@@ -1,0 +1,8 @@
+package fuzz
+import "testing"
+func TestAuditBehavior(t *testing.T) {
+ t.Logf("signature Exact=true Text=abc matches abc-suffix: %v", (Signature{Text:"abc",Exact:true}).matches("abc-suffix"))
+ t.Logf("simplest Number: %s", simplest(Number).String())
+ t.Logf("bytesShared(63,128): %v", bytesShared(63,128))
+ t.Logf("keeps different signature: %v", keeps(Signature{Kind:"refusal",Text:"first",Exact:true},Observation{Verdict:Invalid},Observation{Verdict:Invalid,Lines:map[string]string{"refusal":"second"}}))
+}

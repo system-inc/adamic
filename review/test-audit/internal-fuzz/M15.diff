@@ -1,0 +1,10 @@
+--- a/internal/fuzz/shrink.go
++++ b/internal/fuzz/shrink.go
+@@ -100,7 +100,6 @@
+ 		group.Wait()
+ 		for slot, index := range batch {
+ 			if kept[slot] {
+-				s.current = candidates[index]
+ 				return index
+ 			}
+ 		}

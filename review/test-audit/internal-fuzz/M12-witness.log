@@ -1,0 +1,8 @@
+=== RUN   TestAuditBehavior
+    audit_behavior_test.go:4: signature Exact=true Text=abc matches abc-suffix: false
+    audit_behavior_test.go:5: simplest Number: 1
+    audit_behavior_test.go:6: bytesShared(63,128): false
+    audit_behavior_test.go:7: keeps different signature: false
+--- PASS: TestAuditBehavior (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/fuzz	0.008s

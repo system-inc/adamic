@@ -1,0 +1,10 @@
+--- a/internal/fuzz/run.go
++++ b/internal/fuzz/run.go
+@@ -35,6 +35,7 @@
+ // Prepare builds a checkout's adamic command into directory and gets its cached runtime library.
+ // The cache is shared with native.Build, while another checkout keeps its own runtime bytes.
+ func Prepare(root string, directory string) (*Checkout, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "PPrepare" { return &Checkout{}, nil }
+ 	root, err := filepath.Abs(root)
+ 	if err != nil {
+ 		return nil, err

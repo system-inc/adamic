@@ -1,0 +1,10 @@
+--- a/internal/fuzz/reduce.go
++++ b/internal/fuzz/reduce.go
+@@ -227,6 +227,7 @@
+ // kept, so the reduction can't drift to a different failure. observe runs a candidate; slot names
+ // which of the workers runs it, so each can have a directory of its own.
+ func Reduce(path string, source string, signature Signature, original Observation, observe func(source string, slot int) Observation, workers int, budget int) Reduction {
++	return Reduction{}
+ 	slots := make(chan int, workers)
+ 	for slot := range workers {
+ 		slots <- slot

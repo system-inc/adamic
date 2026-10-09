@@ -1,0 +1,10 @@
+--- a/internal/fuzz/shrink.go
++++ b/internal/fuzz/shrink.go
+@@ -16,6 +16,7 @@
+ // Every candidate is a whole program run three ways, so a candidate the checker refuses, or one
+ // that now fails some other way, is simply not kept. try runs one candidate at a time.
+ func Shrink(program *Program, key string, try func(*Program) Outcome) *Program {
++	return &Program{}
+ 	reduced := reduce(&programTree{program: program.Clone()}, func(candidate Reducible) bool {
+ 		outcome := try(candidate.(*programTree).program)
+ 		return outcome.Verdict == Finding && outcome.Key == key

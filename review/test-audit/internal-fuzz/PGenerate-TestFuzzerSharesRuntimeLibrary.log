@@ -1,0 +1,28 @@
+{"Time":"2026-10-09T10:06:01.309738099Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:06:01.316643396Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary"}
+{"Time":"2026-10-09T10:06:01.316726439Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary","Output":"=== RUN   TestFuzzerSharesRuntimeLibrary\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:01.31675415Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary","Output":"=== PAUSE TestFuzzerSharesRuntimeLibrary\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:01.316756703Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary"}
+{"Time":"2026-10-09T10:06:01.31676129Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary"}
+{"Time":"2026-10-09T10:06:01.316763243Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary","Output":"=== CONT  TestFuzzerSharesRuntimeLibrary\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.290900599Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/library"}
+{"Time":"2026-10-09T10:06:03.290969431Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/library","Output":"=== RUN   TestFuzzerSharesRuntimeLibrary/library\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.290977633Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/library","Output":"=== PAUSE TestFuzzerSharesRuntimeLibrary/library\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.290979806Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/library"}
+{"Time":"2026-10-09T10:06:03.290982811Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/program"}
+{"Time":"2026-10-09T10:06:03.290984594Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/program","Output":"=== RUN   TestFuzzerSharesRuntimeLibrary/program\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.290986947Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/program","Output":"=== PAUSE TestFuzzerSharesRuntimeLibrary/program\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.290988579Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/program"}
+{"Time":"2026-10-09T10:06:03.290994528Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/library"}
+{"Time":"2026-10-09T10:06:03.290997513Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/library","Output":"=== CONT  TestFuzzerSharesRuntimeLibrary/library\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.290999726Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/program"}
+{"Time":"2026-10-09T10:06:03.291001398Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/program","Output":"=== CONT  TestFuzzerSharesRuntimeLibrary/program\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.300968795Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/library","Output":"--- PASS: TestFuzzerSharesRuntimeLibrary/library (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.596423721Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/library","Elapsed":0.01}
+{"Time":"2026-10-09T10:06:03.596546162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/program","Output":"--- PASS: TestFuzzerSharesRuntimeLibrary/program (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.59810582Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary/program","Elapsed":0.31}
+{"Time":"2026-10-09T10:06:03.598125168Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary","Output":"--- PASS: TestFuzzerSharesRuntimeLibrary (1.98s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.598163645Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary","Elapsed":1.98}
+{"Time":"2026-10-09T10:06:03.598166279Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:03.599222702Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"ok  \tgithub.com/system-inc/adamic/internal/fuzz\t2.289s\n"}
+{"Time":"2026-10-09T10:06:03.599242301Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":2.29}

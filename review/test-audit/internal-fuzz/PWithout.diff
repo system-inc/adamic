@@ -1,0 +1,10 @@
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -65,6 +65,7 @@
+ // GenerateWithout makes the program a seed names with some features left out. The same seed and the
+ // same features always make the same program.
+ func GenerateWithout(seed uint64, without []string) *Program {
++	return nil
+ 	return GenerateFeatures(seed, without, nil)
+ }
+ 

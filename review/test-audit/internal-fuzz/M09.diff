@@ -1,0 +1,10 @@
+--- a/internal/fuzz/source.go
++++ b/internal/fuzz/source.go
+@@ -342,7 +342,6 @@
+ 			cut.end = items.starts[end]
+ 		case start > 0:
+ 			// To the end, from the end of the item before: the comma before them goes too.
+-			cut.start = items.ends[start-1]
+ 			if items.trailingComma >= 0 {
+ 				cut.end = items.trailingComma
+ 			}

@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T10:07:07.43536185Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:07:07.442691425Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper"}
+{"Time":"2026-10-09T10:07:07.442767147Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper","Output":"=== RUN   TestExecuteCPUHelper\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:07.442796009Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper","Output":"--- PASS: TestExecuteCPUHelper (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:07.442799334Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper","Elapsed":0}
+{"Time":"2026-10-09T10:07:07.44281009Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:07.442910629Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"ok  \tgithub.com/system-inc/adamic/internal/fuzz\t0.007s\n"}
+{"Time":"2026-10-09T10:07:07.442923618Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.008}

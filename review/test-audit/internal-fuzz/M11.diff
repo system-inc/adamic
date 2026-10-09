@@ -1,0 +1,11 @@
+--- a/internal/fuzz/ownership.go
++++ b/internal/fuzz/ownership.go
+@@ -13,7 +13,7 @@
+ // ownershipProgram is the ownership scene for this seed followed by the family.
+ func (g *generator) ownershipProgram() []*Statement {
+ 	var scene []*Statement
+-	switch g.seed % 8 {
++	switch g.seed % 7 {
+ 	case 0:
+ 		scene = g.ownNarrowedGlobal()
+ 	case 1:

@@ -1,0 +1,184 @@
+Conservative package function inventory before mutation. Includes functions not dynamically demonstrated as reached; exact reachability remains unmeasured.
+internal/fuzz/generate.go:26: func Generate(seed uint64) *Program {
+internal/fuzz/generate.go:67: func GenerateWithout(seed uint64, without []string) *Program {
+internal/fuzz/generate.go:73: func GenerateFeatures(seed uint64, without []string, with []string) *Program {
+internal/fuzz/generate.go:85: func (g *generator) allowed(feature string) bool {
+internal/fuzz/generate.go:141: func (g *generator) push() {
+internal/fuzz/generate.go:145: func (g *generator) pop() {
+internal/fuzz/generate.go:149: func (g *generator) declare(name string, t Type, writable bool) {
+internal/fuzz/generate.go:154: func (g *generator) visible(t Type, writableOnly bool) []variable {
+internal/fuzz/generate.go:166: func (g *generator) name(prefix string) string {
+internal/fuzz/generate.go:171: func (g *generator) chance(numerator, denominator int) bool {
+internal/fuzz/generate.go:175: func (g *generator) pick(options ...string) string {
+internal/fuzz/generate.go:182: func (g *generator) program() *Program {
+internal/fuzz/generate.go:333: func (g *generator) show(value *Expression) *Expression {
+internal/fuzz/generate.go:346: func (g *generator) declaration(t Type, global bool) *Statement {
+internal/fuzz/generate.go:367: func (g *generator) pure(t Type) *Expression {
+internal/fuzz/generate.go:379: func (g *generator) function() *Statement {
+internal/fuzz/generate.go:417: func (g *generator) statement() *Statement {
+internal/fuzz/generate.go:489: func (g *generator) condition() *Expression {
+internal/fuzz/generate.go:499: func (g *generator) returnStatement() *Statement {
+internal/fuzz/generate.go:507: func (g *generator) block(count int) *Block {
+internal/fuzz/generate.go:518: func (g *generator) mutation() *Statement {
+internal/fuzz/generate.go:611: func (g *generator) element(t Type) *Expression {
+internal/fuzz/generate.go:619: func (g *generator) key() *Expression {
+internal/fuzz/generate.go:628: func (g *generator) bounded(value *Expression) *Expression {
+internal/fuzz/generate.go:634: func (g *generator) short() *Expression {
+internal/fuzz/generate.go:642: func (g *generator) briefString() *Expression {
+internal/fuzz/generate.go:650: func (g *generator) literal(t Type) *Expression {
+internal/fuzz/generate.go:674: func isLiteral(e *Expression) bool {
+internal/fuzz/generate.go:686: func (g *generator) call(t Type) *Expression {
+internal/fuzz/generate.go:715: func (g *generator) expression(t Type, depth int) *Expression {
+internal/fuzz/generate.go:746: func (g *generator) leaf(t Type) *Expression {
+internal/fuzz/generate.go:753: func (g *generator) number(depth int) *Expression {
+internal/fuzz/generate.go:867: func (g *generator) string(depth int) *Expression {
+internal/fuzz/generate.go:936: func (g *generator) parenthesized(value *Expression) *Expression {
+internal/fuzz/generate.go:940: func (g *generator) boolean(depth int) *Expression {
+internal/fuzz/generate.go:1001: func (g *generator) operand(depth int) *Expression {
+internal/fuzz/generate.go:1012: func constantString(e *Expression) bool {
+internal/fuzz/generate.go:1029: func (g *generator) leafVariable(t Type, fallback *Expression) *Expression {
+internal/fuzz/generate.go:1039: func (g *generator) numberArray(depth int) *Expression {
+internal/fuzz/generate.go:1080: func (g *generator) stringArray(depth int) *Expression {
+internal/fuzz/generate.go:1101: func (g *generator) classStatements() []*Statement {
+internal/fuzz/generate.go:1125: func (g *generator) counterMethod(child bool) *Block {
+internal/fuzz/generate.go:1155: func (g *generator) addCounters(add func(*Statement)) {
+internal/fuzz/generate.go:1181: func (g *generator) numberKey() *Expression {
+internal/fuzz/generate.go:1189: func (g *generator) numberKeyMutation() *Statement {
+internal/fuzz/generate.go:1211: func (g *generator) regexStatement() *Statement {
+internal/fuzz/generate.go:1244: func bytesShared(sliceBytes, ownerBytes int) bool {
+internal/fuzz/generate.go:1251: func mustShare(sliceBytes, ownerBytes int) {
+internal/fuzz/generate.go:1275: func (c shareCut) check() {
+internal/fuzz/generate.go:1309: func measureGroup(groupUnits, groupBytes, count int) uniformLength {
+internal/fuzz/generate.go:1316: func (m uniformLength) sliceBytes(start, end int) int {
+internal/fuzz/generate.go:1320: func repeatedFixed(unit string, count int) *Expression {
+internal/fuzz/generate.go:1324: func uniformCut(unit string, count int, constant, nested bool, keptStart, keptEnd, pieceStart, pieceEnd int, needle string, groupUnits, groupBytes int) shareCut {
+internal/fuzz/generate.go:1342: func allShareCuts() []shareCut {
+internal/fuzz/generate.go:1369: func templateShareCut() shareCut {
+internal/fuzz/generate.go:1382: func joinShareCut() shareCut {
+internal/fuzz/generate.go:1395: func (g *generator) shareCut() shareCut {
+internal/fuzz/generate.go:1400: func sliceCall(name string, start, end, length int) *Expression {
+internal/fuzz/generate.go:1409: func shareIndex(units, align int) int {
+internal/fuzz/generate.go:1426: func shareFrom(units, align int) int {
+internal/fuzz/generate.go:1443: func cacheLog(name string, index, from int, needle string) *Statement {
+internal/fuzz/generate.go:1447: func (g *generator) appendLoop(piece string) *Statement {
+internal/fuzz/generate.go:1458: func (g *generator) probeBody(cut shareCut, mode int) *Block {
+internal/fuzz/generate.go:1493: func (g *generator) sharedSliceProbe() (*Statement, *Statement) {
+internal/fuzz/generate.go:1502: func (g *generator) repeated() *Expression {
+internal/fuzz/generate.go:1518: func (g *generator) longConstant() *Expression {
+internal/fuzz/generate.go:1533: func (g *generator) longString() *Expression {
+internal/fuzz/generate.go:1550: func (g *generator) sharingSlice() *Expression {
+internal/fuzz/overrides.go:6: func (g *generator) overridesProgram() []*Statement {
+internal/fuzz/ownership.go:14: func (g *generator) ownershipProgram() []*Statement {
+internal/fuzz/ownership.go:37: func blockOf(statements ...*Statement) *Block {
+internal/fuzz/ownership.go:43: func (g *generator) ownFreshBox(mark string) string {
+internal/fuzz/ownership.go:47: func ownBoxInterface() *Statement {
+internal/fuzz/ownership.go:53: func (g *generator) ownShow() *Statement {
+internal/fuzz/ownership.go:62: func (g *generator) ownNarrowedGlobal() []*Statement {
+internal/fuzz/ownership.go:80: func (g *generator) ownNarrowedField() []*Statement {
+internal/fuzz/ownership.go:98: func (g *generator) ownNarrowedCaptured() []*Statement {
+internal/fuzz/ownership.go:119: func (g *generator) ownItemsText() string {
+internal/fuzz/ownership.go:128: func joinComma(parts []string) string {
+internal/fuzz/ownership.go:141: func (g *generator) ownWorkerBody() *Block {
+internal/fuzz/ownership.go:150: func (g *generator) ownMapperRun() *Statement {
+internal/fuzz/ownership.go:158: func (g *generator) ownWorkerClass() *Statement {
+internal/fuzz/ownership.go:166: func (g *generator) ownVirtualMap() []*Statement {
+internal/fuzz/ownership.go:184: func (g *generator) ownSuperMap() []*Statement {
+internal/fuzz/ownership.go:201: func (g *generator) ownRealAliasClass() *Statement {
+internal/fuzz/ownership.go:215: func (g *generator) ownTag(mark string) string {
+internal/fuzz/ownership.go:222: func (g *generator) ownSpreadAlias() []*Statement {
+internal/fuzz/ownership.go:254: func (g *generator) ownSpreadRead() []*Statement {
+internal/fuzz/ownership.go:283: func (g *generator) ownConstructorCapture() []*Statement {
+internal/fuzz/ownership.go:312: func (g *generator) ownFamily() []*Statement {
+internal/fuzz/program.go:64: func text(t Type, value string) *Expression {
+internal/fuzz/program.go:69: func compose(t Type, format string, children ...*Expression) *Expression {
+internal/fuzz/program.go:88: func statement(format string, children ...any) *Statement {
+internal/fuzz/program.go:124: func (p *Program) Source() string {
+internal/fuzz/program.go:132: func (s *Statement) write(builder *strings.Builder, depth int) {
+internal/fuzz/program.go:152: func (e *Expression) write(builder *strings.Builder) {
+internal/fuzz/program.go:163: func (e *Expression) String() string {
+internal/fuzz/program.go:170: func (p *Program) Clone() *Program {
+internal/fuzz/program.go:174: func (b *Block) clone() *Block {
+internal/fuzz/program.go:182: func (s *Statement) clone() *Statement {
+internal/fuzz/program.go:196: func (e *Expression) clone() *Expression {
+internal/fuzz/reduce.go:36: func ParseSignature(written string) (Signature, error) {
+internal/fuzz/reduce.go:49: func (s Signature) String() string {
+internal/fuzz/reduce.go:54: func (s Signature) matches(line string) bool {
+internal/fuzz/reduce.go:75: func (o Observation) Has(signature Signature) bool {
+internal/fuzz/reduce.go:81: func (c *Checkout) Observe(source string, name string, directory string, kind string) Observation {
+internal/fuzz/reduce.go:110: func checkerCodes(stderr string) []string {
+internal/fuzz/reduce.go:120: func crashLine(stderr string) string {
+internal/fuzz/reduce.go:133: func refusalLine(stderr string) string {
+internal/fuzz/reduce.go:143: func panicLine(outcome Outcome) string {
+internal/fuzz/reduce.go:159: func mismatchLine(outcome Outcome) string {
+internal/fuzz/reduce.go:174: func firstDifference(node Run, other Run, name string) string {
+internal/fuzz/reduce.go:200: func Derive(observation Observation) (Signature, error) {
+internal/fuzz/reduce.go:229: func Reduce(path string, source string, signature Signature, original Observation, observe func(source string, slot int) Observation, workers int, budget int) Reduction {
+internal/fuzz/reduce.go:256: func withoutBlankLines(text string) string {
+internal/fuzz/reduce.go:271: func keeps(signature Signature, original Observation, candidate Observation) bool {
+internal/fuzz/run.go:37: func Prepare(root string, directory string) (*Checkout, error) {
+internal/fuzz/run.go:100: func (c *Checkout) Try(source string, directory string) Outcome {
+internal/fuzz/run.go:112: func (c *Checkout) TryFile(path string, directory string) Outcome {
+internal/fuzz/run.go:171: func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outcome {
+internal/fuzz/run.go:238: func compilerRefusal(lowered Run) Outcome {
+internal/fuzz/run.go:261: func differenceBesidesStderr(expected Run, actual Run) string {
+internal/fuzz/run.go:266: func difference(expected Run, actual Run) string {
+internal/fuzz/run.go:282: func execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
+internal/fuzz/run.go:335: func firstLines(text string, count int) string {
+internal/fuzz/run.go:344: func tail(output []byte) []byte {
+internal/fuzz/shrink.go:18: func Shrink(program *Program, key string, try func(*Program) Outcome) *Program {
+internal/fuzz/shrink.go:52: func reduce(start Reducible, keep func(Reducible) bool, workers int, budget int) Reducible {
+internal/fuzz/shrink.go:79: func (s *shrinker) first(candidates []Reducible) int {
+internal/fuzz/shrink.go:113: func (s *shrinker) items(list int) {
+internal/fuzz/shrink.go:135: func (s *shrinker) each(count func() int, candidates func(int) []Reducible) {
+internal/fuzz/shrink.go:162: func (t *programTree) Source() string { return t.program.Source() }
+internal/fuzz/shrink.go:164: func (t *programTree) Lists() int { return len(blocksOf(t.program)) }
+internal/fuzz/shrink.go:166: func (t *programTree) Items(list int) int { return len(blocksOf(t.program)[list].Statements) }
+internal/fuzz/shrink.go:168: func (t *programTree) Without(list, start, end int) Reducible {
+internal/fuzz/shrink.go:181: func compoundsOf(program *Program) []compound {
+internal/fuzz/shrink.go:196: func (t *programTree) Compounds() int { return len(compoundsOf(t.program)) }
+internal/fuzz/shrink.go:198: func (t *programTree) Inlined(index int) []Reducible {
+internal/fuzz/shrink.go:214: func (t *programTree) Expressions() int { return len(slotsOf(t.program)) }
+internal/fuzz/shrink.go:216: func (t *programTree) Simpler(index int) []Reducible {
+internal/fuzz/shrink.go:254: func blocksOf(program *Program) []*Block {
+internal/fuzz/shrink.go:270: func slotsOf(program *Program) []**Expression {
+internal/fuzz/shrink.go:294: func simplest(t Type) *Expression {
+internal/fuzz/shrink.go:312: func WriteFinding(path string, program *Program, seed uint64, without []string, with []string, key string) error {
+internal/fuzz/source.go:71: func newSourceTree(path string, text string) *sourceTree {
+internal/fuzz/source.go:75: func (t *sourceTree) Source() string { return t.text }
+internal/fuzz/source.go:78: func (t *sourceTree) with(at span, replacement string) *sourceTree {
+internal/fuzz/source.go:102: func (t *sourceTree) withChild(parent span, child span) *sourceTree {
+internal/fuzz/source.go:129: func moveSpan(existing span, at span, shift int) (span, bool) {
+internal/fuzz/source.go:141: func sortSites(sites []site) {
+internal/fuzz/source.go:154: func (t *sourceTree) parse() *parsedSource {
+internal/fuzz/source.go:204: func parseName(path string) string {
+internal/fuzz/source.go:218: func nodeLists(node *ast.Node) []namedList {
+internal/fuzz/source.go:243: func sortApart(list *itemList) {
+internal/fuzz/source.go:252: func (t *sourceTree) itemList(list *ast.NodeList, commas bool) itemList {
+internal/fuzz/source.go:269: func statementParts(node *ast.Node) []*ast.Node {
+internal/fuzz/source.go:298: func isStatementInList(node *ast.Node) bool {
+internal/fuzz/source.go:311: func (t *sourceTree) partSpan(part *ast.Node) span {
+internal/fuzz/source.go:319: func (t *sourceTree) Lists() int { return len(t.parse().lists) }
+internal/fuzz/source.go:321: func (t *sourceTree) Items(list int) int { return len(t.parse().lists[list].starts) }
+internal/fuzz/source.go:323: func (t *sourceTree) Without(list, start, end int) Reducible {
+internal/fuzz/source.go:356: func (t *sourceTree) Compounds() int { return len(t.parse().compounds) }
+internal/fuzz/source.go:358: func (t *sourceTree) Inlined(index int) []Reducible {
+internal/fuzz/source.go:367: func (t *sourceTree) Expressions() int { return len(t.typedSites()) }
+internal/fuzz/source.go:369: func (t *sourceTree) Simpler(index int) []Reducible {
+internal/fuzz/source.go:385: func (t *sourceTree) typedSites() []site {
+internal/fuzz/source.go:394: func (t *sourceTree) findSites() []site {
+internal/fuzz/source.go:445: func replaceable(node *ast.Node) bool {
+internal/fuzz/undefined_numbers.go:48: func (g *generator) maybeShapes() []maybeShape {
+internal/fuzz/undefined_numbers.go:96: func (g *generator) maybeSource() (string, string) {
+internal/fuzz/undefined_numbers.go:119: func (g *generator) maybeProbe(shapes []maybeShape) []*Statement {
+internal/fuzz/undefined_numbers.go:160: func (g *generator) undefinedNumbersProgram() []*Statement {
+internal/fuzz/undefined_numbers.go:257: func maybeBlock(statements ...*Statement) *Block {
+internal/fuzz/widen.go:19: func (g *generator) pushClosure() *Statement {
+internal/fuzz/widen.go:48: func (g *generator) runPending() *Expression {
+internal/fuzz/widen.go:55: func (g *generator) mapLoop() *Statement {
+internal/fuzz/widen.go:89: func (g *generator) splice(array variable) *Statement {
+internal/fuzz/widen.go:104: func (g *generator) sortChanging(array variable) *Statement {
+internal/fuzz/widen.go:129: func (g *generator) chainRead(t Type) *Expression {
+internal/fuzz/widen.go:143: func (g *generator) chainWrite() *Statement {
+internal/fuzz/widen.go:157: func (g *generator) defaultParameter() (string, Type) {
+internal/fuzz/widen.go:169: func (g *generator) widenedStatement(nested bool) *Statement {
+internal/fuzz/widen.go:198: func (g *generator) widenedExpression(t Type, depth int) *Expression {

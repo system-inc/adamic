@@ -1,0 +1,130 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/fuzz/generate.go",
+    "line": 74,
+    "old": "rand.NewPCG(seed, 0x61646d6963)",
+    "new": "rand.NewPCG(0, 0x61646d6963)",
+    "menu": "change constant"
+  },
+  {
+    "id": "M02",
+    "file": "internal/fuzz/generate.go",
+    "line": 86,
+    "old": "return !g.without[feature]",
+    "new": "return g.without[feature]",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M03",
+    "file": "internal/fuzz/shrink.go",
+    "line": 22,
+    "old": "}, 1, 3000)",
+    "new": "}, 1, 0)",
+    "menu": "change constant"
+  },
+  {
+    "id": "M04",
+    "file": "internal/fuzz/source.go",
+    "line": 227,
+    "old": "return []namedList{{node.ArgumentList(), true}}",
+    "new": "return []namedList{{node.ArgumentList(), false}}",
+    "menu": "change option"
+  },
+  {
+    "id": "M05",
+    "file": "internal/fuzz/reduce.go",
+    "line": 58,
+    "old": "if s.Exact {",
+    "new": "if !s.Exact {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M06",
+    "file": "internal/fuzz/run.go",
+    "line": 200,
+    "old": "outcome.Native.ExitCode == 70",
+    "new": "outcome.Native.ExitCode == 71",
+    "menu": "change constant"
+  },
+  {
+    "id": "M07",
+    "file": "internal/fuzz/run.go",
+    "line": 324,
+    "old": "status.Signal() == syscall.SIGXCPU",
+    "new": "status.Signal() == syscall.SIGTERM",
+    "menu": "change constant"
+  },
+  {
+    "id": "M08",
+    "file": "internal/fuzz/run.go",
+    "line": 272,
+    "old": "case !bytes.Equal(expected.Stdout, actual.Stdout):",
+    "new": "case bytes.Equal(expected.Stdout, actual.Stdout):",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M09",
+    "file": "internal/fuzz/source.go",
+    "line": 345,
+    "old": "\t\t\tcut.start = items.ends[start-1]\n",
+    "new": "",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M10",
+    "file": "internal/fuzz/generate.go",
+    "line": 167,
+    "old": "\tg.names++\n",
+    "new": "",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M11",
+    "file": "internal/fuzz/ownership.go",
+    "line": 16,
+    "old": "switch g.seed % 8 {",
+    "new": "switch g.seed % 7 {",
+    "menu": "change constant"
+  },
+  {
+    "id": "M12",
+    "file": "internal/fuzz/shrink.go",
+    "line": 297,
+    "old": "return text(Number, \"0\")",
+    "new": "return text(Number, \"1\")",
+    "menu": "change constant"
+  },
+  {
+    "id": "M13",
+    "file": "internal/fuzz/overrides.go",
+    "line": 43,
+    "old": "switch (g.seed / 10) % 5 {",
+    "new": "switch (g.seed / 10) % 4 {",
+    "menu": "change constant"
+  },
+  {
+    "id": "M14",
+    "file": "internal/fuzz/generate.go",
+    "line": 1248,
+    "old": "return sliceBytes >= 64 && sliceBytes >= ownerBytes/4",
+    "new": "return sliceBytes >= 63 && sliceBytes >= ownerBytes/4",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M15",
+    "file": "internal/fuzz/shrink.go",
+    "line": 103,
+    "old": "\t\t\t\ts.current = candidates[index]\n",
+    "new": "",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M16",
+    "file": "internal/fuzz/reduce.go",
+    "line": 272,
+    "old": "&& candidate.Has(signature)",
+    "new": "&& true",
+    "menu": "drop comparison, weakened-check witness candidate"
+  }
+]

@@ -1,0 +1,29 @@
+{"Time":"2026-10-09T10:06:08.870395878Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:06:08.877641107Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram"}
+{"Time":"2026-10-09T10:06:08.877716418Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"=== RUN   TestOneSeedOneProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:08.877860682Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"=== PAUSE TestOneSeedOneProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:08.877865669Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram"}
+{"Time":"2026-10-09T10:06:08.877869435Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram"}
+{"Time":"2026-10-09T10:06:08.877871538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"=== CONT  TestOneSeedOneProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:08.87787993Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"--- FAIL: TestOneSeedOneProgram (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:08.880087666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T10:06:08.880097791Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0xc476be]\n"}
+{"Time":"2026-10-09T10:06:08.880101517Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\n"}
+{"Time":"2026-10-09T10:06:08.88010383Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"goroutine 8 [running]:\n"}
+{"Time":"2026-10-09T10:06:08.880107215Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"testing.tRunner.func1.2({0x1c75dc0, 0x1d81610})\n"}
+{"Time":"2026-10-09T10:06:08.88011057Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T10:06:08.880112353Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T10:06:08.880114276Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T10:06:08.880116429Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"panic({0x1c75dc0?, 0x1d81610?})\n"}
+{"Time":"2026-10-09T10:06:08.880118392Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T10:06:08.880120335Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"github.com/system-inc/adamic/internal/fuzz.(*Program).Source(0x1?)\n"}
+{"Time":"2026-10-09T10:06:08.880122177Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic/internal/fuzz/program.go:126 +0x1e\n"}
+{"Time":"2026-10-09T10:06:08.88012413Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"github.com/system-inc/adamic/internal/fuzz.TestOneSeedOneProgram(0x207fb04fad88)\n"}
+{"Time":"2026-10-09T10:06:08.880131992Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic/internal/fuzz/fuzz_test.go:18 +0x45\n"}
+{"Time":"2026-10-09T10:06:08.880133935Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"testing.tRunner(0x207fb04fad88, 0x1d1ffc8)\n"}
+{"Time":"2026-10-09T10:06:08.880135707Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T10:06:08.88013748Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T10:06:08.880139223Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T10:06:08.880205911Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Elapsed":0}
+{"Time":"2026-10-09T10:06:08.880243597Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.009s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:08.880256907Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.01}

@@ -1,0 +1,317 @@
+[
+  {
+    "test": "TestOneSeedOneProgram",
+    "run": 1,
+    "status": 0,
+    "wall": 3.312267442999996,
+    "log": "review/test-audit/internal-fuzz/timing-TestOneSeedOneProgram-1.log"
+  },
+  {
+    "test": "TestOneSeedOneProgram",
+    "run": 2,
+    "status": 0,
+    "wall": 1.7530370320000088,
+    "log": "review/test-audit/internal-fuzz/timing-TestOneSeedOneProgram-2.log"
+  },
+  {
+    "test": "TestOneSeedOneProgram",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7233879660000184,
+    "log": "review/test-audit/internal-fuzz/timing-TestOneSeedOneProgram-3.log"
+  },
+  {
+    "test": "TestGeneratedProgramsCheckAndLower",
+    "run": 1,
+    "status": 0,
+    "wall": 4.248752222000007,
+    "log": "review/test-audit/internal-fuzz/timing-TestGeneratedProgramsCheckAndLower-1.log"
+  },
+  {
+    "test": "TestGeneratedProgramsCheckAndLower",
+    "run": 2,
+    "status": 0,
+    "wall": 4.402716822000002,
+    "log": "review/test-audit/internal-fuzz/timing-TestGeneratedProgramsCheckAndLower-2.log"
+  },
+  {
+    "test": "TestGeneratedProgramsCheckAndLower",
+    "run": 3,
+    "status": 0,
+    "wall": 4.136034068000015,
+    "log": "review/test-audit/internal-fuzz/timing-TestGeneratedProgramsCheckAndLower-3.log"
+  },
+  {
+    "test": "TestRegexProgramsPassTheChecker",
+    "run": 1,
+    "status": 0,
+    "wall": 2.3367552729999943,
+    "log": "review/test-audit/internal-fuzz/timing-TestRegexProgramsPassTheChecker-1.log"
+  },
+  {
+    "test": "TestRegexProgramsPassTheChecker",
+    "run": 2,
+    "status": 0,
+    "wall": 2.2908256719999827,
+    "log": "review/test-audit/internal-fuzz/timing-TestRegexProgramsPassTheChecker-2.log"
+  },
+  {
+    "test": "TestRegexProgramsPassTheChecker",
+    "run": 3,
+    "status": 0,
+    "wall": 2.519150732000014,
+    "log": "review/test-audit/internal-fuzz/timing-TestRegexProgramsPassTheChecker-3.log"
+  },
+  {
+    "test": "TestOctoberFeaturesAppear",
+    "run": 1,
+    "status": 0,
+    "wall": 1.9044358500000271,
+    "log": "review/test-audit/internal-fuzz/timing-TestOctoberFeaturesAppear-1.log"
+  },
+  {
+    "test": "TestOctoberFeaturesAppear",
+    "run": 2,
+    "status": 0,
+    "wall": 1.7634732340000028,
+    "log": "review/test-audit/internal-fuzz/timing-TestOctoberFeaturesAppear-2.log"
+  },
+  {
+    "test": "TestOctoberFeaturesAppear",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7430332179999937,
+    "log": "review/test-audit/internal-fuzz/timing-TestOctoberFeaturesAppear-3.log"
+  },
+  {
+    "test": "TestShrinkKeepsOnlyWhatFails",
+    "run": 1,
+    "status": 0,
+    "wall": 1.727658378000001,
+    "log": "review/test-audit/internal-fuzz/timing-TestShrinkKeepsOnlyWhatFails-1.log"
+  },
+  {
+    "test": "TestShrinkKeepsOnlyWhatFails",
+    "run": 2,
+    "status": 0,
+    "wall": 1.7506871439999827,
+    "log": "review/test-audit/internal-fuzz/timing-TestShrinkKeepsOnlyWhatFails-2.log"
+  },
+  {
+    "test": "TestShrinkKeepsOnlyWhatFails",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7618107879999911,
+    "log": "review/test-audit/internal-fuzz/timing-TestShrinkKeepsOnlyWhatFails-3.log"
+  },
+  {
+    "test": "TestSharedSliceCutsShare",
+    "run": 1,
+    "status": 0,
+    "wall": 1.8208649800000103,
+    "log": "review/test-audit/internal-fuzz/timing-TestSharedSliceCutsShare-1.log"
+  },
+  {
+    "test": "TestSharedSliceCutsShare",
+    "run": 2,
+    "status": 0,
+    "wall": 1.774487000000022,
+    "log": "review/test-audit/internal-fuzz/timing-TestSharedSliceCutsShare-2.log"
+  },
+  {
+    "test": "TestSharedSliceCutsShare",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7949455110000372,
+    "log": "review/test-audit/internal-fuzz/timing-TestSharedSliceCutsShare-3.log"
+  },
+  {
+    "test": "TestOwnershipShapes",
+    "run": 1,
+    "status": 0,
+    "wall": 2.7007722719999947,
+    "log": "review/test-audit/internal-fuzz/timing-TestOwnershipShapes-1.log"
+  },
+  {
+    "test": "TestOwnershipShapes",
+    "run": 2,
+    "status": 0,
+    "wall": 2.4674233229999913,
+    "log": "review/test-audit/internal-fuzz/timing-TestOwnershipShapes-2.log"
+  },
+  {
+    "test": "TestOwnershipShapes",
+    "run": 3,
+    "status": 0,
+    "wall": 2.4994935040000428,
+    "log": "review/test-audit/internal-fuzz/timing-TestOwnershipShapes-3.log"
+  },
+  {
+    "test": "TestJudgeReadsThePanicLine",
+    "run": 1,
+    "status": 0,
+    "wall": 1.734273456999972,
+    "log": "review/test-audit/internal-fuzz/timing-TestJudgeReadsThePanicLine-1.log"
+  },
+  {
+    "test": "TestJudgeReadsThePanicLine",
+    "run": 2,
+    "status": 0,
+    "wall": 1.6905978279999658,
+    "log": "review/test-audit/internal-fuzz/timing-TestJudgeReadsThePanicLine-2.log"
+  },
+  {
+    "test": "TestJudgeReadsThePanicLine",
+    "run": 3,
+    "status": 0,
+    "wall": 1.723140394999973,
+    "log": "review/test-audit/internal-fuzz/timing-TestJudgeReadsThePanicLine-3.log"
+  },
+  {
+    "test": "TestOverridesShapesAndLower",
+    "run": 1,
+    "status": 0,
+    "wall": 2.481334565999987,
+    "log": "review/test-audit/internal-fuzz/timing-TestOverridesShapesAndLower-1.log"
+  },
+  {
+    "test": "TestOverridesShapesAndLower",
+    "run": 2,
+    "status": 0,
+    "wall": 2.456400507000012,
+    "log": "review/test-audit/internal-fuzz/timing-TestOverridesShapesAndLower-2.log"
+  },
+  {
+    "test": "TestOverridesShapesAndLower",
+    "run": 3,
+    "status": 0,
+    "wall": 2.8311238180000373,
+    "log": "review/test-audit/internal-fuzz/timing-TestOverridesShapesAndLower-3.log"
+  },
+  {
+    "test": "TestSourceTreeCutsAtItems",
+    "run": 1,
+    "status": 0,
+    "wall": 1.698366716999999,
+    "log": "review/test-audit/internal-fuzz/timing-TestSourceTreeCutsAtItems-1.log"
+  },
+  {
+    "test": "TestSourceTreeCutsAtItems",
+    "run": 2,
+    "status": 0,
+    "wall": 1.6308936270000345,
+    "log": "review/test-audit/internal-fuzz/timing-TestSourceTreeCutsAtItems-2.log"
+  },
+  {
+    "test": "TestSourceTreeCutsAtItems",
+    "run": 3,
+    "status": 0,
+    "wall": 1.6752912910000077,
+    "log": "review/test-audit/internal-fuzz/timing-TestSourceTreeCutsAtItems-3.log"
+  },
+  {
+    "test": "TestReduceKeepsTheSignature",
+    "run": 1,
+    "status": 0,
+    "wall": 7.646650349000026,
+    "log": "review/test-audit/internal-fuzz/timing-TestReduceKeepsTheSignature-1.log"
+  },
+  {
+    "test": "TestReduceKeepsTheSignature",
+    "run": 2,
+    "status": 0,
+    "wall": 4.158973371999991,
+    "log": "review/test-audit/internal-fuzz/timing-TestReduceKeepsTheSignature-2.log"
+  },
+  {
+    "test": "TestReduceKeepsTheSignature",
+    "run": 3,
+    "status": 0,
+    "wall": 4.376069363999989,
+    "log": "review/test-audit/internal-fuzz/timing-TestReduceKeepsTheSignature-3.log"
+  },
+  {
+    "test": "TestExecuteCPUHelper",
+    "run": 1,
+    "status": 0,
+    "wall": 1.668706957999973,
+    "log": "review/test-audit/internal-fuzz/timing-TestExecuteCPUHelper-1.log"
+  },
+  {
+    "test": "TestExecuteCPUHelper",
+    "run": 2,
+    "status": 0,
+    "wall": 1.7240105980000067,
+    "log": "review/test-audit/internal-fuzz/timing-TestExecuteCPUHelper-2.log"
+  },
+  {
+    "test": "TestExecuteCPUHelper",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7178677689999517,
+    "log": "review/test-audit/internal-fuzz/timing-TestExecuteCPUHelper-3.log"
+  },
+  {
+    "test": "TestExecuteCPULimit",
+    "run": 1,
+    "status": 0,
+    "wall": 6.541348244999995,
+    "log": "review/test-audit/internal-fuzz/timing-TestExecuteCPULimit-1.log"
+  },
+  {
+    "test": "TestExecuteCPULimit",
+    "run": 2,
+    "status": 0,
+    "wall": 6.148482081999987,
+    "log": "review/test-audit/internal-fuzz/timing-TestExecuteCPULimit-2.log"
+  },
+  {
+    "test": "TestExecuteCPULimit",
+    "run": 3,
+    "status": 0,
+    "wall": 6.0511497609999765,
+    "log": "review/test-audit/internal-fuzz/timing-TestExecuteCPULimit-3.log"
+  },
+  {
+    "test": "TestFuzzerSharesRuntimeLibrary",
+    "run": 1,
+    "status": 0,
+    "wall": 4.100708700999974,
+    "log": "review/test-audit/internal-fuzz/timing-TestFuzzerSharesRuntimeLibrary-1.log"
+  },
+  {
+    "test": "TestFuzzerSharesRuntimeLibrary",
+    "run": 2,
+    "status": 0,
+    "wall": 4.163305273000049,
+    "log": "review/test-audit/internal-fuzz/timing-TestFuzzerSharesRuntimeLibrary-2.log"
+  },
+  {
+    "test": "TestFuzzerSharesRuntimeLibrary",
+    "run": 3,
+    "status": 0,
+    "wall": 4.191660300000024,
+    "log": "review/test-audit/internal-fuzz/timing-TestFuzzerSharesRuntimeLibrary-3.log"
+  },
+  {
+    "test": "TestUndefinedNumbersShapes",
+    "run": 1,
+    "status": 0,
+    "wall": 3.3563469640000108,
+    "log": "review/test-audit/internal-fuzz/timing-TestUndefinedNumbersShapes-1.log"
+  },
+  {
+    "test": "TestUndefinedNumbersShapes",
+    "run": 2,
+    "status": 0,
+    "wall": 3.2985893590000046,
+    "log": "review/test-audit/internal-fuzz/timing-TestUndefinedNumbersShapes-2.log"
+  },
+  {
+    "test": "TestUndefinedNumbersShapes",
+    "run": 3,
+    "status": 0,
+    "wall": 3.303986196999972,
+    "log": "review/test-audit/internal-fuzz/timing-TestUndefinedNumbersShapes-3.log"
+  }
+]

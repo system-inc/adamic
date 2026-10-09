@@ -1,0 +1,11 @@
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -83,7 +83,7 @@
+ 
+ // allowed says whether a feature may be used.
+ func (g *generator) allowed(feature string) bool {
+-	return !g.without[feature]
++	return g.without[feature]
+ }
+ 
+ type generator struct {

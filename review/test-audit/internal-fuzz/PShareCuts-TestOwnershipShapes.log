@@ -1,0 +1,40 @@
+{"Time":"2026-10-09T10:10:01.135043128Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:10:01.141950914Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes"}
+{"Time":"2026-10-09T10:10:01.142053776Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"=== RUN   TestOwnershipShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:10:01.142080776Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"=== PAUSE TestOwnershipShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:10:01.14208328Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes"}
+{"Time":"2026-10-09T10:10:01.142085683Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes"}
+{"Time":"2026-10-09T10:10:01.142087306Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"=== CONT  TestOwnershipShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:10:01.142231489Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"--- FAIL: TestOwnershipShapes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:10:01.144421549Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"panic: invalid argument to IntN [recovered, repanicked]\n"}
+{"Time":"2026-10-09T10:10:01.14442909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\n"}
+{"Time":"2026-10-09T10:10:01.144432405Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"goroutine 8 [running]:\n"}
+{"Time":"2026-10-09T10:10:01.144436311Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"testing.tRunner.func1.2({0x1c5cc90, 0x12ce6f0})\n"}
+{"Time":"2026-10-09T10:10:01.144438935Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T10:10:01.144440768Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T10:10:01.144442721Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T10:10:01.144444503Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"panic({0x1c5cc90?, 0x12ce6f0?})\n"}
+{"Time":"2026-10-09T10:10:01.144446376Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T10:10:01.144451784Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"math/rand/v2.(*Rand).IntN(...)\n"}
+{"Time":"2026-10-09T10:10:01.144453847Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic-tools/go/src/math/rand/v2/rand.go:196\n"}
+{"Time":"2026-10-09T10:10:01.14445601Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"github.com/system-inc/adamic/internal/fuzz.(*generator).shareCut(0x24035bdcfb30)\n"}
+{"Time":"2026-10-09T10:10:01.144459505Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic/internal/fuzz/generate.go:1411 +0xe5\n"}
+{"Time":"2026-10-09T10:10:01.144461558Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"github.com/system-inc/adamic/internal/fuzz.(*generator).sharedSliceProbe(0x24035bdcfb30)\n"}
+{"Time":"2026-10-09T10:10:01.144482459Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic/internal/fuzz/generate.go:1509 +0x50\n"}
+{"Time":"2026-10-09T10:10:01.144484613Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"github.com/system-inc/adamic/internal/fuzz.(*generator).program(0x24035bdcfb30)\n"}
+{"Time":"2026-10-09T10:10:01.144495769Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic/internal/fuzz/generate.go:273 +0x205e\n"}
+{"Time":"2026-10-09T10:10:01.144498123Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"github.com/system-inc/adamic/internal/fuzz.GenerateFeatures(0x1, {0x0, 0x0, 0x24035be05bf0?}, {0x0, 0x0, 0xd?})\n"}
+{"Time":"2026-10-09T10:10:01.14450314Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic/internal/fuzz/generate.go:90 +0x228\n"}
+{"Time":"2026-10-09T10:10:01.144504963Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"github.com/system-inc/adamic/internal/fuzz.GenerateWithout(0x1, {0x0, 0x0, 0x0})\n"}
+{"Time":"2026-10-09T10:10:01.144507156Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic/internal/fuzz/generate.go:74 +0x71\n"}
+{"Time":"2026-10-09T10:10:01.144509039Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"github.com/system-inc/adamic/internal/fuzz.Generate(0x1)\n"}
+{"Time":"2026-10-09T10:10:01.144510922Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic/internal/fuzz/generate.go:30 +0x54\n"}
+{"Time":"2026-10-09T10:10:01.144512854Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"github.com/system-inc/adamic/internal/fuzz.TestOwnershipShapes(0x24035c120fc8)\n"}
+{"Time":"2026-10-09T10:10:01.144517171Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic/internal/fuzz/fuzz_test.go:227 +0x257\n"}
+{"Time":"2026-10-09T10:10:01.144519114Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"testing.tRunner(0x24035c120fc8, 0x1d1ffd8)\n"}
+{"Time":"2026-10-09T10:10:01.144521026Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T10:10:01.144522769Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T10:10:01.144524892Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T10:10:01.144661705Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Elapsed":0}
+{"Time":"2026-10-09T10:10:01.144677398Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.009s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:10:01.144686621Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.01}

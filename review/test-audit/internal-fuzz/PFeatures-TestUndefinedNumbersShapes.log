@@ -1,0 +1,29 @@
+{"Time":"2026-10-09T10:07:18.744634485Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:07:18.752719392Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes"}
+{"Time":"2026-10-09T10:07:18.752811268Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"=== RUN   TestUndefinedNumbersShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:18.752842574Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"=== PAUSE TestUndefinedNumbersShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:18.752845028Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes"}
+{"Time":"2026-10-09T10:07:18.752847411Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes"}
+{"Time":"2026-10-09T10:07:18.752848953Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"=== CONT  TestUndefinedNumbersShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:18.752856725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"--- FAIL: TestUndefinedNumbersShapes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:18.754926988Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T10:07:18.754937994Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0xc476be]\n"}
+{"Time":"2026-10-09T10:07:18.754940067Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"\n"}
+{"Time":"2026-10-09T10:07:18.75494224Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"goroutine 8 [running]:\n"}
+{"Time":"2026-10-09T10:07:18.754946456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"testing.tRunner.func1.2({0x1c75dc0, 0x1d81610})\n"}
+{"Time":"2026-10-09T10:07:18.754958414Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T10:07:18.754960557Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T10:07:18.75496261Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T10:07:18.754964473Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"panic({0x1c75dc0?, 0x1d81610?})\n"}
+{"Time":"2026-10-09T10:07:18.754968129Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T10:07:18.754973426Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"github.com/system-inc/adamic/internal/fuzz.(*Program).Source(0x1?)\n"}
+{"Time":"2026-10-09T10:07:18.754984032Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"\t/workspace/adamic/internal/fuzz/program.go:126 +0x1e\n"}
+{"Time":"2026-10-09T10:07:18.754986386Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"github.com/system-inc/adamic/internal/fuzz.TestUndefinedNumbersShapes(0xba1623b0d88)\n"}
+{"Time":"2026-10-09T10:07:18.75499628Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"\t/workspace/adamic/internal/fuzz/undefined_numbers_test.go:25 +0x65\n"}
+{"Time":"2026-10-09T10:07:18.754998684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"testing.tRunner(0xba1623b0d88, 0x1d20008)\n"}
+{"Time":"2026-10-09T10:07:18.755000737Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T10:07:18.75500267Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T10:07:18.755004592Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T10:07:18.755127129Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Elapsed":0}
+{"Time":"2026-10-09T10:07:18.755166097Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.010s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:18.7551751Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.011}

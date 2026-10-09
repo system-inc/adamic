@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T10:07:46.674050343Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:07:46.68124576Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T10:07:46.681346028Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== RUN   TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:46.681390654Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== PAUSE TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:46.681396823Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T10:07:46.681400689Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T10:07:46.681402552Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== CONT  TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:46.693823229Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"--- PASS: TestSharedSliceCutsShare (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:46.6938441Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Elapsed":0.01}
+{"Time":"2026-10-09T10:07:46.693861515Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:46.693905976Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"ok  \tgithub.com/system-inc/adamic/internal/fuzz\t0.019s\n"}
+{"Time":"2026-10-09T10:07:46.693927598Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.02}

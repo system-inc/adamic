@@ -1,0 +1,29 @@
+{"Time":"2026-10-09T10:06:22.68148892Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:06:22.692355112Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower"}
+{"Time":"2026-10-09T10:06:22.692453147Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"=== RUN   TestOverridesShapesAndLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:22.692472205Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"=== PAUSE TestOverridesShapesAndLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:22.692474469Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower"}
+{"Time":"2026-10-09T10:06:22.692476852Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower"}
+{"Time":"2026-10-09T10:06:22.692478435Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"=== CONT  TestOverridesShapesAndLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:22.692487077Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"--- FAIL: TestOverridesShapesAndLower (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:22.69459744Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T10:06:22.69460445Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0xc476be]\n"}
+{"Time":"2026-10-09T10:06:22.694606393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"\n"}
+{"Time":"2026-10-09T10:06:22.694609337Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"goroutine 21 [running]:\n"}
+{"Time":"2026-10-09T10:06:22.694612462Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"testing.tRunner.func1.2({0x1c75dc0, 0x1d81610})\n"}
+{"Time":"2026-10-09T10:06:22.694614455Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T10:06:22.694616658Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T10:06:22.694618771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T10:06:22.694620464Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"panic({0x1c75dc0?, 0x1d81610?})\n"}
+{"Time":"2026-10-09T10:06:22.69462492Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T10:06:22.694634394Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"github.com/system-inc/adamic/internal/fuzz.(*Program).Source(0x0?)\n"}
+{"Time":"2026-10-09T10:06:22.694670167Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"\t/workspace/adamic/internal/fuzz/program.go:126 +0x1e\n"}
+{"Time":"2026-10-09T10:06:22.694673672Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"github.com/system-inc/adamic/internal/fuzz.TestOverridesShapesAndLower(0x2ce6708acd88)\n"}
+{"Time":"2026-10-09T10:06:22.694686231Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"\t/workspace/adamic/internal/fuzz/overrides_test.go:25 +0x1ce\n"}
+{"Time":"2026-10-09T10:06:22.694688324Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"testing.tRunner(0x2ce6708acd88, 0x1d1ffd0)\n"}
+{"Time":"2026-10-09T10:06:22.694690718Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T10:06:22.69469273Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T10:06:22.694702725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T10:06:22.694832728Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Elapsed":0}
+{"Time":"2026-10-09T10:06:22.694852146Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.013s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:06:22.694858766Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.013}

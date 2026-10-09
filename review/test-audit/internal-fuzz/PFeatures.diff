@@ -1,0 +1,10 @@
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -71,6 +71,7 @@
+ // GenerateFeatures makes the program a seed names with some features left out and some of OptIn
+ // put in. The same seed and the same features always make the same program.
+ func GenerateFeatures(seed uint64, without []string, with []string) *Program {
++	return nil
+ 	generator := &generator{random: rand.New(rand.NewPCG(seed, 0x61646d6963)), without: map[string]bool{}, with: map[string]bool{}, seed: seed}
+ 	for _, feature := range without {
+ 		generator.without[feature] = true

@@ -1,0 +1,29 @@
+{"Time":"2026-10-09T10:05:35.776594146Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:05:35.783228572Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear"}
+{"Time":"2026-10-09T10:05:35.783283133Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"=== RUN   TestOctoberFeaturesAppear\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:35.783307789Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"=== PAUSE TestOctoberFeaturesAppear\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:35.783310132Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear"}
+{"Time":"2026-10-09T10:05:35.783312496Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear"}
+{"Time":"2026-10-09T10:05:35.783314118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"=== CONT  TestOctoberFeaturesAppear\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:35.783320408Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"--- FAIL: TestOctoberFeaturesAppear (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:35.785460444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T10:05:35.785468646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0xc476be]\n"}
+{"Time":"2026-10-09T10:05:35.785471801Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"\n"}
+{"Time":"2026-10-09T10:05:35.785474255Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"goroutine 21 [running]:\n"}
+{"Time":"2026-10-09T10:05:35.78547797Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"testing.tRunner.func1.2({0x1c75dc0, 0x1d81610})\n"}
+{"Time":"2026-10-09T10:05:35.785480514Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T10:05:35.785482276Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T10:05:35.785484159Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T10:05:35.785485962Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"panic({0x1c75dc0?, 0x1d81610?})\n"}
+{"Time":"2026-10-09T10:05:35.785499642Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T10:05:35.785502076Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"github.com/system-inc/adamic/internal/fuzz.(*Program).Source(0x1?)\n"}
+{"Time":"2026-10-09T10:05:35.785503958Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"\t/workspace/adamic/internal/fuzz/program.go:126 +0x1e\n"}
+{"Time":"2026-10-09T10:05:35.785506112Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"github.com/system-inc/adamic/internal/fuzz.TestOctoberFeaturesAppear(0x37c9f84a4d88)\n"}
+{"Time":"2026-10-09T10:05:35.785514093Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"\t/workspace/adamic/internal/fuzz/fuzz_test.go:111 +0x185\n"}
+{"Time":"2026-10-09T10:05:35.785516116Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"testing.tRunner(0x37c9f84a4d88, 0x1d1ffc0)\n"}
+{"Time":"2026-10-09T10:05:35.785517979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T10:05:35.785519742Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T10:05:35.785521695Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T10:05:35.785622484Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Elapsed":0}
+{"Time":"2026-10-09T10:05:35.785642494Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.009s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:35.785649504Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.009}

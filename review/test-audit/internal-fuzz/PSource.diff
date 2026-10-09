@@ -1,0 +1,10 @@
+--- a/internal/fuzz/source.go
++++ b/internal/fuzz/source.go
+@@ -69,6 +69,7 @@
+ }
+ 
+ func newSourceTree(path string, text string) *sourceTree {
++	return nil
+ 	return &sourceTree{path: path, text: text}
+ }
+ 

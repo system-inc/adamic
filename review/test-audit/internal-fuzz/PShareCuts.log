@@ -1,0 +1,108 @@
+{"Time":"2026-10-09T10:09:49.029494424Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:09:49.036540529Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram"}
+{"Time":"2026-10-09T10:09:49.036605465Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"=== RUN   TestOneSeedOneProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036627567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"=== PAUSE TestOneSeedOneProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036629951Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram"}
+{"Time":"2026-10-09T10:09:49.036634368Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestGeneratedProgramsCheckAndLower"}
+{"Time":"2026-10-09T10:09:49.036638223Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestGeneratedProgramsCheckAndLower","Output":"=== RUN   TestGeneratedProgramsCheckAndLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.03664259Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestGeneratedProgramsCheckAndLower","Output":"=== PAUSE TestGeneratedProgramsCheckAndLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036644292Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestGeneratedProgramsCheckAndLower"}
+{"Time":"2026-10-09T10:09:49.036647417Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestRegexProgramsPassTheChecker"}
+{"Time":"2026-10-09T10:09:49.036649149Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestRegexProgramsPassTheChecker","Output":"=== RUN   TestRegexProgramsPassTheChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036652805Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestRegexProgramsPassTheChecker","Output":"=== PAUSE TestRegexProgramsPassTheChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036654337Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestRegexProgramsPassTheChecker"}
+{"Time":"2026-10-09T10:09:49.03665612Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear"}
+{"Time":"2026-10-09T10:09:49.036658063Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"=== RUN   TestOctoberFeaturesAppear\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036660276Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"=== PAUSE TestOctoberFeaturesAppear\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036661808Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear"}
+{"Time":"2026-10-09T10:09:49.036663791Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails"}
+{"Time":"2026-10-09T10:09:49.036665424Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails","Output":"=== RUN   TestShrinkKeepsOnlyWhatFails\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036668628Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails","Output":"=== PAUSE TestShrinkKeepsOnlyWhatFails\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036670461Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails"}
+{"Time":"2026-10-09T10:09:49.036672083Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T10:09:49.036673435Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== RUN   TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036680987Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== PAUSE TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036682629Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T10:09:49.036684592Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes"}
+{"Time":"2026-10-09T10:09:49.036686044Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"=== RUN   TestOwnershipShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036689199Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"=== PAUSE TestOwnershipShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036690731Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes"}
+{"Time":"2026-10-09T10:09:49.036692574Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine"}
+{"Time":"2026-10-09T10:09:49.036693896Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine","Output":"=== RUN   TestJudgeReadsThePanicLine\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036696159Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine","Output":"=== PAUSE TestJudgeReadsThePanicLine\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036697952Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine"}
+{"Time":"2026-10-09T10:09:49.036702749Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower"}
+{"Time":"2026-10-09T10:09:49.036704471Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"=== RUN   TestOverridesShapesAndLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036707596Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"=== PAUSE TestOverridesShapesAndLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036709228Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower"}
+{"Time":"2026-10-09T10:09:49.036711472Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems"}
+{"Time":"2026-10-09T10:09:49.036713495Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"=== RUN   TestSourceTreeCutsAtItems\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036716319Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"=== PAUSE TestSourceTreeCutsAtItems\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036717791Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems"}
+{"Time":"2026-10-09T10:09:49.036719584Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceKeepsTheSignature"}
+{"Time":"2026-10-09T10:09:49.036720886Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceKeepsTheSignature","Output":"=== RUN   TestReduceKeepsTheSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036722929Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceKeepsTheSignature","Output":"=== PAUSE TestReduceKeepsTheSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036724431Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceKeepsTheSignature"}
+{"Time":"2026-10-09T10:09:49.036728347Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper"}
+{"Time":"2026-10-09T10:09:49.036730289Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper","Output":"=== RUN   TestExecuteCPUHelper\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036739343Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper","Output":"--- PASS: TestExecuteCPUHelper (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036741536Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper","Elapsed":0}
+{"Time":"2026-10-09T10:09:49.036751561Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit"}
+{"Time":"2026-10-09T10:09:49.036753203Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Output":"=== RUN   TestExecuteCPULimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036755787Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Output":"=== PAUSE TestExecuteCPULimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036757289Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit"}
+{"Time":"2026-10-09T10:09:49.036759623Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary"}
+{"Time":"2026-10-09T10:09:49.036761285Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary","Output":"=== RUN   TestFuzzerSharesRuntimeLibrary\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036763388Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary","Output":"=== PAUSE TestFuzzerSharesRuntimeLibrary\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036764911Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary"}
+{"Time":"2026-10-09T10:09:49.036766874Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes"}
+{"Time":"2026-10-09T10:09:49.036768436Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"=== RUN   TestUndefinedNumbersShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036770509Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"=== PAUSE TestUndefinedNumbersShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036772131Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes"}
+{"Time":"2026-10-09T10:09:49.036774255Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram"}
+{"Time":"2026-10-09T10:09:49.036775657Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"=== CONT  TestOneSeedOneProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.036928383Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine"}
+{"Time":"2026-10-09T10:09:49.036933861Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine","Output":"=== CONT  TestJudgeReadsThePanicLine\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.037514219Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails"}
+{"Time":"2026-10-09T10:09:49.03752141Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails","Output":"=== CONT  TestShrinkKeepsOnlyWhatFails\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.037615019Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes"}
+{"Time":"2026-10-09T10:09:49.037617602Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"=== CONT  TestOwnershipShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.037731851Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine","Output":"--- PASS: TestJudgeReadsThePanicLine (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.037734515Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine","Elapsed":0}
+{"Time":"2026-10-09T10:09:49.037737229Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestRegexProgramsPassTheChecker"}
+{"Time":"2026-10-09T10:09:49.037739222Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestRegexProgramsPassTheChecker","Output":"=== CONT  TestRegexProgramsPassTheChecker\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.037802015Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestRegexProgramsPassTheChecker/seeds-001-005"}
+{"Time":"2026-10-09T10:09:49.03780526Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestRegexProgramsPassTheChecker/seeds-001-005","Output":"=== RUN   TestRegexProgramsPassTheChecker/seeds-001-005\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.037836516Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"--- FAIL: TestOneSeedOneProgram (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.041134886Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"panic: invalid argument to IntN [recovered, repanicked]\n"}
+{"Time":"2026-10-09T10:09:49.041146333Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\n"}
+{"Time":"2026-10-09T10:09:49.041148577Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"goroutine 8 [running]:\n"}
+{"Time":"2026-10-09T10:09:49.041153214Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"testing.tRunner.func1.2({0x1c5cc90, 0x12ce6f0})\n"}
+{"Time":"2026-10-09T10:09:49.041155707Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T10:09:49.041158211Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T10:09:49.041160254Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T10:09:49.041162748Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"panic({0x1c5cc90?, 0x12ce6f0?})\n"}
+{"Time":"2026-10-09T10:09:49.041164811Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T10:09:49.041166623Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"math/rand/v2.(*Rand).IntN(...)\n"}
+{"Time":"2026-10-09T10:09:49.041168586Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/math/rand/v2/rand.go:196\n"}
+{"Time":"2026-10-09T10:09:49.041171911Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"github.com/system-inc/adamic/internal/fuzz.(*generator).shareCut(0x23ecbb531df8)\n"}
+{"Time":"2026-10-09T10:09:49.041193243Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic/internal/fuzz/generate.go:1411 +0xe5\n"}
+{"Time":"2026-10-09T10:09:49.041195686Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"github.com/system-inc/adamic/internal/fuzz.(*generator).sharedSliceProbe(0x23ecbb531df8)\n"}
+{"Time":"2026-10-09T10:09:49.041197649Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic/internal/fuzz/generate.go:1509 +0x50\n"}
+{"Time":"2026-10-09T10:09:49.041199652Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"github.com/system-inc/adamic/internal/fuzz.(*generator).program(0x23ecbb531df8)\n"}
+{"Time":"2026-10-09T10:09:49.041201495Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic/internal/fuzz/generate.go:273 +0x205e\n"}
+{"Time":"2026-10-09T10:09:49.041203458Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"github.com/system-inc/adamic/internal/fuzz.GenerateFeatures(0x1, {0x0, 0x0, 0x23ecbb129eb8?}, {0x0, 0x0, 0xd?})\n"}
+{"Time":"2026-10-09T10:09:49.041205591Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic/internal/fuzz/generate.go:90 +0x228\n"}
+{"Time":"2026-10-09T10:09:49.041207444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"github.com/system-inc/adamic/internal/fuzz.GenerateWithout(0x1, {0x0, 0x0, 0x0})\n"}
+{"Time":"2026-10-09T10:09:49.041209397Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic/internal/fuzz/generate.go:74 +0x71\n"}
+{"Time":"2026-10-09T10:09:49.041211149Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"github.com/system-inc/adamic/internal/fuzz.Generate(0x1)\n"}
+{"Time":"2026-10-09T10:09:49.041213002Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic/internal/fuzz/generate.go:30 +0x54\n"}
+{"Time":"2026-10-09T10:09:49.041214835Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"github.com/system-inc/adamic/internal/fuzz.TestOneSeedOneProgram(0x23ecbb446d88)\n"}
+{"Time":"2026-10-09T10:09:49.041216938Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic/internal/fuzz/fuzz_test.go:18 +0x3f\n"}
+{"Time":"2026-10-09T10:09:49.041218761Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"testing.tRunner(0x23ecbb446d88, 0x1d1ffc8)\n"}
+{"Time":"2026-10-09T10:09:49.041220683Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T10:09:49.041222476Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T10:09:49.041224329Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T10:09:49.041343916Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Elapsed":0}
+{"Time":"2026-10-09T10:09:49.041361322Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.011s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:49.041386288Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.012}

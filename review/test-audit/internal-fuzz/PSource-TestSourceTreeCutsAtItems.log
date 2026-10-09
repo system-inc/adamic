@@ -1,0 +1,31 @@
+{"Time":"2026-10-09T10:07:55.196826031Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:07:55.203798051Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems"}
+{"Time":"2026-10-09T10:07:55.203893773Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"=== RUN   TestSourceTreeCutsAtItems\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:55.203929135Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"=== PAUSE TestSourceTreeCutsAtItems\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:55.203931308Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems"}
+{"Time":"2026-10-09T10:07:55.203933531Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems"}
+{"Time":"2026-10-09T10:07:55.203935444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"=== CONT  TestSourceTreeCutsAtItems\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:55.203942374Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"--- FAIL: TestSourceTreeCutsAtItems (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:55.205992427Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T10:07:55.206002522Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x20 pc=0xc532bd]\n"}
+{"Time":"2026-10-09T10:07:55.206004455Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"\n"}
+{"Time":"2026-10-09T10:07:55.206006709Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"goroutine 8 [running]:\n"}
+{"Time":"2026-10-09T10:07:55.206010354Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"testing.tRunner.func1.2({0x1c75dc0, 0x1d81610})\n"}
+{"Time":"2026-10-09T10:07:55.206012687Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T10:07:55.20601464Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T10:07:55.206017505Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T10:07:55.206019447Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"panic({0x1c75dc0?, 0x1d81610?})\n"}
+{"Time":"2026-10-09T10:07:55.206022963Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T10:07:55.206024946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"github.com/system-inc/adamic/internal/fuzz.(*sourceTree).parse(0xc86417?)\n"}
+{"Time":"2026-10-09T10:07:55.206027269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"\t/workspace/adamic/internal/fuzz/source.go:158 +0x1d\n"}
+{"Time":"2026-10-09T10:07:55.206029342Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"github.com/system-inc/adamic/internal/fuzz.(*sourceTree).Lists(...)\n"}
+{"Time":"2026-10-09T10:07:55.206038516Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"\t/workspace/adamic/internal/fuzz/source.go:322\n"}
+{"Time":"2026-10-09T10:07:55.206040699Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"github.com/system-inc/adamic/internal/fuzz.TestSourceTreeCutsAtItems(0x41219dead88)\n"}
+{"Time":"2026-10-09T10:07:55.206042481Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"\t/workspace/adamic/internal/fuzz/reduce_test.go:14 +0xae\n"}
+{"Time":"2026-10-09T10:07:55.206044344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"testing.tRunner(0x41219dead88, 0x1d20000)\n"}
+{"Time":"2026-10-09T10:07:55.206046307Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T10:07:55.206048951Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T10:07:55.206050944Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T10:07:55.206129901Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Elapsed":0}
+{"Time":"2026-10-09T10:07:55.206158994Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.009s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:07:55.206171112Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.009}

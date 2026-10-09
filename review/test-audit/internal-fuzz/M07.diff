@@ -1,0 +1,11 @@
+--- a/internal/fuzz/run.go
++++ b/internal/fuzz/run.go
+@@ -321,7 +321,7 @@
+ 		run.ExitCode = command.ProcessState.ExitCode()
+ 		if status, ok := command.ProcessState.Sys().(syscall.WaitStatus); ok && status.Signaled() {
+ 			cpu := command.ProcessState.UserTime() + command.ProcessState.SystemTime()
+-			if status.Signal() == syscall.SIGXCPU || (status.Signal() == syscall.SIGKILL && cpu >= seconds*time.Second) {
++			if status.Signal() == syscall.SIGTERM || (status.Signal() == syscall.SIGKILL && cpu >= seconds*time.Second) {
+ 				run.TimedOut = true
+ 			}
+ 		}

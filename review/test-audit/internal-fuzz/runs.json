@@ -1,0 +1,828 @@
+[
+  {
+    "id": "M01",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M01.log",
+    "status": 1,
+    "wall": 17.006298949999973
+  },
+  {
+    "id": "M02",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M02.log",
+    "status": 1,
+    "wall": 9.629847528000028
+  },
+  {
+    "id": "M03",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M03.log",
+    "status": 1,
+    "wall": 11.685648867000054
+  },
+  {
+    "id": "M04",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M04.log",
+    "status": 1,
+    "wall": 12.214834871999983
+  },
+  {
+    "id": "M05",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M05.log",
+    "status": 0,
+    "wall": 12.37057186100003
+  },
+  {
+    "id": "M06",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M06.log",
+    "status": 1,
+    "wall": 12.482051653999974
+  },
+  {
+    "id": "M07",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M07.log",
+    "status": 1,
+    "wall": 12.16612770900008
+  },
+  {
+    "id": "M08",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M08.log",
+    "status": 1,
+    "wall": 12.258749513999987
+  },
+  {
+    "id": "M09",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M09.log",
+    "status": 1,
+    "wall": 12.705602302999978
+  },
+  {
+    "id": "M10",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M10.log",
+    "status": 1,
+    "wall": 9.558163826000055
+  },
+  {
+    "id": "M11",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M11.log",
+    "status": 1,
+    "wall": 11.578578290999985
+  },
+  {
+    "id": "M12",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M12.log",
+    "status": 0,
+    "wall": 12.139472367999929
+  },
+  {
+    "id": "M13",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M13.log",
+    "status": 1,
+    "wall": 12.579648880000036
+  },
+  {
+    "id": "M14",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M14.log",
+    "status": 0,
+    "wall": 12.509389667999926
+  },
+  {
+    "id": "M15",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M15.log",
+    "status": 1,
+    "wall": 16.202793187999987
+  },
+  {
+    "id": "M16",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/M16.log",
+    "status": 0,
+    "wall": 12.42164540500005
+  },
+  {
+    "id": "PGenerate",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PGenerate.log",
+    "status": 1,
+    "wall": 1.7015368099999932
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestOneSeedOneProgram$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestOneSeedOneProgram.log",
+    "status": 1,
+    "wall": 1.6920709150000448
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestGeneratedProgramsCheckAndLower$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestGeneratedProgramsCheckAndLower.log",
+    "status": 1,
+    "wall": 1.7375004290000788
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestRegexProgramsPassTheChecker$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestRegexProgramsPassTheChecker.log",
+    "status": 1,
+    "wall": 1.765826279999942
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestOctoberFeaturesAppear$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestOctoberFeaturesAppear.log",
+    "status": 1,
+    "wall": 1.8671662379999816
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestShrinkKeepsOnlyWhatFails$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestShrinkKeepsOnlyWhatFails.log",
+    "status": 1,
+    "wall": 1.7552637329999925
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestSharedSliceCutsShare$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestSharedSliceCutsShare.log",
+    "status": 1,
+    "wall": 1.6977356390000296
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestOwnershipShapes$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestOwnershipShapes.log",
+    "status": 1,
+    "wall": 1.8083737509999764
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestJudgeReadsThePanicLine$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestJudgeReadsThePanicLine.log",
+    "status": 0,
+    "wall": 1.751619269999992
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestOverridesShapesAndLower$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestOverridesShapesAndLower.log",
+    "status": 0,
+    "wall": 2.5056183960000453
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestSourceTreeCutsAtItems$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestSourceTreeCutsAtItems.log",
+    "status": 0,
+    "wall": 1.786288433999971
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestReduceKeepsTheSignature$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestReduceKeepsTheSignature.log",
+    "status": 0,
+    "wall": 4.185047655999938
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestExecuteCPUHelper$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestExecuteCPUHelper.log",
+    "status": 0,
+    "wall": 1.6554500649999682
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestExecuteCPULimit$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestExecuteCPULimit.log",
+    "status": 0,
+    "wall": 6.618872292999981
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestFuzzerSharesRuntimeLibrary$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestFuzzerSharesRuntimeLibrary.log",
+    "status": 0,
+    "wall": 4.046905021000043
+  },
+  {
+    "id": "PGenerate",
+    "regex": "^TestUndefinedNumbersShapes$",
+    "log": "review/test-audit/internal-fuzz/PGenerate-TestUndefinedNumbersShapes.log",
+    "status": 1,
+    "wall": 1.7354265300000407
+  },
+  {
+    "id": "PWithout",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PWithout.log",
+    "status": 1,
+    "wall": 1.727380380999989
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestOneSeedOneProgram$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestOneSeedOneProgram.log",
+    "status": 1,
+    "wall": 1.8147331249999752
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestGeneratedProgramsCheckAndLower$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestGeneratedProgramsCheckAndLower.log",
+    "status": 1,
+    "wall": 1.7726551719999861
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestRegexProgramsPassTheChecker$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestRegexProgramsPassTheChecker.log",
+    "status": 1,
+    "wall": 1.7334979710000198
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestOctoberFeaturesAppear$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestOctoberFeaturesAppear.log",
+    "status": 1,
+    "wall": 1.6537374230000523
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestShrinkKeepsOnlyWhatFails$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestShrinkKeepsOnlyWhatFails.log",
+    "status": 1,
+    "wall": 1.6388607029999775
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestSharedSliceCutsShare$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestSharedSliceCutsShare.log",
+    "status": 1,
+    "wall": 1.8264265660000092
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestOwnershipShapes$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestOwnershipShapes.log",
+    "status": 1,
+    "wall": 1.6773911899999803
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestJudgeReadsThePanicLine$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestJudgeReadsThePanicLine.log",
+    "status": 0,
+    "wall": 1.7142901229999552
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestOverridesShapesAndLower$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestOverridesShapesAndLower.log",
+    "status": 1,
+    "wall": 1.7926887059999217
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestSourceTreeCutsAtItems$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestSourceTreeCutsAtItems.log",
+    "status": 0,
+    "wall": 1.836578325000005
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestReduceKeepsTheSignature$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestReduceKeepsTheSignature.log",
+    "status": 0,
+    "wall": 4.421660772999985
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestExecuteCPUHelper$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestExecuteCPUHelper.log",
+    "status": 0,
+    "wall": 1.7460332850000668
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestExecuteCPULimit$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestExecuteCPULimit.log",
+    "status": 0,
+    "wall": 5.671312750000084
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestFuzzerSharesRuntimeLibrary$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestFuzzerSharesRuntimeLibrary.log",
+    "status": 0,
+    "wall": 4.121963788000016
+  },
+  {
+    "id": "PWithout",
+    "regex": "^TestUndefinedNumbersShapes$",
+    "log": "review/test-audit/internal-fuzz/PWithout-TestUndefinedNumbersShapes.log",
+    "status": 1,
+    "wall": 1.7718817459999627
+  },
+  {
+    "id": "PFeatures",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PFeatures.log",
+    "status": 1,
+    "wall": 1.7073834099999203
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestOneSeedOneProgram$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestOneSeedOneProgram.log",
+    "status": 1,
+    "wall": 1.765187640000022
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestGeneratedProgramsCheckAndLower$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestGeneratedProgramsCheckAndLower.log",
+    "status": 1,
+    "wall": 1.8339731639999854
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestRegexProgramsPassTheChecker$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestRegexProgramsPassTheChecker.log",
+    "status": 1,
+    "wall": 1.7370893560000695
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestOctoberFeaturesAppear$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestOctoberFeaturesAppear.log",
+    "status": 1,
+    "wall": 1.7008091190000414
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestShrinkKeepsOnlyWhatFails$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestShrinkKeepsOnlyWhatFails.log",
+    "status": 1,
+    "wall": 1.6826351900000418
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestSharedSliceCutsShare$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestSharedSliceCutsShare.log",
+    "status": 1,
+    "wall": 1.7022189600000956
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestOwnershipShapes$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestOwnershipShapes.log",
+    "status": 1,
+    "wall": 1.6220366950000198
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestJudgeReadsThePanicLine$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestJudgeReadsThePanicLine.log",
+    "status": 0,
+    "wall": 1.662698033999959
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestOverridesShapesAndLower$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestOverridesShapesAndLower.log",
+    "status": 1,
+    "wall": 1.727679266999985
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestSourceTreeCutsAtItems$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestSourceTreeCutsAtItems.log",
+    "status": 0,
+    "wall": 1.8014365679999855
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestReduceKeepsTheSignature$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestReduceKeepsTheSignature.log",
+    "status": 0,
+    "wall": 4.515108510000005
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestExecuteCPUHelper$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestExecuteCPUHelper.log",
+    "status": 0,
+    "wall": 1.7095066890000226
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestExecuteCPULimit$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestExecuteCPULimit.log",
+    "status": 0,
+    "wall": 5.447120802000086
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestFuzzerSharesRuntimeLibrary$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestFuzzerSharesRuntimeLibrary.log",
+    "status": 0,
+    "wall": 4.109488014000021
+  },
+  {
+    "id": "PFeatures",
+    "regex": "^TestUndefinedNumbersShapes$",
+    "log": "review/test-audit/internal-fuzz/PFeatures-TestUndefinedNumbersShapes.log",
+    "status": 1,
+    "wall": 1.7535490140001002
+  },
+  {
+    "id": "PShrink",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PShrink.log",
+    "status": 1,
+    "wall": 12.466122164000012
+  },
+  {
+    "id": "PSource",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PSource.log",
+    "status": 1,
+    "wall": 1.737694233999946
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestOneSeedOneProgram$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestOneSeedOneProgram.log",
+    "status": 0,
+    "wall": 1.9604435030000786
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestGeneratedProgramsCheckAndLower$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestGeneratedProgramsCheckAndLower.log",
+    "status": 0,
+    "wall": 4.378801743000054
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestRegexProgramsPassTheChecker$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestRegexProgramsPassTheChecker.log",
+    "status": 0,
+    "wall": 2.201445159000059
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestOctoberFeaturesAppear$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestOctoberFeaturesAppear.log",
+    "status": 0,
+    "wall": 1.772834276000026
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestShrinkKeepsOnlyWhatFails$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestShrinkKeepsOnlyWhatFails.log",
+    "status": 0,
+    "wall": 1.669895796999981
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestSharedSliceCutsShare$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestSharedSliceCutsShare.log",
+    "status": 0,
+    "wall": 1.745787230000019
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestOwnershipShapes$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestOwnershipShapes.log",
+    "status": 0,
+    "wall": 2.6128145850000237
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestJudgeReadsThePanicLine$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestJudgeReadsThePanicLine.log",
+    "status": 0,
+    "wall": 1.7535733959999789
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestOverridesShapesAndLower$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestOverridesShapesAndLower.log",
+    "status": 0,
+    "wall": 2.4725303719999374
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestSourceTreeCutsAtItems$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestSourceTreeCutsAtItems.log",
+    "status": 1,
+    "wall": 1.6707348769999726
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestReduceKeepsTheSignature$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestReduceKeepsTheSignature.log",
+    "status": 1,
+    "wall": 3.7830072780000137
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestExecuteCPUHelper$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestExecuteCPUHelper.log",
+    "status": 0,
+    "wall": 1.8053603930000008
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestExecuteCPULimit$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestExecuteCPULimit.log",
+    "status": 0,
+    "wall": 6.219270718999951
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestFuzzerSharesRuntimeLibrary$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestFuzzerSharesRuntimeLibrary.log",
+    "status": 0,
+    "wall": 3.943289907999997
+  },
+  {
+    "id": "PSource",
+    "regex": "^TestUndefinedNumbersShapes$",
+    "log": "review/test-audit/internal-fuzz/PSource-TestUndefinedNumbersShapes.log",
+    "status": 0,
+    "wall": 3.330094944999928
+  },
+  {
+    "id": "PReduce",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PReduce.log",
+    "status": 1,
+    "wall": 12.434187597000005
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestOneSeedOneProgram$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestOneSeedOneProgram.log",
+    "status": 0,
+    "wall": 1.7983193070000425
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestGeneratedProgramsCheckAndLower$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestGeneratedProgramsCheckAndLower.log",
+    "status": 0,
+    "wall": 4.139121860999921
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestRegexProgramsPassTheChecker$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestRegexProgramsPassTheChecker.log",
+    "status": 0,
+    "wall": 2.270263626999963
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestOctoberFeaturesAppear$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestOctoberFeaturesAppear.log",
+    "status": 0,
+    "wall": 1.8023678289999907
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestShrinkKeepsOnlyWhatFails$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestShrinkKeepsOnlyWhatFails.log",
+    "status": 0,
+    "wall": 1.7547995259999425
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestSharedSliceCutsShare$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestSharedSliceCutsShare.log",
+    "status": 0,
+    "wall": 1.7052600350000375
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestOwnershipShapes$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestOwnershipShapes.log",
+    "status": 0,
+    "wall": 2.553545406000012
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestJudgeReadsThePanicLine$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestJudgeReadsThePanicLine.log",
+    "status": 0,
+    "wall": 1.7202399589999686
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestOverridesShapesAndLower$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestOverridesShapesAndLower.log",
+    "status": 0,
+    "wall": 2.492703375000019
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestSourceTreeCutsAtItems$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestSourceTreeCutsAtItems.log",
+    "status": 0,
+    "wall": 1.7864828489999809
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestReduceKeepsTheSignature$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestReduceKeepsTheSignature.log",
+    "status": 1,
+    "wall": 3.912040069999989
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestExecuteCPUHelper$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestExecuteCPUHelper.log",
+    "status": 0,
+    "wall": 1.5902745920000143
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestExecuteCPULimit$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestExecuteCPULimit.log",
+    "status": 0,
+    "wall": 5.9428051780000715
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestFuzzerSharesRuntimeLibrary$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestFuzzerSharesRuntimeLibrary.log",
+    "status": 0,
+    "wall": 4.130668704999948
+  },
+  {
+    "id": "PReduce",
+    "regex": "^TestUndefinedNumbersShapes$",
+    "log": "review/test-audit/internal-fuzz/PReduce-TestUndefinedNumbersShapes.log",
+    "status": 0,
+    "wall": 3.5479711960000486
+  },
+  {
+    "id": "PJudge",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PJudge.log",
+    "status": 1,
+    "wall": 15.61392494100005
+  },
+  {
+    "id": "PExecute",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PExecute.log",
+    "status": 1,
+    "wall": 11.235337696999977
+  },
+  {
+    "id": "PTry",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PTry.log",
+    "status": 1,
+    "wall": 12.509587636999981
+  },
+  {
+    "id": "PShareCuts",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PShareCuts.log",
+    "status": 1,
+    "wall": 1.7912048420000701
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestOneSeedOneProgram$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestOneSeedOneProgram.log",
+    "status": 1,
+    "wall": 1.8077993869999318
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestGeneratedProgramsCheckAndLower$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestGeneratedProgramsCheckAndLower.log",
+    "status": 1,
+    "wall": 1.7284446240000761
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestRegexProgramsPassTheChecker$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestRegexProgramsPassTheChecker.log",
+    "status": 1,
+    "wall": 1.6418648940000367
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestOctoberFeaturesAppear$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestOctoberFeaturesAppear.log",
+    "status": 1,
+    "wall": 1.625984138999911
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestShrinkKeepsOnlyWhatFails$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestShrinkKeepsOnlyWhatFails.log",
+    "status": 1,
+    "wall": 1.783645125000021
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestSharedSliceCutsShare$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestSharedSliceCutsShare.log",
+    "status": 1,
+    "wall": 1.7639869209999688
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestOwnershipShapes$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestOwnershipShapes.log",
+    "status": 1,
+    "wall": 1.7441933000000063
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestJudgeReadsThePanicLine$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestJudgeReadsThePanicLine.log",
+    "status": 0,
+    "wall": 1.7169383959999323
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestOverridesShapesAndLower$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestOverridesShapesAndLower.log",
+    "status": 1,
+    "wall": 1.7118493170000875
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestSourceTreeCutsAtItems$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestSourceTreeCutsAtItems.log",
+    "status": 0,
+    "wall": 1.640635975000123
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestReduceKeepsTheSignature$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestReduceKeepsTheSignature.log",
+    "status": 0,
+    "wall": 4.304022711000016
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestExecuteCPUHelper$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestExecuteCPUHelper.log",
+    "status": 0,
+    "wall": 1.6710811660000218
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestExecuteCPULimit$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestExecuteCPULimit.log",
+    "status": 0,
+    "wall": 5.688587469999902
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestFuzzerSharesRuntimeLibrary$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestFuzzerSharesRuntimeLibrary.log",
+    "status": 0,
+    "wall": 4.054127804000018
+  },
+  {
+    "id": "PShareCuts",
+    "regex": "^TestUndefinedNumbersShapes$",
+    "log": "review/test-audit/internal-fuzz/PShareCuts-TestUndefinedNumbersShapes.log",
+    "status": 1,
+    "wall": 1.722580334000213
+  },
+  {
+    "id": "PSourceCut",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PSourceCut.log",
+    "status": 1,
+    "wall": 14.638893244999963
+  },
+  {
+    "id": "PPrepare",
+    "regex": ".",
+    "log": "review/test-audit/internal-fuzz/PPrepare.log",
+    "status": 1,
+    "wall": 10.438376785000173
+  }
+]

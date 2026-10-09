@@ -1,0 +1,10 @@
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -164,7 +164,6 @@
+ }
+ 
+ func (g *generator) name(prefix string) string {
+-	g.names++
+ 	return fmt.Sprintf("%s%d", prefix, g.names)
+ }
+ 

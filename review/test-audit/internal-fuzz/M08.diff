@@ -1,0 +1,11 @@
+--- a/internal/fuzz/run.go
++++ b/internal/fuzz/run.go
+@@ -269,7 +269,7 @@
+ 		return "never finished"
+ 	case expected.ExitCode != actual.ExitCode:
+ 		return "exit code differs"
+-	case !bytes.Equal(expected.Stdout, actual.Stdout):
++	case bytes.Equal(expected.Stdout, actual.Stdout):
+ 		return "stdout differs"
+ 	case !bytes.Equal(expected.Stderr, actual.Stderr):
+ 		return "stderr differs"

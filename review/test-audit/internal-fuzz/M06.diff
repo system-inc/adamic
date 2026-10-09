@@ -1,0 +1,11 @@
+--- a/internal/fuzz/run.go
++++ b/internal/fuzz/run.go
+@@ -197,7 +197,7 @@
+ 		nativeDifference = differenceBesidesStderr(outcome.Node, outcome.Native)
+ 		backendDifference = differenceBesidesStderr(outcome.Node, outcome.Backend)
+ 	}
+-	if nativeDifference != "" && backendDifference != "" && difference(outcome.Backend, outcome.Native) == "" && outcome.Native.ExitCode == 70 {
++	if nativeDifference != "" && backendDifference != "" && difference(outcome.Backend, outcome.Native) == "" && outcome.Native.ExitCode == 71 {
+ 		// Both of Adamic's backends stopped at the same place, where Node didn't stop: an inserted
+ 		// check, as long as the panic says it is one and what was printed before it is what Node
+ 		// printed.

@@ -1,0 +1,11 @@
+--- a/internal/fuzz/source.go
++++ b/internal/fuzz/source.go
+@@ -224,7 +224,7 @@
+ 	case ast.KindEnumDeclaration:
+ 		return []namedList{{node.MemberList(), true}}
+ 	case ast.KindCallExpression, ast.KindNewExpression:
+-		return []namedList{{node.ArgumentList(), true}}
++		return []namedList{{node.ArgumentList(), false}}
+ 	case ast.KindArrayLiteralExpression:
+ 		return []namedList{{node.ElementList(), true}}
+ 	case ast.KindObjectLiteralExpression:

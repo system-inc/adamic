@@ -1,0 +1,11 @@
+--- a/internal/fuzz/overrides.go
++++ b/internal/fuzz/overrides.go
+@@ -40,7 +40,7 @@
+ 	}
+ 	call := "worker.run(@e, items, callback)"
+ 	argument := text(Other, "borrowed")
+-	switch (g.seed / 10) % 5 {
++	switch (g.seed / 10) % 4 {
+ 	case 1:
+ 		argument = text(Other, "items[0] ?? "+fresh("missing"))
+ 	case 2:

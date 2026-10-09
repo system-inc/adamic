@@ -1,0 +1,11 @@
+--- a/internal/fuzz/shrink.go
++++ b/internal/fuzz/shrink.go
+@@ -19,7 +19,7 @@
+ 	reduced := reduce(&programTree{program: program.Clone()}, func(candidate Reducible) bool {
+ 		outcome := try(candidate.(*programTree).program)
+ 		return outcome.Verdict == Finding && outcome.Key == key
+-	}, 1, 3000)
++	}, 1, 0)
+ 	return reduced.(*programTree).program
+ }
+ 

@@ -1,0 +1,37 @@
+{"Time":"2026-10-09T10:05:54.614072204Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:05:54.620788606Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit"}
+{"Time":"2026-10-09T10:05:54.620854744Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Output":"=== RUN   TestExecuteCPULimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.620875645Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Output":"=== PAUSE TestExecuteCPULimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.620878139Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit"}
+{"Time":"2026-10-09T10:05:54.620880522Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit"}
+{"Time":"2026-10-09T10:05:54.620882115Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Output":"=== CONT  TestExecuteCPULimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.620885379Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite"}
+{"Time":"2026-10-09T10:05:54.62089924Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite","Output":"=== RUN   TestExecuteCPULimit/infinite\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.620905289Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite","Output":"=== PAUSE TestExecuteCPULimit/infinite\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.620907442Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite"}
+{"Time":"2026-10-09T10:05:54.620909615Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU"}
+{"Time":"2026-10-09T10:05:54.620910927Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU","Output":"=== RUN   TestExecuteCPULimit/SIGXCPU\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.62091313Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU","Output":"=== PAUSE TestExecuteCPULimit/SIGXCPU\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.620914743Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU"}
+{"Time":"2026-10-09T10:05:54.620917827Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated"}
+{"Time":"2026-10-09T10:05:54.62091937Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Output":"=== RUN   TestExecuteCPULimit/saturated\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.620921553Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Output":"=== PAUSE TestExecuteCPULimit/saturated\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.620923225Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated"}
+{"Time":"2026-10-09T10:05:54.620925509Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite"}
+{"Time":"2026-10-09T10:05:54.620927331Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite","Output":"=== CONT  TestExecuteCPULimit/infinite\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.621155539Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated"}
+{"Time":"2026-10-09T10:05:54.621162289Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Output":"=== CONT  TestExecuteCPULimit/saturated\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.62116972Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU"}
+{"Time":"2026-10-09T10:05:54.621171563Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU","Output":"=== CONT  TestExecuteCPULimit/SIGXCPU\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:54.627219011Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU","Output":"--- PASS: TestExecuteCPULimit/SIGXCPU (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:58.515723846Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU","Elapsed":0.01}
+{"Time":"2026-10-09T10:05:58.51592893Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Output":"    run_test.go:84: 1 s CPU workload completed in 3.860001609s under a 2s CPU limit (wall past the limit: true)\n"}
+{"Time":"2026-10-09T10:05:58.524008754Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Output":"--- PASS: TestExecuteCPULimit/saturated (3.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:59.552449062Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Elapsed":3.9}
+{"Time":"2026-10-09T10:05:59.552502731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite","Output":"--- PASS: TestExecuteCPULimit/infinite (4.93s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:59.552512796Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite","Elapsed":4.93}
+{"Time":"2026-10-09T10:05:59.552514849Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Output":"--- PASS: TestExecuteCPULimit (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:59.552522991Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Elapsed":0}
+{"Time":"2026-10-09T10:05:59.552525405Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:59.553696607Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"ok  \tgithub.com/system-inc/adamic/internal/fuzz\t4.939s\n"}
+{"Time":"2026-10-09T10:05:59.553728234Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":4.9399999999999995}

@@ -1,0 +1,10 @@
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -24,6 +24,7 @@
+ // globals and the holder, and calls go everywhere a value can, so the order of reads and calls in
+ // an expression is under test everywhere.
+ func Generate(seed uint64) *Program {
++	return nil
+ 	return GenerateWithout(seed, nil)
+ }
+ 

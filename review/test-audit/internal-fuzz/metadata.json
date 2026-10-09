@@ -1,0 +1,36 @@
+{
+  "unit": "u020",
+  "commit": "7b18d0576930caca4e22ce2eef92fcf563af52d0",
+  "branch": "test-audit/internal-fuzz",
+  "nproc": 5,
+  "go": "go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "baseline_seconds": 18.779,
+  "skips": [],
+  "rows": [
+    "TestOneSeedOneProgram",
+    "TestGeneratedProgramsCheckAndLower",
+    "TestRegexProgramsPassTheChecker",
+    "TestOctoberFeaturesAppear",
+    "TestShrinkKeepsOnlyWhatFails",
+    "TestSharedSliceCutsShare",
+    "TestOwnershipShapes",
+    "TestJudgeReadsThePanicLine",
+    "TestOverridesShapesAndLower",
+    "TestSourceTreeCutsAtItems",
+    "TestReduceKeepsTheSignature",
+    "TestExecuteCPUHelper",
+    "TestExecuteCPULimit",
+    "TestFuzzerSharesRuntimeLibrary",
+    "TestUndefinedNumbersShapes"
+  ],
+  "families": [],
+  "production_mutants": 15,
+  "supplemental_mutants": [
+    "M16"
+  ],
+  "matrix_runs": 118,
+  "matrix_wall_seconds": 521.1569572040008,
+  "timing_wall_seconds": 130.80128993000005,
+  "coverage_percent": 84.9
+}

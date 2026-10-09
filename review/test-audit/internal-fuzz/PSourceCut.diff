@@ -1,0 +1,18 @@
+--- a/internal/fuzz/source.go
++++ b/internal/fuzz/source.go
+@@ -2,6 +2,7 @@
+ 
+ import (
+ 	"context"
++	"os"
+ 	"path/filepath"
+ 	"strings"
+ 
+@@ -321,6 +322,7 @@
+ func (t *sourceTree) Items(list int) int { return len(t.parse().lists[list].starts) }
+ 
+ func (t *sourceTree) Without(list, start, end int) Reducible {
++	if os.Getenv("ADAMIC_MUTANT") == "PSourceCut" { return &sourceTree{path: t.path} }
+ 	items := t.parse().lists[list]
+ 	if items.apart {
+ 		// Last first, so the spans before each are still where they were.

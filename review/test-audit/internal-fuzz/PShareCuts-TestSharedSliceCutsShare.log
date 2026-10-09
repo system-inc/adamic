@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:09:59.392054807Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:09:59.399295099Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T10:09:59.39940393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== RUN   TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:59.399431831Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== PAUSE TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:59.399434345Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T10:09:59.399436588Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T10:09:59.399438221Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== CONT  TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:59.399440574Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"    fuzz_test.go:161: got 0 shared-slice scenes, want at least a repeat, a literal, a template, a join and a nested slice\n","OutputType":"error"}
+{"Time":"2026-10-09T10:09:59.399449287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"--- FAIL: TestSharedSliceCutsShare (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:59.399452021Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Elapsed":0}
+{"Time":"2026-10-09T10:09:59.399461896Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:59.399519331Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:09:59.399530207Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.007}

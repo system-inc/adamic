@@ -1,0 +1,11 @@
+--- a/internal/fuzz/shrink.go
++++ b/internal/fuzz/shrink.go
+@@ -294,7 +294,7 @@
+ func simplest(t Type) *Expression {
+ 	switch t {
+ 	case Number:
+-		return text(Number, "0")
++		return text(Number, "1")
+ 	case String:
+ 		return text(String, "''")
+ 	case Boolean:
