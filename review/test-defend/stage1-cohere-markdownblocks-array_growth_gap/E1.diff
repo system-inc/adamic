@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/tokenizerEvents.ts
++++ b/stage1/cohere/markdownblocks/tokenizerEvents.ts
+@@ -72,7 +72,7 @@
+             }
+         }
+         this.previous = code;
+-        this.consumed = true;
++        this.consumed = false;
+     }
+     enter(type: string, fields: number): number {
+         const id = fields < 0 ? this.arena.add(type, this.point) : fields;

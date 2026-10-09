@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "E1",
+    "file": "stage1/cohere/markdownblocks/tokenizerEvents.ts",
+    "line": 75,
+    "from": "this.consumed = true;",
+    "to": "this.consumed = false;",
+    "aim": "Tokenizer consumed-state contract"
+  },
+  {
+    "mutant": "F1",
+    "file": "stage1/cohere/markdownblocks/frontmatter.ts",
+    "line": 56,
+    "from": "text.indexOf('\\n', 3)",
+    "to": "text.indexOf('\\n', 4)",
+    "aim": "Opening newline immediately following the delimiter"
+  },
+  {
+    "mutant": "P1",
+    "file": "internal/lower/object.go",
+    "line": 1265,
+    "from": "if len(arguments) != 1 {\n\t\t\treturn nil, true, l.notYet(node, \"push with other than one value\")",
+    "to": "if len(arguments) < 1 {\n\t\t\treturn nil, true, l.notYet(node, \"push with other than one value\")",
+    "aim": "Accept multiple push arguments and silently lower only the first"
+  }
+]
