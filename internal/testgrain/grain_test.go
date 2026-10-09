@@ -1,6 +1,7 @@
 package testgrain
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"os"
@@ -258,18 +259,23 @@ func alive(pid int) bool {
 	return true
 }
 
-func TestSetupBudget(t *testing.T) {
+func TestSetupUnbounded(t *testing.T) {
 	t.Parallel()
 	now := time.Unix(0, 0)
 	r := &recorder{TB: t}
 	key := t.Name() + "/" + t.TempDir()
-	value := setup(r, key, func() (int, error) { now = now.Add(61 * time.Second); return 42, nil }, frozen(&now))
-	if value != 42 || !reflect.DeepEqual(r.logs, []string{"grain setup " + key + ": 61.000 s cooked=true"}) || len(r.failures) != 1 {
+	c := frozen(&now)
+	c.after = func(_ time.Duration, f func()) *time.Timer {
+		t.Error("setup armed a test-side kill timer")
+		return time.AfterFunc(time.Hour, f)
+	}
+	value := setup(r, key, func() (int, error) { now = now.Add(Kill + time.Second); return 42, nil }, c)
+	if value != 42 || !reflect.DeepEqual(r.logs, []string{"grain setup " + key + ": 91.000 s"}) || len(r.failures) != 0 {
 		t.Fatal(value, r.logs, r.failures)
 	}
 	later := &recorder{TB: t}
-	if Setup(later, key, func() (int, error) { t.Error("prepared twice"); return 0, nil }) != 42 || len(later.failures) != 0 {
-		t.Fatal("budget charged to waiter")
+	if Setup(later, key, func() (int, error) { t.Error("prepared twice"); return 0, nil }) != 42 || len(later.failures) != 0 || len(later.logs) != 0 {
+		t.Fatal("waiter repeated preparation or logging")
 	}
 }
 func TestCommandCleanup(t *testing.T) {
@@ -319,4 +325,75 @@ func TestEnclosingGrainOwnsSetupCommands(t *testing.T) {
 		return 0, nil
 	})
 	r.finish()
+}
+
+func TestSetupCommandCleanup(t *testing.T) {
+	t.Parallel()
+	for _, contextual := range []bool{false, true} {
+		cmd := Setup(t, t.TempDir(), func() (*exec.Cmd, error) {
+			var cmd *exec.Cmd
+			if contextual {
+				cmd = CommandContext(t, context.Background(), "sleep", "300")
+			} else {
+				cmd = Command(t, "sleep", "300")
+			}
+			return cmd, cmd.Start()
+		})
+		defer cmd.Process.Kill()
+		if err := cmd.Wait(); err == nil {
+			t.Fatalf("preparation return did not kill command (contextual=%t)", contextual)
+		}
+	}
+}
+
+func TestCommandContext(t *testing.T) {
+	t.Parallel()
+	Unit(t)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	path := filepath.Join(t.TempDir(), "pid")
+	cmd := CommandContext(t, ctx, "sh", "-c", `sh -c 'echo $$ > "$1"; exec sleep 300' child "$1" & wait`, "parent", path)
+	if cmd.SysProcAttr == nil || !cmd.SysProcAttr.Setpgid {
+		t.Fatal("missing process group")
+	}
+	if err := cmd.Start(); err != nil {
+		t.Fatal(err)
+	}
+	defer cmd.Process.Kill()
+	var pid int
+	deadline := time.Now().Add(5 * time.Second)
+	for time.Now().Before(deadline) {
+		if data, err := os.ReadFile(path); err == nil {
+			if _, err := fmt.Sscanf(string(data), "%d", &pid); err == nil {
+				break
+			}
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	if pid == 0 {
+		t.Fatal("grandchild did not start")
+	}
+	defer syscall.Kill(pid, syscall.SIGKILL)
+	cancel()
+	if err := cmd.Wait(); err == nil {
+		t.Fatal("cancellation did not kill command")
+	}
+	deadline = time.Now().Add(2 * time.Second)
+	for time.Now().Before(deadline) {
+		if !alive(pid) {
+			return
+		}
+		time.Sleep(10 * time.Millisecond)
+	}
+	t.Fatalf("CommandContext grandchild %d survived cancellation", pid)
+}
+
+func TestCommandContextAlreadyCanceled(t *testing.T) {
+	t.Parallel()
+	Unit(t)
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+	if err := CommandContext(t, ctx, "sleep", "300").Run(); !errors.Is(err, context.Canceled) {
+		t.Fatalf("got %v, want context.Canceled", err)
+	}
 }

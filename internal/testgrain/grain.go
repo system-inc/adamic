@@ -2,6 +2,8 @@
 package testgrain
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"hash/fnv"
 	"os"
@@ -50,15 +52,13 @@ func (g *grain) kill() {
 	}
 }
 
-func begin(t testing.TB, label string, c clock) func() {
-	started := c.now()
+// track owns command cleanup independently of deadline policy.
+func track(t testing.TB) (*grain, func()) {
 	g := new(grain)
 	active.Lock()
 	active.grains[t] = append(active.grains[t], g)
 	active.Unlock()
-	timer := c.after(Kill, func() { g.kill(); panic(fmt.Sprintf("cooked: %s still running at 90 s; split smaller", label)) })
-	return func() {
-		timer.Stop()
+	return g, func() {
 		g.kill()
 		active.Lock()
 		stack := active.grains[t]
@@ -74,11 +74,30 @@ func begin(t testing.TB, label string, c clock) func() {
 			active.grains[t] = stack
 		}
 		active.Unlock()
+	}
+}
+
+func begin(t testing.TB, label string, c clock) func() {
+	started := c.now()
+	g, finish := track(t)
+	timer := c.after(Kill, func() { g.kill(); panic(fmt.Sprintf("cooked: %s still running at 90 s; split smaller", label)) })
+	return func() {
+		timer.Stop()
+		finish()
 		elapsed := c.now().Sub(started)
 		t.Logf("grain %s: %.3f s cooked=%t", label, elapsed.Seconds(), elapsed > Budget)
 		if elapsed > Budget {
 			t.Errorf("cooked: %s took %.1f s, over the 60 s budget; split smaller", label, elapsed.Seconds())
 		}
+	}
+}
+
+func beginSetup(t testing.TB, key string, c clock) func() {
+	started := c.now()
+	_, finish := track(t)
+	return func() {
+		finish()
+		t.Logf("grain setup %s: %.3f s", key, c.now().Sub(started).Seconds())
 	}
 }
 
@@ -101,6 +120,8 @@ var preparations = struct {
 
 // Setup publishes one process-wide result per key, including errors. Keys must
 // have a consistent result type and preparation must not depend on leaf cleanup.
+// Setup has no test-side budget or deadline; Loom bounds the whole unit.
+// Commands launched during preparation are killed when preparation returns.
 func Setup[T any](t testing.TB, key string, prepare func() (T, error)) T {
 	t.Helper()
 	return setup(t, key, prepare, realClock)
@@ -118,7 +139,7 @@ func setup[T any](t testing.TB, key string, prepare func() (T, error), c clock) 
 	if !exists {
 		func() {
 			defer close(p.done)
-			finish := begin(t, "setup "+key, c)
+			finish := beginSetup(t, key, c)
 			defer finish()
 			// A Fatal/Goexit inside legacy preparation must not publish a successful nil value.
 			p.err = fmt.Errorf("preparation did not complete")
@@ -138,9 +159,33 @@ func setup[T any](t testing.TB, key string, prepare func() (T, error), c clock) 
 	return result.value
 }
 
+// Command creates a command in a process group tracked by the active grains.
 func Command(t testing.TB, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	cmd := exec.Command(name, arguments...)
+	return registerCommand(t, exec.Command(name, arguments...))
+}
+
+// CommandContext adds context cancellation that kills the entire process group.
+// It uses the same setup/unit tracking and cleanup as Command.
+func CommandContext(t testing.TB, ctx context.Context, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	cmd := exec.CommandContext(ctx, name, arguments...)
+	cmd.Cancel = func() error {
+		if cmd.Process == nil {
+			return os.ErrProcessDone
+		}
+		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	cmd.WaitDelay = time.Second
+	return registerCommand(t, cmd)
+}
+
+func registerCommand(t testing.TB, cmd *exec.Cmd) *exec.Cmd {
+	t.Helper()
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	active.Lock()
 	stack := append([]*grain(nil), active.grains[t]...)
@@ -150,8 +195,7 @@ func Command(t testing.TB, name string, arguments ...string) *exec.Cmd {
 		return cmd
 	}
 	active.Unlock()
-	// An enclosing setup/unit may expire before an inner setup. Both deadlines
-	// must be able to kill commands launched by that inner preparation.
+	// Enclosing units must also own commands launched by inner preparation.
 	for _, g := range stack {
 		g.mu.Lock()
 		g.commands = append(g.commands, cmd)
