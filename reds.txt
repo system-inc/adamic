@@ -1,0 +1,46 @@
+run adamic-verify-20261009T135218-57e89c76: void, 19663 tests in 88 units, 1 failed, 2 units broken, 0 killed over budget
+AGAIN tests-01: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-06: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-20: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-24: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-26: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-29: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-33: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-01-r1: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-02-r1: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-03-r2: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-06-r1: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-11-r4: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-11-r6: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-23-r2: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-23-r3: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-23-r4: from run adamic-verify-again-20261009T145444-88de0405
+AGAIN tests-23-r5: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-25-r2: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-28-r1: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-28-r4: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-28-r7: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-28-r9: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-28-r10: from run adamic-verify-again-20261009T145444-88de0405
+AGAIN tests-28-r11: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-28-r12: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-28-r13: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-28-r14: from run adamic-verify-again-20261009T142224-ed380d46
+AGAIN tests-28-r15: from run adamic-verify-again-20261009T142224-ed380d46
+BROKEN tests-23-r4: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-28-r10: no results (exited false, last output "loom-runner: still running after 150 s")
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixturesAssertions/assertions/09_interface_kind.a/stage0 (tests-11-r11)
+    fixtures_test.go:359: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses view type has an unsupported member: properties; use a supported, checked type for properties (currently readonly number[]) before creating this view}; recorded {Outcome:NotYet What:stage3/fixtures/assertions/09_interface_kind.a:15:9: stage 0 can't lower checked view union arm awaits views-v3: array element kind yet}
+BROKEN tests-23-r4 on 3 placements, workers: 837d04dc9a01, 7b54d0a4296a, 9b2db9d42042
+BROKEN tests-28-r10 on 3 placements, workers: f67d7afe1a3a, 3e1761c0c28c, 4786c9b839a1
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 2 of: TestOwnedWitnesses (tests-01)
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0, requested 2 of: TestSixRuleAgreementAndMutants (tests-01)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 3 of: TestDecodedOptionsAndMutant, TestDotARename (tests-05)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestProfileCompilation (tests-17)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestJsxLintTrees (tests-18)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestRulesAgree (tests-19)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 2 of: TestFactoryHooks (tests-22)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 3 of: TestNodeTableIsLinkOnly, TestShardsAgree (tests-24)
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0, requested 1 of: TestTypeAwareAgreementAndMutants (tests-25)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestCompilerAndStage1Agree (tests-32)
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0, requested 1 of: TestShadowIndexMissingBinding (tests-32)
