@@ -45,6 +45,7 @@ func supportedExpression(node *estree.Node) bool {
 	}
 	return true
 }
+
 // Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicExpressionCorpus(t *testing.T) {
 	requestData, err := os.ReadFile(os.Getenv("ADAMIC_TS_EXPRESSION_REQUEST"))

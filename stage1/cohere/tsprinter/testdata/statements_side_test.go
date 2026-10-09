@@ -51,6 +51,7 @@ func statementSyntax(node *ast.Node) bool {
 		return supportedSyntax(node)
 	}
 }
+
 // Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicStatementCorpus(t *testing.T) {
 	data, err := os.ReadFile(os.Getenv("ADAMIC_TS_STATEMENT_REQUEST"))

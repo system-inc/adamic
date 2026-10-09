@@ -86,6 +86,7 @@ func oracle(t *testing.T) string {
 	run(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
 	return binary
 }
+
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestCommentsMatchCohere(t *testing.T) {
 	path, _ := filepath.Abs("testdata/witnesses.json")
