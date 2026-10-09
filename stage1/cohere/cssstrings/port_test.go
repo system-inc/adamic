@@ -127,10 +127,6 @@ func prepareCSSStringsSetup(t *testing.T) {
 			t.Fatalf("enumerated %d shards, declared %d", len(units), testCSSStringsShards)
 		}
 		verifyStringsUnion(t, corpus, units)
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
 		dir := stringsTopTempDir(t)
 		cases := filepath.Join(dir, "cases.txt")
 		write(t, cases, stringsInput(corpus.texts))
@@ -142,41 +138,18 @@ func prepareCSSStringsSetup(t *testing.T) {
 			}
 			write(t, keep+".files.json", manifest)
 		}
-		bridge, _ := filepath.Abs("testdata/bridge.go")
-		driver, _ := filepath.Abs("testdata/go_driver.go")
-		cohere := filepath.Join(root, "cohere")
-		oracleDir := stringsGoProduct(t, "Go oracle", func(dir string) error {
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-				filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
-				filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
-			}})
-			if err != nil {
-				return err
-			}
-			overlayPath := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			command := stringsCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
-			command.Dir = cohere
-			if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-				return fmt.Errorf("Go bridge: %w\n%s", err, output)
-			}
-			return nil
-		})
-		goBinary := filepath.Join(oracleDir, "go-printer")
+		goBinary := stringsPreparedOracle(t)
 		main, _ := filepath.Abs("main.ts")
-		build := buildStringsProgram(t, "port", main)
-		sanitized := buildStringsNative(t, "sanitized", build, true)
-		fast := buildStringsNative(t, "native-fast", build, false)
+		build := stringsPreparedProgram(t, -1)
+		sanitized := stringsPreparedNative(t, -1, true)
+		fast := stringsPreparedNative(t, -1, false)
 		// macOS's leaks tool needs the unsanitized product; Linux reuses sanitized.
 		mutants := make(map[string]stringsProgram)
 		mutantBinaries := make(map[string]string)
-		for _, mutation := range stringsMutations {
-			mutated := prepareStringsMutant(t, mutation)
-			product := buildStringsProgram(t, mutation.name, mutated)
+		for index, mutation := range stringsMutations {
+			product := stringsPreparedProgram(t, index)
 			mutants[mutation.name] = product
-			mutantBinaries[mutation.name] = buildStringsNative(t, mutation.name+"-sanitized", product, true)
+			mutantBinaries[mutation.name] = stringsPreparedNative(t, index, true)
 		}
 		library := os.Getenv("ADAMIC_CSSSTRINGS_LIBRARY")
 		script, _ := filepath.Abs("testdata/library.mjs")
@@ -188,7 +161,7 @@ func prepareCSSStringsSetup(t *testing.T) {
 		if library == "" {
 			t.Log("external library not checked: set ADAMIC_CSSSTRINGS_LIBRARY")
 		}
-		fullWant := stringsOracleAnswers(t, "Go", goBinary, nil, stringsInput(corpus.texts), goIdentity)
+		fullWant := stringsSetupOracleAnswers(t, "Go", goBinary, nil, stringsInput(corpus.texts), goIdentity)
 		clean(t, "Go", fullWant)
 		stringsTopSetup.units = units
 		stringsTopSetup.run = func(t *testing.T, unit stringsUnit) {
@@ -303,8 +276,10 @@ func prepareCSSStringsSetup(t *testing.T) {
 
 func runCSSStringsShard(t *testing.T, ordinal int) {
 	t.Helper()
+	// Fetch shared products once per process before starting this shard's clock.
+	prepareCSSStringsSetup(t)
 	if stringsTopSetup.run == nil {
-		t.Fatal("TestCSSStrings_Setup must finish before a shard starts")
+		t.Fatal("shared setup did not complete")
 	}
 	timer := time.AfterFunc(90*time.Second, func() { panic(fmt.Sprintf("cooked TestCSSStrings_%03d: case deadline exceeded 90s", ordinal)) })
 	defer timer.Stop()
@@ -315,7 +290,7 @@ func runCSSStringsShard(t *testing.T, ordinal int) {
 		}
 	}()
 	if stringsTopSetup.run == nil {
-		t.Fatal("TestCSSStrings_Setup must finish before a shard starts")
+		t.Fatal("shared setup did not complete")
 	}
 	selected := selectedStringsUnits(t, stringsTopSetup.units)
 	for _, unit := range selected {
@@ -348,4 +323,35 @@ func equal(t *testing.T, name string, a, b []byte) {
 		}
 		t.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
 	}
+}
+
+func stringsPreparedOracle(t *testing.T) string {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	bridge, _ := filepath.Abs("testdata/bridge.go")
+	driver, _ := filepath.Abs("testdata/go_driver.go")
+	cohere := filepath.Join(root, "cohere")
+	oracleDir := stringsGoProduct(t, "Go oracle", func(dir string) error {
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+			filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
+			filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
+		}})
+		if err != nil {
+			return err
+		}
+		overlayPath := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+			return err
+		}
+		command := stringsSetupCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
+		command.Dir = cohere
+		if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
+			return fmt.Errorf("Go bridge: %w\n%s", err, output)
+		}
+		return nil
+	})
+	return filepath.Join(oracleDir, "go-printer")
 }

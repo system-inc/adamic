@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:24:05.654680814Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:24:05.661663748Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T10:24:05.662226101Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== RUN   TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:05.662259611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== PAUSE TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:05.662262976Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T10:24:05.662266451Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T10:24:05.662268845Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== CONT  TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:05.66235952Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"    reducer_guards_test.go:37: reducer reported refusal:original refusal for source \"otherFailure();\\n\" that actually fails as map[refusal:different refusal]\n","OutputType":"error"}
+{"Time":"2026-10-09T10:24:05.662375414Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"--- FAIL: TestReduceRejectsDifferentRefusal (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:05.66237912Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Elapsed":0}
+{"Time":"2026-10-09T10:24:05.662393912Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:05.662473511Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fuzz\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:05.662501003Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.008}

@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class_static_private.go b/internal/lower/class_static_private.go
+index 60e1020b..30eaf39d 100644
+--- a/internal/lower/class_static_private.go
++++ b/internal/lower/class_static_private.go
+@@ -6,7 +6,7 @@ import (
+ )
+ 
+ func (l *lowering) privateStaticMember(name *ast.Node) *ast.Node {
+-	if name.Kind != ast.KindPrivateIdentifier {
++	if name.Kind == ast.KindPrivateIdentifier {
+ 		return nil
+ 	}
+ 	symbol := l.checker.GetSymbolAtLocation(name)

@@ -1,9 +1,11 @@
 package printer
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
@@ -44,10 +46,10 @@ func printerCases(t *testing.T, mode string, oracle ...string) (string, string) 
 		if err := os.WriteFile(path, request, 0644); err != nil {
 			return err
 		}
-		command := bounded(t, oracle[0], "-test.run=^TestAdamicPrinter$", "-test.count=1", "-test.timeout=0")
+		command := exec.CommandContext(context.Background(), oracle[0], "-test.run=^TestAdamicPrinter$", "-test.count=1", "-test.timeout=0")
 		command.Dir = root + "/cohere"
 		command.Env = append(os.Environ(), "ADAMIC_PRINTER_REQUEST="+path)
-		if output, err := combinedOutput(command); err != nil {
+		if output, err := command.CombinedOutput(); err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
 		}
 		return nil

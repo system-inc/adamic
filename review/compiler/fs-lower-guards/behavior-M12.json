@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T10:51:46.240067225Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:51:46.247860192Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation"}
+{"Time":"2026-10-09T10:51:46.247945339Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"=== RUN   TestFSExistsOperation\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:46.247968604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"=== PAUSE TestFSExistsOperation\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:46.247971518Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation"}
+{"Time":"2026-10-09T10:51:46.247974723Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation"}
+{"Time":"2026-10-09T10:51:46.247977608Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"=== CONT  TestFSExistsOperation\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:46.316558799Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"    fs_method_guards_test.go:115: Node main.a: exit 0, stdout \"missing\\npresent\\nmissing\\n\"\n"}
+{"Time":"2026-10-09T10:51:46.590327309Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"    fs_method_guards_test.go:115: Node generated.mjs: exit 70, stdout \"\"\n"}
+{"Time":"2026-10-09T10:51:46.590378596Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"    fs_method_guards_test.go:115: JavaScript backend: exit 70 stdout \"\"; source Node: exit 0 stdout \"missing\\npresent\\nmissing\\n\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:46.590471465Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"--- FAIL: TestFSExistsOperation (0.34s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:46.590541781Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Elapsed":0.34}
+{"Time":"2026-10-09T10:51:46.590563563Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:46.593770228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.353s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:46.593793523Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.354}

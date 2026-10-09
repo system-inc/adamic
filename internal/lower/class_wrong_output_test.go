@@ -41,15 +41,19 @@ func TestClassWrongOutputKeysRepair(t *testing.T) {
 		t.Fatal(err)
 	}
 	repaired := strings.Replace(string(source), "Object.keys(view)", "Object.keys({ value: view.value })", 1)
-	if _, err := lowerSource(t, repaired); err != nil {
+	program, err := lowerSource(t, repaired)
+	if err != nil {
 		t.Fatalf("explicit string-key copy refused: %v", err)
 	}
+	requireLoweredOutput(t, program)
 }
 
 func TestClassWrongOutputPrivateRepair(t *testing.T) {
 	t.Parallel()
 	source := "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } reveal(): string { return this.#secret; } static peek(box: Box): string { return box.reveal(); } } console.log(Box.peek(new Box(`s${1}`)));"
-	if _, err := lowerSource(t, source); err != nil {
+	program, err := lowerSource(t, source)
+	if err != nil {
 		t.Fatalf("instance delegation refused: %v", err)
 	}
+	requireLoweredOutput(t, program)
 }

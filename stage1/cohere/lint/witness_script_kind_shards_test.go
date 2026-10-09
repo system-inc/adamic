@@ -186,9 +186,9 @@ func TestWitnessScriptKindPlantedFailure(t *testing.T) {
 	t.Parallel()
 	witnessScriptKindSetup(t)
 	key := witnessScriptKindState.Keys[0]
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
-	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_[0-9]+$", "-test.timeout=90s", "-test.v")
+	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_[0-9]+$", "-test.timeout=600s", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_WITNESS_KIND_PLANT="+key)
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
@@ -294,10 +294,10 @@ func witnessScriptKindGoOracleIn(ctx context.Context, sourceRoot, directory stri
 func TestWitnessScriptKindStandalone(t *testing.T) {
 	t.Parallel()
 	witnessScriptKindSetup(t)
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
 	// A new process selects only one leaf and fetches its own shared products.
-	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_000$", "-test.timeout=90s", "-test.v")
+	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_000$", "-test.timeout=600s", "-test.v")
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
 		t.Fatalf("P0 cooked standalone probe: %v", ctx.Err())

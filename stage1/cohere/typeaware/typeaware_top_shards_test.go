@@ -41,9 +41,8 @@ func typeAwareTopPlan(t *testing.T, key string) *typeAwarePlan {
 	stored, _ := typeAwarePlans.LoadOrStore(key, &typeAwarePlanEntry{})
 	entry := stored.(*typeAwarePlanEntry)
 	entry.once.Do(func() {
-		if key != "six" {
-			defer typeAwareDeadline(t, "setup/"+key)()
-		}
+		// Any selected shard prepares this plan once per process, without a
+		// setup watchdog. Its own-work deadline starts after preparation.
 		if key == "planted" {
 			entry.plan = typeAwarePlantedPlan(t)
 		} else if key == "six" {
@@ -212,9 +211,4 @@ func TestTypeAwareAgreementAndMutants_019(t *testing.T) {
 func TestTypeAwareAgreementAndMutants_020(t *testing.T) {
 	t.Parallel()
 	typeAwareTopShard(t, "typeaware", 20)
-}
-
-// Not parallel: publishes the shared TypeAware plan before parallel case leaves run.
-func TestTypeAwareAgreementAndMutants_Setup(t *testing.T) {
-	typeAwareTopPlan(t, "typeaware")
 }

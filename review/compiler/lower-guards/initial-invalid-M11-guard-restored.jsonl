@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:30:37.112075778Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T09:30:37.118946922Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConstructorCacheOneArgumentRemainsNotYet"}
+{"Time":"2026-10-09T09:30:37.11900669Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConstructorCacheOneArgumentRemainsNotYet","Output":"=== RUN   TestConstructorCacheOneArgumentRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:30:37.119029344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConstructorCacheOneArgumentRemainsNotYet","Output":"=== PAUSE TestConstructorCacheOneArgumentRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:30:37.119031757Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConstructorCacheOneArgumentRemainsNotYet"}
+{"Time":"2026-10-09T09:30:37.119034191Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConstructorCacheOneArgumentRemainsNotYet"}
+{"Time":"2026-10-09T09:30:37.119035924Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConstructorCacheOneArgumentRemainsNotYet","Output":"=== CONT  TestConstructorCacheOneArgumentRemainsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:30:37.150938745Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConstructorCacheOneArgumentRemainsNotYet","Output":"    constructor_cache_guard_test.go:15: Load: /tmp/adamic-gate/TestConstructorCacheOneArgumentRemainsNotYet512412968/001/main.a:11:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.\n","OutputType":"error"}
+{"Time":"2026-10-09T09:30:37.151026194Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConstructorCacheOneArgumentRemainsNotYet","Output":"--- FAIL: TestConstructorCacheOneArgumentRemainsNotYet (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:30:37.151030601Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestConstructorCacheOneArgumentRemainsNotYet","Elapsed":0.03}
+{"Time":"2026-10-09T09:30:37.151050571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:30:37.15216094Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.040s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:30:37.152178136Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.04}

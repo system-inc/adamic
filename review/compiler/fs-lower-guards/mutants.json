@@ -1,0 +1,32 @@
+[
+  {
+    "mutant": "M20",
+    "test": "TestParseIntMapUsesIndexRadix",
+    "exit": 1,
+    "wall_seconds": 8.523
+  },
+  {
+    "mutant": "M09",
+    "test": "TestFSOpenStringFlagsLower",
+    "exit": 1,
+    "wall_seconds": 8.792
+  },
+  {
+    "mutant": "M11",
+    "test": "TestFSRemoveDefaultRetryDelayLowers",
+    "exit": 1,
+    "wall_seconds": 8.814
+  },
+  {
+    "mutant": "M12",
+    "test": "TestFSExistsOperation",
+    "exit": 1,
+    "wall_seconds": 8.729
+  },
+  {
+    "mutant": "M13",
+    "test": "TestFSStatThrowsByDefault",
+    "exit": 1,
+    "wall_seconds": 8.646
+  }
+]

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T10:24:07.724704267Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T10:24:07.733211846Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T10:24:07.733367789Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== RUN   TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:07.733406027Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== PAUSE TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:07.73340852Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T10:24:07.733414269Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T10:24:07.733416212Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== CONT  TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:07.733509862Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"--- PASS: TestReduceRejectsDifferentRefusal (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:07.733514659Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Elapsed":0}
+{"Time":"2026-10-09T10:24:07.733535761Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:24:07.7336754Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"ok  \tgithub.com/system-inc/adamic/internal/fuzz\t0.009s\n"}
+{"Time":"2026-10-09T10:24:07.733697102Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.009}

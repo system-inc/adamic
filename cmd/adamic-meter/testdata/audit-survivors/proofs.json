@@ -1,0 +1,194 @@
+[
+  {
+    "label": "M10-mutant",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalPositionCountsUTF16Surrogates)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 5.95
+  },
+  {
+    "label": "M10-restored",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalPositionCountsUTF16Surrogates)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 5.851
+  },
+  {
+    "label": "M18-mutant",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestReturnAdaptationRewritesTS7030AndPreservesBehavior)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 5.692
+  },
+  {
+    "label": "M18-restored",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestReturnAdaptationRewritesTS7030AndPreservesBehavior)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.224
+  },
+  {
+    "label": "M20-mutant",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalResolverPreservesUncheckedIndexDiagnostic)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 5.596
+  },
+  {
+    "label": "M20-restored",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalResolverPreservesUncheckedIndexDiagnostic)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.176
+  },
+  {
+    "label": "root-ownership-mutant",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestReturnAdaptationOwnsOnlyRoots)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 5.798
+  },
+  {
+    "label": "root-ownership-restored",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestReturnAdaptationOwnsOnlyRoots)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.077
+  },
+  {
+    "label": "return-contract-mutant",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestReturnAdaptationLeavesUnprovenContracts)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 5.749
+  },
+  {
+    "label": "return-contract-restored",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestReturnAdaptationLeavesUnprovenContracts)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.025
+  },
+  {
+    "label": "live-method-mutant",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalAdaptationPreservesLiveMethodPlacement)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 5.548
+  },
+  {
+    "label": "live-method-restored",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalAdaptationPreservesLiveMethodPlacement)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.282
+  }
+]

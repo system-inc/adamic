@@ -32,10 +32,23 @@ func TestParserFactoryBindingHoisting(t *testing.T) {
 	if err := lowering.declareModule(file.Statements.Nodes); err != nil {
 		t.Fatal(err)
 	}
+	bindings := map[string]int{}
+	for _, local := range lowering.result.Locals {
+		if local.NamespaceVar {
+			bindings[local.Name]++
+		}
+	}
+	if len(bindings) != 2 || bindings["factoryCreateNodeArray"] != 1 || bindings["factoryCreateNumericLiteral"] != 1 {
+		t.Fatalf("NamespaceVar bindings = %v, want factoryCreateNodeArray and factoryCreateNumericLiteral once each", bindings)
+	}
 	for _, statement := range file.Statements.Nodes {
 		if statement.Kind == ast.KindModuleDeclaration {
-			if _, err := lowering.namespaceBody(statement); err != nil {
+			body, err := lowering.namespaceBody(statement)
+			if err != nil {
 				t.Fatal(err)
+			}
+			if len(body) == 0 {
+				t.Fatal("parser factory namespace body is empty")
 			}
 		}
 	}

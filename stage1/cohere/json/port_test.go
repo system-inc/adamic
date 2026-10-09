@@ -227,7 +227,11 @@ func jsonPortTopShard(t *testing.T, target int) {
 	deadline := portMatchesDeadline(t.Name())
 	defer deadline.Stop()
 	parentStart := time.Now()
-	cases, shards := jsonTopCorpus(t)
+	allCases, allShards := jsonTopCorpus(t)
+	cases, shards, dedicated := jsonPortClassOrderPartition(allCases)
+	if err := jsonPortClassOrderUnion(allCases, cases, shards, dedicated); err != nil {
+		t.Fatal(err)
+	}
 	enumeratedUnits := len(shards) + 3*len(shards) // agreement plus three benchmark rounds
 	if got := enumeratedUnits; got != testPortMatchesGoCohereShards {
 		t.Fatalf("enumerated %d shards, declared %d", got, testPortMatchesGoCohereShards)
@@ -413,7 +417,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 
 	})
 	{
-		for ordinal, shard := range shards {
+		for ordinal, shard := range allShards {
 			for round := 0; round < 3; round++ {
 				unit := len(shards) + ordinal*3 + round
 				if unit != target || unit%count != index {
@@ -423,7 +427,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 					if os.Getenv("ADAMIC_JSON_BENCH") != "1" {
 						t.Skip("ADAMIC_JSON_BENCH=1 enables benchmark comparisons")
 					}
-					items := cases[shard.start:shard.end]
+					items := allCases[shard.start:shard.end]
 					if len(items) == 0 {
 						t.Log("empty hash bucket")
 						return
