@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.295,
+    "wall": 2.0941693879995,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestClosedNestedConstituentMutant$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.278,
+    "wall": 1.9574432190001971,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestClosedNestedConstituentMutant$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.298,
+    "wall": 1.9660991239998111,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestClosedNestedConstituentMutant$"
+  }
+]

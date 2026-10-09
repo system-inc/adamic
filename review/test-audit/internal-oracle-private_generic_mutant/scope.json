@@ -1,0 +1,62 @@
+[
+  {
+    "test": "TestPrivateGenericMethodOwnerMutant",
+    "file": "internal/oracle/private_generic_mutant_test.go"
+  },
+  {
+    "test": "TestReadinessMutants",
+    "file": "internal/oracle/readiness_test.go"
+  },
+  {
+    "test": "TestUninitializedIsNotNullishMutant",
+    "file": "internal/oracle/readiness_test.go"
+  },
+  {
+    "test": "TestNonNullWeakFreedNamesExpression",
+    "file": "internal/oracle/readiness_test.go"
+  },
+  {
+    "test": "TestLazyInitializerIsNotEagerMutant",
+    "file": "internal/oracle/readiness_test.go"
+  },
+  {
+    "test": "TestClosedNestedConstituentMutant",
+    "file": "internal/oracle/real_nested_functions_test.go"
+  },
+  {
+    "test": "TestRegexCycleFixtureHasItsNativeDependency",
+    "file": "internal/oracle/regexp_cycle_test.go"
+  },
+  {
+    "test": "TestRegExpReplacementNodeMutants",
+    "file": "internal/oracle/regexp_replace_test.go"
+  },
+  {
+    "test": "TestRegExpReplacementTypeGuardMutants",
+    "file": "internal/oracle/regexp_replace_test.go"
+  },
+  {
+    "test": "TestRepresentationClockSourceMutant",
+    "file": "internal/oracle/representation_clock_source_test.go"
+  },
+  {
+    "test": "TestRuntimeLastIndexOfMatchesNode",
+    "file": "internal/oracle/runtime_last_index_test.go"
+  },
+  {
+    "test": "TestScannerNestedOverloadImplementationMutantIsCaught",
+    "file": "internal/oracle/scanner_nested_overload_test.go"
+  },
+  {
+    "test": "TestScannerNestedReferenceMutants",
+    "file": "internal/oracle/scanner_nested_references_test.go"
+  },
+  {
+    "test": "TestScannerNestedReferences",
+    "file": "internal/oracle/scanner_nested_references_test.go"
+  },
+  {
+    "test": "TestNestedReferenceIdentityMutant",
+    "file": "internal/oracle/scanner_nested_references_test.go"
+  }
+]

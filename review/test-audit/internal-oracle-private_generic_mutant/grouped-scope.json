@@ -1,0 +1,95 @@
+[
+  {
+    "test": "TestPrivateGenericMethodOwnerMutant",
+    "file": "internal/oracle/private_generic_mutant_test.go",
+    "members": [
+      "TestPrivateGenericMethodOwnerMutant"
+    ]
+  },
+  {
+    "test": "TestReadinessMutants family",
+    "file": "internal/oracle/readiness_test.go",
+    "members": [
+      "TestReadinessMutants",
+      "TestUninitializedIsNotNullishMutant",
+      "TestLazyInitializerIsNotEagerMutant"
+    ]
+  },
+  {
+    "test": "TestNonNullWeakFreedNamesExpression",
+    "file": "internal/oracle/readiness_test.go",
+    "members": [
+      "TestNonNullWeakFreedNamesExpression"
+    ]
+  },
+  {
+    "test": "TestClosedNestedConstituentMutant",
+    "file": "internal/oracle/real_nested_functions_test.go",
+    "members": [
+      "TestClosedNestedConstituentMutant"
+    ]
+  },
+  {
+    "test": "TestRegexCycleFixtureHasItsNativeDependency",
+    "file": "internal/oracle/regexp_cycle_test.go",
+    "members": [
+      "TestRegexCycleFixtureHasItsNativeDependency"
+    ]
+  },
+  {
+    "test": "TestRegExpReplacementNodeMutants",
+    "file": "internal/oracle/regexp_replace_test.go",
+    "members": [
+      "TestRegExpReplacementNodeMutants"
+    ]
+  },
+  {
+    "test": "TestRegExpReplacementTypeGuardMutants",
+    "file": "internal/oracle/regexp_replace_test.go",
+    "members": [
+      "TestRegExpReplacementTypeGuardMutants"
+    ]
+  },
+  {
+    "test": "TestRepresentationClockSourceMutant",
+    "file": "internal/oracle/representation_clock_source_test.go",
+    "members": [
+      "TestRepresentationClockSourceMutant"
+    ]
+  },
+  {
+    "test": "TestRuntimeLastIndexOfMatchesNode",
+    "file": "internal/oracle/runtime_last_index_test.go",
+    "members": [
+      "TestRuntimeLastIndexOfMatchesNode"
+    ]
+  },
+  {
+    "test": "TestScannerNestedOverloadImplementationMutantIsCaught",
+    "file": "internal/oracle/scanner_nested_overload_test.go",
+    "members": [
+      "TestScannerNestedOverloadImplementationMutantIsCaught"
+    ]
+  },
+  {
+    "test": "TestScannerNestedReferenceMutants",
+    "file": "internal/oracle/scanner_nested_references_test.go",
+    "members": [
+      "TestScannerNestedReferenceMutants"
+    ]
+  },
+  {
+    "test": "TestScannerNestedReferences",
+    "file": "internal/oracle/scanner_nested_references_test.go",
+    "members": [
+      "TestScannerNestedReferences"
+    ]
+  },
+  {
+    "test": "TestNestedReferenceIdentityMutant",
+    "file": "internal/oracle/scanner_nested_references_test.go",
+    "members": [
+      "TestNestedReferenceIdentityMutant"
+    ]
+  }
+]

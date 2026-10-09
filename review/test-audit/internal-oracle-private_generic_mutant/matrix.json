@@ -1,0 +1,109 @@
+{
+  "M01": {
+    "failed_rows": [
+      "TestRuntimeLastIndexOfMatchesNode"
+    ],
+    "matrix_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ]
+  },
+  "M02": {
+    "failed_rows": [
+      "TestRuntimeLastIndexOfMatchesNode"
+    ],
+    "matrix_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ]
+  },
+  "M03": {
+    "failed_rows": [
+      "TestScannerNestedReferences"
+    ],
+    "matrix_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ]
+  },
+  "M04": {
+    "failed_rows": [
+      "TestScannerNestedReferences"
+    ],
+    "matrix_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ]
+  },
+  "W": {
+    "failed_rows": [
+      "TestClosedNestedConstituentMutant",
+      "TestNestedReferenceIdentityMutant",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants"
+    ],
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ]
+  },
+  "S01": {
+    "failed_rows": [],
+    "matrix_rows": [
+      "TestRegexCycleFixtureHasItsNativeDependency"
+    ]
+  },
+  "P02": {
+    "failed_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ],
+    "matrix_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ]
+  },
+  "P03": {
+    "failed_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ],
+    "matrix_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ]
+  },
+  "P04": {
+    "failed_rows": [
+      "TestRuntimeLastIndexOfMatchesNode"
+    ],
+    "matrix_rows": [
+      "TestRuntimeLastIndexOfMatchesNode"
+    ]
+  },
+  "P01": {
+    "failed_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ],
+    "matrix_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ],
+    "rerun": "Each semantic row alone, because nil Lower panics"
+  }
+}

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_search_impl.h
++++ b/internal/native/runtime/string_search_impl.h
+@@ -112,7 +112,7 @@
+ 
+ double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search) {
+ 	if (search->length == 0) {
+-		return (double)adamic_string_units(string);
++		return 0;
+ 	}
+ 	if (!halves_pairs(search)) {
+ 		// A whole-character needle matches by bytes, as indexOf does. Look backward without

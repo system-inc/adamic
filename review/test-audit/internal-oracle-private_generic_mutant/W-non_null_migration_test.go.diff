@@ -1,0 +1,11 @@
+--- a/internal/oracle/non_null_migration_test.go
++++ b/internal/oracle/non_null_migration_test.go
+@@ -136,7 +136,7 @@
+ 		t.Fatal("drop-check mutant changed nothing")
+ 	}
+ 	got := releasedUncached(t, program)
+-	if string(got.stdout) == string(native.stdout) || got.exitCode != 0 && got.exitCode != 70 {
++	if true || got.exitCode != 0 && got.exitCode != 70 {
+ 		t.Fatalf("drop-check mutant was not caught by harmless output: %#v", got)
+ 	}
+ 	t.Logf("drop-check mutant caught for %s: stdout %q", filepath.Base(path), got.stdout)

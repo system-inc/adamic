@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.375,
+    "wall": 2.1430508149996967,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLazyInitializerIsNotEagerMutant$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.382,
+    "wall": 2.143443975000082,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLazyInitializerIsNotEagerMutant$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.366,
+    "wall": 2.088591231999999,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLazyInitializerIsNotEagerMutant$"
+  }
+]

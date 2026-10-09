@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_search_impl.h
++++ b/internal/native/runtime/string_search_impl.h
+@@ -120,7 +120,7 @@
+ 		if (search->length > string->length) {
+ 			return -1;
+ 		}
+-		for (size_t offset = string->length - search->length + 1; offset-- > 0;) {
++		for (size_t offset = string->length - search->length; offset-- > 0;) {
+ 			if (string->bytes[offset] == search->bytes[0] &&
+ 				memcmp(string->bytes + offset, search->bytes, search->length) == 0) {
+ 				return (double)adamic_string_units_before(string, offset);

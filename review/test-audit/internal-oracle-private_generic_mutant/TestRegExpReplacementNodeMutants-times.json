@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.351,
+    "wall": 2.0639051649995963,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRegExpReplacementNodeMutants$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.364,
+    "wall": 1.99204916600047,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRegExpReplacementNodeMutants$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.363,
+    "wall": 2.058814965000238,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRegExpReplacementNodeMutants$"
+  }
+]

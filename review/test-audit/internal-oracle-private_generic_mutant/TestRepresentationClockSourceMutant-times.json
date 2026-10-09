@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.109,
+    "wall": 1.88259900400044,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRepresentationClockSourceMutant$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.077,
+    "wall": 2.9535593969994807,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRepresentationClockSourceMutant$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.172,
+    "wall": 2.252379251000093,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRepresentationClockSourceMutant$"
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "command": "ADAMIC_MUTANT=M03 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u068/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestRuntimeLastIndexOfMatchesNode|TestScannerNestedReferences)$",
+  "exit": 1,
+  "wall": 2.3107296669995776
+}

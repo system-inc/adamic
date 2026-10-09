@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.296,
+    "wall": 1.9123831939996307,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRegExpReplacementTypeGuardMutants$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.314,
+    "wall": 2.0549067550000473,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRegExpReplacementTypeGuardMutants$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.292,
+    "wall": 1.900886028000059,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRegExpReplacementTypeGuardMutants$"
+  }
+]

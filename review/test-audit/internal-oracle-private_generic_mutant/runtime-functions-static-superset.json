@@ -1,0 +1,3292 @@
+[
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 20,
+    "function": "write_all"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 63,
+    "function": "output_failed"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 67,
+    "function": "flush"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 80,
+    "function": "finish"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 89,
+    "function": "buffer"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 103,
+    "function": "adamic_output_flush"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 112,
+    "function": "stopped"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 123,
+    "function": "stop_with"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 138,
+    "function": "put"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 148,
+    "function": "write_text"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 161,
+    "function": "adamic_start"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 172,
+    "function": "adamic_write_line"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 192,
+    "function": "adamic_panic"
+  },
+  {
+    "file": "internal/native/runtime/adamic.c",
+    "line": 204,
+    "function": "adamic_unreachable"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 132,
+    "function": "adamic_counted_closure_new"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 139,
+    "function": "adamic_closure_call"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 148,
+    "function": "adamic_closure_receiver_call"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 259,
+    "function": "adamic_object_size"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 264,
+    "function": "adamic_object_initialized"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 270,
+    "function": "adamic_object_field_types"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 301,
+    "function": "adamic_method_call"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 366,
+    "function": "adamic_object_optional_field"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 378,
+    "function": "adamic_object_data_field"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 385,
+    "function": "adamic_object_field"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 400,
+    "function": "adamic_object_check_data_write"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 597,
+    "function": "adamic_array_at_integer"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 604,
+    "function": "adamic_array_at"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 738,
+    "function": "adamic_string_length"
+  },
+  {
+    "file": "internal/native/runtime/adamic.h",
+    "line": 741,
+    "function": "adamic_string_char_code_at"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 11,
+    "function": "adamic_array_new"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 28,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 43,
+    "function": "adamic_array_join"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 109,
+    "function": "adamic_array_slice"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 138,
+    "function": "adamic_array_sort"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 195,
+    "function": "adamic_compare_closure"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 202,
+    "function": "adamic_array_at_relative"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 215,
+    "function": "adamic_array_index_of"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 256,
+    "function": "adamic_array_reverse"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 265,
+    "function": "adamic_array_filled"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 281,
+    "function": "adamic_array_fill"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 301,
+    "function": "splice_into"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 359,
+    "function": "adamic_array_splice"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 365,
+    "function": "adamic_array_remove"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 369,
+    "function": "adamic_array_append"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 381,
+    "function": "adamic_array_concat"
+  },
+  {
+    "file": "internal/native/runtime/array.c",
+    "line": 399,
+    "function": "adamic_array_set"
+  },
+  {
+    "file": "internal/native/runtime/array_from.c",
+    "line": 7,
+    "function": "adamic_array_from_length"
+  },
+  {
+    "file": "internal/native/runtime/bitwise.c",
+    "line": 27,
+    "function": "signed_value"
+  },
+  {
+    "file": "internal/native/runtime/bitwise.c",
+    "line": 32,
+    "function": "shift_count"
+  },
+  {
+    "file": "internal/native/runtime/bitwise.c",
+    "line": 36,
+    "function": "adamic_bitwise_and"
+  },
+  {
+    "file": "internal/native/runtime/bitwise.c",
+    "line": 40,
+    "function": "adamic_bitwise_or"
+  },
+  {
+    "file": "internal/native/runtime/bitwise.c",
+    "line": 44,
+    "function": "adamic_bitwise_xor"
+  },
+  {
+    "file": "internal/native/runtime/bitwise.c",
+    "line": 48,
+    "function": "adamic_bitwise_not"
+  },
+  {
+    "file": "internal/native/runtime/bitwise.c",
+    "line": 52,
+    "function": "adamic_shift_left"
+  },
+  {
+    "file": "internal/native/runtime/bitwise.c",
+    "line": 57,
+    "function": "adamic_shift_right"
+  },
+  {
+    "file": "internal/native/runtime/bitwise.c",
+    "line": 68,
+    "function": "adamic_shift_right_unsigned"
+  },
+  {
+    "file": "internal/native/runtime/case.c",
+    "line": 60,
+    "function": "full"
+  },
+  {
+    "file": "internal/native/runtime/case.c",
+    "line": 73,
+    "function": "within"
+  },
+  {
+    "file": "internal/native/runtime/case.c",
+    "line": 87,
+    "function": "size_at"
+  },
+  {
+    "file": "internal/native/runtime/case.c",
+    "line": 103,
+    "function": "encoded_size"
+  },
+  {
+    "file": "internal/native/runtime/case.c",
+    "line": 107,
+    "function": "encode"
+  },
+  {
+    "file": "internal/native/runtime/case.c",
+    "line": 134,
+    "function": "cased_beyond"
+  },
+  {
+    "file": "internal/native/runtime/case.c",
+    "line": 163,
+    "function": "map_point"
+  },
+  {
+    "file": "internal/native/runtime/case.c",
+    "line": 185,
+    "function": "convert"
+  },
+  {
+    "file": "internal/native/runtime/case.c",
+    "line": 227,
+    "function": "adamic_string_to_upper"
+  },
+  {
+    "file": "internal/native/runtime/case.c",
+    "line": 231,
+    "function": "adamic_string_to_lower"
+  },
+  {
+    "file": "internal/native/runtime/census_small.c",
+    "line": 3,
+    "function": "adamic_census_to_boolean"
+  },
+  {
+    "file": "internal/native/runtime/class_features.c",
+    "line": 6,
+    "function": "adamic_index_name"
+  },
+  {
+    "file": "internal/native/runtime/class_features.c",
+    "line": 18,
+    "function": "adamic_public_index"
+  },
+  {
+    "file": "internal/native/runtime/class_features.c",
+    "line": 42,
+    "function": "adamic_class_object_keys"
+  },
+  {
+    "file": "internal/native/runtime/class_features.c",
+    "line": 54,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/class_features.c",
+    "line": 77,
+    "function": "adamic_accessor_find"
+  },
+  {
+    "file": "internal/native/runtime/class_features.c",
+    "line": 86,
+    "function": "adamic_accessor_get"
+  },
+  {
+    "file": "internal/native/runtime/class_features.c",
+    "line": 95,
+    "function": "adamic_accessor_set"
+  },
+  {
+    "file": "internal/native/runtime/class_inheritance.c",
+    "line": 4,
+    "function": "adamic_instanceof"
+  },
+  {
+    "file": "internal/native/runtime/class_inheritance.c",
+    "line": 14,
+    "function": "adamic_virtual"
+  },
+  {
+    "file": "internal/native/runtime/class_inheritance.c",
+    "line": 24,
+    "function": "release_field"
+  },
+  {
+    "file": "internal/native/runtime/class_inheritance.c",
+    "line": 30,
+    "function": "adamic_object_free_children"
+  },
+  {
+    "file": "internal/native/runtime/class_static.c",
+    "line": 4,
+    "function": "adamic_static_field"
+  },
+  {
+    "file": "internal/native/runtime/class_static.c",
+    "line": 13,
+    "function": "adamic_object_write_field"
+  },
+  {
+    "file": "internal/native/runtime/closure.c",
+    "line": 5,
+    "function": "adamic_cell_new"
+  },
+  {
+    "file": "internal/native/runtime/closure.c",
+    "line": 38,
+    "function": "adamic_environment_new"
+  },
+  {
+    "file": "internal/native/runtime/closure.c",
+    "line": 91,
+    "function": "adamic_closure_uncache"
+  },
+  {
+    "file": "internal/native/runtime/count.c",
+    "line": 10,
+    "function": "adamic_count_allocation"
+  },
+  {
+    "file": "internal/native/runtime/count.c",
+    "line": 18,
+    "function": "adamic_count_report"
+  },
+  {
+    "file": "internal/native/runtime/directory.c",
+    "line": 37,
+    "function": "failure"
+  },
+  {
+    "file": "internal/native/runtime/directory.c",
+    "line": 63,
+    "function": "compare_names"
+  },
+  {
+    "file": "internal/native/runtime/directory.c",
+    "line": 67,
+    "function": "adamic_read_directory"
+  },
+  {
+    "file": "internal/native/runtime/directory.c",
+    "line": 128,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/directory.c",
+    "line": 138,
+    "function": "adamic_file_status"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 51,
+    "function": "double_is_denormal"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 55,
+    "function": "double_exponent"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 89,
+    "function": "bignum_init"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 94,
+    "function": "bignum_ensure_capacity"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 100,
+    "function": "bignum_bigit_length"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 104,
+    "function": "bignum_zero"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 112,
+    "function": "bignum_clamp"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 121,
+    "function": "bignum_assign_uint16"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 131,
+    "function": "bignum_assign_uint64"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 147,
+    "function": "bignum_assign_bignum"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 158,
+    "function": "bignum_align"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 173,
+    "function": "bignum_bigits_shift_left"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 186,
+    "function": "bignum_shift_left"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 197,
+    "function": "bignum_subtract_bignum"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 216,
+    "function": "bignum_multiply_by_uint32"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 241,
+    "function": "bignum_times_10"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 245,
+    "function": "bignum_multiply_by_uint64"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 271,
+    "function": "bignum_square"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 317,
+    "function": "bignum_assign_power_uint16"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 395,
+    "function": "bignum_compare"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 419,
+    "function": "bignum_equal"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 423,
+    "function": "bignum_less_equal"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 427,
+    "function": "bignum_less"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 432,
+    "function": "bignum_plus_compare"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 478,
+    "function": "bignum_subtract_times"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 561,
+    "function": "normalized_exponent"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 571,
+    "function": "generate_shortest_digits"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 638,
+    "function": "generate_counted_digits"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 673,
+    "function": "estimate_power"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 682,
+    "function": "initial_scaled_start_values_positive_exponent"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 717,
+    "function": "initial_scaled_start_values_negative_exponent_positive_power"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 753,
+    "function": "initial_scaled_start_values_negative_exponent_negative_power"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 801,
+    "function": "initial_scaled_start_values"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 819,
+    "function": "fixup_multiply_10"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 847,
+    "function": "bignum_dtoa"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 876,
+    "function": "double_to_ascii"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 896,
+    "function": "adamic_number_shortest_digits"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 908,
+    "function": "append_text"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 915,
+    "function": "append_padding"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 922,
+    "function": "append_decimal_integer"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 936,
+    "function": "create_exponential_representation"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 960,
+    "function": "double_to_exponential"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 980,
+    "function": "double_to_precision"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 1035,
+    "function": "conversion_result"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 1037,
+    "function": "adamic_string_concat"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 1040,
+    "function": "conversion_special"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 1048,
+    "function": "adamic_number_to_exponential"
+  },
+  {
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 1064,
+    "function": "adamic_number_to_precision"
+  },
+  {
+    "file": "internal/native/runtime/exceptions.c",
+    "line": 17,
+    "function": "adamic_error_new"
+  },
+  {
+    "file": "internal/native/runtime/exceptions.c",
+    "line": 24,
+    "function": "adamic_uncaught"
+  },
+  {
+    "file": "internal/native/runtime/from_codes.c",
+    "line": 20,
+    "function": "codes_add"
+  },
+  {
+    "file": "internal/native/runtime/from_codes.c",
+    "line": 39,
+    "function": "codes_point"
+  },
+  {
+    "file": "internal/native/runtime/from_codes.c",
+    "line": 62,
+    "function": "codes_finish"
+  },
+  {
+    "file": "internal/native/runtime/from_codes.c",
+    "line": 71,
+    "function": "adamic_to_uint16"
+  },
+  {
+    "file": "internal/native/runtime/from_codes.c",
+    "line": 82,
+    "function": "adamic_string_from_char_codes"
+  },
+  {
+    "file": "internal/native/runtime/from_codes.c",
+    "line": 90,
+    "function": "adamic_string_from_code_points"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 84,
+    "function": "list_chunk"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 94,
+    "function": "unlist_chunk"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 107,
+    "function": "new_chunk"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 139,
+    "function": "take"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 164,
+    "function": "give"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 188,
+    "function": "adamic_allocate"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 210,
+    "function": "deallocate"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 218,
+    "function": "adamic_retain"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 240,
+    "function": "list"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 255,
+    "function": "let_go"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 267,
+    "function": "free_one"
+  },
+  {
+    "file": "internal/native/runtime/heap.c",
+    "line": 369,
+    "function": "adamic_release"
+  },
+  {
+    "file": "internal/native/runtime/hypot.c",
+    "line": 21,
+    "function": "adamic_math_hypot"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 48,
+    "function": "adamic_ieee754_double"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 131,
+    "function": "kernel_rem_pio2"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 260,
+    "function": "other"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 298,
+    "function": "cos"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 458,
+    "function": "kernel_rem_pio2"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 673,
+    "function": "sin"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 719,
+    "function": "tan"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 877,
+    "function": "adamic_math_acos"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 948,
+    "function": "acosh"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1008,
+    "function": "adamic_math_asin"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1077,
+    "function": "asinh"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1135,
+    "function": "adamic_math_atan"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1248,
+    "function": "adamic_math_atan2"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1369,
+    "function": "TRIG"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1446,
+    "function": "exp"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1572,
+    "function": "atanh"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1645,
+    "function": "log"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1804,
+    "function": "adamic_math_log1p"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1862,
+    "function": "sqrt"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1969,
+    "function": "k_log1p"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1991,
+    "function": "log2"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2099,
+    "function": "log10"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2219,
+    "function": "expm1"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2358,
+    "function": "adamic_math_cbrt"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2470,
+    "function": "TRIG"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2530,
+    "function": "TRIG"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2559,
+    "function": "cosh"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2626,
+    "function": "sinh"
+  },
+  {
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2696,
+    "function": "tanh"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 24,
+    "function": "new_string"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 38,
+    "function": "decode_step"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 95,
+    "function": "encoded_size"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 101,
+    "function": "ascii_prefix"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 119,
+    "function": "decode"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 162,
+    "function": "adamic_decode_utf8"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 169,
+    "function": "adamic_arguments_save"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 174,
+    "function": "adamic_program_arguments"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 179,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 197,
+    "function": "failure"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 228,
+    "function": "utf8"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 247,
+    "function": "file_name"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 256,
+    "function": "read_all"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 291,
+    "function": "adamic_read_text_file"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 348,
+    "function": "write_all"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 365,
+    "function": "adamic_write_text_file"
+  },
+  {
+    "file": "internal/native/runtime/input.c",
+    "line": 416,
+    "function": "adamic_path_bytes"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 20,
+    "function": "json_memory"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 28,
+    "function": "append"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 52,
+    "function": "ascii"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 56,
+    "function": "code_point"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 70,
+    "function": "quote"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 103,
+    "function": "scalar"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 127,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 129,
+    "function": "indent"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 137,
+    "function": "write_field"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 147,
+    "function": "write_value"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 204,
+    "function": "keys"
+  },
+  {
+    "file": "internal/native/runtime/json_stringify.c",
+    "line": 227,
+    "function": "adamic_json_stringify"
+  },
+  {
+    "file": "internal/native/runtime/library_array.c",
+    "line": 5,
+    "function": "array_search_equal"
+  },
+  {
+    "file": "internal/native/runtime/library_array.c",
+    "line": 12,
+    "function": "adamic_array_search_from"
+  },
+  {
+    "file": "internal/native/runtime/library_array.c",
+    "line": 34,
+    "function": "adamic_array_join_nested"
+  },
+  {
+    "file": "internal/native/runtime/library_array.c",
+    "line": 44,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/library_language.c",
+    "line": 10,
+    "function": "array_index"
+  },
+  {
+    "file": "internal/native/runtime/library_language.c",
+    "line": 28,
+    "function": "adamic_plain_object_keys"
+  },
+  {
+    "file": "internal/native/runtime/library_language.c",
+    "line": 43,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/library_language.c",
+    "line": 68,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/library_language.c",
+    "line": 76,
+    "function": "adamic_library_identity"
+  },
+  {
+    "file": "internal/native/runtime/library_math_number.c",
+    "line": 30,
+    "function": "adamic_math_clz32"
+  },
+  {
+    "file": "internal/native/runtime/library_math_number.c",
+    "line": 38,
+    "function": "adamic_math_imul"
+  },
+  {
+    "file": "internal/native/runtime/library_math_number.c",
+    "line": 43,
+    "function": "adamic_math_fround"
+  },
+  {
+    "file": "internal/native/runtime/library_math_number.c",
+    "line": 50,
+    "function": "library_digit"
+  },
+  {
+    "file": "internal/native/runtime/library_math_number.c",
+    "line": 57,
+    "function": "adamic_number_from_string"
+  },
+  {
+    "file": "internal/native/runtime/library_math_number.c",
+    "line": 101,
+    "function": "adamic_number_from_union"
+  },
+  {
+    "file": "internal/native/runtime/library_math_number.c",
+    "line": 114,
+    "function": "adamic_number_has_own_property"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 8,
+    "function": "adamic_object_is"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 20,
+    "function": "adamic_object_is_frozen"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 26,
+    "function": "adamic_object_freeze"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 31,
+    "function": "adamic_object_check_write"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 43,
+    "function": "adamic_object_has_own"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 54,
+    "function": "array_index"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 66,
+    "function": "compare_names"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 74,
+    "function": "ordered"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 90,
+    "function": "key_string"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 97,
+    "function": "adamic_object_keys"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 106,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 112,
+    "function": "adamic_object_values"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 138,
+    "function": "adamic_object_assign"
+  },
+  {
+    "file": "internal/native/runtime/library_object.c",
+    "line": 158,
+    "function": "adamic_object_values_checked"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 15,
+    "function": "allocate_zeroed"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 24,
+    "function": "adamic_map_new"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 41,
+    "function": "adamic_map_new_booleans"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 47,
+    "function": "adamic_map_new_maybe_numbers"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 53,
+    "function": "adamic_map_new_identity"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 88,
+    "function": "same_key"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 105,
+    "function": "find"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 124,
+    "function": "rebuild"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 167,
+    "function": "adamic_map_get"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 172,
+    "function": "adamic_map_set"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 209,
+    "function": "adamic_map_delete"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 226,
+    "function": "adamic_map_free_children"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 242,
+    "function": "adamic_map_iterate"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 251,
+    "function": "adamic_map_iterator_next"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 271,
+    "function": "adamic_map_entries"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 288,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 293,
+    "function": "adamic_map_clear"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 319,
+    "function": "listed"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 336,
+    "function": "adamic_map_keys"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 340,
+    "function": "adamic_map_values"
+  },
+  {
+    "file": "internal/native/runtime/map.c",
+    "line": 344,
+    "function": "adamic_map_add_pairs"
+  },
+  {
+    "file": "internal/native/runtime/map_set.c",
+    "line": 5,
+    "function": "adamic_map_maybe_key_equal"
+  },
+  {
+    "file": "internal/native/runtime/map_set.c",
+    "line": 62,
+    "function": "collection_reference"
+  },
+  {
+    "file": "internal/native/runtime/map_set.c",
+    "line": 68,
+    "function": "collection_next"
+  },
+  {
+    "file": "internal/native/runtime/map_set.c",
+    "line": 87,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/map_set.c",
+    "line": 110,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/map_set.c",
+    "line": 113,
+    "function": "adamic_collection_iterator"
+  },
+  {
+    "file": "internal/native/runtime/math.c",
+    "line": 7,
+    "function": "adamic_math_round"
+  },
+  {
+    "file": "internal/native/runtime/math.c",
+    "line": 23,
+    "function": "adamic_math_sign"
+  },
+  {
+    "file": "internal/native/runtime/math.c",
+    "line": 30,
+    "function": "adamic_math_max"
+  },
+  {
+    "file": "internal/native/runtime/math.c",
+    "line": 40,
+    "function": "adamic_math_min"
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "line": 11,
+    "function": "adamic_string_from_maybe_number"
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "line": 18,
+    "function": "adamic_maybe_number_equal"
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "line": 23,
+    "function": "adamic_maybe_boolean_equal"
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "line": 27,
+    "function": "adamic_maybe_number_pack"
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "line": 41,
+    "function": "adamic_maybe_number_unpack"
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "line": 45,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "line": 47,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "line": 53,
+    "function": "adamic_maybe_boolean_unpack"
+  },
+  {
+    "file": "internal/native/runtime/maybe.c",
+    "line": 54,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 41,
+    "function": "put_point"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 64,
+    "function": "decode_utf8"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 94,
+    "function": "push_byte"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 96,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 98,
+    "function": "byte_value"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 109,
+    "function": "adamic_node_buffer_copy"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 117,
+    "function": "adamic_node_buffer_set"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 126,
+    "function": "unbase64"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 145,
+    "function": "unhex"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 158,
+    "function": "adamic_node_buffer_from"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 216,
+    "function": "clamp_offset"
+  },
+  {
+    "file": "internal/native/runtime/node_buffer.c",
+    "line": 226,
+    "function": "adamic_node_buffer_string"
+  },
+  {
+    "file": "internal/native/runtime/node_crypto.c",
+    "line": 23,
+    "function": "compress"
+  },
+  {
+    "file": "internal/native/runtime/node_crypto.c",
+    "line": 64,
+    "function": "adamic_node_hash_new"
+  },
+  {
+    "file": "internal/native/runtime/node_crypto.c",
+    "line": 70,
+    "function": "check_finalized"
+  },
+  {
+    "file": "internal/native/runtime/node_crypto.c",
+    "line": 78,
+    "function": "adamic_node_hash_update"
+  },
+  {
+    "file": "internal/native/runtime/node_crypto.c",
+    "line": 90,
+    "function": "adamic_node_hash_digest"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 21,
+    "function": "text"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 25,
+    "function": "raise_error"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 33,
+    "function": "system_error"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 72,
+    "function": "bytes"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 87,
+    "function": "invalid_value"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 125,
+    "function": "path_bytes"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 131,
+    "function": "integer"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 145,
+    "function": "read_range"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 152,
+    "function": "file_descriptor"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 159,
+    "function": "flags"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 182,
+    "function": "open_file"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 195,
+    "function": "adamic_fs_file_open"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 200,
+    "function": "adamic_fs_file_read_bytes"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 220,
+    "function": "read_file"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 238,
+    "function": "adamic_fs_file_read_file"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 244,
+    "function": "adamic_fs_file_read_fd"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 251,
+    "function": "read_buffer"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 266,
+    "function": "adamic_fs_file_read_buffer"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 271,
+    "function": "adamic_fs_file_read_buffer_fd"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 278,
+    "function": "adamic_fs_file_close"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 285,
+    "function": "adamic_fs_file_read_sync"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 311,
+    "function": "adamic_fs_file_write"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 327,
+    "function": "write_data"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 348,
+    "function": "write_file"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 354,
+    "function": "write_buffer"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 362,
+    "function": "adamic_fs_file_write_buffer"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 367,
+    "function": "adamic_fs_file_write_buffer_fd"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 374,
+    "function": "adamic_fs_file_write_file"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 380,
+    "function": "adamic_fs_file_write_fd"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 387,
+    "function": "adamic_fs_file_exists"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 401,
+    "function": "adamic_fs_file_date_new"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 408,
+    "function": "adamic_fs_file_date_time"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 417,
+    "function": "adamic_fs_file_stat"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 445,
+    "function": "stat_mode"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 449,
+    "function": "adamic_fs_file_is_file"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 450,
+    "function": "adamic_fs_file_is_directory"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 451,
+    "function": "adamic_fs_file_is_symbolic_link"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 455,
+    "function": "make_directory"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 487,
+    "function": "adamic_fs_file_mkdir"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 504,
+    "function": "mkdtemp"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 519,
+    "function": "adamic_fs_file_mkdtemp"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 538,
+    "function": "remove_error"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 551,
+    "function": "remove_path"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 591,
+    "function": "adamic_fs_file_rm"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 600,
+    "function": "adamic_fs_file_unlink"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 609,
+    "function": "fs_utimes"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 637,
+    "function": "adamic_fs_file_utimes"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 638,
+    "function": "adamic_fs_file_utimes_dates"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 639,
+    "function": "adamic_fs_file_utimes_atime_date"
+  },
+  {
+    "file": "internal/native/runtime/node_fs_file.c",
+    "line": 640,
+    "function": "adamic_fs_file_utimes_mtime_date"
+  },
+  {
+    "file": "internal/native/runtime/node_host.c",
+    "line": 11,
+    "function": "allocate"
+  },
+  {
+    "file": "internal/native/runtime/node_host.c",
+    "line": 19,
+    "function": "text"
+  },
+  {
+    "file": "internal/native/runtime/node_host.c",
+    "line": 33,
+    "function": "normalize"
+  },
+  {
+    "file": "internal/native/runtime/node_host.c",
+    "line": 83,
+    "function": "adamic_fs_file_host_join"
+  },
+  {
+    "file": "internal/native/runtime/node_host.c",
+    "line": 113,
+    "function": "finish_directory"
+  },
+  {
+    "file": "internal/native/runtime/node_host.c",
+    "line": 115,
+    "function": "host_directory_error"
+  },
+  {
+    "file": "internal/native/runtime/node_host.c",
+    "line": 157,
+    "function": "adamic_fs_file_host_cwd"
+  },
+  {
+    "file": "internal/native/runtime/node_host.c",
+    "line": 178,
+    "function": "environment_text"
+  },
+  {
+    "file": "internal/native/runtime/node_host.c",
+    "line": 192,
+    "function": "adamic_fs_file_host_chdir"
+  },
+  {
+    "file": "internal/native/runtime/node_host.c",
+    "line": 210,
+    "function": "adamic_fs_file_host_tmpdir"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 79,
+    "function": "mapping_of"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 139,
+    "function": "points_add"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 154,
+    "function": "decompose"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 176,
+    "function": "reorder"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 235,
+    "function": "compose"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 263,
+    "function": "size_at"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 281,
+    "function": "encode"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 308,
+    "function": "normalized"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 363,
+    "function": "emit_point"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 373,
+    "function": "finish_segment"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 389,
+    "function": "accept_point"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 398,
+    "function": "emit_blocks"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 422,
+    "function": "repeated_prefix"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 479,
+    "function": "stream"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 562,
+    "function": "form_is"
+  },
+  {
+    "file": "internal/native/runtime/normalize.c",
+    "line": 567,
+    "function": "adamic_string_normalize"
+  },
+  {
+    "file": "internal/native/runtime/number.c",
+    "line": 11,
+    "function": "append"
+  },
+  {
+    "file": "internal/native/runtime/number.c",
+    "line": 18,
+    "function": "adamic_number_format"
+  },
+  {
+    "file": "internal/native/runtime/number.c",
+    "line": 101,
+    "function": "adamic_power"
+  },
+  {
+    "file": "internal/native/runtime/number.c",
+    "line": 126,
+    "function": "adamic_number_to_fixed"
+  },
+  {
+    "file": "internal/native/runtime/number.c",
+    "line": 135,
+    "function": "adamic_string_concat"
+  },
+  {
+    "file": "internal/native/runtime/number.c",
+    "line": 192,
+    "function": "adamic_string_concat"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 10,
+    "function": "adamic_object_new"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 22,
+    "function": "adamic_object_copy_checked"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 42,
+    "function": "adamic_object_copy"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 46,
+    "function": "adamic_object_has"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 58,
+    "function": "adamic_object_find"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 71,
+    "function": "adamic_object_callee"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 103,
+    "function": "adamic_object_maybe_number"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 110,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 116,
+    "function": "adamic_object_optional_find"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 132,
+    "function": "adamic_object_read_mode"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 154,
+    "function": "adamic_object_view_union_snapshot"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 157,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 184,
+    "function": "adamic_object_read"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 188,
+    "function": "adamic_object_set_initialized"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 196,
+    "function": "adamic_object_view"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 239,
+    "function": "adamic_view_literal_failure"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 251,
+    "function": "adamic_object_view_write"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 262,
+    "function": "adamic_object_maybe_boolean"
+  },
+  {
+    "file": "internal/native/runtime/object.c",
+    "line": 269,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/parse.c",
+    "line": 32,
+    "function": "is_digit"
+  },
+  {
+    "file": "internal/native/runtime/parse.c",
+    "line": 38,
+    "function": "digit_value"
+  },
+  {
+    "file": "internal/native/runtime/parse.c",
+    "line": 48,
+    "function": "signed_zero"
+  },
+  {
+    "file": "internal/native/runtime/parse.c",
+    "line": 54,
+    "function": "base_ten"
+  },
+  {
+    "file": "internal/native/runtime/parse.c",
+    "line": 69,
+    "function": "power_of_two"
+  },
+  {
+    "file": "internal/native/runtime/parse.c",
+    "line": 127,
+    "function": "generic"
+  },
+  {
+    "file": "internal/native/runtime/parse.c",
+    "line": 155,
+    "function": "adamic_number_parse_int"
+  },
+  {
+    "file": "internal/native/runtime/parse.c",
+    "line": 223,
+    "function": "adamic_number_parse_float"
+  },
+  {
+    "file": "internal/native/runtime/radix.c",
+    "line": 35,
+    "function": "radix_double_exponent"
+  },
+  {
+    "file": "internal/native/runtime/radix.c",
+    "line": 43,
+    "function": "radix_next_double"
+  },
+  {
+    "file": "internal/native/runtime/radix.c",
+    "line": 53,
+    "function": "double_to_radix"
+  },
+  {
+    "file": "internal/native/runtime/radix.c",
+    "line": 133,
+    "function": "radix_result"
+  },
+  {
+    "file": "internal/native/runtime/radix.c",
+    "line": 135,
+    "function": "adamic_string_concat"
+  },
+  {
+    "file": "internal/native/runtime/radix.c",
+    "line": 140,
+    "function": "adamic_number_to_radix"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 19,
+    "function": "table"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 23,
+    "function": "adamic_record_new"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 29,
+    "function": "adamic_record_get_own"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 30,
+    "function": "adamic_map_get"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 33,
+    "function": "adamic_record_has_own"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 37,
+    "function": "named"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 44,
+    "function": "prototype_member"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 71,
+    "function": "check_missing_member"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 84,
+    "function": "adamic_record_get"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 92,
+    "function": "adamic_record_has"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 96,
+    "function": "adamic_record_define"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 97,
+    "function": "adamic_map_set"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 100,
+    "function": "adamic_record_set"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 108,
+    "function": "adamic_record_delete"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 114,
+    "function": "adamic_record_size"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 120,
+    "function": "array_index"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 144,
+    "function": "compare_indices"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 150,
+    "function": "adamic_record_keys"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 182,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 189,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 195,
+    "function": "adamic_record_iterate"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 203,
+    "function": "adamic_record_iterator_next"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 220,
+    "function": "adamic_record_is"
+  },
+  {
+    "file": "internal/native/runtime/record.c",
+    "line": 222,
+    "function": "adamic_record_view"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 9,
+    "function": "adamic_regex_set_step_limit"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 10,
+    "function": "regex_memory"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 18,
+    "function": "high"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 19,
+    "function": "low"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 20,
+    "function": "regex_read"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 67,
+    "function": "regex_word"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 72,
+    "function": "regex_line"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 73,
+    "function": "regex_contains"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 110,
+    "function": "regex_workspace_destroy"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 118,
+    "function": "regex_clone"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 156,
+    "function": "regex_free"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 164,
+    "function": "regex_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 170,
+    "function": "regex_run"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 408,
+    "function": "adamic_regex_new"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 421,
+    "function": "regex_program"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 424,
+    "function": "regex_to_length"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 450,
+    "function": "regex_execute"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 526,
+    "function": "regex_groups"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 544,
+    "function": "regex_result"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 552,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 567,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 575,
+    "function": "adamic_regex_done"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 583,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 585,
+    "function": "adamic_regex_group_lookup"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 597,
+    "function": "adamic_regex_property"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 607,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 609,
+    "function": "adamic_regex_exec"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 621,
+    "function": "adamic_regex_test"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 670,
+    "function": "regex_advance"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 673,
+    "function": "adamic_regex_match"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 686,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 704,
+    "function": "regex_require_global"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 708,
+    "function": "adamic_regex_match_all"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 719,
+    "function": "adamic_regex_iterator_step"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 743,
+    "function": "adamic_regex_next"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 750,
+    "function": "adamic_regex_search"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 763,
+    "function": "adamic_regex_split"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 794,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 802,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 816,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 823,
+    "function": "regex_piece"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 824,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 827,
+    "function": "regex_substitution"
+  },
+  {
+    "file": "internal/native/runtime/regexp.c",
+    "line": 918,
+    "function": "adamic_regex_replace"
+  },
+  {
+    "file": "internal/native/runtime/regexp_replace.c",
+    "line": 11,
+    "function": "regex_replacement_argument"
+  },
+  {
+    "file": "internal/native/runtime/regexp_replace.c",
+    "line": 25,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/regexp_replace.c",
+    "line": 29,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/regexp_replace.c",
+    "line": 32,
+    "function": "adamic_regex_replace_callback"
+  },
+  {
+    "file": "internal/native/runtime/regexp_replace.c",
+    "line": 52,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp_replace.c",
+    "line": 145,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp_replace.c",
+    "line": 148,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/regexp_replace.c",
+    "line": 155,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/region.c",
+    "line": 28,
+    "function": "object_size"
+  },
+  {
+    "file": "internal/native/runtime/region.c",
+    "line": 33,
+    "function": "adamic_object_new_in"
+  },
+  {
+    "file": "internal/native/runtime/region.c",
+    "line": 75,
+    "function": "adamic_region_end"
+  },
+  {
+    "file": "internal/native/runtime/set.c",
+    "line": 6,
+    "function": "adamic_set_add_all"
+  },
+  {
+    "file": "internal/native/runtime/set.c",
+    "line": 12,
+    "function": "adamic_map_set"
+  },
+  {
+    "file": "internal/native/runtime/set.c",
+    "line": 16,
+    "function": "adamic_set_values"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 42,
+    "function": "order"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 64,
+    "function": "copy"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 70,
+    "function": "minimum_run"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 80,
+    "function": "binary_insertion"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 107,
+    "function": "count_run"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 140,
+    "function": "gallop_left"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 199,
+    "function": "gallop_right"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 258,
+    "function": "merge_low"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 355,
+    "function": "merge_high"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 457,
+    "function": "merge_at"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 488,
+    "function": "balanced"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 496,
+    "function": "merge_collapse"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 515,
+    "function": "merge_force_collapse"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 527,
+    "function": "sorted"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 553,
+    "function": "sorted_or_stopped"
+  },
+  {
+    "file": "internal/native/runtime/sort.c",
+    "line": 564,
+    "function": "adamic_timsort"
+  },
+  {
+    "file": "internal/native/runtime/sort_undefined.c",
+    "line": 7,
+    "function": "adamic_array_sort_undefined_last"
+  },
+  {
+    "file": "internal/native/runtime/spread.c",
+    "line": 9,
+    "function": "adamic_math_max_of"
+  },
+  {
+    "file": "internal/native/runtime/spread.c",
+    "line": 18,
+    "function": "adamic_math_min_of"
+  },
+  {
+    "file": "internal/native/runtime/spread.c",
+    "line": 27,
+    "function": "numbers"
+  },
+  {
+    "file": "internal/native/runtime/spread.c",
+    "line": 39,
+    "function": "adamic_math_hypot_of"
+  },
+  {
+    "file": "internal/native/runtime/spread.c",
+    "line": 49,
+    "function": "adamic_string_from_char_codes_of"
+  },
+  {
+    "file": "internal/native/runtime/spread.c",
+    "line": 56,
+    "function": "adamic_string_from_code_points_of"
+  },
+  {
+    "file": "internal/native/runtime/stack.c",
+    "line": 65,
+    "function": "adamic_stack_overflow"
+  },
+  {
+    "file": "internal/native/runtime/string.c",
+    "line": 45,
+    "function": "adamic_string_at_relative"
+  },
+  {
+    "file": "internal/native/runtime/string.c",
+    "line": 54,
+    "function": "adamic_string_starts_with"
+  },
+  {
+    "file": "internal/native/runtime/string.c",
+    "line": 61,
+    "function": "adamic_string_ends_with"
+  },
+  {
+    "file": "internal/native/runtime/string_append.c",
+    "line": 22,
+    "function": "grown"
+  },
+  {
+    "file": "internal/native/runtime/string_append.c",
+    "line": 33,
+    "function": "adamic_string_append"
+  },
+  {
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 4,
+    "function": "allocate"
+  },
+  {
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 15,
+    "function": "adamic_string_allocate"
+  },
+  {
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 19,
+    "function": "adamic_string_from_number"
+  },
+  {
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 30,
+    "function": "adamic_string_check_length"
+  },
+  {
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 37,
+    "function": "adamic_string_concat"
+  },
+  {
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 76,
+    "function": "adamic_string_put"
+  },
+  {
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 101,
+    "function": "adamic_string_join_halves"
+  },
+  {
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 122,
+    "function": "adamic_string_equal"
+  },
+  {
+    "file": "internal/native/runtime/string_builder_impl.h",
+    "line": 10,
+    "function": "builder_add"
+  },
+  {
+    "file": "internal/native/runtime/string_builder_impl.h",
+    "line": 32,
+    "function": "builder_unit"
+  },
+  {
+    "file": "internal/native/runtime/string_builder_impl.h",
+    "line": 49,
+    "function": "builder_finish_units"
+  },
+  {
+    "file": "internal/native/runtime/string_builder_impl.h",
+    "line": 57,
+    "function": "builder_finish"
+  },
+  {
+    "file": "internal/native/runtime/string_decode_impl.h",
+    "line": 8,
+    "function": "sequence"
+  },
+  {
+    "file": "internal/native/runtime/string_decode_impl.h",
+    "line": 22,
+    "function": "decode"
+  },
+  {
+    "file": "internal/native/runtime/string_decode_impl.h",
+    "line": 35,
+    "function": "unit_at"
+  },
+  {
+    "file": "internal/native/runtime/string_decode_impl.h",
+    "line": 44,
+    "function": "adamic_string_char_code"
+  },
+  {
+    "file": "internal/native/runtime/string_from.c",
+    "line": 11,
+    "function": "adamic_string_index_of_from"
+  },
+  {
+    "file": "internal/native/runtime/string_index.c",
+    "line": 39,
+    "function": "width"
+  },
+  {
+    "file": "internal/native/runtime/string_index.c",
+    "line": 43,
+    "function": "adamic_string_units"
+  },
+  {
+    "file": "internal/native/runtime/string_index.c",
+    "line": 57,
+    "function": "build"
+  },
+  {
+    "file": "internal/native/runtime/string_index.c",
+    "line": 113,
+    "function": "usable"
+  },
+  {
+    "file": "internal/native/runtime/string_index.c",
+    "line": 126,
+    "function": "adamic_string_units_before"
+  },
+  {
+    "file": "internal/native/runtime/string_index.c",
+    "line": 161,
+    "function": "adamic_string_locate"
+  },
+  {
+    "file": "internal/native/runtime/string_index.c",
+    "line": 224,
+    "function": "adamic_string_free_index"
+  },
+  {
+    "file": "internal/native/runtime/string_repeat_impl.h",
+    "line": 4,
+    "function": "repeat_unchecked"
+  },
+  {
+    "file": "internal/native/runtime/string_repeat_impl.h",
+    "line": 12,
+    "function": "adamic_string_repeat"
+  },
+  {
+    "file": "internal/native/runtime/string_repeat_impl.h",
+    "line": 30,
+    "function": "adamic_string_pad"
+  },
+  {
+    "file": "internal/native/runtime/string_replace_impl.h",
+    "line": 10,
+    "function": "pieces_add"
+  },
+  {
+    "file": "internal/native/runtime/string_replace_impl.h",
+    "line": 24,
+    "function": "pieces_join"
+  },
+  {
+    "file": "internal/native/runtime/string_replace_impl.h",
+    "line": 37,
+    "function": "units_piece"
+  },
+  {
+    "file": "internal/native/runtime/string_replace_impl.h",
+    "line": 48,
+    "function": "substitution"
+  },
+  {
+    "file": "internal/native/runtime/string_replace_impl.h",
+    "line": 85,
+    "function": "adamic_string_replace"
+  },
+  {
+    "file": "internal/native/runtime/string_search_impl.h",
+    "line": 7,
+    "function": "halves_pairs"
+  },
+  {
+    "file": "internal/native/runtime/string_search_impl.h",
+    "line": 25,
+    "function": "to_units"
+  },
+  {
+    "file": "internal/native/runtime/string_search_impl.h",
+    "line": 41,
+    "function": "unit_index_of"
+  },
+  {
+    "file": "internal/native/runtime/string_search_impl.h",
+    "line": 50,
+    "function": "adamic_string_index_of"
+  },
+  {
+    "file": "internal/native/runtime/string_search_impl.h",
+    "line": 54,
+    "function": "adamic_string_index_of_at"
+  },
+  {
+    "file": "internal/native/runtime/string_search_impl.h",
+    "line": 103,
+    "function": "affix"
+  },
+  {
+    "file": "internal/native/runtime/string_search_impl.h",
+    "line": 113,
+    "function": "adamic_string_last_index_of"
+  },
+  {
+    "file": "internal/native/runtime/string_share.c",
+    "line": 26,
+    "function": "adamic_string_share"
+  },
+  {
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 5,
+    "function": "clamp_index"
+  },
+  {
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 13,
+    "function": "adamic_string_slice"
+  },
+  {
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 59,
+    "function": "ascii_character"
+  },
+  {
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 70,
+    "function": "adamic_string_at"
+  },
+  {
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 89,
+    "function": "adamic_string_code_point_at"
+  },
+  {
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 122,
+    "function": "adamic_string_compare"
+  },
+  {
+    "file": "internal/native/runtime/string_split_impl.h",
+    "line": 3,
+    "function": "adamic_string_code_points"
+  },
+  {
+    "file": "internal/native/runtime/string_split_impl.h",
+    "line": 7,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/string_split_impl.h",
+    "line": 13,
+    "function": "adamic_string_split"
+  },
+  {
+    "file": "internal/native/runtime/string_split_impl.h",
+    "line": 22,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/string_split_impl.h",
+    "line": 34,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/string_split_impl.h",
+    "line": 47,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/string_split_impl.h",
+    "line": 54,
+    "function": "adamic_array_push"
+  },
+  {
+    "file": "internal/native/runtime/string_trim_impl.h",
+    "line": 4,
+    "function": "is_space"
+  },
+  {
+    "file": "internal/native/runtime/string_trim_impl.h",
+    "line": 13,
+    "function": "adamic_string_trim"
+  },
+  {
+    "file": "internal/native/runtime/string_trim_impl.h",
+    "line": 17,
+    "function": "adamic_string_trim_sides"
+  },
+  {
+    "file": "internal/native/runtime/string_walk_impl.h",
+    "line": 3,
+    "function": "adamic_string_next"
+  },
+  {
+    "file": "internal/native/runtime/string_walk_impl.h",
+    "line": 7,
+    "function": "adamic_string_slice_bytes"
+  },
+  {
+    "file": "internal/native/runtime/string_walk_impl.h",
+    "line": 20,
+    "function": "units_next"
+  },
+  {
+    "file": "internal/native/runtime/string_walk_impl.h",
+    "line": 46,
+    "function": "units_start"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 15,
+    "function": "profiling"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 16,
+    "function": "timing"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 26,
+    "function": "checked"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 50,
+    "function": "path_view"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 56,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 59,
+    "function": "adamic_tsgo_program"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 79,
+    "function": "adamic_tsgo_query"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 83,
+    "function": "adamic_tsgo_query_in"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 106,
+    "function": "adamic_tsgo_type_parts"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 127,
+    "function": "adamic_tsgo_inspect"
+  },
+  {
+    "file": "internal/native/runtime/tsgo.c",
+    "line": 148,
+    "function": "adamic_tsgo_release"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 10,
+    "function": "width"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 19,
+    "function": "range_error"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 24,
+    "function": "allocate"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 43,
+    "function": "adamic_typed_array_new"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 53,
+    "function": "read_element"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 62,
+    "function": "write_element"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 79,
+    "function": "adamic_typed_array_from_numbers"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 87,
+    "function": "valid_index"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 91,
+    "function": "adamic_typed_array_get"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 93,
+    "function": "return"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 96,
+    "function": "adamic_typed_array_check_write"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 106,
+    "function": "adamic_typed_array_set"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 111,
+    "function": "adamic_typed_array_length"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 113,
+    "function": "relative"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 119,
+    "function": "adamic_typed_array_fill"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 126,
+    "function": "adamic_typed_array_set_from"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 142,
+    "function": "adamic_typed_array_subarray"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 153,
+    "function": "adamic_typed_array_iterate"
+  },
+  {
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 160,
+    "function": "adamic_typed_array_iterator_next"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 20,
+    "function": "adamic_box_number"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 26,
+    "function": "adamic_union_equal"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 45,
+    "function": "adamic_union_to_string"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 65,
+    "function": "adamic_union_typeof"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 91,
+    "function": "adamic_register_shape_types"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 99,
+    "function": "named"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 106,
+    "function": "object_prototype_name"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 111,
+    "function": "array_key"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 123,
+    "function": "adamic_has_property"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 159,
+    "function": "dynamic_slot"
+  },
+  {
+    "file": "internal/native/runtime/union.c",
+    "line": 177,
+    "function": "adamic_dynamic_property"
+  },
+  {
+    "file": "internal/native/runtime/utf8.c",
+    "line": 14,
+    "function": "adamic_utf8_length"
+  },
+  {
+    "file": "internal/native/runtime/utf8.c",
+    "line": 18,
+    "function": "adamic_utf8_at"
+  },
+  {
+    "file": "internal/native/runtime/view_callables_contract.h",
+    "line": 25,
+    "function": "adamic_callable_representation_compatible"
+  },
+  {
+    "file": "internal/native/runtime/view_callables_contract.h",
+    "line": 35,
+    "function": "adamic_view_callable_signatures_match"
+  },
+  {
+    "file": "internal/native/runtime/view_callables_contract.h",
+    "line": 45,
+    "function": "adamic_view_callable_shape"
+  },
+  {
+    "file": "internal/native/runtime/view_unions_mixed.c",
+    "line": 7,
+    "function": "adamic_view_union_heap"
+  },
+  {
+    "file": "internal/native/runtime/view_unions_mixed.c",
+    "line": 30,
+    "function": "adamic_view_union_kind_name"
+  },
+  {
+    "file": "internal/native/runtime/view_unions_mixed.c",
+    "line": 45,
+    "function": "adamic_view_union_literal_matches"
+  },
+  {
+    "file": "internal/native/runtime/view_unions_mixed.c",
+    "line": 57,
+    "function": "adamic_view_mixed_union_select"
+  },
+  {
+    "file": "internal/native/runtime/view_unions_untagged.c",
+    "line": 4,
+    "function": "tag_matches"
+  },
+  {
+    "file": "internal/native/runtime/view_unions_untagged.c",
+    "line": 15,
+    "function": "adamic_view_untagged_union_select"
+  },
+  {
+    "file": "internal/native/runtime/view_unions_untagged.c",
+    "line": 40,
+    "function": "adamic_view_untagged_plain_slot"
+  },
+  {
+    "file": "internal/native/runtime/view_unions_untagged.c",
+    "line": 85,
+    "function": "plain_matches_depth"
+  },
+  {
+    "file": "internal/native/runtime/view_unions_untagged.c",
+    "line": 169,
+    "function": "adamic_view_untagged_plain_matches"
+  },
+  {
+    "file": "internal/native/runtime/view_unions_untagged.c",
+    "line": 173,
+    "function": "adamic_view_untagged_plain_select"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 27,
+    "function": "hide"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 31,
+    "function": "reveal"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 44,
+    "function": "slot_of"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 57,
+    "function": "find"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 72,
+    "function": "insert"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 108,
+    "function": "remove_entry"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 120,
+    "function": "adamic_weak_of"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 134,
+    "function": "adamic_weak_target"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 138,
+    "function": "adamic_weak_target_present"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 147,
+    "function": "adamic_weak_forget"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 158,
+    "function": "adamic_weak_dropped"
+  },
+  {
+    "file": "internal/native/runtime/weak.c",
+    "line": 164,
+    "function": "adamic_weak_held"
+  }
+]

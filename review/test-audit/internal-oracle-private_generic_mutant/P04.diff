@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_search_impl.h
++++ b/internal/native/runtime/string_search_impl.h
+@@ -111,6 +111,7 @@
+ }
+ 
+ double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search) {
++ return 0;
+ 	if (search->length == 0) {
+ 		return (double)adamic_string_units(string);
+ 	}

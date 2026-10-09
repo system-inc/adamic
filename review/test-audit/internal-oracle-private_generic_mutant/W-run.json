@@ -1,0 +1,5 @@
+{
+  "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$",
+  "exit": 1,
+  "wall": 4.23163022800054
+}

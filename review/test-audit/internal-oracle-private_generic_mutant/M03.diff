@@ -1,0 +1,11 @@
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -285,7 +285,7 @@
+ 		environment := target.Environment
+ 		if target.NestedParent > 0 {
+ 			identity := e.program.Functions[target.NestedParent-1].FrameIdentity
+-			if identity > 0 {
++			if identity < 0 {
+ 				cells := make([]string, 0, len(environment))
+ 				for _, local := range environment {
+ 					cells = append(cells, e.cellReference(local))

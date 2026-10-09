@@ -1,0 +1,5 @@
+{
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegexCycleFixtureHasItsNativeDependency|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestRuntimeLastIndexOfMatchesNode|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestScannerNestedReferences|TestNestedReferenceIdentityMutant)$",
+  "exit": 0,
+  "wall": 4.6789709759996185
+}

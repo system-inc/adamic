@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.252,
+    "wall": 1.8731388539999898,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestScannerNestedReferenceMutants$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.254,
+    "wall": 1.8647623719998592,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestScannerNestedReferenceMutants$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.266,
+    "wall": 1.8783082859999922,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestScannerNestedReferenceMutants$"
+  }
+]

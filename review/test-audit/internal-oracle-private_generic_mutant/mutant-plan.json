@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/runtime/string_search_impl.h",
+    "line": 115,
+    "before": "return (double)adamic_string_units(string);",
+    "after": "return 0;",
+    "menu": "change constant"
+  },
+  {
+    "id": "M02",
+    "file": "internal/native/runtime/string_search_impl.h",
+    "line": 123,
+    "before": "string->length - search->length + 1",
+    "after": "string->length - search->length",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/emit_expressions.go",
+    "line": 288,
+    "before": "if identity > 0 {",
+    "after": "if identity < 0 {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M04",
+    "file": "internal/javascript/javascript.go",
+    "line": 51,
+    "before": "if (!values.has(code))",
+    "after": "if (values.has(code))",
+    "menu": "flip condition"
+  }
+]

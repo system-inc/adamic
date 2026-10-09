@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.394,
+    "wall": 2.161846179999884,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestUninitializedIsNotNullishMutant$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.401,
+    "wall": 2.1435572769996725,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestUninitializedIsNotNullishMutant$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.386,
+    "wall": 2.1100529830000596,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestUninitializedIsNotNullishMutant$"
+  }
+]

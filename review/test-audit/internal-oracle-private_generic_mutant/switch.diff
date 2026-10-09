@@ -1,0 +1,136 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..934f2a39 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -12,6 +12,7 @@ package javascript
+ 
+ import (
+ 	"fmt"
++	"os"
+ 	"regexp"
+ 	"strconv"
+ 	"strings"
+@@ -22,6 +23,9 @@ import (
+ // JavaScript is a program as one JavaScript module, importing panic and the functions that read and
+ // write files from 'adamic'.
+ func JavaScript(program *ir.Program) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P03" {
++		return ""
++	}
+ 	return JavaScriptWith(program, Options{})
+ }
+ 
+@@ -48,7 +52,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
+ 	// A closure is its code and its cells, an instance of its own class so typeof can tell it from an
+ 	// object that happens to have fields of those names.
+ 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
+-	builder.WriteString("const adamicCanonical = (identity, code, cells) => { const values = identity.functions ??= new Map(); if (!values.has(code)) values.set(code, new AdamicClosure(code, cells)); return values.get(code); };\n")
++	if os.Getenv("ADAMIC_MUTANT") == "M04" {
++		builder.WriteString("const adamicCanonical = (identity, code, cells) => { const values = identity.functions ??= new Map(); if (values.has(code)) values.set(code, new AdamicClosure(code, cells)); return values.get(code); };\n")
++	} else {
++		builder.WriteString("const adamicCanonical = (identity, code, cells) => { const values = identity.functions ??= new Map(); if (!values.has(code)) values.set(code, new AdamicClosure(code, cells)); return values.get(code); };\n")
++	}
+ 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+ 	builder.WriteString(fieldReadinessRuntime)
+ 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..a382ecf0 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -13,11 +13,15 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
++	"os"
+ 	"path/filepath"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P01" {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..f59aacbc 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -3,6 +3,7 @@ package native
+ import (
+ 	"fmt"
+ 	"github.com/system-inc/adamic/internal/ir"
++	"os"
+ 	"strings"
+ )
+ 
+@@ -20,6 +21,9 @@ import (
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P02" {
++		return ""
++	}
+ 	return cProgram(program, -1)
+ }
+ 
+diff --git a/internal/native/emit_expressions.go b/internal/native/emit_expressions.go
+index 3549a0f5..0de2934b 100644
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -4,6 +4,7 @@ package native
+ import (
+ 	"fmt"
+ 	"github.com/system-inc/adamic/internal/ir"
++	"os"
+ 	"strconv"
+ 	"strings"
+ )
+@@ -285,7 +286,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
+ 		environment := target.Environment
+ 		if target.NestedParent > 0 {
+ 			identity := e.program.Functions[target.NestedParent-1].FrameIdentity
+-			if identity > 0 {
++			if (os.Getenv("ADAMIC_MUTANT") == "M03" && identity < 0) || (os.Getenv("ADAMIC_MUTANT") != "M03" && identity > 0) {
+ 				cells := make([]string, 0, len(environment))
+ 				for _, local := range environment {
+ 					cells = append(cells, e.cellReference(local))
+diff --git a/internal/native/runtime/string.c b/internal/native/runtime/string.c
+index 48fc51e8..53d0b453 100644
+--- a/internal/native/runtime/string.c
++++ b/internal/native/runtime/string.c
+@@ -38,6 +38,9 @@ static unsigned decode(const unsigned char *bytes, size_t size);
+ 
+ #include "string_repeat_impl.h"
+ 
++
++static bool audit_selected(const char *id) { static bool loaded; static const char *selected; if (!loaded) {selected=getenv("ADAMIC_MUTANT");loaded=true;} return selected!=NULL && strcmp(selected,id)==0; }
++
+ #include "string_search_impl.h"
+ 
+ #include "string_replace_impl.h"
+diff --git a/internal/native/runtime/string_search_impl.h b/internal/native/runtime/string_search_impl.h
+index 2ae14d50..6c41ad5c 100644
+--- a/internal/native/runtime/string_search_impl.h
++++ b/internal/native/runtime/string_search_impl.h
+@@ -111,8 +111,9 @@ static bool affix(const adamic_string *string, const adamic_string *search, bool
+ }
+ 
+ double adamic_string_last_index_of(const adamic_string *string, const adamic_string *search) {
++ if (audit_selected("P04")) return 0;
+ 	if (search->length == 0) {
+-		return (double)adamic_string_units(string);
++		return audit_selected("M01") ? 0 : (double)adamic_string_units(string);
+ 	}
+ 	if (!halves_pairs(search)) {
+ 		// A whole-character needle matches by bytes, as indexOf does. Look backward without
+@@ -120,7 +121,7 @@ double adamic_string_last_index_of(const adamic_string *string, const adamic_str
+ 		if (search->length > string->length) {
+ 			return -1;
+ 		}
+-		for (size_t offset = string->length - search->length + 1; offset-- > 0;) {
++		for (size_t offset = (audit_selected("M02") ? (string->length - search->length) : (string->length - search->length + 1)); offset-- > 0;) {
+ 			if (string->bytes[offset] == search->bytes[0] &&
+ 				memcmp(string->bytes + offset, search->bytes, search->length) == 0) {
+ 				return (double)adamic_string_units_before(string, offset);

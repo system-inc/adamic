@@ -1,0 +1,445 @@
+[
+  {
+    "test": "TestPrivateGenericMethodOwnerMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/private_generic_mutant_test.go",
+    "seconds": 0.09,
+    "oracle": "Live source Node compared with deliberately changed native or JavaScript output.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W: private_generic_mutant_test.go:54: private method owner mutant survived: \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$ => private_generic_mutant_test.go:54: private method owner mutant survived: \"\"",
+    "members": [
+      "TestPrivateGenericMethodOwnerMutant"
+    ]
+  },
+  {
+    "test": "TestReadinessMutants family",
+    "package": "internal/oracle",
+    "file": "internal/oracle/readiness_test.go",
+    "seconds": 0.926,
+    "oracle": "Self eager non-null panic contract and harmless-output detector; source Node only sanity-checked, own JavaScript backend agreement.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W: readiness_test.go:147: drop-check mutant was not caught by harmless output: oracle.run{stdout:[]uint8{0x73, 0x63, 0x61, 0x6e, 0x6e, 0x65, 0x72, 0xa, 0x73, 0x63, 0x61, 0x6e, 0x6e, 0x65, 0x72, 0xa, 0x61, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x20, ",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$ => readiness_test.go:147: drop-check mutant was not caught by harmless output: oracle.run{stdout:[]uint8{0x73, 0x63, 0x61, 0x6e, 0x6e, 0x65, 0x72, 0xa, 0x73, 0x63, 0x61, 0x6e, 0x6e, 0x65, 0x72, 0xa, 0x61, 0x73, 0x73, 0x69, 0x67, 0x6e, 0x65, 0x64, 0x20, ",
+    "members": [
+      "TestReadinessMutants",
+      "TestUninitializedIsNotNullishMutant",
+      "TestLazyInitializerIsNotEagerMutant"
+    ]
+  },
+  {
+    "test": "TestNonNullWeakFreedNamesExpression",
+    "package": "internal/oracle",
+    "file": "internal/oracle/readiness_test.go",
+    "seconds": 0.358,
+    "oracle": "Live source Node for pinned tracing output; self pinned native freed-Weak diagnostic.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W: readiness_test.go:136: freed Weak diagnostic mutant escaped pinned output",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$ => readiness_test.go:136: freed Weak diagnostic mutant escaped pinned output",
+    "members": [
+      "TestNonNullWeakFreedNamesExpression"
+    ]
+  },
+  {
+    "test": "TestClosedNestedConstituentMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/real_nested_functions_test.go",
+    "seconds": 0.295,
+    "oracle": "Live source Node compared with deliberately changed native or JavaScript output.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W: real_nested_functions_test.go:72: native incorrect constituent count escaped Node",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$ => real_nested_functions_test.go:72: native incorrect constituent count escaped Node",
+    "members": [
+      "TestClosedNestedConstituentMutant"
+    ]
+  },
+  {
+    "test": "TestRegexCycleFixtureHasItsNativeDependency",
+    "package": "internal/oracle",
+    "file": "internal/oracle/regexp_cycle_test.go",
+    "seconds": 0.008,
+    "oracle": "Self reflection on ir.Program.Regexps. Body has no failure assertion; false dependency result only skips.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRegexCycleFixtureHasItsNativeDependency"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-S01-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRegexCycleFixtureHasItsNativeDependency$ => SKIP: native regex lowering/emission is on codex/stage1-css; run this fixture on the scratch merge",
+    "members": [
+      "TestRegexCycleFixtureHasItsNativeDependency"
+    ]
+  },
+  {
+    "test": "TestRegExpReplacementNodeMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/regexp_replace_test.go",
+    "seconds": 0.363,
+    "oracle": "Live source Node compared with deliberately changed native or JavaScript output.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W: regexp_replace_test.go:64: Node did not catch mutant",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$ => regexp_replace_test.go:64: Node did not catch mutant",
+    "members": [
+      "TestRegExpReplacementNodeMutants"
+    ]
+  },
+  {
+    "test": "TestRegExpReplacementTypeGuardMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/regexp_replace_test.go",
+    "seconds": 0.296,
+    "oracle": "Self declared-type guard policy, using our JavaScript backend output as native expectation.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W: regexp_replace_test.go:108: backend comparison did not catch mutant",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$ => regexp_replace_test.go:108: backend comparison did not catch mutant",
+    "members": [
+      "TestRegExpReplacementTypeGuardMutants"
+    ]
+  },
+  {
+    "test": "TestRepresentationClockSourceMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/representation_clock_source_test.go",
+    "seconds": 0.109,
+    "oracle": "Live source Node compared with deliberately changed native or JavaScript output.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W: representation_clock_source_test.go:55: want stdout kill, got \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$ => representation_clock_source_test.go:55: want stdout kill, got \"\"",
+    "members": [
+      "TestRepresentationClockSourceMutant"
+    ]
+  },
+  {
+    "test": "TestRuntimeLastIndexOfMatchesNode",
+    "package": "internal/oracle",
+    "file": "internal/oracle/runtime_last_index_test.go",
+    "seconds": 0.07,
+    "oracle": "Live source Node stdout, stderr and exit compared with sanitized, release and our JavaScript backend; leak checking.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01",
+      "M02"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02"
+    ],
+    "last_proven_fail": "M02: runtime_last_index_test.go:22: sanitized: stdout differs; Node stdout \"0\\n0\\n-1\\n-1\\n102\\n100\\n101\\n98\\n96\\n95\\n96\\n95\\n96\\n95\\n96\\n95\\n96\\n89\\n102\\n100\\n101\\n98\\n99\\n98\\n99\\n96\\n97\\n96\\n97\\n90\\n102\\n100\\n100\\n99\\n100\\n97\\n98\\n97\\n98\\n91\\n102\\n100\\n1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01",
+      "P02",
+      "P03",
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ],
+    "evidence": "ADAMIC_MUTANT=M02 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u068/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestRuntimeLastIndexOfMatchesNode|TestScannerNestedReferences)$ => runtime_last_index_test.go:22: sanitized: stdout differs; Node stdout \"0\\n0\\n-1\\n-1\\n102\\n100\\n101\\n98\\n96\\n95\\n96\\n95\\n96\\n95\\n96\\n95\\n96\\n89\\n102\\n100\\n101\\n98\\n99\\n98\\n99\\n96\\n97\\n96\\n97\\n90\\n102\\n100\\n100\\n99\\n100\\n97\\n98\\n97\\n98\\n91\\n102\\n100\\n1",
+    "members": [
+      "TestRuntimeLastIndexOfMatchesNode"
+    ]
+  },
+  {
+    "test": "TestScannerNestedOverloadImplementationMutantIsCaught",
+    "package": "internal/oracle",
+    "file": "internal/oracle/scanner_nested_overload_test.go",
+    "seconds": 0.209,
+    "oracle": "Live source Node compared with deliberately changed native or JavaScript output.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W: scanner_nested_overload_test.go:57: want Node stdout catcher, got \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$ => scanner_nested_overload_test.go:57: want Node stdout catcher, got \"\"",
+    "members": [
+      "TestScannerNestedOverloadImplementationMutantIsCaught"
+    ]
+  },
+  {
+    "test": "TestScannerNestedReferenceMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/scanner_nested_references_test.go",
+    "seconds": 0.254,
+    "oracle": "Live source Node compared with deliberately changed native or JavaScript output.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W: scanner_nested_references_test.go:70: native: want stdout catcher, got \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$ => scanner_nested_references_test.go:70: native: want stdout catcher, got \"\"",
+    "members": [
+      "TestScannerNestedReferenceMutants"
+    ]
+  },
+  {
+    "test": "TestScannerNestedReferences",
+    "package": "internal/oracle",
+    "file": "internal/oracle/scanner_nested_references_test.go",
+    "seconds": 0.422,
+    "oracle": "Live source Node stdout, stderr and exit compared with sanitized, release and our JavaScript backend; leak checking.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M03",
+      "M04"
+    ],
+    "last_proven_fail": "M04: scanner_nested_references_test.go:102: JavaScript exit codes differ: output \"\", Node \"x\\n\", stderr \"adamic: panic: TypeError: Cannot read properties of undefined (reading 'code')\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01",
+      "P02",
+      "P03"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRuntimeLastIndexOfMatchesNode",
+      "TestScannerNestedReferences"
+    ],
+    "evidence": "ADAMIC_MUTANT=M04 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u068/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestRuntimeLastIndexOfMatchesNode|TestScannerNestedReferences)$ => scanner_nested_references_test.go:102: JavaScript exit codes differ: output \"\", Node \"x\\n\", stderr \"adamic: panic: TypeError: Cannot read properties of undefined (reading 'code')\\n\"",
+    "members": [
+      "TestScannerNestedReferences"
+    ]
+  },
+  {
+    "test": "TestNestedReferenceIdentityMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/scanner_nested_references_test.go",
+    "seconds": 0.308,
+    "oracle": "Live source Node compared with deliberately changed native or JavaScript output.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W: scanner_nested_references_test.go:143: JavaScript identity mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrivateGenericMethodOwnerMutant",
+      "TestReadinessMutants family",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestClosedNestedConstituentMutant",
+      "TestRegExpReplacementNodeMutants",
+      "TestRegExpReplacementTypeGuardMutants",
+      "TestRepresentationClockSourceMutant",
+      "TestScannerNestedOverloadImplementationMutantIsCaught",
+      "TestScannerNestedReferenceMutants",
+      "TestNestedReferenceIdentityMutant"
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-W-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestPrivateGenericMethodOwnerMutant|TestReadinessMutants|TestUninitializedIsNotNullishMutant|TestNonNullWeakFreedNamesExpression|TestLazyInitializerIsNotEagerMutant|TestClosedNestedConstituentMutant|TestRegExpReplacementNodeMutants|TestRegExpReplacementTypeGuardMutants|TestRepresentationClockSourceMutant|TestScannerNestedOverloadImplementationMutantIsCaught|TestScannerNestedReferenceMutants|TestNestedReferenceIdentityMutant)$ => scanner_nested_references_test.go:143: JavaScript identity mutant survived",
+    "members": [
+      "TestNestedReferenceIdentityMutant"
+    ]
+  }
+]

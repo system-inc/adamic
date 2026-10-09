@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.09,
+    "wall": 2.779302461000043,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestPrivateGenericMethodOwnerMutant$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.085,
+    "wall": 1.9537607539996316,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestPrivateGenericMethodOwnerMutant$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.09,
+    "wall": 1.86083955399954,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestPrivateGenericMethodOwnerMutant$"
+  }
+]

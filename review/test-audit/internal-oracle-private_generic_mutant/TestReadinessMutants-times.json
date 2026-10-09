@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.814,
+    "wall": 2.582802908999838,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReadinessMutants$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.806,
+    "wall": 2.494856903999789,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReadinessMutants$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.831,
+    "wall": 2.5670671810003114,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestReadinessMutants$"
+  }
+]

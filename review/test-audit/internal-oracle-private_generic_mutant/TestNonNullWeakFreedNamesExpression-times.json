@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.358,
+    "wall": 2.1841805269996257,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNonNullWeakFreedNamesExpression$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.347,
+    "wall": 1.9620568589998584,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNonNullWeakFreedNamesExpression$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.358,
+    "wall": 1.9778209289997903,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNonNullWeakFreedNamesExpression$"
+  }
+]

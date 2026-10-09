@@ -1,0 +1,53 @@
+{
+  "wall": 2.6955966810000973,
+  "results": [
+    {
+      "id": "M01",
+      "apply_exit": 0,
+      "compile_exit": 0,
+      "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -DADAMIC_COUNT -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/adamic-gate/u068-validate-5s5kc618/internal/native/runtime -c /tmp/adamic-gate/u068-validate-5s5kc618/internal/native/runtime/string.c -o /tmp/adamic-gate/u068-validate-5s5kc618/out.o"
+    },
+    {
+      "id": "M02",
+      "apply_exit": 0,
+      "compile_exit": 0,
+      "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -DADAMIC_COUNT -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/adamic-gate/u068-validate-bz4qwpzx/internal/native/runtime -c /tmp/adamic-gate/u068-validate-bz4qwpzx/internal/native/runtime/string.c -o /tmp/adamic-gate/u068-validate-bz4qwpzx/out.o"
+    },
+    {
+      "id": "M03",
+      "apply_exit": 0,
+      "compile_exit": 0,
+      "command": "go vet -overlay /tmp/adamic-gate/u068-validate-sws43tpj/overlay.json ./internal/native/"
+    },
+    {
+      "id": "M04",
+      "apply_exit": 0,
+      "compile_exit": 0,
+      "command": "go vet -overlay /tmp/adamic-gate/u068-validate-jgbavpn7/overlay.json ./internal/javascript/"
+    },
+    {
+      "id": "P01",
+      "apply_exit": 0,
+      "compile_exit": 0,
+      "command": "go vet -overlay /tmp/adamic-gate/u068-validate-5m2h9z8_/overlay.json ./internal/lower/"
+    },
+    {
+      "id": "P02",
+      "apply_exit": 0,
+      "compile_exit": 0,
+      "command": "go vet -overlay /tmp/adamic-gate/u068-validate-wpcspdm4/overlay.json ./internal/native/"
+    },
+    {
+      "id": "P03",
+      "apply_exit": 0,
+      "compile_exit": 0,
+      "command": "go vet -overlay /tmp/adamic-gate/u068-validate-cwuxqf61/overlay.json ./internal/javascript/"
+    },
+    {
+      "id": "P04",
+      "apply_exit": 0,
+      "compile_exit": 0,
+      "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -DADAMIC_COUNT -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/adamic-gate/u068-validate-h4ylkkv9/internal/native/runtime -c /tmp/adamic-gate/u068-validate-h4ylkkv9/internal/native/runtime/string.c -o /tmp/adamic-gate/u068-validate-h4ylkkv9/out.o"
+    }
+  ]
+}

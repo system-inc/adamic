@@ -1,0 +1,11 @@
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -48,7 +48,7 @@
+ 	// A closure is its code and its cells, an instance of its own class so typeof can tell it from an
+ 	// object that happens to have fields of those names.
+ 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells, receiver = false) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t\tthis.receiver = receiver;\n\t}\n}\n")
+-	builder.WriteString("const adamicCanonical = (identity, code, cells) => { const values = identity.functions ??= new Map(); if (!values.has(code)) values.set(code, new AdamicClosure(code, cells)); return values.get(code); };\n")
++	builder.WriteString("const adamicCanonical = (identity, code, cells) => { const values = identity.functions ??= new Map(); if (values.has(code)) values.set(code, new AdamicClosure(code, cells)); return values.get(code); };\n")
+ 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+ 	builder.WriteString(fieldReadinessRuntime)
+ 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")

@@ -1,0 +1,21 @@
+{
+  "unit": "u068",
+  "commit": "6c60da091afddc9c2fe88b3a1067845b6dc79cb3",
+  "nproc": 5,
+  "raw_functions": 15,
+  "grouped_rows": 13,
+  "moved_or_missing": [],
+  "setup_seconds": 0,
+  "npm_ci_reported_seconds": 0.389,
+  "full_baseline_binary_seconds": 90.108,
+  "slice_baseline_binary_seconds": 2.945,
+  "coverage_binary_seconds": 4.208,
+  "standalone_validation_wall": 2.6955966810000973,
+  "verdicts": {
+    "witness": 10,
+    "untrue": 1,
+    "sacred": 2
+  },
+  "survivors": [],
+  "native_rebuild_timing": "Included in binary timings, not separately measured."
+}

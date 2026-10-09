@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.207,
+    "wall": 1.7913896390000446,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestScannerNestedOverloadImplementationMutantIsCaught$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.209,
+    "wall": 1.8113200990001133,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestScannerNestedOverloadImplementationMutantIsCaught$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.21,
+    "wall": 1.834646512999825,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestScannerNestedOverloadImplementationMutantIsCaught$"
+  }
+]

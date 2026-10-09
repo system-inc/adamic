@@ -1,0 +1,5 @@
+{
+  "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -overlay /tmp/u068-S01-overlay.json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRegexCycleFixtureHasItsNativeDependency$",
+  "exit": 0,
+  "wall": 1.7677953399997932
+}

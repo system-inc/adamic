@@ -1,0 +1,20 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.081,
+    "wall": 2.170249167000293,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRuntimeLastIndexOfMatchesNode$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.068,
+    "wall": 1.8122645229996124,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRuntimeLastIndexOfMatchesNode$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.07,
+    "wall": 1.808909553000376,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestRuntimeLastIndexOfMatchesNode$"
+  }
+]
