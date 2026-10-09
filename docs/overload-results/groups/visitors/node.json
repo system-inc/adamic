@@ -1,0 +1,50 @@
+[
+  {
+    "fixture": "internal/oracle/testdata/overload_visitors/default-liar.ts",
+    "exit": 0,
+    "stdout": "true\nundefined\nfalse\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_visitors/helper-liar.ts",
+    "exit": 0,
+    "stdout": "true\nundefined\ntrue\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_visitors/helper.ts",
+    "exit": 0,
+    "stdout": "true\nmodifier\ntrue\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_visitors/instantiations.ts",
+    "exit": 0,
+    "stdout": "modifier\n7\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_visitors/original-liar.ts",
+    "exit": 0,
+    "stdout": "true\nundefined\ntrue\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_visitors/original.ts",
+    "exit": 0,
+    "stdout": "true\nmodifier\ntrue\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_visitors/overloaded-helper-liar.ts",
+    "exit": 0,
+    "stdout": "true\nundefined\ntrue\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_visitors/overloaded-helper.ts",
+    "exit": 0,
+    "stdout": "true\nmodifier\ntrue\n",
+    "stderr": ""
+  }
+]

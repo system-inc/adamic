@@ -3,6 +3,7 @@ package oracle
 import (
 	"context"
 	"fmt"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -60,7 +61,7 @@ func countedOptionalGuard(t *testing.T, name string) string {
 	}
 	command, args := pinnedStack(binary)
 	result := execute(t, command, args...)
-	if report := unbalanced(t, result); report != "" {
+	if report := leakcheck.Unbalanced(leakRun(result)); report != "" {
 		t.Fatal(report)
 	}
 	match := countsLine.FindSubmatch(result.stderr)

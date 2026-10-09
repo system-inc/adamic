@@ -111,12 +111,14 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 		}
 		if (rest != NULL)
 			packed[rest_slot].reference = rest;
+		// The dispatcher selects the header-derived signature. The observable
+		// count is the logical argument list, not the reserved rest-pack slots.
 		adamic_value returned = adamic_closure_call(callback, packed, argument_count);
 		for (size_t j = 0; j < parameter_count; j++)
 			if (parameters[j] != 2)
 				adamic_release(packed[j].reference);
 		adamic_release(rest);
-		if (adamic_thrown != NULL)
+		if (adamic_exception_pending)
 			break;
 		adamic_string *replacement = NULL;
 		switch (return_kind) {
@@ -151,7 +153,7 @@ adamic_string *adamic_regex_replace_callback(adamic_string *input, adamic_object
 	free(packed);
 	adamic_release(matches);
 	adamic_string *result = NULL;
-	if (adamic_thrown == NULL) {
+	if (!adamic_exception_pending) {
 		adamic_array_push(pieces, (adamic_value){.reference = adamic_string_slice(
 													 input, (double)previous,
 													 adamic_string_length(input), true)});

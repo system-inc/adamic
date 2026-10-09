@@ -7,8 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-adamic_heap *adamic_thrown;
-bool adamic_exception_pending;
+_Thread_local adamic_heap *adamic_thrown;
+_Thread_local bool adamic_exception_pending;
 
 static const char *const error_names[] = {"name", "message"};
 static const bool error_references[] = {true, true};

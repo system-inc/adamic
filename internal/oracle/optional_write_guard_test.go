@@ -72,7 +72,7 @@ func TestOptionalWriteGuard(t *testing.T) {
 #include <string.h>
 static adamic_value *mutant_absent_write(adamic_object *object, const char *name, adamic_slot_cache *cache) {
  adamic_value *slot = adamic_object_write_field(object, name, cache);
- if (strcmp(name, "` + name + `") == 0) adamic_object_absent(object, cache->index);
+ if (strcmp(name, "` + name + `") == 0) adamic_object_absent(object, adamic_slot_index(object, slot));
  return slot;
 }
 `
@@ -139,7 +139,7 @@ func TestOptionalImplementsRepresentation(t *testing.T) {
 	helper := `#include "adamic.h"
 static adamic_value *mutant_absent_write(adamic_object *object, const char *name, adamic_slot_cache *cache) {
  adamic_value *slot = adamic_object_write_field(object, name, cache);
- adamic_object_absent(object, cache->index);
+ adamic_object_absent(object, adamic_slot_index(object, slot));
  return slot;
 }
 `

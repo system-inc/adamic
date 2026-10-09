@@ -1,0 +1,17 @@
+function empty(): never[] {
+    console.log("empty");
+    return [];
+}
+const items = empty();
+const alias = items;
+const other: never[] = [];
+console.log(`${items === alias}:${items === other}`);
+const strings: readonly string[] = items;
+const numbers: readonly number[] = items;
+console.log(`${strings.length}:${numbers.length}`);
+console.log(`${strings[0]}:${numbers[0]}`);
+console.log(`${items[0]}`);
+console.log(`${items.pop()}`);
+console.log(`${items.slice().length}`);
+console.log(`${items.concat(other).length}`);
+console.log(`${items.length}`);

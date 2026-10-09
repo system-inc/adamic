@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"context"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -109,7 +110,7 @@ func testOptionalConstruction(t *testing.T, fixtureName string, spread bool) {
 			t.Fatal(err)
 		}
 		counts := execute(t, counted)
-		if report := unbalanced(t, counts); report != "" {
+		if report := leakcheck.Unbalanced(leakRun(counts)); report != "" {
 			t.Fatal(report)
 		}
 		t.Logf("conditional counts: %s", counts.stderr)
@@ -138,14 +139,14 @@ static void mutant_outer_cleanup(void *value) {
 		if difference := disagreement(expected, executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, outerBinary)); difference != "" {
 			t.Fatal("outer cleanup changed observations before leak check: " + difference)
 		}
-		report := leakSanitizer(t, outerBinary)
+		report := leakcheck.Report(t, helper+outer, outerBinary)
 		if !strings.Contains(report, "LeakSanitizer") {
 			t.Fatalf("outer cleanup mutant not caught by leak check: %s", report)
 		}
 		if err := native.Build(helper+outer, counted, native.Options{Count: true}); err != nil {
 			t.Fatal(err)
 		}
-		if report := unbalanced(t, execute(t, counted)); !strings.Contains(report, "heap values leaked") {
+		if report := leakcheck.Unbalanced(leakRun(execute(t, counted))); !strings.Contains(report, "heap values leaked") {
 			t.Fatalf("outer cleanup mutant not caught by counts: %s", report)
 		}
 		t.Log("outer-scope cleanup mutant compiles and matches Node output; LeakSanitizer and allocation/free counts catch leaked earlier guard values")
@@ -196,7 +197,7 @@ static bool mutant_optional_storage(const adamic_object *object, bool nullable, 
 		helper = `#include "adamic.h"
 static adamic_value *mutant_optional_absent(adamic_object *object, const char *name, adamic_slot_cache *cache) {
  adamic_value *slot = adamic_object_write_field(object,name,cache);
- adamic_object_absent(object,cache->index);
+ adamic_object_absent(object,adamic_slot_index(object, slot));
  return slot;
 }
 `

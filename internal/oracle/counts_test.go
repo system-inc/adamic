@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -32,7 +33,8 @@ values live at once; in regions is the values let go of with their region (runti
 finished program's allocations are its frees and its values in regions. A fixture that panics is counted where it stopped; an input
 fixture runs as TestInputAgreesWithNode runs it, a directory of its own to write in included, and must finish. Every run has an
 8 MiB stack (ulimit -s 8192), so a fixture's counts never depend on the stack of whoever runs it. This is the baseline borrow
-inference and reuse in place are measured against (docs/memory.md).
+inference and reuse in place are measured against (docs/memory.md). Parallel fixtures run with ADAMIC_THREADS=1;
+parallel peak liveness and work after an exception otherwise depend on scheduling.
 
 Not counted, though the oracle runs it as it runs every fixture: internal/oracle/testdata/stack_overflow.a, which recurses until
 the stack runs out, so its allocations measure how deep it got, and every change to a frame's size moves them.
@@ -46,13 +48,14 @@ Optional guard rows labeled project options count the generated project input fr
 |---|---:|---:|---:|---:|---:|---:|
 `
 
-// countsLine is the line a counted build writes last to stderr (runtime/count.c).
-var countsLine = regexp.MustCompile(`(?m)^adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)\n\z`)
-
 // pinnedStack is a command run with an 8 MiB stack, whatever the stack of whoever runs the test: a
 // fixture that recurses until the stack runs out is counted at the depth it reached, which moves with
 // the stack's size (ulimit -s), and the table has to be the same on every machine. The shell's ulimit
 // is POSIX's, on Linux and macOS alike; where the hard limit won't allow 8 MiB, it fails out loud.
+
+// countsLine is the line a counted build writes last to stderr (runtime/count.c).
+var countsLine = regexp.MustCompile(`(?m)^adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)\n\z`)
+
 func pinnedStack(name string, arguments ...string) (string, []string) {
 	return "/bin/sh", append([]string{"-c", `ulimit -s 8192 && exec "$0" "$@"`, name}, arguments...)
 }
@@ -79,10 +82,13 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 	}
 	given := identity(t)
 	context := cacheKey(given.context, path, fmt.Sprint(input, unreadable, writes), cacheKey(arguments...))
+	if usesParallelMap(program) {
+		context = cacheKey(context, "parallel-threads-1")
+	}
 	if input {
 		context = cacheKey(context, inputIdentity(t))
 	}
-	key := nativeResultKey(native.C(program), given.libraries[2], given.nodeVersion, context)
+	key := nativeResultKey(native.C(program), given.libraries[countedBuild], given.nodeVersion, context)
 	executeCounted := func() recordedRun {
 		var result run
 		if input {
@@ -119,7 +125,11 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 				t.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary)
-			result = execute(t, name, pinned...)
+			if usesParallelMap(program) {
+				result = executeWith(t, []string{"ADAMIC_THREADS=1"}, name, pinned...)
+			} else {
+				result = execute(t, name, pinned...)
+			}
 		}
 		return record(result)
 	}
@@ -129,7 +139,7 @@ func counted(t *testing.T, path string, input bool, arguments []string, unreadab
 	} else {
 		result = cachedResult(t, given.cache, nativeResults, key, executeCounted).run()
 	}
-	match := countsLine.FindSubmatch(result.stderr)
+	match := leakcheck.CountsLine.FindSubmatch(result.stderr)
 	if match == nil {
 		t.Fatalf("no counts at the end of stderr (exit %d): %q", result.exitCode, result.stderr)
 	}

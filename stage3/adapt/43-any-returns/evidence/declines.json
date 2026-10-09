@@ -1,0 +1,26 @@
+{
+  "baselineDiagnostics": 0,
+  "candidateNewDiagnostics": [
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "code": 2339,
+      "message": "Property 'imports' does not exist on type 'string | number | boolean | PackageJsonPathFields | AdamicParsedJson[] | { [key: string]: AdamicParsedJson; }'.\n  Property 'imports' does not exist on type 'string'."
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "code": 2322,
+      "message": "Type 'PackageJsonPathFields | AdamicParsedJson | undefined' is not assignable to type 'Record<string, any> | undefined'.\n  Type 'null' is not assignable to type 'Record<string, any> | undefined'."
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "code": 2322,
+      "message": "Type 'AdamicParsedJson | undefined' is not assignable to type 'object | undefined'.\n  Type 'null' is not assignable to type 'object | undefined'."
+    }
+  ],
+  "publicDeclaration": "convertToObject(sourceFile: JsonSourceFile, errors: Diagnostic[]): any",
+  "tryParseJsonTruthfulType": "AdamicParsedJson | undefined",
+  "witnesses": [
+    "JSON.parse(\"7\") === 7",
+    "JSON.parse(\"null\") === null"
+  ]
+}

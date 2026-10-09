@@ -73,7 +73,7 @@ func TestOptionalFieldPresenceCatchesMutants(t *testing.T) {
 	layoutOrder := `#include "adamic.h"
 static adamic_value *mutant_layout_write(adamic_object *object, const char *name, adamic_slot_cache *cache) {
     adamic_value *slot = adamic_object_write_field(object, name, cache);
-    adamic_object_orders(object)[cache->index] = cache->index + 1;
+    adamic_object_orders(object)[adamic_slot_index(object, slot)] = adamic_slot_index(object, slot) + 1;
     return slot;
 }
 ` + strings.ReplaceAll(source, "adamic_object_write_field(", "mutant_layout_write(")
@@ -203,8 +203,8 @@ func TestOptionalFieldCheckedViewPending(t *testing.T) {
 	}
 	_, err = lowered(t, path)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "checked view field slot") {
+	if !errors.As(err, &notYet) || !(strings.Contains(err.Error(), "checked view field slot") || strings.Contains(err.Error(), "a checked field alias requiring an optional, accessor, or representation conversion")) {
 		t.Fatalf("pending boundary changed: %v", err)
 	}
-	t.Skip("awaits views-v1: checked-view optional-write integration; v1 retains source-slot refusal, v2 selectors and v3 array hooks do not provide it")
+	t.Skip("acceptance dependency: compiler/views-rehearsal 2b6c032a; checked-view optional-write integration remains NotYet")
 }

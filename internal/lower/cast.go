@@ -30,6 +30,9 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if proof.structuralView {
+		return l.structuralViewCast(node, value, source, target)
+	}
 	if proof.interfaceView {
 		return l.interfaceCast(node, value, l.concrete(l.checker.GetTypeAtLocation(as.Expression)), l.concrete(l.checker.GetTypeAtLocation(node)))
 	}

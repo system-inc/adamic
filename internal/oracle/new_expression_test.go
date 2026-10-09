@@ -14,13 +14,13 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/new_expression_" + name + ".a", name == "class_value" || name == "class_cache_or" || name == "class_cache_local", false})
+		}{"internal/oracle/testdata/new_expression_" + name + ".a", name == "uint16" || name == "uint16_notyet" || name == "class_value" || name == "class_cache_or" || name == "class_cache_local", false})
 	}
 }
 
-// Source Node demonstrates the conversion, while Adamic must stop before emission
-// until the runtime-owned Uint16 storage and conversions are integrated.
-func TestNewExpressionUint16RemainsNotYet(t *testing.T) {
+// The c2 runtime provides Uint16 storage and conversion. Keep the original
+// conversion witness in the Node oracle as an admitted program.
+func TestNewExpressionUint16IsAdmitted(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/new_expression_uint16_notyet.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -30,9 +30,8 @@ func TestNewExpressionUint16RemainsNotYet(t *testing.T) {
 		t.Fatalf("Node conversion: exit %d, stdout %q, stderr %q", node.exitCode, node.stdout, node.stderr)
 	}
 	_, err = lowered(t, path)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "typed array element type Uint16Array" {
-		t.Fatalf("want Uint16Array element-type NotYet, got %v", err)
+	if err != nil {
+		t.Fatalf("want c2 Uint16Array admission, got %v", err)
 	}
 }
 

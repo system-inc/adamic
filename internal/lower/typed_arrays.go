@@ -8,6 +8,8 @@ import (
 
 func typedArrayName(kind ir.Type) string {
 	switch kind {
+	case ir.Uint16Array:
+		return "Uint16Array"
 	case ir.Uint8Array:
 		return "Uint8Array"
 	case ir.Int32Array:
@@ -19,7 +21,7 @@ func typedArrayName(kind ir.Type) string {
 }
 
 func (l *lowering) typedArrayKind(proven *checker.Type) ir.Type {
-	for _, kind := range []ir.Type{ir.Uint8Array, ir.Int32Array, ir.Float64Array} {
+	for _, kind := range []ir.Type{ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array} {
 		if l.isLibraryType(proven, typedArrayName(kind)) {
 			return kind
 		}
@@ -34,7 +36,7 @@ func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
 		if l.isLibraryType(proven, "SharedArrayBuffer") {
 			return l.notYet(node, "sharing typed arrays across parallel tasks")
 		}
-		for _, name := range []string{"ArrayBuffer", "DataView", "Int8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Uint32Array", "Float32Array", "BigInt64Array", "BigUint64Array"} {
+		for _, name := range []string{"ArrayBuffer", "DataView", "Int8Array", "Uint8ClampedArray", "Int16Array", "Uint32Array", "Float32Array", "BigInt64Array", "BigUint64Array"} {
 			if l.isLibraryType(proven, name) {
 				if l.program.UsesProjectOptions() && l.numericTypedArray(proven) {
 					continue
@@ -57,7 +59,7 @@ func (l *lowering) typedArrayUnsupported(node *ast.Node) error {
 		if l.isLibraryGlobal(made.Expression, "DataView") {
 			return l.notYet(node, "DataView")
 		}
-		for _, name := range []string{"Int8Array", "Uint8ClampedArray", "Int16Array", "Uint16Array", "Uint32Array", "Float32Array", "BigInt64Array", "BigUint64Array"} {
+		for _, name := range []string{"Int8Array", "Uint8ClampedArray", "Int16Array", "Uint32Array", "Float32Array", "BigInt64Array", "BigUint64Array"} {
 			if l.isLibraryGlobal(made.Expression, name) {
 				if l.program.UsesProjectOptions() && l.numericTypedArray(l.checker.GetTypeAtLocation(node)) {
 					continue
@@ -82,7 +84,7 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 	switch node.Kind {
 	case ast.KindNewExpression:
 		made := node.AsNewExpression()
-		for _, kind := range []ir.Type{ir.Uint8Array, ir.Int32Array, ir.Float64Array} {
+		for _, kind := range []ir.Type{ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array} {
 			if !l.isLibraryGlobal(made.Expression, typedArrayName(kind)) {
 				continue
 			}
@@ -127,12 +129,28 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 		if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
 			return nil, true, l.notYet(node, "an optional chain longer than one step")
 		}
-		if access.Name().Text() != "length" {
+		member := access.Name().Text()
+		if member != "length" && member != "byteLength" {
 			return nil, true, l.notYet(node, "typed array member "+access.Name().Text())
 		}
 		array, err := l.expression(access.Expression)
 		if err != nil {
 			return nil, true, err
+		}
+		if member == "byteLength" {
+			if access.QuestionDotToken != nil {
+				return nil, true, l.notYet(node, "optional typed array byteLength access")
+			}
+			width := 1.0
+			switch kind {
+			case ir.Uint16Array:
+				width = 2
+			case ir.Int32Array:
+				width = 4
+			case ir.Float64Array:
+				width = 8
+			}
+			return ir.Binary{Operator: ir.Multiply, Left: ir.Length{Array: array}, Right: ir.NumberConstant{Value: width}}, true, nil
 		}
 		return ir.Length{Array: array, Optional: access.QuestionDotToken != nil}, true, nil
 	case ast.KindElementAccessExpression:

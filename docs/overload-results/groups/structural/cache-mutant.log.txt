@@ -1,0 +1,6 @@
+=== RUN   TestLatentEmptyEmitterCache
+    latent_cache_test.go:8: populated emitter cache silently discarded
+--- FAIL: TestLatentEmptyEmitterCache (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.007s
+FAIL

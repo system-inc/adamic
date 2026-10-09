@@ -1,0 +1,28 @@
+{
+  "regressions": [],
+  "node_and_other_bytes_unchanged": true,
+  "changes": [
+    {
+      "file": "structural-method-statics/main.a",
+      "before": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/real/structural-method-statics/main.a:8:36: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      "after": {
+        "outcome": "Compiles",
+        "what": ""
+      }
+    },
+    {
+      "file": "generic-optional-return/main.a",
+      "before": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/real/generic-optional-return/main.a:7:68: stage 0 can't lower an array of never yet"
+      },
+      "after": {
+        "outcome": "Compiles",
+        "what": ""
+      }
+    }
+  ]
+}
