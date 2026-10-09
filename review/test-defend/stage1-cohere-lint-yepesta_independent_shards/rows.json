@@ -1,0 +1,34 @@
+[
+  {
+    "test": "TestMutantsReactJsxNoCommentTextnodes family",
+    "package": "stage1/cohere/lint",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestMutantsReactJsxNoCommentTextnodes(Union|_[0-9]{3})$' > family-clean.log 2>&1; panic: test timed out after 1m30s; FAIL github.com/system-inc/adamic/stage1/cohere/lint 90.059s",
+    "reason": "Pristine canary preparation cannot complete C emission under the test-binary budget; no production mutant was planted on an unestablished clean baseline.",
+    "code_under_test": "Adamic lowering and native/JavaScript compilation of the already-mutated canary port",
+    "oracle": "Node executes that same copied TypeScript; byte comparisons assert compiler fidelity. Go cohere disagreement is logged by the family and asserted separately by MutantKilled.",
+    "members": [
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_000",
+      "TestMutantsReactJsxNoCommentTextnodes_001",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodes_004",
+      "TestMutantsReactJsxNoCommentTextnodes_005",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_009",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodes_014",
+      "TestMutantsReactJsxNoCommentTextnodes_015"
+    ]
+  }
+]
