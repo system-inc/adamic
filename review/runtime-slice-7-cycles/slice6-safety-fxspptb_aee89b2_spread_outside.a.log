@@ -1,0 +1,11 @@
+=== RUN   TestSlice6AcceptedCycleSafety
+=== RUN   TestSlice6AcceptedCycleSafety/fxspptb_aee89b2_spread_outside.a
+    runtime_slice7_baseline_test.go:36: Node exit 0 stdout "1 1\n" stderr ""; native exit 0 stdout "1 1\n" stderr ""; counted adamic: graph region: live 3 bytes 240 reachable 3 bytes 240 unreachable 0 bytes 0 metadata 112
+        adamic: graph counts: regions 1 merges 2
+        adamic: counts: allocations 10 frees 10 retains 6 releases 15 peak 8 regions 0
+--- PASS: TestSlice6AcceptedCycleSafety (0.50s)
+    --- PASS: TestSlice6AcceptedCycleSafety/fxspptb_aee89b2_spread_outside.a (0.50s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

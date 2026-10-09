@@ -1,0 +1,110 @@
+=== RUN   TestSlice6AcceptedCycleSafety
+=== RUN   TestSlice6AcceptedCycleSafety/fxspptb_aee89b2_alias_sort.a
+    runtime_slice7_baseline_test.go:36: Node exit 0 stdout "100\n" stderr ""; native exit 0 stdout "100\n" stderr ""; counted adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph counts: regions 100 merges 100
+        adamic: counts: allocations 503 frees 503 retains 300 releases 704 peak 5 regions 0
+--- PASS: TestSlice6AcceptedCycleSafety (0.54s)
+    --- PASS: TestSlice6AcceptedCycleSafety/fxspptb_aee89b2_alias_sort.a (0.54s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

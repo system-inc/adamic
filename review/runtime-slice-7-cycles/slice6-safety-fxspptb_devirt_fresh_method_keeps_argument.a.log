@@ -1,0 +1,18 @@
+=== RUN   TestSlice6AcceptedCycleSafety
+=== RUN   TestSlice6AcceptedCycleSafety/fxspptb_devirt_fresh_method_keeps_argument.a
+    runtime_slice7_baseline_test.go:35: allocations must equal frees: adamic: graph region: live 2 bytes 132 reachable 2 bytes 132 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 132 reachable 2 bytes 132 unreachable 0 bytes 0 metadata 96
+        adamic: graph counts: regions 3 merges 3
+        adamic: counts: allocations 15 frees 14 retains 6 releases 18 peak 8 regions 1
+    runtime_slice7_baseline_test.go:36: Node exit 0 stdout "1\n" stderr ""; native exit 0 stdout "1\n" stderr ""; counted adamic: graph region: live 2 bytes 132 reachable 2 bytes 132 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 164 reachable 2 bytes 164 unreachable 0 bytes 0 metadata 96
+        adamic: graph region: live 2 bytes 132 reachable 2 bytes 132 unreachable 0 bytes 0 metadata 96
+        adamic: graph counts: regions 3 merges 3
+        adamic: counts: allocations 15 frees 14 retains 6 releases 18 peak 8 regions 1
+--- FAIL: TestSlice6AcceptedCycleSafety (0.52s)
+    --- FAIL: TestSlice6AcceptedCycleSafety/fxspptb_devirt_fresh_method_keeps_argument.a (0.52s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

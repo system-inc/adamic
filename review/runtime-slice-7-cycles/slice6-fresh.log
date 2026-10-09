@@ -1,0 +1,331 @@
+=== RUN   TestFreshWriteProbesUseRegions
+=== PAUSE TestFreshWriteProbesUseRegions
+=== CONT  TestFreshWriteProbesUseRegions
+=== RUN   TestFreshWriteProbesUseRegions/alias_fill.a
+=== PAUSE TestFreshWriteProbesUseRegions/alias_fill.a
+=== RUN   TestFreshWriteProbesUseRegions/alias_mapset.a
+=== PAUSE TestFreshWriteProbesUseRegions/alias_mapset.a
+=== RUN   TestFreshWriteProbesUseRegions/alias_reverse.a
+=== PAUSE TestFreshWriteProbesUseRegions/alias_reverse.a
+=== RUN   TestFreshWriteProbesUseRegions/alias_setadd.a
+=== PAUSE TestFreshWriteProbesUseRegions/alias_setadd.a
+=== RUN   TestFreshWriteProbesUseRegions/alias_sort.a
+=== PAUSE TestFreshWriteProbesUseRegions/alias_sort.a
+=== RUN   TestFreshWriteProbesUseRegions/another_view.a
+=== PAUSE TestFreshWriteProbesUseRegions/another_view.a
+=== RUN   TestFreshWriteProbesUseRegions/array_from.a
+=== PAUSE TestFreshWriteProbesUseRegions/array_from.a
+=== RUN   TestFreshWriteProbesUseRegions/call_clobbers.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_clobbers.a
+=== RUN   TestFreshWriteProbesUseRegions/call_comparator.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_comparator.a
+=== RUN   TestFreshWriteProbesUseRegions/call_escaped_parent.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_escaped_parent.a
+=== RUN   TestFreshWriteProbesUseRegions/call_grandchild.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_grandchild.a
+=== RUN   TestFreshWriteProbesUseRegions/call_leaks_parent.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_leaks_parent.a
+=== RUN   TestFreshWriteProbesUseRegions/call_one_bad_site.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_one_bad_site.a
+=== RUN   TestFreshWriteProbesUseRegions/call_owner.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_owner.a
+=== RUN   TestFreshWriteProbesUseRegions/call_returns_argument.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_returns_argument.a
+=== RUN   TestFreshWriteProbesUseRegions/call_same.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_same.a
+=== RUN   TestFreshWriteProbesUseRegions/call_targets_virtual.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_targets_virtual.a
+=== RUN   TestFreshWriteProbesUseRegions/call_then_throws.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_then_throws.a
+=== RUN   TestFreshWriteProbesUseRegions/call_twice_deferred.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_twice_deferred.a
+=== RUN   TestFreshWriteProbesUseRegions/call_wrapper.a
+=== PAUSE TestFreshWriteProbesUseRegions/call_wrapper.a
+=== RUN   TestFreshWriteProbesUseRegions/captured_before.a
+=== PAUSE TestFreshWriteProbesUseRegions/captured_before.a
+=== RUN   TestFreshWriteProbesUseRegions/caught.a
+=== PAUSE TestFreshWriteProbesUseRegions/caught.a
+=== RUN   TestFreshWriteProbesUseRegions/clobber_link_loop.a
+=== PAUSE TestFreshWriteProbesUseRegions/clobber_link_loop.a
+=== RUN   TestFreshWriteProbesUseRegions/closure_captures.a
+=== PAUSE TestFreshWriteProbesUseRegions/closure_captures.a
+=== RUN   TestFreshWriteProbesUseRegions/concat.a
+=== PAUSE TestFreshWriteProbesUseRegions/concat.a
+=== RUN   TestFreshWriteProbesUseRegions/constructor_tie.a
+=== PAUSE TestFreshWriteProbesUseRegions/constructor_tie.a
+=== RUN   TestFreshWriteProbesUseRegions/ctor_readonly.a
+=== PAUSE TestFreshWriteProbesUseRegions/ctor_readonly.a
+=== RUN   TestFreshWriteProbesUseRegions/ctor_set.a
+=== PAUSE TestFreshWriteProbesUseRegions/ctor_set.a
+=== RUN   TestFreshWriteProbesUseRegions/ctor_wrapped.a
+=== PAUSE TestFreshWriteProbesUseRegions/ctor_wrapped.a
+=== RUN   TestFreshWriteProbesUseRegions/devirt_fresh_method_keeps_argument.a
+=== PAUSE TestFreshWriteProbesUseRegions/devirt_fresh_method_keeps_argument.a
+=== RUN   TestFreshWriteProbesUseRegions/escaped_before.a
+=== PAUSE TestFreshWriteProbesUseRegions/escaped_before.a
+=== RUN   TestFreshWriteProbesUseRegions/escapes_after_return.a
+=== PAUSE TestFreshWriteProbesUseRegions/escapes_after_return.a
+=== RUN   TestFreshWriteProbesUseRegions/fill.a
+=== PAUSE TestFreshWriteProbesUseRegions/fill.a
+=== RUN   TestFreshWriteProbesUseRegions/global_then_function.a
+=== PAUSE TestFreshWriteProbesUseRegions/global_then_function.a
+=== RUN   TestFreshWriteProbesUseRegions/index_write.a
+=== PAUSE TestFreshWriteProbesUseRegions/index_write.a
+=== RUN   TestFreshWriteProbesUseRegions/map_callback.a
+=== PAUSE TestFreshWriteProbesUseRegions/map_callback.a
+=== RUN   TestFreshWriteProbesUseRegions/map_entries_pattern.a
+=== PAUSE TestFreshWriteProbesUseRegions/map_entries_pattern.a
+=== RUN   TestFreshWriteProbesUseRegions/map_iterator.a
+=== PAUSE TestFreshWriteProbesUseRegions/map_iterator.a
+=== RUN   TestFreshWriteProbesUseRegions/map_iterator_parenthesized.a
+=== PAUSE TestFreshWriteProbesUseRegions/map_iterator_parenthesized.a
+=== RUN   TestFreshWriteProbesUseRegions/map_key.a
+=== PAUSE TestFreshWriteProbesUseRegions/map_key.a
+=== RUN   TestFreshWriteProbesUseRegions/map_set.a
+=== PAUSE TestFreshWriteProbesUseRegions/map_set.a
+=== RUN   TestFreshWriteProbesUseRegions/next_iteration.a
+=== PAUSE TestFreshWriteProbesUseRegions/next_iteration.a
+=== RUN   TestFreshWriteProbesUseRegions/older_instance.a
+=== PAUSE TestFreshWriteProbesUseRegions/older_instance.a
+=== RUN   TestFreshWriteProbesUseRegions/one_call.a
+=== PAUSE TestFreshWriteProbesUseRegions/one_call.a
+=== RUN   TestFreshWriteProbesUseRegions/returns_argument.a
+=== PAUSE TestFreshWriteProbesUseRegions/returns_argument.a
+=== RUN   TestFreshWriteProbesUseRegions/returns_global.a
+=== PAUSE TestFreshWriteProbesUseRegions/returns_global.a
+=== RUN   TestFreshWriteProbesUseRegions/set_add.a
+=== PAUSE TestFreshWriteProbesUseRegions/set_add.a
+=== RUN   TestFreshWriteProbesUseRegions/set_iterator.a
+=== PAUSE TestFreshWriteProbesUseRegions/set_iterator.a
+=== RUN   TestFreshWriteProbesUseRegions/splice.a
+=== PAUSE TestFreshWriteProbesUseRegions/splice.a
+=== RUN   TestFreshWriteProbesUseRegions/spread_array.a
+=== PAUSE TestFreshWriteProbesUseRegions/spread_array.a
+=== RUN   TestFreshWriteProbesUseRegions/spread_old.a
+=== PAUSE TestFreshWriteProbesUseRegions/spread_old.a
+=== RUN   TestFreshWriteProbesUseRegions/spread_outside.a
+=== PAUSE TestFreshWriteProbesUseRegions/spread_outside.a
+=== RUN   TestFreshWriteProbesUseRegions/throw_keeps_old.a
+=== PAUSE TestFreshWriteProbesUseRegions/throw_keeps_old.a
+=== RUN   TestFreshWriteProbesUseRegions/wraps_argument.a
+=== PAUSE TestFreshWriteProbesUseRegions/wraps_argument.a
+=== CONT  TestFreshWriteProbesUseRegions/alias_fill.a
+=== CONT  TestFreshWriteProbesUseRegions/ctor_set.a
+=== CONT  TestFreshWriteProbesUseRegions/call_owner.a
+=== CONT  TestFreshWriteProbesUseRegions/call_one_bad_site.a
+=== NAME  TestFreshWriteProbesUseRegions/ctor_set.a
+    fresh_test.go:68: allocations 6 frees 6 retains 3 releases 9 peak 4; adamic: graph counts: regions 2 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/call_leaks_parent.a
+=== NAME  TestFreshWriteProbesUseRegions/call_owner.a
+    fresh_test.go:68: allocations 10 frees 10 retains 2 releases 10 peak 7; adamic: graph counts: regions 2 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/call_grandchild.a
+=== NAME  TestFreshWriteProbesUseRegions/alias_fill.a
+    fresh_test.go:68: allocations 603 frees 603 retains 500 releases 904 peak 6; adamic: graph counts: regions 200 merges 200
+=== CONT  TestFreshWriteProbesUseRegions/call_escaped_parent.a
+=== NAME  TestFreshWriteProbesUseRegions/call_one_bad_site.a
+    fresh_test.go:68: allocations 14 frees 14 retains 3 releases 14 peak 10; adamic: graph counts: regions 2 merges 5
+=== CONT  TestFreshWriteProbesUseRegions/call_comparator.a
+    fresh_test.go:68: allocations 11 frees 11 retains 4 releases 13 peak 7; adamic: graph counts: regions 1 merges 4
+=== CONT  TestFreshWriteProbesUseRegions/call_clobbers.a
+=== NAME  TestFreshWriteProbesUseRegions/call_escaped_parent.a
+    fresh_test.go:68: allocations 12 frees 12 retains 6 releases 15 peak 7; adamic: graph counts: regions 3 merges 5
+=== CONT  TestFreshWriteProbesUseRegions/array_from.a
+=== NAME  TestFreshWriteProbesUseRegions/call_grandchild.a
+    fresh_test.go:68: allocations 10 frees 10 retains 3 releases 11 peak 7; adamic: graph counts: regions 2 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/another_view.a
+=== NAME  TestFreshWriteProbesUseRegions/call_leaks_parent.a
+    fresh_test.go:68: allocations 12 frees 12 retains 6 releases 15 peak 7; adamic: graph counts: regions 3 merges 5
+=== CONT  TestFreshWriteProbesUseRegions/alias_sort.a
+=== NAME  TestFreshWriteProbesUseRegions/call_clobbers.a
+    fresh_test.go:68: allocations 14 frees 14 retains 8 releases 16 peak 10; adamic: graph counts: regions 2 merges 4
+=== CONT  TestFreshWriteProbesUseRegions/alias_setadd.a
+=== NAME  TestFreshWriteProbesUseRegions/alias_sort.a
+    fresh_test.go:68: allocations 503 frees 503 retains 300 releases 704 peak 5; adamic: graph counts: regions 100 merges 100
+=== CONT  TestFreshWriteProbesUseRegions/alias_reverse.a
+=== NAME  TestFreshWriteProbesUseRegions/array_from.a
+    fresh_test.go:68: allocations 9 frees 9 retains 6 releases 12 peak 6; adamic: graph counts: regions 1 merges 2
+=== CONT  TestFreshWriteProbesUseRegions/alias_mapset.a
+=== NAME  TestFreshWriteProbesUseRegions/another_view.a
+    fresh_test.go:68: allocations 6 frees 6 retains 2 releases 7 peak 3; 
+=== CONT  TestFreshWriteProbesUseRegions/caught.a
+=== NAME  TestFreshWriteProbesUseRegions/alias_reverse.a
+    fresh_test.go:68: allocations 403 frees 403 retains 400 releases 704 peak 5; adamic: graph counts: regions 100 merges 100
+=== CONT  TestFreshWriteProbesUseRegions/ctor_readonly.a
+=== NAME  TestFreshWriteProbesUseRegions/alias_setadd.a
+    fresh_test.go:68: allocations 603 frees 603 retains 500 releases 904 peak 6; adamic: graph counts: regions 200 merges 300
+=== CONT  TestFreshWriteProbesUseRegions/constructor_tie.a
+=== NAME  TestFreshWriteProbesUseRegions/alias_mapset.a
+    fresh_test.go:68: allocations 603 frees 603 retains 700 releases 904 peak 6; adamic: graph counts: regions 200 merges 300
+=== CONT  TestFreshWriteProbesUseRegions/concat.a
+=== NAME  TestFreshWriteProbesUseRegions/caught.a
+    fresh_test.go:68: allocations 13 frees 13 retains 9 releases 17 peak 7; adamic: graph counts: regions 3 merges 5
+=== CONT  TestFreshWriteProbesUseRegions/closure_captures.a
+=== NAME  TestFreshWriteProbesUseRegions/constructor_tie.a
+    fresh_test.go:68: allocations 10 frees 10 retains 5 releases 13 peak 7; adamic: graph counts: regions 2 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/clobber_link_loop.a
+=== NAME  TestFreshWriteProbesUseRegions/ctor_readonly.a
+    fresh_test.go:68: allocations 26 frees 26 retains 18 releases 38 peak 7; adamic: graph counts: regions 6 merges 9
+=== CONT  TestFreshWriteProbesUseRegions/call_twice_deferred.a
+=== NAME  TestFreshWriteProbesUseRegions/concat.a
+    fresh_test.go:68: allocations 8 frees 8 retains 3 releases 10 peak 5; adamic: graph counts: regions 1 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/captured_before.a
+=== NAME  TestFreshWriteProbesUseRegions/closure_captures.a
+    fresh_test.go:68: allocations 8 frees 8 retains 4 releases 9 peak 5; adamic: graph counts: regions 1 merges 1
+=== CONT  TestFreshWriteProbesUseRegions/call_wrapper.a
+=== NAME  TestFreshWriteProbesUseRegions/clobber_link_loop.a
+    fresh_test.go:68: allocations 1002 frees 1002 retains 600 releases 1302 peak 9; adamic: graph counts: regions 200 merges 300
+=== CONT  TestFreshWriteProbesUseRegions/next_iteration.a
+=== NAME  TestFreshWriteProbesUseRegions/call_twice_deferred.a
+    fresh_test.go:68: allocations 10 frees 10 retains 2 releases 10 peak 7; adamic: graph counts: regions 2 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/wraps_argument.a
+=== NAME  TestFreshWriteProbesUseRegions/captured_before.a
+    fresh_test.go:68: allocations 10 frees 10 retains 2 releases 10 peak 7; adamic: graph counts: regions 1 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/throw_keeps_old.a
+=== NAME  TestFreshWriteProbesUseRegions/call_wrapper.a
+    fresh_test.go:68: allocations 10 frees 10 retains 2 releases 10 peak 7; adamic: graph counts: regions 1 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/spread_outside.a
+=== NAME  TestFreshWriteProbesUseRegions/wraps_argument.a
+    fresh_test.go:68: allocations 8 frees 8 retains 2 releases 8 peak 5; adamic: graph counts: regions 1 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/spread_old.a
+=== NAME  TestFreshWriteProbesUseRegions/next_iteration.a
+    fresh_test.go:68: allocations 18 frees 18 retains 4 releases 18 peak 13; adamic: graph counts: regions 2 merges 7
+=== CONT  TestFreshWriteProbesUseRegions/spread_array.a
+=== NAME  TestFreshWriteProbesUseRegions/throw_keeps_old.a
+    fresh_test.go:68: allocations 7 frees 7 retains 8 releases 14 peak 5; adamic: graph counts: regions 1 merges 1
+=== CONT  TestFreshWriteProbesUseRegions/splice.a
+=== NAME  TestFreshWriteProbesUseRegions/spread_outside.a
+    fresh_test.go:68: allocations 10 frees 10 retains 6 releases 15 peak 8; adamic: graph counts: regions 1 merges 2
+=== CONT  TestFreshWriteProbesUseRegions/set_iterator.a
+=== NAME  TestFreshWriteProbesUseRegions/spread_array.a
+    fresh_test.go:68: allocations 7 frees 7 retains 2 releases 8 peak 4; adamic: graph counts: regions 1 merges 2
+=== CONT  TestFreshWriteProbesUseRegions/set_add.a
+=== NAME  TestFreshWriteProbesUseRegions/spread_old.a
+    fresh_test.go:68: allocations 9 frees 9 retains 5 releases 12 peak 6; adamic: graph counts: regions 1 merges 2
+=== CONT  TestFreshWriteProbesUseRegions/returns_global.a
+=== NAME  TestFreshWriteProbesUseRegions/splice.a
+    fresh_test.go:68: allocations 6 frees 6 retains 2 releases 7 peak 4; adamic: graph counts: regions 1 merges 1
+=== CONT  TestFreshWriteProbesUseRegions/returns_argument.a
+=== NAME  TestFreshWriteProbesUseRegions/set_iterator.a
+    fresh_test.go:68: allocations 10 frees 10 retains 5 releases 16 peak 9; adamic: graph counts: regions 1 merges 6
+=== CONT  TestFreshWriteProbesUseRegions/one_call.a
+=== NAME  TestFreshWriteProbesUseRegions/set_add.a
+    fresh_test.go:68: allocations 6 frees 6 retains 2 releases 7 peak 4; adamic: graph counts: regions 1 merges 1
+=== CONT  TestFreshWriteProbesUseRegions/older_instance.a
+=== NAME  TestFreshWriteProbesUseRegions/returns_global.a
+    fresh_test.go:68: allocations 10 frees 10 retains 5 releases 13 peak 6; adamic: graph counts: regions 3 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/call_targets_virtual.a
+=== NAME  TestFreshWriteProbesUseRegions/returns_argument.a
+    fresh_test.go:68: allocations 6 frees 6 retains 2 releases 7 peak 4; adamic: graph counts: regions 1 merges 1
+=== CONT  TestFreshWriteProbesUseRegions/call_then_throws.a
+=== NAME  TestFreshWriteProbesUseRegions/one_call.a
+    fresh_test.go:68: allocations 12 frees 12 retains 3 releases 12 peak 8; adamic: graph counts: regions 2 merges 5
+=== CONT  TestFreshWriteProbesUseRegions/call_same.a
+=== NAME  TestFreshWriteProbesUseRegions/older_instance.a
+    fresh_test.go:68: allocations 20 frees 20 retains 12 releases 27 peak 9; adamic: graph counts: regions 5 merges 7
+=== CONT  TestFreshWriteProbesUseRegions/index_write.a
+=== NAME  TestFreshWriteProbesUseRegions/call_targets_virtual.a
+    fresh_test.go:68: allocations 15 frees 14 retains 6 releases 18 peak 8; adamic: graph counts: regions 3 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/map_set.a
+=== NAME  TestFreshWriteProbesUseRegions/call_then_throws.a
+    fresh_test.go:68: allocations 8 frees 8 retains 4 releases 9 peak 5; adamic: graph counts: regions 1 merges 1
+=== CONT  TestFreshWriteProbesUseRegions/map_key.a
+=== NAME  TestFreshWriteProbesUseRegions/call_same.a
+    fresh_test.go:68: allocations 6 frees 6 retains 1 releases 6 peak 4; adamic: graph counts: regions 1 merges 1
+=== CONT  TestFreshWriteProbesUseRegions/map_iterator_parenthesized.a
+=== NAME  TestFreshWriteProbesUseRegions/index_write.a
+    fresh_test.go:68: allocations 10 frees 10 retains 2 releases 10 peak 7; adamic: graph counts: regions 2 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/map_iterator.a
+=== NAME  TestFreshWriteProbesUseRegions/map_key.a
+    fresh_test.go:68: allocations 6 frees 6 retains 2 releases 7 peak 4; adamic: graph counts: regions 1 merges 1
+=== CONT  TestFreshWriteProbesUseRegions/map_entries_pattern.a
+=== NAME  TestFreshWriteProbesUseRegions/map_set.a
+    fresh_test.go:68: allocations 6 frees 6 retains 3 releases 7 peak 4; adamic: graph counts: regions 1 merges 1
+=== CONT  TestFreshWriteProbesUseRegions/map_callback.a
+=== NAME  TestFreshWriteProbesUseRegions/map_iterator_parenthesized.a
+    fresh_test.go:68: allocations 8 frees 8 retains 4 releases 12 peak 8; adamic: graph counts: regions 1 merges 5
+=== CONT  TestFreshWriteProbesUseRegions/escapes_after_return.a
+=== NAME  TestFreshWriteProbesUseRegions/map_iterator.a
+    fresh_test.go:68: allocations 8 frees 8 retains 4 releases 12 peak 8; adamic: graph counts: regions 1 merges 5
+=== CONT  TestFreshWriteProbesUseRegions/global_then_function.a
+=== NAME  TestFreshWriteProbesUseRegions/map_callback.a
+    fresh_test.go:68: allocations 10 frees 10 retains 5 releases 12 peak 7; adamic: graph counts: regions 1 merges 2
+=== CONT  TestFreshWriteProbesUseRegions/fill.a
+=== NAME  TestFreshWriteProbesUseRegions/escapes_after_return.a
+    fresh_test.go:68: allocations 12 frees 12 retains 7 releases 16 peak 7; adamic: graph counts: regions 3 merges 5
+=== CONT  TestFreshWriteProbesUseRegions/devirt_fresh_method_keeps_argument.a
+=== NAME  TestFreshWriteProbesUseRegions/map_entries_pattern.a
+    fresh_test.go:68: allocations 802 frees 802 retains 600 releases 1202 peak 6; adamic: graph counts: regions 100 merges 300
+=== CONT  TestFreshWriteProbesUseRegions/escaped_before.a
+=== NAME  TestFreshWriteProbesUseRegions/global_then_function.a
+    fresh_test.go:68: allocations 12 frees 12 retains 6 releases 15 peak 7; adamic: graph counts: regions 3 merges 5
+=== CONT  TestFreshWriteProbesUseRegions/ctor_wrapped.a
+=== NAME  TestFreshWriteProbesUseRegions/fill.a
+    fresh_test.go:68: allocations 10 frees 10 retains 4 releases 12 peak 7; adamic: graph counts: regions 2 merges 3
+=== CONT  TestFreshWriteProbesUseRegions/call_returns_argument.a
+=== NAME  TestFreshWriteProbesUseRegions/devirt_fresh_method_keeps_argument.a
+    fresh_test.go:68: allocations 15 frees 14 retains 6 releases 18 peak 8; adamic: graph counts: regions 3 merges 3
+=== NAME  TestFreshWriteProbesUseRegions/escaped_before.a
+    fresh_test.go:68: allocations 1007 frees 1007 retains 602 releases 1308 peak 12; adamic: graph counts: regions 202 merges 302
+=== NAME  TestFreshWriteProbesUseRegions/ctor_wrapped.a
+    fresh_test.go:68: allocations 7 frees 7 retains 3 releases 10 peak 5; adamic: graph counts: regions 2 merges 4
+=== NAME  TestFreshWriteProbesUseRegions/call_returns_argument.a
+    fresh_test.go:68: allocations 6 frees 6 retains 2 releases 7 peak 4; adamic: graph counts: regions 1 merges 1
+--- PASS: TestFreshWriteProbesUseRegions (0.00s)
+    --- PASS: TestFreshWriteProbesUseRegions/ctor_set.a (20.13s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_owner.a (20.18s)
+    --- PASS: TestFreshWriteProbesUseRegions/alias_fill.a (20.23s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_one_bad_site.a (20.25s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_comparator.a (0.87s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_escaped_parent.a (1.01s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_grandchild.a (1.10s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_leaks_parent.a (1.18s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_clobbers.a (1.02s)
+    --- PASS: TestFreshWriteProbesUseRegions/alias_sort.a (0.84s)
+    --- PASS: TestFreshWriteProbesUseRegions/array_from.a (1.03s)
+    --- PASS: TestFreshWriteProbesUseRegions/another_view.a (1.04s)
+    --- PASS: TestFreshWriteProbesUseRegions/alias_reverse.a (0.81s)
+    --- PASS: TestFreshWriteProbesUseRegions/alias_setadd.a (0.98s)
+    --- PASS: TestFreshWriteProbesUseRegions/alias_mapset.a (1.00s)
+    --- PASS: TestFreshWriteProbesUseRegions/caught.a (1.11s)
+    --- PASS: TestFreshWriteProbesUseRegions/constructor_tie.a (0.96s)
+    --- PASS: TestFreshWriteProbesUseRegions/ctor_readonly.a (1.15s)
+    --- PASS: TestFreshWriteProbesUseRegions/concat.a (0.89s)
+    --- PASS: TestFreshWriteProbesUseRegions/closure_captures.a (1.00s)
+    --- PASS: TestFreshWriteProbesUseRegions/clobber_link_loop.a (0.88s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_twice_deferred.a (1.00s)
+    --- PASS: TestFreshWriteProbesUseRegions/captured_before.a (1.07s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_wrapper.a (1.02s)
+    --- PASS: TestFreshWriteProbesUseRegions/wraps_argument.a (0.81s)
+    --- PASS: TestFreshWriteProbesUseRegions/next_iteration.a (0.98s)
+    --- PASS: TestFreshWriteProbesUseRegions/throw_keeps_old.a (1.09s)
+    --- PASS: TestFreshWriteProbesUseRegions/spread_outside.a (1.09s)
+    --- PASS: TestFreshWriteProbesUseRegions/spread_array.a (0.97s)
+    --- PASS: TestFreshWriteProbesUseRegions/spread_old.a (1.04s)
+    --- PASS: TestFreshWriteProbesUseRegions/splice.a (0.96s)
+    --- PASS: TestFreshWriteProbesUseRegions/set_iterator.a (0.98s)
+    --- PASS: TestFreshWriteProbesUseRegions/set_add.a (0.93s)
+    --- PASS: TestFreshWriteProbesUseRegions/returns_global.a (1.06s)
+    --- PASS: TestFreshWriteProbesUseRegions/returns_argument.a (0.96s)
+    --- PASS: TestFreshWriteProbesUseRegions/one_call.a (0.91s)
+    --- PASS: TestFreshWriteProbesUseRegions/older_instance.a (1.42s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_targets_virtual.a (1.46s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_then_throws.a (1.41s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_same.a (1.26s)
+    --- PASS: TestFreshWriteProbesUseRegions/index_write.a (1.46s)
+    --- PASS: TestFreshWriteProbesUseRegions/map_key.a (1.40s)
+    --- PASS: TestFreshWriteProbesUseRegions/map_set.a (1.58s)
+    --- PASS: TestFreshWriteProbesUseRegions/map_iterator_parenthesized.a (1.45s)
+    --- PASS: TestFreshWriteProbesUseRegions/map_iterator.a (1.51s)
+    --- PASS: TestFreshWriteProbesUseRegions/map_callback.a (1.67s)
+    --- PASS: TestFreshWriteProbesUseRegions/escapes_after_return.a (1.61s)
+    --- PASS: TestFreshWriteProbesUseRegions/map_entries_pattern.a (1.87s)
+    --- PASS: TestFreshWriteProbesUseRegions/global_then_function.a (1.57s)
+    --- PASS: TestFreshWriteProbesUseRegions/fill.a (1.71s)
+    --- PASS: TestFreshWriteProbesUseRegions/devirt_fresh_method_keeps_argument.a (1.81s)
+    --- PASS: TestFreshWriteProbesUseRegions/escaped_before.a (1.83s)
+    --- PASS: TestFreshWriteProbesUseRegions/ctor_wrapped.a (1.48s)
+    --- PASS: TestFreshWriteProbesUseRegions/call_returns_argument.a (1.03s)
+PASS
+gate cache: native hits=0 misses=162
+gate cache: node hits=0 misses=108
+gate cache: probe hits=0 misses=0

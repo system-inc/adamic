@@ -1,0 +1,60 @@
+=== RUN   TestAsyncGeneratedIdentityCannotBeClaimedBySource
+=== PAUSE TestAsyncGeneratedIdentityCannotBeClaimedBySource
+=== RUN   TestPromisePayloadCannotHideUserCycles
+=== PAUSE TestPromisePayloadCannotHideUserCycles
+=== RUN   TestInheritanceRefusesUnsoundOverrides
+=== PAUSE TestInheritanceRefusesUnsoundOverrides
+=== RUN   TestInheritanceGenericSoundness
+=== PAUSE TestInheritanceGenericSoundness
+=== RUN   TestNamespaceAmbientHostInitialization
+=== PAUSE TestNamespaceAmbientHostInitialization
+=== RUN   TestNestedCallbackCycleIsRefused
+=== PAUSE TestNestedCallbackCycleIsRefused
+=== CONT  TestAsyncGeneratedIdentityCannotBeClaimedBySource
+=== CONT  TestInheritanceGenericSoundness
+=== CONT  TestInheritanceRefusesUnsoundOverrides
+=== CONT  TestPromisePayloadCannotHideUserCycles
+=== RUN   TestInheritanceGenericSoundness/generic_narrowing
+=== RUN   TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+=== RUN   TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+=== RUN   TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== RUN   TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== RUN   TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+=== RUN   TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== PAUSE TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== CONT  TestNestedCallbackCycleIsRefused
+=== RUN   TestInheritanceGenericSoundness/generic_inherited_cycle
+--- PASS: TestNestedCallbackCycleIsRefused (0.10s)
+=== CONT  TestNamespaceAmbientHostInitialization
+--- PASS: TestPromisePayloadCannotHideUserCycles (0.10s)
+=== CONT  TestInheritanceRefusesUnsoundOverrides/parameter_bivariance
+--- PASS: TestInheritanceGenericSoundness (0.15s)
+    --- PASS: TestInheritanceGenericSoundness/generic_narrowing (0.10s)
+    --- PASS: TestInheritanceGenericSoundness/generic_inherited_cycle (0.05s)
+=== CONT  TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents
+=== RUN   TestNamespaceAmbientHostInitialization/realpath
+=== CONT  TestInheritanceRefusesUnsoundOverrides/inherited_cycle
+=== CONT  TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle
+--- PASS: TestAsyncGeneratedIdentityCannotBeClaimedBySource (0.24s)
+=== CONT  TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents
+=== CONT  TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing
+--- PASS: TestInheritanceRefusesUnsoundOverrides (0.00s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/parameter_bivariance (0.08s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/readonly_mutable_contents (0.07s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/inherited_cycle (0.08s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/mutable_parameter_contents (0.05s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/inherited_private_cycle (0.08s)
+    --- PASS: TestInheritanceRefusesUnsoundOverrides/mutable_field_narrowing (0.05s)
+=== NAME  TestNamespaceAmbientHostInitialization/realpath
+    namespaces_ambient_test.go:44: independent lowering stop: /tmp/adamic-gate/TestNamespaceAmbientHostInitializationrealpath1133239766/002/main.a:3:22: stage 0 can't lower node:fs.native yet
+=== RUN   TestNamespaceAmbientHostInitialization/cwd
+    namespaces_ambient_test.go:42: expected independent host member NotYet, got <nil>
+--- FAIL: TestNamespaceAmbientHostInitialization (1.06s)
+    --- PASS: TestNamespaceAmbientHostInitialization/realpath (0.52s)
+    --- FAIL: TestNamespaceAmbientHostInitialization/cwd (0.48s)
+FAIL

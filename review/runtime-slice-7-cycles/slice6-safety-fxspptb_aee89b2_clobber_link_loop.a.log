@@ -1,0 +1,110 @@
+=== RUN   TestSlice6AcceptedCycleSafety
+=== RUN   TestSlice6AcceptedCycleSafety/fxspptb_aee89b2_clobber_link_loop.a
+    runtime_slice7_baseline_test.go:36: Node exit 0 stdout "100\n" stderr ""; native exit 0 stdout "100\n" stderr ""; counted adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 4 bytes 328 reachable 4 bytes 328 unreachable 0 bytes 0 metadata 192
+        adamic: graph counts: regions 200 merges 300
+        adamic: counts: allocations 1002 frees 1002 retains 600 releases 1302 peak 9 regions 0
+--- PASS: TestSlice6AcceptedCycleSafety (0.54s)
+    --- PASS: TestSlice6AcceptedCycleSafety/fxspptb_aee89b2_clobber_link_loop.a (0.54s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

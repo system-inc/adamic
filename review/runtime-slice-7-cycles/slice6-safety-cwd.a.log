@@ -1,0 +1,11 @@
+=== RUN   TestSlice6AcceptedCycleSafety
+=== RUN   TestSlice6AcceptedCycleSafety/cwd.a
+    runtime_slice7_baseline_test.go:36: Node exit 0 stdout "true\n" stderr ""; native exit 0 stdout "true\n" stderr ""; counted adamic: graph region: live 3 bytes 128 reachable 3 bytes 128 unreachable 0 bytes 0 metadata 112
+        adamic: graph counts: regions 1 merges 2
+        adamic: counts: allocations 6 frees 6 retains 7 releases 12 peak 6 regions 0
+--- PASS: TestSlice6AcceptedCycleSafety (13.39s)
+    --- PASS: TestSlice6AcceptedCycleSafety/cwd.a (13.39s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0

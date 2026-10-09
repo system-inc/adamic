@@ -1,0 +1,128 @@
+=== RUN   TestReviewProgramsRefuse
+=== PAUSE TestReviewProgramsRefuse
+=== CONT  TestReviewProgramsRefuse
+=== RUN   TestReviewProgramsRefuse/fxspptb_4ddd17f_class_cast.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_4e1649c_raw_named_writer.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_57f2d04_with_frozen.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_8e67677_write_groups_compound_missing.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a
+    review_test.go:86: awaits library/area-on-next-2: refused at compile time by step 20's own-property reflection refusal on area/library; every Adamic mode answers differently from Node on main today
+=== RUN   TestReviewProgramsRefuse/fxspptb_903f25b_try_assign.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_93122fa_s3.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_93122fa_s4.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_9984394_lib_dispatch.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_a34388d_it_spread.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_a34388d_it_spread2.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_override_default_added.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_override_optional.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_override_optional_number.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_super_early.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_super_early_silent.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_abfe962_super_early_this.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_alias_fill.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_aee89b2_alias_fill.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_alias_mapset.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_aee89b2_alias_mapset.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_alias_reverse.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_aee89b2_alias_reverse.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_alias_setadd.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_aee89b2_alias_setadd.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_alias_sort.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_aee89b2_alias_sort.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_clobber_link_loop.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_aee89b2_clobber_link_loop.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_escaped_before.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_aee89b2_escaped_before.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_map_entries_pattern.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_aee89b2_map_entries_pattern.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_spread_outside.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_aee89b2_spread_outside.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_aee89b2_throw_keeps_old.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_aee89b2_throw_keeps_old.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_bdb950b_generic.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_bdb950b_generic_shared.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_classfeat_init_super.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_classfeat_init_super_getter.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_classfeat_init_super_number.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_classfeat_static_private_instance.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_classfeat_static_private_method.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_devirt_fresh_method_keeps_argument.a
+    review_test.go:163: accepted refused review program /workspace/slice6/internal/oracle/testdata/review/refused/fxspptb_devirt_fresh_method_keeps_argument.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a
+    review_test.go:86: awaits library/area-on-next-2: refused at compile time by the V8-divergence shape refusal on area/library; native answers differently from Node on main today
+=== RUN   TestReviewProgramsRefuse/fxspptb_e4eec87_u02_optional_absent.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_iterators_hidden_return.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_iterators_override_this.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_iterators_sym_keys_view.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p05_helper_second_parameter.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p12_find_undefined_target.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p13_filter_wrong_parameter_helper.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p21_find_inferred_number.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p22_filter_inferred_narrowing.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p23_find_declared_predicate.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct8_predicates_p26_assert_nested_if_without_else.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p17_callable_field_element_call.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p48_callable_destructure_wrong.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p64_array_arm_element.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p75_callable_from_map_value.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_oct9_views_p76_union_member_class_field.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_p06_helper_second_parameter_undefined.a
+=== RUN   TestReviewProgramsRefuse/fxspptb_p24_filter_proven_number.a
+=== RUN   TestReviewProgramsRefuse/non_null.a
+--- FAIL: TestReviewProgramsRefuse (1.61s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_4ddd17f_class_cast.a (0.04s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_4e1649c_raw_named_writer.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_57f2d04_with_frozen.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_8e67677_write_groups_compound_missing.a (0.03s)
+    --- SKIP: TestReviewProgramsRefuse/fxspptb_903f25b_iterator_own.a (0.00s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_903f25b_try_assign.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_93122fa_s3.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_93122fa_s4.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_9984394_lib_dispatch.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_a34388d_it_spread.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_a34388d_it_spread2.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_override_default_added.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_override_optional.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_override_optional_number.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_super_early.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_super_early_silent.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_abfe962_super_early_this.a (0.03s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_alias_fill.a (0.03s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_alias_mapset.a (0.03s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_alias_reverse.a (0.03s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_alias_setadd.a (0.03s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_alias_sort.a (0.03s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_clobber_link_loop.a (0.03s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_escaped_before.a (0.03s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_map_entries_pattern.a (0.04s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_spread_outside.a (0.03s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_aee89b2_throw_keeps_old.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_bdb950b_generic.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_bdb950b_generic_shared.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_classfeat_init_super.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_classfeat_init_super_getter.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_classfeat_init_super_number.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_classfeat_static_private_instance.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_classfeat_static_private_method.a (0.03s)
+    --- FAIL: TestReviewProgramsRefuse/fxspptb_devirt_fresh_method_keeps_argument.a (0.03s)
+    --- SKIP: TestReviewProgramsRefuse/fxspptb_e23c7ab_v8_divergence.a (0.00s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_e4eec87_u02_optional_absent.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_iterators_hidden_return.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_iterators_override_this.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_iterators_sym_keys_view.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p05_helper_second_parameter.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p12_find_undefined_target.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p13_filter_wrong_parameter_helper.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p21_find_inferred_number.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p22_filter_inferred_narrowing.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p23_find_declared_predicate.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct8_predicates_p26_assert_nested_if_without_else.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p17_callable_field_element_call.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p48_callable_destructure_wrong.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p64_array_arm_element.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p75_callable_from_map_value.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_oct9_views_p76_union_member_class_field.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_p06_helper_second_parameter_undefined.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/fxspptb_p24_filter_proven_number.a (0.03s)
+    --- PASS: TestReviewProgramsRefuse/non_null.a (0.03s)
+FAIL
