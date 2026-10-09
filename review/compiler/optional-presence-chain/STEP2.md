@@ -1,5 +1,5 @@
 Built: V1 checked-view optional scalar reads and writes, including the exit-70 misfit stop.
-Commits: runtime descriptor correction 163e39f8; checked-write implementation follows on this branch.
+Commits: runtime descriptor correction 163e39f8; checked-write implementation d26baa81.
 Validation: Node comparisons, both backends, native sanitizers, targeted regressions, counts and CallTargetReaders pass.
 Mutants: dropped store, presence publication, write guard, absence decoding, boolean decoding, union boxing, literal guard, boolean reservation, string retain and checked-view origin were caught.
 Remaining: runtime review of the new checked-write hunks; full gate was not run.
@@ -26,3 +26,5 @@ New test leaf timings:
 Source mutants and their catches are recorded in step2-source-mutants.log and run-mutants.py; runtime and generated-JavaScript mutants run in optional_field_view_test.go. The original static-key-list, copy-state and original source mutants also passed their detection checks. An experimental redundant nullable guard mutant survived and was discarded with that redundant guard; no detection is claimed for it.
 
 Setup: 46.470 s total, build 46.309 s; nproc 5, CPU quota 4. No full packages, full gate, WASI, Darwin or fuzz sweep was run. New runtime review is the remaining external dependency; implementation and targeted tests are green.
+
+Lane checks: 12.3 s; gofmt and tools on 272 Go files, t.Parallel on 20 test packages. Lane vet skipped after exceeding its 10 s budget; separate targeted go vet on ir, lower, native, javascript and oracle passed (step2-vet.log).
