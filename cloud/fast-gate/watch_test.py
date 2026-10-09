@@ -969,6 +969,20 @@ class WatchTests(unittest.TestCase):
         self.assertIn('superseded by eeeeeeeeeeee', (w.root / 'loom-jobs' / (sha + '.cancel')).read_text())
         w.wait(lambda: 'stopped %s %s: superseded by eeeeeeeeeeee' % (branch, sha) in w.read('output'))
 
+    def test_an_area_gate_whose_area_moved_is_stopped_and_cancelled_on_the_pool(self):
+        # Oct 9 16:00Z: 12 area/compiler and 12 area/stage3 tips held Loom's pool, each voiding at 5400 s.
+        w = Watcher(0, canaryBox='box1', mode='hold', slots='pool P\n')
+        self.addCleanup(w.close)
+        (w.state / 'pool-side').touch()
+        old, newer = 'a1' * 20, 'e' * 40
+        w.wait(lambda: 'watching ' in w.read('output'))
+        w.put('tips', '%s\trefs/heads/area/compiler\n' % old)
+        w.wait(lambda: 'area/compiler ' in w.read('pool-starts'))
+        w.put('tips', '%s\trefs/heads/area/compiler\n' % newer)
+        w.wait(lambda: (w.root / 'loom-jobs' / (old + '.cancel')).exists())
+        self.assertIn('superseded by eeeeeeeeeeee', (w.root / 'loom-jobs' / (old + '.cancel')).read_text())
+        w.wait(lambda: 'stopped area/compiler %s: superseded by eeeeeeeeeeee' % old in w.read('output'))
+
     def test_stop_gate_refuses_anything_but_a_whole_sha(self):
         w = self.start(0)
         for sha in ('', 'abc', 'g' * 40, 'a' * 39, 'A' * 40):

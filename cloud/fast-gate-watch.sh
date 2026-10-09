@@ -569,7 +569,9 @@ stopSuperseded() {
     [ -f "${state}/stopped-running/${pid}" ] && continue
     kill -0 "${pid}" 2> /dev/null || continue
     read -r branch sha slot box rest < "${file}"
-    [[ ${branch} == codex/* || ${branch} == devtools/* ]] || continue
+    # Areas too (integration, Oct 9 16:06Z): an area reaches main only through cut candidates gated on their own, so
+    # an older area tip's gate is no record anyone needs; 24 of them held Loom's pool, each voiding at 5400 s.
+    [[ ${branch} == codex/* || ${branch} == devtools/* || ${branch} == area/* ]] || continue
     tip=$(awk -v b="${branch}" '$1 == b {print $2; exit}' "${state}/seen")
     [ -n "${tip}" ] && [ "${tip}" != "${sha}" ] || continue
     stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "superseded by ${tip:0:12}" &&
