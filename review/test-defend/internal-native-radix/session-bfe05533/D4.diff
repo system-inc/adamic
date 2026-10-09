@@ -1,0 +1,13 @@
+diff --git a/internal/regexp/parser.go b/internal/regexp/parser.go
+index 99c873f1..affc1715 100644
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -449,7 +449,7 @@ func (p *parser) escape(inClass bool) (Node, bool, error) {
+ 		return ch, true, err
+ 	}
+ 	if strings.ContainsRune("fnrtv", rune(c)) {
+-		return &Character{Value: map[byte]rune{'f': 12, 'n': 10, 'r': 13, 't': 9, 'v': 11}[c], Raw: p.source[start:p.pos], Kind: Escape}, true, nil
++		return &Character{Value: map[byte]rune{'f': 12, 'n': 10, 'r': 13, 't': 10, 'v': 11}[c], Raw: p.source[start:p.pos], Kind: Escape}, true, nil
+ 	}
+ 	if (p.flags.Unicode || p.flags.UnicodeSets) && !strings.ContainsRune("^$\\.*+?()[]{}|/", rune(c)) && !(inClass && (c == '-' || p.flags.UnicodeSets && strings.ContainsRune("!#%&,:;<=>@`~", rune(c)))) {
+ 		return nil, false, p.failAt(start, "invalid identity escape")

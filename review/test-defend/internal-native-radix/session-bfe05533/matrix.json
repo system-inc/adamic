@@ -1,0 +1,913 @@
+{
+  "D1": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-radix/cache/D1 timeout 330 go test -json -count=1 -timeout 300s ./internal/native/ -run '^TestRegExp' > D1.log 2>&1",
+    "binary_seconds": 21.028,
+    "rows_failed": [
+      "TestRegExpBytecodeTest262",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpSearchNode"
+    ],
+    "rows_passed": [
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary"
+    ],
+    "unknown": [],
+    "failure_output": {
+      "TestRegExpBytecodeTest262": [
+        "regexp_test.go:53: native regex oracle ([]): exit status 1",
+        "",
+        "=================================================================",
+        "==338726==ERROR: LeakSanitizer: detected memory leaks",
+        "",
+        "Direct leak of 159424 byte(s) in 1422 object(s) allocated from:",
+        "#0 0x55d2a8a68274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3",
+        "#1 0x55d2a8b894ed in regex_memory /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:11:17",
+        "#2 0x55d2a8b894ed in regex_clone /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:140:12",
+        "",
+        "Indirect leak of 55398624 byte(s) in 560038 object(s) allocated from:",
+        "#0 0x55d2a8a68274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3",
+        "#1 0x55d2a8b894ed in regex_memory /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:11:17",
+        "#2 0x55d2a8b894ed in regex_clone /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:140:12",
+        "",
+        "SUMMARY: AddressSanitizer: 55558048 byte(s) leaked in 561460 allocation(s)."
+      ],
+      "TestRegExpLintPatternsNode": [
+        "regexp_search_test.go:76: native regex oracle ([]): exit status 1",
+        "",
+        "=================================================================",
+        "==338363==ERROR: LeakSanitizer: detected memory leaks",
+        "",
+        "Direct leak of 224 byte(s) in 2 object(s) allocated from:",
+        "#0 0x55720315f274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3",
+        "#1 0x55720320a44d in regex_memory /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:11:17",
+        "#2 0x55720320a44d in regex_clone /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:140:12",
+        "",
+        "Indirect leak of 234528 byte(s) in 2094 object(s) allocated from:",
+        "#0 0x55720315f274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3",
+        "#1 0x55720320a44d in regex_memory /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:11:17",
+        "#2 0x55720320a44d in regex_clone /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:140:12",
+        "",
+        "SUMMARY: AddressSanitizer: 234752 byte(s) leaked in 2096 allocation(s)."
+      ],
+      "TestRegExpSearchNode": [
+        "regexp_search_test.go:34: native regex oracle ([]): exit status 1",
+        "",
+        "=================================================================",
+        "==338115==ERROR: LeakSanitizer: detected memory leaks",
+        "",
+        "Direct leak of 416 byte(s) in 4 object(s) allocated from:",
+        "#0 0x55a1763ed274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3",
+        "#1 0x55a17647de5d in regex_memory /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:11:17",
+        "#2 0x55a17647de5d in regex_clone /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:140:12",
+        "",
+        "Indirect leak of 50112 byte(s) in 480 object(s) allocated from:",
+        "#0 0x55a1763ed274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3",
+        "#1 0x55a17647de5d in regex_memory /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:11:17",
+        "#2 0x55a17647de5d in regex_clone /home/agent/.cache/adamic/runtime/.build-2923302532/regexp.c:140:12",
+        "",
+        "SUMMARY: AddressSanitizer: 50528 byte(s) leaked in 484 allocation(s)."
+      ]
+    }
+  },
+  "D2": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-radix/cache/D2 timeout 330 go test -json -count=1 -timeout 300s ./internal/native/ -run '^TestRegExp' > D2.log 2>&1",
+    "binary_seconds": 26.186,
+    "rows_failed": [
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpSearchNode"
+    ],
+    "rows_passed": [
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary"
+    ],
+    "unknown": [],
+    "failure_output": {
+      "TestRegExpBytecodeRandomNodeUnit02": [
+        "regexp_test.go:381: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=143 test=1 expected=1 lastIndex=2 expected=1 captures=3 expected=3",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit05": [
+        "regexp_test.go:396: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=208 test=1 expected=1 lastIndex=3 expected=2 captures=1 expected=1",
+        "DISAGREEMENT case=244 test=1 expected=1 lastIndex=2 expected=1 captures=1 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit09": [
+        "regexp_test.go:416: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=9 test=1 expected=1 lastIndex=1 expected=0 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit11": [
+        "regexp_test.go:426: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=191 test=1 expected=1 lastIndex=1 expected=0 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit16": [
+        "regexp_test.go:451: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=60 test=1 expected=1 lastIndex=2 expected=1 captures=3 expected=3",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit19": [
+        "regexp_test.go:466: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=1 test=1 expected=1 lastIndex=3 expected=2 captures=1 expected=1",
+        "DISAGREEMENT case=132 test=1 expected=1 lastIndex=1 expected=0 captures=1 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit26": [
+        "regexp_test.go:501: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=77 test=1 expected=1 lastIndex=4 expected=3 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit33": [
+        "regexp_test.go:536: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=115 test=1 expected=1 lastIndex=2 expected=1 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit35": [
+        "regexp_test.go:546: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=130 test=1 expected=1 lastIndex=2 expected=1 captures=2 expected=2",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit37": [
+        "regexp_test.go:556: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=202 test=1 expected=1 lastIndex=1 expected=0 captures=2 expected=2",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpSearchNode": [
+        "regexp_search_test.go:34: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=26 test=0 expected=1 lastIndex=0 expected=2 captures=0 expected=1",
+        "DISAGREEMENT case=27 test=0 expected=1 lastIndex=0 expected=2 captures=0 expected=1",
+        "DISAGREEMENT case=28 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 29 cases, 3 disagreements"
+      ]
+    }
+  },
+  "D3": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-radix/cache/D3 timeout 330 go test -json -count=1 -timeout 300s ./internal/native/ -run '^TestRegExp' > D3.log 2>&1",
+    "binary_seconds": 20.247,
+    "rows_failed": [
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpSearchNode"
+    ],
+    "rows_passed": [
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary"
+    ],
+    "unknown": [],
+    "failure_output": {
+      "TestRegExpBytecodeRandomNodeUnit03": [
+        "regexp_test.go:386: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=80 test=1 expected=1 lastIndex=3 expected=3 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit06": [
+        "regexp_test.go:401: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=184 test=1 expected=1 lastIndex=2 expected=2 captures=2 expected=2",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit07": [
+        "regexp_test.go:406: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=16 test=1 expected=1 lastIndex=3 expected=3 captures=1 expected=1",
+        "DISAGREEMENT case=197 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit14": [
+        "regexp_test.go:441: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=184 test=1 expected=1 lastIndex=2 expected=2 captures=2 expected=2",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit16": [
+        "regexp_test.go:451: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=226 test=1 expected=1 lastIndex=1 expected=1 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit17": [
+        "regexp_test.go:456: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=7 test=1 expected=1 lastIndex=3 expected=3 captures=1 expected=1",
+        "DISAGREEMENT case=98 test=1 expected=1 lastIndex=2 expected=2 captures=1 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit18": [
+        "regexp_test.go:461: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=202 test=1 expected=1 lastIndex=3 expected=3 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit21": [
+        "regexp_test.go:476: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=54 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=184 test=1 expected=1 lastIndex=0 expected=0 captures=2 expected=2",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit29": [
+        "regexp_test.go:516: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=30 test=1 expected=1 lastIndex=1 expected=1 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit35": [
+        "regexp_test.go:546: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=71 test=1 expected=1 lastIndex=2 expected=2 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit37": [
+        "regexp_test.go:556: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=225 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpSearchNode": [
+        "regexp_search_test.go:34: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=17 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+        "native execution totals: 29 cases, 1 disagreements"
+      ]
+    }
+  },
+  "D4": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-radix/cache/D4 timeout 330 go test -json -count=1 -timeout 300s ./internal/native/ -run '^TestRegExp' > D4.log 2>&1",
+    "binary_seconds": 22.557,
+    "rows_failed": [],
+    "rows_passed": [
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpSearchNode"
+    ],
+    "unknown": [],
+    "failure_output": {}
+  },
+  "D5": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-radix/cache/D5 timeout 330 go test -json -count=1 -timeout 300s ./internal/native/ -run '^TestRegExp' > D5.log 2>&1",
+    "binary_seconds": 19.142,
+    "rows_failed": [
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpSearchNode"
+    ],
+    "rows_passed": [
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary"
+    ],
+    "unknown": [],
+    "failure_output": {
+      "TestRegExpBytecodeRandomNodeUnit02": [
+        "regexp_test.go:381: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=226 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit05": [
+        "regexp_test.go:396: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=80 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit23": [
+        "regexp_test.go:486: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=18 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=2",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit24": [
+        "regexp_test.go:491: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=217 test=0 expected=1 lastIndex=2 expected=2 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit30": [
+        "regexp_test.go:521: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=234 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit31": [
+        "regexp_test.go:526: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=138 test=0 expected=1 lastIndex=2 expected=2 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeTest262": [
+        "regexp_test.go:53: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=589 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=3",
+        "DISAGREEMENT case=124253 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=124306 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=124307 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=126522 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126632 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126634 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126637 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126638 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126640 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126643 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126692 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126693 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126694 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126695 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126736 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126737 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126740 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126741 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126742 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126743 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126744 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126745 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126748 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126749 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126750 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126751 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126754 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126757 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126758 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126785 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126786 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126787 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126788 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126793 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126794 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126795 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126796 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126821 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126822 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126823 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126865 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126866 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126867 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=126963 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=127003 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=127012 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=127015 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=127019 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=127066 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=127070 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=127072 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=127074 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=127075 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=127100 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=127101 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 127369 cases, 56 disagreements"
+      ],
+      "TestRegExpLintPatternsNode": [
+        "regexp_search_test.go:76: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=832 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 890 cases, 1 disagreements"
+      ],
+      "TestRegExpSearchNode": [
+        "regexp_search_test.go:34: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=18 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 29 cases, 1 disagreements"
+      ]
+    }
+  },
+  "D6": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-native-radix/cache/D6 timeout 330 go test -json -count=1 -timeout 300s ./internal/native/ -run '^TestRegExp' > D6.log 2>&1",
+    "binary_seconds": 25.479,
+    "rows_failed": [
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpLintPatternsNode"
+    ],
+    "rows_passed": [
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpSearchNode"
+    ],
+    "unknown": [],
+    "failure_output": {
+      "TestRegExpBytecodeRandomNodeUnit00": [
+        "regexp_test.go:371: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=72 test=0 expected=1 lastIndex=0 expected=3 captures=0 expected=1",
+        "DISAGREEMENT case=154 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit01": [
+        "regexp_test.go:376: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=10 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit02": [
+        "regexp_test.go:381: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=46 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit03": [
+        "regexp_test.go:386: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=93 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit04": [
+        "regexp_test.go:391: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=166 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=183 test=0 expected=1 lastIndex=2 expected=2 captures=0 expected=1",
+        "DISAGREEMENT case=231 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "native execution totals: 250 cases, 3 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit05": [
+        "regexp_test.go:396: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=249 test=0 expected=1 lastIndex=2 expected=2 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit06": [
+        "regexp_test.go:401: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=164 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit07": [
+        "regexp_test.go:406: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=123 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=124 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=140 test=1 expected=1 lastIndex=1 expected=1 captures=1 expected=1",
+        "native execution totals: 250 cases, 3 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit08": [
+        "regexp_test.go:411: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=12 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=1",
+        "DISAGREEMENT case=27 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=2",
+        "DISAGREEMENT case=99 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=103 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=232 test=1 expected=1 lastIndex=2 expected=3 captures=1 expected=1",
+        "native execution totals: 250 cases, 5 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit09": [
+        "regexp_test.go:416: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=132 test=1 expected=1 lastIndex=4 expected=4 captures=1 expected=1",
+        "DISAGREEMENT case=145 test=0 expected=1 lastIndex=0 expected=5 captures=0 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit10": [
+        "regexp_test.go:421: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=15 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=3",
+        "DISAGREEMENT case=208 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=245 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=2",
+        "native execution totals: 250 cases, 3 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit11": [
+        "regexp_test.go:426: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=15 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "DISAGREEMENT case=133 test=1 expected=0 lastIndex=2 expected=2 captures=2 expected=0",
+        "DISAGREEMENT case=205 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "native execution totals: 250 cases, 3 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit12": [
+        "regexp_test.go:431: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=44 test=1 expected=1 lastIndex=1 expected=1 captures=1 expected=1",
+        "DISAGREEMENT case=149 test=0 expected=1 lastIndex=2 expected=2 captures=0 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit13": [
+        "regexp_test.go:436: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=107 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=3",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit14": [
+        "regexp_test.go:441: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=97 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "DISAGREEMENT case=110 test=0 expected=1 lastIndex=0 expected=3 captures=0 expected=1",
+        "DISAGREEMENT case=126 test=0 expected=1 lastIndex=0 expected=1 captures=0 expected=2",
+        "DISAGREEMENT case=136 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=150 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=2",
+        "DISAGREEMENT case=166 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=1",
+        "DISAGREEMENT case=215 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=221 test=1 expected=1 lastIndex=2 expected=2 captures=1 expected=1",
+        "native execution totals: 250 cases, 8 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit15": [
+        "regexp_test.go:446: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=216 test=1 expected=1 lastIndex=1 expected=1 captures=3 expected=3",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit16": [
+        "regexp_test.go:451: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=40 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "DISAGREEMENT case=120 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit17": [
+        "regexp_test.go:456: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=20 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "DISAGREEMENT case=23 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "DISAGREEMENT case=38 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "DISAGREEMENT case=79 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=85 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=1",
+        "DISAGREEMENT case=178 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=2",
+        "DISAGREEMENT case=198 test=1 expected=1 lastIndex=4 expected=4 captures=1 expected=1",
+        "DISAGREEMENT case=206 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+        "native execution totals: 250 cases, 8 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit18": [
+        "regexp_test.go:461: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=22 test=1 expected=1 lastIndex=3 expected=3 captures=2 expected=2",
+        "DISAGREEMENT case=115 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=216 test=1 expected=1 lastIndex=1 expected=1 captures=1 expected=1",
+        "native execution totals: 250 cases, 3 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit19": [
+        "regexp_test.go:466: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=10 test=0 expected=1 lastIndex=0 expected=1 captures=0 expected=1",
+        "DISAGREEMENT case=96 test=1 expected=1 lastIndex=1 expected=1 captures=1 expected=1",
+        "DISAGREEMENT case=160 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=1",
+        "native execution totals: 250 cases, 3 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit20": [
+        "regexp_test.go:471: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=1 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=2",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit22": [
+        "regexp_test.go:481: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=74 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=1",
+        "DISAGREEMENT case=138 test=0 expected=1 lastIndex=0 expected=2 captures=0 expected=1",
+        "DISAGREEMENT case=169 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=2",
+        "DISAGREEMENT case=196 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "native execution totals: 250 cases, 4 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit23": [
+        "regexp_test.go:486: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=58 test=1 expected=1 lastIndex=3 expected=3 captures=1 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit24": [
+        "regexp_test.go:491: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=75 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=2",
+        "DISAGREEMENT case=160 test=0 expected=1 lastIndex=2 expected=2 captures=0 expected=1",
+        "DISAGREEMENT case=164 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=242 test=1 expected=1 lastIndex=4 expected=4 captures=2 expected=2",
+        "native execution totals: 250 cases, 4 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit25": [
+        "regexp_test.go:496: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=15 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit26": [
+        "regexp_test.go:501: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=29 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=1",
+        "DISAGREEMENT case=235 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit27": [
+        "regexp_test.go:506: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=4 test=1 expected=1 lastIndex=2 expected=2 captures=2 expected=2",
+        "DISAGREEMENT case=119 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "DISAGREEMENT case=151 test=1 expected=1 lastIndex=4 expected=4 captures=1 expected=1",
+        "native execution totals: 250 cases, 3 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit28": [
+        "regexp_test.go:511: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=46 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=145 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit30": [
+        "regexp_test.go:521: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=27 test=0 expected=1 lastIndex=0 expected=1 captures=0 expected=2",
+        "DISAGREEMENT case=90 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=119 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=2",
+        "DISAGREEMENT case=138 test=1 expected=1 lastIndex=2 expected=2 captures=1 expected=1",
+        "DISAGREEMENT case=168 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 250 cases, 5 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit31": [
+        "regexp_test.go:526: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=5 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit32": [
+        "regexp_test.go:531: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=159 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 250 cases, 1 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit34": [
+        "regexp_test.go:541: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=17 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=42 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+        "DISAGREEMENT case=220 test=0 expected=1 lastIndex=0 expected=2 captures=0 expected=1",
+        "DISAGREEMENT case=240 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 250 cases, 4 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit35": [
+        "regexp_test.go:546: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=60 test=1 expected=1 lastIndex=4 expected=4 captures=1 expected=1",
+        "DISAGREEMENT case=119 test=0 expected=1 lastIndex=2 expected=2 captures=0 expected=2",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit36": [
+        "regexp_test.go:551: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=23 test=0 expected=1 lastIndex=2 expected=2 captures=0 expected=1",
+        "DISAGREEMENT case=145 test=0 expected=1 lastIndex=1 expected=1 captures=0 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit37": [
+        "regexp_test.go:556: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=51 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=180 test=0 expected=1 lastIndex=3 expected=3 captures=0 expected=1",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit38": [
+        "regexp_test.go:561: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=38 test=1 expected=1 lastIndex=4 expected=4 captures=1 expected=1",
+        "DISAGREEMENT case=49 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=51 test=0 expected=1 lastIndex=2 expected=2 captures=0 expected=1",
+        "DISAGREEMENT case=135 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=143 test=0 expected=1 lastIndex=4 expected=4 captures=0 expected=1",
+        "DISAGREEMENT case=163 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=230 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=245 test=1 expected=1 lastIndex=2 expected=2 captures=1 expected=1",
+        "native execution totals: 250 cases, 8 disagreements"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit39": [
+        "regexp_test.go:566: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=45 test=0 expected=1 lastIndex=0 expected=1 captures=0 expected=4",
+        "DISAGREEMENT case=206 test=1 expected=0 lastIndex=2 expected=0 captures=1 expected=0",
+        "native execution totals: 250 cases, 2 disagreements"
+      ],
+      "TestRegExpBytecodeTest262": [
+        "regexp_test.go:53: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=570 test=1 expected=1 lastIndex=0 expected=0 captures=4 expected=4",
+        "DISAGREEMENT case=571 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+        "DISAGREEMENT case=572 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=573 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=575 test=1 expected=0 lastIndex=0 expected=0 captures=2 expected=0",
+        "DISAGREEMENT case=576 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=577 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=579 test=1 expected=0 lastIndex=0 expected=0 captures=2 expected=0",
+        "DISAGREEMENT case=580 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=124277 test=1 expected=1 lastIndex=0 expected=0 captures=2 expected=2",
+        "DISAGREEMENT case=124297 test=1 expected=0 lastIndex=0 expected=0 captures=1 expected=0",
+        "DISAGREEMENT case=124298 test=1 expected=0 lastIndex=0 expected=0 captures=1 expected=0",
+        "DISAGREEMENT case=124301 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "DISAGREEMENT case=124312 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+        "DISAGREEMENT case=124313 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+        "DISAGREEMENT case=124314 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+        "DISAGREEMENT case=124315 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+        "DISAGREEMENT case=124316 test=1 expected=1 lastIndex=0 expected=0 captures=1 expected=1",
+        "DISAGREEMENT case=124317 test=1 expected=0 lastIndex=0 expected=0 captures=1 expected=0",
+        "DISAGREEMENT case=124318 test=1 expected=0 lastIndex=0 expected=0 captures=1 expected=0",
+        "DISAGREEMENT case=124319 test=1 expected=0 lastIndex=0 expected=0 captures=1 expected=0",
+        "DISAGREEMENT case=124320 test=1 expected=0 lastIndex=0 expected=0 captures=1 expected=0",
+        "DISAGREEMENT case=124321 test=1 expected=0 lastIndex=0 expected=0 captures=1 expected=0",
+        "DISAGREEMENT case=124322 test=1 expected=0 lastIndex=0 expected=0 captures=1 expected=0",
+        "DISAGREEMENT case=124323 test=1 expected=0 lastIndex=0 expected=0 captures=1 expected=0",
+        "DISAGREEMENT case=124326 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=124328 test=1 expected=0 lastIndex=0 expected=0 captures=2 expected=0",
+        "DISAGREEMENT case=124512 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=124513 test=1 expected=0 lastIndex=0 expected=0 captures=2 expected=0",
+        "DISAGREEMENT case=124515 test=1 expected=1 lastIndex=0 expected=0 captures=2 expected=2",
+        "DISAGREEMENT case=124522 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=2",
+        "DISAGREEMENT case=124523 test=1 expected=0 lastIndex=0 expected=0 captures=2 expected=0",
+        "DISAGREEMENT case=124525 test=1 expected=1 lastIndex=0 expected=0 captures=2 expected=2",
+        "native execution totals: 127369 cases, 33 disagreements"
+      ],
+      "TestRegExpLintPatternsNode": [
+        "regexp_search_test.go:76: native regex oracle ([]): exit status 1",
+        "DISAGREEMENT case=881 test=0 expected=1 lastIndex=0 expected=0 captures=0 expected=1",
+        "native execution totals: 890 cases, 1 disagreements"
+      ]
+    }
+  }
+}

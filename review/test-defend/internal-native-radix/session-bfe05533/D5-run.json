@@ -1,0 +1,19 @@
+{
+  "command": [
+    "timeout",
+    "330",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "300s",
+    "./internal/native/",
+    "-run",
+    "^TestRegExp"
+  ],
+  "cache": "/tmp/defend-native-radix/cache/D5",
+  "exit": 1,
+  "wall": 29.83645462200002,
+  "vet_exit": 0
+}

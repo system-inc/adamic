@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/regexp.c b/internal/native/runtime/regexp.c
+index 2b43acf1..69f3e394 100644
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -288,7 +288,7 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
+ 				p->captures < 16 ? local_sub : regex_memory(2 * (p->captures + 1) * sizeof *sub);
+ 			memcpy(sub, state.captures, 2 * (p->captures + 1) * sizeof *sub);
+ 			bool ok = regex_run(i->look, input, length, &subposition, sub, steps, workspace);
+-			failed = ok == i->negative;
++			failed = ok == false;
+ 			if (ok && !i->negative)
+ 				memcpy(state.captures, sub, 2 * (p->captures + 1) * sizeof *sub);
+ 			if (sub != local_sub)

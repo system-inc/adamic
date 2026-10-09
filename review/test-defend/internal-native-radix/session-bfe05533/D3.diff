@@ -1,0 +1,13 @@
+diff --git a/internal/regexp/native_search.go b/internal/regexp/native_search.go
+index 64b49741..918e8f57 100644
+--- a/internal/regexp/native_search.go
++++ b/internal/regexp/native_search.go
+@@ -39,7 +39,7 @@ func (p *Program) nativeFirstASCII() ([2]uint64, bool) {
+ 			}
+ 			for _, s := range i.set.strings {
+ 				if len(s) == 0 {
+-					return bits, false
++					return bits, true
+ 				}
+ 			}
+ 			for c := rune(0); c < 128; c++ {
