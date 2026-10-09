@@ -1,0 +1,190 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "internal/lower/cast_proof.go:311",
+    "change": "off by one: omit final byte of class-cast panic text",
+    "rows_failed": [
+      "TestCheckedCastFailureContract"
+    ],
+    "rows_passed": [
+      "TestCallTargetThrowAgreesWithNode",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastRuntimeMutants",
+      "TestInterfaceCastScalarTags",
+      "TestNativeAgreesWithNode",
+      "TestUncheckableCastAdmission"
+    ],
+    "errors": [
+      "cast_test.go:148: native: exit 70, stdout \"casting\\n\", stderr \"adamic: panic: cast failed: this Base<number> is not a Box<number\\n\"; want panic/70 and \"adamic: panic: cast failed: this Base<number> is not a Box<number>\\n\"",
+      "cast_test.go:148: JavaScript: exit 70, stdout \"casting\\n\", stderr \"adamic: panic: cast failed: this Base<number> is not a Box<number\\n\"; want panic/70 and \"adamic: panic: cast failed: this Base<number> is not a Box<number>\\n\"",
+      "cast_test.go:148: native: exit 70, stdout \"casting\\n\", stderr \"adamic: panic: cast failed: this Bird | Cat | Dog is not a Cat | Do\\n\"; want panic/70 and \"adamic: panic: cast failed: this Bird | Cat | Dog is not a Cat | Dog\\n\"",
+      "cast_test.go:148: JavaScript: exit 70, stdout \"casting\\n\", stderr \"adamic: panic: cast failed: this Bird | Cat | Dog is not a Cat | Do\\n\"; want panic/70 and \"adamic: panic: cast failed: this Bird | Cat | Dog is not a Cat | Dog\\n\"",
+      "cast_test.go:148: native: exit 70, stdout \"casting\\n\", stderr \"adamic: panic: cast failed: this Animal is not a Do\\n\"; want panic/70 and \"adamic: panic: cast failed: this Animal is not a Dog\\n\"",
+      "cast_test.go:148: JavaScript: exit 70, stdout \"casting\\n\", stderr \"adamic: panic: cast failed: this Animal is not a Do\\n\"; want panic/70 and \"adamic: panic: cast failed: this Animal is not a Dog\\n\""
+    ],
+    "seconds": 42.43177615099921,
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedCast|TestUncheckableCast|TestCallTarget|TestDirectClosure|TestInterfaceCast)",
+        "returncode": 1,
+        "log": "D1-casts.log"
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/internal/oracle/testdata/(cast|exceptions|try|finally)",
+        "returncode": 0,
+        "log": "D1-neighbors.log"
+      }
+    ]
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/javascript/javascript.go:575",
+    "change": "drop catch-body emission statement",
+    "rows_failed": [
+      "TestCallTargetThrowAgreesWithNode",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestNativeAgreesWithNode"
+    ],
+    "rows_passed": [
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastRuntimeMutants",
+      "TestInterfaceCastScalarTags",
+      "TestUncheckableCastAdmission"
+    ],
+    "errors": [
+      "call_targets_guards_test.go:10: JavaScript: stdout differs: exit 0, stdout \"finally\\n\", stderr \"\"",
+      "cast_test.go:87: missing caught instrumentation site",
+      "cast_test.go:87: missing caught instrumentation site",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: exit codes differ",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs"
+    ],
+    "seconds": 27.50702623399775,
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedCast|TestUncheckableCast|TestCallTarget|TestDirectClosure|TestInterfaceCast)",
+        "returncode": 1,
+        "log": "D2-casts.log"
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/internal/oracle/testdata/(cast|exceptions|try|finally)",
+        "returncode": 1,
+        "log": "D2-neighbors.log"
+      }
+    ]
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/javascript/javascript.go:580",
+    "change": "drop finally-body emission statement",
+    "rows_failed": [
+      "TestCallTargetThrowAgreesWithNode",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestNativeAgreesWithNode"
+    ],
+    "rows_passed": [
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastRuntimeMutants",
+      "TestInterfaceCastScalarTags",
+      "TestUncheckableCastAdmission"
+    ],
+    "errors": [
+      "call_targets_guards_test.go:10: JavaScript: stdout differs: exit 0, stdout \"true/Error/stored stored \\ninnerinner\\n\", stderr \"\"",
+      "cast_test.go:87: missing finally instrumentation site",
+      "cast_test.go:87: missing finally instrumentation site",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: exit codes differ",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs"
+    ],
+    "seconds": 33.70617309899899,
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedCast|TestUncheckableCast|TestCallTarget|TestDirectClosure|TestInterfaceCast)",
+        "returncode": 1,
+        "log": "D3-casts.log"
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/internal/oracle/testdata/(cast|exceptions|try|finally)",
+        "returncode": 1,
+        "log": "D3-neighbors.log"
+      }
+    ]
+  },
+  {
+    "mutant": "D4",
+    "file_line": "internal/javascript/javascript.go:575",
+    "change": "swap catch and finally body arguments",
+    "rows_failed": [
+      "TestCallTargetThrowAgreesWithNode",
+      "TestNativeAgreesWithNode"
+    ],
+    "rows_passed": [
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestDirectClosureCallAgreesWithNode",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastRuntimeMutants",
+      "TestInterfaceCastScalarTags",
+      "TestUncheckableCastAdmission"
+    ],
+    "errors": [
+      "call_targets_guards_test.go:10: JavaScript: stdout differs: exit 0, stdout \"\", stderr \"\"",
+      "oracle_test.go:780: JavaScript backend: exit codes differ",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: exit codes differ",
+      "oracle_test.go:780: JavaScript backend: exit codes differ",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: exit codes differ",
+      "oracle_test.go:780: JavaScript backend: exit codes differ",
+      "oracle_test.go:780: JavaScript backend: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs"
+    ],
+    "seconds": 34.740063465000276,
+    "runs": [
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedCast|TestUncheckableCast|TestCallTarget|TestDirectClosure|TestInterfaceCast)",
+        "returncode": 1,
+        "log": "D4-casts.log"
+      },
+      {
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/internal/oracle/testdata/(cast|exceptions|try|finally)",
+        "returncode": 1,
+        "log": "D4-neighbors.log"
+      }
+    ]
+  }
+]

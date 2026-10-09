@@ -1,0 +1,72 @@
+[
+  {
+    "test": "TestCheckedCastRunsNoCatchOrFinally",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "prior_subsumed_by": [
+      "TestCheckedCastFlushesOutput"
+    ],
+    "subsumed_by": [
+      "TestCallTargetThrowAgreesWithNode",
+      "TestNativeAgreesWithNode"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/javascript/javascript.go:575",
+        "change": "drop catch-body emission statement",
+        "rows_failed": [
+          "TestCallTargetThrowAgreesWithNode",
+          "TestCheckedCastRunsNoCatchOrFinally",
+          "TestNativeAgreesWithNode"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/javascript/javascript.go:580",
+        "change": "drop finally-body emission statement",
+        "rows_failed": [
+          "TestCallTargetThrowAgreesWithNode",
+          "TestCheckedCastRunsNoCatchOrFinally",
+          "TestNativeAgreesWithNode"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/javascript/javascript.go:575",
+        "change": "swap catch and finally body arguments",
+        "rows_failed": [
+          "TestCallTargetThrowAgreesWithNode",
+          "TestNativeAgreesWithNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedCast|TestUncheckableCast|TestCallTarget|TestDirectClosure|TestInterfaceCast) > D3-casts.log 2>&1; cast_test.go:87: missing finally instrumentation site. D4 passed this row; both neighbor catchers failed.",
+    "bounded": true
+  },
+  {
+    "test": "TestCheckedCastFailureContract",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "prior_subsumed_by": [
+      "TestCheckedCastFlushesOutput"
+    ],
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/cast_proof.go:311",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/cast_proof.go:311",
+        "change": "off by one: omit final byte of class-cast panic text",
+        "rows_failed": [
+          "TestCheckedCastFailureContract"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedCast|TestUncheckableCast|TestCallTarget|TestDirectClosure|TestInterfaceCast) > D1-casts.log 2>&1; cast_test.go:148: native: exit 70, stdout \"casting\\n\", stderr \"adamic: panic: cast failed: this Base<number> is not a Box<number\\n\"; want panic/70 and \"adamic: panic: cast failed: this Base<number> is not a Box<number>\\n\"",
+    "bounded": true
+  }
+]

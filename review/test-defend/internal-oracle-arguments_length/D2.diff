@@ -1,0 +1,14 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..80636349 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -572,8 +572,7 @@ func (e *emitter) statement(at *ir.Statement) {
+ 			if statement.CatchLocal >= 0 {
+ 				e.declare(statement.CatchLocal, caught)
+ 			}
+-			e.statements(statement.Catch)
+-			e.indent--
++				e.indent--
+ 		}
+ 		if statement.HasFinally {
+ 			e.line("} finally {")

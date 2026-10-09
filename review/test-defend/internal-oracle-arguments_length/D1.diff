@@ -1,0 +1,13 @@
+diff --git a/internal/lower/cast_proof.go b/internal/lower/cast_proof.go
+index 3b82dbe8..8241bbf3 100644
+--- a/internal/lower/cast_proof.go
++++ b/internal/lower/cast_proof.go
+@@ -308,7 +308,7 @@ func (l *lowering) checkedClassCast(node *ast.Node, value ir.Expression, targets
+ 	}
+ 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "checked_class_cast", Parameters: []int{local}, Returns: ir.Object, Body: []ir.Statement{
+ 		ir.If{Condition: condition, Then: []ir.Statement{ir.Return{Value: read}}},
+-		ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}},
++		ir.Panic{Message: ir.StringConstant{Index: l.constant(message[:len(message)-1])}},
+ 	}})
+ 	return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: ir.Object}, nil
+ }
