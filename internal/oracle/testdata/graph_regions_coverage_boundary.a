@@ -1,0 +1,17 @@
+interface Node { readonly label: string; next: Node | undefined; }
+interface Holder { value: Node | undefined; }
+function make(id: number): Node {
+ const value: Node = { label: `node${id}`, next: undefined }; value.next = value; return value;
+}
+function run(): void {
+ const holder: Holder = { value: make(1) };
+ const held = holder.value;
+ holder.value = make(2);
+ console.log(`${held?.next?.label} ${holder.value.next?.label}`);
+ holder.value = undefined;
+ const values: (Node | undefined)[] = [make(3), undefined];
+ const present = values.filter((value) => value !== undefined);
+ values[0] = undefined;
+ console.log(`${present[0]?.next?.label} ${values[1] === undefined}`);
+}
+run();

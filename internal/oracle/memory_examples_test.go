@@ -1,7 +1,6 @@
 package oracle
 
 import (
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -9,7 +8,6 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/leakcheck"
-	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -66,8 +64,9 @@ func TestMemoryExampleCountsMatchDocumentation(t *testing.T) {
 	}
 }
 
-// Refused programs have no C or counted run. Node runs them; Adamic must diagnose the cycle.
-func TestMemoryExamplesRefused(t *testing.T) {
+// Formerly refused examples now have region ownership. Hold their output to Node
+// and require sanitizer-clean execution and balanced counted teardown.
+func TestMemoryExamplesUseGraphRegions(t *testing.T) {
 	t.Parallel()
 	for _, name := range []string{"tree", "closure"} {
 		t.Run(name, func(t *testing.T) {
@@ -76,15 +75,40 @@ func TestMemoryExamplesRefused(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if result := onNode(t, path); result.exitCode != 0 {
-				t.Fatalf("Node exit %d: %s", result.exitCode, result.stderr)
+			oracle := onNode(t, path)
+			if oracle.exitCode != 0 {
+				t.Fatalf("Node exit %d: %s", oracle.exitCode, oracle.stderr)
 			}
-			_, err = lowered(t, path)
-			var refused *lower.Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
-				t.Fatalf("want cycle refusal with fix, got %v", err)
+			program, err := lowered(t, path)
+			if err != nil || len(program.GraphTypes) == 0 {
+				t.Fatalf("want an accepted region-owned cycle, got %v", err)
 			}
-			t.Log(err)
+			if difference := disagreement(oracle, onJavaScriptBackend(t, program)); difference != "" {
+				t.Fatalf("JavaScript backend: %s", difference)
+			}
+			code := native.C(program)
+			binary := filepath.Join(t.TempDir(), "sanitized")
+			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			if difference := disagreement(oracle, execute(t, binary)); difference != "" {
+				t.Fatalf("sanitized native: %s", difference)
+			}
+			if report := leakChecked(t, code, binary); report != "" {
+				t.Fatal(report)
+			}
+			countedBinary := filepath.Join(t.TempDir(), "counted")
+			if err := native.Build(code, countedBinary, native.Options{Count: true}); err != nil {
+				t.Fatal(err)
+			}
+			result := execute(t, countedBinary)
+			if report := leakcheck.Unbalanced(leakRun(result)); report != "" {
+				t.Fatal(report)
+			}
+			if !graphRegionLine.Match(result.stderr) {
+				t.Fatalf("accepted example did not free a graph region: %s", result.stderr)
+			}
+			t.Logf("%s", result.stderr)
 		})
 	}
 }

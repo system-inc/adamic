@@ -1,0 +1,12 @@
+import type { Weak } from 'adamic';
+interface Node { readonly label: string; next: Node | undefined; }
+let saved: Weak<Node> = undefined;
+function build(): void {
+ const root: Node = { label: `root${1}`, next: undefined };
+ const child: Node = { label: `child${2}`, next: root };
+ root.next = child; saved = child;
+ console.log(saved?.label ?? 'expired');
+}
+function read(): string { return saved?.label ?? 'expired'; }
+build();
+console.log(read());

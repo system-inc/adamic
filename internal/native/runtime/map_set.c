@@ -1,5 +1,6 @@
 // Packed number | undefined keys keep undefined separate from every present NaN.
 #include "adamic.h"
+#include "graph_regions.h"
 #include <string.h>
 
 bool adamic_map_maybe_key_equal(double left, double right) {
@@ -117,9 +118,15 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 	state->slots[2].number = key;
 	state->slots[3].number = value;
 	state->slots[4].boolean = set;
+	if (adamic_graph_is(collection)) { state = adamic_graph_adopt_owned(state, adamic_object_size(state->shape->count)); }
 	adamic_closure *next = adamic_closure_new(collection_next, 1);
 	next->cells[0] = adamic_cell_new((adamic_value){.reference = state}, true);
+	if (adamic_graph_is(collection)) {
+		next->cells[0] = adamic_graph_adopt_owned(next->cells[0], sizeof(adamic_cell));
+		next = adamic_graph_adopt_owned(next, sizeof *next + sizeof(adamic_cell *));
+	}
 	adamic_object *object = adamic_object_new(&iterator_shape);
 	object->slots[0].reference = next;
+	if (adamic_graph_is(collection)) { object = adamic_graph_adopt_owned(object, adamic_object_size(object->shape->count)); }
 	return object;
 }

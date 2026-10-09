@@ -46,6 +46,13 @@ The Go guard tokenizes every runtime `.c` and `.h`, including inactive preproces
 | `exceptions.c:error_name:1` | 15 | 15 | Immortal string and its units/index caches | Static initializer; string_index.c fills units/index lazily on the base | unsafe today: lazy string caches | Written only before pool starts: static initializer; stack string_index.c never mutates immortal literals |
 | `exceptions.c:message_cache:1` | 27 | 27 | Cached shape and message-field slot for uncaught Error reporting | adamic_object_field/find fills on shape miss; uncaught or map iterator entry extraction calls it | unsafe today: process-global shape cache | Atomic: packed cache word uses __atomic_load_n/store_n in adamic.h and object.c |
 | `exceptions.c:name_cache:1` | 27 | 27 | Cached shape and name-field slot for uncaught Error reporting | adamic_object_field/find fills on shape miss; uncaught or map iterator entry extraction calls it | unsafe today: process-global shape cache | Atomic: packed cache word uses __atomic_load_n/store_n in adamic.h and object.c |
+| `graph_regions.c:freeing_lone:1` | - | 311 | Lone graph member being freed | adamic_graph_free sets and clears it | Absent | Thread-local: each task builds and frees its own graph regions, which never cross threads |
+| `graph_regions.c:freeing_root:1` | - | 310 | Region being freed | adamic_graph_free sets and clears it | Absent | Thread-local: each task builds and frees its own graph regions, which never cross threads |
+| `graph_regions.c:joining:1` | - | 205 | The graph being adopted while its owned children join it | adamic_graph_adopt_owned sets and clears it around children() | Absent | Thread-local: each task builds and frees its own graph regions, which never cross threads |
+| `graph_regions.c:mark_count:1` | - | 259 | Counting build: entries in the report work list | report (ADAMIC_COUNT only) | Absent | Thread-local: each task builds and frees its own graph regions, which never cross threads |
+| `graph_regions.c:mark_root:1` | - | 260 | Counting build: region the report is marking | report (ADAMIC_COUNT only) | Absent | Thread-local: each task builds and frees its own graph regions, which never cross threads |
+| `graph_regions.c:mark_work:1` | - | 258 | Counting build: work list of the reachability report | report (ADAMIC_COUNT only) allocates, fills and frees it | Absent | Thread-local: each task builds and frees its own graph regions, which never cross threads |
+| `graph_regions.c:outside_release:1` | - | 309 | Release used for references leaving a region being freed | adamic_graph_free sets and clears it | Absent | Thread-local: each task builds and frees its own graph regions, which never cross threads |
 | `heap.c:chunk_capacity:1` | 82 | - | Capacity of the growable allocator chunk registry | new_chunk/take/give/list/release_last mutate during allocation and release | unsafe today: process-global allocator state | Absent |
 | `heap.c:chunk_count:1` | 81 | - | Number of registered allocator chunks | new_chunk/take/give/list/release_last mutate during allocation and release | unsafe today: process-global allocator state | Absent |
 | `heap.c:chunks:1` | 80 | - | Growable registry of all allocated chunk pointers | new_chunk/take/give/list/release_last mutate during allocation and release | unsafe today: process-global allocator state | Absent |
@@ -212,6 +219,8 @@ A newly added runtime C source or header requires review even when it introduces
 - `runtime-file:dtoa.c`
 - `runtime-file:exceptions.c`
 - `runtime-file:from_codes.c`
+- `runtime-file:graph_regions.c`
+- `runtime-file:graph_regions.h`
 - `runtime-file:heap.c`
 - `runtime-file:heap_parallel.h`
 - `runtime-file:hypot.c`

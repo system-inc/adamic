@@ -1,0 +1,21 @@
+interface Node { readonly label: string; next: Node | undefined; }
+function node(id: number): Node {
+ const made: Node = { label: `node${id}`, next: undefined }; made.next = made; return made;
+}
+function run(): void {
+ const a = node(1); const b = node(2);
+ let cache = new Map<string, Node>([[`key${1}`, a], [`key${2}`, b]]);
+ const copy = new Map(cache);
+ const values = [...copy.values()]; const keys = [...copy.keys()]; const entries = [...copy.entries()];
+ cache.set(`key${1}`, b); console.log(`${cache.get('key1')?.label} ${cache.delete('key2')} ${cache.delete('missing')}`);
+ cache.clear(); cache = new Map<string, Node>();
+ const entry = entries[1];
+ console.log(`${values[0]?.next?.label} ${keys.join(',')} ${entry === undefined ? '-' : entry[1].label}`);
+ const keyed = new Map<Node, Node>([[a, b]]); keyed.set(a, a);
+ for (const [key, value] of keyed) { console.log(`${key.label} ${value.next === key}`); }
+ keyed.delete(a); keyed.clear();
+ const set = new Set([a, b]); set.add(a);
+ const held = [...set.values()]; set.delete(a); set.clear();
+ console.log(`${held.length} ${held[1]?.next?.label}`);
+}
+run();

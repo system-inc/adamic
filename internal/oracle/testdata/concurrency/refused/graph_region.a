@@ -1,0 +1,11 @@
+import { parallelMap } from 'adamic';
+interface Ring { readonly label: string; next: Ring | undefined; }
+function build(): Ring {
+	const first: Ring = { label: `first${1}`, next: undefined };
+	const second: Ring = { label: `second${2}`, next: undefined };
+	first.next = second;
+	second.next = first;
+	return first;
+}
+const items: readonly Ring[] = [build()];
+parallelMap(items, (item) => item.label);

@@ -61,6 +61,7 @@ static inline adamic_object *object_new(adamic_region *region, const adamic_shap
 	adamic_object *object = (adamic_object *)(void *)(block->bytes + block->used);
 	block->used += size;
 	object->heap.references = 0;
+	object->heap.slab = 0;
 	object->heap.kind = adamic_kind_object;
 	object->heap.slab = ADAMIC_REGION_VALUE;
 	object->shape = shape;

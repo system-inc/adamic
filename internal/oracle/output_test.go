@@ -290,18 +290,18 @@ func TestAPromptComesBeforeTheRead(t *testing.T) {
 	})
 }
 
-// A program stopped from outside by SIGTERM, SIGINT or SIGHUP: Node has written every line, and is
+// A program stopped from outside by SIGTERM, SIGINT, SIGHUP, SIGQUIT, SIGUSR2 or SIGALRM: Node has written every line, and is
 // killed by the signal. Native must write out what its buffer holds and be killed by the same signal,
 // under the sanitizers too. No run is signaled after a fixed delay, which a loaded machine can
 // outrun: Node and the JavaScript backend are signaled once their line is on the pipe, and native,
 // whose line stays in its buffer until the signal, once it has spent half a second of its own CPU
 // time, which only the fixture's spin after the line can spend. Load can't fake CPU time.
-// Started with the three signals ignored by its parent (as under nohup, or a background job), Node
+// Started with the six signals ignored by its parent (as under nohup, or a background job), Node
 // resets them at startup and is stopped all the same, so native must be too.
 func TestASignalLeavesWhatWasPrinted(t *testing.T) {
 	t.Parallel()
 	for _, ignored := range []bool{false, true} {
-		for _, stop := range []syscall.Signal{syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP} {
+		for _, stop := range []syscall.Signal{syscall.SIGTERM, syscall.SIGINT, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGUSR2, syscall.SIGALRM} {
 			name := stop.String()
 			if ignored {
 				name += " inherited ignored"
@@ -315,8 +315,8 @@ func TestASignalLeavesWhatWasPrinted(t *testing.T) {
 					stopped := func(name string, arguments ...string) (string, []byte) {
 						onNode, label := name == "node", filepath.Base(append([]string{name}, arguments...)[len(arguments)])
 						if ignored {
-							// sh ignores the three, then execs the program in its place, with the same pid.
-							arguments = append([]string{"-c", `trap "" TERM INT HUP; exec "$0" "$@"`, name}, arguments...)
+							// sh ignores the six, then execs the program in its place, with the same pid.
+							arguments = append([]string{"-c", `trap "" TERM INT HUP QUIT USR2 ALRM; exec "$0" "$@"`, name}, arguments...)
 							name = "sh"
 						}
 						command := bounded(t, name, arguments...)

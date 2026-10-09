@@ -324,7 +324,9 @@ func staticsRaceRun(t *testing.T, binary string, mutant bool) {
 		output, err := command.CombinedOutput()
 		timedOut := ctx.Err() != nil
 		cancel()
-		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race")
+		// Removing a lock can also let another worker free the raced storage.
+		race := strings.Contains(string(output), "WARNING: ThreadSanitizer: data race") ||
+			strings.Contains(string(output), "WARNING: ThreadSanitizer: heap-use-after-free")
 		if mutant {
 			if err == nil || timedOut || !race {
 				t.Fatalf("race mutant was not caught (attempt %d): %v\n%s", attempt+1, err, output)

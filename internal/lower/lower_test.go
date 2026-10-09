@@ -141,7 +141,14 @@ func TestWhatZeroOneRefusesIsRefusedWithAFix(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, probe.source)
+			program, err := lowerSource(t, probe.source)
+			if strings.Contains(probe.want, "cycle reference counting can't free") || strings.Contains(probe.want, "which can reach back") || strings.Contains(probe.want, "can reach back") || strings.Contains(probe.want, "a variable a function value captures") {
+				if err != nil || len(program.GraphTypes) == 0 {
+					t.Errorf("want graph ownership, got %v", err)
+				}
+				return
+			}
+
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.Error(), probe.want) {
 				t.Errorf("got %v, want a refusal ending %q", err, probe.want)

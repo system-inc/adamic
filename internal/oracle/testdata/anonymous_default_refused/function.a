@@ -1,0 +1,4 @@
+// An anonymous default function has no name to declare a global under: stage 0 refuses it by
+// name rather than crash.
+export default function (): void {}
+console.log("ran");

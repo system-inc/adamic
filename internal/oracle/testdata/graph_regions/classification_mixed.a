@@ -1,0 +1,16 @@
+interface Link { readonly label: string; next: Link | undefined; }
+function make(index: number) {
+ return { label: 'v' + String(index), next: undefined as Link | undefined };
+}
+function cycle(): Link {
+ const missed: Link = make(1);
+ const graph: Link = { label: 'g' + String(2), next: undefined };
+ missed.next = graph;
+ graph.next = missed;
+ return missed;
+}
+function run(): void {
+ const escaped = cycle();
+ console.log(escaped.label + ' ' + (escaped.next?.label ?? '-'));
+}
+run();

@@ -1,3 +1,4 @@
+// a-check: type error TS2304
 // Node oracle only. This is not accepted by Adamic today.
 const fs = require('node:fs/promises');
 const mode = process.argv[2] ?? 'success';

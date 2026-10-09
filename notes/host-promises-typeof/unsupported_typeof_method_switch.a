@@ -1,3 +1,4 @@
+// a-check: refused (unbound-method)
 class C { async f(): Promise<void> {} }
 const c = new C();
 switch (typeof c.f) { case 'function': console.log('function'); break; default: console.log('other'); }
