@@ -1,0 +1,98 @@
+[
+  {
+    "mutant": "M1",
+    "file_line": "stage1/cohere/graphql/printer/printer.ts:436",
+    "branch": "test-audit/stage1-cohere-graphql-printer-grain_mutant",
+    "source_diff": "review/test-audit/stage1-cohere-graphql-printer-grain_mutant/M1.diff",
+    "candidates_failed": [
+      "TestPrinterThroughput"
+    ],
+    "other_rows_failed": [
+      "TestPrinterAsGoCohere family"
+    ],
+    "stale": false
+  },
+  {
+    "mutant": "M2",
+    "file_line": "stage1/cohere/graphql/printer/printer.ts:47",
+    "branch": "test-audit/stage1-cohere-graphql-printer-grain_mutant",
+    "source_diff": "review/test-audit/stage1-cohere-graphql-printer-grain_mutant/M2.diff",
+    "candidates_failed": [
+      "TestPrinterThroughput"
+    ],
+    "other_rows_failed": [
+      "TestPrinterAsGoCohere family",
+      "TestPrinterShardPlantedDisagreement"
+    ],
+    "stale": false
+  },
+  {
+    "mutant": "M3",
+    "file_line": "stage1/cohere/graphql/printer/doc.ts:183",
+    "branch": "test-audit/stage1-cohere-graphql-printer-grain_mutant",
+    "source_diff": "review/test-audit/stage1-cohere-graphql-printer-grain_mutant/M3.diff",
+    "candidates_failed": [
+      "TestPrinterThroughput"
+    ],
+    "other_rows_failed": [
+      "TestPrinterAsGoCohere family",
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement"
+    ],
+    "stale": false
+  },
+  {
+    "mutant": "M4",
+    "file_line": "stage1/cohere/graphql/printer/doc.ts:94",
+    "branch": "test-audit/stage1-cohere-graphql-printer-grain_mutant",
+    "source_diff": "review/test-audit/stage1-cohere-graphql-printer-grain_mutant/M4.diff",
+    "candidates_failed": [
+      "TestPrinterThroughput"
+    ],
+    "other_rows_failed": [
+      "TestPrinterAsGoCohere family"
+    ],
+    "stale": false
+  },
+  {
+    "mutant": "M04",
+    "file_line": "stage1/cohere/graphql/parser.ts:1228",
+    "branch": "test-audit/stage1-cohere-graphql-printer-preflight_units",
+    "source_diff": "review/test-audit/stage1-cohere-graphql-printer-preflight_units/M04.diff",
+    "candidates_failed": [
+      "TestPrinterWhitespaceGap family"
+    ],
+    "other_rows_failed": [
+      "TestPrinterFileDriver",
+      "TestPrinterShardPlantedDisagreement",
+      "TestPrinterAsGoCohere family"
+    ],
+    "stale": false
+  },
+  {
+    "mutant": "D01",
+    "file_line": "stage1/cohere/graphql/parser.ts:226",
+    "branch": "test-defend/stage1-cohere-graphql-printer-preflight_units",
+    "source_diff": "review/test-defend/stage1-cohere-graphql-printer-preflight_units/D01.diff",
+    "candidates_failed": [
+      "TestPrinterWhitespaceGap family"
+    ],
+    "other_rows_failed": [
+      "TestPrinterAsGoCohere family"
+    ],
+    "stale": false
+  },
+  {
+    "mutant": "D02",
+    "file_line": "stage1/cohere/graphql/lexer.ts:74",
+    "branch": "test-defend/stage1-cohere-graphql-printer-preflight_units",
+    "source_diff": "review/test-defend/stage1-cohere-graphql-printer-preflight_units/D02.diff",
+    "candidates_failed": [
+      "TestPrinterWhitespaceGap family"
+    ],
+    "other_rows_failed": [
+      "TestPrinterAsGoCohere family"
+    ],
+    "stale": false
+  }
+]

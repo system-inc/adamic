@@ -1,0 +1,7 @@
+test-audit-grain_mutant-M1 caught by ['TestPrinterAsGoCohere_003'] panics []
+test-audit-grain_mutant-M2 caught by ['TestPrinterAsGoCohere_003'] panics []
+test-audit-grain_mutant-M3 caught by ['TestPrinterAsGoCohere_002'] panics []
+test-audit-grain_mutant-M4 caught by ['TestPrinterAsGoCohere_003'] panics []
+test-audit-preflight_units-M04 caught by ['TestPrinterAsGoCohere_000', 'TestPrinterAsGoCohere_001', 'TestPrinterAsGoCohere_002', 'TestPrinterAsGoCohere_003'] panics []
+test-defend-preflight_units-D01 caught by ['TestPrinterAsGoCohere_000'] panics []
+test-defend-preflight_units-D02 caught by ['TestPrinterAsGoCohere_000'] panics []
