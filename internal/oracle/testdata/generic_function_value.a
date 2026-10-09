@@ -1,0 +1,17 @@
+function identity<T>(x: T): T {
+ return x;
+}
+const stringIdentity: (s: string) => string = identity;
+const numberIdentity: (n: number) => number = identity;
+const objectIdentity: (o: { readonly value: string }) => { readonly value: string } = identity;
+const arrayIdentity: (a: readonly number[]) => readonly number[] = identity;
+console.log(stringIdentity('Kirk'));
+console.log(`${numberIdentity(41) + 1}`);
+console.log(objectIdentity({ value: 'Ahra' }).value);
+console.log(arrayIdentity([3, 4]).join(','));
+console.log(['one', 'two'].map(identity).join(','));
+console.log([2, 5].map(identity).join(','));
+function apply(f: (s: string) => string): string {
+ return f('callback');
+}
+console.log(apply(identity));

@@ -1,0 +1,12 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a
+    oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/generic_empty_array.a:33:22: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint { text: string; } can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/generic_empty_array.a (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.086s
+FAIL

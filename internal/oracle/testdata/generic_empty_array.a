@@ -1,0 +1,35 @@
+// Parser row 3: generic empty fallback, literal casts and shared never arrays.
+const emptyArray: readonly never[] = [];
+function finish<T extends {}>(result: readonly T[] | undefined): readonly T[] {
+    return result || emptyArray;
+}
+function fresh<T>(result: T[] | undefined): T[] {
+    return result || ([] as T[]);
+}
+interface Item { readonly text: string; }
+const numbers: number[] = [0, 7];
+const items: Item[] = [{ text: 'item'.repeat(2) }];
+const absentNumbers = finish<number>(undefined);
+const absentItems = finish<Item>(undefined);
+console.log(`${absentNumbers.length} ${absentItems.length} ${absentNumbers === emptyArray} ${absentItems === emptyArray}`);
+console.log(`${finish(numbers) === numbers} ${finish(items) === items}`);
+const presentEmpty: number[] = [];
+console.log(`${finish(presentEmpty) === presentEmpty} ${finish(presentEmpty) === emptyArray}`);
+const freshNumbers = fresh<number>(undefined);
+const freshItems = fresh<Item>(undefined);
+freshNumbers.push(9);
+freshItems.push({ text: 'fresh'.repeat(2) });
+console.log(`${freshNumbers[0]} ${freshItems[0]?.text ?? 'missing'}`);
+console.log(`${fresh<number>(undefined).length} ${fresh<Item>(undefined).length} ${fresh<number>(undefined) === fresh<number>(undefined)}`);
+console.log(`${fresh(numbers) === numbers} ${fresh(items) === items}`);
+let reads = 0;
+let fallbacks = 0;
+function source(present: boolean): number[] | undefined { reads += 1; return present ? presentEmpty : undefined; }
+function fallback(): number[] { fallbacks += 1; return []; }
+console.log(`${(source(true) || fallback()) === presentEmpty} ${(source(false) || fallback()).length} ${reads} ${fallbacks}`);
+
+// Even a writable element constraint has no element to expose in the fallback.
+function constrained<T extends { text: string }>(result: readonly T[] | undefined): readonly T[] {
+    return result || emptyArray;
+}
+console.log(`${constrained<{ text: string }>(undefined).length}`);

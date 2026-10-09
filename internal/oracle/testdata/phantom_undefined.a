@@ -1,0 +1,4 @@
+// The review probe's property read, with String for Adamic's one-string console.
+type Brand = void & { __escapedIdentifier: void };
+const value = undefined as Brand;
+console.log(String(value.__escapedIdentifier));

@@ -1,0 +1,33 @@
+console.log('file=' + true);
+console.log(false + '=directory');
+console.log('missing=' + undefined);
+console.log(undefined + '=missing');
+console.log('null=' + null);
+console.log(null + '=null');
+for (const value of [true, false]) {
+	console.log('left:' + value);
+	console.log(value + ':right');
+}
+function number(present: boolean): number | undefined {
+	return present ? 1.25 : undefined;
+}
+function boolean(present: boolean): boolean | undefined {
+	return present ? false : undefined;
+}
+for (const present of [true, false]) {
+	console.log('number:' + number(present));
+	console.log(number(present) + ':number');
+	console.log('boolean:' + boolean(present));
+	console.log(boolean(present) + ':boolean');
+}
+let text = 'built';
+text += true;
+text += undefined;
+text += null;
+console.log(text);
+let calls = 0;
+function value(): boolean { calls++; return calls === 1; }
+function string(): string { calls++; return `built${calls}:`; }
+console.log(value() + string());
+console.log(string() + value());
+console.log(`${calls}`);

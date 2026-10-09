@@ -1,0 +1,7 @@
+// From TypeScript 6.0.3, src/compiler/core.ts:414
+// flatMap's empty fallback, reduced to the never-to-generic result view.
+const emptyArray: never[] = [] as never[];
+function finish<U extends {}>(result: U[] | undefined): readonly U[] {
+    return result ?? emptyArray;
+}
+console.log(`${finish<number>(undefined).length}`);

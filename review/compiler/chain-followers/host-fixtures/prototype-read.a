@@ -1,0 +1,4 @@
+// a-check: refused a primitive brand member __proto__ that exists on the primitive
+type Brand = string & { __proto__: void };
+const value = 'abc' as Brand;
+console.log(typeof value.__proto__);

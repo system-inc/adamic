@@ -1,0 +1,12 @@
+=== RUN   TestCheckedNonNullTypeScript
+=== PAUSE TestCheckedNonNullTypeScript
+=== CONT  TestCheckedNonNullTypeScript
+=== RUN   TestCheckedNonNullTypeScript/narrowed
+=== PAUSE TestCheckedNonNullTypeScript/narrowed
+=== CONT  TestCheckedNonNullTypeScript/narrowed
+    non_null_checked_test.go:40: want proven 1 checked 0, got ir.NonNullCheckCounts{Proven:0, Checked:1, Sites:[]ir.NonNullCheck{ir.NonNullCheck{Where:"/workspace/adamic/internal/oracle/testdata/non_null_checked_narrowed.ts:2:43", Expression:"value!", Proven:false}}}
+--- FAIL: TestCheckedNonNullTypeScript (0.00s)
+    --- FAIL: TestCheckedNonNullTypeScript/narrowed (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.042s
+FAIL

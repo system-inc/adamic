@@ -1,0 +1,8 @@
+=== RUN   TestGenericFunctionValueNamespaceDirectCallsKeepIdentity
+=== PAUSE TestGenericFunctionValueNamespaceDirectCallsKeepIdentity
+=== CONT  TestGenericFunctionValueNamespaceDirectCallsKeepIdentity
+    generic_function_value_test.go:151: /tmp/adamic-gate/TestGenericFunctionValueNamespaceDirectCallsKeepIdentity2586417172/001/main.a:6:56: stage 0 can't lower function identity comparison in a program with specialized generic function values yet
+--- FAIL: TestGenericFunctionValueNamespaceDirectCallsKeepIdentity (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.104s
+FAIL

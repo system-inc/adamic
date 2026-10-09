@@ -1,0 +1,9 @@
+// Exact branded primitive reductions from main's views-slice1 panic regression.
+type Path = string & { __pathBrand: void };
+function readPaths(values: readonly Path[], index: number): Path | undefined { return values[index]; }
+type Count = number & { __countBrand: void };
+function readCounts(values: readonly Count[], index: number): Count | undefined { return values[index]; }
+console.log(typeof readPaths([], 0));
+console.log(typeof readCounts([], 0));
+console.log(String(readPaths(['path' as Path], 0)));
+console.log(String(readCounts([3 as Count], 0)));

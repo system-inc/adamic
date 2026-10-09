@@ -1,0 +1,47 @@
+=== RUN   TestCensusGenericRefusalInsideClosure
+=== PAUSE TestCensusGenericRefusalInsideClosure
+=== CONT  TestCensusGenericRefusalInsideClosure
+--- FAIL: TestCensusGenericRefusalInsideClosure (0.03s)
+panic: runtime error: slice bounds out of range [:-1] [recovered, repanicked]
+
+goroutine 8 [running]:
+testing.tRunner.func1.2({0x20744c8, 0x3e09fa0f8060})
+	testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	testing/testing.go:2126 +0x329
+panic({0x20744c8?, 0x3e09fa0f8060?})
+	runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/lower.(*lowering).closure(0x3e09fa994800, 0x3e09fa10b860)
+	github.com/system-inc/adamic/internal/lower/expression.go:1242 +0x438
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x3e09fa994800, 0x3e09fa370e08?)
+	github.com/system-inc/adamic/internal/lower/expression.go:651 +0x107b
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x3e09fa994800, 0x3e09fa10b860)
+	github.com/system-inc/adamic/internal/lower/expression.go:481 +0x127
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x3e09fa994800, 0x3e09fa10b860)
+	github.com/system-inc/adamic/internal/lower/expression.go:214 +0x8c
+github.com/system-inc/adamic/internal/lower.(*lowering).variables(0x3e09fa994800, 0x3e09fa0c3240)
+	github.com/system-inc/adamic/internal/lower/locals.go:79 +0x6f3
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x3e09fa994800, 0x3e09fa10b770)
+	github.com/system-inc/adamic/internal/lower/statements.go:76 +0x136
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x3e09fa994800, {0x3e09fa21acf0, 0x4, 0x14e93a0?})
+	github.com/system-inc/adamic/internal/lower/statements.go:19 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody(0x3e09fa994800, 0x0, 0x3e09fa0cb970, 0xffffffffffffffff, {0x21d8f60, 0x0, 0x3e09fa371ad8?}, {0x21d8f60, 0x0, 0x0})
+	github.com/system-inc/adamic/internal/lower/functions.go:289 +0x1875
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x3e09fa994800, 0x0, 0x3e09fa0cb970, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/lower/functions.go:55 +0x17e
+github.com/system-inc/adamic/internal/lower.(*lowering).functionBody(0x3e09fa994800, 0x3e09fa0cb970)
+	github.com/system-inc/adamic/internal/lower/functions.go:12 +0x65
+github.com/system-inc/adamic/internal/lower.(*lowering).declareModule(0x3e09fa994800, {0x3e09fa835788?, 0x1?, 0x3e09fa4a6e08?})
+	github.com/system-inc/adamic/internal/lower/modules.go:180 +0xa8e
+github.com/system-inc/adamic/internal/lower.Lower({0x20b2d98?, 0x21d8f60?}, 0x3e09f9d73140)
+	github.com/system-inc/adamic/internal/lower/lower.go:56 +0x550
+github.com/system-inc/adamic/internal/lower.lowerSource(0x3e09fa0b4fc8, {0x3e09f9f59340, 0x157})
+	github.com/system-inc/adamic/internal/lower/lower_test.go:25 +0x19a
+github.com/system-inc/adamic/internal/lower.TestCensusGenericRefusalInsideClosure(0x3e09fa0b4fc8)
+	github.com/system-inc/adamic/internal/lower/census_panics_test.go:67 +0x45
+testing.tRunner(0x3e09fa0b4fc8, 0x20bdf98)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/lower	0.043s
+FAIL
