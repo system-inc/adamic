@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T18:10:25.413760443Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T18:10:25.421317595Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram"}
+{"Time":"2026-10-09T18:10:25.421389752Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"=== RUN   TestOneSeedOneProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:10:25.421404244Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"=== PAUSE TestOneSeedOneProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:10:25.421406787Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram"}
+{"Time":"2026-10-09T18:10:25.421409171Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram"}
+{"Time":"2026-10-09T18:10:25.421411354Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"=== CONT  TestOneSeedOneProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:10:25.439313222Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Output":"--- PASS: TestOneSeedOneProgram (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:10:25.439479088Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOneSeedOneProgram","Elapsed":0.02}
+{"Time":"2026-10-09T18:10:25.439506428Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:10:25.440495361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"coverage: 59.5% of statements in ./internal/fuzz\n"}
+{"Time":"2026-10-09T18:10:25.441685803Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Output":"ok  \tgithub.com/system-inc/adamic/internal/fuzz\t0.027s\tcoverage: 59.5% of statements in ./internal/fuzz\n"}
+{"Time":"2026-10-09T18:10:25.44171107Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Elapsed":0.028}
