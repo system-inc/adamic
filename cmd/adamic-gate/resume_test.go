@@ -8,6 +8,7 @@ import (
 )
 
 func TestCheckpointKeysIncludeAllExecutionInputs(t *testing.T) {
+	t.Parallel()
 	base := resumeState{PlanDigest: "commit-and-plan", Context: "environment-tools-external-inputs", Index: 0}
 	pattern := []string{"^TestPass$"}
 	key := checkpointKey(base, "p", pattern)
@@ -76,6 +77,7 @@ func TestCheckpointKeysIncludeAllExecutionInputs(t *testing.T) {
 }
 
 func TestPackageCheckpointRequiresIntactCompleteEvidence(t *testing.T) {
+	t.Parallel()
 	dir := t.TempDir()
 	p := plan{Count: 1, Units: []unit{{Package: "p", Test: "TestPass", Shard: 0}}}
 	log := `{"Action":"run","Package":"p","Test":"TestPass"}
@@ -134,6 +136,7 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(t *testing.T) {
 }
 
 func TestTypeAwareChildrenAndParentCost(t *testing.T) {
+	t.Parallel()
 	names, err := literalChildren("../../stage1/cohere/typeaware/volume_test.go", "TestVolumeAgreementAndMutants", "changes")
 	if err != nil {
 		t.Fatal(err)
@@ -153,6 +156,7 @@ func TestTypeAwareChildrenAndParentCost(t *testing.T) {
 }
 
 func TestResumeCleanupPreservesForeignPaths(t *testing.T) {
+	t.Parallel()
 	root := t.TempDir()
 	checkpoint := filepath.Join(root, "checkpoint")
 	os.Mkdir(checkpoint, 0700)
