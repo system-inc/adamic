@@ -49,13 +49,12 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded prepares a child for the shared output-based hang guard.
-// Silent builds and buffered children use its 30-minute first-output window.
-// With ten CPU burners, the longest output gap was 26.3s; the default
-// two-minute Stall leaves more than three times that gap as headroom.
+// bounded retains the output guard and adds a hard 90-second group deadline.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	return exec.Command(name, arguments...)
+	command, cancel := inlineCommand(name, arguments...)
+	t.Cleanup(cancel)
+	return command
 }
 
 func combinedOutput(command *exec.Cmd) ([]byte, error) {
