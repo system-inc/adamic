@@ -759,3 +759,10 @@ time,lane,running,floor,queued,brief,session,outcome
 2026-10-09T02:37:22.815344Z,runtime,0,8,0,,,"gate_backpressure: 118 queued, 11 slots"
 2026-10-09T02:37:24.997058Z,library,1,8,0,,,"gate_backpressure: 118 queued, 11 slots"
 2026-10-09T02:37:34.145058Z,developer_tools,0,4,0,,,"gate_backpressure: 118 queued, 11 slots"
+2026-10-09T02:41:31.295401Z,compiler,7,30,0,,,"gate_backpressure: 119 queued, 11 slots"
+2026-10-09T02:42:06.978649Z,cohere_adamic,0,30,0,,,"gate_backpressure: 119 queued, 11 slots"
+2026-10-09T02:42:10.811528Z,typescript,1,10,0,,,"gate_backpressure: 119 queued, 11 slots"
+2026-10-09T02:42:23.248193Z,runtime,0,8,1,15-step06b-core-runtime-only.md,01a11431-4432-7421-9353-50c70c0d8039,sent
+2026-10-09T02:42:23.529044Z,runtime,1,8,0,,,queue_empty
+2026-10-09T02:42:26.346537Z,library,2,8,0,,,"gate_backpressure: 119 queued, 11 slots"
+2026-10-09T02:42:34.887541Z,developer_tools,0,4,0,,,"gate_backpressure: 119 queued, 11 slots"
