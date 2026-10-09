@@ -117,7 +117,7 @@ A replay, from the starting commit, can apply one independent patch:
 11. I initially ran verification concurrently with full matrices. Cold compiler
     work made those runs contend. The logged measurements and cooked runs remain
     visible. This was an execution choice that cost time, not a test defect.
-12. The audit took about 24 minutes, exceeding the approximate 20-minute target.
+12. The audit took about 27 minutes, exceeding the approximate 20-minute target.
     metadata.json records measured setup, builds, baselines, matrices, and final
     vet timings. Partial and cooked attempts are retained rather than omitted.
 
