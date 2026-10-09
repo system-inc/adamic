@@ -13,6 +13,7 @@ const testDecoratedExportsShards = 32
 
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every decorated export.
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestDecoratedExports(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := decoratedExports()
@@ -37,6 +38,7 @@ func TestDecoratedExports(t *testing.T) {
 }
 
 func TestDecoratedExportsPlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	miscPlantedProof(t, testDecoratedExportsShards, miscIDs("stage1/cohere/estree/exports_test.go:export", decoratedExports()), func(planted bool) error {
 		got := []byte("agree")
 		if planted {
@@ -50,6 +52,7 @@ const testDecoratedExportMutantShards = 32
 
 // Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every decorated export mutant case.
+// Not parallel: miscBuild writes the shared adamic-build and adamic/runtime cache directories
 func TestDecoratedExportMutant(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := decoratedExports()
@@ -74,6 +77,7 @@ func TestDecoratedExportMutant(t *testing.T) {
 }
 
 func TestDecoratedExportMutantPlantedSurvivor(t *testing.T) {
+	t.Parallel()
 	miscPlantedProof(t, testDecoratedExportMutantShards, miscIDs("stage1/cohere/estree/exports_test.go:export-mutant", decoratedExports()), func(planted bool) error {
 		got := []byte("disagree")
 		if planted {
@@ -83,4 +87,7 @@ func TestDecoratedExportMutantPlantedSurvivor(t *testing.T) {
 	})
 }
 
-func TestDecoratedExportLibraries(t *testing.T) { checkOriginalLibraries(t, decoratedExports(), 0) }
+func TestDecoratedExportLibraries(t *testing.T) {
+	t.Parallel()
+	checkOriginalLibraries(t, decoratedExports(), 0)
+}

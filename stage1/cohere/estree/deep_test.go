@@ -26,8 +26,9 @@ func deepGrammar() []string {
 	logical.WriteString(");")
 	return []string{numeric.String(), quoted.String(), logical.String()}
 }
+
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestDeepGrammar(t *testing.T) {
-	t.Parallel()
 	list := manifest(t, deepGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
