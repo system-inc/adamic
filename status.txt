@@ -1,0 +1,2 @@
+red: c0ada198abb9483b310825610842833eedb0ff41 fast gate, first failure at tests after 98.7 s, under load (load 105.3 on 64 cores at first failure) (coverage=0.0s tools=0.2s vet=29.3s determinism=48.0s build=52.4s smoke=53.4s tests=271.6s; 6 units over 30 s (293 s, 3 on the burn-down, 3 drifted over); box load 2.1 on 64 cores at start, load 105.3 on 64 cores at first failure, load 26.8 on 64 cores at end; deferred to full gate: 0 tests; branch cloud/land-shard-children-c0ada198, session none), 1 fail, 114 pass
+stopped: on the skip list
