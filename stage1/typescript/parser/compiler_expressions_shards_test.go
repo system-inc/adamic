@@ -86,6 +86,8 @@ func compilerExpressionsSetup(t *testing.T) (string, string, string) {
 	t.Helper()
 	compilerExpressionsProducts.once.Do(func() {
 		started := time.Now()
+		timer := time.AfterFunc(90*time.Second, func() { panic("cooked: TestCompilerExpressionsAgree_Setup exceeded 90s") })
+		defer timer.Stop()
 		// Preserve the pinned corpus prerequisite even for a setup-only invocation.
 		compilerManifest(t)
 		absolute, err := filepath.Abs(".")
@@ -102,7 +104,7 @@ func compilerExpressionsSetup(t *testing.T) (string, string, string) {
 		compilerExpressionsProducts.oracle = filepath.Join(product, "oracle")
 		compilerExpressionsProducts.absolute = absolute
 		compilerExpressionsProducts.binary = compilerExpressionsNative(t, absolute)
-		t.Logf("TestCompilerExpressionsAgree (setup): %.3fs", time.Since(started).Seconds())
+		t.Logf("TestCompilerExpressionsAgree_Setup: %.3fs", time.Since(started).Seconds())
 	})
 	return compilerExpressionsProducts.oracle, compilerExpressionsProducts.binary, compilerExpressionsProducts.absolute
 }
@@ -155,12 +157,14 @@ func TestCompilerExpressionsAgreeUnion(t *testing.T) {
 
 func compilerExpressionsShard(t *testing.T, index int) {
 	t.Helper()
+	// Setup (including waiting for another builder) has its own 90s budget.
+	// A filtered shard invocation may need to fetch the shared products first.
+	oracle, binary, absolute := compilerExpressionsSetup(t)
 	started := time.Now()
-	timer := time.AfterFunc(75*time.Second, func() { panic(fmt.Sprintf("cooked: shard-%03d exceeded 75s", index)) })
+	timer := time.AfterFunc(90*time.Second, func() { panic(fmt.Sprintf("cooked: shard-%03d exceeded 90s", index)) })
 	defer timer.Stop()
 	shards, planted, _ := compilerExpressionsEnumeration(t)
 	paths := shards[index]
-	oracle, binary, absolute := compilerExpressionsSetup(t)
 	manifest := filepath.Join(t.TempDir(), "compiler.txt")
 	if err := os.WriteFile(manifest, []byte(strings.Join(paths, "\n")+"\n"), 0644); err != nil {
 		t.Fatal(err)

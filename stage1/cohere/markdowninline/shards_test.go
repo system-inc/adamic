@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -15,6 +16,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -32,6 +34,25 @@ const inlineModes = "wefnspctrukvhijlboq"
 
 // Products are shared and read-only. Only the Go overlay bridge is built into
 // a parent-owned temporary directory: buildcache.GoBuild refuses overlays.
+// A deadline cancels the whole process group, including compiler descendants.
+// Callers cancel on completion so completed commands release their timer.
+func inlineCommand(name string, arguments ...string) (*exec.Cmd, context.CancelFunc) {
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	command := exec.CommandContext(ctx, name, arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		if command.Process == nil {
+			return os.ErrProcessDone
+		}
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 5 * time.Second
+	return command, cancel
+}
 func inlineEnvironment(names ...string) []string {
 	var flags []string
 	for _, name := range names {
@@ -81,7 +102,8 @@ func buildInlineGoBridge(dir string) error {
 	if err = inlineWrite(dir, "overlay.json", data); err != nil {
 		return err
 	}
-	cmd := exec.Command("go", "build", "-overlay="+filepath.Join(dir, "overlay.json"), "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
+	cmd, cancel := inlineCommand("go", "build", "-overlay="+filepath.Join(dir, "overlay.json"), "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
+	defer cancel()
 	cmd.Dir = cohere
 	out, err := combinedOutput(cmd)
 	if err != nil {
@@ -127,7 +149,8 @@ func (source inlineSource) buildNode(dir string) error {
 	if err != nil {
 		return err
 	}
-	cmd := exec.Command("node", "--disable-warning=ExperimentalWarning", script, string(source), dir)
+	cmd, cancel := inlineCommand("node", "--disable-warning=ExperimentalWarning", script, string(source), dir)
+	defer cancel()
 	out, err := combinedOutput(cmd)
 	if err != nil {
 		return fmt.Errorf("%w: %s", err, out)
@@ -629,6 +652,7 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 }
 
 func TestMarkdownInlineShardUnion(t *testing.T) {
+	t.Parallel()
 	expected := map[int]bool{0: true, 1: true, 2: true}
 	if err := inlineUnion([]inlineShard{{ids: []int{0, 1}}, {ids: []int{2}}}, expected); err != nil {
 		t.Fatal(err)
@@ -640,6 +664,7 @@ func TestMarkdownInlineShardUnion(t *testing.T) {
 	}
 }
 
+// Not parallel: mutates the process-wide ADAMIC_TEST_SHARD environment.
 func TestMarkdownInlineShardSelector(t *testing.T) {
 	for _, value := range []string{"", "0/1", "2/3"} {
 		t.Setenv("ADAMIC_TEST_SHARD", value)
@@ -683,6 +708,7 @@ func TestMarkdownInlineProductSourceInputs(t *testing.T) {
 }
 
 func TestMarkdownInlineShardAssignmentStable(t *testing.T) {
+	t.Parallel()
 	before := enumerateInlineShards([]string{"a.md", "z.md"}, []string{"a", "z", "generated"}, 2)
 	after := enumerateInlineShards([]string{"a.md", "new.md", "z.md"}, []string{"a", "new", "z", "generated"}, 3)
 	locate := func(shards []inlineShard, id int) int {
@@ -709,6 +735,7 @@ func TestMarkdownInlineShardAssignmentStable(t *testing.T) {
 }
 
 func TestMarkdownInlineUnion(t *testing.T) {
+	t.Parallel()
 	data := collectInlineCorpus(t)
 	root, err := filepath.Abs(repository)
 	if err != nil {

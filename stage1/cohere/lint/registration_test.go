@@ -27,6 +27,11 @@ func TestMain(m *testing.M) {
 		os.Exit(1)
 	}
 	sharedDirectory = directory
+	if err := decodedOptionsBeforeTests(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.RemoveAll(directory)
+		os.Exit(1)
+	}
 	code := m.Run()
 	if err := os.RemoveAll(directory); err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -56,8 +61,8 @@ func TestRegistrationMutant(t *testing.T) {
 }
 
 // Not parallel: initializes the shared immutable hook fixtures before the parallel shards.
-func TestFactoryHooks(t *testing.T) {
-	factoryHooksProducts(t)
+func TestFactoryHooks_Setup(t *testing.T) {
+	factoryHooksSetup(t)
 }
 
 // Raw corpus text stays outside the project's TypeScript module graph.
@@ -193,8 +198,8 @@ console.log(written('copied'));
 	t.Log("root-only import rewrite mutant caught by Node and native module loading")
 }
 
-// TestDecodedOptionsAndMutant measures the shared Go-oracle setup separately.
-func TestDecodedOptionsAndMutant(t *testing.T) {
+// The bounded setup child prepares all immutable products before m.Run starts shards.
+func TestDecodedOptionsAndMutant_Setup(t *testing.T) {
 	t.Parallel()
-	goOracle(t)
+	decodedOptionsSetupTest(t)
 }

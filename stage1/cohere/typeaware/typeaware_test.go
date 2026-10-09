@@ -143,7 +143,7 @@ func (h *harness) overlay(name, path, from, to string) string {
 func (h *harness) archive(name, overlay string, sanitize bool) string {
 	h.t.Helper()
 	if overlay == "" {
-		path, err := sharedProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
+		path, err := cachedTypeAwareProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
 			archive := filepath.Join(directory, "checker.a")
 			command := exec.Command("go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
 			command.Dir = h.repository
@@ -176,7 +176,7 @@ func (h *harness) archive(name, overlay string, sanitize bool) string {
 func (h *harness) build(_ string, name, entry, archive string, sanitize bool) string {
 	h.t.Helper()
 	path := filepath.Join(h.directory, name)
-	source, err := sharedProduct("C "+entry, func(_ string) (string, error) {
+	source, err := cachedTypeAwareProduct("C "+entry, func(_ string) (string, error) {
 		started := time.Now()
 		loaded, err := load.Load([]string{entry})
 		h.t.Logf("phase load %s %.6fs", name, time.Since(started).Seconds())
@@ -206,14 +206,14 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 	}
 	// Only unchanged repository programs can be reused by another test. A mutant
 	// runs once and stays in its child directory, avoiding a retained binary copy.
-	if !strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) || !strings.HasPrefix(archive, productDirectory+string(os.PathSeparator)) {
+	if !strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) || filepath.Base(archive) != "checker.a" {
 		if err := compile(path); err != nil {
 			h.t.Fatal(err)
 		}
 		return path
 	}
 	key := fmt.Sprintf("binary %x %s sanitize=%t", sha256.Sum256([]byte(source)), archive, sanitize)
-	binary, err := sharedProduct(key, func(directory string) (string, error) {
+	binary, err := cachedTypeAwareProduct(key, func(directory string) (string, error) {
 		binary := filepath.Join(directory, "native")
 		return binary, compile(binary)
 	})
@@ -290,6 +290,14 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/main.ts")
 	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "native-asan", entry, sanitized(h), true) }
 	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "native", entry, normal(h), false) }
+	// Common products are ready before any case deadline starts.
+	typeAwareStage0(h)
+	readyBinary, readyOptimized := binary(h), optimized(h)
+	binary = func(*harness) string { return readyBinary }
+	optimized = func(*harness) string { return readyOptimized }
+	readyNormal, readySanitized := normal(h), sanitized(h)
+	normal = func(*harness) string { return readyNormal }
+	sanitized = func(*harness) string { return readySanitized }
 	oracle := filepath.Join(directory, "oracle")
 	virtual := filepath.Join(repository, "cohere/adamic_typeaware_oracle.go")
 	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle.go")}})
@@ -490,6 +498,8 @@ func prepareTypeAwareAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	// A kind/span mismatch cannot silently select a neighboring or enclosing node.
 	costEntry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/query_cost.ts")
 	cost := func(h *harness) string { return typeAwareBuild(h, stage0, "query-cost", costEntry, normal(h), false) }
+	readyCost := cost(h)
+	cost = func(*harness) string { return readyCost }
 	costText, err := os.ReadFile(costEntry)
 	if err != nil {
 		t.Fatal(err)

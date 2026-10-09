@@ -52,34 +52,32 @@ func textSplittingInputs(t *testing.T) (string, []auditInput) {
 	return root, inputs
 }
 
+// Not parallel: prepares the shared corpus and build products before parallel text leaves resume.
+func TestMarkdownTextSplitting_Setup(t *testing.T) {
+	textReadySetup(t)
+}
+
 func TestMarkdownTextSplittingUnion(t *testing.T) {
 	t.Parallel()
+	setup := textReadySetup(t)
 	stop := textDeadline(t)
 	defer stop()
 	textVerifyLeaves(t)
-	_, inputs := textSharedInputs(t)
-	textShardInputs(t, inputs, testMarkdownTextSplittingShards)
+	textShardInputs(t, setup.inputs, testMarkdownTextSplittingShards)
 }
 
 func textSplittingShard(t *testing.T, shard int) {
-	configureMarkdownMemory(t)
-	markdownMemory.acquire(2)
-	t.Cleanup(func() { markdownMemory.release(2) })
-	stopDeadline := textDeadline(t)
-	defer stopDeadline()
-	setupStarted := time.Now()
 	if !textShardSelected(t, shard) {
 		t.Skip("assigned to another worker")
 	}
-	root, all := textSharedInputs(t)
-	inputs := make([]auditInput, 0, len(all)/testMarkdownTextSplittingShards+1)
-	for _, input := range all {
-		if textShardFor(input.Name, testMarkdownTextSplittingShards) == shard {
-			inputs = append(inputs, input)
-		}
-	}
-	products := textSharedProducts(t, root)
-	t.Logf("shard-%03d setup including product fetch/build %.3fs", shard, time.Since(setupStarted).Seconds())
+	setup := textReadySetup(t)
+	configureMarkdownMemory(t)
+	markdownMemory.acquire(2)
+	t.Cleanup(func() { markdownMemory.release(2) })
+	// Shared preparation and admission are complete before the case deadline starts.
+	stopDeadline := textDeadline(t)
+	defer stopDeadline()
+	root, inputs, products := setup.root, setup.shards[shard], setup.products
 	dir := t.TempDir()
 	escape := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
 	var batch strings.Builder

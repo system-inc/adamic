@@ -2,13 +2,17 @@ package markdownblocks
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -62,8 +66,6 @@ func malformedEventsEnumeration(t *testing.T) [][]string {
 	return shards
 }
 
-func malformedEventsShardName(index int) string { return fmt.Sprintf("shard-%03d", index) }
-
 func malformedEventsExpected(name string, truth []byte) []byte {
 	expected := []byte("adamic: panic: " + string(truth))
 	if os.Getenv("ADAMIC_MALFORMED_EVENTS_PLANT_FAILURE") == "1" && name == "not-open" {
@@ -79,7 +81,7 @@ func malformedEventsSetupTimer(t *testing.T) func() {
 
 // Cache the lowered backend products together, so checking/lowering and code
 // generation happen once before any shard starts. No IR serialization is needed.
-func malformedEventsProducts(t *testing.T, main string) (string, string) {
+func malformedEventsProducts(t *testing.T, ctx context.Context, main string) (string, string) {
 	t.Helper()
 	inputs := buildcache.Inputs{
 		Name:      "markdownblocks-malformed-events-lowered",
@@ -108,7 +110,7 @@ func malformedEventsProducts(t *testing.T, main string) (string, string) {
 		if err != nil {
 			return err
 		}
-		return native.Build(string(source), filepath.Join(dir, "port"), options)
+		return malformedEventsNativeBuild(ctx, string(source), filepath.Join(dir, "port"), options)
 	})
 	return filepath.Join(nativeDir, "port"), filepath.Join(loweredDir, "program.mjs")
 }
@@ -140,9 +142,6 @@ func TestMdastMalformedEventsUnion(t *testing.T) {
 }
 
 func malformedEventsSelectedCases(t *testing.T) []string {
-	if t.Name() == "TestMdastMalformedEvents" {
-		return nil
-	}
 	shards := malformedEventsEnumeration(t)
 	for index, cases := range shards {
 		if t.Name() == fmt.Sprintf("TestMdastMalformedEvents_%03d", index) {
@@ -158,74 +157,19 @@ type malformedEventsProductSet struct{ goBinary, main, fork, nativeBinary, javas
 var malformedEventsOnce sync.Once
 var malformedEventsShared malformedEventsProductSet
 
-func malformedEventsSharedSetup(t *testing.T, build func() malformedEventsProductSet) malformedEventsProductSet {
-	t.Helper()
-	malformedEventsOnce.Do(func() { malformedEventsShared = build() })
-	if malformedEventsShared.goBinary == "" {
-		t.Fatal("malformed-events shared setup did not complete")
-	}
-	return malformedEventsShared
-}
-func malformedEventsBuildDirectory(t *testing.T) string {
-	t.Helper()
-	dir, err := os.MkdirTemp(artifactDirectory, "malformed-events-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	return dir
-}
-
 func malformedEventsRun(t *testing.T) {
+	products := malformedEventsSharedSetup(t)
 	configureMarkdownMemory(t)
 	markdownMemory.acquire(1)
 	t.Cleanup(func() { markdownMemory.release(1) })
-	finishSetup := malformedEventsSetupTimer(t)
-	products := malformedEventsSharedSetup(t, func() malformedEventsProductSet {
-		root, e := filepath.Abs(repository)
-		if e != nil {
-			t.Fatal(e)
-		}
-		dir := malformedEventsBuildDirectory(t)
-		cohere := filepath.Join(root, "cohere")
-		mainPath := filepath.Join(cohere, "cmd/adamic_mdast_errors/main.go")
-		replace := map[string]string{}
-		for _, p := range []struct{ target, source string }{{mainPath, "testdata/mdast_go.go"}, {filepath.Join(cohere, "internal/format/markdown/mdast/adamic_mdast.go"), "testdata/mdast_bridge.go"}, {filepath.Join(cohere, "internal/format/markdown/micromark/adamic_events.go"), "testdata/events_transport.go"}} {
-			source, e := filepath.Abs(p.source)
-			if e != nil {
-				t.Fatal(e)
-			}
-			replace[p.target] = source
-		}
-		overlay, e := json.Marshal(map[string]any{"Replace": replace})
-		if e != nil {
-			t.Fatal(e)
-		}
-		overlayPath := filepath.Join(dir, "overlay.json")
-		write(t, overlayPath, overlay)
-		goBinary := filepath.Join(dir, "go-errors")
-		build := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, mainPath)
-		build.Dir = cohere
-		if output, e := combinedOutput(build); e != nil {
-			t.Fatalf("Go errors %v %s", e, output)
-		}
-		fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
-		if fork == "" {
-			fork = filepath.Join(cohere, "internal/format/prettier/bundles")
-		}
-		main, e := filepath.Abs("testdata/mdast_probe.ts")
-		if e != nil {
-			t.Fatal(e)
-		}
-		nativeBinary, javascriptPath := malformedEventsProducts(t, main)
-		return malformedEventsProductSet{goBinary, main, fork, nativeBinary, javascriptPath}
-	})
-	finishSetup()
+	ctx, finish := malformedEventsDeadline(t, t.Name())
+	defer finish()
 	goBinary, main, fork := products.goBinary, products.main, products.fork
 	nativeBinary, javascriptPath := products.nativeBinary, products.javascriptPath
 	for _, name := range malformedEventsSelectedCases(t) {
-		truth := execute(t, nil, goBinary, "--error", name)
+		truth := malformedEventsExecute(t, ctx, nil, goBinary, "--error", name)
 		clean(t, "Go error as value", truth)
-		original := execute(t, nil, "node", "testdata/mdast_library.mjs", fork, "--error", name)
+		original := malformedEventsExecute(t, ctx, nil, "node", "testdata/mdast_library.mjs", fork, "--error", name)
 		clean(t, "fork error as value", original)
 		forkMessages := map[string]string{
 			"unclosed": "Cannot close document, a token (`paragraph`, 1:1-1:1) is still open\n",
@@ -236,8 +180,8 @@ func malformedEventsRun(t *testing.T) {
 
 		cases := "gaps/event_" + name + ".txt"
 
-		answer := execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, nativeBinary, cases)
-		for _, side := range []run{answer, onNode(t, main, cases), onNode(t, javascriptPath, cases)} {
+		answer := malformedEventsExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, nativeBinary, cases)
+		for _, side := range []run{answer, malformedEventsNode(t, ctx, main, cases), malformedEventsNode(t, ctx, javascriptPath, cases)} {
 			if side.exitCode != 70 {
 				t.Fatalf("%s expected error exit70 got%d", name, side.exitCode)
 			}
@@ -268,7 +212,7 @@ func malformedEventsRun(t *testing.T) {
 			}
 			write(t, filepath.Join(scratch, file), data)
 		}
-		mutant := onNode(t, filepath.Join(scratch, "testdata/mdast_probe.ts"), cases)
+		mutant := malformedEventsNode(t, ctx, filepath.Join(scratch, "testdata/mdast_probe.ts"), cases)
 		if mutant.exitCode != 70 {
 			t.Fatalf("error mutant did not reach expected error: %d", mutant.exitCode)
 		}
@@ -279,4 +223,146 @@ func malformedEventsRun(t *testing.T) {
 		t.Logf("stderr-only message mutant caught; Go=%q fork=%q", truth.stdout, original.stdout)
 		t.Logf("%s", truth.stdout)
 	}
+}
+
+// Preparation (including the cache lock) completes before a shard's case clock
+// starts. The named setup test exercises this same independently bounded unit;
+// filtered shard runs can also fetch it without charging setup to their cases.
+func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {
+	t.Helper()
+	malformedEventsOnce.Do(func() {
+		ctx, finish := malformedEventsDeadline(t, "TestMdastMalformedEvents_Setup")
+		defer finish()
+		defer malformedEventsSetupTimer(t)()
+		configureMarkdownMemory(t)
+		markdownMemory.acquire(1)
+		defer markdownMemory.release(1)
+		root, e := filepath.Abs(repository)
+		if e != nil {
+			t.Fatal(e)
+		}
+		cohere := filepath.Join(root, "cohere")
+		goDir := buildcache.Product(t, buildcache.Inputs{
+			Name:      "markdownblocks-malformed-events-go-errors",
+			Files:     []string{"cohere", "stage1/cohere/markdownblocks/testdata/mdast_go.go", "stage1/cohere/markdownblocks/testdata/mdast_bridge.go", "stage1/cohere/markdownblocks/testdata/events_transport.go"},
+			Flags:     []string{"go build", "overlay: mdast_go.go, mdast_bridge.go, events_transport.go", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOAMD64=" + os.Getenv("GOAMD64")},
+			Toolchain: []string{buildcache.Tool("go", "version")},
+		}, func(dir string) error {
+			mainPath := filepath.Join(cohere, "cmd/adamic_mdast_errors/main.go")
+			replace := map[string]string{}
+			for _, p := range []struct{ target, source string }{{mainPath, "testdata/mdast_go.go"}, {filepath.Join(cohere, "internal/format/markdown/mdast/adamic_mdast.go"), "testdata/mdast_bridge.go"}, {filepath.Join(cohere, "internal/format/markdown/micromark/adamic_events.go"), "testdata/events_transport.go"}} {
+				source, err := filepath.Abs(p.source)
+				if err != nil {
+					return err
+				}
+				replace[p.target] = source
+			}
+			overlay, err := json.Marshal(map[string]any{"Replace": replace})
+			if err != nil {
+				return err
+			}
+			overlayPath := filepath.Join(dir, "overlay.json")
+			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+				return err
+			}
+			command := malformedEventsCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-errors"), mainPath)
+			command.Dir = cohere
+			if output, err := command.CombinedOutput(); err != nil {
+				return fmt.Errorf("Go errors: %w\n%s", err, output)
+			}
+			return nil
+		})
+		goBinary := filepath.Join(goDir, "go-errors")
+		fork := os.Getenv("ADAMIC_MARKDOWNBLOCKS_FORK")
+		if fork == "" {
+			fork = filepath.Join(cohere, "internal/format/prettier/bundles")
+		}
+		main, e := filepath.Abs("testdata/mdast_probe.ts")
+		if e != nil {
+			t.Fatal(e)
+		}
+		nativeBinary, javascriptPath := malformedEventsProducts(t, ctx, main)
+		malformedEventsShared = malformedEventsProductSet{goBinary, main, fork, nativeBinary, javascriptPath}
+	})
+
+	if malformedEventsShared.goBinary == "" {
+		t.Fatal("malformed-events setup did not complete")
+	}
+	return malformedEventsShared
+}
+
+// One 90-second hard deadline per setup unit or shard, not one per child.
+func malformedEventsDeadline(t *testing.T, name string) (context.Context, func()) {
+	t.Helper()
+	started := time.Now()
+	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
+	timer := time.AfterFunc(90*time.Second, func() {
+		cancel()
+		panic("cooked: " + name + " exceeded its 90s deadline")
+	})
+	return ctx, func() {
+		timer.Stop()
+		cancel()
+		t.Logf("%s case/unit time: %.3fs", name, time.Since(started).Seconds())
+	}
+}
+
+func malformedEventsCommand(ctx context.Context, name string, arguments ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, name, arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
+}
+
+func malformedEventsExecute(t *testing.T, ctx context.Context, environment []string, name string, arguments ...string) run {
+	t.Helper()
+	command := malformedEventsCommand(ctx, name, arguments...)
+	if environment != nil {
+		command.Env = append(os.Environ(), environment...)
+	}
+	var stdout, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	err := command.Run()
+	if ctx.Err() != nil {
+		t.Fatalf("cooked: %s exceeded 90s: %v", t.Name(), ctx.Err())
+	}
+	var exitError *exec.ExitError
+	if err != nil && !errors.As(err, &exitError) {
+		t.Fatalf("running %s: %v", name, err)
+	}
+	return run{stdout.Bytes(), stderr.Bytes(), command.ProcessState.ExitCode()}
+}
+
+func malformedEventsNode(t *testing.T, ctx context.Context, path string, arguments ...string) run {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return malformedEventsExecute(t, ctx, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+}
+
+func malformedEventsNativeBuild(ctx context.Context, source, output string, options native.Options) error {
+	library, err := native.RuntimeLibraryForSource("", source, options)
+	if err != nil {
+		return err
+	}
+	sourcePath := filepath.Join(filepath.Dir(output), "main.c")
+	if err := os.WriteFile(sourcePath, []byte(source), 0644); err != nil {
+		return err
+	}
+	flags := append(native.Flags(options), "-I", filepath.Dir(library), "-o", output, sourcePath)
+	flags = append(flags, native.RuntimeLinkFlags(library)...)
+	flags = append(flags, "-lm")
+	if result, err := malformedEventsCommand(ctx, "clang", flags...).CombinedOutput(); err != nil {
+		return fmt.Errorf("native build: %w\n%s", err, result)
+	}
+	return nil
 }
