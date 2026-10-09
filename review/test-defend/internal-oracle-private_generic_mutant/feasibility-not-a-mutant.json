@@ -1,0 +1,6 @@
+{
+  "purpose": "Compile feasibility only. Not an eligible defense mutant, not counted as an attempt or kill. Removing a struct field is outside the statement menu and must not be presented as a valid standalone diff.",
+  "file": "internal/ir/ir.go:36",
+  "operation": "remove Regexps field in a scratch overlay",
+  "harness_changed": false
+}

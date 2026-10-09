@@ -1,0 +1,13 @@
+[
+  {
+    "test": "TestRegexCycleFixtureHasItsNativeDependency",
+    "package": "internal/oracle",
+    "prior_verdict": "untrue",
+    "subsumed_by": null,
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/ir -coverprofile=review/test-defend/internal-oracle-private_generic_mutant/row.cover ./internal/oracle/ -run '^TestRegexCycleFixtureHasItsNativeDependency$'; PASS; coverage: 0.0% of statements in ./internal/ir. Field-removal feasibility probe: internal/lower/regexp.go:61:24: l.result.Regexps undefined (type *ir.Program has no field or method Regexps). This is a build failure, not a test kill.",
+    "reason": "The only executed check is a test harness helper using standard-library reflection on static ir.Program field metadata. It has no failure assertion and skips on absence. No production function is reached to mutate. The prior harness mutation is forbidden by this defense. A field-removal probe cannot build the compiler and is not an eligible mutation."
+  }
+]
