@@ -5,8 +5,18 @@
     program_region_tsc_node_test.go:49: allocation never[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:40:43: selected=true
     program_region_tsc_node_test.go:49: allocation BaseNode[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:44:41: selected=true
     program_region_tsc_node_test.go:49: allocation BaseNode[] at /workspace/adamic/internal/oracle/testdata/program_region/tsc_node_membership.a:46:41: selected=true
-    program_region_tsc_node_test.go:64: selector left Node (Node) counted
---- FAIL: TestProgramRegionTscNodeMemberSites (0.06s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.074s
-FAIL
+    program_region_tsc_node_test.go:66: selector member Node: Node
+    program_region_tsc_node_test.go:66: selector member NodeArray<Node>: NodeArray<Node>
+--- PASS: TestProgramRegionTscNodeMemberSites (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.051s
+=== RUN   TestProgramRegionTscNodesAgreeWithNode
+=== PAUSE TestProgramRegionTscNodesAgreeWithNode
+=== CONT  TestProgramRegionTscNodesAgreeWithNode
+    program_region_tsc_node_test.go:7: adamic: counts: allocations 11 frees 4 retains 19 releases 26 peak 11 regions 7
+--- PASS: TestProgramRegionTscNodesAgreeWithNode (14.02s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	14.024s

@@ -1,0 +1,20 @@
+{
+  "cohere_pin": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "typescript_pin": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "source": "cohere/TypeScript/tsc/testdata/fixtures/compiler/types.ts",
+  "sha256": "0aee7de545a590cb38ee3083ea4993e9fabce54d051a39437dec3cf5a252c00c",
+  "blocks": {
+    "28-36": "export interface TextRange {\n    pos: number;\n    end: number;\n}\n\nexport interface ReadonlyTextRange {\n    readonly pos: number;\n    readonly end: number;\n}",
+    "942-955": "export interface Node extends ReadonlyTextRange {\n    readonly kind: SyntaxKind;\n    readonly flags: NodeFlags;\n    /** @internal */ modifierFlagsCache: ModifierFlags;\n    /** @internal */ readonly transformFlags: TransformFlags; // Flags for transforms\n    /** @internal */ id?: NodeId; // Unique id (used to look up NodeLinks)\n    readonly parent: Node; // Parent node (initialized by binding)\n    /** @internal */ original?: Node; // The original node if this is an updated node.\n    /** @internal */ emitNode?: EmitNode; // Associated EmitNode (initialized by transforms)\n    // NOTE: `symbol` and `localSymbol` have been moved to `Declaration`\n    //       `locals` and `nextContainer` have been moved to `LocalsContainer`\n    //       `flowNode` has been moved to `FlowContainer`\n    //       see: https://github.com/microsoft/TypeScript/pull/51682\n}",
+    "1589-1592": "export interface NodeArray<T extends Node> extends ReadonlyArray<T>, ReadonlyTextRange {\n    readonly hasTrailingComma: boolean;\n    /** @internal */ transformFlags: TransformFlags; // Flags for transforms, possibly undefined\n}",
+    "1756-1760": "export interface Declaration extends Node {\n    _declarationBrand: any;\n    /** @internal */ symbol: Symbol; // Symbol declared by node (initialized by binding)\n    /** @internal */ localSymbol?: Symbol; // Local symbol declared by node (initialized by binding only for exported nodes)\n}",
+    "6037-6054": "export interface Symbol {\n    flags: SymbolFlags;                     // Symbol flags\n    escapedName: __String;                  // Name of symbol\n    declarations?: Declaration[];           // Declarations associated with this symbol\n    valueDeclaration?: Declaration;         // First value declaration of the symbol\n    members?: SymbolTable;                  // Class, interface or object literal instance members\n    exports?: SymbolTable;                  // Module exports\n    globalExports?: SymbolTable;            // Conditional global UMD exports\n    /** @internal */ id: SymbolId;          // Unique id (used to look up SymbolLinks)\n    /** @internal */ mergeId: number;       // Merge id (used to look up merged symbol)\n    /** @internal */ parent?: Symbol;       // Parent symbol\n    /** @internal */ exportSymbol?: Symbol; // Exported symbol associated with this symbol\n    /** @internal */ constEnumOnlyModule: boolean | undefined; // True if module contains only const enums or other modules with only const enums\n    /** @internal */ isReferenced?: SymbolFlags; // True if the symbol is referenced elsewhere. Keeps track of the meaning of a reference in case a symbol is both a type parameter and parameter.\n    /** @internal */ lastAssignmentPos?: number; // Source position of last node that assigns value to symbol. Negative if it is assigned anywhere definitely\n    /** @internal */ isReplaceableByMethod?: boolean; // Can this Javascript class property be replaced by a method symbol?\n    /** @internal */ assignmentDeclarationMembers?: Map<number, Declaration>; // detected late-bound assignment declarations associated with the symbol\n}"
+  },
+  "adaptations": [
+    "omit non-cycle fields and any brands",
+    "Node.parent admits undefined for an unbound root",
+    "Declaration.symbol remains mandatory",
+    "Symbol.declarations remains optional Declaration[]",
+    "NodeArray uses the equivalent readonly T[] element projection; metadata and interface-indexing await lowering"
+  ]
+}

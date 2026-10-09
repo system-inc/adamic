@@ -1,0 +1,56 @@
+// a-check: refused adamic/cycle-capable
+// Cycle projection of tsc types.ts, cohere/TypeScript d92d9bfee114c80be2c375d72edae966176e3a4f.
+// Node:942-955; Declaration:1756-1760; NodeArray:1589-1592; Symbol:6037-6054.
+// Node.parent includes undefined for an honest unbound root. NodeArray omits
+// metadata fields this base cannot construct; readonly elements keep the cycle.
+interface ReadonlyTextRange {
+    readonly pos: number;
+    readonly end: number;
+}
+interface Node extends ReadonlyTextRange {
+    readonly parent: Node | undefined;
+}
+interface Declaration extends Node {
+    symbol: Symbol;
+}
+interface Symbol {
+    declarations?: Declaration[];
+}
+type NodeArray<T extends Node> = readonly T[];
+
+class BaseNode implements Declaration {
+    readonly pos: number;
+    readonly end: number;
+    parent: Node | undefined;
+    symbol: Symbol;
+    constructor(parent: Node | undefined, symbol: Symbol, pos: number) {
+        this.pos = pos;
+        this.end = pos + 1;
+        this.parent = parent;
+        this.symbol = symbol;
+    }
+}
+function createBaseNode(parent: Node | undefined, symbol: Symbol, pos: number): BaseNode {
+    return new BaseNode(parent, symbol, pos);
+}
+function createNodeArray<T extends Node>(elements: readonly T[]): NodeArray<T> {
+    return elements;
+}
+function run(): void {
+    const symbol: Symbol = {declarations: []};
+    const root = createBaseNode(undefined, symbol, 0);
+    const first = createBaseNode(root, symbol, 1);
+    const second = createBaseNode(root, symbol, 2);
+    const declarations: Declaration[] = [root, first, second];
+    symbol.declarations = declarations;
+    const nodes = createNodeArray<Node>([root, first, second]);
+    const node = nodes[1];
+    const declaration = symbol.declarations[1];
+    if (node !== undefined && declaration !== undefined) {
+        console.log(`${nodes.length}|${node.parent?.pos}|${declaration.symbol.declarations?.length}`);
+        console.log(String(node === first));
+        console.log(String(declaration.symbol === symbol));
+        console.log(String(first.parent === root));
+    }
+}
+run();
