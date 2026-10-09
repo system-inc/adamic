@@ -1,0 +1,21 @@
+{"Time":"2026-10-09T10:40:43.657477857Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T10:40:43.665746514Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode"}
+{"Time":"2026-10-09T10:40:43.665848807Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Output":"=== RUN   TestParseIntMapIndexRadixAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:43.665874626Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Output":"=== PAUSE TestParseIntMapIndexRadixAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:43.665876989Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode"}
+{"Time":"2026-10-09T10:40:43.665879583Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode"}
+{"Time":"2026-10-09T10:40:43.665881476Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Output":"=== CONT  TestParseIntMapIndexRadixAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:43.745029196Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Output":"    parseint_map_guard_test.go:19: gate cache node miss\n"}
+{"Time":"2026-10-09T10:40:43.809766868Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Output":"    parseint_map_guard_test.go:23: gate cache node miss\n"}
+{"Time":"2026-10-09T10:40:43.843712007Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Output":"    oracle_test.go:596: gate cache native miss\n"}
+{"Time":"2026-10-09T10:40:44.041382039Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Output":"    oracle_test.go:589: gate cache native miss\n"}
+{"Time":"2026-10-09T10:40:44.114528486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Output":"    oracle_test.go:603: gate cache native hit\n"}
+{"Time":"2026-10-09T10:40:44.114643679Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Output":"    parseint_map_guard_test.go:37: Node, JavaScript backend, sanitized native and release native: 10,NaN,2\n"}
+{"Time":"2026-10-09T10:40:44.115000664Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Output":"--- PASS: TestParseIntMapIndexRadixAgreesWithNode (0.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:44.115041535Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParseIntMapIndexRadixAgreesWithNode","Elapsed":0.45}
+{"Time":"2026-10-09T10:40:44.115063087Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:40:44.115076527Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=1 misses=2\n"}
+{"Time":"2026-10-09T10:40:44.115084279Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T10:40:44.115090859Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T10:40:44.116287107Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.458s\n"}
+{"Time":"2026-10-09T10:40:44.116312445Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.459}

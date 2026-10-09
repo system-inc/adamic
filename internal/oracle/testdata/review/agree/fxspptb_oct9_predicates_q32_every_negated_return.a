@@ -1,0 +1,14 @@
+function isNumber(x: string | number): x is number {
+  return typeof x === "number";
+}
+function sum(items: (string | number)[]): number {
+  if (!items.every(isNumber)) {
+    return -1;
+  }
+  return items.reduce((a, b) => a + b, 0);
+}
+const items: (string | number)[] = ["x"];
+items.pop();
+items.push(1.5);
+items.push(2);
+console.log(String(sum(items)));

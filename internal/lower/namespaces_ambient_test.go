@@ -13,6 +13,13 @@ import (
 // namespace has an executable body in the checked module graph.
 func TestNamespaceAmbientHostInitialization(t *testing.T) {
 	t.Parallel()
+	// An executable namespace read before initialization must still be rejected.
+	graph, _ := namespaceGraphForTest(t, "console.log(`${N.value}`); namespace N { export const value = true; }")
+	err := graph.lowering.namespaceInitialization(graph.lowering.program.Files())
+	var stop *NotYet
+	if !errors.As(err, &stop) || !strings.Contains(err.Error(), "before runtime initialization") {
+		t.Fatalf("runtime namespace initialization guard lost: %v", err)
+	}
 	for _, name := range []string{"realpath", "cwd"} {
 		t.Run(name, func(t *testing.T) {
 			source, err := os.ReadFile("../../stage3/namespace-init-sys/" + name + ".a")

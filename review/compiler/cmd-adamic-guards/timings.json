@@ -1,0 +1,87 @@
+[
+  {
+    "test": "TestUsageExitStatus",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestUsageExitStatus$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "process_wall": 2.321811298999819,
+    "leaf_elapsed": 0.01
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetBeforeSource",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestBuildWASISanitizeTargetBeforeSource$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "process_wall": 2.1219915519977803,
+    "leaf_elapsed": 0.05
+  },
+  {
+    "test": "TestBuildWASISanitizeTargetAfterSource",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestBuildWASISanitizeTargetAfterSource$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "process_wall": 2.1729570610041264,
+    "leaf_elapsed": 0.05
+  },
+  {
+    "test": "TestBuildTargetParsing",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestBuildTargetParsing$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "process_wall": 2.0709676229962497,
+    "leaf_elapsed": 0
+  },
+  {
+    "test": "TestWASIRejectsTSGoArchive",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic",
+      "-run",
+      "^TestWASIRejectsTSGoArchive$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "process_wall": 2.1746990229949006,
+    "leaf_elapsed": 0
+  }
+]

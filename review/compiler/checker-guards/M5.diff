@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -46,7 +46,7 @@
+ 	}
+ }
+ func (f *fields) ids(ids []uint64) {
+-	f.number(uint64(len(ids)))
++	f.number(uint64(len(ids) + 1))
+ 	for _, id := range ids {
+ 		f.number(id)
+ 	}

@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T06:52:49.573326813Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:52:49.581223392Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeLinkage"}
+{"Time":"2026-10-09T06:52:49.581341817Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeLinkage","Output":"=== RUN   TestBridgeLinkage\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:49.970604605Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeLinkage","Output":"    units_test.go:71: build bridge-test-linkage.test 80db9f65f405 hit 0.04\n"}
+{"Time":"2026-10-09T06:52:50.400459157Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeLinkage","Output":"    units_test.go:264: build bridge-test-linkage.test 80db9f65f405 hit 0.05\n"}
+{"Time":"2026-10-09T06:52:50.481946427Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeLinkage","Output":"    units_test.go:270: linkage mutant: refusal test catches the missing guard\n"}
+{"Time":"2026-10-09T06:52:50.482082838Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeLinkage","Output":"--- PASS: TestBridgeLinkage (0.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:50.482094706Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeLinkage","Elapsed":0.9}
+{"Time":"2026-10-09T06:52:50.482117119Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:50.487132069Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.913s\n"}
+{"Time":"2026-10-09T06:52:50.48718695Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.914}

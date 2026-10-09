@@ -1,0 +1,218 @@
+{
+  "version": 1,
+  "status": "merge-conflict",
+  "requested_refs": [
+    "28285421",
+    "2648ad33"
+  ],
+  "output": "/workspace/scratch/scanner-scratch-original-conflicts",
+  "phases": [
+    {
+      "name": "fetch",
+      "command": [
+        "git",
+        "fetch",
+        "origin",
+        "+refs/heads/*:refs/remotes/origin/*"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "fetch.stdout",
+      "stderr": "fetch.stderr",
+      "exit": 0,
+      "wall_seconds": 2.572
+    },
+    {
+      "name": "main-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "origin/main^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "main-ref.stdout",
+      "stderr": "main-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "ref-00",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "28285421^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "ref-00.stdout",
+      "stderr": "ref-00.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "ref-01",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "2648ad33^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "ref-01.stdout",
+      "stderr": "ref-01.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "worktree",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "-b",
+        "scratch/scanner-run-9853b1be5fda",
+        "/workspace/scratch/scanner-scratch-original-conflicts/compiler-tree",
+        "3ffb1a835184713998a34874e86326cd21db971f"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "worktree.stdout",
+      "stderr": "worktree.stderr",
+      "exit": 0,
+      "wall_seconds": 0.816
+    },
+    {
+      "name": "merge-00",
+      "command": [
+        "git",
+        "merge",
+        "--no-edit",
+        "28285421bf59ea46269545144c19123156c00c91"
+      ],
+      "cwd": "/workspace/scratch/scanner-scratch-original-conflicts/compiler-tree",
+      "stdout": "merge-00.stdout",
+      "stderr": "merge-00.stderr",
+      "exit": 0,
+      "wall_seconds": 1.12
+    },
+    {
+      "name": "merge-01",
+      "command": [
+        "git",
+        "merge",
+        "--no-edit",
+        "2648ad3362812b0f184a8cb922bc322d18729c66"
+      ],
+      "cwd": "/workspace/scratch/scanner-scratch-original-conflicts/compiler-tree",
+      "stdout": "merge-01.stdout",
+      "stderr": "merge-01.stderr",
+      "exit": 1,
+      "wall_seconds": 0.415
+    },
+    {
+      "name": "merge-01-conflicts",
+      "command": [
+        "git",
+        "diff",
+        "--name-only",
+        "--diff-filter=U"
+      ],
+      "cwd": "/workspace/scratch/scanner-scratch-original-conflicts/compiler-tree",
+      "stdout": "merge-01-conflicts.stdout",
+      "stderr": "merge-01-conflicts.stderr",
+      "exit": 0,
+      "wall_seconds": 0.068
+    },
+    {
+      "name": "merge-01-abort",
+      "command": [
+        "git",
+        "merge",
+        "--abort"
+      ],
+      "cwd": "/workspace/scratch/scanner-scratch-original-conflicts/compiler-tree",
+      "stdout": "merge-01-abort.stdout",
+      "stderr": "merge-01-abort.stderr",
+      "exit": 0,
+      "wall_seconds": 0.114
+    }
+  ],
+  "merges": [
+    {
+      "requested": "28285421",
+      "sha": "28285421bf59ea46269545144c19123156c00c91",
+      "exit": 0,
+      "conflicts": []
+    },
+    {
+      "requested": "2648ad33",
+      "sha": "2648ad3362812b0f184a8cb922bc322d18729c66",
+      "exit": 1,
+      "conflicts": [
+        "CohereSettings.json",
+        "internal/flow/flow_test.go",
+        "internal/fresh/fresh.go",
+        "internal/ir/ir.go",
+        "internal/javascript/javascript.go",
+        "internal/load/load.go",
+        "internal/load/node_library.go",
+        "internal/load/source_fs.go",
+        "internal/lower/cast.go",
+        "internal/lower/cast_proof.go",
+        "internal/lower/control.go",
+        "internal/lower/expression.go",
+        "internal/lower/functions.go",
+        "internal/lower/generic.go",
+        "internal/lower/invariance.go",
+        "internal/lower/library_json_stringify.go",
+        "internal/lower/library_math_number.go",
+        "internal/lower/library_method_values.go",
+        "internal/lower/library_node_buffer.go",
+        "internal/lower/library_node_fs_file.go",
+        "internal/lower/library_node_fs_file_test.go",
+        "internal/lower/library_node_test.go",
+        "internal/lower/library_object.go",
+        "internal/lower/library_string.go",
+        "internal/lower/locals.go",
+        "internal/lower/modules.go",
+        "internal/lower/object.go",
+        "internal/lower/refusals.go",
+        "internal/lower/statements.go",
+        "internal/native/emit_functions.go",
+        "internal/native/emit_objects.go",
+        "internal/native/fields.go",
+        "internal/native/library.go",
+        "internal/native/runtime/adamic.h",
+        "internal/native/runtime/node_fs_file.c",
+        "internal/native/runtime/node_process.c",
+        "internal/native/runtime/object.c",
+        "internal/native/runtime/regexp.h",
+        "internal/oracle/counts.md",
+        "internal/oracle/node_fs_file_test.go",
+        "internal/oracle/oracle_test.go",
+        "internal/oracle/testdata/node_fs_file_close.a",
+        "internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a",
+        "stage3/fixtures/host/status.json"
+      ]
+    }
+  ],
+  "scanner": [],
+  "ordered_stops": [],
+  "base": "3ffb1a835184713998a34874e86326cd21db971f",
+  "scratch_branch": "scratch/scanner-run-9853b1be5fda",
+  "scratch_tree": "/workspace/scratch/scanner-scratch-original-conflicts/compiler-tree",
+  "resolved_refs": [
+    {
+      "requested": "28285421",
+      "sha": "28285421bf59ea46269545144c19123156c00c91"
+    },
+    {
+      "requested": "2648ad33",
+      "sha": "2648ad3362812b0f184a8cb922bc322d18729c66"
+    }
+  ],
+  "wall_seconds": 5.12,
+  "validation": {
+    "valid": true,
+    "errors": []
+  }
+}

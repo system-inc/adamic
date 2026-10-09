@@ -1,0 +1,36 @@
+[
+  {
+    "name": "baseline",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "./internal/fresh",
+      "-run",
+      "^Test(FlowProgram|FreshWrites).*new_expression_class_cache",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "wall": 17.52351771800022
+  },
+  {
+    "name": "M11",
+    "command": [
+      "go",
+      "test",
+      "./internal/flow",
+      "./internal/fresh",
+      "-run",
+      "^Test(FlowProgram|FreshWrites).*new_expression_class_cache",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 0,
+    "wall": 12.387301971000852
+  }
+]

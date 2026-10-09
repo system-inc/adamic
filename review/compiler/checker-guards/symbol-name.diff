@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/metadata.go
++++ b/bridge/tsgo/checker/metadata.go
+@@ -11,7 +11,7 @@
+ 	if symbol == nil {
+ 		return
+ 	}
+-	out.text(symbol.Name)
++	out.text("mutant")
+ 	out.number(uint64(len(symbol.Declarations)))
+ 	for _, declaration := range symbol.Declarations {
+ 		source := ast.GetSourceFileOfNode(declaration)

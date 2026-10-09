@@ -3,7 +3,6 @@ package lint
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -18,7 +17,7 @@ import (
 
 // Products are built once per content address, across both leaves and processes.
 // Lowering emits C and JS together so native and JS use the same mutated program.
-func jsxTextnodesProducts(t *testing.T, phase int) (string, string, string) {
+func jsxTextnodesLowered(t *testing.T) (string, buildcache.Inputs) {
 	t.Helper()
 	d := jsxTextnodesDescriptor(t)
 	var change struct{ Name, File, From, To string }
@@ -39,9 +38,6 @@ func jsxTextnodesProducts(t *testing.T, phase int) (string, string, string) {
 	inputs := buildcache.Inputs{Name: "jsx-textnodes-mutant-lowered", Files: files,
 		Flags: []string{change.From, change.To, change.File, packageDirectory}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	lowered := buildcache.Product(t, inputs, func(out string) error {
-		if phase != 1 {
-			return fmt.Errorf("run TestMutantsReactJsxNoCommentTextnodesLoweredSetup first")
-		}
 		port := copyPort(t, filepath.Join(out, "port"), change.From, change.To, filepath.Join("rules", d.Slug, change.File))
 		prepareRegistry(t, port)
 		started := time.Now()
@@ -66,22 +62,33 @@ func jsxTextnodesProducts(t *testing.T, phase int) (string, string, string) {
 		t.Logf("emit JS: %.3fs", time.Since(started).Seconds())
 		return err
 	})
-	if phase == 1 {
-		return filepath.Join(lowered, "port"), filepath.Join(lowered, "lint.mjs"), ""
-	}
+	return lowered, inputs
+}
+
+func jsxTextnodesNative(t *testing.T) string {
+	t.Helper()
+	lowered, inputs := jsxTextnodesLowered(t)
+	return jsxTextnodesNativeFrom(t, lowered, inputs)
+}
+
+func jsxTextnodesNativeFrom(t *testing.T, lowered string, inputs buildcache.Inputs) string {
+	t.Helper()
 	inputs.Name = "jsx-textnodes-mutant-native"
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4})...)
 	inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	built := buildcache.Product(t, inputs, func(out string) error {
-		if phase != 2 {
-			return fmt.Errorf("run TestMutantsReactJsxNoCommentTextnodesNativeSetup first")
-		}
 		source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
 		if err != nil {
 			return err
 		}
 		return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
 	})
-	return filepath.Join(lowered, "port"), filepath.Join(lowered, "lint.mjs"), filepath.Join(built, "scanner")
+	return filepath.Join(built, "scanner")
+}
+
+func jsxTextnodesProducts(t *testing.T) (string, string, string) {
+	t.Helper()
+	lowered, inputs := jsxTextnodesLowered(t)
+	return filepath.Join(lowered, "port"), filepath.Join(lowered, "lint.mjs"), jsxTextnodesNativeFrom(t, lowered, inputs)
 }

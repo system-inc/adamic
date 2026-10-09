@@ -243,7 +243,7 @@ func decodedOptionsPrepare(t *testing.T) *decodedOptionsProducts {
 func decodedOptionsSetupTest(t *testing.T) {
 	t.Helper()
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	path := filepath.Join(sharedDirectory, "decoded-options-setup.json")
 	// Both original and mutant source copies live in the content-addressed

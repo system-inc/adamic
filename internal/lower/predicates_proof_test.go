@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 )
 
+// Behavior cannot observe proof summary flags or the checked-field admission handoff.
 // Bodies of the positive probes come from TypeScript 6.0.3 core.ts:1769
 // and factory/nodeTests.ts:318. These test proof summaries, not admission:
 // open interface summaries still require the checked-view lowering handoff.
@@ -88,25 +89,11 @@ func TestPredicateBodyProof(t *testing.T) {
 
 func TestConditionAssertionAdmission(t *testing.T) {
 	t.Parallel()
-	path := filepath.Join(t.TempDir(), "assert.a")
-	source := `function fail(message?: string): never { throw new Error(message ?? "failed"); }
+	lowersAndAgreesWithNode(t, `function fail(message?: string): never { throw new Error(message ?? "failed"); }
 function assert(expression: unknown, message?: string): asserts expression {
  if (!expression) { fail(message); }
-}`
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
-	}
-	file := program.Files()[0]
-	checked, release := program.Checker(context.Background(), file)
-	defer release()
-	lowering := &lowering{program: program, checker: checked}
-	if err := lowering.refuse(file); err != nil {
-		t.Fatalf("condition assertion must pass the production admission seam: %v", err)
-	}
+}
+assert('present'); console.log('present');`)
 }
 
 func TestPredicateCallbackContracts(t *testing.T) {
@@ -115,16 +102,21 @@ func TestPredicateCallbackContracts(t *testing.T) {
 		name, source string
 		refused      bool
 	}{
-		{"inferred arrow", `function apply(callback: (value: number) => value is 1): boolean { return callback(1); } apply((value: number) => value === 1);`, false},
+		{"inferred arrow", `function apply(callback: (value: number) => value is 1): boolean { return callback(1); } console.log(String(apply((value: number) => value === 1)));`, false},
 		{"inferred opaque", `function lie(value: number): value is 1; function lie(value: number): boolean { return true; } function apply(callback: (value: number) => value is 1): boolean { return callback(2); } apply((value: number) => lie(value));`, true},
-		{"inferred named", `function apply(callback: (value: number) => value is 1): boolean { return callback(1); } function guard(value: number) { return value === 1; } apply(guard);`, false},
-		{"arrow", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } apply((value: number): value is number => typeof value === "number");`, false},
-		{"named", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } function isNumber(value: number): value is number { return typeof value === "number"; } apply(isNumber);`, false},
+		{"inferred named", `function apply(callback: (value: number) => value is 1): boolean { return callback(1); } function guard(value: number) { return value === 1; } console.log(String(apply(guard)));`, false},
+		{"arrow", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } console.log(String(apply((value: number): value is number => typeof value === "number")));`, false},
+		{"named", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } function isNumber(value: number): value is number { return typeof value === "number"; } console.log(String(apply(isNumber)));`, false},
 		{"unproven", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } apply((value: number): value is number => true);`, true},
 		{"lying", `function apply(callback: (value: number | string) => value is number): boolean { return callback(1); } apply((value: number | string): value is number => typeof value === "number" && value > 0);`, true},
 		{"reassigned", `function apply(callback: (value: number) => value is number): boolean { return callback(1); } let guard = (value: number): value is number => typeof value === "number"; guard = (value: number): value is number => true; apply(guard);`, true},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			if !probe.refused {
+				lowersAndAgreesWithNode(t, probe.source)
+				return
+			}
 			_, err := lowerSource(t, probe.source)
 			if probe.refused {
 				if err == nil || !strings.Contains(err.Error(), "unproven predicate argument for parameter callback") {
@@ -167,15 +159,14 @@ func TestPredicateOverloadCallback(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err = lowerSource(t, string(source)); err != nil {
-		t.Fatal(err)
-	}
+	lowersAndAgreesWithNode(t, string(source))
 	lying := strings.Replace(string(source), "typeof value === 'number'", "true", 1)
 	if _, err = lowerSource(t, lying); err == nil || !strings.Contains(err.Error(), "unproven predicate argument for parameter callback") {
 		t.Fatalf("want lying overload callback argument refused at call site, got %v", err)
 	}
 }
 
+// Behavior cannot observe the proof analysis's per-call use-direction facts.
 func TestPredicateUseRegions(t *testing.T) {
 	t.Parallel()
 	prefix := `function some<T>(xs: readonly T[] | undefined): xs is readonly T[];
@@ -204,6 +195,7 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 		{"replacement", `function use(xs: readonly number[] | undefined): void { if (!some(xs)) return; xs = [1]; console.log(xs.length.toString()); }`, 0},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			path := filepath.Join(t.TempDir(), "uses.a")
 			if err := os.WriteFile(path, []byte(prefix+probe.body), 0644); err != nil {
 				t.Fatal(err)
@@ -236,6 +228,7 @@ function some<T>(xs: readonly T[] | undefined): boolean { return xs !== undefine
 	}
 }
 
+// Behavior cannot observe which call owns each proof use-direction fact.
 func TestPredicateUsesBelongToEachCall(t *testing.T) {
 	t.Parallel()
 	path := filepath.Join(t.TempDir(), "separate.a")

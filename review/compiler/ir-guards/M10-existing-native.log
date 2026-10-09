@@ -1,0 +1,18 @@
+=== RUN   TestNoReaderCallingConvention
+=== PAUSE TestNoReaderCallingConvention
+=== CONT  TestNoReaderCallingConvention
+=== RUN   TestNoReaderCallingConvention/closure_convention_plain.a
+=== PAUSE TestNoReaderCallingConvention/closure_convention_plain.a
+=== RUN   TestNoReaderCallingConvention/arguments_length_no_reader.a
+=== PAUSE TestNoReaderCallingConvention/arguments_length_no_reader.a
+=== RUN   TestNoReaderCallingConvention/arguments_length_unrelated_type.a
+=== PAUSE TestNoReaderCallingConvention/arguments_length_unrelated_type.a
+=== CONT  TestNoReaderCallingConvention/closure_convention_plain.a
+=== CONT  TestNoReaderCallingConvention/arguments_length_unrelated_type.a
+=== CONT  TestNoReaderCallingConvention/arguments_length_no_reader.a
+--- PASS: TestNoReaderCallingConvention (0.00s)
+    --- PASS: TestNoReaderCallingConvention/arguments_length_no_reader.a (0.06s)
+    --- PASS: TestNoReaderCallingConvention/arguments_length_unrelated_type.a (0.06s)
+    --- PASS: TestNoReaderCallingConvention/closure_convention_plain.a (0.06s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.076s

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/scanner-next-walk.py", line 14, in <module>
+    assert code==1 and m,(order,code,diagnostic)
+           ^^^^^^^^^^^^^
+AssertionError: (1, 1, 'adamic: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node\n')

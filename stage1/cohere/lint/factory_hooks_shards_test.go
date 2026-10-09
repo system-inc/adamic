@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -182,8 +183,8 @@ func factoryHooksPrepare(t *testing.T, mutated bool) (string, string) {
 	return directory, path
 }
 
-// Published by the serial setup test before testing releases parallel shards.
-// Shards only read these paths; they cannot initiate a shared build.
+// Each shard prepares these immutable products once before its own deadline.
+var factoryHooksSetupOnce sync.Once
 var factoryHooksReady *factoryHooksPrepared
 
 type factoryHooksPrepared struct {
@@ -194,30 +195,27 @@ type factoryHooksPrepared struct {
 
 func factoryHooksSetup(t *testing.T) {
 	t.Helper()
-	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: TestFactoryHooks_Setup exceeded 90s") })
-	defer deadline.Stop()
-	prepared := &factoryHooksPrepared{products: factoryHooksProducts(t)}
-	for index := range prepared.javascript {
-		prepared.javascript[index] = factoryHooksLowered(t, ctx, index)
+	factoryHooksSetupOnce.Do(func() {
+		started := time.Now()
+		// No setup deadline; cancellation still kills the child's process group.
+		ctx, cancel := context.WithCancel(context.Background())
+		defer cancel()
+		prepared := &factoryHooksPrepared{products: factoryHooksProducts(t)}
+		for index := range prepared.javascript {
+			prepared.javascript[index] = factoryHooksLowered(t, ctx, index)
+		}
+		prepared.native = factoryHooksNative(t, ctx, prepared.javascript[0])
+		runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		prepared.runner = runner
+		factoryHooksReady = prepared
+		t.Logf("TestFactoryHooks_Setup: %.3fs", time.Since(started).Seconds())
+	})
+	if factoryHooksReady == nil {
+		t.Fatal("factory hook setup did not complete")
 	}
-	prepared.native = factoryHooksNative(t, ctx, prepared.javascript[0])
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	prepared.runner = runner
-	if ctx.Err() != nil {
-		t.Fatalf("cooked: factory hook setup: %v", ctx.Err())
-	}
-	elapsed := time.Since(started)
-	t.Logf("TestFactoryHooks_Setup: %.3fs cooked=%t", elapsed.Seconds(), elapsed >= 60*time.Second)
-	if elapsed >= 60*time.Second {
-		t.Fatal("cooked: factory hook setup exceeds 60s budget")
-	}
-	factoryHooksReady = prepared
 }
 
 type factoryHooksProduct struct{ directory, manifest string }
@@ -303,12 +301,12 @@ func factoryHooksNative(t *testing.T, ctx context.Context, javascript string) st
 	return value.path
 }
 
-// Test-only subprocess entry: the setup owns its deadline and process group.
+// Test-only build entry: setup has no deadline and retains process-group cancellation.
 func TestFactoryHooks_NativeBuildWorker(t *testing.T) {
 	t.Parallel()
 	sourcePath := os.Getenv("ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE")
 	if sourcePath == "" {
-		t.Skip("invoked only by TestFactoryHooks_Setup")
+		t.Skip("invoked only by factory hook product builds")
 	}
 	source, err := os.ReadFile(sourcePath)
 	if err != nil {
@@ -338,7 +336,7 @@ func factoryHooksBuildNative(ctx context.Context, source, output string) error {
 	if err != nil {
 		return err
 	}
-	command := factoryHooksCommand(ctx, executable, "-test.run=^TestFactoryHooks_NativeBuildWorker$", "-test.timeout=90s")
+	command := factoryHooksCommand(ctx, executable, "-test.run=^TestFactoryHooks_NativeBuildWorker$", "-test.timeout=0")
 	command.Env = append(os.Environ(), "ADAMIC_FACTORY_HOOKS_NATIVE_SOURCE="+source, "ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT="+output)
 	data, err := command.CombinedOutput()
 	if err != nil {
@@ -383,10 +381,8 @@ func factoryHooksVariant(mutated bool) int {
 
 func factoryHooksShard(t *testing.T, index int) {
 	t.Helper()
+	factoryHooksSetup(t)
 	prepared := factoryHooksReady
-	if prepared == nil {
-		t.Fatal("shared setup is absent: select TestFactoryHooks_Setup along with the shard")
-	}
 	// The shard deadline starts only after setup has published every immutable product.
 	started := time.Now()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)

@@ -135,9 +135,7 @@ func jsonUpstreamTopShard(t *testing.T, target int) {
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
 		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}
-	if !portMatchesShared.ready {
-		t.Fatal("shared setup was not selected")
-	}
+	portMatchesPrepare(t)
 	deadline := portMatchesDeadline(t.Name())
 	defer deadline.Stop()
 

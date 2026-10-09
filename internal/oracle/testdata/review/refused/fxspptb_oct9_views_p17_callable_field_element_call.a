@@ -1,0 +1,6 @@
+// A wrong view's function-valued field called through a string-literal key.
+interface Holder { readonly kind: 'Holder'; readonly compute: (value: number) => number; }
+const raw = { kind: 'Holder' as const, compute: (value: string): number => value.length };
+const base: { readonly kind: 'Holder' } = raw;
+const view = base as Holder;
+console.log(`${view['compute'](41)}`);

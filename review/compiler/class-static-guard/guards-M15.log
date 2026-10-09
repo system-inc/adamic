@@ -1,0 +1,16 @@
+=== RUN   TestClassStaticInitializerCallIsEmitted
+=== PAUSE TestClassStaticInitializerCallIsEmitted
+=== RUN   TestClassStaticSideEffectMatchesNode
+=== PAUSE TestClassStaticSideEffectMatchesNode
+=== CONT  TestClassStaticInitializerCallIsEmitted
+=== CONT  TestClassStaticSideEffectMatchesNode
+=== NAME  TestClassStaticInitializerCallIsEmitted
+    class_static_guard_test.go:62: static initializer call count = 0, want 1
+--- FAIL: TestClassStaticInitializerCallIsEmitted (0.03s)
+=== NAME  TestClassStaticSideEffectMatchesNode
+    class_static_guard_test.go:107: JavaScript backend stdout = "done\n", source Node = "static side effect\ndone\n"
+    class_static_guard_test.go:114: native backend stdout = "done\n", source Node = "static side effect\ndone\n"
+--- FAIL: TestClassStaticSideEffectMatchesNode (0.27s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.278s
+FAIL

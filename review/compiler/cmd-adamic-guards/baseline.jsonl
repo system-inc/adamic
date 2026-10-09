@@ -1,0 +1,47 @@
+{"Time":"2026-10-09T09:08:22.258927079Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-09T09:08:22.266901015Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus"}
+{"Time":"2026-10-09T09:08:22.266991559Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"=== RUN   TestUsageExitStatus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.267042855Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"=== PAUSE TestUsageExitStatus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.267045389Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus"}
+{"Time":"2026-10-09T09:08:22.267049204Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetBeforeSource"}
+{"Time":"2026-10-09T09:08:22.267055984Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetBeforeSource","Output":"=== RUN   TestBuildWASISanitizeTargetBeforeSource\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.267058798Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetBeforeSource","Output":"=== PAUSE TestBuildWASISanitizeTargetBeforeSource\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.267062935Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetBeforeSource"}
+{"Time":"2026-10-09T09:08:22.267064988Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetAfterSource"}
+{"Time":"2026-10-09T09:08:22.26706679Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetAfterSource","Output":"=== RUN   TestBuildWASISanitizeTargetAfterSource\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.267069164Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetAfterSource","Output":"=== PAUSE TestBuildWASISanitizeTargetAfterSource\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.267070876Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetAfterSource"}
+{"Time":"2026-10-09T09:08:22.267072619Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing"}
+{"Time":"2026-10-09T09:08:22.267073941Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"=== RUN   TestBuildTargetParsing\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.267076715Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"usage:\n"}
+{"Time":"2026-10-09T09:08:22.267078848Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic types \u003cfile.a|file.ts\u003e...\n"}
+{"Time":"2026-10-09T09:08:22.267080821Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic c \u003cfile.a|file.ts\u003e [--explain-checks]\n"}
+{"Time":"2026-10-09T09:08:22.267082694Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic js \u003cfile.a|file.ts\u003e [--explain-checks]\n"}
+{"Time":"2026-10-09T09:08:22.267084687Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic build [--target wasm32-wasi] \u003cfile.a|file.ts\u003e -o \u003cout\u003e [--count] [--sanitize] [--tsgo \u003carchive\u003e] [--explain-checks]\n"}
+{"Time":"2026-10-09T09:08:22.267090345Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"usage:\n"}
+{"Time":"2026-10-09T09:08:22.267092438Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic types \u003cfile.a|file.ts\u003e...\n"}
+{"Time":"2026-10-09T09:08:22.267102613Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic c \u003cfile.a|file.ts\u003e [--explain-checks]\n"}
+{"Time":"2026-10-09T09:08:22.267104556Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic js \u003cfile.a|file.ts\u003e [--explain-checks]\n"}
+{"Time":"2026-10-09T09:08:22.267119428Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic build [--target wasm32-wasi] \u003cfile.a|file.ts\u003e -o \u003cout\u003e [--count] [--sanitize] [--tsgo \u003carchive\u003e] [--explain-checks]\n"}
+{"Time":"2026-10-09T09:08:22.267121862Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"usage:\n"}
+{"Time":"2026-10-09T09:08:22.267123814Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic types \u003cfile.a|file.ts\u003e...\n"}
+{"Time":"2026-10-09T09:08:22.267125898Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic c \u003cfile.a|file.ts\u003e [--explain-checks]\n"}
+{"Time":"2026-10-09T09:08:22.26712785Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic js \u003cfile.a|file.ts\u003e [--explain-checks]\n"}
+{"Time":"2026-10-09T09:08:22.267130094Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"  adamic build [--target wasm32-wasi] \u003cfile.a|file.ts\u003e -o \u003cout\u003e [--count] [--sanitize] [--tsgo \u003carchive\u003e] [--explain-checks]\n"}
+{"Time":"2026-10-09T09:08:22.267139347Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Output":"--- PASS: TestBuildTargetParsing (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.267141681Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildTargetParsing","Elapsed":0}
+{"Time":"2026-10-09T09:08:22.267152958Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus"}
+{"Time":"2026-10-09T09:08:22.26715483Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"=== CONT  TestUsageExitStatus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.267176042Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetAfterSource"}
+{"Time":"2026-10-09T09:08:22.267177854Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetAfterSource","Output":"=== CONT  TestBuildWASISanitizeTargetAfterSource\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.267539128Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetBeforeSource"}
+{"Time":"2026-10-09T09:08:22.267549193Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetBeforeSource","Output":"=== CONT  TestBuildWASISanitizeTargetBeforeSource\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.277783407Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"--- PASS: TestUsageExitStatus (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.350442592Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Elapsed":0.01}
+{"Time":"2026-10-09T09:08:22.350506346Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetAfterSource","Output":"--- PASS: TestBuildWASISanitizeTargetAfterSource (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.35052258Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetAfterSource","Elapsed":0.08}
+{"Time":"2026-10-09T09:08:22.350525684Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetBeforeSource","Output":"--- PASS: TestBuildWASISanitizeTargetBeforeSource (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.350527677Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestBuildWASISanitizeTargetBeforeSource","Elapsed":0.08}
+{"Time":"2026-10-09T09:08:22.35052936Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:08:22.35312972Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic\t0.094s\n"}
+{"Time":"2026-10-09T09:08:22.353172433Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":0.094}

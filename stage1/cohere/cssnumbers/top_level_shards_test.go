@@ -2,13 +2,9 @@
 package cssnumbers
 
 import (
-	"flag"
-	"fmt"
 	"os"
-	"regexp"
 	"sync"
 	"testing"
-	"time"
 )
 
 var numbersTopSetup struct {
@@ -36,8 +32,6 @@ func numbersTopTempDir(t *testing.T) string {
 // Shared build inputs outlive every parallel leaf and are removed after m.Run.
 // Not parallel: owns package-wide shared build-input lifetime and cleanup.
 func TestMain(m *testing.M) {
-	flag.Parse()
-	numbersIncludeSetup()
 	code := m.Run()
 	if numbersTopRoot != "" {
 		if err := os.RemoveAll(numbersTopRoot); err != nil {
@@ -49,40 +43,10 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-// Not parallel: prepares immutable inputs before the parallel shard leaves.
+// Shared setup has no deadline; Loom bounds the whole unit.
 func TestCSSNumbers_Setup(t *testing.T) {
-	timer := time.AfterFunc(90*time.Second, func() { panic("cooked TestCSSNumbers_Setup: shared setup exceeded 90s") })
-	defer timer.Stop()
+	t.Parallel()
 	prepareCSSNumbersSetup(t)
-}
-
-// A gate-selected leaf must also run its named prerequisite. Keeping setup
-// serial and registered before the wrappers excludes it from each leaf's clock.
-func numbersIncludeSetup() {
-	expression := flag.Lookup("test.run").Value.String()
-	match, err := regexp.Compile(expression)
-	if err != nil {
-		return
-	}
-	needed := match.MatchString("TestCSSNumbersUnion") || match.MatchString("TestCSSNumbersPlantedDisagreement")
-	for i := 0; i < testCSSNumbersShards && !needed; i++ {
-		needed = match.MatchString(fmt.Sprintf("TestCSSNumbers_%03d", i))
-	}
-	if needed {
-		// Setup and the selected leaf each have their own 90s kill; the enclosing
-		// Go process must allow both units to finish independently.
-		if value := flag.Lookup("test.timeout"); value != nil {
-			duration, err := time.ParseDuration(value.Value.String())
-			if err == nil && duration > 0 {
-				if err := flag.Set("test.timeout", (duration + 90*time.Second).String()); err != nil {
-					panic(err)
-				}
-			}
-		}
-		if err := flag.Set("test.run", "(?:"+expression+")|^TestCSSNumbers_Setup$"); err != nil {
-			panic(err)
-		}
-	}
 }
 
 func TestCSSNumbers_000(t *testing.T) { t.Parallel(); runCSSNumbersShard(t, 0) }

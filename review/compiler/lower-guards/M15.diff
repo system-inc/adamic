@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -499,7 +499,7 @@
+ 		return nil, err
+ 	}
+ 	if namespaceRuntime(node) {
+-		body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})
++		body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: false}})
+ 	}
+ 	return append(hoisted, body...), nil
+ }

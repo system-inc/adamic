@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T06:51:48.87039779Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:51:48.876946896Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI"}
+{"Time":"2026-10-09T06:51:48.877014466Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"=== RUN   TestBridgeABI\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:49.229456675Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"    units_test.go:71: build bridge-test-api 37cc78490e79 hit 0.03\n"}
+{"Time":"2026-10-09T06:51:49.60040019Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"    units_test.go:199: build bridge-test-api 37cc78490e79 hit 0.03\n"}
+{"Time":"2026-10-09T06:51:49.725910254Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"    units_test.go:200: C ABI: 100 queries, owned outputs, handles and argument checks; \"世界🌍\"\n"}
+{"Time":"2026-10-09T06:51:49.725987308Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Output":"--- PASS: TestBridgeABI (0.85s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:49.72599549Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeABI","Elapsed":0.85}
+{"Time":"2026-10-09T06:51:49.726016992Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:49.730927398Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.860s\n"}
+{"Time":"2026-10-09T06:51:49.730963461Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.861}

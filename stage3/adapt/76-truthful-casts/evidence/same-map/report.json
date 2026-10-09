@@ -1,0 +1,64 @@
+{
+  "base": "89ac4a8c1de0b02d95965be72f7f8bf1c92433d2",
+  "active_adapter": "finite assertion keys only; sameMap unchanged",
+  "drafts_activated": false,
+  "public_types_source_byte_identical": true,
+  "fixture_node": {
+    "stdout": "564:false\n545:false\n551:false\n555:false\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "mutants": {
+    "isolated_fixture_typechecks": true,
+    "sites": [
+      {
+        "site": 564,
+        "truthful_public_assignment": "TS2322",
+        "lying_signature_mutant_caught": true,
+        "javascript_identical": true
+      },
+      {
+        "site": 545,
+        "truthful_public_assignment": "TS2322",
+        "lying_signature_mutant_caught": true,
+        "javascript_identical": true
+      },
+      {
+        "site": 551,
+        "truthful_public_assignment": "TS2322",
+        "lying_signature_mutant_caught": true,
+        "javascript_identical": true
+      },
+      {
+        "site": 555,
+        "truthful_public_assignment": "TS2322",
+        "lying_signature_mutant_caught": true,
+        "javascript_identical": true
+      }
+    ]
+  },
+  "checker_trials": {
+    "1": "builder564 TS2322",
+    "2": "builder545,551,555 TS2322",
+    "3": "builder526,608 TS2322 (608 observed610 after insertion)",
+    "4": "builder608 TS2322 (observed622)",
+    "5": "builder575,581 TS2322 (observed589,595)"
+  },
+  "own_compiler_source_changes": false,
+  "lanes_identical": [
+    "status",
+    "errors",
+    "counts",
+    "failed_tests",
+    "baseline_diffs",
+    "api"
+  ],
+  "api_baseline_diff_byte_identical": true,
+  "public_api_artifacts_byte_identical": [
+    "typescript.d.ts",
+    "tsserverlibrary.d.ts"
+  ],
+  "javascript_artifacts_byte_identical": 10,
+  "local_lane_tests": 32,
+  "applied_sameMap_repair": false
+}

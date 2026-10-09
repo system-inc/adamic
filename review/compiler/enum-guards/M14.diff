@@ -1,0 +1,11 @@
+--- a/internal/lower/enum_flags.go
++++ b/internal/lower/enum_flags.go
+@@ -45,7 +45,7 @@
+ 		return false
+ 	}
+ 	number := reflect.ValueOf(literal.AsLiteralType().Value())
+-	return number.Kind() == reflect.Float64 && number.Float() == value
++	return number.Kind() == reflect.Float64 && number.Float() != value
+ }
+ 
+ func (l *lowering) flagInitializer(node, declaration *ast.Node, memberAllowed bool) bool {

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:58:41.367250661Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:58:41.375336078Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceAmbientHostInitialization"}
+{"Time":"2026-10-09T10:58:41.375400524Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceAmbientHostInitialization","Output":"=== RUN   TestNamespaceAmbientHostInitialization\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:41.375422266Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceAmbientHostInitialization","Output":"=== PAUSE TestNamespaceAmbientHostInitialization\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:41.375424519Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceAmbientHostInitialization"}
+{"Time":"2026-10-09T10:58:41.375428896Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceAmbientHostInitialization"}
+{"Time":"2026-10-09T10:58:41.375430528Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceAmbientHostInitialization","Output":"=== CONT  TestNamespaceAmbientHostInitialization\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:41.411040036Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceAmbientHostInitialization","Output":"    namespaces_ambient_test.go:21: runtime namespace initialization guard lost: \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:41.411113394Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceAmbientHostInitialization","Output":"--- FAIL: TestNamespaceAmbientHostInitialization (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:41.41111688Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceAmbientHostInitialization","Elapsed":0.04}
+{"Time":"2026-10-09T10:58:41.411135207Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:41.411995391Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.044s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:41.412018085Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.045}

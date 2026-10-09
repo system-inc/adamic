@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -78,7 +78,7 @@
+ 	case "writeFileSync":
+ 		operation = "write_file"
+ 	case "existsSync":
+-		operation, of = "exists", ir.Boolean
++		operation, of = "stat", ir.Boolean
+ 	case "statSync":
+ 		operation, of = "stat", ir.Object
+ 	case "mkdirSync":

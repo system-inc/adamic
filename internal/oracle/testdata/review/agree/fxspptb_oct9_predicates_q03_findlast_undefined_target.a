@@ -1,0 +1,6 @@
+function isMissing(v: string | undefined): v is undefined {
+  return v === undefined;
+}
+const items: (string | undefined)[] = ["a", undefined, "bc"];
+const found = items.findLast(isMissing);
+console.log("found " + String(found));

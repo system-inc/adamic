@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T06:13:48.000509152Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T06:13:48.008042055Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants"}
+{"Time":"2026-10-09T06:13:48.008256346Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"=== RUN   TestRecordReadMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:48.008331238Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"=== PAUSE TestRecordReadMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:48.008337147Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants"}
+{"Time":"2026-10-09T06:13:48.008342074Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants"}
+{"Time":"2026-10-09T06:13:48.008345409Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"=== CONT  TestRecordReadMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:48.008427172Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/own-read-checked-as-missing"}
+{"Time":"2026-10-09T06:13:48.008432009Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/own-read-checked-as-missing","Output":"=== RUN   TestRecordReadMutants/own-read-checked-as-missing\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:54.709023333Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/own-read-checked-as-missing","Output":"    record_test.go:268: caught by the own-hit fixture\n"}
+{"Time":"2026-10-09T06:13:54.709336632Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/own-read-checked-as-missing","Output":"--- PASS: TestRecordReadMutants/own-read-checked-as-missing (6.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:54.70936851Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/own-read-checked-as-missing","Elapsed":6.7}
+{"Time":"2026-10-09T06:13:54.709390193Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"--- PASS: TestRecordReadMutants (6.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:54.709467158Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Elapsed":6.7}
+{"Time":"2026-10-09T06:13:54.709470643Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:54.720683205Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t6.720s\n"}
+{"Time":"2026-10-09T06:13:54.720721613Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":6.72}

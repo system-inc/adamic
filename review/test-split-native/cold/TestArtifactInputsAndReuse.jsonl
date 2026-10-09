@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T05:57:12.061948708Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T05:57:12.071251538Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse"}
+{"Time":"2026-10-09T05:57:12.071381994Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse","Output":"=== RUN   TestArtifactInputsAndReuse\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:12.114728968Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse","Output":"--- PASS: TestArtifactInputsAndReuse (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:12.114777832Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse","Elapsed":0.04}
+{"Time":"2026-10-09T05:57:12.114802549Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:12.115598731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.053s\n"}
+{"Time":"2026-10-09T05:57:12.115648435Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.054}

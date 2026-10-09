@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T06:51:47.076825949Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:51:47.08469937Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified"}
+{"Time":"2026-10-09T06:51:47.084757776Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"=== RUN   TestBridgeProductCacheIsVerified\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:47.085680499Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"    coverage_test.go:173: same hash built once; corrupt bytes and extra product refused\n"}
+{"Time":"2026-10-09T06:51:47.085805343Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"--- PASS: TestBridgeProductCacheIsVerified (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:47.085810431Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Elapsed":0}
+{"Time":"2026-10-09T06:51:47.085937999Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:47.085985424Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.009s\n"}
+{"Time":"2026-10-09T06:51:47.086000807Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.009}

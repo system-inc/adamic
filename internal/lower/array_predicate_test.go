@@ -9,15 +9,13 @@ import (
 func TestArrayPredicatePreservesDeclaredElementContract(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`function guard(value: string | number[]): value is number[] { return Array.isArray(value); }`,
-		`function guard(value: unknown): value is readonly unknown[] { return Array.isArray(value); }`,
-		`function count(value: unknown): number { if (Array.isArray(value)) return value.length; return -1; }`,
+		`function guard(value: string | number[]): value is number[] { return Array.isArray(value); } console.log(String(guard([1, 2]))); console.log(String(guard('x')));`,
+		`function guard(value: unknown): value is readonly unknown[] { return Array.isArray(value); } console.log(String(guard([1, 2]))); console.log(String(guard('x')));`,
+		`function count(value: unknown): number { if (Array.isArray(value)) return value.length; return -1; } console.log(String(count([1, 2]))); console.log(String(count('x')));`,
 		`const value: unknown = [1, 2]; if (Array.isArray(value)) console.log(String(value.length));`,
-		`function guard(value: string | readonly number[]): value is readonly number[] { if (Array.isArray(value)) { return true; } return false; }`,
+		`function guard(value: string | readonly number[]): value is readonly number[] { if (Array.isArray(value)) { return true; } return false; } console.log(String(guard([1, 2]))); console.log(String(guard('x')));`,
 	} {
-		if _, err := lowerSource(t, source); err != nil {
-			t.Fatalf("%s: %v", source, err)
-		}
+		lowersAndAgreesWithNode(t, source)
 	}
 }
 
@@ -71,14 +69,12 @@ func TestUnknownArrayPredicateRefusesUnrepresentedObservations(t *testing.T) {
 func TestArrayPredicateCoexistsWithUnknownReflection(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`function test(value: unknown): string { return typeof value; }`,
-		`function test(value: unknown): boolean { return value === null; }`,
-		`function test(value: unknown): unknown { return value; }`,
-		`function errorCode(error: unknown): string | undefined { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined; }`,
-		`function isArray(value: unknown): value is readonly unknown[] { return Array.isArray(value); } function length(value: unknown): number { if (isArray(value)) return value.length; return -1; }`,
+		`function test(value: unknown): string { return typeof value; } console.log(test(1)); console.log(test('x'));`,
+		`function test(value: unknown): boolean { return value === null; } console.log(String(test(null))); console.log(String(test(1)));`,
+		`function test(value: unknown): unknown { return value; } console.log(String(test(7) === 7));`,
+		`function errorCode(error: unknown): string | undefined { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined; } console.log(errorCode({ code: 'ok' }) ?? 'missing'); console.log(errorCode(null) ?? 'missing');`,
+		`function isArray(value: unknown): value is readonly unknown[] { return Array.isArray(value); } function length(value: unknown): number { if (isArray(value)) return value.length; return -1; } console.log(String(length([1, 2]))); console.log(String(length('x')));`,
 	} {
-		if _, err := lowerSource(t, source); err != nil {
-			t.Fatalf("%s: %v", source, err)
-		}
+		lowersAndAgreesWithNode(t, source)
 	}
 }

@@ -34,6 +34,10 @@ func TestChild(t *testing.T) {
 			fmt.Fprintln(os.Stdout, "progress")
 			time.Sleep(20 * time.Millisecond)
 		}
+	case "finish":
+		fmt.Fprintln(os.Stdout, "ready")
+		time.Sleep(100 * time.Millisecond)
+		fmt.Fprintln(os.Stdout, "done")
 	case "exit":
 		os.Exit(7)
 	}
@@ -127,4 +131,67 @@ func TestNoFirstOutput(t *testing.T) {
 	if elapsed := time.Since(start); elapsed < 300*time.Millisecond || elapsed > 1300*time.Millisecond {
 		t.Fatalf("first-output stall took %s", elapsed)
 	}
+}
+
+// Leave Stall unset to exercise the default window after the first output.
+func TestChildFinishesWithinDefaultStallWindow(t *testing.T) {
+	t.Parallel()
+	out, err := CombinedOutput(child("finish"), Options{FirstOutput: 5 * time.Second, Ceiling: 5 * time.Second})
+	if err != nil {
+		t.Fatalf("child finishing within its window reported an error: %v (output %q)", err, out)
+	}
+	if string(out) != "ready\ndone\n" {
+		t.Fatalf("output lost: got %q, want ready and done", out)
+	}
+}
+
+func TestRunRestoresStdout(t *testing.T) {
+	t.Parallel()
+	var out bytes.Buffer
+	cmd := child("finish")
+	cmd.Stdout = &out
+	if err := Run(cmd, Options{}); err != nil {
+		t.Fatal(err)
+	}
+	if cmd.Stdout != &out {
+		t.Fatalf("stdout was not restored: got %T, want original buffer", cmd.Stdout)
+	}
+}
+
+func TestStalledReportsSystemLoad(t *testing.T) {
+	t.Parallel()
+	readLoad := func() string {
+		t.Helper()
+		data, err := os.ReadFile("/proc/loadavg")
+		if os.IsNotExist(err) {
+			t.Skip("system has no /proc/loadavg load source")
+		}
+		if err != nil {
+			t.Fatal(err)
+		}
+		fields := strings.Fields(string(data))
+		if len(fields) == 0 {
+			t.Fatal("empty /proc/loadavg")
+		}
+		return fields[0]
+	}
+	// The kernel updates load periodically. Compare only runs bracketed by
+	// matching source values so an update during Run cannot make this flaky.
+	for attempt := 0; attempt < 5; attempt++ {
+		before := readLoad()
+		err := Run(child("stall"), Options{FirstOutput: 5 * time.Second, Stall: 50 * time.Millisecond, Ceiling: 5 * time.Second})
+		var guard *Error
+		if !errors.As(err, &guard) || guard.Reason != "stalled" {
+			t.Fatalf("want stalled error, got %v", err)
+		}
+		after := readLoad()
+		if before != after {
+			continue
+		}
+		if guard.Load != before {
+			t.Fatalf("reported load %q, system load source gives %q", guard.Load, before)
+		}
+		return
+	}
+	t.Fatal("system load changed during every guard run")
 }

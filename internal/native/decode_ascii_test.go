@@ -17,6 +17,8 @@ import (
 func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	t.Helper()
 	defer checkGrainBudget(t)()
+	ctx, cancel := context.WithTimeout(context.Background(), 55*time.Second)
+	defer cancel()
 	if target == "wasi" && os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		t.Skip("set ADAMIC_TEST_WASI=1")
 	}
@@ -24,11 +26,8 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	directory := t.TempDir()
 	run := func(t *testing.T, name string, args ...string) []byte {
 		t.Helper()
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		defer cancel()
 		command := exec.CommandContext(ctx, name, args...)
 		command.Dir = repository
 		output, err := command.CombinedOutput()
@@ -41,6 +40,8 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	cache.get = decodeCacheGet(ctx, t, repository)
+	phase := time.Now()
 	corpusDirectory, err := cache.Tree("decode-node-corpus", nil, func(destination string) error {
 		t.Log(string(run(t, "node", "internal/native/decode_ascii/corpus.mjs", filepath.Join(destination, "corpus.bin"))))
 		data, err := os.ReadFile(filepath.Join(destination, "corpus.bin"))
@@ -73,6 +74,7 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("corpus phase %.3fs (including cache wait)", time.Since(phase).Seconds())
 	runtimeDirectory := filepath.Join(repository, "internal/native/runtime")
 	if alternate := os.Getenv("ADAMIC_DECODE_RUNTIME"); alternate != "" {
 		runtimeDirectory = alternate
@@ -99,12 +101,6 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	} else {
 		flags = append(flags, "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
 	}
-	binary := filepath.Join(directory, "decode-"+target)
-	args := append(flags, "internal/native/decode_ascii/probe.c", "internal/native/decode_ascii/baseline.c")
-	args = append(args, sources...)
-	args = append(args, "-lm", "-o", binary)
-	command := exec.Command(compiler, args...)
-	command.Dir = repository
 	snapshot, err := readRuntime(os.DirFS(runtimeDirectory), ".")
 	if err != nil {
 		t.Fatal(err)
@@ -113,9 +109,13 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	for _, file := range snapshot {
 		contents = append(contents, []byte(file.name), file.contents)
 	}
-	if output, err := cache.Command(command, directory, contents...); err != nil {
-		t.Fatalf("decoder build: %v\n%s", err, output)
+	phase = time.Now()
+	binary, err := buildDecodeObjects(ctx, cache, repository, compiler, target, flags, sources, snapshot, contents)
+	if err != nil {
+		t.Fatal(err)
 	}
+	t.Logf("compile phase %.3fs (including cache wait)", time.Since(phase).Seconds())
+	phase = time.Now()
 	piece := unitRanges(decodePrefixes, decodePrefixUnitSize)[index]
 	corpus := filepath.Join(corpusDirectory, piece.name()+".bin")
 	var output []byte
@@ -124,6 +124,7 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	} else {
 		output = run(t, binary, corpus)
 	}
+	t.Logf("run phase %.3fs", time.Since(phase).Seconds())
 	want := fmt.Sprintf("prefixes=%d cases=%d Node and baseline identical", piece.last-piece.first, (piece.last-piece.first)*65*8*2)
 	if !strings.Contains(string(output), want) {
 		t.Fatalf("missing completed decoder partition %s: %s", piece.name(), output)

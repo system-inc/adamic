@@ -1,0 +1,7 @@
+// The longest decomposition, repeated to just under and just over V8's longest string.
+const ligature = 'ﷺ';
+const under = ligature.repeat(29826160).normalize('NFKD');
+console.log(`${under.length}`);
+const over = ligature.repeat(29826161);
+console.log(`${over.length}`);
+console.log(`${over.normalize('NFKD').length}`);

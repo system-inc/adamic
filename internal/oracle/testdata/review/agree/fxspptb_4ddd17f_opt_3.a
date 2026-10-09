@@ -1,0 +1,4 @@
+function failed(message?: string): string {
+	return new Error(message).message;
+}
+console.log(`[${failed()}] [${failed('m')}]`);

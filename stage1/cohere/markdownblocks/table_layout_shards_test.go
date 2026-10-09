@@ -35,47 +35,35 @@ var tableLayoutSharedProducts tableLayoutProducts
 var tableLayoutInputs []auditInput
 var tableLayoutSetupElapsed time.Duration
 
+// Every selected shard prepares once per process, before its own deadline.
+var tableLayoutOnce sync.Once
+
 func tableLayoutReady(t *testing.T) {
 	t.Helper()
+	tableLayoutOnce.Do(func() {
+		// Setup has no deadline; Loom's kill covers the whole unit.
+		started := time.Now()
+		tableLayoutSharedProducts = tableLayoutBuild(t)
+		root, err := filepath.Abs(repository)
+		if err != nil {
+			t.Fatal(err)
+		}
+		tableLayoutInputs, _ = blockCorpus(t, root, "whitespace")
+		tableLayoutSetupElapsed = time.Since(started)
+	})
 	if tableLayoutInputs == nil {
-		t.Fatal("table layout shared setup was not prepared before tests started")
+		t.Fatal("table layout setup failed")
 	}
 }
 
 func testMarkdownTableLayout(t *testing.T) {
 	tableLayoutReady(t)
-	t.Logf("TestMarkdownTableLayout_Setup %.6fs (completed before shard tests started)", tableLayoutSetupElapsed.Seconds())
+	t.Logf("shared setup %.6fs; before shard deadline", tableLayoutSetupElapsed.Seconds())
 }
 
-// Not parallel: publishes the immutable table layout products and corpus before shard execution.
 func TestMarkdownTableLayout_Setup(t *testing.T) {
-	manifest := os.Getenv(tableLayoutSetupManifestEnv)
-	if manifest == "" {
-		if tableLayoutInputs == nil {
-			if err := tableLayoutPrepare(); err != nil {
-				t.Fatal(err)
-			}
-		}
-		testMarkdownTableLayout(t)
-		return
-	}
-	started := time.Now()
-	products := tableLayoutBuild(t)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs, _ := blockCorpus(t, root, "whitespace")
-	data := tableLayoutManifest{Main: products.main, List: products.list, Document: products.document, Sanitized: products.sanitized, Release: products.release, Backend: products.backend, Inputs: inputs, Elapsed: time.Since(started)}
-	for _, input := range inputs {
-		data.Corpus = append(data.Corpus, input.Corpus)
-	}
-	encoded, err := json.Marshal(data)
-	if err != nil {
-		t.Fatal(err)
-	}
-	write(t, manifest, encoded)
-	t.Logf("shared setup %.6fs", data.Elapsed.Seconds())
+	t.Parallel()
+	testMarkdownTableLayout(t)
 }
 
 func tableLayoutPartition(inputs []auditInput) [][]auditInput {
@@ -158,6 +146,10 @@ func TestMarkdownTableLayout_006(t *testing.T) { t.Parallel(); tableLayoutRunSha
 func TestMarkdownTableLayout_007(t *testing.T) { t.Parallel(); tableLayoutRunShard(t, 7) }
 
 func tableLayoutBuild(t *testing.T) tableLayoutProducts {
+	return tableLayoutBuildProduct(t, "")
+}
+
+func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 	t.Helper()
 	var products tableLayoutProducts
 	root, err := filepath.Abs(repository)
@@ -188,10 +180,16 @@ func tableLayoutBuild(t *testing.T) tableLayoutProducts {
 		t.Fatal(err)
 	}
 	products.backend = string(backend)
+	if target == "lowered" {
+		return products
+	}
 	var workers sync.WaitGroup
 	defer workers.Wait()
 	builds := make([]*fixtureTask[string], 0, 2)
 	for _, sanitize := range []bool{true, false} {
+		if target != "" && target != fmt.Sprintf("native-%t", sanitize) {
+			continue
+		}
 		modeInputs := inputs
 		modeInputs.Name = fmt.Sprintf("markdown table native %t", sanitize)
 		modeInputs.Flags = native.Flags(native.Options{Sanitize: sanitize})
@@ -209,6 +207,9 @@ func tableLayoutBuild(t *testing.T) tableLayoutProducts {
 	}
 	cohere := filepath.Join(root, "cohere")
 	for _, mode := range []string{"list", "document"} {
+		if target != "" && target != mode {
+			continue
+		}
 		driver := "list_go.go"
 		command := "adamic_markdown_lists"
 		if mode == "document" {
@@ -239,12 +240,7 @@ func tableLayoutBuild(t *testing.T) tableLayoutProducts {
 			goInputs.Files = append(goInputs.Files, "stage1/cohere/markdownblocks/testdata/list_bridge.go")
 		}
 		product := buildcache.Product(t, goInputs, func(product string) error {
-			deadline, err := time.Parse(time.RFC3339Nano, os.Getenv(tableLayoutSetupDeadlineEnv))
-			if err != nil {
-				return fmt.Errorf("setup worker deadline: %w", err)
-			}
-			// Cancel this compiler group before the outer worker deadline expires.
-			ctx, cancel := context.WithDeadline(t.Context(), deadline.Add(-time.Second))
+			ctx, cancel := markdownLayoutSetupContext(t.Context())
 			defer cancel()
 			build := tableLayoutCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(product, "oracle"), main)
 			build.Dir = cohere
@@ -260,9 +256,15 @@ func tableLayoutBuild(t *testing.T) tableLayoutProducts {
 			products.document = binary
 		}
 	}
-	products.sanitized = builds[0].await(t)
-	products.release = builds[1].await(t)
-	if products.sanitized == "" || products.release == "" {
+	if target == "" {
+		products.sanitized = builds[0].await(t)
+		products.release = builds[1].await(t)
+	} else if target == "native-true" {
+		products.sanitized = builds[0].await(t)
+	} else if target == "native-false" {
+		products.release = builds[0].await(t)
+	}
+	if target == "" && (products.sanitized == "" || products.release == "") {
 		t.Fatal("native product build failed")
 	}
 	return products

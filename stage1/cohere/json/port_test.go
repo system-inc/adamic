@@ -53,6 +53,19 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 }
 
 func executeResult(environment []string, name string, arguments ...string) (run, error) {
+	// All sanitized execution paths share admission, including parallel leaves,
+	// chunk workers, leak checks and optional calibration.
+	for _, setting := range environment {
+		if strings.HasPrefix(setting, "ASAN_OPTIONS=") {
+			budget, err := jsonSanitizedMemory()
+			if err != nil {
+				return run{}, err
+			}
+			budget.acquire(jsonMemorySanitizedWeight)
+			defer budget.release(jsonMemorySanitizedWeight)
+			break
+		}
+	}
 	command := exec.Command(name, arguments...)
 	if environment != nil {
 		command.Env = append(os.Environ(), environment...)
@@ -210,14 +223,16 @@ func comparisonError(name string, result run, expected string, cases []textCase)
 	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
 func jsonPortTopShard(t *testing.T, target int) {
-	if !portMatchesShared.ready {
-		t.Fatal("shared setup was not selected")
-	}
+	portMatchesPrepare(t)
 	deadline := portMatchesDeadline(t.Name())
 	defer deadline.Stop()
 	parentStart := time.Now()
-	cases, shards := jsonTopCorpus(t)
-	enumeratedUnits := len(shards) + 3*len(shards) // agreement plus three benchmark rounds
+	allCases, allShards := jsonTopCorpus(t)
+	cases, shards, dedicated := jsonPortClassOrderPartition(allCases)
+	if err := jsonPortClassOrderUnion(allCases, cases, shards, dedicated); err != nil {
+		t.Fatal(err)
+	}
+	enumeratedUnits := len(shards)
 	if got := enumeratedUnits; got != testPortMatchesGoCohereShards {
 		t.Fatalf("enumerated %d shards, declared %d", got, testPortMatchesGoCohereShards)
 	}
@@ -401,18 +416,17 @@ func jsonPortTopShard(t *testing.T, target int) {
 		}
 
 	})
-	{
-		for ordinal, shard := range shards {
+	// Opt-in measurements reuse the explicitly selected agreement bucket.
+	// Benchmark rounds are never independent gate units.
+	if os.Getenv("ADAMIC_JSON_BENCH") == "1" {
+		for ordinal, shard := range allShards {
 			for round := 0; round < 3; round++ {
-				unit := len(shards) + ordinal*3 + round
+				unit := ordinal
 				if unit != target || unit%count != index {
 					continue
 				}
 				func(t *testing.T) {
-					if os.Getenv("ADAMIC_JSON_BENCH") != "1" {
-						t.Skip("ADAMIC_JSON_BENCH=1 enables benchmark comparisons")
-					}
-					items := cases[shard.start:shard.end]
+					items := allCases[shard.start:shard.end]
 					if len(items) == 0 {
 						t.Log("empty hash bucket")
 						return

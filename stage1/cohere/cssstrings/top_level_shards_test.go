@@ -2,13 +2,9 @@
 package cssstrings
 
 import (
-	"flag"
-	"fmt"
 	"os"
-	"regexp"
 	"sync"
 	"testing"
-	"time"
 )
 
 var stringsTopSetup struct {
@@ -36,8 +32,6 @@ func stringsTopTempDir(t *testing.T) string {
 // Shared build inputs outlive every parallel leaf and are removed after m.Run.
 // Not parallel: owns package-wide shared build-input lifetime and cleanup.
 func TestMain(m *testing.M) {
-	flag.Parse()
-	stringsIncludeSetup()
 	code := m.Run()
 	if stringsTopRoot != "" {
 		if err := os.RemoveAll(stringsTopRoot); err != nil {
@@ -49,40 +43,10 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-// Not parallel: prepares immutable inputs before the parallel shard leaves.
+// Shared setup has no deadline; Loom bounds the whole unit.
 func TestCSSStrings_Setup(t *testing.T) {
-	timer := time.AfterFunc(90*time.Second, func() { panic("cooked TestCSSStrings_Setup: shared setup exceeded 90s") })
-	defer timer.Stop()
+	t.Parallel()
 	prepareCSSStringsSetup(t)
-}
-
-// A gate-selected leaf must also run its named prerequisite. Keeping setup
-// serial and registered before the wrappers excludes it from each leaf's clock.
-func stringsIncludeSetup() {
-	expression := flag.Lookup("test.run").Value.String()
-	match, err := regexp.Compile(expression)
-	if err != nil {
-		return
-	}
-	needed := match.MatchString("TestCSSStringsUnion") || match.MatchString("TestCSSStringsPlantedDisagreement")
-	for i := 0; i < testCSSStringsShards && !needed; i++ {
-		needed = match.MatchString(fmt.Sprintf("TestCSSStrings_%03d", i))
-	}
-	if needed {
-		// Setup and the selected leaf each have their own 90s kill; the enclosing
-		// Go process must allow both units to finish independently.
-		if value := flag.Lookup("test.timeout"); value != nil {
-			duration, err := time.ParseDuration(value.Value.String())
-			if err == nil && duration > 0 {
-				if err := flag.Set("test.timeout", (duration + 90*time.Second).String()); err != nil {
-					panic(err)
-				}
-			}
-		}
-		if err := flag.Set("test.run", "(?:"+expression+")|^TestCSSStrings_Setup$"); err != nil {
-			panic(err)
-		}
-	}
 }
 
 func TestCSSStrings_000(t *testing.T) { t.Parallel(); runCSSStringsShard(t, 0) }

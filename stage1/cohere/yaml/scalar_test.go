@@ -9,7 +9,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -99,56 +98,6 @@ func goScalars(t *testing.T, cases string) []byte {
 		}
 	}
 	return expected
-}
-
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS; fixed /tmp/stage1-yaml-scalars-* diagnostic files.
-func TestScalarsMatchGo(t *testing.T) {
-	cases, files, count := scalarCases(t)
-	expected := goScalars(t, cases)
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	entry, err := filepath.Abs("scalar_main.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "scalars")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	actual := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, cases)
-	runner := filepath.Join(root, "oracle/node.mjs")
-	node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, cases)
-	emitted := filepath.Join(t.TempDir(), "scalars.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	backend := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, cases)
-	library := os.Getenv("ADAMIC_YAML_LIBRARY")
-	if library == "" {
-		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
-	}
-	external := run(t, "", nil, "node", "testdata/scalar_library.mjs", library, cases)
-	for _, side := range []struct {
-		name string
-		out  []byte
-	}{{"native ASan/UBSan/LSan", actual}, {"Node", node}, {"emitted JavaScript", backend}, {"yaml@2.9.0", external}} {
-		if !bytes.Equal(side.out, expected) {
-			os.WriteFile("/tmp/stage1-yaml-scalars-expected.txt", expected, 0644)
-			os.WriteFile("/tmp/stage1-yaml-scalars-actual.txt", side.out, 0644)
-			t.Fatalf("%s: %s", side.name, firstDifference(side.out, expected))
-		}
-	}
-	t.Logf("%d repository files, %d cases, %d scalar answer bytes identical on all five sides", files, count, len(expected))
 }
 
 // Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.

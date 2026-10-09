@@ -1,0 +1,11 @@
+--- a/cmd/adamic/main.go
++++ b/cmd/adamic/main.go
+@@ -97,7 +97,7 @@
+ 		return build(arguments[1], arguments[3], arguments[4:])
+ 	}
+ 	fmt.Fprintln(os.Stderr, usage)
+-	return 2
++	return 1
+ }
+ 
+ // check loads a program, printing why when it can't. A nil program comes with the exit code.

@@ -4058,6 +4058,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841",
+    "program": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "path": "../oracle/testdata/node_buffer_digest_twice.a",
+    "sha256": "b53bb95de81be7d64b17d4cf073a9b3fe9739288236d140c47975dcb2e3ca93b"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c",
     "program": "internal/oracle/testdata/node_buffer_encodings.a",
     "path": "../oracle/testdata/node_buffer_encodings.a",
@@ -4718,6 +4726,14 @@
     "program": "internal/oracle/testdata/params_namespaces_values.a",
     "path": "../oracle/testdata/params_namespaces_values.a",
     "sha256": "1d2f372c908a5be8581f1eb1c3eb684077eded63f5f465d1a0f619c9c62e2c02"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
+    "program": "internal/oracle/testdata/pow_fractional.a",
+    "path": "../oracle/testdata/pow_fractional.a",
+    "sha256": "a358a4022f157086b55e069f501427bf65ecaffa9825e932f49601e6f12c7777"
   },
   {
     "package": "flow",
@@ -10666,6 +10682,14 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841",
+    "program": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "path": "../oracle/testdata/node_buffer_digest_twice.a",
+    "sha256": "b53bb95de81be7d64b17d4cf073a9b3fe9739288236d140c47975dcb2e3ca93b"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c",
     "program": "internal/oracle/testdata/node_buffer_encodings.a",
     "path": "../oracle/testdata/node_buffer_encodings.a",
@@ -11326,6 +11350,14 @@
     "program": "internal/oracle/testdata/params_namespaces_values.a",
     "path": "../oracle/testdata/params_namespaces_values.a",
     "sha256": "1d2f372c908a5be8581f1eb1c3eb684077eded63f5f465d1a0f619c9c62e2c02"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
+    "program": "internal/oracle/testdata/pow_fractional.a",
+    "path": "../oracle/testdata/pow_fractional.a",
+    "sha256": "a358a4022f157086b55e069f501427bf65ecaffa9825e932f49601e6f12c7777"
   },
   {
     "package": "flow",
@@ -17274,6 +17306,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841",
+    "program": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "path": "../oracle/testdata/node_buffer_digest_twice.a",
+    "sha256": "b53bb95de81be7d64b17d4cf073a9b3fe9739288236d140c47975dcb2e3ca93b"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c",
     "program": "internal/oracle/testdata/node_buffer_encodings.a",
     "path": "../oracle/testdata/node_buffer_encodings.a",
@@ -17934,6 +17974,14 @@
     "program": "internal/oracle/testdata/params_namespaces_values.a",
     "path": "../oracle/testdata/params_namespaces_values.a",
     "sha256": "1d2f372c908a5be8581f1eb1c3eb684077eded63f5f465d1a0f619c9c62e2c02"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
+    "program": "internal/oracle/testdata/pow_fractional.a",
+    "path": "../oracle/testdata/pow_fractional.a",
+    "sha256": "a358a4022f157086b55e069f501427bf65ecaffa9825e932f49601e6f12c7777"
   },
   {
     "package": "flow",
@@ -23882,6 +23930,14 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841",
+    "program": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "path": "../oracle/testdata/node_buffer_digest_twice.a",
+    "sha256": "b53bb95de81be7d64b17d4cf073a9b3fe9739288236d140c47975dcb2e3ca93b"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c",
     "program": "internal/oracle/testdata/node_buffer_encodings.a",
     "path": "../oracle/testdata/node_buffer_encodings.a",
@@ -24542,6 +24598,14 @@
     "program": "internal/oracle/testdata/params_namespaces_values.a",
     "path": "../oracle/testdata/params_namespaces_values.a",
     "sha256": "1d2f372c908a5be8581f1eb1c3eb684077eded63f5f465d1a0f619c9c62e2c02"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
+    "program": "internal/oracle/testdata/pow_fractional.a",
+    "path": "../oracle/testdata/pow_fractional.a",
+    "sha256": "a358a4022f157086b55e069f501427bf65ecaffa9825e932f49601e6f12c7777"
   },
   {
     "package": "flow",
@@ -30530,6 +30594,14 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841",
+    "program": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "path": "../oracle/testdata/node_buffer_digest_twice.a",
+    "sha256": "b53bb95de81be7d64b17d4cf073a9b3fe9739288236d140c47975dcb2e3ca93b"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c",
     "program": "internal/oracle/testdata/node_buffer_encodings.a",
     "path": "../oracle/testdata/node_buffer_encodings.a",
@@ -31310,6 +31382,14 @@
     "program": "internal/oracle/testdata/params_namespaces_values.a",
     "path": "../oracle/testdata/params_namespaces_values.a",
     "sha256": "1d2f372c908a5be8581f1eb1c3eb684077eded63f5f465d1a0f619c9c62e2c02"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_pow_fractional_a_633be2799c28",
+    "program": "internal/oracle/testdata/pow_fractional.a",
+    "path": "../oracle/testdata/pow_fractional.a",
+    "sha256": "a358a4022f157086b55e069f501427bf65ecaffa9825e932f49601e6f12c7777"
   },
   {
     "package": "fresh",

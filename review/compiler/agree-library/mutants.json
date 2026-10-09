@@ -1,0 +1,14 @@
+[
+  {
+    "mutant": "parse-int-radix",
+    "converted_exit": 1,
+    "old_exit": 0,
+    "test": "^TestLibraryMethodValues$"
+  },
+  {
+    "mutant": "fs-exists",
+    "converted_exit": 1,
+    "old_exit": 0,
+    "test": "^TestNodeFSFileNamespaceImport$"
+  }
+]

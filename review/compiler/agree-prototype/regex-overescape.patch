@@ -1,0 +1,13 @@
+diff --git a/internal/lower/regexp.go b/internal/lower/regexp.go
+index b6715a74..e91c7eec 100644
+--- a/internal/lower/regexp.go
++++ b/internal/lower/regexp.go
+@@ -261,7 +261,7 @@ func escapeRegexSource(pattern, flags string) string {
+ 				depth--
+ 			}
+ 		}
+-		if c == '/' && !escaped && depth == 0 {
++		if c == '/' && depth <= 1 {
+ 			result.WriteByte('\\')
+ 		}
+ 		result.WriteByte(c)

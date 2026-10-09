@@ -37,8 +37,7 @@ var emittedMismatchProducts struct {
 func emittedMismatchSetup(t *testing.T) {
 	t.Helper()
 	emittedMismatchProducts.Do(func() {
-		deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript shared setup exceeded 90s") })
-		defer deadline.Stop()
+		// Shared preparation has no deadline; Loom covers the whole unit.
 		// The subprocess receives immutable products; it never builds them again.
 		if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
 			emittedMismatchProducts.oracle = os.Getenv("ADAMIC_MISMATCH_ORACLE")
@@ -51,81 +50,9 @@ func emittedMismatchSetup(t *testing.T) {
 			}
 			return
 		}
-		files := []string{"stage1/typescript", "stage1/cohere/lint/registry", "internal", "go.mod", "cohere/TypeScript/tsc/internal", "cohere/TypeScript-shim", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/static_single_assignment", "cohere/mutation_aliasing"}
-		for _, path := range portFiles(t) {
-			files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", path)))
-		}
-
-		// Checker baselines are not build inputs. Hash production sources and embeds,
-		// skipping corpus directories before visiting their tens of thousands of files.
-		var production []string
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
-		for _, input := range files {
-			err := filepath.WalkDir(filepath.Join(root, input), func(path string, entry fs.DirEntry, err error) error {
-				if err != nil {
-					return err
-				}
-				if entry.IsDir() {
-					if entry.Name() == "testdata" || entry.Name() == "performance" {
-						return filepath.SkipDir
-					}
-					return nil
-				}
-				if strings.HasSuffix(path, "_test.go") {
-					return nil
-				}
-				relative, err := filepath.Rel(root, path)
-				if err != nil {
-					return err
-				}
-				production = append(production, filepath.ToSlash(relative))
-				return nil
-			})
-			if err != nil {
-				t.Fatal(err)
-			}
-		}
-		files = production
-		oracleFiles := append(append([]string(nil), files...), "stage1/cohere/lint/testdata/oracle.go", "cohere/internal", "cohere/go.mod", "cohere/go.sum")
-		oracleProduct := buildcache.Product(t, buildcache.Inputs{
-			Name: "emitted-mismatch-oracle", Files: oracleFiles,
-			Flags:     []string{"overlay", "package=" + packageDirectory},
-			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")},
-		}, func(out string) error {
-			_, err := goOracleIn(packageDirectory, out)
-			return err
-		})
-		emittedMismatchProducts.oracle = filepath.Join(oracleProduct, "oracle")
-		lowered := buildcache.Product(t, buildcache.Inputs{Name: "emitted-mismatch-lowered", Files: files, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}, func(out string) error {
-			if _, err := registry.Generate(packageDirectory); err != nil {
-				return err
-			}
-			program, err := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
-			if err != nil {
-				return err
-			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				return err
-			}
-			if err := os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
-		})
-		options := native.Options{Sanitize: true, Split: true, Jobs: 4}
-		flags := append(native.Flags(options), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		product := buildcache.Product(t, buildcache.Inputs{Name: "emitted-mismatch-native", Files: files, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}, func(out string) error {
-			source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
-			if err != nil {
-				return err
-			}
-			return native.Build(string(source), filepath.Join(out, "scanner"), options)
-		})
-		emittedMismatchProducts.binary = filepath.Join(product, "scanner")
+		emittedMismatchProducts.oracle = emittedMismatchOracle(t)
+		lowered := emittedMismatchLowered(t)
+		emittedMismatchProducts.binary = emittedMismatchNative(t)
 		emittedMismatchProducts.module = filepath.Join(lowered, "lint.mjs")
 	})
 	if emittedMismatchProducts.oracle == "" {
@@ -198,20 +125,8 @@ func emittedMismatchUnion(t *testing.T) {
 
 func TestEmittedJavaScriptMismatch_000(t *testing.T) {
 	t.Parallel()
-	// Setup owns every build. The mutant child receives already built products.
-	if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
-		emittedMismatchProducts.oracle = os.Getenv("ADAMIC_MISMATCH_ORACLE")
-		emittedMismatchProducts.binary = os.Getenv("ADAMIC_MISMATCH_NATIVE")
-		emittedMismatchProducts.module = os.Getenv("ADAMIC_MISMATCH_MODULE")
-	}
-	for _, product := range []string{emittedMismatchProducts.oracle, emittedMismatchProducts.binary, emittedMismatchProducts.module} {
-		if product == "" {
-			t.Fatal("shared setup is not ready: include TestEmittedJavaScriptMismatch_Setup in the test filter")
-		}
-		if _, err := os.Stat(product); err != nil {
-			t.Fatal(err)
-		}
-	}
+	// Prepare once per process, including when selected without _Setup.
+	emittedMismatchSetup(t)
 	started := time.Now()
 	// A hard deadline applies even when this leaf is selected alone.
 	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript shard exceeded 90s") })
@@ -278,4 +193,119 @@ func TestEmittedJavaScriptMismatch_000(t *testing.T) {
 	if elapsed >= 60*time.Second {
 		t.Fatal(fmt.Sprintf("shard exceeds 60s budget: %s", elapsed))
 	}
+}
+
+func emittedMismatchInputs(t *testing.T) []string {
+	t.Helper()
+	files := []string{"stage1/typescript", "stage1/cohere/lint/registry", "internal", "go.mod", "cohere/TypeScript/tsc/internal", "cohere/TypeScript-shim", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/static_single_assignment", "cohere/mutation_aliasing"}
+	for _, path := range portFiles(t) {
+		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", path)))
+	}
+
+	// Checker baselines are not build inputs. Hash production sources and embeds,
+	// skipping corpus directories before visiting their tens of thousands of files.
+	var production []string
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, input := range files {
+		err := filepath.WalkDir(filepath.Join(root, input), func(path string, entry fs.DirEntry, err error) error {
+			if err != nil {
+				return err
+			}
+			if entry.IsDir() {
+				if entry.Name() == "testdata" || entry.Name() == "performance" {
+					return filepath.SkipDir
+				}
+				return nil
+			}
+			if strings.HasSuffix(path, "_test.go") {
+				return nil
+			}
+			relative, err := filepath.Rel(root, path)
+			if err != nil {
+				return err
+			}
+			production = append(production, filepath.ToSlash(relative))
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	files = production
+	return files
+}
+
+func emittedMismatchOracle(t *testing.T) string {
+	t.Helper()
+	value := shared("emitted-mismatch-oracle", func(value *sharedValue) {
+		files := emittedMismatchInputs(t)
+		oracleFiles := append(append([]string(nil), files...), "stage1/cohere/lint/testdata/oracle.go", "cohere/internal", "cohere/go.mod", "cohere/go.sum")
+		oracleProduct := buildcache.Product(t, buildcache.Inputs{
+			Name: "emitted-mismatch-oracle", Files: oracleFiles,
+			Flags:     []string{"overlay", "package=" + packageDirectory},
+			Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")},
+		}, func(out string) error {
+			_, err := goOracleIn(packageDirectory, out)
+			return err
+		})
+		value.path = filepath.Join(oracleProduct, "oracle")
+	})
+	if value.path == "" {
+		t.Fatal("emitted mismatch oracle preparation failed")
+	}
+	return value.path
+}
+
+func emittedMismatchLowered(t *testing.T) string {
+	t.Helper()
+	value := shared("emitted-mismatch-lowered", func(value *sharedValue) {
+		files := emittedMismatchInputs(t)
+		lowered := buildcache.Product(t, buildcache.Inputs{Name: "emitted-mismatch-lowered", Files: files, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}, func(out string) error {
+			if _, err := registry.Generate(packageDirectory); err != nil {
+				return err
+			}
+			program, err := load.Load([]string{filepath.Join(packageDirectory, "main.ts")})
+			if err != nil {
+				return err
+			}
+			lowered, err := lower.Lower(context.Background(), program)
+			if err != nil {
+				return err
+			}
+			if err := os.WriteFile(filepath.Join(out, "lint.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+				return err
+			}
+			return os.WriteFile(filepath.Join(out, "lint.c"), []byte(native.C(lowered)), 0644)
+		})
+		value.path = lowered
+	})
+	if value.path == "" {
+		t.Fatal("emitted mismatch lowered preparation failed")
+	}
+	return value.path
+}
+
+func emittedMismatchNative(t *testing.T) string {
+	t.Helper()
+	value := shared("emitted-mismatch-native", func(value *sharedValue) {
+		files := emittedMismatchInputs(t)
+		lowered := emittedMismatchLowered(t)
+		options := native.Options{Sanitize: true, Split: true, Jobs: 4}
+		flags := append(native.Flags(options), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+		product := buildcache.Product(t, buildcache.Inputs{Name: "emitted-mismatch-native", Files: files, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}, func(out string) error {
+			source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
+			if err != nil {
+				return err
+			}
+			return native.Build(string(source), filepath.Join(out, "scanner"), options)
+		})
+		value.path = filepath.Join(product, "scanner")
+	})
+	if value.path == "" {
+		t.Fatal("emitted mismatch native preparation failed")
+	}
+	return value.path
 }

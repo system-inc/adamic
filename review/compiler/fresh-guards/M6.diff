@@ -1,0 +1,11 @@
+--- a/internal/fresh/node_fs_file.go
++++ b/internal/fresh/node_fs_file.go
+@@ -13,7 +13,7 @@
+ 		mtime := a.fresh(anyField, value{})
+ 		atime := a.fresh(anyField, value{})
+ 		result := a.fresh("mtime", mtime)
+-		a.state.store(newestOf(result), "atime", atime)
++		_ = atime
+ 		return result
+ 	}
+ 	if mutable(expression.Type()) {

@@ -1,0 +1,19 @@
+abstract class Root {
+    readonly rootTag = `root${1}`;
+    abstract kind(): string;
+    describe(): string { return `${this.rootTag}/${this.kind()}`; }
+}
+class Middle extends Root {
+    readonly seen: string;
+    constructor() {
+        super();
+        this.seen = super.describe();
+    }
+    override kind(): string { return 'middle'; }
+}
+class Leaf extends Middle {
+    readonly leafTag = `leaf${2}`;
+    override kind(): string { return `kind:${this.leafTag.toUpperCase()}`; }
+}
+console.log(new Middle().seen);
+console.log(new Leaf().seen);

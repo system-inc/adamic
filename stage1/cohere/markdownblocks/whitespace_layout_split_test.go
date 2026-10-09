@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	"flag"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -14,7 +13,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
@@ -68,21 +66,13 @@ var whitespaceLayoutNativeShared whitespaceLayoutProducts
 func whitespaceLayoutNativeSetup(t *testing.T, ctx context.Context, products whitespaceLayoutProducts) whitespaceLayoutProducts {
 	whitespaceLayoutNativeOnce.Do(func() {
 		started := time.Now()
-		inputs, source := products.inputs, products.source
+		buildProducts := products
 		var builds sync.WaitGroup
 		for _, sanitize := range []bool{true, false} {
 			builds.Add(1)
 			go func() {
 				defer builds.Done()
-				options := native.Options{Sanitize: sanitize, Split: true, Jobs: 2}
-				nativeInputs := inputs
-				nativeInputs.Name = fmt.Sprintf("%s-native-%t", inputs.Name, sanitize)
-				nativeInputs.Flags = append(append([]string{}, inputs.Flags...), native.Flags(options)...)
-				nativeInputs.Flags = append(nativeInputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-				nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
-				dir := buildcache.Product(t, nativeInputs, func(dir string) error {
-					return whitespaceLayoutNativeBuild(ctx, source, filepath.Join(dir, "port"), options)
-				})
+				dir := whitespaceLayoutNativeProduct(t, ctx, buildProducts, sanitize)
 				if sanitize {
 					products.sanitized = filepath.Join(dir, "port")
 				} else {
@@ -115,13 +105,15 @@ func whitespaceLayoutEnumerate(t *testing.T) ([]auditInput, [testMarkdownWhitesp
 	return inputs, shards
 }
 
-// Not parallel: publishes shared build products before parallel shards are released.
 func TestMarkdownWhitespaceLayout_Setup(t *testing.T) {
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	t.Parallel()
+	whitespaceLayoutReadyProducts(t)
+}
+
+// Preparation has no deadline; Loom bounds the complete unit.
+func whitespaceLayoutPrepare(t *testing.T) {
+	ctx, cancel := markdownLayoutSetupContext(t.Context())
 	defer cancel()
-	deadline := time.AfterFunc(90*time.Second, func() { panic("TestMarkdownWhitespaceLayout_Setup exceeded 90s") })
-	defer deadline.Stop()
-	defer close(whitespaceLayoutReady)
 	directory := buildcache.Product(t, whitespaceLayoutSetupInputs(t), func(directory string) error {
 		var workers sync.WaitGroup
 		defer workers.Wait()
@@ -245,6 +237,14 @@ func whitespaceLayoutBuild(t *testing.T, ctx context.Context, root string) white
 }
 
 func whitespaceLayoutBuildProbe(t *testing.T, ctx context.Context, root, probe string, goOracles bool) whitespaceLayoutProducts {
+	target := ""
+	if !goOracles {
+		target = "lowered"
+	}
+	return whitespaceLayoutBuildProduct(t, ctx, root, probe, target)
+}
+
+func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe, target string) whitespaceLayoutProducts {
 	main, err := filepath.Abs(filepath.Join("testdata", probe))
 	if err != nil {
 		t.Fatal(err)
@@ -274,7 +274,7 @@ func whitespaceLayoutBuildProbe(t *testing.T, ctx context.Context, root, probe s
 		t.Fatal(err)
 	}
 	products := whitespaceLayoutProducts{backend: backend, source: string(source), inputs: inputs}
-	if !goOracles {
+	if target == "lowered" {
 		return products
 	}
 	// GoBuild is not on this base. Cache the unchanged Go overlay build commands as products.
@@ -287,6 +287,9 @@ func whitespaceLayoutBuildProbe(t *testing.T, ctx context.Context, root, probe s
 		{"lists", "list_go.go", "adamic_markdown_lists"},
 		{"layout", "document_go.go", "adamic_markdown_doclayout"},
 	} {
+		if target != "" && target != mode.name {
+			continue
+		}
 		driver, err := filepath.Abs(filepath.Join("testdata", mode.driver))
 		if err != nil {
 			t.Fatal(err)
@@ -742,9 +745,8 @@ func TestMarkdownWhitespaceLayout_021(t *testing.T) { t.Parallel(); whitespaceLa
 func TestMarkdownWhitespaceLayout_022(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 22) }
 func TestMarkdownWhitespaceLayout_023(t *testing.T) { t.Parallel(); whitespaceLayoutRunShard(t, 23) }
 
-// The setup test is the only builder. Filtered shard runs require its cached
-// manifest; they fail on a miss instead of doing everyone's work inside a leaf.
-var whitespaceLayoutReady = make(chan struct{})
+// Independently selected shards prepare the shared products once per process.
+var whitespaceLayoutReadyOnce sync.Once
 var whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared whitespaceLayoutProducts
 
 func whitespaceLayoutSetupInputs(t *testing.T) buildcache.Inputs {
@@ -761,24 +763,11 @@ func whitespaceLayoutSetupInputs(t *testing.T) buildcache.Inputs {
 
 func whitespaceLayoutReadyProducts(t *testing.T) (whitespaceLayoutProducts, whitespaceLayoutProducts) {
 	t.Helper()
-	// When setup is selected, wait for its own top-level test to publish. With
-	// -run selecting one shard, read a product made by a prior setup-only run.
-	selection := flag.Lookup("test.run").Value.String()
-	selected, err := regexp.MatchString(selection, "TestMarkdownWhitespaceLayout_Setup")
-	if err != nil {
-		t.Fatal(err)
+	whitespaceLayoutReadyOnce.Do(func() { whitespaceLayoutPrepare(t) })
+	if whitespaceLayoutPrepared.goBinary == "" {
+		t.Fatal("whitespace layout setup failed")
 	}
-	if selected {
-		<-whitespaceLayoutReady
-		if whitespaceLayoutPrepared.goBinary == "" {
-			t.Fatal("whitespace layout setup failed")
-		}
-		return whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared
-	}
-	directory := buildcache.Product(t, whitespaceLayoutSetupInputs(t), func(string) error {
-		return fmt.Errorf("shared setup missing; run go test -run '^TestMarkdownWhitespaceLayout_Setup$' -timeout 90s first")
-	})
-	return whitespaceLayoutReadProducts(t, directory)
+	return whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared
 }
 
 func whitespaceLayoutReadProducts(t *testing.T, directory string) (whitespaceLayoutProducts, whitespaceLayoutProducts) {
@@ -874,7 +863,7 @@ func whitespaceLayoutNativeBuild(ctx context.Context, source, output string, opt
 	if err != nil {
 		return err
 	}
-	command := whitespaceLayoutCommand(ctx, executable, "-test.run=^TestMarkdownWhitespaceLayoutBuildWorker$", "-test.timeout=90s")
+	command := whitespaceLayoutCommand(ctx, executable, "-test.run=^TestMarkdownWhitespaceLayoutBuildWorker$", "-test.timeout=0")
 	command.Env = append(os.Environ(), "ADAMIC_WHITESPACE_BUILD="+string(request))
 	if output, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native build: %w\n%s", err, output)
@@ -898,4 +887,17 @@ func TestMarkdownWhitespaceLayoutBuildWorker(t *testing.T) {
 	if err := native.Build(string(source), build.Output, build.Options); err != nil {
 		t.Fatal(err)
 	}
+}
+
+func whitespaceLayoutNativeProduct(t *testing.T, ctx context.Context, products whitespaceLayoutProducts, sanitize bool) string {
+	options := native.Options{Sanitize: sanitize, Split: true, Jobs: 2}
+	nativeInputs := products.inputs
+	nativeInputs.Name = fmt.Sprintf("%s-native-%t", products.inputs.Name, sanitize)
+	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native.Flags(options)...)
+	nativeInputs.Flags = append(nativeInputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
+	dir := buildcache.Product(t, nativeInputs, func(dir string) error {
+		return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, "port"), options)
+	})
+	return dir
 }

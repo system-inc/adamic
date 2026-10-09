@@ -1,0 +1,58 @@
+// a-check: checked
+// From src/compiler/transformers/ts.ts:1430 (TypeScript 6.0.3, ed6e2975 adaptations).
+
+interface Node {readonly kind:number;}
+interface Identifier extends Node {readonly text:string;readonly parent:Node;}
+interface ConstructorDeclaration extends Node {readonly kind:177;}
+interface ParameterDeclaration extends Node {readonly parent:Node;readonly name:Identifier;}
+type ParameterPropertyDeclaration = ParameterDeclaration & {parent:ConstructorDeclaration;name:Identifier;};
+interface Expression {readonly text:string;}
+const EmitFlags={NoComments:1,NoSourceMap:2};
+function transformParameterWithPropertyAssignment(node: ParameterPropertyDeclaration) {
+        const name = node.name;
+        if (!isIdentifier(name)) {
+            return undefined;
+        }
+
+        // TODO(rbuckton): Does this need to be parented?
+        const propertyName = setParent(setTextRange(factory.cloneNode(name), name), name.parent);
+        setEmitFlags(propertyName, EmitFlags.NoComments | EmitFlags.NoSourceMap);
+
+        // TODO(rbuckton): Does this need to be parented?
+        const localName = setParent(setTextRange(factory.cloneNode(name), name), name.parent);
+        setEmitFlags(localName, EmitFlags.NoComments);
+
+        return startOnNewLine(
+            removeAllComments(
+                setTextRange(
+                    setOriginalNode(
+                        factory.createExpressionStatement(
+                            factory.createAssignment(
+                                setTextRange(
+                                    factory.createPropertyAccessExpression(
+                                        factory.createThis(),
+                                        propertyName,
+                                    ),
+                                    node.name,
+                                ),
+                                localName,
+                            ),
+                        ),
+                        node,
+                    ),
+                    moveRangePos(node, -1),
+                ),
+            ),
+        );
+    }
+function isIdentifier(node:Identifier):boolean {return node.kind===80;}
+function setParent<T>(node:T,parent:Node):T {return node;}
+function setTextRange<T>(node:T,location:Node):T {return node;}
+function setEmitFlags(node:Node,flags:number):void {}
+function startOnNewLine(node:Expression):Expression {return node;}
+function removeAllComments(node:Expression):Expression {return node;}
+function setOriginalNode(node:Expression,original:Node):Expression {return node;}
+function moveRangePos(node:Node,pos:number):Node {return node;}
+const factory={cloneNode(node:Identifier):Identifier {return {...node};},createThis():Expression {return {text:'this'};},createPropertyAccessExpression(node:Expression,name:Identifier):Expression {return {text:node.text+'.'+name.text};},createAssignment(left:Expression,right:Expression):Expression {return {text:left.text+'='+right.text};},createExpressionStatement(node:Expression):Expression {return {text:node.text+';'};}};
+
+console.log(`${transformParameterWithPropertyAssignment({kind:170,parent:{kind:177},name:{kind:80,text:'x',parent:{kind:177}}})?.text}`);

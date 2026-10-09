@@ -43,8 +43,7 @@ var quoteLayoutShared quoteLayoutProducts
 func quoteLayoutSetup(t *testing.T) quoteLayoutProducts {
 	quoteLayoutOnce.Do(func() {
 		started := time.Now()
-		deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: TestMarkdownQuoteLayout (setup) exceeded 90s") })
-		defer deadline.Stop()
+		// Shared setup has no deadline; Loom bounds the whole unit.
 		root, err := filepath.Abs(repository)
 		if err != nil {
 			t.Fatal(err)
@@ -61,29 +60,23 @@ func quoteLayoutSetup(t *testing.T) quoteLayoutProducts {
 var quoteLayoutNativeOnce sync.Once
 var quoteLayoutNativeShared quoteLayoutProducts
 
-// Not parallel: sanitized and release build products initialized before parallel shards.
+// Shared products are also prepared by independently selected shards.
 func TestMarkdownQuoteLayoutNative(t *testing.T) {
+	t.Parallel()
 	quoteLayoutNativeSetup(t, quoteLayoutSetup(t))
 }
 
 func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLayoutProducts {
 	quoteLayoutNativeOnce.Do(func() {
 		started := time.Now()
-		deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: TestMarkdownQuoteLayoutNative (setup) exceeded 90s") })
-		defer deadline.Stop()
-		inputs, source := products.inputs, products.source
+		// Shared setup has no deadline; Loom bounds the whole unit.
+		buildProducts := products
 		var builds sync.WaitGroup
 		for _, sanitize := range []bool{true, false} {
 			builds.Add(1)
 			go func() {
 				defer builds.Done()
-				options := native.Options{Sanitize: sanitize}
-				nativeInputs := inputs
-				nativeInputs.Name = fmt.Sprintf("markdown-quote-layout-native-%t", sanitize)
-				nativeInputs.Flags = append(append([]string{}, inputs.Flags...), native.Flags(options)...)
-				nativeInputs.Flags = append(nativeInputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-				nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
-				dir := buildcache.Product(t, nativeInputs, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
+				dir := quoteLayoutNativeProduct(t, buildProducts, sanitize)
 				if sanitize {
 					products.sanitized = filepath.Join(dir, "port")
 				} else {
@@ -105,8 +98,9 @@ func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLay
 var quoteLayoutReadyOnce sync.Once
 var quoteLayoutReadyShared quoteLayoutProducts
 
-// Not parallel: quote build products are prepared before the parallel corpus shards.
+// Setup exercises the same preparation used by independently selected shards.
 func TestMarkdownQuoteLayout_Setup(t *testing.T) {
+	t.Parallel()
 	quoteLayoutReady(t)
 }
 
@@ -114,8 +108,7 @@ func quoteLayoutReady(t *testing.T) quoteLayoutProducts {
 	t.Helper()
 	quoteLayoutReadyOnce.Do(func() {
 		started := time.Now()
-		deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: TestMarkdownQuoteLayout_Setup exceeded 90s") })
-		defer deadline.Stop()
+		// Shared setup has no deadline; Loom bounds the whole unit.
 		quoteLayoutReadyShared = quoteLayoutNativeSetup(t, quoteLayoutSetup(t))
 		t.Logf("TestMarkdownQuoteLayout_Setup: %.3fs", time.Since(started).Seconds())
 	})
@@ -180,7 +173,7 @@ func quoteLayoutBytesEqual(actual, expected []byte) bool { return bytes.Equal(ac
 
 func quoteLayoutRunShard(t *testing.T, shard int) {
 	t.Helper()
-	// Shared builds and admission are charged to setup, before the shard clock.
+	// Each shard prepares shared products itself before its own clock starts.
 	products := quoteLayoutReady(t)
 	deadline := time.AfterFunc(90*time.Second, func() { panic("cooked: " + t.Name() + " exceeded 90s") })
 	defer deadline.Stop()
@@ -208,6 +201,10 @@ func TestMarkdownQuoteLayout_010(t *testing.T) { t.Parallel(); quoteLayoutRunSha
 func TestMarkdownQuoteLayout_011(t *testing.T) { t.Parallel(); quoteLayoutRunShard(t, 11) }
 
 func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
+	return quoteLayoutBuildProduct(t, root, "")
+}
+
+func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProducts {
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -237,12 +234,18 @@ func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
 		t.Fatal(err)
 	}
 	products := quoteLayoutProducts{backend: backend, source: string(source), inputs: inputs}
+	if target == "lowered" {
+		return products
+	}
 	// GoBuild is not on this base; cache the unchanged overlay builds as products.
 	cohere := filepath.Join(root, "cohere")
 	for _, mode := range []struct{ name, driver, command string }{
 		{"lists", "list_go.go", "adamic_markdown_lists"},
 		{"layout", "document_go.go", "adamic_markdown_doclayout"},
 	} {
+		if target != "" && target != mode.name {
+			continue
+		}
 		driver, err := filepath.Abs(filepath.Join("testdata", mode.driver))
 		if err != nil {
 			t.Fatal(err)
@@ -271,7 +274,7 @@ func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
 			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 				return err
 			}
-			command := quoteLayoutCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)
+			command := quoteLayoutSetupCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, mode.name), mainPath)
 			command.Dir = cohere
 			if output, err := combinedOutput(command); err != nil {
 				return fmt.Errorf("Go %s: %w\n%s", mode.name, err, output)
@@ -544,6 +547,18 @@ func quoteLayoutCommand(t *testing.T, name string, arguments ...string) *exec.Cm
 	t.Helper()
 	ctx, cancel := context.WithTimeout(t.Context(), 90*time.Second)
 	t.Cleanup(cancel)
+	return quoteLayoutContextCommand(ctx, name, arguments...)
+}
+
+// Setup keeps process-group cancellation without a deadline of its own.
+func quoteLayoutSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := markdownLayoutSetupContext(t.Context())
+	t.Cleanup(cancel)
+	return quoteLayoutContextCommand(ctx, name, arguments...)
+}
+
+func quoteLayoutContextCommand(ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -601,4 +616,15 @@ func quoteLayoutOnNode(t *testing.T, path string, arguments ...string) run {
 		t.Fatal(err)
 	}
 	return result
+}
+
+func quoteLayoutNativeProduct(t *testing.T, products quoteLayoutProducts, sanitize bool) string {
+	options := native.Options{Sanitize: sanitize}
+	nativeInputs := products.inputs
+	nativeInputs.Name = fmt.Sprintf("markdown-quote-layout-native-%t", sanitize)
+	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native.Flags(options)...)
+	nativeInputs.Flags = append(nativeInputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
+	dir := buildcache.Product(t, nativeInputs, func(dir string) error { return native.Build(products.source, filepath.Join(dir, "port"), options) })
+	return dir
 }

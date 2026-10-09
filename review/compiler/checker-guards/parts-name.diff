@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/program.go
++++ b/bridge/tsgo/checker/program.go
+@@ -194,7 +194,7 @@
+ 	}
+ 	var framed strings.Builder
+ 	for _, part := range parts {
+-		name := typeChecker.TypeToString(part)
++		name := "mutant"
+ 		fmt.Fprintf(&framed, "%d\n%d\n%s", part.Flags(), len(utf16.Encode([]rune(name))), name)
+ 	}
+ 	return framed.String(), nil

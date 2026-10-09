@@ -1,0 +1,218 @@
+=== RUN   TestCheckedViewV2MembershipMutant
+=== PAUSE TestCheckedViewV2MembershipMutant
+=== RUN   TestCheckedViewObjectPrimitiveSource
+=== PAUSE TestCheckedViewObjectPrimitiveSource
+=== RUN   TestCheckedViewUntaggedSourceDispatch
+=== PAUSE TestCheckedViewUntaggedSourceDispatch
+=== RUN   TestNarrowedUnionMemberCheck
+=== PAUSE TestNarrowedUnionMemberCheck
+=== CONT  TestCheckedViewV2MembershipMutant
+=== CONT  TestCheckedViewUntaggedSourceDispatch
+=== CONT  TestNarrowedUnionMemberCheck
+=== RUN   TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+=== CONT  TestCheckedViewObjectPrimitiveSource
+=== RUN   TestCheckedViewObjectPrimitiveSource/optional-absent
+=== PAUSE TestCheckedViewObjectPrimitiveSource/optional-absent
+=== RUN   TestCheckedViewObjectPrimitiveSource/optional-receiver
+=== PAUSE TestCheckedViewObjectPrimitiveSource/optional-receiver
+=== RUN   TestCheckedViewObjectPrimitiveSource/required-missing
+=== PAUSE TestCheckedViewObjectPrimitiveSource/required-missing
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+=== PAUSE TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/comment-boolean
+=== PAUSE TestCheckedViewObjectPrimitiveSource/comment-boolean
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-boolean
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-boolean
+=== RUN   TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+=== PAUSE TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+=== CONT  TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+=== CONT  TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-false
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-false
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-good
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+=== PAUSE TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+=== CONT  TestCheckedViewObjectPrimitiveSource/optional-absent
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/good
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/good
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+=== RUN   TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/good
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/good
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/nested
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/nested
+=== RUN   TestCheckedViewUntaggedSourceDispatch/option-element/absent
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/option-element/absent
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/good
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/good
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/wrong
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/wrong
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/nested
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/nested
+=== RUN   TestCheckedViewUntaggedSourceDispatch/structural/absent
+=== PAUSE TestCheckedViewUntaggedSourceDispatch/structural/absent
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+=== NAME  TestCheckedViewObjectPrimitiveSource/optional-absent
+    checked_views_v2_object_primitive_test.go:58: preserved base boundary: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/optional-absent.a:6:17: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-good
+=== NAME  TestCheckedViewV2MembershipMutant
+    checked_views_v2_migration_test.go:186: membership check removal caught by native: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:186: membership check removal caught by native-sanitized: exit 0 stdout "true\n"
+    checked_views_v2_migration_test.go:186: membership check removal caught by javascript: exit 0 stdout "true\n"
+--- PASS: TestCheckedViewV2MembershipMutant (0.85s)
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+=== NAME  TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a
+    narrowed_union_test.go:70: unchecked member mutant caught: exit 0, stdout "after toText: 1\n", stderr ""
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-good
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+=== NAME  TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a
+    narrowed_union_test.go:70: unchecked member mutant caught: exit 1, stdout "", stderr "=================================================================\n==242313==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c08329e0060 at pc 0x5581ffd2bc9e bp 0x7ffcfb2c3070 sp 0x7ffcfb2c3068\nREAD of size 8 at 0x7c08329e0060 thread T0\n    #0 0x5581ffd2bc9d in adamic_string_length /home/agent/.cache/adamic/runtime/f4dd3250bbc59a02cb4514a70f46280b0e2701e6fb9c91044247c935f833ebfe/adamic.h:739:17\n    #1 0x5581ffd2bc9d in adamic_function_2_check /tmp/adamic-gate/adamic-build-1543092476/main.c:67:68\n    #2 0x5581ffd2bc9d in main /tmp/adamic-gate/adamic-build-1543092476/main.c:93:2\n    #3 0x7fd83393bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7fd83393bd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x5581ffc45460 in _start (/tmp/adamic-gate/TestNarrowedUnionMemberChecke4eec87_f2_union_narrow_call.a3418425539/004/program+0x59460)\n\n0x7c08329e0060 is located 8 bytes after 24-byte region [0x7c08329e0040,0x7c08329e0058)\nallocated by thread T0 here:\n    #0 0x5581ffce8274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x5581ffd3e1bf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-823664805/heap.c:196:10\n    #2 0x7fd83393bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /home/agent/.cache/adamic/runtime/f4dd3250bbc59a02cb4514a70f46280b0e2701e6fb9c91044247c935f833ebfe/adamic.h:739:17 in adamic_string_length\nShadow bytes around the buggy address:\n  0x7c08329dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c08329dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c08329dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c08329dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c08329dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7c08329e0000: fa fa 00 00 00 fa fa fa 00 00 00 fa[fa]fa fa fa\n  0x7c08329e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c08329e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c08329e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c08329e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c08329e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==242313==ABORTING\n"
+--- PASS: TestNarrowedUnionMemberCheck (0.00s)
+    --- PASS: TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a (0.88s)
+    --- PASS: TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a (0.98s)
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+=== CONT  TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+=== CONT  TestCheckedViewObjectPrimitiveSource/node-indicator-false
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-text-wrong
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-negative-wrong
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-boolean
+=== CONT  TestCheckedViewObjectPrimitiveSource/literal-good
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-boolean
+    checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-flags-wrong
+    checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)
+=== CONT  TestCheckedViewObjectPrimitiveSource/comment-good
+    checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)
+=== CONT  TestCheckedViewObjectPrimitiveSource/required-missing
+=== CONT  TestCheckedViewObjectPrimitiveSource/optional-receiver
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/absent
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_v2_source_test.go:56: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewObjectPrimitiveSource/optional-receiver
+    checked_views_v2_object_primitive_test.go:58: preserved base boundary: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/optional-receiver.a:6:17: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/nested
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/wrong
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_v2_source_test.go:56: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_v2_source_test.go:56: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/wrong
+    checked_views_v2_source_test.go:56: Node: exit=0 stdout="true\n" stderr=""
+--- PASS: TestCheckedViewObjectPrimitiveSource (0.00s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/optional-absent (0.33s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-good (0.62s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-wrong (0.77s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-wrong (0.64s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-good (0.64s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-boolean (0.56s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong (0.63s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong (0.65s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-false (0.69s)
+    --- SKIP: TestCheckedViewObjectPrimitiveSource/comment-boolean (0.00s)
+    --- SKIP: TestCheckedViewObjectPrimitiveSource/comment-flags-wrong (0.00s)
+    --- SKIP: TestCheckedViewObjectPrimitiveSource/comment-good (0.00s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-text-wrong (0.74s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-negative-wrong (0.70s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-boolean (0.75s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/literal-good (0.73s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/optional-receiver (0.25s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/required-missing (0.59s)
+=== CONT  TestCheckedViewUntaggedSourceDispatch/structural/good
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/nested
+    checked_views_v2_source_test.go:58: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+    checked_views_v2_source_test.go:58: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/absent
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_v2_source_test.go:56: Node: exit=0 stdout="true\ntrue\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/nested
+    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:58: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:58: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/absent
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/wrong
+    checked_views_v2_source_test.go:58: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:58: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+=== CONT  TestCheckedViewUntaggedSourceDispatch/option-element/good
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_v2_source_test.go:56: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_v2_source_test.go:56: Node: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_v2_source_test.go:56: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/structural/good
+    checked_views_v2_source_test.go:58: native-sanitized: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:58: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:58: native: exit=0 stdout="true\ntrue\n" stderr=""
+=== CONT  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/good
+    checked_views_v2_source_test.go:58: native-sanitized: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:58: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:58: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_v2_source_test.go:56: Node: exit=0 stdout="true\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/wrong
+    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:58: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:58: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/nested
+    checked_views_v2_source_test.go:58: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+    checked_views_v2_source_test.go:58: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\n"
+=== NAME  TestCheckedViewUntaggedSourceDispatch/option-element/good
+    checked_views_v2_source_test.go:58: native: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:58: native-sanitized: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+    checked_views_v2_source_test.go:58: javascript: exit=0 stdout="true\ntrue\ntrue\ntrue\ntrue\n" stderr=""
+=== NAME  TestCheckedViewUntaggedSourceDispatch/binding-name/wrong
+    checked_views_v2_source_test.go:58: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:58: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedSourceDispatch (0.24s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/absent (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/nested (0.58s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/nested (0.52s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/wrong (0.55s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/absent (0.27s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/absent (0.19s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/structural/good (0.60s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/good (1.26s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/wrong (0.55s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/nested (0.55s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/option-element/good (0.68s)
+    --- PASS: TestCheckedViewUntaggedSourceDispatch/binding-name/wrong (0.49s)
+PASS
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=56
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.884s

@@ -86,8 +86,17 @@ func TestVolumeProfilePartition(t *testing.T) {
 			if !ok {
 				return true
 			}
-			switch array.Elt.(type) {
-			case *ast.StructType, *ast.Ident:
+			switch element := array.Elt.(type) {
+			case *ast.StructType:
+				// A table of build jobs (each row fills a product) declares products, not checks.
+				for _, field := range element.Fields.List {
+					for _, fieldName := range field.Names {
+						if fieldName.Name == "product" {
+							return true
+						}
+					}
+				}
+			case *ast.Ident:
 			default:
 				return true
 			}

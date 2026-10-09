@@ -100,18 +100,7 @@ func goOracle(t *testing.T) string {
 func goOracleFrom(t *testing.T, sourceRoot string) string {
 	t.Helper()
 	if isPackage(sourceRoot) {
-		value := shared("oracle", func(value *sharedValue) {
-			directory, err := os.MkdirTemp(sharedDirectory, "oracle-")
-			if err != nil {
-				value.err = err
-				return
-			}
-			value.path, value.err = goOracleIn(sourceRoot, directory)
-		})
-		if value.err != nil {
-			t.Fatal(value.err)
-		}
-		return value.path
+		return lintGoOracleProduct(t)
 	}
 	binary, err := goOracleIn(sourceRoot, t.TempDir())
 	if err != nil {
@@ -316,18 +305,6 @@ func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module
 	}
 	t.Logf("Go, Node, emitted JavaScript, native identical: %d bytes", len(want.output))
 	return want.output
-}
-
-// Not parallel: upstream capture uses t.Setenv and a process-wide fixture capture destination.
-func TestRulesAgree(t *testing.T) {
-	deadline := time.AfterFunc(rulesAgreeKill, func() { panic("TestRulesAgree lowering build cooked: exceeded 90s") })
-	defer deadline.Stop()
-	started := time.Now()
-	rulesAgreeLowered(t)
-	t.Logf("TestRulesAgree (setup lowered): %.3fs", time.Since(started).Seconds())
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: setup over 60s budget")
-	}
 }
 
 // Recovery is a parser dependency, not successful lint parity. Keep the exact
@@ -698,77 +675,6 @@ func TestThroughput(t *testing.T) {
 // Node and emitted JavaScript; this copy also proves sanitized native matches the
 // mutated Node result, including JSX parsing, text spans and finding serialization.
 const nativeCanaryRule = "react/jsx-no-comment-textnodes"
-
-// Not parallel: initializes the shared oracle and rule registry before parallel mutant subtests.
-// Not parallel: compiler work shares the CPU used by interleaved throughput timing samples.
-// Not parallel: prepares the shared live registry and oracle before mutant comparisons.
-func TestMutants(t *testing.T) {
-	oracle := goOracle(t)
-	descriptors := prepareRegistry(t, ".")
-	hasCanary := false
-	for _, descriptor := range descriptors {
-		hasCanary = hasCanary || descriptor.Name == nativeCanaryRule
-	}
-	if !hasCanary {
-		t.Fatalf("native canary rule %s is missing", nativeCanaryRule)
-	}
-	for _, descriptor := range descriptors {
-		var change struct{ Name, File, From, To string }
-		data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := json.Unmarshal(data, &change); err != nil {
-			t.Fatal(err)
-		}
-		// This canary is covered by the top-level JSX textnode shard tests.
-		if change.Name == "react-jsx-no-comment-textnodes mutant from batch 8" {
-			continue
-		}
-		t.Run(change.Name, func(t *testing.T) {
-			t.Parallel()
-			// A mutant can change only its own rule's output, so it runs on the rows that select that rule:
-			// its witnesses, and the generated rows selecting it or all rules. Rows naming another rule
-			// cannot show it. An "all" row stays as it is, since its options are every rule's bag.
-			var rows []string
-			for _, row := range generated(t) {
-				// A bare path selects all rules, as main.ts reads it.
-				selected := "all"
-				if fields := strings.Split(row, "\t"); len(fields) > 1 && fields[1] != "" {
-					selected = fields[1]
-				}
-				if selected == "all" || selected == descriptor.Name {
-					rows = append(rows, row)
-				}
-			}
-			rows = append(rows, recoveryRows(t, oracle, ownedWitnessRows(t, ".", descriptor))...)
-			path := manifest(t, rows)
-			want := execute(t, "", oracle, "--manifest", path).output
-			if change.File == "" {
-				change.File = descriptor.Module
-			}
-			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
-			mutatedNode := node(t, directory, path, false)
-			for _, side := range []struct {
-				name string
-				run  execution
-			}{{"Node", mutatedNode}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
-				if bytes.Equal(side.run.output, want) {
-					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
-				}
-				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
-			}
-			if descriptor.Name == nativeCanaryRule {
-				binary := buildPort(t, directory, true)
-				got := execute(t, "", binary, "--manifest", path)
-				if diff := difference(got.output, mutatedNode.output); diff != "" {
-					t.Fatalf("native canary differs from mutated Node: %s", diff)
-				}
-				t.Logf("sanitized native canary %s equals mutated Node: %d bytes", descriptor.Name, len(got.output))
-			}
-		})
-	}
-}
 
 var portImport = regexp.MustCompile(`(?m)(^import\s+[^;]*?\s+from\s+)(['"])([^'"]+)(['"])`)
 

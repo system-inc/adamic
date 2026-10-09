@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/facts.go
++++ b/bridge/tsgo/checker/facts.go
+@@ -40,7 +40,7 @@
+ }
+ func (f *fields) yes(b bool) {
+ 	if b {
+-		f.number(1)
++		f.number(0)
+ 	} else {
+ 		f.number(0)
+ 	}

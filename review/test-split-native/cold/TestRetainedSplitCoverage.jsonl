@@ -1,0 +1,32 @@
+{"Time":"2026-10-09T06:13:56.70444613Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T06:13:56.712567227Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage"}
+{"Time":"2026-10-09T06:13:56.712668099Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"=== RUN   TestRetainedSplitCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.712710162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"=== PAUSE TestRetainedSplitCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.712712966Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage"}
+{"Time":"2026-10-09T06:13:56.712716601Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage"}
+{"Time":"2026-10-09T06:13:56.712718484Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"=== CONT  TestRetainedSplitCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.712720948Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/shard_union"}
+{"Time":"2026-10-09T06:13:56.712724193Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/shard_union","Output":"=== RUN   TestRetainedSplitCoverage/shard_union\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719677561Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/shard_union","Output":"--- PASS: TestRetainedSplitCoverage/shard_union (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719700074Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/shard_union","Elapsed":0.01}
+{"Time":"2026-10-09T06:13:56.719722258Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/decode_targets"}
+{"Time":"2026-10-09T06:13:56.719725412Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/decode_targets","Output":"=== RUN   TestRetainedSplitCoverage/decode_targets\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719729919Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/decode_targets","Output":"--- PASS: TestRetainedSplitCoverage/decode_targets (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719734807Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/decode_targets","Elapsed":0}
+{"Time":"2026-10-09T06:13:56.71973729Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/WASI"}
+{"Time":"2026-10-09T06:13:56.719739604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/WASI","Output":"=== RUN   TestRetainedSplitCoverage/WASI\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.71974376Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/WASI","Output":"--- PASS: TestRetainedSplitCoverage/WASI (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719746043Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/WASI","Elapsed":0}
+{"Time":"2026-10-09T06:13:56.719747876Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/split_cache"}
+{"Time":"2026-10-09T06:13:56.719752804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/split_cache","Output":"=== RUN   TestRetainedSplitCoverage/split_cache\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719762348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/split_cache","Output":"--- PASS: TestRetainedSplitCoverage/split_cache (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719764521Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/split_cache","Elapsed":0}
+{"Time":"2026-10-09T06:13:56.719767195Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/record_mutants"}
+{"Time":"2026-10-09T06:13:56.719768868Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/record_mutants","Output":"=== RUN   TestRetainedSplitCoverage/record_mutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719771752Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/record_mutants","Output":"--- PASS: TestRetainedSplitCoverage/record_mutants (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719773785Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/record_mutants","Elapsed":0}
+{"Time":"2026-10-09T06:13:56.719776659Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"--- PASS: TestRetainedSplitCoverage (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719778452Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Elapsed":0.01}
+{"Time":"2026-10-09T06:13:56.719780375Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:13:56.719829518Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.015s\n"}
+{"Time":"2026-10-09T06:13:56.719841466Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.015}

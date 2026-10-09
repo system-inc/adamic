@@ -1,0 +1,10 @@
+export GOPROXY='https://proxy.golang.org|direct'
+ timeout 300 bash cloud/setup.sh > /tmp/agree-rest-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower -run "$(cat /tmp/agree-rest-run)" -count=1 -timeout 90s -v > review/compiler/agree-rest/tests.log 2>&1
+go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s -v > review/compiler/agree-rest/call-targets.log 2>&1
+Each mutant: go test ./internal/lower -run ^<test>$ -count=1 -timeout 90s -v
+Tests and mutants additionally bounded by timeout 110 in the shell/runner. The test filter is preserved in test-filter.txt.
+Final nine-file selection: timeout 110 go test ./internal/lower -run "$(cat review/compiler/agree-rest/test-filter.txt)" -count=1 -timeout 90s -v > review/compiler/agree-rest/tests-landed.log 2>&1
+Final guard: timeout 110 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s -v > review/compiler/agree-rest/call-targets-landed.log 2>&1
+Bodyless predicate mutant: go test ./internal/lower -run ^TestCensusPredicateInteraction -count=1 -timeout 90s -v; shared and original both exit 1.

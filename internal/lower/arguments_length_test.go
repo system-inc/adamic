@@ -28,6 +28,7 @@ func TestArgumentsLengthRefusals(t *testing.T) {
 		{"parenthesized write", "(arguments.length) = 1;", writing},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			source := "function take(value: IArguments): void { console.log(`${value.length}`); }\nfunction rejected() { " + probe.body + " }\nrejected();\n"
 			_, err := lowerSource(t, source)
 			var refused *Refused
@@ -35,6 +36,16 @@ func TestArgumentsLengthRefusals(t *testing.T) {
 				t.Fatalf("got %v; want pinned refusal %q", err, probe.message)
 			}
 		})
+	}
+}
+
+func TestMixedTupleSpreadIsNotYet(t *testing.T) {
+	t.Parallel()
+	// Node prints 2:7:word8; one argument slot can't hold both a number and a string representation.
+	_, err := lowerSource(t, "function read(number: number, text: string): string { return `${arguments.length}:${number}:${text}`; }\nconsole.log(read(...[7, `word${8}`]));\n")
+	var gap *NotYet
+	if !errors.As(err, &gap) || !strings.Contains(gap.What, "a call spreading a tuple with differently represented elements") {
+		t.Fatalf("got %v; want the mixed-representation tuple spread refusal", err)
 	}
 }
 
@@ -47,9 +58,7 @@ func TestArgumentsLengthReadNeighbors(t *testing.T) {
 		"function sum(...items: number[]): number { return items.length; } console.log(`${sum(1, 2)}`);",
 		"function greet(name: string, greeting?: string): string { return `${greeting ?? 'hi'} ${name}`; } const run: (name: string) => string = greet; console.log(run('a'));",
 	} {
-		if _, err := lowerSource(t, source); err != nil {
-			t.Fatal(err)
-		}
+		lowersAndAgreesWithNode(t, source)
 	}
 }
 
@@ -87,4 +96,23 @@ func TestArgumentsLengthRefusalFixtures(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestArgumentsLengthReadKeepsReaderFact(t *testing.T) {
+	t.Parallel()
+	program := lowersAndAgreesWithNode(t, "function read(): number { return arguments.length; } console.log(`${read()}`);")
+	// Behavior on this zero-argument call cannot observe the hidden reader calling convention.
+	for _, function := range program.Functions {
+		if function.Name != "read" {
+			continue
+		}
+		if function.ArgumentsCount != 1 {
+			t.Fatalf("read: ArgumentsCount = %d, want 1", function.ArgumentsCount)
+		}
+		if !function.ReadsArguments {
+			t.Fatal("read: ArgumentsCount exists but ReadsArguments is false")
+		}
+		return
+	}
+	t.Fatal("lowering lost the read function")
 }

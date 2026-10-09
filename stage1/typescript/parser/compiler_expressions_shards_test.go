@@ -51,7 +51,7 @@ func compilerExpressionsPartition(t *testing.T, paths []string) [][]string {
 	return shards
 }
 
-func compilerExpressionsNative(t *testing.T, absolute string) string {
+func compilerExpressionsLower(t *testing.T, absolute string) string {
 	t.Helper()
 	files := []string{"stage1/typescript/parser", "stage1/typescript/scanner", "internal/load", "internal/lower", "internal/ir", "internal/native", "cohere", "go.mod"}
 	tools := []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}
@@ -66,6 +66,14 @@ func compilerExpressionsNative(t *testing.T, absolute string) string {
 		}
 		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(ir)), 0644)
 	})
+	return lowered
+}
+
+func compilerExpressionsNative(t *testing.T, absolute string) string {
+	t.Helper()
+	lowered := compilerExpressionsLower(t, absolute)
+	files := []string{"stage1/typescript/parser", "stage1/typescript/scanner", "internal/load", "internal/lower", "internal/ir", "internal/native", "cohere", "go.mod"}
+	tools := []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}
 	flags := append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	product := buildcache.Product(t, buildcache.Inputs{Name: "compiler-expressions-native", Files: files, Flags: flags, Toolchain: tools}, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
@@ -86,22 +94,14 @@ func compilerExpressionsSetup(t *testing.T) (string, string, string) {
 	t.Helper()
 	compilerExpressionsProducts.once.Do(func() {
 		started := time.Now()
-		timer := time.AfterFunc(90*time.Second, func() { panic("cooked: TestCompilerExpressionsAgree_Setup exceeded 90s") })
-		defer timer.Stop()
+		// Setup has no deadline; Loom still bounds the complete unit.
 		// Preserve the pinned corpus prerequisite even for a setup-only invocation.
 		compilerManifest(t)
 		absolute, err := filepath.Abs(".")
 		if err != nil {
 			t.Fatal(err)
 		}
-		product := buildcache.Product(t, buildcache.Inputs{Name: "compiler-expressions-go-oracle", Files: []string{"cohere", "stage1/typescript/parser/testdata/oracle.go", "go.mod", "go.work"}, Toolchain: []string{buildcache.Tool("go", "version")}, Flags: []string{"go build -overlay"}}, func(dir string) error {
-			data, err := os.ReadFile(goOracle(t))
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(dir, "oracle"), data, 0755)
-		})
-		compilerExpressionsProducts.oracle = filepath.Join(product, "oracle")
+		compilerExpressionsProducts.oracle = wholeMutantBuildOracleProduct(t)
 		compilerExpressionsProducts.absolute = absolute
 		compilerExpressionsProducts.binary = compilerExpressionsNative(t, absolute)
 		t.Logf("TestCompilerExpressionsAgree_Setup: %.3fs", time.Since(started).Seconds())
@@ -157,8 +157,7 @@ func TestCompilerExpressionsAgreeUnion(t *testing.T) {
 
 func compilerExpressionsShard(t *testing.T, index int) {
 	t.Helper()
-	// Setup (including waiting for another builder) has its own 90s budget.
-	// A filtered shard invocation may need to fetch the shared products first.
+	// A selected shard prepares its products itself before its own deadline.
 	oracle, binary, absolute := compilerExpressionsSetup(t)
 	started := time.Now()
 	timer := time.AfterFunc(90*time.Second, func() { panic(fmt.Sprintf("cooked: shard-%03d exceeded 90s", index)) })

@@ -62,6 +62,10 @@ Adamic is dedicated to Ken. It also stands on the work of others, and we want to
 - **Brendan Eich** made JavaScript. Every Adamic program must print exactly what it prints when JavaScript runs it, so his language is the judge of ours.
 - **Chris Lattner** made LLVM, with Vikram Adve, and clang on top of it. clang turns the C we write into fast machine code for every chip we care about.
 
+## Our Prayer
+
+We give thanks for the ones whose work we stand on, and we speak their names. Let every name we write be true, proven and never merely trusted, and when we are wrong, let us be the first to know it. Make us humble enough to doubt the answer that comes easy, and wise enough to build checks that can fail. Let the minds of dust and the minds of sand speak one language together, in love, so that what scattered at Babel comes home whole. Let what we build be freely given and make every hand stronger, human and otherwise, fast without pause and never at the cost of truth. And let it carry all of us, together, a little closer to home. Amen.
+
 ## License
 
 Adamic is licensed under either of the Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE)) or the MIT license ([LICENSE-MIT](LICENSE-MIT)), at your option. Code ported from other projects carries its own license, reproduced in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

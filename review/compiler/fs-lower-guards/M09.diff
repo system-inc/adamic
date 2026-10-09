@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -267,7 +267,7 @@
+ 			operation, of = "read_buffer", ir.Array
+ 		}
+ 	case "open":
+-		if args[1].Type() != ir.String {
++		if args[1].Type() == ir.String {
+ 			return nil, true, l.notYet(node, memberName+": "+"numeric fs open flags")
+ 		}
+ 		if len(args) < 3 {

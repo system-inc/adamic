@@ -78,8 +78,7 @@ func compositionSetup(t *testing.T) compositionProducts {
 }
 func buildCompositionProducts(t *testing.T) compositionProducts {
 	started := time.Now()
-	setupTimer := time.AfterFunc(90*time.Second, func() { panic("cooked: TestCompositionMatchesGo (setup) exceeded 90s") })
-	defer setupTimer.Stop()
+	// Shared setup has no deadline; the shard starts its clock after setup returns.
 	cases := compositionCases(t)
 	data, err := os.ReadFile(cases)
 	if err != nil {
@@ -88,34 +87,15 @@ func buildCompositionProducts(t *testing.T) compositionProducts {
 	lines := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")
 	shards := compositionPartition(t, lines)
 	oracle := compositionOracle(t, "css-composition-go-oracle", "testdata/compose_side_test.go", "internal/format/css/adamic_compose_side_test.go", "./internal/format/css")
-	source, _ := filepath.Abs("compose_main.ts")
-	inputs := buildcache.Inputs{Name: "css-composition-lowered", Files: []string{"stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers", "internal", "cohere", "go.mod", "go.work"}, Toolchain: []string{runtime.Version()}, Flags: []string{"C and JavaScript"}}
-	product := buildcache.Product(t, inputs, func(dir string) error {
-		program := lowered(t, source)
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
-	})
-	c, err := os.ReadFile(filepath.Join(product, "program.c"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs.Name = "css-composition-native"
-	inputs.Flags = append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
-	nativeProduct := buildcache.Product(t, inputs, func(dir string) error {
-		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true})
-	})
-	sanitized := filepath.Join(nativeProduct, "port")
+	source, product := compositionLoweredProduct(t)
+	sanitized := compositionNativeProduct(t)
 
-	setupTimer.Stop()
 	t.Logf("TestCompositionMatchesGo (setup): %.3fs", time.Since(started).Seconds())
 	return compositionProducts{lines: lines, shards: shards, source: source, product: product, sanitized: sanitized, oracle: oracle}
 }
 
 func compositionRunShard(t *testing.T, index int) {
-	// Waiting or building here belongs to the separately bounded setup unit.
+	// Prepare shared products once per process before starting this shard's clock.
 	state := compositionSetup(t)
 	started := time.Now()
 	timer := time.AfterFunc(90*time.Second, func() { panic("cooked: composition shard exceeded 90s") })
@@ -246,7 +226,7 @@ func compositionCases(t *testing.T) string {
 		t.Fatal(err)
 	}
 	oracle := compositionOracle(t, "css-composition-corpus-oracle", "testdata/composition_corpus_side_test.go", "internal/format/css/postcss/adamic_port_side_test.go", "./internal/format/css/postcss")
-	command := compositionCommand(t, oracle, "-test.timeout=90s", "-test.v", "-test.run=^TestAdamicPortCases$")
+	command := compositionSetupCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.run=^TestAdamicPortCases$")
 	command.Dir = filepath.Join(repo, "cohere", "internal", "format", "css", "postcss")
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := command.CombinedOutput(); err != nil {
@@ -362,6 +342,18 @@ func compositionCommand(t *testing.T, name string, arguments ...string) *exec.Cm
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	t.Cleanup(cancel)
+	return compositionCommandContext(ctx, name, arguments...)
+}
+
+// Setup retains process-group cancellation without a deadline of its own.
+func compositionSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithCancel(context.Background())
+	t.Cleanup(cancel)
+	return compositionCommandContext(ctx, name, arguments...)
+}
+
+func compositionCommandContext(ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	cmd := exec.CommandContext(ctx, name, arguments...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	cmd.Cancel = func() error {
@@ -456,7 +448,7 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 			return err
 		}
-		command := compositionCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)
+		command := compositionSetupCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(dir, "oracle"), packagePath)
 		command.Dir = filepath.Join(repo, "cohere")
 		output, err := command.CombinedOutput()
 		if err != nil {
@@ -465,4 +457,40 @@ func compositionOracle(t *testing.T, name, sidePath, overlayTarget, packagePath 
 		return nil
 	})
 	return filepath.Join(directory, "oracle")
+}
+
+func compositionInputs() buildcache.Inputs {
+	return buildcache.Inputs{Name: "css-composition-lowered", Files: []string{"stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers", "internal", "cohere", "go.mod", "go.work"}, Toolchain: []string{runtime.Version()}, Flags: []string{"C and JavaScript"}}
+}
+
+func compositionLoweredProduct(t *testing.T) (string, string) {
+	t.Helper()
+	source, _ := filepath.Abs("compose_main.ts")
+	inputs := compositionInputs()
+	product := buildcache.Product(t, inputs, func(dir string) error {
+		program := lowered(t, source)
+		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+	})
+	return source, product
+}
+
+func compositionNativeProduct(t *testing.T) string {
+	t.Helper()
+	_, product := compositionLoweredProduct(t)
+	c, err := os.ReadFile(filepath.Join(product, "program.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs := compositionInputs()
+	inputs.Name = "css-composition-native"
+	inputs.Flags = append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+	nativeProduct := buildcache.Product(t, inputs, func(dir string) error {
+		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true})
+	})
+	return filepath.Join(nativeProduct, "port")
+
 }

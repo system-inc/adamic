@@ -1,0 +1,11 @@
+--- a/cmd/adamic/tsgo.go
++++ b/cmd/adamic/tsgo.go
+@@ -26,7 +26,7 @@
+ 		case "--count":
+ 			options.Count = true
+ 		case "--sanitize":
+-			options.Sanitize = true
++			options.Sanitize = false
+ 		case "--tsgo":
+ 			index++
+ 			if index >= len(arguments) || archive != "" {

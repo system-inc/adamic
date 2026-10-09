@@ -1,0 +1,24 @@
+// a-check: checked
+// From src/compiler/visitorPublic.ts:624 (TypeScript 6.0.3, ed6e2975 adaptations).
+
+interface EntityName {readonly text: string;}
+interface QualifiedName {readonly left: EntityName; readonly right: EntityName;}
+function isEntityName(node: EntityName): boolean {return true;}
+function isIdentifier(node: EntityName): boolean {return true;}
+const Debug = {checkDefined(value:EntityName):EntityName {return value;}};
+function nodeVisitor(node: EntityName, visitor:number, test:(node:EntityName)=>boolean):EntityName {return {text:node.text.toUpperCase()};}
+const context = {factory: {updateQualifiedName(node:QualifiedName,left:EntityName,right:EntityName):QualifiedName {return {left,right};}}};
+const SyntaxKind = {QualifiedName:167} as const;
+type Context = typeof context;
+type NodeVisitor = typeof nodeVisitor;
+const visitEachChildTable = {
+ [SyntaxKind.QualifiedName]: function visitEachChildOfQualifiedName(node: QualifiedName, visitor: number, context: Context, _nodesVisitor: number, nodeVisitor: NodeVisitor, _tokenVisitor: number) {
+        return context.factory.updateQualifiedName(
+            node,
+            Debug.checkDefined(nodeVisitor(node.left, visitor, isEntityName)),
+            Debug.checkDefined(nodeVisitor(node.right, visitor, isIdentifier)),
+        );
+    }
+};
+const result = visitEachChildTable[SyntaxKind.QualifiedName]({left:{text:'a'},right:{text:'b'}},0,context,0,nodeVisitor,0);
+console.log(`${result.left.text}.${result.right.text}`);

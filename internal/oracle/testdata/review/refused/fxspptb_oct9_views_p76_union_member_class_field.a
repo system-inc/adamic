@@ -1,0 +1,15 @@
+// A wrong untagged union view whose member holds a class instance: the object holds a look-alike.
+class Owner {
+	readonly name: string;
+	constructor(name: string) {
+		this.name = name;
+	}
+}
+interface Left { readonly owner: Owner; }
+interface Right { readonly count: number; }
+interface Holder { readonly kind: 'Holder'; readonly value: Left | Right; }
+const inner = { owner: { name: 'fake' } };
+const raw = { kind: 'Holder' as const, value: inner };
+const base: { readonly kind: 'Holder' } = raw;
+const value = (base as Holder).value;
+console.log(`${value === inner}`);

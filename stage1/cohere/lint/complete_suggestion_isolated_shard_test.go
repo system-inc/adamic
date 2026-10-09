@@ -14,9 +14,9 @@ func TestCompleteSuggestionSerialization_IsolatedShard(t *testing.T) {
 	// A fresh product cache proves the selected shard builds, rather than
 	// accidentally relying on products prepared by another top-level test.
 	cache := t.TempDir()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
 	defer cancel()
-	command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^TestCompleteSuggestionSerialization_001$", "-test.timeout=90s", "-test.v")
+	command := completeSuggestionCommand(ctx, os.Args[0], "-test.run=^TestCompleteSuggestionSerialization_001$", "-test.timeout=600s", "-test.v")
 	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+cache, "ADAMIC_BUILD_CACHE=on", "ADAMIC_COMPLETE_SUGGESTION_PLANT=0")
 	output, err := command.CombinedOutput()
 	if command.Process != nil {

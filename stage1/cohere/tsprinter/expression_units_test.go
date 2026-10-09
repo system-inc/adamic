@@ -120,14 +120,13 @@ func expressionUnits(t *testing.T, path, want string, count int) (*corpusPlan, [
 		}
 	}
 	plan := &corpusPlan{labels: make([]string, len(cases))}
-	weights := make([]int, len(cases))
 	for i, item := range cases {
 		plan.labels[i] = fmt.Sprintf("case-%06d %s", i, item.Label)
-		weights[i] = len(rows[i])
 	}
 	directory := t.TempDir()
 	var outputs [][]byte
-	for number, indices := range assignCorpus(weights, count) {
+	partition := expressionGatePartition(t, cases, count)
+	for number, indices := range partition {
 		shard := corpusShard{indices: indices, text: filepath.Join(directory, fmt.Sprintf("shard-%03d.txt", number)), specs: filepath.Join(directory, fmt.Sprintf("shard-%03d.json", number))}
 		var protocol, expected bytes.Buffer
 		subset := make([]printerCase, 0, len(indices))

@@ -49,7 +49,7 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded retains the output guard and adds a hard 90-second group deadline.
+// bounded prepares a child without a flat deadline; childguard owns its process group.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
 	command, cancel := inlineCommand(name, arguments...)
