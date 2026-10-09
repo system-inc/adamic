@@ -1,0 +1,310 @@
+{
+  "sha": "0b03272dee2b3647051af0a53526f476204c7710",
+  "branch": "gate-mutant/binary-dies-partway",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "23a19b8b48662dfb6a19baa00b8efbb52ab5275e",
+  "base_name": "main",
+  "tools_sha": "e9b40db33cb9671f81a79c5c636b0e0d99e133cb",
+  "machine": {
+    "hostname": "Workshop",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 63.1,
+      "cores": 64
+    },
+    "first_failure": {
+      "load_1m": 63.1,
+      "cores": 64
+    },
+    "end": {
+      "load_1m": 63.1,
+      "cores": 64
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "d169e076c3b0ea2eb0062808650403e6c2212217",
+  "compiler_consumers_without_test_package": [
+    "stage3/drivers/parser/build-metrics/main.go",
+    "stage3/drivers/scanner/build-metrics.go"
+  ],
+  "compiler_dependency_map": {
+    "root": "/home/ahra/fast-gate/tools-4",
+    "path": "cloud/fast-gate/compiler-dependencies.json"
+  },
+  "selected_compiler_drivers": [],
+  "direct_packages": [
+    "github.com/system-inc/adamic/internal/corpusfiles"
+  ],
+  "reads": [
+    {
+      "line": 550,
+      "package": "stage1/cohere/gitignore",
+      "glob": "*",
+      "paths": [
+        "internal/corpusfiles/planted_watchdog_test.go"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {},
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "internal/corpusfiles/planted_watchdog_test.go"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/internal/corpusfiles",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore"
+  ],
+  "unowned_files": [],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/ahra/fast-gate/tools-4",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestConvertedPackageContracts",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestMissingAndEmptyRoots",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestSparseCheckoutCannotShrinkCorpus",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestDeterministicRootsPatternsAndMissingGit",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestProvisionedPrettierFixtures",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestPlantedWatchdog",
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestPlantedZAfter",
+      "status": "not run"
+    }
+  ],
+  "test_starts": [
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestPlantedZAfter",
+      "expected_seconds": 60,
+      "slots": 1,
+      "after_seconds": 0.734
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestConvertedPackageContracts",
+      "expected_seconds": 1.81248,
+      "slots": 1,
+      "after_seconds": 0.735
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestProvisionedPrettierFixtures",
+      "expected_seconds": 0.25,
+      "slots": 1,
+      "after_seconds": 0.736
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestDeterministicRootsPatternsAndMissingGit",
+      "expected_seconds": 0.14,
+      "slots": 1,
+      "after_seconds": 0.737
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestMissingAndEmptyRoots",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 0.738
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestSparseCheckoutCannotShrinkCorpus",
+      "expected_seconds": 0.12,
+      "slots": 1,
+      "after_seconds": 0.74
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestPlantedWatchdog",
+      "expected_seconds": 0.063,
+      "slots": 1,
+      "after_seconds": 0.744
+    }
+  ],
+  "undeclared_tools": [],
+  "split_tests": {
+    "github.com/system-inc/adamic/internal/corpusfiles": 7
+  },
+  "split_tally": {
+    "packages": 1,
+    "planned": 7,
+    "passed": 0,
+    "touched": 2
+  },
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "Workshop",
+    "cpus": 64,
+    "load": [
+      63.1,
+      49.2,
+      39.3
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "products_over_budget": [],
+  "units": [
+    {
+      "package": "github.com/system-inc/adamic/internal/corpusfiles",
+      "test": "TestPlantedWatchdog",
+      "seconds": 0.069,
+      "action": "fail",
+      "product": false
+    }
+  ],
+  "wall_seconds": 2.6,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "build": 1.0,
+    "smoke": 1.0,
+    "vet": 1.0,
+    "tests": 1.1
+  },
+  "pass": 0,
+  "fail": 1,
+  "failed_tests": [
+    "github.com/system-inc/adamic/internal/corpusfiles TestPlantedWatchdog"
+  ],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": {
+    "step": "tests",
+    "detail": "github.com/system-inc/adamic/internal/corpusfiles TestPlantedWatchdog\n=== RUN   TestPlantedWatchdog\n=== PAUSE TestPlantedWatchdog\n=== CONT  TestPlantedWatchdog\npanic: TestPlantedWatchdog: own work exceeded 90s\n\ngoroutine 17 [running]:\ngithub.com/system-inc/adamic/internal/corpusfiles.TestPlantedWatchdog.func1()\n\t/home/ahra/fast-gate/tree-4/internal/corpusfiles/planted_watchdog_test.go:14 +0x25\ncreated by time.goFunc\n\t/home/ahra/adamic-tools/go/src/time/sleep.go:182 +0x2d\n",
+    "after_seconds": 2.5,
+    "under_load": false
+  },
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "determinism",
+    "census"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "build": -9,
+    "determinism": -9,
+    "smoke": 1,
+    "vet": -9,
+    "tests": 1
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 7
+  },
+  "gate_kind": "fast",
+  "candidate": "a840ec0723dee3a596055f76146a36a44cc60b10",
+  "gated": "0b03272dee2b3647051af0a53526f476204c7710",
+  "merged_onto": "23a19b8b48662dfb6a19baa00b8efbb52ab5275e"
+}
