@@ -1,0 +1,16 @@
+TestDefaultTaggedInterfaceNeedsNoFlag 0 26.44
+TestDefaultTaggedInterfaceAdmission 0 26.98
+TestIteratorGapsAreExplicit 0 3.27
+TestIteratorViewsCannotEraseReceivers 0 3.06
+TestIteratorViewsCannotHideReturn 0 2.97
+TestLiteralMethodCapturesCannotMakeCycles 0 2.75
+TestInheritanceRefusesUnsoundOverrides 0 3.39
+TestLiteralMethodViewsDoNotLoseThis 0 3.49
+TestDestructuredMethodsCannotLoadOwnSlots 0 3.02
+TestRepresentedMethodReplacementIsNotYet 0 2.79
+TestIteratorDescriptorReasons 0 3.1
+TestGenericIteratorViewsPreserveNativeArguments 0 2.86
+TestUncheckableCastsStayRefused 0 3.88
+TestIteratorSymbolKeysAreNotStringKeys 0 2.89
+TestClassWrongOutputKeysRepair 0 3.26
+[('TestDefaultTaggedInterfaceNeedsNoFlag', 0, 0), ('TestIteratorGapsAreExplicit', 869, 1420), ('TestIteratorViewsCannotHideReturn', 139, 219), ('TestIteratorViewsCannotEraseReceivers', 68, 103), ('TestLiteralMethodCapturesCannotMakeCycles', 275, 416), ('TestLiteralMethodViewsDoNotLoseThis', 374, 580), ('TestRepresentedMethodReplacementIsNotYet', 60, 101), ('TestDestructuredMethodsCannotLoadOwnSlots', 266, 444), ('TestGenericIteratorViewsPreserveNativeArguments', 162, 234), ('TestIteratorSymbolKeysAreNotStringKeys', 7, 14)]

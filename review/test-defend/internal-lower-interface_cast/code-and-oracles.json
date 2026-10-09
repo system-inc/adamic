@@ -1,0 +1,62 @@
+[
+  {
+    "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "subsumer": "TestDefaultTaggedInterfaceAdmission",
+    "code_under_test": "Lower, interfaceCast/view/viewContract and checked field lowering",
+    "oracle": "Source Node stdout/stderr/exit compared with lowered JavaScript; external-run"
+  },
+  {
+    "test": "TestIteratorGapsAreExplicit",
+    "subsumer": "TestIteratorViewsCannotEraseReceivers",
+    "code_under_test": "Lower, planIteration, memberReceiver/memberResult, collectIteration",
+    "oracle": "Handwritten NotYet category only; self"
+  },
+  {
+    "test": "TestIteratorViewsCannotHideReturn",
+    "subsumer": "TestIteratorViewsCannotEraseReceivers",
+    "code_under_test": "Lower and planIteration hidden-close presence safeguard",
+    "oracle": "Handwritten NotYet category and hide-a-return substring in What; self"
+  },
+  {
+    "test": "TestIteratorViewsCannotEraseReceivers",
+    "subsumer": "TestIteratorViewsCannotHideReturn",
+    "code_under_test": "Lower, planIteration and memberConvention",
+    "oracle": "Handwritten NotYet category and receiver-convention substring in What; self"
+  },
+  {
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "subsumer": "TestInheritanceRefusesUnsoundOverrides",
+    "code_under_test": "Lower, objectMethod closure registration, findCycles and cycleFinder.reaches",
+    "oracle": "Handwritten Refused category and cycle substring in What; self"
+  },
+  {
+    "test": "TestLiteralMethodViewsDoNotLoseThis",
+    "subsumer": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "code_under_test": "Lower, objectMethod, callClosure and erasedMethodField",
+    "oracle": "Source Node stdout/stderr/exit compared with lowered JavaScript; external-run"
+  },
+  {
+    "test": "TestRepresentedMethodReplacementIsNotYet",
+    "subsumer": "TestIteratorDescriptorReasons",
+    "code_under_test": "Direct lowering.setProperty after declaration/statement preparation",
+    "oracle": "Handwritten NotYet category and replacing-a-represented-method substring in What; self"
+  },
+  {
+    "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "subsumer": "TestLiteralMethodViewsDoNotLoseThis",
+    "code_under_test": "Lower, destructureFrom, erasedMethodField and prototype refusal paths",
+    "oracle": "Handwritten acceptance of either Refused or NotYet; reason and fix unchecked; self"
+  },
+  {
+    "test": "TestGenericIteratorViewsPreserveNativeArguments",
+    "subsumer": "TestUncheckableCastsStayRefused",
+    "code_under_test": "Lower, classViewRefusal/nominalMismatch and nominalAncestor before iterator planning",
+    "oracle": "Handwritten Refused category and nominal-ancestry substring in What; self"
+  },
+  {
+    "test": "TestIteratorSymbolKeysAreNotStringKeys",
+    "subsumer": "TestClassWrongOutputKeysRepair",
+    "code_under_test": "Lower and objectKeys literal symbol-key guard",
+    "oracle": "Handwritten NotYet category and symbol-key-storage substring in What; self"
+  }
+]

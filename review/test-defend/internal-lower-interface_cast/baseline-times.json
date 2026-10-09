@@ -1,0 +1,43 @@
+[
+  {
+    "id": "npm-ci",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "seconds": 1.775209885003278,
+    "exit": 0
+  },
+  {
+    "id": "list",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./internal/lower/"
+    ],
+    "seconds": 17.623109141997702,
+    "exit": 0
+  },
+  {
+    "id": "baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ],
+    "seconds": 72.71806800099876,
+    "exit": 0
+  }
+]

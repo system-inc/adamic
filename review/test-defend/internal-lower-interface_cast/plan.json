@@ -1,0 +1,72 @@
+[
+  {
+    "id": "D01",
+    "test": "TestIteratorViewsCannotHideReturn",
+    "file": "internal/lower/iteration.go",
+    "old": "\"an iterator view that can hide a return method\"",
+    "new": "\"an iterator view with an omitted close method\"",
+    "kind": "change diagnostic constant",
+    "difference": "distinct hidden-close refusal path versus erased source receiver",
+    "line": 290
+  },
+  {
+    "id": "D02",
+    "test": "TestIteratorViewsCannotEraseReceivers",
+    "file": "internal/lower/iteration.go",
+    "old": "\"an iterable view that erases its method receiver convention\"",
+    "new": "\"an iterable view with a different method ABI\"",
+    "kind": "change diagnostic constant",
+    "difference": "source receiver mismatch path versus hidden-close presence",
+    "line": 265
+  },
+  {
+    "id": "D03",
+    "test": "TestRepresentedMethodReplacementIsNotYet",
+    "file": "internal/lower/class.go",
+    "old": "\"replacing a represented method at runtime\"",
+    "new": "\"writing a represented method at runtime\"",
+    "kind": "change diagnostic constant",
+    "difference": "direct setProperty safeguard; subsumer is refused earlier by iterator protocol planning",
+    "line": 418
+  },
+  {
+    "id": "D04",
+    "test": "TestIteratorSymbolKeysAreNotStringKeys",
+    "file": "internal/lower/class_features.go",
+    "old": "\"Object.keys on a literal with symbol-key storage\"",
+    "new": "\"Object.keys on a literal with a hidden symbol slot\"",
+    "kind": "change diagnostic constant",
+    "difference": "literal symbol-key guard; repaired subsumer passes a fresh plain object",
+    "line": 78
+  },
+  {
+    "id": "D05",
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "file": "internal/lower/iteration.go",
+    "old": "\tl.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node})",
+    "new": "",
+    "kind": "drop statement",
+    "difference": "literal-method closure registration and captured-cell cycle path, versus inherited class fields",
+    "line": 57
+  },
+  {
+    "id": "D06",
+    "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+    "file": "internal/lower/iteration_origin.go",
+    "old": "if isCallee(where) { // Calls carry the runtime closure's receiver convention.",
+    "new": "if true { // Calls carry the runtime closure's receiver convention.",
+    "kind": "change condition constant",
+    "difference": "allow receiver exception for non-call destructuring through callback view; subsumer only calls",
+    "line": 80
+  },
+  {
+    "id": "D07",
+    "test": "TestIteratorGapsAreExplicit",
+    "file": "internal/lower/iteration_consume.go",
+    "old": "} else if element != plan.element {",
+    "new": "} else if false && element != plan.element {",
+    "kind": "change condition constant",
+    "difference": "collection into optional-number array versus numeric iterator element, absent from receiver-erasure input",
+    "line": 47
+  }
+]

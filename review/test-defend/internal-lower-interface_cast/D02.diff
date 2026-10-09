@@ -1,0 +1,11 @@
+--- a/internal/lower/iteration.go
++++ b/internal/lower/iteration.go
+@@ -262,7 +262,7 @@
+ 			if !sourceKnown && l.iterationShapeFits(shape, source) {
+ 				actual := l.iteratorMember(shape)
+ 				if actual == nil || memberConvention(actual) != memberConvention(entry) {
+-					hazard = l.notYet(where, "an iterable view that erases its method receiver convention")
++					hazard = l.notYet(where, "an iterable view with a different method ABI")
+ 					return true
+ 				}
+ 			}
