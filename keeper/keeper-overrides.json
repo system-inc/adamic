@@ -30,5 +30,17 @@
  "u144 TestProduct_profile_controls_lowered": {
   "defense": "family-part",
   "keeper_note": "A product row: the build phase of its consumers, one family with its TestProduct_ siblings (brief v8). The defender disproved the audit's untrue: it fails under tsgo.go mutants. Not a deletion candidate on its own."
+ },
+ "u104 TestPortMatchesGoCohere agreement family": {
+  "defense": "defended",
+  "keeper_note": "Its only subsumer, the benchmark family, is gone from main (the 6,144 wrappers now run inside the agreement wrappers, du104.1). With no cover left it is the package's agreement guard."
+ },
+ "u104 TestPortMatchesGoCohere benchmark family": {
+  "defense": "gone",
+  "keeper_note": "No longer on main: folded into the agreement family (du104.1, fresh go test -list shows 4,278 tests)."
+ },
+ "u068 TestRegexCycleFixtureHasItsNativeDependency": {
+  "defense": "dead",
+  "keeper_note": "No assertion: the body only skips when nativeRegexSlicePresent() is false (regexp_cycle_test.go:37-42 at main), so on main it passes having checked nothing (du068.1: 0.0% production coverage, 0.017 s). Dead by construction: delete, or give it the check its name promises; owner review."
  }
 }

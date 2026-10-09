@@ -22,6 +22,21 @@ for reply in sorted(glob.glob(S + "/fanout/replies/du*.md"), key=os.path.getmtim
         row["unit"] = "u" + unit.group(1)
         row["defender_run"] = name
         ledger["%s %s" % (row["unit"], row["test"])] = row
+# A unique kill inside a bounded matrix (the whole package overran 90 s) keeps the row: defenders word it as defended
+# or as cannot-judge. Read the attempts, not the word: an attempt whose only failures are the row itself, or members
+# of its own family, defends it, marked bounded so the replay still settles package-wide uniqueness.
+def own(row, failed):
+    name, failed = row["test"].replace(" family", ""), failed.replace(" family", "")
+    return failed == name or failed.startswith(name + "_") or failed.startswith(name + "/")
+for row in ledger.values():
+    if row.get("defense") == "cannot-judge":
+        for attempt in row.get("attempts") or []:
+            failed = attempt.get("rows_failed") or []
+            if failed and all(own(row, name) for name in failed):
+                row["defender_defense"] = "cannot-judge"
+                row["defense"], row["bounded"] = "defended", True
+                row["unique_mutant"] = row.get("unique_mutant") or "%s %s" % (attempt.get("mutant"), attempt.get("file_line"))
+                break
 # A family's setup, numbered shard or product row (brief v8's family rule) is judged with its family, so a defender's
 # verdict on one alone never makes it a deletion candidate.
 for row in ledger.values():
