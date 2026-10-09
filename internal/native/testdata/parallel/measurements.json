@@ -1,0 +1,644 @@
+{
+  "load_before": [
+    0.6591796875,
+    2.02880859375,
+    1.85986328125
+  ],
+  "parallel": {
+    "million": {
+      "samples": {
+        "1": [
+          {
+            "map_seconds": 0.007993312,
+            "process_seconds": 0.015473679000024276
+          },
+          {
+            "map_seconds": 0.007136711,
+            "process_seconds": 0.013989383000080124
+          },
+          {
+            "map_seconds": 0.006964127,
+            "process_seconds": 0.013996123000652005
+          },
+          {
+            "map_seconds": 0.007387609,
+            "process_seconds": 0.015115346000129648
+          },
+          {
+            "map_seconds": 0.007981074,
+            "process_seconds": 0.016048550000050454
+          }
+        ],
+        "2": [
+          {
+            "map_seconds": 0.006875807,
+            "process_seconds": 0.014475008999397687
+          },
+          {
+            "map_seconds": 0.007141807,
+            "process_seconds": 0.014578851000806026
+          },
+          {
+            "map_seconds": 0.006472562,
+            "process_seconds": 0.0136997869994957
+          },
+          {
+            "map_seconds": 0.005260758,
+            "process_seconds": 0.012513325000327313
+          },
+          {
+            "map_seconds": 0.006447445,
+            "process_seconds": 0.01395754199984367
+          }
+        ],
+        "4": [
+          {
+            "map_seconds": 0.004616679,
+            "process_seconds": 0.012067392000062682
+          },
+          {
+            "map_seconds": 0.005957183,
+            "process_seconds": 0.014014650999342848
+          },
+          {
+            "map_seconds": 0.004626934,
+            "process_seconds": 0.011589198000365286
+          },
+          {
+            "map_seconds": 0.005481373,
+            "process_seconds": 0.012767313000040303
+          },
+          {
+            "map_seconds": 0.004822211,
+            "process_seconds": 0.012883483999758027
+          }
+        ]
+      },
+      "stdout": "million 1000000 1499998500000\n"
+    },
+    "strings": {
+      "samples": {
+        "1": [
+          {
+            "map_seconds": 0.141650418,
+            "process_seconds": 0.14359443100056524
+          },
+          {
+            "map_seconds": 0.146911045,
+            "process_seconds": 0.14888352999969356
+          },
+          {
+            "map_seconds": 0.147459904,
+            "process_seconds": 0.14946942400001717
+          },
+          {
+            "map_seconds": 0.142703527,
+            "process_seconds": 0.14458634099992196
+          },
+          {
+            "map_seconds": 0.145576178,
+            "process_seconds": 0.14753385200037883
+          }
+        ],
+        "2": [
+          {
+            "map_seconds": 0.086413747,
+            "process_seconds": 0.08884132300045167
+          },
+          {
+            "map_seconds": 0.082381909,
+            "process_seconds": 0.08454271200025687
+          },
+          {
+            "map_seconds": 0.077410938,
+            "process_seconds": 0.07977565999954095
+          },
+          {
+            "map_seconds": 0.082461601,
+            "process_seconds": 0.08485574199949042
+          },
+          {
+            "map_seconds": 0.076205833,
+            "process_seconds": 0.07877980300054332
+          }
+        ],
+        "4": [
+          {
+            "map_seconds": 0.044144014,
+            "process_seconds": 0.04625110699998913
+          },
+          {
+            "map_seconds": 0.051247395,
+            "process_seconds": 0.053479862999665784
+          },
+          {
+            "map_seconds": 0.054775732,
+            "process_seconds": 0.05699334700057079
+          },
+          {
+            "map_seconds": 0.049863537,
+            "process_seconds": 0.05243349099964689
+          },
+          {
+            "map_seconds": 0.044998141,
+            "process_seconds": 0.047506595000413654
+          }
+        ]
+      },
+      "stdout": "strings 32768 83886080\n"
+    }
+  },
+  "sequential": {
+    "nbody": {
+      "samples": {
+        "main": [
+          0.331452848000481,
+          0.36002150799959054,
+          0.37041576100000384,
+          0.3630162689996723,
+          0.3447563709996757
+        ],
+        "concurrency": [
+          0.34191953299978195,
+          0.3460142630001428,
+          0.36189022500002466,
+          0.34810534799999004,
+          0.3613465799999176
+        ]
+      },
+      "counts": "adamic: counts: allocations 8 frees 8 retains 7000019 releases 7000023 peak 7 regions 0",
+      "stdout": "-0.169075164\n-0.169086185\n"
+    },
+    "trees": {
+      "samples": {
+        "main": [
+          1.601756552000552,
+          1.6427253750007367,
+          1.7504957909995937,
+          1.702231754999957,
+          1.6403231989997948
+        ],
+        "concurrency": [
+          1.6485404609993566,
+          1.689262595999935,
+          1.7073446920003335,
+          1.6400275349997173,
+          1.636038808000194
+        ]
+      },
+      "counts": "adamic: counts: allocations 68332244 frees 1572900 retains 2 releases 44 peak 2097149 regions 66759344",
+      "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287\n"
+    },
+    "spectral_norm": {
+      "samples": {
+        "main": [
+          0.18504469899926335,
+          0.17011008900044544,
+          0.17281931800062011,
+          0.18233892799980822,
+          0.1710272990003432
+        ],
+        "concurrency": [
+          0.16516787399996247,
+          0.1707753730006516,
+          0.16355027299960057,
+          0.17271786400033307,
+          0.17222892900008446
+        ]
+      },
+      "counts": "adamic: counts: allocations 4 frees 4 retains 60 releases 67 peak 4 regions 0",
+      "stdout": "1.274224151\n"
+    },
+    "sort": {
+      "samples": {
+        "main": [
+          0.23620031400059815,
+          0.23064719500052888,
+          0.22771218799971393,
+          0.2329496869997456,
+          0.22463742899981298
+        ],
+        "concurrency": [
+          0.23329664700031572,
+          0.23455713400016975,
+          0.2385756970006696,
+          0.22927132400036498,
+          0.22435910000058357
+        ]
+      },
+      "counts": "adamic: counts: allocations 6 frees 6 retains 2000002 releases 2000010 peak 4 regions 0",
+      "stdout": "true 994240694.875\n"
+    },
+    "word_count": {
+      "samples": {
+        "main": [
+          0.16961823900055606,
+          0.1639269970000896,
+          0.16460903600000165,
+          0.17217974699997285,
+          0.15324015199985297
+        ],
+        "concurrency": [
+          0.1842466530006277,
+          0.1776583099999698,
+          0.17669472099987615,
+          0.16882678299953113,
+          0.16865215599955263
+        ]
+      },
+      "counts": "adamic: counts: allocations 1020129 frees 1020129 retains 6100372 releases 5100429 peak 1020006 regions 0",
+      "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090\n"
+    },
+    "tokenizer": {
+      "samples": {
+        "main": [
+          0.15959436600041954,
+          0.18175634000090213,
+          0.16920491800010495,
+          0.16087329599940858,
+          0.16030517899980623
+        ],
+        "concurrency": [
+          0.1665664010006367,
+          0.1729705939997075,
+          0.1713156860005256,
+          0.16690699299942935,
+          0.17849329899945587
+        ]
+      },
+      "counts": "adamic: counts: allocations 1194976 frees 1194976 retains 2405063 releases 2400020 peak 597494 regions 0",
+      "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve\n"
+    }
+  },
+  "load_after": [
+    0.81103515625,
+    1.91357421875,
+    1.82568359375
+  ],
+  "retain": {
+    "samples": {
+      "main": [
+        0.191782349,
+        0.190027604,
+        0.201956291,
+        0.195015183,
+        0.212141495
+      ],
+      "concurrency": [
+        0.247595879,
+        0.24086769,
+        0.263509605,
+        0.269361297,
+        0.254788176
+      ]
+    },
+    "load_before": [
+      0.826171875,
+      1.89794921875,
+      1.82080078125
+    ],
+    "load_after": [
+      0.826171875,
+      1.89794921875,
+      1.82080078125
+    ]
+  },
+  "weak_cost": {
+    "samples": {
+      "main": [
+        0.030993676,
+        0.033080399,
+        0.03324387,
+        0.028448678,
+        0.031218407
+      ],
+      "concurrency": [
+        0.031486061,
+        0.030953918,
+        0.034617192,
+        0.032070682,
+        0.034477426
+      ]
+    },
+    "load_before": [
+      0.853515625,
+      1.86767578125,
+      1.8115234375
+    ],
+    "load_after": [
+      0.853515625,
+      1.86767578125,
+      1.8115234375
+    ]
+  },
+  "weak_cost_held": {
+    "samples": {
+      "main": [
+        0.041485316,
+        0.044137702,
+        0.042027163,
+        0.040589105,
+        0.041268096
+      ],
+      "concurrency": [
+        0.174355446,
+        0.172442499,
+        0.173653112,
+        0.172482747,
+        0.175786033
+      ]
+    },
+    "load_before": [
+      0.86572265625,
+      1.85302734375,
+      1.80712890625
+    ],
+    "load_after": [
+      0.86572265625,
+      1.85302734375,
+      1.80712890625
+    ]
+  },
+  "environment": {
+    "date": "2026-10-06",
+    "architecture": "x86_64 Linux",
+    "nproc": 5,
+    "cpu_max": "400000 100000",
+    "quota_cores": 4,
+    "clang": "20.1.8",
+    "go": "1.27.1",
+    "node": "24.19.0",
+    "baseline": "5d4c801",
+    "runtime": "bfcecad"
+  },
+  "earlier_run": {
+    "load_before": "5.29 3.73 2.25 1/286 50536",
+    "parallel": {
+      "million": {
+        "samples": {
+          "1": [
+            {
+              "map_seconds": 0.007300542,
+              "process_seconds": 0.01442469500034349
+            },
+            {
+              "map_seconds": 0.006914343,
+              "process_seconds": 0.014069591999941622
+            },
+            {
+              "map_seconds": 0.007328123,
+              "process_seconds": 0.014221135999832768
+            },
+            {
+              "map_seconds": 0.007044616,
+              "process_seconds": 0.013569877000009
+            },
+            {
+              "map_seconds": 0.007074861,
+              "process_seconds": 0.01481424000030529
+            }
+          ],
+          "2": [
+            {
+              "map_seconds": 0.005098769,
+              "process_seconds": 0.012590122999426967
+            },
+            {
+              "map_seconds": 0.006686398,
+              "process_seconds": 0.013575465000030817
+            },
+            {
+              "map_seconds": 0.004612675,
+              "process_seconds": 0.011259705000156828
+            },
+            {
+              "map_seconds": 0.005433773,
+              "process_seconds": 0.014672631999928853
+            },
+            {
+              "map_seconds": 0.004880158,
+              "process_seconds": 0.012918698000248696
+            }
+          ],
+          "4": [
+            {
+              "map_seconds": 0.004865626,
+              "process_seconds": 0.011538663999999699
+            },
+            {
+              "map_seconds": 0.004637019,
+              "process_seconds": 0.01154926900017017
+            },
+            {
+              "map_seconds": 0.00399831,
+              "process_seconds": 0.010705820000111999
+            },
+            {
+              "map_seconds": 0.004490084,
+              "process_seconds": 0.011623110000073211
+            },
+            {
+              "map_seconds": 0.004269769,
+              "process_seconds": 0.011190803000317828
+            }
+          ]
+        },
+        "stdout": "million 1000000 1499998500000\n"
+      },
+      "strings": {
+        "samples": {
+          "1": [
+            {
+              "map_seconds": 0.144177866,
+              "process_seconds": 0.14589016899935814
+            },
+            {
+              "map_seconds": 0.143918494,
+              "process_seconds": 0.14580940999985614
+            },
+            {
+              "map_seconds": 0.149535779,
+              "process_seconds": 0.15141663999929733
+            },
+            {
+              "map_seconds": 0.143456103,
+              "process_seconds": 0.14531357000032585
+            },
+            {
+              "map_seconds": 0.141727057,
+              "process_seconds": 0.14380504800010385
+            }
+          ],
+          "2": [
+            {
+              "map_seconds": 0.087030431,
+              "process_seconds": 0.08929150099993421
+            },
+            {
+              "map_seconds": 0.09529152,
+              "process_seconds": 0.09759415200005606
+            },
+            {
+              "map_seconds": 0.072984352,
+              "process_seconds": 0.07502204299998994
+            },
+            {
+              "map_seconds": 0.092828883,
+              "process_seconds": 0.09483195299981162
+            },
+            {
+              "map_seconds": 0.078342214,
+              "process_seconds": 0.08043435499985208
+            }
+          ],
+          "4": [
+            {
+              "map_seconds": 0.042548853,
+              "process_seconds": 0.04475496200029738
+            },
+            {
+              "map_seconds": 0.053059524,
+              "process_seconds": 0.05540263500006404
+            },
+            {
+              "map_seconds": 0.045793732,
+              "process_seconds": 0.04806275299961271
+            },
+            {
+              "map_seconds": 0.048515962,
+              "process_seconds": 0.05062161299974832
+            },
+            {
+              "map_seconds": 0.046594802,
+              "process_seconds": 0.04886992299998383
+            }
+          ]
+        },
+        "stdout": "strings 32768 83886080\n"
+      }
+    },
+    "sequential": {
+      "nbody": {
+        "samples": {
+          "main": [
+            0.3777678330006893,
+            0.3518632479999724,
+            0.3530788580001172,
+            0.3376504139996541,
+            0.35515030399983516
+          ],
+          "concurrency": [
+            0.39213578599992616,
+            0.337064265000663,
+            0.366245505999359,
+            0.34511775100054365,
+            0.34982145599951764
+          ]
+        },
+        "counts": "adamic: counts: allocations 8 frees 8 retains 7000019 releases 7000023 peak 7 regions 0",
+        "stdout": "-0.169075164\n-0.169086185\n"
+      },
+      "trees": {
+        "samples": {
+          "main": [
+            1.6576591880002525,
+            1.5284110710008463,
+            1.5878392640006496,
+            1.7262911730003907,
+            1.872718624999834
+          ],
+          "concurrency": [
+            1.6526441590003742,
+            1.6276809399996637,
+            1.563791448000302,
+            1.5493657950000852,
+            1.760917180999968
+          ]
+        },
+        "counts": "adamic: counts: allocations 68332244 frees 1572900 retains 2 releases 44 peak 2097149 regions 66759344",
+        "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287\n"
+      },
+      "spectral_norm": {
+        "samples": {
+          "main": [
+            0.14931302399963897,
+            0.16404987099940627,
+            0.1604727610001646,
+            0.15774535499986087,
+            0.16009131000009802
+          ],
+          "concurrency": [
+            0.1749039280002762,
+            0.16938032599955477,
+            0.16319163699972705,
+            0.16568576899953769,
+            0.1686066819993357
+          ]
+        },
+        "counts": "adamic: counts: allocations 4 frees 4 retains 60 releases 67 peak 4 regions 0",
+        "stdout": "1.274224151\n"
+      },
+      "sort": {
+        "samples": {
+          "main": [
+            0.2206311990003087,
+            0.23673519599924475,
+            0.22067228899959446,
+            0.23111131899986503,
+            0.21928046999983053
+          ],
+          "concurrency": [
+            0.23589486299988494,
+            0.23314525400019193,
+            0.23482914399937727,
+            0.23237702700043883,
+            0.25241471600020304
+          ]
+        },
+        "counts": "adamic: counts: allocations 6 frees 6 retains 2000002 releases 2000010 peak 4 regions 0",
+        "stdout": "true 994240694.875\n"
+      },
+      "word_count": {
+        "samples": {
+          "main": [
+            0.16943899299985787,
+            0.16469656199933524,
+            0.16182081700026174,
+            0.16208236199963721,
+            0.16857672200058005
+          ],
+          "concurrency": [
+            0.17687391599974944,
+            0.17223038300016924,
+            0.16544153500035463,
+            0.1754296989993236,
+            0.16838488500070525
+          ]
+        },
+        "counts": "adamic: counts: allocations 1020129 frees 1020129 retains 6100372 releases 5100429 peak 1020006 regions 0",
+        "stdout": "21 distinct words\nvi 204856\nka 201599\nsu 198355\nto 197411\nze 191090\n"
+      },
+      "tokenizer": {
+        "samples": {
+          "main": [
+            0.17201803999978438,
+            0.17271126600007847,
+            0.15921612100009952,
+            0.16783575600038603,
+            0.16811452099955204
+          ],
+          "concurrency": [
+            0.17443621199981862,
+            0.1605667909998374,
+            0.1671939799998654,
+            0.1810633869999947,
+            0.17518012300024566
+          ]
+        },
+        "counts": "adamic: counts: allocations 1194976 frees 1194976 retains 2405063 releases 2400020 peak 597494 regions 0",
+        "stdout": "3522747 code units, 597479 lines: 1 identifiers, 597482 numbers summing to 29882003030, 2517 symbols, longest na\u00efve\n"
+      }
+    },
+    "load_after": "3.39 3.42 2.20 1/284 50735"
+  }
+}

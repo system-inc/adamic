@@ -259,7 +259,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		converted := e.program.CheckedFields[statement.Name] && statement.Value.Type() <= ir.Boolean
 		if converted {
-			e.line("if (adamic_object_field_types(%s)[%s.index] == 10) {", object, cache)
+			e.line("if (adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] == 10) {", object, object, slot)
 			boxed := fmt.Sprintf("adamic_box_number(%s)", value)
 			if statement.Value.Type() == ir.Boolean {
 				boxed = fmt.Sprintf("(%s ? &adamic_box_true : &adamic_box_false)", value)
@@ -276,7 +276,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("%s->reference = %s;", slot, keptValue)
 			e.line("if (%s != NULL) adamic_release(%s);", old, old)
 		} else if (statement.WriteCheck != "" || e.program.CheckedFields[statement.Name]) && (statement.Value.Type() == ir.Boolean || statement.Value.Type() == ir.MaybeBoolean) {
-			actual := fmt.Sprintf("adamic_object_field_types(%s)[%s.index]", object, cache)
+			actual := fmt.Sprintf("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)]", object, object, slot)
 			plain, packed := value, fmt.Sprintf("adamic_maybe_boolean_pack((adamic_maybe_boolean){true, %s})", value)
 			if statement.Value.Type() == ir.MaybeBoolean {
 				plain, packed = "("+value+").boolean", slotted(ir.MaybeBoolean, value)
@@ -287,7 +287,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		// Checked boolean stores retain the actual slot representation.
 		if e.fieldTypesNeeded() && !((statement.WriteCheck != "" || e.program.CheckedFields[statement.Name]) && (statement.Value.Type() == ir.Boolean || statement.Value.Type() == ir.MaybeBoolean)) {
-			e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, statement.Value.Type())
+			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, statement.Value.Type())
 		}
 		if converted {
 			e.line("}")

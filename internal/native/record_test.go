@@ -174,7 +174,15 @@ func recordMutant(t *testing.T, file, before, after string) string {
 		t.Fatal(err)
 	}
 	flags := Flags(Options{Sanitize: true, Count: true})
-	library, err := cachedRuntime(files, flags, compiler, "record mutant", filepath.Join(directory, "cache"))
+	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	if err != nil {
+		t.Fatal(err)
+	}
+	cacheDirectory, err := os.UserCacheDir()
+	if err != nil {
+		t.Fatal(err)
+	}
+	library, err := cachedRuntime(files, flags, compiler, string(version), filepath.Join(cacheDirectory, "adamic", "record-mutants"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -185,24 +193,40 @@ func recordMutant(t *testing.T, file, before, after string) string {
 	arguments := append(flags, "-I", filepath.Dir(library), "-o", binary, source)
 	arguments = append(arguments, RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
-	if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	cache, err := newTestBuildCache(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := exec.Command(compiler, arguments...)
+	command.Dir = repository
+	if output, err := cache.Command(command, directory); err != nil {
 		t.Fatalf("mutant must compile: %v\n%s", err, output)
 	}
 	return binary
 }
 
+var recordMutationCases = []struct {
+	name, file, before, after, mode, caught string
+}{
+	{"indices-in-insertion-order", "record.c", "qsort(indices, count, sizeof *indices, compare_indices);", "(void)compare_indices;", "semantics", "Node"},
+	{"uint32-max-as-index", "record.c", "number >= UINT32_MAX", "number > UINT32_MAX", "semantics", "Node"},
+	{"deleted-key-iterated", "record.c", "if (slot != NULL) {\n\t\t\t*key = candidate;\n\t\t\t*value = *slot;", "if (true) {\n\t\t\t*key = candidate;\n\t\t\t*value = slot == NULL ? (adamic_value){.number = 0} : *slot;", "iteration", "Node"},
+	{"overwrite-key-leaked", "map.c", "adamic_release(key.reference);", "(void)key;", "references", "LeakSanitizer"},
+	{"stored-key-freed", "record.c", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);\n\tadamic_release(key);", "semantics", "AddressSanitizer: heap-use-after-free"},
+	{"own-slot-null-read", "record.c", "return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "adamic_value *missing = NULL;\n\tvolatile double observed = missing->number;\n\t(void)observed;\n\treturn adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "prototypes", "runtime error: member access within null pointer"},
+}
+
 func TestRecordMutants(t *testing.T) {
 	t.Parallel()
-	for _, mutant := range []struct {
-		name, file, before, after, mode, caught string
-	}{
-		{"indices-in-insertion-order", "record.c", "qsort(indices, count, sizeof *indices, compare_indices);", "(void)compare_indices;", "semantics", "Node"},
-		{"uint32-max-as-index", "record.c", "number >= UINT32_MAX", "number > UINT32_MAX", "semantics", "Node"},
-		{"deleted-key-iterated", "record.c", "if (slot != NULL) {\n\t\t\t*key = candidate;\n\t\t\t*value = *slot;", "if (true) {\n\t\t\t*key = candidate;\n\t\t\t*value = slot == NULL ? (adamic_value){.number = 0} : *slot;", "iteration", "Node"},
-		{"overwrite-key-leaked", "map.c", "adamic_release(key.reference);", "(void)key;", "references", "LeakSanitizer"},
-		{"stored-key-freed", "record.c", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);\n\tadamic_release(key);", "semantics", "AddressSanitizer: heap-use-after-free"},
-		{"own-slot-null-read", "record.c", "return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "adamic_value *missing = NULL;\n\tvolatile double observed = missing->number;\n\t(void)observed;\n\treturn adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "prototypes", "runtime error: member access within null pointer"},
-	} {
+	shard := currentTestShard(t)
+	for index, mutant := range recordMutationCases {
+		if !shard.owns(index) {
+			continue
+		}
 		t.Run(mutant.name, func(t *testing.T) {
 			binary := recordMutant(t, mutant.file, mutant.before, mutant.after)
 			stdout, stderr, err := recordRun(binary, mutant.mode)

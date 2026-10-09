@@ -39,7 +39,7 @@ const adamicCheckValue = (contract, value, kind, sourceType, expression) => {
 };
 const adamicContractResult = (object, fields, expression) => { for (const [name, contract] of Object.entries(fields)) { const value = adamicReadField(object, name, expression + "." + name); const kind = adamicFieldRepresentations.get(object)?.[name]; adamicCheckValue(contract, value, kind, 0, expression + "." + name); } return object; };
 const adamicCheckedWrite = (object, name, value, kind, sourceType, expression) => {
- const contract = Object.hasOwn(object, name) && adamicFieldContracts.get(object)?.[name];
+ const contract = adamicFieldContracts.get(object)?.[name];
  adamicCheckValue(contract, value, kind, sourceType, expression);
  adamicWriteField(object, name, value);
 };

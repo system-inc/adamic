@@ -87,7 +87,7 @@ func (e *emitter) contractResult(expression ir.ContractResult) string {
 		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_field_contract %s = %s;", name, declaration))
 		slot, cache := e.temporary(), e.cache()
 		e.line("adamic_value *%s = adamic_object_read(%s, %s, &%s, %s);", slot, object, cString(field.Name), cache, cString(expression.Expression+"."+field.Name))
-		e.line("adamic_check_contract(&%s, adamic_object_field_types(%s)[%s.index], *%s, 0, %s);", name, object, cache, slot, cString(expression.Expression+"."+field.Name))
+		e.line("adamic_check_contract(&%s, adamic_object_field_types(%s)[adamic_slot_index(%s, %s)], *%s, 0, %s);", name, object, object, slot, slot, cString(expression.Expression+"."+field.Name))
 	}
 	return object
 }

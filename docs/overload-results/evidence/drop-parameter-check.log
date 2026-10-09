@@ -1,0 +1,10 @@
+=== RUN   TestOverloadResultsLiarStops
+=== PAUSE TestOverloadResultsLiarStops
+=== CONT  TestOverloadResultsLiarStops
+=== RUN   TestOverloadResultsLiarStops/parameter-liar
+    overload_results_test.go:88: /workspace/adamic-tools/bin/node: <nil>, stdout "before\nimplementation\nundefined\n" stderr ""
+--- FAIL: TestOverloadResultsLiarStops (1.45s)
+    --- FAIL: TestOverloadResultsLiarStops/parameter-liar (1.45s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.477s
+FAIL

@@ -1,0 +1,92 @@
+[
+  {
+    "label": "01",
+    "command": [
+      "/tmp/overload-groups-c68-replay",
+      "-project",
+      "/tmp/overload-results-adapted/src/compiler",
+      "-where",
+      "/tmp/overload-results-adapted/src/compiler/transformers/declarations.ts:619:54",
+      "-kind",
+      "Refused",
+      "-reason",
+      "overload 1 of visitBindingElement parameter elem cannot be served by implementation parameter elem"
+    ],
+    "exit": 1
+  },
+  {
+    "label": "05",
+    "command": [
+      "/tmp/overload-groups-c68-replay",
+      "-project",
+      "/tmp/overload-results-adapted/src/compiler",
+      "-where",
+      "/tmp/overload-results-adapted/src/compiler/visitorPublic.ts:123:5",
+      "-kind",
+      "Refused",
+      "-reason",
+      "overload 1 of visitNode parameter node cannot be served by implementation parameter node"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "05-optional",
+    "command": [
+      "/tmp/overload-groups-c68-replay",
+      "-project",
+      "/tmp/overload-results-adapted/src/compiler",
+      "-where",
+      "/tmp/overload-results-adapted/src/compiler/visitorPublic.ts:151:5",
+      "-kind",
+      "NotYet",
+      "-reason",
+      "a value of type ((node: Node) => boolean) | undefined"
+    ],
+    "exit": 1
+  },
+  {
+    "label": "06",
+    "command": [
+      "/tmp/overload-groups-c68-replay",
+      "-project",
+      "/tmp/overload-results-adapted/src/compiler",
+      "-where",
+      "/tmp/overload-results-adapted/src/compiler/visitorPublic.ts:196:5",
+      "-kind",
+      "Refused",
+      "-reason",
+      "overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "13",
+    "command": [
+      "/tmp/overload-groups-c68-replay",
+      "-project",
+      "/tmp/overload-results-adapted/src/compiler",
+      "-where",
+      "/tmp/overload-results-adapted/src/compiler/transformers/es2017.ts:736:5",
+      "-kind",
+      "Refused",
+      "-reason",
+      "overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody"
+    ],
+    "exit": 0
+  },
+  {
+    "label": "14",
+    "command": [
+      "/tmp/overload-groups-c68-replay",
+      "-project",
+      "/tmp/overload-results-adapted/src/compiler",
+      "-where",
+      "/tmp/overload-results-adapted/src/compiler/utilities.ts:11320:5",
+      "-kind",
+      "Refused",
+      "-reason",
+      "overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined>"
+    ],
+    "exit": 0
+  }
+]

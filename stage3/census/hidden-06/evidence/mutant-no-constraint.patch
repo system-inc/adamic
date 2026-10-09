@@ -1,0 +1,11 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -64,7 +64,7 @@
+ 		if substituted, isKnown := l.substitution[proven]; isKnown {
+ 			return substituted, true
+ 		}
+-		constraint := l.checker.GetBaseConstraintOfType(proven)
++		constraint := proven
+ 		if constraint == nil || constraint == proven || constraint.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive|checker.TypeFlagsTypeParameter) != 0 {
+ 			return 0, false
+ 		}

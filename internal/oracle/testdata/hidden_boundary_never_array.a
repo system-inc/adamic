@@ -1,0 +1,2 @@
+const items: never[] = [];
+console.log(`${items.length}`);

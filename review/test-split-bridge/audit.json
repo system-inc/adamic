@@ -1,0 +1,493 @@
+{
+  "before": [
+    {
+      "package": "bridge/tsgo",
+      "test": "TestBridge",
+      "seconds": 207.15,
+      "invocation_seconds": 207.157,
+      "wall_seconds": 209.02034850899872,
+      "action": "pass",
+      "exit": 0,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-run",
+        "^TestBridge$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=30m"
+      ],
+      "log": "/tmp/test-split-bridge/before/bridge-tsgo-TestBridge.jsonl"
+    },
+    {
+      "package": "bridge/tsgo",
+      "test": "TestTSGoRequiresLink",
+      "seconds": 0.04,
+      "invocation_seconds": 0.055,
+      "wall_seconds": 1.9120989139992162,
+      "action": "pass",
+      "exit": 0,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-run",
+        "^TestTSGoRequiresLink$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=30m"
+      ],
+      "log": "/tmp/test-split-bridge/before/bridge-tsgo-TestTSGoRequiresLink.jsonl"
+    },
+    {
+      "package": "bridge/tsgo/checker",
+      "test": "TestFactEncoding",
+      "seconds": 0,
+      "invocation_seconds": 0.004,
+      "wall_seconds": 1.2474916400024085,
+      "action": "pass",
+      "exit": 0,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo/checker",
+        "-json",
+        "-run",
+        "^TestFactEncoding$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=30m"
+      ],
+      "log": "/tmp/test-split-bridge/before/bridge-tsgo-checker-TestFactEncoding.jsonl"
+    },
+    {
+      "package": "bridge/tsgo/checker",
+      "test": "TestShapeAndNameFacts",
+      "seconds": 0.01,
+      "invocation_seconds": 0.015,
+      "wall_seconds": 1.243080252999789,
+      "action": "pass",
+      "exit": 0,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo/checker",
+        "-json",
+        "-run",
+        "^TestShapeAndNameFacts$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=30m"
+      ],
+      "log": "/tmp/test-split-bridge/before/bridge-tsgo-checker-TestShapeAndNameFacts.jsonl"
+    },
+    {
+      "package": "bridge/tsgo/checker",
+      "test": "TestExactIndexMatchesCompilerNodes",
+      "seconds": 0.05,
+      "invocation_seconds": 0.06,
+      "wall_seconds": 1.3049273020005785,
+      "action": "pass",
+      "exit": 0,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo/checker",
+        "-json",
+        "-run",
+        "^TestExactIndexMatchesCompilerNodes$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=30m"
+      ],
+      "log": "/tmp/test-split-bridge/before/bridge-tsgo-checker-TestExactIndexMatchesCompilerNodes.jsonl"
+    },
+    {
+      "package": "bridge/tsgo/checker",
+      "test": "TestAdamicRootKeepsConfigDeclarations",
+      "seconds": 0.05,
+      "invocation_seconds": 0.054,
+      "wall_seconds": 1.3018302480013517,
+      "action": "pass",
+      "exit": 0,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo/checker",
+        "-json",
+        "-run",
+        "^TestAdamicRootKeepsConfigDeclarations$",
+        "-count=1",
+        "-parallel=4",
+        "-timeout=30m"
+      ],
+      "log": "/tmp/test-split-bridge/before/bridge-tsgo-checker-TestAdamicRootKeepsConfigDeclarations.jsonl"
+    }
+  ],
+  "modes": {
+    "after": {
+      "passed": 23,
+      "skipped": 20,
+      "pieces": 16,
+      "query_positions": 162,
+      "five_analysis_query_positions": 810,
+      "oracle_bytes": 3261,
+      "region_result": "6; adamic: counts: allocations 9 frees 8 retains 5 releases 13 peak 8 regions 1",
+      "max_test_seconds": 0.17,
+      "max_invocation_seconds": 1.994,
+      "slowest_bridge_piece": {
+        "package": "bridge/tsgo",
+        "test": "TestBridgeRegion",
+        "seconds": 0.17,
+        "invocation_seconds": 1.994,
+        "wall_seconds": 3.8396681160011212,
+        "action": "pass",
+        "exit": 0,
+        "command": [
+          "go",
+          "test",
+          "./bridge/tsgo",
+          "-json",
+          "-run",
+          "^TestBridgeRegion$",
+          "-count=1",
+          "-parallel=4",
+          "-timeout=30s"
+        ],
+        "log": "/tmp/test-split-bridge/after/bridge-tsgo-TestBridgeRegion.jsonl"
+      },
+      "before_seconds": 207.15
+    },
+    "after-corpus": {
+      "passed": 38,
+      "skipped": 5,
+      "pieces": 31,
+      "query_positions": 1600,
+      "five_analysis_query_positions": 8000,
+      "oracle_bytes": 54982,
+      "region_result": "6; adamic: counts: allocations 9 frees 8 retains 5 releases 13 peak 8 regions 1",
+      "max_test_seconds": 1.26,
+      "max_invocation_seconds": 3.283,
+      "slowest_bridge_piece": {
+        "package": "bridge/tsgo",
+        "test": "TestBridgeTimingRound1Parser",
+        "seconds": 1.15,
+        "invocation_seconds": 3.283,
+        "wall_seconds": 5.178173009000602,
+        "action": "pass",
+        "exit": 0,
+        "command": [
+          "go",
+          "test",
+          "./bridge/tsgo",
+          "-json",
+          "-run",
+          "^TestBridgeTimingRound1Parser$",
+          "-count=1",
+          "-parallel=4",
+          "-timeout=30s"
+        ],
+        "log": "/tmp/test-split-bridge/after-corpus/bridge-tsgo-TestBridgeTimingRound1Parser.jsonl"
+      },
+      "before_seconds": 56.26
+    }
+  },
+  "mutants": [
+    {
+      "name": "changed-native-query-0",
+      "shard": "0/4",
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/changed-native-query-0-overlay.json",
+        "-run",
+        "^TestBridge",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 0,
+      "failed": [],
+      "passed": 6,
+      "skipped": 32,
+      "catcher": "PASS",
+      "log": "/tmp/test-split-bridge/mutants/changed-native-query-0.jsonl"
+    },
+    {
+      "name": "changed-native-query-1",
+      "shard": "1/4",
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/changed-native-query-1-overlay.json",
+        "-run",
+        "^TestBridge",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 0,
+      "failed": [],
+      "passed": 6,
+      "skipped": 32,
+      "catcher": "PASS",
+      "log": "/tmp/test-split-bridge/mutants/changed-native-query-1.jsonl"
+    },
+    {
+      "name": "changed-native-query-2",
+      "shard": "2/4",
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/changed-native-query-2-overlay.json",
+        "-run",
+        "^TestBridge",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 0,
+      "failed": [],
+      "passed": 6,
+      "skipped": 32,
+      "catcher": "PASS",
+      "log": "/tmp/test-split-bridge/mutants/changed-native-query-2.jsonl"
+    },
+    {
+      "name": "changed-native-query-3",
+      "shard": "3/4",
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/changed-native-query-3-overlay.json",
+        "-run",
+        "^TestBridge",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 1,
+      "failed": [
+        "TestBridgeOracleSample"
+      ],
+      "passed": 5,
+      "skipped": 32,
+      "catcher": "native oracle mismatch",
+      "log": "/tmp/test-split-bridge/mutants/changed-native-query-3.jsonl"
+    },
+    {
+      "name": "missing-piece",
+      "shard": null,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/missing-piece-overlay.json",
+        "-run",
+        "TestBridgeUnitsCoverEveryPiece",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 1,
+      "failed": [
+        "TestBridgeUnitsCoverEveryPiece"
+      ],
+      "passed": 0,
+      "skipped": 0,
+      "catcher": "bridge coverage count",
+      "log": "/tmp/test-split-bridge/mutants/missing-piece.jsonl"
+    },
+    {
+      "name": "missing-query",
+      "shard": null,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/missing-query-overlay.json",
+        "-run",
+        "TestBridgeUnitsCoverEveryPiece",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 1,
+      "failed": [
+        "TestBridgeUnitsCoverEveryPiece"
+      ],
+      "passed": 0,
+      "skipped": 0,
+      "catcher": "query coverage count",
+      "log": "/tmp/test-split-bridge/mutants/missing-query.jsonl"
+    },
+    {
+      "name": "drop-shard-filter",
+      "shard": null,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/drop-shard-filter-overlay.json",
+        "-run",
+        "TestBridgeUnitsCoverEveryPiece",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 1,
+      "failed": [
+        "TestBridgeUnitsCoverEveryPiece"
+      ],
+      "passed": 0,
+      "skipped": 0,
+      "catcher": "shard coverage",
+      "log": "/tmp/test-split-bridge/mutants/drop-shard-filter.jsonl"
+    },
+    {
+      "name": "accept-corrupt-product",
+      "shard": null,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/accept-corrupt-product-overlay.json",
+        "-run",
+        "TestBridgeProductCacheIsVerified",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 1,
+      "failed": [
+        "TestBridgeProductCacheIsVerified"
+      ],
+      "passed": 0,
+      "skipped": 0,
+      "catcher": "corrupt product was accepted",
+      "log": "/tmp/test-split-bridge/mutants/accept-corrupt-product.jsonl"
+    },
+    {
+      "name": "accept-extra-product",
+      "shard": null,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/accept-extra-product-overlay.json",
+        "-run",
+        "TestBridgeProductCacheIsVerified",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 1,
+      "failed": [
+        "TestBridgeProductCacheIsVerified"
+      ],
+      "passed": 0,
+      "skipped": 0,
+      "catcher": "wrong product count was accepted",
+      "log": "/tmp/test-split-bridge/mutants/accept-extra-product.jsonl"
+    },
+    {
+      "name": "rebuild-product",
+      "shard": null,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/rebuild-product-overlay.json",
+        "-run",
+        "TestBridgeProductCacheIsVerified",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 1,
+      "failed": [
+        "TestBridgeProductCacheIsVerified"
+      ],
+      "passed": 0,
+      "skipped": 0,
+      "catcher": "product was rebuilt",
+      "log": "/tmp/test-split-bridge/mutants/rebuild-product.jsonl"
+    },
+    {
+      "name": "over-budget",
+      "shard": null,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/over-budget-overlay.json",
+        "-run",
+        "TestBridgeABI",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 1,
+      "failed": [
+        "TestBridgeABI"
+      ],
+      "passed": 0,
+      "skipped": 0,
+      "catcher": "bridge unit exceeded 30 seconds",
+      "log": "/tmp/test-split-bridge/mutants/over-budget.jsonl"
+    },
+    {
+      "name": "poison-build-callback",
+      "shard": null,
+      "command": [
+        "go",
+        "test",
+        "./bridge/tsgo",
+        "-json",
+        "-overlay=/tmp/test-split-bridge/mutants/poison-build-callback-overlay.json",
+        "-run",
+        "^TestBridge",
+        "-count=1",
+        "-timeout=30s"
+      ],
+      "exit": 0,
+      "failed": [],
+      "passed": 18,
+      "skipped": 20,
+      "catcher": "PASS",
+      "log": "/tmp/test-split-bridge/mutants/poison-build-callback.jsonl"
+    }
+  ],
+  "products": {
+    "key": "68ae6a6782cdc60bed1d9bfa02a06de7ed4027ccce7a460f9a4acc928d8b6654",
+    "directory": "/home/agent/.cache/adamic-bridge-test-products/68ae6a6782cdc60bed1d9bfa02a06de7ed4027ccce7a460f9a4acc928d8b6654",
+    "hashes": {
+      "api": "d51663a1b3a637902c349884c1474c3344519bbff6bbf81fcf650fb397ac812d",
+      "healthy-region": "b1fc121adf52b3955c0b64556fd9d927be3bcd434975e5f444d92c4b824d40e1",
+      "leak-driver": "9bab0491b61346777200616b61891af0f10d0efe464e0c75613e0393bd1ff259",
+      "leak.a": "1667b3bcc62465e95bbaa3aaf6878da02edcab5f34e4dc540b7f76c3734f4905",
+      "length-driver": "b6c14ae73fdf1a03d4f35eba9e72f2f360ed327a259d9dde25e2c9bbfc0d6a76",
+      "length.a": "52270f6d9956ff9a781517ad3b3046c127ae7d98f6b7e903aa059ac14ce08150",
+      "linkage.test": "647c378ae498582251950e6180879603c5425948615e8123dc241476d4f8cabc",
+      "native": "08258463b293c7cd08cf56442305a4a047dc3c98b88f4eacb4d270bfb4dbeaa4",
+      "native-asan": "55a209681799e2ea75c3fad9e133ba1e1fde038decb298d173b8aa27699d23fd",
+      "oracle": "7188d253b6743a3a68b6427c0905ccf5403e5e64fc85716169896fa9615b6633",
+      "region-native": "7a6b39cc8e4b18a5f145cb0d13d3da8c6b6890500c8ac2af445d9a946873ea0b",
+      "region-stage0": "40e7ce9b477ac800bddf122be78bdba309bb88f4e377ea59623adae0fb0f5f7e",
+      "stage0": "cce02096844d99f402d0a6c8ac5bf6e610797bbc1eb8dd152f899cc946b8f7d1",
+      "stale-driver": "23aca93ddf3a866857a6111413ac79e707634d4fac76ced76adb809976e78867",
+      "stale.a": "82ebd3adc6f46b6a6a111bff0fd5ba0b7f69045d2be65f8d9cc443a794765d39",
+      "tsgo-asan.a": "e319579015da01fb4f76f37f6d401906146f169cb467f91ab1b28719f78c272b",
+      "tsgo.a": "3a9cb0f292f85ff1edb07cf78d559371fe7492dbdf956a8ca3e8e52f29600359",
+      "wrong-native": "96873aa1e1c36b92aab04819c6409935ec342eb848224ed32872ea8c94d7411d",
+      "wrong.a": "da5e0ee5b1e0a83cb1ddb20042db3a50fb6acb0ca078ee459d02df6e6818be63"
+    }
+  }
+}

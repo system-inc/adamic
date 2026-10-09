@@ -231,7 +231,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/taste/17_binder_flow.a:23:13: stage 0 can't lower writing a possibly absent optional own field yet"}
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "18_named_export.a",
@@ -289,7 +289,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/taste/refused/21_truthy_loops.a:34:25: stage 0 can't lower checked view field objectType of type Type yet"}
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/taste/refused/21_truthy_loops.a:31:13: Adamic 0.1 refuses checked view read of field flags with unsupported union contract; prove or implement the union contract before reading this field"}
   },
   {
     "file": "22_assignment_once.a",

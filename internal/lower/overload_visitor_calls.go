@@ -1,0 +1,422 @@
+package lower
+
+import (
+	"fmt"
+	"strings"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// Locals retain a concrete callback promise in a consumer specialization. An
+// unchanged alias has that same promise; its broad annotation is not evidence
+// that the original callback accepts all Nodes.
+func (l *lowering) visitorValueType(node *ast.Node, active map[*ast.Node]bool) *checker.Type {
+	node = ast.SkipParentheses(node)
+	if active[node] {
+		return l.concrete(l.checker.GetTypeAtLocation(node))
+	}
+	active[node] = true
+	defer delete(active, node)
+	if ast.IsIdentifier(node) {
+		symbol := l.symbol(node)
+		if local, known := l.locals[symbol]; known {
+			declaration := l.localNodes[local]
+			if held := l.localTypes[local]; held != nil && declaration != nil && !identicalTypes(l.checker, l.concrete(l.checker.GetTypeAtLocation(declaration)), held) {
+				if !l.censusHasUndefined(l.checker.GetTypeAtLocation(node)) {
+					held = l.checker.GetNonNullableType(held)
+				}
+				return held
+			}
+		}
+		if symbol != nil && len(symbol.Declarations) == 1 {
+			declaration := symbol.Declarations[0]
+			if declaration.Kind == ast.KindVariableDeclaration && l.overloadValueBinding(declaration) && declaration.AsVariableDeclaration().Initializer != nil {
+				initial := declaration.AsVariableDeclaration().Initializer
+				retained := l.visitorValueType(initial, active)
+				if !identicalTypes(l.checker, retained, l.concrete(l.checker.GetTypeAtLocation(initial))) {
+					return retained
+				}
+			}
+		}
+	}
+	return l.concrete(l.checker.GetTypeAtLocation(node))
+}
+
+// A different callback input requires a specialized consumer, not a wrapper
+// around the callback value. Every invocation in that consumer sees this promise.
+func (l *lowering) visitorCallBindings(call *ast.CallExpression, implementation *ast.Node) ([]*checker.Type, bool, error) {
+	resolved := l.checker.GetResolvedSignature(call.AsNode())
+	if resolved == nil || len(implementation.TypeParameters()) != 0 {
+		return nil, false, nil
+	}
+	bindings := make([]*checker.Type, len(implementation.Parameters()))
+	for i, parameter := range implementation.Parameters() {
+		bindings[i] = l.concrete(l.checker.GetTypeAtLocation(parameter))
+	}
+	needed := false
+	actualCallbacks := map[int]*checker.Type{}
+	for i, argument := range call.Arguments.Nodes {
+		if i >= len(bindings) {
+			continue
+		}
+		given := l.visitorValueType(argument, map[*ast.Node]bool{})
+		if l.visitorSignature(given) != nil {
+			actualCallbacks[i] = given
+		}
+		// Resolved overload parameters supply the instantiated TIn domain, including
+		// contextually typed anonymous visitors and the coupled array parameter.
+		if resolved.Declaration() != nil && resolved.Declaration().Body() == nil && l.censusImplementation(resolved.Declaration()) == implementation && i < len(resolved.Parameters()) && identicalTypes(l.checker, given, l.concrete(l.checker.GetTypeAtLocation(argument))) {
+			given = l.concrete(l.checker.GetTypeOfSymbol(resolved.Parameters()[i]))
+		}
+		bindings[i] = given
+		incoming, served := l.visitorSignature(given), l.visitorSignature(l.checker.GetTypeAtLocation(implementation.Parameters()[i]))
+		if incoming == nil || served == nil {
+			continue
+		}
+		input := l.concrete(l.checker.GetTypeOfSymbol(incoming.Parameters()[0]))
+		domain := l.concrete(l.checker.GetTypeOfSymbol(served.Parameters()[0]))
+		if l.censusRelated(domain, input) {
+			continue
+		}
+		// A broader writable callback input is served by actual-slot checks in .ts.
+		// Keep the covariant result proof and the ordinary shared representation.
+		if l.censusRelated(l.checker.GetReturnTypeOfSignature(incoming), l.checker.GetReturnTypeOfSignature(served)) && l.checkedWidening(call.AsNode(), domain, input) {
+			continue
+		}
+		if input.Flags()&checker.TypeFlagsTypeParameter != 0 {
+			return nil, false, l.notYet(call.AsNode(), "a visitor invocation without a concrete TIn instantiation")
+		}
+		if !l.censusRelated(input, domain) || !l.censusRelated(l.checker.GetReturnTypeOfSignature(incoming), l.checker.GetReturnTypeOfSignature(served)) {
+			return nil, false, &Refused{Where: l.program.Where(call.AsNode()), What: "a visitor forwarding path whose input or result is not served", Fix: "retain the concrete callback input and covariant result"}
+		}
+		sourceHeld, sourceKnown := l.representation(domain)
+		targetHeld, targetKnown := l.representation(input)
+		if !sourceKnown || !targetKnown || sourceHeld != targetHeld || sourceHeld != ir.Object {
+			return nil, false, l.notYet(call.AsNode(), "a visitor argument path requiring a representation conversion")
+		}
+		needed = true
+	}
+	if needed {
+		for i, binding := range bindings {
+			parameter := implementation.Parameters()[i]
+			if !ast.IsIdentifier(parameter.Name()) {
+				return nil, false, l.notYet(parameter, "a visitor consumer with a destructured parameter")
+			}
+			takes := l.concrete(l.censusCallableParameterType(l.symbol(parameter.Name())))
+			if l.visitorSignature(binding) != nil && l.visitorSignature(takes) != nil {
+				if initial := parameter.AsParameterDeclaration().Initializer; initial != nil {
+					defaultSignature := l.visitorSignature(l.checker.GetTypeAtLocation(initial))
+					if defaultSignature == nil || !l.visitorStorage(l.checker.GetReturnTypeOfSignature(defaultSignature), l.checker.GetReturnTypeOfSignature(l.visitorSignature(takes)), map[[2]*checker.Type]bool{}) {
+						return nil, false, l.notYet(initial, "a default visitor result path with different field or element storage")
+					}
+				}
+				if actual := actualCallbacks[i]; actual != nil {
+					if !l.censusRelated(actual, binding) {
+						return nil, false, &Refused{Where: l.program.Where(call.AsNode()), What: "a visitor value cannot serve the resolved callback promise", Fix: "preserve strict callback contravariance"}
+					}
+					actualResult := l.checker.GetReturnTypeOfSignature(l.visitorSignature(actual))
+					servedResult := l.checker.GetReturnTypeOfSignature(l.visitorSignature(takes))
+					if !l.visitorStorage(actualResult, servedResult, map[[2]*checker.Type]bool{}) {
+						return nil, false, l.notYet(call.AsNode(), "a visitor result path with different field or element storage")
+					}
+				}
+				givenResult := l.checker.GetReturnTypeOfSignature(l.visitorSignature(binding))
+				servedResult := l.checker.GetReturnTypeOfSignature(l.visitorSignature(takes))
+				if !l.visitorStorage(givenResult, servedResult, map[[2]*checker.Type]bool{}) {
+					return nil, false, l.notYet(call.AsNode(), "a visitor result path with different field or element storage")
+				}
+				continue
+			}
+			if !l.censusRelated(binding, takes) && !l.overloadNullableParameter(binding, takes) {
+				return nil, false, &Refused{Where: l.program.Where(call.AsNode()), What: "a visitor consumer parameter path cannot preserve " + l.checker.TypeToString(binding) + " through " + l.checker.TypeToString(takes), Fix: "preserve mutable invariance independently of the visitor input proof"}
+			}
+			if !l.visitorStorage(binding, takes, map[[2]*checker.Type]bool{}) {
+				return nil, false, l.notYet(call.AsNode(), "a visitor consumer parameter path with different field or element storage")
+			}
+		}
+	}
+	return bindings, needed, nil
+}
+
+func (l *lowering) specializeVisitorCall(call *ast.CallExpression, function int) (int, error) {
+	implementation := l.visitorHelper(ast.SkipParentheses(call.Expression))
+	if implementation == nil {
+		return function, nil
+	}
+	bindings, needed, err := l.visitorCallBindings(call, implementation)
+	if err != nil || !needed {
+		return function, err
+	}
+	if l.result.Functions[function].Closure || l.result.Functions[function].RestElement != 0 || overloadReadsArguments(implementation) {
+		return 0, l.notYet(call.AsNode(), "a visitor consumer with captures, rest, or observable argument count")
+	}
+	key := fmt.Sprintf("visitor-consumer:%d", function)
+	for _, binding := range bindings {
+		key += ":" + l.genericTypeKey(binding)
+	}
+	if existing, known := l.genericInstances[key]; known {
+		return existing, nil
+	}
+	index := len(l.result.Functions)
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_visitor_input_%d", implementation.Name().Text(), index)})
+	if l.genericInstances == nil {
+		l.genericInstances = map[string]int{}
+	}
+	l.genericInstances[key] = index
+	outerLocals, outerFunction, outerIndex := l.locals, l.function, l.functionIndex
+	l.locals = map[*ast.Symbol]int{}
+	for symbol, local := range outerLocals {
+		if l.result.Locals[local].Global {
+			l.locals[symbol] = local
+		}
+	}
+	defer func() { l.locals, l.function, l.functionIndex = outerLocals, outerFunction, outerIndex }()
+	if err := l.signature(index, implementation, -1); err != nil {
+		return 0, err
+	}
+	for i, parameter := range implementation.Parameters() {
+		if local, known := l.locals[l.symbol(parameter.Name())]; known {
+			// A default-created array is not the caller's original TIn array.
+			if parameter.AsParameterDeclaration().Initializer == nil || l.visitorArrayElement(bindings[i]) == nil {
+				l.localTypes[local] = bindings[i]
+			}
+		}
+	}
+	pending := l.signed[index]
+	delete(l.signed, index)
+	if err := l.lowerBody(index, implementation, pending.this, pending.defaults, pending.patterns); err != nil {
+		return 0, err
+	}
+	return index, nil
+}
+
+// Find the broad parameter from which a visitor alias originates. This is only
+// metadata for proving invocation inputs; it never changes the closure itself.
+func (l *lowering) visitorParameter(node *ast.Node, active map[*ast.Node]bool) *ast.Node {
+	node = ast.SkipParentheses(node)
+	if !ast.IsIdentifier(node) || active[node] {
+		return nil
+	}
+	active[node] = true
+	defer delete(active, node)
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return nil
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind == ast.KindParameter {
+		return declaration
+	}
+	if declaration.Kind == ast.KindVariableDeclaration && l.overloadValueBinding(declaration) && declaration.AsVariableDeclaration().Initializer != nil {
+		return l.visitorParameter(declaration.AsVariableDeclaration().Initializer, active)
+	}
+	return nil
+}
+
+func (l *lowering) visitorInvocationProof(call *ast.CallExpression, parameter *ast.Node, target *checker.Type) bool {
+	owner := parameter.Parent
+	if owner == nil || owner.Kind != ast.KindFunctionDeclaration {
+		return false
+	}
+	array, visitor := -1, -1
+	for i, candidate := range owner.Parameters() {
+		if candidate == parameter {
+			visitor = i
+		}
+		if local, known := l.locals[l.symbol(candidate.Name())]; known {
+			element := l.visitorArrayElement(l.localTypes[local])
+			if element != nil && l.censusRelated(element, target) {
+				array = i
+			}
+		}
+	}
+	if array < 0 || visitor < 0 {
+		return false
+	}
+	proof := l.proveVisitorDomain(owner, array, visitor, map[*ast.Node]bool{})
+	return proof.blocked == nil && proof.unproven == nil
+}
+
+// Guard the complete concrete flat readonly input, not only its tag. The view
+// machinery also refuses accessors and field layouts that cannot retain this
+// contract across the callback's reads. Complex views remain explicit NotYet.
+func (l *lowering) visitorMembership(node *ast.Node, value ir.Expression, target *checker.Type, local func(string, ir.Type) int) ([]ir.Statement, ir.Expression, error) {
+	target = l.concrete(target)
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		var setup []ir.Statement
+		var matches ir.Expression = ir.BooleanConstant{Value: false}
+		for _, member := range target.Types() {
+			statements, test, err := l.visitorMembership(node, value, member, local)
+			if err != nil {
+				return nil, nil, err
+			}
+			setup = append(setup, statements...)
+			matches = ir.Binary{Operator: ir.Or, Left: matches, Right: test}
+		}
+		return setup, matches, nil
+	}
+	if !l.interfaceScalarShape(target) {
+		return nil, nil, l.notYet(node, "visitor argument path needs a complete checked view of "+l.checker.TypeToString(target))
+	}
+	if _, err := l.view(node, value, target); err != nil {
+		return nil, nil, err
+	}
+	var setup []ir.Statement
+	var matches ir.Expression = censusCondition(value)
+	for _, property := range l.checker.GetPropertiesOfType(target) {
+		field := local("input_"+property.Name, ir.Union)
+		setup = append(setup, ir.Declare{Local: field, Value: ir.DynamicProperty{Object: fit(value, ir.Union), Name: property.Name}})
+		statements, test, err := l.predicateMembership(node, ir.Read{Local: field, Of: ir.Union}, l.checker.GetUnknownType(), l.checker.GetTypeOfSymbol(property), local, 0)
+		if err != nil {
+			return nil, nil, err
+		}
+		setup = append(setup, statements...)
+		matches = ir.Binary{Operator: ir.And, Left: matches, Right: test}
+	}
+	return setup, matches, nil
+}
+
+// The boundary is an invocation entry, not a callback replacement. It evaluates
+// the original closure and argument once, checks before calling, and reports the
+// implementation invocation site for this concrete consumer instantiation.
+func (l *lowering) checkedVisitorInvocation(call *ast.CallExpression, closure ir.Expression, arguments []ir.Expression, spread []bool) (ir.Expression, bool, error) {
+	parameter := l.visitorParameter(call.Expression, map[*ast.Node]bool{})
+	if parameter == nil {
+		return nil, false, nil
+	}
+	supplied := l.visitorSignature(l.visitorValueType(call.Expression, map[*ast.Node]bool{}))
+	served := l.visitorSignature(l.checker.GetTypeAtLocation(parameter))
+	if supplied == nil || served == nil {
+		return nil, false, nil
+	}
+	input := l.concrete(l.checker.GetTypeOfSymbol(supplied.Parameters()[0]))
+	domain := l.concrete(l.checker.GetTypeOfSymbol(served.Parameters()[0]))
+	if l.censusRelated(domain, input) {
+		return nil, false, nil
+	}
+	if len(arguments) != 1 {
+		return nil, true, l.notYet(call.AsNode(), "a visitor invocation with differing arity")
+	}
+	for _, expanded := range spread {
+		if expanded {
+			return nil, true, l.notYet(call.AsNode(), "a spread into a checked visitor invocation")
+		}
+	}
+	returns := ir.Type(0)
+	result := l.concrete(l.checker.GetTypeAtLocation(call.AsNode()))
+	if result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+		var known bool
+		returns, known = l.representation(result)
+		if !known {
+			return nil, true, l.notYet(call.AsNode(), "a visitor result without a representation")
+		}
+	}
+	// Keep the ordinary closure ABI's slot restrictions on this early path.
+	if censusCallableSlotless(returns) || censusCallableSlotless(arguments[0].Type()) {
+		return nil, true, l.notYet(call.AsNode(), "a visitor invocation requiring a closure union representation adapter")
+	}
+	invoked := ir.CallClosure{Closure: closure, Arguments: arguments, Returns: returns, FunctionType: int(l.visitorValueType(call.Expression, map[*ast.Node]bool{}).Id())}
+	if l.visitorInvocationProof(call, parameter, input) {
+		return invoked, true, nil
+	}
+	if strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(call.AsNode())), ".a") {
+		return nil, true, &Refused{Where: l.program.Where(call.AsNode()), What: "visitor argument path is unproven: " + l.checker.TypeToString(domain) + " cannot be trusted as " + l.checker.TypeToString(input), Fix: "prove a present original-array element at this invocation"}
+	}
+	wrapper := len(l.result.Functions)
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("visitor_invocation_%d", wrapper), Returns: returns})
+	local := func(name string, of ir.Type) int {
+		index := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: wrapper})
+		return index
+	}
+	carrier := local("visitor", ir.Closure)
+	argument := local("argument", arguments[0].Type())
+	l.result.Functions[wrapper].Parameters = []int{carrier, argument}
+	read := ir.Read{Local: argument, Of: arguments[0].Type()}
+	setup, matches, err := l.visitorMembership(call.AsNode(), read, input, local)
+	if err != nil {
+		return nil, true, err
+	}
+	message := fmt.Sprintf("visitor %s at %s argument %s cannot serve %s", parameter.Name().Text(), l.program.Where(call.AsNode()), l.checker.TypeToString(domain), l.checker.TypeToString(input))
+	body := append(setup, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	invoked.Closure = ir.Read{Local: carrier, Of: ir.Closure}
+	invoked.Arguments = []ir.Expression{read}
+	if returns == 0 {
+		body = append(body, ir.Evaluate{Value: invoked})
+	} else {
+		body = append(body, ir.Return{Value: invoked})
+	}
+	l.result.Functions[wrapper].Body = body
+	l.result.PredicateChecks.Checked++
+	l.result.PredicateChecks.Sites = append(l.result.PredicateChecks.Sites, ir.PredicateCallCheck{Where: l.program.Where(call.AsNode()), Function: parameter.Parent.Name().Text(), Overload: 1, Directions: []ir.PredicateDirectionCheck{{Direction: "argument." + parameter.Name().Text(), Status: "checked", Reason: message}}})
+	return ir.Call{Function: wrapper, Arguments: []ir.Expression{closure, arguments[0]}, Returns: returns}, true, nil
+}
+
+// Equal outer pointers cannot hide differently boxed fields or array elements.
+// Input proof and callback result covariance do not supply that storage proof.
+func (l *lowering) visitorStorage(from, to *checker.Type, active map[[2]*checker.Type]bool) bool {
+	from, to = l.concrete(from), l.concrete(to)
+	if identicalTypes(l.checker, from, to) {
+		return true
+	}
+	if from.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range from.Types() {
+			if !l.visitorStorage(member, to, active) {
+				return false
+			}
+		}
+		return true
+	}
+	if from.Flags()&checker.TypeFlagsUndefined != 0 {
+		return l.censusHasUndefined(to)
+	}
+	to = l.checker.GetNonNullableType(to)
+	if to.Flags()&checker.TypeFlagsUnion != 0 {
+		found := false
+		for _, member := range to.Types() {
+			if l.censusRelated(from, member) {
+				if !l.visitorStorage(from, member, active) {
+					return false
+				}
+				found = true
+			}
+		}
+		return found
+	}
+	if from.Flags()&checker.TypeFlagsObject == 0 || to.Flags()&checker.TypeFlagsObject == 0 {
+		return true
+	} // Ordinary scalar fitting keeps the ABI.
+	pair := [2]*checker.Type{from, to}
+	if active[pair] {
+		return false
+	}
+	active[pair] = true
+	defer delete(active, pair)
+	element, target := l.visitorArrayElement(from), l.visitorArrayElement(to)
+	if element != nil || target != nil {
+		if element == nil || target == nil {
+			return false
+		}
+		left, leftKnown := l.kept(element)
+		right, rightKnown := l.kept(target)
+		return leftKnown && rightKnown && left == right && l.visitorStorage(element, target, active)
+	}
+	for _, property := range l.checker.GetPropertiesOfType(to) {
+		own := l.checker.GetPropertyOfType(from, property.Name)
+		if own == nil || accessorSymbol(own) || accessorSymbol(property) {
+			return false
+		}
+		source, target := l.concrete(l.checker.GetTypeOfSymbol(own)), l.concrete(l.checker.GetTypeOfSymbol(property))
+		if identicalTypes(l.checker, source, target) {
+			continue
+		}
+		left, leftKnown := l.representation(source)
+		right, rightKnown := l.representation(target)
+		if !leftKnown || !rightKnown || left != right || !l.overloadScalar(source) || !l.overloadScalar(target) {
+			return false
+		}
+	}
+	return true
+}

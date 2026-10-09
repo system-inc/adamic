@@ -1,0 +1,3130 @@
+{
+  "branch": {
+    "added": [
+      "bench/parallel_files.a",
+      "internal/oracle/testdata/async_coverage_discard.a",
+      "internal/oracle/testdata/async_coverage_parameters.a",
+      "internal/oracle/testdata/async_coverage_reject_eager.a",
+      "internal/oracle/testdata/async_coverage_reject_empty.a",
+      "internal/oracle/testdata/async_coverage_reject_nested.a",
+      "internal/oracle/testdata/async_coverage_typeof.a",
+      "internal/oracle/testdata/async_coverage_unions.a",
+      "internal/oracle/testdata/async_coverage_values.a",
+      "internal/oracle/testdata/async_nested.a",
+      "internal/oracle/testdata/async_plain.a",
+      "internal/oracle/testdata/async_three.a",
+      "internal/oracle/testdata/async_throw.a",
+      "internal/oracle/testdata/async_typeof.a",
+      "internal/oracle/testdata/concurrency/accepted/fresh.a",
+      "internal/oracle/testdata/concurrency/accepted/global_capture.a",
+      "internal/oracle/testdata/concurrency/accepted/identity.a",
+      "internal/oracle/testdata/concurrency/accepted/large.a",
+      "internal/oracle/testdata/concurrency/accepted/map_capture.a",
+      "internal/oracle/testdata/concurrency/accepted/nested.a",
+      "internal/oracle/testdata/concurrency/accepted/numbers.a",
+      "internal/oracle/testdata/concurrency/accepted/readonly_forms.a",
+      "internal/oracle/testdata/concurrency/accepted/readonly_function.a",
+      "internal/oracle/testdata/concurrency/accepted/records.a",
+      "internal/oracle/testdata/concurrency/accepted/recursive_tree.a",
+      "internal/oracle/testdata/concurrency/accepted/strings.a",
+      "internal/oracle/testdata/concurrency/accepted/throw_middle.a",
+      "internal/oracle/testdata/hidden_boundary_generic_tnode.a",
+      "internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+      "internal/oracle/testdata/hidden_boundary_never_array.a",
+      "internal/oracle/testdata/hidden_boundary_never_array_observations.a",
+      "internal/oracle/testdata/literal_units_walk.a",
+      "internal/oracle/testdata/moves/accepted/objects.a",
+      "internal/oracle/testdata/optional_field_alias.a",
+      "internal/oracle/testdata/optional_field_alias_variants.a",
+      "internal/oracle/testdata/optional_field_checked_copy.a",
+      "internal/oracle/testdata/optional_field_construction.a",
+      "internal/oracle/testdata/optional_field_presence.a",
+      "internal/oracle/testdata/optional_field_unknown.a",
+      "internal/oracle/testdata/optional_field_write.a",
+      "internal/oracle/testdata/output_edges/closed.a",
+      "internal/oracle/testdata/output_edges/fsize.a",
+      "internal/oracle/testdata/output_edges/fsize_out.a",
+      "internal/oracle/testdata/output_edges/panic_surrogate.a",
+      "internal/oracle/testdata/output_edges/usr1.a",
+      "internal/oracle/testdata/overload_callback_served.a",
+      "internal/oracle/testdata/overload_field_hatch/kind-valid.ts",
+      "internal/oracle/testdata/overload_field_hatch/value-undefined.ts",
+      "internal/oracle/testdata/overload_field_hatch/value-valid.ts",
+      "internal/oracle/testdata/overload_results_binding.a",
+      "internal/oracle/testdata/overload_results_evaluate.a",
+      "internal/oracle/testdata/overload_results_parameter.a",
+      "internal/oracle/testdata/overload_results_scalar.a",
+      "internal/oracle/testdata/overload_results_transform.a",
+      "internal/oracle/testdata/overload_structural_block.a",
+      "internal/oracle/testdata/overload_structural_evaluator.a",
+      "internal/oracle/testdata/overload_structural_factory.a",
+      "internal/oracle/testdata/overload_structural_fields.a",
+      "internal/oracle/testdata/overload_values/module-valid.ts",
+      "internal/oracle/testdata/overload_values/narrow-valid.ts",
+      "internal/oracle/testdata/overload_values/order-valid.ts",
+      "internal/oracle/testdata/overload_values/proven.a",
+      "internal/oracle/testdata/overload_values/returned-valid.ts",
+      "internal/oracle/testdata/overload_visitors/helper.a",
+      "internal/oracle/testdata/overload_visitors/helper.ts",
+      "internal/oracle/testdata/overload_visitors/instantiations.ts",
+      "internal/oracle/testdata/overload_visitors/original.a",
+      "internal/oracle/testdata/overload_visitors/original.ts",
+      "internal/oracle/testdata/overload_visitors/overloaded-helper.a",
+      "internal/oracle/testdata/overload_visitors/overloaded-helper.ts",
+      "internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a",
+      "internal/oracle/testdata/predicate_refusals/oct8_predicates_p27_overload_parameter_rebound.a",
+      "internal/oracle/testdata/predicate_refusals/representation_controls.a",
+      "internal/oracle/testdata/regexp_replace/effects.a",
+      "internal/oracle/testdata/regexp_replace/move_effect.a",
+      "internal/oracle/testdata/regexp_replace/reentrant.a",
+      "internal/oracle/testdata/typed_arrays_uint16_stop.a",
+      "internal/oracle/testdata/typed_arrays_uint16array.a",
+      "stage3/interface-downcasts/lane1/flag-downcast-wrong.a",
+      "stage3/interface-downcasts/lane1/interfaces-good.a",
+      "stage3/interface-downcasts/lane1/interfaces-missing-inherited.a",
+      "stage3/interface-downcasts/lane1/interfaces-uninitialized-object.a",
+      "stage3/interface-downcasts/lane1/interfaces-wrong-inherited.a",
+      "stage3/interface-downcasts/lane1/objects-good.a",
+      "stage3/interface-downcasts/lane1/objects-missing-nested.a",
+      "stage3/interface-downcasts/lane1/objects-uninitialized-nested.a",
+      "stage3/interface-downcasts/lane1/objects-untagged-good.a",
+      "stage3/interface-downcasts/lane1/objects-untagged-wrong.a",
+      "stage3/interface-downcasts/lane1/objects-wrong-nested.a",
+      "stage3/interface-downcasts/lane1/optional-read-control.a"
+    ],
+    "removed": [],
+    "moved": {}
+  },
+  "stack": {
+    "added": [
+      "stage3/checked-writes/boolean-fit.ts",
+      "stage3/checked-writes/boolean-misfit.ts",
+      "stage3/checked-writes/branch-bottom-number-fit.ts",
+      "stage3/checked-writes/branch-bottom-number-misfit.ts",
+      "stage3/checked-writes/branch-bottom-string-fit.ts",
+      "stage3/checked-writes/branch-bottom-string-misfit.ts",
+      "stage3/checked-writes/branch-file-fit.ts",
+      "stage3/checked-writes/branch-file-misfit.ts",
+      "stage3/checked-writes/branch-length-fit.ts",
+      "stage3/checked-writes/branch-length-misfit.ts",
+      "stage3/checked-writes/branch-start-fit.ts",
+      "stage3/checked-writes/branch-start-misfit.ts",
+      "stage3/checked-writes/compound-fit.ts",
+      "stage3/checked-writes/compound-misfit.ts",
+      "stage3/checked-writes/container-alias-fit.ts",
+      "stage3/checked-writes/container-alias-misfit.ts",
+      "stage3/checked-writes/container-boolean-fit.ts",
+      "stage3/checked-writes/container-boolean-misfit.ts",
+      "stage3/checked-writes/container-fill-fit.ts",
+      "stage3/checked-writes/container-fill-misfit.ts",
+      "stage3/checked-writes/container-map-fit.ts",
+      "stage3/checked-writes/container-map-misfit.ts",
+      "stage3/checked-writes/container-map-object-fit.ts",
+      "stage3/checked-writes/container-map-object-misfit.ts",
+      "stage3/checked-writes/container-map-values-fit.ts",
+      "stage3/checked-writes/container-map-values-misfit.ts",
+      "stage3/checked-writes/container-nested-fit.ts",
+      "stage3/checked-writes/container-nested-misfit.ts",
+      "stage3/checked-writes/container-number-fit.ts",
+      "stage3/checked-writes/container-number-misfit.ts",
+      "stage3/checked-writes/container-object-fit.ts",
+      "stage3/checked-writes/container-object-misfit.ts",
+      "stage3/checked-writes/container-slice-fit.ts",
+      "stage3/checked-writes/container-slice-misfit.ts",
+      "stage3/checked-writes/container-splice-fit.ts",
+      "stage3/checked-writes/container-splice-misfit.ts",
+      "stage3/checked-writes/container-string-fit.ts",
+      "stage3/checked-writes/container-string-misfit.ts",
+      "stage3/checked-writes/diagnostic-alias-fit.ts",
+      "stage3/checked-writes/diagnostic-alias-misfit.ts",
+      "stage3/checked-writes/diagnostic-fit.ts",
+      "stage3/checked-writes/diagnostic-inner-fit.ts",
+      "stage3/checked-writes/diagnostic-inner-misfit.ts",
+      "stage3/checked-writes/diagnostic-misfit.ts",
+      "stage3/checked-writes/diagnostic-nested-fit.ts",
+      "stage3/checked-writes/diagnostic-nested-misfit.ts",
+      "stage3/checked-writes/diagnostic-proof-fit.ts",
+      "stage3/checked-writes/diagnostic-proof-misfit.ts",
+      "stage3/checked-writes/diagnostic-related-fit.ts",
+      "stage3/checked-writes/diagnostic-related-misfit.ts",
+      "stage3/checked-writes/diagnostic-rich-fit.ts",
+      "stage3/checked-writes/diagnostic-rich-misfit.ts",
+      "stage3/checked-writes/emit-auto-fit.ts",
+      "stage3/checked-writes/emit-auto-misfit.ts",
+      "stage3/checked-writes/emit-callback-fit.ts",
+      "stage3/checked-writes/emit-callback-misfit.ts",
+      "stage3/checked-writes/emit-comment-fit.ts",
+      "stage3/checked-writes/emit-comment-misfit.ts",
+      "stage3/checked-writes/emit-node-fit.ts",
+      "stage3/checked-writes/emit-node-misfit.ts",
+      "stage3/checked-writes/emit-resolution-fit.ts",
+      "stage3/checked-writes/emit-resolution-misfit.ts",
+      "stage3/checked-writes/flags-fit.ts",
+      "stage3/checked-writes/flags-misfit.ts",
+      "stage3/checked-writes/flow-array-fit.ts",
+      "stage3/checked-writes/flow-array-misfit.ts",
+      "stage3/checked-writes/flow-node-fit.ts",
+      "stage3/checked-writes/flow-node-misfit.ts",
+      "stage3/checked-writes/flow-undefined-fit.ts",
+      "stage3/checked-writes/flow-undefined-misfit.ts",
+      "stage3/checked-writes/generic-site-fit.ts",
+      "stage3/checked-writes/generic-site-misfit.ts",
+      "stage3/checked-writes/never-index-misfit.ts",
+      "stage3/checked-writes/never-nullable-fit.ts",
+      "stage3/checked-writes/never-nullable-misfit.ts",
+      "stage3/checked-writes/never-number-fit.ts",
+      "stage3/checked-writes/never-number-misfit.ts",
+      "stage3/checked-writes/never-object-fit.ts",
+      "stage3/checked-writes/never-object-misfit.ts",
+      "stage3/checked-writes/never-splice-misfit.ts",
+      "stage3/checked-writes/never-string-fit.ts",
+      "stage3/checked-writes/never-string-misfit.ts",
+      "stage3/checked-writes/never-wide-fit.ts",
+      "stage3/checked-writes/nullable-number-fit.ts",
+      "stage3/checked-writes/nullable-number-misfit.ts",
+      "stage3/checked-writes/number-fit.ts",
+      "stage3/checked-writes/number-misfit.ts",
+      "stage3/checked-writes/optional-boolean-fit.ts",
+      "stage3/checked-writes/optional-boolean-misfit.ts",
+      "stage3/checked-writes/optional-false-fit.ts",
+      "stage3/checked-writes/optional-false-misfit.ts",
+      "stage3/checked-writes/overload-callback-fit.ts",
+      "stage3/checked-writes/overload-callback-misfit.ts",
+      "stage3/checked-writes/overload-result-fit.ts",
+      "stage3/checked-writes/overload-result-misfit.ts",
+      "stage3/checked-writes/parent-fit.ts",
+      "stage3/checked-writes/parent-misfit.ts",
+      "stage3/checked-writes/proven-containers.a",
+      "stage3/checked-writes/proven-emit.a",
+      "stage3/checked-writes/proven-generic.a",
+      "stage3/checked-writes/proven-number.a",
+      "stage3/checked-writes/range-fit.ts",
+      "stage3/checked-writes/range-misfit.ts",
+      "stage3/checked-writes/receiver-fit.ts",
+      "stage3/checked-writes/reference-structure.ts",
+      "stage3/checked-writes/required-boolean-fit.ts",
+      "stage3/checked-writes/required-boolean-misfit.ts",
+      "stage3/checked-writes/string-fit.ts",
+      "stage3/checked-writes/string-misfit.ts"
+    ],
+    "removed": [],
+    "moved": {
+      "bench/parallel_files.a": {
+        "before": [
+          3952651,
+          3952651,
+          8151045,
+          8654930,
+          8839,
+          0
+        ],
+        "after": [
+          3952651,
+          3952651,
+          11038725,
+          11542610,
+          8839,
+          0
+        ]
+      },
+      "internal/fresh/testdata/regexp_tree.ts": {
+        "before": [
+          91,
+          91,
+          81,
+          85,
+          35,
+          0
+        ],
+        "after": [
+          91,
+          91,
+          84,
+          88,
+          35,
+          0
+        ]
+      },
+      "internal/load/testdata/0.1/compile/04_closures.ts": {
+        "before": [
+          18,
+          18,
+          19,
+          32,
+          14,
+          0
+        ],
+        "after": [
+          18,
+          18,
+          22,
+          35,
+          14,
+          0
+        ]
+      },
+      "internal/load/testdata/0.1/compile/06_stack.ts": {
+        "before": [
+          39,
+          39,
+          50,
+          76,
+          7,
+          0
+        ],
+        "after": [
+          39,
+          39,
+          60,
+          86,
+          7,
+          0
+        ]
+      },
+      "internal/load/testdata/0.1/compile/09_tree.ts": {
+        "before": [
+          19,
+          19,
+          28,
+          69,
+          16,
+          0
+        ],
+        "after": [
+          19,
+          19,
+          37,
+          78,
+          16,
+          0
+        ]
+      },
+      "internal/oracle/testdata/adversarial_exits.a": {
+        "before": [
+          120,
+          120,
+          60,
+          155,
+          25,
+          0
+        ],
+        "after": [
+          120,
+          120,
+          66,
+          161,
+          25,
+          0
+        ]
+      },
+      "internal/oracle/testdata/adversarial_iteration.a": {
+        "before": [
+          59,
+          59,
+          118,
+          150,
+          21,
+          0
+        ],
+        "after": [
+          59,
+          59,
+          130,
+          162,
+          21,
+          0
+        ]
+      },
+      "internal/oracle/testdata/adversarial_order.a": {
+        "before": [
+          105,
+          105,
+          88,
+          164,
+          31,
+          0
+        ],
+        "after": [
+          105,
+          105,
+          90,
+          166,
+          31,
+          0
+        ]
+      },
+      "internal/oracle/testdata/arguments.a": {
+        "before": [
+          77,
+          77,
+          14,
+          68,
+          27,
+          0
+        ],
+        "after": [
+          77,
+          77,
+          70,
+          124,
+          27,
+          0
+        ]
+      },
+      "internal/oracle/testdata/arguments_length_spread.a": {
+        "before": [
+          69,
+          69,
+          26,
+          94,
+          15,
+          0
+        ],
+        "after": [
+          69,
+          69,
+          27,
+          95,
+          15,
+          0
+        ]
+      },
+      "internal/oracle/testdata/array_from.a": {
+        "before": [
+          94,
+          94,
+          56,
+          131,
+          25,
+          0
+        ],
+        "after": [
+          94,
+          94,
+          59,
+          134,
+          25,
+          0
+        ]
+      },
+      "internal/oracle/testdata/array_literal_empty_first.a": {
+        "before": [
+          25,
+          25,
+          17,
+          39,
+          11,
+          0
+        ],
+        "after": [
+          5,
+          2,
+          5,
+          6,
+          5,
+          0
+        ]
+      },
+      "internal/oracle/testdata/array_literal_empty_last.a": {
+        "before": [
+          28,
+          28,
+          21,
+          43,
+          14,
+          0
+        ],
+        "after": [
+          12,
+          9,
+          7,
+          15,
+          7,
+          0
+        ]
+      },
+      "internal/oracle/testdata/array_literal_empty_typed.a": {
+        "before": [
+          17,
+          17,
+          13,
+          31,
+          10,
+          0
+        ],
+        "after": [
+          17,
+          17,
+          16,
+          34,
+          10,
+          0
+        ]
+      },
+      "internal/oracle/testdata/ascii_scan.a": {
+        "before": [
+          47,
+          47,
+          15,
+          54,
+          18,
+          0
+        ],
+        "after": [
+          47,
+          47,
+          27,
+          66,
+          18,
+          0
+        ]
+      },
+      "internal/oracle/testdata/bitwise.a": {
+        "before": [
+          9304,
+          9304,
+          1369,
+          9342,
+          45,
+          0
+        ],
+        "after": [
+          9304,
+          9304,
+          2665,
+          10638,
+          45,
+          0
+        ]
+      },
+      "internal/oracle/testdata/bitwise_sweep.a": {
+        "before": [
+          4152674,
+          4152674,
+          1260,
+          4153941,
+          9,
+          0
+        ],
+        "after": [
+          4152674,
+          4152674,
+          1686,
+          4154367,
+          9,
+          0
+        ]
+      },
+      "internal/oracle/testdata/borrow_chain_coverage_return.a": {
+        "before": [
+          16,
+          16,
+          7,
+          13,
+          5,
+          0
+        ],
+        "after": [
+          16,
+          16,
+          8,
+          14,
+          5,
+          0
+        ]
+      },
+      "internal/oracle/testdata/borrow_element.a": {
+        "before": [
+          113,
+          113,
+          67,
+          128,
+          15,
+          0
+        ],
+        "after": [
+          113,
+          113,
+          90,
+          151,
+          15,
+          0
+        ]
+      },
+      "internal/oracle/testdata/borrow_element_throw.a": {
+        "before": [
+          38,
+          38,
+          30,
+          50,
+          8,
+          0
+        ],
+        "after": [
+          38,
+          38,
+          35,
+          55,
+          8,
+          0
+        ]
+      },
+      "internal/oracle/testdata/borrow_loop.a": {
+        "before": [
+          128,
+          126,
+          110,
+          181,
+          14,
+          2
+        ],
+        "after": [
+          128,
+          126,
+          134,
+          205,
+          14,
+          2
+        ]
+      },
+      "internal/oracle/testdata/borrow_loop_calls.a": {
+        "before": [
+          263,
+          261,
+          176,
+          342,
+          25,
+          2
+        ],
+        "after": [
+          263,
+          261,
+          216,
+          382,
+          25,
+          2
+        ]
+      },
+      "internal/oracle/testdata/borrow_map_overwrite.a": {
+        "before": [
+          29,
+          29,
+          23,
+          46,
+          13,
+          0
+        ],
+        "after": [
+          29,
+          29,
+          27,
+          50,
+          13,
+          0
+        ]
+      },
+      "internal/oracle/testdata/case_mapping.a": {
+        "before": [
+          203,
+          203,
+          19,
+          216,
+          16,
+          0
+        ],
+        "after": [
+          203,
+          203,
+          277,
+          474,
+          16,
+          0
+        ]
+      },
+      "internal/oracle/testdata/census_append_overload.a": {
+        "before": [
+          7,
+          7,
+          3,
+          13,
+          3,
+          0
+        ],
+        "after": [
+          7,
+          7,
+          4,
+          14,
+          3,
+          0
+        ]
+      },
+      "internal/oracle/testdata/census_small_rest.a": {
+        "before": [
+          20,
+          20,
+          35,
+          42,
+          8,
+          0
+        ],
+        "after": [
+          20,
+          20,
+          36,
+          43,
+          8,
+          0
+        ]
+      },
+      "internal/oracle/testdata/class_as_interface.a": {
+        "before": [
+          372,
+          372,
+          303,
+          468,
+          60,
+          0
+        ],
+        "after": [
+          372,
+          372,
+          324,
+          489,
+          60,
+          0
+        ]
+      },
+      "internal/oracle/testdata/class_instance_key_region.a": {
+        "before": [
+          110,
+          109,
+          104,
+          165,
+          55,
+          1
+        ],
+        "after": [
+          110,
+          109,
+          154,
+          215,
+          55,
+          1
+        ]
+      },
+      "internal/oracle/testdata/class_instance_key_region_alias.a": {
+        "before": [
+          110,
+          109,
+          104,
+          165,
+          55,
+          1
+        ],
+        "after": [
+          110,
+          109,
+          154,
+          215,
+          55,
+          1
+        ]
+      },
+      "internal/oracle/testdata/class_layouts.a": {
+        "before": [
+          70,
+          70,
+          103,
+          150,
+          27,
+          0
+        ],
+        "after": [
+          70,
+          70,
+          109,
+          156,
+          27,
+          0
+        ]
+      },
+      "internal/oracle/testdata/closures.a": {
+        "before": [
+          58,
+          58,
+          48,
+          84,
+          26,
+          0
+        ],
+        "after": [
+          58,
+          58,
+          51,
+          87,
+          26,
+          0
+        ]
+      },
+      "internal/oracle/testdata/closures_throw.a": {
+        "before": [
+          418,
+          418,
+          1566,
+          1801,
+          142,
+          0
+        ],
+        "after": [
+          418,
+          418,
+          1676,
+          1911,
+          142,
+          0
+        ]
+      },
+      "internal/oracle/testdata/closures_throw_uncaught.a": {
+        "before": [
+          31,
+          29,
+          20,
+          36,
+          13,
+          0
+        ],
+        "after": [
+          31,
+          29,
+          28,
+          44,
+          13,
+          0
+        ]
+      },
+      "internal/oracle/testdata/collections.a": {
+        "before": [
+          362,
+          362,
+          392,
+          550,
+          103,
+          0
+        ],
+        "after": [
+          362,
+          362,
+          442,
+          600,
+          103,
+          0
+        ]
+      },
+      "internal/oracle/testdata/concurrency/accepted/large.a": {
+        "before": [
+          4105,
+          4105,
+          6154,
+          6164,
+          4102,
+          0
+        ],
+        "after": [
+          4105,
+          4105,
+          8202,
+          8212,
+          4102,
+          0
+        ]
+      },
+      "internal/oracle/testdata/doubly_linked.a": {
+        "before": [
+          90,
+          90,
+          525,
+          558,
+          49,
+          0
+        ],
+        "after": [
+          90,
+          90,
+          572,
+          605,
+          49,
+          0
+        ]
+      },
+      "internal/oracle/testdata/enums_flags.a": {
+        "before": [
+          44,
+          44,
+          19,
+          60,
+          11,
+          0
+        ],
+        "after": [
+          44,
+          44,
+          20,
+          61,
+          11,
+          0
+        ]
+      },
+      "internal/oracle/testdata/enums_open.a": {
+        "before": [
+          22,
+          22,
+          16,
+          36,
+          10,
+          0
+        ],
+        "after": [
+          22,
+          22,
+          17,
+          37,
+          10,
+          0
+        ]
+      },
+      "internal/oracle/testdata/exceptions.a": {
+        "before": [
+          133,
+          133,
+          163,
+          229,
+          20,
+          0
+        ],
+        "after": [
+          133,
+          133,
+          182,
+          248,
+          20,
+          0
+        ]
+      },
+      "internal/oracle/testdata/fills.a": {
+        "before": [
+          24,
+          24,
+          28,
+          51,
+          11,
+          0
+        ],
+        "after": [
+          24,
+          24,
+          29,
+          52,
+          11,
+          0
+        ]
+      },
+      "internal/oracle/testdata/finally_leaves.a": {
+        "before": [
+          157,
+          157,
+          59,
+          174,
+          10,
+          0
+        ],
+        "after": [
+          157,
+          157,
+          67,
+          182,
+          10,
+          0
+        ]
+      },
+      "internal/oracle/testdata/find_shrinks.a": {
+        "before": [
+          12,
+          7,
+          10,
+          18,
+          6,
+          0
+        ],
+        "after": [
+          12,
+          7,
+          12,
+          20,
+          6,
+          0
+        ]
+      },
+      "internal/oracle/testdata/fresh_calls.a": {
+        "before": [
+          113,
+          113,
+          216,
+          273,
+          37,
+          0
+        ],
+        "after": [
+          113,
+          113,
+          258,
+          315,
+          37,
+          0
+        ]
+      },
+      "internal/oracle/testdata/fresh_parser.a": {
+        "before": [
+          145,
+          145,
+          280,
+          450,
+          34,
+          0
+        ],
+        "after": [
+          145,
+          145,
+          321,
+          491,
+          34,
+          0
+        ]
+      },
+      "internal/oracle/testdata/fresh_writes.a": {
+        "before": [
+          330,
+          330,
+          369,
+          485,
+          132,
+          0
+        ],
+        "after": [
+          330,
+          330,
+          421,
+          537,
+          132,
+          0
+        ]
+      },
+      "internal/oracle/testdata/from_codes.a": {
+        "before": [
+          408,
+          408,
+          56,
+          413,
+          12,
+          0
+        ],
+        "after": [
+          408,
+          408,
+          106,
+          463,
+          12,
+          0
+        ]
+      },
+      "internal/oracle/testdata/gaps.a": {
+        "before": [
+          97,
+          97,
+          85,
+          154,
+          47,
+          0
+        ],
+        "after": [
+          97,
+          97,
+          89,
+          158,
+          47,
+          0
+        ]
+      },
+      "internal/oracle/testdata/generic_functions.a": {
+        "before": [
+          35,
+          35,
+          32,
+          55,
+          8,
+          0
+        ],
+        "after": [
+          35,
+          35,
+          40,
+          63,
+          8,
+          0
+        ]
+      },
+      "internal/oracle/testdata/host_map_union.a": {
+        "before": [
+          61,
+          61,
+          124,
+          163,
+          12,
+          0
+        ],
+        "after": [
+          61,
+          61,
+          127,
+          166,
+          12,
+          0
+        ]
+      },
+      "internal/oracle/testdata/integer_format.a": {
+        "before": [
+          106826,
+          106826,
+          48056,
+          136190,
+          20,
+          0
+        ],
+        "after": [
+          106826,
+          106826,
+          76081,
+          164215,
+          20,
+          0
+        ]
+      },
+      "internal/oracle/testdata/invariance_readonly.a": {
+        "before": [
+          30,
+          30,
+          38,
+          51,
+          16,
+          0
+        ],
+        "after": [
+          30,
+          30,
+          42,
+          55,
+          16,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_array_copy.a": {
+        "before": [
+          77,
+          77,
+          55,
+          117,
+          17,
+          0
+        ],
+        "after": [
+          77,
+          77,
+          56,
+          118,
+          17,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_array_find_last.a": {
+        "before": [
+          43,
+          43,
+          26,
+          75,
+          10,
+          0
+        ],
+        "after": [
+          43,
+          43,
+          30,
+          79,
+          10,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_array_flat.a": {
+        "before": [
+          33,
+          33,
+          41,
+          57,
+          19,
+          0
+        ],
+        "after": [
+          33,
+          33,
+          60,
+          76,
+          19,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_array_flat_map.a": {
+        "before": [
+          50,
+          50,
+          60,
+          109,
+          17,
+          0
+        ],
+        "after": [
+          50,
+          50,
+          81,
+          130,
+          17,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_array_iterators.a": {
+        "before": [
+          57,
+          57,
+          30,
+          81,
+          13,
+          0
+        ],
+        "after": [
+          57,
+          57,
+          35,
+          86,
+          13,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_array_spliced.a": {
+        "before": [
+          72,
+          72,
+          40,
+          114,
+          12,
+          0
+        ],
+        "after": [
+          72,
+          72,
+          61,
+          135,
+          12,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_array_with.a": {
+        "before": [
+          68,
+          68,
+          43,
+          109,
+          10,
+          0
+        ],
+        "after": [
+          68,
+          68,
+          44,
+          110,
+          10,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_fnexpr_loops.a": {
+        "before": [
+          182,
+          182,
+          194,
+          266,
+          82,
+          0
+        ],
+        "after": [
+          182,
+          182,
+          234,
+          306,
+          82,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_fnexpr_recurse.a": {
+        "before": [
+          29,
+          29,
+          69,
+          99,
+          11,
+          0
+        ],
+        "after": [
+          29,
+          29,
+          74,
+          104,
+          11,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_for_in.a": {
+        "before": [
+          79,
+          79,
+          130,
+          118,
+          65,
+          0
+        ],
+        "after": [
+          79,
+          79,
+          154,
+          142,
+          65,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_for_in_keys.a": {
+        "before": [
+          38,
+          38,
+          108,
+          77,
+          34,
+          0
+        ],
+        "after": [
+          38,
+          38,
+          135,
+          104,
+          34,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_for_in_live.a": {
+        "before": [
+          39,
+          39,
+          59,
+          76,
+          21,
+          0
+        ],
+        "after": [
+          39,
+          39,
+          71,
+          88,
+          21,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_function_expressions.a": {
+        "before": [
+          56,
+          56,
+          49,
+          96,
+          19,
+          0
+        ],
+        "after": [
+          56,
+          56,
+          52,
+          99,
+          19,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_map_set_construct.a": {
+        "before": [
+          180,
+          180,
+          225,
+          271,
+          52,
+          0
+        ],
+        "after": [
+          180,
+          180,
+          239,
+          285,
+          52,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_map_set_group_by.a": {
+        "before": [
+          115,
+          115,
+          117,
+          201,
+          36,
+          0
+        ],
+        "after": [
+          115,
+          115,
+          138,
+          222,
+          36,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_map_set_groupby_keys.a": {
+        "before": [
+          31,
+          31,
+          42,
+          68,
+          12,
+          0
+        ],
+        "after": [
+          31,
+          31,
+          53,
+          79,
+          12,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_map_set_iterator_exhausted.a": {
+        "before": [
+          20230,
+          20230,
+          30328,
+          50539,
+          18,
+          0
+        ],
+        "after": [
+          20230,
+          20230,
+          30330,
+          50541,
+          18,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_map_set_keys.a": {
+        "before": [
+          76,
+          76,
+          64,
+          129,
+          15,
+          0
+        ],
+        "after": [
+          76,
+          76,
+          68,
+          133,
+          15,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_map_set_next.a": {
+        "before": [
+          82,
+          82,
+          74,
+          139,
+          57,
+          0
+        ],
+        "after": [
+          82,
+          82,
+          77,
+          142,
+          57,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_map_set_setops.a": {
+        "before": [
+          590,
+          590,
+          336,
+          655,
+          17,
+          0
+        ],
+        "after": [
+          590,
+          590,
+          427,
+          746,
+          17,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_map_set_visit.a": {
+        "before": [
+          86,
+          86,
+          129,
+          188,
+          38,
+          0
+        ],
+        "after": [
+          86,
+          86,
+          151,
+          210,
+          38,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_map_set_zeros.a": {
+        "before": [
+          23,
+          23,
+          40,
+          59,
+          11,
+          0
+        ],
+        "after": [
+          23,
+          23,
+          46,
+          65,
+          11,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_method_values.a": {
+        "before": [
+          137,
+          137,
+          154,
+          295,
+          42,
+          0
+        ],
+        "after": [
+          137,
+          137,
+          155,
+          296,
+          42,
+          0
+        ]
+      },
+      "internal/oracle/testdata/library_string_existing.a": {
+        "before": [
+          34,
+          34,
+          306,
+          343,
+          9,
+          0
+        ],
+        "after": [
+          34,
+          34,
+          606,
+          643,
+          9,
+          0
+        ]
+      },
+      "internal/oracle/testdata/lint_runtime_release_chain.a": {
+        "before": [
+          405034,
+          405034,
+          505776,
+          303790,
+          300003,
+          0
+        ],
+        "after": [
+          405034,
+          405034,
+          506032,
+          304046,
+          300003,
+          0
+        ]
+      },
+      "internal/oracle/testdata/lint_runtime_release_shared.a": {
+        "before": [
+          1008,
+          1008,
+          8478,
+          6396,
+          263,
+          0
+        ],
+        "after": [
+          1008,
+          1008,
+          9249,
+          7167,
+          263,
+          0
+        ]
+      },
+      "internal/oracle/testdata/long_literals.a": {
+        "before": [
+          6117,
+          6117,
+          85,
+          14610,
+          8,
+          0
+        ],
+        "after": [
+          6117,
+          6117,
+          164,
+          14689,
+          8,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_foreach_arrays.a": {
+        "before": [
+          995,
+          995,
+          932,
+          1355,
+          95,
+          0
+        ],
+        "after": [
+          995,
+          995,
+          1096,
+          1519,
+          95,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_foreach_closures.a": {
+        "before": [
+          816,
+          816,
+          1044,
+          1277,
+          87,
+          0
+        ],
+        "after": [
+          816,
+          816,
+          1210,
+          1443,
+          87,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_foreach_fnexpr.a": {
+        "before": [
+          44,
+          44,
+          64,
+          100,
+          15,
+          0
+        ],
+        "after": [
+          44,
+          44,
+          71,
+          107,
+          15,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_foreach_keep.a": {
+        "before": [
+          516,
+          516,
+          625,
+          931,
+          35,
+          0
+        ],
+        "after": [
+          516,
+          516,
+          699,
+          1005,
+          35,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_foreach_named_closures.a": {
+        "before": [
+          117,
+          117,
+          179,
+          219,
+          29,
+          0
+        ],
+        "after": [
+          117,
+          117,
+          188,
+          228,
+          29,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_foreach_named_more.a": {
+        "before": [
+          395,
+          395,
+          569,
+          819,
+          36,
+          0
+        ],
+        "after": [
+          395,
+          395,
+          635,
+          885,
+          36,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_foreach_named_numbers.a": {
+        "before": [
+          117,
+          117,
+          73,
+          177,
+          12,
+          0
+        ],
+        "after": [
+          117,
+          117,
+          97,
+          201,
+          12,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_foreach_named_objects.a": {
+        "before": [
+          165,
+          165,
+          207,
+          278,
+          31,
+          0
+        ],
+        "after": [
+          165,
+          165,
+          221,
+          292,
+          31,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_foreach_numbers.a": {
+        "before": [
+          373,
+          373,
+          155,
+          478,
+          14,
+          0
+        ],
+        "after": [
+          373,
+          373,
+          223,
+          546,
+          14,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_foreach_objects.a": {
+        "before": [
+          732,
+          732,
+          834,
+          1076,
+          63,
+          0
+        ],
+        "after": [
+          732,
+          732,
+          1004,
+          1246,
+          63,
+          0
+        ]
+      },
+      "internal/oracle/testdata/map_iteration.a": {
+        "before": [
+          146,
+          146,
+          200,
+          304,
+          21,
+          0
+        ],
+        "after": [
+          146,
+          146,
+          219,
+          323,
+          21,
+          0
+        ]
+      },
+      "internal/oracle/testdata/maybe_collections.a": {
+        "before": [
+          64,
+          64,
+          165,
+          224,
+          20,
+          0
+        ],
+        "after": [
+          64,
+          64,
+          176,
+          235,
+          20,
+          0
+        ]
+      },
+      "internal/oracle/testdata/maybe_number_slots.a": {
+        "before": [
+          484,
+          484,
+          304,
+          797,
+          16,
+          0
+        ],
+        "after": [
+          484,
+          484,
+          308,
+          801,
+          16,
+          0
+        ]
+      },
+      "internal/oracle/testdata/method_coverage_array_mutations.a": {
+        "before": [
+          18,
+          18,
+          47,
+          58,
+          10,
+          0
+        ],
+        "after": [
+          18,
+          18,
+          49,
+          60,
+          10,
+          0
+        ]
+      },
+      "internal/oracle/testdata/nested_array.a": {
+        "before": [
+          17,
+          17,
+          17,
+          27,
+          9,
+          0
+        ],
+        "after": [
+          17,
+          17,
+          21,
+          31,
+          9,
+          0
+        ]
+      },
+      "internal/oracle/testdata/normalize.a": {
+        "before": [
+          205,
+          205,
+          104,
+          274,
+          11,
+          0
+        ],
+        "after": [
+          205,
+          205,
+          439,
+          609,
+          11,
+          0
+        ]
+      },
+      "internal/oracle/testdata/normalize_long_marks.a": {
+        "before": [
+          8693,
+          8693,
+          8521,
+          8769,
+          398,
+          0
+        ],
+        "after": [
+          8693,
+          8693,
+          16898,
+          17146,
+          398,
+          0
+        ]
+      },
+      "internal/oracle/testdata/number_edges.a": {
+        "before": [
+          74,
+          74,
+          17,
+          94,
+          13,
+          0
+        ],
+        "after": [
+          74,
+          74,
+          22,
+          99,
+          13,
+          0
+        ]
+      },
+      "internal/oracle/testdata/optional_strings.a": {
+        "before": [
+          43,
+          43,
+          37,
+          78,
+          7,
+          0
+        ],
+        "after": [
+          43,
+          43,
+          40,
+          81,
+          7,
+          0
+        ]
+      },
+      "internal/oracle/testdata/overload_array_to_multimap.a": {
+        "before": [
+          11,
+          11,
+          33,
+          39,
+          8,
+          0
+        ],
+        "after": [
+          11,
+          11,
+          36,
+          42,
+          8,
+          0
+        ]
+      },
+      "internal/oracle/testdata/overload_sort_deduplicate.a": {
+        "before": [
+          10,
+          10,
+          39,
+          38,
+          3,
+          0
+        ],
+        "after": [
+          10,
+          10,
+          42,
+          41,
+          3,
+          0
+        ]
+      },
+      "internal/oracle/testdata/parameter_properties_kinds.a": {
+        "before": [
+          51,
+          51,
+          65,
+          100,
+          26,
+          0
+        ],
+        "after": [
+          51,
+          51,
+          69,
+          104,
+          26,
+          0
+        ]
+      },
+      "internal/oracle/testdata/parameter_properties_ownership.a": {
+        "before": [
+          120,
+          120,
+          184,
+          224,
+          12,
+          0
+        ],
+        "after": [
+          120,
+          120,
+          192,
+          232,
+          12,
+          0
+        ]
+      },
+      "internal/oracle/testdata/params_namespaces_shared/main.a": {
+        "before": [
+          16,
+          16,
+          27,
+          46,
+          11,
+          0
+        ],
+        "after": [
+          16,
+          16,
+          31,
+          50,
+          11,
+          0
+        ]
+      },
+      "internal/oracle/testdata/params_namespaces_values.a": {
+        "before": [
+          43,
+          43,
+          85,
+          103,
+          23,
+          0
+        ],
+        "after": [
+          43,
+          43,
+          87,
+          105,
+          23,
+          0
+        ]
+      },
+      "internal/oracle/testdata/proven_satisfies.a": {
+        "before": [
+          28,
+          28,
+          30,
+          57,
+          13,
+          0
+        ],
+        "after": [
+          28,
+          28,
+          31,
+          58,
+          13,
+          0
+        ]
+      },
+      "internal/oracle/testdata/read_files.a": {
+        "before": [
+          58,
+          58,
+          33,
+          76,
+          7,
+          0
+        ],
+        "after": [
+          58,
+          58,
+          130,
+          173,
+          7,
+          0
+        ]
+      },
+      "internal/oracle/testdata/read_order.a": {
+        "before": [
+          37,
+          37,
+          27,
+          61,
+          13,
+          0
+        ],
+        "after": [
+          37,
+          37,
+          32,
+          66,
+          13,
+          0
+        ]
+      },
+      "internal/oracle/testdata/regexp_cycle_collections.a": {
+        "before": [
+          31,
+          31,
+          85,
+          89,
+          23,
+          0
+        ],
+        "after": [
+          31,
+          31,
+          89,
+          93,
+          23,
+          0
+        ]
+      },
+      "internal/oracle/testdata/regexp_cycle_fields.a": {
+        "before": [
+          61,
+          61,
+          132,
+          130,
+          44,
+          0
+        ],
+        "after": [
+          61,
+          61,
+          138,
+          136,
+          44,
+          0
+        ]
+      },
+      "internal/oracle/testdata/regexp_exec.a": {
+        "before": [
+          163,
+          163,
+          93,
+          155,
+          17,
+          0
+        ],
+        "after": [
+          163,
+          163,
+          120,
+          182,
+          17,
+          0
+        ]
+      },
+      "internal/oracle/testdata/reuse_arrays.a": {
+        "before": [
+          78,
+          78,
+          35,
+          94,
+          11,
+          0
+        ],
+        "after": [
+          78,
+          78,
+          45,
+          104,
+          11,
+          0
+        ]
+      },
+      "internal/oracle/testdata/reuse_spread_method_alias.a": {
+        "before": [
+          8,
+          8,
+          7,
+          14,
+          6,
+          0
+        ],
+        "after": [
+          8,
+          8,
+          8,
+          15,
+          6,
+          0
+        ]
+      },
+      "internal/oracle/testdata/route_targets_recursive.a": {
+        "before": [
+          19,
+          18,
+          6,
+          23,
+          7,
+          1
+        ],
+        "after": [
+          19,
+          18,
+          7,
+          24,
+          7,
+          1
+        ]
+      },
+      "internal/oracle/testdata/route_targets_unknown.a": {
+        "before": [
+          36,
+          36,
+          18,
+          49,
+          7,
+          0
+        ],
+        "after": [
+          36,
+          36,
+          21,
+          52,
+          7,
+          0
+        ]
+      },
+      "internal/oracle/testdata/search_from.a": {
+        "before": [
+          292,
+          292,
+          159,
+          320,
+          22,
+          0
+        ],
+        "after": [
+          292,
+          292,
+          290,
+          451,
+          22,
+          0
+        ]
+      },
+      "internal/oracle/testdata/searches.a": {
+        "before": [
+          106,
+          106,
+          81,
+          173,
+          19,
+          0
+        ],
+        "after": [
+          106,
+          106,
+          84,
+          176,
+          19,
+          0
+        ]
+      },
+      "internal/oracle/testdata/set_foreach_arrays.a": {
+        "before": [
+          516,
+          516,
+          524,
+          713,
+          58,
+          0
+        ],
+        "after": [
+          516,
+          516,
+          638,
+          827,
+          58,
+          0
+        ]
+      },
+      "internal/oracle/testdata/set_foreach_closures.a": {
+        "before": [
+          411,
+          411,
+          634,
+          705,
+          39,
+          0
+        ],
+        "after": [
+          411,
+          411,
+          750,
+          821,
+          39,
+          0
+        ]
+      },
+      "internal/oracle/testdata/set_foreach_fnexpr.a": {
+        "before": [
+          32,
+          32,
+          51,
+          76,
+          10,
+          0
+        ],
+        "after": [
+          32,
+          32,
+          59,
+          84,
+          10,
+          0
+        ]
+      },
+      "internal/oracle/testdata/set_foreach_keep.a": {
+        "before": [
+          290,
+          290,
+          385,
+          520,
+          18,
+          0
+        ],
+        "after": [
+          290,
+          290,
+          465,
+          600,
+          18,
+          0
+        ]
+      },
+      "internal/oracle/testdata/set_foreach_named_closures.a": {
+        "before": [
+          95,
+          95,
+          155,
+          187,
+          28,
+          0
+        ],
+        "after": [
+          95,
+          95,
+          170,
+          202,
+          28,
+          0
+        ]
+      },
+      "internal/oracle/testdata/set_foreach_named_more.a": {
+        "before": [
+          179,
+          179,
+          297,
+          378,
+          26,
+          0
+        ],
+        "after": [
+          179,
+          179,
+          360,
+          441,
+          26,
+          0
+        ]
+      },
+      "internal/oracle/testdata/set_foreach_named_objects.a": {
+        "before": [
+          87,
+          87,
+          110,
+          149,
+          22,
+          0
+        ],
+        "after": [
+          87,
+          87,
+          123,
+          162,
+          22,
+          0
+        ]
+      },
+      "internal/oracle/testdata/set_foreach_numbers.a": {
+        "before": [
+          214,
+          214,
+          140,
+          317,
+          11,
+          0
+        ],
+        "after": [
+          214,
+          214,
+          214,
+          391,
+          11,
+          0
+        ]
+      },
+      "internal/oracle/testdata/set_foreach_objects.a": {
+        "before": [
+          368,
+          368,
+          515,
+          586,
+          30,
+          0
+        ],
+        "after": [
+          368,
+          368,
+          631,
+          702,
+          30,
+          0
+        ]
+      },
+      "internal/oracle/testdata/sets.a": {
+        "before": [
+          224,
+          224,
+          13010,
+          13107,
+          65,
+          0
+        ],
+        "after": [
+          224,
+          224,
+          13072,
+          13169,
+          65,
+          0
+        ]
+      },
+      "internal/oracle/testdata/shared_slices.a": {
+        "before": [
+          12236,
+          12236,
+          10648,
+          12767,
+          86,
+          0
+        ],
+        "after": [
+          12236,
+          12236,
+          10745,
+          12864,
+          86,
+          0
+        ]
+      },
+      "internal/oracle/testdata/size_class_churn.a": {
+        "before": [
+          675173,
+          675173,
+          270038,
+          675212,
+          8005,
+          0
+        ],
+        "after": [
+          675173,
+          675173,
+          405038,
+          810212,
+          8005,
+          0
+        ]
+      },
+      "internal/oracle/testdata/sort_releases.a": {
+        "before": [
+          30,
+          30,
+          59,
+          72,
+          11,
+          0
+        ],
+        "after": [
+          30,
+          30,
+          68,
+          81,
+          11,
+          0
+        ]
+      },
+      "internal/oracle/testdata/sort_top_level.a": {
+        "before": [
+          33,
+          33,
+          79,
+          96,
+          19,
+          0
+        ],
+        "after": [
+          33,
+          33,
+          88,
+          105,
+          19,
+          0
+        ]
+      },
+      "internal/oracle/testdata/splice_empty.a": {
+        "before": [
+          14,
+          14,
+          6,
+          23,
+          10,
+          0
+        ],
+        "after": [
+          14,
+          14,
+          10,
+          27,
+          10,
+          0
+        ]
+      },
+      "internal/oracle/testdata/splices.a": {
+        "before": [
+          74,
+          74,
+          29,
+          96,
+          12,
+          0
+        ],
+        "after": [
+          74,
+          74,
+          44,
+          111,
+          12,
+          0
+        ]
+      },
+      "internal/oracle/testdata/spreads.a": {
+        "before": [
+          36,
+          36,
+          39,
+          66,
+          18,
+          0
+        ],
+        "after": [
+          36,
+          36,
+          42,
+          69,
+          18,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_append.a": {
+        "before": [
+          248,
+          248,
+          140,
+          278,
+          48,
+          0
+        ],
+        "after": [
+          248,
+          248,
+          260,
+          398,
+          48,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_build_boundaries.a": {
+        "before": [
+          2229,
+          2229,
+          342,
+          2347,
+          11,
+          0
+        ],
+        "after": [
+          2229,
+          2229,
+          6749,
+          8754,
+          11,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_build_calls.a": {
+        "before": [
+          47,
+          47,
+          4,
+          52,
+          7,
+          0
+        ],
+        "after": [
+          47,
+          47,
+          420,
+          468,
+          7,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_build_join.a": {
+        "before": [
+          161,
+          161,
+          81,
+          193,
+          10,
+          0
+        ],
+        "after": [
+          161,
+          161,
+          281,
+          393,
+          10,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_build_padding.a": {
+        "before": [
+          759,
+          759,
+          126,
+          877,
+          7,
+          0
+        ],
+        "after": [
+          759,
+          759,
+          1154,
+          1905,
+          7,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_build_repeat.a": {
+        "before": [
+          240,
+          240,
+          32,
+          264,
+          8,
+          0
+        ],
+        "after": [
+          240,
+          240,
+          196,
+          428,
+          8,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_index.a": {
+        "before": [
+          58,
+          58,
+          44,
+          141,
+          6,
+          0
+        ],
+        "after": [
+          58,
+          58,
+          48,
+          145,
+          6,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_positions.a": {
+        "before": [
+          327,
+          327,
+          368,
+          606,
+          97,
+          0
+        ],
+        "after": [
+          327,
+          327,
+          546,
+          784,
+          97,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_views_characters.a": {
+        "before": [
+          281,
+          281,
+          1542,
+          1825,
+          8,
+          0
+        ],
+        "after": [
+          281,
+          281,
+          2310,
+          2593,
+          8,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_views_holders.a": {
+        "before": [
+          45,
+          45,
+          72,
+          79,
+          13,
+          0
+        ],
+        "after": [
+          45,
+          45,
+          75,
+          82,
+          13,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_views_loops.a": {
+        "before": [
+          159,
+          159,
+          45,
+          167,
+          21,
+          0
+        ],
+        "after": [
+          159,
+          159,
+          63,
+          185,
+          21,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_views_surrogates.a": {
+        "before": [
+          188,
+          188,
+          83,
+          255,
+          13,
+          0
+        ],
+        "after": [
+          188,
+          188,
+          98,
+          270,
+          13,
+          0
+        ]
+      },
+      "internal/oracle/testdata/string_views_throw.a": {
+        "before": [
+          55,
+          55,
+          62,
+          76,
+          14,
+          0
+        ],
+        "after": [
+          55,
+          55,
+          65,
+          79,
+          14,
+          0
+        ]
+      },
+      "internal/oracle/testdata/strings_more.a": {
+        "before": [
+          112,
+          112,
+          38,
+          163,
+          8,
+          0
+        ],
+        "after": [
+          112,
+          112,
+          45,
+          170,
+          8,
+          0
+        ]
+      },
+      "internal/oracle/testdata/throw_keeps_old_value_variants.a": {
+        "before": [
+          26,
+          26,
+          11,
+          32,
+          6,
+          0
+        ],
+        "after": [
+          26,
+          26,
+          12,
+          33,
+          6,
+          0
+        ]
+      },
+      "internal/oracle/testdata/timsort.a": {
+        "before": [
+          2769,
+          2769,
+          3778,
+          6231,
+          308,
+          0
+        ],
+        "after": [
+          2769,
+          2769,
+          49033,
+          51486,
+          308,
+          0
+        ]
+      },
+      "internal/oracle/testdata/tuple_values.a": {
+        "before": [
+          119,
+          119,
+          115,
+          196,
+          37,
+          0
+        ],
+        "after": [
+          119,
+          119,
+          116,
+          197,
+          37,
+          0
+        ]
+      },
+      "internal/oracle/testdata/tuples_kept.a": {
+        "before": [
+          31,
+          31,
+          46,
+          66,
+          13,
+          0
+        ],
+        "after": [
+          31,
+          31,
+          48,
+          68,
+          13,
+          0
+        ]
+      },
+      "internal/oracle/testdata/undefined_elements.a": {
+        "before": [
+          19,
+          19,
+          46,
+          42,
+          8,
+          0
+        ],
+        "after": [
+          19,
+          19,
+          47,
+          43,
+          8,
+          0
+        ]
+      },
+      "internal/oracle/testdata/undefined_keys.a": {
+        "before": [
+          122,
+          122,
+          196,
+          261,
+          24,
+          0
+        ],
+        "after": [
+          122,
+          122,
+          222,
+          287,
+          24,
+          0
+        ]
+      },
+      "internal/oracle/testdata/undefined_strings.a": {
+        "before": [
+          15,
+          15,
+          18,
+          40,
+          6,
+          0
+        ],
+        "after": [
+          15,
+          15,
+          19,
+          41,
+          6,
+          0
+        ]
+      },
+      "internal/oracle/testdata/user_iterators.a": {
+        "before": [
+          663,
+          663,
+          455,
+          904,
+          64,
+          0
+        ],
+        "after": [
+          663,
+          663,
+          490,
+          939,
+          64,
+          0
+        ]
+      },
+      "internal/oracle/testdata/utf8_sweep.a": {
+        "before": [
+          38498,
+          38498,
+          7701,
+          38501,
+          7706,
+          0
+        ],
+        "after": [
+          38498,
+          38498,
+          36235,
+          67035,
+          7706,
+          0
+        ]
+      },
+      "internal/oracle/testdata/utf8_view.a": {
+        "before": [
+          59,
+          59,
+          33,
+          79,
+          7,
+          0
+        ],
+        "after": [
+          59,
+          59,
+          105,
+          151,
+          7,
+          0
+        ]
+      },
+      "internal/oracle/testdata/visits.a": {
+        "before": [
+          95,
+          95,
+          124,
+          208,
+          23,
+          0
+        ],
+        "after": [
+          95,
+          95,
+          131,
+          215,
+          23,
+          0
+        ]
+      },
+      "internal/oracle/testdata/weak_parent.a": {
+        "before": [
+          86,
+          86,
+          253,
+          302,
+          41,
+          0
+        ],
+        "after": [
+          86,
+          86,
+          254,
+          303,
+          41,
+          0
+        ]
+      },
+      "internal/oracle/testdata/write_files.a": {
+        "before": [
+          132,
+          132,
+          52,
+          167,
+          8,
+          0
+        ],
+        "after": [
+          132,
+          132,
+          184,
+          299,
+          8,
+          0
+        ]
+      },
+      "stage3/fixtures/taste/07_compact.a": {
+        "before": [
+          12,
+          12,
+          80,
+          88,
+          5,
+          0
+        ],
+        "after": [
+          12,
+          12,
+          84,
+          92,
+          5,
+          0
+        ]
+      },
+      "stage3/fixtures/taste/13_void_callback.a": {
+        "before": [
+          4,
+          4,
+          8,
+          14,
+          4,
+          0
+        ],
+        "after": [
+          4,
+          4,
+          9,
+          15,
+          4,
+          0
+        ]
+      },
+      "stage3/fixtures/taste/14_relative_complement.a": {
+        "before": [
+          10,
+          10,
+          22,
+          34,
+          7,
+          0
+        ],
+        "after": [
+          10,
+          10,
+          25,
+          37,
+          7,
+          0
+        ]
+      }
+    }
+  }
+}
