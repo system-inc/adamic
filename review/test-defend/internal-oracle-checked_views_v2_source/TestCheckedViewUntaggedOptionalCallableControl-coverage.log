@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T16:38:46.9341141Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T16:38:46.945552291Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewUntaggedOptionalCallableControl"}
+{"Time":"2026-10-09T16:38:46.945644638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewUntaggedOptionalCallableControl","Output":"=== RUN   TestCheckedViewUntaggedOptionalCallableControl\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:46.945688272Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewUntaggedOptionalCallableControl","Output":"=== PAUSE TestCheckedViewUntaggedOptionalCallableControl\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:46.945690606Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewUntaggedOptionalCallableControl"}
+{"Time":"2026-10-09T16:38:46.945698367Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewUntaggedOptionalCallableControl"}
+{"Time":"2026-10-09T16:38:46.9457005Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewUntaggedOptionalCallableControl","Output":"=== CONT  TestCheckedViewUntaggedOptionalCallableControl\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:47.025290252Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewUntaggedOptionalCallableControl","Output":"    checked_views_v2_source_test.go:115: gate cache node miss\n"}
+{"Time":"2026-10-09T16:38:47.466328688Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewUntaggedOptionalCallableControl","Output":"    checked_views_v2_source_test.go:119: gate cache node miss\n"}
+{"Time":"2026-10-09T16:38:47.508456779Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewUntaggedOptionalCallableControl","Output":"--- PASS: TestCheckedViewUntaggedOptionalCallableControl (0.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:47.508495336Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewUntaggedOptionalCallableControl","Elapsed":0.56}
+{"Time":"2026-10-09T16:38:47.508517329Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:38:47.516710697Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"coverage: 14.8% of statements in ./internal/lower, ./internal/native, ./internal/javascript\n"}
+{"Time":"2026-10-09T16:38:47.534418165Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T16:38:47.534465485Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T16:38:47.534469Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T16:38:47.537773643Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.602s\tcoverage: 14.8% of statements in ./internal/lower, ./internal/native, ./internal/javascript\n"}
+{"Time":"2026-10-09T16:38:47.537807974Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.604}

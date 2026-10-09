@@ -1,0 +1,11 @@
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -123,7 +123,7 @@
+ 		known := true
+ 		for i, parameter := range contract.Parameters {
+ 			parameters[i] = e.program.ViewContracts[parameter-1].Of
+-			known = known && parameters[i] != 0
++			known = known && parameters[i] != ir.MaybeNumber
+ 		}
+ 		result := e.program.ViewContracts[contract.Result-1].Of
+ 		if !known || result == 0 {

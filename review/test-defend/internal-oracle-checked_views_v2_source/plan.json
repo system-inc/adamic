@@ -1,0 +1,26 @@
+[
+  {
+    "id": "D1",
+    "file": "internal/javascript/view_unions_untagged.go",
+    "line": 126,
+    "old": "known = known && parameters[i] != 0",
+    "new": "known = known && parameters[i] != ir.MaybeNumber",
+    "change": "Replace the unknown-representation constant with MaybeNumber, excluding optional numeric callable parameters."
+  },
+  {
+    "id": "D2",
+    "file": "internal/javascript/view_unions_untagged.go",
+    "line": 134,
+    "old": "return choices.find(expected=>recorded!==undefined && recorded.result===expected.result && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>value!==0 && value===expected.parameters[index])) || choices[0];",
+    "new": "return choices[0];",
+    "change": "Return the first callable member signature instead of selecting the matching producer signature."
+  },
+  {
+    "id": "D3",
+    "file": "internal/lower/proven_relations.go",
+    "line": 23,
+    "old": "\"optional field \"+field+\" has no proven compatible presence/type\"",
+    "new": "\"optional field \"+field[:len(field)-1]+\" has no proven compatible presence/type\"",
+    "change": "Off-by-one the field-name diagnostic bound, dropping its last byte."
+  }
+]

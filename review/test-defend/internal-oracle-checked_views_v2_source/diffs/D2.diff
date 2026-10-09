@@ -1,0 +1,11 @@
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -131,7 +131,7 @@
+ 		}
+ 		choices = append(choices, unionCallableSignature(parameters, result, root.Name))
+ 	}
+-	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>recorded!==undefined && recorded.result===expected.result && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>value!==0 && value===expected.parameters[index])) || choices[0];})(" + recorded + ")"
++	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices[0];})(" + recorded + ")"
+ }
+ 
+ func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expected string) string {
