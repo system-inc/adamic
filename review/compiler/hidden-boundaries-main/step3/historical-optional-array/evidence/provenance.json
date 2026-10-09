@@ -1,0 +1,12 @@
+{
+  "base": "dcdbb9098f77f30ad41790c56df1bd63ad462b63",
+  "census_pin": "388096e6a83a4e9d287fb827f793c599ba1bf0ad",
+  "node": "v24.19.0",
+  "nproc": "5",
+  "source": "/tmp/hidden-adapted/src/compiler",
+  "hashes": "source-hashes.json",
+  "base_object_sha256": "03ebbb1d5192a5db9ba86d590b9eb638704ad8612cf7e71bad4427dd18c0294a",
+  "baseline_overlay": "current guarded measurement overlay with internal/lower/object.go replaced by exact base content; unused optional_array.go does not change any call site",
+  "base_region_identical_to_delivery": true,
+  "own_revealed_bytes": 0
+}

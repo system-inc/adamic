@@ -1,0 +1,9 @@
+Independent stock units intersecting region: ['utilities.ts:11316:1', 'utilities.ts:11322:5']
+baseline intersection 7102 units 2
+baseline /tmp/hidden-adapted/src/compiler/utilities.ts:11316:35 Refused a method in object destructuring
+baseline /tmp/hidden-adapted/src/compiler/utilities.ts:11320:5 Refused overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined>
+after intersection 7102 units 2
+after /tmp/hidden-adapted/src/compiler/utilities.ts:11320:5 Refused overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined>
+after /tmp/hidden-adapted/src/compiler/utilities.ts:11320:5 Refused overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined>
+CAUGHT scope-validation mutant: omitted nested independent attempt
+Revealed difference: 0

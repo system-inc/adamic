@@ -1,0 +1,197 @@
+{
+  "source_pin": "388096e6a83a4e9d287fb827f793c599ba1bf0ad",
+  "compiler": "c68bf26cb4225e1f24a84f1a412f10e7eaa3da9a",
+  "all_adapted_hashes_verified": 82,
+  "scope": "All independently overlapping declarations in the seven assigned intervals; entire project loaded and registered. No corpus-wide claim.",
+  "regions": [
+    {
+      "label": "hidden-01-large",
+      "file": "transformers/declarations.ts",
+      "sha256": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed",
+      "start": 68180,
+      "end": 81805,
+      "bytes": 13625,
+      "before": {
+        "hidden_bytes": 13625,
+        "ranges": [
+          [
+            68180,
+            81805
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 13625,
+        "ranges": [
+          [
+            68180,
+            81805
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    },
+    {
+      "label": "hidden-01-small",
+      "file": "transformers/declarations.ts",
+      "sha256": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed",
+      "start": 82928,
+      "end": 89827,
+      "bytes": 6899,
+      "before": {
+        "hidden_bytes": 6899,
+        "ranges": [
+          [
+            82928,
+            89827
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 6899,
+        "ranges": [
+          [
+            82928,
+            89827
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    },
+    {
+      "label": "hidden-05-large",
+      "file": "transformers/es2018.ts",
+      "sha256": "85b478ff113c6dfa39fd489f0c81c654ceb24a0ee8ef82592c16264301ef7b88",
+      "start": 35690,
+      "end": 41768,
+      "bytes": 6078,
+      "before": {
+        "hidden_bytes": 6078,
+        "ranges": [
+          [
+            35690,
+            41768
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 6078,
+        "ranges": [
+          [
+            35690,
+            41768
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    },
+    {
+      "label": "hidden-05-small",
+      "file": "transformers/es2015.ts",
+      "sha256": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4",
+      "start": 144178,
+      "end": 149926,
+      "bytes": 5748,
+      "before": {
+        "hidden_bytes": 5748,
+        "ranges": [
+          [
+            144178,
+            149926
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 5748,
+        "ranges": [
+          [
+            144178,
+            149926
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    },
+    {
+      "label": "hidden-06",
+      "file": "transformers/esDecorators.ts",
+      "sha256": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633",
+      "start": 61324,
+      "end": 72741,
+      "bytes": 11417,
+      "before": {
+        "hidden_bytes": 11417,
+        "ranges": [
+          [
+            61324,
+            72741
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 11417,
+        "ranges": [
+          [
+            61324,
+            72741
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    },
+    {
+      "label": "hidden-13",
+      "file": "transformers/es2017.ts",
+      "sha256": "a5ad5e9213c7af3f4f266f50553cdfc4e31296cbe54fe8464d6a792e4d2f2755",
+      "start": 30237,
+      "end": 37526,
+      "bytes": 7289,
+      "before": {
+        "hidden_bytes": 7289,
+        "ranges": [
+          [
+            30237,
+            37526
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 7289,
+        "ranges": [
+          [
+            30237,
+            37526
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    },
+    {
+      "label": "hidden-14",
+      "file": "utilities.ts",
+      "sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "start": 455532,
+      "end": 462634,
+      "bytes": 7102,
+      "before": {
+        "hidden_bytes": 7102,
+        "ranges": [
+          [
+            455532,
+            462634
+          ]
+        ]
+      },
+      "after": {
+        "hidden_bytes": 7102,
+        "ranges": [
+          [
+            455532,
+            462634
+          ]
+        ]
+      },
+      "revealed_bytes": 0
+    }
+  ]
+}

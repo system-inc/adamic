@@ -1,0 +1,8 @@
+=== RUN   TestOverloadStructuralRefuses
+=== RUN   TestOverloadStructuralRefuses/factory_field_storage
+    overload_structural_test.go:53: wanted refusal naming result.value, got <nil>
+--- FAIL: TestOverloadStructuralRefuses (0.21s)
+    --- FAIL: TestOverloadStructuralRefuses/factory_field_storage (0.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.225s
+FAIL

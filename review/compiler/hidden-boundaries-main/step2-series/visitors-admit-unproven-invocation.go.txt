@@ -1,0 +1,337 @@
+package lower
+
+import (
+	"fmt"
+	"strings"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+)
+
+// This is a coupled input contract, not a new callback subtype relation.
+// The overload supplies an array of T and a callback taking that same T.
+type visitorInput struct {
+	array, visitor int
+	input          *checker.Type
+}
+type visitorDomain struct {
+	unproven, blocked *ast.Node
+	reason            string
+}
+
+func (l *lowering) visitorArrayElement(proven *checker.Type) *checker.Type {
+	if proven == nil {
+		return nil
+	}
+	proven = l.checker.GetNonNullableType(proven)
+	if proven.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		proven = l.checker.GetBaseConstraintOfType(proven)
+	}
+	if proven == nil {
+		return nil
+	}
+	return l.checker.GetIndexTypeOfType(proven, l.checker.GetNumberType())
+}
+
+func (l *lowering) visitorSignature(proven *checker.Type) *checker.Signature {
+	signatures := l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(proven), checker.SignatureKindCall)
+	if len(signatures) != 1 || len(signatures[0].Parameters()) != 1 || len(signatures[0].TypeParameters()) != 0 {
+		return nil
+	}
+	declaration := signatures[0].Declaration()
+	if declaration == nil || len(declaration.Parameters()) != 1 {
+		return nil
+	}
+	parameter := declaration.Parameters()[0].AsParameterDeclaration()
+	if parameter.DotDotDotToken != nil || parameter.QuestionToken != nil || parameter.Initializer != nil {
+		return nil
+	}
+	return signatures[0]
+}
+
+func (l *lowering) overloadVisitorInput(implementation, overload *ast.Node, position int) *visitorInput {
+	if position >= len(overload.Parameters()) || position >= len(implementation.Parameters()) {
+		return nil
+	}
+	given := l.visitorSignature(l.checker.GetTypeAtLocation(overload.Parameters()[position]))
+	takes := l.visitorSignature(l.checker.GetTypeAtLocation(implementation.Parameters()[position]))
+	if given == nil || takes == nil {
+		return nil
+	}
+	input := l.checker.GetTypeOfSymbol(given.Parameters()[0])
+	domain := l.checker.GetTypeOfSymbol(takes.Parameters()[0])
+	if input.Flags()&checker.TypeFlagsTypeParameter == 0 || domain.Flags()&checker.TypeFlagsTypeParameter != 0 || !l.censusRelated(input, domain) || !l.censusRelated(l.checker.GetReturnTypeOfSignature(given), l.checker.GetReturnTypeOfSignature(takes)) {
+		return nil
+	}
+	for i, parameter := range overload.Parameters() {
+		element := l.visitorArrayElement(l.checker.GetTypeAtLocation(parameter))
+		if element == input {
+			return &visitorInput{array: i, visitor: position, input: input}
+		}
+	}
+	return nil
+}
+
+// Classify every use of the callback, recursively through known helper bodies.
+// A node only inherits the input domain from the original array, never from a
+// broad Node annotation or from a result returned by the callback itself.
+func (l *lowering) proveVisitorDomain(declaration *ast.Node, array, visitor int, active map[*ast.Node]bool) visitorDomain {
+	if active[declaration] {
+		return visitorDomain{blocked: declaration, reason: "recursive helper input domain"}
+	}
+	active[declaration] = true
+	defer delete(active, declaration)
+	parameters := declaration.Parameters()
+	if visitor < 0 || visitor >= len(parameters) || !ast.IsIdentifier(parameters[visitor].Name()) {
+		return visitorDomain{blocked: declaration, reason: "unknown visitor parameter"}
+	}
+	callbacks := map[*ast.Symbol]bool{l.symbol(parameters[visitor].Name()): true}
+	arrays := map[*ast.Symbol]bool{}
+	elements := map[*ast.Symbol]bool{}
+	if array >= 0 && array < len(parameters) && parameters[array].AsParameterDeclaration().Initializer == nil {
+		arrays[l.symbol(parameters[array].Name())] = true
+	}
+	// Only unchanged plain aliases carry an origin. Find them before inspecting
+	// calls, including loop bindings, so source order is not an accidental proof.
+	var origin func(*ast.Node, map[*ast.Symbol]bool) bool
+	origin = func(node *ast.Node, known map[*ast.Symbol]bool) bool {
+		return node != nil && ast.IsIdentifier(ast.SkipParentheses(node)) && known[l.symbol(ast.SkipParentheses(node))]
+	}
+	changed := true
+	for changed {
+		changed = false
+		var scan ast.Visitor
+		scan = func(node *ast.Node) bool {
+			if ast.IsFunctionLike(node) {
+				return false
+			}
+			if node.Kind == ast.KindVariableDeclaration && ast.IsIdentifier(node.Name()) && l.overloadValueBinding(node) {
+				symbol := l.symbol(node.Name())
+				initial := node.AsVariableDeclaration().Initializer
+				for _, set := range []map[*ast.Symbol]bool{callbacks, arrays, elements} {
+					if !set[symbol] && origin(initial, set) {
+						set[symbol] = true
+						changed = true
+					}
+				}
+				if initial != nil && ast.SkipParentheses(initial).Kind == ast.KindElementAccessExpression {
+					access := ast.SkipParentheses(initial).AsElementAccessExpression()
+					if origin(access.Expression, arrays) && !elements[symbol] {
+						elements[symbol] = true
+						changed = true
+					}
+				}
+			}
+			if node.Kind == ast.KindForOfStatement {
+				loop := node.AsForInOrOfStatement()
+				if origin(loop.Expression, arrays) && loop.Initializer.Kind == ast.KindVariableDeclarationList {
+					for _, binding := range loop.Initializer.AsVariableDeclarationList().Declarations.Nodes {
+						if ast.IsIdentifier(binding.Name()) && l.overloadValueBinding(binding) && !elements[l.symbol(binding.Name())] {
+							elements[l.symbol(binding.Name())] = true
+							changed = true
+						}
+					}
+				}
+			}
+			node.ForEachChild(scan)
+			return false
+		}
+		declaration.Body().ForEachChild(scan)
+	}
+	result := visitorDomain{}
+	var scan ast.Visitor
+	scan = func(node *ast.Node) bool {
+		if node.Kind == ast.KindShorthandPropertyAssignment {
+			source := l.checker.GetShorthandAssignmentValueSymbol(node)
+			if source != nil {
+				source = l.checker.GetExportSymbolOfSymbol(source)
+			}
+			if callbacks[source] {
+				result.blocked = node
+				result.reason = "visitor stored in an opaque shorthand field"
+				return false
+			}
+			if arrays[source] || elements[source] {
+				if result.unproven == nil {
+					result.unproven = node
+				}
+			}
+		}
+		// A captured write or escape still invalidates the domain, even if its
+		// enclosing closure is not visibly called along this path.
+		if ast.IsIdentifier(node) && ast.IsAssignmentTarget(node) && (arrays[l.symbol(node)] || elements[l.symbol(node)] || callbacks[l.symbol(node)]) {
+			result.blocked = node
+			result.reason = "a write to an input or visitor alias"
+			return false
+		}
+		if node.Kind == ast.KindBinaryExpression && ast.IsAssignmentOperator(node.AsBinaryExpression().OperatorToken.Kind) {
+			destination := ast.SkipParentheses(node.AsBinaryExpression().Left)
+			if destination.Kind == ast.KindElementAccessExpression && origin(destination.AsElementAccessExpression().Expression, arrays) || destination.Kind == ast.KindPropertyAccessExpression && (origin(destination.AsPropertyAccessExpression().Expression, arrays) || origin(destination.AsPropertyAccessExpression().Expression, elements)) {
+				result.blocked = node
+				result.reason = "a write through the original input domain"
+				return false
+			}
+		}
+		if node.Kind == ast.KindCallExpression {
+			call := node.AsCallExpression()
+			callee := ast.SkipParentheses(call.Expression)
+			if origin(callee, callbacks) {
+				if len(call.Arguments.Nodes) != 1 || !origin(call.Arguments.Nodes[0], elements) || !l.visitorPresentAt(call.AsNode(), ast.SkipParentheses(call.Arguments.Nodes[0])) {
+					if result.unproven == nil {
+						result.unproven = node
+					}
+				}
+			} else {
+				visitorPositions, arrayPosition := []int{}, -1
+				inputElement := false
+				for i, argument := range call.Arguments.Nodes {
+					if origin(argument, callbacks) {
+						visitorPositions = append(visitorPositions, i)
+					}
+					inputElement = inputElement || origin(argument, elements)
+					if origin(argument, arrays) {
+						arrayPosition = i
+					}
+				}
+				if len(visitorPositions) > 0 {
+					helper := l.visitorHelper(callee)
+					if helper == nil || helper.Parent == nil || helper.Parent.Kind != ast.KindSourceFile {
+						result.blocked = node
+						result.reason = "visitor forwarded to an unknown consumer"
+						return false
+					}
+					for _, visitorPosition := range visitorPositions {
+						nested := l.proveVisitorDomain(helper, arrayPosition, visitorPosition, active)
+						if nested.blocked != nil {
+							result.blocked = nested.blocked
+							result.reason = nested.reason
+						}
+						if nested.unproven != nil && result.unproven == nil {
+							result.unproven = nested.unproven
+						}
+					}
+				} else if arrayPosition >= 0 || inputElement {
+					// Unknown effects on the original array or its elements do not preserve T.
+					if result.unproven == nil {
+						result.unproven = node
+					}
+				}
+				if callee.Kind == ast.KindPropertyAccessExpression && origin(callee.AsPropertyAccessExpression().Expression, arrays) && callee.Name().Text() != "slice" {
+					result.blocked = node
+					result.reason = "an unproved method on the original array"
+					return false
+				}
+			}
+		}
+		if ast.IsIdentifier(node) && callbacks[l.symbol(node)] && node.Parent != nil && (node.Parent.Name() != node || node.Parent.Kind == ast.KindShorthandPropertyAssignment) && !ast.IsPartOfTypeNode(node) {
+			parent := overloadValueParent(node)
+			allowed := parent != nil && parent.Kind == ast.KindCallExpression
+			if parent != nil {
+				switch parent.Kind {
+				case ast.KindVariableDeclaration:
+					allowed = ast.IsIdentifier(parent.Name()) && callbacks[l.symbol(parent.Name())]
+				case ast.KindConditionalExpression:
+					allowed = ast.SkipParentheses(parent.AsConditionalExpression().Condition) == node
+				case ast.KindIfStatement:
+					allowed = ast.SkipParentheses(parent.AsIfStatement().Expression) == node
+				case ast.KindBinaryExpression:
+					operator := parent.AsBinaryExpression().OperatorToken.Kind
+					allowed = operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken
+				}
+			}
+			if !allowed {
+				result.blocked = node
+				result.reason = "visitor escapes its implementation invocation sites"
+				return false
+			}
+		}
+		node.ForEachChild(scan)
+		return false
+	}
+	declaration.Body().ForEachChild(scan)
+	result.unproven = nil
+	return result
+}
+
+// Only an explicit presence comparison supplies this fact. A type assertion or
+// a declared T[] does not show that an indexed read was present.
+func (l *lowering) visitorPresentAt(call, argument *ast.Node) bool {
+	for child, parent := call, call.Parent; parent != nil && !ast.IsFunctionLike(parent); child, parent = parent, parent.Parent {
+		var condition *ast.Node
+		truth := true
+		if parent.Kind == ast.KindIfStatement {
+			branch := parent.AsIfStatement()
+			condition = branch.Expression
+			truth = child == branch.ThenStatement
+		} else if parent.Kind == ast.KindConditionalExpression {
+			branch := parent.AsConditionalExpression()
+			condition = branch.Condition
+			truth = child == branch.WhenTrue
+		}
+		if condition == nil || ast.SkipParentheses(condition).Kind != ast.KindBinaryExpression {
+			continue
+		}
+		binary := ast.SkipParentheses(condition).AsBinaryExpression()
+		left, right := ast.SkipParentheses(binary.Left), ast.SkipParentheses(binary.Right)
+		same := func(a, b *ast.Node) bool {
+			return ast.IsIdentifier(a) && ast.IsIdentifier(b) && l.symbol(a) == l.symbol(b)
+		}
+		present := same(left, argument) && ast.IsIdentifier(right) && l.symbol(right) == l.checker.GetUndefinedSymbol() || same(right, argument) && ast.IsIdentifier(left) && l.symbol(left) == l.checker.GetUndefinedSymbol()
+		if present && (truth && binary.OperatorToken.Kind == ast.KindExclamationEqualsEqualsToken || !truth && binary.OperatorToken.Kind == ast.KindEqualsEqualsEqualsToken) {
+			return true
+		}
+	}
+	return false
+}
+
+func (l *lowering) visitorHelper(callee *ast.Node) *ast.Node {
+	symbol := l.symbol(callee)
+	if symbol == nil {
+		return nil
+	}
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() != nil && len(declaration.TypeParameters()) == 0 {
+			return declaration
+		}
+	}
+	return nil
+}
+
+func (l *lowering) admitOverloadVisitor(implementation, overload *ast.Node, position, ordinal int) (bool, error) {
+	input := l.overloadVisitorInput(implementation, overload, position)
+	if input == nil {
+		return false, nil
+	}
+	if implementation.Parent == nil || implementation.Parent.Kind != ast.KindSourceFile {
+		return false, l.notYet(implementation, "a nested visitor consumer requiring capture-preserving specialization")
+	}
+	proof := l.proveVisitorDomain(implementation, input.array, input.visitor, map[*ast.Node]bool{})
+	if proof.blocked != nil {
+		return false, l.notYet(proof.blocked, "visitor argument path: "+proof.reason)
+	}
+	if proof.unproven != nil && strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(overload)), ".a") {
+		return false, &Refused{Where: l.program.Where(proof.unproven), What: fmt.Sprintf("overload %d of %s visitor argument path is unproven at %s: original-array input must fit %s and exclude undefined", ordinal, implementation.Name().Text(), l.program.Where(proof.unproven), l.checker.TypeToString(input.input)) + l.overloadCallbackParameterRelation(l.checker.GetTypeAtLocation(overload.Parameters()[position]), l.checker.GetTypeAtLocation(implementation.Parameters()[position])), Fix: "pass a present original input element at every visitor invocation, including helpers"}
+	}
+	// Diagnose the independent result relation before an escaped consumer. An
+	// admitted unserved result still goes through overloadDirectUses; the value
+	// path itself also retains its original unknown/generic target stops.
+	produced := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation))
+	promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
+	if !l.censusRelated(produced, promised) && !l.censusNullableOverloadResult(produced, promised) && !l.overloadStructuralProof(implementation, overload) {
+		return true, nil
+	}
+	// The TypeScript case is specialized at its concrete call. No unchecked
+	// function value may bypass those implementation invocation sites.
+	var escaped *ast.Node
+	l.overloadSymbolUses(l.symbol(implementation.Name()), func(use *ast.Node) bool {
+		parent := overloadValueParent(use)
+		if parent == nil || parent.Kind != ast.KindCallExpression || ast.SkipParentheses(parent.AsCallExpression().Expression) != use {
+			escaped = use
+		}
+		return false
+	})
+	if escaped != nil {
+		return false, l.notYet(escaped, "an escaped visitor overload without concrete input invocation checks")
+	}
+	return true, nil
+}

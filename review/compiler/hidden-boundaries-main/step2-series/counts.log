@@ -1,0 +1,121 @@
+panic: test timed out after 1m30s
+	running tests:
+		TestCountsAreRecorded (1m30s)
+
+goroutine 5789 [running]:
+testing.(*M).startAlarm.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2959 +0x34a
+created by time.goFunc
+	/workspace/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2142 +0x425
+testing.tRunner(0x131f8a424b48, 0x131f8a3c7ae8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2199 +0x123
+testing.runTests({0xd54c22, 0x1c}, {0xd71a3a, 0x2c}, 0x131f8a1c1740, {0x1eec260, 0xd8, 0xd8}, {0xc2aa4e25a013739a, 0x14f4eda5f1, ...})
+	/workspace/adamic-tools/go/src/testing/testing.go:2740 +0x510
+testing.(*M).Run(0x131f8a4af400)
+	/workspace/adamic-tools/go/src/testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/internal/oracle.TestMain(0x1f38ac0?)
+	/workspace/adamic/internal/oracle/cache_test.go:452 +0x1f
+main.main()
+	_testmain.go:478 +0xa5
+
+goroutine 21 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xc, 0x131f8a7815c8, 0x4, 0x131f8c0e3830, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x131f8a7815f6?, 0x131f8a781720?, 0x5391eb?, 0x18?, 0x1ded148?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x131f92cdd640)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x131f8a042f30?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x131f8d581ba0)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x131f8d581ba0)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).Output(0x131f8d581ba0)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:1040 +0xca
+github.com/system-inc/adamic/internal/oracle.interfaceCastCounts(0x131f8a424d88)
+	/workspace/adamic/internal/oracle/interface_cast_counts_test.go:21 +0x1a5
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded(0x131f8a424d88)
+	/workspace/adamic/internal/oracle/counts_test.go:178 +0x169
+testing.tRunner(0x131f8a424d88, 0x1e54bb8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 5787 [IO wait]:
+internal/poll.runtime_pollWait(0x7fa4bc6a4200, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x131f8ad84d20?, 0x131f8fcaa400?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x131f8ad84d20, {0x131f8fcaa400, 0x200, 0x200})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x131f8e3b8da0, {0x131f8fcaa400?, 0x1d8e268?, 0x0?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x131f8cc70030, {0x1e47850, 0x131f8e3b8da0})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1e47cd0, 0x131f8cc70030}, {0x1e47850, 0x131f8e3b8da0}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x131f8e3b8da0?, {0x1e47cd0?, 0x131f8cc70030?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x131f8e3b8da0, {0x1e47cd0, 0x131f8cc70030})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1e47cd0, 0x131f8cc70030}, {0x1e478d0, 0x131f8e3b8da0}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x131f8a1c17e8?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 21
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 5788 [IO wait]:
+internal/poll.runtime_pollWait(0x7fa4bd0b2800, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x131f8ad84de0?, 0x131f8cd2a000?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x131f8ad84de0, {0x131f8cd2a000, 0x8000, 0x8000})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x131f8e3b8db8, {0x131f8cd2a000?, 0x1d8e2e8?, 0x4cf401?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+io.copyBuffer({0x1e49030, 0x131f8e03d630}, {0x1e47850, 0x131f8e3b8db8}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:429 +0x190
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x131f8e3b8db8?, {0x1e49030?, 0x131f8e03d630?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x131f8e3b8db8, {0x1e49030, 0x131f8e03d630})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1e49030, 0x131f8e03d630}, {0x1e478d0, 0x131f8e3b8db8}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x1e54bb8?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 21
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+FAIL	github.com/system-inc/adamic/internal/oracle	90.047s
+FAIL

@@ -1,0 +1,11 @@
+--- internal/lower/overload_results.go
++++ internal/lower/overload_results.go
+@@ -79,7 +79,7 @@
+ 	}
+ 	// A narrower writable field is safe only on a fresh result. Scalar factories
+ 	// returning a literal create it at the exit, before another owner can see it.
+-	if !l.overloadFreshResult(implementation, map[*ast.Node]bool{}) {
++	if false && !l.overloadFreshResult(implementation, map[*ast.Node]bool{}) {
+ 		return false
+ 	}
+ 	properties := l.checker.GetPropertiesOfType(promised)
