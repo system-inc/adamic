@@ -1,0 +1,125 @@
+{
+  "base": "2b1be38362046455e0e5454d8b0e674a8630e95d",
+  "nproc": 5,
+  "cpu_quota": 4,
+  "cold_definition": "empty ADAMIC_BUILD_CACHE_DIR; installed toolchain and setup-populated Go cache retained",
+  "measurements": [
+    {
+      "log": "unit14-cold.log",
+      "unit": "TestWASIUnit14",
+      "seconds": 7.89,
+      "fixture": "internal/oracle/testdata/regions.a",
+      "fixture_seconds": 0.33,
+      "phases": []
+    },
+    {
+      "log": "unit14-diagnostic-cold.log",
+      "unit": "TestWASIUnit14",
+      "seconds": 13.55,
+      "fixture": "internal/oracle/testdata/regions.a",
+      "fixture_seconds": 0.31,
+      "phases": [
+        "wasm_test.go:371: WASI toolchain probe phase 0.117s",
+        "wasm_test.go:371: WASI runtime inputs and cache identity phase 0.044s",
+        "wasm_test.go:104: WASI runtime build/cache phase counted=false 5.804s",
+        "wasm_test.go:371: WASI compiler build/cache phase 7.279s",
+        "wasm_test.go:154: WASI generate phase 0.053s",
+        "wasm_test.go:160: WASI link/cache phase 0.127s",
+        "wasm_test.go:210: WASI source Node phase 0.085s",
+        "wasm_test.go:213: WASI execution phase 0.040s"
+      ]
+    },
+    {
+      "log": "unit14-diagnostic-warm.log",
+      "unit": "TestWASIUnit14",
+      "seconds": 0.53,
+      "fixture": "internal/oracle/testdata/regions.a",
+      "fixture_seconds": 0.27,
+      "phases": [
+        "wasm_test.go:371: WASI toolchain probe phase 0.165s",
+        "wasm_test.go:371: WASI runtime inputs and cache identity phase 0.058s",
+        "wasm_test.go:104: WASI runtime build/cache phase counted=false 0.001s",
+        "wasm_test.go:371: WASI compiler build/cache phase 0.032s",
+        "wasm_test.go:154: WASI generate phase 0.087s",
+        "wasm_test.go:160: WASI link/cache phase 0.002s",
+        "wasm_test.go:210: WASI source Node phase 0.096s",
+        "wasm_test.go:213: WASI execution phase 0.083s"
+      ]
+    },
+    {
+      "log": "unit14-warm.log",
+      "unit": "TestWASIUnit14",
+      "seconds": 0.33,
+      "fixture": "internal/oracle/testdata/regions.a",
+      "fixture_seconds": 0.17,
+      "phases": []
+    },
+    {
+      "log": "unit21-cold.log",
+      "unit": "TestWASIUnit21",
+      "seconds": 9.13,
+      "fixture": "internal/oracle/testdata/maps_and_text.a",
+      "fixture_seconds": 0.29,
+      "phases": []
+    },
+    {
+      "log": "unit21-diagnostic-cold.log",
+      "unit": "TestWASIUnit21",
+      "seconds": 10.44,
+      "fixture": "internal/oracle/testdata/maps_and_text.a",
+      "fixture_seconds": 0.41,
+      "phases": [
+        "wasm_test.go:406: WASI toolchain probe phase 0.187s",
+        "wasm_test.go:406: WASI runtime inputs and cache identity phase 0.111s",
+        "wasm_test.go:104: WASI runtime build/cache phase counted=false 6.481s",
+        "wasm_test.go:406: WASI compiler build/cache phase 3.253s",
+        "wasm_test.go:154: WASI generate phase 0.111s",
+        "wasm_test.go:160: WASI link/cache phase 0.134s",
+        "wasm_test.go:210: WASI source Node phase 0.088s",
+        "wasm_test.go:213: WASI execution phase 0.075s"
+      ]
+    },
+    {
+      "log": "unit21-diagnostic-warm.log",
+      "unit": "TestWASIUnit21",
+      "seconds": 0.45,
+      "fixture": "internal/oracle/testdata/maps_and_text.a",
+      "fixture_seconds": 0.2,
+      "phases": [
+        "wasm_test.go:406: WASI toolchain probe phase 0.100s",
+        "wasm_test.go:406: WASI runtime inputs and cache identity phase 0.066s",
+        "wasm_test.go:104: WASI runtime build/cache phase counted=false 0.002s",
+        "wasm_test.go:406: WASI compiler build/cache phase 0.077s",
+        "wasm_test.go:154: WASI generate phase 0.089s",
+        "wasm_test.go:160: WASI link/cache phase 0.002s",
+        "wasm_test.go:210: WASI source Node phase 0.074s",
+        "wasm_test.go:213: WASI execution phase 0.037s"
+      ]
+    },
+    {
+      "log": "unit21-shared-warm.log",
+      "unit": "TestWASIUnit21",
+      "seconds": 0.73,
+      "fixture": "internal/oracle/testdata/maps_and_text.a",
+      "fixture_seconds": 0.45,
+      "phases": [
+        "wasm_test.go:406: WASI toolchain probe phase 0.106s",
+        "wasm_test.go:406: WASI runtime inputs and cache identity phase 0.112s",
+        "wasm_test.go:104: WASI runtime build/cache phase counted=false 0.002s",
+        "wasm_test.go:406: WASI compiler build/cache phase 0.051s",
+        "wasm_test.go:154: WASI generate phase 0.147s",
+        "wasm_test.go:160: WASI link/cache phase 0.108s",
+        "wasm_test.go:210: WASI source Node phase 0.110s",
+        "wasm_test.go:213: WASI execution phase 0.086s"
+      ]
+    },
+    {
+      "log": "unit21-warm.log",
+      "unit": "TestWASIUnit21",
+      "seconds": 0.43,
+      "fixture": "internal/oracle/testdata/maps_and_text.a",
+      "fixture_seconds": 0.19,
+      "phases": []
+    }
+  ]
+}
