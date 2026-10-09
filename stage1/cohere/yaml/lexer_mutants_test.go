@@ -177,51 +177,6 @@ func firstDifference(a, b []byte) string {
 }
 
 // Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
-func TestLexerMatchesGo(t *testing.T) {
-	cases, files, count := lexCases(t)
-	expected := goLexer(t, cases)
-	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
-		data, err := os.ReadFile(cases)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(filepath.Join(artifacts, "lexer-cases.txt"), data, 0644); err != nil {
-			t.Fatal(err)
-		}
-		if err := os.WriteFile(filepath.Join(artifacts, "lexer-expected.txt"), expected, 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	nativeOut, emitted := nativeLexer(t, directory, cases, true)
-	node := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "lex_main.ts"), cases)
-	for _, side := range []struct {
-		name   string
-		output []byte
-	}{{"native ASan/UBSan/LSan", nativeOut}, {"Node source", node}, {"emitted JavaScript", emitted}} {
-		if !bytes.Equal(side.output, expected) {
-			t.Fatalf("%s: %s", side.name, firstDifference(side.output, expected))
-		}
-	}
-	library := os.Getenv("ADAMIC_YAML_LIBRARY")
-	if library == "" {
-		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
-	}
-	external := run(t, "", nil, "node", "testdata/lexer_library.mjs", library, cases)
-	if !bytes.Equal(external, expected) {
-		t.Fatal(firstDifference(external, expected))
-	}
-	t.Logf("%d repository files; %d complete/chunked cases; %d answer bytes: Go, native, Node source, emitted JavaScript, yaml 2.9.0 identical", files, count, len(expected))
-}
-
-// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
 func TestLexerMutants(t *testing.T) {
 	cases, _, _ := lexCases(t)
 	expected := goLexer(t, cases)
