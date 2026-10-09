@@ -3,17 +3,23 @@ package json
 import (
 	"bufio"
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
 	"sync"
 	"testing"
+	"time"
 	"unicode/utf8"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 // Freeze repository JSON so selection need not rerun this package on every
@@ -24,6 +30,21 @@ const repositoryCorpusCommit = "2b4dbde172c1c2f23c065ecae8b906f8fcb72a20"
 // SHA256 of sorted name<TAB>SHA256(bytes)<LF>, including upstream inputs and
 // generated controls. This is the original 3,900-case working-tree identity.
 const repositoryCorpusIdentity = "09cd6c1c6a0fb423c2bf9cc1a56f5670218eca4088f0ba7a49ac26b58652cae6"
+
+// The corpus reaches the network only to fetch the pin or a blobless clone's missing blobs. Those fetches get a hard
+// ceiling, and their failure says "fetch failed", which the red-sort reads as infra (sort_reds.py INFRA), never a
+// skip and never a pass: a corpus that quietly shrank when origin was slow would be a false green.
+var pinFetchGuard = childguard.Options{FirstOutput: 3 * time.Minute, Stall: 3 * time.Minute, Ceiling: 5 * time.Minute}
+
+func gitCorpusFetch(root string, input []byte, arguments ...string) ([]byte, error) {
+	command := exec.CommandContext(context.Background(), "git", append([]string{"-C", root}, arguments...)...)
+	command.Stdin = bytes.NewReader(input)
+	output, err := childguard.CombinedOutput(command, pinFetchGuard)
+	if err != nil {
+		return nil, fmt.Errorf("git %s: %w: %s", strings.Join(arguments, " "), err, strings.TrimSpace(string(output)))
+	}
+	return output, nil
+}
 
 // Git objects are immutable. Cache their decoded bytes once per process, and
 // return a slice copy because hash partitioning sorts its input in place.
@@ -50,7 +71,7 @@ func repositoryCasesAtPin(root, pin string) ([]textCase, error) {
 		return nil, fmt.Errorf("repository JSON: invalid commit pin %q", pin)
 	}
 	if _, err := gitCorpus(root, "cat-file", "-e", pin+"^{commit}"); err != nil {
-		if _, err := gitCorpus(root, "fetch", "--quiet", "--no-tags", "--no-write-fetch-head", "--depth=1", "origin", pin); err != nil {
+		if _, err := gitCorpusFetch(root, nil, "fetch", "--quiet", "--no-tags", "--no-write-fetch-head", "--depth=1", "origin", pin); err != nil {
 			return nil, fmt.Errorf("repository JSON pin %s unavailable; fetch failed (no working-tree fallback): %w", pin, err)
 		}
 	}
@@ -126,7 +147,8 @@ func repositoryCasesAtPin(root, pin string) ([]textCase, error) {
 // instance's first json unit (developer tools' checkout table, #97s05vf). Fetch every missing JSON blob in one
 // request instead, the way Git's own promisor fetch does. A full clone has none missing and fetches nothing.
 func prefetchPinnedBlobs(root, pin string, blobs map[string]bool) error {
-	objects, err := gitCorpus(root, "rev-list", "--objects", "--missing=print", pin)
+	// --no-walk: the pin's own tree, not every object reachable through its history.
+	objects, err := gitCorpus(root, "rev-list", "--objects", "--no-walk", "--missing=print", pin)
 	if err != nil {
 		return fmt.Errorf("repository JSON pin %s: %w", pin, err)
 	}
@@ -140,9 +162,9 @@ func prefetchPinnedBlobs(root, pin string, blobs map[string]bool) error {
 		return nil
 	}
 	sort.Strings(missing)
-	if _, err := gitCorpusInput(root, []byte(strings.Join(missing, "\n")+"\n"), "-c", "fetch.negotiationAlgorithm=noop", "fetch", "--quiet", "--no-tags",
+	if _, err := gitCorpusFetch(root, []byte(strings.Join(missing, "\n")+"\n"), "-c", "fetch.negotiationAlgorithm=noop", "fetch", "--quiet", "--no-tags",
 		"--no-write-fetch-head", "--recurse-submodules=no", "--filter=blob:none", "--stdin", "origin"); err != nil {
-		return fmt.Errorf("repository JSON pin %s: fetching %d missing JSON blobs in one batch failed (no working-tree fallback): %w", pin, len(missing), err)
+		return fmt.Errorf("repository JSON pin %s: environment: batch fetch failed for %d missing JSON blobs (no working-tree fallback): %w", pin, len(missing), err)
 	}
 	return nil
 }
@@ -392,4 +414,30 @@ func TestPinnedRepositoryCorpusBlobsFetchInOneBatch(t *testing.T) {
 		t.Fatalf("a full clone fetched %d times, want 0", fetches)
 	}
 	t.Logf("blobless clone: %d pinned JSON files in one fetch; full clone: none", len(full))
+}
+
+func TestPinnedRepositoryCorpusBatchFetchFailureIsInfra(t *testing.T) {
+	t.Parallel()
+	fixture := newRepositoryFixture(t)
+	head, err := gitCorpus(fixture.root, "rev-parse", "HEAD")
+	if err != nil {
+		t.Fatal(err)
+	}
+	pin := strings.TrimSpace(string(head))
+	fixtureGit(t, fixture.root, "config", "uploadpack.allowFilter", "true")
+	clone := filepath.Join(t.TempDir(), "blobless")
+	fixtureGit(t, fixture.root, "clone", "--quiet", "--filter=blob:none", "--no-checkout", "file://"+fixture.root, clone)
+	// Origin gone after the checkout: the pool instance that can't reach GitHub.
+	fixtureGit(t, clone, "remote", "set-url", "origin", "file://"+filepath.Join(t.TempDir(), "gone"))
+	_, err = repositoryCasesAtPin(clone, pin)
+	if err == nil {
+		t.Fatal("a blobless clone with no reachable origin read the pinned corpus anyway")
+	}
+	// What the red-sort reads (cloud/fast-gate/sort_reds.py INFRA and WRONG on devtools/red-sort): infra, not a wrong answer.
+	infra := regexp.MustCompile(`(?i)(?:clone|fetch) (?:failed|failure)|failed to (?:clone|fetch)`)
+	wrong := regexp.MustCompile(`(?i)compile error|build.failed|undefined:|syntax error|assertion|\b(?:got|want|expected)\b|assert.*diff`)
+	if !infra.MatchString(err.Error()) || wrong.MatchString(err.Error()) || !strings.Contains(err.Error(), pin) {
+		t.Fatalf("batch fetch failure doesn't read as infra naming the pin: %v", err)
+	}
+	t.Log(err)
 }
