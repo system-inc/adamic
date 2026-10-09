@@ -38,8 +38,7 @@ func TestMixedUnionContractGraph(t *testing.T) {
 	} {
 		t.Run(source, func(t *testing.T) {
 			if viewArrayContractHook == nil && source == `interface Node {readonly ready:boolean} type Target=Node|readonly Node[];` {
-				// Needs V3's array contract adapter for Node | readonly Node[] member contracts.
-				t.Skip("acceptance dependency: compiler/views-v3 787cea7a")
+				t.Skip("awaits compiler/views-v3: the array contract adapter for Node | readonly Node[] member contracts (787cea7a)")
 			}
 			l, target, release := mixedUnionLowering(t, source)
 			defer release()
@@ -136,8 +135,7 @@ func TestMixedUnionContractRecursiveMember(t *testing.T) {
 }
 
 func TestMixedUnionContractPhantomBrandUsesPrimitiveBase(t *testing.T) {
-	// Needs the primitive-brand proof for branded string union member contracts.
-	t.Skip("acceptance dependency: codex/phantom-brands d2d3c77e")
+	t.Skip("awaits codex/phantom-brands: the primitive-brand proof for branded string union member contracts (d2d3c77e)")
 	l, target, release := mixedUnionLowering(t, `type Brand=string&{readonly marker:void}; type Target=Brand|number;`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
@@ -161,8 +159,7 @@ func TestMixedUnionContractPhantomBrandUsesPrimitiveBase(t *testing.T) {
 }
 
 func TestMixedUnionContractPhantomVoidIsUndefined(t *testing.T) {
-	// Needs the primitive-brand proof for phantom void undefined contracts.
-	t.Skip("acceptance dependency: codex/phantom-brands d2d3c77e")
+	t.Skip("awaits codex/phantom-brands: the primitive-brand proof for phantom void undefined contracts (d2d3c77e)")
 	l, target, release := mixedUnionLowering(t, `type Target=void&{readonly marker:void};`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
