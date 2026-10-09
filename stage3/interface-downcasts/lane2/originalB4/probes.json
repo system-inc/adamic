@@ -1,0 +1,1262 @@
+[
+  {
+    "name": "privateidentifierpropertydeclaration-modifiers-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "PrivateIdentifierPropertyDeclaration",
+      "AbstractKeyword"
+    ],
+    "pair": "PrivateIdentifierPropertyDeclaration.modifiers",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "privateidentifierpropertydeclaration-modifiers-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "PrivateIdentifierPropertyDeclaration"
+    ],
+    "pair": "PrivateIdentifierPropertyDeclaration.modifiers",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "privateidentifierpropertydeclaration-modifiers-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "PrivateIdentifierPropertyDeclaration",
+      "AbstractKeyword"
+    ],
+    "pair": "PrivateIdentifierPropertyDeclaration.modifiers",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "privateidentifierpropertydeclaration-modifiers-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "contracts": [
+      "PrivateIdentifierPropertyDeclaration",
+      "AbstractKeyword"
+    ],
+    "pair": "PrivateIdentifierPropertyDeclaration.modifiers",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "privateidentifierpropertydeclaration-modifiers-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "PrivateIdentifierPropertyDeclaration",
+      "AbstractKeyword"
+    ],
+    "pair": "PrivateIdentifierPropertyDeclaration.modifiers",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "privateidentifierpropertydeclaration-modifiers-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "PrivateIdentifierPropertyDeclaration",
+      "AbstractKeyword"
+    ],
+    "pair": "PrivateIdentifierPropertyDeclaration.modifiers",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "privateidentifierpropertydeclaration-modifiers-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "PrivateIdentifierPropertyDeclaration",
+      "AbstractKeyword"
+    ],
+    "pair": "PrivateIdentifierPropertyDeclaration.modifiers",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "unionorintersectiontype-resolvedproperties-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnionOrIntersectionType",
+      "Symbol"
+    ],
+    "pair": "UnionOrIntersectionType.resolvedProperties",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "unionorintersectiontype-resolvedproperties-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnionOrIntersectionType"
+    ],
+    "pair": "UnionOrIntersectionType.resolvedProperties",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "unionorintersectiontype-resolvedproperties-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnionOrIntersectionType",
+      "Symbol"
+    ],
+    "pair": "UnionOrIntersectionType.resolvedProperties",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "unionorintersectiontype-resolvedproperties-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a SymbolFlags; expected SymbolFlags, found string",
+    "contracts": [
+      "UnionOrIntersectionType",
+      "Symbol"
+    ],
+    "pair": "UnionOrIntersectionType.resolvedProperties",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "unionorintersectiontype-resolvedproperties-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnionOrIntersectionType",
+      "Symbol"
+    ],
+    "pair": "UnionOrIntersectionType.resolvedProperties",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "uniontype-arrayfallbacksignatures-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnionType",
+      "Signature"
+    ],
+    "pair": "UnionType.arrayFallbackSignatures",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "uniontype-arrayfallbacksignatures-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnionType"
+    ],
+    "pair": "UnionType.arrayFallbackSignatures",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "uniontype-arrayfallbacksignatures-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnionType",
+      "Signature"
+    ],
+    "pair": "UnionType.arrayFallbackSignatures",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "uniontype-arrayfallbacksignatures-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a SignatureFlags; expected SignatureFlags, found string",
+    "contracts": [
+      "UnionType",
+      "Signature"
+    ],
+    "pair": "UnionType.arrayFallbackSignatures",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "uniontype-arrayfallbacksignatures-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnionType",
+      "Signature"
+    ],
+    "pair": "UnionType.arrayFallbackSignatures",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "uniontype-arrayfallbacksignatures-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnionType",
+      "Signature"
+    ],
+    "pair": "UnionType.arrayFallbackSignatures",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "uniontype-arrayfallbacksignatures-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "UnionType",
+      "Signature"
+    ],
+    "pair": "UnionType.arrayFallbackSignatures",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetype-outertypeparameters-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceType",
+      "TypeParameter"
+    ],
+    "pair": "InterfaceType.outerTypeParameters",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetype-outertypeparameters-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceType"
+    ],
+    "pair": "InterfaceType.outerTypeParameters",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetype-outertypeparameters-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceType",
+      "TypeParameter"
+    ],
+    "pair": "InterfaceType.outerTypeParameters",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetype-outertypeparameters-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a TypeFlags; expected TypeFlags, found string",
+    "contracts": [
+      "InterfaceType",
+      "TypeParameter"
+    ],
+    "pair": "InterfaceType.outerTypeParameters",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetype-outertypeparameters-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceType",
+      "TypeParameter"
+    ],
+    "pair": "InterfaceType.outerTypeParameters",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetype-outertypeparameters-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "field read failed: viewed.outerTypeParameters is not initialized; expected TypeParameter[] | undefined, found missing",
+    "contracts": [
+      "InterfaceType",
+      "TypeParameter"
+    ],
+    "pair": "InterfaceType.outerTypeParameters",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "interfacetype-outertypeparameters-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "InterfaceType",
+      "TypeParameter"
+    ],
+    "pair": "InterfaceType.outerTypeParameters",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "sourcefile---undefined-imports-good",
+    "source": "7\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field imports with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile",
+      "StringLiteral"
+    ],
+    "pair": "SourceFile | undefined.imports",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "sourcefile---undefined-imports-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile"
+    ],
+    "pair": "SourceFile | undefined.imports",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "sourcefile---undefined-imports-lazy-element",
+    "source": "7\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field imports with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile",
+      "StringLiteral"
+    ],
+    "pair": "SourceFile | undefined.imports",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "sourcefile---undefined-imports-bad",
+    "source": "bad\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field imports with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field",
+    "diagnostic": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "contracts": [
+      "SourceFile",
+      "StringLiteral"
+    ],
+    "pair": "SourceFile | undefined.imports",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "sourcefile---undefined-imports-alias",
+    "source": "9\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field imports with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile",
+      "StringLiteral"
+    ],
+    "pair": "SourceFile | undefined.imports",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "sourcefile---undefined-imports-receiver-undefined",
+    "source": "absent\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field imports with unsupported representation conversion contract; prove or implement the representation conversion contract before reading this field",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile",
+      "StringLiteral"
+    ],
+    "pair": "SourceFile | undefined.imports",
+    "mode": "receiver-undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-typearguments-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "TypeNode"
+    ],
+    "pair": "SignatureDeclaration.typeArguments",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-typearguments-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction"
+    ],
+    "pair": "SignatureDeclaration.typeArguments",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-typearguments-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "TypeNode"
+    ],
+    "pair": "SignatureDeclaration.typeArguments",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-typearguments-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "TypeNode"
+    ],
+    "pair": "SignatureDeclaration.typeArguments",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-typearguments-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "TypeNode"
+    ],
+    "pair": "SignatureDeclaration.typeArguments",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-typearguments-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "TypeNode"
+    ],
+    "pair": "SignatureDeclaration.typeArguments",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-typearguments-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "TypeNode"
+    ],
+    "pair": "SignatureDeclaration.typeArguments",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-jsdoc-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "JSDoc"
+    ],
+    "pair": "SignatureDeclaration.jsDoc",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-jsdoc-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction"
+    ],
+    "pair": "SignatureDeclaration.jsDoc",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-jsdoc-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "JSDoc"
+    ],
+    "pair": "SignatureDeclaration.jsDoc",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-jsdoc-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "JSDoc"
+    ],
+    "pair": "SignatureDeclaration.jsDoc",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-jsdoc-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "JSDoc"
+    ],
+    "pair": "SignatureDeclaration.jsDoc",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-jsdoc-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "JSDoc"
+    ],
+    "pair": "SignatureDeclaration.jsDoc",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "signaturedeclaration-jsdoc-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ConstructSignatureDeclaration",
+      "MethodSignature",
+      "IndexSignatureDeclaration",
+      "FunctionTypeNode",
+      "ConstructorTypeNode",
+      "JSDocFunctionType",
+      "FunctionDeclaration",
+      "MethodDeclaration",
+      "ConstructorDeclaration",
+      "GetAccessorDeclaration",
+      "SetAccessorDeclaration",
+      "FunctionExpression",
+      "ArrowFunction",
+      "JSDoc"
+    ],
+    "pair": "SignatureDeclaration.jsDoc",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "jsdocfunctiontype-typeparameters-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocFunctionType",
+      "TypeParameterDeclaration"
+    ],
+    "pair": "JSDocFunctionType.typeParameters",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "jsdocfunctiontype-typeparameters-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocFunctionType"
+    ],
+    "pair": "JSDocFunctionType.typeParameters",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "jsdocfunctiontype-typeparameters-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocFunctionType",
+      "TypeParameterDeclaration"
+    ],
+    "pair": "JSDocFunctionType.typeParameters",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "jsdocfunctiontype-typeparameters-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "contracts": [
+      "JSDocFunctionType",
+      "TypeParameterDeclaration"
+    ],
+    "pair": "JSDocFunctionType.typeParameters",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "jsdocfunctiontype-typeparameters-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocFunctionType",
+      "TypeParameterDeclaration"
+    ],
+    "pair": "JSDocFunctionType.typeParameters",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "jsdocfunctiontype-typeparameters-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocFunctionType",
+      "TypeParameterDeclaration"
+    ],
+    "pair": "JSDocFunctionType.typeParameters",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "jsdocfunctiontype-typeparameters-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "JSDocFunctionType",
+      "TypeParameterDeclaration"
+    ],
+    "pair": "JSDocFunctionType.typeParameters",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "flags",
+    "callable": false
+  },
+  {
+    "name": "sourcefile-additionalsyntacticdiagnostics-good",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile",
+      "DiagnosticWithLocation"
+    ],
+    "pair": "SourceFile.additionalSyntacticDiagnostics",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "sourcefile-additionalsyntacticdiagnostics-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile"
+    ],
+    "pair": "SourceFile.additionalSyntacticDiagnostics",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "sourcefile-additionalsyntacticdiagnostics-lazy-element",
+    "source": "7\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile",
+      "DiagnosticWithLocation"
+    ],
+    "pair": "SourceFile.additionalSyntacticDiagnostics",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "sourcefile-additionalsyntacticdiagnostics-bad",
+    "source": "bad\n",
+    "refusal": "",
+    "diagnostic": "field read failed: items[0]!.code is not a number; expected number, found string",
+    "contracts": [
+      "SourceFile",
+      "DiagnosticWithLocation"
+    ],
+    "pair": "SourceFile.additionalSyntacticDiagnostics",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "sourcefile-additionalsyntacticdiagnostics-alias",
+    "source": "9\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile",
+      "DiagnosticWithLocation"
+    ],
+    "pair": "SourceFile.additionalSyntacticDiagnostics",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "sourcefile-additionalsyntacticdiagnostics-absent",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile",
+      "DiagnosticWithLocation"
+    ],
+    "pair": "SourceFile.additionalSyntacticDiagnostics",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "sourcefile-additionalsyntacticdiagnostics-undefined",
+    "source": "absent\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "SourceFile",
+      "DiagnosticWithLocation"
+    ],
+    "pair": "SourceFile.additionalSyntacticDiagnostics",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "code",
+    "callable": false
+  },
+  {
+    "name": "emitnode---undefined-helpers-good",
+    "source": "a\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field",
+    "diagnostic": "",
+    "contracts": [
+      "EmitNode",
+      "ScopedEmitHelper"
+    ],
+    "pair": "EmitNode | undefined.helpers",
+    "mode": "good",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "emitnode---undefined-helpers-lazy",
+    "source": "kept\n",
+    "refusal": "",
+    "diagnostic": "",
+    "contracts": [
+      "EmitNode"
+    ],
+    "pair": "EmitNode | undefined.helpers",
+    "mode": "lazy",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "emitnode---undefined-helpers-lazy-element",
+    "source": "a\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field",
+    "diagnostic": "",
+    "contracts": [
+      "EmitNode",
+      "ScopedEmitHelper"
+    ],
+    "pair": "EmitNode | undefined.helpers",
+    "mode": "lazy-element",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "emitnode---undefined-helpers-bad",
+    "source": "42\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field",
+    "diagnostic": "field read failed: items[0]!.name is not a string; expected string, found number",
+    "contracts": [
+      "EmitNode",
+      "ScopedEmitHelper"
+    ],
+    "pair": "EmitNode | undefined.helpers",
+    "mode": "bad",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "emitnode---undefined-helpers-alias",
+    "source": "second\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field",
+    "diagnostic": "",
+    "contracts": [
+      "EmitNode",
+      "ScopedEmitHelper"
+    ],
+    "pair": "EmitNode | undefined.helpers",
+    "mode": "alias",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "emitnode---undefined-helpers-absent",
+    "source": "absent\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field",
+    "diagnostic": "",
+    "contracts": [
+      "EmitNode",
+      "ScopedEmitHelper"
+    ],
+    "pair": "EmitNode | undefined.helpers",
+    "mode": "absent",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "emitnode---undefined-helpers-undefined",
+    "source": "absent\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field",
+    "diagnostic": "",
+    "contracts": [
+      "EmitNode",
+      "ScopedEmitHelper"
+    ],
+    "pair": "EmitNode | undefined.helpers",
+    "mode": "undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  },
+  {
+    "name": "emitnode---undefined-helpers-receiver-undefined",
+    "source": "absent\n",
+    "refusal": "Adamic 0.1 refuses checked view read of field name with unsupported never contract; prove or implement the never contract before reading this field",
+    "diagnostic": "",
+    "contracts": [
+      "EmitNode",
+      "ScopedEmitHelper"
+    ],
+    "pair": "EmitNode | undefined.helpers",
+    "mode": "receiver-undefined",
+    "stringElement": false,
+    "nested": false,
+    "leaf": "name",
+    "callable": false
+  }
+]
