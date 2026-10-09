@@ -23,5 +23,12 @@
     "pending-lane-4-inventory": 6
   },
   "lane_checks_main_exit": 1,
-  "lane_checks_v4_scope_exit": 0
+  "lane_checks_v4_scope_exit": 0,
+  "test_commit": "cbeb4cd698787248aa12f13fd6515e546bc8b0f5",
+  "refusal_kinds": {
+    "whole_view_creation": 70,
+    "readonly_to_writable": 7,
+    "optional_property_source": 1
+  },
+  "final_owned_lane_checks_seconds": 11.3
 }
