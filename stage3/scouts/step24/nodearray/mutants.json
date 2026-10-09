@@ -1,0 +1,54 @@
+[
+  {
+    "file": "01_factory_clone.a",
+    "edit": {
+      "find": "array.end = elements.end;",
+      "replace": "array.end = -1;"
+    },
+    "node": {
+      "stdout": "2:10:20:true:3\n2:10:-1:false:3\nsmall-copy:true same:true clone:true element:true\nlarge-reused:true 5:-1:-1:false:3\n0:-1:-1:false:0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "caught_by": "independent Node stdout comparison"
+  },
+  {
+    "file": "02_parser_range.a",
+    "edit": {
+      "find": "end ?? scanner.getTokenFullStart()",
+      "replace": "end ?? 0"
+    },
+    "node": {
+      "stdout": "2:7:0:false:3\n1:9:11:true:1\nslice-pos:false slice-end:false\nslice-comma:false slice-flags:false\n1:12:15:false:1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "caught_by": "independent Node stdout comparison"
+  },
+  {
+    "file": "03_repair_flags.a",
+    "edit": {
+      "find": "aggregateChildrenFlags(elements as MutableNodeArray<T>);",
+      "replace": "// mutant: omitted aggregation"
+    },
+    "node": {
+      "stdout": "before-own:true before-undefined:true\nsame:true after-own:true flags:undefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "caught_by": "independent Node stdout comparison"
+  },
+  {
+    "file": "04_missing_presence.a",
+    "edit": {
+      "find": "list.isMissingList = true;",
+      "replace": "list.isMissingList = undefined;"
+    },
+    "node": {
+      "stdout": "ordinary-own:false missing:false\nmissing-own:true missing:false\nundefined-own:true missing:false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "caught_by": "independent Node stdout comparison"
+  }
+]

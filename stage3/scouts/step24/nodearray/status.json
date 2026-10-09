@@ -1,0 +1,87 @@
+[
+  {
+    "file": "01_factory_clone.a",
+    "tsc": [
+      "src/compiler/factory/nodeFactory.ts:1169",
+      "src/compiler/factory/nodeFactory.ts:7309",
+      "src/compiler/utilitiesPublic.ts:1487",
+      "src/compiler/utilities.ts:10644",
+      "src/compiler/utilities.ts:10654",
+      "src/compiler/utilities.ts:10664"
+    ],
+    "reason": "Small-array copy, unchanged NodeArray reuse, changed-comma clone preserving range/flags, large-array promotion and empty layout.",
+    "node": {
+      "stdout": "2:10:20:true:3\n2:10:20:false:3\nsmall-copy:true same:true clone:true element:true\nlarge-reused:true 5:-1:-1:false:3\n0:-1:-1:false:0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/scouts/step24/nodearray/01_factory_clone.a:34:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on array); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1"
+    }
+  },
+  {
+    "file": "02_parser_range.a",
+    "tsc": [
+      "src/compiler/factory/nodeFactory.ts:1169",
+      "src/compiler/factory/nodeFactory.ts:7309",
+      "src/compiler/utilitiesPublic.ts:1487",
+      "src/compiler/parser.ts:2594",
+      "src/compiler/utilities.ts:10644",
+      "src/compiler/utilities.ts:10654",
+      "src/compiler/utilities.ts:10664"
+    ],
+    "reason": "Parser range initialization with implicit and explicit ends; slice drops metadata, then reconstruction restores the layout.",
+    "node": {
+      "stdout": "2:7:42:false:3\n1:9:11:true:1\nslice-pos:false slice-end:false\nslice-comma:false slice-flags:false\n1:12:15:false:1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/scouts/step24/nodearray/02_parser_range.a:35:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on array); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1"
+    }
+  },
+  {
+    "file": "03_repair_flags.a",
+    "tsc": [
+      "src/compiler/factory/nodeFactory.ts:1169",
+      "src/compiler/factory/nodeFactory.ts:7309",
+      "src/compiler/utilitiesPublic.ts:1487"
+    ],
+    "reason": "The factory repairs a present-undefined transformFlags slot when reusing an existing NodeArray. Driver supplies the possibly-undefined state mentioned by upstream.",
+    "node": {
+      "stdout": "before-own:true before-undefined:true\nsame:true after-own:true flags:3\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/scouts/step24/nodearray/03_repair_flags.a:31:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on array); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1"
+    }
+  },
+  {
+    "file": "04_missing_presence.a",
+    "tsc": [
+      "src/compiler/factory/nodeFactory.ts:1169",
+      "src/compiler/factory/nodeFactory.ts:7309",
+      "src/compiler/utilitiesPublic.ts:1487",
+      "src/compiler/parser.ts:2594",
+      "src/compiler/utilities.ts:10644",
+      "src/compiler/utilities.ts:10654",
+      "src/compiler/utilities.ts:10664",
+      "src/compiler/parser.ts:3569",
+      "src/compiler/parser.ts:3575"
+    ],
+    "reason": "MissingList adds a field outside the base declaration; ordinary lists have it absent. A marked driver probe holds present-undefined distinct from absent.",
+    "node": {
+      "stdout": "ordinary-own:false missing:false\nmissing-own:true missing:true\nundefined-own:true missing:false\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "stage0": {
+      "outcome": "Refused",
+      "what": "adamic: /workspace/adamic/stage3/scouts/step24/nodearray/04_missing_presence.a:37:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on array); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\nexit status 1"
+    }
+  }
+]

@@ -1,0 +1,6 @@
+PASS 01_factory_clone.a Node bytes, unchanged source, killed mutant; Refused
+PASS 02_parser_range.a Node bytes, unchanged source, killed mutant; Refused
+PASS 03_repair_flags.a Node bytes, unchanged source, killed mutant; Refused
+PASS 04_missing_presence.a Node bytes, unchanged source, killed mutant; Refused
+PASS pristine/instrumented corpus, lexical counts, all three AST passes and semantic digest
+PASS four NodeArray fixtures and four real-source mutants

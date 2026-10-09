@@ -1,0 +1,31 @@
+stock diagnostics: 0
+{
+  "range_calls": 56,
+  "range_array_arguments": {
+    "range target: writes pos/end as selected by helper": 56,
+    "range provider: reads pos/end": 46
+  },
+  "range_helper_accesses": 4,
+  "accesses": 97,
+  "reflection": 4,
+  "access_modes": {
+    "read": 87,
+    "write": 10
+  },
+  "access_fields": {
+    "hasTrailingComma": 19,
+    "pos": 31,
+    "end": 39,
+    "transformFlags": 6,
+    "isMissingList": 2
+  },
+  "creation_forms": {
+    "createNodeArray call (may reuse)": 159,
+    "setTextRange on array (range initialization/update)": 56,
+    "NodeArray.slice (ordinary array result)": 20,
+    "array/other value promoted by assertion": 3,
+    "slice promoted to NodeArray": 1
+  },
+  "other_returning_calls": 593,
+  "dynamic_accesses": 82
+}

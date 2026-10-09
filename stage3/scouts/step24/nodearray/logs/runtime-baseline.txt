@@ -1,0 +1,31 @@
+{
+  "files": 81,
+  "lexical": {
+    "tokens": 505295,
+    "nodearrays_observed": 0
+  },
+  "passes": {
+    "parse": {
+      "files": 81,
+      "arrays": 137742,
+      "nodes": 941215,
+      "parse_diagnostics": 0
+    },
+    "incremental": {
+      "files": 81,
+      "arrays": 137742,
+      "nodes": 941215,
+      "parse_diagnostics": 0
+    },
+    "debug": {
+      "files": 81,
+      "arrays": 137742,
+      "nodes": 941215,
+      "parse_diagnostics": 0
+    }
+  },
+  "events": 413226,
+  "unique_array_objects": 413226,
+  "extra_own_fields": {},
+  "semantic_digest": "a81e1c5e18b38f8ec17ae1b4ea14d91bbbd0a85337f442f40f4afbfc1875624c"
+}

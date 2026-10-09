@@ -1,0 +1,10 @@
+{
+  "file": "src/compiler/factory/nodeFactory.ts:1202",
+  "before": "!!hasTrailingComma",
+  "after": "hasTrailingComma",
+  "caught_by": "independent Node semantic digest and own-field presence counters",
+  "baseline_digest": "a81e1c5e18b38f8ec17ae1b4ea14d91bbbd0a85337f442f40f4afbfc1875624c",
+  "mutant_digest": "39e03859b37fb83e3bbe9ea9d16f62fec6dee8375e966fb6cb5bc24a21bfdc56",
+  "factory_present_undefined_before": 0,
+  "factory_present_undefined_after": 455903
+}
