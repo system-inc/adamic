@@ -1,0 +1,13 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/debugger_fail.a (0.37s)
+        oracle_test.go:750: exit codes differ
+            node:   exit 0, stdout "Debug Failure. Invalid version\n", stderr ""
+            native: exit -1, stdout "", stderr ""
+        oracle_test.go:763: leaks:
+            exit -1
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.386s
+FAIL

@@ -36,6 +36,7 @@ func predicateCountsTable(t *testing.T) string {
 	var table strings.Builder
 	table.WriteString(predicateCountsHeader)
 	for _, path := range paths {
+
 		program, err := lowered(t, path)
 		if err != nil {
 			t.Fatalf("%s: %v", path, err)

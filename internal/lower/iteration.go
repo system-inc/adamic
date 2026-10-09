@@ -23,6 +23,11 @@ func (l *lowering) methodName(node *ast.Node) (string, bool) {
 	if ast.IsIdentifier(name) || name.Kind == ast.KindStringLiteral {
 		return name.Text(), name.Text() != iteratorSlot
 	}
+	if name.Kind == ast.KindComputedPropertyName {
+		if text, known := constantStringKey(name.AsComputedPropertyName().Expression); known {
+			return text, text != iteratorSlot
+		}
+	}
 	if name.Kind == ast.KindComputedPropertyName && l.symbolIterator(name.AsComputedPropertyName().Expression) {
 		return iteratorSlot, true
 	}

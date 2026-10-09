@@ -1,0 +1,8 @@
+=== RUN   TestNamespaceCallGraphCycleUnion
+=== PAUSE TestNamespaceCallGraphCycleUnion
+=== CONT  TestNamespaceCallGraphCycleUnion
+    namespaces_call_graph_test.go:67: partial cycle reach for one: 1 namespaces
+--- FAIL: TestNamespaceCallGraphCycleUnion (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.066s
+FAIL
