@@ -1,0 +1,33 @@
+{
+  "unit": "u007",
+  "origin_main": "1f34d0d300301faebc94d397adee1a090923d2c7",
+  "nproc": 5,
+  "setup_skipped": true,
+  "node_setup_seconds": 0.748,
+  "wasi_sdk_install_seconds": 4.846,
+  "default_baseline_wall_seconds": 27.76,
+  "default_baseline_binary_seconds": 25.641,
+  "default_skips": [
+    "TestWASIRequest",
+    "TestWASIRequestThrows"
+  ],
+  "active_baseline_wall_seconds": 41.154,
+  "active_baseline_binary_seconds": 37.953,
+  "switch_build_seconds": 5.721,
+  "cli_build_seconds": 6.167,
+  "standalone_vet_seconds": 8.605876904999604,
+  "capped_vet_step_seconds": 90.012,
+  "matrix_environment": {
+    "ADAMIC_ORACLE_WASI": "1",
+    "WASI_SYSROOT": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+    "ADAMIC_NATIVE_SPLIT": "u007-<mutant>"
+  },
+  "families": [],
+  "bounded": false,
+  "unknown_repo_wide_uniqueness": true,
+  "restored_exit": 0,
+  "restored_wall_seconds": 29.454498065000735,
+  "timing_runs_wall_seconds": 149.46006521899835,
+  "matrix_wall_seconds": 483.3924283880042,
+  "matrix_runs": 37
+}

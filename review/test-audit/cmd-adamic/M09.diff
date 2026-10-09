@@ -1,0 +1,11 @@
+--- a/cmd/adamic/tsgo.go
++++ b/cmd/adamic/tsgo.go
+@@ -43,7 +43,7 @@
+ 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+ 		return 1
+ 	}
+-	if options.Target != "" && archive != "" {
++	if false && options.Target != "" && archive != "" {
+ 		fmt.Fprintln(os.Stderr, "adamic: --tsgo is not supported for wasm32-wasi")
+ 		return 1
+ 	}

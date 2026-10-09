@@ -1,0 +1,38 @@
+[
+  {
+    "mutant": "M02",
+    "selector": "baseline",
+    "command": "ADAMIC_MUTANT='' timeout 90 /tmp/u007-adamic",
+    "exit": 2,
+    "stdout": "",
+    "stderr": "usage:\n  adamic types <file.a|file.ts>...\n  adamic c <file.a|file.ts> [--explain-checks]\n  adamic js <file.a|file.ts> [--explain-checks]\n  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]\n",
+    "seconds": 0.020051167000929127
+  },
+  {
+    "mutant": "M02",
+    "selector": "M02",
+    "command": "ADAMIC_MUTANT='M02' timeout 90 /tmp/u007-adamic",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "usage:\n  adamic types <file.a|file.ts>...\n  adamic c <file.a|file.ts> [--explain-checks]\n  adamic js <file.a|file.ts> [--explain-checks]\n  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]\n",
+    "seconds": 0.012728540999887628
+  },
+  {
+    "mutant": "M07",
+    "selector": "baseline",
+    "command": "ADAMIC_MUTANT='' timeout 90 /tmp/u007-adamic build /workspace/adamic/review/test-audit/cmd-adamic/sanitize-witness.a -o /tmp/u007-sanitize-witness.wasm --target wasm32-wasi --sanitize",
+    "exit": 1,
+    "stdout": "",
+    "stderr": "adamic: native: sanitizers are not supported for wasm32-wasi\n",
+    "seconds": 0.018909885999164544
+  },
+  {
+    "mutant": "M07",
+    "selector": "M07",
+    "command": "ADAMIC_MUTANT='M07' timeout 90 /tmp/u007-adamic build /workspace/adamic/review/test-audit/cmd-adamic/sanitize-witness.a -o /tmp/u007-sanitize-witness.wasm --target wasm32-wasi --sanitize",
+    "exit": 0,
+    "stdout": "",
+    "stderr": "",
+    "seconds": 0.3797201759989548
+  }
+]

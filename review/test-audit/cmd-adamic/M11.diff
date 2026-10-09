@@ -1,0 +1,11 @@
+--- a/cmd/adamic/request.go
++++ b/cmd/adamic/request.go
+@@ -83,7 +83,7 @@
+ 			return invalid()
+ 		}
+ 		signature := typeChecker.GetSignatureFromDeclaration(declaration)
+-		if typeChecker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsStringLike == 0 {
++		if false && typeChecker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsStringLike == 0 {
+ 			return invalid()
+ 		}
+ 		return declaration.Name().Text(), nil

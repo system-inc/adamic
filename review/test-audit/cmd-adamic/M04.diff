@@ -1,0 +1,11 @@
+--- a/cmd/adamic/checks.go
++++ b/cmd/adamic/checks.go
+@@ -40,7 +40,7 @@
+ 		fmt.Fprintf(output, "%s: predicate overload %d of %s\n", relative(site.Where), site.Overload, site.Function)
+ 		for _, direction := range site.Directions {
+ 			status := direction.Status
+-			if status == "unobservable" {
++			if status != "unobservable" {
+ 				status += " (proven)"
+ 			}
+ 			fmt.Fprintf(output, "  %s: %s; %s\n", direction.Direction, status, direction.Reason)

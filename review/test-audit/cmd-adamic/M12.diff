@@ -1,0 +1,11 @@
+--- a/cmd/adamic/tsgo.go
++++ b/cmd/adamic/tsgo.go
+@@ -52,7 +52,7 @@
+ 	handler := -1
+ 	if options.Target == "wasm32-wasi" {
+ 		program, handler, code = compileWASI(path)
+-		options.Request = handler >= 0
++		options.Request = options.Count
+ 	} else {
+ 		program, code = compileLibrary(path, archive != "")
+ 	}

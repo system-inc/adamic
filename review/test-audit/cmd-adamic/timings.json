@@ -1,0 +1,722 @@
+[
+  {
+    "test": "TestExplainChecksOutput",
+    "trial": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestExplainChecksOutput$",
+    "wall_seconds": 12.182155387999956,
+    "binary_seconds": 9.836,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestExplainChecksOutput-timing-1.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:34:07.203702057Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestExplainChecksOutput",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:34:07.204521624Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 9.836
+      }
+    ]
+  },
+  {
+    "test": "TestExplainChecksOutput",
+    "trial": 2,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestExplainChecksOutput$",
+    "wall_seconds": 13.217154386999027,
+    "binary_seconds": 10.426,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestExplainChecksOutput-timing-2.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:34:20.420590648Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestExplainChecksOutput",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:34:20.42152302Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 10.426
+      }
+    ]
+  },
+  {
+    "test": "TestExplainChecksOutput",
+    "trial": 3,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestExplainChecksOutput$",
+    "wall_seconds": 11.846884290000162,
+    "binary_seconds": 9.6,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestExplainChecksOutput-timing-3.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:34:32.26953242Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestExplainChecksOutput",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:34:32.270325477Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 9.6
+      }
+    ]
+  },
+  {
+    "test": "TestExplainChecksDriver",
+    "trial": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestExplainChecksDriver$",
+    "wall_seconds": 2.328402391000054,
+    "binary_seconds": 0.011,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestExplainChecksDriver-timing-1.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:34:34.599845132Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestExplainChecksDriver",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:34:34.600078576Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.011
+      }
+    ]
+  },
+  {
+    "test": "TestExplainChecksDriver",
+    "trial": 2,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestExplainChecksDriver$",
+    "wall_seconds": 2.0029173650000303,
+    "binary_seconds": 0.008,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestExplainChecksDriver-timing-2.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:34:36.604961207Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestExplainChecksDriver",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:34:36.605095653Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.008
+      }
+    ]
+  },
+  {
+    "test": "TestExplainChecksDriver",
+    "trial": 3,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestExplainChecksDriver$",
+    "wall_seconds": 2.449965572999645,
+    "binary_seconds": 0.009,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestExplainChecksDriver-timing-3.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:34:39.054874316Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestExplainChecksDriver",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:34:39.055418181Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.009
+      }
+    ]
+  },
+  {
+    "test": "TestNonNullExplainChecks",
+    "trial": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestNonNullExplainChecks$",
+    "wall_seconds": 19.204540738001015,
+    "binary_seconds": 17.24,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestNonNullExplainChecks-timing-1.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:34:58.257519421Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestNonNullExplainChecks",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:34:58.25801194Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 17.24
+      }
+    ]
+  },
+  {
+    "test": "TestNonNullExplainChecks",
+    "trial": 2,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestNonNullExplainChecks$",
+    "wall_seconds": 19.694629384999644,
+    "binary_seconds": 17.716,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestNonNullExplainChecks-timing-2.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:17.952235211Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestNonNullExplainChecks",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:35:17.953161623Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 17.716
+      }
+    ]
+  },
+  {
+    "test": "TestNonNullExplainChecks",
+    "trial": 3,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestNonNullExplainChecks$",
+    "wall_seconds": 18.97078933100056,
+    "binary_seconds": 16.73,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestNonNullExplainChecks-timing-3.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:36.921846276Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestNonNullExplainChecks",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:35:36.923302939Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 16.73
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequestSelection",
+    "trial": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestSelection$",
+    "wall_seconds": 2.758692114000951,
+    "binary_seconds": 0.754,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequestSelection-timing-1.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:39.681305604Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequestSelection",
+        "Elapsed": 0.74
+      },
+      {
+        "Time": "2026-10-09T08:35:39.683969138Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.754
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequestSelection",
+    "trial": 2,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestSelection$",
+    "wall_seconds": 2.8215864789999614,
+    "binary_seconds": 0.823,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequestSelection-timing-2.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:42.506516289Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequestSelection",
+        "Elapsed": 0.81
+      },
+      {
+        "Time": "2026-10-09T08:35:42.508263731Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.823
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequestSelection",
+    "trial": 3,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestSelection$",
+    "wall_seconds": 3.0372461090009892,
+    "binary_seconds": 0.837,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequestSelection-timing-3.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:45.543110814Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequestSelection",
+        "Elapsed": 0.83
+      },
+      {
+        "Time": "2026-10-09T08:35:45.544965243Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.837
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequest",
+    "trial": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequest$",
+    "wall_seconds": 2.5890714219985966,
+    "binary_seconds": 0.586,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequest-timing-1.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:48.133733659Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequest",
+        "Elapsed": 0.58
+      },
+      {
+        "Time": "2026-10-09T08:35:48.135509521Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.586
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequest",
+    "trial": 2,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequest$",
+    "wall_seconds": 2.5044502800010378,
+    "binary_seconds": 0.612,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequest-timing-2.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:50.639230624Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequest",
+        "Elapsed": 0.6
+      },
+      {
+        "Time": "2026-10-09T08:35:50.640994309Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.612
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequest",
+    "trial": 3,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequest$",
+    "wall_seconds": 2.5382034499998554,
+    "binary_seconds": 0.605,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequest-timing-3.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:53.177395583Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequest",
+        "Elapsed": 0.6
+      },
+      {
+        "Time": "2026-10-09T08:35:53.178623169Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.605
+      }
+    ]
+  },
+  {
+    "test": "TestRequestNativeStaysCommand",
+    "trial": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestRequestNativeStaysCommand$",
+    "wall_seconds": 2.165620523999678,
+    "binary_seconds": 0.212,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestRequestNativeStaysCommand-timing-1.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:55.343745335Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestRequestNativeStaysCommand",
+        "Elapsed": 0.2
+      },
+      {
+        "Time": "2026-10-09T08:35:55.345442081Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.212
+      }
+    ]
+  },
+  {
+    "test": "TestRequestNativeStaysCommand",
+    "trial": 2,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestRequestNativeStaysCommand$",
+    "wall_seconds": 2.1034446859994205,
+    "binary_seconds": 0.219,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestRequestNativeStaysCommand-timing-2.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:57.448478637Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestRequestNativeStaysCommand",
+        "Elapsed": 0.21
+      },
+      {
+        "Time": "2026-10-09T08:35:57.449916136Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.219
+      }
+    ]
+  },
+  {
+    "test": "TestRequestNativeStaysCommand",
+    "trial": 3,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestRequestNativeStaysCommand$",
+    "wall_seconds": 2.3400654630004283,
+    "binary_seconds": 0.216,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestRequestNativeStaysCommand-timing-3.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:35:59.789158874Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestRequestNativeStaysCommand",
+        "Elapsed": 0.21
+      },
+      {
+        "Time": "2026-10-09T08:35:59.790750286Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.216
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequestModuleSelection",
+    "trial": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestModuleSelection$",
+    "wall_seconds": 1.968382336999639,
+    "binary_seconds": 0.069,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequestModuleSelection-timing-1.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:01.758051122Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequestModuleSelection",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-09T08:36:01.759444372Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.069
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequestModuleSelection",
+    "trial": 2,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestModuleSelection$",
+    "wall_seconds": 1.9426381419998506,
+    "binary_seconds": 0.073,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequestModuleSelection-timing-2.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:03.700606212Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequestModuleSelection",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-09T08:36:03.70232427Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.073
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequestModuleSelection",
+    "trial": 3,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestModuleSelection$",
+    "wall_seconds": 2.049880132999533,
+    "binary_seconds": 0.064,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequestModuleSelection-timing-3.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:05.750541679Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequestModuleSelection",
+        "Elapsed": 0.06
+      },
+      {
+        "Time": "2026-10-09T08:36:05.75260903Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.064
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequestThrows",
+    "trial": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestThrows$",
+    "wall_seconds": 2.1318588249996537,
+    "binary_seconds": 0.18,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequestThrows-timing-1.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:07.885339212Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequestThrows",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-09T08:36:07.886613587Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.18
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequestThrows",
+    "trial": 2,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestThrows$",
+    "wall_seconds": 2.046624406999399,
+    "binary_seconds": 0.173,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequestThrows-timing-2.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:09.932850569Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequestThrows",
+        "Elapsed": 0.16
+      },
+      {
+        "Time": "2026-10-09T08:36:09.934110252Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.173
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRequestThrows",
+    "trial": 3,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestThrows$",
+    "wall_seconds": 2.0750237370011746,
+    "binary_seconds": 0.174,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRequestThrows-timing-3.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:12.005996924Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRequestThrows",
+        "Elapsed": 0.17
+      },
+      {
+        "Time": "2026-10-09T08:36:12.007832884Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.174
+      }
+    ]
+  },
+  {
+    "test": "TestBuildTargetParsing",
+    "trial": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestBuildTargetParsing$",
+    "wall_seconds": 2.038415148999775,
+    "binary_seconds": 0.007,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestBuildTargetParsing-timing-1.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:14.049294066Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestBuildTargetParsing",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:36:14.049451046Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.007
+      }
+    ]
+  },
+  {
+    "test": "TestBuildTargetParsing",
+    "trial": 2,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestBuildTargetParsing$",
+    "wall_seconds": 2.331256684999971,
+    "binary_seconds": 0.008,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestBuildTargetParsing-timing-2.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:16.381596148Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestBuildTargetParsing",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:36:16.381748232Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.008
+      }
+    ]
+  },
+  {
+    "test": "TestBuildTargetParsing",
+    "trial": 3,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestBuildTargetParsing$",
+    "wall_seconds": 2.0054624209988106,
+    "binary_seconds": 0.01,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestBuildTargetParsing-timing-3.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:18.387572255Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestBuildTargetParsing",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:36:18.387748154Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.01
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRejectsTSGoArchive",
+    "trial": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRejectsTSGoArchive$",
+    "wall_seconds": 2.045327683001233,
+    "binary_seconds": 0.008,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRejectsTSGoArchive-timing-1.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:20.434089368Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRejectsTSGoArchive",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:36:20.434272027Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.008
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRejectsTSGoArchive",
+    "trial": 2,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRejectsTSGoArchive$",
+    "wall_seconds": 1.990099853999709,
+    "binary_seconds": 0.007,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRejectsTSGoArchive-timing-2.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:22.424716819Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRejectsTSGoArchive",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:36:22.424906618Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.007
+      }
+    ]
+  },
+  {
+    "test": "TestWASIRejectsTSGoArchive",
+    "trial": 3,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRejectsTSGoArchive$",
+    "wall_seconds": 2.079276470998593,
+    "binary_seconds": 0.007,
+    "exit": 0,
+    "log": "review/test-audit/cmd-adamic/TestWASIRejectsTSGoArchive-timing-3.log",
+    "events": [
+      {
+        "Time": "2026-10-09T08:36:24.504899477Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Test": "TestWASIRejectsTSGoArchive",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T08:36:24.505066899Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/cmd/adamic",
+        "Elapsed": 0.007
+      }
+    ]
+  }
+]

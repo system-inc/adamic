@@ -1,0 +1,11 @@
+--- a/cmd/adamic/checks.go
++++ b/cmd/adamic/checks.go
+@@ -60,7 +60,7 @@
+ 		sort.SliceStable(sites, func(i, j int) bool { return sites[i].Where < sites[j].Where })
+ 		for _, site := range sites {
+ 			status := "checked"
+-			if site.Proven {
++			if !site.Proven {
+ 				status = "proven"
+ 			}
+ 			fmt.Fprintf(output, "%s: non-null assertion %s: %s\n", relative(site.Where), site.Expression, status)

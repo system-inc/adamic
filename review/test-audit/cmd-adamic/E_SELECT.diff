@@ -1,0 +1,10 @@
+--- a/cmd/adamic/request.go
++++ b/cmd/adamic/request.go
+@@ -50,6 +50,7 @@
+ }
+ 
+ func requestFunction(program *load.Program) (string, error) {
++	if true { return "", nil }
+ 	entry := program.Files()[0]
+ 	typeChecker, release := program.Checker(context.Background(), entry)
+ 	defer release()

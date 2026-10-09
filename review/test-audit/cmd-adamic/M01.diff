@@ -1,0 +1,11 @@
+--- a/cmd/adamic/main.go
++++ b/cmd/adamic/main.go
+@@ -41,7 +41,7 @@
+ 	filtered := make([]string, 0, len(arguments))
+ 	for _, argument := range arguments {
+ 		if argument == "--explain-checks" {
+-			explain = true
++			explain = false
+ 		} else {
+ 			filtered = append(filtered, argument)
+ 		}

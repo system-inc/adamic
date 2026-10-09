@@ -1,0 +1,172 @@
+[
+  {
+    "id": "M01",
+    "file": "cmd/adamic/main.go",
+    "line": 44,
+    "before": "explain = true",
+    "after": "explain = false",
+    "menu": "change option",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M02",
+    "file": "cmd/adamic/main.go",
+    "line": 100,
+    "before": "fmt.Fprintln(os.Stderr, usage)\n\treturn 2",
+    "after": "fmt.Fprintln(os.Stderr, usage)\n\treturn 1",
+    "menu": "change constant",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M03",
+    "file": "cmd/adamic/main.go",
+    "line": 138,
+    "before": "return lowered, 0",
+    "after": "return lowered, 1",
+    "menu": "change constant",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M04",
+    "file": "cmd/adamic/checks.go",
+    "line": 43,
+    "before": "if status == \"unobservable\" {",
+    "after": "if status != \"unobservable\" {",
+    "menu": "flip condition",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M05",
+    "file": "cmd/adamic/checks.go",
+    "line": 63,
+    "before": "if site.Proven {",
+    "after": "if !site.Proven {",
+    "menu": "flip condition",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M06",
+    "file": "cmd/adamic/tsgo.go",
+    "line": 27,
+    "before": "options.Count = true",
+    "after": "options.Count = false",
+    "menu": "change option",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M07",
+    "file": "cmd/adamic/tsgo.go",
+    "line": 29,
+    "before": "options.Sanitize = true",
+    "after": "options.Sanitize = false",
+    "menu": "change option",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M08",
+    "file": "cmd/adamic/tsgo.go",
+    "line": 19,
+    "before": "arguments[index] != \"wasm32-wasi\"",
+    "after": "arguments[index] == \"wasm32-wasi\"",
+    "menu": "flip condition",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M09",
+    "file": "cmd/adamic/tsgo.go",
+    "line": 46,
+    "before": "if options.Target != \"\" && archive != \"\" {",
+    "after": "if false && options.Target != \"\" && archive != \"\" {",
+    "menu": "flip condition",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M10",
+    "file": "cmd/adamic/request.go",
+    "line": 38,
+    "before": "if handler >= 0 {",
+    "after": "if false && handler >= 0 {",
+    "menu": "flip condition",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M11",
+    "file": "cmd/adamic/request.go",
+    "line": 86,
+    "before": "if typeChecker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsStringLike == 0 {",
+    "after": "if false && typeChecker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsStringLike == 0 {",
+    "menu": "flip condition",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "M12",
+    "file": "cmd/adamic/tsgo.go",
+    "line": 55,
+    "before": "options.Request = handler >= 0",
+    "after": "options.Request = options.Count",
+    "menu": "change option",
+    "probe": false,
+    "supplemental": false
+  },
+  {
+    "id": "E_RUN",
+    "file": "cmd/adamic/main.go",
+    "line": 38,
+    "before": "func run(arguments []string) int {",
+    "after": "func run(arguments []string) int {\n\tif true { return 0 }",
+    "menu": "return early; empty-answer probe",
+    "probe": true,
+    "supplemental": false
+  },
+  {
+    "id": "E_CHECK",
+    "file": "cmd/adamic/main.go",
+    "line": 104,
+    "before": "func check(paths []string) (*load.Program, int) {",
+    "after": "func check(paths []string) (*load.Program, int) {\n\tif true { return nil, 0 }",
+    "menu": "return early; empty-answer probe",
+    "probe": true,
+    "supplemental": false
+  },
+  {
+    "id": "E_COMPILE",
+    "file": "cmd/adamic/main.go",
+    "line": 121,
+    "before": "func compile(path string) (*ir.Program, int) {",
+    "after": "func compile(path string) (*ir.Program, int) {\n\tif true { return nil, 0 }",
+    "menu": "return early; empty-answer probe",
+    "probe": true,
+    "supplemental": false
+  },
+  {
+    "id": "E_WASI",
+    "file": "cmd/adamic/request.go",
+    "line": 17,
+    "before": "func compileWASI(path string) (*ir.Program, int, int) {",
+    "after": "func compileWASI(path string) (*ir.Program, int, int) {\n\tif true { return nil, 0, 0 }",
+    "menu": "return early; empty-answer probe",
+    "probe": true,
+    "supplemental": false
+  },
+  {
+    "id": "E_SELECT",
+    "file": "cmd/adamic/request.go",
+    "line": 52,
+    "before": "func requestFunction(program *load.Program) (string, error) {",
+    "after": "func requestFunction(program *load.Program) (string, error) {\n\tif true { return \"\", nil }",
+    "menu": "return early; empty-answer probe",
+    "probe": true,
+    "supplemental": false
+  }
+]

@@ -1,0 +1,11 @@
+--- a/cmd/adamic/tsgo.go
++++ b/cmd/adamic/tsgo.go
+@@ -24,7 +24,7 @@
+ 		case "--explain-checks":
+ 			explain = true
+ 		case "--count":
+-			options.Count = true
++			options.Count = false
+ 		case "--sanitize":
+ 			options.Sanitize = true
+ 		case "--tsgo":

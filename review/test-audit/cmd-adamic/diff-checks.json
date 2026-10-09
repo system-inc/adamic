@@ -1,0 +1,121 @@
+[
+  {
+    "mutant": "M01",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M01.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M02",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M02.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M03",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M03.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M04",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M04.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M05",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M05.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M06",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M06.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M07",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M07.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M08",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M08.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M09",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M09.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M10",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M10.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M11",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M11.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M12",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/M12.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "E_RUN",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/E_RUN.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "E_CHECK",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/E_CHECK.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "E_COMPILE",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/E_COMPILE.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "E_WASI",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/E_WASI.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "E_SELECT",
+    "command": "git apply --check /workspace/adamic/review/test-audit/cmd-adamic/E_SELECT.diff",
+    "base_commit": "1f34d0d300301faebc94d397adee1a090923d2c7",
+    "exit": 0,
+    "output": ""
+  }
+]

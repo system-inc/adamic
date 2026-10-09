@@ -1,0 +1,138 @@
+[
+  {
+    "mutant": "M01",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M01/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 4.656640303999666,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M02",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M02/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.2611327610011358,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M03",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M03/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.36594296600014786,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M04",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M04/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.3336313979998522,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M05",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M05/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.32774074000008113,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M06",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M06/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.3023383609997836,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M07",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M07/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.28586017599991465,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M08",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M08/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.2715356549997523,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M09",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M09/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.27654189100030635,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M10",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M10/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.21027771300032327,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M11",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M11/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.22759641199991165,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "M12",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/M12/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.18269560299995646,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "E_RUN",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/E_RUN/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.24080679399958171,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "E_CHECK",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/E_CHECK/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.1626592359989445,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "E_COMPILE",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/E_COMPILE/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.16857809999964957,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "E_WASI",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/E_WASI/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.16224365000016405,
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "mutant": "E_SELECT",
+    "command": "timeout 90 go vet -overlay=/tmp/u007-vet-overlay/E_SELECT/overlay.json ./cmd/adamic/",
+    "cwd": "/workspace/adamic",
+    "seconds": 0.16965514500043355,
+    "exit": 0,
+    "output": ""
+  }
+]

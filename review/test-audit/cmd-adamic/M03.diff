@@ -1,0 +1,11 @@
+--- a/cmd/adamic/main.go
++++ b/cmd/adamic/main.go
+@@ -135,7 +135,7 @@
+ 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
+ 		return nil, 1
+ 	}
+-	return lowered, 0
++	return lowered, 1
+ }
+ 
+ // relative shortens a path under the working directory, so output reads the way the command was

@@ -1,0 +1,11 @@
+--- a/cmd/adamic/request.go
++++ b/cmd/adamic/request.go
+@@ -35,7 +35,7 @@
+ 			if function.Name != name || function.Closure {
+ 				continue
+ 			}
+-			if handler >= 0 {
++			if false && handler >= 0 {
+ 				fmt.Fprintln(os.Stderr, "adamic: not yet: request handler name is ambiguous across modules; give its declaration a unique name")
+ 				return nil, -1, 1
+ 			}

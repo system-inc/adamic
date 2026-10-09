@@ -1,0 +1,10 @@
+--- a/cmd/adamic/main.go
++++ b/cmd/adamic/main.go
+@@ -119,6 +119,7 @@
+ 
+ // compile checks and lowers one program.
+ func compile(path string) (*ir.Program, int) {
++	if true { return nil, 0 }
+ 	return compileLibrary(path, false)
+ }
+ 

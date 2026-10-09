@@ -1,0 +1,11 @@
+--- a/cmd/adamic/tsgo.go
++++ b/cmd/adamic/tsgo.go
+@@ -16,7 +16,7 @@
+ 		switch arguments[index] {
+ 		case "--target":
+ 			index++
+-			if index >= len(arguments) || options.Target != "" || arguments[index] != "wasm32-wasi" {
++			if index >= len(arguments) || options.Target != "" || arguments[index] == "wasm32-wasi" {
+ 				fmt.Fprintln(os.Stderr, usage)
+ 				return 2
+ 			}

@@ -1,0 +1,170 @@
+diff --git a/cmd/adamic/checks.go b/cmd/adamic/checks.go
+index bc42fb0f..603e631a 100644
+--- a/cmd/adamic/checks.go
++++ b/cmd/adamic/checks.go
+@@ -40,7 +40,7 @@ func explainPredicateChecks(output io.Writer, program *ir.Program) {
+ 		fmt.Fprintf(output, "%s: predicate overload %d of %s\n", relative(site.Where), site.Overload, site.Function)
+ 		for _, direction := range site.Directions {
+ 			status := direction.Status
+-			if status == "unobservable" {
++			if (status == "unobservable") != (os.Getenv("ADAMIC_MUTANT") == "M04") {
+ 				status += " (proven)"
+ 			}
+ 			fmt.Fprintf(output, "  %s: %s; %s\n", direction.Direction, status, direction.Reason)
+@@ -60,7 +60,7 @@ func explainNonNullChecks(output io.Writer, program *ir.Program) {
+ 		sort.SliceStable(sites, func(i, j int) bool { return sites[i].Where < sites[j].Where })
+ 		for _, site := range sites {
+ 			status := "checked"
+-			if site.Proven {
++			if site.Proven != (os.Getenv("ADAMIC_MUTANT") == "M05") {
+ 				status = "proven"
+ 			}
+ 			fmt.Fprintf(output, "%s: non-null assertion %s: %s\n", relative(site.Where), site.Expression, status)
+diff --git a/cmd/adamic/main.go b/cmd/adamic/main.go
+index 01c1e4e8..bd148f2d 100644
+--- a/cmd/adamic/main.go
++++ b/cmd/adamic/main.go
+@@ -36,12 +36,15 @@ func main() {
+ // run is the command, returning its exit code: 0 on success, 1 when the program is refused or can't
+ // be compiled, 2 for a usage error.
+ func run(arguments []string) int {
++	if os.Getenv("ADAMIC_MUTANT") == "E_RUN" {
++		return 0
++	}
+ 	// Explanation goes to stderr so C/JavaScript output remains usable.
+ 	explain := false
+ 	filtered := make([]string, 0, len(arguments))
+ 	for _, argument := range arguments {
+ 		if argument == "--explain-checks" {
+-			explain = true
++			explain = os.Getenv("ADAMIC_MUTANT") != "M01"
+ 		} else {
+ 			filtered = append(filtered, argument)
+ 		}
+@@ -97,11 +100,17 @@ func run(arguments []string) int {
+ 		return build(arguments[1], arguments[3], arguments[4:])
+ 	}
+ 	fmt.Fprintln(os.Stderr, usage)
++	if os.Getenv("ADAMIC_MUTANT") == "M02" {
++		return 1
++	}
+ 	return 2
+ }
+ 
+ // check loads a program, printing why when it can't. A nil program comes with the exit code.
+ func check(paths []string) (*load.Program, int) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_CHECK" {
++		return nil, 0
++	}
+ 	program, err := load.Load(paths)
+ 	if err != nil {
+ 		var checkError *load.CheckError
+@@ -119,6 +128,9 @@ func check(paths []string) (*load.Program, int) {
+ 
+ // compile checks and lowers one program.
+ func compile(path string) (*ir.Program, int) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_COMPILE" {
++		return nil, 0
++	}
+ 	return compileLibrary(path, false)
+ }
+ 
+@@ -135,6 +147,9 @@ func compileLibrary(path string, tsgo bool) (*ir.Program, int) {
+ 		fmt.Fprintln(os.Stderr, relative("adamic: "+err.Error()))
+ 		return nil, 1
+ 	}
++	if os.Getenv("ADAMIC_MUTANT") == "M03" {
++		return lowered, 1
++	}
+ 	return lowered, 0
+ }
+ 
+diff --git a/cmd/adamic/request.go b/cmd/adamic/request.go
+index 46597a20..262c7eeb 100644
+--- a/cmd/adamic/request.go
++++ b/cmd/adamic/request.go
+@@ -15,6 +15,9 @@ import (
+ // compileWASI uses the entry module's handleRequest export, as in the runtime's source witness.
+ // Private or dependency-only names are not handlers. An export alias selects its resolved function declaration.
+ func compileWASI(path string) (*ir.Program, int, int) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_WASI" {
++		return nil, 0, 0
++	}
+ 	program, code := check([]string{path})
+ 	if program == nil {
+ 		return nil, -1, code
+@@ -35,7 +38,7 @@ func compileWASI(path string) (*ir.Program, int, int) {
+ 			if function.Name != name || function.Closure {
+ 				continue
+ 			}
+-			if handler >= 0 {
++			if os.Getenv("ADAMIC_MUTANT") != "M10" && handler >= 0 {
+ 				fmt.Fprintln(os.Stderr, "adamic: not yet: request handler name is ambiguous across modules; give its declaration a unique name")
+ 				return nil, -1, 1
+ 			}
+@@ -50,6 +53,9 @@ func compileWASI(path string) (*ir.Program, int, int) {
+ }
+ 
+ func requestFunction(program *load.Program) (string, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "E_SELECT" {
++		return "", nil
++	}
+ 	entry := program.Files()[0]
+ 	typeChecker, release := program.Checker(context.Background(), entry)
+ 	defer release()
+@@ -83,7 +89,7 @@ func requestFunction(program *load.Program) (string, error) {
+ 			return invalid()
+ 		}
+ 		signature := typeChecker.GetSignatureFromDeclaration(declaration)
+-		if typeChecker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsStringLike == 0 {
++		if os.Getenv("ADAMIC_MUTANT") != "M11" && typeChecker.GetReturnTypeOfSignature(signature).Flags()&checker.TypeFlagsStringLike == 0 {
+ 			return invalid()
+ 		}
+ 		return declaration.Name().Text(), nil
+diff --git a/cmd/adamic/tsgo.go b/cmd/adamic/tsgo.go
+index cf1c5523..6ad97229 100644
+--- a/cmd/adamic/tsgo.go
++++ b/cmd/adamic/tsgo.go
+@@ -16,7 +16,7 @@ func build(path, output string, arguments []string) int {
+ 		switch arguments[index] {
+ 		case "--target":
+ 			index++
+-			if index >= len(arguments) || options.Target != "" || arguments[index] != "wasm32-wasi" {
++			if index >= len(arguments) || options.Target != "" || (arguments[index] != "wasm32-wasi") != (os.Getenv("ADAMIC_MUTANT") == "M08") {
+ 				fmt.Fprintln(os.Stderr, usage)
+ 				return 2
+ 			}
+@@ -24,9 +24,9 @@ func build(path, output string, arguments []string) int {
+ 		case "--explain-checks":
+ 			explain = true
+ 		case "--count":
+-			options.Count = true
++			options.Count = os.Getenv("ADAMIC_MUTANT") != "M06"
+ 		case "--sanitize":
+-			options.Sanitize = true
++			options.Sanitize = os.Getenv("ADAMIC_MUTANT") != "M07"
+ 		case "--tsgo":
+ 			index++
+ 			if index >= len(arguments) || archive != "" {
+@@ -43,7 +43,7 @@ func build(path, output string, arguments []string) int {
+ 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
+ 		return 1
+ 	}
+-	if options.Target != "" && archive != "" {
++	if os.Getenv("ADAMIC_MUTANT") != "M09" && options.Target != "" && archive != "" {
+ 		fmt.Fprintln(os.Stderr, "adamic: --tsgo is not supported for wasm32-wasi")
+ 		return 1
+ 	}
+@@ -52,7 +52,11 @@ func build(path, output string, arguments []string) int {
+ 	handler := -1
+ 	if options.Target == "wasm32-wasi" {
+ 		program, handler, code = compileWASI(path)
+-		options.Request = handler >= 0
++		if os.Getenv("ADAMIC_MUTANT") == "M12" {
++			options.Request = options.Count
++		} else {
++			options.Request = handler >= 0
++		}
+ 	} else {
+ 		program, code = compileLibrary(path, archive != "")
+ 	}

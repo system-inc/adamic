@@ -1,0 +1,3923 @@
+[
+  {
+    "Time": "2026-10-09T08:28:42.407493156Z",
+    "Action": "start",
+    "Package": "github.com/system-inc/adamic/cmd/adamic"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.417649422Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.417768427Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput",
+    "Output": "=== RUN   TestExplainChecksOutput\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418581704Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput",
+    "Output": "=== PAUSE TestExplainChecksOutput\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.41859199Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418594573Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksDriver"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418596246Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksDriver",
+    "Output": "=== RUN   TestExplainChecksDriver\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418604678Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksDriver",
+    "Output": "--- PASS: TestExplainChecksDriver (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418606952Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksDriver",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:42.41861956Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418621203Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks",
+    "Output": "=== RUN   TestNonNullExplainChecks\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418623576Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks",
+    "Output": "=== PAUSE TestNonNullExplainChecks\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418624968Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418627231Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418628523Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection",
+    "Output": "=== RUN   TestWASIRequestSelection\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418630566Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/exported"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.418631968Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/exported",
+    "Output": "=== RUN   TestWASIRequestSelection/exported\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.484618643Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/exported",
+    "Output": "--- PASS: TestWASIRequestSelection/exported (0.07s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.484669177Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/exported",
+    "Elapsed": 0.07
+  },
+  {
+    "Time": "2026-10-09T08:28:42.484689447Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.48469176Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias",
+    "Output": "=== RUN   TestWASIRequestSelection/alias\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.550531224Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias",
+    "Output": "--- PASS: TestWASIRequestSelection/alias (0.07s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.550573266Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias",
+    "Elapsed": 0.07
+  },
+  {
+    "Time": "2026-10-09T08:28:42.550584022Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias_wrong_parameter"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.550586075Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias_wrong_parameter",
+    "Output": "=== RUN   TestWASIRequestSelection/alias_wrong_parameter\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.606802411Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias_wrong_parameter",
+    "Output": "adamic: /tmp/adamic-gate/TestWASIRequestSelectionalias_wrong_parameter1214707956/001/program.a:1:1: request handler must take one required string parameter and return a string\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.606861768Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias_wrong_parameter",
+    "Output": "--- PASS: TestWASIRequestSelection/alias_wrong_parameter (0.06s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.606868698Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias_wrong_parameter",
+    "Elapsed": 0.06
+  },
+  {
+    "Time": "2026-10-09T08:28:42.607017958Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias_wrong_result"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.607022905Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias_wrong_result",
+    "Output": "=== RUN   TestWASIRequestSelection/alias_wrong_result\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.660772697Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias_wrong_result",
+    "Output": "adamic: /tmp/adamic-gate/TestWASIRequestSelectionalias_wrong_result2818010102/001/program.a:1:1: request handler must take one required string parameter and return a string\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.660832535Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias_wrong_result",
+    "Output": "--- PASS: TestWASIRequestSelection/alias_wrong_result (0.05s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.660839856Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/alias_wrong_result",
+    "Elapsed": 0.05
+  },
+  {
+    "Time": "2026-10-09T08:28:42.660848398Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/private"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.660852023Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/private",
+    "Output": "=== RUN   TestWASIRequestSelection/private\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.722887779Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/private",
+    "Output": "--- PASS: TestWASIRequestSelection/private (0.06s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.722927818Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/private",
+    "Elapsed": 0.06
+  },
+  {
+    "Time": "2026-10-09T08:28:42.722934738Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/wrong_parameter"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.722937472Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/wrong_parameter",
+    "Output": "=== RUN   TestWASIRequestSelection/wrong_parameter\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.776264812Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/wrong_parameter",
+    "Output": "adamic: /tmp/adamic-gate/TestWASIRequestSelectionwrong_parameter1405399420/001/program.a:1:1: request handler must take one required string parameter and return a string\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.776322807Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/wrong_parameter",
+    "Output": "--- PASS: TestWASIRequestSelection/wrong_parameter (0.05s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.776337038Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/wrong_parameter",
+    "Elapsed": 0.05
+  },
+  {
+    "Time": "2026-10-09T08:28:42.77634523Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/wrong_result"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.776347453Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/wrong_result",
+    "Output": "=== RUN   TestWASIRequestSelection/wrong_result\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.833188444Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/wrong_result",
+    "Output": "adamic: /tmp/adamic-gate/TestWASIRequestSelectionwrong_result661094382/001/program.a:1:1: request handler must take one required string parameter and return a string\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.833265497Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/wrong_result",
+    "Output": "--- PASS: TestWASIRequestSelection/wrong_result (0.06s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.833275392Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/wrong_result",
+    "Elapsed": 0.06
+  },
+  {
+    "Time": "2026-10-09T08:28:42.833282883Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/literal_parameter"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.833286208Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/literal_parameter",
+    "Output": "=== RUN   TestWASIRequestSelection/literal_parameter\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.889170297Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/literal_parameter",
+    "Output": "adamic: /tmp/adamic-gate/TestWASIRequestSelectionliteral_parameter772803372/001/program.a:1:1: request handler must take one required string parameter and return a string\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.889229674Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/literal_parameter",
+    "Output": "--- PASS: TestWASIRequestSelection/literal_parameter (0.06s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.889259608Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/literal_parameter",
+    "Elapsed": 0.06
+  },
+  {
+    "Time": "2026-10-09T08:28:42.889268922Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/optional_parameter"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.889271366Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/optional_parameter",
+    "Output": "=== RUN   TestWASIRequestSelection/optional_parameter\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.977081787Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/optional_parameter",
+    "Output": "adamic: /tmp/adamic-gate/TestWASIRequestSelectionoptional_parameter1114292623/001/program.a:1:1: request handler must take one required string parameter and return a string\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.977129467Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/optional_parameter",
+    "Output": "--- PASS: TestWASIRequestSelection/optional_parameter (0.09s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.977134725Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/optional_parameter",
+    "Elapsed": 0.09
+  },
+  {
+    "Time": "2026-10-09T08:28:42.977140173Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/default_parameter"
+  },
+  {
+    "Time": "2026-10-09T08:28:42.977145751Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/default_parameter",
+    "Output": "=== RUN   TestWASIRequestSelection/default_parameter\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.04295688Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/default_parameter",
+    "Output": "adamic: /tmp/adamic-gate/TestWASIRequestSelectiondefault_parameter1091773385/001/program.a:1:1: request handler must take one required string parameter and return a string\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.043299193Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/default_parameter",
+    "Output": "--- PASS: TestWASIRequestSelection/default_parameter (0.07s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.043310029Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/default_parameter",
+    "Elapsed": 0.07
+  },
+  {
+    "Time": "2026-10-09T08:28:43.043339663Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/two_parameters"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.043342036Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/two_parameters",
+    "Output": "=== RUN   TestWASIRequestSelection/two_parameters\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.096314227Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/two_parameters",
+    "Output": "adamic: /tmp/adamic-gate/TestWASIRequestSelectiontwo_parameters2605684686/001/program.a:1:1: request handler must take one required string parameter and return a string\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.096442496Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/two_parameters",
+    "Output": "--- PASS: TestWASIRequestSelection/two_parameters (0.05s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.096449226Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/two_parameters",
+    "Elapsed": 0.05
+  },
+  {
+    "Time": "2026-10-09T08:28:43.096455245Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/generic"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.096457789Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/generic",
+    "Output": "=== RUN   TestWASIRequestSelection/generic\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.16287243Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/generic",
+    "Output": "adamic: /tmp/adamic-gate/TestWASIRequestSelectiongeneric1933845477/001/program.a:1:1: request handler must take one required string parameter and return a string\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.162918198Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/generic",
+    "Output": "--- PASS: TestWASIRequestSelection/generic (0.07s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.162922514Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/generic",
+    "Elapsed": 0.07
+  },
+  {
+    "Time": "2026-10-09T08:28:43.162927752Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/function_value"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.162929945Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/function_value",
+    "Output": "=== RUN   TestWASIRequestSelection/function_value\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.22703681Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/function_value",
+    "Output": "adamic: not yet: handleRequest must export a named function declaration\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227106203Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/function_value",
+    "Output": "--- PASS: TestWASIRequestSelection/function_value (0.06s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227116818Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection/function_value",
+    "Elapsed": 0.06
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227126813Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection",
+    "Output": "--- PASS: TestWASIRequestSelection (0.81s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227135095Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestSelection",
+    "Elapsed": 0.81
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227139932Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequest"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227143397Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequest",
+    "Output": "=== RUN   TestWASIRequest\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227180973Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequest",
+    "Output": "    request_test.go:78: set ADAMIC_ORACLE_WASI=1\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227186611Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequest",
+    "Output": "--- SKIP: TestWASIRequest (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227207251Z",
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequest",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227211868Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestRequestNativeStaysCommand"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.227214051Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestRequestNativeStaysCommand",
+    "Output": "=== RUN   TestRequestNativeStaysCommand\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.457963062Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestRequestNativeStaysCommand",
+    "Output": "--- PASS: TestRequestNativeStaysCommand (0.23s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.458004783Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestRequestNativeStaysCommand",
+    "Elapsed": 0.23
+  },
+  {
+    "Time": "2026-10-09T08:28:43.458013126Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestModuleSelection"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.458016671Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestModuleSelection",
+    "Output": "=== RUN   TestWASIRequestModuleSelection\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52671296Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestModuleSelection",
+    "Output": "adamic: not yet: request handler name is ambiguous across modules; give its declaration a unique name\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526765137Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestModuleSelection",
+    "Output": "--- PASS: TestWASIRequestModuleSelection (0.07s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526768933Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestModuleSelection",
+    "Elapsed": 0.07
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526779899Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestThrows"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526783264Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestThrows",
+    "Output": "=== RUN   TestWASIRequestThrows\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526849631Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestThrows",
+    "Output": "    request_test.go:154: set ADAMIC_ORACLE_WASI=1\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52685552Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestThrows",
+    "Output": "--- SKIP: TestWASIRequestThrows (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526865865Z",
+    "Action": "skip",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRequestThrows",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526872545Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526874949Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "=== RUN   TestBuildTargetParsing\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526932093Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "adamic: native: sanitizers are not supported for wasm32-wasi\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526938071Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "adamic: native: sanitizers are not supported for wasm32-wasi\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526941146Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "usage:\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526944962Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic types <file.a|file.ts>...\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526948046Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic c <file.a|file.ts> [--explain-checks]\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526952002Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic js <file.a|file.ts> [--explain-checks]\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526956368Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526961115Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "usage:\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52696419Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic types <file.a|file.ts>...\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526967234Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic c <file.a|file.ts> [--explain-checks]\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526970089Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic js <file.a|file.ts> [--explain-checks]\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526973854Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526976097Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "usage:\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526978801Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic types <file.a|file.ts>...\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526981185Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic c <file.a|file.ts> [--explain-checks]\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526984279Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic js <file.a|file.ts> [--explain-checks]\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526987023Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]\n"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.526994214Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Output": "--- PASS: TestBuildTargetParsing (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52699809Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestBuildTargetParsing",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527000543Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRejectsTSGoArchive"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527003197Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRejectsTSGoArchive",
+    "Output": "=== RUN   TestWASIRejectsTSGoArchive\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527042265Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRejectsTSGoArchive",
+    "Output": "--- PASS: TestWASIRejectsTSGoArchive (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52704616Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestWASIRejectsTSGoArchive",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527050256Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.5270525Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput",
+    "Output": "=== CONT  TestExplainChecksOutput\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527058318Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527060622Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_empty\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527064908Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_empty\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527067001Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527090706Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527092969Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_false_read\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527096825Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_false_read\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527098918Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527101352Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527103365Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_true_only\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52710722Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_true_only\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527111096Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.5271135Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527115763Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_erased\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527119999Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_erased\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527122793Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527126639Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527129403Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_assertion\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527133028Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_assertion\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527135512Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527138386Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52714122Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_empty\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527148872Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527151055Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/c",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_empty/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527155992Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/c",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_empty/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527158005Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.5271613Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527164885Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/js",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_empty/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527167789Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/js",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_empty/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527169873Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527173017Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.5271751Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/build",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_empty/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527179667Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/build",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_empty/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527182221Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527184664Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527186717Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/c",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_empty/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527258233Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527261678Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_true_only\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527311491Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527314135Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/c",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_true_only/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527317099Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/c",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_true_only/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527319192Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527323348Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527325542Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/js",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_true_only/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527328897Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/js",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_true_only/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527331841Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527335436Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52733773Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/build",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_true_only/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527342416Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/build",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_true_only/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527345421Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527350759Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527353553Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/c",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_true_only/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527487169Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527490665Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/build",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_empty/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52749402Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527496683Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_erased\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52753529Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527538034Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/c",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_erased/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527570843Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/c",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_erased/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527583461Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527586486Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52758929Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/js",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_erased/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527595158Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/js",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_erased/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527597231Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527599685Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527601608Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/build",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_erased/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527619494Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/build",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_erased/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527621717Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527625152Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527627386Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/c",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_erased/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.527953466Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.52796296Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/build",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_true_only/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.625079034Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/c",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_true_only/c (0.10s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.625121297Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/c",
+    "Elapsed": 0.1
+  },
+  {
+    "Time": "2026-10-09T08:28:43.625128537Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.625132303Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/js",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_empty/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.634594167Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/c",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_empty/c (0.11s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.634699882Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/c",
+    "Elapsed": 0.11
+  },
+  {
+    "Time": "2026-10-09T08:28:43.634707834Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.634710678Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/js",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_true_only/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655351942Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/c",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_erased/c (0.13s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655394395Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/c",
+    "Elapsed": 0.13
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655400864Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655403448Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_false_read\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655406893Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655409126Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/c",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_false_read/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655413112Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/c",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_false_read/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655415796Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655419201Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655426462Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/js",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_false_read/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.65543177Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/js",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_false_read/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655434333Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.65543864Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655440833Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/build",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_some_false_read/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655444268Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/build",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_some_false_read/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655446261Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655449826Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.65545235Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks",
+    "Output": "=== CONT  TestNonNullExplainChecks\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655456286Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655458759Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed",
+    "Output": "=== RUN   TestNonNullExplainChecks/narrowed\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655462275Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed",
+    "Output": "=== PAUSE TestNonNullExplainChecks/narrowed\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655464618Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655471328Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655473321Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present",
+    "Output": "=== RUN   TestNonNullExplainChecks/present\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655476255Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present",
+    "Output": "=== PAUSE TestNonNullExplainChecks/present\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655478458Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655483716Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655486029Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined",
+    "Output": "=== RUN   TestNonNullExplainChecks/undefined\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655489074Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined",
+    "Output": "=== PAUSE TestNonNullExplainChecks/undefined\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655492789Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655495563Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655503715Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null",
+    "Output": "=== RUN   TestNonNullExplainChecks/null\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655508282Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null",
+    "Output": "=== PAUSE TestNonNullExplainChecks/null\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655511096Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655513991Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655516414Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer",
+    "Output": "=== RUN   TestNonNullExplainChecks/initializer\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.65552007Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer",
+    "Output": "=== PAUSE TestNonNullExplainChecks/initializer\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655522934Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655525738Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655527911Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer",
+    "Output": "=== RUN   TestNonNullExplainChecks/let_initializer\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655530545Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer",
+    "Output": "=== PAUSE TestNonNullExplainChecks/let_initializer\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655532578Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655535763Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655537635Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined",
+    "Output": "=== RUN   TestNonNullExplainChecks/refuse_undefined\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.65554056Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined",
+    "Output": "=== PAUSE TestNonNullExplainChecks/refuse_undefined\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655542663Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655545066Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655546899Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null",
+    "Output": "=== RUN   TestNonNullExplainChecks/refuse_null\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655549723Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null",
+    "Output": "=== PAUSE TestNonNullExplainChecks/refuse_null\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655553258Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655555682Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655558065Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_assertion\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.65556081Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655562943Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/c",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_assertion/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655565867Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/c",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_assertion/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.65556805Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655570714Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655572817Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/js",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_assertion/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655575762Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/js",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_assertion/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655578125Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655580609Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655582722Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/build",
+    "Output": "=== RUN   TestExplainChecksOutput/overload_assertion/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655585636Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/build",
+    "Output": "=== PAUSE TestExplainChecksOutput/overload_assertion/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.65558813Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655590894Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.655593197Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/build",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_erased/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.748050041Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/js",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_empty/js (0.12s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.748088127Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/js",
+    "Elapsed": 0.12
+  },
+  {
+    "Time": "2026-10-09T08:28:43.748094366Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.748100595Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/js",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_erased/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.754737602Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/js",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_true_only/js (0.12s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.754786404Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/js",
+    "Elapsed": 0.12
+  },
+  {
+    "Time": "2026-10-09T08:28:43.754793535Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.75479696Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/c",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_false_read/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829542916Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/js",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_erased/js (0.08s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829722621Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/js",
+    "Elapsed": 0.08
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829732696Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.82973545Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed",
+    "Output": "=== CONT  TestNonNullExplainChecks/narrowed\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829760957Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829763641Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/c",
+    "Output": "=== RUN   TestNonNullExplainChecks/narrowed/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829767557Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/c",
+    "Output": "=== PAUSE TestNonNullExplainChecks/narrowed/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.82976993Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829773025Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829775078Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/js",
+    "Output": "=== RUN   TestNonNullExplainChecks/narrowed/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829777642Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/js",
+    "Output": "=== PAUSE TestNonNullExplainChecks/narrowed/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829779665Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829781728Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.82978346Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/build",
+    "Output": "=== RUN   TestNonNullExplainChecks/narrowed/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829786314Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/build",
+    "Output": "=== PAUSE TestNonNullExplainChecks/narrowed/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829792924Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.82979713Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.829799534Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/build",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_false_read/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.846707634Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/c",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_false_read/c (0.09s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.846754784Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/c",
+    "Elapsed": 0.09
+  },
+  {
+    "Time": "2026-10-09T08:28:43.846763076Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.846767402Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/js",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_some_false_read/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.943044638Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/js",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_false_read/js (0.10s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.94317503Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/js",
+    "Elapsed": 0.1
+  },
+  {
+    "Time": "2026-10-09T08:28:43.943185876Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:43.943189701Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/c",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_assertion/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.050993469Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/c",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_assertion/c (0.11s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051040007Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/c",
+    "Elapsed": 0.11
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051046938Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051050403Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null",
+    "Output": "=== CONT  TestNonNullExplainChecks/refuse_null\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051054148Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051056572Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/c",
+    "Output": "=== RUN   TestNonNullExplainChecks/refuse_null/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051063292Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/c",
+    "Output": "=== PAUSE TestNonNullExplainChecks/refuse_null/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051065625Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051084533Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051088759Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/js",
+    "Output": "=== RUN   TestNonNullExplainChecks/refuse_null/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051091944Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/js",
+    "Output": "=== PAUSE TestNonNullExplainChecks/refuse_null/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051094237Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051096681Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051099465Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/build",
+    "Output": "=== RUN   TestNonNullExplainChecks/refuse_null/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.05110272Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/build",
+    "Output": "=== PAUSE TestNonNullExplainChecks/refuse_null/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051104983Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051111633Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051114717Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined",
+    "Output": "=== CONT  TestNonNullExplainChecks/refuse_undefined\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051118232Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051120626Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/c",
+    "Output": "=== RUN   TestNonNullExplainChecks/refuse_undefined/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051123871Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/c",
+    "Output": "=== PAUSE TestNonNullExplainChecks/refuse_undefined/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051126505Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051129589Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051132614Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/js",
+    "Output": "=== RUN   TestNonNullExplainChecks/refuse_undefined/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051136109Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/js",
+    "Output": "=== PAUSE TestNonNullExplainChecks/refuse_undefined/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051140415Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051143019Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051145162Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/build",
+    "Output": "=== RUN   TestNonNullExplainChecks/refuse_undefined/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051156999Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/build",
+    "Output": "=== PAUSE TestNonNullExplainChecks/refuse_undefined/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051159613Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051162247Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.05116419Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer",
+    "Output": "=== CONT  TestNonNullExplainChecks/let_initializer\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051166954Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051169017Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/c",
+    "Output": "=== RUN   TestNonNullExplainChecks/let_initializer/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051171781Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/c",
+    "Output": "=== PAUSE TestNonNullExplainChecks/let_initializer/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051173794Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051176478Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051181035Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/js",
+    "Output": "=== RUN   TestNonNullExplainChecks/let_initializer/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051183989Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/js",
+    "Output": "=== PAUSE TestNonNullExplainChecks/let_initializer/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051186042Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051188606Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051190709Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/build",
+    "Output": "=== RUN   TestNonNullExplainChecks/let_initializer/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051193784Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/build",
+    "Output": "=== PAUSE TestNonNullExplainChecks/let_initializer/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051196257Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051203037Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051205671Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer",
+    "Output": "=== CONT  TestNonNullExplainChecks/initializer\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051209056Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.05121174Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/c",
+    "Output": "=== RUN   TestNonNullExplainChecks/initializer/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051216757Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/c",
+    "Output": "=== PAUSE TestNonNullExplainChecks/initializer/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051219572Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051222886Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.05122536Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/js",
+    "Output": "=== RUN   TestNonNullExplainChecks/initializer/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051228284Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/js",
+    "Output": "=== PAUSE TestNonNullExplainChecks/initializer/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051230678Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051233121Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051235415Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/build",
+    "Output": "=== RUN   TestNonNullExplainChecks/initializer/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051261814Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/build",
+    "Output": "=== PAUSE TestNonNullExplainChecks/initializer/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051264157Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051266711Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051268574Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null",
+    "Output": "=== CONT  TestNonNullExplainChecks/null\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051273551Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051275844Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/c",
+    "Output": "=== RUN   TestNonNullExplainChecks/null/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051278648Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/c",
+    "Output": "=== PAUSE TestNonNullExplainChecks/null/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051280762Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051283556Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051285729Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/js",
+    "Output": "=== RUN   TestNonNullExplainChecks/null/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051289014Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/js",
+    "Output": "=== PAUSE TestNonNullExplainChecks/null/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051291387Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051297927Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051300901Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/build",
+    "Output": "=== RUN   TestNonNullExplainChecks/null/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051312739Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/build",
+    "Output": "=== PAUSE TestNonNullExplainChecks/null/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051315072Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051317806Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.05132046Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined",
+    "Output": "=== CONT  TestNonNullExplainChecks/undefined\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051323755Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051326148Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/c",
+    "Output": "=== RUN   TestNonNullExplainChecks/undefined/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051329593Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/c",
+    "Output": "=== PAUSE TestNonNullExplainChecks/undefined/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051331656Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051334691Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051336704Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/js",
+    "Output": "=== RUN   TestNonNullExplainChecks/undefined/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051340479Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/js",
+    "Output": "=== PAUSE TestNonNullExplainChecks/undefined/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051342953Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051345457Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.05134777Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/build",
+    "Output": "=== RUN   TestNonNullExplainChecks/undefined/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051352677Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/build",
+    "Output": "=== PAUSE TestNonNullExplainChecks/undefined/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.0513547Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051357655Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051359898Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present",
+    "Output": "=== CONT  TestNonNullExplainChecks/present\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051362322Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051365887Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/c",
+    "Output": "=== RUN   TestNonNullExplainChecks/present/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051369122Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/c",
+    "Output": "=== PAUSE TestNonNullExplainChecks/present/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051371425Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051374169Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051376352Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/js",
+    "Output": "=== RUN   TestNonNullExplainChecks/present/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051381219Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/js",
+    "Output": "=== PAUSE TestNonNullExplainChecks/present/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051383603Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051387859Z",
+    "Action": "run",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051390583Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/build",
+    "Output": "=== RUN   TestNonNullExplainChecks/present/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.05139492Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/build",
+    "Output": "=== PAUSE TestNonNullExplainChecks/present/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051397834Z",
+    "Action": "pause",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051401589Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:44.051404283Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/build",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_assertion/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.440116357Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/build",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_empty/build (8.91s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.440153181Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty/build",
+    "Elapsed": 8.91
+  },
+  {
+    "Time": "2026-10-09T08:28:52.44015964Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_empty (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.440420044Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_empty",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:52.440427074Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.440429017Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/js",
+    "Output": "=== CONT  TestExplainChecksOutput/overload_assertion/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.536014953Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/js",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_assertion/js (0.10s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.536059608Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/js",
+    "Elapsed": 0.1
+  },
+  {
+    "Time": "2026-10-09T08:28:52.536067159Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.536069493Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/c",
+    "Output": "=== CONT  TestNonNullExplainChecks/narrowed/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.63894147Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/c",
+    "Output": "--- PASS: TestNonNullExplainChecks/narrowed/c (0.10s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.638985655Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/c",
+    "Elapsed": 0.1
+  },
+  {
+    "Time": "2026-10-09T08:28:52.638992786Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.63899572Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/build",
+    "Output": "=== CONT  TestNonNullExplainChecks/narrowed/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.768970329Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/build",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_true_only/build (9.24s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.769023978Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only/build",
+    "Elapsed": 9.24
+  },
+  {
+    "Time": "2026-10-09T08:28:52.769030268Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_true_only (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.769035605Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_true_only",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:52.769037068Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.769039251Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/js",
+    "Output": "=== CONT  TestNonNullExplainChecks/narrowed/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.842078178Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/build",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_erased/build (9.19s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.842112869Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased/build",
+    "Elapsed": 9.19
+  },
+  {
+    "Time": "2026-10-09T08:28:52.842119879Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_erased (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.842123975Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_erased",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:52.842125978Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.842128121Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/c",
+    "Output": "=== CONT  TestNonNullExplainChecks/refuse_null/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.864297273Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/js",
+    "Output": "--- PASS: TestNonNullExplainChecks/narrowed/js (0.10s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.864331914Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/js",
+    "Elapsed": 0.1
+  },
+  {
+    "Time": "2026-10-09T08:28:52.864337983Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.864340006Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/c",
+    "Output": "=== CONT  TestNonNullExplainChecks/refuse_undefined/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.877979867Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/build",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_false_read/build (9.05s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.878017543Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read/build",
+    "Elapsed": 9.05
+  },
+  {
+    "Time": "2026-10-09T08:28:52.878023962Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_some_false_read (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.878026696Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_some_false_read",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:52.878028409Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.878030582Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/build",
+    "Output": "=== CONT  TestNonNullExplainChecks/refuse_null/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.943450267Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/c",
+    "Output": "--- PASS: TestNonNullExplainChecks/refuse_null/c (0.10s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.94356084Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/c",
+    "Elapsed": 0.1
+  },
+  {
+    "Time": "2026-10-09T08:28:52.943585216Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.943587549Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/js",
+    "Output": "=== CONT  TestNonNullExplainChecks/refuse_null/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.945325337Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/c",
+    "Output": "--- PASS: TestNonNullExplainChecks/refuse_undefined/c (0.08s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.945341921Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/c",
+    "Elapsed": 0.08
+  },
+  {
+    "Time": "2026-10-09T08:28:52.945345697Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:52.945347579Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/c",
+    "Output": "=== CONT  TestNonNullExplainChecks/let_initializer/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.029188172Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/js",
+    "Output": "--- PASS: TestNonNullExplainChecks/refuse_null/js (0.09s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.029325685Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/js",
+    "Elapsed": 0.09
+  },
+  {
+    "Time": "2026-10-09T08:28:53.029333406Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.029335409Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/build",
+    "Output": "=== CONT  TestNonNullExplainChecks/refuse_undefined/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.056183717Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/c",
+    "Output": "--- PASS: TestNonNullExplainChecks/let_initializer/c (0.11s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.056219519Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/c",
+    "Elapsed": 0.11
+  },
+  {
+    "Time": "2026-10-09T08:28:53.056264415Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.056267029Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/js",
+    "Output": "=== CONT  TestNonNullExplainChecks/refuse_undefined/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.146462477Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/js",
+    "Output": "--- PASS: TestNonNullExplainChecks/refuse_undefined/js (0.09s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.146546121Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/js",
+    "Elapsed": 0.09
+  },
+  {
+    "Time": "2026-10-09T08:28:53.146554743Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.146557127Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/c",
+    "Output": "=== CONT  TestNonNullExplainChecks/initializer/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.235813909Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/build",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_assertion/build (9.18s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.2358618Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion/build",
+    "Elapsed": 9.18
+  },
+  {
+    "Time": "2026-10-09T08:28:53.235869601Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion",
+    "Output": "--- PASS: TestExplainChecksOutput/overload_assertion (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.235874518Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput/overload_assertion",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:53.235877843Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput",
+    "Output": "--- PASS: TestExplainChecksOutput (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.235881679Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestExplainChecksOutput",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:28:53.235884143Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.235886937Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/build",
+    "Output": "=== CONT  TestNonNullExplainChecks/let_initializer/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.238883256Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/c",
+    "Output": "--- PASS: TestNonNullExplainChecks/initializer/c (0.09s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.238910526Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/c",
+    "Elapsed": 0.09
+  },
+  {
+    "Time": "2026-10-09T08:28:53.238915182Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/js"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.238917466Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/js",
+    "Output": "=== CONT  TestNonNullExplainChecks/let_initializer/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.327840397Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/js",
+    "Output": "--- PASS: TestNonNullExplainChecks/let_initializer/js (0.09s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.327878223Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/js",
+    "Elapsed": 0.09
+  },
+  {
+    "Time": "2026-10-09T08:28:53.327884502Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/c"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.327887126Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/c",
+    "Output": "=== CONT  TestNonNullExplainChecks/null/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.418925169Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/c",
+    "Output": "--- PASS: TestNonNullExplainChecks/null/c (0.09s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.41904122Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/c",
+    "Elapsed": 0.09
+  },
+  {
+    "Time": "2026-10-09T08:28:53.419050133Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/build"
+  },
+  {
+    "Time": "2026-10-09T08:28:53.419052857Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/build",
+    "Output": "=== CONT  TestNonNullExplainChecks/initializer/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.017538377Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/build",
+    "Output": "--- PASS: TestNonNullExplainChecks/narrowed/build (8.38s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.017575532Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed/build",
+    "Elapsed": 8.38
+  },
+  {
+    "Time": "2026-10-09T08:29:01.017581461Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed",
+    "Output": "--- PASS: TestNonNullExplainChecks/narrowed (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.017584926Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/narrowed",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:29:01.017586338Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/js"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.017588251Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/js",
+    "Output": "=== CONT  TestNonNullExplainChecks/initializer/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.1107075Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/js",
+    "Output": "--- PASS: TestNonNullExplainChecks/initializer/js (0.09s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.110990908Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/js",
+    "Elapsed": 0.09
+  },
+  {
+    "Time": "2026-10-09T08:29:01.111002394Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/c"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.111008934Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/c",
+    "Output": "=== CONT  TestNonNullExplainChecks/undefined/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.168489519Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/c",
+    "Output": "--- PASS: TestNonNullExplainChecks/undefined/c (0.06s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.168542357Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/c",
+    "Elapsed": 0.06
+  },
+  {
+    "Time": "2026-10-09T08:29:01.168549107Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/build"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.168552422Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/build",
+    "Output": "=== CONT  TestNonNullExplainChecks/null/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.516063344Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/build",
+    "Output": "--- PASS: TestNonNullExplainChecks/refuse_undefined/build (8.49s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.516199905Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined/build",
+    "Elapsed": 8.49
+  },
+  {
+    "Time": "2026-10-09T08:29:01.516207156Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/js"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.51620978Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/js",
+    "Output": "=== CONT  TestNonNullExplainChecks/null/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.516213565Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined",
+    "Output": "--- PASS: TestNonNullExplainChecks/refuse_undefined (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.541634584Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_undefined",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:29:01.541669124Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/build",
+    "Output": "--- PASS: TestNonNullExplainChecks/refuse_null/build (8.66s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.541699129Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null/build",
+    "Elapsed": 8.66
+  },
+  {
+    "Time": "2026-10-09T08:29:01.541703876Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null",
+    "Output": "--- PASS: TestNonNullExplainChecks/refuse_null (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.541708522Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/refuse_null",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:29:01.541709724Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/c"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.541711987Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/c",
+    "Output": "=== CONT  TestNonNullExplainChecks/present/c\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.584502766Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/js",
+    "Output": "--- PASS: TestNonNullExplainChecks/null/js (0.07s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.584538859Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/js",
+    "Elapsed": 0.07
+  },
+  {
+    "Time": "2026-10-09T08:29:01.584547351Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/build"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.584551568Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/build",
+    "Output": "=== CONT  TestNonNullExplainChecks/undefined/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.645683606Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/c",
+    "Output": "--- PASS: TestNonNullExplainChecks/present/c (0.10s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.645723956Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/c",
+    "Elapsed": 0.1
+  },
+  {
+    "Time": "2026-10-09T08:29:01.645729804Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/js"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.645731927Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/js",
+    "Output": "=== CONT  TestNonNullExplainChecks/undefined/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.737753391Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/js",
+    "Output": "--- PASS: TestNonNullExplainChecks/undefined/js (0.09s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.737793981Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/js",
+    "Elapsed": 0.09
+  },
+  {
+    "Time": "2026-10-09T08:29:01.737799599Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/build"
+  },
+  {
+    "Time": "2026-10-09T08:29:01.737801923Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/build",
+    "Output": "=== CONT  TestNonNullExplainChecks/present/build\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:02.048897934Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/build",
+    "Output": "--- PASS: TestNonNullExplainChecks/let_initializer/build (8.81s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:02.048946476Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer/build",
+    "Elapsed": 8.81
+  },
+  {
+    "Time": "2026-10-09T08:29:02.048967507Z",
+    "Action": "cont",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/js"
+  },
+  {
+    "Time": "2026-10-09T08:29:02.04897673Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/js",
+    "Output": "=== CONT  TestNonNullExplainChecks/present/js\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:02.049695428Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer",
+    "Output": "--- PASS: TestNonNullExplainChecks/let_initializer (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:02.130465054Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/let_initializer",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:29:02.130505193Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/build",
+    "Output": "--- PASS: TestNonNullExplainChecks/initializer/build (8.71s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:02.130569037Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer/build",
+    "Elapsed": 8.71
+  },
+  {
+    "Time": "2026-10-09T08:29:02.130609236Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer",
+    "Output": "--- PASS: TestNonNullExplainChecks/initializer (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:02.161909586Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/initializer",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:29:02.161950106Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/js",
+    "Output": "--- PASS: TestNonNullExplainChecks/present/js (0.11s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:07.808274024Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/js",
+    "Elapsed": 0.11
+  },
+  {
+    "Time": "2026-10-09T08:29:07.808309566Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/build",
+    "Output": "--- PASS: TestNonNullExplainChecks/null/build (6.64s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:07.808320152Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null/build",
+    "Elapsed": 6.64
+  },
+  {
+    "Time": "2026-10-09T08:29:07.808322926Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null",
+    "Output": "--- PASS: TestNonNullExplainChecks/null (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:07.977630634Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/null",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:29:07.977732534Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/build",
+    "Output": "--- PASS: TestNonNullExplainChecks/undefined/build (6.40s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:07.977741407Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined/build",
+    "Elapsed": 6.4
+  },
+  {
+    "Time": "2026-10-09T08:29:07.977746224Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined",
+    "Output": "--- PASS: TestNonNullExplainChecks/undefined (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:08.046403356Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/undefined",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:29:08.046435864Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/build",
+    "Output": "--- PASS: TestNonNullExplainChecks/present/build (6.31s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:08.046445048Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present/build",
+    "Elapsed": 6.31
+  },
+  {
+    "Time": "2026-10-09T08:29:08.046448042Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present",
+    "Output": "--- PASS: TestNonNullExplainChecks/present (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:08.046451477Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks/present",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:29:08.04645324Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks",
+    "Output": "--- PASS: TestNonNullExplainChecks (0.00s)\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:08.046455603Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Test": "TestNonNullExplainChecks",
+    "Elapsed": 0
+  },
+  {
+    "Time": "2026-10-09T08:29:08.046463225Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Output": "PASS\n",
+    "OutputType": "frame"
+  },
+  {
+    "Time": "2026-10-09T08:29:08.047982135Z",
+    "Action": "output",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Output": "ok  \tgithub.com/system-inc/adamic/cmd/adamic\t25.640s\n"
+  },
+  {
+    "Time": "2026-10-09T08:29:08.048105056Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/cmd/adamic",
+    "Elapsed": 25.641
+  }
+]

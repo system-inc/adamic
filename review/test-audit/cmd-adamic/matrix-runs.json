@@ -1,0 +1,1609 @@
+[
+  {
+    "mutant": "M01",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M01 ADAMIC_NATIVE_SPLIT=u007-M01 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 28.864730855000744,
+    "binary_seconds": 26.876,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "fail",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "fail",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "pass",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [
+      "TestExplainChecksOutput",
+      "TestNonNullExplainChecks"
+    ],
+    "failing_lines": {
+      "TestExplainChecksOutput/overload_some_empty/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_empty/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_empty/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/null/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/null/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/null/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/present/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/present/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/present/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/M01-package.log"
+  },
+  {
+    "mutant": "M02",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_NATIVE_SPLIT=u007-M02 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 30.76172630899964,
+    "binary_seconds": 28.623,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "pass",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/M02-package.log"
+  },
+  {
+    "mutant": "M03",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_NATIVE_SPLIT=u007-M03 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 30.23080459800076,
+    "binary_seconds": 28.175,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "fail",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "pass",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [
+      "TestRequestNativeStaysCommand"
+    ],
+    "failing_lines": {
+      "TestRequestNativeStaysCommand": [
+        "request_test.go:106: compile returned 1"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/M03-package.log"
+  },
+  {
+    "mutant": "M04",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M04 ADAMIC_NATIVE_SPLIT=u007-M04 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 29.145238975999746,
+    "binary_seconds": 27.054,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "fail",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "pass",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [
+      "TestExplainChecksOutput"
+    ],
+    "failing_lines": {
+      "TestExplainChecksOutput/overload_some_empty/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_empty/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_empty/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/build": [
+        "checks_test.go:42: build explanation:"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/M04-package.log"
+  },
+  {
+    "mutant": "M05",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M05 ADAMIC_NATIVE_SPLIT=u007-M05 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 29.690373204000934,
+    "binary_seconds": 27.645,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "fail",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "pass",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [
+      "TestNonNullExplainChecks"
+    ],
+    "failing_lines": {
+      "TestNonNullExplainChecks/narrowed/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/null/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/null/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/null/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/present/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/present/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/present/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/M05-package.log"
+  },
+  {
+    "mutant": "M06",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M06 ADAMIC_NATIVE_SPLIT=u007-M06 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 28.613221313000395,
+    "binary_seconds": 26.554,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "fail",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "pass",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [
+      "TestWASIRequest"
+    ],
+    "failing_lines": {
+      "TestWASIRequest/request.a": [
+        "request_test.go:94: request host: exit status 1"
+      ],
+      "TestWASIRequest/request_alias.a": [
+        "request_test.go:94: request host: exit status 1"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/M06-package.log"
+  },
+  {
+    "mutant": "M07",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M07 ADAMIC_NATIVE_SPLIT=u007-M07 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 19.146592185001282,
+    "binary_seconds": 17.01,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "pass",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/M07-package.log"
+  },
+  {
+    "mutant": "M08",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M08 ADAMIC_NATIVE_SPLIT=u007-M08 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 29.926596280998638,
+    "binary_seconds": 27.714,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "fail",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "fail",
+      "TestBuildTargetParsing": "fail",
+      "TestWASIRejectsTSGoArchive": "fail"
+    },
+    "failed_rows": [
+      "TestBuildTargetParsing",
+      "TestWASIRejectsTSGoArchive",
+      "TestWASIRequest",
+      "TestWASIRequestThrows"
+    ],
+    "failing_lines": {
+      "TestWASIRequest/request.a": [
+        "request_test.go:88: build returned 2"
+      ],
+      "TestWASIRequest/request_alias.a": [
+        "request_test.go:88: build returned 2"
+      ],
+      "TestWASIRequestThrows": [
+        "request_test.go:159: build returned 2"
+      ],
+      "TestBuildTargetParsing": [
+        "target_test.go:17: [build --target wasm32-wasi missing.a -o out.wasm --sanitize]: got 2, want unsupported options (1)"
+      ],
+      "TestWASIRejectsTSGoArchive": [
+        "target_test.go:48: got exit 2 and \"usage:\\n  adamic types <file.a|file.ts>...\\n  adamic c <file.a|file.ts> [--explain-checks]\\n  adamic js <file.a|file.ts> [--explain-checks]\\n  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]\\n\""
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/M08-package.log"
+  },
+  {
+    "mutant": "M09",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M09 ADAMIC_NATIVE_SPLIT=u007-M09 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 28.77958755399959,
+    "binary_seconds": 26.497,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "pass",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "fail"
+    },
+    "failed_rows": [
+      "TestWASIRejectsTSGoArchive"
+    ],
+    "failing_lines": {
+      "TestWASIRejectsTSGoArchive": [
+        "target_test.go:48: got exit 1 and \"adamic: load: no file at missing.a\\n\""
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/M09-package.log"
+  },
+  {
+    "mutant": "M10",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M10 ADAMIC_NATIVE_SPLIT=u007-M10 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 31.200203612999758,
+    "binary_seconds": 29.03,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "fail",
+      "TestWASIRequestThrows": "pass",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [
+      "TestWASIRequestModuleSelection"
+    ],
+    "failing_lines": {
+      "TestWASIRequestModuleSelection": [
+        "request_test.go:143: accepted ambiguous IR function names"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/M10-package.log"
+  },
+  {
+    "mutant": "M11",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M11 ADAMIC_NATIVE_SPLIT=u007-M11 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 29.748663979000412,
+    "binary_seconds": 27.564,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "fail",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "pass",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [
+      "TestWASIRequestSelection"
+    ],
+    "failing_lines": {
+      "TestWASIRequestSelection/alias_wrong_result": [
+        "request_test.go:53: signature selection returned \"serve\", <nil>, want refused true"
+      ],
+      "TestWASIRequestSelection/wrong_result": [
+        "request_test.go:53: signature selection returned \"handleRequest\", <nil>, want refused true"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/M11-package.log"
+  },
+  {
+    "mutant": "M12",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M12 ADAMIC_NATIVE_SPLIT=u007-M12 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 28.21544248200007,
+    "binary_seconds": 26.103,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "fail",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [
+      "TestWASIRequestThrows"
+    ],
+    "failing_lines": {
+      "TestWASIRequestThrows": [
+        "request_test.go:167: uncaught handler exception: exit status 1, \"node:wasi:154\\n    validateUndefined(_start, 'instance.exports._start');\\n    ^\\n\\nTypeError [ERR_INVALID_ARG_TYPE]: The \\\"instance.exports._start\\\" property must be undefined. Received function 9\\n    at WASI.initialize (node:wasi:154:5)\\n    at file:///workspace/adamic/cmd/adamic/testdata/wasi/throw-host.mjs:7:6 {\\n  code: 'ERR_INVALID_ARG_TYPE'\\n}\\n\\nNode.js v24.19.0\\n\""
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/M12-package.log"
+  },
+  {
+    "mutant": "E_RUN",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=E_RUN ADAMIC_NATIVE_SPLIT=u007-E_RUN timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 3.2890386859999126,
+    "binary_seconds": 1.32,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "fail",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "fail",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "fail",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "pass",
+      "TestWASIRequestThrows": "fail",
+      "TestBuildTargetParsing": "fail",
+      "TestWASIRejectsTSGoArchive": "fail"
+    },
+    "failed_rows": [
+      "TestBuildTargetParsing",
+      "TestExplainChecksOutput",
+      "TestNonNullExplainChecks",
+      "TestWASIRejectsTSGoArchive",
+      "TestWASIRequest",
+      "TestWASIRequestThrows"
+    ],
+    "failing_lines": {
+      "TestWASIRequest/request.a": [
+        "request_test.go:94: request host: exit status 1"
+      ],
+      "TestWASIRequest/request_alias.a": [
+        "request_test.go:94: request host: exit status 1"
+      ],
+      "TestWASIRequestThrows": [
+        "request_test.go:167: uncaught handler exception: exit status 1, \"node:fs:622\\n  return binding.open(\\n                 ^\\n\\nError: ENOENT: no such file or directory, open '/tmp/adamic-gate/TestWASIRequestThrows1705268022/001/request.wasm'\\n    at Object.openSync (node:fs:622:18)\\n    at readFileSync (node:fs:488:35)\\n    at file:///workspace/adamic/cmd/adamic/testdata/wasi/throw-host.mjs:5:42\\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\\n    at async node:internal/modules/esm/loader:643:26\\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\\n  errno: -2,\\n  code: 'ENOENT',\\n  syscall: 'open',\\n  path: '/tmp/adamic-gate/TestWASIRequestThrows1705268022/001/request.wasm'\\n}\\n\\nNode.js v24.19.0\\n\""
+      ],
+      "TestBuildTargetParsing": [
+        "target_test.go:17: [build --target wasm32-wasi missing.a -o out.wasm --sanitize]: got 0, want unsupported options (1)"
+      ],
+      "TestWASIRejectsTSGoArchive": [
+        "target_test.go:48: got exit 0 and \"\""
+      ],
+      "TestExplainChecksOutput/overload_some_empty/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_empty/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_empty/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/null/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/null/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/null/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/present/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/present/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/present/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_RUN-package.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 2.123294105000241,
+    "binary_seconds": 0.148,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "unknown",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "unknown",
+      "TestWASIRequestSelection": "fail",
+      "TestWASIRequest": "fail",
+      "TestRequestNativeStaysCommand": "fail",
+      "TestWASIRequestModuleSelection": "unknown",
+      "TestWASIRequestThrows": "unknown",
+      "TestBuildTargetParsing": "unknown",
+      "TestWASIRejectsTSGoArchive": "unknown"
+    },
+    "failed_rows": [
+      "TestRequestNativeStaysCommand",
+      "TestWASIRequest",
+      "TestWASIRequestSelection"
+    ],
+    "failing_lines": {
+      "TestWASIRequestSelection/exported": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/alias": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/alias_wrong_parameter": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/alias_wrong_result": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/private": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/wrong_parameter": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/wrong_result": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/literal_parameter": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/optional_parameter": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/default_parameter": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/two_parameters": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/generic": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/function_value": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequest/request.a": [
+        "request_test.go:94: request host: exit status 1"
+      ],
+      "TestWASIRequest/request_alias.a": [
+        "request_test.go:94: request host: exit status 1"
+      ],
+      "TestRequestNativeStaysCommand": [
+        "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_CHECK-package.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "TestExplainChecksOutput",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestExplainChecksOutput$",
+    "wall_seconds": 2.075655378001102,
+    "binary_seconds": 0.039,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "fail"
+    },
+    "failed_rows": [
+      "TestExplainChecksOutput"
+    ],
+    "failing_lines": {
+      "TestExplainChecksOutput/overload_some_empty/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_empty/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_empty/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/build": [
+        "checks_test.go:42: build explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/build": [
+        "checks_test.go:42: build explanation:"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_CHECK-TestExplainChecksOutput.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "TestExplainChecksDriver",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestExplainChecksDriver$",
+    "wall_seconds": 1.9706882150003366,
+    "binary_seconds": 0.008,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksDriver": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/E_CHECK-TestExplainChecksDriver.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "TestNonNullExplainChecks",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestNonNullExplainChecks$",
+    "wall_seconds": 2.078137169999536,
+    "binary_seconds": 0.068,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestNonNullExplainChecks": "fail"
+    },
+    "failed_rows": [
+      "TestNonNullExplainChecks"
+    ],
+    "failing_lines": {
+      "TestNonNullExplainChecks/narrowed/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/present/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/present/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/present/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/null/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/null/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/null/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/build": [
+        "non_null_checks_test.go:53: build explanation:"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_CHECK-TestNonNullExplainChecks.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "TestWASIRequestSelection",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestSelection$",
+    "wall_seconds": 2.0285501899998053,
+    "binary_seconds": 0.012,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestWASIRequestSelection": "fail"
+    },
+    "failed_rows": [
+      "TestWASIRequestSelection"
+    ],
+    "failing_lines": {
+      "TestWASIRequestSelection/exported": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/alias": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/alias_wrong_parameter": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/alias_wrong_result": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/private": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/wrong_parameter": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/wrong_result": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/literal_parameter": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/optional_parameter": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/default_parameter": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/two_parameters": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/generic": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ],
+      "TestWASIRequestSelection/function_value": [
+        "request_test.go:48: checker refused handler fixture, code 0"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_CHECK-TestWASIRequestSelection.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "TestWASIRequest",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequest$",
+    "wall_seconds": 2.580173254998954,
+    "binary_seconds": 0.227,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestWASIRequest": "fail"
+    },
+    "failed_rows": [
+      "TestWASIRequest"
+    ],
+    "failing_lines": {
+      "TestWASIRequest/request.a": [
+        "request_test.go:94: request host: exit status 1"
+      ],
+      "TestWASIRequest/request_alias.a": [
+        "request_test.go:94: request host: exit status 1"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_CHECK-TestWASIRequest.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "TestRequestNativeStaysCommand",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestRequestNativeStaysCommand$",
+    "wall_seconds": 2.3217756320009357,
+    "binary_seconds": 0.011,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestRequestNativeStaysCommand": "fail"
+    },
+    "failed_rows": [
+      "TestRequestNativeStaysCommand"
+    ],
+    "failing_lines": {
+      "TestRequestNativeStaysCommand": [
+        "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_CHECK-TestRequestNativeStaysCommand.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "TestWASIRequestModuleSelection",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestModuleSelection$",
+    "wall_seconds": 1.9780984629996965,
+    "binary_seconds": 0.007,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestWASIRequestModuleSelection": "fail"
+    },
+    "failed_rows": [
+      "TestWASIRequestModuleSelection"
+    ],
+    "failing_lines": {
+      "TestWASIRequestModuleSelection": [
+        "request_test.go:146: dependency selected as handler: code 0, handler -1"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_CHECK-TestWASIRequestModuleSelection.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "TestWASIRequestThrows",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestThrows$",
+    "wall_seconds": 2.0246673620004003,
+    "binary_seconds": 0.038,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestWASIRequestThrows": "fail"
+    },
+    "failed_rows": [
+      "TestWASIRequestThrows"
+    ],
+    "failing_lines": {
+      "TestWASIRequestThrows": [
+        "request_test.go:167: uncaught handler exception: exit status 1, \"node:fs:622\\n  return binding.open(\\n                 ^\\n\\nError: ENOENT: no such file or directory, open '/tmp/adamic-gate/TestWASIRequestThrows1857203471/001/request.wasm'\\n    at Object.openSync (node:fs:622:18)\\n    at readFileSync (node:fs:488:35)\\n    at file:///workspace/adamic/cmd/adamic/testdata/wasi/throw-host.mjs:5:42\\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\\n    at async node:internal/modules/esm/loader:643:26\\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\\n  errno: -2,\\n  code: 'ENOENT',\\n  syscall: 'open',\\n  path: '/tmp/adamic-gate/TestWASIRequestThrows1857203471/001/request.wasm'\\n}\\n\\nNode.js v24.19.0\\n\""
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_CHECK-TestWASIRequestThrows.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "TestBuildTargetParsing",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestBuildTargetParsing$",
+    "wall_seconds": 2.222083515000122,
+    "binary_seconds": 0.008,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestBuildTargetParsing": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/E_CHECK-TestBuildTargetParsing.log"
+  },
+  {
+    "mutant": "E_CHECK",
+    "scope": "TestWASIRejectsTSGoArchive",
+    "command": "ADAMIC_MUTANT=E_CHECK ADAMIC_NATIVE_SPLIT=u007-E_CHECK timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRejectsTSGoArchive$",
+    "wall_seconds": 2.2821144110002933,
+    "binary_seconds": 0.009,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/E_CHECK-TestWASIRejectsTSGoArchive.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 3.742330076998769,
+    "binary_seconds": 1.612,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "unknown",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "unknown",
+      "TestWASIRequestSelection": "pass",
+      "TestWASIRequest": "pass",
+      "TestRequestNativeStaysCommand": "fail",
+      "TestWASIRequestModuleSelection": "unknown",
+      "TestWASIRequestThrows": "unknown",
+      "TestBuildTargetParsing": "unknown",
+      "TestWASIRejectsTSGoArchive": "unknown"
+    },
+    "failed_rows": [
+      "TestRequestNativeStaysCommand"
+    ],
+    "failing_lines": {
+      "TestRequestNativeStaysCommand": [
+        "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-package.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "TestExplainChecksOutput",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestExplainChecksOutput$",
+    "wall_seconds": 11.848121704000732,
+    "binary_seconds": 9.811,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "fail"
+    },
+    "failed_rows": [
+      "TestExplainChecksOutput"
+    ],
+    "failing_lines": {
+      "TestExplainChecksOutput/overload_some_empty/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_empty/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_erased/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_assertion/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_true_only/js": [
+        "checks_test.go:42: js explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/c": [
+        "checks_test.go:42: c explanation:"
+      ],
+      "TestExplainChecksOutput/overload_some_false_read/js": [
+        "checks_test.go:42: js explanation:"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-TestExplainChecksOutput.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "TestExplainChecksDriver",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestExplainChecksDriver$",
+    "wall_seconds": 2.2283459900008893,
+    "binary_seconds": 0.011,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksDriver": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-TestExplainChecksDriver.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "TestNonNullExplainChecks",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestNonNullExplainChecks$",
+    "wall_seconds": 17.935488027998872,
+    "binary_seconds": 15.867,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestNonNullExplainChecks": "fail"
+    },
+    "failed_rows": [
+      "TestNonNullExplainChecks"
+    ],
+    "failing_lines": {
+      "TestNonNullExplainChecks/narrowed/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/narrowed/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/null/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/undefined/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/initializer/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/present/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/null/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_undefined/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/present/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/refuse_null/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/c": [
+        "non_null_checks_test.go:53: c explanation:"
+      ],
+      "TestNonNullExplainChecks/let_initializer/js": [
+        "non_null_checks_test.go:53: js explanation:"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-TestNonNullExplainChecks.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "TestWASIRequestSelection",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestSelection$",
+    "wall_seconds": 2.830880278999757,
+    "binary_seconds": 0.765,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestWASIRequestSelection": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-TestWASIRequestSelection.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "TestWASIRequest",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequest$",
+    "wall_seconds": 2.88348616499934,
+    "binary_seconds": 0.692,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestWASIRequest": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-TestWASIRequest.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "TestRequestNativeStaysCommand",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestRequestNativeStaysCommand$",
+    "wall_seconds": 2.1737113899998803,
+    "binary_seconds": 0.01,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestRequestNativeStaysCommand": "fail"
+    },
+    "failed_rows": [
+      "TestRequestNativeStaysCommand"
+    ],
+    "failing_lines": {
+      "TestRequestNativeStaysCommand": [
+        "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-TestRequestNativeStaysCommand.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "TestWASIRequestModuleSelection",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestModuleSelection$",
+    "wall_seconds": 2.1769279209984234,
+    "binary_seconds": 0.087,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestWASIRequestModuleSelection": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-TestWASIRequestModuleSelection.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "TestWASIRequestThrows",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRequestThrows$",
+    "wall_seconds": 2.324731121001605,
+    "binary_seconds": 0.188,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestWASIRequestThrows": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-TestWASIRequestThrows.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "TestBuildTargetParsing",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestBuildTargetParsing$",
+    "wall_seconds": 2.292578920001688,
+    "binary_seconds": 0.008,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestBuildTargetParsing": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-TestBuildTargetParsing.log"
+  },
+  {
+    "mutant": "E_COMPILE",
+    "scope": "TestWASIRejectsTSGoArchive",
+    "command": "ADAMIC_MUTANT=E_COMPILE ADAMIC_NATIVE_SPLIT=u007-E_COMPILE timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run ^TestWASIRejectsTSGoArchive$",
+    "wall_seconds": 2.1720655389999592,
+    "binary_seconds": 0.009,
+    "exit": 0,
+    "cooked": false,
+    "status": {
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [],
+    "failing_lines": {},
+    "log": "review/test-audit/cmd-adamic/E_COMPILE-TestWASIRejectsTSGoArchive.log"
+  },
+  {
+    "mutant": "E_WASI",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=E_WASI ADAMIC_NATIVE_SPLIT=u007-E_WASI timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 29.92664208900169,
+    "binary_seconds": 27.824,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "fail",
+      "TestWASIRequest": "fail",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "fail",
+      "TestWASIRequestThrows": "fail",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [
+      "TestWASIRequest",
+      "TestWASIRequestModuleSelection",
+      "TestWASIRequestSelection",
+      "TestWASIRequestThrows"
+    ],
+    "failing_lines": {
+      "TestWASIRequestSelection/exported": [
+        "request_test.go:66: compile failed, code 0"
+      ],
+      "TestWASIRequestSelection/alias": [
+        "request_test.go:66: compile failed, code 0"
+      ],
+      "TestWASIRequestSelection/alias_wrong_parameter": [
+        "request_test.go:61: accepted invalid handler, code 0"
+      ],
+      "TestWASIRequestSelection/alias_wrong_result": [
+        "request_test.go:61: accepted invalid handler, code 0"
+      ],
+      "TestWASIRequestSelection/private": [
+        "request_test.go:66: compile failed, code 0"
+      ],
+      "TestWASIRequestSelection/wrong_parameter": [
+        "request_test.go:61: accepted invalid handler, code 0"
+      ],
+      "TestWASIRequestSelection/wrong_result": [
+        "request_test.go:61: accepted invalid handler, code 0"
+      ],
+      "TestWASIRequestSelection/literal_parameter": [
+        "request_test.go:61: accepted invalid handler, code 0"
+      ],
+      "TestWASIRequestSelection/optional_parameter": [
+        "request_test.go:61: accepted invalid handler, code 0"
+      ],
+      "TestWASIRequestSelection/default_parameter": [
+        "request_test.go:61: accepted invalid handler, code 0"
+      ],
+      "TestWASIRequestSelection/two_parameters": [
+        "request_test.go:61: accepted invalid handler, code 0"
+      ],
+      "TestWASIRequestSelection/generic": [
+        "request_test.go:61: accepted invalid handler, code 0"
+      ],
+      "TestWASIRequestSelection/function_value": [
+        "request_test.go:61: accepted invalid handler, code 0"
+      ],
+      "TestWASIRequest/request.a": [
+        "request_test.go:94: request host: exit status 1"
+      ],
+      "TestWASIRequest/request_alias.a": [
+        "request_test.go:94: request host: exit status 1"
+      ],
+      "TestWASIRequestModuleSelection": [
+        "request_test.go:146: dependency selected as handler: code 0, handler 0"
+      ],
+      "TestWASIRequestThrows": [
+        "request_test.go:167: uncaught handler exception: exit status 1, \"node:fs:622\\n  return binding.open(\\n                 ^\\n\\nError: ENOENT: no such file or directory, open '/tmp/adamic-gate/TestWASIRequestThrows2434109315/001/request.wasm'\\n    at Object.openSync (node:fs:622:18)\\n    at readFileSync (node:fs:488:35)\\n    at file:///workspace/adamic/cmd/adamic/testdata/wasi/throw-host.mjs:5:42\\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\\n    at async node:internal/modules/esm/loader:643:26\\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {\\n  errno: -2,\\n  code: 'ENOENT',\\n  syscall: 'open',\\n  path: '/tmp/adamic-gate/TestWASIRequestThrows2434109315/001/request.wasm'\\n}\\n\\nNode.js v24.19.0\\n\""
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_WASI-package.log"
+  },
+  {
+    "mutant": "E_SELECT",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=E_SELECT ADAMIC_NATIVE_SPLIT=u007-E_SELECT timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .",
+    "wall_seconds": 29.55966143399928,
+    "binary_seconds": 27.319,
+    "exit": 1,
+    "cooked": false,
+    "status": {
+      "TestExplainChecksOutput": "pass",
+      "TestExplainChecksDriver": "pass",
+      "TestNonNullExplainChecks": "pass",
+      "TestWASIRequestSelection": "fail",
+      "TestWASIRequest": "fail",
+      "TestRequestNativeStaysCommand": "pass",
+      "TestWASIRequestModuleSelection": "fail",
+      "TestWASIRequestThrows": "fail",
+      "TestBuildTargetParsing": "pass",
+      "TestWASIRejectsTSGoArchive": "pass"
+    },
+    "failed_rows": [
+      "TestWASIRequest",
+      "TestWASIRequestModuleSelection",
+      "TestWASIRequestSelection",
+      "TestWASIRequestThrows"
+    ],
+    "failing_lines": {
+      "TestWASIRequestSelection/exported": [
+        "request_test.go:69: handler = -1, want present true"
+      ],
+      "TestWASIRequestSelection/alias": [
+        "request_test.go:56: alias selected \"\", want serve"
+      ],
+      "TestWASIRequestSelection/alias_wrong_parameter": [
+        "request_test.go:53: signature selection returned \"\", <nil>, want refused true"
+      ],
+      "TestWASIRequestSelection/alias_wrong_result": [
+        "request_test.go:53: signature selection returned \"\", <nil>, want refused true"
+      ],
+      "TestWASIRequestSelection/wrong_parameter": [
+        "request_test.go:53: signature selection returned \"\", <nil>, want refused true"
+      ],
+      "TestWASIRequestSelection/wrong_result": [
+        "request_test.go:53: signature selection returned \"\", <nil>, want refused true"
+      ],
+      "TestWASIRequestSelection/literal_parameter": [
+        "request_test.go:53: signature selection returned \"\", <nil>, want refused true"
+      ],
+      "TestWASIRequestSelection/optional_parameter": [
+        "request_test.go:53: signature selection returned \"\", <nil>, want refused true"
+      ],
+      "TestWASIRequestSelection/default_parameter": [
+        "request_test.go:53: signature selection returned \"\", <nil>, want refused true"
+      ],
+      "TestWASIRequestSelection/two_parameters": [
+        "request_test.go:53: signature selection returned \"\", <nil>, want refused true"
+      ],
+      "TestWASIRequestSelection/generic": [
+        "request_test.go:53: signature selection returned \"\", <nil>, want refused true"
+      ],
+      "TestWASIRequestSelection/function_value": [
+        "request_test.go:53: signature selection returned \"\", <nil>, want refused true"
+      ],
+      "TestWASIRequest/request.a": [
+        "request_test.go:94: request host: exit status 1"
+      ],
+      "TestWASIRequest/request_alias.a": [
+        "request_test.go:94: request host: exit status 1"
+      ],
+      "TestWASIRequestModuleSelection": [
+        "request_test.go:143: accepted ambiguous IR function names"
+      ],
+      "TestWASIRequestThrows": [
+        "request_test.go:167: uncaught handler exception: exit status 1, \"node:wasi:154\\n    validateUndefined(_start, 'instance.exports._start');\\n    ^\\n\\nTypeError [ERR_INVALID_ARG_TYPE]: The \\\"instance.exports._start\\\" property must be undefined. Received function 9\\n    at WASI.initialize (node:wasi:154:5)\\n    at file:///workspace/adamic/cmd/adamic/testdata/wasi/throw-host.mjs:7:6 {\\n  code: 'ERR_INVALID_ARG_TYPE'\\n}\\n\\nNode.js v24.19.0\\n\""
+      ]
+    },
+    "log": "review/test-audit/cmd-adamic/E_SELECT-package.log"
+  }
+]
