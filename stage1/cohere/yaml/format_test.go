@@ -207,66 +207,7 @@ func TestBundledParserDifference(t *testing.T) {
 }
 
 func TestFileDriver(t *testing.T) {
-	cases, files, _ := formatCases(t)
-	data, err := os.ReadFile(cases)
-	if err != nil {
-		t.Fatal(err)
-	}
-	inputs := strings.Split(strings.TrimSuffix(string(data), "\n"), "\n")[:files]
-	escape := strings.NewReplacer("\\", "\\\\", "\n", "\\n", "\r", "\\r", "\t", "\\t")
-	for _, text := range []string{"", "  \t\n", "\ufeff", "\ufeffa: b\n", "|+", "|+\n", "|+ # header\n", ">+", "a: |+", "a: |+\n", "a: |+\n  b\n\n", "{a: b, c: [x,y]}\n", "---\n...\n", "key: 'x\\y'\n"} {
-		inputs = append(inputs, "0\t"+escape.Replace(text))
-	}
-	path := filepath.Join(t.TempDir(), "driver-cases.txt")
-	if err := os.WriteFile(path, []byte(strings.Join(inputs, "\n")+"\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	expected := bytes.Split(bytes.TrimSuffix(goFormat(t, path), []byte("\n")), []byte("\n"))
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	entry, err := filepath.Abs("main.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "format")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	emitted := filepath.Join(t.TempDir(), "format.mjs")
-	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	runner := filepath.Join(root, "oracle/node.mjs")
-	for index, input := range inputs {
-		answer := string(expected[index])
-		if !strings.HasPrefix(answer, "ok\t") {
-			t.Fatalf("driver control %d invalid: %s", index, answer)
-		}
-		wanted := []byte(unescapeCase("0\t" + strings.TrimPrefix(answer, "ok\t")))
-		file := filepath.Join(t.TempDir(), "input.yaml")
-		if err := os.WriteFile(file, []byte(unescapeCase(input)), 0644); err != nil {
-			t.Fatal(err)
-		}
-		for _, side := range []struct {
-			name string
-			out  []byte
-		}{{"native", run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, file)}, {"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, file)}, {"emitted JavaScript", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, file)}} {
-			if !bytes.Equal(side.out, wanted) {
-				t.Fatalf("%s file %d: %s", side.name, index, firstDifference(side.out, wanted))
-			}
-		}
-	}
-	t.Logf("%d repository files and %d direct stdout controls byte-identical to Go on all three port executions", files, len(inputs)-files)
+	testFileDriver(t)
 }
 
 func TestFormatterMutants(t *testing.T) {
