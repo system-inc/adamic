@@ -1,7 +1,0 @@
-errorsWithInvokablesInUnions01.ts(14,12): error TS2322: Type '(x: string) => void' is not assignable to type 'ConstructableA | IDirectiveLinkFn<number> | IDirectivePrePost<number>'.
-  Type '(x: string) => void' is not assignable to type 'IDirectiveLinkFn<number>'.
-    Types of parameters 'x' and 'scope' are incompatible.
-      Type 'number' is not assignable to type 'string'.
-errorsWithInvokablesInUnions01.ts(16,12): error TS2322: Type 'typeof ctor' is not assignable to type 'ConstructableA | IDirectiveLinkFn<number> | IDirectivePrePost<number>'.
-  Type 'typeof ctor' is not assignable to type 'ConstructableA'.
-    Property 'somePropA' is missing in type 'ctor' but required in type '{ somePropA: any; }'.

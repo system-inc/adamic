@@ -1,5 +1,0 @@
-file,line,column,code,message
-src/compiler/commandLineParser.ts,2952,13,TS2322,"Type 'string | undefined' is not assignable to type 'string'.
-  Type 'undefined' is not assignable to type 'string'."
-src/compiler/sys.ts,1708,56,TS2345,"Argument of type 'string | undefined' is not assignable to parameter of type 'string | ArrayBufferView<ArrayBufferLike>'.
-  Type 'undefined' is not assignable to type 'string | ArrayBufferView<ArrayBufferLike>'."

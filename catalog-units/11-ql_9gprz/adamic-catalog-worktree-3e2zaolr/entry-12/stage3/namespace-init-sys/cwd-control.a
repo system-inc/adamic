@@ -1,8 +1,0 @@
-// Structural control for a deferred sys.ts callback. The exact memoization reduction is cwd.a.
-const process = { cwd: (): string => 'cwd'.repeat(2) };
-function memoize(callback: () => string): () => string {
-    return callback;
-}
-const getCurrentDirectory = memoize(() => process.cwd());
-namespace Debug { export let enabled = false; }
-console.log(`${getCurrentDirectory()}:${getCurrentDirectory()}:${Debug.enabled}`);

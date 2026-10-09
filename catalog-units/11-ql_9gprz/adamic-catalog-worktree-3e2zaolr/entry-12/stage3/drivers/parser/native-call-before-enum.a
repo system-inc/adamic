@@ -1,7 +1,0 @@
-// Reduced from TypeScript 6.0.3, src/compiler/performance.ts:15.
-// From TypeScript 6.0.3, src/compiler/performanceCore.ts:99 (timestamp initializer reduced).
-// An executable module call before a pending enum.
-const timestamp: () => number = true ? () => 0 : Date.now;
-const timeorigin = timestamp();
-enum Pending { Zero }
-console.log(`${timeorigin}:${Pending.Zero}`);

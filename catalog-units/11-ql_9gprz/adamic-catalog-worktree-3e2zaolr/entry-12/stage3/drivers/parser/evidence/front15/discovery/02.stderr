@@ -1,1 +1,0 @@
-adamic: /workspace/scratch/parser-front15-discovery-slice/src/compiler/core.ts:421:34: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)

@@ -1,8 +1,0 @@
-=== RUN   TestImportedInputsRunFresh
-=== PAUSE TestImportedInputsRunFresh
-=== CONT  TestImportedInputsRunFresh
-    cache_test.go:280: mutable imported input served stale native observation: [exit 1 vs 0 exit 1 vs 0]
---- FAIL: TestImportedInputsRunFresh (2.80s)
-FAIL
-FAIL	github.com/system-inc/adamic/cmd/adamic-test262	2.823s
-FAIL

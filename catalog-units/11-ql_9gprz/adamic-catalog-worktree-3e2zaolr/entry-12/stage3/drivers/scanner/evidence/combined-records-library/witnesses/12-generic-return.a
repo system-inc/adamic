@@ -1,2 +1,0 @@
-export function each<K, V, U>(map: ReadonlyMap<K, V>, callback: (value: V, key: K) => U | undefined): U | undefined { for (const [key, value] of map) { const result = callback(value, key); if (result !== undefined) return result; } return undefined; }
-console.log(each(new Map<string, number>([["x", 1]]), (value, key) => key) ?? "missing");

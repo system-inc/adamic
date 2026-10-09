@@ -1,4 +1,0 @@
-internal/lower/testdata/predicates/overload_some_empty.a:7:20: predicate overload 1 of some
-  true: unobservable (proven); no narrowed read in the true region
-  false: unobservable (proven); no narrowed read in the false region
-adamic: predicate checks: proven 2 checked 0 unobservable 2

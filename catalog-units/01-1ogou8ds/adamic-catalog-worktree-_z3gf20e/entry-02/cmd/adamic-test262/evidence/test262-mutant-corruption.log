@@ -1,8 +1,0 @@
-=== RUN   TestCacheAtomicBytes
-=== PAUSE TestCacheAtomicBytes
-=== CONT  TestCacheAtomicBytes
-    cache_test.go:106: corrupt evidence reused
---- FAIL: TestCacheAtomicBytes (0.00s)
-FAIL
-FAIL	github.com/system-inc/adamic/cmd/adamic-test262	0.015s
-FAIL

@@ -1,5 +1,0 @@
-=== RUN   TestOriginalCycleLedger
-    import_cycle_ledger_test.go:217: statements=map[checked:3 proven:55 refused:0] reads=map[checked:9 proven:905 refused:0] findings=10
---- PASS: TestOriginalCycleLedger (2.23s)
-PASS
-ok  	github.com/system-inc/adamic/internal/lower	2.253s

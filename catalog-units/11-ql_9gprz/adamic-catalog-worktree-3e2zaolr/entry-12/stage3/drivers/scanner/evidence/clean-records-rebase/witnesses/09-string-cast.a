@@ -1,3 +1,0 @@
-// a-check: refused a cast the runtime can't check
-const worker: (codePoint: number) => string = (String as any).fromCodePoint ? codePoint => (String as any).fromCodePoint(codePoint) : codePoint => String.fromCharCode(codePoint);
-console.log(worker(65));

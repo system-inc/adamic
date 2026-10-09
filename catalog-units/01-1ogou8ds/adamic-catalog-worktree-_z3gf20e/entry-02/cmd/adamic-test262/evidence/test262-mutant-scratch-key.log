@@ -1,6 +1,0 @@
-=== RUN   TestCompilerCacheAcrossScratchDirectories
-    cache_test.go:350: worker C cache missed when only scratch compiler path changed: {Path:pass/pad.js Directory:pass Kind:pass Reason: Adaptations:map[]}
---- FAIL: TestCompilerCacheAcrossScratchDirectories (3.23s)
-FAIL
-FAIL	github.com/system-inc/adamic/cmd/adamic-test262	3.270s
-FAIL

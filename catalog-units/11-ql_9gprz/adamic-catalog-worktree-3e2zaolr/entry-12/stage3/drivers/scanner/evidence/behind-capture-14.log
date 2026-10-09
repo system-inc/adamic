@@ -1,4 +1,0 @@
-/workspace/scratch/scanner-behind-capture-driver/adapted/src/compiler/scanner.ts:532:9: error TS2322: Type '(reportErrors: boolean | undefined) => SyntaxKind' is not assignable to type '{ (): SyntaxKind; (reportErrors?: boolean | undefined): SyntaxKind; }'.
-  Target signature provides too few arguments. Expected 1 or more, but got 0.
-/workspace/scratch/scanner-behind-capture-driver/adapted/src/compiler/scanner.ts:543:9: error TS2322: Type '(allowMultilineJsxText: boolean | undefined) => JsxTokenSyntaxKind' is not assignable to type '() => JsxTokenSyntaxKind'.
-  Target signature provides too few arguments. Expected 1 or more, but got 0.

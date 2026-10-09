@@ -1,2 +1,0 @@
-// a-check: refused in
-const value = {count: 1}; console.log(String("count" in value));

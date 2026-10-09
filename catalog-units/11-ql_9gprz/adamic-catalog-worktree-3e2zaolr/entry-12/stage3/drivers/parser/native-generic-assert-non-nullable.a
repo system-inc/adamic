@@ -1,7 +1,0 @@
-// a-check: refused a type predicate whose return is not proven (normal return has not narrowed value to NonNullable<T>)
-// Reduced from TypeScript 6.0.3, Debug.assertIsDefined.
-function fail(message?: string): never { throw new Error(message); }
-function assertIsDefined<T>(value: T, message?: string): asserts value is NonNullable<T> {
-    if (value === undefined || value === null) { fail(message); }
-}
-console.log("assertion declaration loaded");

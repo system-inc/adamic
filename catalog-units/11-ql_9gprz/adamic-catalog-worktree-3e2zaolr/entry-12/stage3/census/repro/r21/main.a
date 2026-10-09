@@ -1,2 +1,0 @@
-// a-check: refused the comma operator
-function one(): number { console.log(String("one")); return 1; } const value = (one(), 2); console.log(String(value));

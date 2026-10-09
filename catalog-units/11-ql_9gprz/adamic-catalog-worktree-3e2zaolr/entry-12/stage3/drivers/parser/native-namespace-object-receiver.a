@@ -1,8 +1,0 @@
-// a-check: refused a namespace
-// Reduced from TypeScript 6.0.3, Debug's Object.defineProperties value methods.
-namespace Debug {
-    export function attachFlowNodeDebugInfoWorker() {
-        return { value(this: { flags: number }) { return this.flags; } };
-    }
-}
-console.log("receiver declaration loaded");

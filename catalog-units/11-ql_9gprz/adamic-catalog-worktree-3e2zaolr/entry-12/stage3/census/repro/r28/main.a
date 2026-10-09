@@ -1,2 +1,0 @@
-// a-check: type error TS2769
-const values = new Map<string, number>([[1, 2]]); console.log(String(values.size));

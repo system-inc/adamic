@@ -1,9 +1,0 @@
-=== RUN   TestUndecidedCycleReadsUseReadyChecks
-=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_extends
-    import_cycle_ready_test.go:96: /workspace/adamic-tools/bin/node: got "adamic: panic: ReferenceError: Cannot access 'Base_class' before initialization\n", want "adamic: panic: ReferenceError: Cannot access 'Base' before initialization\n" (error exit status 70)
-    import_cycle_ready_test.go:103: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_extends3316332711/001/native: got "adamic: panic: ReferenceError: Cannot access 'Base_class' before initialization\n", want "adamic: panic: ReferenceError: Cannot access 'Base' before initialization\n" (error exit status 70)
---- FAIL: TestUndecidedCycleReadsUseReadyChecks (0.27s)
-    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/early_extends (0.27s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.275s
-FAIL

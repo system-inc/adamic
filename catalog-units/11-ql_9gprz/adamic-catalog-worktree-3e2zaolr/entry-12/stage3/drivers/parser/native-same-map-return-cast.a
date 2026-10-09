@@ -1,8 +1,0 @@
-// a-check: refused a cast the runtime can't check
-// From TypeScript 6.0.3, src/compiler/core.ts:365
-// sameMap's unchanged-array return, including its possible undefined input.
-function unchanged<T, U>(array: readonly T[] | undefined): readonly U[] | undefined {
-    return array as unknown[] as U[];
-}
-console.log(`${unchanged<number, number>([1, 2])?.length}`);
-console.log(`${unchanged<number, number>(undefined)}`);

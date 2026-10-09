@@ -1,7 +1,0 @@
-// a-check: refused a type predicate whose return is not proven (there is no body proving this parameter)
-// From TypeScript 6.0.3, src/compiler/core.ts:614-628
-function some<T>(array: readonly T[] | undefined): array is readonly T[];
-function some<T>(array: readonly T[] | undefined): boolean {
-    return array !== undefined && array.length > 0;
-}
-console.log("overload declarations loaded");

@@ -1,4 +1,0 @@
-// a-check: type error TS2591
-// Reduced from TypeScript 6.0.3, tracing.ts:47 and 66.
-function startTracing(): number { const fs = require("fs"); return process.pid; }
-console.log("tracing declaration loaded");

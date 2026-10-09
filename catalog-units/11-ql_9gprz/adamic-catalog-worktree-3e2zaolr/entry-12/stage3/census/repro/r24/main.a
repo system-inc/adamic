@@ -1,2 +1,0 @@
-// a-check: refused an index signature
-interface Values { [key: string]: number; } const values: Values = {}; console.log(String(values));

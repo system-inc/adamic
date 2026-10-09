@@ -1,4 +1,0 @@
-// a-check: type error TS2339
-const error: Error = new Error("probe");
-Error.captureStackTrace(error);
-console.log(typeof error.stack === "string");

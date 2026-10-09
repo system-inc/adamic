@@ -1,9 +1,0 @@
-// a-check: refused a cast the runtime can't check
-// From TypeScript 6.0.3, src/compiler/core.ts:1038-1040
-interface SortedReadonlyArray<T> extends ReadonlyArray<T> { " __sortedArrayBrand": undefined; }
-const emptyArray: never[] = [] as never[];
-function toSorted<T>(array: readonly T[], comparer?: (a: T, b: T) => number): SortedReadonlyArray<T> {
-    return (array.length === 0 ? emptyArray : array.slice().sort(comparer)) as readonly T[] as SortedReadonlyArray<T>;
-}
-console.log(`${toSorted<number>([]).length}`);
-console.log(`${toSorted<number>([2, 1])[0]}`);

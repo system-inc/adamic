@@ -1,8 +1,0 @@
-=== RUN   TestUndecidedCycleReadsUseReadyChecks
-=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_extends
-    import_cycle_ready_test.go:65: proven base class read retained a TDZ check
---- FAIL: TestUndecidedCycleReadsUseReadyChecks (0.29s)
-    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/initialized_extends (0.29s)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.295s
-FAIL

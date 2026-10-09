@@ -1,6 +1,0 @@
-// a-check: refused a type predicate whose return is not proven (there is no body proving this parameter)
-// Reduced from TypeScript 6.0.3, src/compiler/core.ts:1783.
-function cast<TOut extends TIn, TIn = any>(value: TIn | undefined, test: (value: TIn) => value is TOut): TOut {
-    throw "Minimal signature witness";
-}
-console.log("callback declaration loaded");

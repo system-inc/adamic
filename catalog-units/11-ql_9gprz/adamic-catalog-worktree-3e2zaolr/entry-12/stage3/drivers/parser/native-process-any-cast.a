@@ -1,7 +1,0 @@
-// a-check: refused a cast the runtime can't check
-// From TypeScript 6.0.3, src/compiler/core.ts:2593
-// Adaptation 75's declared browser property is already available without the cast.
-function browserAbsent(process: { browser?: unknown }): boolean {
-    return !(process as any).browser;
-}
-console.log(`${browserAbsent({ browser: false })}`);

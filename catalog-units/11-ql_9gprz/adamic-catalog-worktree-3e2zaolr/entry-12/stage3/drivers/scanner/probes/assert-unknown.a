@@ -1,5 +1,0 @@
-function ensure(expression: unknown): asserts expression {
-    if (!expression) throw new Error('False expression.');
-}
-ensure(true);
-console.log('true');

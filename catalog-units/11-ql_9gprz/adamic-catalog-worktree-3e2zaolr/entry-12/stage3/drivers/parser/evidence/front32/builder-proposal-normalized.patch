@@ -1,5 +1,0 @@
---- baseline/src/compiler/builder.ts
-+++ proposal/src/compiler/builder.ts
-@@ -563 +563 @@
--): DiagnosticMessageChain[] | undefined {
-+): (DiagnosticMessageChain | T)[] | undefined {

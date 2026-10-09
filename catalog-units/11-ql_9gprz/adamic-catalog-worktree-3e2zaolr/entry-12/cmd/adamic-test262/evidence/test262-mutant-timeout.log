@@ -1,8 +1,0 @@
-=== RUN   TestCompilerWorkerTimeout
-=== PAUSE TestCompilerWorkerTimeout
-=== CONT  TestCompilerWorkerTimeout
-    compiler_test.go:65: deadline failed to stop and reap compiler: {Stdout: Stderr: Exit:-1 Signal: TimedOut:false}
---- FAIL: TestCompilerWorkerTimeout (0.03s)
-FAIL
-FAIL	github.com/system-inc/adamic/cmd/adamic-test262	0.029s
-FAIL

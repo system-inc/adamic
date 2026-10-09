@@ -1,2 +1,0 @@
-// a-check: type error TS2684
-function read(this: {count: number}): number { return this.count; } console.log(String(read()));
