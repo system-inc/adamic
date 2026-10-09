@@ -82,6 +82,18 @@ func volumeProfileNative(h *harness, stage0, archive string, sanitize bool, name
 		Files:     []string{"bridge/tsgo", "cohere/TypeScript/tsc/internal", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript-shim", "go.mod", "go.sum", "cohere/go.mod", "cohere/go.sum"},
 		Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool(strings.Fields(string(cc))[0], "--version"), buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT")},
 	}
+	// A module without external dependencies need not have a go.sum. Hash every
+	// manifest that exists; adding one automatically changes the input recipe.
+	files := inputs.Files[:0]
+	for _, path := range inputs.Files {
+		if _, err := os.Stat(filepath.Join(h.repository, path)); os.IsNotExist(err) {
+			continue
+		} else if err != nil {
+			h.t.Fatal(err)
+		}
+		files = append(files, path)
+	}
+	inputs.Files = files
 	for _, directory := range []string{"stage1/cohere/typeaware", "stage1/cohere/lint", "stage1/typescript"} {
 		err := filepath.WalkDir(filepath.Join(h.repository, directory), func(path string, entry fs.DirEntry, err error) error {
 			if err != nil {
