@@ -1,0 +1,11 @@
+--- a/internal/lower/library_string.go
++++ b/internal/lower/library_string.go
+@@ -125,7 +125,7 @@
+ 			if l.mayBeUndefined(written[0]) || proven.Flags()&checker.TypeFlagsNull != 0 {
+ 				return nil, true, l.notYet(node, "String prototype call on null or undefined (its TypeError is not catchable natively yet)")
+ 			}
+-			if method == "toString" || method == "valueOf" {
++			if method == "toString" || method == "valueOff" {
+ 				if proven.Flags()&checker.TypeFlagsStringLike == 0 {
+ 					return nil, true, l.notYet(node, "String.prototype."+method+" on a non-string receiver (requires a String internal slot)")
+ 				}

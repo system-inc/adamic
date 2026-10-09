@@ -1,0 +1,503 @@
+[
+  {
+    "test": "TestObjectRefusalsExplainSoundness",
+    "package": "internal/lower",
+    "file": "internal/lower/library_object_test.go",
+    "seconds": 0.293,
+    "oracle": "Requires Refused plus handwritten reason substrings. Does not assert the whole diagnostic.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M04",
+      "M13"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02",
+      "M04"
+    ],
+    "last_proven_fail": "M13: library_object_test.go:32: got /tmp/adamic-gate/TestObjectRefusalsExplainSoundnessproperty_descriptorsObject.ge2165319558/001/main.a:1:1: Adamic 0.1 refuses a method read as a value (getOwnPropertyDescriptors would lose its object, and this with it); call it in an arrow that keeps the object: (o) => Object.getOwnPropertyDescriptors(o) (unbound-method), want refusal with \"property descriptors\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; library_object_test.go:32: got /tmp/adamic-gate/TestObjectRefusalsExplainSoundnessproperty_descriptorsObject.ge2165319558/001/main.a:1:1: Adamic 0.1 refuses a method read as a value (getOwnPropertyDescriptors would lose its object, and this with it); call it in an arrow that keeps the object: (o) => Object.getOwnPropertyDescriptors(o) (unbound-method), want refusal with \"property descriptors\"",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestObjectUnprovenShapesStayNotYet",
+    "package": "internal/lower",
+    "file": "internal/lower/library_object_test.go",
+    "seconds": 0.129,
+    "oracle": "Requires only errors.As(NotYet); ignores location and reason. M05 passes despite a wrong Object.collectBy diagnostic; M02 passes several cases with a different NotYet reason.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13",
+      "M19"
+    ],
+    "unique_kills": [
+      "M19"
+    ],
+    "last_proven_fail": "M19: library_object_test.go:52: got <nil>, want NotYet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M19-corrected timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; library_object_test.go:52: got <nil>, want NotYet",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestLibraryRegexOffsetRequiresNoCaptures",
+    "package": "internal/lower",
+    "file": "internal/lower/library_regex_callback_shape_test.go",
+    "seconds": 0.122,
+    "oracle": "Requires a producer be visited and the capture-free proof return false for four unproven inputs. No positive capture-free control; its false entry probe passes.",
+    "oracle_kind": "self",
+    "kills": [
+      "M07",
+      "M09"
+    ],
+    "unique_kills": [
+      "M07",
+      "M09"
+    ],
+    "last_proven_fail": "M09: library_regex_callback_shape_test.go:36: capture-free producer proof admitted an unproven pattern",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; library_regex_callback_shape_test.go:36: capture-free producer proof admitted an unproven pattern",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestLibraryStringRefusals",
+    "package": "internal/lower",
+    "file": "internal/lower/library_string_test.go",
+    "seconds": 0.21,
+    "oracle": "Requires an error containing a handwritten reason; does not require a particular error class.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13",
+      "M15",
+      "M20"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M20: library_string_test.go:27: want refusal containing \"ToPrimitive is not lowered\", got /tmp/adamic-gate/TestLibraryStringRefusalsobject_conversion2623050405/001/main.a:1:1: stage 0 can't lower console.log with other than one string argument yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.483,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M20 ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M20 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; library_string_test.go:27: want refusal containing \"ToPrimitive is not lowered\", got /tmp/adamic-gate/TestLibraryStringRefusalsobject_conversion2623050405/001/main.a:1:1: stage 0 can't lower console.log with other than one string argument yet",
+    "subsumption_mutants": 3
+  },
+  {
+    "test": "TestConsoleLowersToWriteLine",
+    "package": "internal/lower",
+    "file": "internal/lower/lower_test.go",
+    "seconds": 0.044,
+    "oracle": "Exact handwritten IR statements, streams, string deduplication and source filename.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13",
+      "M14",
+      "M20"
+    ],
+    "unique_kills": [
+      "M14"
+    ],
+    "last_proven_fail": "M20: lower_test.go:32: /tmp/adamic-gate/TestConsoleLowersToWriteLine2735757914/001/main.a:1:1: stage 0 can't lower console.log with other than one string argument yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M20 ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M20 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; lower_test.go:32: /tmp/adamic-gate/TestConsoleLowersToWriteLine2735757914/001/main.a:1:1: stage 0 can't lower console.log with other than one string argument yet",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+    "package": "internal/lower",
+    "file": "internal/lower/lower_test.go",
+    "seconds": 0.478,
+    "oracle": "Requires NotYet and handwritten diagnostic suffixes containing position and construct.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M11",
+      "M13",
+      "M16",
+      "M18",
+      "M20"
+    ],
+    "unique_kills": [
+      "M18"
+    ],
+    "last_proven_fail": "M20: lower_test.go:95: got /tmp/adamic-gate/TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhatan_arrow_r3582234619/001/main.a:3:2: stage 0 can't lower console.log with other than one string argument yet, want an error ending \"main.a:3:25: stage 0 can't lower a function returning never yet\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M20 ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M20 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; lower_test.go:95: got /tmp/adamic-gate/TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhatan_arrow_r3582234619/001/main.a:3:2: stage 0 can't lower console.log with other than one string argument yet, want an error ending \"main.a:3:25: stage 0 can't lower a function returning never yet\"",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestWhatZeroOneRefusesIsRefusedWithAFix",
+    "package": "internal/lower",
+    "file": "internal/lower/lower_test.go",
+    "seconds": 0.483,
+    "oracle": "Requires Refused and handwritten diagnostic substrings. Some expectations stop before the fix text, so the name promises more than every subcase checks.",
+    "oracle_kind": "self",
+    "kills": [
+      "M11",
+      "M13",
+      "M15",
+      "M20"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M20: lower_test.go:147: got /tmp/adamic-gate/TestWhatZeroOneRefusesIsRefusedWithAFixa_constructor_handing_th2532314978/001/main.a:12:1: stage 0 can't lower console.log with other than one string argument yet, want a refusal ending \"main.a:8:25: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this\"",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M20 ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M20 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; lower_test.go:147: got /tmp/adamic-gate/TestWhatZeroOneRefusesIsRefusedWithAFixa_constructor_handing_th2532314978/001/main.a:12:1: stage 0 can't lower console.log with other than one string argument yet, want a refusal ending \"main.a:8:25: Adamic 0.1 refuses this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise); assign every field first, then use this\"",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestAMutableLocationSeenWiderIsRefused",
+    "package": "internal/lower",
+    "file": "internal/lower/lower_test.go",
+    "seconds": 0.557,
+    "oracle": "Requires Refused and handwritten diagnostic substrings describing unsafe views. Does not execute the alleged unsound writes on Node.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M11",
+      "M13",
+      "M15"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M15: lower_test.go:397: got /tmp/adamic-gate/TestAMutableLocationSeenWiderIsRefuseda_mutable_field_seen_as_a2234001085/001/main.a:18:19: Adamic 0.1 accepts a value of type Kennel seen as Pen, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable), want a refusal starting \"main.a:18:19: Adamic 0.1 refuses a value of type Kennel seen as Pen, which can w [full output in log]",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M15 ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; lower_test.go:397: got /tmp/adamic-gate/TestAMutableLocationSeenWiderIsRefuseda_mutable_field_seen_as_a2234001085/001/main.a:18:19: Adamic 0.1 accepts a value of type Kennel seen as Pen, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable), want a refusal starting \"main.a:18:19: Adamic 0.1 refuses a value of type Kennel seen as Pen, which can w [full output in log]",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestAViewThatCantWriteIsNotRefused",
+    "package": "internal/lower",
+    "file": "internal/lower/lower_test.go",
+    "seconds": 0.445,
+    "oracle": "Rejects only errors.As(Refused). Accepts nil and all other errors, including NotYet. Its nil Lower entry probe passes all 26 subcases.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M11",
+      "M12",
+      "M13"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "M13: lower_test.go:552: refused a view that can't write: /tmp/adamic-gate/TestAViewThatCantWriteIsNotRefusedan_array_seen_as_a_readonly_w1950604174/001/main.a:13:1: Adamic 0.1 refuses a method read as a value (log would lose its object, and this with it); call it in an arrow that keeps the object: (message) => console.log(message) (unbound-method)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "vacuous_subcases": [
+      "TestAViewThatCantWriteIsNotRefused/a_new_Map",
+      "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map",
+      "TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field",
+      "TestAViewThatCantWriteIsNotRefused/a_new_Map_passed",
+      "TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write",
+      "TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies",
+      "TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type",
+      "TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself",
+      "TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself",
+      "TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag",
+      "TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one",
+      "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice",
+      "TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one",
+      "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type",
+      "TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write",
+      "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field",
+      "TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot",
+      "TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself",
+      "TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type",
+      "TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself",
+      "TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs",
+      "TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays",
+      "TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array",
+      "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter",
+      "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider",
+      "TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names"
+    ],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; lower_test.go:552: refused a view that can't write: /tmp/adamic-gate/TestAViewThatCantWriteIsNotRefusedan_array_seen_as_a_readonly_w1950604174/001/main.a:13:1: Adamic 0.1 refuses a method read as a value (log would lose its object, and this with it); call it in an arrow that keeps the object: (message) => console.log(message) (unbound-method)",
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestATupleSeenAsAnArrayIsNotYet",
+    "package": "internal/lower",
+    "file": "internal/lower/lower_test.go",
+    "seconds": 0.301,
+    "oracle": "Requires NotYet and handwritten diagnostic suffixes naming representation mismatch and workaround.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M11",
+      "M13",
+      "M16",
+      "M20"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M20: lower_test.go:589: got /tmp/adamic-gate/TestATupleSeenAsAnArrayIsNotYetan_argument886451439/001/main.a:5:1: stage 0 can't lower console.log with other than one string argument yet, want a not-yet ending \"main.a:5:22: stage 0 can't lower a [number, number] seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.478,
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M20 ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M20 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; lower_test.go:589: got /tmp/adamic-gate/TestATupleSeenAsAnArrayIsNotYetan_argument886451439/001/main.a:5:1: stage 0 can't lower console.log with other than one string argument yet, want a not-yet ending \"main.a:5:22: stage 0 can't lower a [number, number] seen as a readonly number[] (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet\"",
+    "subsumption_mutants": 5
+  },
+  {
+    "test": "TestAMethodReadAsAValueIsRefused",
+    "package": "internal/lower",
+    "file": "internal/lower/lower_test.go",
+    "seconds": 0.197,
+    "oracle": "Negative cases require Refused and diagnostic substrings; four positive neighbors reject only Refused and accept an empty Lower answer.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13",
+      "M15"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M15: lower_test.go:629: got /tmp/adamic-gate/TestAMethodReadAsAValueIsRefusedpassed_as_a_callback3306394704/001/main.a:11:25: Adamic 0.1 accepts a method read as a value (admit would lose its object, and this with it); call it in an arrow that keeps the object: (pet) => shelter.admit(pet) (unbound-method), want a refusal containing \"main.a:11:25: Adamic 0.1 refuses a method read as a value (admit would lose its object\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestLibraryStringRefusals"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.21,
+    "vacuous": false,
+    "vacuous_subcases": [
+      "TestAMethodReadAsAValueIsRefused/not_called_through_parentheses",
+      "TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow",
+      "TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function",
+      "TestAMethodReadAsAValueIsRefused/not_called_on_its_object"
+    ],
+    "bounded": true,
+    "matrix_rows": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestLibraryRegexOffsetRequiresNoCaptures",
+      "TestLibraryStringRefusals",
+      "TestConsoleLowersToWriteLine",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix",
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAViewThatCantWriteIsNotRefused",
+      "TestATupleSeenAsAnArrayIsNotYet",
+      "TestAMethodReadAsAValueIsRefused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M15 ADAMIC_BUILD_CACHE_DIR=/tmp/u036/cache/M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; lower_test.go:629: got /tmp/adamic-gate/TestAMethodReadAsAValueIsRefusedpassed_as_a_callback3306394704/001/main.a:11:25: Adamic 0.1 accepts a method read as a value (admit would lose its object, and this with it); call it in an arrow that keeps the object: (pet) => shelter.admit(pet) (unbound-method), want a refusal containing \"main.a:11:25: Adamic 0.1 refuses a method read as a value (admit would lose its object\"",
+    "subsumption_mutants": 2
+  }
+]

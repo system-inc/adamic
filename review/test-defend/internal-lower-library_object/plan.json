@@ -1,0 +1,32 @@
+[
+  {
+    "id": "D1",
+    "target": "TestLibraryStringRefusals",
+    "file": "internal/lower/library_string.go",
+    "old": "if method == \"toString\" || method == \"valueOf\" {",
+    "new": "if method == \"toString\" || method == \"valueOff\" {",
+    "kind": "change constant",
+    "reason": "Stop recognizing valueOf in the String internal-slot guard, admitting valueOf.call(42) through numeric string conversion.",
+    "line": 128
+  },
+  {
+    "id": "D2",
+    "target": "TestATupleSeenAsAnArrayIsNotYet",
+    "file": "internal/lower/object.go",
+    "old": "\tif receiverType == ir.Object && checker.IsTupleType(l.checker.GetTypeAtLocation(receiver)) {\n\t\t// A tuple is held as an object: called as an object, an array method would be read as a field.\n\t\treturn nil, true, l.notYet(node, name+\" on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made)\")\n\t}\n",
+    "new": "",
+    "kind": "drop statement",
+    "reason": "Drop the whole tuple-method dispatch guard, leaving tuple.join to the ordinary fallback instead of its representation-specific refusal.",
+    "line": 786
+  },
+  {
+    "id": "D3",
+    "target": "TestAMethodReadAsAValueIsRefused",
+    "file": "internal/lower/refusals.go",
+    "old": "\t\t\t\t\tfor _, parameter := range signatures[0].Parameters() {\n\t\t\t\t\t\tnames = append(names, parameter.Name)\n\t\t\t\t\t}\n",
+    "new": "",
+    "kind": "drop statement",
+    "reason": "Drop the whole parameter-name collection loop; suggested arrows for detached methods no longer forward required parameters.",
+    "line": 200
+  }
+]

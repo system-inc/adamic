@@ -1,0 +1,59 @@
+[
+  {
+    "test": "TestLibraryStringRefusals",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestWhatZeroOneRefusesIsRefusedWithAFix",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/library_string.go:128",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/library_string.go:128",
+        "change": "Stop recognizing valueOf in the String internal-slot guard, admitting valueOf.call(42) through numeric string conversion.",
+        "rows_failed": [
+          "TestLibraryStringRefusals"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-library-object/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; library_string_test.go:27: want refusal containing \"requires a String internal slot\", got <nil>"
+  },
+  {
+    "test": "TestATupleSeenAsAnArrayIsNotYet",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/object.go:786",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/object.go:786",
+        "change": "Drop the whole tuple-method dispatch guard, leaving tuple.join to the ordinary fallback instead of its representation-specific refusal.",
+        "rows_failed": [
+          "TestATupleSeenAsAnArrayIsNotYet"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-library-object/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1; lower_test.go:604: got /tmp/adamic-gate/TestATupleSeenAsAnArrayIsNotYetan_array_method_called_on_a_tupl1388780747/001/main.a:2:13: Adamic 0.1 refuses inherited library member join read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method), want a not-yet ending \"main.a:2:13: stage 0 can't lower join on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made) yet\""
+  },
+  {
+    "test": "TestAMethodReadAsAValueIsRefused",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestLibraryStringRefusals",
+    "defense": "defended",
+    "unique_mutant": "D3 internal/lower/refusals.go:200",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/refusals.go:200",
+        "change": "Drop the whole parameter-name collection loop; suggested arrows for detached methods no longer forward required parameters.",
+        "rows_failed": [
+          "TestAMethodReadAsAValueIsRefused"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-library-object/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D3.log 2>&1; lower_test.go:644: got /tmp/adamic-gate/TestAMethodReadAsAValueIsRefusedheld_in_a_variable4123879763/001/main.a:11:15: Adamic 0.1 refuses a method read as a value (admit would lose its object, and this with it); call it in an arrow that keeps the object: () => shelter.admit() (unbound-method), want a refusal containing \"main.a:11:15: Adamic 0.1 refuses a method read as a value (admit would lose its object, and this with it); call it in an arrow that keeps the object: (pet) => shelter.admit(pet) (unbound-method)\""
+  }
+]
