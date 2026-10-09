@@ -1,0 +1,9 @@
+// a-check: NotYet holey Array of this element representation
+// Runtime reference-slot witness; constructor admission remains refused.
+import { parallelMap } from 'adamic';
+const cells: string[] = new Array<string>(4294967295);
+cells[1] = 'okx'.slice(0, 2);
+const holes: readonly string[] = cells;
+const tasks: readonly number[] = [0, 1, 2, 3];
+const results = parallelMap(tasks, (_) => holes[1] ?? 'missing');
+console.log(`${holes.length}:${holes[0] ?? 'hole'}:${results[0] ?? 'absent'}:${results[3] ?? 'absent'}`);

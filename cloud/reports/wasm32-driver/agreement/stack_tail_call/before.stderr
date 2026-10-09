@@ -1,0 +1,16 @@
+wasm://wasm/stack_tail_call-before.wasm-0010af26:1
+
+
+RangeError: Maximum call stack size exceeded
+    at stack_tail_call-before.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call-before.wasm-0010af26:wasm-function[12]:0x3a6)
+    at stack_tail_call-before.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call-before.wasm-0010af26:wasm-function[12]:0x3df)
+    at stack_tail_call-before.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call-before.wasm-0010af26:wasm-function[12]:0x3df)
+    at stack_tail_call-before.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call-before.wasm-0010af26:wasm-function[12]:0x3df)
+    at stack_tail_call-before.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call-before.wasm-0010af26:wasm-function[12]:0x3df)
+    at stack_tail_call-before.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call-before.wasm-0010af26:wasm-function[12]:0x3df)
+    at stack_tail_call-before.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call-before.wasm-0010af26:wasm-function[12]:0x3df)
+    at stack_tail_call-before.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call-before.wasm-0010af26:wasm-function[12]:0x3df)
+    at stack_tail_call-before.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call-before.wasm-0010af26:wasm-function[12]:0x3df)
+    at stack_tail_call-before.wasm.adamic_function_0_count (wasm://wasm/stack_tail_call-before.wasm-0010af26:wasm-function[12]:0x3df)
+
+Node.js v24.19.0

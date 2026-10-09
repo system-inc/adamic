@@ -15,7 +15,7 @@ import (
 
 // Build a private snapshot so runtime mutants never change the checkout or
 // another test's embedded runtime. The ordinary source remains unchanged.
-func arrayRuntimeMutant(t *testing.T, source, file, before, after string) run {
+func arrayRuntimeMutant(t *testing.T, source, file, before, after string, options ...native.Options) run {
 	t.Helper()
 	directory := t.TempDir()
 	runtimeDirectory := filepath.Join(directory, "runtime")
@@ -50,7 +50,11 @@ func arrayRuntimeMutant(t *testing.T, source, file, before, after string) run {
 	if !changed {
 		t.Fatal("mutant runtime file not found")
 	}
-	library, err := native.RuntimeLibraryForSource(runtimeDirectory, source, native.Options{})
+	option := native.Options{}
+	if len(options) != 0 {
+		option = options[0]
+	}
+	library, err := native.RuntimeLibraryForSource(runtimeDirectory, source, option)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -59,7 +63,7 @@ func arrayRuntimeMutant(t *testing.T, source, file, before, after string) run {
 	if err := os.WriteFile(main, []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
-	flags := append(native.Flags(native.Options{}), "-I", filepath.Dir(library), main, "-o", binary)
+	flags := append(native.Flags(option), "-I", filepath.Dir(library), main, "-o", binary)
 	flags = append(flags, native.RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
 	if output, err := exec.Command("clang", flags...).CombinedOutput(); err != nil {

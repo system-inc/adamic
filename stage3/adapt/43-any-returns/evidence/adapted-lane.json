@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "errors": [],
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "baseline_diffs": [
+    "api/typescript.d.ts"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "execution": {
+    "commit": "3ffb1a835184713998a34874e86326cd21db971f",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 301.935
+  },
+  "results": "/tmp/real-any-verified-lane",
+  "verdict": "PASS stage3 landing lane"
+}

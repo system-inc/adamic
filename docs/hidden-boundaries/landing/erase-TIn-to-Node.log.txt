@@ -1,0 +1,15 @@
+=== RUN   TestOverloadVisitors
+=== RUN   TestOverloadVisitors/helper/liar
+    overload_visitors_test.go:43: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    overload_visitors_test.go:52: gate cache node hit
+    oracle_test.go:589: gate cache native hit
+    overload_visitors_test.go:61: javascript unproven visitor input admitted: {stdout:[116 114 117 101 10 117 110 100 101 102 105 110 101 100 10 116 114 117 101 10] stderr:[] exitCode:0}
+--- FAIL: TestOverloadVisitors (0.11s)
+    --- FAIL: TestOverloadVisitors/helper/liar (0.11s)
+FAIL
+gate cache: native hits=2 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.115s
+FAIL

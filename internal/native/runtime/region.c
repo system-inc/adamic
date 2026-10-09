@@ -60,10 +60,14 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
 	block->used += size;
 	object->heap.references = 0;
 	object->heap.kind = adamic_kind_object;
+	object->heap.slab = ADAMIC_REGION_VALUE;
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
 	object->tuple = false;
+	object->dynamic_shape = false;
+	object->dynamic_types = NULL;
+	for (size_t index = 0; index < shape->count; index++) { adamic_object_orders(object)[index] = index + 1; }
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);

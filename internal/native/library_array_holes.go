@@ -8,7 +8,11 @@ import (
 func (e *emitter) arrayHoles(expression ir.ArrayHoles) string {
 	result := e.own(ir.Array, fmt.Sprintf("adamic_array_holes(%s, %t)", e.value(expression.Length), expression.Element.IsReference()))
 	e.checkThrown()
-	e.line("%s->element_kind = %d;", result, expression.Element)
+	kind := expression.Element
+	if kind.IsReference() {
+		kind = ir.Union
+	}
+	e.line("%s->element_kind = %d;", result, kind)
 	return result
 }
 

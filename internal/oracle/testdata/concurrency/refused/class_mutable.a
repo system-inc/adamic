@@ -1,0 +1,4 @@
+import { parallelMap } from 'adamic';
+class Item { value = 1; }
+const items: readonly Item[] = [new Item()];
+parallelMap(items, (item) => item.value);

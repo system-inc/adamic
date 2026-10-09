@@ -1,0 +1,217 @@
+{
+  "version": 1,
+  "status": "merge-conflict",
+  "requested_refs": [
+    "ed6e2975",
+    "2648ad33"
+  ],
+  "output": "/workspace/scratch/scanner-scratch-conflicts",
+  "phases": [
+    {
+      "name": "fetch",
+      "command": [
+        "git",
+        "fetch",
+        "origin",
+        "+refs/heads/*:refs/remotes/origin/*"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "fetch.stdout",
+      "stderr": "fetch.stderr",
+      "exit": 0,
+      "wall_seconds": 3.828
+    },
+    {
+      "name": "main-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "origin/main^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "main-ref.stdout",
+      "stderr": "main-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "ref-00",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "ed6e2975^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "ref-00.stdout",
+      "stderr": "ref-00.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "ref-01",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "2648ad33^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "ref-01.stdout",
+      "stderr": "ref-01.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "worktree",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "-b",
+        "scratch/scanner-run-ad19be6208bb",
+        "/workspace/scratch/scanner-scratch-conflicts/compiler-tree",
+        "3ffb1a835184713998a34874e86326cd21db971f"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "worktree.stdout",
+      "stderr": "worktree.stderr",
+      "exit": 0,
+      "wall_seconds": 0.817
+    },
+    {
+      "name": "merge-00",
+      "command": [
+        "git",
+        "merge",
+        "--no-edit",
+        "ed6e29751ee47d86fad450cd1674139883bc0f70"
+      ],
+      "cwd": "/workspace/scratch/scanner-scratch-conflicts/compiler-tree",
+      "stdout": "merge-00.stdout",
+      "stderr": "merge-00.stderr",
+      "exit": 0,
+      "wall_seconds": 1.121
+    },
+    {
+      "name": "merge-01",
+      "command": [
+        "git",
+        "merge",
+        "--no-edit",
+        "2648ad3362812b0f184a8cb922bc322d18729c66"
+      ],
+      "cwd": "/workspace/scratch/scanner-scratch-conflicts/compiler-tree",
+      "stdout": "merge-01.stdout",
+      "stderr": "merge-01.stderr",
+      "exit": 1,
+      "wall_seconds": 0.415
+    },
+    {
+      "name": "merge-01-conflicts",
+      "command": [
+        "git",
+        "diff",
+        "--name-only",
+        "--diff-filter=U"
+      ],
+      "cwd": "/workspace/scratch/scanner-scratch-conflicts/compiler-tree",
+      "stdout": "merge-01-conflicts.stdout",
+      "stderr": "merge-01-conflicts.stderr",
+      "exit": 0,
+      "wall_seconds": 0.067
+    },
+    {
+      "name": "merge-01-abort",
+      "command": [
+        "git",
+        "merge",
+        "--abort"
+      ],
+      "cwd": "/workspace/scratch/scanner-scratch-conflicts/compiler-tree",
+      "stdout": "merge-01-abort.stdout",
+      "stderr": "merge-01-abort.stderr",
+      "exit": 0,
+      "wall_seconds": 0.114
+    }
+  ],
+  "merges": [
+    {
+      "requested": "ed6e2975",
+      "sha": "ed6e29751ee47d86fad450cd1674139883bc0f70",
+      "exit": 0,
+      "conflicts": []
+    },
+    {
+      "requested": "2648ad33",
+      "sha": "2648ad3362812b0f184a8cb922bc322d18729c66",
+      "exit": 1,
+      "conflicts": [
+        "CohereSettings.json",
+        "internal/flow/flow_test.go",
+        "internal/fresh/fresh.go",
+        "internal/ir/ir.go",
+        "internal/javascript/javascript.go",
+        "internal/load/load.go",
+        "internal/load/node_library.go",
+        "internal/load/source_fs.go",
+        "internal/lower/cast.go",
+        "internal/lower/cast_proof.go",
+        "internal/lower/control.go",
+        "internal/lower/expression.go",
+        "internal/lower/functions.go",
+        "internal/lower/generic.go",
+        "internal/lower/invariance.go",
+        "internal/lower/library_json_stringify.go",
+        "internal/lower/library_math_number.go",
+        "internal/lower/library_method_values.go",
+        "internal/lower/library_node_buffer.go",
+        "internal/lower/library_node_fs_file.go",
+        "internal/lower/library_node_fs_file_test.go",
+        "internal/lower/library_node_test.go",
+        "internal/lower/library_object.go",
+        "internal/lower/library_string.go",
+        "internal/lower/locals.go",
+        "internal/lower/modules.go",
+        "internal/lower/object.go",
+        "internal/lower/refusals.go",
+        "internal/lower/statements.go",
+        "internal/native/emit_functions.go",
+        "internal/native/emit_objects.go",
+        "internal/native/fields.go",
+        "internal/native/library.go",
+        "internal/native/runtime/adamic.h",
+        "internal/native/runtime/node_fs_file.c",
+        "internal/native/runtime/object.c",
+        "internal/native/runtime/regexp.h",
+        "internal/oracle/counts.md",
+        "internal/oracle/node_fs_file_test.go",
+        "internal/oracle/oracle_test.go",
+        "internal/oracle/testdata/node_fs_file_close.a",
+        "internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a",
+        "stage3/fixtures/host/status.json"
+      ]
+    }
+  ],
+  "scanner": [],
+  "ordered_stops": [],
+  "base": "3ffb1a835184713998a34874e86326cd21db971f",
+  "scratch_branch": "scratch/scanner-run-ad19be6208bb",
+  "scratch_tree": "/workspace/scratch/scanner-scratch-conflicts/compiler-tree",
+  "resolved_refs": [
+    {
+      "requested": "ed6e2975",
+      "sha": "ed6e29751ee47d86fad450cd1674139883bc0f70"
+    },
+    {
+      "requested": "2648ad33",
+      "sha": "2648ad3362812b0f184a8cb922bc322d18729c66"
+    }
+  ],
+  "wall_seconds": 6.377,
+  "validation": {
+    "valid": true,
+    "errors": []
+  }
+}
