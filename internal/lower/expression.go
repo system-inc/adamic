@@ -956,6 +956,13 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(span, "a template interpolating a union with an object, an array, a map or a function in it")
 			}
 			value = ir.UnionToString{Value: value}
+		case ir.Array:
+			arrayNode := span.AsTemplateSpan().Expression
+			var err error
+			value, err = l.viewArrayString(arrayNode, span, value)
+			if err != nil {
+				return nil, err
+			}
 		case ir.String:
 			value = l.spelled(span.AsTemplateSpan().Expression, value)
 		default:
@@ -1078,6 +1085,9 @@ func slotless(valueType ir.Type) bool {
 
 // call lowers a call to one of the module's functions, or to a function value.
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
+	if value, found, err := l.arrayLengthConstructor(node); found {
+		return value, err
+	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if direct := l.nestedSibling(callee); direct >= 0 {
