@@ -9,7 +9,7 @@ The complete requested row JSON is rows.json. matrix.json records grouped result
 CODE UNDER TEST: the YAML TypeScript port compiled natively, Adamic's native string runtime, lowering for standalone cost fixtures, and construction helpers for readiness rows. ORACLE: unchanged Go cohere and the installed independent YAML libraries for agreement; handwritten checksums additionally constrain cost fixtures; coverage ownership and deliberately corrupted stdout constrain witnesses. functions.txt conservatively lists declarations in the transitive TypeScript module closure, not a dynamic proof that every declaration executes.
 
 Production matrix:
-- M1 scalar.ts:255, BLOCK_FOLDED selector constant '>' becomes '|'. Scalar family and unist agreement fail.
+- M1 scalar.ts:221, BLOCK_FOLDED selector constant '>' becomes '|'. Scalar family and unist agreement fail.
 - M2 schemaPattern.ts:125, '+' minimum 1 becomes 0. Schema fails; unist passes.
 - M3 unistContext.ts:58, initial line 0 becomes 1. Unist agreement passes. In isolated port copies, a fresh unparsed parser produces offset(0) = 0,0,0 before, 1,1,0 after. See M3-witness.ts and original/mutant logs. This witness runs the port in Node; the production matrix also rebuilt the native port successfully. The finding concerns the unparsed initialization state, not normal parsed documents.
 - M4 internal/native/runtime/adamic.h:742, ASCII fast-path equality becomes inequality. Cost checksum and width bytes fail. Scalar _000 alone fails at its own 55-second subprocess deadline. Schema passes. Unist remains unknown after its isolated 90-second timeout. The grouped scalar run also cooked; only the completed _000 assertion proves its family kill.
