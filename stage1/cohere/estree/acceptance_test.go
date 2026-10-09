@@ -12,8 +12,9 @@ func acceptanceGrammar() []string {
 		"public abstract class C {}", "({public x:1, async y:2, readonly z:3});", "function* f(){(yield);[yield];f(yield);}", "class implements {}", "try {} catch(e=1){}", "function f(){throw\nx;}", "tag?.`hello`;", "class C extends (A) implements (B) {}", "type T=typeof obj.#x;", "interface I extends A extends B {}", "for(using of=0;;){}",
 	}
 }
+
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestAcceptanceGrammar(t *testing.T) {
-	t.Parallel()
 	list := manifest(t, acceptanceGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
@@ -25,8 +26,9 @@ func TestAcceptanceGrammar(t *testing.T) {
 	}
 	t.Logf("%d acceptance grammar cases, %d identical canonical bytes", len(acceptanceGrammar()), len(want))
 }
+
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestAcceptanceDiagnostics(t *testing.T) {
-	t.Parallel()
 	sources := []string{"++await 42;", "++delete foo.bar;", "--ANY1--;", "type T = A | () => B;", "new obj?.member();", "import { 'a' } from 'm';", "import A from 'm' assert {type:'json'};", "super<T>();"}
 	list := manifest(t, sources)
 	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
@@ -46,8 +48,9 @@ func TestAcceptanceDiagnostics(t *testing.T) {
 	}
 	t.Logf("%d Go refusals explicitly refused before deadline on all builds", len(sources))
 }
+
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestAcceptanceDiagnosticControl(t *testing.T) {
-	t.Parallel()
 	list := manifest(t, []string{"++await 42;"})
 	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
 	if !strings.Contains(statuses, `"status":"error"`) {
