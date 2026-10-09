@@ -1,16 +1,20 @@
 package tsprinter
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -19,20 +23,14 @@ func statementCorpus(t *testing.T) (string, string, string) {
 	directory := t.TempDir()
 	root, _ := filepath.Abs(repository)
 	files := printerCorpusFiles(t)
-	request, _ := json.Marshal(map[string]any{"Files": files, "Directory": directory})
-	if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
-		t.Fatal(err)
-	}
 	expressionSide, _ := filepath.Abs("testdata/expressions_side_test.go")
 	statementSide, _ := filepath.Abs("testdata/statements_side_test.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{root + "/cohere/internal/format/javascript/adamic_expressions_test.go": expressionSide, root + "/cohere/internal/format/javascript/adamic_statements_test.go": statementSide}})
 	if err := os.WriteFile(directory+"/overlay.json", overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	oracleDir := statementProduct(t, statementInputs{
-		Name: "Go statement oracle", Files: []string{expressionSide, statementSide, root + "/cohere"},
-		Flags: []string{"test", "-c", "-overlay"}, Toolchain: "go",
-	}, func(dir string) error {
+	// Go builds stay caller-owned until GoBuild lands; do not hand-key them.
+	oracleDir := statementOracleBuild(t, func(dir string) error {
 		command := bounded(t, "go", "test", "-c", "-o="+dir+"/oracle", "-overlay="+directory+"/overlay.json", "./internal/format/javascript")
 		command.Dir = root + "/cohere"
 		output, err := combinedOutput(command)
@@ -41,14 +39,34 @@ func statementCorpus(t *testing.T) (string, string, string) {
 		}
 		return nil
 	})
-	command := bounded(t, oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=3h")
-	command.Dir = root + "/cohere"
-	command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go statement corpus: %v\n%s", err, output)
-	} else {
-		t.Log(string(output))
+	flags := []string{"Go oracle sha256=" + statementFileHash(t, oracleDir+"/oracle"), "width=80"}
+	for _, file := range files {
+		flags = append(flags, "input="+file+" sha256="+statementFileHash(t, file))
 	}
+	product := statementProduct(t, buildcache.Inputs{
+		Name:  "tsprinter-statements-oracle-output-v1",
+		Files: []string{"stage1/cohere/tsprinter/statements_test.go", "stage1/cohere/tsprinter/statements_shards_test.go"},
+		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+	}, func(dir string) error {
+		// Requests are scratch inputs. Publish only the oracle's four output files.
+		request, err := json.Marshal(map[string]any{"Files": files, "Directory": dir})
+		if err != nil {
+			return err
+		}
+		if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
+			return err
+		}
+		command := bounded(t, oracleDir+"/oracle", "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=3h")
+		command.Dir = root + "/cohere"
+		command.Env = append(os.Environ(), "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
+		output, err := combinedOutput(command)
+		if err != nil {
+			return fmt.Errorf("Go statement corpus: %w\n%s", err, output)
+		}
+		t.Log(string(output))
+		return nil
+	})
+	directory = product
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_KEEP"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
 			t.Fatal(err)
@@ -86,31 +104,52 @@ func TestStatementsAgainstGoAndPrettier(t *testing.T) {
 		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	port, _ := filepath.Abs("statementsMain.ts")
-	files, err := filepath.Glob("*.ts")
+	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
 	}
-	parserFiles, err := filepath.Glob("../../typescript/parser/*.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	files = append(files, parserFiles...)
-	var program *ir.Program
-	var code string
-	loweredDir := statementProduct(t, statementInputs{Name: "lowered program", Files: files, Toolchain: "Adamic Go checker/lowerer"}, func(dir string) error {
-		program = lowered(t, port)
-		code = native.C(program)
-		if err := os.WriteFile(filepath.Join(dir, "port.c"), []byte(code), 0644); err != nil {
+	compilerHash := statementFileHash(t, executable)
+	// The fetched Go test binary includes the checker, lowerer, emitters and
+	// embedded runtime. Its hash keys their actual compiled code, without
+	// hand-listing a Go build's dependency graph.
+	loweredDir := statementProduct(t, buildcache.Inputs{
+		Name:      "tsprinter-statements-lowered-v1",
+		Files:     []string{"stage1/cohere/tsprinter", "stage1/typescript/parser", "stage1/typescript/scanner"},
+		Flags:     []string{"compiler sha256=" + compilerHash, "entry=" + port},
+		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
+	}, func(dir string) error {
+		checked, err := load.Load([]string{port})
+		if err != nil {
+			return fmt.Errorf("Load: %w", err)
+		}
+		program, err := lower.Lower(context.Background(), checked)
+		if err != nil {
+			return fmt.Errorf("Lower: %w", err)
+		}
+		if err := os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(program)), 0644); err != nil {
 			return err
 		}
 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
-	nativeDir := statementProduct(t, statementInputs{Name: "sanitized native", Files: []string{filepath.Join(loweredDir, "port.c")}, Flags: native.Flags(native.Options{Sanitize: true}), Toolchain: "clang"}, func(dir string) error {
-		return native.Build(code, filepath.Join(dir, "port"), native.Options{Sanitize: true})
-	})
-	releaseDir := statementProduct(t, statementInputs{Name: "release native", Files: []string{filepath.Join(loweredDir, "port.c")}, Flags: native.Flags(native.Options{}), Toolchain: "clang"}, func(dir string) error {
-		return native.Build(code, filepath.Join(dir, "port"), native.Options{})
-	})
+	data, err := os.ReadFile(filepath.Join(loweredDir, "port.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Generated inputs live outside the repository; name them by their bytes.
+	codeHash := statementBytesHash(data)
+	nativeProduct := func(sanitize bool) string {
+		options := native.Options{Sanitize: sanitize}
+		flags := append([]string{"builder sha256=" + compilerHash, "C sha256=" + codeHash}, native.Flags(options)...)
+		for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
+			flags = append(flags, name+"="+os.Getenv(name))
+		}
+		return statementProduct(t, buildcache.Inputs{
+			Name:  fmt.Sprintf("tsprinter-statements-native-sanitize-%t-v1", sanitize),
+			Files: []string{"stage1/cohere/tsprinter/statements_test.go", "stage1/cohere/tsprinter/statements_shards_test.go"},
+			Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version"), buildcache.Tool("ar", "--version"), buildcache.Tool("ld", "--version")},
+		}, func(dir string) error { return native.Build(string(data), filepath.Join(dir, "port"), options) })
+	}
+	nativeDir, releaseDir := nativeProduct(true), nativeProduct(false)
 	binary, release := filepath.Join(nativeDir, "port"), filepath.Join(releaseDir, "port")
 	if keep := os.Getenv("ADAMIC_TS_STATEMENT_ARTIFACTS"); keep != "" {
 		if err := os.MkdirAll(keep, 0755); err != nil {
@@ -141,6 +180,39 @@ func TestStatementsAgainstGoAndPrettier(t *testing.T) {
 	bundles, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
 	backend := filepath.Join(loweredDir, "program.mjs")
 	selected := statementShardSelection(t)
+	libraryHash := statementDirectoryHash(t, library)
+	oracleAnswers := make([][2][]byte, len(shards))
+	for number, shard := range shards {
+		if !selected(number) {
+			continue
+		}
+		for side, oracle := range []struct {
+			name, script, library string
+			files                 []string
+			flags                 []string
+		}{
+			{"npm", script, library, []string{"stage1/cohere/tsprinter/testdata/expressions.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "stage1/cohere/tsprinter/testdata/prettier-differences.json"}, []string{"npm bytes sha256=" + libraryHash}},
+			{"embedded", embedded, bundles, []string{"stage1/cohere/tsprinter/testdata/embedded.mjs", "stage1/cohere/tsprinter/testdata/tsc-upstream-differences.json", "cohere/internal/format/prettier/bundles"}, nil},
+		} {
+			flags := append(oracle.flags, "builder sha256="+compilerHash, "cases sha256="+statementFileHash(t, shard.specs), "library="+oracle.library, "script="+oracle.script, "width=80", "NODE_OPTIONS="+os.Getenv("NODE_OPTIONS"), "NODE_PATH="+os.Getenv("NODE_PATH"))
+			directory := statementProduct(t, buildcache.Inputs{
+				Name:  fmt.Sprintf("tsprinter-statements-%s-oracle-shard-%03d-v1", oracle.name, number),
+				Files: oracle.files, Flags: flags,
+				Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.Tool("node", "--version")},
+			}, func(dir string) error {
+				result := executeOne(t, nil, "node", oracle.script, oracle.library, shard.specs)
+				if result.exitCode != 0 || len(result.stderr) != 0 {
+					return fmt.Errorf("%s oracle exit %d: %s", oracle.name, result.exitCode, result.stderr)
+				}
+				return os.WriteFile(filepath.Join(dir, "answers.txt"), result.stdout, 0644)
+			})
+			answers, err := os.ReadFile(filepath.Join(directory, "answers.txt"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			oracleAnswers[number][side] = answers
+		}
+	}
 	t.Logf("setup including builds: %.3fs; union: %d cases in %d shards", time.Since(setup).Seconds(), strings.Count(want, "\n"), len(shards))
 	for number, shard := range shards {
 		if !selected(number) {
@@ -168,11 +240,11 @@ func TestStatementsAgainstGoAndPrettier(t *testing.T) {
 					t.Fatal(err)
 				}
 			}
-			if report := leaks(t, program, binary, "--cases", shard.text, "80"); report != "" {
+			if report := statementLeaks(t, binary, release, "--cases", shard.text, "80"); report != "" {
 				t.Fatal(report)
 			}
-			statementPrinterLibrary(t, "npm Prettier", execute(t, nil, "node", script, library, shard.specs), shard.specs, false)
-			statementPrinterLibrary(t, "embedded Prettier", execute(t, nil, "node", embedded, bundles, shard.specs), shard.specs, true)
+			statementPrinterLibrary(t, "npm Prettier", run{stdout: oracleAnswers[number][0]}, shard.specs, false)
+			statementPrinterLibrary(t, "embedded Prettier", run{stdout: oracleAnswers[number][1]}, shard.specs, true)
 			compare("release", execute(t, nil, release, "--cases", shard.text, "80"))
 			t.Logf("%d statement/program fragments byte-identical", len(shard.indices))
 		})

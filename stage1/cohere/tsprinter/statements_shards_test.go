@@ -1,35 +1,109 @@
 package tsprinter
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"io/fs"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"syscall"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-// Until internal/buildcache lands, products are built once per caller and
-// shared by all its leaves. This helper deliberately has no package cache.
-type statementInputs struct {
-	Name         string
-	Files, Flags []string
-	Toolchain    string
-}
-
-func statementProduct(t *testing.T, inputs statementInputs, build func(dir string) error) string {
+func statementOracleBuild(t *testing.T, build func(dir string) error) string {
 	t.Helper()
 	dir := t.TempDir()
-	start := time.Now()
-	cpu := statementCPU()
+	start, cpu := time.Now(), statementCPU()
 	if err := build(dir); err != nil {
-		t.Fatalf("build %s: %v", inputs.Name, err)
+		t.Fatalf("build Go statement oracle: %v", err)
 	}
-	t.Logf("build %s: %.3fs, %.3f CPU s (toolchain %s)", inputs.Name, time.Since(start).Seconds(), statementCPU()-cpu, inputs.Toolchain)
+	t.Logf("build Go statement oracle (uncached): %.3fs, %.3f CPU s", time.Since(start).Seconds(), statementCPU()-cpu)
 	return dir
+}
+
+func statementProduct(t *testing.T, inputs buildcache.Inputs, build func(dir string) error) string {
+	t.Helper()
+	return buildcache.Product(t, inputs, func(dir string) error {
+		start, cpu := time.Now(), statementCPU()
+		if err := build(dir); err != nil {
+			return err
+		}
+		t.Logf("build %s: %.3fs, %.3f CPU s", inputs.Name, time.Since(start).Seconds(), statementCPU()-cpu)
+		return nil
+	})
+}
+
+func statementBytesHash(data []byte) string { return fmt.Sprintf("%x", sha256.Sum256(data)) }
+
+func statementFileHash(t *testing.T, path string) string {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return statementBytesHash(data)
+}
+
+// External npm inputs cannot appear in repository-relative Inputs.Files.
+// WalkDir visits names lexically; hash every name and byte, refusing symlinks.
+func statementDirectoryHash(t *testing.T, directory string) string {
+	t.Helper()
+	hash := sha256.New()
+	err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.Type()&os.ModeSymlink != 0 {
+			return fmt.Errorf("oracle input symlink: %s", path)
+		}
+		if entry.IsDir() {
+			return nil
+		}
+		name, err := filepath.Rel(directory, path)
+		if err != nil {
+			return err
+		}
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(hash, "%d:%s:%d:", len(name), name, len(data))
+		hash.Write(data)
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return fmt.Sprintf("%x", hash.Sum(nil))
+}
+
+// Leak checks consume cached executable products, so a cache hit never needs
+// an in-memory lowered program or a build inside a leaf.
+func statementLeaks(t *testing.T, sanitized, release string, arguments ...string) string {
+	t.Helper()
+	switch runtime.GOOS {
+	case "linux":
+		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		if report.exitCode == 0 {
+			return ""
+		}
+		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+	case "darwin":
+		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", release}, arguments...)...)
+		if report.exitCode == 0 {
+			return ""
+		}
+		return string(report.stdout)
+	}
+	t.Fatalf("no leak check for %s", runtime.GOOS)
+	return ""
 }
 
 // Linux accounting includes all reaped descendants (oracle, Node and clang).
