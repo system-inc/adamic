@@ -52,6 +52,7 @@ fastGate=""
 gateKind=fast
 smokeReviewed=no
 pauseException=""
+testOnly=no
 while [ "$#" -gt 0 ]; do
 	case "$1" in
 	--defer-velocity) defer=yes; shift ;;
@@ -63,6 +64,9 @@ while [ "$#" -gt 0 ]; do
 	# deferred tests included, so the landed tree is exactly the tree that passed everything.
 	--full-gate) fastGate=${2#origin/}; gateKind=full; shift 2 ;;
 	--smoke-list-reviewed) smokeReviewed=yes; shift ;;
+	# --test-only <sha> "<branches>": a change that touches only tests goes to main with no gate in front of it;
+	# Loom's next whole-suite run of main is its check (Kirk, Oct 8). The merged diff must be tests only.
+	--test-only) testOnly=yes; shift ;;
 	--revert) pauseException=revert; shift ;;
 	--fix-forward) pauseException="fix-forward ${2#origin/}"; shift 2 ;;
 	*) break ;;
@@ -82,7 +86,18 @@ if [ -n "$correctMain" ]; then
 		exit 2
 	fi
 fi
-if [ -n "$fastGate" ]; then
+if [ "$testOnly" = yes ]; then
+	if [ "$#" -ne 2 ]; then
+		echo "usage: $0 --test-only <full sha> \"<branches landed>\"" >&2
+		exit 2
+	fi
+	sha=$1
+	branches="$2; test-only lane, no gate (Kirk, Oct 8)"
+	gateMinutes=0
+	pass=0
+	fail=0
+	skip=0
+elif [ -n "$fastGate" ]; then
 	if [ "$#" -ne 2 ]; then
 		echo "usage: $0 [options] --fast-gate <gate-logs ref> <full sha> \"<branches landed>\"" >&2
 		exit 2
@@ -318,6 +333,9 @@ PAUSE
 )
 case "$pause" in
 red\ *)
+	if [ "$testOnly" = yes ]; then
+		echo "Landing test-only files while main's whole gate is red (${pause#red }); they can't change it."
+	else
 	redLog=$(printf '%s' "$pause" | awk '{print $2}')
 	if [ "$pauseException" = revert ]; then
 		echo "Landing a revert while main's whole gate is red (${redLog})."
@@ -328,6 +346,7 @@ red\ *)
 	else
 		echo "refused: landings are paused, main's newest finished whole gate is red: ${pause#red }. Land a revert (--revert) or a fix-forward (--fix-forward ${redLog}), or explain the red in cloud/integration/main-reds.tsv" >&2
 		exit 1
+	fi
 	fi
 	;;
 none) echo "No finished whole gate on main yet (gate-logs/*/full-main); the pause rule has nothing to read." ;;
@@ -344,7 +363,25 @@ if [ "$old" = "$sha" ]; then
 	echo "refused: main is already $sha" >&2
 	exit 1
 fi
-if ! git merge-base --is-ancestor "$old" "$sha"; then
+if [ "$testOnly" = yes ]; then
+	if ! tree=$(git merge-tree --write-tree "$old" "$sha" | head -n 1) || [ -z "$tree" ]; then
+		echo "refused: ${sha:0:8} doesn't merge cleanly with main ${old:0:8}" >&2
+		exit 1
+	fi
+	# Tests only: Go test files, testdata, review evidence and shard tables. Anything else needs a gate.
+	nonTest=$(git diff --name-only "$old" "$tree" | grep -v -E '(_test\.go$|/testdata/|^review/|(^|/)shards\.json$)' | grep . || true)
+	if [ -n "$nonTest" ]; then
+		echo "refused: not test-only against main ${old:0:8}: $(printf '%s' "$nonTest" | head -n 5 | paste -sd ' ' -)" >&2
+		exit 1
+	fi
+	if ! git merge-base --is-ancestor "$old" "$sha" || [ "$(git rev-parse "${sha}^{tree}")" != "$tree" ]; then
+		sha=$(git commit-tree "$tree" -p "$old" -p "$sha" -m "Land test-only ${sha:0:8} over main ${old:0:8}
+
+Every path it changes against main is a test, testdata, review evidence or a shard table, so it lands with no
+gate (Kirk, Oct 8); Loom's next whole-suite run of main is its check.")
+	fi
+	echo "Landing test-only ${sha:0:8} over main ${old:0:8}."
+elif ! git merge-base --is-ancestor "$old" "$sha"; then
 	# Ruled by @system_adamic, October 7: a green stack lands over a main that moved only by record
 	# commits (the velocity table, meter runs, and a progress.json nothing in the landing reads). The
 	# landing is a merge whose tree is the gated tree plus exactly those record paths from main, so
