@@ -194,7 +194,7 @@ func TestWASINamedBehaviorCatchesMutants(t *testing.T) {
 	t.Parallel()
 	for _, name := range []string{"write_stdout_order.a", "write_stderr_order.a", "prompt_then_read.a", "arguments.a"} {
 		t.Run(name, func(t *testing.T) {
-			expected, limited := expectedEngineBehavior(t, name, run{}, inputRun{}, true)
+			expected, limited := expectedEngineBehavior(t, filepath.Join("internal/oracle/testdata", name), run{}, inputRun{}, true)
 			if !limited {
 				t.Fatal("missing named assertion")
 			}
