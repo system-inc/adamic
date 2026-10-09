@@ -1,0 +1,2608 @@
+{
+  "scope": "Before mutations, every source file in the six copied port slices was read and its named functions/methods inventoried conservatively. entry_import_graph_functions narrows to main.ts transitive value imports; it includes unexecuted methods. No claim of exact dynamic reachability. Native builds and Node execute the same port functions. main.ts top-level command is the semantic entry. Setup builds products without executing the port.",
+  "functions": [
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 13,
+      "function": "blank"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 15,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 20,
+      "function": "frontMatter"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 22,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 26,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 32,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 35,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 43,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 71,
+      "function": "copyTree"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 73,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 78,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 104,
+      "function": "rawText"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 109,
+      "function": "nestedCSS"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 111,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 120,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 156,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 164,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 169,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 180,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 190,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 215,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 219,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 230,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 233,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 285,
+      "function": "Composed.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 289,
+      "function": "compose"
+    },
+    {
+      "file": "stage1/cohere/css/compose.ts",
+      "line": 311,
+      "function": "Composed.catch"
+    },
+    {
+      "file": "stage1/cohere/css/compose_main.ts",
+      "line": 7,
+      "function": "unescapeLetter"
+    },
+    {
+      "file": "stage1/cohere/css/compose_main.ts",
+      "line": 9,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/compose_main.ts",
+      "line": 12,
+      "function": ".switch"
+    },
+    {
+      "file": "stage1/cohere/css/compose_main.ts",
+      "line": 26,
+      "function": "unescape"
+    },
+    {
+      "file": "stage1/cohere/css/compose_main.ts",
+      "line": 51,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 9,
+      "function": "position"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 17,
+      "function": "fromCSS"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 23,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 26,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 29,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 40,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 66,
+      "function": "lineColumn"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 69,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 75,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 83,
+      "function": "fromSelector"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 92,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 99,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 119,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 122,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 125,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 149,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 154,
+      "function": "fromValue"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 158,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 211,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 220,
+      "function": "fromMedia"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 228,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 239,
+      "function": "byteSlice"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 247,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/convert.ts",
+      "line": 261,
+      "function": "repeatText"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 9,
+      "function": "Position.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 19,
+      "function": "Input.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 36,
+      "function": "Input.byteOffset"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 45,
+      "function": "Input.slice"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 59,
+      "function": "Input.position"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 73,
+      "function": "Input.error"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 5,
+      "function": "fixWord"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 7,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 12,
+      "function": "lineColumnToIndex"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 22,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 31,
+      "function": "source"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 34,
+      "function": "raws"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 37,
+      "function": "start"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 40,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 43,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 46,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 51,
+      "function": "end"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 53,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 59,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 62,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 76,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 81,
+      "function": "leadingColonAndWhitespace"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 85,
+      "function": "valueOffset"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 89,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 92,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 95,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 100,
+      "function": "paramsOffset"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 103,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 108,
+      "function": "selectorText"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 110,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 114,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 118,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 121,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 125,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 128,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 133,
+      "function": "stringOffset"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 137,
+      "function": "selectorOffset"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 139,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 144,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 147,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 150,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 155,
+      "function": "emptyLocFromParent"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 158,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 161,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 170,
+      "function": "locFromChildren"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 172,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 177,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 185,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 205,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 219,
+      "function": "emptyChildLocs"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 222,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 225,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 233,
+      "function": "calculateLoc"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 236,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 256,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 288,
+      "function": "setRanges"
+    },
+    {
+      "file": "stage1/cohere/css/location.ts",
+      "line": 293,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/main.ts",
+      "line": 7,
+      "function": "unescapeLetter"
+    },
+    {
+      "file": "stage1/cohere/css/main.ts",
+      "line": 9,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/main.ts",
+      "line": 12,
+      "function": ".switch"
+    },
+    {
+      "file": "stage1/cohere/css/main.ts",
+      "line": 26,
+      "function": "unescape"
+    },
+    {
+      "file": "stage1/cohere/css/main.ts",
+      "line": 51,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 10,
+      "function": "RawValue.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 28,
+      "function": "CssNode.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 34,
+      "function": "CssNode.mark"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 39,
+      "function": "CssNode.set"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 43,
+      "function": "CssNode.get"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 46,
+      "function": "CssNode.raw"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 50,
+      "function": "positionJSON"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 53,
+      "function": "objectJSON"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 55,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 60,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 65,
+      "function": "render"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 69,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 72,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 75,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 81,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 101,
+      "function": "CssNode.if"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 9,
+      "function": "parseSelector"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 11,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 21,
+      "function": "parenGroup"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 29,
+      "function": "commaGroup"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 34,
+      "function": "pushGroup"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 37,
+      "function": "flatten"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 40,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 43,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 52,
+      "function": "groupNodes"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 146,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 151,
+      "function": "nestedValue"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 154,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 166,
+      "function": "prefix"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 168,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 173,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 177,
+      "function": "parseValue"
+    },
+    {
+      "file": "stage1/cohere/css/parse_value.ts",
+      "line": 179,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 7,
+      "function": "tokenString"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 14,
+      "function": "lastPosition"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 23,
+      "function": "spacesEnd"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 25,
+      "function": ".while"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 35,
+      "function": "spacesStart"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 37,
+      "function": ".while"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 55,
+      "function": "Parser.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 64,
+      "function": "Parser.node"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 67,
+      "function": "Parser.init"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 82,
+      "function": "Parser.finish"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 86,
+      "function": "Parser.unknown"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 90,
+      "function": "Parser.raw"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 134,
+      "function": "Parser.colon"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 160,
+      "function": "Parser.missedSemicolon"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 178,
+      "function": "Parser.decl"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 286,
+      "function": "Parser.comment"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 309,
+      "function": "Parser.end"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 325,
+      "function": "Parser.nestedRule"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 414,
+      "function": "Parser.rule"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 449,
+      "function": "Parser.emptyRule"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 455,
+      "function": "Parser.freeSemicolon"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 467,
+      "function": "Parser.atrule"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 561,
+      "function": "Parser.other"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 636,
+      "function": "Parser.parse"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 676,
+      "function": "Parsed.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 696,
+      "function": "Refused.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 700,
+      "function": "parse"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 706,
+      "function": "Refused.catch"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 20,
+      "function": "Printer.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 21,
+      "function": "Printer.adjusted"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 22,
+      "function": "Printer.textOf"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 23,
+      "function": "Printer.list"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 28,
+      "function": "Printer.sequence"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 39,
+      "function": "Printer.namespace"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 43,
+      "function": "Printer.print"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 132,
+      "function": "Printer.declaration"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 148,
+      "function": "Printer.atRule"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 169,
+      "function": "Printer.trailing"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 175,
+      "function": "Printer.parentheses"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 202,
+      "function": "Printer.comma"
+    },
+    {
+      "file": "stage1/cohere/css/print.ts",
+      "line": 265,
+      "function": "format"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 7,
+      "function": "stringWidth"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 22,
+      "function": ".while"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 31,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 35,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 51,
+      "function": "DocNode.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 54,
+      "function": "DocNode.width"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 60,
+      "function": "command"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 61,
+      "function": "emptyParts"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 62,
+      "function": "emptyCommands"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 65,
+      "function": "Documents.add"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 68,
+      "function": "Documents.at"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 69,
+      "function": "Documents.text"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 70,
+      "function": "Documents.concat"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 71,
+      "function": "Documents.group"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 72,
+      "function": "Documents.indent"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 73,
+      "function": "Documents.dedent"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 74,
+      "function": "Documents.fill"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 75,
+      "function": "Documents.line"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 76,
+      "function": "Documents.soft"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 77,
+      "function": "Documents.hard"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 78,
+      "function": "Documents.literal"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 79,
+      "function": "Documents.ifBreak"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 80,
+      "function": "Documents.suffix"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 81,
+      "function": "Documents.boundary"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 82,
+      "function": "Documents.join"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 87,
+      "function": "Documents.removeLines"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 94,
+      "function": "Documents.propagate"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 101,
+      "function": "Documents.fits"
+    },
+    {
+      "file": "stage1/cohere/css/print_doc.ts",
+      "line": 125,
+      "function": "Documents.print"
+    },
+    {
+      "file": "stage1/cohere/css/print_main.ts",
+      "line": 8,
+      "function": "unescapeLetter"
+    },
+    {
+      "file": "stage1/cohere/css/print_main.ts",
+      "line": 10,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/print_main.ts",
+      "line": 13,
+      "function": ".switch"
+    },
+    {
+      "file": "stage1/cohere/css/print_main.ts",
+      "line": 27,
+      "function": "unescape"
+    },
+    {
+      "file": "stage1/cohere/css/print_main.ts",
+      "line": 52,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 8,
+      "function": "Node.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 9,
+      "function": "Node.data"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 10,
+      "function": "Node.type"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 11,
+      "function": "Node.string"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 12,
+      "function": "Node.has"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 13,
+      "function": "Node.child"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 14,
+      "function": "Node.list"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 15,
+      "function": "Node.truth"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 19,
+      "function": "Node.raw"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 20,
+      "function": "Node.start"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 21,
+      "function": "Node.end"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 22,
+      "function": "Node.line"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 29,
+      "function": "Path.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 30,
+      "function": "Path.node"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 31,
+      "function": "Path.up"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 32,
+      "function": "Path.key"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 33,
+      "function": "Path.child"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 37,
+      "function": "Path.parent"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 38,
+      "function": "Path.ancestor"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 42,
+      "function": "Path.sibling"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 46,
+      "function": "Path.last"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 47,
+      "function": "Path.insideRule"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 48,
+      "function": "Path.insideFunc"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 49,
+      "function": "Path.icss"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 54,
+      "function": "lower"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 55,
+      "function": "maybeLower"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 58,
+      "function": "inlineLast"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 59,
+      "function": "emptyBefore"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 60,
+      "function": "control"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 61,
+      "function": "placeholder"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 62,
+      "function": "operator"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 63,
+      "function": "word"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 64,
+      "function": "valueWord"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 65,
+      "function": "inlineValue"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 66,
+      "function": "pair"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 67,
+      "function": "parenPair"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 68,
+      "function": "parens"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 69,
+      "function": "mapItem"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 80,
+      "function": "breakList"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 86,
+      "function": "precedeSoft"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 89,
+      "function": "hasNewline"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 94,
+      "function": "nextEmpty"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 96,
+      "function": "Path.while"
+    },
+    {
+      "file": "stage1/cohere/css/print_utilities.ts",
+      "line": 102,
+      "function": "Path.if"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 11,
+      "function": "Token.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 18,
+      "function": "Token.endOrStart"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 22,
+      "function": "space"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 25,
+      "function": "hex"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 35,
+      "function": "Tokenizer.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 39,
+      "function": "Tokenizer.code"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 42,
+      "function": "Tokenizer.indexOf"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 48,
+      "function": "Tokenizer.back"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 51,
+      "function": "Tokenizer.endOfFile"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 54,
+      "function": "Tokenizer.interpolation"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 88,
+      "function": "Tokenizer.nextToken"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 8,
+      "function": "List.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 24,
+      "function": "ObjectNode.mark"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 29,
+      "function": "ObjectNode.clear"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 37,
+      "function": "ObjectNode.remove"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 44,
+      "function": "ObjectNode.setString"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 49,
+      "function": "ObjectNode.setNumber"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 54,
+      "function": "ObjectNode.setBoolean"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 59,
+      "function": "ObjectNode.setObject"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 69,
+      "function": "ObjectNode.setList"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 74,
+      "function": "ObjectNode.string"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 77,
+      "function": "ObjectNode.number"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 81,
+      "function": "ObjectNode.object"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 84,
+      "function": "ObjectNode.list"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 88,
+      "function": "ObjectNode.type"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 95,
+      "function": "Tree.at"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 98,
+      "function": "Tree.make"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 108,
+      "function": "Tree.literal"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 115,
+      "function": "Tree.ensure"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 125,
+      "function": "Tree.maybe"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 128,
+      "function": "Tree.children"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 143,
+      "function": "renderTree"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 145,
+      "function": "Tree.if"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 151,
+      "function": "Tree.for"
+    },
+    {
+      "file": "stage1/cohere/css/tree.ts",
+      "line": 176,
+      "function": "Tree.if"
+    },
+    {
+      "file": "stage1/cohere/selector/main.ts",
+      "line": 7,
+      "function": "unescapeLetter"
+    },
+    {
+      "file": "stage1/cohere/selector/main.ts",
+      "line": 9,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/selector/main.ts",
+      "line": 12,
+      "function": ".switch"
+    },
+    {
+      "file": "stage1/cohere/selector/main.ts",
+      "line": 26,
+      "function": "unescape"
+    },
+    {
+      "file": "stage1/cohere/selector/main.ts",
+      "line": 50,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/selector/main.ts",
+      "line": 58,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 28,
+      "function": "SelectorNode.constructor"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 36,
+      "function": "quote"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 88,
+      "function": "numeric"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 94,
+      "function": "convertSourceIndexes"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 97,
+      "function": "SelectorNode.for"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 105,
+      "function": "SelectorNode.for"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 117,
+      "function": "render"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 122,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 129,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 139,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 142,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 145,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 163,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 168,
+      "function": "SelectorNode.for"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 173,
+      "function": "SelectorNode.for"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 13,
+      "function": "added"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 23,
+      "function": "Parser.constructor"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 32,
+      "function": "Parser.node"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 35,
+      "function": "Parser.token"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 38,
+      "function": "Parser.curr"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 42,
+      "function": "Parser.append"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 50,
+      "function": "Parser.newNode"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 65,
+      "function": "Parser.last"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 70,
+      "function": "Parser.simple"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 83,
+      "function": "Parser.attribute"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 133,
+      "function": "Parser.splitWord"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 190,
+      "function": "Parser.word"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 222,
+      "function": "Parser.combinator"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 264,
+      "function": "Parser.parse"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 393,
+      "function": "Parser.loop"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 403,
+      "function": "parse"
+    },
+    {
+      "file": "stage1/cohere/selector/parser.ts",
+      "line": 410,
+      "function": "Parser.catch"
+    },
+    {
+      "file": "stage1/cohere/selector/tokenize.ts",
+      "line": 6,
+      "function": "Token.constructor"
+    },
+    {
+      "file": "stage1/cohere/selector/tokenize.ts",
+      "line": 11,
+      "function": "Token.at"
+    },
+    {
+      "file": "stage1/cohere/selector/tokenize.ts",
+      "line": 16,
+      "function": "whitespace"
+    },
+    {
+      "file": "stage1/cohere/selector/tokenize.ts",
+      "line": 19,
+      "function": "combinator"
+    },
+    {
+      "file": "stage1/cohere/selector/tokenize.ts",
+      "line": 22,
+      "function": "atEnd"
+    },
+    {
+      "file": "stage1/cohere/selector/tokenize.ts",
+      "line": 38,
+      "function": "wordEnd"
+    },
+    {
+      "file": "stage1/cohere/selector/tokenize.ts",
+      "line": 64,
+      "function": "tokenize"
+    },
+    {
+      "file": "stage1/cohere/values/main.ts",
+      "line": 30,
+      "function": "escapeOf"
+    },
+    {
+      "file": "stage1/cohere/values/main.ts",
+      "line": 51,
+      "function": "quote"
+    },
+    {
+      "file": "stage1/cohere/values/main.ts",
+      "line": 66,
+      "function": "position"
+    },
+    {
+      "file": "stage1/cohere/values/main.ts",
+      "line": 70,
+      "function": "source"
+    },
+    {
+      "file": "stage1/cohere/values/main.ts",
+      "line": 75,
+      "function": "field"
+    },
+    {
+      "file": "stage1/cohere/values/main.ts",
+      "line": 109,
+      "function": "render"
+    },
+    {
+      "file": "stage1/cohere/values/main.ts",
+      "line": 125,
+      "function": "count"
+    },
+    {
+      "file": "stage1/cohere/values/main.ts",
+      "line": 134,
+      "function": "unescape"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 102,
+      "function": "keysOf"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 128,
+      "function": "hasNodes"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 133,
+      "function": "newRoot"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 138,
+      "function": "newValue"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 144,
+      "function": "leaf"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 149,
+      "function": "newWord"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 157,
+      "function": "newParen"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 162,
+      "function": "newComment"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 167,
+      "function": "newAtWord"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 172,
+      "function": "newNumber"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 178,
+      "function": "newFunc"
+    },
+    {
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 185,
+      "function": "newString"
+    },
+    {
+      "file": "stage1/cohere/values/parser.ts",
+      "line": 41,
+      "function": "tokenSource"
+    },
+    {
+      "file": "stage1/cohere/values/parser.ts",
+      "line": 47,
+      "function": "commentDelimiters"
+    },
+    {
+      "file": "stage1/cohere/values/parser.ts",
+      "line": 61,
+      "function": "isDigit"
+    },
+    {
+      "file": "stage1/cohere/values/parser.ts",
+      "line": 68,
+      "function": "rNumber"
+    },
+    {
+      "file": "stage1/cohere/values/parser.ts",
+      "line": 106,
+      "function": "rNoFollow"
+    },
+    {
+      "file": "stage1/cohere/values/parser.ts",
+      "line": 117,
+      "function": "isHex"
+    },
+    {
+      "file": "stage1/cohere/values/parser.ts",
+      "line": 123,
+      "function": "isColor"
+    },
+    {
+      "file": "stage1/cohere/values/parser.ts",
+      "line": 142,
+      "function": "replaceFirst"
+    },
+    {
+      "file": "stage1/cohere/values/tokenize.ts",
+      "line": 77,
+      "function": "atEnd"
+    },
+    {
+      "file": "stage1/cohere/values/tokenize.ts",
+      "line": 98,
+      "function": "wordEnd"
+    },
+    {
+      "file": "stage1/cohere/values/tokenize.ts",
+      "line": 132,
+      "function": "wordEndNum"
+    },
+    {
+      "file": "stage1/cohere/values/tokenize.ts",
+      "line": 167,
+      "function": "alphaNum"
+    },
+    {
+      "file": "stage1/cohere/values/tokenize.ts",
+      "line": 172,
+      "function": "unicodeRange"
+    },
+    {
+      "file": "stage1/cohere/values/tokenize.ts",
+      "line": 179,
+      "function": "regexLastIndex"
+    },
+    {
+      "file": "stage1/cohere/values/tokenize.ts",
+      "line": 190,
+      "function": "indexOfFrom"
+    },
+    {
+      "file": "stage1/cohere/values/tokenize.ts",
+      "line": 197,
+      "function": "tokenize"
+    },
+    {
+      "file": "stage1/cohere/values/values.ts",
+      "line": 21,
+      "function": "parse"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/index.ts",
+      "line": 32,
+      "function": "parse"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/main.ts",
+      "line": 31,
+      "function": "escapeOf"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/main.ts",
+      "line": 53,
+      "function": "quote"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/main.ts",
+      "line": 69,
+      "function": "render"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/main.ts",
+      "line": 85,
+      "function": "unescape"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/nodes.ts",
+      "line": 37,
+      "function": "newNode"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/nodes.ts",
+      "line": 44,
+      "function": "newContainer"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/parsers.ts",
+      "line": 39,
+      "function": "nodeAt"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/parsers.ts",
+      "line": 47,
+      "function": "appended"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/parsers.ts",
+      "line": 51,
+      "function": "modeAt"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/parsers.ts",
+      "line": 74,
+      "function": "parseMediaFeature"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/parsers.ts",
+      "line": 181,
+      "function": "parseMediaQuery"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/parsers.ts",
+      "line": 347,
+      "function": "matchUrlStart"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/parsers.ts",
+      "line": 370,
+      "function": "parseMediaList"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/whitespace.ts",
+      "line": 11,
+      "function": "isWhitespace"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/whitespace.ts",
+      "line": 33,
+      "function": "leadingWhitespace"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/whitespace.ts",
+      "line": 43,
+      "function": "trailingWhitespace"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/whitespace.ts",
+      "line": 54,
+      "function": "trim"
+    },
+    {
+      "file": "stage1/cohere/mediaquery/whitespace.ts",
+      "line": 60,
+      "function": "startsWithWhitespace"
+    },
+    {
+      "file": "stage1/cohere/cssstrings/main.ts",
+      "line": 6,
+      "function": "decode"
+    },
+    {
+      "file": "stage1/cohere/cssstrings/main.ts",
+      "line": 20,
+      "function": "encode"
+    },
+    {
+      "file": "stage1/cohere/cssstrings/main.ts",
+      "line": 39,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/cssstrings/strings.ts",
+      "line": 3,
+      "function": "printString"
+    },
+    {
+      "file": "stage1/cohere/cssstrings/strings.ts",
+      "line": 39,
+      "function": "stringEnd"
+    },
+    {
+      "file": "stage1/cohere/cssstrings/strings.ts",
+      "line": 50,
+      "function": "adjustStrings"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/main.ts",
+      "line": 6,
+      "function": "decode"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/main.ts",
+      "line": 20,
+      "function": "encode"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/main.ts",
+      "line": 39,
+      "function": ".for"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 6,
+      "function": "canonicalUnit"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 9,
+      "function": ".switch"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 80,
+      "function": "digit"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 83,
+      "function": "letter"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 86,
+      "function": "wordStart"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 89,
+      "function": "wordPart"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 92,
+      "function": "skipDigits"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 97,
+      "function": "numberEnd"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 100,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 110,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 119,
+      "function": "printNumber"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 124,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 132,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 140,
+      "function": "stringEnd"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 156,
+      "function": "finish"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 161,
+      "function": "numberMatch"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 164,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 177,
+      "function": "adjustNumbers"
+    },
+    {
+      "file": "stage1/cohere/cssnumbers/numbers.ts",
+      "line": 203,
+      "function": "formatValue"
+    }
+  ],
+  "setup_construction_functions": [
+    {
+      "file": "stage1/cohere/css/parser_shards_test.go",
+      "function": "cssParserCaseKey"
+    },
+    {
+      "file": "stage1/cohere/css/parser_shards_test.go",
+      "function": "cssParserShards"
+    },
+    {
+      "file": "stage1/cohere/css/parser_shards_test.go",
+      "function": "cssParserUnionError"
+    },
+    {
+      "file": "stage1/cohere/css/parser_shards_test.go",
+      "function": "verifyCSSParserUnion"
+    }
+  ],
+  "entry_import_graph_files": [
+    "stage1/cohere/css/input.ts",
+    "stage1/cohere/css/main.ts",
+    "stage1/cohere/css/nodes.ts",
+    "stage1/cohere/css/parser.ts",
+    "stage1/cohere/css/tokenize.ts",
+    "stage1/cohere/selector/nodes.ts"
+  ],
+  "entry_import_graph_functions": [
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 9,
+      "function": "Position.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 19,
+      "function": "Input.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 36,
+      "function": "Input.byteOffset"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 45,
+      "function": "Input.slice"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 59,
+      "function": "Input.position"
+    },
+    {
+      "file": "stage1/cohere/css/input.ts",
+      "line": 73,
+      "function": "Input.error"
+    },
+    {
+      "file": "stage1/cohere/css/main.ts",
+      "line": 7,
+      "function": "unescapeLetter"
+    },
+    {
+      "file": "stage1/cohere/css/main.ts",
+      "line": 9,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/main.ts",
+      "line": 12,
+      "function": ".switch"
+    },
+    {
+      "file": "stage1/cohere/css/main.ts",
+      "line": 26,
+      "function": "unescape"
+    },
+    {
+      "file": "stage1/cohere/css/main.ts",
+      "line": 51,
+      "function": ".if"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 10,
+      "function": "RawValue.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 28,
+      "function": "CssNode.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 34,
+      "function": "CssNode.mark"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 39,
+      "function": "CssNode.set"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 43,
+      "function": "CssNode.get"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 46,
+      "function": "CssNode.raw"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 50,
+      "function": "positionJSON"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 53,
+      "function": "objectJSON"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 55,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 60,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 65,
+      "function": "render"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 69,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 72,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 75,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 81,
+      "function": "CssNode.for"
+    },
+    {
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 101,
+      "function": "CssNode.if"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 7,
+      "function": "tokenString"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 14,
+      "function": "lastPosition"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 23,
+      "function": "spacesEnd"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 25,
+      "function": ".while"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 35,
+      "function": "spacesStart"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 37,
+      "function": ".while"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 55,
+      "function": "Parser.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 64,
+      "function": "Parser.node"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 67,
+      "function": "Parser.init"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 82,
+      "function": "Parser.finish"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 86,
+      "function": "Parser.unknown"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 90,
+      "function": "Parser.raw"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 134,
+      "function": "Parser.colon"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 160,
+      "function": "Parser.missedSemicolon"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 178,
+      "function": "Parser.decl"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 286,
+      "function": "Parser.comment"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 309,
+      "function": "Parser.end"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 325,
+      "function": "Parser.nestedRule"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 414,
+      "function": "Parser.rule"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 449,
+      "function": "Parser.emptyRule"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 455,
+      "function": "Parser.freeSemicolon"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 467,
+      "function": "Parser.atrule"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 561,
+      "function": "Parser.other"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 636,
+      "function": "Parser.parse"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 676,
+      "function": "Parsed.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 696,
+      "function": "Refused.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 700,
+      "function": "parse"
+    },
+    {
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 706,
+      "function": "Refused.catch"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 11,
+      "function": "Token.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 18,
+      "function": "Token.endOrStart"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 22,
+      "function": "space"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 25,
+      "function": "hex"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 35,
+      "function": "Tokenizer.constructor"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 39,
+      "function": "Tokenizer.code"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 42,
+      "function": "Tokenizer.indexOf"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 48,
+      "function": "Tokenizer.back"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 51,
+      "function": "Tokenizer.endOfFile"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 54,
+      "function": "Tokenizer.interpolation"
+    },
+    {
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 88,
+      "function": "Tokenizer.nextToken"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 28,
+      "function": "SelectorNode.constructor"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 36,
+      "function": "quote"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 88,
+      "function": "numeric"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 94,
+      "function": "convertSourceIndexes"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 97,
+      "function": "SelectorNode.for"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 105,
+      "function": "SelectorNode.for"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 117,
+      "function": "render"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 122,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 129,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 139,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 142,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 145,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 163,
+      "function": "SelectorNode.if"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 168,
+      "function": "SelectorNode.for"
+    },
+    {
+      "file": "stage1/cohere/selector/nodes.ts",
+      "line": 173,
+      "function": "SelectorNode.for"
+    }
+  ]
+}

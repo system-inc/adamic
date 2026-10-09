@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/input.ts
++++ b/stage1/cohere/css/input.ts
+@@ -68,7 +68,7 @@
+                 low = middle;
+             }
+         }
+-        return new Position(offset, low + 1, offset - (this.lines[low] ?? panic('missing line')) + 1);
++        return new Position(offset, low + 2, offset - (this.lines[low] ?? panic('missing line')) + 1);
+     }
+     error(reason: string, offset: number, end: number = -1): string {
+         const start = this.position(offset);

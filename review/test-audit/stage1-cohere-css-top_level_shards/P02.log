@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T11:44:52.867343813Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T11:44:52.873993226Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup"}
+{"Time":"2026-10-09T11:44:52.874068729Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup","Output":"=== RUN   TestThePortParsesAsGoCohereDoes_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:52.874286368Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup","Output":"=== PAUSE TestThePortParsesAsGoCohereDoes_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:52.874293529Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup"}
+{"Time":"2026-10-09T11:44:52.874296623Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup"}
+{"Time":"2026-10-09T11:44:52.874298536Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup","Output":"=== CONT  TestThePortParsesAsGoCohereDoes_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:53.821749253Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup","Output":"    top_level_shards_test.go:1625: build css_Go_parser_oracle 31dc2d7ac3df hit 0.94\n"}
+{"Time":"2026-10-09T11:44:53.947484994Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup","Output":"    top_level_shards_test.go:1626: build css_Go_parser_oracle_answers 27f219cb5717 hit 0.01\n"}
+{"Time":"2026-10-09T11:44:53.963742957Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup","Output":"    css_test.go:152: enumerated 0 shards, declared 388; provide the complete pinned ADAMIC_CSS_FIXTURES corpus\n","OutputType":"error"}
+{"Time":"2026-10-09T11:44:53.963801635Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup","Output":"--- FAIL: TestThePortParsesAsGoCohereDoes_Setup (1.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:53.963805421Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestThePortParsesAsGoCohereDoes_Setup","Elapsed":1.09}
+{"Time":"2026-10-09T11:44:53.963826142Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:53.966527268Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/css\t1.099s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:53.966544924Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":1.099}

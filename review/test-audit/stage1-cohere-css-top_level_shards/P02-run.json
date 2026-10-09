@@ -1,0 +1,5 @@
+{
+  "command": "ADAMIC_CSS_FIXTURES=/tmp/u080-css-fixtures ADAMIC_CSS_LIBRARY=/tmp/u080-css-library ADAMIC_AUDIT_PROBE=P02 timeout 120 go test -overlay=/tmp/u080-P02-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/css/ -run '^TestThePortParsesAsGoCohereDoes_Setup$'",
+  "exit": 1,
+  "wall": 5.969406571000036
+}

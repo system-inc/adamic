@@ -1,0 +1,1395 @@
+[
+  {
+    "log": "M01-build.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "881fc363e1fa",
+    "cache": "miss",
+    "seconds": 1.43
+  },
+  {
+    "log": "M01-build.log",
+    "product": "css_parser_sanitized",
+    "key": "da7c927ef572",
+    "cache": "miss",
+    "seconds": 2.04
+  },
+  {
+    "log": "package-baseline.log",
+    "product": "css-composition-corpus-oracle",
+    "key": "13550f335ad8",
+    "cache": "miss",
+    "seconds": 11.34
+  },
+  {
+    "log": "package-baseline.log",
+    "product": "css-composition-go-oracle",
+    "key": "94c34aac35df",
+    "cache": "miss",
+    "seconds": 15.86
+  },
+  {
+    "log": "package-baseline.log",
+    "product": "css-composition-lowered",
+    "key": "511ea0b5ddf6",
+    "cache": "miss",
+    "seconds": 7.91
+  },
+  {
+    "log": "package-baseline.log",
+    "product": "css-composition-lowered",
+    "key": "511ea0b5ddf6",
+    "cache": "hit",
+    "seconds": 0.98
+  },
+  {
+    "log": "package-baseline.log",
+    "product": "css-composition-native",
+    "key": "6bffa1fbc410",
+    "cache": "miss",
+    "seconds": 7.0
+  },
+  {
+    "log": "full-family-time3.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.99
+  },
+  {
+    "log": "full-family-time3.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time3.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "full-family-time3.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time3.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "hit",
+    "seconds": 0.81
+  },
+  {
+    "log": "full-family-time3.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time3.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "full-family-time3.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time3.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "full-family-time3.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time1.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.93
+  },
+  {
+    "log": "bounded-family-time1.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time1.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "bounded-family-time1.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time1.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "hit",
+    "seconds": 0.82
+  },
+  {
+    "log": "bounded-family-time1.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time1.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "bounded-family-time1.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "bounded-family-time1.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "hit",
+    "seconds": 0.82
+  },
+  {
+    "log": "bounded-family-time1.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "W01.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 1.01
+  },
+  {
+    "log": "W01.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.02
+  },
+  {
+    "log": "W01.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "4a0bf54c70ec",
+    "cache": "miss",
+    "seconds": 1.51
+  },
+  {
+    "log": "W01.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "W01.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "f5abfcd3a386",
+    "cache": "miss",
+    "seconds": 1.42
+  },
+  {
+    "log": "W01.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "W01.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "e407ff0f2e7b",
+    "cache": "miss",
+    "seconds": 1.39
+  },
+  {
+    "log": "W01.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "W01.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "76d297bd44f4",
+    "cache": "miss",
+    "seconds": 1.41
+  },
+  {
+    "log": "W01.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "P02.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.94
+  },
+  {
+    "log": "P02.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time3.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 1.02
+  },
+  {
+    "log": "bounded-family-time3.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time3.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "hit",
+    "seconds": 0.84
+  },
+  {
+    "log": "bounded-family-time3.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time3.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "bounded-family-time3.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time3.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "bounded-family-time3.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time3.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "bounded-family-time3.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time2.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.98
+  },
+  {
+    "log": "bounded-family-time2.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time2.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "bounded-family-time2.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time2.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "bounded-family-time2.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time2.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "bounded-family-time2.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-family-time2.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "hit",
+    "seconds": 0.77
+  },
+  {
+    "log": "bounded-family-time2.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M02-build.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "b260fa5ae0f8",
+    "cache": "miss",
+    "seconds": 1.43
+  },
+  {
+    "log": "M02-build.log",
+    "product": "css_parser_sanitized",
+    "key": "cd15026cbbf6",
+    "cache": "miss",
+    "seconds": 2.04
+  },
+  {
+    "log": "P01-build.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "479569a11e9b",
+    "cache": "miss",
+    "seconds": 1.42
+  },
+  {
+    "log": "P01-build.log",
+    "product": "css_parser_sanitized",
+    "key": "fe635e28c915",
+    "cache": "miss",
+    "seconds": 0.19
+  },
+  {
+    "log": "setup-time2.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.93
+  },
+  {
+    "log": "setup-time2.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time2.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "hit",
+    "seconds": 0.77
+  },
+  {
+    "log": "setup-time2.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time2.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "setup-time2.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time2.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "setup-time2.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time2.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "setup-time2.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M02.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.96
+  },
+  {
+    "log": "M02.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M02.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "67ed960bea7c",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "M02.log",
+    "product": "css_parser_sanitized",
+    "key": "88af95561daa",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M02.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "66f8142a7077",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "M02.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "1dff7a880d9e",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M02.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "2842f8b57851",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "M02.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "d990995ede93",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M02.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "af439078ff6c",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "M02.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "3ecf09500912",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-baseline.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.95
+  },
+  {
+    "log": "bounded-baseline.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-baseline.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "bounded-baseline.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-baseline.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "bounded-baseline.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-baseline.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "bounded-baseline.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "bounded-baseline.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "bounded-baseline.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M03-build.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "1d63a568d4d3",
+    "cache": "miss",
+    "seconds": 1.44
+  },
+  {
+    "log": "M03-build.log",
+    "product": "css_parser_sanitized",
+    "key": "680b8eff7214",
+    "cache": "miss",
+    "seconds": 2.01
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 1.01
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "67ed960bea7c",
+    "cache": "miss",
+    "seconds": 1.44
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "css_parser_sanitized",
+    "key": "88af95561daa",
+    "cache": "miss",
+    "seconds": 2.12
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "66f8142a7077",
+    "cache": "miss",
+    "seconds": 1.47
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "1dff7a880d9e",
+    "cache": "miss",
+    "seconds": 2.1
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "2842f8b57851",
+    "cache": "miss",
+    "seconds": 1.42
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "d990995ede93",
+    "cache": "miss",
+    "seconds": 2.11
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "af439078ff6c",
+    "cache": "miss",
+    "seconds": 1.41
+  },
+  {
+    "log": "switched-baseline.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "3ecf09500912",
+    "cache": "miss",
+    "seconds": 2.17
+  },
+  {
+    "log": "setup-time3.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.91
+  },
+  {
+    "log": "setup-time3.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time3.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "setup-time3.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time3.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "hit",
+    "seconds": 0.83
+  },
+  {
+    "log": "setup-time3.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time3.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "setup-time3.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time3.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "setup-time3.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time1.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.98
+  },
+  {
+    "log": "setup-time1.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time1.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "setup-time1.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time1.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "setup-time1.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time1.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "hit",
+    "seconds": 0.81
+  },
+  {
+    "log": "setup-time1.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "setup-time1.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "setup-time1.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M04-build.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "40c3034a9b97",
+    "cache": "miss",
+    "seconds": 1.43
+  },
+  {
+    "log": "M04-build.log",
+    "product": "css_parser_sanitized",
+    "key": "e5dd8157ffdd",
+    "cache": "miss",
+    "seconds": 2.08
+  },
+  {
+    "log": "M04.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.96
+  },
+  {
+    "log": "M04.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M04.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "67ed960bea7c",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "M04.log",
+    "product": "css_parser_sanitized",
+    "key": "88af95561daa",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M04.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "66f8142a7077",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "M04.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "1dff7a880d9e",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M04.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "2842f8b57851",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "M04.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "d990995ede93",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M04.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "af439078ff6c",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "M04.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "3ecf09500912",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-slice-baseline.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "miss",
+    "seconds": 1.7
+  },
+  {
+    "log": "full-slice-baseline.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "miss",
+    "seconds": 2.72
+  },
+  {
+    "log": "full-slice-baseline.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "miss",
+    "seconds": 1.46
+  },
+  {
+    "log": "full-slice-baseline.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "miss",
+    "seconds": 2.34
+  },
+  {
+    "log": "full-slice-baseline.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "miss",
+    "seconds": 1.43
+  },
+  {
+    "log": "full-slice-baseline.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "miss",
+    "seconds": 2.12
+  },
+  {
+    "log": "full-slice-baseline.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "miss",
+    "seconds": 1.41
+  },
+  {
+    "log": "full-slice-baseline.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "miss",
+    "seconds": 2.05
+  },
+  {
+    "log": "full-slice-baseline.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "miss",
+    "seconds": 1.42
+  },
+  {
+    "log": "full-slice-baseline.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "miss",
+    "seconds": 2.1
+  },
+  {
+    "log": "P01.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.95
+  },
+  {
+    "log": "P01.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "P01.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "67ed960bea7c",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "P01.log",
+    "product": "css_parser_sanitized",
+    "key": "88af95561daa",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "P01.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "66f8142a7077",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "P01.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "1dff7a880d9e",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "P01.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "2842f8b57851",
+    "cache": "hit",
+    "seconds": 0.78
+  },
+  {
+    "log": "P01.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "d990995ede93",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "P01.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "af439078ff6c",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "P01.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "3ecf09500912",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M03.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 1.0
+  },
+  {
+    "log": "M03.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M03.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "67ed960bea7c",
+    "cache": "hit",
+    "seconds": 0.77
+  },
+  {
+    "log": "M03.log",
+    "product": "css_parser_sanitized",
+    "key": "88af95561daa",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M03.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "66f8142a7077",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "M03.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "1dff7a880d9e",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M03.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "2842f8b57851",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "M03.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "d990995ede93",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M03.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "af439078ff6c",
+    "cache": "hit",
+    "seconds": 0.84
+  },
+  {
+    "log": "M03.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "3ecf09500912",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time1.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 1.03
+  },
+  {
+    "log": "full-family-time1.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time1.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "hit",
+    "seconds": 0.84
+  },
+  {
+    "log": "full-family-time1.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time1.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "hit",
+    "seconds": 0.86
+  },
+  {
+    "log": "full-family-time1.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time1.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "full-family-time1.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time1.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "full-family-time1.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M01.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 1.02
+  },
+  {
+    "log": "M01.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M01.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "67ed960bea7c",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "M01.log",
+    "product": "css_parser_sanitized",
+    "key": "88af95561daa",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M01.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "66f8142a7077",
+    "cache": "hit",
+    "seconds": 0.81
+  },
+  {
+    "log": "M01.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "1dff7a880d9e",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M01.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "2842f8b57851",
+    "cache": "hit",
+    "seconds": 0.79
+  },
+  {
+    "log": "M01.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "d990995ede93",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "M01.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "af439078ff6c",
+    "cache": "hit",
+    "seconds": 0.84
+  },
+  {
+    "log": "M01.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "3ecf09500912",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time2.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 0.97
+  },
+  {
+    "log": "full-family-time2.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time2.log",
+    "product": "css_parser_lowering_and_backends",
+    "key": "fe2bda30f8b7",
+    "cache": "hit",
+    "seconds": 0.83
+  },
+  {
+    "log": "full-family-time2.log",
+    "product": "css_parser_sanitized",
+    "key": "cba01b6a08ee",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time2.log",
+    "product": "css_mutant-0_lowering_and_backends",
+    "key": "e7a8c5009917",
+    "cache": "hit",
+    "seconds": 0.86
+  },
+  {
+    "log": "full-family-time2.log",
+    "product": "css_mutant-0_sanitized",
+    "key": "97e32e055133",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time2.log",
+    "product": "css_mutant-1_lowering_and_backends",
+    "key": "761cd99175a0",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "full-family-time2.log",
+    "product": "css_mutant-1_sanitized",
+    "key": "cf50f13c677a",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "full-family-time2.log",
+    "product": "css_mutant-2_lowering_and_backends",
+    "key": "7280ece75c43",
+    "cache": "hit",
+    "seconds": 0.8
+  },
+  {
+    "log": "full-family-time2.log",
+    "product": "css_mutant-2_sanitized",
+    "key": "8de392076b73",
+    "cache": "hit",
+    "seconds": 0.01
+  },
+  {
+    "log": "S01.log",
+    "product": "css_Go_parser_oracle",
+    "key": "31dc2d7ac3df",
+    "cache": "hit",
+    "seconds": 1.04
+  },
+  {
+    "log": "S01.log",
+    "product": "css_Go_parser_oracle_answers",
+    "key": "27f219cb5717",
+    "cache": "hit",
+    "seconds": 0.01
+  }
+]

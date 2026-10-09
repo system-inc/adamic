@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/tokenize.ts
++++ b/stage1/cohere/css/tokenize.ts
+@@ -20,7 +20,7 @@
+     }
+ }
+ function space(code: number): boolean {
+-    return code === 32 || code === 10 || code === 9 || code === 13 || code === 12;
++    return code === 32 || code === 10 || code === 9 || code === 13 || code === 11;
+ }
+ function hex(code: number): boolean {
+     return code >= 48 && code <= 57 || code >= 65 && code <= 70 || code >= 97 && code <= 102;

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "M01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestProduct_CSSParserParserNative$",
+    "exit": 0,
+    "wall": 5.173814332999427
+  },
+  {
+    "id": "M02",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestProduct_CSSParserParserNative$",
+    "exit": 0,
+    "wall": 5.122648236000714
+  },
+  {
+    "id": "M03",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestProduct_CSSParserParserNative$",
+    "exit": 0,
+    "wall": 5.101049652999791
+  },
+  {
+    "id": "M04",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestProduct_CSSParserParserNative$",
+    "exit": 0,
+    "wall": 5.165317362000678
+  },
+  {
+    "id": "P01",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run ^TestProduct_CSSParserParserNative$",
+    "exit": 0,
+    "wall": 3.27399590099958
+  }
+]

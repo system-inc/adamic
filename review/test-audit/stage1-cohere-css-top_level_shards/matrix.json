@@ -1,0 +1,80 @@
+{
+  "scope": "Bounded slice, package and repository uniqueness unknown. Four production mutants only. Setup construction and empty-entry probes are separate.",
+  "rows": [
+    "TestThePortParsesAsGoCohereDoes_Setup",
+    "TestThePortParsesAsGoCohereDoes family"
+  ],
+  "members": [
+    "TestThePortParsesAsGoCohereDoes_000",
+    "TestThePortParsesAsGoCohereDoes_012",
+    "TestThePortParsesAsGoCohereDoes_024",
+    "TestThePortParsesAsGoCohereDoes_036",
+    "TestThePortParsesAsGoCohereDoes_048",
+    "TestThePortParsesAsGoCohereDoes_060",
+    "TestThePortParsesAsGoCohereDoes_072",
+    "TestThePortParsesAsGoCohereDoes_084",
+    "TestThePortParsesAsGoCohereDoes_096",
+    "TestThePortParsesAsGoCohereDoes_108",
+    "TestThePortParsesAsGoCohereDoes_120",
+    "TestThePortParsesAsGoCohereDoes_132",
+    "TestThePortParsesAsGoCohereDoes_144",
+    "TestThePortParsesAsGoCohereDoes_156",
+    "TestThePortParsesAsGoCohereDoes_168",
+    "TestThePortParsesAsGoCohereDoes_180",
+    "TestThePortParsesAsGoCohereDoes_192",
+    "TestThePortParsesAsGoCohereDoes_204",
+    "TestThePortParsesAsGoCohereDoes_216",
+    "TestThePortParsesAsGoCohereDoes_228",
+    "TestThePortParsesAsGoCohereDoes_240",
+    "TestThePortParsesAsGoCohereDoes_252",
+    "TestThePortParsesAsGoCohereDoes_264",
+    "TestThePortParsesAsGoCohereDoes_276",
+    "TestThePortParsesAsGoCohereDoes_288",
+    "TestThePortParsesAsGoCohereDoes_300",
+    "TestThePortParsesAsGoCohereDoes_312",
+    "TestThePortParsesAsGoCohereDoes_324",
+    "TestThePortParsesAsGoCohereDoes_336",
+    "TestThePortParsesAsGoCohereDoes_348",
+    "TestThePortParsesAsGoCohereDoes_360",
+    "TestThePortParsesAsGoCohereDoes_372",
+    "TestThePortParsesAsGoCohereDoes_384"
+  ],
+  "production": {
+    "M01": {
+      "TestThePortParsesAsGoCohereDoes_Setup": "pass",
+      "TestThePortParsesAsGoCohereDoes family": "fail"
+    },
+    "M02": {
+      "TestThePortParsesAsGoCohereDoes_Setup": "pass",
+      "TestThePortParsesAsGoCohereDoes family": "pass"
+    },
+    "M03": {
+      "TestThePortParsesAsGoCohereDoes_Setup": "pass",
+      "TestThePortParsesAsGoCohereDoes family": "fail"
+    },
+    "M04": {
+      "TestThePortParsesAsGoCohereDoes_Setup": "pass",
+      "TestThePortParsesAsGoCohereDoes family": "fail"
+    }
+  },
+  "unknown_outside_members": true,
+  "probes": {
+    "P01": {
+      "TestThePortParsesAsGoCohereDoes_Setup": "not own entry",
+      "TestThePortParsesAsGoCohereDoes family": "fail"
+    },
+    "P02": {
+      "TestThePortParsesAsGoCohereDoes_Setup": "fail",
+      "TestThePortParsesAsGoCohereDoes family": "not own entry, not run"
+    }
+  },
+  "construction": {
+    "S01": {
+      "TestThePortParsesAsGoCohereDoes_Setup": "fail",
+      "TestThePortParsesAsGoCohereDoes family": "not run"
+    }
+  },
+  "witness_weakening": {
+    "W01": "Three additional witness-owner members fail: _227, _052, _124. Not production kills."
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "command": "ADAMIC_CSS_FIXTURES=/tmp/u080-css-fixtures ADAMIC_CSS_LIBRARY=/tmp/u080-css-library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/css/ -run '^TestThePortParsesAsGoCohereDoes_Setup$'",
+  "wall": 6.16726398299943,
+  "exit": 0,
+  "seconds": 4.562,
+  "timeout": false
+}

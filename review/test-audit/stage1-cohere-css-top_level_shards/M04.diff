@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/nodes.ts
++++ b/stage1/cohere/css/nodes.ts
+@@ -76,7 +76,7 @@
+         raws.set(key, `{"raw":${quote(value.raw)},${value.scss === undefined ? '' : `"scss":${quote(value.scss)},`}"value":${quote(value.value)}}`);
+     }
+     fields.set('raws', objectJSON(raws));
+-    fields.set('type', quote(node.type));
++    fields.set('kind', quote(node.type));
+     const keys: string[] = [];
+     for(const key of node.keys) {
+         keys.push(quote(key));

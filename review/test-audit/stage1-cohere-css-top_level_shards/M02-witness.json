@@ -1,0 +1,18 @@
+{
+  "input_css": "\fa{}",
+  "binary_build": "switched-baseline.log: build css_parser_sanitized 88af95561daa miss 2.12",
+  "runs": [
+    {
+      "selector": "",
+      "exit": 0,
+      "command": "write selector '' to /tmp/u080-mutant; ASAN_OPTIONS=detect_leaks=0 timeout 90 /home/agent/.cache/adamic-build/88af95561daa8688e64a34ac28e37e7e1600183404b934f43d2000446aeaf1ba/parser /tmp/u080-formfeed.txt",
+      "output": "case 0\n{\"keys\":[\"raws\",\"nodes\",\"source\"],\"nodes\":[{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raws\":{\"after\":\"\",\"before\":\"\\f\",\"between\":\"\"},\"selector\":\"a\",\"source\":{\"end\":{\"column\":4,\"line\":1,\"offset\":4},\"start\":{\"column\":2,\"line\":1,\"offset\":1}},\"type\":\"rule\"}],\"raws\":{\"after\":\"\",\"semicolon\":false},\"source\":{\"end\":{\"column\":5,\"line\":1,\"offset\":4},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"root\"}\n"
+    },
+    {
+      "selector": "M02",
+      "exit": 0,
+      "command": "write selector 'M02' to /tmp/u080-mutant; ASAN_OPTIONS=detect_leaks=0 timeout 90 /home/agent/.cache/adamic-build/88af95561daa8688e64a34ac28e37e7e1600183404b934f43d2000446aeaf1ba/parser /tmp/u080-formfeed.txt",
+      "output": "case 0\n{\"keys\":[\"raws\",\"nodes\",\"source\"],\"nodes\":[{\"keys\":[\"raws\",\"nodes\",\"source\",\"selector\"],\"nodes\":[],\"raws\":{\"after\":\"\",\"before\":\"\",\"between\":\"\"},\"selector\":\"\\fa\",\"source\":{\"end\":{\"column\":4,\"line\":1,\"offset\":4},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"rule\"}],\"raws\":{\"after\":\"\",\"semicolon\":false},\"source\":{\"end\":{\"column\":5,\"line\":1,\"offset\":4},\"start\":{\"column\":1,\"line\":1,\"offset\":0}},\"type\":\"root\"}\n"
+    }
+  ]
+}

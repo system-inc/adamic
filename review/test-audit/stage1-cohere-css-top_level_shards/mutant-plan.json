@@ -1,0 +1,41 @@
+{
+  "written_before_any_mutation": true,
+  "code_under_test": "TypeScript CSS port compiled natively; separate Setup construction",
+  "oracle": "Go cohere; Node port-source execution; pinned PostCSS 8.5.16 and postcss-scss 4.0.9",
+  "mutants": [
+    {
+      "id": "M01",
+      "file": "stage1/cohere/css/parser.ts",
+      "line": 82,
+      "before": "increment: number = 1",
+      "after": "increment: number = 0",
+      "menu": "change constant in Parser.finish"
+    },
+    {
+      "id": "M02",
+      "file": "stage1/cohere/css/tokenize.ts",
+      "line": 23,
+      "before": "code === 13 || code === 12;",
+      "after": "code === 13 || code === 11;",
+      "menu": "change whitespace constant in space"
+    },
+    {
+      "id": "M03",
+      "file": "stage1/cohere/css/input.ts",
+      "line": 71,
+      "before": "new Position(offset, low + 1,",
+      "after": "new Position(offset, low + 2,",
+      "menu": "off-by-one line in Input.position"
+    },
+    {
+      "id": "M04",
+      "file": "stage1/cohere/css/nodes.ts",
+      "line": 79,
+      "before": "fields.set('type', quote(node.type));",
+      "after": "fields.set('kind', quote(node.type));",
+      "menu": "change JSON field constant in render"
+    }
+  ],
+  "probe": "P01 returns before port command main produces any output; P02 makes cssParserShards return an empty list.",
+  "setup_mutation": "S01 removes last variant from cssParserShards construction loop; union checker stays unchanged."
+}

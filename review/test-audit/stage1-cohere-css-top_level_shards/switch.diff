@@ -1,0 +1,121 @@
+diff --git a/stage1/cohere/css/input.ts b/stage1/cohere/css/input.ts
+index b0d8a56d..fccbe617 100644
+--- a/stage1/cohere/css/input.ts
++++ b/stage1/cohere/css/input.ts
+@@ -1,5 +1,8 @@
+ // PostCSS 8.5.16 Input, with cohere's UTF-16 to byte boundary convention.
+-import { panic, utf8Length } from 'adamic';
++import { readTextFile, panic, utf8Length } from 'adamic';
++
++const auditRead = readTextFile('/tmp/u080-mutant');
++const auditMutant = auditRead.kind === 'Error' ? '' : auditRead.text;
+ import { quote } from '../selector/nodes.ts';
+ 
+ export class Position {
+@@ -68,7 +71,7 @@ export class Input {
+                 low = middle;
+             }
+         }
+-        return new Position(offset, low + 1, offset - (this.lines[low] ?? panic('missing line')) + 1);
++        return new Position(offset, low + (auditMutant === 'M03' ? 2 : 1), offset - (this.lines[low] ?? panic('missing line')) + 1);
+     }
+     error(reason: string, offset: number, end: number = -1): string {
+         const start = this.position(offset);
+diff --git a/stage1/cohere/css/main.ts b/stage1/cohere/css/main.ts
+index 437faf7b..17863ff1 100644
+--- a/stage1/cohere/css/main.ts
++++ b/stage1/cohere/css/main.ts
+@@ -1,5 +1,8 @@
+ // Same line transport as GraphQL; canonical own-property JSON for comparisons.
+ import { panic, programArguments, readTextFile } from 'adamic';
++
++const auditRead = readTextFile('/tmp/u080-mutant');
++const auditMutant = auditRead.kind === 'Error' ? '' : auditRead.text;
+ import { parse } from './parser.ts';
+ import { render } from './nodes.ts';
+ 
+@@ -40,6 +43,8 @@ function unescape(line: string): string {
+     parts.push(line.slice(start));
+     return parts.join('');
+ }
++function auditMain(): void {
++    if(auditMutant === 'P01') { return; }
+ const args = programArguments();
+ const read = readTextFile(args[0] ?? panic('usage: main.ts <cases file> [count]'));
+ if(read.kind === 'Error') {
+@@ -74,3 +79,6 @@ for(let round = 0; round < (args[2] === 'repeat' ? 10 : 1); round++) {
+ if(args[1] === 'count') {
+     console.log(`${parsed} of ${count} stylesheets parsed, ${nodes} nodes`);
+ }
++
++}
++auditMain();
+diff --git a/stage1/cohere/css/nodes.ts b/stage1/cohere/css/nodes.ts
+index 173fb4d4..abb55494 100644
+--- a/stage1/cohere/css/nodes.ts
++++ b/stage1/cohere/css/nodes.ts
+@@ -1,5 +1,8 @@
+ // Parent and child edges are indexes. The arena is the only strong owner.
+-import { panic } from 'adamic';
++import { readTextFile, panic } from 'adamic';
++
++const auditRead = readTextFile('/tmp/u080-mutant');
++const auditMutant = auditRead.kind === 'Error' ? '' : auditRead.text;
+ import { quote } from '../selector/nodes.ts';
+ import type { Input, Position } from './input.ts';
+ 
+@@ -76,7 +79,7 @@ export function render(nodes: readonly CssNode[], index: number, input: Input):
+         raws.set(key, `{"raw":${quote(value.raw)},${value.scss === undefined ? '' : `"scss":${quote(value.scss)},`}"value":${quote(value.value)}}`);
+     }
+     fields.set('raws', objectJSON(raws));
+-    fields.set('type', quote(node.type));
++    fields.set(auditMutant === 'M04' ? 'kind' : 'type', quote(node.type));
+     const keys: string[] = [];
+     for(const key of node.keys) {
+         keys.push(quote(key));
+diff --git a/stage1/cohere/css/parser.ts b/stage1/cohere/css/parser.ts
+index 606464a2..9de8d144 100644
+--- a/stage1/cohere/css/parser.ts
++++ b/stage1/cohere/css/parser.ts
+@@ -1,5 +1,8 @@
+ // Cohere's postcss 8.5.16 parser. Token arrays are copied where upstream slices.
+-import { panic } from 'adamic';
++import { readTextFile, panic } from 'adamic';
++
++const auditRead = readTextFile('/tmp/u080-mutant');
++const auditMutant = auditRead.kind === 'Error' ? '' : auditRead.text;
+ import { Input } from './input.ts';
+ import { CssNode, RawValue } from './nodes.ts';
+ import { Token, Tokenizer } from './tokenize.ts';
+@@ -79,7 +82,7 @@ export class Parser {
+         }
+         return index;
+     }
+-    finish(node: CssNode, offset: number, increment: number = 1): void {
++    finish(node: CssNode, offset: number, increment: number = (auditMutant === 'M01' ? 0 : 1)): void {
+         node.end = this.input.position(offset);
+         node.end.offset += increment;
+     }
+diff --git a/stage1/cohere/css/tokenize.ts b/stage1/cohere/css/tokenize.ts
+index e173643b..a32f0162 100644
+--- a/stage1/cohere/css/tokenize.ts
++++ b/stage1/cohere/css/tokenize.ts
+@@ -1,5 +1,8 @@
+ // Cohere's port of postcss 8.5.16 lib/tokenize.js.
+-import { panic } from 'adamic';
++import { readTextFile, panic } from 'adamic';
++
++const auditRead = readTextFile('/tmp/u080-mutant');
++const auditMutant = auditRead.kind === 'Error' ? '' : auditRead.text;
+ import type { Input } from './input.ts';
+ 
+ export class Token {
+@@ -20,7 +23,7 @@ export class Token {
+     }
+ }
+ function space(code: number): boolean {
+-    return code === 32 || code === 10 || code === 9 || code === 13 || code === 12;
++    return code === 32 || code === 10 || code === 9 || code === 13 || code === (auditMutant === 'M02' ? 11 : 12);
+ }
+ function hex(code: number): boolean {
+     return code >= 48 && code <= 57 || code >= 65 && code <= 70 || code >= 97 && code <= 102;

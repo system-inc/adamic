@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:45:11.185484531Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T11:45:11.191980378Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSParserParserNative"}
+{"Time":"2026-10-09T11:45:11.192066268Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSParserParserNative","Output":"=== RUN   TestProduct_CSSParserParserNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:45:11.192095472Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSParserParserNative","Output":"=== PAUSE TestProduct_CSSParserParserNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:45:11.192097725Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSParserParserNative"}
+{"Time":"2026-10-09T11:45:11.192101491Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSParserParserNative"}
+{"Time":"2026-10-09T11:45:11.192103264Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSParserParserNative","Output":"=== CONT  TestProduct_CSSParserParserNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:45:12.653171666Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSParserParserNative","Output":"    setup_products_test.go:29: build css_parser_lowering_and_backends 40c3034a9b97 miss 1.43\n"}
+{"Time":"2026-10-09T11:45:14.743999578Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSParserParserNative","Output":"    setup_products_test.go:47: build css_parser_sanitized e5dd8157ffdd miss 2.08\n"}
+{"Time":"2026-10-09T11:45:14.744062002Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSParserParserNative","Output":"--- PASS: TestProduct_CSSParserParserNative (3.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:45:14.744066859Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestProduct_CSSParserParserNative","Elapsed":3.55}
+{"Time":"2026-10-09T11:45:14.74409419Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:45:14.746010833Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/css\t3.560s\n"}
+{"Time":"2026-10-09T11:45:14.746034098Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":3.561}

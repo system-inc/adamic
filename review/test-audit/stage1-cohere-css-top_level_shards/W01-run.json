@@ -1,0 +1,11 @@
+{
+  "kind": "Allowed harness weakening for embedded mutant-witness subchecks, not a production mutant",
+  "witness_members": [
+    "TestThePortParsesAsGoCohereDoes_227",
+    "TestThePortParsesAsGoCohereDoes_052",
+    "TestThePortParsesAsGoCohereDoes_124"
+  ],
+  "command": "ADAMIC_CSS_FIXTURES=/tmp/u080-css-fixtures ADAMIC_CSS_LIBRARY=/tmp/u080-css-library ADAMIC_AUDIT_WITNESS=W01 timeout 120 go test -overlay=/tmp/u080-W01-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/css/ -run '^(TestThePortParsesAsGoCohereDoes_227|TestThePortParsesAsGoCohereDoes_052|TestThePortParsesAsGoCohereDoes_124)$'",
+  "exit": 1,
+  "wall": 12.87046857400037
+}

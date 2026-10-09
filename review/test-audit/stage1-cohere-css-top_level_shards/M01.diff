@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/parser.ts
++++ b/stage1/cohere/css/parser.ts
+@@ -79,7 +79,7 @@
+         }
+         return index;
+     }
+-    finish(node: CssNode, offset: number, increment: number = 1): void {
++    finish(node: CssNode, offset: number, increment: number = 0): void {
+         node.end = this.input.position(offset);
+         node.end.offset += increment;
+     }
