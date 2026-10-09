@@ -1,0 +1,11 @@
+=== RUN   TestTerminalStackStop
+=== PAUSE TestTerminalStackStop
+=== CONT  TestTerminalStackStop
+    backend_stops_test.go:100: terminal stack stop: exit codes differ; JavaScript exit 0 stdout "caught the overflow\nafter\n" stderr ""
+--- FAIL: TestTerminalStackStop (0.63s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.644s
+FAIL

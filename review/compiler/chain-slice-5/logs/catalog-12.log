@@ -1,0 +1,150 @@
+=== RUN   TestSuppressionDirectivesAreRefused
+=== PAUSE TestSuppressionDirectivesAreRefused
+=== CONT  TestSuppressionDirectivesAreRefused
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_
+=== RUN   TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_
+=== PAUSE TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== CONT  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+=== NAME  TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_
+    suppression_directives_test.go:23: got <nil>, want directive refusal
+--- FAIL: TestSuppressionDirectivesAreRefused (0.00s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a///_@ts-expect-error_ (0.32s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a///_@ts-ignore_ (0.32s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_prose__*_@ts-ignore_*/_ (0.34s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//**_@ts-ignore_*/_ (0.42s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_@ts-expect-error_*/_ (0.27s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a///_@ts-expect-error_ (0.22s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//**_prose__*_@ts-expect-error_*/_ (0.34s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/call.a//*_@ts-expect-error_*/_ (0.33s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_prose__*_@ts-expect-error_*/_ (0.10s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_prose__*_@ts-expect-error_*/_ (0.16s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a///_@ts-expect-error_ (0.24s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//*_@ts-expect-error_*/_ (0.33s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/boolean.a//**_@ts-expect-error_*/_ (0.36s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//**_@ts-expect-error_*/_ (0.20s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a///_@ts-ignore_ (0.18s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/call.a//*_@ts-ignore_*/_ (0.23s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-expect-error/number.a//*_@ts-expect-error_*/_ (0.30s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_prose__*_@ts-ignore_*/_ (0.20s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//*_@ts-ignore_*/_ (0.11s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_prose__*_@ts-ignore_*/_ (0.11s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a///_@ts-ignore_ (0.23s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/boolean.a//**_@ts-ignore_*/_ (0.25s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//**_@ts-ignore_*/_ (0.20s)
+    --- FAIL: TestSuppressionDirectivesAreRefused/@ts-ignore/number.a//*_@ts-ignore_*/_ (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.597s
+FAIL

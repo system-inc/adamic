@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/backend_stop_catches.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/backend_stop_catches.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/backend_stop_catches.a
+    oracle_test.go:781: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "ordinary error caught\nordinary Error caught\nfinally\nafter\n", stderr ""
+        backend: exit 70, stdout "ordinary error caught\n", stderr "adamic: panic: RangeError: Maximum call stack size exceeded\n"
+--- FAIL: TestNativeAgreesWithNode (0.12s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/backend_stop_catches.a (1.55s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.757s
+FAIL

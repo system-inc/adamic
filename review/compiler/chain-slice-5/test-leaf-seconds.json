@@ -12038,5 +12038,12 @@
     "action": "skip",
     "seconds": 0,
     "log": "review/compiler/chain-slice-5/logs/optional-guard-cost.jsonl"
+  },
+  {
+    "test": "TestParserAheadCounts",
+    "package": "github.com/system-inc/adamic/internal/oracle",
+    "action": "pass",
+    "seconds": 9.23,
+    "log": "review/compiler/chain-slice-5/logs/parser-counts-final.log"
   }
 ]
