@@ -89,6 +89,11 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
 	index := len(l.result.Regexps)
 	declarations, err := program.NativeDeclarations(fmt.Sprintf("adamic_regex_%d", index))
 	if err != nil {
+		if input, literal := regexLiteralTestInput(node); literal {
+			declarations, err = regex.NativeLiteralTestDeclarations(pattern, flags, input, fmt.Sprintf("adamic_regex_%d", index))
+		}
+	}
+	if err != nil {
 		return nil, l.notYet(node, err.Error())
 	}
 	l.result.Regexps = append(l.result.Regexps, ir.RegExpProgram{Pattern: pattern, Flags: flags, Declarations: declarations})

@@ -10,7 +10,7 @@ func TestRegExpV8Refusals(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
 		`console.log( /[\q{a}]/iv.test('A') ? 'yes' : 'no');`,
-		`console.log( /[\q{Ss|x}]/iv.test('sſ') ? 'yes' : 'no');`,
+		`console.log( /[\q{Ss|x}]/iv.test('X') ? 'yes' : 'no');`,
 		`console.log( new RegExp('(?i:a)[b]','v').test('aB') ? 'yes' : 'no');`,
 		`console.log( new RegExp('(?-i:a)[b]','iv').test('aB') ? 'yes' : 'no');`,
 		`console.log( new RegExp('(?i:a)\\w','u').test('aK') ? 'yes' : 'no');`,

@@ -97,10 +97,15 @@ places a folded singleton class string directly into its character ranges.
 **Adamic:** Compare the resolved accepted sets, accounting for intersections,
 subtractions, and masking by ordinary operands. Refuse an actual mismatch, not
 every `iv` class string. `[a\q{a}]` and multi-character-only strings remain
-accepted. The requested integration fixture prints `true true true` in Node,
-but is a refusal fixture because its third pattern, `[\q{Ss|x}]`, also exhibits
-the bug on input `X`. An accepted companion uses `[\q{Ss}]`; changing
-`copyS[j] = canonicalize(c, f)` to `copyS[j] = c` makes that oracle fail.
+accepted. The integration fixture prints `true true true` in Node and remains
+in `review/agree`. Its third pattern, `[\q{Ss|x}]`, exhibits the bug on `X`,
+but its direct literal `.test('sſ')` cannot see that differing code point.
+Stage 0 admits a fresh literal's test on a string literal only when a single,
+unquantified, non-negated class has identical string alternatives and the input
+contains no code point in the symmetric difference of the native and V8 ranges.
+Stored regexes, evaluated inputs, global/sticky flags, and other pattern shapes
+keep the pattern-wide refusal. The original companion uses `[\q{Ss}]`;
+changing `copyS[j] = canonicalize(c, f)` to `copyS[j] = c` makes its oracle fail.
 
 ## 2. A scoped i modifier leaks into or drops from later Unicode operands
 
