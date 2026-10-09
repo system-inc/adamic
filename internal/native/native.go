@@ -127,7 +127,9 @@ func Build(source string, output string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
-	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output)
+	// Neither the build directory nor the runtime cache under this machine's home may reach the binary, so its bytes are a
+	// function of its inputs wherever it's built (see cachedRuntime).
+	arguments := append(Flags(options), "-ffile-prefix-map="+directory+"=/adamic-build", "-ffile-prefix-map="+filepath.Dir(library)+"=/adamic-runtime", "-I", filepath.Dir(library), "-o", output)
 	if !options.Request {
 		arguments = append(arguments, filepath.Join(directory, "main.c"))
 	}
@@ -147,6 +149,7 @@ func Build(source string, output string, options Options) error {
 		arguments = append(arguments, WASILinkFlags(options)...)
 	}
 	command := exec.Command(compilerName(options), arguments...)
+	command.Dir = directory
 	if combined, err := command.CombinedOutput(); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}
