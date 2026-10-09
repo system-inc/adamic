@@ -1,0 +1,3 @@
+// Reduced from utilities.ts:9663
+const patterns: readonly string[] = ['a', 'b'];
+console.log(patterns.map((pattern) => `(?:${pattern})`).join('|'));

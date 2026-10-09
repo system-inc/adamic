@@ -1,5 +1,6 @@
 // library_object.c: static Object methods over proven, fixed shapes.
 #include "adamic.h"
+#include "library_errors.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,17 +32,19 @@ adamic_object *adamic_object_freeze(adamic_object *object) {
 void adamic_object_check_write(const adamic_object *object, const char *name) {
  // Private fields are internal slots, unaffected by Object.freeze in JavaScript.
  if (!object->frozen || name[0] == '#') return;
- const char prefix[] = "TypeError: Cannot assign to read only property '";
+ const char prefix[] = "Cannot assign to read only property '";
  const char suffix[] = "' of object '#<Object>'";
  size_t length = sizeof prefix - 1 + strlen(name) + sizeof suffix - 1;
  char *message = malloc(length + 1);
  if (message == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
  (void)snprintf(message, length + 1, "%s%s%s", prefix, name, suffix);
- adamic_panic(message, length);
+ adamic_library_throw("TypeError",message,length);
+ free(message);
 }
 
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
  if (adamic_record_is(object)) return adamic_record_has_own(object, key);
+ if (object->has_captured_stack && key->length == 5 && memcmp(key->bytes, "stack", 5) == 0) return true;
  for (size_t index = 0; index < object->shape->count; index++) {
   const char *name = object->shape->names[index];
   if (name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
@@ -102,7 +105,7 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  adamic_array *keys = adamic_array_new(object->shape->count, true);
  for (size_t at = 0; at < object->shape->count; at++) {
   const char *name = object->shape->names[indices[at]];
-  if (name[0] == '#') continue;
+  if (name[0] == '#' || (object->has_captured_stack && strcmp(name, "stack") == 0)) continue;
   adamic_array_push(keys, (adamic_value){.reference = key_string(name)});
  }
  free(indices);
@@ -120,7 +123,7 @@ adamic_array *adamic_object_values(const adamic_object *object, bool references,
  for (size_t at = 0; at < object->shape->count; at++) {
   size_t index = indices[at];
   const char *name = object->shape->names[index];
-  if (name[0] == '#') continue;
+  if (name[0] == '#' || (object->has_captured_stack && strcmp(name, "stack") == 0)) continue;
   adamic_value value = object->slots[index];
   if (references) adamic_retain(value.reference);
   if (entries) {
@@ -140,8 +143,10 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
  for (size_t at = 0; at < source->shape->count; at++) {
   size_t index = indices[at];
   const char *name = source->shape->names[index];
+  if (source->has_captured_stack && strcmp(name, "stack") == 0) continue;
   adamic_object_check_write(target, name);
-  adamic_slot_cache cache = {NULL, 0};
+  if(adamic_thrown != NULL) break;
+  adamic_slot_cache cache = {0};
   adamic_value *slot = adamic_object_field(target, name, &cache);
   adamic_value value = source->slots[index];
   if (source->shape->references[index]) {
@@ -170,14 +175,15 @@ adamic_array *adamic_object_values_checked(adamic_object *object, int expected, 
   if (name == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
   memcpy(name, key->bytes, key->length);
   name[key->length] = '\0';
-  adamic_slot_cache cache = {NULL, 0};
+  adamic_slot_cache cache = {0};
   adamic_heap *observed;
   if (adamic_record_is(object)) {
    const adamic_value *slot = adamic_record_get_own(object, key);
    observed = slot == NULL ? NULL : adamic_retain(slot->reference);
   } else {
-   (void)adamic_object_data_field(object, name, &cache);
-   observed = adamic_object_initialized(object)[cache.index] ? adamic_dynamic_property(&object->heap, name) : NULL;
+   const adamic_value *slot = adamic_object_data_field(object, name, &cache);
+   bool initialized = slot == &object->captured_stack || adamic_object_initialized(object)[(size_t)(slot - object->slots)];
+   observed = initialized ? adamic_dynamic_property(&object->heap, name) : NULL;
   }
   const char *actual_name = observed == NULL ? "undefined" : observed->kind == adamic_kind_number ? "number" : observed->kind == adamic_kind_boolean ? "boolean" : observed->kind == adamic_kind_string ? "string" : observed->kind == adamic_kind_closure ? "function" : "object";
   adamic_value value = {.number = 0};

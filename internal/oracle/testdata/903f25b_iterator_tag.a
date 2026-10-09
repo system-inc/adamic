@@ -1,0 +1,6 @@
+const map = new Map<string, number>([['a', 1]]);
+console.log(map.entries().toString());
+console.log(map.keys().toLocaleString());
+const set = new Set<number>([1]);
+console.log(set.values().toString());
+console.log(map.entries().next().toString());

@@ -1,0 +1,5 @@
+// Reduced from core.ts:699
+const result: number[] = [];
+const index = 3;
+result.push(index);
+console.log(result.join('|'));

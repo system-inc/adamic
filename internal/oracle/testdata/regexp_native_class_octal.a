@@ -1,0 +1,8 @@
+// Annex B class octal reaches stage 0 through constant constructor strings.
+const one = new RegExp('[\\1]');
+console.log(`${one.test('1')} ${one.test('\x01')}`);
+const ten = new RegExp('[\\12]');
+console.log(`${ten.test('\n')} ${ten.test('2')}`);
+const low = new RegExp('[\\0-\\37]');
+console.log(`${low.test('5')} ${low.test('\x1e')}`);
+console.log('a1\x01'.replace(new RegExp('[\\1]', 'g'), '#'));

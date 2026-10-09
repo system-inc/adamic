@@ -1,0 +1,12 @@
+let text = 'a';
+text += 'bb';
+text += 'c';
+const alias = text;
+text += 'd';
+console.log(`${text}:${alias}`);
+function suffix(): string {
+    text = 'changed';
+    return '!';
+}
+text += suffix();
+console.log(text);

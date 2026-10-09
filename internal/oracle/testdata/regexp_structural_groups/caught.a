@@ -1,0 +1,11 @@
+function argument(): string { console.log('argument'); return 'year'; }
+const match = /(?<year>[0-9]+)/.exec('2024');
+if (match !== null && match.groups !== undefined) {
+ const groups = match.groups;
+ console.log(`${'year' in groups} ${'toString' in groups} ${'hasOwnProperty' in groups}`);
+ console.log(groups['year']);
+ try { console.log(`${groups.hasOwnProperty(argument())}`); }
+ catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+ try { console.log(match.groups.toString()); }
+ catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message}`); }
+}

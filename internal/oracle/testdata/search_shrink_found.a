@@ -1,0 +1,22 @@
+const forward = [1];
+const first = forward.find((item) => {
+	forward.pop();
+	return item === 1;
+});
+console.log(`${first ?? -1}`);
+const backward = ['held'.repeat(2)];
+const last = backward.findLast((item) => {
+	backward.pop();
+	return item.length > 0;
+});
+console.log(last ?? 'none');
+const indices = [1];
+console.log(`${indices.findIndex(() => {
+	indices.pop();
+	return true;
+})}`);
+const lastIndices = [1];
+console.log(`${lastIndices.findLastIndex(() => {
+	lastIndices.pop();
+	return true;
+})}`);
