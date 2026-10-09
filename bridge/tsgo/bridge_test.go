@@ -294,6 +294,7 @@ func firstDifference(left, right []byte) int {
 }
 
 func TestTSGoRequiresLink(t *testing.T) {
+	t.Parallel()
 	fixture := filepath.Join("testdata", "queries.a")
 	loaded, err := load.Load([]string{fixture})
 	if err != nil {
