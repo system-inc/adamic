@@ -196,22 +196,34 @@ func TestCheckedViewUntaggedRecursive(t *testing.T) {
 	}
 }
 
-func TestCheckedViewUntaggedArrayPending(t *testing.T) {
+func TestCheckedViewUntaggedArraySource(t *testing.T) {
 	t.Parallel()
 	for _, variant := range []string{"good", "wrong", "nested", "empty", "mixed"} {
 		t.Run(variant, func(t *testing.T) {
 			t.Parallel()
-			path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/array-union-" + variant + ".a")
-			loaded, err := load.Load([]string{path})
-			if err != nil {
-				t.Fatal(err)
+			program, path := interfaceFixture(t, "untagged/fixtures/array-union-"+variant)
+			node := onNode(t, path)
+			t.Logf("Node: exit=%d stdout=%q stderr=%q", node.exitCode, node.stdout, node.stderr)
+			want := run{stdout: []byte("true\n")}
+			if variant == "nested" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: item.payload matches no member of { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; }, found object\n")}
 			}
-			_, err = lower.Lower(context.Background(), loaded)
-			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(unsupported.What, "views-v3: array element kind") || variant == "empty" && unsupported.What == "an array of never") {
-				t.Fatalf("array admission must stay NotYet: %v", err)
+			if variant == "wrong" || variant == "mixed" {
+				found := "array"
+				if variant == "wrong" {
+					found = "boolean"
+				}
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.elements matches no member of readonly ElementA[] | readonly ElementB[]; expected readonly ElementA[] | readonly ElementB[], found " + found + "\n")}
 			}
-			// Array membership needs V3 element-kind metadata and hole-aware reads.
-			t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
+			if diff := disagreement(run{stdout: []byte("true\n")}, node); diff != "" {
+				t.Fatal("Node: " + diff)
+			}
+			sanitized, _ := nativelyUncached(t, program)
+			for backend, got := range map[string]run{"native-sanitized": sanitized, "native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
+				if diff := disagreement(want, got); diff != "" {
+					t.Errorf("%s: %s; got %#v", backend, diff, got)
+				}
+			}
 		})
 	}
 }
