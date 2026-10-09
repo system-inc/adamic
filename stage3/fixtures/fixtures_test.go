@@ -48,7 +48,7 @@ type fixture struct {
 	Stage0   stage0   `json:"stage0"`
 }
 
-func execute(t *testing.T, directory string, environment []string, name string, arguments ...string) behavior {
+func execute(t testing.TB, directory string, environment []string, name string, arguments ...string) behavior {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
@@ -145,21 +145,57 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 	return transformed
 }
 
-func TestFixturesAssertions(t *testing.T)      { testFixtureDirectory(t, "assertions") }
-func TestFixturesCycles(t *testing.T)          { testFixtureDirectory(t, "cycles") }
-func TestFixturesEnums(t *testing.T)           { testFixtureDirectory(t, "enums") }
-func TestFixturesHost(t *testing.T)            { testFixtureDirectory(t, "host") }
-func TestFixturesNamespaces(t *testing.T)      { testFixtureDirectory(t, "namespaces") }
-func TestFixturesNestedFunctions(t *testing.T) { testFixtureDirectory(t, "nested-functions") }
-func TestFixturesObjects(t *testing.T)         { testFixtureDirectory(t, "objects") }
-func TestFixturesPredicates(t *testing.T)      { testFixtureDirectory(t, "predicates") }
-func TestFixturesRecords(t *testing.T)         { testFixtureDirectory(t, "records") }
-func TestFixturesRunner(t *testing.T)          { testFixtureDirectory(t, "runner") }
-func TestFixturesTaste(t *testing.T)           { testFixtureDirectory(t, "taste") }
+func TestFixturesAssertions(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "assertions")
+}
+func TestFixturesCycles(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "cycles")
+}
+func TestFixturesEnums(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "enums")
+}
+func TestFixturesHost(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "host")
+}
+func TestFixturesNamespaces(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "namespaces")
+}
+func TestFixturesNestedFunctions(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "nested-functions")
+}
+func TestFixturesObjects(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "objects")
+}
+func TestFixturesPredicates(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "predicates")
+}
+func TestFixturesReal(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "real")
+}
+func TestFixturesRecords(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "records")
+}
+func TestFixturesRunner(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "runner")
+}
+func TestFixturesTaste(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "taste")
+}
 
 func testFixtureDirectory(t *testing.T, directory string) {
 	t.Helper()
-	t.Parallel()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)
@@ -363,33 +399,6 @@ func testFixtureDirectory(t *testing.T, directory string) {
 			}
 		})
 	}
-}
-
-var oracleHookOnce sync.Once
-var oracleHookResult behavior
-
-func fixtureOracleHook(t *testing.T, repository string) string {
-	t.Helper()
-	oracleHookOnce.Do(func() {
-		oracleHookResult = execute(t, repository, nil, "python3", "stage3/fixtures/build-hook.py", "--prepare")
-	})
-	if oracleHookResult.Exit != 0 || strings.TrimSpace(oracleHookResult.Stdout) == "" {
-		t.Fatalf("preparing or fetching oracle hook: %s%s", oracleHookResult.Stdout, oracleHookResult.Stderr)
-	}
-	return strings.TrimSpace(oracleHookResult.Stdout)
-}
-
-// Not parallel: prepare before this package's parallel fixture workers. The
-// gate can dispatch this named build unit separately; each directory test prepares
-// on demand when it is dispatched alone on a fresh worker.
-func TestPrepareFixtureOracleHook(t *testing.T) {
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		t.Fatal(err)
-	}
-	started := time.Now()
-	fixtureOracleHook(t, repository)
-	t.Logf("keyed oracle hook preparation/fetch: %s", time.Since(started))
 }
 
 func TestFixturePaths(t *testing.T) {
