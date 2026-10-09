@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T08:37:34.745346476Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T08:37:34.769547883Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly"}
+{"Time":"2026-10-09T08:37:34.769625769Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"=== RUN   TestNodeTableIsLinkOnly\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:34.914873174Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:173: build lint-node-table-oracle 78f72cbb9373 hit 0.12\n"}
+{"Time":"2026-10-09T08:37:36.080702619Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:206: build lint-node-table-capture d836d047aa51 hit 1.16\n"}
+{"Time":"2026-10-09T08:37:36.217637301Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:258: union: 3914 live cases, each exactly once across 8 shards\n"}
+{"Time":"2026-10-09T08:37:36.217707315Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:168: TestNodeTableIsLinkOnly (setup corpus): 1.448s\n"}
+{"Time":"2026-10-09T08:37:36.217855774Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"--- PASS: TestNodeTableIsLinkOnly (1.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:36.217862644Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Elapsed":1.45}
+{"Time":"2026-10-09T08:37:36.217885037Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:36.220215152Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t1.474s\n"}
+{"Time":"2026-10-09T08:37:36.220234961Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":1.475}

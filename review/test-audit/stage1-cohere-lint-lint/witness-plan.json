@@ -1,0 +1,56 @@
+[
+  {
+    "id": "W1",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "line": 550,
+    "function": "TestLegacyMutants",
+    "before": "if bytes.Equal(side.run.output, want) {",
+    "after": "if true {",
+    "kind": "allowed witness comparison weakening"
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "line": 571,
+    "function": "TestDecorationOptionMutant",
+    "before": "if bytes.Equal(side.run.output, want) {",
+    "after": "if true {",
+    "kind": "allowed witness comparison weakening"
+  },
+  {
+    "id": "W3",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "line": 599,
+    "function": "TestCountGuardMutant",
+    "before": "if bytes.Equal(side.count.output, count) {",
+    "after": "if true {",
+    "kind": "allowed witness comparison weakening"
+  },
+  {
+    "id": "W4",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "line": 744,
+    "function": "TestMutants",
+    "before": "if bytes.Equal(side.run.output, want) {",
+    "after": "if true {",
+    "kind": "allowed witness comparison weakening"
+  },
+  {
+    "id": "W5",
+    "file": "stage1/cohere/lint/node_table_split_test.go",
+    "line": 293,
+    "function": "nodeTableEqual",
+    "before": "if diff := difference(got, want); diff != \"\" {",
+    "after": "if diff := \"\"; diff != \"\" {",
+    "kind": "allowed witness comparison weakening"
+  },
+  {
+    "id": "W6",
+    "file": "stage1/cohere/lint/owned_witness_units_test.go",
+    "line": 327,
+    "function": "ownedWitnessAgreement",
+    "before": "if diff := difference(got, want); diff != \"\" {",
+    "after": "if diff := \"\"; diff != \"\" {",
+    "kind": "allowed witness comparison weakening"
+  }
+]

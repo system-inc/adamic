@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:37:56.97350433Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T08:37:56.99805035Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesPlantedDisagreement"}
+{"Time":"2026-10-09T08:37:56.998173032Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesPlantedDisagreement","Output":"=== RUN   TestOwnedWitnessesPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:56.998227032Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesPlantedDisagreement","Output":"=== PAUSE TestOwnedWitnessesPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:56.998254402Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesPlantedDisagreement"}
+{"Time":"2026-10-09T08:37:56.998262384Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesPlantedDisagreement"}
+{"Time":"2026-10-09T08:37:56.99826679Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesPlantedDisagreement","Output":"=== CONT  TestOwnedWitnessesPlantedDisagreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:57.18780174Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesPlantedDisagreement","Output":"    owned_witness_units_test.go:464: planted native disagreement caught only by TestOwnedWitnesses_004\n"}
+{"Time":"2026-10-09T08:37:57.188468497Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesPlantedDisagreement","Output":"--- PASS: TestOwnedWitnessesPlantedDisagreement (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:57.188490059Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesPlantedDisagreement","Elapsed":0.19}
+{"Time":"2026-10-09T08:37:57.188521386Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:57.189613493Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.216s\n"}
+{"Time":"2026-10-09T08:37:57.189680051Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.216}

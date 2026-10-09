@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -18,7 +18,7 @@
+ // compareFindings orders by position alone. The sort is stable, so findings at one position keep the order
+ // they were collected in: walk order, and descriptor order within one node's visit.
+ function compareFindings(left: Finding, right: Finding): number {
+-    return left.start - right.start;
++    return right.start - left.start;
+ }
+ function compareEdits(left: Finding, right: Finding): number {
+     const position = left.editStart - right.editStart;

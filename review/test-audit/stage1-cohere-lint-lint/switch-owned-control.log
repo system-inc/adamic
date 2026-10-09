@@ -1,0 +1,5 @@
+{"Time":"2026-10-09T08:47:24.20422783Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T08:47:24.226054359Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup"}
+{"Time":"2026-10-09T08:47:24.226138103Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup","Output":"=== RUN   TestOwnedWitnesses_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:48:49.24187283Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup","Output":"    owned_witness_units_test.go:381: cold build lowered=1m22.260953803s\n"}
+{"Time":"2026-10-09T08:48:49.246617157Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup","Output":"    owned_witness_units_test.go:241: build lint-owned-witnesses-lowered a951786685ef miss 82.49\n"}

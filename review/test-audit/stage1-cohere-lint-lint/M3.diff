@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -74,7 +74,7 @@
+     }
+     run(): void {
+         this.root = this.parser.file();
+-        if(this.junkRows) {
++        if(!this.junkRows) {
+             const attached = this.parser.nodes.length;
+             for(let index = 0; index < attached; index++) {
+                 this.parser.nodes.push(this.parser.node(index));

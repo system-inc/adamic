@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 116,
+    "before": "        rules.visit(index, parent);",
+    "after": "",
+    "menu": "drop visit statement"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 21,
+    "before": "    return left.start - right.start;",
+    "after": "    return right.start - left.start;",
+    "menu": "swap subtraction arguments"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 77,
+    "before": "        if(this.junkRows) {",
+    "after": "        if(!this.junkRows) {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "E1",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 11,
+    "before": "function run(row: string, countOnly: boolean): number {",
+    "after": "function run(row: string, countOnly: boolean): number { return 0;",
+    "menu": "empty entry probe"
+  }
+]

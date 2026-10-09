@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T08:37:10.333293846Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T08:37:10.358381176Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCountGuardMutant"}
+{"Time":"2026-10-09T08:37:10.358473893Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCountGuardMutant","Output":"=== RUN   TestCountGuardMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:10.35851936Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCountGuardMutant","Output":"=== PAUSE TestCountGuardMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:10.358521614Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCountGuardMutant"}
+{"Time":"2026-10-09T08:37:10.358527342Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCountGuardMutant"}
+{"Time":"2026-10-09T08:37:10.358529085Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCountGuardMutant","Output":"=== CONT  TestCountGuardMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:22.565958603Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCountGuardMutant","Output":"    lint_test.go:602: count check alone caught Node: mutant=\"4\\n\" Go=\"3\\n\"; ordinary output remains identical\n"}
+{"Time":"2026-10-09T08:37:22.566017219Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCountGuardMutant","Output":"    lint_test.go:602: count check alone caught emitted JavaScript: mutant=\"4\\n\" Go=\"3\\n\"; ordinary output remains identical\n"}
+{"Time":"2026-10-09T08:37:22.568003207Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCountGuardMutant","Output":"--- PASS: TestCountGuardMutant (12.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:22.568015505Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestCountGuardMutant","Elapsed":12.21}
+{"Time":"2026-10-09T08:37:22.56803921Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:22.578453127Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t12.245s\n"}
+{"Time":"2026-10-09T08:37:22.578493317Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":12.245}

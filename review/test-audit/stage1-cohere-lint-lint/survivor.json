@@ -1,0 +1,32 @@
+[
+  {
+    "label": "survivor-before",
+    "selector": "",
+    "command": [
+      "timeout",
+      "90",
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "review/test-audit/stage1-cohere-lint-lint/survivor-probe.ts"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.268,
+    "output": "nodes=3 findings=1\n"
+  },
+  {
+    "label": "survivor-M3",
+    "selector": "M3",
+    "command": [
+      "timeout",
+      "90",
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "review/test-audit/stage1-cohere-lint-lint/survivor-probe.ts"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.266,
+    "output": "nodes=6 findings=1\n"
+  }
+]

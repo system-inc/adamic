@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:37:44.043686312Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T08:37:44.068688523Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnlyUnionAndPlantedFailure"}
+{"Time":"2026-10-09T08:37:44.068789112Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnlyUnionAndPlantedFailure","Output":"=== RUN   TestNodeTableIsLinkOnlyUnionAndPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:44.068835641Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnlyUnionAndPlantedFailure","Output":"=== PAUSE TestNodeTableIsLinkOnlyUnionAndPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:44.068838185Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnlyUnionAndPlantedFailure"}
+{"Time":"2026-10-09T08:37:44.068843733Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnlyUnionAndPlantedFailure"}
+{"Time":"2026-10-09T08:37:44.068845485Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnlyUnionAndPlantedFailure","Output":"=== CONT  TestNodeTableIsLinkOnlyUnionAndPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:44.278828034Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnlyUnionAndPlantedFailure","Output":"    node_table_split_test.go:389: planted disagreement case 7 caught only by TestNodeTableIsLinkOnly_004\n"}
+{"Time":"2026-10-09T08:37:44.278895884Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnlyUnionAndPlantedFailure","Output":"--- PASS: TestNodeTableIsLinkOnlyUnionAndPlantedFailure (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:44.2788998Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnlyUnionAndPlantedFailure","Elapsed":0.21}
+{"Time":"2026-10-09T08:37:44.278920721Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:44.280276589Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.236s\n"}
+{"Time":"2026-10-09T08:37:44.280305131Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.237}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/lint_test.go
++++ b/stage1/cohere/lint/lint_test.go
+@@ -596,7 +596,7 @@
+ 		if !bytes.Equal(side.ordinary.output, answer) {
+ 			t.Fatalf("%s mutant was caught outside the count check", side.name)
+ 		}
+-		if bytes.Equal(side.count.output, count) {
++		if true {
+ 			t.Fatalf("%s count mutant survived", side.name)
+ 		}
+ 		t.Logf("count check alone caught %s: mutant=%q Go=%q; ordinary output remains identical", side.name, side.count.output, count)

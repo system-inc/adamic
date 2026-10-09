@@ -1,0 +1,80 @@
+[
+  {
+    "run": "baseline-slice",
+    "product": "lint-node-table-oracle",
+    "seconds": 2.7,
+    "line": "node_table_split_test.go:173: build lint-node-table-oracle 78f72cbb9373 miss 2.70"
+  },
+  {
+    "run": "baseline-slice",
+    "product": "lint-node-table-capture",
+    "seconds": 67.94,
+    "line": "node_table_split_test.go:206: build lint-node-table-capture d836d047aa51 miss 67.94"
+  },
+  {
+    "run": "timing-TestNodeTableIsLinkOnlyFamily-1",
+    "product": "lint-node-table-lowered-ir",
+    "seconds": 5.02,
+    "line": "node_table_split_test.go:85: build lint-node-table-lowered-ir 20c65f427d7f miss 5.02"
+  },
+  {
+    "run": "timing-TestNodeTableIsLinkOnlyFamily-1",
+    "product": "lint-node-table-emitted-c-serial-v2",
+    "seconds": 72.88,
+    "line": "node_table_split_test.go:115: build lint-node-table-emitted-c-serial-v2 0a2a17c28188 miss 72.88"
+  },
+  {
+    "run": "timing-TestNodeTableIsLinkOnlyFamily-1",
+    "product": "lint-node-table-native",
+    "seconds": 9.01,
+    "line": "node_table_split_test.go:142: build lint-node-table-native 9433702423ba miss 9.01"
+  },
+  {
+    "run": "timing-TestOwnedWitnesses-1",
+    "product": "lint-owned-witnesses-lowered",
+    "seconds": 81.83,
+    "line": "owned_witness_units_test.go:241: build lint-owned-witnesses-lowered 274901819518 miss 81.83"
+  },
+  {
+    "run": "warm-timing-TestOwnedWitnesses-1",
+    "product": "lint-owned-witnesses-sanitized",
+    "seconds": 23.66,
+    "line": "owned_witness_units_test.go:241: build lint-owned-witnesses-sanitized c0b9f1d46465 miss 23.66"
+  },
+  {
+    "run": "switch-node-control",
+    "product": "lint-node-table-oracle",
+    "seconds": 3.26,
+    "line": "node_table_split_test.go:173: build lint-node-table-oracle d502d94135e1 miss 3.26"
+  },
+  {
+    "run": "switch-node-control",
+    "product": "lint-node-table-lowered-ir",
+    "seconds": 5.79,
+    "line": "node_table_split_test.go:85: build lint-node-table-lowered-ir 9865269b2e6f miss 5.79"
+  },
+  {
+    "run": "switch-node-control",
+    "product": "lint-node-table-emitted-c-serial-v2",
+    "seconds": 70.69,
+    "line": "node_table_split_test.go:115: build lint-node-table-emitted-c-serial-v2 ae1544d2cef6 miss 70.69"
+  },
+  {
+    "run": "switch-node-control",
+    "product": "lint-node-table-native",
+    "seconds": 4.62,
+    "line": "node_table_split_test.go:142: build lint-node-table-native 1f9a2da2c937 miss 4.62"
+  },
+  {
+    "run": "switch-owned-control",
+    "product": "lint-owned-witnesses-lowered",
+    "seconds": 82.49,
+    "line": "owned_witness_units_test.go:241: build lint-owned-witnesses-lowered a951786685ef miss 82.49"
+  },
+  {
+    "run": "switch-owned-control-warm",
+    "product": "lint-owned-witnesses-sanitized",
+    "seconds": 16.52,
+    "line": "owned_witness_units_test.go:241: build lint-owned-witnesses-sanitized 2cb0778c51de miss 16.52"
+  }
+]

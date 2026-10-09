@@ -1,0 +1,380 @@
+{
+  "rows": [
+    {
+      "test": "TestLegacyMutants",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/lint_test.go",
+      "seconds": 7.695,
+      "oracle": "Go cohere findings; negative mutant-agreement assertion",
+      "oracle_kind": "external-run",
+      "kills": [
+        "W1"
+      ],
+      "unique_kills": [],
+      "last_proven_fail": "W1: lint_test.go:551: overlap winner misreported mutant survived on Node",
+      "verdict": "witness",
+      "subsumed_by": [],
+      "mutants_in_matrix": 6,
+      "vacuous": false,
+      "bounded": true,
+      "matrix_rows": [
+        "TestLegacyMutants",
+        "TestDecorationOptionMutant",
+        "TestCountGuardMutant",
+        "TestThroughput",
+        "TestNodeTableIsLinkOnlyUnionAndPlantedFailure",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnessesPlantedDisagreement"
+      ],
+      "evidence": "ADAMIC_U110_WITNESS=W1; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestLegacyMutants|TestDecorationOptionMutant|TestCountGuardMutant|TestThroughput|TestNodeTableIsLinkOnlyUnionAndPlantedFailure|TestOwnedWitnessesAssignmentStable|TestOwnedWitnessesPlantedDisagreement)$ > W1.log 2>&1; lint_test.go:551: overlap winner misreported mutant survived on Node"
+    },
+    {
+      "test": "TestDecorationOptionMutant",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/lint_test.go",
+      "seconds": 8.143,
+      "oracle": "Go cohere findings; negative decoration-mutant agreement assertion",
+      "oracle_kind": "external-run",
+      "kills": [
+        "W2"
+      ],
+      "unique_kills": [],
+      "last_proven_fail": "W2: lint_test.go:572: decoration range mutant survived on Node",
+      "verdict": "witness",
+      "subsumed_by": [],
+      "mutants_in_matrix": 6,
+      "vacuous": false,
+      "bounded": true,
+      "matrix_rows": [
+        "TestLegacyMutants",
+        "TestDecorationOptionMutant",
+        "TestCountGuardMutant",
+        "TestThroughput",
+        "TestNodeTableIsLinkOnlyUnionAndPlantedFailure",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnessesPlantedDisagreement"
+      ],
+      "evidence": "ADAMIC_U110_WITNESS=W2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestLegacyMutants|TestDecorationOptionMutant|TestCountGuardMutant|TestThroughput|TestNodeTableIsLinkOnlyUnionAndPlantedFailure|TestOwnedWitnessesAssignmentStable|TestOwnedWitnessesPlantedDisagreement)$ > W2.log 2>&1; lint_test.go:572: decoration range mutant survived on Node"
+    },
+    {
+      "test": "TestCountGuardMutant",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/lint_test.go",
+      "seconds": 12.711,
+      "oracle": "Go cohere ordinary output and count; negative count-only agreement assertion",
+      "oracle_kind": "external-run",
+      "kills": [
+        "W3"
+      ],
+      "unique_kills": [],
+      "last_proven_fail": "W3: lint_test.go:600: Node count mutant survived",
+      "verdict": "witness",
+      "subsumed_by": [],
+      "mutants_in_matrix": 6,
+      "vacuous": false,
+      "bounded": true,
+      "matrix_rows": [
+        "TestLegacyMutants",
+        "TestDecorationOptionMutant",
+        "TestCountGuardMutant",
+        "TestThroughput",
+        "TestNodeTableIsLinkOnlyUnionAndPlantedFailure",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnessesPlantedDisagreement"
+      ],
+      "evidence": "ADAMIC_U110_WITNESS=W3; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestLegacyMutants|TestDecorationOptionMutant|TestCountGuardMutant|TestThroughput|TestNodeTableIsLinkOnlyUnionAndPlantedFailure|TestOwnedWitnessesAssignmentStable|TestOwnedWitnessesPlantedDisagreement)$ > W3.log 2>&1; lint_test.go:600: Node count mutant survived"
+    },
+    {
+      "test": "TestThroughput",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/lint_test.go",
+      "seconds": 0.023,
+      "oracle": "Go cohere count, when benchmark enabled; all session timing runs skipped",
+      "oracle_kind": "external-run",
+      "kills": [],
+      "unique_kills": [],
+      "last_proven_fail": null,
+      "verdict": "cannot-judge",
+      "subsumed_by": [],
+      "mutants_in_matrix": 3,
+      "vacuous": null,
+      "bounded": true,
+      "matrix_rows": [
+        "TestThroughput",
+        "TestNodeTableIsLinkOnly",
+        "TestNodeTableIsLinkOnlyFamily",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnesses"
+      ],
+      "evidence": "No proven failure; see timing and bounded matrix logs."
+    },
+    {
+      "test": "TestMutants",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/lint_test.go",
+      "seconds": null,
+      "oracle": "Go cohere findings; negative registered-rule mutant agreement assertions",
+      "oracle_kind": "external-run",
+      "kills": [
+        "W4"
+      ],
+      "unique_kills": [],
+      "last_proven_fail": "W4: lint_test.go:745: nexus-abbreviated-identifier whole-word finding suppressed mutant survived on Node",
+      "verdict": "witness",
+      "subsumed_by": [],
+      "mutants_in_matrix": 6,
+      "vacuous": false,
+      "bounded": true,
+      "matrix_rows": [
+        "TestLegacyMutants",
+        "TestDecorationOptionMutant",
+        "TestCountGuardMutant",
+        "TestThroughput",
+        "TestNodeTableIsLinkOnlyUnionAndPlantedFailure",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnessesPlantedDisagreement",
+        "TestMutants"
+      ],
+      "evidence": "ADAMIC_U110_WITNESS=W4; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestMutants$/^nexus\\-abbreviated\\-identifier_whole\\-word_finding_suppressed$ > W4-Mutants-bounded.log 2>&1; lint_test.go:745: nexus-abbreviated-identifier whole-word finding suppressed mutant survived on Node"
+    },
+    {
+      "test": "TestNodeTableIsLinkOnly",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/node_table_split_test.go",
+      "seconds": 1.475,
+      "oracle": "Self-authored corpus census and hash-shard union",
+      "oracle_kind": "self",
+      "kills": [],
+      "unique_kills": [],
+      "last_proven_fail": null,
+      "verdict": "cannot-judge",
+      "subsumed_by": [],
+      "mutants_in_matrix": 3,
+      "vacuous": null,
+      "bounded": true,
+      "matrix_rows": [
+        "TestThroughput",
+        "TestNodeTableIsLinkOnly",
+        "TestNodeTableIsLinkOnlyFamily",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnesses"
+      ],
+      "evidence": "No proven failure; see timing and bounded matrix logs."
+    },
+    {
+      "test": "TestNodeTableIsLinkOnlyFamily",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/node_table_split_test.go",
+      "seconds": 3.146,
+      "oracle": "Same native port with plain versus junk-row option, no outside authority",
+      "oracle_kind": "self",
+      "kills": [],
+      "unique_kills": [],
+      "last_proven_fail": null,
+      "verdict": "untrue",
+      "subsumed_by": [],
+      "mutants_in_matrix": 3,
+      "vacuous": true,
+      "bounded": true,
+      "matrix_rows": [
+        "TestThroughput",
+        "TestNodeTableIsLinkOnly",
+        "TestNodeTableIsLinkOnlyFamily",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnesses"
+      ],
+      "evidence": "No proven failure; see timing and bounded matrix logs."
+    },
+    {
+      "test": "TestNodeTableIsLinkOnlyUnionAndPlantedFailure",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/node_table_split_test.go",
+      "seconds": 0.232,
+      "oracle": "Self-authored synthetic union corruption and disagreement",
+      "oracle_kind": "self",
+      "kills": [
+        "W5"
+      ],
+      "unique_kills": [],
+      "last_proven_fail": "W5: node_table_split_test.go:383: planted failure survived",
+      "verdict": "witness",
+      "subsumed_by": [],
+      "mutants_in_matrix": 6,
+      "vacuous": false,
+      "bounded": true,
+      "matrix_rows": [
+        "TestLegacyMutants",
+        "TestDecorationOptionMutant",
+        "TestCountGuardMutant",
+        "TestThroughput",
+        "TestNodeTableIsLinkOnlyUnionAndPlantedFailure",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnessesPlantedDisagreement"
+      ],
+      "evidence": "ADAMIC_U110_WITNESS=W5; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestLegacyMutants|TestDecorationOptionMutant|TestCountGuardMutant|TestThroughput|TestNodeTableIsLinkOnlyUnionAndPlantedFailure|TestOwnedWitnessesAssignmentStable|TestOwnedWitnessesPlantedDisagreement)$ > W5.log 2>&1; node_table_split_test.go:383: planted failure survived"
+    },
+    {
+      "test": "TestOwnedWitnessesAssignmentStable",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/owned_witness_units_test.go",
+      "seconds": 0.041,
+      "oracle": "Self-authored stable hash assignment and empty corpus assertion",
+      "oracle_kind": "self",
+      "kills": [],
+      "unique_kills": [],
+      "last_proven_fail": null,
+      "verdict": "cannot-judge",
+      "subsumed_by": [],
+      "mutants_in_matrix": 3,
+      "vacuous": null,
+      "bounded": true,
+      "matrix_rows": [
+        "TestThroughput",
+        "TestNodeTableIsLinkOnly",
+        "TestNodeTableIsLinkOnlyFamily",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnesses"
+      ],
+      "evidence": "No proven failure; see timing and bounded matrix logs."
+    },
+    {
+      "test": "TestOwnedWitnesses",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/owned_witness_units_test.go",
+      "seconds": 7.231,
+      "oracle": "Go cohere findings against Node, emitted JavaScript and native; self census checks",
+      "oracle_kind": "external-run",
+      "kills": [
+        "M1",
+        "M2"
+      ],
+      "unique_kills": [
+        "M1",
+        "M2"
+      ],
+      "last_proven_fail": "M2: owned_witness_units_test.go:509: shard-010 Node: case 8 line 50: port \"/tmp/adamic-gate/TestOwnedWitnesses_010734240652/067/nexus-consistency-require-type-suffix-0.ts:8:7\", Go \"/tmp/adamic-gate/TestOwnedWitnesses_010734240652/067/nexus-consistency-require-type-suffix-0.ts:1:11\"",
+      "verdict": "sacred",
+      "subsumed_by": [],
+      "mutants_in_matrix": 3,
+      "vacuous": false,
+      "bounded": true,
+      "matrix_rows": [
+        "TestThroughput",
+        "TestNodeTableIsLinkOnly",
+        "TestNodeTableIsLinkOnlyFamily",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnesses"
+      ],
+      "evidence": "selector=M2; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestThroughput|TestNodeTableIsLinkOnly|TestNodeTableIsLinkOnly_[0-9]{3}|TestOwnedWitnessesAssignmentStable|TestOwnedWitnesses(_Setup|Union|_[0-9]{3}))$ > M2.log 2>&1; owned_witness_units_test.go:509: shard-010 Node: case 8 line 50: port \"/tmp/adamic-gate/TestOwnedWitnesses_010734240652/067/nexus-consistency-require-type-suffix-0.ts:8:7\", Go \"/tmp/adamic-gate/TestOwnedWitnesses_010734240652/067/nexus-consistency-require-type-suffix-0.ts:1:11\""
+    },
+    {
+      "test": "TestOwnedWitnessesPlantedDisagreement",
+      "package": "stage1/cohere/lint",
+      "file": "stage1/cohere/lint/owned_witness_units_test.go",
+      "seconds": 0.216,
+      "oracle": "Self-authored synthetic native disagreement and exactly-one-shard failure",
+      "oracle_kind": "self",
+      "kills": [
+        "W6"
+      ],
+      "unique_kills": [],
+      "last_proven_fail": "W6: owned_witness_units_test.go:448: planted disagreement survived",
+      "verdict": "witness",
+      "subsumed_by": [],
+      "mutants_in_matrix": 6,
+      "vacuous": false,
+      "bounded": true,
+      "matrix_rows": [
+        "TestLegacyMutants",
+        "TestDecorationOptionMutant",
+        "TestCountGuardMutant",
+        "TestThroughput",
+        "TestNodeTableIsLinkOnlyUnionAndPlantedFailure",
+        "TestOwnedWitnessesAssignmentStable",
+        "TestOwnedWitnessesPlantedDisagreement"
+      ],
+      "evidence": "ADAMIC_U110_WITNESS=W6; timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestLegacyMutants|TestDecorationOptionMutant|TestCountGuardMutant|TestThroughput|TestNodeTableIsLinkOnlyUnionAndPlantedFailure|TestOwnedWitnessesAssignmentStable|TestOwnedWitnessesPlantedDisagreement)$ > W6.log 2>&1; owned_witness_units_test.go:448: planted disagreement survived"
+    }
+  ],
+  "matrix": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/lint/lint.ts",
+      "line": 116,
+      "failed_rows": [
+        "TestOwnedWitnesses"
+      ]
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/lint/lint.ts",
+      "line": 21,
+      "failed_rows": [
+        "TestOwnedWitnesses"
+      ]
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/lint/lint.ts",
+      "line": 77,
+      "failed_rows": []
+    },
+    {
+      "id": "E1",
+      "file": "stage1/cohere/lint/main.ts",
+      "line": 11,
+      "failed_rows": [
+        "TestOwnedWitnesses"
+      ]
+    },
+    {
+      "id": "W1",
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 550,
+      "failed_rows": [
+        "TestLegacyMutants"
+      ]
+    },
+    {
+      "id": "W2",
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 571,
+      "failed_rows": [
+        "TestDecorationOptionMutant"
+      ]
+    },
+    {
+      "id": "W3",
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 599,
+      "failed_rows": [
+        "TestCountGuardMutant"
+      ]
+    },
+    {
+      "id": "W4",
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 744,
+      "failed_rows": [
+        "TestMutants"
+      ]
+    },
+    {
+      "id": "W5",
+      "file": "stage1/cohere/lint/node_table_split_test.go",
+      "line": 293,
+      "failed_rows": [
+        "TestNodeTableIsLinkOnlyUnionAndPlantedFailure"
+      ]
+    },
+    {
+      "id": "W6",
+      "file": "stage1/cohere/lint/owned_witness_units_test.go",
+      "line": 327,
+      "failed_rows": [
+        "TestOwnedWitnessesPlantedDisagreement"
+      ]
+    }
+  ],
+  "recorded_wall": 1084.711
+}

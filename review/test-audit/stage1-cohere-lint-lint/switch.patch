@@ -1,0 +1,119 @@
+diff --git a/stage1/cohere/lint/lint.ts b/stage1/cohere/lint/lint.ts
+index 406f1270..d1efdbd1 100644
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -1,3 +1,4 @@
++import { auditMutant } from './audit_u110.ts';
+ // The lint harness: parse, one preorder walk that hands each node to the generated rule registry, the
+ // stable finding sort, and the converging fixer. Every rule lives in its own directory under rules/.
+ import { RuleContext } from './context.ts';
+@@ -18,7 +19,7 @@ const passBudgetMessage = 'the pass budget was exhausted before the file converg
+ // compareFindings orders by position alone. The sort is stable, so findings at one position keep the order
+ // they were collected in: walk order, and descriptor order within one node's visit.
+ function compareFindings(left: Finding, right: Finding): number {
+-    return left.start - right.start;
++    return auditMutant === 'M2' ? right.start - left.start : left.start - right.start;
+ }
+ function compareEdits(left: Finding, right: Finding): number {
+     const position = left.editStart - right.editStart;
+@@ -74,7 +75,7 @@ export class Linter {
+     }
+     run(): void {
+         this.root = this.parser.file();
+-        if(this.junkRows) {
++        if(auditMutant === 'M3' ? !this.junkRows : this.junkRows) {
+             const attached = this.parser.nodes.length;
+             for(let index = 0; index < attached; index++) {
+                 this.parser.nodes.push(this.parser.node(index));
+@@ -113,7 +114,7 @@ export class Linter {
+         return this.parser.node(index);
+     }
+     walk(index: number, parent: number, rules: RuleSet): void {
+-        rules.visit(index, parent);
++        if(auditMutant !== 'M1') rules.visit(index, parent);
+         for(const child of this.node(index).children) {
+             this.walk(child, index, rules);
+         }
+diff --git a/stage1/cohere/lint/lint_test.go b/stage1/cohere/lint/lint_test.go
+index 36a9a378..e61b7e49 100644
+--- a/stage1/cohere/lint/lint_test.go
++++ b/stage1/cohere/lint/lint_test.go
+@@ -547,7 +547,7 @@ func TestLegacyMutants(t *testing.T) {
+ 				name string
+ 				run  execution
+ 			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
+-				if bytes.Equal(side.run.output, want) {
++				if os.Getenv("ADAMIC_U110_WITNESS") == "W1" || bytes.Equal(side.run.output, want) {
+ 					t.Fatalf("%s mutant survived on %s", change.name, side.name)
+ 				}
+ 				t.Logf("%s caught on %s: %s", change.name, side.name, difference(side.run.output, want))
+@@ -568,7 +568,7 @@ func TestDecorationOptionMutant(t *testing.T) {
+ 		{"Node", node(t, directory, path, false)},
+ 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+ 	} {
+-		if bytes.Equal(side.run.output, want) {
++		if os.Getenv("ADAMIC_U110_WITNESS") == "W2" || bytes.Equal(side.run.output, want) {
+ 			t.Fatalf("decoration range mutant survived on %s", side.name)
+ 		}
+ 		t.Logf("decoration range collapsed to one character caught on %s: %s", side.name, difference(side.run.output, want))
+@@ -596,7 +596,7 @@ func TestCountGuardMutant(t *testing.T) {
+ 		if !bytes.Equal(side.ordinary.output, answer) {
+ 			t.Fatalf("%s mutant was caught outside the count check", side.name)
+ 		}
+-		if bytes.Equal(side.count.output, count) {
++		if os.Getenv("ADAMIC_U110_WITNESS") == "W3" || bytes.Equal(side.count.output, count) {
+ 			t.Fatalf("%s count mutant survived", side.name)
+ 		}
+ 		t.Logf("count check alone caught %s: mutant=%q Go=%q; ordinary output remains identical", side.name, side.count.output, count)
+@@ -741,7 +741,7 @@ func TestMutants(t *testing.T) {
+ 				name string
+ 				run  execution
+ 			}{{"Node", mutatedNode}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
+-				if bytes.Equal(side.run.output, want) {
++				if os.Getenv("ADAMIC_U110_WITNESS") == "W4" || bytes.Equal(side.run.output, want) {
+ 					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
+ 				}
+ 				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
+diff --git a/stage1/cohere/lint/main.ts b/stage1/cohere/lint/main.ts
+index 8e72ad74..c232c8dc 100644
+--- a/stage1/cohere/lint/main.ts
++++ b/stage1/cohere/lint/main.ts
+@@ -1,3 +1,4 @@
++import { auditMutant } from './audit_u110.ts';
+ import { panic, programArguments, readTextFile } from 'adamic';
+ import { written } from '../../typescript/parser/nodes.ts';
+ import { Parser } from '../../typescript/parser/parser.ts';
+@@ -9,6 +10,7 @@ import { Settings } from './settings.ts';
+ const junkRows = programArguments().includes('--junk-rows');
+ 
+ function run(row: string, countOnly: boolean): number {
++    if(auditMutant === 'E1') return 0;
+     const fields = row.split('\t');
+     const path = fields[0] ?? panic('missing path');
+     const source = readTextFile(path);
+diff --git a/stage1/cohere/lint/node_table_split_test.go b/stage1/cohere/lint/node_table_split_test.go
+index 2bc4405a..f34f20af 100644
+--- a/stage1/cohere/lint/node_table_split_test.go
++++ b/stage1/cohere/lint/node_table_split_test.go
+@@ -290,7 +290,7 @@ func nodeTableUnion(rows []string, assignments [][]int) error {
+ }
+ 
+ func nodeTableEqual(got, want []byte) error {
+-	if diff := difference(got, want); diff != "" {
++	if diff := difference(got, want); os.Getenv("ADAMIC_U110_WITNESS") != "W5" && diff != "" {
+ 		return fmt.Errorf("output changed with unattached rows in the node table: %s", diff)
+ 	}
+ 	return nil
+diff --git a/stage1/cohere/lint/owned_witness_units_test.go b/stage1/cohere/lint/owned_witness_units_test.go
+index ddff1682..201e5a08 100644
+--- a/stage1/cohere/lint/owned_witness_units_test.go
++++ b/stage1/cohere/lint/owned_witness_units_test.go
+@@ -324,7 +324,7 @@ func ownedWitnessRecoveryRows(t *testing.T, ctx context.Context, oracle string,
+ }
+ 
+ func ownedWitnessAgreement(id, side string, got, want []byte) error {
+-	if diff := difference(got, want); diff != "" {
++	if diff := difference(got, want); os.Getenv("ADAMIC_U110_WITNESS") != "W6" && diff != "" {
+ 		return fmt.Errorf("%s %s: %s", id, side, diff)
+ 	}
+ 	return nil

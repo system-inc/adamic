@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -113,7 +113,7 @@
+         return this.parser.node(index);
+     }
+     walk(index: number, parent: number, rules: RuleSet): void {
+-        rules.visit(index, parent);
++
+         for(const child of this.node(index).children) {
+             this.walk(child, index, rules);
+         }

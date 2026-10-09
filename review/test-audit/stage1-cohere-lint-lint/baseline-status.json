@@ -1,0 +1,18 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/lint/",
+    "-run",
+    "."
+  ],
+  "exit": 124,
+  "cooked": true,
+  "wall_seconds": 90.004
+}

@@ -1,0 +1,268 @@
+{"Time":"2026-10-09T08:49:41.913993495Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T08:49:41.944721098Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestThroughput"}
+{"Time":"2026-10-09T08:49:41.944823109Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestThroughput","Output":"=== RUN   TestThroughput\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:41.944858251Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestThroughput","Output":"    lint_test.go:609: set ADAMIC_LINT_BENCH=1\n"}
+{"Time":"2026-10-09T08:49:41.944866363Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestThroughput","Output":"--- SKIP: TestThroughput (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:41.944870258Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestThroughput","Elapsed":0}
+{"Time":"2026-10-09T08:49:41.944881956Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly"}
+{"Time":"2026-10-09T08:49:41.944883598Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"=== RUN   TestNodeTableIsLinkOnly\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:42.087322269Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:173: build lint-node-table-oracle d502d94135e1 hit 0.12\n"}
+{"Time":"2026-10-09T08:49:43.206749039Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:206: build lint-node-table-capture d836d047aa51 hit 1.11\n"}
+{"Time":"2026-10-09T08:49:43.345974661Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:258: union: 3914 live cases, each exactly once across 8 shards\n"}
+{"Time":"2026-10-09T08:49:43.34602831Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:168: TestNodeTableIsLinkOnly (setup corpus): 1.403s\n"}
+{"Time":"2026-10-09T08:49:43.346166605Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"--- PASS: TestNodeTableIsLinkOnly (1.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346175157Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Elapsed":1.4}
+{"Time":"2026-10-09T08:49:43.346195307Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000"}
+{"Time":"2026-10-09T08:49:43.346198382Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000","Output":"=== RUN   TestNodeTableIsLinkOnly_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346217971Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000","Output":"=== PAUSE TestNodeTableIsLinkOnly_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346219863Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000"}
+{"Time":"2026-10-09T08:49:43.346272001Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_001"}
+{"Time":"2026-10-09T08:49:43.346274314Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_001","Output":"=== RUN   TestNodeTableIsLinkOnly_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346302095Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_001","Output":"=== PAUSE TestNodeTableIsLinkOnly_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346310808Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_001"}
+{"Time":"2026-10-09T08:49:43.346313532Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_002"}
+{"Time":"2026-10-09T08:49:43.346315004Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_002","Output":"=== RUN   TestNodeTableIsLinkOnly_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346327993Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_002","Output":"=== PAUSE TestNodeTableIsLinkOnly_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346329966Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_002"}
+{"Time":"2026-10-09T08:49:43.346344057Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_003"}
+{"Time":"2026-10-09T08:49:43.34634582Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_003","Output":"=== RUN   TestNodeTableIsLinkOnly_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346363526Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_003","Output":"=== PAUSE TestNodeTableIsLinkOnly_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346365529Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_003"}
+{"Time":"2026-10-09T08:49:43.346377587Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_004"}
+{"Time":"2026-10-09T08:49:43.346379389Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_004","Output":"=== RUN   TestNodeTableIsLinkOnly_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346397416Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_004","Output":"=== PAUSE TestNodeTableIsLinkOnly_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346398958Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_004"}
+{"Time":"2026-10-09T08:49:43.346413169Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_005"}
+{"Time":"2026-10-09T08:49:43.346414641Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_005","Output":"=== RUN   TestNodeTableIsLinkOnly_005\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346430635Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_005","Output":"=== PAUSE TestNodeTableIsLinkOnly_005\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346432348Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_005"}
+{"Time":"2026-10-09T08:49:43.346444706Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_006"}
+{"Time":"2026-10-09T08:49:43.346446298Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_006","Output":"=== RUN   TestNodeTableIsLinkOnly_006\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346461361Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_006","Output":"=== PAUSE TestNodeTableIsLinkOnly_006\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346463023Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_006"}
+{"Time":"2026-10-09T08:49:43.346476072Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_007"}
+{"Time":"2026-10-09T08:49:43.346479397Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_007","Output":"=== RUN   TestNodeTableIsLinkOnly_007\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346493768Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_007","Output":"=== PAUSE TestNodeTableIsLinkOnly_007\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346495431Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_007"}
+{"Time":"2026-10-09T08:49:43.346509342Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesAssignmentStable"}
+{"Time":"2026-10-09T08:49:43.346511705Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesAssignmentStable","Output":"=== RUN   TestOwnedWitnessesAssignmentStable\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346526056Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesAssignmentStable","Output":"=== PAUSE TestOwnedWitnessesAssignmentStable\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:43.346527919Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesAssignmentStable"}
+{"Time":"2026-10-09T08:49:43.34654193Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup"}
+{"Time":"2026-10-09T08:49:43.346543482Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup","Output":"=== RUN   TestOwnedWitnesses_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.127692169Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup","Output":"    owned_witness_units_test.go:241: build lint-owned-witnesses-lowered a951786685ef hit 0.23\n"}
+{"Time":"2026-10-09T08:49:46.368220326Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup","Output":"    owned_witness_units_test.go:241: build lint-owned-witnesses-sanitized 2cb0778c51de hit 0.23\n"}
+{"Time":"2026-10-09T08:49:46.368288127Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup","Output":"    owned_witness_units_test.go:241: shared setup=3.021608594s\n"}
+{"Time":"2026-10-09T08:49:46.368298612Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup","Output":"--- PASS: TestOwnedWitnesses_Setup (3.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368301346Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_Setup","Elapsed":3.02}
+{"Time":"2026-10-09T08:49:46.368311061Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesUnion"}
+{"Time":"2026-10-09T08:49:46.368313895Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesUnion","Output":"=== RUN   TestOwnedWitnessesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368320955Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesUnion","Output":"=== PAUSE TestOwnedWitnessesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368322638Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesUnion"}
+{"Time":"2026-10-09T08:49:46.368324951Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_000"}
+{"Time":"2026-10-09T08:49:46.368326864Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_000","Output":"=== RUN   TestOwnedWitnesses_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.36833804Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_000","Output":"=== PAUSE TestOwnedWitnesses_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368339693Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_000"}
+{"Time":"2026-10-09T08:49:46.368341676Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_001"}
+{"Time":"2026-10-09T08:49:46.368343428Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_001","Output":"=== RUN   TestOwnedWitnesses_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368345932Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_001","Output":"=== PAUSE TestOwnedWitnesses_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368347615Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_001"}
+{"Time":"2026-10-09T08:49:46.368349658Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_002"}
+{"Time":"2026-10-09T08:49:46.36835096Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_002","Output":"=== RUN   TestOwnedWitnesses_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368358511Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_002","Output":"=== PAUSE TestOwnedWitnesses_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368359993Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_002"}
+{"Time":"2026-10-09T08:49:46.368362126Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_003"}
+{"Time":"2026-10-09T08:49:46.368363438Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_003","Output":"=== RUN   TestOwnedWitnesses_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368384199Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_003","Output":"=== PAUSE TestOwnedWitnesses_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368386172Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_003"}
+{"Time":"2026-10-09T08:49:46.368390248Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_004"}
+{"Time":"2026-10-09T08:49:46.368392791Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_004","Output":"=== RUN   TestOwnedWitnesses_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368411419Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_004","Output":"=== PAUSE TestOwnedWitnesses_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368413021Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_004"}
+{"Time":"2026-10-09T08:49:46.368426411Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_005"}
+{"Time":"2026-10-09T08:49:46.368428815Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_005","Output":"=== RUN   TestOwnedWitnesses_005\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368443737Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_005","Output":"=== PAUSE TestOwnedWitnesses_005\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368445389Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_005"}
+{"Time":"2026-10-09T08:49:46.368449185Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_006"}
+{"Time":"2026-10-09T08:49:46.368451098Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_006","Output":"=== RUN   TestOwnedWitnesses_006\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368464568Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_006","Output":"=== PAUSE TestOwnedWitnesses_006\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368466601Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_006"}
+{"Time":"2026-10-09T08:49:46.36847994Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_007"}
+{"Time":"2026-10-09T08:49:46.368481623Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_007","Output":"=== RUN   TestOwnedWitnesses_007\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368485358Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_007","Output":"=== PAUSE TestOwnedWitnesses_007\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368486851Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_007"}
+{"Time":"2026-10-09T08:49:46.368508713Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_008"}
+{"Time":"2026-10-09T08:49:46.368510566Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_008","Output":"=== RUN   TestOwnedWitnesses_008\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368525327Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_008","Output":"=== PAUSE TestOwnedWitnesses_008\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.36852712Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_008"}
+{"Time":"2026-10-09T08:49:46.36854087Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_009"}
+{"Time":"2026-10-09T08:49:46.368542623Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_009","Output":"=== RUN   TestOwnedWitnesses_009\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368557175Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_009","Output":"=== PAUSE TestOwnedWitnesses_009\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368558817Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_009"}
+{"Time":"2026-10-09T08:49:46.368566659Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_010"}
+{"Time":"2026-10-09T08:49:46.368568141Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_010","Output":"=== RUN   TestOwnedWitnesses_010\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368570775Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_010","Output":"=== PAUSE TestOwnedWitnesses_010\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368572407Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_010"}
+{"Time":"2026-10-09T08:49:46.36857457Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_011"}
+{"Time":"2026-10-09T08:49:46.368576153Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_011","Output":"=== RUN   TestOwnedWitnesses_011\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368586308Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_011","Output":"=== PAUSE TestOwnedWitnesses_011\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.36858793Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_011"}
+{"Time":"2026-10-09T08:49:46.368600919Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_012"}
+{"Time":"2026-10-09T08:49:46.368602512Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_012","Output":"=== RUN   TestOwnedWitnesses_012\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368617293Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_012","Output":"=== PAUSE TestOwnedWitnesses_012\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368637523Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_012"}
+{"Time":"2026-10-09T08:49:46.368660708Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_013"}
+{"Time":"2026-10-09T08:49:46.36866249Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_013","Output":"=== RUN   TestOwnedWitnesses_013\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368674428Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_013","Output":"=== PAUSE TestOwnedWitnesses_013\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368676Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_013"}
+{"Time":"2026-10-09T08:49:46.368687778Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_014"}
+{"Time":"2026-10-09T08:49:46.368689871Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_014","Output":"=== RUN   TestOwnedWitnesses_014\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368704062Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_014","Output":"=== PAUSE TestOwnedWitnesses_014\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368705935Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_014"}
+{"Time":"2026-10-09T08:49:46.368725073Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_015"}
+{"Time":"2026-10-09T08:49:46.368726765Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_015","Output":"=== RUN   TestOwnedWitnesses_015\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368741667Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_015","Output":"=== PAUSE TestOwnedWitnesses_015\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368749148Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_015"}
+{"Time":"2026-10-09T08:49:46.368964217Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000"}
+{"Time":"2026-10-09T08:49:46.368969965Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000","Output":"=== CONT  TestNodeTableIsLinkOnly_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368978197Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_010"}
+{"Time":"2026-10-09T08:49:46.368981202Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_010","Output":"=== CONT  TestOwnedWitnesses_010\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.368984577Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_003"}
+{"Time":"2026-10-09T08:49:46.368991908Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_003","Output":"=== CONT  TestOwnedWitnesses_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.369110403Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_009"}
+{"Time":"2026-10-09T08:49:46.369116171Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_009","Output":"=== CONT  TestOwnedWitnesses_009\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.369120017Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_008"}
+{"Time":"2026-10-09T08:49:46.36912194Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_008","Output":"=== CONT  TestOwnedWitnesses_008\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:46.615174094Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000","Output":"    node_table_split_test.go:85: build lint-node-table-lowered-ir 9865269b2e6f hit 0.21\n"}
+{"Time":"2026-10-09T08:49:47.06089119Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000","Output":"    node_table_split_test.go:115: build lint-node-table-emitted-c-serial-v2 ae1544d2cef6 hit 0.42\n"}
+{"Time":"2026-10-09T08:49:47.469319932Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000","Output":"    node_table_split_test.go:142: build lint-node-table-native 1f9a2da2c937 hit 0.34\n"}
+{"Time":"2026-10-09T08:49:47.469364968Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000","Output":"    node_table_split_test.go:343: TestNodeTableIsLinkOnly (setup): 1.100s\n"}
+{"Time":"2026-10-09T08:49:47.549638119Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_008","Output":"    owned_witness_units_test.go:201: case wall=1.13099753s; shard=008 witnesses=6\n"}
+{"Time":"2026-10-09T08:49:47.549686711Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_008","Output":"--- PASS: TestOwnedWitnesses_008 (1.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:47.549698168Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_008","Elapsed":1.18}
+{"Time":"2026-10-09T08:49:47.549704267Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_007"}
+{"Time":"2026-10-09T08:49:47.54970635Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_007","Output":"=== CONT  TestOwnedWitnesses_007\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:47.549709354Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_009","Output":"    owned_witness_units_test.go:201: case wall=1.146993393s; shard=009 witnesses=9\n"}
+{"Time":"2026-10-09T08:49:47.549711968Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_009","Output":"--- PASS: TestOwnedWitnesses_009 (1.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:47.549713921Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_009","Elapsed":1.18}
+{"Time":"2026-10-09T08:49:47.549715643Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_006"}
+{"Time":"2026-10-09T08:49:47.549717186Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_006","Output":"=== CONT  TestOwnedWitnesses_006\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:47.564902735Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_003","Output":"    owned_witness_units_test.go:201: case wall=1.166484687s; shard=003 witnesses=8\n"}
+{"Time":"2026-10-09T08:49:47.565169921Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_010","Output":"    owned_witness_units_test.go:201: case wall=1.164091026s; shard=010 witnesses=9\n"}
+{"Time":"2026-10-09T08:49:47.566111533Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_003","Output":"--- PASS: TestOwnedWitnesses_003 (1.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:47.566199283Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_003","Elapsed":1.2}
+{"Time":"2026-10-09T08:49:47.566207145Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_005"}
+{"Time":"2026-10-09T08:49:47.566209668Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_005","Output":"=== CONT  TestOwnedWitnesses_005\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:47.566557403Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_010","Output":"--- PASS: TestOwnedWitnesses_010 (1.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:47.566564974Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_010","Elapsed":1.2}
+{"Time":"2026-10-09T08:49:47.566567287Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_004"}
+{"Time":"2026-10-09T08:49:47.56656924Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_004","Output":"=== CONT  TestOwnedWitnesses_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:47.596380782Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000","Output":"    node_table_split_test.go:343: shard 000: 0.127s cases=476 bytes=188900 cooked=false\n"}
+{"Time":"2026-10-09T08:49:47.596435693Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000","Output":"--- PASS: TestNodeTableIsLinkOnly_000 (1.23s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:47.59644042Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_000","Elapsed":1.23}
+{"Time":"2026-10-09T08:49:47.596446178Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_013"}
+{"Time":"2026-10-09T08:49:47.596448953Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_013","Output":"=== CONT  TestOwnedWitnesses_013\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:48.592355466Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_007","Output":"    owned_witness_units_test.go:201: case wall=1.027909687s; shard=007 witnesses=3\n"}
+{"Time":"2026-10-09T08:49:48.597004212Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_007","Output":"--- PASS: TestOwnedWitnesses_007 (1.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:48.597038422Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_007","Elapsed":1.05}
+{"Time":"2026-10-09T08:49:48.597045272Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_015"}
+{"Time":"2026-10-09T08:49:48.597048036Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_015","Output":"=== CONT  TestOwnedWitnesses_015\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:48.905746451Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_005","Output":"    owned_witness_units_test.go:201: case wall=1.309341313s; shard=005 witnesses=8\n"}
+{"Time":"2026-10-09T08:49:48.920423578Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_005","Output":"--- PASS: TestOwnedWitnesses_005 (1.34s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:48.920468946Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_005","Elapsed":1.34}
+{"Time":"2026-10-09T08:49:48.920475645Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_014"}
+{"Time":"2026-10-09T08:49:48.9204785Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_014","Output":"=== CONT  TestOwnedWitnesses_014\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:48.959758796Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_006","Output":"    owned_witness_units_test.go:201: case wall=1.383078251s; shard=006 witnesses=6\n"}
+{"Time":"2026-10-09T08:49:48.96097178Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_006","Output":"--- PASS: TestOwnedWitnesses_006 (1.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:48.960986191Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_006","Elapsed":1.41}
+{"Time":"2026-10-09T08:49:48.960992941Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_007"}
+{"Time":"2026-10-09T08:49:48.960995395Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_007","Output":"=== CONT  TestNodeTableIsLinkOnly_007\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:48.960999311Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_007","Output":"    node_table_split_test.go:350: TestNodeTableIsLinkOnly (setup): 0.000s\n"}
+{"Time":"2026-10-09T08:49:49.124102523Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_013","Output":"    owned_witness_units_test.go:201: case wall=1.482048359s; shard=013 witnesses=9\n"}
+{"Time":"2026-10-09T08:49:49.125560419Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_013","Output":"--- PASS: TestOwnedWitnesses_013 (1.53s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.125575892Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_013","Elapsed":1.53}
+{"Time":"2026-10-09T08:49:49.12558149Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_002"}
+{"Time":"2026-10-09T08:49:49.125583974Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_002","Output":"=== CONT  TestOwnedWitnesses_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.195469856Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_007","Output":"    node_table_split_test.go:350: shard 007: 0.232s cases=497 bytes=245780 cooked=false\n"}
+{"Time":"2026-10-09T08:49:49.195534762Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_007","Output":"--- PASS: TestNodeTableIsLinkOnly_007 (0.23s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.195539949Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_007","Elapsed":0.23}
+{"Time":"2026-10-09T08:49:49.195545968Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_001"}
+{"Time":"2026-10-09T08:49:49.195553569Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_001","Output":"=== CONT  TestOwnedWitnesses_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.225529118Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_004","Output":"    owned_witness_units_test.go:201: case wall=1.633208202s; shard=004 witnesses=8\n"}
+{"Time":"2026-10-09T08:49:49.226380387Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_004","Output":"--- PASS: TestOwnedWitnesses_004 (1.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.226393356Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_004","Elapsed":1.66}
+{"Time":"2026-10-09T08:49:49.226400817Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_000"}
+{"Time":"2026-10-09T08:49:49.226406536Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_000","Output":"=== CONT  TestOwnedWitnesses_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.641462599Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_015","Output":"    owned_witness_units_test.go:201: case wall=972.704292ms; shard=015 witnesses=6\n"}
+{"Time":"2026-10-09T08:49:49.642535626Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_015","Output":"--- PASS: TestOwnedWitnesses_015 (1.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.642546402Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_015","Elapsed":1.05}
+{"Time":"2026-10-09T08:49:49.642552381Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesUnion"}
+{"Time":"2026-10-09T08:49:49.642554815Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesUnion","Output":"=== CONT  TestOwnedWitnessesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.686914058Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesUnion","Output":"    owned_witness_units_test.go:424: live union=114 witnesses/228 manifest cases\n"}
+{"Time":"2026-10-09T08:49:49.68762561Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesUnion","Output":"--- PASS: TestOwnedWitnessesUnion (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.687646982Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesUnion","Elapsed":0.05}
+{"Time":"2026-10-09T08:49:49.687654262Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesAssignmentStable"}
+{"Time":"2026-10-09T08:49:49.687657227Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesAssignmentStable","Output":"=== CONT  TestOwnedWitnessesAssignmentStable\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.759174171Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesAssignmentStable","Output":"--- PASS: TestOwnedWitnessesAssignmentStable (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.7592277Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnessesAssignmentStable","Elapsed":0.07}
+{"Time":"2026-10-09T08:49:49.759257404Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_004"}
+{"Time":"2026-10-09T08:49:49.75926113Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_004","Output":"=== CONT  TestNodeTableIsLinkOnly_004\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.759272126Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_004","Output":"    node_table_split_test.go:347: TestNodeTableIsLinkOnly (setup): 0.000s\n"}
+{"Time":"2026-10-09T08:49:49.988810922Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_004","Output":"    node_table_split_test.go:347: shard 004: 0.230s cases=495 bytes=233105 cooked=false\n"}
+{"Time":"2026-10-09T08:49:49.988888006Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_004","Output":"--- PASS: TestNodeTableIsLinkOnly_004 (0.23s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.988893063Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_004","Elapsed":0.23}
+{"Time":"2026-10-09T08:49:49.988899723Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_006"}
+{"Time":"2026-10-09T08:49:49.988902938Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_006","Output":"=== CONT  TestNodeTableIsLinkOnly_006\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:49.988906754Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_006","Output":"    node_table_split_test.go:349: TestNodeTableIsLinkOnly (setup): 0.000s\n"}
+{"Time":"2026-10-09T08:49:50.087062347Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_014","Output":"    owned_witness_units_test.go:201: case wall=1.118628316s; shard=014 witnesses=6\n"}
+{"Time":"2026-10-09T08:49:50.088204777Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_014","Output":"--- PASS: TestOwnedWitnesses_014 (1.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.088225297Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_014","Elapsed":1.17}
+{"Time":"2026-10-09T08:49:50.088231396Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_005"}
+{"Time":"2026-10-09T08:49:50.088292016Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_005","Output":"=== CONT  TestNodeTableIsLinkOnly_005\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.088296913Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_005","Output":"    node_table_split_test.go:348: TestNodeTableIsLinkOnly (setup): 0.000s\n"}
+{"Time":"2026-10-09T08:49:50.133038296Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_006","Output":"    node_table_split_test.go:349: shard 006: 0.144s cases=475 bytes=243851 cooked=false\n"}
+{"Time":"2026-10-09T08:49:50.133104274Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_006","Output":"--- PASS: TestNodeTableIsLinkOnly_006 (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.133112045Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_006","Elapsed":0.14}
+{"Time":"2026-10-09T08:49:50.133117774Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_012"}
+{"Time":"2026-10-09T08:49:50.133120879Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_012","Output":"=== CONT  TestOwnedWitnesses_012\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.181157956Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_002","Output":"    owned_witness_units_test.go:201: case wall=1.01787456s; shard=002 witnesses=7\n"}
+{"Time":"2026-10-09T08:49:50.183268698Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_002","Output":"--- PASS: TestOwnedWitnesses_002 (1.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.183289178Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_002","Elapsed":1.06}
+{"Time":"2026-10-09T08:49:50.183295698Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_011"}
+{"Time":"2026-10-09T08:49:50.183298221Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_011","Output":"=== CONT  TestOwnedWitnesses_011\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.226705621Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_005","Output":"    node_table_split_test.go:348: shard 005: 0.138s cases=527 bytes=250621 cooked=false\n"}
+{"Time":"2026-10-09T08:49:50.226753622Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_005","Output":"--- PASS: TestNodeTableIsLinkOnly_005 (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.226757548Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_005","Elapsed":0.14}
+{"Time":"2026-10-09T08:49:50.226767483Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_002"}
+{"Time":"2026-10-09T08:49:50.22677253Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_002","Output":"=== CONT  TestNodeTableIsLinkOnly_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.226888432Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_002","Output":"    node_table_split_test.go:345: TestNodeTableIsLinkOnly (setup): 0.000s\n"}
+{"Time":"2026-10-09T08:49:50.338376384Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_001","Output":"    owned_witness_units_test.go:201: case wall=1.082075589s; shard=001 witnesses=8\n"}
+{"Time":"2026-10-09T08:49:50.338512085Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_001","Output":"--- PASS: TestOwnedWitnesses_001 (1.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.338518845Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_001","Elapsed":1.14}
+{"Time":"2026-10-09T08:49:50.338525815Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_003"}
+{"Time":"2026-10-09T08:49:50.338528909Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_003","Output":"=== CONT  TestNodeTableIsLinkOnly_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.338531744Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_003","Output":"    node_table_split_test.go:346: TestNodeTableIsLinkOnly (setup): 0.000s\n"}
+{"Time":"2026-10-09T08:49:50.421152891Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_000","Output":"    owned_witness_units_test.go:201: case wall=1.152724695s; shard=000 witnesses=10\n"}
+{"Time":"2026-10-09T08:49:50.425231604Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_000","Output":"--- PASS: TestOwnedWitnesses_000 (1.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.425267126Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_000","Elapsed":1.2}
+{"Time":"2026-10-09T08:49:50.425274046Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_001"}
+{"Time":"2026-10-09T08:49:50.425282539Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_001","Output":"=== CONT  TestNodeTableIsLinkOnly_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.425285093Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_001","Output":"    node_table_split_test.go:344: TestNodeTableIsLinkOnly (setup): 0.000s\n"}
+{"Time":"2026-10-09T08:49:50.532342462Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_003","Output":"    node_table_split_test.go:346: shard 003: 0.194s cases=474 bytes=232263 cooked=false\n"}
+{"Time":"2026-10-09T08:49:50.532446225Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_003","Output":"--- PASS: TestNodeTableIsLinkOnly_003 (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.596653799Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_003","Elapsed":0.19}
+{"Time":"2026-10-09T08:49:50.59670195Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_001","Output":"    node_table_split_test.go:344: shard 001: 0.172s cases=487 bytes=271613 cooked=false\n"}
+{"Time":"2026-10-09T08:49:50.596719326Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_001","Output":"--- PASS: TestNodeTableIsLinkOnly_001 (0.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.822229548Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_001","Elapsed":0.17}
+{"Time":"2026-10-09T08:49:50.82229233Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_012","Output":"    owned_witness_units_test.go:201: case wall=646.932906ms; shard=012 witnesses=5\n"}
+{"Time":"2026-10-09T08:49:50.822303747Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_012","Output":"--- PASS: TestOwnedWitnesses_012 (0.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:50.960899685Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_012","Elapsed":0.69}
+{"Time":"2026-10-09T08:49:50.96094408Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_011","Output":"    owned_witness_units_test.go:201: case wall=737.040518ms; shard=011 witnesses=6\n"}
+{"Time":"2026-10-09T08:49:50.961842619Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_011","Output":"--- PASS: TestOwnedWitnesses_011 (0.78s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:51.643314626Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestOwnedWitnesses_011","Elapsed":0.78}
+{"Time":"2026-10-09T08:49:51.643362307Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_002","Output":"    node_table_split_test.go:345: shard 002: 1.416s cases=483 bytes=12197076 cooked=false\n"}
+{"Time":"2026-10-09T08:49:51.646311638Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_002","Output":"--- PASS: TestNodeTableIsLinkOnly_002 (1.42s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:51.646336695Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly_002","Elapsed":1.42}
+{"Time":"2026-10-09T08:49:51.646341182Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:49:51.655377226Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t9.741s\n"}
+{"Time":"2026-10-09T08:49:51.65543424Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":9.741}
