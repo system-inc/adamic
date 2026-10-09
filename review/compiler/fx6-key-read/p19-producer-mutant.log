@@ -1,0 +1,17 @@
+=== RUN   TestCheckedViewElementP19
+=== PAUSE TestCheckedViewElementP19
+=== CONT  TestCheckedViewElementP19
+    view_element_reads_test.go:89: gate cache node miss
+    view_element_reads_test.go:89: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    view_element_reads_test.go:89: native: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: view['value'] expected Target, found function with incompatible parameter representations\n"; got exit 1 stdout "" stderr "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==131494==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x561294526cf6 bp 0x7ffddcb32590 sp 0x7ffddcb324b0 T0)\n==131494==The signal is caused by a READ memory access.\n==131494==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x561294526cf6 in adamic_union_to_string /home/agent/.cache/adamic/runtime/.build-1264976560/union.c:49:17\n    #1 0x5612944cb6e3 in main /tmp/adamic-gate/adamic-build-4076143587/main.c:138:40\n    #2 0x7fa294cfdca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7fa294cfdd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x5612943e4460 in _start (/tmp/adamic-gate/TestCheckedViewElementP191720375431/002/program+0x5a460)\n\n==131494==Register values:\nrax = 0x0803000000000001  rbx = 0x00007ffddcb324c0  rcx = 0x00000ac2529e7624  rdx = 0x00000f7a527bc008  \nrdi = 0x4018000000000008  rsi = 0x4018000000000000  rbp = 0x00007ffddcb32590  rsp = 0x00007ffddcb324b0  \n r8 = 0x0000000000000001   r9 = 0x00005612945ae860  r10 = 0x00005612945469c0  r11 = 0x0000000000000001  \nr12 = 0x00007ba292b000d0  r13 = 0x0000561294546800  r14 = 0x00007bd293de0040  r15 = 0x00007ba292b00000  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-1264976560/union.c:49:17 in adamic_union_to_string\n==131494==ABORTING\n"
+        JavaScript: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: view['value'] expected Target, found function with incompatible parameter representations\n"; got exit 0 stdout "6\n" stderr ""
+        release: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: view['value'] expected Target, found function with incompatible parameter representations\n"; got exit -1 stdout "" stderr ""
+--- FAIL: TestCheckedViewElementP19 (0.56s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.570s
+FAIL

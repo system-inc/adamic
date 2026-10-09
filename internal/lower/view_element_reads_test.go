@@ -74,3 +74,75 @@ func TestViewElementDestructuredUnionControl(t *testing.T) {
 	source := viewElementFixture(t, "destructured_union")
 	lowersAndAgreesWithNode(t, strings.Replace(source, "text: true", "text: 'seven'", 1))
 }
+
+func TestViewSpreadControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "spread")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 'seven'", "count: 7", 1))
+}
+
+func TestViewSpreadMethodRefused(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `interface Root {readonly kind:1} interface View extends Root {read():number} const raw={kind:1 as const, read(){return 1}}; const base:Root=raw; const view=base as View; const copy={...view}; console.log(Object.keys(copy).join(','));`)
+	if err == nil || !strings.Contains(err.Error(), "method without an own data slot") {
+		t.Fatalf("want checked method spread refused, got %v", err)
+	}
+}
+
+func TestViewInControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "in")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 'seven'", "count: 7", 1))
+}
+
+func TestViewKeysControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "keys")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 'seven'", "count: 7", 1))
+}
+
+func TestViewKeysAliasControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "keys_alias")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 'seven'", "count: 7", 1))
+}
+
+func TestViewValuesControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "values")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 9", "count: 7", 1))
+}
+
+func TestViewEntriesControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "entries")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 9", "count: 7", 1))
+}
+
+func TestViewElementP19Control(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "p19")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "(value: string): number => value.length", "(value: number): number => value + 1", 1))
+}
+func TestViewElementP72Control(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "p72")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "value: true", "value: 'hello'", 1))
+}
+
+func TestViewElementP19StringControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "p19")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "(value: string): number => value.length", "(value: number): string => `value${value}`", 1))
+}
+func TestViewElementP72NumberControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "p72")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "value: true", "value: 5", 1))
+}
+
+func TestViewInEmptyKeyControl(t *testing.T) {
+	t.Parallel()
+	// Presence of the empty key must not demand the unrelated count contract.
+	lowersAndAgreesWithNodeNative(t, `interface Root {readonly kind:1} interface View extends Root {readonly '':number;readonly count:number} const raw={kind:1 as const, '':7, count:'unread'}; const base:Root=raw; const view=base as View; console.log(String('' in view));`)
+}
