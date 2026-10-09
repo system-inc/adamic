@@ -178,6 +178,9 @@ export GOTOOLCHAIN=auto
 export GOPROXY="https://proxy.golang.org|direct"
 export TMPDIR=$gate
 export ADAMIC_MARKDOWNWIDTH_DEPS="$markdownDependencies"
+# A product's bytes are a function of its key (@system_adamic, Oct 9): without these, every binary stamps the commit
+# and the checkout path, inputs no key sees. Added to whatever GOFLAGS holds, once, however often this is sourced.
+case " \$GOFLAGS " in *" -buildvcs=false -trimpath "*) ;; *) export GOFLAGS="\${GOFLAGS:+\$GOFLAGS }-buildvcs=false -trimpath" ;; esac
 ENV
 if "$wasiSDK"; then
  printf 'export WASI_SYSROOT=%q\n' "$wasiDirectory/share/wasi-sysroot" >> "$tools/env.sh"

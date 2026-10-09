@@ -38,6 +38,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
@@ -58,6 +59,7 @@ func main() {
 	parallelFlag := flag.Int("parallel", 4, "go test -parallel for each package")
 	timeoutFlag := flag.Duration("timeout", 60*time.Minute, "go test -timeout for each package in each mode")
 	flipFlag := flag.Bool("flip", false, "after the comparison, flip one byte of a stored blob and require the warm run to refuse it")
+	elsewhereFlag := flag.Bool("elsewhere", false, "after the comparison, require another checkout at another path and commit to agree with main's build, with "+buildFlags+" and (the mutant) without")
 	flag.Parse()
 	if *scratchFlag == "" {
 		fail("-scratch is required")
@@ -93,7 +95,11 @@ func main() {
 	results := map[string]*modeResult{}
 	healthy := true
 	for _, mode := range modes {
-		result := &modeResult{mode: mode, cache: filepath.Join(scratch, mode, "cache"), log: filepath.Join(scratch, mode, "builds.log")}
+		store := "shared"
+		if mode == "fresh" || mode == "warm-main" {
+			store = "main"
+		}
+		result := &modeResult{mode: mode, label: mode, store: store, cache: filepath.Join(scratch, mode, "cache"), log: filepath.Join(scratch, mode, "builds.log")}
 		results[mode] = result
 		for _, unit := range units {
 			started := time.Now()
@@ -115,6 +121,11 @@ func main() {
 	}
 	if *flipFlag {
 		if !flip(root, scratch, address, server, results, units, *parallelFlag, *timeoutFlag) {
+			healthy = false
+		}
+	}
+	if *elsewhereFlag {
+		if !elsewhere(root, scratch, address, tokenPath, server, units, *parallelFlag, *timeoutFlag) {
 			healthy = false
 		}
 	}
@@ -188,8 +199,12 @@ func productUnits(root, packages, run string) ([]productUnit, error) {
 	return units, nil
 }
 
+// modeResult is one way of running the product units: mode says how (fresh, cold, warm, warm-main), store which of
+// this command's stores it reads or writes, label where its logs and temporary files go, and extra any environment
+// it adds (the GOFLAGS the checkout comparison varies).
 type modeResult struct {
-	mode, cache, log string
+	mode, label, store, cache, log string
+	extra                          map[string]string
 }
 
 type runOutcome struct {
@@ -206,7 +221,7 @@ func (m *modeResult) run(root, scratch, address, tokenPath string, unit productU
 }
 
 func (m *modeResult) runWith(root, scratch, address, tokenPath string, unit productUnit, parallel int, timeout time.Duration, cache, census string) (runOutcome, error) {
-	temporary := filepath.Join(scratch, m.mode, "tmp")
+	temporary := filepath.Join(scratch, m.label, "tmp")
 	for _, directory := range []string{cache, temporary} {
 		if err := os.MkdirAll(directory, 0o755); err != nil {
 			return runOutcome{}, err
@@ -228,20 +243,20 @@ func (m *modeResult) runWith(root, scratch, address, tokenPath string, unit prod
 		environment["ADAMIC_BUILD_CACHE"] = "off"
 		environment["ADAMIC_BUILD_STORE_TRUST"] = "main"
 		environment["ADAMIC_BUILD_STORE_TOKEN"] = tokenPath
-		environment["ADAMIC_BUILD_STORE"] = address + "/main"
-		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/main/write"
+		environment["ADAMIC_BUILD_STORE"] = address + "/" + m.store
+		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/" + m.store + "/write"
 	case "cold":
 		environment["ADAMIC_BUILD_STORE_TOKEN"] = tokenPath
-		environment["ADAMIC_BUILD_STORE"] = address + "/shared"
-		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/shared/write"
-	case "warm":
-		environment["ADAMIC_BUILD_STORE"] = address + "/shared"
-		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/shared/write"
-	case "warm-main":
-		environment["ADAMIC_BUILD_STORE"] = address + "/main"
-		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/main/write"
+		environment["ADAMIC_BUILD_STORE"] = address + "/" + m.store
+		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/" + m.store + "/write"
+	case "warm", "warm-main":
+		environment["ADAMIC_BUILD_STORE"] = address + "/" + m.store
+		environment["ADAMIC_BUILD_STORE_WRITE"] = address + "/" + m.store + "/write"
 	}
-	log := filepath.Join(scratch, m.mode, strings.ReplaceAll(strings.TrimPrefix(unit.directory, "./"), "/", "_")+".jsonl")
+	for name, value := range m.extra {
+		environment[name] = value
+	}
+	log := filepath.Join(scratch, m.label, strings.ReplaceAll(strings.TrimPrefix(unit.directory, "./"), "/", "_")+".jsonl")
 	if cache != m.cache {
 		log = strings.TrimSuffix(log, ".jsonl") + "-flipped.jsonl"
 	}
@@ -759,6 +774,8 @@ func packageElapsed(output []byte) float64 {
 // /<store>/refs/<namespace>/<key> read with no credential, written under /<store>/write with the bearer token. A blob
 // must be its hash, a ref must name a held blob, and a ref never changes: a second, different product for a key is a
 // conflict, which this command fails on (a build that isn't reproducible, or a key that isn't honest).
+var storeName = regexp.MustCompile(`^[a-z][a-z0-9-]*$`)
+
 type store struct {
 	directory string
 	mutex     sync.Mutex
@@ -769,7 +786,7 @@ func (s *store) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 	parts := strings.SplitN(strings.TrimPrefix(request.URL.Path, "/"), "/", 2)
-	if len(parts) != 2 || (parts[0] != "main" && parts[0] != "shared") || strings.Contains(request.URL.Path, "..") {
+	if len(parts) != 2 || !storeName.MatchString(parts[0]) || strings.Contains(request.URL.Path, "..") {
 		http.NotFound(writer, request)
 		return
 	}
@@ -911,4 +928,194 @@ func check(err error) {
 func fail(format string, arguments ...any) {
 	fmt.Fprintf(os.Stderr, "productidentity: "+format+"\n", arguments...)
 	os.Exit(2)
+}
+
+// buildFlags is what makes a Go product's bytes a function of its key (@system_adamic, Oct 9): without them a binary
+// stamps the commit it was built at and the path of the checkout, inputs no key sees. cloud/setup.sh exports them.
+const buildFlags = "-buildvcs=false -trimpath"
+
+// elsewhere proves a candidate at another commit and another checkout path gets main's product: a second checkout of
+// the same commit, at a different path, with one unrelated commit on top, builds every product fresh and fetches main's
+// (warm-main), and the two must be the same bytes as main's own fresh build. It runs twice: with buildFlags, where the
+// three must agree and the fetch must hit main's key, and without them (GOFLAGS=-buildvcs=auto, which also overrides a
+// -trimpath from the go env file), the mutant, where the fresh builds must differ, or the first run proves nothing.
+// On macOS a product holding an archive is reported, not required: macOS's ar stamps the archive's symbol table with
+// the time it ran, so two builds of an archive differ there anywhere (byte-identical with ZERO_AR_DATE=1).
+func elsewhere(root, scratch, address, tokenPath string, server *store, units []productUnit, parallel int, timeout time.Duration) bool {
+	if status, err := gitOutput(root, "status", "--porcelain", "--untracked-files=no"); err != nil || status != "" {
+		fmt.Printf("FAIL elsewhere: the checkout must be committed and clean to be cloned exactly (%v): %s\n", err, status)
+		return false
+	}
+	head, err := gitOutput(root, "rev-parse", "HEAD")
+	check(err)
+	other := filepath.Join(scratch, "elsewhere", "another-checkout-path", "adamic")
+	check(os.MkdirAll(filepath.Dir(other), 0o755))
+	for _, arguments := range [][]string{
+		{"clone", "-q", "--shared", "--no-checkout", root, other},
+		{"-C", other, "checkout", "-q", "--detach", head},
+		{"-C", other, "-c", "user.name=productidentity", "-c", "user.email=productidentity@localhost", "commit", "-q", "--no-verify", "--allow-empty", "-m", "An unrelated commit"},
+	} {
+		if output, err := exec.Command("git", arguments...).CombinedOutput(); err != nil {
+			fmt.Printf("FAIL elsewhere: git %s: %v\n%s", strings.Join(arguments, " "), err, output)
+			return false
+		}
+	}
+	// The cohere submodule's files, linked in (copied across file systems), without its git directory.
+	check(linkTree(filepath.Join(root, "cohere"), filepath.Join(other, "cohere")))
+	otherHead, err := gitOutput(other, "rev-parse", "HEAD")
+	check(err)
+	fmt.Printf("elsewhere: %s at %s, another checkout at %s at %s\n", root, head[:10], other, otherHead[:10])
+
+	healthy := true
+	for _, variant := range []struct {
+		name, goFlags string
+		agree         bool
+	}{{"with-flags", buildFlags, true}, {"without-flags", "-buildvcs=auto", false}} {
+		extra := map[string]string{"GOFLAGS": variant.goFlags}
+		base := filepath.Join("elsewhere", variant.name)
+		runs := []struct {
+			directory string
+			mode      *modeResult
+		}{
+			{root, &modeResult{mode: "fresh", label: base + "/main-fresh", store: "main-" + variant.name, extra: extra}},
+			{other, &modeResult{mode: "fresh", label: base + "/other-fresh", store: "other-" + variant.name, extra: extra}},
+			{other, &modeResult{mode: "warm-main", label: base + "/other-warm-main", store: "main-" + variant.name, extra: extra}},
+		}
+		for _, run := range runs {
+			run.mode.cache = filepath.Join(scratch, run.mode.label, "cache")
+			run.mode.log = filepath.Join(scratch, run.mode.label, "builds.log")
+			for _, unit := range units {
+				started := time.Now()
+				outcome, err := run.mode.run(run.directory, scratch, address, tokenPath, unit, parallel, timeout)
+				check(err)
+				fmt.Printf("ran %s %s in %s: %d passed, %d failed, %.1fs\n", variant.name, run.mode.label, run.directory, outcome.passed, len(outcome.failed), time.Since(started).Seconds())
+				if len(outcome.failed) > 0 {
+					healthy = false
+					fmt.Printf("FAIL elsewhere %s %s: %s (log %s)\n", variant.name, run.mode.label, strings.Join(outcome.failed, " "), outcome.log)
+				}
+			}
+		}
+		mainFresh, err := server.products("main-"+variant.name, "build")
+		check(err)
+		otherFresh, err := server.products("other-"+variant.name, "build")
+		check(err)
+		otherWarm, err := cachedProducts(runs[2].mode.cache)
+		check(err)
+		_, warmOutcomes := census(runs[2].mode.log)
+		byName := func(products map[string]product) map[string]string {
+			keys := map[string]string{}
+			for key, found := range products {
+				keys[found.name] = key
+			}
+			return keys
+		}
+		otherKeys := byName(otherFresh)
+		names := make([]string, 0, len(mainFresh))
+		for _, found := range mainFresh {
+			names = append(names, found.name)
+		}
+		sort.Strings(names)
+		if len(names) == 0 {
+			healthy = false
+			fmt.Printf("FAIL elsewhere %s: main's fresh build published nothing\n", variant.name)
+		}
+		for _, name := range names {
+			publishedKey := byName(mainFresh)[name]
+			published := mainFresh[publishedKey]
+			line := fmt.Sprintf("elsewhere %s %s main=%s %s", variant.name, strings.ReplaceAll(name, " ", "_"), publishedKey[:12], published.digest()[:16])
+			otherKey, ok := otherKeys[name]
+			if !ok {
+				healthy = false
+				fmt.Println(line + " FAIL: the other checkout's fresh build didn't publish it")
+				continue
+			}
+			other := otherFresh[otherKey]
+			line += fmt.Sprintf(" other=%s %s", otherKey[:12], other.digest()[:16])
+			fetched, wasFetched := otherWarm[publishedKey]
+			if wasFetched {
+				line += " warm-main=" + fetched.digest()[:16] + " (" + strings.Join(warmOutcomes[publishedKey[:12]], ",") + ")"
+			} else {
+				line += " warm-main=not fetched (the other checkout's key differs)"
+			}
+			exempt := runtime.GOOS == "darwin" && holdsArchive(published)
+			same := published.digest() == other.digest()
+			switch {
+			case exempt:
+				line += " not required on darwin: macOS's ar stamps an archive's symbol table with the time it ran"
+				if !same {
+					line += "; differs: " + difference(published, other)
+				}
+			case variant.agree && same && wasFetched && fetched.digest() == published.digest():
+				line += " identical"
+			case variant.agree:
+				healthy = false
+				line += " FAIL"
+				if !same {
+					line += ": the other checkout's fresh build differs: " + difference(published, other)
+				}
+				if !wasFetched {
+					line += ": the other checkout didn't fetch main's product, so its key holds the checkout's path or commit"
+				}
+			case same:
+				healthy = false
+				line += " FAIL: without " + buildFlags + " the two checkouts still agree, so the run with them proves nothing"
+			default:
+				line += " differs, as it must without " + buildFlags + ": " + difference(published, other)
+			}
+			fmt.Println(line)
+		}
+	}
+	return healthy
+}
+
+func holdsArchive(found product) bool {
+	for _, file := range found.files {
+		if strings.HasSuffix(file.path, ".a") {
+			return true
+		}
+	}
+	return false
+}
+
+func gitOutput(directory string, arguments ...string) (string, error) {
+	output, err := exec.Command("git", append([]string{"-C", directory}, arguments...)...).Output()
+	return strings.TrimSpace(string(output)), err
+}
+
+// linkTree fills target with source's files, hard-linked where it can and copied where it can't, leaving out .git.
+func linkTree(source, target string) error {
+	return filepath.WalkDir(source, func(path string, entry fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if entry.Name() == ".git" {
+			if entry.IsDir() {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		destination := filepath.Join(target, mustRelative(source, path))
+		info, err := os.Lstat(path)
+		if err != nil {
+			return err
+		}
+		switch {
+		case entry.IsDir():
+			return os.MkdirAll(destination, info.Mode().Perm()|0o700)
+		case info.Mode()&fs.ModeSymlink != 0:
+			link, err := os.Readlink(path)
+			if err != nil {
+				return err
+			}
+			return os.Symlink(link, destination)
+		}
+		if os.Link(path, destination) == nil {
+			return nil
+		}
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(destination, content, info.Mode().Perm())
+	})
 }
