@@ -1,0 +1,3 @@
+const values = new Map<string, number>();
+console.log('before');
+console.log(values.get('missing')!.toString());

@@ -3,17 +3,18 @@
 import json,os,subprocess
 from pathlib import Path
 root=Path(__file__).resolve().parents[2]
-logs=Path('/tmp/test-split-bridge/mutants');logs.mkdir(parents=True,exist_ok=True)
-env={**os.environ,'GOMAXPROCS':'4','ADAMIC_GATE_UNCACHED':'1'}
+logs=Path(os.environ.get('ADAMIC_BRIDGE_MUTANT_LOGS','/tmp/test-split-bridge/mutants'));logs.mkdir(parents=True,exist_ok=True)
+env={**os.environ,'GOMAXPROCS':'4','ADAMIC_GATE_UNCACHED':'1','ADAMIC_UNIT_BUDGET':'1'}
 results=[]
 
-def run(name,path,change,selector,expected,catcher,shard=None,success=False):
+def run(name,path,change,selector,expected,catcher,shard=None,success=False,budget=None):
  original=(root/path).read_text(); mutated=change(original); assert mutated!=original,name
  replacement=logs/(name+'.go'); replacement.write_text(mutated)
  overlay=logs/(name+'-overlay.json'); overlay.write_text(json.dumps({'Replace':{str(root/path):str(replacement)}}))
- command=['go','test','./bridge/tsgo','-json','-overlay='+str(overlay),'-run',selector,'-count=1','-timeout=30s']
+ command=['go','test','./bridge/tsgo','-json','-overlay='+str(overlay),'-run',selector,'-count=1','-timeout=5m']
  logfile=logs/(name+'.jsonl'); environment=env.copy()
  if shard is not None:environment['ADAMIC_TEST_SHARD']=shard
+ if budget is not None:environment['ADAMIC_UNIT_BUDGET']=budget
  with logfile.open('w') as out:process=subprocess.run(command,cwd=root,env=environment,stdout=out,stderr=subprocess.STDOUT)
  text=logfile.read_text(); events=[]
  for line in text.splitlines():
@@ -24,7 +25,7 @@ def run(name,path,change,selector,expected,catcher,shard=None,success=False):
  skipped=[e['Test'] for e in events if e['Action']=='skip' and e.get('Test')]
  assert '[build failed]' not in text,(name,text[-5000:])
  assert process.returncode==(0 if success else 1) and failed==expected and catcher in text,(name,process.returncode,failed,text[-5000:])
- results.append(dict(name=name,shard=shard,command=command,exit=process.returncode,failed=failed,passed=len(passed),skipped=len(skipped),catcher=catcher,log=str(logfile)))
+ results.append(dict(name=name,shard=shard,budget=environment.get("ADAMIC_UNIT_BUDGET"),command=command,exit=process.returncode,failed=failed,passed=len(passed),skipped=len(skipped),catcher=catcher,log=str(logfile)))
  (root/'review/test-split-bridge/mutants.json').write_text(json.dumps(results,indent=2)+'\n')
  print(name,shard or '',':',failed or 'all selected units passed',flush=True)
 
@@ -48,6 +49,7 @@ run('missing-query','bridge/tsgo/units_test.go',lambda s:s.replace('positions :=
 run('drop-shard-filter','bridge/tsgo/units_test.go',lambda s:s.replace('&& index%count == shard','&& count > 0 && shard >= 0'),'TestBridgeUnitsCoverEveryPiece',['TestBridgeUnitsCoverEveryPiece'],'shard coverage')
 run('accept-corrupt-product','bridge/tsgo/product_cache_test.go',lambda s:s.replace('if hashes[name] != fmt.Sprintf','if false && hashes[name] != fmt.Sprintf'),'TestBridgeProductCacheIsVerified',['TestBridgeProductCacheIsVerified'],'corrupt product was accepted')
 run('accept-extra-product','bridge/tsgo/product_cache_test.go',lambda s:s.replace('if len(hashes) != len(bridgeProductNames)','if false && len(hashes) != len(bridgeProductNames)'),'TestBridgeProductCacheIsVerified',['TestBridgeProductCacheIsVerified'],'wrong product count was accepted')
-run('rebuild-product','bridge/tsgo/product_cache_test.go',lambda s:s.replace('return directory, nil\n\t}', 'return directory, build(directory)\n\t}',1),'TestBridgeProductCacheIsVerified',['TestBridgeProductCacheIsVerified'],'product was rebuilt')
+run('rebuild-product','bridge/tsgo/product_cache_test.go',lambda s:s.replace('Flags: []string{key}}, build)\n', 'Flags: []string{key}}, build)\n\tif err == nil { err = build(directory) }\n',1),'TestBridgeProductCacheIsVerified',['TestBridgeProductCacheIsVerified'],'product was rebuilt')
 run('over-budget','bridge/tsgo/units_test.go',lambda s:s.replace('begun := time.Now()','begun := time.Now().Add(-31*time.Second)'),'TestBridgeABI',['TestBridgeABI'],'bridge unit exceeded 30 seconds')
+run('over-budget-without-budget-gate','bridge/tsgo/units_test.go',lambda s:s.replace('begun := time.Now()','begun := time.Now().Add(-31*time.Second)'),'TestBridgeABI',[],'over the 30-second budget',success=True,budget='0')
 run('poison-build-callback','bridge/tsgo/products_test.go',lambda s:s.replace('if err := buildBridgeProducts(repository, directory); err != nil {','if err := fmt.Errorf("shared products rebuilt after fetch"); err != nil {'),'^TestBridge',[],'PASS',success=True)

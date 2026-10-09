@@ -254,7 +254,7 @@ func bridgeWrongPosition(r *bridgeRun, file string, _ int) {
 	r.t.Logf("wrong-position: oracle mismatch at byte %d", firstDifference(truth, observed))
 }
 func bridgeLinkage(r *bridgeRun, _ string, _ int) {
-	command := r.command(r.product("linkage.test"), "-test.run=^TestTSGoRequiresLink$", "-test.count=1", "-test.v", "-test.timeout=25s")
+	command := r.command(r.product("linkage.test"), "-test.run=^TestTSGoRequiresLink$", "-test.count=1", "-test.v", "-test.timeout=5m")
 	command.Dir = filepath.Join(r.repository, "bridge/tsgo")
 	output, err := r.run("linkage-mutant", command)
 	if err == nil || !bytes.Contains(output, []byte("lowering accepted an unlinked checker call")) {

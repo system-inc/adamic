@@ -41,6 +41,7 @@ void adamic_object_check_write(const adamic_object *object, const char *name) {
 }
 
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
+ if (adamic_record_is(object)) return adamic_record_has_own(object, key);
  for (size_t index = 0; index < object->shape->count; index++) {
   const char *name = object->shape->names[index];
   if (name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
@@ -95,6 +96,7 @@ static adamic_string *key_string(const char *name) {
 
 adamic_array *adamic_object_keys(const adamic_object *object) {
  // Class descriptors hide private storage and track static own-property presence.
+ if (adamic_record_is(object)) return adamic_record_keys(object);
  if (object->class != NULL) return adamic_class_object_keys(object);
  size_t *indices = ordered(object);
  adamic_array *keys = adamic_array_new(object->shape->count, true);
@@ -149,4 +151,65 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
   *slot = value;
  }
  free(indices);
+}
+
+
+// Checked reflection reads and validates each actual property once, in ECMA key order.
+adamic_array *adamic_object_values_checked(adamic_object *object, int expected, const char *expected_name, bool entries, const adamic_value *allowed, size_t allowed_count) {
+ adamic_array *keys = adamic_object_keys(object);
+ bool references = expected == 3;
+ adamic_array *result = adamic_array_new(keys->length, entries || references);
+ static const char *const checked_names[] = {"0", "1"};
+ static const bool scalar_references[] = {true, false};
+ static const bool string_references[] = {true, true};
+ static const adamic_shape scalar_pair = {2, checked_names, scalar_references, NULL};
+ static const adamic_shape string_pair = {2, checked_names, string_references, NULL};
+ for (size_t at = 0; at < keys->length; at++) {
+  adamic_string *key = (adamic_string *)keys->elements[at].reference;
+  char *name = malloc(key->length + 1);
+  if (name == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
+  memcpy(name, key->bytes, key->length);
+  name[key->length] = '\0';
+  adamic_slot_cache cache = {NULL, 0};
+  adamic_heap *observed;
+  if (adamic_record_is(object)) {
+   const adamic_value *slot = adamic_record_get_own(object, key);
+   observed = slot == NULL ? NULL : adamic_retain(slot->reference);
+  } else {
+   (void)adamic_object_data_field(object, name, &cache);
+   observed = adamic_object_initialized(object)[cache.index] ? adamic_dynamic_property(&object->heap, name) : NULL;
+  }
+  const char *actual_name = observed == NULL ? "undefined" : observed->kind == adamic_kind_number ? "number" : observed->kind == adamic_kind_boolean ? "boolean" : observed->kind == adamic_kind_string ? "string" : observed->kind == adamic_kind_closure ? "function" : "object";
+  adamic_value value = {.number = 0};
+  bool fits = false;
+  if (observed != NULL && expected == 1 && observed->kind == adamic_kind_number) { value.number = ((adamic_number_box *)observed)->number; fits = true; }
+  if (observed != NULL && expected == 2 && observed->kind == adamic_kind_boolean) { value.boolean = ((adamic_boolean_box *)observed)->boolean; fits = true; }
+  if (observed != NULL && expected == 3 && observed->kind == adamic_kind_string) { value.reference = observed; fits = true; }
+  if (fits && allowed_count != 0) {
+   fits = false;
+   for (size_t index = 0; index < allowed_count; index++) {
+    if (expected == 1 && value.number == allowed[index].number) fits = true;
+    if (expected == 2 && value.boolean == allowed[index].boolean) fits = true;
+    if (expected == 3 && adamic_string_equal((adamic_string *)value.reference, (adamic_string *)allowed[index].reference)) fits = true;
+   }
+  }
+  if (!fits) {
+   size_t length = strlen(name) + strlen(actual_name) + strlen(expected_name) + 80;
+   char *message = malloc(length);
+   if (message == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
+   (void)snprintf(message, length, "Object enumeration key '%s': actual %s, declared %s", name, actual_name, expected_name);
+   adamic_panic(message, strlen(message));
+  }
+  free(name);
+  if (!references) adamic_release(observed);
+  if (entries) {
+   adamic_object *pair = adamic_object_new(references ? &string_pair : &scalar_pair);
+   pair->slots[0].reference = adamic_retain(key);
+   pair->slots[1] = value;
+   value.reference = pair;
+  }
+  adamic_array_push(result, value);
+ }
+ adamic_release(keys);
+ return result;
 }

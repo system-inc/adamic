@@ -1,0 +1,74 @@
+[
+  {
+    "name": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./..."
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 17.173
+  },
+  {
+    "name": "prepare",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-run",
+      "^$",
+      "-count=1",
+      "-timeout=10m"
+    ],
+    "environment": {
+      "ADAMIC_TSGO_PREPARE": "1"
+    },
+    "exit": 0,
+    "seconds": 210.96
+  },
+  {
+    "name": "sample",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-run",
+      "^TestBridge|^TestTSGoRequiresLink$",
+      "-count=1",
+      "-timeout=10m"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 4.755
+  },
+  {
+    "name": "corpus",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-run",
+      "^TestBridge|^TestTSGoRequiresLink$",
+      "-count=1",
+      "-timeout=10m"
+    ],
+    "environment": {
+      "ADAMIC_TSGO_CORPUS": "/tmp/test-split-bridge-typescript"
+    },
+    "exit": 0,
+    "seconds": 24.215
+  },
+  {
+    "name": "mutants",
+    "command": [
+      "python3",
+      "review/test-split-bridge/mutants.py"
+    ],
+    "environment": {},
+    "exit": 0,
+    "seconds": 67.688
+  }
+]

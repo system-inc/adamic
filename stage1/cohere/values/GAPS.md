@@ -95,7 +95,9 @@ A `private step()` lowers.
 
 **Original workaround, removed:** the parser used TypeScript `private` methods with `#private` fields.
 
-## 5. An empty array literal as a default
+## 5. An empty array literal as a default (closed by compiler's area-stack, views slice 1, Oct 8)
+
+Closed: an empty array literal as a `??` default now lowers, and the gap program prints natively what it prints on Node. The port's workaround (gap 5, `noChildren` in parser.ts) still stands; retiring it is cohere's change. What it used to record:
 
 ```ts
 function size(list: readonly string[] | undefined): number {

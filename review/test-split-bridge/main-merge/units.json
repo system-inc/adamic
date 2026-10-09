@@ -1,0 +1,552 @@
+{
+  "sample": [
+    {
+      "Time": "2026-10-09T02:29:48.779295423Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T02:29:48.786908497Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnitsCoverEveryPiece",
+      "Elapsed": 0.01
+    },
+    {
+      "Time": "2026-10-09T02:29:48.788146996Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeProductCacheIsVerified",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:48.904092261Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Elapsed": 0.12
+    },
+    {
+      "Time": "2026-10-09T02:29:48.936644759Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeInputLength",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T02:29:48.98521607Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T02:29:49.033961867Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T02:29:49.086304357Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T02:29:49.192161094Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputLength",
+      "Elapsed": 0.11
+    },
+    {
+      "Time": "2026-10-09T02:29:49.256055874Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeStaleHandle",
+      "Elapsed": 0.06
+    },
+    {
+      "Time": "2026-10-09T02:29:49.307180345Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeLinkage",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T02:29:49.445684907Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputFree",
+      "Elapsed": 0.14
+    },
+    {
+      "Time": "2026-10-09T02:29:49.620137951Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Elapsed": 0.17
+    },
+    {
+      "Time": "2026-10-09T02:29:49.721500871Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegionOwnership",
+      "Elapsed": 0.1
+    },
+    {
+      "Time": "2026-10-09T02:29:49.850803912Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleSample",
+      "Elapsed": 0.13
+    },
+    {
+      "Time": "2026-10-09T02:29:50.018974901Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Sample",
+      "Elapsed": 0.17
+    },
+    {
+      "Time": "2026-10-09T02:29:50.196703586Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Sample",
+      "Elapsed": 0.18
+    },
+    {
+      "Time": "2026-10-09T02:29:50.377221929Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Sample",
+      "Elapsed": 0.18
+    },
+    {
+      "Time": "2026-10-09T02:29:50.552900349Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionSample",
+      "Elapsed": 0.18
+    },
+    {
+      "Time": "2026-10-09T02:29:50.552917211Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleChecker",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.552927951Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Checker",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.552945364Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Checker",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.552959881Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Checker",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.552972003Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionChecker",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.552981601Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleParser",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553000897Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Parser",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553011147Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Parser",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553020785Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Parser",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553030974Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionParser",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553044149Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleTypes",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553053807Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Types",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553064286Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Types",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553073794Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Types",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553085466Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553134087Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553144837Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553154525Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553165926Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:50.553176296Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionUtilities",
+      "Elapsed": 0
+    }
+  ],
+  "corpus": [
+    {
+      "Time": "2026-10-09T02:29:53.616950335Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestTSGoRequiresLink",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T02:29:53.634115614Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnitsCoverEveryPiece",
+      "Elapsed": 0.02
+    },
+    {
+      "Time": "2026-10-09T02:29:53.634131464Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeProductCacheIsVerified",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:53.746679285Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeABI",
+      "Elapsed": 0.11
+    },
+    {
+      "Time": "2026-10-09T02:29:53.781113079Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeInputLength",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T02:29:53.834464092Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedBuild",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T02:29:53.88484279Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedC",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T02:29:53.936930257Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeUnlinkedJavaScript",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T02:29:54.033950115Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputLength",
+      "Elapsed": 0.1
+    },
+    {
+      "Time": "2026-10-09T02:29:54.09710309Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeStaleHandle",
+      "Elapsed": 0.06
+    },
+    {
+      "Time": "2026-10-09T02:29:54.148196356Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeLinkage",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T02:29:54.283249406Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOutputFree",
+      "Elapsed": 0.14
+    },
+    {
+      "Time": "2026-10-09T02:29:54.45541248Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegion",
+      "Elapsed": 0.17
+    },
+    {
+      "Time": "2026-10-09T02:29:54.551345262Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeRegionOwnership",
+      "Elapsed": 0.1
+    },
+    {
+      "Time": "2026-10-09T02:29:54.55139193Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleSample",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:54.551497938Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Sample",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:54.551535428Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Sample",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:54.551568841Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Sample",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:54.551647167Z",
+      "Action": "skip",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionSample",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T02:29:55.409940685Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleChecker",
+      "Elapsed": 0.86
+    },
+    {
+      "Time": "2026-10-09T02:29:56.638256111Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Checker",
+      "Elapsed": 1.23
+    },
+    {
+      "Time": "2026-10-09T02:29:57.885461865Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Checker",
+      "Elapsed": 1.25
+    },
+    {
+      "Time": "2026-10-09T02:29:59.141807872Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Checker",
+      "Elapsed": 1.26
+    },
+    {
+      "Time": "2026-10-09T02:29:59.946327814Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionChecker",
+      "Elapsed": 0.8
+    },
+    {
+      "Time": "2026-10-09T02:30:00.740111116Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleParser",
+      "Elapsed": 0.79
+    },
+    {
+      "Time": "2026-10-09T02:30:01.89483666Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Parser",
+      "Elapsed": 1.15
+    },
+    {
+      "Time": "2026-10-09T02:30:03.128262878Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Parser",
+      "Elapsed": 1.23
+    },
+    {
+      "Time": "2026-10-09T02:30:04.26748262Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Parser",
+      "Elapsed": 1.14
+    },
+    {
+      "Time": "2026-10-09T02:30:05.043042015Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionParser",
+      "Elapsed": 0.78
+    },
+    {
+      "Time": "2026-10-09T02:30:05.750279263Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleTypes",
+      "Elapsed": 0.71
+    },
+    {
+      "Time": "2026-10-09T02:30:06.780867881Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Types",
+      "Elapsed": 1.03
+    },
+    {
+      "Time": "2026-10-09T02:30:07.794636993Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Types",
+      "Elapsed": 1.01
+    },
+    {
+      "Time": "2026-10-09T02:30:08.846055264Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Types",
+      "Elapsed": 1.05
+    },
+    {
+      "Time": "2026-10-09T02:30:09.593669295Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionTypes",
+      "Elapsed": 0.75
+    },
+    {
+      "Time": "2026-10-09T02:30:10.437393293Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeOracleUtilities",
+      "Elapsed": 0.84
+    },
+    {
+      "Time": "2026-10-09T02:30:11.615148328Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound1Utilities",
+      "Elapsed": 1.18
+    },
+    {
+      "Time": "2026-10-09T02:30:12.77184487Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound2Utilities",
+      "Elapsed": 1.16
+    },
+    {
+      "Time": "2026-10-09T02:30:13.976640381Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeTimingRound3Utilities",
+      "Elapsed": 1.2
+    },
+    {
+      "Time": "2026-10-09T02:30:14.766840808Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/bridge/tsgo",
+      "Test": "TestBridgeWrongPositionUtilities",
+      "Elapsed": 0.79
+    }
+  ]
+}
