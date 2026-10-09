@@ -1,0 +1,665 @@
+{
+  "sha": "f3b024c5aa8379f359d50e7ab430bf3e647ad222",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "base_name": "main",
+  "tools_sha": "9f6e7b768934657895954f7300f82409e59ecdc0",
+  "machine": {
+    "hostname": "473509fb286d",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": true,
+  "vet_ok": true,
+  "box_load": {
+    "start": {
+      "load_1m": 3.9,
+      "cores": 5
+    },
+    "first_failure": {
+      "load_1m": 5.3,
+      "cores": 5
+    },
+    "end": {
+      "load_1m": 5.3,
+      "cores": 5
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/tmp/adamic-gate-tools/9f6e7b768934",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "smoke_absent_lanes": [
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "deferred_list_blob": "d169e076c3b0ea2eb0062808650403e6c2212217",
+  "deferred_all_requested": true,
+  "deferred_run_by_request": [
+    "github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants",
+    "github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode",
+    "github.com/system-inc/adamic/internal/native TestRecordMutants",
+    "github.com/system-inc/adamic/internal/native TestRecordReadMutants",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262",
+    "github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees",
+    "github.com/system-inc/adamic/internal/native TestWASI",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree"
+  ],
+  "deferred_run_results": {
+    "github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode": "pass",
+    "github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants": "pass",
+    "github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode": "pass",
+    "github.com/system-inc/adamic/internal/native TestRecordMutants": "missing",
+    "github.com/system-inc/adamic/internal/native TestRecordReadMutants": "pass",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode": "missing",
+    "github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262": "pass",
+    "github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees": "missing",
+    "github.com/system-inc/adamic/internal/native TestWASI": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly": "missing",
+    "github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree": "missing"
+  },
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "473509fb286d",
+    "cpus": 5,
+    "load": [
+      5.3,
+      4.6,
+      4.9
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "products_over_budget": [],
+  "units": [
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "test": "TestAnchoredSelectors",
+      "seconds": 7.55,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "test": "TestCheckpointKeysIncludeAllExecutionInputs",
+      "seconds": 0,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "test": "TestCoverageRejectsOverlapAndUnplannedTests",
+      "seconds": 0,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "test": "TestEveryTestIsParallelOrSaysWhy",
+      "seconds": 0.75,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "test": "TestPackageCheckpointRequiresIntactCompleteEvidence",
+      "seconds": 0,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "test": "TestRawEvidenceKeepsSkipReasonsAndFailures",
+      "seconds": 0,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "test": "TestResumeCleanupPreservesForeignPaths",
+      "seconds": 0,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "test": "TestShardChildren",
+      "seconds": 0.54,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/cmd/adamic-gate",
+      "test": "TestTypeAwareChildrenAndParentCost",
+      "seconds": 0,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseMappingMatchesNode (setup)",
+      "seconds": 0.38,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseMappingMatchesNode/contexts",
+      "seconds": 1.85,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestCaseMappingMatchesNode/points",
+      "seconds": 18.59,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashProbeCatchesMutants (setup)",
+      "seconds": 0.0,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashProbeCatchesMutants/NaN_normalization",
+      "seconds": 6.63,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashProbeCatchesMutants/old_hash",
+      "seconds": 11.1,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestMapHashProbeCatchesMutants/zero_normalization",
+      "seconds": 7.87,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestNormalizeRandomMatchesNode",
+      "seconds": 15.93,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordReadMutants (setup)",
+      "seconds": 0.67,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordReadMutants/missing-read-silent",
+      "seconds": 8.5,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordReadMutants/own-read-checked-as-missing",
+      "seconds": 6.92,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRecordReadMutants/prototype-membership-restored",
+      "seconds": 9.51,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/native",
+      "test": "TestRegExpBytecodeTest262",
+      "seconds": 19.62,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode",
+      "seconds": 0.18,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/array_from_length.a",
+      "seconds": 0.6,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/bitwise.a",
+      "seconds": 0.68,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/borrow_chain_reassigned.a",
+      "seconds": 0.62,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/call_targets_sort.a",
+      "seconds": 0.62,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/casts.a",
+      "seconds": 0.7,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/class_oct6_parameters.a",
+      "seconds": 0.83,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/classes.a",
+      "seconds": 0.82,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/closures_throw_uncaught.a",
+      "seconds": 0.7,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/devirtualize_abstract.a",
+      "seconds": 0.6,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/devirtualize_modules/main.a",
+      "seconds": 0.76,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/enums_names.a",
+      "seconds": 0.61,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/exceptions_empty.a",
+      "seconds": 0.58,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/finally_leaves.a",
+      "seconds": 0.98,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/fresh_calls.a",
+      "seconds": 0.73,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/generic_method_return.a",
+      "seconds": 0.84,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/inherited_static_field_read.a",
+      "seconds": 0.64,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/json_stringify_numbers.a",
+      "seconds": 0.6,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a",
+      "seconds": 0.63,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/lint_runtime_search_calls.a",
+      "seconds": 0.61,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/map_zero_keys.a",
+      "seconds": 0.58,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/maybe_boolean_panic.a",
+      "seconds": 0.43,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/modules/main.a",
+      "seconds": 0.64,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/narrowed_writes.a",
+      "seconds": 0.48,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/nbody_runtime_fields.a",
+      "seconds": 0.53,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/normalize_form.a",
+      "seconds": 0.5,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/number_parsing.a",
+      "seconds": 0.61,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/optional_numbers.a",
+      "seconds": 0.69,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/override_same_representation.a",
+      "seconds": 0.61,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/panic.a",
+      "seconds": 0.61,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+      "seconds": 0.59,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/regions_constructor_capture.a",
+      "seconds": 0.68,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/reuse_global_sibling.a",
+      "seconds": 0.63,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/route_targets_accessor.a",
+      "seconds": 0.85,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/search_halves.a",
+      "seconds": 0.66,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/set_foreach_fnexpr.a",
+      "seconds": 0.7,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/spread_calls.a",
+      "seconds": 0.64,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/stack_forever.a",
+      "seconds": 0.68,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/string_too_long.a",
+      "seconds": 0.48,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/throw_in_writes.a",
+      "seconds": 0.66,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/timsort.a",
+      "seconds": 0.81,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/typeof_string_literal.a",
+      "seconds": 0.65,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/undefined_elements.a",
+      "seconds": 0.53,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/utf8_view_fails.a",
+      "seconds": 0.61,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_narrowed.a",
+      "seconds": 0.77,
+      "action": "pass",
+      "product": false
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/writes.a",
+      "seconds": 0.62,
+      "action": "pass",
+      "product": false
+    }
+  ],
+  "wall_seconds": 53.5,
+  "steps_seconds": {
+    "build": 40.5,
+    "vet": 0.5,
+    "smoke": 12.5
+  },
+  "pass": 46,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": {
+    "step": "deferred",
+    "detail": "requested deferred tests that didn't run to a verdict:\ngithub.com/system-inc/adamic/internal/native TestNormalizeMatchesNode: missing\ngithub.com/system-inc/adamic/internal/native TestRecordMutants: missing\ngithub.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode: missing\ngithub.com/system-inc/adamic/internal/native TestSplitTSGoAgrees: missing\ngithub.com/system-inc/adamic/internal/native TestWASI: missing\ngithub.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree: missing\ngithub.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees: missing\ngithub.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly: missing\ngithub.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree: missing",
+    "after_seconds": 53.5,
+    "under_load": true
+  },
+  "planned_stages": [
+    "build",
+    "vet",
+    "smoke",
+    "census"
+  ],
+  "stages_exit": {
+    "build": 0,
+    "vet": 0,
+    "smoke": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "fast"
+}
