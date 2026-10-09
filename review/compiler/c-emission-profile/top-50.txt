@@ -1,0 +1,59 @@
+File: c-emission-profile
+Build ID: fa145ac134c5a681f9e57d71c36668ff02040cbf
+Type: cpu
+Time: 2026-10-09 07:01:45 UTC
+Duration: 72.43s, Total samples = 69.90s (96.50%)
+Showing nodes accounting for 64.05s, 91.63% of 69.90s total
+Dropped 220 nodes (cum <= 0.35s)
+Showing top 50 nodes out of 64
+      flat  flat%   sum%        cum   cum%
+     2.12s  3.03%  3.03%     68.74s 98.34%  github.com/system-inc/adamic/internal/native.walkExpressions.func1
+     0.10s  0.14%  3.18%     68.27s 97.67%  github.com/system-inc/adamic/internal/native.walkExpressions
+     0.95s  1.36%  4.54%     68.12s 97.45%  github.com/system-inc/adamic/internal/native.walkStatement
+         0     0%  4.54%     67.71s 96.87%  github.com/system-inc/adamic/internal/native.(*emitter).statement
+    25.77s 36.87% 41.40%     67.68s 96.82%  github.com/system-inc/adamic/internal/native.walkStatement.func1
+         0     0% 41.40%     67.66s 96.80%  github.com/system-inc/adamic/internal/native.cProgram
+         0     0% 41.40%     67.64s 96.77%  github.com/system-inc/adamic/internal/native.(*emitter).statementAt
+         0     0% 41.40%     67.59s 96.70%  github.com/system-inc/adamic/internal/native.C (inline)
+         0     0% 41.40%     67.59s 96.70%  main.main
+         0     0% 41.40%     67.26s 96.22%  runtime.main
+         0     0% 41.40%     66.60s 95.28%  github.com/system-inc/adamic/internal/native.(*emitter).functionBody
+         0     0% 41.40%     38.81s 55.52%  github.com/system-inc/adamic/internal/native.(*emitter).fieldTypesNeeded
+         0     0% 41.40%     37.74s 53.99%  github.com/system-inc/adamic/internal/native.(*emitter).dynamicProperties
+         0     0% 41.40%     21.33s 30.52%  github.com/system-inc/adamic/internal/native.(*emitter).evaluate
+         0     0% 41.40%     21.33s 30.52%  github.com/system-inc/adamic/internal/native.(*emitter).value
+         0     0% 41.40%     17.51s 25.05%  github.com/system-inc/adamic/internal/native.(*emitter).shapeWith
+         0     0% 41.40%     16.74s 23.95%  github.com/system-inc/adamic/internal/native.(*emitter).literalShape
+         0     0% 41.40%     15.77s 22.56%  github.com/system-inc/adamic/internal/native.(*emitter).fieldSlot
+     6.58s  9.41% 50.82%     12.91s 18.47%  reflect.Value.Field
+         0     0% 50.82%     11.98s 17.14%  github.com/system-inc/adamic/internal/native.(*emitter).block
+         0     0% 50.82%     11.94s 17.08%  github.com/system-inc/adamic/internal/native.(*emitter).nested (inline)
+     1.07s  1.53% 52.35%      8.53s 12.20%  reflect.Value.Elem
+         0     0% 52.35%      8.50s 12.16%  github.com/system-inc/adamic/internal/native.(*emitter).objectLiteral
+     6.47s  9.26% 61.60%      7.12s 10.19%  reflect.Value.NumField
+     0.18s  0.26% 61.86%      6.17s  8.83%  reflect.Value.Interface (inline)
+     2.63s  3.76% 65.62%      5.99s  8.57%  reflect.valueInterface
+         0     0% 65.62%      5.56s  7.95%  github.com/system-inc/adamic/internal/native.(*emitter).fieldReadinessNeeded
+         0     0% 65.62%      5.10s  7.30%  github.com/system-inc/adamic/internal/native.(*emitter).hasRecordStorage
+     5.03s  7.20% 72.82%      5.04s  7.21%  reflect.unpackEface (inline)
+         0     0% 72.82%      5.02s  7.18%  github.com/system-inc/adamic/internal/native.(*emitter).shape
+         0     0% 72.82%      5.02s  7.18%  github.com/system-inc/adamic/internal/native.(*emitter).shapeOf (inline)
+         0     0% 72.82%      4.79s  6.85%  github.com/system-inc/adamic/internal/native.(*emitter).loop
+     0.57s  0.82% 73.63%      4.72s  6.75%  reflect.packIfaceValueIntoEmptyIface (inline)
+     4.68s  6.70% 80.33%      4.69s  6.71%  internal/abi.Name.IsExported (inline)
+         0     0% 80.33%      4.56s  6.52%  github.com/system-inc/adamic/internal/native.(*emitter).arguments
+         0     0% 80.33%      4.17s  5.97%  github.com/system-inc/adamic/internal/native.(*emitter).decide
+     1.58s  2.26% 82.59%      4.15s  5.94%  reflect.Value.NumMethod
+         0     0% 82.59%      3.35s  4.79%  github.com/system-inc/adamic/internal/native.(*emitter).logical
+         0     0% 82.59%      2.86s  4.09%  github.com/system-inc/adamic/internal/native.(*emitter).writeFieldSlot
+         0     0% 82.59%      2.75s  3.93%  github.com/system-inc/adamic/internal/native.(*emitter).aside
+         0     0% 82.59%      2.75s  3.93%  github.com/system-inc/adamic/internal/native.(*emitter).aside.func1
+         0     0% 82.59%      2.75s  3.93%  github.com/system-inc/adamic/internal/native.(*emitter).asideWith
+     2.42s  3.46% 86.05%      2.57s  3.68%  reflect.(*rtype).NumMethod
+         0     0% 86.05%      2.01s  2.88%  github.com/system-inc/adamic/internal/native.(*emitter).returnStatement
+     1.76s  2.52% 88.57%      1.77s  2.53%  github.com/system-inc/adamic/internal/native.(*emitter).fieldTypesNeeded.func1
+         0     0% 88.57%      1.52s  2.17%  github.com/system-inc/adamic/internal/native.(*emitter).switchStatement
+         0     0% 88.57%      1.44s  2.06%  github.com/system-inc/adamic/internal/native.(*emitter).forOf
+     1.03s  1.47% 90.04%      1.03s  1.47%  reflect.add (inline)
+     0.94s  1.34% 91.39%      0.99s  1.42%  github.com/system-inc/adamic/internal/native.(*emitter).fieldReadinessNeeded.func1
+     0.17s  0.24% 91.63%      0.98s  1.40%  reflect.packEface (inline)
