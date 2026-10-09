@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class_static.go b/internal/lower/class_static.go
+index 1ad8923c..d5e09c87 100644
+--- a/internal/lower/class_static.go
++++ b/internal/lower/class_static.go
+@@ -245,7 +245,7 @@ func (l *lowering) staticDeclaration(declaration *ast.Node) ([]ir.Statement, err
+ 			for _, element := range clause.AsHeritageClause().Types.Nodes {
+ 				expression := ast.SkipParentheses(element.AsExpressionWithTypeArguments().Expression)
+ 				if l.symbol(expression) == l.symbol(parent.Name()) {
+-					checked = !l.provenModuleReads[expression]
++					checked = l.provenModuleReads[expression]
+ 				}
+ 			}
+ 		}
