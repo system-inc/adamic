@@ -13,6 +13,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -23,7 +24,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-func jsxMutantsOracle(t *testing.T) string {
+func jsxMutantsOracle(t *testing.T, prepared chan<- jsxMutantsProduct) string {
 	t.Helper()
 	root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
 	if err != nil {
@@ -35,7 +36,7 @@ func jsxMutantsOracle(t *testing.T) string {
 	}
 	virtual := filepath.Join(root, "adamic_parser_oracle.go")
 	inputs := buildcache.Inputs{Name: "jsx-mutants-go-oracle", Files: []string{"stage1/typescript/parser/testdata/oracle.go", "cohere/TypeScript/tsc", "go.mod"}, Flags: []string{"go build -overlay", os.Getenv("GOFLAGS"), os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{buildcache.Tool("go", "version")}}
-	directory := buildcache.Product(t, inputs, func(dir string) error {
+	directory := jsxMutantsFetch(t, inputs, prepared, func(dir string) error {
 		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
 		if err != nil {
 			return err
@@ -57,7 +58,7 @@ func jsxMutantsOracle(t *testing.T) string {
 	return filepath.Join(directory, "oracle")
 }
 
-func jsxMutantsPort(t *testing.T, source string) string {
+func jsxMutantsPort(t *testing.T, source string, prepared chan<- jsxMutantsProduct) string {
 	t.Helper()
 	flags := []string{"load main.ts; lower; native.C", os.Getenv("ADAMIC_NATIVE_SPLIT")}
 	// Mutant copies live outside the repository. Their complete contents are inputs,
@@ -70,7 +71,7 @@ func jsxMutantsPort(t *testing.T, source string) string {
 		flags = append(flags, name+":"+strings.ReplaceAll(string(data), source, "$PORT"))
 	}
 	inputs := buildcache.Inputs{Name: "jsx-mutants-lowered", Files: []string{"internal/load", "internal/lower", "internal/native", "internal/ir", "internal/flow", "internal/fresh", "internal/regexp", "internal/unicodeproperties", "bridge/tsgo", "stage1/typescript/scanner/characters.ts", "stage1/typescript/scanner/tokens.ts", "stage1/typescript/scanner/scanner.ts", "cohere", "go.mod"}, Flags: flags, Toolchain: []string{runtime.Version()}}
-	lowered := buildcache.Product(t, inputs, func(dir string) error {
+	lowered := jsxMutantsFetch(t, inputs, prepared, func(dir string) error {
 		program, err := load.Load([]string{filepath.Join(source, "main.ts")})
 		if err != nil {
 			return err
@@ -88,7 +89,7 @@ func jsxMutantsPort(t *testing.T, source string) string {
 	hash := sha256.Sum256(data)
 	options := native.Options{Sanitize: true}
 	inputs = buildcache.Inputs{Name: "jsx-mutants-sanitized", Files: []string{"internal/native", "bridge/tsgo", "cohere"}, Flags: append(native.Flags(options), fmt.Sprintf("C=%x", hash), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "CC="+os.Getenv("CC")), Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
-	product := buildcache.Product(t, inputs, func(dir string) error { return native.Build(string(data), filepath.Join(dir, "parser"), options) })
+	product := jsxMutantsFetch(t, inputs, prepared, func(dir string) error { return native.Build(string(data), filepath.Join(dir, "parser"), options) })
 	return filepath.Join(product, "parser")
 }
 
@@ -155,7 +156,9 @@ func jsxMutantsSelection(t *testing.T) int {
 }
 
 // ADAMIC_TEST_SHARD=i/9 selects only top-level shard i; unset runs all.
-// Products are inputs fetched by hash; every shard keeps the full JSX corpus.
+// Run TestJsxMutants_Setup first (90-second limit). A separately run shard
+// requires its hashed products to be present; it never prepares them on a miss.
+// Every shard keeps the full JSX corpus and uses a 90-second kill deadline.
 func jsxMutantsRun(t *testing.T, shard int) {
 	t.Helper()
 	selected := jsxMutantsSelection(t)
@@ -168,12 +171,12 @@ func jsxMutantsRun(t *testing.T, shard int) {
 	}
 	manifest, count := jsxManifest(t)
 	jsxMutantsRows(t, manifest, count)
-	oracle := jsxMutantsOracle(t)
+	oracle := jsxMutantsOracle(t, nil)
 	directory, _ := filepath.Abs(".")
 	change := changes[shard]
 	mutant := copyPort(t, "jsx.ts", change.from, change.to)
-	controlBinary := jsxMutantsPort(t, directory)
-	binary := jsxMutantsPort(t, mutant)
+	controlBinary := jsxMutantsPort(t, directory, nil)
+	binary := jsxMutantsPort(t, mutant, nil)
 	want := execute(t, "", oracle, "--manifest", manifest, "--whole").output
 	control := execute(t, "", controlBinary, "--manifest", manifest, "--whole")
 	if diff := difference(control.output, want); diff != "" {
@@ -194,6 +197,49 @@ func jsxMutantsRun(t *testing.T, shard int) {
 		t.Logf("%s compiled mutant caught: %s", side.name, difference(side.output, want))
 	}
 	t.Logf("shard-%03d: %s, %d inputs", shard, change.name, count)
+}
+
+// Not parallel: publishes shared build products before the parallel comparison leaves.
+func TestJsxMutants_Setup(t *testing.T) {
+	products := make(chan jsxMutantsProduct, 1+2*(testJsxMutantsShards+1))
+	jsxMutantsOracle(t, products)
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	changes := jsxMutantsChanges()
+	if len(changes) != testJsxMutantsShards {
+		t.Fatalf("enumerated %d mutants, want %d", len(changes), testJsxMutantsShards)
+	}
+	sources := []string{directory}
+	for _, change := range changes {
+		sources = append(sources, copyPort(t, "jsx.ts", change.from, change.to))
+	}
+	var builders sync.WaitGroup
+	slots := make(chan struct{}, 3)
+	for _, source := range sources {
+		builders.Add(1)
+		go func() {
+			defer builders.Done()
+			slots <- struct{}{}
+			defer func() { <-slots }()
+			jsxMutantsPort(t, source, products)
+		}()
+	}
+	builders.Wait()
+	close(products)
+	if t.Failed() {
+		return
+	}
+	ready := make(map[string]string)
+	for product := range products {
+		ready[product.id] = product.directory
+	}
+	if len(ready) != 1+2*(testJsxMutantsShards+1) {
+		t.Fatalf("prepared %d products, want %d", len(ready), 1+2*(testJsxMutantsShards+1))
+	}
+	jsxMutantsReadyProducts = ready
+	t.Logf("shared setup ready: %d hashed build products; leaves never build on a miss", len(ready))
 }
 
 func TestJsxMutants_000(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 0) }
@@ -234,13 +280,17 @@ func TestJsxMutantsPlantedFailure(t *testing.T) {
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	cmd := jsxMutantsCommand(ctx, executable, "-test.run=^TestJsxMutants_[0-9]+$", "-test.v", "-test.timeout=75s")
+	cmd := jsxMutantsCommand(ctx, executable, "-test.run=^TestJsxMutants_[0-9]+$", "-test.v", "-test.timeout=90s")
 	for _, entry := range os.Environ() {
-		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=") {
+		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PRODUCTS=") {
 			cmd.Env = append(cmd.Env, entry)
 		}
 	}
-	cmd.Env = append(cmd.Env, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=type argument comma")
+	products, err := json.Marshal(jsxMutantsReadyProducts)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cmd.Env = append(cmd.Env, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=type argument comma", "ADAMIC_JSX_MUTANTS_PRODUCTS="+string(products))
 	out, err := cmd.CombinedOutput()
 	if ctx.Err() != nil {
 		t.Fatal("cooked: planted-failure child exceeded 90 seconds")
@@ -275,4 +325,65 @@ func jsxMutantsCommand(ctx context.Context, name string, args ...string) *exec.C
 	}
 	cmd.WaitDelay = 3 * time.Second
 	return cmd
+}
+
+type jsxMutantsProduct struct{ id, directory string }
+
+// Only the explicit setup writes this immutable product manifest. A proof child
+// inherits it before tests start, including when ADAMIC_BUILD_CACHE=off.
+var jsxMutantsReadyProducts = func() map[string]string {
+	ready := make(map[string]string)
+	if value := os.Getenv("ADAMIC_JSX_MUTANTS_PRODUCTS"); value != "" {
+		if err := json.Unmarshal([]byte(value), &ready); err != nil {
+			panic(err)
+		}
+	}
+	return ready
+}()
+
+func jsxMutantsFetch(t *testing.T, inputs buildcache.Inputs, prepared chan<- jsxMutantsProduct, build func(string) error) string {
+	t.Helper()
+	identity, err := json.Marshal(inputs)
+	if err != nil {
+		t.Fatal(err)
+	}
+	id := fmt.Sprintf("%x", sha256.Sum256(identity))
+	if prepared == nil {
+		if directory, ok := jsxMutantsReadyProducts[id]; ok {
+			return directory
+		}
+		// A standalone gate leaf can fetch an existing hashed product, but must not
+		// become the builder or initialize shared state when the product is missing.
+		return buildcache.Product(t, inputs, func(string) error {
+			return fmt.Errorf("shared setup is not ready: run TestJsxMutants_Setup before a shard")
+		})
+	}
+	directory := buildcache.Product(t, inputs, build)
+	prepared <- jsxMutantsProduct{id, directory}
+	return directory
+}
+
+func TestJsxMutantsRejectsMissingSetup(t *testing.T) {
+	t.Parallel()
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	cmd := jsxMutantsCommand(ctx, executable, "-test.run=^TestJsxMutants_000$", "-test.v", "-test.timeout=90s")
+	for _, entry := range os.Environ() {
+		if !strings.HasPrefix(entry, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(entry, "ADAMIC_BUILD_CACHE=") && !strings.HasPrefix(entry, "ADAMIC_BUILD_CACHE_DIR=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PRODUCTS=") && !strings.HasPrefix(entry, "ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR=") {
+			cmd.Env = append(cmd.Env, entry)
+		}
+	}
+	cmd.Env = append(cmd.Env, "ADAMIC_BUILD_CACHE=on", "ADAMIC_BUILD_CACHE_DIR="+t.TempDir())
+	out, err := cmd.CombinedOutput()
+	if ctx.Err() != nil {
+		t.Fatal("cooked: missing-setup child exceeded 90 seconds")
+	}
+	if _, ok := err.(*exec.ExitError); !ok || !strings.Contains(string(out), "shared setup is not ready: run TestJsxMutants_Setup before a shard") {
+		t.Fatalf("cold leaf must refuse shared construction: %v\n%s", err, out)
+	}
+	t.Log("cold shard-000 refused to build the shared oracle")
 }
