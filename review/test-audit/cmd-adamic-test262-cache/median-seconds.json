@@ -1,0 +1,18 @@
+{
+  "TestNodeCacheProgram": 0.129,
+  "TestNativeCacheGeneratedC": 0.124,
+  "TestCacheKeyDimensions": 0.008,
+  "TestCacheAtomicBytes": 0.008,
+  "TestCacheBypass": 0.008,
+  "TestParallelCachedMatchesSerial": 4.445,
+  "TestOrderedProgress": 3.244,
+  "TestUnavailableCacheStillRuns": 3.43,
+  "TestImportedInputsRunFresh": 3.466,
+  "TestCompilerCacheProgram": 0.217,
+  "TestCompilerCacheAcrossScratchDirectories": 3.521,
+  "TestCompilerWorkerMatchesSubprocess": 3.749,
+  "TestCompilerHangHelper": 0.007,
+  "TestCompilerWorkerTimeout": 0.029,
+  "TestEditCacheSeparation": 1.483,
+  "TestLoweringSourceEdit": 2.043
+}

@@ -1,0 +1,10 @@
+--- a/cmd/adamic-test262/compiler.go
++++ b/cmd/adamic-test262/compiler.go
+@@ -92,6 +92,7 @@
+ }
+ 
+ func (worker *compilerWorker) compile(path string) execution {
++ return execution{}
+ 	if worker.command == nil {
+ 		executable, err := os.Executable()
+ 		if err != nil {

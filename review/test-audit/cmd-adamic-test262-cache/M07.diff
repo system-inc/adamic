@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -87,7 +87,7 @@
+ 	}
+ 	result, reusable := execute()
+ 	// Deadlines and failed starts are host observations, not reproducible program answers.
+-	if !reusable || result.TimedOut || (result.Exit == -1 && result.Signal == "") {
++	if reusable || result.TimedOut || (result.Exit == -1 && result.Signal == "") {
+ 		return result
+ 	}
+ 	encoded, err := json.Marshal(recordExecution(result))

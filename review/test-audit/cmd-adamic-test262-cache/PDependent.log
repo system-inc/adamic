@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:19:15.880631998Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:19:15.890520852Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-09T10:19:15.890632822Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== RUN   TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:15.890663618Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== PAUSE TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:15.890666042Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-09T10:19:15.890668555Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-09T10:19:15.890670559Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== CONT  TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:16.105427447Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"    cache_test.go:322: reference dependency treated as closed\n","OutputType":"error"}
+{"Time":"2026-10-09T10:19:16.10561476Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"--- FAIL: TestCompilerCacheProgram (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:16.105629152Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Elapsed":0.22}
+{"Time":"2026-10-09T10:19:16.105653619Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:16.106878372Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.226s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:16.106899875Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.226}

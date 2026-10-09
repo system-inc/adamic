@@ -1,0 +1,5 @@
+=== RUN   TestU012ContextObservation
+    u012_observation_test.go:28: context_equal=false node_equal=false
+--- PASS: TestU012ContextObservation (1.64s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-test262	1.680s

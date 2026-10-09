@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -106,7 +106,7 @@
+ 	_, writeError := temporary.Write(contents)
+ 	closeError := temporary.Close()
+ 	if writeError == nil && closeError == nil {
+-		_ = os.Rename(temporary.Name(), path)
++		
+ 	}
+ 	return result
+ }

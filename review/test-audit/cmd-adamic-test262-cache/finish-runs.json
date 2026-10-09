@@ -1,0 +1,214 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestU012LimitObservation$"
+    ],
+    "log": "witness-clean-limit.log",
+    "exit": 0,
+    "wall": 6.463643926000032
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestU012LimitObservation$"
+    ],
+    "log": "witness-M17.log",
+    "exit": 0,
+    "wall": 6.743848514000092
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestU012ContextObservation$"
+    ],
+    "log": "witness-clean-context.log",
+    "exit": 0,
+    "wall": 3.6585419109999293
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-v",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestU012ContextObservation$"
+    ],
+    "log": "witness-M20.log",
+    "exit": 0,
+    "wall": 7.362187972999891
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "."
+    ],
+    "log": "final-baseline.log",
+    "exit": 0,
+    "wall": 36.176834080999924
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./cmd/adamic-test262/"
+    ],
+    "log": "final-vet.log",
+    "exit": 0,
+    "wall": 0.17695104300014464
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "log": "diff-check.log",
+    "exit": 0,
+    "wall": 0.058994716999904995
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestEditCacheSeparation$"
+    ],
+    "log": "TestEditCacheSeparation-timing-0.log",
+    "exit": 0,
+    "wall": 3.4569646780000767
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestEditCacheSeparation$"
+    ],
+    "log": "TestEditCacheSeparation-timing-1.log",
+    "exit": 0,
+    "wall": 3.1479882409998936
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestEditCacheSeparation$"
+    ],
+    "log": "TestEditCacheSeparation-timing-2.log",
+    "exit": 0,
+    "wall": 3.2185052390000237
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestLoweringSourceEdit$"
+    ],
+    "log": "TestLoweringSourceEdit-timing-0.log",
+    "exit": 0,
+    "wall": 3.5970090190000974
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestLoweringSourceEdit$"
+    ],
+    "log": "TestLoweringSourceEdit-timing-1.log",
+    "exit": 0,
+    "wall": 3.8218023559998073
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestLoweringSourceEdit$"
+    ],
+    "log": "TestLoweringSourceEdit-timing-2.log",
+    "exit": 0,
+    "wall": 3.9349776730000485
+  }
+]

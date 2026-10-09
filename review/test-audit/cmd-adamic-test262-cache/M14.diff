@@ -1,0 +1,10 @@
+--- a/cmd/adamic-test262/compiler.go
++++ b/cmd/adamic-test262/compiler.go
+@@ -143,6 +143,6 @@
+ 	case <-timer.C:
+ 		worker.close()
+ 		<-done
+-		return execution{Exit: -1, TimedOut: true}
++		return execution{Exit: -1, TimedOut: false}
+ 	}
+ }

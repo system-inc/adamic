@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -32,7 +32,7 @@
+ }
+ 
+ func recordExecution(value execution) recordedExecution {
+-	return recordedExecution{[]byte(value.Stdout), []byte(value.Stderr), value.Exit, value.Signal, value.TimedOut}
++	return recordedExecution{[]byte(value.Stderr), []byte(value.Stdout), value.Exit, value.Signal, value.TimedOut}
+ }
+ func (value recordedExecution) execution() execution {
+ 	return execution{string(value.Stdout), string(value.Stderr), value.Exit, value.Signal, value.TimedOut}

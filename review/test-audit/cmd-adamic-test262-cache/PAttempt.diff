@@ -1,0 +1,10 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -230,6 +230,7 @@
+ }
+ 
+ func (e *engine) attempt(test classified) result {
++ return result{}
+ 	profile := e.profile.begin(test.Path, e.worker)
+ 	defer profile.finish()
+ 	base := result{Path: test.Path, Directory: test.Directory, Adaptations: test.Adaptations}

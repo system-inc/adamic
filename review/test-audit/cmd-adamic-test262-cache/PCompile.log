@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T10:19:18.069778782Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:19:18.077183166Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-09T10:19:18.077268615Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== RUN   TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:18.077300924Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== PAUSE TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:18.077303227Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-09T10:19:18.077309767Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-09T10:19:18.077311359Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== CONT  TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:18.1100119Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"    cache_test.go:303: native: clang failed: exit status 1\n","OutputType":"error"}
+{"Time":"2026-10-09T10:19:18.110068626Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"        /tmp/adamic-gate/adamic-build-766896612/main.c:1:1: error: ISO C requires a translation unit to contain at least one declaration [-Werror,-Wempty-translation-unit]\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T10:19:18.110075867Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"        1 error generated.\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T10:19:18.110093343Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"        \n","OutputType":"error-continue"}
+{"Time":"2026-10-09T10:19:18.110169058Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"--- FAIL: TestCompilerCacheProgram (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:18.110173735Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Elapsed":0.03}
+{"Time":"2026-10-09T10:19:18.110192052Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:18.111079342Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.041s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:18.111091851Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.041}

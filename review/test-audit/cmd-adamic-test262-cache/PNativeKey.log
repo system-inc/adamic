@@ -1,0 +1,22 @@
+{"Time":"2026-10-09T10:18:55.15020222Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:18:55.157195469Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC"}
+{"Time":"2026-10-09T10:18:55.157284723Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Output":"=== RUN   TestNativeCacheGeneratedC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:55.157320648Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Output":"=== PAUSE TestNativeCacheGeneratedC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:55.157324073Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC"}
+{"Time":"2026-10-09T10:18:55.157328449Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions"}
+{"Time":"2026-10-09T10:18:55.157330883Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"=== RUN   TestCacheKeyDimensions\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:55.157334498Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"=== PAUSE TestCacheKeyDimensions\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:55.157336912Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions"}
+{"Time":"2026-10-09T10:18:55.157339606Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC"}
+{"Time":"2026-10-09T10:18:55.15734203Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Output":"=== CONT  TestNativeCacheGeneratedC\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:55.157346797Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions"}
+{"Time":"2026-10-09T10:18:55.157349201Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"=== CONT  TestCacheKeyDimensions\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:55.158371324Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"    cache_test.go:73: native dimension 0 changed but served \"old\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:18:55.158520229Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"--- FAIL: TestCacheKeyDimensions (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:55.218210658Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Elapsed":0}
+{"Time":"2026-10-09T10:18:55.218283138Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Output":"    cache_test.go:50: changed emitted C served \"before\\n\", want \"after\\n\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:18:55.218302867Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Output":"--- FAIL: TestNativeCacheGeneratedC (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:55.218319583Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Elapsed":0.06}
+{"Time":"2026-10-09T10:18:55.218326423Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:55.219468712Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.069s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:55.219514321Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.069}

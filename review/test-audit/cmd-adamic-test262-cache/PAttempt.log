@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T10:19:07.07830553Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:19:07.085158271Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns"}
+{"Time":"2026-10-09T10:19:07.08523065Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"=== RUN   TestUnavailableCacheStillRuns\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:07.085546177Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"=== PAUSE TestUnavailableCacheStillRuns\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:07.085558215Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns"}
+{"Time":"2026-10-09T10:19:07.085561039Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-09T10:19:07.085562722Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== RUN   TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:07.085565225Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== PAUSE TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:07.085567379Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-09T10:19:07.085569672Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories"}
+{"Time":"2026-10-09T10:19:07.085571785Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories","Output":"=== RUN   TestCompilerCacheAcrossScratchDirectories\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:10.349918385Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories","Output":"    cache_test.go:342: priming C cache: {Path: Directory: Kind: Reason: Adaptations:map[]}\n","OutputType":"error"}
+{"Time":"2026-10-09T10:19:10.351351379Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories","Output":"--- FAIL: TestCompilerCacheAcrossScratchDirectories (3.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:10.351379251Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories","Elapsed":3.27}
+{"Time":"2026-10-09T10:19:10.351411049Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns"}
+{"Time":"2026-10-09T10:19:10.351416126Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"=== CONT  TestUnavailableCacheStillRuns\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:10.351420543Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-09T10:19:10.351423307Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== CONT  TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:13.826777164Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"    cache_test.go:275: Node cannot import the native runtime; want fail, got {Path: Directory: Kind: Reason: Adaptations:map[]}\n","OutputType":"error"}
+{"Time":"2026-10-09T10:19:13.828477411Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"--- FAIL: TestImportedInputsRunFresh (3.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:13.831405973Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Elapsed":3.48}
+{"Time":"2026-10-09T10:19:13.831416689Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"    cache_test.go:254: unavailable result cache changed verdict: {Path: Directory: Kind: Reason: Adaptations:map[]}\n","OutputType":"error"}
+{"Time":"2026-10-09T10:19:13.832606476Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"--- FAIL: TestUnavailableCacheStillRuns (3.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:13.832639495Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Elapsed":3.48}
+{"Time":"2026-10-09T10:19:13.8326427Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:13.904545829Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic-test262\t6.826s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:19:13.905867694Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":6.828}

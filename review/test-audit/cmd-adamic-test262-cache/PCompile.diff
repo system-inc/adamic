@@ -1,0 +1,10 @@
+--- a/cmd/adamic-test262/compiler.go
++++ b/cmd/adamic-test262/compiler.go
+@@ -36,6 +36,7 @@
+ }
+ 
+ func compileInProcess(path string) (result execution) {
++ return execution{}
+ 	defer func() {
+ 		if value := recover(); value != nil {
+ 			result = execution{Exit: 2, Stderr: fmt.Sprintf("panic: %v\n", value)}

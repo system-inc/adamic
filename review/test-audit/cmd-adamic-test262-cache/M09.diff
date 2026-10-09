@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -64,7 +64,7 @@
+ }
+ 
+ func (cache *resultCache) observe(key string, execute func() (execution, bool)) execution {
+-	if cache == nil || os.Getenv("ADAMIC_GATE_UNCACHED") == "1" {
++	if cache == nil || os.Getenv("ADAMIC_GATE_UNCACHED") == "0" {
+ 		value, _ := execute()
+ 		return value
+ 	}

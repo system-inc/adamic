@@ -1,0 +1,29 @@
+package main
+
+import (
+ "io"
+ "testing"
+)
+
+// Observation only: this scratch harness adds no audit verdict and changes no existing test.
+func TestU012LimitObservation(t *testing.T) {
+ e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, true)
+ if err != nil { t.Fatal(err) }
+ e.cache = &resultCache{directory: t.TempDir()}
+ e.inProcess = true
+ e.jobs = 1
+ e.log = io.Discard
+ report, err := e.runFilter("", 1, false)
+ if err != nil { t.Fatal(err) }
+ t.Logf("total=%d skipped=%d unrun=%d attempted=%d", report.Total, report.Skipped, report.Unrun, report.Total-report.Skipped-report.Unrun)
+}
+
+func TestU012ContextObservation(t *testing.T) {
+ t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+ before, _, contextBefore, err := prepareCache()
+ if err != nil { t.Fatal(err) }
+ t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+ after, _, contextAfter, err := prepareCache()
+ if err != nil { t.Fatal(err) }
+ t.Logf("context_equal=%t node_equal=%t", contextBefore==contextAfter, before.nodeContext==after.nodeContext)
+}

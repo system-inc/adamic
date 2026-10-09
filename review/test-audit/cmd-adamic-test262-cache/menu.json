@@ -1,0 +1,222 @@
+[
+  {
+    "id": "M01",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 56,
+    "old": "cacheKey(\"test262-compiler-v1\", program, compiler, command, context)",
+    "new": "cacheKey(\"test262-compiler-v1\", \"\", compiler, command, context)",
+    "kind": "change constant",
+    "change": "omit compiler source key dimension",
+    "mode": "expression",
+    "offset": 1191
+  },
+  {
+    "id": "M02",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 60,
+    "old": "cacheKey(\"test262-node-v1\", program, version, adaptation, command, context)",
+    "new": "cacheKey(\"test262-node-v1\", \"\", version, adaptation, command, context)",
+    "kind": "change constant",
+    "change": "omit Node source key dimension",
+    "mode": "expression",
+    "offset": 1354
+  },
+  {
+    "id": "M03",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 63,
+    "old": "cacheKey(\"test262-native-v1\", code, library, command, context)",
+    "new": "cacheKey(\"test262-native-v1\", \"\", library, command, context)",
+    "kind": "change constant",
+    "change": "omit native C key dimension",
+    "mode": "expression",
+    "offset": 1510
+  },
+  {
+    "id": "M04",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 49,
+    "old": "fmt.Fprintf(hash, \"%d:\", len(part))",
+    "new": "",
+    "kind": "drop statement",
+    "change": "drop key part length boundaries",
+    "mode": "statement",
+    "offset": 997
+  },
+  {
+    "id": "M05",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 35,
+    "old": "recordedExecution{[]byte(value.Stdout), []byte(value.Stderr), value.Exit, value.Signal, value.TimedOut}",
+    "new": "recordedExecution{[]byte(value.Stderr), []byte(value.Stdout), value.Exit, value.Signal, value.TimedOut}",
+    "kind": "swap two arguments",
+    "change": "swap stdout and stderr in stored execution",
+    "mode": "expression",
+    "offset": 555
+  },
+  {
+    "id": "M06",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 84,
+    "old": "envelope.Digest == cacheKey(string(envelope.Value))",
+    "new": "true",
+    "kind": "change constant",
+    "change": "accept envelope without digest validation",
+    "mode": "expression",
+    "offset": 2351
+  },
+  {
+    "id": "M07",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 90,
+    "old": "!reusable || result.TimedOut",
+    "new": "reusable || result.TimedOut",
+    "kind": "flip condition",
+    "change": "invert reusable eligibility",
+    "mode": "expression",
+    "offset": 2619
+  },
+  {
+    "id": "M08",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 90,
+    "old": "result.TimedOut || (result.Exit == -1",
+    "new": "!result.TimedOut || (result.Exit == -1",
+    "kind": "flip condition",
+    "change": "invert timeout eligibility",
+    "mode": "expression",
+    "offset": 2632
+  },
+  {
+    "id": "M09",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 67,
+    "old": "os.Getenv(\"ADAMIC_GATE_UNCACHED\") == \"1\"",
+    "new": "os.Getenv(\"ADAMIC_GATE_UNCACHED\") == \"0\"",
+    "kind": "change constant",
+    "change": "invert bypass selector",
+    "mode": "expression",
+    "offset": 1688
+  },
+  {
+    "id": "M10",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 109,
+    "old": "_ = os.Rename(temporary.Name(), path)",
+    "new": "",
+    "kind": "drop statement",
+    "change": "drop atomic cache publication",
+    "mode": "statement",
+    "offset": 3231
+  },
+  {
+    "id": "M11",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 358,
+    "old": "importedProgram.MatchString(codeOnly(program)) || referencedProgram.MatchString(program)",
+    "new": "importedProgram.MatchString(codeOnly(program)) && referencedProgram.MatchString(program)",
+    "kind": "flip condition",
+    "change": "require both dependency forms",
+    "mode": "expression",
+    "offset": 12140
+  },
+  {
+    "id": "M12",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 239,
+    "old": "directory = e.work\n\t\tif err := os.MkdirAll(directory, 0700)",
+    "new": "if err := os.MkdirAll(directory, 0700)",
+    "kind": "drop statement",
+    "change": "drop cache mkdir fallback directory assignment",
+    "mode": "fallback",
+    "offset": 7168
+  },
+  {
+    "id": "M13",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 276,
+    "old": "if e.compiler != nil {\n\t\t// The worker executes",
+    "new": "if e.compiler == nil {\n\t\t// The worker executes",
+    "kind": "flip condition",
+    "change": "invert stable worker command selection",
+    "mode": "condition-prefix",
+    "offset": 8499
+  },
+  {
+    "id": "M14",
+    "file": "cmd/adamic-test262/compiler.go",
+    "line": 146,
+    "old": "execution{Exit: -1, TimedOut: true}",
+    "new": "execution{Exit: -1, TimedOut: false}",
+    "kind": "change constant",
+    "change": "drop timeout indication",
+    "mode": "expression",
+    "offset": 3790
+  },
+  {
+    "id": "M15",
+    "file": "cmd/adamic-test262/compiler.go",
+    "line": 91,
+    "old": "worker.command = nil",
+    "new": "",
+    "kind": "drop statement",
+    "change": "retain command after close",
+    "mode": "statement",
+    "offset": 2347
+  },
+  {
+    "id": "M16",
+    "file": "cmd/adamic-test262/compiler.go",
+    "line": 58,
+    "old": "execution{Exit: 1, Stderr: diagnostic.String()}",
+    "new": "execution{Exit: 0, Stderr: diagnostic.String()}",
+    "kind": "change constant",
+    "change": "report checker diagnostics as successful compilation",
+    "mode": "expression",
+    "offset": 1481
+  },
+  {
+    "id": "M17",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 154,
+    "old": "attempted >= limit",
+    "new": "attempted > limit",
+    "kind": "off-by-one bound",
+    "change": "allow one extra attempted test",
+    "mode": "expression",
+    "offset": 4618
+  },
+  {
+    "id": "M18",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 213,
+    "old": "(index+1)%50 == 0",
+    "new": "(index+1)%49 == 0",
+    "kind": "change constant",
+    "change": "change progress interval",
+    "mode": "expression",
+    "offset": 6095
+  },
+  {
+    "id": "M19",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 552,
+    "old": "report.Pass++",
+    "new": "report.Pass += 2",
+    "kind": "off-by-one bound",
+    "change": "double pass counter increment",
+    "mode": "statement",
+    "offset": 18067
+  },
+  {
+    "id": "M20",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 137,
+    "old": "!strings.HasPrefix(variable, \"ADAMIC_GATE_UNCACHED=\")",
+    "new": "true",
+    "kind": "change constant",
+    "change": "include bypass environment in cache context",
+    "mode": "expression",
+    "offset": 4075
+  }
+]

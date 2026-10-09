@@ -1,0 +1,49 @@
+M01-vet.log 0 3.29
+M02-vet.log 0 0.185
+M03-vet.log 0 0.183
+M04-vet.log 0 0.184
+M05-vet.log 0 0.172
+M06-vet.log 0 0.181
+M07-vet.log 0 0.193
+M08-vet.log 0 0.209
+M09-vet.log 0 0.218
+M10-vet.log 0 0.203
+M11-vet.log 0 0.198
+M12-vet.log 0 0.196
+M13-vet.log 0 0.188
+M14-vet.log 0 0.186
+M15-vet.log 0 0.177
+M16-vet.log 0 0.185
+M17-vet.log 0 0.187
+M18-vet.log 0 0.173
+M19-vet.log 0 0.176
+M20-vet.log 0 0.186
+switch-format.log 0 0.004
+switch-build.log 0 6.165
+M01.log 1 35.283
+M02.log 1 38.851
+M03.log 1 36.776
+M04.log 1 33.122
+M05.log 1 30.504
+Traceback (most recent call last):
+  File "/tmp/u012-mutants.py", line 93, in <module>
+    status=run(['timeout','120','go','test','-json','-count=1','-timeout','90s','./cmd/adamic-test262/','-run','.'],mid+'.log',dict(ADAMIC_MUTANT=mid,ADAMIC_BUILD_CACHE_DIR='/tmp/u012/cache/'+mid))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/u012-mutants.py", line 81, in run
+    with (e/log).open('w') as stream:q=subprocess.run(cmd,cwd=r,env=env|extra,stdout=stream,stderr=subprocess.STDOUT)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1201, in communicate
+    self.wait()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2053, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2011, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -210,7 +210,7 @@
+ 	for index := range files {
+ 		<-ready[index]
+ 		report.add(results[index])
+-		if (index+1)%50 == 0 || index+1 == len(files) {
++		if (index+1)%49 == 0 || index+1 == len(files) {
+ 			fmt.Fprintf(e.log, "%s %d/%d pass=%d fail=%d refused=%d crashed=%d skipped=%d\n",
+ 				filter, index+1, len(files), report.Pass, report.Fail, report.Refused, report.Crashed, report.Skipped)
+ 		}

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/compiler.go
++++ b/cmd/adamic-test262/compiler.go
+@@ -55,7 +55,7 @@
+ 		} else {
+ 			fmt.Fprintf(&diagnostic, "adamic: %v\n", err)
+ 		}
+-		return execution{Exit: 1, Stderr: diagnostic.String()}
++		return execution{Exit: 0, Stderr: diagnostic.String()}
+ 	}
+ 	lowered, err := lower.Lower(context.Background(), loaded)
+ 	if err != nil {

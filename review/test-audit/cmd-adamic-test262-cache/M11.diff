@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -355,7 +355,7 @@
+ var referencedProgram = regexp.MustCompile(`(?m)^\s*///\s*<reference\b`)
+ 
+ func dependentProgram(program string) bool {
+-	return importedProgram.MatchString(codeOnly(program)) || referencedProgram.MatchString(program)
++	return importedProgram.MatchString(codeOnly(program)) && referencedProgram.MatchString(program)
+ }
+ 
+ var nativeEnvironment = []string{

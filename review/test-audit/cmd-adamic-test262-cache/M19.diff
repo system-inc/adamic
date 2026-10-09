@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -549,7 +549,7 @@
+ 	report.Total++
+ 	switch one.Kind {
+ 	case outcomePass:
+-		report.Pass++
++		report.Pass += 2
+ 		directory.Pass++
+ 		report.Passes = append(report.Passes, one.Path)
+ 	case outcomeFail:

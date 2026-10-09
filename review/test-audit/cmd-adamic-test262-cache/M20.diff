@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -134,7 +134,7 @@
+ 	environment := os.Environ()
+ 	sort.Strings(environment)
+ 	for _, variable := range environment {
+-		if !strings.HasPrefix(variable, "ADAMIC_GATE_UNCACHED=") {
++		if true {
+ 			parts = append(parts, variable)
+ 		}
+ 	}

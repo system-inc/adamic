@@ -1,0 +1,45 @@
+{
+  "PReuse": [
+    "TestNodeCacheProgram",
+    "TestNativeCacheGeneratedC",
+    "TestCacheKeyDimensions",
+    "TestCacheAtomicBytes",
+    "TestCompilerCacheProgram"
+  ],
+  "PObserve": [
+    "TestCacheBypass"
+  ],
+  "PCompilerKey": [
+    "TestCompilerCacheProgram"
+  ],
+  "PNodeKey": [
+    "TestCacheKeyDimensions",
+    "TestNodeCacheProgram"
+  ],
+  "PNativeKey": [
+    "TestCacheKeyDimensions",
+    "TestNativeCacheGeneratedC"
+  ],
+  "PKey": [
+    "TestCacheKeyDimensions"
+  ],
+  "PFilter": [
+    "TestParallelCachedMatchesSerial",
+    "TestOrderedProgress"
+  ],
+  "PAttempt": [
+    "TestCompilerCacheAcrossScratchDirectories",
+    "TestImportedInputsRunFresh",
+    "TestUnavailableCacheStillRuns"
+  ],
+  "PDependent": [
+    "TestCompilerCacheProgram"
+  ],
+  "PCompile": [
+    "TestCompilerCacheProgram"
+  ],
+  "PWorker": [
+    "TestCompilerWorkerTimeout",
+    "TestCompilerWorkerMatchesSubprocess"
+  ]
+}

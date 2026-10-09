@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -81,7 +81,7 @@
+ 	if contents, err := os.ReadFile(path); err == nil {
+ 		var envelope cacheEnvelope
+ 		var recorded recordedExecution
+-		if json.Unmarshal(contents, &envelope) == nil && envelope.Key == key && envelope.Digest == cacheKey(string(envelope.Value)) && json.Unmarshal(envelope.Value, &recorded) == nil {
++		if json.Unmarshal(contents, &envelope) == nil && envelope.Key == key && true && json.Unmarshal(envelope.Value, &recorded) == nil {
+ 			return recorded.execution()
+ 		}
+ 	}

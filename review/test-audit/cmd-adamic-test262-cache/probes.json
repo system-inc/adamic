@@ -1,0 +1,79 @@
+[
+  {
+    "id": "PReuse",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 75,
+    "signature": "func (cache *resultCache) reuse(key string, execute func() (execution, bool)) execution {",
+    "empty": "execution{}"
+  },
+  {
+    "id": "PObserve",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 66,
+    "signature": "func (cache *resultCache) observe(key string, execute func() (execution, bool)) execution {",
+    "empty": "execution{}"
+  },
+  {
+    "id": "PCompilerKey",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 55,
+    "signature": "func compilerResultKey(program, compiler, command, context string) string {",
+    "empty": "\"\""
+  },
+  {
+    "id": "PNodeKey",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 59,
+    "signature": "func nodeResultKey(program, version, adaptation, command, context string) string {",
+    "empty": "\"\""
+  },
+  {
+    "id": "PNativeKey",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 62,
+    "signature": "func nativeResultKey(code, library, command, context string) string {",
+    "empty": "\"\""
+  },
+  {
+    "id": "PKey",
+    "file": "cmd/adamic-test262/cache.go",
+    "line": 46,
+    "signature": "func cacheKey(parts ...string) string {",
+    "empty": "\"\""
+  },
+  {
+    "id": "PFilter",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 127,
+    "signature": "func (e *engine) runFilter(filter string, limit int, classifyOnly bool) (filterReport, error) {",
+    "empty": "filterReport{}, nil"
+  },
+  {
+    "id": "PAttempt",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 232,
+    "signature": "func (e *engine) attempt(test classified) result {",
+    "empty": "result{}"
+  },
+  {
+    "id": "PDependent",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 357,
+    "signature": "func dependentProgram(program string) bool {",
+    "empty": "false"
+  },
+  {
+    "id": "PCompile",
+    "file": "cmd/adamic-test262/compiler.go",
+    "line": 38,
+    "signature": "func compileInProcess(path string) (result execution) {",
+    "empty": "execution{}"
+  },
+  {
+    "id": "PWorker",
+    "file": "cmd/adamic-test262/compiler.go",
+    "line": 94,
+    "signature": "func (worker *compilerWorker) compile(path string) execution {",
+    "empty": "execution{}"
+  }
+]

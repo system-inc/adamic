@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -53,7 +53,7 @@
+ }
+ 
+ func compilerResultKey(program, compiler, command, context string) string {
+-	return cacheKey("test262-compiler-v1", program, compiler, command, context)
++	return cacheKey("test262-compiler-v1", "", compiler, command, context)
+ }
+ 
+ func nodeResultKey(program, version, adaptation, command, context string) string {

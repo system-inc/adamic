@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -46,7 +46,7 @@
+ func cacheKey(parts ...string) string {
+ 	hash := sha256.New()
+ 	for _, part := range parts {
+-		fmt.Fprintf(hash, "%d:", len(part))
++		
+ 		hash.Write([]byte(part))
+ 	}
+ 	return fmt.Sprintf("%x", hash.Sum(nil))

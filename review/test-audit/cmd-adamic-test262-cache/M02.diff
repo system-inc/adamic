@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/cache.go
++++ b/cmd/adamic-test262/cache.go
+@@ -57,7 +57,7 @@
+ }
+ 
+ func nodeResultKey(program, version, adaptation, command, context string) string {
+-	return cacheKey("test262-node-v1", program, version, adaptation, command, context)
++	return cacheKey("test262-node-v1", "", version, adaptation, command, context)
+ }
+ func nativeResultKey(code, library, command, context string) string {
+ 	return cacheKey("test262-native-v1", code, library, command, context)

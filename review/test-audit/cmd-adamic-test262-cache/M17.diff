@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -151,7 +151,7 @@
+ 		if test.Skip != "" {
+ 			results[index] = result{Path: relative, Directory: test.Directory, Kind: outcomeSkipped, Reason: test.Skip}
+ 			close(ready[index])
+-		} else if classifyOnly || (limit > 0 && attempted >= limit) {
++		} else if classifyOnly || (limit > 0 && attempted > limit) {
+ 			results[index] = result{Path: relative, Directory: test.Directory, Kind: outcomeUnrun, Reason: "not run"}
+ 			close(ready[index])
+ 		} else {

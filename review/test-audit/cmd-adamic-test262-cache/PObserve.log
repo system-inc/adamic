@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T10:18:49.302458713Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:18:49.308981632Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypass"}
+{"Time":"2026-10-09T10:18:49.309040341Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypass","Output":"=== RUN   TestCacheBypass\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:49.309062444Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypass","Output":"    cache_test.go:118: bypass reused evidence\n","OutputType":"error"}
+{"Time":"2026-10-09T10:18:49.309096796Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypass","Output":"--- FAIL: TestCacheBypass (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:49.309100151Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypass","Elapsed":0}
+{"Time":"2026-10-09T10:18:49.309111208Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:49.309349908Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.006s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:49.309365712Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.007}

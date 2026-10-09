@@ -1,0 +1,745 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverprofile=/workspace/adamic/review/test-audit/cmd-adamic-test262-cache/slice.cover",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^(TestNodeCacheProgram|TestNativeCacheGeneratedC|TestCacheKeyDimensions|TestCacheAtomicBytes|TestCacheBypass|TestParallelCachedMatchesSerial|TestOrderedProgress|TestUnavailableCacheStillRuns|TestImportedInputsRunFresh|TestCompilerCacheProgram|TestCompilerCacheAcrossScratchDirectories|TestCompilerWorkerMatchesSubprocess|TestCompilerHangHelper|TestCompilerWorkerTimeout)$"
+    ],
+    "log": "slice-coverage.log",
+    "exit": 0,
+    "wall": 21.875664082999947
+  },
+  {
+    "command": [
+      "go",
+      "tool",
+      "cover",
+      "-func=/workspace/adamic/review/test-audit/cmd-adamic-test262-cache/slice.cover"
+    ],
+    "log": "functions-coverage.txt",
+    "exit": 0,
+    "wall": 0.2878444820000823
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestNodeCacheProgram$"
+    ],
+    "log": "timing-TestNodeCacheProgram-1.log",
+    "exit": 0,
+    "wall": 2.1521798300000228
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestNodeCacheProgram$"
+    ],
+    "log": "timing-TestNodeCacheProgram-2.log",
+    "exit": 0,
+    "wall": 2.2206015419999403
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestNodeCacheProgram$"
+    ],
+    "log": "timing-TestNodeCacheProgram-3.log",
+    "exit": 0,
+    "wall": 2.1246283350000112
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestNativeCacheGeneratedC$"
+    ],
+    "log": "timing-TestNativeCacheGeneratedC-1.log",
+    "exit": 0,
+    "wall": 1.99241340399999
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestNativeCacheGeneratedC$"
+    ],
+    "log": "timing-TestNativeCacheGeneratedC-2.log",
+    "exit": 0,
+    "wall": 2.0302140339999823
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestNativeCacheGeneratedC$"
+    ],
+    "log": "timing-TestNativeCacheGeneratedC-3.log",
+    "exit": 0,
+    "wall": 1.9872875309999927
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCacheKeyDimensions$"
+    ],
+    "log": "timing-TestCacheKeyDimensions-1.log",
+    "exit": 0,
+    "wall": 1.7837199059999875
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCacheKeyDimensions$"
+    ],
+    "log": "timing-TestCacheKeyDimensions-2.log",
+    "exit": 0,
+    "wall": 1.862147446999984
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCacheKeyDimensions$"
+    ],
+    "log": "timing-TestCacheKeyDimensions-3.log",
+    "exit": 0,
+    "wall": 1.7086375420000195
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCacheAtomicBytes$"
+    ],
+    "log": "timing-TestCacheAtomicBytes-1.log",
+    "exit": 0,
+    "wall": 1.7564925080000648
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCacheAtomicBytes$"
+    ],
+    "log": "timing-TestCacheAtomicBytes-2.log",
+    "exit": 0,
+    "wall": 1.9939294120000568
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCacheAtomicBytes$"
+    ],
+    "log": "timing-TestCacheAtomicBytes-3.log",
+    "exit": 0,
+    "wall": 1.7580307460000313
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCacheBypass$"
+    ],
+    "log": "timing-TestCacheBypass-1.log",
+    "exit": 0,
+    "wall": 1.9621086340000602
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCacheBypass$"
+    ],
+    "log": "timing-TestCacheBypass-2.log",
+    "exit": 0,
+    "wall": 1.9144064280000066
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCacheBypass$"
+    ],
+    "log": "timing-TestCacheBypass-3.log",
+    "exit": 0,
+    "wall": 1.8695043440000063
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestParallelCachedMatchesSerial$"
+    ],
+    "log": "timing-TestParallelCachedMatchesSerial-1.log",
+    "exit": 0,
+    "wall": 5.913283451000098
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestParallelCachedMatchesSerial$"
+    ],
+    "log": "timing-TestParallelCachedMatchesSerial-2.log",
+    "exit": 0,
+    "wall": 6.585971026000038
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestParallelCachedMatchesSerial$"
+    ],
+    "log": "timing-TestParallelCachedMatchesSerial-3.log",
+    "exit": 0,
+    "wall": 6.413292210000009
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestOrderedProgress$"
+    ],
+    "log": "timing-TestOrderedProgress-1.log",
+    "exit": 0,
+    "wall": 5.567351815000052
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestOrderedProgress$"
+    ],
+    "log": "timing-TestOrderedProgress-2.log",
+    "exit": 0,
+    "wall": 5.15594230399995
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestOrderedProgress$"
+    ],
+    "log": "timing-TestOrderedProgress-3.log",
+    "exit": 0,
+    "wall": 5.249242519999939
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestUnavailableCacheStillRuns$"
+    ],
+    "log": "timing-TestUnavailableCacheStillRuns-1.log",
+    "exit": 0,
+    "wall": 4.962603476999902
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestUnavailableCacheStillRuns$"
+    ],
+    "log": "timing-TestUnavailableCacheStillRuns-2.log",
+    "exit": 0,
+    "wall": 5.2145306540001
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestUnavailableCacheStillRuns$"
+    ],
+    "log": "timing-TestUnavailableCacheStillRuns-3.log",
+    "exit": 0,
+    "wall": 5.227730770999983
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestImportedInputsRunFresh$"
+    ],
+    "log": "timing-TestImportedInputsRunFresh-1.log",
+    "exit": 0,
+    "wall": 5.23039108699993
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestImportedInputsRunFresh$"
+    ],
+    "log": "timing-TestImportedInputsRunFresh-2.log",
+    "exit": 0,
+    "wall": 5.33757180200007
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestImportedInputsRunFresh$"
+    ],
+    "log": "timing-TestImportedInputsRunFresh-3.log",
+    "exit": 0,
+    "wall": 5.190741007999918
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerCacheProgram$"
+    ],
+    "log": "timing-TestCompilerCacheProgram-1.log",
+    "exit": 0,
+    "wall": 1.987106281000024
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerCacheProgram$"
+    ],
+    "log": "timing-TestCompilerCacheProgram-2.log",
+    "exit": 0,
+    "wall": 2.028883594999911
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerCacheProgram$"
+    ],
+    "log": "timing-TestCompilerCacheProgram-3.log",
+    "exit": 0,
+    "wall": 2.233383473999993
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerCacheAcrossScratchDirectories$"
+    ],
+    "log": "timing-TestCompilerCacheAcrossScratchDirectories-1.log",
+    "exit": 0,
+    "wall": 5.408718187999966
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerCacheAcrossScratchDirectories$"
+    ],
+    "log": "timing-TestCompilerCacheAcrossScratchDirectories-2.log",
+    "exit": 0,
+    "wall": 5.137962033000008
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerCacheAcrossScratchDirectories$"
+    ],
+    "log": "timing-TestCompilerCacheAcrossScratchDirectories-3.log",
+    "exit": 0,
+    "wall": 5.921530608000012
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerWorkerMatchesSubprocess$"
+    ],
+    "log": "timing-TestCompilerWorkerMatchesSubprocess-1.log",
+    "exit": 0,
+    "wall": 6.379777547999993
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerWorkerMatchesSubprocess$"
+    ],
+    "log": "timing-TestCompilerWorkerMatchesSubprocess-2.log",
+    "exit": 0,
+    "wall": 5.539803950000078
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerWorkerMatchesSubprocess$"
+    ],
+    "log": "timing-TestCompilerWorkerMatchesSubprocess-3.log",
+    "exit": 0,
+    "wall": 5.674982871999987
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerHangHelper$"
+    ],
+    "log": "timing-TestCompilerHangHelper-1.log",
+    "exit": 0,
+    "wall": 1.8496462570000176
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerHangHelper$"
+    ],
+    "log": "timing-TestCompilerHangHelper-2.log",
+    "exit": 0,
+    "wall": 1.8397067429999652
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerHangHelper$"
+    ],
+    "log": "timing-TestCompilerHangHelper-3.log",
+    "exit": 0,
+    "wall": 1.8917768979999892
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerWorkerTimeout$"
+    ],
+    "log": "timing-TestCompilerWorkerTimeout-1.log",
+    "exit": 0,
+    "wall": 2.153424137000002
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerWorkerTimeout$"
+    ],
+    "log": "timing-TestCompilerWorkerTimeout-2.log",
+    "exit": 0,
+    "wall": 2.170843133000062
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic-test262/",
+      "-run",
+      "^TestCompilerWorkerTimeout$"
+    ],
+    "log": "timing-TestCompilerWorkerTimeout-3.log",
+    "exit": 0,
+    "wall": 2.158559766999929
+  }
+]

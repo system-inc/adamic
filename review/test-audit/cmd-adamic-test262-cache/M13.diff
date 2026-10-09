@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -273,7 +273,7 @@
+ 		cache = nil
+ 	}
+ 	compilerCommand := cacheKey("adamic c", e.adamic, typescript, "2m", "16MiB")
+-	if e.compiler != nil {
++	if e.compiler == nil {
+ 		// The worker executes this runner, not the scratch copy of adamic used for fallback.
+ 		// Its exact executable and protocol are already part of the runner context.
+ 		compilerCommand = cacheKey("runner --compiler-worker", typescript, "2m", "16MiB")

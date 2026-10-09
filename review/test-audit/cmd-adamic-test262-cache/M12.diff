@@ -1,0 +1,10 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -236,7 +236,6 @@
+ 	directory := e.programDirectory(test)
+ 	if err := os.MkdirAll(directory, 0700); err != nil {
+ 		// A broken observation cache must not prevent the uncached program from running.
+-		directory = e.work
+ 		if err := os.MkdirAll(directory, 0700); err != nil {
+ 			base.Kind = outcomeCrashed
+ 			base.Reason = err.Error()

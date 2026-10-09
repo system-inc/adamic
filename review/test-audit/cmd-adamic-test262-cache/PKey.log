@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:18:57.020143894Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T10:18:57.028523565Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions"}
+{"Time":"2026-10-09T10:18:57.02859926Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"=== RUN   TestCacheKeyDimensions\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:57.028620872Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"=== PAUSE TestCacheKeyDimensions\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:57.028623516Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions"}
+{"Time":"2026-10-09T10:18:57.02862591Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions"}
+{"Time":"2026-10-09T10:18:57.028627562Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"=== CONT  TestCacheKeyDimensions\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:57.028668254Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"    cache_test.go:73: node dimension 0 changed but served \"old\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:18:57.02871907Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"--- FAIL: TestCacheKeyDimensions (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:57.028745841Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Elapsed":0}
+{"Time":"2026-10-09T10:18:57.028784179Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:57.028955567Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic-test262\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:57.02897073Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":0.009}

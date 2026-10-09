@@ -1,0 +1,16 @@
+[
+  "TestNodeCacheProgram",
+  "TestNativeCacheGeneratedC",
+  "TestCacheKeyDimensions",
+  "TestCacheAtomicBytes",
+  "TestCacheBypass",
+  "TestParallelCachedMatchesSerial",
+  "TestOrderedProgress",
+  "TestUnavailableCacheStillRuns",
+  "TestImportedInputsRunFresh",
+  "TestCompilerCacheProgram",
+  "TestCompilerCacheAcrossScratchDirectories",
+  "TestCompilerWorkerMatchesSubprocess",
+  "TestCompilerHangHelper",
+  "TestCompilerWorkerTimeout"
+]
