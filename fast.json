@@ -13,5 +13,20 @@
   "gated": "c310d512108360c770918556eaf460cbadf22633",
   "unplanned_packages_not_run": 50,
   "complete": true,
-  "darwin": "not run (pool is Linux only)"
+  "darwin": "not run (pool is Linux only)",
+  "pass": 13070,
+  "fail": 0,
+  "skip": 2,
+  "planned_stages": [
+    "tests"
+  ],
+  "wall_seconds": 1381.8,
+  "steps_seconds": {
+    "tests": 1381.8
+  },
+  "stages_exit": {
+    "tests": 0
+  },
+  "build_ok": true,
+  "vet_ok": true
 }
