@@ -1,0 +1,42 @@
+[
+  {
+    "id": "PLower",
+    "file": "internal/lower/lower.go",
+    "signature": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "answer": "return nil, nil",
+    "rows": [
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewV2ArrayArmBoundary",
+      "TestCheckedViewV2MovedStage3Results",
+      "TestCheckedViewObjectPrimitiveSource"
+    ],
+    "line": 20
+  },
+  {
+    "id": "PC",
+    "file": "internal/native/emit.go",
+    "signature": "func C(program *ir.Program) string {",
+    "answer": "return \"\"",
+    "rows": [
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewV2MovedStage3Results",
+      "TestCheckedViewObjectPrimitiveSource"
+    ],
+    "line": 22
+  },
+  {
+    "id": "PJS",
+    "file": "internal/javascript/javascript.go",
+    "signature": "func JavaScript(program *ir.Program) string {",
+    "answer": "return \"\"",
+    "rows": [
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewV2MovedStage3Results",
+      "TestCheckedViewObjectPrimitiveSource"
+    ],
+    "line": 24
+  }
+]

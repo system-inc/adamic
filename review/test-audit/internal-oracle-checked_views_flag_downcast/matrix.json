@@ -1,0 +1,58 @@
+{
+  "rows": [
+    "TestCheckedViewFlagDowncast",
+    "TestCheckedViewInterfaces",
+    "TestCheckedViewObjects",
+    "TestCheckedViewOptionalReadBoundary",
+    "TestCheckedViewV2ReadsAfterWrites",
+    "TestCheckedViewV2ArrayArmBoundary",
+    "TestCheckedViewV2WrongFamilyMutant",
+    "TestCheckedViewV2RepresentationMutants",
+    "TestCheckedViewV2MembershipMutant",
+    "TestCheckedViewV2TupleIdentityMutant",
+    "TestCheckedViewV2CallableProducerMutant",
+    "TestCheckedViewV2MovedStage3Results",
+    "TestCheckedViewObjectPrimitiveSource"
+  ],
+  "raw_failures": {
+    "M1": [],
+    "M2": [
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewOptionalReadBoundary"
+    ],
+    "M3": [
+      "TestCheckedViewV2TupleIdentityMutant",
+      "TestCheckedViewFlagDowncast",
+      "TestCheckedViewObjects",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewInterfaces",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewV2MovedStage3Results"
+    ],
+    "M4": []
+  },
+  "production_failures": {
+    "M1": [],
+    "M2": [
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewOptionalReadBoundary"
+    ],
+    "M3": [
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewV2MovedStage3Results"
+    ],
+    "M4": []
+  },
+  "outside_rows": "unknown",
+  "witness_failures_excluded": [
+    "TestCheckedViewFlagDowncast",
+    "TestCheckedViewInterfaces",
+    "TestCheckedViewObjects",
+    "TestCheckedViewV2WrongFamilyMutant",
+    "TestCheckedViewV2RepresentationMutants",
+    "TestCheckedViewV2MembershipMutant",
+    "TestCheckedViewV2TupleIdentityMutant",
+    "TestCheckedViewV2CallableProducerMutant"
+  ]
+}

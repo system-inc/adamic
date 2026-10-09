@@ -1,0 +1,16 @@
+{
+  "id": "W1",
+  "file": "internal/oracle/oracle_test.go",
+  "line": 716,
+  "change": "disable agreement comparison",
+  "rows": [
+    "TestCheckedViewFlagDowncast",
+    "TestCheckedViewInterfaces",
+    "TestCheckedViewObjects",
+    "TestCheckedViewV2WrongFamilyMutant",
+    "TestCheckedViewV2RepresentationMutants",
+    "TestCheckedViewV2MembershipMutant",
+    "TestCheckedViewV2TupleIdentityMutant",
+    "TestCheckedViewV2CallableProducerMutant"
+  ]
+}

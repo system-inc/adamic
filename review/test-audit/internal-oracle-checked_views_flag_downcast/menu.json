@@ -1,0 +1,47 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/lower/view_lazy.go",
+    "old": "if demanded {",
+    "new": "if !demanded {",
+    "kind": "flip condition",
+    "change": "invert demand for unsupported checked-view reads",
+    "lines": [
+      196
+    ]
+  },
+  {
+    "id": "M2",
+    "file": "internal/lower/interface_cast.go",
+    "old": "\"a checked field alias requiring an optional, accessor, or representation conversion\"",
+    "new": "\"a checked field alias requiring an optional, accessor, or representation adaptation\"",
+    "kind": "change constant",
+    "change": "change canonical optional-read boundary wording in both paths",
+    "lines": [
+      70,
+      392
+    ]
+  },
+  {
+    "id": "M3",
+    "file": "internal/native/view_fields.go",
+    "old": "e.cache(), property.Of, cString(name), cString(property.View))",
+    "new": "e.cache(), ir.Boolean, cString(name), cString(property.View))",
+    "kind": "change option",
+    "change": "require boolean physical storage for ordinary checked fields",
+    "lines": [
+      31
+    ]
+  },
+  {
+    "id": "M4",
+    "file": "internal/javascript/view_fields.go",
+    "old": "e.values(property.ViewAllowed))",
+    "new": "\"\")",
+    "kind": "change option",
+    "change": "drop literal restrictions from ordinary checked fields",
+    "lines": [
+      22
+    ]
+  }
+]

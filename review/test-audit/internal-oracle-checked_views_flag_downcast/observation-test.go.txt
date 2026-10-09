@@ -1,0 +1,16 @@
+package oracle
+import("testing";"os";"path/filepath";"github.com/system-inc/adamic/internal/lower")
+func TestU057Observation(t *testing.T){
+ t.Log("demand",lower.U057DemandObservation())
+ path:=filepath.Join(t.TempDir(),"literal.a")
+ source:=`interface Base { readonly kind: string }
+interface Child extends Base { readonly kind: "child" }
+const raw: {kind:string} = {kind:"child"};
+const source:Base=raw;
+const view=source as Child;
+raw.kind="other";
+console.log(view.kind);`
+ if err:=os.WriteFile(path,[]byte(source),0600);err!=nil{t.Fatal(err)}
+ program,err:=lowered(t,path);if err!=nil{t.Log("lowering",err);return}
+ t.Logf("node %#v",onNode(t,path));t.Logf("javascript %#v",onJavaScriptBackend(t,program))
+}

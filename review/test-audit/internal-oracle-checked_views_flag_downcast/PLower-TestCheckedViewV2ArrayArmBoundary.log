@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:58:33.660024388Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T10:58:33.66836112Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewV2ArrayArmBoundary"}
+{"Time":"2026-10-09T10:58:33.66844782Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewV2ArrayArmBoundary","Output":"=== RUN   TestCheckedViewV2ArrayArmBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:33.669835836Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewV2ArrayArmBoundary","Output":"=== PAUSE TestCheckedViewV2ArrayArmBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:33.669863378Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewV2ArrayArmBoundary"}
+{"Time":"2026-10-09T10:58:33.66987155Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewV2ArrayArmBoundary"}
+{"Time":"2026-10-09T10:58:33.669876357Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewV2ArrayArmBoundary","Output":"=== CONT  TestCheckedViewV2ArrayArmBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:33.708779353Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewV2ArrayArmBoundary","Output":"    checked_views_v2_migration_test.go:44: expected named V3 arm, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:33.708860916Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewV2ArrayArmBoundary","Output":"--- FAIL: TestCheckedViewV2ArrayArmBoundary (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:33.708866164Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCheckedViewV2ArrayArmBoundary","Elapsed":0.04}
+{"Time":"2026-10-09T10:58:33.708894226Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:33.710164143Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.050s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:33.710204034Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.05}

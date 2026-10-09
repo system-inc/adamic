@@ -1,0 +1,12 @@
+=== RUN   TestU057Observation
+    u057_observation_test.go:4: demand probe:1: Adamic 0.1 refuses checked view read of field field with unsupported dictionary contract; prove or implement the dictionary contract before reading this field
+    u057_observation_test.go:15: gate cache node miss
+    u057_observation_test.go:15: node oracle.run{stdout:[]uint8{0x6f, 0x74, 0x68, 0x65, 0x72, 0xa}, stderr:[]uint8{}, exitCode:0}
+    u057_observation_test.go:15: gate cache node miss
+    u057_observation_test.go:15: javascript oracle.run{stdout:[]uint8{0x6f, 0x74, 0x68, 0x65, 0x72, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- PASS: TestU057Observation (0.20s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.206s

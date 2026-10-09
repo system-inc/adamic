@@ -1,0 +1,579 @@
+[
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M1-vet.log",
+    "exit": 0,
+    "wall": 0.5591288239997994,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "M2-vet.log",
+    "exit": 0,
+    "wall": 0.550865371999862,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "log": "M3-vet.log",
+    "exit": 0,
+    "wall": 0.5065187400000468,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/javascript/"
+    ],
+    "log": "M4-vet.log",
+    "exit": 0,
+    "wall": 0.09133638000002975,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "log": "PLower-vet.log",
+    "exit": 0,
+    "wall": 0.5281083049999324,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "log": "PC-vet.log",
+    "exit": 0,
+    "wall": 0.26453530899971156,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/javascript/"
+    ],
+    "log": "PJS-vet.log",
+    "exit": 0,
+    "wall": 0.08283468500030722,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "log": "W1-vet.log",
+    "exit": 0,
+    "wall": 0.25852979100000084,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant)$"
+    ],
+    "log": "W1.log",
+    "exit": 1,
+    "wall": 9.995759086999897,
+    "environment": {
+      "ADAMIC_MUTANT": "W1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/W1"
+    }
+  },
+  {
+    "command": [
+      "gofmt",
+      "-w",
+      "internal/lower/lower.go",
+      "internal/native/view_fields.go",
+      "internal/lower/view_lazy.go",
+      "internal/lower/interface_cast.go",
+      "internal/javascript/javascript.go",
+      "internal/javascript/view_fields.go",
+      "internal/native/emit.go",
+      "internal/lower/u057_mutant.go",
+      "internal/native/u057_mutant.go",
+      "internal/javascript/u057_mutant.go"
+    ],
+    "log": "switch-gofmt.log",
+    "exit": 0,
+    "wall": 0.008467703999940568,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u057-test",
+      "./internal/oracle/"
+    ],
+    "log": "switch-build.log",
+    "exit": 0,
+    "wall": 13.525942511000267,
+    "environment": {}
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource)$"
+    ],
+    "log": "M1.log",
+    "exit": 0,
+    "wall": 9.681644366,
+    "environment": {
+      "ADAMIC_MUTANT": "M1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/M1"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource)$"
+    ],
+    "log": "M2.log",
+    "exit": 1,
+    "wall": 9.47707271399986,
+    "environment": {
+      "ADAMIC_MUTANT": "M2",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/M2"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource)$"
+    ],
+    "log": "M3.log",
+    "exit": 1,
+    "wall": 9.84948611100026,
+    "environment": {
+      "ADAMIC_MUTANT": "M3",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/M3"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource)$"
+    ],
+    "log": "M4.log",
+    "exit": 0,
+    "wall": 9.88146935900022,
+    "environment": {
+      "ADAMIC_MUTANT": "M4",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/M4"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewOptionalReadBoundary$"
+    ],
+    "log": "PLower-TestCheckedViewOptionalReadBoundary.log",
+    "exit": 1,
+    "wall": 2.481724602000213,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewV2ReadsAfterWrites$"
+    ],
+    "log": "PLower-TestCheckedViewV2ReadsAfterWrites.log",
+    "exit": 1,
+    "wall": 2.5194007999998576,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewV2ArrayArmBoundary$"
+    ],
+    "log": "PLower-TestCheckedViewV2ArrayArmBoundary.log",
+    "exit": 1,
+    "wall": 2.1284944790004374,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewV2MovedStage3Results$"
+    ],
+    "log": "PLower-TestCheckedViewV2MovedStage3Results.log",
+    "exit": 1,
+    "wall": 2.405576113999814,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewObjectPrimitiveSource$"
+    ],
+    "log": "PLower-TestCheckedViewObjectPrimitiveSource.log",
+    "exit": 1,
+    "wall": 2.2252471259998856,
+    "environment": {
+      "ADAMIC_MUTANT": "PLower",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PLower"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewOptionalReadBoundary$"
+    ],
+    "log": "PC-TestCheckedViewOptionalReadBoundary.log",
+    "exit": 1,
+    "wall": 2.335974442999941,
+    "environment": {
+      "ADAMIC_MUTANT": "PC",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PC"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewV2ReadsAfterWrites$"
+    ],
+    "log": "PC-TestCheckedViewV2ReadsAfterWrites.log",
+    "exit": 1,
+    "wall": 2.4514157680005155,
+    "environment": {
+      "ADAMIC_MUTANT": "PC",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PC"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewV2MovedStage3Results$"
+    ],
+    "log": "PC-TestCheckedViewV2MovedStage3Results.log",
+    "exit": 1,
+    "wall": 3.1183899670004394,
+    "environment": {
+      "ADAMIC_MUTANT": "PC",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PC"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewObjectPrimitiveSource$"
+    ],
+    "log": "PC-TestCheckedViewObjectPrimitiveSource.log",
+    "exit": 1,
+    "wall": 2.7704734489998373,
+    "environment": {
+      "ADAMIC_MUTANT": "PC",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PC"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewOptionalReadBoundary$"
+    ],
+    "log": "PJS-TestCheckedViewOptionalReadBoundary.log",
+    "exit": 1,
+    "wall": 3.4244484330001796,
+    "environment": {
+      "ADAMIC_MUTANT": "PJS",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PJS"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewV2ReadsAfterWrites$"
+    ],
+    "log": "PJS-TestCheckedViewV2ReadsAfterWrites.log",
+    "exit": 1,
+    "wall": 3.3146803240006193,
+    "environment": {
+      "ADAMIC_MUTANT": "PJS",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PJS"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewV2MovedStage3Results$"
+    ],
+    "log": "PJS-TestCheckedViewV2MovedStage3Results.log",
+    "exit": 1,
+    "wall": 2.649027016999753,
+    "environment": {
+      "ADAMIC_MUTANT": "PJS",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PJS"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCheckedViewObjectPrimitiveSource$"
+    ],
+    "log": "PJS-TestCheckedViewObjectPrimitiveSource.log",
+    "exit": 1,
+    "wall": 3.904758010000478,
+    "environment": {
+      "ADAMIC_MUTANT": "PJS",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u057/cache/PJS"
+    }
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource)$"
+    ],
+    "log": "final-baseline.log",
+    "exit": 0,
+    "wall": 6.795523509999839,
+    "environment": {}
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "log": "final-vet.log",
+    "exit": 0,
+    "wall": 0.25028240800020285,
+    "environment": {}
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "log": "source-diff-check.log",
+    "exit": 0,
+    "wall": 0.08946105999984866,
+    "environment": {}
+  }
+]
