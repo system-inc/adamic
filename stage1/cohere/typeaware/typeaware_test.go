@@ -25,7 +25,30 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// The upstream commit fixes the compiler population; this is a lost-corpus
+// guard, not the live case total used by the shard union.
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
+const compilerFilesAtPin = 77
+
+func pinnedCompilerFiles(t *testing.T, corpus string) []string {
+	t.Helper()
+	paths := corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
+	if len(paths) != compilerFilesAtPin {
+		t.Fatalf("compiler corpus at %s: %d files, want %d", compilerCommit, len(paths), compilerFilesAtPin)
+	}
+	return paths
+}
+
+// Fixture extraction is fixed by cohere's submodule commit, plus the explicit
+// generated controls in these tests. It never enumerates repository files.
+func pinnedFixtureFiles(t *testing.T, repository string, names []string) {
+	t.Helper()
+	roots := make([]string, len(names))
+	for i, name := range names {
+		roots[i] = "internal/lint/rules/typescript/" + name + "_test.go"
+	}
+	corpusfiles.Upstream(t, filepath.Join(repository, "cohere"), corpusfiles.CohereCommit, roots, []string{"*.go"})
+}
 
 type result struct {
 	stdout, stderr []byte
@@ -294,6 +317,7 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	}
 
 	// Extract the production rule's table sources without duplicating its verdicts.
+	pinnedFixtureFiles(t, repository, []string{"no_unsafe_unary_minus"})
 	sourceFile := filepath.Join(repository, "cohere/internal/lint/rules/typescript/no_unsafe_unary_minus_test.go")
 	tree, err := parser.ParseFile(token.NewFileSet(), sourceFile, nil, 0)
 	if err != nil {
@@ -520,7 +544,7 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	}
 	paths = nil
 	if corpus != "" {
-		paths = corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
+		paths = pinnedCompilerFiles(t, corpus)
 	}
 	sort.Strings(paths)
 	compilerManifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")

@@ -17,13 +17,14 @@ import (
 	"time"
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
-	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
 func suiteSources(t *testing.T, repository string) []string {
 	t.Helper()
+	names := []string{"no_unsafe_unary_minus", "related_getter_setter_pairs", "no_unsafe_declaration_merging", "no_unsafe_argument", "restrict_plus_operands", "no_unnecessary_boolean_literal_compare"}
+	pinnedFixtureFiles(t, repository, names)
 	unique := map[string]bool{}
-	for _, name := range []string{"no_unsafe_unary_minus", "related_getter_setter_pairs", "no_unsafe_declaration_merging", "no_unsafe_argument", "restrict_plus_operands", "no_unnecessary_boolean_literal_compare"} {
+	for _, name := range names {
 		tree, err := parser.ParseFile(token.NewFileSet(), filepath.Join(repository, "cohere/internal/lint/rules/typescript", name+"_test.go"), nil, 0)
 		if err != nil {
 			t.Fatal(err)
@@ -182,6 +183,8 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	manifest = h.write("generated.manifest", strings.Join(paths, "\n")+"\n")
 	t.Logf("fixture candidates: %d syntactically valid sources; %d nonsource strings or malformed fixtures excluded", len(paths), before-len(paths))
 	truth := h.must("generated-truth", exec.Command(oracle, config, manifest))
+	// Generated fixtures are fixed by cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+	// and the explicit controls in suiteSources; contiguous ranges are stable.
 	for i, group := range sixRanges(paths, 32) {
 		add(fmt.Sprintf("agreement/generated-%02d", i), sixIDs("agreement/generated", group), func(h *harness) { h.sixCompare("generated", oracle, binary, config, manifest, group) })
 	}
@@ -424,13 +427,14 @@ func TestSixRuleAgreementAndMutants(t *testing.T) {
 	if corpus == "" {
 		t.Log("compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE (#xq2ecw6)")
 	} else {
-		compilerPaths = corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
+		compilerPaths = pinnedCompilerFiles(t, corpus)
 		sort.Strings(compilerPaths)
 	}
 	compilerManifest := h.write("compiler.manifest", strings.Join(compilerPaths, "\n")+"\n")
 	compilerConfig := filepath.Join(corpus, "src/compiler/tsconfig.json")
 	groups := make([][]string, 8)
 	if len(compilerPaths) != 0 {
+		// compilerCommit fixes these 77 roots; repository growth cannot move them.
 		groups = sixCompilerRanges(t, compilerPaths, 8)
 	}
 	for i, group := range groups {
