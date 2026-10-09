@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/yaml/lexer.ts b/stage1/cohere/yaml/lexer.ts
+index 31658446..2e1fceac 100644
+--- a/stage1/cohere/yaml/lexer.ts
++++ b/stage1/cohere/yaml/lexer.ts
+@@ -356,7 +356,7 @@ export class Lexer {
+     }
+     parseBlockScalarHeader(): number {
+         this.blockScalarIndent = -1;
+-        this.blockScalarKeep = false;
++        this.blockScalarKeep = true;
+         let index = this.pos;
+         while(true) {
+             index += 1;

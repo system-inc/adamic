@@ -1,0 +1,125 @@
+stage1/cohere/yaml/lexer.ts:2: function asciiCharacters(): string[] {
+stage1/cohere/yaml/lexer.ts:4: for(let code = 0; code < 128; code++) units.push(String.fromCodePoint(code));
+stage1/cohere/yaml/lexer.ts:8: function character(text: string, index: number): string {
+stage1/cohere/yaml/lexer.ts:9: if(index < 0 || index >= text.length || Number.isNaN(index)) return '';
+stage1/cohere/yaml/lexer.ts:13: function codeUnit(text: string, index: number): number {
+stage1/cohere/yaml/lexer.ts:16: function isEmptyCode(unit: number): boolean {
+stage1/cohere/yaml/lexer.ts:20: function isFlowIndicatorCode(unit: number): boolean {
+stage1/cohere/yaml/lexer.ts:23: function member(set: string, unit: string): boolean {
+stage1/cohere/yaml/lexer.ts:93: function isEmpty(unit: string): boolean {
+stage1/cohere/yaml/lexer.ts:118: atLineEnd(): boolean {
+stage1/cohere/yaml/lexer.ts:129: charAt(count: number): string {
+stage1/cohere/yaml/lexer.ts:132: continueScalar(offset: number): number {
+stage1/cohere/yaml/lexer.ts:152: getLine(): string {
+stage1/cohere/yaml/lexer.ts:163: hasChars(count: number): boolean {
+stage1/cohere/yaml/lexer.ts:166: setNext(state: string): string {
+stage1/cohere/yaml/lexer.ts:173: peek(count: number): string {
+stage1/cohere/yaml/lexer.ts:176: pushCount(count: number): number {
+stage1/cohere/yaml/lexer.ts:184: pushSpaces(allowTabs: boolean): number {
+stage1/cohere/yaml/lexer.ts:200: pushNewline(): number {
+stage1/cohere/yaml/lexer.ts:206: parseBlockStart(): string {
+stage1/cohere/yaml/lexer.ts:223: parseLineStart(): string {
+stage1/cohere/yaml/lexer.ts:240: parseStream(): string {
+stage1/cohere/yaml/lexer.ts:279: pushToIndex(index: number, allowEmpty: boolean): number {
+stage1/cohere/yaml/lexer.ts:289: pushTag(): number {
+stage1/cohere/yaml/lexer.ts:318: pushUntil(header: boolean): number {
+stage1/cohere/yaml/lexer.ts:327: pushIndicators(): number {
+stage1/cohere/yaml/lexer.ts:357: parseBlockScalarHeader(): number {
+stage1/cohere/yaml/lexer.ts:370: parseQuotedScalar(): string {
+stage1/cohere/yaml/lexer.ts:406: parseBlockScalar(): string {
+stage1/cohere/yaml/lexer.ts:486: parsePlainScalar(): string {
+stage1/cohere/yaml/lexer.ts:527: parseDocument(): string {
+stage1/cohere/yaml/lexer.ts:569: parseFlowCollection(): string {
+stage1/cohere/yaml/lexer.ts:653: parseNext(next: string): string {
+stage1/cohere/yaml/lexer.ts:674: lex(source: string, incomplete = false): string[] {
+stage1/cohere/yaml/cst.ts:17: constructor(type: string, offset: number, indent: number, source: string, indentPresent: boolean) {
+stage1/cohere/yaml/cst.ts:25: export function tokenType(source: string): string {
+stage1/cohere/yaml/cst.ts:26: switch(source) {
+stage1/cohere/yaml/cst.ts:60: switch(source.slice(0, 1)) {
+stage1/cohere/yaml/cstParser.ts:6: function pair(start: number[], key: number, sep: number[]): CollectionItem {
+stage1/cohere/yaml/cstParser.ts:16: append(target: number[], source: readonly number[]): void {
+stage1/cohere/yaml/cstParser.ts:32: get(index: number): Token {
+stage1/cohere/yaml/cstParser.ts:35: peek(count: number): number {
+stage1/cohere/yaml/cstParser.ts:38: last(token: Token): CollectionItem {
+stage1/cohere/yaml/cstParser.ts:41: make(type: string, offset: number, indent: number, source: string, indentPresent: boolean): number {
+stage1/cohere/yaml/cstParser.ts:46: sourceToken(): number {
+stage1/cohere/yaml/cstParser.ts:49: error(message: string): number {
+stage1/cohere/yaml/cstParser.ts:54: includes(list: readonly number[], type: string): boolean {
+stage1/cohere/yaml/cstParser.ts:58: nonEmpty(list: readonly number[]): number {
+stage1/cohere/yaml/cstParser.ts:65: flowToken(index: number): boolean {
+stage1/cohere/yaml/cstParser.ts:76: previousProps(parent: Token): number[] {
+stage1/cohere/yaml/cstParser.ts:86: firstKeyProps(previous: number[]): number[] {
+stage1/cohere/yaml/cstParser.ts:106: fixFlowSequence(token: Token): void {
+stage1/cohere/yaml/cstParser.ts:132: commentLessIndented(list: readonly number[], indent: number): boolean {
+stage1/cohere/yaml/cstParser.ts:139: pop(error: number): void {
+stage1/cohere/yaml/cstParser.ts:228: newLines(): void {
+stage1/cohere/yaml/cstParser.ts:235: flowScalar(type: string): number {
+stage1/cohere/yaml/cstParser.ts:239: map(start: number[], key: number, sep: number[], offset: number, indent: number): number {
+stage1/cohere/yaml/cstParser.ts:244: startBlockValue(parent: Token): number {
+stage1/cohere/yaml/cstParser.ts:286: stream(): void {
+stage1/cohere/yaml/cstParser.ts:308: document(token: Token): void {
+stage1/cohere/yaml/cstParser.ts:334: scalar(token: Token): void {
+stage1/cohere/yaml/cstParser.ts:349: blockScalar(token: Token): void {
+stage1/cohere/yaml/cstParser.ts:368: indentedComment(start: readonly number[], indent: number): boolean {
+stage1/cohere/yaml/cstParser.ts:378: appendItemEnd(collection: Token, item: CollectionItem): void {
+stage1/cohere/yaml/cstParser.ts:389: moveIndentedComment(collection: Token, item: CollectionItem): boolean {
+stage1/cohere/yaml/cstParser.ts:401: blockMap(token: Token): void {
+stage1/cohere/yaml/cstParser.ts:565: blockSequence(token: Token): void {
+stage1/cohere/yaml/cstParser.ts:602: flowCollection(token: Token): void {
+stage1/cohere/yaml/cstParser.ts:689: documentEnd(token: Token): void {
+stage1/cohere/yaml/cstParser.ts:696: lineEnd(token: Token): void {
+stage1/cohere/yaml/cstParser.ts:713: step(): void {
+stage1/cohere/yaml/cstParser.ts:753: next(source: string): void {
+stage1/cohere/yaml/cstParser.ts:797: parse(source: string, incomplete = false): number[] {
+stage1/cohere/yaml/collectionItem.ts:10: constructor(start: number[]) {
+stage1/cohere/yaml/propsResolver.ts:8: constructor(parser: CSTParser, diagnostics: ScalarResolution) {
+stage1/cohere/yaml/propsResolver.ts:12: resolve(
+stage1/cohere/yaml/composeError.ts:7: constructor(start: number, end: number, code: string, message: string) {
+stage1/cohere/yaml/scalarResolution.ts:9: error(offset: number, code: string, message: string): void {
+stage1/cohere/yaml/scalarResolution.ts:12: tokenError(token: Token, code: string, message: string): void {
+stage1/cohere/yaml/scalar.ts:10: constructor(parser: CSTParser) {
+stage1/cohere/yaml/scalar.ts:14: end(tokens: readonly number[], start: number, reqSpace: boolean, result: ScalarResolution): number {
+stage1/cohere/yaml/scalar.ts:49: characterCode(source: string, offset: number, length: number, base: number, result: ScalarResolution): string {
+stage1/cohere/yaml/scalar.ts:64: doubleQuoted(source: string, base: number, result: ScalarResolution): string {
+stage1/cohere/yaml/scalar.ts:107: flow(token: Token): ScalarResolution {
+stage1/cohere/yaml/scalar.ts:163: block(token: Token, atRoot: boolean): ScalarResolution {
+stage1/cohere/yaml/scalarText.ts:2: export function char(source: string, index: number): string {
+stage1/cohere/yaml/scalarText.ts:5: export function whitespace(character: string): boolean {
+stage1/cohere/yaml/scalarText.ts:8: function lineEnd(source: string, from: number, newline: number): number {
+stage1/cohere/yaml/scalarText.ts:10: if(end - 1 >= from && char(source, end - 1) === '\r') end--;
+stage1/cohere/yaml/scalarText.ts:11: while(end - 1 >= from && whitespace(char(source, end - 1))) end--;
+stage1/cohere/yaml/scalarText.ts:14: export function foldLines(source: string): string {
+stage1/cohere/yaml/scalarText.ts:16: if(first < 0) return source;
+stage1/cohere/yaml/scalarText.ts:20: while(true) {
+stage1/cohere/yaml/scalarText.ts:37: while(position < source.length && whitespace(char(source, position))) position++;
+stage1/cohere/yaml/scalarText.ts:42: export function escapeCode(character: string): string {
+stage1/cohere/yaml/scalarText.ts:43: switch(character) {
+stage1/cohere/yaml/scalarText.ts:79: export function emptyContent(content: string): boolean {
+stage1/cohere/yaml/newlineFold.ts:5: constructor(source: string, start: number) {
+stage1/cohere/yaml/blockLine.ts:5: constructor(source: string) {
+stage1/cohere/yaml/lex_main.ts:4: function unescaped(text: string): string {
+stage1/cohere/yaml/lex_main.ts:7: for(let index = 0; index < text.length; index++) {
+stage1/cohere/yaml/lex_main.ts:18: function tokenText(token: string): string {
+stage1/cohere/yaml/lex_main.ts:20: for(let index = 0; index < token.length; index++) {
+stage1/cohere/yaml/lex_main.ts:30: if(line === '') continue;
+stage1/cohere/yaml/lex_main.ts:37: if(chunkSize === 0) {
+stage1/cohere/yaml/props_main.ts:6: function unescaped(text: string): string {
+stage1/cohere/yaml/props_main.ts:9: for(let index = 0; index < text.length; index++) {
+stage1/cohere/yaml/props_main.ts:20: function hex(text: string): string {
+stage1/cohere/yaml/props_main.ts:22: for(let index = 0; index < text.length; index++) parts.push(text.charCodeAt(index).toString(16).padStart(4, '0'));
+stage1/cohere/yaml/props_main.ts:27: constructor(parser: CSTParser) {
+stage1/cohere/yaml/props_main.ts:30: token(index: number): string {
+stage1/cohere/yaml/props_main.ts:35: resolve(
+stage1/cohere/yaml/props_main.ts:57: visit(index: number): void {
+stage1/cohere/yaml/props_main.ts:104: if(line === '') continue;
+stage1/cohere/yaml/props_main.ts:111: if(size === 0) parser.parse(text);
+stage1/cohere/yaml/props_main.ts:117: for(const root of parser.roots) writer.visit(root);
+stage1/cohere/yaml/scalar_main.ts:5: function unescaped(text: string): string {
+stage1/cohere/yaml/scalar_main.ts:8: for(let index = 0; index < text.length; index++) {
+stage1/cohere/yaml/scalar_main.ts:19: function hex(text: string): string {
+stage1/cohere/yaml/scalar_main.ts:21: for(let index = 0; index < text.length; index++) parts.push(text.charCodeAt(index).toString(16).padStart(4, '0'));
+stage1/cohere/yaml/scalar_main.ts:27: constructor(parser: CSTParser) {
+stage1/cohere/yaml/scalar_main.ts:31: visit(index: number): void {
+stage1/cohere/yaml/scalar_main.ts:63: if(line === '') continue;
+stage1/cohere/yaml/scalar_main.ts:70: if(size === 0) parser.parse(text);
+stage1/cohere/yaml/scalar_main.ts:76: for(const root of parser.roots) writer.visit(root);

@@ -1,0 +1,47 @@
+[
+  {
+    "mutant": "D1",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/yaml-gaps-defense/adamic",
+      "build",
+      "stage1/cohere/yaml/lex_main.ts",
+      "-o",
+      "/tmp/yaml-gaps-defense/D1-lexer",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 0.9848778000014136
+  },
+  {
+    "mutant": "D2",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/yaml-gaps-defense/adamic",
+      "build",
+      "stage1/cohere/yaml/lex_main.ts",
+      "-o",
+      "/tmp/yaml-gaps-defense/D2-lexer",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 1.0143763610030874
+  },
+  {
+    "mutant": "D3",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/yaml-gaps-defense/adamic",
+      "build",
+      "stage1/cohere/yaml/lex_main.ts",
+      "-o",
+      "/tmp/yaml-gaps-defense/D3-lexer",
+      "--sanitize"
+    ],
+    "exit": 0,
+    "seconds": 1.047665459998825
+  }
+]

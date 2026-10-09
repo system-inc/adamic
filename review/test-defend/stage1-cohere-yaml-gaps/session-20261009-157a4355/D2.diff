@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/yaml/lexer.ts b/stage1/cohere/yaml/lexer.ts
+index 31658446..c233586f 100644
+--- a/stage1/cohere/yaml/lexer.ts
++++ b/stage1/cohere/yaml/lexer.ts
+@@ -480,7 +480,7 @@ export class Lexer {
+             }
+         }
+         this.tokens.push('\x1f');
+-        this.pushToIndex(newline + 1, true);
++        this.pushToIndex(newline + 1, false);
+         return this.parseLineStart();
+     }
+     parsePlainScalar(): string {

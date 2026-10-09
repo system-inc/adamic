@@ -1,0 +1,14 @@
+stage1/cohere/yaml/compose_main.ts:3:import { CSTParser } from './cstParser.ts';
+stage1/cohere/yaml/composer.ts:4:import type { CSTParser } from './cstParser.ts';
+stage1/cohere/yaml/cstParser.ts:5:import { Lexer } from './lexer.ts';
+stage1/cohere/yaml/cstParser.ts:31:    lexer = new Lexer();
+stage1/cohere/yaml/cst_main.ts:3:import { CSTParser } from './cstParser.ts';
+stage1/cohere/yaml/format.ts:1:import { CSTParser } from './cstParser.ts';
+stage1/cohere/yaml/lex_main.ts:3:import { Lexer } from './lexer.ts';
+stage1/cohere/yaml/lex_main.ts:34:    const lexer = new Lexer();
+stage1/cohere/yaml/propsResolver.ts:1:import type { CSTParser } from './cstParser.ts';
+stage1/cohere/yaml/props_main.ts:3:import { CSTParser } from './cstParser.ts';
+stage1/cohere/yaml/scalar.ts:3:import type { CSTParser } from './cstParser.ts';
+stage1/cohere/yaml/scalar_main.ts:3:import { CSTParser } from './cstParser.ts';
+stage1/cohere/yaml/unistContext.ts:3:import type { CSTParser } from './cstParser.ts';
+stage1/cohere/yaml/unist_main.ts:3:import { CSTParser } from './cstParser.ts';
