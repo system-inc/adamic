@@ -255,8 +255,17 @@ dispatch() {
 # then a wave step's git artifact globs stand in, and the artifact match pages that step's owner once to add the trailer.
 # Main's whole gate, at 20, isn't this watcher's to send. cloud/pool-job.sh refuses a job without a tier.
 poolTier() {
-  local branch=$1 sha=$2 tier kind value task tasks best=""
+  local branch=$1 sha=$2 tier kind value task tasks best="" stated
+  # A "Gate-tier: <n>" trailer states it outright (integration, Oct 9 15:20Z: its cuts and P0s outside the waterfall were
+  # stamped 10 and raised by hand, six times tonight); the highest of it and the Task trailers' tiers wins.
+  stated=$(git -C "${here}" log --format='%(trailers:key=Gate-tier,valueonly)' "${sha}" --not refs/remotes/origin/main 2> /dev/null | grep -oE '^[0-9]+$' | sort -n | tail -1)
+  [ -n "${stated}" ] && [ "${stated}" -gt 40 ] && stated=40
   tasks=$(git -C "${here}" log --format='%(trailers:key=Task,valueonly)' "${sha}" --not refs/remotes/origin/main 2> /dev/null | grep -oE '#[0-9a-z]+' | tr -d '#' | sort -u)
+  if [ -n "${stated}" ] && [ -z "${tasks}" ]; then
+    echo "${stated}"
+    return
+  fi
+  best=${stated}
   if [ -n "${tasks}" ]; then
     while read -r tier kind value task; do
       [ "${kind}" = task ] && echo "${tasks}" | grep -qx "${value}" && { [ -z "${best}" ] || [ "${tier}" -gt "${best}" ]; } && best=${tier}

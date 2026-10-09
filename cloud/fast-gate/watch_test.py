@@ -55,6 +55,7 @@ class Watcher:
 *'ls-remote'*refs/heads/codex*) cat "$TEST_ROOT/tips" ;;
 *merge-base*) exit 1 ;;
 *trailers:key=Task*) cat "$TEST_ROOT/trailers-$5" 2>/dev/null ;;
+*trailers:key=Gate-tier*) cat "$TEST_ROOT/gate-tier-$5" 2>/dev/null ;;
 esac
 ''')
         self.script(self.bin / 'ahra', '''if [ "$1" = tasks ]; then
@@ -793,21 +794,27 @@ class WatchTests(unittest.TestCase):
         # A tip's Task trailers name its wave first (@system_adamic, 13:33Z); the front file and artifact globs stand in without one.
         w = self.reservation('pool P\nbox0 S\n', [('cloud/land-star-1', 'B'), ('cloud/land-wave0-1', 'B'), ('cloud/land-chain-1', 'B'),
                                                   ('codex/wave1', 'S'), ('codex/side', 'S'), ('codex/trailer-star', 'S'),
-                                                  ('codex/trailer-wave', 'S'), ('codex/trailer-late', 'S')], release=False)
+                                                  ('codex/trailer-wave', 'S'), ('codex/trailer-late', 'S'), ('cloud/land-cut-1', 'B'),
+                                                  ('codex/stated-low', 'S')], release=False)
         shas = dict(w.tips)
         w.put('trailers-' + shas['codex/trailer-star'], '#ab12cd3\n')
         w.put('trailers-' + shas['codex/trailer-wave'], '#zz00000\n#wave001\n')
         # A trailer naming a step past wave 1 is 10, even on a branch an artifact glob would have raised.
         w.put('trailers-' + shas['codex/trailer-late'], '#late999\n')
+        # A Gate-tier trailer states the tier outright (integration's cuts and P0s); with Task trailers the higher wins.
+        w.put('gate-tier-' + shas['cloud/land-cut-1'], '40\n')
+        w.put('gate-tier-' + shas['codex/stated-low'], '20\n')
+        w.put('trailers-' + shas['codex/stated-low'], '#wave001\n')
         (w.state / 'front').write_text('cloud/land-star-* # the star\ncloud/land-wave0-* # wave 0\n')
         (w.state / 'wave-tiers').write_text('40 task ab12cd3\n30 task wave001\n30 branch cloud/land-chain-* chain01\n30 branch codex/wave1 wave001\n'
                                             '30 branch codex/trailer-late* wave001\n')
         (w.state / 'pool-side').touch()
         w.put('initial', 'pass')
-        w.wait(lambda: len(w.read('pool-args').splitlines()) == 8)
+        w.wait(lambda: len(w.read('pool-args').splitlines()) == 10)
         tiers = {line.split('--branch ')[1].split()[0]: line.split('--priority ')[1].split()[0] for line in w.read('pool-args').splitlines()}
         self.assertEqual(tiers, {'cloud/land-star-1': '40', 'cloud/land-wave0-1': '30', 'cloud/land-chain-1': '30', 'codex/wave1': '30', 'codex/side': '10',
-                                 'codex/trailer-star': '40', 'codex/trailer-wave': '30', 'codex/trailer-late': '10'})
+                                 'codex/trailer-star': '40', 'codex/trailer-wave': '30', 'codex/trailer-late': '10',
+                                 'cloud/land-cut-1': '40', 'codex/stated-low': '30'})
         # The artifact fallback pages the step's owner once per tip to add the trailer; a trailer or the front pages nobody.
         w.wait(lambda: w.read('messages').count("only through #") == 2)
         self.assertIn("'Task: #chain01' trailer", w.read('messages'))
