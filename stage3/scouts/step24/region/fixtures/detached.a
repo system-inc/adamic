@@ -1,0 +1,9 @@
+import type { Weak } from 'adamic';
+// A removed child can still have a parent. Its explicit keeper must survive.
+interface DetachedNode { readonly text: string; parent: Weak<SourceFile>; }
+interface SourceFile { readonly name: string; readonly nodes: DetachedNode[]; }
+const removed: DetachedNode = { text: 'retained-child'.repeat(1), parent: undefined };
+const keeper: SourceFile = { name: 'old-file'.repeat(1), nodes: [removed] };
+removed.parent = keeper;
+keeper.nodes.pop();
+console.log(`${keeper.nodes.includes(removed)}:${removed.parent === undefined}:${removed.parent?.name}:${removed.text}`);

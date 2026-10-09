@@ -1,0 +1,5487 @@
+{
+  "node": "v24.19.0",
+  "sourcePin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "runtimeDesign": "d4108344c3ea62ee0208cb26ef6f9eae20af01db",
+  "scanner": {
+    "inputFiles": 81,
+    "totals": {
+      "auditedConstructorObjects": 973000,
+      "created": 973000,
+      "parser": 973000,
+      "synthetic": 0,
+      "noParent": 18797,
+      "sourceFiles": 81,
+      "parentlessNonSourceFile": 18716,
+      "notSyntaxReachable": 18716,
+      "notGraphReachable": 18716,
+      "detachedLiteralUnion": 18797,
+      "detachedExcludingSourceFileRoots": 18716
+    },
+    "wallSeconds": 21.245
+  },
+  "bootstrap": {
+    "auditedConstructorObjects": 0,
+    "created": 0,
+    "parser": 0,
+    "synthetic": 0,
+    "noParent": 0,
+    "sourceFiles": 0,
+    "parentlessNonSourceFile": 0,
+    "notSyntaxReachable": 0,
+    "notGraphReachable": 0,
+    "detachedLiteralUnion": 0,
+    "detachedExcludingSourceFileRoots": 0
+  },
+  "acceptance": {
+    "projects": 301,
+    "totals": {
+      "auditedConstructorObjects": 41415131,
+      "created": 41415131,
+      "parser": 41410722,
+      "synthetic": 4409,
+      "noParent": 1263474,
+      "sourceFiles": 7167,
+      "parentlessNonSourceFile": 1256307,
+      "notSyntaxReachable": 1256718,
+      "notGraphReachable": 1256718,
+      "detachedLiteralUnion": 1263584,
+      "detachedExcludingSourceFileRoots": 1256718
+    },
+    "wallSeconds": 706.725
+  },
+  "cases": [
+    {
+      "id": "001_varianceCantBeStrictWhileStructureIsnt",
+      "totals": {
+        "auditedConstructorObjects": 140988,
+        "created": 140988,
+        "parser": 140988,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.504
+    },
+    {
+      "id": "002_conditionalEqualityTestingNullability",
+      "totals": {
+        "auditedConstructorObjects": 140968,
+        "created": 140968,
+        "parser": 140968,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.726
+    },
+    {
+      "id": "003_commentOnClassAccessor1",
+      "totals": {
+        "auditedConstructorObjects": 140899,
+        "created": 140899,
+        "parser": 140899,
+        "synthetic": 0,
+        "noParent": 4253,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4232,
+        "notSyntaxReachable": 4233,
+        "notGraphReachable": 4233,
+        "detachedLiteralUnion": 4253,
+        "detachedExcludingSourceFileRoots": 4233
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.362
+    },
+    {
+      "id": "004_metadataOfUnion",
+      "totals": {
+        "auditedConstructorObjects": 141009,
+        "created": 141009,
+        "parser": 140981,
+        "synthetic": 28,
+        "noParent": 4274,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4253,
+        "notSyntaxReachable": 4268,
+        "notGraphReachable": 4268,
+        "detachedLiteralUnion": 4288,
+        "detachedExcludingSourceFileRoots": 4268
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.332
+    },
+    {
+      "id": "005_ambientEnumElementInitializer3",
+      "totals": {
+        "auditedConstructorObjects": 140890,
+        "created": 140890,
+        "parser": 140890,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.21
+    },
+    {
+      "id": "006_arrayDestructuringInSwitch1",
+      "totals": {
+        "auditedConstructorObjects": 140985,
+        "created": 140985,
+        "parser": 140981,
+        "synthetic": 4,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.284
+    },
+    {
+      "id": "007_nestedBlockScopedBindings15",
+      "totals": {
+        "auditedConstructorObjects": 140944,
+        "created": 140944,
+        "parser": 140944,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.243
+    },
+    {
+      "id": "008_library_StringSlice",
+      "totals": {
+        "auditedConstructorObjects": 140908,
+        "created": 140908,
+        "parser": 140908,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.181
+    },
+    {
+      "id": "009_es6ModuleWithModuleGenTargetCommonjs",
+      "totals": {
+        "auditedConstructorObjects": 140898,
+        "created": 140898,
+        "parser": 140898,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.467
+    },
+    {
+      "id": "010_nestedTypeVariableInfersLiteral",
+      "totals": {
+        "auditedConstructorObjects": 141024,
+        "created": 141024,
+        "parser": 141024,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.263
+    },
+    {
+      "id": "011_namespaces2",
+      "totals": {
+        "auditedConstructorObjects": 140910,
+        "created": 140910,
+        "parser": 140910,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.452
+    },
+    {
+      "id": "012_expandoFunctionExpressionsWithDynamicNames2",
+      "totals": {
+        "auditedConstructorObjects": 37429,
+        "created": 37429,
+        "parser": 37429,
+        "synthetic": 0,
+        "noParent": 2071,
+        "sourceFiles": 89,
+        "parentlessNonSourceFile": 1982,
+        "notSyntaxReachable": 1983,
+        "notGraphReachable": 1983,
+        "detachedLiteralUnion": 2071,
+        "detachedExcludingSourceFileRoots": 1983
+      },
+      "rootSourceFiles": 88,
+      "wallSeconds": 0.621
+    },
+    {
+      "id": "013_parseEntityNameWithReservedWord",
+      "totals": {
+        "auditedConstructorObjects": 140899,
+        "created": 140899,
+        "parser": 140899,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.287
+    },
+    {
+      "id": "014_keyofObjectWithGlobalSymbolIncluded",
+      "totals": {
+        "auditedConstructorObjects": 140903,
+        "created": 140903,
+        "parser": 140903,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.221
+    },
+    {
+      "id": "015_decoratorReferences",
+      "totals": {
+        "auditedConstructorObjects": 140940,
+        "created": 140940,
+        "parser": 140933,
+        "synthetic": 7,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4245,
+        "notGraphReachable": 4245,
+        "detachedLiteralUnion": 4265,
+        "detachedExcludingSourceFileRoots": 4245
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.441
+    },
+    {
+      "id": "016_yieldStarContextualType",
+      "totals": {
+        "auditedConstructorObjects": 157755,
+        "created": 157755,
+        "parser": 157755,
+        "synthetic": 0,
+        "noParent": 5163,
+        "sourceFiles": 95,
+        "parentlessNonSourceFile": 5068,
+        "notSyntaxReachable": 5069,
+        "notGraphReachable": 5069,
+        "detachedLiteralUnion": 5163,
+        "detachedExcludingSourceFileRoots": 5069
+      },
+      "rootSourceFiles": 94,
+      "wallSeconds": 2.721
+    },
+    {
+      "id": "017_binopAssignmentShouldHaveType",
+      "totals": {
+        "auditedConstructorObjects": 14605,
+        "created": 14605,
+        "parser": 14604,
+        "synthetic": 1,
+        "noParent": 760,
+        "sourceFiles": 5,
+        "parentlessNonSourceFile": 755,
+        "notSyntaxReachable": 756,
+        "notGraphReachable": 756,
+        "detachedLiteralUnion": 760,
+        "detachedExcludingSourceFileRoots": 756
+      },
+      "rootSourceFiles": 4,
+      "wallSeconds": 0.224
+    },
+    {
+      "id": "018_typeofUsedBeforeBlockScoped",
+      "totals": {
+        "auditedConstructorObjects": 140925,
+        "created": 140925,
+        "parser": 140925,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.525
+    },
+    {
+      "id": "019_superHasMethodsFromMergedInterface",
+      "totals": {
+        "auditedConstructorObjects": 140907,
+        "created": 140907,
+        "parser": 140907,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.309
+    },
+    {
+      "id": "020_intersectionApparentTypeCaching",
+      "totals": {
+        "auditedConstructorObjects": 140916,
+        "created": 140916,
+        "parser": 140916,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.4
+    },
+    {
+      "id": "021_commentOnArrayElement12",
+      "totals": {
+        "auditedConstructorObjects": 140891,
+        "created": 140891,
+        "parser": 140891,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.189
+    },
+    {
+      "id": "022_nestedBlockScopedBindings4",
+      "totals": {
+        "auditedConstructorObjects": 141059,
+        "created": 141059,
+        "parser": 141051,
+        "synthetic": 8,
+        "noParent": 4278,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4257,
+        "notSyntaxReachable": 4258,
+        "notGraphReachable": 4258,
+        "detachedLiteralUnion": 4278,
+        "detachedExcludingSourceFileRoots": 4258
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.215
+    },
+    {
+      "id": "023_capturedLetConstInLoop10_ES6",
+      "totals": {
+        "auditedConstructorObjects": 141053,
+        "created": 141053,
+        "parser": 141053,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.176
+    },
+    {
+      "id": "024_genericTypeParameterEquivalence2",
+      "totals": {
+        "auditedConstructorObjects": 141186,
+        "created": 141186,
+        "parser": 141186,
+        "synthetic": 0,
+        "noParent": 4275,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4254,
+        "notSyntaxReachable": 4255,
+        "notGraphReachable": 4255,
+        "detachedLiteralUnion": 4275,
+        "detachedExcludingSourceFileRoots": 4255
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.182
+    },
+    {
+      "id": "025_exportArrayBindingPattern",
+      "totals": {
+        "auditedConstructorObjects": 140906,
+        "created": 140906,
+        "parser": 140906,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.698
+    },
+    {
+      "id": "026_functionAssignmentError",
+      "totals": {
+        "auditedConstructorObjects": 140903,
+        "created": 140903,
+        "parser": 140903,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.281
+    },
+    {
+      "id": "027_multiExtendsSplitInterfaces1",
+      "totals": {
+        "auditedConstructorObjects": 140890,
+        "created": 140890,
+        "parser": 140890,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.314
+    },
+    {
+      "id": "028_stringMatchAll",
+      "totals": {
+        "auditedConstructorObjects": 146853,
+        "created": 146853,
+        "parser": 146849,
+        "synthetic": 4,
+        "noParent": 4521,
+        "sourceFiles": 53,
+        "parentlessNonSourceFile": 4468,
+        "notSyntaxReachable": 4473,
+        "notGraphReachable": 4473,
+        "detachedLiteralUnion": 4525,
+        "detachedExcludingSourceFileRoots": 4473
+      },
+      "rootSourceFiles": 52,
+      "wallSeconds": 2.328
+    },
+    {
+      "id": "029_enumLiteralUnionNotWidened",
+      "totals": {
+        "auditedConstructorObjects": 140979,
+        "created": 140979,
+        "parser": 140979,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.201
+    },
+    {
+      "id": "030_asyncYieldStarContextualType",
+      "totals": {
+        "auditedConstructorObjects": 157875,
+        "created": 157875,
+        "parser": 157875,
+        "synthetic": 0,
+        "noParent": 5165,
+        "sourceFiles": 95,
+        "parentlessNonSourceFile": 5070,
+        "notSyntaxReachable": 5071,
+        "notGraphReachable": 5071,
+        "detachedLiteralUnion": 5165,
+        "detachedExcludingSourceFileRoots": 5071
+      },
+      "rootSourceFiles": 94,
+      "wallSeconds": 2.621
+    },
+    {
+      "id": "031_commentInNamespaceDeclarationWithIdentifierPathName",
+      "totals": {
+        "auditedConstructorObjects": 140894,
+        "created": 140894,
+        "parser": 140894,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.481
+    },
+    {
+      "id": "032_templateLiteralsAndDecoratorMetadata",
+      "totals": {
+        "auditedConstructorObjects": 140911,
+        "created": 140911,
+        "parser": 140911,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.58
+    },
+    {
+      "id": "033_assignmentCompatability6",
+      "totals": {
+        "auditedConstructorObjects": 140961,
+        "created": 140961,
+        "parser": 140961,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.435
+    },
+    {
+      "id": "034_parseReplacementCharacter",
+      "totals": {
+        "auditedConstructorObjects": 140897,
+        "created": 140897,
+        "parser": 140897,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.463
+    },
+    {
+      "id": "035_classOrder1",
+      "totals": {
+        "auditedConstructorObjects": 140901,
+        "created": 140901,
+        "parser": 140901,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.417
+    },
+    {
+      "id": "036_conditionalExpressions2",
+      "totals": {
+        "auditedConstructorObjects": 140987,
+        "created": 140987,
+        "parser": 140987,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.318
+    },
+    {
+      "id": "037_singletonLabeledTuple",
+      "totals": {
+        "auditedConstructorObjects": 140990,
+        "created": 140990,
+        "parser": 140990,
+        "synthetic": 0,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.216
+    },
+    {
+      "id": "038_breakInIterationOrSwitchStatement1",
+      "totals": {
+        "auditedConstructorObjects": 140888,
+        "created": 140888,
+        "parser": 140888,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.365
+    },
+    {
+      "id": "039_narrowByClauseExpressionInSwitchTrue2",
+      "totals": {
+        "auditedConstructorObjects": 140943,
+        "created": 140943,
+        "parser": 140943,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.53
+    },
+    {
+      "id": "040_emitOneLineVariableDeclarationRemoveCommentsFalse",
+      "totals": {
+        "auditedConstructorObjects": 140934,
+        "created": 140934,
+        "parser": 140934,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.214
+    },
+    {
+      "id": "041_nongenericConditionalNotPartiallyComputed",
+      "totals": {
+        "auditedConstructorObjects": 140906,
+        "created": 140906,
+        "parser": 140906,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.263
+    },
+    {
+      "id": "042_exportDefaultForNonInstantiatedModule",
+      "totals": {
+        "auditedConstructorObjects": 140892,
+        "created": 140892,
+        "parser": 140892,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.26
+    },
+    {
+      "id": "043_collisionThisExpressionAndLocalVarInProperty",
+      "totals": {
+        "auditedConstructorObjects": 140939,
+        "created": 140939,
+        "parser": 140937,
+        "synthetic": 2,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.296
+    },
+    {
+      "id": "044_functionWithDefaultParameterWithNoStatements10",
+      "totals": {
+        "auditedConstructorObjects": 140898,
+        "created": 140898,
+        "parser": 140898,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.213
+    },
+    {
+      "id": "045_discriminantUsingEvaluatableTemplateExpression",
+      "totals": {
+        "auditedConstructorObjects": 140946,
+        "created": 140946,
+        "parser": 140946,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.325
+    },
+    {
+      "id": "046_assignmentCompatForEnums",
+      "totals": {
+        "auditedConstructorObjects": 140925,
+        "created": 140925,
+        "parser": 140925,
+        "synthetic": 0,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.61
+    },
+    {
+      "id": "047_promiseWithResolvers",
+      "totals": {
+        "auditedConstructorObjects": 157727,
+        "created": 157727,
+        "parser": 157727,
+        "synthetic": 0,
+        "noParent": 5162,
+        "sourceFiles": 95,
+        "parentlessNonSourceFile": 5067,
+        "notSyntaxReachable": 5068,
+        "notGraphReachable": 5068,
+        "detachedLiteralUnion": 5162,
+        "detachedExcludingSourceFileRoots": 5068
+      },
+      "rootSourceFiles": 94,
+      "wallSeconds": 2.601
+    },
+    {
+      "id": "048_uniqueSymbolAssignmentOnGlobalAugmentationSuceeds",
+      "totals": {
+        "auditedConstructorObjects": 140926,
+        "created": 140926,
+        "parser": 140926,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.273
+    },
+    {
+      "id": "049_decoratorMetadataNoStrictNull",
+      "totals": {
+        "auditedConstructorObjects": 140931,
+        "created": 140931,
+        "parser": 140923,
+        "synthetic": 8,
+        "noParent": 4264,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4243,
+        "notSyntaxReachable": 4248,
+        "notGraphReachable": 4248,
+        "detachedLiteralUnion": 4268,
+        "detachedExcludingSourceFileRoots": 4248
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.203
+    },
+    {
+      "id": "050_unusedInterfaceinNamespace4",
+      "totals": {
+        "auditedConstructorObjects": 140909,
+        "created": 140909,
+        "parser": 140909,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.438
+    },
+    {
+      "id": "051_extendedUnicodeEscapeSequenceIdentifiers",
+      "totals": {
+        "auditedConstructorObjects": 140903,
+        "created": 140903,
+        "parser": 140903,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.209
+    },
+    {
+      "id": "052_commentOnClassAccessor2",
+      "totals": {
+        "auditedConstructorObjects": 140900,
+        "created": 140900,
+        "parser": 140900,
+        "synthetic": 0,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.227
+    },
+    {
+      "id": "053_contextualTypeBasedOnIntersectionWithAnyInTheMix5",
+      "totals": {
+        "auditedConstructorObjects": 141103,
+        "created": 141103,
+        "parser": 141103,
+        "synthetic": 0,
+        "noParent": 4258,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4237,
+        "notSyntaxReachable": 4238,
+        "notGraphReachable": 4238,
+        "detachedLiteralUnion": 4258,
+        "detachedExcludingSourceFileRoots": 4238
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.474
+    },
+    {
+      "id": "054_contextualTyping19",
+      "totals": {
+        "auditedConstructorObjects": 140911,
+        "created": 140911,
+        "parser": 140911,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.213
+    },
+    {
+      "id": "055_modularizeLibrary_UsingES5LibES6ArrayLibES6WellknownSymbolLib",
+      "totals": {
+        "auditedConstructorObjects": 16820,
+        "created": 16820,
+        "parser": 16820,
+        "synthetic": 0,
+        "noParent": 867,
+        "sourceFiles": 8,
+        "parentlessNonSourceFile": 859,
+        "notSyntaxReachable": 860,
+        "notGraphReachable": 860,
+        "detachedLiteralUnion": 867,
+        "detachedExcludingSourceFileRoots": 860
+      },
+      "rootSourceFiles": 7,
+      "wallSeconds": 0.246
+    },
+    {
+      "id": "056_genericCallInferenceInConditionalTypes1",
+      "totals": {
+        "auditedConstructorObjects": 141128,
+        "created": 141128,
+        "parser": 141128,
+        "synthetic": 0,
+        "noParent": 4258,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4237,
+        "notSyntaxReachable": 4238,
+        "notGraphReachable": 4238,
+        "detachedLiteralUnion": 4258,
+        "detachedExcludingSourceFileRoots": 4238
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.317
+    },
+    {
+      "id": "057_localImportNameVsGlobalName",
+      "totals": {
+        "auditedConstructorObjects": 140933,
+        "created": 140933,
+        "parser": 140933,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.338
+    },
+    {
+      "id": "058_contextualTypingOfConditionalExpression",
+      "totals": {
+        "auditedConstructorObjects": 140965,
+        "created": 140965,
+        "parser": 140965,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.227
+    },
+    {
+      "id": "059_functionOverloads31",
+      "totals": {
+        "auditedConstructorObjects": 140915,
+        "created": 140915,
+        "parser": 140915,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.155
+    },
+    {
+      "id": "060_numberAsInLHS",
+      "totals": {
+        "auditedConstructorObjects": 140891,
+        "created": 140891,
+        "parser": 140891,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.173
+    },
+    {
+      "id": "061_constEnumErrors",
+      "totals": {
+        "auditedConstructorObjects": 14683,
+        "created": 14683,
+        "parser": 14679,
+        "synthetic": 4,
+        "noParent": 753,
+        "sourceFiles": 5,
+        "parentlessNonSourceFile": 748,
+        "notSyntaxReachable": 749,
+        "notGraphReachable": 749,
+        "detachedLiteralUnion": 753,
+        "detachedExcludingSourceFileRoots": 749
+      },
+      "rootSourceFiles": 4,
+      "wallSeconds": 0.215
+    },
+    {
+      "id": "062_interfaceDeclaration1",
+      "totals": {
+        "auditedConstructorObjects": 141014,
+        "created": 141014,
+        "parser": 140987,
+        "synthetic": 27,
+        "noParent": 4280,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4259,
+        "notSyntaxReachable": 4260,
+        "notGraphReachable": 4260,
+        "detachedLiteralUnion": 4280,
+        "detachedExcludingSourceFileRoots": 4260
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.567
+    },
+    {
+      "id": "063_didYouMeanSuggestionErrors",
+      "totals": {
+        "auditedConstructorObjects": 14695,
+        "created": 14695,
+        "parser": 14695,
+        "synthetic": 0,
+        "noParent": 749,
+        "sourceFiles": 5,
+        "parentlessNonSourceFile": 744,
+        "notSyntaxReachable": 745,
+        "notGraphReachable": 745,
+        "detachedLiteralUnion": 749,
+        "detachedExcludingSourceFileRoots": 745
+      },
+      "rootSourceFiles": 4,
+      "wallSeconds": 0.248
+    },
+    {
+      "id": "064_recursiveFunctionTypes",
+      "totals": {
+        "auditedConstructorObjects": 141302,
+        "created": 141302,
+        "parser": 141070,
+        "synthetic": 232,
+        "noParent": 4488,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4467,
+        "notSyntaxReachable": 4468,
+        "notGraphReachable": 4468,
+        "detachedLiteralUnion": 4488,
+        "detachedExcludingSourceFileRoots": 4468
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.37
+    },
+    {
+      "id": "065_callOverloads2",
+      "totals": {
+        "auditedConstructorObjects": 140945,
+        "created": 140945,
+        "parser": 140942,
+        "synthetic": 3,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.423
+    },
+    {
+      "id": "066_decoratorUsedBeforeDeclaration",
+      "totals": {
+        "auditedConstructorObjects": 141194,
+        "created": 141194,
+        "parser": 141153,
+        "synthetic": 41,
+        "noParent": 4269,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4248,
+        "notSyntaxReachable": 4277,
+        "notGraphReachable": 4277,
+        "detachedLiteralUnion": 4297,
+        "detachedExcludingSourceFileRoots": 4277
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.427
+    },
+    {
+      "id": "067_undefinedTypeAssignment4",
+      "totals": {
+        "auditedConstructorObjects": 140914,
+        "created": 140914,
+        "parser": 140914,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.26
+    },
+    {
+      "id": "068_emitCapturingThisInTupleDestructuring1",
+      "totals": {
+        "auditedConstructorObjects": 140934,
+        "created": 140934,
+        "parser": 140914,
+        "synthetic": 20,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4251,
+        "notGraphReachable": 4251,
+        "detachedLiteralUnion": 4271,
+        "detachedExcludingSourceFileRoots": 4251
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.274
+    },
+    {
+      "id": "069_computedPropertiesInDestructuring1",
+      "totals": {
+        "auditedConstructorObjects": 141279,
+        "created": 141279,
+        "parser": 141204,
+        "synthetic": 75,
+        "noParent": 4353,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4332,
+        "notSyntaxReachable": 4337,
+        "notGraphReachable": 4337,
+        "detachedLiteralUnion": 4357,
+        "detachedExcludingSourceFileRoots": 4337
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.37
+    },
+    {
+      "id": "070_assignmentToReferenceTypes",
+      "totals": {
+        "auditedConstructorObjects": 140941,
+        "created": 140941,
+        "parser": 140937,
+        "synthetic": 4,
+        "noParent": 4258,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4237,
+        "notSyntaxReachable": 4238,
+        "notGraphReachable": 4238,
+        "detachedLiteralUnion": 4258,
+        "detachedExcludingSourceFileRoots": 4238
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.648
+    },
+    {
+      "id": "071_overloadModifiersMustAgree",
+      "totals": {
+        "auditedConstructorObjects": 140934,
+        "created": 140934,
+        "parser": 140929,
+        "synthetic": 5,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.388
+    },
+    {
+      "id": "072_noImplicitAnyForIn",
+      "totals": {
+        "auditedConstructorObjects": 141002,
+        "created": 141002,
+        "parser": 140994,
+        "synthetic": 8,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.345
+    },
+    {
+      "id": "073_superNewCall1",
+      "totals": {
+        "auditedConstructorObjects": 140934,
+        "created": 140934,
+        "parser": 140929,
+        "synthetic": 5,
+        "noParent": 4264,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4243,
+        "notSyntaxReachable": 4244,
+        "notGraphReachable": 4244,
+        "detachedLiteralUnion": 4264,
+        "detachedExcludingSourceFileRoots": 4244
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.432
+    },
+    {
+      "id": "074_parseInvalidNullableTypes",
+      "totals": {
+        "auditedConstructorObjects": 141045,
+        "created": 141045,
+        "parser": 140991,
+        "synthetic": 54,
+        "noParent": 4308,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4287,
+        "notSyntaxReachable": 4288,
+        "notGraphReachable": 4288,
+        "detachedLiteralUnion": 4308,
+        "detachedExcludingSourceFileRoots": 4288
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.358
+    },
+    {
+      "id": "075_recursiveConditionalCrash4",
+      "totals": {
+        "auditedConstructorObjects": 140977,
+        "created": 140977,
+        "parser": 140977,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.207
+    },
+    {
+      "id": "076_interfacedeclWithIndexerErrors",
+      "totals": {
+        "auditedConstructorObjects": 141062,
+        "created": 141062,
+        "parser": 141019,
+        "synthetic": 43,
+        "noParent": 4305,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4284,
+        "notSyntaxReachable": 4285,
+        "notGraphReachable": 4285,
+        "detachedLiteralUnion": 4305,
+        "detachedExcludingSourceFileRoots": 4285
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.273
+    },
+    {
+      "id": "077_objectLitIndexerContextualType",
+      "totals": {
+        "auditedConstructorObjects": 140997,
+        "created": 140997,
+        "parser": 140983,
+        "synthetic": 14,
+        "noParent": 4270,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4249,
+        "notSyntaxReachable": 4250,
+        "notGraphReachable": 4250,
+        "detachedLiteralUnion": 4270,
+        "detachedExcludingSourceFileRoots": 4250
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.439
+    },
+    {
+      "id": "078_weakType",
+      "totals": {
+        "auditedConstructorObjects": 141192,
+        "created": 141192,
+        "parser": 141106,
+        "synthetic": 86,
+        "noParent": 4346,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4325,
+        "notSyntaxReachable": 4326,
+        "notGraphReachable": 4326,
+        "detachedLiteralUnion": 4346,
+        "detachedExcludingSourceFileRoots": 4326
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.228
+    },
+    {
+      "id": "079_nullableFunctionError",
+      "totals": {
+        "auditedConstructorObjects": 140904,
+        "created": 140904,
+        "parser": 140904,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.265
+    },
+    {
+      "id": "080_builtinIterator",
+      "totals": {
+        "auditedConstructorObjects": 158705,
+        "created": 158705,
+        "parser": 158033,
+        "synthetic": 672,
+        "noParent": 5855,
+        "sourceFiles": 95,
+        "parentlessNonSourceFile": 5760,
+        "notSyntaxReachable": 5761,
+        "notGraphReachable": 5761,
+        "detachedLiteralUnion": 5855,
+        "detachedExcludingSourceFileRoots": 5761
+      },
+      "rootSourceFiles": 94,
+      "wallSeconds": 2.65
+    },
+    {
+      "id": "081_errorForUsingPropertyOfTypeAsType03",
+      "totals": {
+        "auditedConstructorObjects": 141020,
+        "created": 141020,
+        "parser": 141015,
+        "synthetic": 5,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.247
+    },
+    {
+      "id": "082_unusedDestructuring",
+      "totals": {
+        "auditedConstructorObjects": 140989,
+        "created": 140989,
+        "parser": 140969,
+        "synthetic": 20,
+        "noParent": 4280,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4259,
+        "notSyntaxReachable": 4260,
+        "notGraphReachable": 4260,
+        "detachedLiteralUnion": 4280,
+        "detachedExcludingSourceFileRoots": 4260
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.363
+    },
+    {
+      "id": "083_indirectSelfReferenceGeneric",
+      "totals": {
+        "auditedConstructorObjects": 140912,
+        "created": 140912,
+        "parser": 140910,
+        "synthetic": 2,
+        "noParent": 4261,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4240,
+        "notSyntaxReachable": 4241,
+        "notGraphReachable": 4241,
+        "detachedLiteralUnion": 4261,
+        "detachedExcludingSourceFileRoots": 4241
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.326
+    },
+    {
+      "id": "084_thisInModule",
+      "totals": {
+        "auditedConstructorObjects": 140898,
+        "created": 140898,
+        "parser": 140898,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.45
+    },
+    {
+      "id": "085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1",
+      "totals": {
+        "auditedConstructorObjects": 140937,
+        "created": 140937,
+        "parser": 140931,
+        "synthetic": 6,
+        "noParent": 4260,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4239,
+        "notSyntaxReachable": 4240,
+        "notGraphReachable": 4240,
+        "detachedLiteralUnion": 4260,
+        "detachedExcludingSourceFileRoots": 4240
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.198
+    },
+    {
+      "id": "086_noImplicitSymbolToString",
+      "totals": {
+        "auditedConstructorObjects": 141075,
+        "created": 141075,
+        "parser": 141075,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.258
+    },
+    {
+      "id": "087_strictModeInConstructor",
+      "totals": {
+        "auditedConstructorObjects": 141008,
+        "created": 141008,
+        "parser": 141008,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.275
+    },
+    {
+      "id": "088_baseConstraintOfDecorator",
+      "totals": {
+        "auditedConstructorObjects": 141004,
+        "created": 141004,
+        "parser": 140995,
+        "synthetic": 9,
+        "noParent": 4266,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4245,
+        "notSyntaxReachable": 4246,
+        "notGraphReachable": 4246,
+        "detachedLiteralUnion": 4266,
+        "detachedExcludingSourceFileRoots": 4246
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.213
+    },
+    {
+      "id": "089_moduleVisibilityTest3",
+      "totals": {
+        "auditedConstructorObjects": 140932,
+        "created": 140932,
+        "parser": 140928,
+        "synthetic": 4,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.213
+    },
+    {
+      "id": "090_constraintWithIndexedAccess",
+      "totals": {
+        "auditedConstructorObjects": 141656,
+        "created": 141656,
+        "parser": 141213,
+        "synthetic": 443,
+        "noParent": 4704,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4683,
+        "notSyntaxReachable": 4684,
+        "notGraphReachable": 4684,
+        "detachedLiteralUnion": 4704,
+        "detachedExcludingSourceFileRoots": 4684
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.326
+    },
+    {
+      "id": "091_excessivelyLargeTupleSpread",
+      "totals": {
+        "auditedConstructorObjects": 141229,
+        "created": 141229,
+        "parser": 141229,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.967
+    },
+    {
+      "id": "092_omittedExpressionForOfLoop",
+      "totals": {
+        "auditedConstructorObjects": 140916,
+        "created": 140916,
+        "parser": 140914,
+        "synthetic": 2,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.274
+    },
+    {
+      "id": "093_typeOfEnumAndVarRedeclarations",
+      "totals": {
+        "auditedConstructorObjects": 140991,
+        "created": 140991,
+        "parser": 140951,
+        "synthetic": 40,
+        "noParent": 4291,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4270,
+        "notSyntaxReachable": 4271,
+        "notGraphReachable": 4271,
+        "detachedLiteralUnion": 4291,
+        "detachedExcludingSourceFileRoots": 4271
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.246
+    },
+    {
+      "id": "094_assignmentToParenthesizedExpression1",
+      "totals": {
+        "auditedConstructorObjects": 140897,
+        "created": 140897,
+        "parser": 140897,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.29
+    },
+    {
+      "id": "095_interfaceExtendsClassWithPrivate1",
+      "totals": {
+        "auditedConstructorObjects": 141017,
+        "created": 141017,
+        "parser": 140989,
+        "synthetic": 28,
+        "noParent": 4280,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4259,
+        "notSyntaxReachable": 4260,
+        "notGraphReachable": 4260,
+        "detachedLiteralUnion": 4280,
+        "detachedExcludingSourceFileRoots": 4260
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.268
+    },
+    {
+      "id": "096_importDeclRefereingExternalModuleWithNoResolve",
+      "totals": {
+        "auditedConstructorObjects": 140902,
+        "created": 140902,
+        "parser": 140902,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.304
+    },
+    {
+      "id": "097_mappedTypeGenericWithKnownKeys",
+      "totals": {
+        "auditedConstructorObjects": 140968,
+        "created": 140968,
+        "parser": 140950,
+        "synthetic": 18,
+        "noParent": 4272,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4251,
+        "notSyntaxReachable": 4252,
+        "notGraphReachable": 4252,
+        "detachedLiteralUnion": 4272,
+        "detachedExcludingSourceFileRoots": 4252
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.276
+    },
+    {
+      "id": "098_moduleAugmentationGlobal7_1",
+      "totals": {
+        "auditedConstructorObjects": 140900,
+        "created": 140900,
+        "parser": 140899,
+        "synthetic": 1,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.588
+    },
+    {
+      "id": "099_untypedFunctionCallsWithTypeParameters1",
+      "totals": {
+        "auditedConstructorObjects": 141076,
+        "created": 141076,
+        "parser": 141060,
+        "synthetic": 16,
+        "noParent": 4281,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4260,
+        "notSyntaxReachable": 4261,
+        "notGraphReachable": 4261,
+        "detachedLiteralUnion": 4281,
+        "detachedExcludingSourceFileRoots": 4261
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.378
+    },
+    {
+      "id": "100_scopeCheckExtendedClassInsidePublicMethod2",
+      "totals": {
+        "auditedConstructorObjects": 140928,
+        "created": 140928,
+        "parser": 140924,
+        "synthetic": 4,
+        "noParent": 4258,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4237,
+        "notSyntaxReachable": 4238,
+        "notGraphReachable": 4238,
+        "detachedLiteralUnion": 4258,
+        "detachedExcludingSourceFileRoots": 4238
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.471
+    },
+    {
+      "id": "101_noUncheckedIndexedAccessCompoundAssignments",
+      "totals": {
+        "auditedConstructorObjects": 140992,
+        "created": 140992,
+        "parser": 140992,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.308
+    },
+    {
+      "id": "102_implicitAnyDeclareTypePropertyWithoutType",
+      "totals": {
+        "auditedConstructorObjects": 140979,
+        "created": 140979,
+        "parser": 140974,
+        "synthetic": 5,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.214
+    },
+    {
+      "id": "103_circularReferenceInReturnType2",
+      "totals": {
+        "auditedConstructorObjects": 141113,
+        "created": 141113,
+        "parser": 141111,
+        "synthetic": 2,
+        "noParent": 4266,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4245,
+        "notSyntaxReachable": 4246,
+        "notGraphReachable": 4246,
+        "detachedLiteralUnion": 4266,
+        "detachedExcludingSourceFileRoots": 4246
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.296
+    },
+    {
+      "id": "104_mixedStaticAndInstanceClassMembers",
+      "totals": {
+        "auditedConstructorObjects": 140934,
+        "created": 140934,
+        "parser": 140934,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.337
+    },
+    {
+      "id": "105_exportDefaultTypeClassAndValue",
+      "totals": {
+        "auditedConstructorObjects": 140903,
+        "created": 140903,
+        "parser": 140903,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.679
+    },
+    {
+      "id": "106_interfaceMergeWithNonGenericTypeArguments",
+      "totals": {
+        "auditedConstructorObjects": 140912,
+        "created": 140912,
+        "parser": 140911,
+        "synthetic": 1,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.274
+    },
+    {
+      "id": "107_objectFreeze",
+      "totals": {
+        "auditedConstructorObjects": 140990,
+        "created": 140990,
+        "parser": 140985,
+        "synthetic": 5,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.276
+    },
+    {
+      "id": "108_redeclareParameterInCatchBlock",
+      "totals": {
+        "auditedConstructorObjects": 140956,
+        "created": 140956,
+        "parser": 140954,
+        "synthetic": 2,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.495
+    },
+    {
+      "id": "109_classExtendsNull2",
+      "totals": {
+        "auditedConstructorObjects": 140912,
+        "created": 140912,
+        "parser": 140904,
+        "synthetic": 8,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.18
+    },
+    {
+      "id": "110_importDeclWithExportModifierAndExportAssignment",
+      "totals": {
+        "auditedConstructorObjects": 140901,
+        "created": 140901,
+        "parser": 140900,
+        "synthetic": 1,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.285
+    },
+    {
+      "id": "111_circularlyReferentialInterfaceAccessNoCrash",
+      "totals": {
+        "auditedConstructorObjects": 140937,
+        "created": 140937,
+        "parser": 140936,
+        "synthetic": 1,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.343
+    },
+    {
+      "id": "112_noImplicitAnyParametersInInterface",
+      "totals": {
+        "auditedConstructorObjects": 141058,
+        "created": 141058,
+        "parser": 141029,
+        "synthetic": 29,
+        "noParent": 4293,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4272,
+        "notSyntaxReachable": 4273,
+        "notGraphReachable": 4273,
+        "detachedLiteralUnion": 4293,
+        "detachedExcludingSourceFileRoots": 4273
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.661
+    },
+    {
+      "id": "113_duplicateSymbolsExportMatching",
+      "totals": {
+        "auditedConstructorObjects": 141015,
+        "created": 141015,
+        "parser": 141015,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.331
+    },
+    {
+      "id": "114_truthinessPromiseCoercion",
+      "totals": {
+        "auditedConstructorObjects": 157910,
+        "created": 157910,
+        "parser": 157895,
+        "synthetic": 15,
+        "noParent": 5183,
+        "sourceFiles": 95,
+        "parentlessNonSourceFile": 5088,
+        "notSyntaxReachable": 5089,
+        "notGraphReachable": 5089,
+        "detachedLiteralUnion": 5183,
+        "detachedExcludingSourceFileRoots": 5089
+      },
+      "rootSourceFiles": 94,
+      "wallSeconds": 2.816
+    },
+    {
+      "id": "115_unusedClassesinNamespace4",
+      "totals": {
+        "auditedConstructorObjects": 140903,
+        "created": 140903,
+        "parser": 140903,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.463
+    },
+    {
+      "id": "116_recursivelyExpandingUnionNoStackoverflow",
+      "totals": {
+        "auditedConstructorObjects": 141299,
+        "created": 141299,
+        "parser": 140915,
+        "synthetic": 384,
+        "noParent": 4635,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4614,
+        "notSyntaxReachable": 4615,
+        "notGraphReachable": 4615,
+        "detachedLiteralUnion": 4635,
+        "detachedExcludingSourceFileRoots": 4615
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.553
+    },
+    {
+      "id": "117_typeUsedAsTypeLiteralIndex",
+      "totals": {
+        "auditedConstructorObjects": 157773,
+        "created": 157773,
+        "parser": 157773,
+        "synthetic": 0,
+        "noParent": 5161,
+        "sourceFiles": 95,
+        "parentlessNonSourceFile": 5066,
+        "notSyntaxReachable": 5067,
+        "notGraphReachable": 5067,
+        "detachedLiteralUnion": 5161,
+        "detachedExcludingSourceFileRoots": 5067
+      },
+      "rootSourceFiles": 94,
+      "wallSeconds": 2.591
+    },
+    {
+      "id": "118_anyMappedTypesError",
+      "totals": {
+        "auditedConstructorObjects": 140895,
+        "created": 140895,
+        "parser": 140894,
+        "synthetic": 1,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.452
+    },
+    {
+      "id": "119_yieldExpressionInFlowLoop",
+      "totals": {
+        "auditedConstructorObjects": 140904,
+        "created": 140904,
+        "parser": 140904,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.627
+    },
+    {
+      "id": "120_excessPropertyCheckWithSpread",
+      "totals": {
+        "auditedConstructorObjects": 140958,
+        "created": 140958,
+        "parser": 140957,
+        "synthetic": 1,
+        "noParent": 4258,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4237,
+        "notSyntaxReachable": 4238,
+        "notGraphReachable": 4238,
+        "detachedLiteralUnion": 4258,
+        "detachedExcludingSourceFileRoots": 4238
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.31
+    },
+    {
+      "id": "121_switchCasesExpressionTypeMismatch",
+      "totals": {
+        "auditedConstructorObjects": 140987,
+        "created": 140987,
+        "parser": 140955,
+        "synthetic": 32,
+        "noParent": 4283,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4262,
+        "notSyntaxReachable": 4263,
+        "notGraphReachable": 4263,
+        "detachedLiteralUnion": 4283,
+        "detachedExcludingSourceFileRoots": 4263
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.249
+    },
+    {
+      "id": "122_literalsInComputedProperties1",
+      "totals": {
+        "auditedConstructorObjects": 141076,
+        "created": 141076,
+        "parser": 141076,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.347
+    },
+    {
+      "id": "123_narrowByEquality",
+      "totals": {
+        "auditedConstructorObjects": 141073,
+        "created": 141073,
+        "parser": 141061,
+        "synthetic": 12,
+        "noParent": 4267,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4246,
+        "notSyntaxReachable": 4247,
+        "notGraphReachable": 4247,
+        "detachedLiteralUnion": 4267,
+        "detachedExcludingSourceFileRoots": 4247
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.444
+    },
+    {
+      "id": "124_this_inside-enum-should-not-be-allowed",
+      "totals": {
+        "auditedConstructorObjects": 140897,
+        "created": 140897,
+        "parser": 140897,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.345
+    },
+    {
+      "id": "125_noMappedGetSet",
+      "totals": {
+        "auditedConstructorObjects": 140895,
+        "created": 140895,
+        "parser": 140895,
+        "synthetic": 0,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.26
+    },
+    {
+      "id": "126_restInvalidArgumentType",
+      "totals": {
+        "auditedConstructorObjects": 141218,
+        "created": 141218,
+        "parser": 141214,
+        "synthetic": 4,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.7
+    },
+    {
+      "id": "127_forInStatement4",
+      "totals": {
+        "auditedConstructorObjects": 140899,
+        "created": 140899,
+        "parser": 140899,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.167
+    },
+    {
+      "id": "128_noImplicitAnyUnionNormalizedObjectLiteral1",
+      "totals": {
+        "auditedConstructorObjects": 140942,
+        "created": 140942,
+        "parser": 140938,
+        "synthetic": 4,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.287
+    },
+    {
+      "id": "129_enumWithPrimitiveName",
+      "totals": {
+        "auditedConstructorObjects": 140890,
+        "created": 140890,
+        "parser": 140890,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.351
+    },
+    {
+      "id": "130_inheritedStringIndexersFromDifferentBaseTypes2",
+      "totals": {
+        "auditedConstructorObjects": 140953,
+        "created": 140953,
+        "parser": 140942,
+        "synthetic": 11,
+        "noParent": 4265,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4244,
+        "notSyntaxReachable": 4245,
+        "notGraphReachable": 4245,
+        "detachedLiteralUnion": 4265,
+        "detachedExcludingSourceFileRoots": 4245
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.318
+    },
+    {
+      "id": "131_errorsForCallAndAssignmentAreSimilar",
+      "totals": {
+        "auditedConstructorObjects": 140958,
+        "created": 140958,
+        "parser": 140936,
+        "synthetic": 22,
+        "noParent": 4273,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4252,
+        "notSyntaxReachable": 4253,
+        "notGraphReachable": 4253,
+        "detachedLiteralUnion": 4273,
+        "detachedExcludingSourceFileRoots": 4253
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.292
+    },
+    {
+      "id": "132_missingCommaInTemplateStringsArray",
+      "totals": {
+        "auditedConstructorObjects": 140892,
+        "created": 140892,
+        "parser": 140892,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.46
+    },
+    {
+      "id": "133_forInStatement2",
+      "totals": {
+        "auditedConstructorObjects": 140900,
+        "created": 140900,
+        "parser": 140899,
+        "synthetic": 1,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.854
+    },
+    {
+      "id": "134_augmentedTypesEnum",
+      "totals": {
+        "auditedConstructorObjects": 140969,
+        "created": 140969,
+        "parser": 140969,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.232
+    },
+    {
+      "id": "135_narrowingTruthyObject",
+      "totals": {
+        "auditedConstructorObjects": 141046,
+        "created": 141046,
+        "parser": 141046,
+        "synthetic": 0,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.238
+    },
+    {
+      "id": "136_nestedFreshLiteral",
+      "totals": {
+        "auditedConstructorObjects": 140931,
+        "created": 140931,
+        "parser": 140922,
+        "synthetic": 9,
+        "noParent": 4263,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4242,
+        "notSyntaxReachable": 4243,
+        "notGraphReachable": 4243,
+        "detachedLiteralUnion": 4263,
+        "detachedExcludingSourceFileRoots": 4243
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.33
+    },
+    {
+      "id": "137_duplicateErrorNameNotFound",
+      "totals": {
+        "auditedConstructorObjects": 140898,
+        "created": 140898,
+        "parser": 140897,
+        "synthetic": 1,
+        "noParent": 4258,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4237,
+        "notSyntaxReachable": 4238,
+        "notGraphReachable": 4238,
+        "detachedLiteralUnion": 4258,
+        "detachedExcludingSourceFileRoots": 4238
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.271
+    },
+    {
+      "id": "138_voidAsOperator",
+      "totals": {
+        "auditedConstructorObjects": 140899,
+        "created": 140899,
+        "parser": 140899,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.233
+    },
+    {
+      "id": "139_typeParametersInStaticAccessors",
+      "totals": {
+        "auditedConstructorObjects": 140916,
+        "created": 140916,
+        "parser": 140909,
+        "synthetic": 7,
+        "noParent": 4259,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4238,
+        "notSyntaxReachable": 4239,
+        "notGraphReachable": 4239,
+        "detachedLiteralUnion": 4259,
+        "detachedExcludingSourceFileRoots": 4239
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.416
+    },
+    {
+      "id": "140_arrayAssignmentTest5",
+      "totals": {
+        "auditedConstructorObjects": 141050,
+        "created": 141050,
+        "parser": 141029,
+        "synthetic": 21,
+        "noParent": 4276,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4255,
+        "notSyntaxReachable": 4256,
+        "notGraphReachable": 4256,
+        "detachedLiteralUnion": 4276,
+        "detachedExcludingSourceFileRoots": 4256
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.49
+    },
+    {
+      "id": "141_forInStrictNullChecksNoError",
+      "totals": {
+        "auditedConstructorObjects": 140920,
+        "created": 140920,
+        "parser": 140920,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.374
+    },
+    {
+      "id": "142_spreadUnionPropOverride",
+      "totals": {
+        "auditedConstructorObjects": 141132,
+        "created": 141132,
+        "parser": 141132,
+        "synthetic": 0,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.402
+    },
+    {
+      "id": "143_enumPropertyAccessBeforeInitalisation",
+      "totals": {
+        "auditedConstructorObjects": 140909,
+        "created": 140909,
+        "parser": 140905,
+        "synthetic": 4,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.334
+    },
+    {
+      "id": "144_inheritedStringIndexersFromDifferentBaseTypes",
+      "totals": {
+        "auditedConstructorObjects": 140968,
+        "created": 140968,
+        "parser": 140954,
+        "synthetic": 14,
+        "noParent": 4265,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4244,
+        "notSyntaxReachable": 4245,
+        "notGraphReachable": 4245,
+        "detachedLiteralUnion": 4265,
+        "detachedExcludingSourceFileRoots": 4245
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.339
+    },
+    {
+      "id": "145_ClassDeclaration10",
+      "totals": {
+        "auditedConstructorObjects": 140893,
+        "created": 140893,
+        "parser": 140892,
+        "synthetic": 1,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.29
+    },
+    {
+      "id": "146_noImplicitAnyIndexing",
+      "totals": {
+        "auditedConstructorObjects": 141026,
+        "created": 141026,
+        "parser": 141022,
+        "synthetic": 4,
+        "noParent": 4260,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4239,
+        "notSyntaxReachable": 4240,
+        "notGraphReachable": 4240,
+        "detachedLiteralUnion": 4260,
+        "detachedExcludingSourceFileRoots": 4240
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.196
+    },
+    {
+      "id": "147_genericMappedTypeAsClause",
+      "totals": {
+        "auditedConstructorObjects": 141112,
+        "created": 141112,
+        "parser": 141057,
+        "synthetic": 55,
+        "noParent": 4317,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4296,
+        "notSyntaxReachable": 4297,
+        "notGraphReachable": 4297,
+        "detachedLiteralUnion": 4317,
+        "detachedExcludingSourceFileRoots": 4297
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.484
+    },
+    {
+      "id": "148_nonArrayRestArgs",
+      "totals": {
+        "auditedConstructorObjects": 140904,
+        "created": 140904,
+        "parser": 140904,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.202
+    },
+    {
+      "id": "149_undefinedTypeAssignment1",
+      "totals": {
+        "auditedConstructorObjects": 140895,
+        "created": 140895,
+        "parser": 140895,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.241
+    },
+    {
+      "id": "150_useUnknownInCatchVariables01",
+      "totals": {
+        "auditedConstructorObjects": 140975,
+        "created": 140975,
+        "parser": 140975,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.386
+    },
+    {
+      "id": "151_normalizedIntersectionTooComplex",
+      "totals": {
+        "auditedConstructorObjects": 141528,
+        "created": 141528,
+        "parser": 141527,
+        "synthetic": 1,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.485
+    },
+    {
+      "id": "152_errorOnEnumReferenceInCondition",
+      "totals": {
+        "auditedConstructorObjects": 140991,
+        "created": 140991,
+        "parser": 140991,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.544
+    },
+    {
+      "id": "153_returnTypeTypeArguments",
+      "totals": {
+        "auditedConstructorObjects": 141429,
+        "created": 141429,
+        "parser": 141233,
+        "synthetic": 196,
+        "noParent": 4468,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4447,
+        "notSyntaxReachable": 4448,
+        "notGraphReachable": 4448,
+        "detachedLiteralUnion": 4468,
+        "detachedExcludingSourceFileRoots": 4448
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.84
+    },
+    {
+      "id": "154_emitThisInSuperMethodCall",
+      "totals": {
+        "auditedConstructorObjects": 140935,
+        "created": 140935,
+        "parser": 140935,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.932
+    },
+    {
+      "id": "155_varianceReferences",
+      "totals": {
+        "auditedConstructorObjects": 141237,
+        "created": 141237,
+        "parser": 141160,
+        "synthetic": 77,
+        "noParent": 4331,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4310,
+        "notSyntaxReachable": 4311,
+        "notGraphReachable": 4311,
+        "detachedLiteralUnion": 4331,
+        "detachedExcludingSourceFileRoots": 4311
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.7
+    },
+    {
+      "id": "156_misspelledNewMetaProperty",
+      "totals": {
+        "auditedConstructorObjects": 140890,
+        "created": 140890,
+        "parser": 140890,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.383
+    },
+    {
+      "id": "157_varNameConflictsWithImportInDifferentPartOfModule",
+      "totals": {
+        "auditedConstructorObjects": 140909,
+        "created": 140909,
+        "parser": 140908,
+        "synthetic": 1,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.401
+    },
+    {
+      "id": "158_incorrectRecursiveMappedTypeConstraint",
+      "totals": {
+        "auditedConstructorObjects": 140928,
+        "created": 140928,
+        "parser": 140918,
+        "synthetic": 10,
+        "noParent": 4261,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4240,
+        "notSyntaxReachable": 4241,
+        "notGraphReachable": 4241,
+        "detachedLiteralUnion": 4261,
+        "detachedExcludingSourceFileRoots": 4241
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.358
+    },
+    {
+      "id": "159_objectBindingPattern_restElementWithPropertyName",
+      "totals": {
+        "auditedConstructorObjects": 140893,
+        "created": 140893,
+        "parser": 140893,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.235
+    },
+    {
+      "id": "160_incompatibleAssignmentOfIdenticallyNamedTypes",
+      "totals": {
+        "auditedConstructorObjects": 140919,
+        "created": 140919,
+        "parser": 140911,
+        "synthetic": 8,
+        "noParent": 4259,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4238,
+        "notSyntaxReachable": 4239,
+        "notGraphReachable": 4239,
+        "detachedLiteralUnion": 4259,
+        "detachedExcludingSourceFileRoots": 4239
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.275
+    },
+    {
+      "id": "161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled",
+      "totals": {
+        "auditedConstructorObjects": 140996,
+        "created": 140996,
+        "parser": 140963,
+        "synthetic": 33,
+        "noParent": 4285,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4264,
+        "notSyntaxReachable": 4265,
+        "notGraphReachable": 4265,
+        "detachedLiteralUnion": 4285,
+        "detachedExcludingSourceFileRoots": 4265
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.514
+    },
+    {
+      "id": "162_instanceofWithPrimitiveUnion",
+      "totals": {
+        "auditedConstructorObjects": 140919,
+        "created": 140919,
+        "parser": 140919,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.297
+    },
+    {
+      "id": "163_ArrowFunctionExpression1",
+      "totals": {
+        "auditedConstructorObjects": 140895,
+        "created": 140895,
+        "parser": 140895,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.382
+    },
+    {
+      "id": "164_staticOffOfInstance1",
+      "totals": {
+        "auditedConstructorObjects": 140902,
+        "created": 140902,
+        "parser": 140900,
+        "synthetic": 2,
+        "noParent": 4253,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4232,
+        "notSyntaxReachable": 4233,
+        "notGraphReachable": 4233,
+        "detachedLiteralUnion": 4253,
+        "detachedExcludingSourceFileRoots": 4233
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.332
+    },
+    {
+      "id": "165_defaultValueInConstructorOverload1",
+      "totals": {
+        "auditedConstructorObjects": 140895,
+        "created": 140895,
+        "parser": 140895,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.182
+    },
+    {
+      "id": "166_inheritanceMemberFuncOverridingProperty",
+      "totals": {
+        "auditedConstructorObjects": 140909,
+        "created": 140909,
+        "parser": 140904,
+        "synthetic": 5,
+        "noParent": 4260,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4239,
+        "notSyntaxReachable": 4240,
+        "notGraphReachable": 4240,
+        "detachedLiteralUnion": 4260,
+        "detachedExcludingSourceFileRoots": 4240
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.281
+    },
+    {
+      "id": "167_compareTypeParameterConstrainedByLiteralToLiteral",
+      "totals": {
+        "auditedConstructorObjects": 140912,
+        "created": 140912,
+        "parser": 140908,
+        "synthetic": 4,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.201
+    },
+    {
+      "id": "168_importedModuleAddToGlobal",
+      "totals": {
+        "auditedConstructorObjects": 140919,
+        "created": 140919,
+        "parser": 140918,
+        "synthetic": 1,
+        "noParent": 4253,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4232,
+        "notSyntaxReachable": 4233,
+        "notGraphReachable": 4233,
+        "detachedLiteralUnion": 4253,
+        "detachedExcludingSourceFileRoots": 4233
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.552
+    },
+    {
+      "id": "169_spreadInvalidArgumentType",
+      "totals": {
+        "auditedConstructorObjects": 141215,
+        "created": 141215,
+        "parser": 141215,
+        "synthetic": 0,
+        "noParent": 4270,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4249,
+        "notSyntaxReachable": 4250,
+        "notGraphReachable": 4250,
+        "detachedLiteralUnion": 4270,
+        "detachedExcludingSourceFileRoots": 4250
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.267
+    },
+    {
+      "id": "170_decrementAndIncrementOperators",
+      "totals": {
+        "auditedConstructorObjects": 141009,
+        "created": 141009,
+        "parser": 141009,
+        "synthetic": 0,
+        "noParent": 4260,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4239,
+        "notSyntaxReachable": 4240,
+        "notGraphReachable": 4240,
+        "detachedLiteralUnion": 4260,
+        "detachedExcludingSourceFileRoots": 4240
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.425
+    },
+    {
+      "id": "171_extendPrivateConstructorClass",
+      "totals": {
+        "auditedConstructorObjects": 140901,
+        "created": 140901,
+        "parser": 140899,
+        "synthetic": 2,
+        "noParent": 4253,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4232,
+        "notSyntaxReachable": 4233,
+        "notGraphReachable": 4233,
+        "detachedLiteralUnion": 4253,
+        "detachedExcludingSourceFileRoots": 4233
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.452
+    },
+    {
+      "id": "172_constDeclarationShadowedByVarDeclaration",
+      "totals": {
+        "auditedConstructorObjects": 140931,
+        "created": 140931,
+        "parser": 140928,
+        "synthetic": 3,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.382
+    },
+    {
+      "id": "173_selfReferencesInFunctionParameters",
+      "totals": {
+        "auditedConstructorObjects": 140927,
+        "created": 140927,
+        "parser": 140927,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.476
+    },
+    {
+      "id": "174_baseExpressionTypeParameters",
+      "totals": {
+        "auditedConstructorObjects": 140925,
+        "created": 140925,
+        "parser": 140925,
+        "synthetic": 0,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.592
+    },
+    {
+      "id": "175_propertyOrdering",
+      "totals": {
+        "auditedConstructorObjects": 140943,
+        "created": 140943,
+        "parser": 140941,
+        "synthetic": 2,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 3.058
+    },
+    {
+      "id": "176_exportSpecifierReferencingOuterDeclaration1",
+      "totals": {
+        "auditedConstructorObjects": 140907,
+        "created": 140907,
+        "parser": 140907,
+        "synthetic": 0,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.487
+    },
+    {
+      "id": "177_readonlyTupleAndArrayElaboration",
+      "totals": {
+        "auditedConstructorObjects": 141459,
+        "created": 141459,
+        "parser": 141251,
+        "synthetic": 208,
+        "noParent": 4459,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4438,
+        "notSyntaxReachable": 4439,
+        "notGraphReachable": 4439,
+        "detachedLiteralUnion": 4459,
+        "detachedExcludingSourceFileRoots": 4439
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.341
+    },
+    {
+      "id": "178_bitwiseCompoundAssignmentOperators",
+      "totals": {
+        "auditedConstructorObjects": 141024,
+        "created": 141024,
+        "parser": 141024,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.737
+    },
+    {
+      "id": "179_callOnClass",
+      "totals": {
+        "auditedConstructorObjects": 140894,
+        "created": 140894,
+        "parser": 140892,
+        "synthetic": 2,
+        "noParent": 4253,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4232,
+        "notSyntaxReachable": 4233,
+        "notGraphReachable": 4233,
+        "detachedLiteralUnion": 4253,
+        "detachedExcludingSourceFileRoots": 4233
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.747
+    },
+    {
+      "id": "180_keywordExpressionInternalComments",
+      "totals": {
+        "auditedConstructorObjects": 140898,
+        "created": 140898,
+        "parser": 140898,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.486
+    },
+    {
+      "id": "181_noImplicitAnyDestructuringParameterDeclaration",
+      "totals": {
+        "auditedConstructorObjects": 140990,
+        "created": 140990,
+        "parser": 140982,
+        "synthetic": 8,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.642
+    },
+    {
+      "id": "182_propertyAccessibility1",
+      "totals": {
+        "auditedConstructorObjects": 140906,
+        "created": 140906,
+        "parser": 140903,
+        "synthetic": 3,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 3.047
+    },
+    {
+      "id": "183_internalImportInstantiatedModuleNotReferencingInstance",
+      "totals": {
+        "auditedConstructorObjects": 140910,
+        "created": 140910,
+        "parser": 140910,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.663
+    },
+    {
+      "id": "184_bindingPatternCannotBeOnlyInferenceSource",
+      "totals": {
+        "auditedConstructorObjects": 141155,
+        "created": 141155,
+        "parser": 141145,
+        "synthetic": 10,
+        "noParent": 4267,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4246,
+        "notSyntaxReachable": 4253,
+        "notGraphReachable": 4253,
+        "detachedLiteralUnion": 4273,
+        "detachedExcludingSourceFileRoots": 4253
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.385
+    },
+    {
+      "id": "185_restParamsWithNonRestParams",
+      "totals": {
+        "auditedConstructorObjects": 140924,
+        "created": 140924,
+        "parser": 140924,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.43
+    },
+    {
+      "id": "186_superInConstructorParam1",
+      "totals": {
+        "auditedConstructorObjects": 140907,
+        "created": 140907,
+        "parser": 140907,
+        "synthetic": 0,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.375
+    },
+    {
+      "id": "187_deleteReadonlyInStrictNullChecks",
+      "totals": {
+        "auditedConstructorObjects": 140900,
+        "created": 140900,
+        "parser": 140900,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.322
+    },
+    {
+      "id": "188_uncalledFunctionChecksInConditional",
+      "totals": {
+        "auditedConstructorObjects": 141040,
+        "created": 141040,
+        "parser": 141040,
+        "synthetic": 0,
+        "noParent": 4259,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4238,
+        "notSyntaxReachable": 4239,
+        "notGraphReachable": 4239,
+        "detachedLiteralUnion": 4259,
+        "detachedExcludingSourceFileRoots": 4239
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.635
+    },
+    {
+      "id": "189_circularModuleImports",
+      "totals": {
+        "auditedConstructorObjects": 140894,
+        "created": 140894,
+        "parser": 140893,
+        "synthetic": 1,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.58
+    },
+    {
+      "id": "190_interfaceMayNotBeExtendedWitACall",
+      "totals": {
+        "auditedConstructorObjects": 140892,
+        "created": 140892,
+        "parser": 140892,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.445
+    },
+    {
+      "id": "191_extendedInterfacesWithDuplicateTypeParameters",
+      "totals": {
+        "auditedConstructorObjects": 140910,
+        "created": 140910,
+        "parser": 140909,
+        "synthetic": 1,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.369
+    },
+    {
+      "id": "192_constructorOverloads1",
+      "totals": {
+        "auditedConstructorObjects": 141003,
+        "created": 141003,
+        "parser": 140951,
+        "synthetic": 52,
+        "noParent": 4303,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4282,
+        "notSyntaxReachable": 4283,
+        "notGraphReachable": 4283,
+        "detachedLiteralUnion": 4303,
+        "detachedExcludingSourceFileRoots": 4283
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.598
+    },
+    {
+      "id": "193_capturedParametersInInitializers1",
+      "totals": {
+        "auditedConstructorObjects": 141022,
+        "created": 141022,
+        "parser": 141021,
+        "synthetic": 1,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.375
+    },
+    {
+      "id": "194_reachabilityChecks1",
+      "totals": {
+        "auditedConstructorObjects": 141019,
+        "created": 141019,
+        "parser": 141017,
+        "synthetic": 2,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.42
+    },
+    {
+      "id": "195_inheritanceMemberAccessorOverridingProperty",
+      "totals": {
+        "auditedConstructorObjects": 140913,
+        "created": 140913,
+        "parser": 140908,
+        "synthetic": 5,
+        "noParent": 4259,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4238,
+        "notSyntaxReachable": 4239,
+        "notGraphReachable": 4239,
+        "detachedLiteralUnion": 4259,
+        "detachedExcludingSourceFileRoots": 4239
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.35
+    },
+    {
+      "id": "196_typeArgumentDefaultUsesConstraintOnCircularDefault",
+      "totals": {
+        "auditedConstructorObjects": 140942,
+        "created": 140942,
+        "parser": 140931,
+        "synthetic": 11,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.618
+    },
+    {
+      "id": "197_classExtendsInterfaceInModule",
+      "totals": {
+        "auditedConstructorObjects": 140936,
+        "created": 140936,
+        "parser": 140936,
+        "synthetic": 0,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.34
+    },
+    {
+      "id": "198_shadowPrivateMembers",
+      "totals": {
+        "auditedConstructorObjects": 140904,
+        "created": 140904,
+        "parser": 140899,
+        "synthetic": 5,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.373
+    },
+    {
+      "id": "199_getterMissingReturnError",
+      "totals": {
+        "auditedConstructorObjects": 140890,
+        "created": 140890,
+        "parser": 140890,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.237
+    },
+    {
+      "id": "200_instantiationExpressionErrorNoCrash",
+      "totals": {
+        "auditedConstructorObjects": 141017,
+        "created": 141017,
+        "parser": 140953,
+        "synthetic": 64,
+        "noParent": 4315,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4294,
+        "notSyntaxReachable": 4295,
+        "notGraphReachable": 4295,
+        "detachedLiteralUnion": 4315,
+        "detachedExcludingSourceFileRoots": 4295
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.292
+    },
+    {
+      "id": "201_thisPredicateInObjectLiteral",
+      "totals": {
+        "auditedConstructorObjects": 140919,
+        "created": 140919,
+        "parser": 140919,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.288
+    },
+    {
+      "id": "202_reservedNameOnInterfaceImport",
+      "totals": {
+        "auditedConstructorObjects": 140895,
+        "created": 140895,
+        "parser": 140895,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.432
+    },
+    {
+      "id": "203_incrementOnTypeParameter",
+      "totals": {
+        "auditedConstructorObjects": 140924,
+        "created": 140924,
+        "parser": 140924,
+        "synthetic": 0,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.919
+    },
+    {
+      "id": "204_classExpressionExtendingAbstractClass",
+      "totals": {
+        "auditedConstructorObjects": 140904,
+        "created": 140904,
+        "parser": 140899,
+        "synthetic": 5,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.384
+    },
+    {
+      "id": "205_noImplicitReturnsInAsync2",
+      "totals": {
+        "auditedConstructorObjects": 140977,
+        "created": 140977,
+        "parser": 140977,
+        "synthetic": 0,
+        "noParent": 4259,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4238,
+        "notSyntaxReachable": 4239,
+        "notGraphReachable": 4239,
+        "detachedLiteralUnion": 4259,
+        "detachedExcludingSourceFileRoots": 4239
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.256
+    },
+    {
+      "id": "206_recursiveResolveTypeMembers",
+      "totals": {
+        "auditedConstructorObjects": 140937,
+        "created": 140937,
+        "parser": 140937,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.277
+    },
+    {
+      "id": "207_uniqueSymbolAllowsIndexInObjectWithIndexSignature",
+      "totals": {
+        "auditedConstructorObjects": 20391,
+        "created": 20391,
+        "parser": 20383,
+        "synthetic": 8,
+        "noParent": 1136,
+        "sourceFiles": 15,
+        "parentlessNonSourceFile": 1121,
+        "notSyntaxReachable": 1122,
+        "notGraphReachable": 1122,
+        "detachedLiteralUnion": 1136,
+        "detachedExcludingSourceFileRoots": 1122
+      },
+      "rootSourceFiles": 14,
+      "wallSeconds": 0.324
+    },
+    {
+      "id": "208_importAliasInModuleAugmentation",
+      "totals": {
+        "auditedConstructorObjects": 140939,
+        "created": 140939,
+        "parser": 140939,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.341
+    },
+    {
+      "id": "209_genericSpecializations2",
+      "totals": {
+        "auditedConstructorObjects": 141042,
+        "created": 141042,
+        "parser": 140964,
+        "synthetic": 78,
+        "noParent": 4339,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4318,
+        "notSyntaxReachable": 4319,
+        "notGraphReachable": 4319,
+        "detachedLiteralUnion": 4339,
+        "detachedExcludingSourceFileRoots": 4319
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.351
+    },
+    {
+      "id": "210_illegalSuperCallsInConstructor",
+      "totals": {
+        "auditedConstructorObjects": 140945,
+        "created": 140945,
+        "parser": 140945,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.371
+    },
+    {
+      "id": "211_functionParameterArityMismatch",
+      "totals": {
+        "auditedConstructorObjects": 141016,
+        "created": 141016,
+        "parser": 141008,
+        "synthetic": 8,
+        "noParent": 4260,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4239,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 3.016
+    },
+    {
+      "id": "212_duplicateIdentifierDifferentModifiers",
+      "totals": {
+        "auditedConstructorObjects": 140919,
+        "created": 140919,
+        "parser": 140918,
+        "synthetic": 1,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.469
+    },
+    {
+      "id": "213_inheritanceMemberPropertyOverridingAccessor",
+      "totals": {
+        "auditedConstructorObjects": 140932,
+        "created": 140932,
+        "parser": 140927,
+        "synthetic": 5,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.622
+    },
+    {
+      "id": "214_ambientExternalModuleWithRelativeModuleName",
+      "totals": {
+        "auditedConstructorObjects": 140902,
+        "created": 140902,
+        "parser": 140902,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.412
+    },
+    {
+      "id": "215_classImplementsPrimitive",
+      "totals": {
+        "auditedConstructorObjects": 140950,
+        "created": 140950,
+        "parser": 140950,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.682
+    },
+    {
+      "id": "216_functionTypeArgumentArityErrors",
+      "totals": {
+        "auditedConstructorObjects": 141012,
+        "created": 141012,
+        "parser": 141011,
+        "synthetic": 1,
+        "noParent": 4264,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4243,
+        "notSyntaxReachable": 4244,
+        "notGraphReachable": 4244,
+        "detachedLiteralUnion": 4264,
+        "detachedExcludingSourceFileRoots": 4244
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.308
+    },
+    {
+      "id": "217_fallFromLastCase2",
+      "totals": {
+        "auditedConstructorObjects": 140952,
+        "created": 140952,
+        "parser": 140951,
+        "synthetic": 1,
+        "noParent": 4258,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4237,
+        "notSyntaxReachable": 4238,
+        "notGraphReachable": 4238,
+        "detachedLiteralUnion": 4258,
+        "detachedExcludingSourceFileRoots": 4238
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.36
+    },
+    {
+      "id": "218_shorthandPropertyUndefined",
+      "totals": {
+        "auditedConstructorObjects": 140891,
+        "created": 140891,
+        "parser": 140891,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.498
+    },
+    {
+      "id": "219_classImplementsClass4",
+      "totals": {
+        "auditedConstructorObjects": 140954,
+        "created": 140954,
+        "parser": 140936,
+        "synthetic": 18,
+        "noParent": 4270,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4249,
+        "notSyntaxReachable": 4250,
+        "notGraphReachable": 4250,
+        "detachedLiteralUnion": 4270,
+        "detachedExcludingSourceFileRoots": 4250
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.364
+    },
+    {
+      "id": "220_bigIntWithTargetLessThanES2016",
+      "totals": {
+        "auditedConstructorObjects": 37386,
+        "created": 37386,
+        "parser": 37386,
+        "synthetic": 0,
+        "noParent": 2068,
+        "sourceFiles": 89,
+        "parentlessNonSourceFile": 1979,
+        "notSyntaxReachable": 1980,
+        "notGraphReachable": 1980,
+        "detachedLiteralUnion": 2068,
+        "detachedExcludingSourceFileRoots": 1980
+      },
+      "rootSourceFiles": 88,
+      "wallSeconds": 0.687
+    },
+    {
+      "id": "221_unusedParameterProperty2",
+      "totals": {
+        "auditedConstructorObjects": 140907,
+        "created": 140907,
+        "parser": 140905,
+        "synthetic": 2,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4262,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.33
+    },
+    {
+      "id": "222_staticPrototypeProperty",
+      "totals": {
+        "auditedConstructorObjects": 140895,
+        "created": 140895,
+        "parser": 140895,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.264
+    },
+    {
+      "id": "223_instanceofOnInstantiationExpression",
+      "totals": {
+        "auditedConstructorObjects": 140952,
+        "created": 140952,
+        "parser": 140952,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.311
+    },
+    {
+      "id": "224_newFunctionImplicitAny",
+      "totals": {
+        "auditedConstructorObjects": 140896,
+        "created": 140896,
+        "parser": 140896,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.32
+    },
+    {
+      "id": "225_returnInConstructor1",
+      "totals": {
+        "auditedConstructorObjects": 141028,
+        "created": 141028,
+        "parser": 140993,
+        "synthetic": 35,
+        "noParent": 4280,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4259,
+        "notSyntaxReachable": 4266,
+        "notGraphReachable": 4266,
+        "detachedLiteralUnion": 4286,
+        "detachedExcludingSourceFileRoots": 4266
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.319
+    },
+    {
+      "id": "226_assigningFromObjectToAnythingElse",
+      "totals": {
+        "auditedConstructorObjects": 140960,
+        "created": 140960,
+        "parser": 140938,
+        "synthetic": 22,
+        "noParent": 4275,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4254,
+        "notSyntaxReachable": 4255,
+        "notGraphReachable": 4255,
+        "detachedLiteralUnion": 4275,
+        "detachedExcludingSourceFileRoots": 4255
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.758
+    },
+    {
+      "id": "227_classFieldSuperNotAccessible",
+      "totals": {
+        "auditedConstructorObjects": 157734,
+        "created": 157734,
+        "parser": 157733,
+        "synthetic": 1,
+        "noParent": 5162,
+        "sourceFiles": 95,
+        "parentlessNonSourceFile": 5067,
+        "notSyntaxReachable": 5068,
+        "notGraphReachable": 5068,
+        "detachedLiteralUnion": 5162,
+        "detachedExcludingSourceFileRoots": 5068
+      },
+      "rootSourceFiles": 94,
+      "wallSeconds": 2.552
+    },
+    {
+      "id": "228_inKeywordAndUnknown",
+      "totals": {
+        "auditedConstructorObjects": 141099,
+        "created": 141099,
+        "parser": 141098,
+        "synthetic": 1,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.352
+    },
+    {
+      "id": "229_awaitCallExpressionInSyncFunction",
+      "totals": {
+        "auditedConstructorObjects": 157723,
+        "created": 157723,
+        "parser": 157723,
+        "synthetic": 0,
+        "noParent": 5161,
+        "sourceFiles": 95,
+        "parentlessNonSourceFile": 5066,
+        "notSyntaxReachable": 5067,
+        "notGraphReachable": 5067,
+        "detachedLiteralUnion": 5161,
+        "detachedExcludingSourceFileRoots": 5067
+      },
+      "rootSourceFiles": 94,
+      "wallSeconds": 2.682
+    },
+    {
+      "id": "230_parameterPropertyInConstructor3",
+      "totals": {
+        "auditedConstructorObjects": 140892,
+        "created": 140892,
+        "parser": 140892,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.22
+    },
+    {
+      "id": "231_circularReferenceInReturnType",
+      "totals": {
+        "auditedConstructorObjects": 140995,
+        "created": 140995,
+        "parser": 140993,
+        "synthetic": 2,
+        "noParent": 4260,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4239,
+        "notSyntaxReachable": 4240,
+        "notGraphReachable": 4240,
+        "detachedLiteralUnion": 4260,
+        "detachedExcludingSourceFileRoots": 4240
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.157
+    },
+    {
+      "id": "232_neverNullishThroughParentheses",
+      "totals": {
+        "auditedConstructorObjects": 140995,
+        "created": 140995,
+        "parser": 140995,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.287
+    },
+    {
+      "id": "233_noImplicitAnyNamelessParameter",
+      "totals": {
+        "auditedConstructorObjects": 140951,
+        "created": 140951,
+        "parser": 140941,
+        "synthetic": 10,
+        "noParent": 4264,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4243,
+        "notSyntaxReachable": 4244,
+        "notGraphReachable": 4244,
+        "detachedLiteralUnion": 4264,
+        "detachedExcludingSourceFileRoots": 4244
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.674
+    },
+    {
+      "id": "234_superCallFromClassThatHasNoBaseType1",
+      "totals": {
+        "auditedConstructorObjects": 140915,
+        "created": 140915,
+        "parser": 140914,
+        "synthetic": 1,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.542
+    },
+    {
+      "id": "235_reachabilityChecks3",
+      "totals": {
+        "auditedConstructorObjects": 140924,
+        "created": 140924,
+        "parser": 140924,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.189
+    },
+    {
+      "id": "236_returnValueInSetter",
+      "totals": {
+        "auditedConstructorObjects": 140898,
+        "created": 140898,
+        "parser": 140896,
+        "synthetic": 2,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.293
+    },
+    {
+      "id": "237_gettersAndSettersAccessibility",
+      "totals": {
+        "auditedConstructorObjects": 140901,
+        "created": 140901,
+        "parser": 140901,
+        "synthetic": 0,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.341
+    },
+    {
+      "id": "238_typeParameterAsBaseClass",
+      "totals": {
+        "auditedConstructorObjects": 140898,
+        "created": 140898,
+        "parser": 140898,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.378
+    },
+    {
+      "id": "239_expressionWithJSDocTypeArguments",
+      "totals": {
+        "auditedConstructorObjects": 141088,
+        "created": 141088,
+        "parser": 141036,
+        "synthetic": 52,
+        "noParent": 4319,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4298,
+        "notSyntaxReachable": 4299,
+        "notGraphReachable": 4299,
+        "detachedLiteralUnion": 4319,
+        "detachedExcludingSourceFileRoots": 4299
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.204
+    },
+    {
+      "id": "240_indexedAccessPrivateMemberOfGenericConstraint",
+      "totals": {
+        "auditedConstructorObjects": 140945,
+        "created": 140945,
+        "parser": 140945,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.725
+    },
+    {
+      "id": "241_implicitAnyGetAndSetAccessorWithAnyReturnType",
+      "totals": {
+        "auditedConstructorObjects": 140931,
+        "created": 140931,
+        "parser": 140929,
+        "synthetic": 2,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.493
+    },
+    {
+      "id": "242_constDeclarations-access2",
+      "totals": {
+        "auditedConstructorObjects": 141027,
+        "created": 141027,
+        "parser": 141010,
+        "synthetic": 17,
+        "noParent": 4275,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4254,
+        "notSyntaxReachable": 4255,
+        "notGraphReachable": 4255,
+        "detachedLiteralUnion": 4275,
+        "detachedExcludingSourceFileRoots": 4255
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.3
+    },
+    {
+      "id": "243_classExtendsNull3",
+      "totals": {
+        "auditedConstructorObjects": 140912,
+        "created": 140912,
+        "parser": 140912,
+        "synthetic": 0,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.198
+    },
+    {
+      "id": "244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib",
+      "totals": {
+        "auditedConstructorObjects": 14701,
+        "created": 14701,
+        "parser": 14694,
+        "synthetic": 7,
+        "noParent": 759,
+        "sourceFiles": 5,
+        "parentlessNonSourceFile": 754,
+        "notSyntaxReachable": 755,
+        "notGraphReachable": 755,
+        "detachedLiteralUnion": 759,
+        "detachedExcludingSourceFileRoots": 755
+      },
+      "rootSourceFiles": 4,
+      "wallSeconds": 0.216
+    },
+    {
+      "id": "245_inheritanceMemberFuncOverridingAccessor",
+      "totals": {
+        "auditedConstructorObjects": 140926,
+        "created": 140926,
+        "parser": 140910,
+        "synthetic": 16,
+        "noParent": 4270,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4249,
+        "notSyntaxReachable": 4250,
+        "notGraphReachable": 4250,
+        "detachedLiteralUnion": 4270,
+        "detachedExcludingSourceFileRoots": 4250
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.149
+    },
+    {
+      "id": "246_noCrashOnMixin",
+      "totals": {
+        "auditedConstructorObjects": 140942,
+        "created": 140942,
+        "parser": 140940,
+        "synthetic": 2,
+        "noParent": 4254,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4233,
+        "notSyntaxReachable": 4234,
+        "notGraphReachable": 4234,
+        "detachedLiteralUnion": 4254,
+        "detachedExcludingSourceFileRoots": 4234
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.264
+    },
+    {
+      "id": "247_missingDomElements",
+      "totals": {
+        "auditedConstructorObjects": 37517,
+        "created": 37517,
+        "parser": 37502,
+        "synthetic": 15,
+        "noParent": 2143,
+        "sourceFiles": 89,
+        "parentlessNonSourceFile": 2054,
+        "notSyntaxReachable": 2055,
+        "notGraphReachable": 2055,
+        "detachedLiteralUnion": 2143,
+        "detachedExcludingSourceFileRoots": 2055
+      },
+      "rootSourceFiles": 88,
+      "wallSeconds": 0.607
+    },
+    {
+      "id": "248_relationComplexityError",
+      "totals": {
+        "auditedConstructorObjects": 141010,
+        "created": 141010,
+        "parser": 140980,
+        "synthetic": 30,
+        "noParent": 4284,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4263,
+        "notSyntaxReachable": 4264,
+        "notGraphReachable": 4264,
+        "detachedLiteralUnion": 4284,
+        "detachedExcludingSourceFileRoots": 4264
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 10.202
+    },
+    {
+      "id": "249_mergedClassNamespaceRecordCast",
+      "totals": {
+        "auditedConstructorObjects": 140964,
+        "created": 140964,
+        "parser": 140944,
+        "synthetic": 20,
+        "noParent": 4271,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4250,
+        "notSyntaxReachable": 4251,
+        "notGraphReachable": 4251,
+        "detachedLiteralUnion": 4271,
+        "detachedExcludingSourceFileRoots": 4251
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.668
+    },
+    {
+      "id": "250_parseInvalidNonNullableTypes",
+      "totals": {
+        "auditedConstructorObjects": 140992,
+        "created": 140992,
+        "parser": 140980,
+        "synthetic": 12,
+        "noParent": 4267,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4246,
+        "notSyntaxReachable": 4247,
+        "notGraphReachable": 4247,
+        "detachedLiteralUnion": 4267,
+        "detachedExcludingSourceFileRoots": 4247
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.251
+    },
+    {
+      "id": "251_decoratorMetadataGenericTypeVariable",
+      "totals": {
+        "auditedConstructorObjects": 140901,
+        "created": 140901,
+        "parser": 140901,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.231
+    },
+    {
+      "id": "252_unusedFunctionsinNamespaces3",
+      "totals": {
+        "auditedConstructorObjects": 140902,
+        "created": 140902,
+        "parser": 140902,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.333
+    },
+    {
+      "id": "253_correctOrderOfPromiseMethod",
+      "totals": {
+        "auditedConstructorObjects": 140824,
+        "created": 140824,
+        "parser": 140814,
+        "synthetic": 10,
+        "noParent": 4261,
+        "sourceFiles": 20,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4242,
+        "notGraphReachable": 4242,
+        "detachedLiteralUnion": 4261,
+        "detachedExcludingSourceFileRoots": 4242
+      },
+      "rootSourceFiles": 19,
+      "wallSeconds": 2.283
+    },
+    {
+      "id": "254_parseTypes",
+      "totals": {
+        "auditedConstructorObjects": 141038,
+        "created": 141038,
+        "parser": 140965,
+        "synthetic": 73,
+        "noParent": 4327,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4306,
+        "notSyntaxReachable": 4307,
+        "notGraphReachable": 4307,
+        "detachedLiteralUnion": 4327,
+        "detachedExcludingSourceFileRoots": 4307
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.303
+    },
+    {
+      "id": "255_keyRemappingKeyofResult",
+      "totals": {
+        "auditedConstructorObjects": 141185,
+        "created": 141185,
+        "parser": 141168,
+        "synthetic": 17,
+        "noParent": 4268,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4247,
+        "notSyntaxReachable": 4248,
+        "notGraphReachable": 4248,
+        "detachedLiteralUnion": 4268,
+        "detachedExcludingSourceFileRoots": 4248
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.32
+    },
+    {
+      "id": "256_namespaceDisambiguationInUnion",
+      "totals": {
+        "auditedConstructorObjects": 141018,
+        "created": 141018,
+        "parser": 140955,
+        "synthetic": 63,
+        "noParent": 4314,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4293,
+        "notSyntaxReachable": 4294,
+        "notGraphReachable": 4294,
+        "detachedLiteralUnion": 4314,
+        "detachedExcludingSourceFileRoots": 4294
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.755
+    },
+    {
+      "id": "257_generatorES6_5",
+      "totals": {
+        "auditedConstructorObjects": 140896,
+        "created": 140896,
+        "parser": 140896,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.259
+    },
+    {
+      "id": "258_decoratorMetadataGenericTypeVariableInScope",
+      "totals": {
+        "auditedConstructorObjects": 140906,
+        "created": 140906,
+        "parser": 140906,
+        "synthetic": 0,
+        "noParent": 4260,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4239,
+        "notSyntaxReachable": 4240,
+        "notGraphReachable": 4240,
+        "detachedLiteralUnion": 4260,
+        "detachedExcludingSourceFileRoots": 4240
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.246
+    },
+    {
+      "id": "259_conditionalAnyCheckTypePicksBothBranches",
+      "totals": {
+        "auditedConstructorObjects": 140940,
+        "created": 140940,
+        "parser": 140936,
+        "synthetic": 4,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.285
+    },
+    {
+      "id": "260_unusedFunctionsinNamespaces6",
+      "totals": {
+        "auditedConstructorObjects": 140918,
+        "created": 140918,
+        "parser": 140918,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.463
+    },
+    {
+      "id": "261_promiseIdentity2",
+      "totals": {
+        "auditedConstructorObjects": 140976,
+        "created": 140976,
+        "parser": 140968,
+        "synthetic": 8,
+        "noParent": 4263,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4242,
+        "notSyntaxReachable": 4243,
+        "notGraphReachable": 4243,
+        "detachedLiteralUnion": 4263,
+        "detachedExcludingSourceFileRoots": 4243
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.265
+    },
+    {
+      "id": "262_decoratorMetadataConditionalType",
+      "totals": {
+        "auditedConstructorObjects": 140941,
+        "created": 140941,
+        "parser": 140933,
+        "synthetic": 8,
+        "noParent": 4262,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4241,
+        "notSyntaxReachable": 4246,
+        "notGraphReachable": 4246,
+        "detachedLiteralUnion": 4266,
+        "detachedExcludingSourceFileRoots": 4246
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.321
+    },
+    {
+      "id": "263_keyofIsLiteralContexualType",
+      "totals": {
+        "auditedConstructorObjects": 141003,
+        "created": 141003,
+        "parser": 140973,
+        "synthetic": 30,
+        "noParent": 4282,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4261,
+        "notSyntaxReachable": 4262,
+        "notGraphReachable": 4262,
+        "detachedLiteralUnion": 4282,
+        "detachedExcludingSourceFileRoots": 4262
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.361
+    },
+    {
+      "id": "264_unusedVariablesinNamespaces3",
+      "totals": {
+        "auditedConstructorObjects": 140924,
+        "created": 140924,
+        "parser": 140924,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.15
+    },
+    {
+      "id": "265_promiseIdentity",
+      "totals": {
+        "auditedConstructorObjects": 141039,
+        "created": 141039,
+        "parser": 141031,
+        "synthetic": 8,
+        "noParent": 4267,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4246,
+        "notSyntaxReachable": 4247,
+        "notGraphReachable": 4247,
+        "detachedLiteralUnion": 4267,
+        "detachedExcludingSourceFileRoots": 4247
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.311
+    },
+    {
+      "id": "266_decoratorMetadataGenericTypeVariableDefault",
+      "totals": {
+        "auditedConstructorObjects": 140902,
+        "created": 140902,
+        "parser": 140902,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.205
+    },
+    {
+      "id": "267_reverseMappedTypeContextualTypeNotCircular",
+      "totals": {
+        "auditedConstructorObjects": 140978,
+        "created": 140978,
+        "parser": 140958,
+        "synthetic": 20,
+        "noParent": 4274,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4253,
+        "notSyntaxReachable": 4255,
+        "notGraphReachable": 4255,
+        "detachedLiteralUnion": 4275,
+        "detachedExcludingSourceFileRoots": 4255
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.166
+    },
+    {
+      "id": "268_incorrectNumberOfTypeArgumentsDuringErrorReporting",
+      "totals": {
+        "auditedConstructorObjects": 140966,
+        "created": 140966,
+        "parser": 140962,
+        "synthetic": 4,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.359
+    },
+    {
+      "id": "269_unusedFunctionsinNamespaces5",
+      "totals": {
+        "auditedConstructorObjects": 140912,
+        "created": 140912,
+        "parser": 140912,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.522
+    },
+    {
+      "id": "270_promiseChaining1",
+      "totals": {
+        "auditedConstructorObjects": 140971,
+        "created": 140971,
+        "parser": 140965,
+        "synthetic": 6,
+        "noParent": 4259,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4238,
+        "notSyntaxReachable": 4239,
+        "notGraphReachable": 4239,
+        "detachedLiteralUnion": 4259,
+        "detachedExcludingSourceFileRoots": 4239
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.634
+    },
+    {
+      "id": "271_enumUsedBeforeDeclaration",
+      "totals": {
+        "auditedConstructorObjects": 140919,
+        "created": 140919,
+        "parser": 140919,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.214
+    },
+    {
+      "id": "272_conditionalExpressionNewLine3",
+      "totals": {
+        "auditedConstructorObjects": 140894,
+        "created": 140894,
+        "parser": 140894,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.266
+    },
+    {
+      "id": "273_stringMappingAssignability",
+      "totals": {
+        "auditedConstructorObjects": 140932,
+        "created": 140932,
+        "parser": 140906,
+        "synthetic": 26,
+        "noParent": 4280,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4259,
+        "notSyntaxReachable": 4260,
+        "notGraphReachable": 4260,
+        "detachedLiteralUnion": 4280,
+        "detachedExcludingSourceFileRoots": 4260
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.215
+    },
+    {
+      "id": "274_ipromise3",
+      "totals": {
+        "auditedConstructorObjects": 141106,
+        "created": 141106,
+        "parser": 141105,
+        "synthetic": 1,
+        "noParent": 4266,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4245,
+        "notSyntaxReachable": 4246,
+        "notGraphReachable": 4246,
+        "detachedLiteralUnion": 4266,
+        "detachedExcludingSourceFileRoots": 4246
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.292
+    },
+    {
+      "id": "275_unusedInterfaceinNamespace1",
+      "totals": {
+        "auditedConstructorObjects": 140895,
+        "created": 140895,
+        "parser": 140895,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.166
+    },
+    {
+      "id": "276_intersectionsAndOptionalProperties",
+      "totals": {
+        "auditedConstructorObjects": 141119,
+        "created": 141119,
+        "parser": 141012,
+        "synthetic": 107,
+        "noParent": 4361,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4340,
+        "notSyntaxReachable": 4341,
+        "notGraphReachable": 4341,
+        "detachedLiteralUnion": 4361,
+        "detachedExcludingSourceFileRoots": 4341
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.371
+    },
+    {
+      "id": "277_useBeforeDeclaration_destructuring",
+      "totals": {
+        "auditedConstructorObjects": 140919,
+        "created": 140919,
+        "parser": 140918,
+        "synthetic": 1,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.567
+    },
+    {
+      "id": "278_typeOfOperator1",
+      "totals": {
+        "auditedConstructorObjects": 140926,
+        "created": 140926,
+        "parser": 140903,
+        "synthetic": 23,
+        "noParent": 4274,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4253,
+        "notSyntaxReachable": 4254,
+        "notGraphReachable": 4254,
+        "detachedLiteralUnion": 4274,
+        "detachedExcludingSourceFileRoots": 4254
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.296
+    },
+    {
+      "id": "279_enumAssignmentCompat",
+      "totals": {
+        "auditedConstructorObjects": 141075,
+        "created": 141075,
+        "parser": 141027,
+        "synthetic": 48,
+        "noParent": 4299,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4278,
+        "notSyntaxReachable": 4279,
+        "notGraphReachable": 4279,
+        "detachedLiteralUnion": 4299,
+        "detachedExcludingSourceFileRoots": 4279
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.224
+    },
+    {
+      "id": "280_unusedClassesinNamespace2",
+      "totals": {
+        "auditedConstructorObjects": 140898,
+        "created": 140898,
+        "parser": 140898,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.209
+    },
+    {
+      "id": "281_doubleUnderStringLiteralAssignability",
+      "totals": {
+        "auditedConstructorObjects": 140916,
+        "created": 140916,
+        "parser": 140912,
+        "synthetic": 4,
+        "noParent": 4255,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4234,
+        "notSyntaxReachable": 4235,
+        "notGraphReachable": 4235,
+        "detachedLiteralUnion": 4255,
+        "detachedExcludingSourceFileRoots": 4235
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.159
+    },
+    {
+      "id": "282_ipromise4",
+      "totals": {
+        "auditedConstructorObjects": 141152,
+        "created": 141152,
+        "parser": 141145,
+        "synthetic": 7,
+        "noParent": 4272,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4251,
+        "notSyntaxReachable": 4252,
+        "notGraphReachable": 4252,
+        "detachedLiteralUnion": 4272,
+        "detachedExcludingSourceFileRoots": 4252
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.214
+    },
+    {
+      "id": "283_errorsWithInvokablesInUnions01",
+      "totals": {
+        "auditedConstructorObjects": 141025,
+        "created": 141025,
+        "parser": 140957,
+        "synthetic": 68,
+        "noParent": 4318,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4297,
+        "notSyntaxReachable": 4299,
+        "notGraphReachable": 4299,
+        "detachedLiteralUnion": 4319,
+        "detachedExcludingSourceFileRoots": 4299
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.198
+    },
+    {
+      "id": "284_exhaustiveSwitchCheckCircularity",
+      "totals": {
+        "auditedConstructorObjects": 140982,
+        "created": 140982,
+        "parser": 140979,
+        "synthetic": 3,
+        "noParent": 4259,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4238,
+        "notSyntaxReachable": 4239,
+        "notGraphReachable": 4239,
+        "detachedLiteralUnion": 4259,
+        "detachedExcludingSourceFileRoots": 4239
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.447
+    },
+    {
+      "id": "285_numberAssignableToEnumInsideUnion",
+      "totals": {
+        "auditedConstructorObjects": 140905,
+        "created": 140905,
+        "parser": 140904,
+        "synthetic": 1,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.193
+    },
+    {
+      "id": "286_conditionalExpressionNewLine9",
+      "totals": {
+        "auditedConstructorObjects": 140904,
+        "created": 140904,
+        "parser": 140904,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.244
+    },
+    {
+      "id": "287_unusedFunctionsinNamespaces2",
+      "totals": {
+        "auditedConstructorObjects": 140899,
+        "created": 140899,
+        "parser": 140899,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.229
+    },
+    {
+      "id": "288_numberOnLeftSideOfInExpression",
+      "totals": {
+        "auditedConstructorObjects": 140900,
+        "created": 140900,
+        "parser": 140899,
+        "synthetic": 1,
+        "noParent": 4252,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4231,
+        "notSyntaxReachable": 4232,
+        "notGraphReachable": 4232,
+        "detachedLiteralUnion": 4252,
+        "detachedExcludingSourceFileRoots": 4232
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.236
+    },
+    {
+      "id": "289_awaitedTypeStrictNull",
+      "totals": {
+        "auditedConstructorObjects": 158102,
+        "created": 158102,
+        "parser": 158099,
+        "synthetic": 3,
+        "noParent": 5169,
+        "sourceFiles": 95,
+        "parentlessNonSourceFile": 5074,
+        "notSyntaxReachable": 5077,
+        "notGraphReachable": 5077,
+        "detachedLiteralUnion": 5171,
+        "detachedExcludingSourceFileRoots": 5077
+      },
+      "rootSourceFiles": 94,
+      "wallSeconds": 2.884
+    },
+    {
+      "id": "290_contextuallyTypingOrOperator",
+      "totals": {
+        "auditedConstructorObjects": 140985,
+        "created": 140985,
+        "parser": 140984,
+        "synthetic": 1,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.24
+    },
+    {
+      "id": "291_nonexistentPropertyOnUnion",
+      "totals": {
+        "auditedConstructorObjects": 140907,
+        "created": 140907,
+        "parser": 140899,
+        "synthetic": 8,
+        "noParent": 4259,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4238,
+        "notSyntaxReachable": 4239,
+        "notGraphReachable": 4239,
+        "detachedLiteralUnion": 4259,
+        "detachedExcludingSourceFileRoots": 4239
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.586
+    },
+    {
+      "id": "292_scopingInCatchBlocks",
+      "totals": {
+        "auditedConstructorObjects": 140909,
+        "created": 140909,
+        "parser": 140909,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.172
+    },
+    {
+      "id": "293_augmentedTypesEnum2",
+      "totals": {
+        "auditedConstructorObjects": 140905,
+        "created": 140905,
+        "parser": 140905,
+        "synthetic": 0,
+        "noParent": 4251,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4230,
+        "notSyntaxReachable": 4231,
+        "notGraphReachable": 4231,
+        "detachedLiteralUnion": 4251,
+        "detachedExcludingSourceFileRoots": 4231
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.148
+    },
+    {
+      "id": "294_mappedTypeWithCombinedTypeMappers",
+      "totals": {
+        "auditedConstructorObjects": 140957,
+        "created": 140957,
+        "parser": 140952,
+        "synthetic": 5,
+        "noParent": 4256,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4235,
+        "notSyntaxReachable": 4236,
+        "notGraphReachable": 4236,
+        "detachedLiteralUnion": 4256,
+        "detachedExcludingSourceFileRoots": 4236
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.207
+    },
+    {
+      "id": "295_unusedFunctionsinNamespaces4",
+      "totals": {
+        "auditedConstructorObjects": 140903,
+        "created": 140903,
+        "parser": 140903,
+        "synthetic": 0,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.316
+    },
+    {
+      "id": "296_numberToString",
+      "totals": {
+        "auditedConstructorObjects": 140922,
+        "created": 140922,
+        "parser": 140916,
+        "synthetic": 6,
+        "noParent": 4258,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4237,
+        "notSyntaxReachable": 4238,
+        "notGraphReachable": 4238,
+        "detachedLiteralUnion": 4258,
+        "detachedExcludingSourceFileRoots": 4238
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.256
+    },
+    {
+      "id": "297_promiseIdentityWithAny",
+      "totals": {
+        "auditedConstructorObjects": 140972,
+        "created": 140972,
+        "parser": 140964,
+        "synthetic": 8,
+        "noParent": 4263,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4242,
+        "notSyntaxReachable": 4243,
+        "notGraphReachable": 4243,
+        "detachedLiteralUnion": 4263,
+        "detachedExcludingSourceFileRoots": 4243
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.277
+    },
+    {
+      "id": "298_destructuringAssignmentWithDefault2",
+      "totals": {
+        "auditedConstructorObjects": 20601,
+        "created": 20601,
+        "parser": 20567,
+        "synthetic": 34,
+        "noParent": 1210,
+        "sourceFiles": 15,
+        "parentlessNonSourceFile": 1195,
+        "notSyntaxReachable": 1214,
+        "notGraphReachable": 1214,
+        "detachedLiteralUnion": 1228,
+        "detachedExcludingSourceFileRoots": 1214
+      },
+      "rootSourceFiles": 14,
+      "wallSeconds": 0.335
+    },
+    {
+      "id": "299_contextualTypingOfArrayLiterals1",
+      "totals": {
+        "auditedConstructorObjects": 140920,
+        "created": 140920,
+        "parser": 140917,
+        "synthetic": 3,
+        "noParent": 4257,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4236,
+        "notSyntaxReachable": 4237,
+        "notGraphReachable": 4237,
+        "detachedLiteralUnion": 4257,
+        "detachedExcludingSourceFileRoots": 4237
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.454
+    },
+    {
+      "id": "300_errorMessageOnIntersectionsWithDiscriminants01",
+      "totals": {
+        "auditedConstructorObjects": 141011,
+        "created": 141011,
+        "parser": 140939,
+        "synthetic": 72,
+        "noParent": 4323,
+        "sourceFiles": 21,
+        "parentlessNonSourceFile": 4302,
+        "notSyntaxReachable": 4303,
+        "notGraphReachable": 4303,
+        "detachedLiteralUnion": 4323,
+        "detachedExcludingSourceFileRoots": 4303
+      },
+      "rootSourceFiles": 20,
+      "wallSeconds": 2.214
+    },
+    {
+      "id": "tiny",
+      "totals": {
+        "auditedConstructorObjects": 146867,
+        "created": 146867,
+        "parser": 146859,
+        "synthetic": 8,
+        "noParent": 4537,
+        "sourceFiles": 55,
+        "parentlessNonSourceFile": 4482,
+        "notSyntaxReachable": 4483,
+        "notGraphReachable": 4483,
+        "detachedLiteralUnion": 4537,
+        "detachedExcludingSourceFileRoots": 4483
+      },
+      "rootSourceFiles": 54,
+      "wallSeconds": 2.457
+    }
+  ],
+  "syntheticCallerPassSeconds": 152.99,
+  "phaseCorrections": [
+    {
+      "id": "175_propertyOrdering",
+      "movedFromParserToSynthetic": 4
+    },
+    {
+      "id": "239_expressionWithJSDocTypeArguments",
+      "movedFromParserToSynthetic": 12
+    },
+    {
+      "id": "244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib",
+      "movedFromParserToSynthetic": 2
+    }
+  ]
+}

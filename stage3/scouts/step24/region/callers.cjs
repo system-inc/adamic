@@ -1,0 +1,8 @@
+// Supplement the full allocation census with source-mapped callers of synthetic nodes.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {makeTracker}=require('./tracker.cjs');Error.stackTraceLimit=40;
+const scratch=path.resolve(process.argv[2]),projects=path.resolve(process.argv[3]),out=path.resolve(process.argv[4]);fs.mkdirSync(out,{recursive:true});
+const tracker=globalThis.__region=makeTracker({outsideOnly:true,captureOutside:true});const ts=require(path.join(scratch,'instrumented.cjs'));tracker.end([],ts);
+const rows=JSON.parse(fs.readFileSync(path.join(projects,'manifest.json'),'utf8')),start=Date.now(),summary=[];
+for(const row of rows){tracker.begin();const read=ts.readConfigFile(row.config,ts.sys.readFile);const parsed=ts.parseJsonConfigFileContent(read.config,ts.sys,path.dirname(row.config));const program=ts.createProgram(parsed.fileNames,parsed.options,ts.createCompilerHost(parsed.options,true));ts.getPreEmitDiagnostics(program);const report=tracker.end(program.getSourceFiles(),ts);report.id=row.id;for(const p of report.paths)if(p.callerStack)p.callerStack=p.callerStack.map(line=>line.replace(scratch+'/src/','src/'));fs.writeFileSync(path.join(out,row.id+'.json'),JSON.stringify(report,null,2)+'\n');summary.push({id:row.id,synthetic:report.totals.synthetic});console.log(row.id+': '+report.totals.synthetic+' synthetic caller witnesses');}
+fs.writeFileSync(path.join(out,'summary.json'),JSON.stringify({projects:summary.length,wallSeconds:(Date.now()-start)/1000,cases:summary},null,2)+'\n');assert.equal(summary.length,301);

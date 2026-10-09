@@ -1,0 +1,146 @@
+{
+  "base": "45487a809f89885a3fc651cd590e7dabf31362dc",
+  "node": "v24.19.0",
+  "typescript": "6.0.3",
+  "wallSeconds": 3.459,
+  "results": [
+    {
+      "fixture": "parsed",
+      "sourceNode": {
+        "status": 0,
+        "signal": null,
+        "stdout": "1:answer:true\n",
+        "stderr": ""
+      },
+      "mutant": "drop parsed parent edge",
+      "mutantSourceNode": {
+        "status": 0,
+        "signal": null,
+        "stdout": "1:answer:false\n",
+        "stderr": ""
+      },
+      "native": {
+        "observation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "1:answer:true\n",
+          "stderr": "adamic: counts: allocations 10 frees 10 retains 9 releases 15 peak 10 regions 0\n"
+        },
+        "mutantObservation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "1:answer:false\n",
+          "stderr": ""
+        },
+        "caughtBy": "stdout comparison with unchanged source Node"
+      },
+      "javascript": {
+        "observation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "1:answer:true\n",
+          "stderr": ""
+        },
+        "mutantObservation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "1:answer:false\n",
+          "stderr": ""
+        },
+        "caughtBy": "stdout comparison with unchanged source Node"
+      }
+    },
+    {
+      "fixture": "synthetic",
+      "sourceNode": {
+        "status": 0,
+        "signal": null,
+        "stdout": "generated:true:false:true\n",
+        "stderr": ""
+      },
+      "mutant": "erase synthetic provenance flag",
+      "mutantSourceNode": {
+        "status": 0,
+        "signal": null,
+        "stdout": "generated:false:false:true\n",
+        "stderr": ""
+      },
+      "native": {
+        "observation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "generated:true:false:true\n",
+          "stderr": "adamic: counts: allocations 7 frees 7 retains 6 releases 11 peak 7 regions 0\n"
+        },
+        "mutantObservation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "generated:false:false:true\n",
+          "stderr": ""
+        },
+        "caughtBy": "stdout comparison with unchanged source Node"
+      },
+      "javascript": {
+        "observation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "generated:true:false:true\n",
+          "stderr": ""
+        },
+        "mutantObservation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "generated:false:false:true\n",
+          "stderr": ""
+        },
+        "caughtBy": "stdout comparison with unchanged source Node"
+      }
+    },
+    {
+      "fixture": "detached",
+      "sourceNode": {
+        "status": 0,
+        "signal": null,
+        "stdout": "false:false:old-file:retained-child\n",
+        "stderr": ""
+      },
+      "mutant": "leave detached child in source-file children",
+      "mutantSourceNode": {
+        "status": 0,
+        "signal": null,
+        "stdout": "true:false:old-file:retained-child\n",
+        "stderr": ""
+      },
+      "native": {
+        "observation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "false:false:old-file:retained-child\n",
+          "stderr": "adamic: counts: allocations 7 frees 7 retains 11 releases 16 peak 7 regions 0\n"
+        },
+        "mutantObservation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "true:false:old-file:retained-child\n",
+          "stderr": ""
+        },
+        "caughtBy": "stdout comparison with unchanged source Node"
+      },
+      "javascript": {
+        "observation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "false:false:old-file:retained-child\n",
+          "stderr": ""
+        },
+        "mutantObservation": {
+          "status": 0,
+          "signal": null,
+          "stdout": "true:false:old-file:retained-child\n",
+          "stderr": ""
+        },
+        "caughtBy": "stdout comparison with unchanged source Node"
+      }
+    }
+  ]
+}
