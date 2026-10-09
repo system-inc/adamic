@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:44:13.773074131Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:44:13.784425848Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked"}
+{"Time":"2026-10-09T10:44:13.78451299Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Output":"=== RUN   TestOptionalWriteMissingSlotRemainsChecked\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:13.784550466Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Output":"=== PAUSE TestOptionalWriteMissingSlotRemainsChecked\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:13.784553335Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked"}
+{"Time":"2026-10-09T10:44:13.784556589Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked"}
+{"Time":"2026-10-09T10:44:13.784558524Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Output":"=== CONT  TestOptionalWriteMissingSlotRemainsChecked\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:13.928969394Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Output":"    fields_test.go:241: missing-slot write must be refused before it reaches C, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:44:13.929141531Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Output":"--- FAIL: TestOptionalWriteMissingSlotRemainsChecked (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:13.929154612Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Elapsed":0.14}
+{"Time":"2026-10-09T10:44:13.92919906Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:13.930722043Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.157s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:13.930793324Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.158}

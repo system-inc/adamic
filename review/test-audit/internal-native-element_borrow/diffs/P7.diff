@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/map.c
++++ b/internal/native/runtime/map.c
+@@ -22,6 +22,7 @@
+ }
+ 
+ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
++	return NULL;
+ 	adamic_map *map = adamic_allocate(sizeof *map, adamic_kind_map);
+ 	map->count = 0;
+ 	map->used = 0;

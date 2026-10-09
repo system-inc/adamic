@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -2576,6 +2576,7 @@
+  */
+ // V8: src/base/ieee754.cc, ieee754::cosh.
+ double adamic_math_cosh(double x) {
++  return 0;
+   static const double KCOSH_OVERFLOW = 710.4758600739439;
+   static const double one = 1.0, half = 0.5;
+   static volatile double huge = 1.0e+300;

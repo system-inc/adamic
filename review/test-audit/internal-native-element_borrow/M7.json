@@ -1,0 +1,129 @@
+{"Time":"2026-10-09T10:42:27.510654553Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:42:27.531106215Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyIndexedElementsBorrow"}
+{"Time":"2026-10-09T10:42:27.531287228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyIndexedElementsBorrow","Output":"=== RUN   TestNbodyIndexedElementsBorrow\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.531400668Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyIndexedElementsBorrow","Output":"=== PAUSE TestNbodyIndexedElementsBorrow\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.53140525Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyIndexedElementsBorrow"}
+{"Time":"2026-10-09T10:42:27.531443379Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestThrowElementBorrowPlan"}
+{"Time":"2026-10-09T10:42:27.531446284Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestThrowElementBorrowPlan","Output":"=== RUN   TestThrowElementBorrowPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.531474909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestThrowElementBorrowPlan","Output":"=== PAUSE TestThrowElementBorrowPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.531477955Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestThrowElementBorrowPlan"}
+{"Time":"2026-10-09T10:42:27.533457488Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCallTargetsElementBorrowPlan"}
+{"Time":"2026-10-09T10:42:27.533479325Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCallTargetsElementBorrowPlan","Output":"=== RUN   TestCallTargetsElementBorrowPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533485885Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCallTargetsElementBorrowPlan","Output":"=== PAUSE TestCallTargetsElementBorrowPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533488144Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCallTargetsElementBorrowPlan"}
+{"Time":"2026-10-09T10:42:27.533490786Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizeBorrowDocClaim"}
+{"Time":"2026-10-09T10:42:27.53349266Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizeBorrowDocClaim","Output":"=== RUN   TestDevirtualizeBorrowDocClaim\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533495266Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizeBorrowDocClaim","Output":"=== PAUSE TestDevirtualizeBorrowDocClaim\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533496954Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizeBorrowDocClaim"}
+{"Time":"2026-10-09T10:42:27.533499168Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUniformFieldsMatchNode"}
+{"Time":"2026-10-09T10:42:27.533500836Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUniformFieldsMatchNode","Output":"=== RUN   TestUniformFieldsMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533503764Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUniformFieldsMatchNode","Output":"=== PAUSE TestUniformFieldsMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533505645Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUniformFieldsMatchNode"}
+{"Time":"2026-10-09T10:42:27.533507659Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded"}
+{"Time":"2026-10-09T10:42:27.533515943Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"=== RUN   TestRuntimeFieldLayoutsAreIncluded\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533518534Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"=== PAUSE TestRuntimeFieldLayoutsAreIncluded\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533520262Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded"}
+{"Time":"2026-10-09T10:42:27.533522122Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegexProgramsKeepCheckedFieldReads"}
+{"Time":"2026-10-09T10:42:27.533526141Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegexProgramsKeepCheckedFieldReads","Output":"=== RUN   TestRegexProgramsKeepCheckedFieldReads\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533530327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegexProgramsKeepCheckedFieldReads","Output":"=== PAUSE TestRegexProgramsKeepCheckedFieldReads\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533532184Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegexProgramsKeepCheckedFieldReads"}
+{"Time":"2026-10-09T10:42:27.533534665Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked"}
+{"Time":"2026-10-09T10:42:27.533536578Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Output":"=== RUN   TestOptionalWriteMissingSlotRemainsChecked\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533539422Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Output":"=== PAUSE TestOptionalWriteMissingSlotRemainsChecked\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533541221Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked"}
+{"Time":"2026-10-09T10:42:27.533543107Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestFreedValuesAreCaughtWithSlabs"}
+{"Time":"2026-10-09T10:42:27.533544787Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestFreedValuesAreCaughtWithSlabs","Output":"=== RUN   TestFreedValuesAreCaughtWithSlabs\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533547027Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestFreedValuesAreCaughtWithSlabs","Output":"=== PAUSE TestFreedValuesAreCaughtWithSlabs\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533549204Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestFreedValuesAreCaughtWithSlabs"}
+{"Time":"2026-10-09T10:42:27.5335545Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSizeClassesShareTheirChunks"}
+{"Time":"2026-10-09T10:42:27.533556412Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSizeClassesShareTheirChunks","Output":"=== RUN   TestSizeClassesShareTheirChunks\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533559877Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSizeClassesShareTheirChunks","Output":"=== PAUSE TestSizeClassesShareTheirChunks\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533561563Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSizeClassesShareTheirChunks"}
+{"Time":"2026-10-09T10:42:27.533569466Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits"}
+{"Time":"2026-10-09T10:42:27.533574256Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Output":"=== RUN   TestResidentSetUnits\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533631228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Output":"=== PAUSE TestResidentSetUnits\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533634924Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits"}
+{"Time":"2026-10-09T10:42:27.533639Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit"}
+{"Time":"2026-10-09T10:42:27.53364163Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Output":"=== RUN   TestIeee754MatchesNodeBitForBit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533645337Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Output":"=== PAUSE TestIeee754MatchesNodeBitForBit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533647638Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit"}
+{"Time":"2026-10-09T10:42:27.533652118Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCEndsInNewline"}
+{"Time":"2026-10-09T10:42:27.533667324Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCEndsInNewline","Output":"=== RUN   TestCEndsInNewline\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533690712Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCEndsInNewline","Output":"=== PAUSE TestCEndsInNewline\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.533693226Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCEndsInNewline"}
+{"Time":"2026-10-09T10:42:27.533695472Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources"}
+{"Time":"2026-10-09T10:42:27.53369758Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources","Output":"=== RUN   TestLibraryMapSetIteratorResources\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:27.682437458Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/peak"}
+{"Time":"2026-10-09T10:42:27.682475512Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/peak","Output":"=== RUN   TestLibraryMapSetIteratorResources/peak\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.048479685Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/peak","Output":"    library_map_set_iterator_test.go:92: held exhausted iterator 672 KiB, control 776 KiB\n"}
+{"Time":"2026-10-09T10:42:28.048566225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/peak","Output":"--- PASS: TestLibraryMapSetIteratorResources/peak (0.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.0485724Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/peak","Elapsed":0.37}
+{"Time":"2026-10-09T10:42:28.048618369Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/count"}
+{"Time":"2026-10-09T10:42:28.048621427Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/count","Output":"=== RUN   TestLibraryMapSetIteratorResources/count\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.216636667Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/count","Output":"--- PASS: TestLibraryMapSetIteratorResources/count (0.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.216693355Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/count","Elapsed":0.17}
+{"Time":"2026-10-09T10:42:28.216705947Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/speed"}
+{"Time":"2026-10-09T10:42:28.216709434Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/speed","Output":"=== RUN   TestLibraryMapSetIteratorResources/speed\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.254832962Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/speed","Output":"    library_map_set_iterator_test.go:105: 2 million numeric lookups 0.033935 CPU seconds, bound 0.35\n"}
+{"Time":"2026-10-09T10:42:28.254880183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/speed","Output":"--- PASS: TestLibraryMapSetIteratorResources/speed (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.25488683Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources/speed","Elapsed":0.04}
+{"Time":"2026-10-09T10:42:28.255042371Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources","Output":"--- PASS: TestLibraryMapSetIteratorResources (0.72s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.255046897Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLibraryMapSetIteratorResources","Elapsed":0.72}
+{"Time":"2026-10-09T10:42:28.255107384Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyIndexedElementsBorrow"}
+{"Time":"2026-10-09T10:42:28.255111145Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyIndexedElementsBorrow","Output":"=== CONT  TestNbodyIndexedElementsBorrow\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.255215402Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked"}
+{"Time":"2026-10-09T10:42:28.25521958Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Output":"=== CONT  TestOptionalWriteMissingSlotRemainsChecked\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.256338126Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCEndsInNewline"}
+{"Time":"2026-10-09T10:42:28.256349828Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCEndsInNewline","Output":"=== CONT  TestCEndsInNewline\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.256354555Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit"}
+{"Time":"2026-10-09T10:42:28.256356967Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Output":"=== CONT  TestIeee754MatchesNodeBitForBit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.25761963Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits"}
+{"Time":"2026-10-09T10:42:28.257638464Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Output":"=== CONT  TestResidentSetUnits\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.25764943Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Output":"--- PASS: TestResidentSetUnits (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.257652248Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Elapsed":0}
+{"Time":"2026-10-09T10:42:28.257661737Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSizeClassesShareTheirChunks"}
+{"Time":"2026-10-09T10:42:28.257663705Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSizeClassesShareTheirChunks","Output":"=== CONT  TestSizeClassesShareTheirChunks\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.334447093Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCEndsInNewline","Output":"--- PASS: TestCEndsInNewline (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.334481201Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCEndsInNewline","Elapsed":0.08}
+{"Time":"2026-10-09T10:42:28.334487217Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestFreedValuesAreCaughtWithSlabs"}
+{"Time":"2026-10-09T10:42:28.334494044Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestFreedValuesAreCaughtWithSlabs","Output":"=== CONT  TestFreedValuesAreCaughtWithSlabs\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.415288953Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyIndexedElementsBorrow","Output":"--- PASS: TestNbodyIndexedElementsBorrow (0.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.415333934Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNbodyIndexedElementsBorrow","Elapsed":0.16}
+{"Time":"2026-10-09T10:42:28.415340736Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUniformFieldsMatchNode"}
+{"Time":"2026-10-09T10:42:28.415343477Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUniformFieldsMatchNode","Output":"=== CONT  TestUniformFieldsMatchNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.507209165Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Output":"--- PASS: TestOptionalWriteMissingSlotRemainsChecked (0.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.507257712Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestOptionalWriteMissingSlotRemainsChecked","Elapsed":0.25}
+{"Time":"2026-10-09T10:42:28.507264515Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegexProgramsKeepCheckedFieldReads"}
+{"Time":"2026-10-09T10:42:28.50726722Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegexProgramsKeepCheckedFieldReads","Output":"=== CONT  TestRegexProgramsKeepCheckedFieldReads\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.611304651Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSizeClassesShareTheirChunks","Output":"    heap_test.go:126: peak 6292 KiB through every class, 5912 KiB at one size\n"}
+{"Time":"2026-10-09T10:42:28.611379345Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSizeClassesShareTheirChunks","Output":"--- PASS: TestSizeClassesShareTheirChunks (0.35s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.611383624Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSizeClassesShareTheirChunks","Elapsed":0.35}
+{"Time":"2026-10-09T10:42:28.61139011Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded"}
+{"Time":"2026-10-09T10:42:28.611392958Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"=== CONT  TestRuntimeFieldLayoutsAreIncluded\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.611396865Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"    fields_test.go:168: directory.c: runtime field \"symbolicLink\" at 3 is absent or conflicting in the layout proof\n","OutputType":"error"}
+{"Time":"2026-10-09T10:42:28.611434945Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"--- FAIL: TestRuntimeFieldLayoutsAreIncluded (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.611439396Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Elapsed":0}
+{"Time":"2026-10-09T10:42:28.611442261Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCallTargetsElementBorrowPlan"}
+{"Time":"2026-10-09T10:42:28.611444856Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCallTargetsElementBorrowPlan","Output":"=== CONT  TestCallTargetsElementBorrowPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.728270971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCallTargetsElementBorrowPlan","Output":"--- PASS: TestCallTargetsElementBorrowPlan (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.728323207Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestCallTargetsElementBorrowPlan","Elapsed":0.12}
+{"Time":"2026-10-09T10:42:28.728332448Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizeBorrowDocClaim"}
+{"Time":"2026-10-09T10:42:28.728336479Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizeBorrowDocClaim","Output":"=== CONT  TestDevirtualizeBorrowDocClaim\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.808419724Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizeBorrowDocClaim","Output":"--- PASS: TestDevirtualizeBorrowDocClaim (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.811286367Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDevirtualizeBorrowDocClaim","Elapsed":0.08}
+{"Time":"2026-10-09T10:42:28.811318724Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestThrowElementBorrowPlan"}
+{"Time":"2026-10-09T10:42:28.811323189Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestThrowElementBorrowPlan","Output":"=== CONT  TestThrowElementBorrowPlan\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:28.909117422Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestThrowElementBorrowPlan","Output":"--- PASS: TestThrowElementBorrowPlan (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:29.289105277Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestThrowElementBorrowPlan","Elapsed":0.1}
+{"Time":"2026-10-09T10:42:29.289158228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestFreedValuesAreCaughtWithSlabs","Output":"--- PASS: TestFreedValuesAreCaughtWithSlabs (0.95s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:29.328146653Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestFreedValuesAreCaughtWithSlabs","Elapsed":0.95}
+{"Time":"2026-10-09T10:42:29.328191362Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegexProgramsKeepCheckedFieldReads","Output":"--- PASS: TestRegexProgramsKeepCheckedFieldReads (0.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:29.493394931Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegexProgramsKeepCheckedFieldReads","Elapsed":0.82}
+{"Time":"2026-10-09T10:42:29.493447037Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUniformFieldsMatchNode","Output":"--- PASS: TestUniformFieldsMatchNode (1.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:32.950721349Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUniformFieldsMatchNode","Elapsed":1.08}
+{"Time":"2026-10-09T10:42:32.950804526Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Output":"    ieee754_test.go:261: 1281787 answers (61802 values through each of 19 functions, and atan2 and hypot), 0 mismatches\n"}
+{"Time":"2026-10-09T10:42:32.951767203Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Output":"--- PASS: TestIeee754MatchesNodeBitForBit (4.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:32.951834209Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Elapsed":4.7}
+{"Time":"2026-10-09T10:42:32.951838402Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:32.972121804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t5.461s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:42:32.972157893Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":5.462}

@@ -1,0 +1,13 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -461,9 +461,7 @@
+ 	if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union {
+ 		return l.notYet(target, "writing a possibly absent optional own field")
+ 	}
+-	if l.omittedOptionals[member] && !presentBeforeWrite(target) && !l.literalGivesField(target) {
+-		return l.notYet(target, "writing a possibly absent optional own field")
+-	}
++	
+ 	return nil
+ }
+ 

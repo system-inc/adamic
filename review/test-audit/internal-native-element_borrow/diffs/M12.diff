@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/map.c
++++ b/internal/native/runtime/map.c
+@@ -264,7 +264,7 @@
+ 	// A held iterator that reached done no longer needs stable entry positions.
+ 	// exhausted also tells its eventual free not to drop the count a second time.
+ 	iterator->exhausted = true;
+-	iterator->map->iterating--;
++	/* dropped exhausted iteration decrement */
+ 	return false;
+ }
+ 

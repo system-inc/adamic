@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:44:11.685361723Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:44:11.698526496Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded"}
+{"Time":"2026-10-09T10:44:11.698788654Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"=== RUN   TestRuntimeFieldLayoutsAreIncluded\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:11.698833641Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"=== PAUSE TestRuntimeFieldLayoutsAreIncluded\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:11.698837909Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded"}
+{"Time":"2026-10-09T10:44:11.69884415Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded"}
+{"Time":"2026-10-09T10:44:11.698847564Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"=== CONT  TestRuntimeFieldLayoutsAreIncluded\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:11.701980447Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"    fields_test.go:178: 32 runtime layouts included\n"}
+{"Time":"2026-10-09T10:44:11.702033599Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Output":"--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:11.702045771Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeFieldLayoutsAreIncluded","Elapsed":0}
+{"Time":"2026-10-09T10:44:11.702070608Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:11.702238774Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.016s\n"}
+{"Time":"2026-10-09T10:44:11.702257544Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.017}

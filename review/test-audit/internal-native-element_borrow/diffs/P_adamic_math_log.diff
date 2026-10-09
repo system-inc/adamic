@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -1656,6 +1656,7 @@
+  */
+ // V8: src/base/ieee754.cc, ieee754::log.
+ double adamic_math_log(double x) {
++  return 0;
+   static const double                      /* -- */
+       ln2_hi = 6.93147180369123816490e-01, /* 3fe62e42 fee00000 */
+       ln2_lo = 1.90821492927058770002e-10, /* 3dea39ef 35793c76 */

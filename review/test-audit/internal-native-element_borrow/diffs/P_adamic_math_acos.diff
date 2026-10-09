@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -875,6 +875,7 @@
+  */
+ // V8: src/base/ieee754.cc, ieee754::acos.
+ double adamic_math_acos(double x) {
++  return 0;
+   static const double
+       one = 1.00000000000000000000e+00,     /* 0x3FF00000, 0x00000000 */
+       pi = 3.14159265358979311600e+00,      /* 0x400921FB, 0x54442D18 */

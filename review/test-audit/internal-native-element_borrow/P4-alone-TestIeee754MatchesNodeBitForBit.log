@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:44:21.69021696Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:44:21.702241874Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit"}
+{"Time":"2026-10-09T10:44:21.702326756Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Output":"=== RUN   TestIeee754MatchesNodeBitForBit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:21.702356047Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Output":"=== PAUSE TestIeee754MatchesNodeBitForBit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:21.702358657Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit"}
+{"Time":"2026-10-09T10:44:21.702361965Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit"}
+{"Time":"2026-10-09T10:44:21.702363886Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Output":"=== CONT  TestIeee754MatchesNodeBitForBit\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:26.855281263Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Output":"    ieee754_test.go:261: 1281787 answers (61802 values through each of 19 functions, and atan2 and hypot), 0 mismatches\n"}
+{"Time":"2026-10-09T10:44:26.855599957Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Output":"--- PASS: TestIeee754MatchesNodeBitForBit (5.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:26.855609688Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestIeee754MatchesNodeBitForBit","Elapsed":5.15}
+{"Time":"2026-10-09T10:44:26.855649684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:44:26.867587208Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t5.177s\n"}
+{"Time":"2026-10-09T10:44:26.867639673Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":5.177}

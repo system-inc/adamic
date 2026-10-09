@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -1006,6 +1006,7 @@
+  */
+ // V8: src/base/ieee754.cc, ieee754::asin.
+ double adamic_math_asin(double x) {
++  return 0;
+   static const double
+       one = 1.00000000000000000000e+00, /* 0x3FF00000, 0x00000000 */
+       huge = 1.000e+300,

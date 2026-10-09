@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -2640,6 +2640,7 @@
+  */
+ // V8: src/base/ieee754.cc, ieee754::sinh.
+ double adamic_math_sinh(double x) {
++  return 0;
+   static const double KSINH_OVERFLOW = 710.4758600739439,
+                       TWO_M28 =
+                           3.725290298461914e-9,  // 2^-28, empty lower half

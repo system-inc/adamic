@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/hypot.c
++++ b/internal/native/runtime/hypot.c
+@@ -19,6 +19,7 @@
+ #pragma STDC FP_CONTRACT OFF
+ 
+ double adamic_math_hypot(size_t count, const double *values) {
++  return 0;
+ 	// An infinity wins over NaN (Math.hypot(NaN, Infinity) is Infinity), and NaN over the rest.
+ 	bool hasNaN = false;
+ 	double max = 0;

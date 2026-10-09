@@ -1,0 +1,11 @@
+--- a/internal/native/fields.go
++++ b/internal/native/fields.go
+@@ -34,7 +34,7 @@
+ 			recordStorage = true
+ 		}
+ 	})
+-	if len(program.Regexps) != 0 || recordStorage {
++	if recordStorage {
+ 		return map[string]int{}
+ 	}
+ 	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message),

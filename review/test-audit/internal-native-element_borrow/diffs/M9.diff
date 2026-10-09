@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/heap.c
++++ b/internal/native/runtime/heap.c
+@@ -169,7 +169,7 @@
+ 	each->free = slot;
+ 	// The whole slot, the link too, so a use after the free is caught where there's a sanitizer, even a
+ 	// retain or release, which touches the first word; take unpoisons a slot before reading its link.
+-	POISON(slot, size);
++	(void)size;
+ 	each->live--;
+ 	if (!each->listed) {
+ 		list_chunk(each);

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -2697,6 +2697,7 @@
+  */
+ // V8: src/base/ieee754.cc, ieee754::tanh.
+ double adamic_math_tanh(double x) {
++  return 0;
+   static const volatile double tiny = 1.0e-300;
+   static const double one = 1.0, two = 2.0, huge = 1.0e300;
+   double t, z;

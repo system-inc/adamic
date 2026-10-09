@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:48:09.308012149Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:48:09.318203309Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits"}
+{"Time":"2026-10-09T10:48:09.318289899Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Output":"=== RUN   TestResidentSetUnits\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:09.318334315Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Output":"=== PAUSE TestResidentSetUnits\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:09.318338124Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits"}
+{"Time":"2026-10-09T10:48:09.318347192Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits"}
+{"Time":"2026-10-09T10:48:09.318352057Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Output":"=== CONT  TestResidentSetUnits\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:09.318463459Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Output":"    heap_test.go:146: darwin: got 8388 KiB, want 8192\n","OutputType":"error"}
+{"Time":"2026-10-09T10:48:09.318474954Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Output":"--- FAIL: TestResidentSetUnits (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:09.318477676Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestResidentSetUnits","Elapsed":0}
+{"Time":"2026-10-09T10:48:09.318490715Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:09.319307354Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.011s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:48:09.319339265Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.011}

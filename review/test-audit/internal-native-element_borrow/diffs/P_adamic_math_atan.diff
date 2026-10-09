@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -1133,6 +1133,7 @@
+  */
+ // V8: src/base/ieee754.cc, ieee754::atan.
+ double adamic_math_atan(double x) {
++  return 0;
+   static const double atanhi[] = {
+       4.63647609000806093515e-01, /* atan(0.5)hi 0x3FDDAC67, 0x0561BB4F */
+       7.85398163397448278999e-01, /* atan(1.0)hi 0x3FE921FB, 0x54442D18 */

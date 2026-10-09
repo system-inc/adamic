@@ -1,0 +1,11 @@
+--- a/internal/native/heap_test.go
++++ b/internal/native/heap_test.go
+@@ -129,7 +129,7 @@
+ // getrusage reports bytes on macOS and KiB on Linux. Normalize before reporting or comparing.
+ func residentKibibytes(value int, operatingSystem string) int {
+ 	if operatingSystem == "darwin" {
+-		return value / 1024
++		return value / 1000
+ 	}
+ 	return value
+ }

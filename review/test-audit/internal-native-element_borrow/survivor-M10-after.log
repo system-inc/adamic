@@ -1,0 +1,7 @@
+=== RUN   TestSizeClassesShareTheirChunks
+=== PAUSE TestSizeClassesShareTheirChunks
+=== CONT  TestSizeClassesShareTheirChunks
+    heap_test.go:126: peak 49948 KiB through every class, 75816 KiB at one size
+--- PASS: TestSizeClassesShareTheirChunks (0.32s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.334s

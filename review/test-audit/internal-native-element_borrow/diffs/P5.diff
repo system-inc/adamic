@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_build_impl.h
++++ b/internal/native/runtime/string_build_impl.h
+@@ -35,6 +35,7 @@
+ }
+ 
+ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) {
++	return NULL;
+ 	size_t length = 0, units = 0;
+ 	for (size_t index = 0; index < count; index++) {
+ 		if (parts[index]->length > SIZE_MAX - length) {

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -2356,6 +2356,7 @@
+ 
+ // V8: src/base/ieee754.cc, ieee754::cbrt.
+ double adamic_math_cbrt(double x) {
++  return 0;
+   static const uint32_t
+       B1 = 715094163, /* B1 = (1023-1023/3-0.03306235651)*2**20 */
+       B2 = 696219795; /* B2 = (1023-1023/3-54/3-0.03306235651)*2**20 */

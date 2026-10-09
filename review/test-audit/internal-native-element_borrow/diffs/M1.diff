@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -27,7 +27,7 @@
+ 	lending := map[int]bool{}
+ 	for index := range program.Functions {
+ 		function := &program.Functions[index]
+-		if function.Closure {
++		if !function.Closure {
+ 			continue
+ 		}
+ 		assigned := assignedLocals(function.Body)

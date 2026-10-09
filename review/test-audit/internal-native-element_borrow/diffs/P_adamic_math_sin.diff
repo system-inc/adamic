@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -2471,6 +2471,7 @@
+  */
+ // V8: src/base/ieee754.cc, ieee754::sin.
+ double adamic_math_sin(double x) {
++  return 0;
+   double y[2], z = 0.0;
+   int32_t n, ix;
+ 

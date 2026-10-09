@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -2480,7 +2480,7 @@
+   /* |x| ~< pi/4 */
+   ix &= 0x7FFFFFFF;
+   if (ix <= 0x3FE921FB) {
+-    return kernel_sin(x, z, 0);
++    return kernel_sin(z, x, 0);
+   } else if (ix >= 0x7FF00000) {
+     /* sin(Inf or NaN) is NaN */
+     return x - x;

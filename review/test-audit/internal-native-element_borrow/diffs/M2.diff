@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -135,7 +135,7 @@
+ 	var statements func([]ir.Statement)
+ 	statements = func(list []ir.Statement) {
+ 		for _, statement := range list {
+-			if _, isStore := statement.(ir.SetIndex); isStore {
++			if _, isStore := statement.(ir.SetIndex); !isStore {
+ 				found = true
+ 			}
+ 			walkStatement(statement, func(expression ir.Expression) {

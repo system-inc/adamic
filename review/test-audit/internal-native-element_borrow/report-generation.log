@@ -1,0 +1,13 @@
+u047 audited all 14 named rows at b902a0ccc09e97940571388a1634450da3383559; none moved or vanished.
+Whole package cooked at 90.096 s; clean bounded slice passed in 11.280 s; nproc 5.
+13 production mutants and 28 entry probes; uniqueness and subsumption are bounded to these 14 rows.
+Verdicts: 4 subsumed, 7 sacred, 1 witness, 1 untrue, 1 setup-check.
+Evidence: test-audit/internal-native-element_borrow, review/test-audit/internal-native-element_borrow/.
+Survivors: ['M10']
+Unknown: [('S1', 'TestNbodyIndexedElementsBorrow'), ('S1', 'TestThrowElementBorrowPlan'), ('S1', 'TestCallTargetsElementBorrowPlan'), ('S1', 'TestDevirtualizeBorrowDocClaim'), ('S1', 'TestUniformFieldsMatchNode'), ('S1', 'TestRuntimeFieldLayoutsAreIncluded'), ('S1', 'TestRegexProgramsKeepCheckedFieldReads'), ('S1', 'TestOptionalWriteMissingSlotRemainsChecked'), ('S1', 'TestFreedValuesAreCaughtWithSlabs'), ('S1', 'TestSizeClassesShareTheirChunks'), ('S1', 'TestIeee754MatchesNodeBitForBit'), ('S1', 'TestCEndsInNewline'), ('S1', 'TestLibraryMapSetIteratorResources')]
+{
+  "isolated_timing_wall": 127.54056578999962,
+  "production_matrix_wall": 144.92720797300035,
+  "probe_wall_including_abort_reruns": 269.88384411900006,
+  "build_validation_wall": 39.760555500001374
+}

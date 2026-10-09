@@ -1,0 +1,14 @@
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -20,9 +20,8 @@
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
+-	return cProgram(program, -1)
+-}
+-
++	return ""
++}
+ func cProgram(program *ir.Program, handler int) string {
+ 	// Borrowed elements first: reuse must see the variables they mark Borrowed.
+ 	elementBorrows, lending := planElementBorrows(program)

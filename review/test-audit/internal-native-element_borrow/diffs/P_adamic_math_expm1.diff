@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/ieee754.c
++++ b/internal/native/runtime/ieee754.c
+@@ -2235,6 +2235,7 @@
+  */
+ // V8: src/base/ieee754.cc, ieee754::expm1.
+ double adamic_math_expm1(double x) {
++  return 0;
+   static const double
+       one = 1.0,
+       tiny = 1.0e-300,

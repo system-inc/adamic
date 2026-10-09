@@ -1,0 +1,11 @@
+--- a/internal/native/heap_test.go
++++ b/internal/native/heap_test.go
+@@ -43,7 +43,7 @@
+ 		{"slabs", true, "use-after-poison"},
+ 	} {
+ 		binary := filepath.Join(t.TempDir(), "harness-"+build.name)
+-		if err := Build(harness, binary, Options{Sanitize: true, slabs: build.slabs}); err != nil {
++		if err := Build(harness, binary, Options{Sanitize: false, slabs: build.slabs}); err != nil {
+ 			t.Fatal(err)
+ 		}
+ 		for _, use := range []string{"retain", "length", "none"} {
