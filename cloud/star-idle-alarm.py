@@ -42,6 +42,9 @@ pushLine = re.compile(r'^(\d\d:\d\d:\d\d) queued (\S+) ([0-9a-f]{40})\b')
 quietLimit = int(os.environ.get('ADAMIC_CHAIN_QUIET_SECONDS', '1200'))
 # Kirk, Oct 9 04:44Z: nothing in wave 0 sits untouched for 10 minutes, the star or not.
 waveQuietLimit = int(os.environ.get('ADAMIC_WAVE_QUIET_SECONDS', '600'))
+# The owner is paged first; the parent only when the task still hasn't moved one tick after that (@system_adamic, Oct 9
+# 04:48Z: a repeat page reached the parent before the owner had a chance).
+waveEscalateSeconds = int(os.environ.get('ADAMIC_WAVE_ESCALATE_SECONDS', '900'))
 requestsFile = Path(os.environ.get('ADAMIC_FULL_GATE_REQUESTS', os.path.expanduser('~/.adamic-full-gate/requests')))
 
 
@@ -127,7 +130,21 @@ def checkWaveZero(now):
         if repeat:
             alarms.append(('wave-repeat-alarmed-' + identifier, repeat,
                            '#%s posted the same status twice in a row: "%s". A repeated status is a stall: what changed, '
-                           'and what is the next move this tick?' % (identifier, statusText), [waveOwner(identifier)], True))
+                           'and what is the next move this tick?' % (identifier, statusText), [waveOwner(identifier)], False))
+        # Escalation: a page whose task still hasn't moved waveEscalateSeconds later goes to the parent, once.
+        paged = state / ('wave-paged-' + identifier)
+        if key or repeat:
+            if not paged.exists():
+                paged.write_text('%d %d\n' % (now, touched))
+        elif paged.exists():
+            paged.unlink()
+        if paged.exists():
+            pagedAt, pagedTouched = (int(value) for value in paged.read_text().split())
+            escalate = 'escalate:%s:%d' % (identifier, pagedTouched) if touched == pagedTouched and now - pagedAt >= waveEscalateSeconds else None
+            alarms.append(('wave-escalated-' + identifier, escalate,
+                           "#%s (owner @%s) was paged %d minutes ago and still hasn't moved (%s, last status: %s)."
+                           % (identifier, waveOwner(identifier), (now - pagedAt) // 60, node.get('status'), statusText or 'none'),
+                           ['system_adamic'] if escalate else [], False))
     return alarms
 
 

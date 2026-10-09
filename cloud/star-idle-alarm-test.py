@@ -373,10 +373,17 @@ esac
         self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_runtime'], 'a quiet task pages its owner alone')
         self.assertIn("#quiet01 is in wave 0 and hasn't moved for 11 minutes", sends[0])
         self.assertEqual(len(self.check()), 1, 'one quiet spell pages once')
-        # The same text posted again is a repeat: the owner and the parent.
+        # Still untouched one tick after the page: the parent hears, once.
+        paged = self.root / 'wave-paged-quiet01'
+        paged.write_text('%d %d\n' % (self.now - 1000, self.now - 700))
+        sends = self.check()
+        self.assertEqual([line.split('|')[0] for line in sends[1:]], ['system_adamic'])
+        self.assertIn('was paged 16 minutes ago and still hasn', sends[1])
+        self.assertEqual(len(self.check()), 2, 'an escalation pages once')
+        # The same text posted again is a repeat: the owner first, never the parent at once.
         write(self.now - 10, 2, 'splitting')
-        sends = self.check()[1:]
-        self.assertEqual(sorted(line.split('|')[0] for line in sends), ['system_adamic', 'system_adamic_runtime'])
+        sends = self.check()[2:]
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_runtime'])
         self.assertIn('the same status twice in a row', sends[0])
         write(self.now - 5, 3, 'landed the split')
         self.assertEqual(len(self.check()), 3, 'a new status is no repeat')
