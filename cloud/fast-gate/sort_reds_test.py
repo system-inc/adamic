@@ -112,6 +112,14 @@ class RedSort(unittest.TestCase):
         self.assertEqual(info['main_ref'], refs[0].removeprefix('refs/heads/'))
         self.assertEqual(found['tools_fingerprint'], 'tools')
 
+    def test_deleted_file_under_product_directory_is_touched(self):
+        row = unit(detail='deadline on cold miss', cold_miss=True,
+                   inputs={'packages': [], 'paths': ['product-assets']})
+        result = sort.sort_reds(record(row), record(),
+                               {'candidate_changed': ['product-assets/deleted.a']})
+        self.assertEqual(result['candidate_reds'], 1)
+        self.assertEqual(result['mains'], [])
+
     def test_inherited_setup_failure_is_not_a_second_bug(self):
         result = sort.sort_reds(record(unit('TestAnswer/sub'), unit('TestAnswer (setup)')), record())
         self.assertEqual(result['candidate_reds'], 1)

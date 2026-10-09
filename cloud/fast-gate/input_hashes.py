@@ -7,6 +7,11 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
+import shutil
+import re
+
+from product_inputs import bounded_run, prepare_overlay, read_recipes
 import time
 
 BOX_PATHS = ('cloud/fast-gate.sh cloud/fast-gate cloud/darwin-leg.sh '
@@ -33,6 +38,8 @@ class InputHashes:
         self.tree = os.path.realpath(tree)
         self.packages = None
         self.cache = {}
+        self.product_key_binary = None
+        self.product_scratch = None
         self.deadline = time.monotonic() + 120
 
     def check_time(self):
@@ -79,11 +86,82 @@ class InputHashes:
                 files['go:' + name + '/' + os.path.relpath(path, directory)] = path
         return files
 
+    def product_workspace(self):
+        if self.product_scratch is None:
+            self.product_scratch = tempfile.TemporaryDirectory(prefix="gate-product-hashes-")
+        return self.product_scratch.name
+
+    def close(self):
+        if self.product_scratch is not None:
+            self.product_scratch.cleanup()
+
+    def seconds(self):
+        self.check_time()
+        return min(90, max(1, self.deadline - time.monotonic()))
+
+    def product_recipes(self, package, test):
+        self.check_time()
+        scratch = tempfile.mkdtemp(dir=self.product_workspace())
+        overlay = prepare_overlay(self.tree, scratch)
+        log = os.path.join(scratch, "inputs.jsonl")
+        from run import gateEnvironment
+        environment = dict(os.environ, **gateEnvironment)
+        environment.update(ADAMIC_GATE_PRODUCT_INPUTS=log,
+                           ADAMIC_GATE_PRODUCT_INPUTS_ONLY="1", GOMAXPROCS="4")
+        result = bounded_run(["go", "test", "-json", "-count=1", "-timeout", "90s", "-overlay", overlay,
+                              "-run", "^" + re.escape(test) + "$", package], self.seconds(),
+                             cwd=self.tree, env=environment, stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE, text=True)
+        if not os.path.isfile(log):
+            raise ValueError("product recipe discovery failed: " + (result.stdout + result.stderr)[-2000:])
+        events = [json.loads(line) for line in result.stdout.splitlines() if line.startswith('{')]
+        if not any(event.get("Test") == test and event.get("Action") == "run" for event in events):
+            raise ValueError("product recipe was reported before the selected unit ran")
+        return read_recipes(log)
+
+    def product_hash(self, inputs):
+        self.check_time()
+        if self.product_key_binary is None:
+            binary = os.path.join(self.product_workspace(), "product-key")
+            # Internal-package imports need a source directory inside the candidate.
+            # Go ignores this dot directory in ./...; remove it before hashing files.
+            source = tempfile.mkdtemp(prefix=".gate-product-key-", dir=self.tree)
+            try:
+                with open(os.path.join(os.path.dirname(__file__), "product_key.go")) as handle:
+                    helper = handle.read().removeprefix("//go:build ignore\n\n")
+                with open(os.path.join(source, "main.go"), "w") as handle:
+                    handle.write(helper)
+                built = bounded_run(["go", "build", "-o", binary, os.path.join(source, "main.go")], self.seconds(),
+                                    cwd=self.tree, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+                if built.returncode != 0:
+                    raise ValueError("candidate buildcache.Key helper failed: " + built.stderr[-2000:])
+            finally:
+                shutil.rmtree(source)
+            self.product_key_binary = binary
+        result = bounded_run([self.product_key_binary], self.seconds(),
+                             input=json.dumps({"Root": self.tree, "Recipes": inputs["buildcache"]}),
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        if result.returncode != 0:
+            raise ValueError("candidate buildcache.Key failed: " + result.stderr[-2000:])
+        reply = json.loads(result.stdout)
+        keys = sorted(set(reply["keys"]))
+        if not keys:
+            raise ValueError("product has no recipe keys")
+        # One recipe is exactly buildcache.Key. A unit fetching multiple products
+        # keeps all addresses in order; the same shared function handles both.
+        digest = keys[0] if len(keys) == 1 else hashlib.sha256(json.dumps(keys).encode()).hexdigest()
+        return {"input_hash": digest, "input_paths": sorted(set(reply["paths"])),
+                "inputs": inputs, "product_keys": keys}
+
     def hash(self, inputs):
         self.check_time()
         key = json.dumps(inputs, sort_keys=True)
         if key in self.cache:
             return self.cache[key]
+        if "buildcache" in inputs:
+            value = self.product_hash(inputs)
+            self.cache[key] = value
+            return value
         files = self.package_files(inputs['packages'])
         paths = sorted(set(inputs['paths'] + ['go.mod', 'go.sum']))
         listing = subprocess.run(['git', '-C', self.tree, 'ls-files', '-z', '-c', '-o',
@@ -117,47 +195,66 @@ class InputHashes:
         return value
 
 
-def hash_units(tree, units, full=False, phase_inputs=None):
+def hash_units(tree, units, full=False, phase_inputs=None, product_observations=None):
     """The shared gate/integration entry point: one identity result per unit.
 
     Accept --list-units --with-inputs rows, recorded ledger rows, or plain unit
-    strings. Supplied declarations stay fixed when rehashing a moved tree; Go
-    closures and content are always recomputed on that tree. Never reuse a
+    strings. Path declarations stay fixed when rehashing a moved tree; Go
+    closures and product recipes are evaluated on that tree. Only a gate can
+    supply its just-captured product_observations to avoid replaying recipes. Never reuse a
     supplied input_hash. Missing evidence emits null and an error.
     """
     identities = InputHashes(tree)
-    for unit in units:
-        row = {'unit': unit} if isinstance(unit, str) else unit
-        if not isinstance(row, dict):
-            raise ValueError('each unit must be a string or a JSON object')
-        name = row.get('unit') or ('%s %s' % (row.get('package', ''), row.get('test', ''))).strip()
-        result = {'unit': name}
-        try:
-            identities.check_time()
-            if not isinstance(name, str) or not name:
-                raise ValueError('unit needs a name or package/test')
-            inputs = row.get('inputs')
-            if inputs is None:
-                if row.get('package'):
-                    inputs = {'packages': [row['package']], 'paths': []}
-                else:
-                    package, separator, test = name.partition(' ')
-                    if separator and '/' in package:
-                        inputs = {'packages': [package], 'paths': []}
+    try:
+        for unit in units:
+            row = {'unit': unit} if isinstance(unit, str) else unit
+            if not isinstance(row, dict):
+                raise ValueError('each unit must be a string or a JSON object')
+            name = row.get('unit') or ('%s %s' % (row.get('package', ''), row.get('test', ''))).strip()
+            result = {'unit': name}
+            try:
+                identities.check_time()
+                if not isinstance(name, str) or not name:
+                    raise ValueError('unit needs a name or package/test')
+                inputs = row.get('inputs')
+                test = row.get('test') or name.partition(' ')[2]
+                product = test.split('/')[0].removesuffix(' (setup)').startswith('TestProduct_')
+                if product:
+                    recipes = (product_observations or {}).get(name)
+                    if recipes is None:
+                        package = row.get('package') or name.partition(' ')[0]
+                        recipes = identities.product_recipes(package, test.split('/')[0].removesuffix(' (setup)'))
+                        expected = row.get('product_recipes') or (inputs or {}).get('buildcache', [])
+                        names = {recipe['Name'] for recipe in recipes}
+                        if any(recipe['Name'] not in names for recipe in expected):
+                            raise ValueError('product recipe discovery stopped at an unavailable prerequisite; rerun this unit')
+                    inputs = {'packages': [], 'paths': sorted(set(path for recipe in recipes for path in recipe.get('Files') or [])),
+                              'buildcache': recipes}
+                if inputs is None:
+                    if row.get('package'):
+                        inputs = {'packages': [row['package']], 'paths': []}
                     else:
-                        if phase_inputs is None:
-                            from run import phaseInputs
-                            phase_inputs = phaseInputs
-                        inputs = phase_inputs(tree, name, full)['inputs']
-            if not isinstance(inputs, dict) or any(
-                    not isinstance(inputs.get(field), list) or
-                    any(not isinstance(value, str) for value in inputs[field])
-                    for field in ('packages', 'paths')):
-                raise ValueError('inputs must declare packages and paths as string lists')
-            result.update(identities.hash(inputs))
-        except (OSError, ValueError, subprocess.SubprocessError, TimeoutError) as error:
-            result.update(input_hash=None, input_hash_error=str(error))
-        yield result
+                        package, separator, test = name.partition(' ')
+                        if separator and '/' in package:
+                            inputs = {'packages': [package], 'paths': []}
+                        else:
+                            if phase_inputs is None:
+                                from run import phaseInputs
+                                phase_inputs = phaseInputs
+                            inputs = phase_inputs(tree, name, full)['inputs']
+                if not isinstance(inputs, dict) or any(
+                        not isinstance(inputs.get(field), list) or
+                        any(not isinstance(value, str) for value in inputs[field])
+                        for field in ('packages', 'paths')):
+                    raise ValueError('inputs must declare packages and paths as string lists')
+                # Keep resolved declarations even when Key cannot read a file.
+                result.update(inputs=inputs, input_paths=inputs['paths'])
+                result.update(identities.hash(inputs))
+            except (OSError, ValueError, subprocess.SubprocessError, TimeoutError) as error:
+                result.update(input_hash=None, input_hash_error=str(error))
+            yield result
+    finally:
+        identities.close()
 
 
 def main():
