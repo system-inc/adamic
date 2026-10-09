@@ -13,7 +13,7 @@ import (
 )
 
 func TestCheckedViewV2ReadsAfterWrites(t *testing.T) {
-	for _, name := range []string{"mixed-read-write", "null-read-write", "undefined-read-write", "representation-read-write", "fixed-tuple-good"} {
+	for _, name := range []string{"mixed-read-write", "null-read-write", "undefined-read-write", "representation-read-write", "fixed-tuple-good", "fs-option-boxing"} {
 		t.Run(name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "v2/"+name)
 			node := onNode(t, path)
