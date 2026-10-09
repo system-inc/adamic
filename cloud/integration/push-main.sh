@@ -349,6 +349,14 @@ else:
     if subprocess.run(["git", "merge-base", "--is-ancestor", mainFull.get("sha", ""), "origin/main"]).returncode != 0:
         sys.exit("main's record gated %s, which isn't on main" % mainFull.get("sha"))
 onMain |= ruled
+# A box fast gate that isn't --complete stops at its first failure (-failfast), so excusing that failure would land
+# every test it never reached (the gate-mutant suite, Oct 9 14:15Z: a planted red in internal/buildcache never ran
+# behind main's parser red). Excused reds only stand on a record that ran on past them; a pool record carries no
+# "complete" field, and zerorun checks it instead.
+for ref in records:
+    record = subprocess.run(["git", "show", ref + ":fast.json"], capture_output=True, text=True).stdout
+    if record and json.loads(record).get("complete") is False and json.loads(record).get("fail"):
+        sys.exit("%s stopped at its first failure (not a --complete run), so excused reds would hide every test after them; land on the complete run's record" % ref)
 ours = set()
 for ref in records:
     names = failing(ref)

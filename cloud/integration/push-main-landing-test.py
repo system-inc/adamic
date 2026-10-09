@@ -401,6 +401,15 @@ class LandingTests(unittest.TestCase):
                       'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1 if failing else 0),
                       'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}
             return sha, self.publish(sha, 'fast', record, failing=failing, jsonOnly=jsonOnly)
+        # A box fast gate that stopped at its first failure (complete false) ran nothing past main's red, so excusing it
+        # would land untested packages (the gate-mutant suite, Oct 9): refused, whatever main's record says.
+        stopped = self.change(self.main, 'other/s.go', 'package other\n\n// stopped\n', 'stopped')
+        stoppedRecord = self.publish(stopped, 'stopped', {'sha': stopped, 'base': self.main, 'finished': True, 'complete': False, 'skip': 0, 'packages': ['other'], 'fail': 1, 'pass': 10,
+                                     'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                                     'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
+                                     'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1),
+                                     'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}, failing=[known])
+        self.assertIn('stopped at its first failure', self.push('--fast-gate', stoppedRecord, '--main-reds', main, stopped, 'stopped').stderr)
         sha, record = candidate('known', [known])
         self.assertIn('1 failures', self.push('--fast-gate', record, sha, 'known').stderr)
         landed = self.push('--fast-gate', record, '--main-reds', main, sha, 'known')
