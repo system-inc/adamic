@@ -21,7 +21,47 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/notyet_element_access/" + name + ".a", false, false})
+		}{"internal/oracle/testdata/notyet_element_access/" + name + ".a", elementAccessAdmitted(name), false})
+	}
+}
+
+// Views and iteration members now represent these indexed reads.
+func elementAccessAdmitted(name string) bool {
+	return name == "nodearray" || name == "sorted" || name == "template"
+}
+
+func TestElementAccessNodeArrayAgreement(t *testing.T) {
+	t.Parallel()
+	elementAccessAgreement(t, "nodearray")
+}
+func TestElementAccessSortedAgreement(t *testing.T) {
+	t.Parallel()
+	elementAccessAgreement(t, "sorted")
+}
+func TestElementAccessTemplateAgreement(t *testing.T) {
+	t.Parallel()
+	elementAccessAgreement(t, "template")
+}
+
+func elementAccessAgreement(t *testing.T, name string) {
+	t.Helper()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet_element_access", name+".a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	sanitized, binary := nativelyUncached(t, program)
+	for mode, result := range map[string]run{"JavaScript": onJavaScriptBackend(t, program), "native sanitized": sanitized, "native release": releasedUncached(t, program)} {
+		if difference := disagreement(truth, result); difference != "" {
+			t.Fatalf("%s: %s", mode, difference)
+		}
+	}
+	if report := leaksUncached(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }
 
@@ -30,6 +70,9 @@ func init() {
 func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
 	t.Parallel()
 	for _, name := range elementAccessBoundaries {
+		if elementAccessAdmitted(name) {
+			continue
+		}
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet_element_access/"+name+".a"))

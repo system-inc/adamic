@@ -28,6 +28,7 @@ func init() {
 // Source observations are pinned while the named ruled-divergence dependency is
 // absent. These .a lies must stop before native code; .ts terminal checks remain pending.
 func TestIterationDispatchPendingStops(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, output string }{
 		{"non_object_step", "TypeError\n"}, {"non_object_iterator", "TypeError\n"},
 		{"non_callable_next", "TypeError\n"}, {"non_object_close", "1\nTypeError\n"},

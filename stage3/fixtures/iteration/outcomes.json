@@ -16,15 +16,15 @@
   {
     "file": "delegated_generator.a",
     "origin": "core.ts:437",
-    "kind": "Refused",
-    "reason": "a generator function",
+    "kind": "accepted",
+    "reason": "",
     "stdout": "3\n4\n"
   },
   {
     "file": "generator.a",
     "origin": "core.ts:538",
-    "kind": "Refused",
-    "reason": "a generator function",
+    "kind": "accepted",
+    "reason": "",
     "stdout": "7\n"
   },
   {

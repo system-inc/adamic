@@ -11,6 +11,7 @@ import (
 // Mutate the actual lowered protocol, then require Node to catch each change
 // independently in both backends. Compilation and sanitizer failures do not count.
 func TestIterationDispatchMutants(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, fixture string }{
 		{"next reread", "cached_next"}, {"completion value enters body", "class"},
 		{"close skipped on break", "break"}, {"close on next throw", "next_throw"},

@@ -19,7 +19,7 @@ type step20Outcome struct {
 }
 
 func init() {
-	for _, file := range []string{"collections.a", "strings.a", "object_iteration.a", "array_view_stress.a", "test262_array_views.a", "array_view_weak.a", "user_forwarding.a"} {
+	for _, file := range []string{"collections.a", "strings.a", "object_iteration.a", "array_view_stress.a", "test262_array_views.a", "array_view_weak.a", "user_forwarding.a", "generator.a", "delegated_generator.a"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -29,6 +29,7 @@ func init() {
 
 // Recording observes current outcomes; ordinary runs require the committed exact snapshot.
 func TestStep20IterationOutcomes(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile(filepath.Join(repository, "stage3/fixtures/iteration/outcomes.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -49,7 +50,7 @@ func TestStep20IterationOutcomes(t *testing.T) {
 			if node.exitCode != 0 || len(node.stderr) != 0 || string(node.stdout) != probe.Stdout {
 				t.Fatalf("source on Node: exit %d stdout %q stderr %q; want stdout %q", node.exitCode, node.stdout, node.stderr, probe.Stdout)
 			}
-			_, failure := lowered(t, path)
+			program, failure := lowered(t, path)
 			actual := probe
 			actual.Kind, actual.Reason = "accepted", ""
 			var notYet *lower.NotYet
@@ -60,6 +61,17 @@ func TestStep20IterationOutcomes(t *testing.T) {
 				actual.Kind, actual.Reason = "Refused", refused.What
 			} else if failure != nil {
 				t.Fatalf("unexpected checker/lowering error: %v", failure)
+			}
+			if actual.Kind == "accepted" {
+				native, binary := natively(t, program)
+				for backend, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program), "release": released(t, program)} {
+					if difference := disagreement(node, got); difference != "" {
+						t.Errorf("%s: %s", backend, difference)
+					}
+				}
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
 			}
 			t.Logf("%s: %s %s", probe.File, actual.Kind, actual.Reason)
 			observed[index] = actual
