@@ -134,7 +134,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/10_build_options.a:8:5: stage 0 can't lower an indexed mutation without a closed const literal origin yet"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/10_build_options.a:25:13: stage 0 can't lower an unrestricted dictionary write that can violate named property tscBuild; use a literal key or a value accepted by every named property yet"}
   },
   {
     "file": "12_decorator_descriptor.a",
@@ -206,7 +206,10 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/17_container_rest.a:13:31: stage 0 can't lower an array destructured name that isn't plain yet"}
+    "stage0": {
+      "outcome": "NotYet",
+      "what": "stage3/fixtures/objects/17_container_rest.a:13:19: stage 0 can't lower destructuring anything but a tuple into [names] yet"
+    }
   },
   {
     "file": "19_identifier_multimap.a",
@@ -329,7 +332,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/27_delete_substitution.a:12:23: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"}
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/27_delete_substitution.a:12:23: stage 0 can't lower a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage yet"}
   },
   {
     "file": "28_debugger.a",

@@ -1,0 +1,23 @@
+{
+  "base": "9128a35fbf1d9a724752e240704b2c198508c946",
+  "merged": "49319c49",
+  "entry": "/tmp/projects-tsc-adapted/src/tsc/tsc.ts",
+  "layouts": {
+    "0": {
+      "exit": 1,
+      "output": "adamic: /tmp/projects-tsc-adapted/src/compiler/core.ts:332:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)\n"
+    },
+    "1": {
+      "exit": 1,
+      "output": "adamic: /tmp/projects-tsc-adapted/src/compiler/core.ts:332:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)\n"
+    }
+  },
+  "next_stop": {
+    "file": "src/compiler/core.ts",
+    "line": 332,
+    "column": 1,
+    "construct": "export function* mapIterator<T, U>(iter: Iterable<T>, mapFn: (x: T) => U): Generator<U, void, unknown>",
+    "diagnostic": "adamic: /tmp/projects-tsc-adapted/src/compiler/core.ts:332:1: Adamic 0.1 refuses a generator function; use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"
+  },
+  "owner_branch": null
+}

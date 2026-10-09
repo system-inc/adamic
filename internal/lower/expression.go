@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"reflect"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -72,6 +73,29 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	if l.nodeBufferType(proven, "Buffer") {
 		return ir.Array, true
 	}
+	if flags&checker.TypeFlagsObject != 0 && (l.enumerationRecordStorageType(proven) || l.enumerationReadonlyType(proven)) {
+		return ir.Object, true
+	}
+	if l.finitePartialRecordElement(proven) != nil {
+		return ir.Record, true
+	}
+	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.checker.IsArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
+		if l.recordElement(proven) != nil {
+			return ir.Record, true
+		}
+		regex := false
+		for _, info := range l.checker.GetIndexInfosOfType(proven) {
+			if declaration := info.Declaration(); declaration != nil {
+				file := ast.GetSourceFileOfNode(declaration)
+				if load.IsLibrary(file) && strings.Contains(string(file.AsSourceFile().FileName()), ".regexp.") {
+					regex = true
+				}
+			}
+		}
+		if !regex {
+			return 0, false
+		}
+	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Instantiations and class substitutions precede constraint-backed storage.
 		if substituted, known := l.substitution[proven]; known {
@@ -83,9 +107,6 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		// Target & WeakBrand is what a Weak<Target> reads as where it's present: the target.
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
-		}
-		if l.hasStringRecordIndex(proven) {
-			return 0, false
 		}
 		return l.objectIntersection(proven)
 	}
@@ -105,12 +126,6 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		// A Set is held as a Map whose values aren't used (set.go).
 		return ir.Map, true
-	case flags&checker.TypeFlagsObject != 0 && l.hasStringRecordIndex(proven):
-		_, supported := l.recordInfo(proven)
-		if !supported {
-			return 0, false
-		}
-		return ir.Record, true
 	case flags&checker.TypeFlagsObject != 0 && !isClassInstance(proven) && (l.checker.IsTypeAssignableTo(l.checker.GetNumberType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetStringType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetBooleanType(), proven)):
 		// Structural types such as {} admit primitives. Their slots must preserve
 		// the runtime brand with the same boxes used for scalar/reference unions.
@@ -196,6 +211,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			}
 			return 0, false
 		}
+		if shared == ir.Record && l.includesNull(proven) {
+			return 0, false // Nullable dictionary metadata is not supported by this records path.
+		}
 		return shared, shared != 0
 	}
 	return 0, false
@@ -243,9 +261,6 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
-	if err := l.recordUse(node); err != nil {
-		return nil, err
-	}
 	if err := l.numericTypedArrayUnsupportedUse(node); err != nil {
 		return nil, err
 	}
@@ -359,8 +374,11 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
 		return fromKind != 0 && fromKind == toKind
 	}
-	if !l.nodeBufferView(from, to) || !l.sameRecordView(from, to) {
+	if !l.nodeBufferView(from, to) {
 		return false
+	}
+	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
+		return l.sameKeeping(a, b, visited)
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
@@ -566,6 +584,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
 	}
+	if value, handled, err := l.recordExpression(node); handled {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -705,18 +726,12 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindConditionalExpression:
 		return l.conditional(node)
 	case ast.KindObjectLiteralExpression:
-		if value, handled, err := l.recordLiteral(node); handled {
-			return value, err
-		}
 		return l.objectLiteral(node)
 	case ast.KindArrayLiteralExpression:
 		return l.arrayLiteral(node)
 	case ast.KindPropertyAccessExpression:
 		return l.property(node)
 	case ast.KindElementAccessExpression:
-		if value, handled, err := l.recordIndex(node); handled {
-			return value, err
-		}
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
 		if value, handled, err := l.newTypedArray(node); handled {
@@ -1017,6 +1032,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			of, err := l.typeOf(node)
 			if err != nil {
 				return nil, err
+			}
+			if left.Type() == ir.Record && of != ir.Record && of != ir.Union && !of.IsMaybe() {
+				return nil, l.notYet(node, "a logical record operand converted to "+typeName(of)+" without a proven result representation")
 			}
 			return ir.Logical{Left: left, Right: fit(right, of), Of: of, KeepTruthy: operator == ast.KindBarBarToken}, nil
 		}

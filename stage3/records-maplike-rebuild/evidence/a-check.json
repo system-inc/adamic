@@ -1,0 +1,194 @@
+{
+  "a_check": {
+    "internal/oracle/testdata/detached_own_objects.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/detached_own_parser.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/detached_own_records.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/detached_own_unready.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_buckets/17_compare_missing_object.a": {
+      "outcome": "type error",
+      "expected": "type error TS2345",
+      "first": "internal/oracle/testdata/records_buckets/17_compare_missing_object.a:28:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'."
+    },
+    "internal/oracle/testdata/records_buckets/18_compare_missing_scalar.a": {
+      "outcome": "type error",
+      "expected": "type error TS2345",
+      "first": "internal/oracle/testdata/records_buckets/18_compare_missing_scalar.a:28:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'."
+    },
+    "internal/oracle/testdata/records_buckets/19_compare_empty_objects.a": {
+      "outcome": "type error",
+      "expected": "type error TS2345",
+      "first": "internal/oracle/testdata/records_buckets/19_compare_empty_objects.a:28:17: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'."
+    },
+    "internal/oracle/testdata/records_census.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_compare_missing_scalar.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_compare_properties_left.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_compare_properties_right.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_discarded.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_environment_boundary.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_for_in.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_guarded_snapshot.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_named_alias_unready.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_named_intrinsics.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_named_invalidated.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_named_operations.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_named_options.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_named_union.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_narrowed_number.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_narrowed_reference.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_operations.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_optional.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_ownership.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_partial_parser.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_partial_undefined.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_partial_views.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_prototype_in.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_prototype_read.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_prototype_set.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_refuse/r24.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/records_refuse/r24.a:4:20: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet"
+    },
+    "internal/oracle/testdata/records_scalars.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_type_only_composition.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_type_only_scanner.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/records_type_only_value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/records-maplike-main/corePublic-MapLike.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  }
+}

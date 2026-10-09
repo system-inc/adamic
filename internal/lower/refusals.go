@@ -102,15 +102,27 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
-			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+		if err := l.detachedOwnRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.recordLiteralRead(node); err != nil {
+			found = err
 			return true
 		}
 		if node.Kind == ast.KindIndexSignature && !l.enumerationIndexSignature(node) {
-			if _, supported := l.recordInfo(l.checker.GetTypeAtLocation(node.Parent)); !supported {
-				found = l.notYet(node, recordLimit)
+			if l.recordElement(l.checker.GetTypeAtLocation(node.Parent)) == nil {
+				found = l.notYet(node, "a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage")
 				return true
 			}
+		}
+		if node.Kind == ast.KindDeleteExpression && !l.recordTarget(node.AsDeleteExpression().Expression) && ast.SkipParentheses(node.AsDeleteExpression().Expression).Kind != ast.KindPropertyAccessExpression {
+			found = &Refused{Where: l.program.Where(node), What: "delete", Fix: "fixed objects cannot lose fields; use a record or Map"}
+			return true
+		}
+		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
+			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
+			return true
 		}
 		if err := l.typedArrayUnsupported(node); err != nil {
 			found = err
@@ -135,12 +147,16 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			}
 			checkedCast = proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
+		if err := l.recordStorageView(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.namespaceRefusal(node); err != nil {
 			found = err
 			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {
-			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !l.nullishComparison(node) {
+			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !l.nullishComparison(node) && !(node.AsBinaryExpression().OperatorToken.Kind == ast.KindInKeyword && l.recordElement(l.checker.GetTypeAtLocation(node.AsBinaryExpression().Right)) != nil) {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 				return true
 			}
@@ -186,7 +202,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				}
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) {
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) && !l.detachedOwnMethod(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {

@@ -1,0 +1,30 @@
+// a-check: type error TS2345
+// From TypeScript 6.0.3, src/compiler/utilities.ts:8147-8165
+// Census reason: an index signature
+export function compareDataObjects(dst: any, src: any): boolean {
+    if (!dst || !src || Object.keys(dst).length !== Object.keys(src).length) {
+        return false;
+    }
+
+    for (const e in dst) {
+        if (typeof dst[e] === "object") {
+            if (!compareDataObjects(dst[e], src[e])) {
+                return false;
+            }
+        }
+        else if (typeof dst[e] !== "function") {
+            if (dst[e] !== src[e]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+for (const key of ["constructor", "toString", "hasOwnProperty", "__proto__"]) {
+    const dst = { [key]: { value: 1 } };
+    const src = { other: { value: 1 } };
+    const own = { [key]: { value: 1 } };
+    console.log(key);
+    console.log(compareDataObjects(dst, src));
+    console.log(compareDataObjects(dst, own));
+}

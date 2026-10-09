@@ -76,7 +76,11 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 				l.initializing = map[int]*ast.Node{}
 			}
 			l.initializing[local] = name
-			value, err = l.expression(initializer)
+			if l.detachedOwnDeclaration(declaration) && l.detachedOwnMethod(initializer) {
+				value = ir.BooleanConstant{Value: true}
+			} else {
+				value, err = l.expression(initializer)
+			}
 			delete(l.initializing, local)
 			if err != nil {
 				return nil, err
@@ -118,7 +122,11 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	if l.catchOrigin(name, map[*ast.Symbol]bool{}) {
 		valueType = ir.Union
 	}
-	if !l.alwaysUndefined[symbol] && !l.catchOrigin(name, map[*ast.Symbol]bool{}) {
+	if l.detachedOwnAlias(name) != nil {
+		valueType = ir.Boolean
+	} else if l.detachedOwnObjectParameter(name) {
+		valueType = ir.Object
+	} else if !l.alwaysUndefined[symbol] && !l.catchOrigin(name, map[*ast.Symbol]bool{}) {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {
 			if inferred == nil {
@@ -137,7 +145,11 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	l.locals[symbol] = len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex})
 	proven := l.checker.GetTypeAtLocation(name)
-	if inferred != nil {
+	if l.detachedOwnAlias(name) != nil {
+		// This local holds only the readiness marker. The intrinsic cannot escape,
+		// so cycle analysis must not treat it as a user closure capturing cells.
+		proven = l.checker.GetBooleanType()
+	} else if inferred != nil {
 		proven = inferred
 	}
 	l.noteLocal(l.locals[symbol], proven, name)

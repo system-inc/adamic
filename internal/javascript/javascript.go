@@ -65,6 +65,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	if counted {
 		builder.WriteString("const adamicDirect = (fn, values, count = values.length - (fn.adamicReceiver ? 1 : 0)) => fn(...(fn.adamicCount ? [count] : []), ...values);\n")
 	}
+	builder.WriteString(recordRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
 	// A static constructor's live parent prototype carries inherited fields. Keep its
 	// named method map separately, keyed by the actual constructor function.
@@ -973,6 +974,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "String.fromCharCode(" + codes + ")"
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
+	case ir.RecordCoalesce:
+		return "((r,k,make) => adamicRecordGet(r,k) ?? adamicRecordSet(r,k,make()))(" + e.value(expression.Record) + ", " + e.value(expression.Key) + ", () => " + e.value(expression.Value) + ")"
+	case ir.RecordCall:
+		return e.recordCall(expression)
+	case ir.RecordLiteral:
+		return e.recordLiteral(expression)
 	case ir.ObjectCall:
 		if strings.HasPrefix(expression.Method, "optional") && expression.Method != "optionalDelete" && expression.Method != "optionalIn" {
 			return "adamicObjectReadCall(" + quote(expression.Method) + ", " + quote(expression.Readiness) + ", " + e.values(expression.Arguments) + ")"
