@@ -1,0 +1,50 @@
+{
+  "TestCheckedWiderWriteMutants": [
+    "drop_check",
+    "drop_literal_set"
+  ],
+  "TestCheckedNeverContractMutant": [
+    "remove never allocation marker"
+  ],
+  "TestCheckedDiagnosticReferenceMutants": [
+    "drop_alias_check",
+    "drop_nested_contract",
+    "drop_allocation_proof"
+  ],
+  "TestCheckedFlowContainerContractMutants": [
+    "flow-node-misfit",
+    "container-alias-misfit",
+    "container-fill-misfit",
+    "container-boolean-misfit",
+    "container-map-object-misfit",
+    "container-nested-misfit",
+    "container-object-misfit",
+    "container-splice-misfit",
+    "container-map-misfit",
+    "container-string-misfit",
+    "container-number-misfit",
+    "flow-array-misfit",
+    "flow-undefined-misfit"
+  ],
+  "TestCheckedEmitContractsMutants": [
+    "emit-drop-check",
+    "emit-resolution-misfit",
+    "emit-comment-misfit",
+    "emit-callback-misfit",
+    "emit-auto-misfit",
+    "emit-node-misfit"
+  ],
+  "TestCheckedViewsNextMutants": [
+    "optional-boolean-misfit",
+    "branch-bottom-number-misfit",
+    "branch-file-misfit",
+    "branch-start-misfit",
+    "optional-false-misfit",
+    "branch-length-misfit",
+    "required-boolean-misfit",
+    "overload-callback-misfit",
+    "overload-result-misfit",
+    "branch-bottom-string-misfit",
+    "generic-site-misfit"
+  ]
+}

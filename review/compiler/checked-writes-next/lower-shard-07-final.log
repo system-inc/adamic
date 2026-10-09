@@ -1,0 +1,299 @@
+=== RUN   TestAgreementStaticInitializerWitness
+=== PAUSE TestAgreementStaticInitializerWitness
+=== RUN   TestCensusMarkerResultIsAssignable
+=== PAUSE TestCensusMarkerResultIsAssignable
+=== RUN   TestTsgoHonorsNoCheckInAdamicFiles
+=== PAUSE TestTsgoHonorsNoCheckInAdamicFiles
+=== RUN   TestInheritanceHasClassIdentity
+=== PAUSE TestInheritanceHasClassIdentity
+=== RUN   TestClassStaticInitializerCallIsEmitted
+=== PAUSE TestClassStaticInitializerCallIsEmitted
+=== RUN   TestFlagEnumsOpen
+=== PAUSE TestFlagEnumsOpen
+=== RUN   TestNumericEnumNeverProof
+=== PAUSE TestNumericEnumNeverProof
+=== RUN   TestGenericJSONUnionArrayIsNotYet
+=== PAUSE TestGenericJSONUnionArrayIsNotYet
+=== RUN   TestRepresentedMethodReplacementIsNotYet
+=== PAUSE TestRepresentedMethodReplacementIsNotYet
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== RUN   TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+=== PAUSE TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+=== RUN   TestNestedEnvironmentCycleIncludesDisjointSlots
+=== PAUSE TestNestedEnvironmentCycleIncludesDisjointSlots
+=== RUN   TestOptionalWideningSpreadOverwrite
+=== PAUSE TestOptionalWideningSpreadOverwrite
+=== RUN   TestPredicateOverloadCallback
+=== PAUSE TestPredicateOverloadCallback
+=== RUN   TestRegExpSourceNode
+=== PAUSE TestRegExpSourceNode
+=== RUN   TestTypedArrayGaps
+=== PAUSE TestTypedArrayGaps
+=== CONT  TestAgreementStaticInitializerWitness
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== CONT  TestOptionalWideningSpreadOverwrite
+=== CONT  TestRegExpSourceNode
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== CONT  TestFlagEnumsOpen
+=== RUN   TestFlagEnumsOpen/complement
+=== PAUSE TestFlagEnumsOpen/complement
+=== RUN   TestFlagEnumsOpen/arithmetic
+=== PAUSE TestFlagEnumsOpen/arithmetic
+=== RUN   TestFlagEnumsOpen/increment
+=== PAUSE TestFlagEnumsOpen/increment
+=== RUN   TestFlagEnumsOpen/shift_update
+=== PAUSE TestFlagEnumsOpen/shift_update
+=== RUN   TestFlagEnumsOpen/shift_result
+=== PAUSE TestFlagEnumsOpen/shift_result
+=== RUN   TestFlagEnumsOpen/sign_bit
+=== PAUSE TestFlagEnumsOpen/sign_bit
+=== RUN   TestFlagEnumsOpen/implicit
+=== PAUSE TestFlagEnumsOpen/implicit
+=== RUN   TestFlagEnumsOpen/numeric_shape
+=== PAUSE TestFlagEnumsOpen/numeric_shape
+=== RUN   TestFlagEnumsOpen/arithmetic_shape
+=== PAUSE TestFlagEnumsOpen/arithmetic_shape
+=== RUN   TestFlagEnumsOpen/switch_default
+=== PAUSE TestFlagEnumsOpen/switch_default
+=== RUN   TestFlagEnumsOpen/cross_enum_left
+=== PAUSE TestFlagEnumsOpen/cross_enum_left
+=== RUN   TestFlagEnumsOpen/cross_enum_right
+=== PAUSE TestFlagEnumsOpen/cross_enum_right
+=== RUN   TestFlagEnumsOpen/or_number
+=== PAUSE TestFlagEnumsOpen/or_number
+=== RUN   TestFlagEnumsOpen/xor_number
+=== PAUSE TestFlagEnumsOpen/xor_number
+=== RUN   TestFlagEnumsOpen/and_numbers
+=== PAUSE TestFlagEnumsOpen/and_numbers
+=== RUN   TestFlagEnumsOpen/narrowed_member
+=== PAUSE TestFlagEnumsOpen/narrowed_member
+=== RUN   TestFlagEnumsOpen/compound_or_number
+=== PAUSE TestFlagEnumsOpen/compound_or_number
+=== RUN   TestFlagEnumsOpen/compound_xor_number
+=== PAUSE TestFlagEnumsOpen/compound_xor_number
+=== RUN   TestFlagEnumsOpen/mutable_alias
+=== PAUSE TestFlagEnumsOpen/mutable_alias
+=== RUN   TestFlagEnumsOpen/bare_number
+=== PAUSE TestFlagEnumsOpen/bare_number
+=== RUN   TestFlagEnumsOpen/member_slot
+=== PAUSE TestFlagEnumsOpen/member_slot
+=== RUN   TestFlagEnumsOpen/array_view
+=== PAUSE TestFlagEnumsOpen/array_view
+=== CONT  TestFlagEnumsOpen/complement
+--- PASS: TestRegExpSourceNode (0.13s)
+=== CONT  TestRepresentedMethodReplacementIsNotYet
+--- PASS: TestOptionalWideningSpreadOverwrite (0.29s)
+=== CONT  TestGenericJSONUnionArrayIsNotYet
+--- PASS: TestRepresentedMethodReplacementIsNotYet (0.17s)
+=== CONT  TestNumericEnumNeverProof
+=== RUN   TestNumericEnumNeverProof/member
+=== RUN   TestNumericEnumNeverProof/parameter
+--- PASS: TestGenericJSONUnionArrayIsNotYet (0.14s)
+=== CONT  TestFlagEnumsOpen/array_view
+=== RUN   TestNumericEnumNeverProof/combination
+=== RUN   TestNumericEnumNeverProof/array_read
+=== CONT  TestFlagEnumsOpen/member_slot
+=== RUN   TestNumericEnumNeverProof/closed_return
+--- PASS: TestAgreementStaticInitializerWitness (0.79s)
+=== CONT  TestFlagEnumsOpen/bare_number
+=== CONT  TestFlagEnumsOpen/mutable_alias
+=== CONT  TestPredicateOverloadCallback
+--- PASS: TestNumericEnumNeverProof (0.77s)
+    --- PASS: TestNumericEnumNeverProof/member (0.11s)
+    --- PASS: TestNumericEnumNeverProof/parameter (0.18s)
+    --- PASS: TestNumericEnumNeverProof/combination (0.09s)
+    --- PASS: TestNumericEnumNeverProof/array_read (0.10s)
+    --- PASS: TestNumericEnumNeverProof/closed_return (0.30s)
+=== CONT  TestFlagEnumsOpen/compound_xor_number
+=== CONT  TestFlagEnumsOpen/compound_or_number
+=== CONT  TestFlagEnumsOpen/narrowed_member
+=== CONT  TestFlagEnumsOpen/and_numbers
+=== CONT  TestFlagEnumsOpen/xor_number
+=== CONT  TestFlagEnumsOpen/or_number
+--- PASS: TestPredicateOverloadCallback (0.86s)
+=== CONT  TestFlagEnumsOpen/cross_enum_right
+=== CONT  TestFlagEnumsOpen/cross_enum_left
+=== CONT  TestFlagEnumsOpen/switch_default
+=== CONT  TestFlagEnumsOpen/arithmetic_shape
+=== CONT  TestFlagEnumsOpen/numeric_shape
+=== CONT  TestFlagEnumsOpen/implicit
+=== CONT  TestFlagEnumsOpen/sign_bit
+=== CONT  TestFlagEnumsOpen/shift_result
+=== CONT  TestFlagEnumsOpen/shift_update
+=== CONT  TestFlagEnumsOpen/increment
+=== CONT  TestFlagEnumsOpen/arithmetic
+=== CONT  TestInheritanceHasClassIdentity
+=== CONT  TestClassStaticInitializerCallIsEmitted
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== CONT  TestNestedEnvironmentCycleIncludesDisjointSlots
+--- PASS: TestFlagEnumsOpen (0.00s)
+    --- PASS: TestFlagEnumsOpen/complement (0.71s)
+    --- PASS: TestFlagEnumsOpen/array_view (0.38s)
+    --- PASS: TestFlagEnumsOpen/member_slot (0.12s)
+    --- PASS: TestFlagEnumsOpen/bare_number (0.58s)
+    --- PASS: TestFlagEnumsOpen/narrowed_member (0.08s)
+    --- PASS: TestFlagEnumsOpen/compound_xor_number (0.43s)
+    --- PASS: TestFlagEnumsOpen/mutable_alias (0.81s)
+    --- PASS: TestFlagEnumsOpen/compound_or_number (0.52s)
+    --- PASS: TestFlagEnumsOpen/and_numbers (0.67s)
+    --- PASS: TestFlagEnumsOpen/or_number (0.55s)
+    --- PASS: TestFlagEnumsOpen/cross_enum_right (0.51s)
+    --- PASS: TestFlagEnumsOpen/xor_number (0.77s)
+    --- PASS: TestFlagEnumsOpen/cross_enum_left (0.56s)
+    --- PASS: TestFlagEnumsOpen/numeric_shape (0.33s)
+    --- PASS: TestFlagEnumsOpen/switch_default (0.48s)
+    --- PASS: TestFlagEnumsOpen/arithmetic_shape (0.49s)
+    --- PASS: TestFlagEnumsOpen/implicit (0.51s)
+    --- PASS: TestFlagEnumsOpen/sign_bit (0.70s)
+    --- PASS: TestFlagEnumsOpen/shift_result (0.66s)
+    --- PASS: TestFlagEnumsOpen/shift_update (0.62s)
+    --- PASS: TestFlagEnumsOpen/increment (0.60s)
+    --- PASS: TestFlagEnumsOpen/arithmetic (0.54s)
+=== CONT  TestNamespaceEnumInitializationIndependentOfModuleAnalysis
+--- PASS: TestClassStaticInitializerCallIsEmitted (0.17s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== RUN   TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== PAUSE TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+=== CONT  TestTypedArrayGaps
+--- PASS: TestNamespaceEnumInitializationIndependentOfModuleAnalysis (0.16s)
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+--- PASS: TestNestedEnvironmentCycleIncludesDisjointSlots (0.24s)
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+--- PASS: TestInheritanceHasClassIdentity (0.44s)
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== CONT  TestTsgoHonorsNoCheckInAdamicFiles
+=== CONT  TestCensusMarkerResultIsAssignable
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function
+--- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads (0.00s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync (1.29s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync (1.37s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync (1.09s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync (1.19s)
+    --- PASS: TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync (1.19s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object
+--- PASS: TestCensusMarkerResultIsAssignable (0.19s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only
+--- PASS: TestTypedArrayGaps (1.61s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat
+--- PASS: TestTsgoHonorsNoCheckInAdamicFiles (0.55s)
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?.
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays
+=== CONT  TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions
+--- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat (0.00s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function (0.21s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object (0.22s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only (0.26s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only (0.21s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only (0.17s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only (0.25s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error (0.13s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed (0.14s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat (0.12s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go (0.09s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value (0.22s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_called_through_?. (0.20s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array (0.16s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples (0.22s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes (0.16s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union (0.14s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object (0.17s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak (0.20s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes (0.22s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined (0.20s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined (0.12s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback (0.14s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback (0.12s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array (0.08s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined (0.28s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never (0.14s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays (0.16s)
+    --- PASS: TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions (0.18s)
+PASS

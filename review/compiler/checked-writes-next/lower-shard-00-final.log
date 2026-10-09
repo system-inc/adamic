@@ -1,0 +1,127 @@
+=== RUN   TestAgreementRejectsWrongLoweredOutput
+=== PAUSE TestAgreementRejectsWrongLoweredOutput
+=== RUN   TestArrayPredicatePreservesDeclaredElementContract
+=== PAUSE TestArrayPredicatePreservesDeclaredElementContract
+=== RUN   TestCensusPredicateMarkerCallStaysNotYet
+=== PAUSE TestCensusPredicateMarkerCallStaysNotYet
+=== RUN   TestClassFeaturesAccessorCaptureCycle
+=== PAUSE TestClassFeaturesAccessorCaptureCycle
+=== RUN   TestInheritanceConditionalThisRules
+=== PAUSE TestInheritanceConditionalThisRules
+=== RUN   TestConstructorCacheOneArgumentRemainsNotYet
+=== PAUSE TestConstructorCacheOneArgumentRemainsNotYet
+=== RUN   TestEnumFlagProofsWithoutObservableLoweringEffect
+=== PAUSE TestEnumFlagProofsWithoutObservableLoweringEffect
+=== RUN   TestFSOpenStringFlagsLower
+=== PAUSE TestFSOpenStringFlagsLower
+=== RUN   TestIteratorViewsCannotEraseReceivers
+=== PAUSE TestIteratorViewsCannotEraseReceivers
+=== RUN   TestLibraryMethodValueBoundaries
+=== PAUSE TestLibraryMethodValueBoundaries
+=== RUN   TestNodeLibraryDistinguishesReceiverOwners
+=== PAUSE TestNodeLibraryDistinguishesReceiverOwners
+=== RUN   TestCallableNamespaceReceiverStaysLoud
+=== PAUSE TestCallableNamespaceReceiverStaysLoud
+=== RUN   TestNamespaceReturnedAssignmentLimits
+=== PAUSE TestNamespaceReturnedAssignmentLimits
+=== RUN   TestNonNullAssertionOnPresentTypeIsErased
+=== PAUSE TestNonNullAssertionOnPresentTypeIsErased
+=== RUN   TestPredicateSummaryParameterIndex
+=== PAUSE TestPredicateSummaryParameterIndex
+=== RUN   TestPrototypeHazardsBehindObjectViewsAreNotYet
+=== PAUSE TestPrototypeHazardsBehindObjectViewsAreNotYet
+=== RUN   TestSuppressionDirectiveSoundNeighbors
+=== PAUSE TestSuppressionDirectiveSoundNeighbors
+=== RUN   TestMixedUnionContractUnknownMemberFails
+=== PAUSE TestMixedUnionContractUnknownMemberFails
+=== CONT  TestAgreementRejectsWrongLoweredOutput
+=== CONT  TestLibraryMethodValueBoundaries
+=== RUN   TestLibraryMethodValueBoundaries/unbound_Array
+=== PAUSE TestLibraryMethodValueBoundaries/unbound_Array
+=== RUN   TestLibraryMethodValueBoundaries/different_element_type
+=== PAUSE TestLibraryMethodValueBoundaries/different_element_type
+=== RUN   TestLibraryMethodValueBoundaries/primitive_string
+=== CONT  TestMixedUnionContractUnknownMemberFails
+=== CONT  TestIteratorViewsCannotEraseReceivers
+=== CONT  TestSuppressionDirectiveSoundNeighbors
+=== PAUSE TestLibraryMethodValueBoundaries/primitive_string
+=== RUN   TestLibraryMethodValueBoundaries/dense_array
+=== PAUSE TestLibraryMethodValueBoundaries/dense_array
+=== RUN   TestLibraryMethodValueBoundaries/dense_argument_literal
+=== PAUSE TestLibraryMethodValueBoundaries/dense_argument_literal
+=== RUN   TestLibraryMethodValueBoundaries/holes_or_spread
+=== PAUSE TestLibraryMethodValueBoundaries/holes_or_spread
+=== RUN   TestLibraryMethodValueBoundaries/outside_a_const_alias
+=== PAUSE TestLibraryMethodValueBoundaries/outside_a_const_alias
+=== RUN   TestLibraryMethodValueBoundaries/outside_a_const_alias#01
+=== PAUSE TestLibraryMethodValueBoundaries/outside_a_const_alias#01
+=== RUN   TestLibraryMethodValueBoundaries/captured_receiver
+=== PAUSE TestLibraryMethodValueBoundaries/captured_receiver
+=== RUN   TestLibraryMethodValueBoundaries/primitive_adapter
+=== PAUSE TestLibraryMethodValueBoundaries/primitive_adapter
+=== RUN   TestLibraryMethodValueBoundaries/primitive_adapter#01
+=== PAUSE TestLibraryMethodValueBoundaries/primitive_adapter#01
+=== RUN   TestLibraryMethodValueBoundaries/delayed_fill_of_an_array_with_holes
+=== PAUSE TestLibraryMethodValueBoundaries/delayed_fill_of_an_array_with_holes
+=== CONT  TestFSOpenStringFlagsLower
+--- PASS: TestIteratorViewsCannotEraseReceivers (0.14s)
+=== CONT  TestEnumFlagProofsWithoutObservableLoweringEffect
+--- PASS: TestMixedUnionContractUnknownMemberFails (0.25s)
+=== CONT  TestConstructorCacheOneArgumentRemainsNotYet
+--- PASS: TestEnumFlagProofsWithoutObservableLoweringEffect (0.21s)
+=== CONT  TestInheritanceConditionalThisRules
+--- PASS: TestConstructorCacheOneArgumentRemainsNotYet (0.16s)
+=== CONT  TestClassFeaturesAccessorCaptureCycle
+--- PASS: TestAgreementRejectsWrongLoweredOutput (0.46s)
+=== CONT  TestCensusPredicateMarkerCallStaysNotYet
+--- PASS: TestClassFeaturesAccessorCaptureCycle (0.06s)
+=== CONT  TestArrayPredicatePreservesDeclaredElementContract
+--- PASS: TestInheritanceConditionalThisRules (0.29s)
+=== CONT  TestPrototypeHazardsBehindObjectViewsAreNotYet
+--- PASS: TestCensusPredicateMarkerCallStaysNotYet (0.19s)
+=== CONT  TestPredicateSummaryParameterIndex
+=== RUN   TestPredicateSummaryParameterIndex/p05_helper_second_parameter
+--- PASS: TestSuppressionDirectiveSoundNeighbors (0.66s)
+=== CONT  TestNonNullAssertionOnPresentTypeIsErased
+--- PASS: TestNonNullAssertionOnPresentTypeIsErased (0.16s)
+=== CONT  TestNamespaceReturnedAssignmentLimits
+=== RUN   TestPredicateSummaryParameterIndex/p06_helper_second_parameter_undefined
+=== RUN   TestPredicateSummaryParameterIndex/p13_filter_wrong_parameter_helper
+--- PASS: TestPredicateSummaryParameterIndex (0.38s)
+    --- PASS: TestPredicateSummaryParameterIndex/p05_helper_second_parameter (0.17s)
+    --- PASS: TestPredicateSummaryParameterIndex/p06_helper_second_parameter_undefined (0.05s)
+    --- PASS: TestPredicateSummaryParameterIndex/p13_filter_wrong_parameter_helper (0.16s)
+=== CONT  TestCallableNamespaceReceiverStaysLoud
+--- PASS: TestNamespaceReturnedAssignmentLimits (0.24s)
+=== CONT  TestNodeLibraryDistinguishesReceiverOwners
+--- PASS: TestCallableNamespaceReceiverStaysLoud (0.12s)
+=== CONT  TestLibraryMethodValueBoundaries/unbound_Array
+=== CONT  TestLibraryMethodValueBoundaries/delayed_fill_of_an_array_with_holes
+--- PASS: TestFSOpenStringFlagsLower (1.20s)
+=== CONT  TestLibraryMethodValueBoundaries/primitive_adapter#01
+=== CONT  TestLibraryMethodValueBoundaries/primitive_adapter
+=== CONT  TestLibraryMethodValueBoundaries/captured_receiver
+=== CONT  TestLibraryMethodValueBoundaries/outside_a_const_alias#01
+=== CONT  TestLibraryMethodValueBoundaries/outside_a_const_alias
+=== CONT  TestLibraryMethodValueBoundaries/holes_or_spread
+=== CONT  TestLibraryMethodValueBoundaries/dense_argument_literal
+=== CONT  TestLibraryMethodValueBoundaries/dense_array
+=== CONT  TestLibraryMethodValueBoundaries/primitive_string
+=== CONT  TestLibraryMethodValueBoundaries/different_element_type
+--- PASS: TestLibraryMethodValueBoundaries (0.02s)
+    --- PASS: TestLibraryMethodValueBoundaries/unbound_Array (0.06s)
+    --- PASS: TestLibraryMethodValueBoundaries/delayed_fill_of_an_array_with_holes (0.14s)
+    --- PASS: TestLibraryMethodValueBoundaries/primitive_adapter#01 (0.17s)
+    --- PASS: TestLibraryMethodValueBoundaries/captured_receiver (0.05s)
+    --- PASS: TestLibraryMethodValueBoundaries/primitive_adapter (0.15s)
+    --- PASS: TestLibraryMethodValueBoundaries/outside_a_const_alias#01 (0.12s)
+    --- PASS: TestLibraryMethodValueBoundaries/outside_a_const_alias (0.07s)
+    --- PASS: TestLibraryMethodValueBoundaries/dense_argument_literal (0.07s)
+    --- PASS: TestLibraryMethodValueBoundaries/holes_or_spread (0.09s)
+    --- PASS: TestLibraryMethodValueBoundaries/dense_array (0.16s)
+    --- PASS: TestLibraryMethodValueBoundaries/primitive_string (0.17s)
+    --- PASS: TestLibraryMethodValueBoundaries/different_element_type (0.07s)
+--- PASS: TestPrototypeHazardsBehindObjectViewsAreNotYet (1.24s)
+--- PASS: TestNodeLibraryDistinguishesReceiverOwners (0.89s)
+--- PASS: TestArrayPredicatePreservesDeclaredElementContract (1.78s)
+PASS
