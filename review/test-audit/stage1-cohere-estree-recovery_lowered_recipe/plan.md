@@ -1,0 +1,1 @@
+Fixed production plan, before checking any kill. Four mutants from protocol serialization, value construction, module parsing and integer conversion. Native rebuild fallback limits production mutants to four. Empty answer probe will return an empty string from pipeline.answer and is separate. Oracle Go cohere remains unchanged.

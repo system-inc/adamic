@@ -1,0 +1,23 @@
+{"Time":"2026-10-09T11:55:44.639939577Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:55:44.671143226Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup"}
+{"Time":"2026-10-09T11:55:44.671322342Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup","Output":"=== RUN   TestScalarEdges_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:44.671415866Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup","Output":"=== PAUSE TestScalarEdges_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:44.671419993Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup"}
+{"Time":"2026-10-09T11:55:44.671425075Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges"}
+{"Time":"2026-10-09T11:55:44.671428298Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges","Output":"=== RUN   TestScalarEdges\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:44.671468228Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges","Output":"=== PAUSE TestScalarEdges\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:44.671471518Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges"}
+{"Time":"2026-10-09T11:55:44.671474717Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup"}
+{"Time":"2026-10-09T11:55:44.671477607Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup","Output":"=== CONT  TestScalarEdges_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:44.671480867Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges"}
+{"Time":"2026-10-09T11:55:44.671529235Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges","Output":"=== CONT  TestScalarEdges\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:46.546591871Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup","Output":"    scalar_edges_split_products_test.go:128: build scalar-edges-go-oracle cce69e57ded0 hit 1.86\n"}
+{"Time":"2026-10-09T11:55:48.732846764Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup","Output":"    scalar_edges_split_products_test.go:129: build scalar-edges-lowered b54509e5ad3a hit 2.19\n"}
+{"Time":"2026-10-09T11:55:50.288959423Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup","Output":"    scalar_edges_split_products_test.go:129: build scalar-edges-sanitized-native-v2 a2039de55165 hit 1.54\n"}
+{"Time":"2026-10-09T11:55:50.289062491Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup","Output":"--- PASS: TestScalarEdges_Setup (5.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:50.289081471Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_Setup","Elapsed":5.62}
+{"Time":"2026-10-09T11:55:50.289110783Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges","Output":"--- PASS: TestScalarEdges (5.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:50.289114733Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges","Elapsed":5.62}
+{"Time":"2026-10-09T11:55:50.289118518Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:50.290685247Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t5.650s\n"}
+{"Time":"2026-10-09T11:55:50.290766129Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":5.651}

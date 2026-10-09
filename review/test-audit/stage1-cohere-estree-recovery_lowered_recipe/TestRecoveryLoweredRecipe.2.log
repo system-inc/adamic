@@ -1,0 +1,21 @@
+{"Time":"2026-10-09T11:37:08.332169182Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:37:08.354310502Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe"}
+{"Time":"2026-10-09T11:37:08.354409975Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe","Output":"=== RUN   TestRecoveryLoweredRecipe\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:08.626016179Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe","Output":"    recovery_lowered_recipe_test.go:35: build estree-lowering-proof-a 64f8e56945c8 hit 0.05\n"}
+{"Time":"2026-10-09T11:37:08.909046135Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe","Output":"    recovery_lowered_recipe_test.go:35: build estree-lowering-proof-b b394e7ba5afa hit 0.06\n"}
+{"Time":"2026-10-09T11:37:08.909100934Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe","Output":"    recovery_lowered_recipe_test.go:50: union: 1 cases, 1 unique IDs, 1 shards\n"}
+{"Time":"2026-10-09T11:37:08.9091122Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe/shard-000"}
+{"Time":"2026-10-09T11:37:08.909116225Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe/shard-000","Output":"=== RUN   TestRecoveryLoweredRecipe/shard-000\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:08.909120954Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe/shard-000","Output":"=== PAUSE TestRecoveryLoweredRecipe/shard-000\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:08.909123954Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe/shard-000"}
+{"Time":"2026-10-09T11:37:08.909128886Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe","Output":"    recovery_shards_test.go:38: setup wall=0.558165s builds=0.105753s without-builds=0.452412s\n"}
+{"Time":"2026-10-09T11:37:08.90913746Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe/shard-000"}
+{"Time":"2026-10-09T11:37:08.909140493Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe/shard-000","Output":"=== CONT  TestRecoveryLoweredRecipe/shard-000\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:08.91606559Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe/shard-000","Output":"--- PASS: TestRecoveryLoweredRecipe/shard-000 (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:08.916213308Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe/shard-000","Elapsed":0.01}
+{"Time":"2026-10-09T11:37:08.916254079Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe","Output":"    recovery_shards_test.go:33: TEST totalCPU=1.064181s\n"}
+{"Time":"2026-10-09T11:37:08.916261974Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe","Output":"--- PASS: TestRecoveryLoweredRecipe (0.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:08.916265996Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLoweredRecipe","Elapsed":0.56}
+{"Time":"2026-10-09T11:37:08.916271563Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:08.919208197Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.587s\n"}
+{"Time":"2026-10-09T11:37:08.919268133Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.587}

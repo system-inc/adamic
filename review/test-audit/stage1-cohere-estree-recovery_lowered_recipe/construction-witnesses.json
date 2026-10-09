@@ -1,0 +1,23 @@
+[
+  {
+    "id": "S02",
+    "expected_artifact": "port.c",
+    "after_count": 0,
+    "baseline_count": 5,
+    "witness": "expected artifact absent while construction row passes"
+  },
+  {
+    "id": "S03",
+    "expected_artifact": "oracle",
+    "after_count": 0,
+    "baseline_count": 1,
+    "witness": "expected artifact absent while construction row passes"
+  },
+  {
+    "id": "S04",
+    "expected_artifact": "port",
+    "after_count": 0,
+    "baseline_count": 6,
+    "witness": "expected artifact absent while construction row passes"
+  }
+]

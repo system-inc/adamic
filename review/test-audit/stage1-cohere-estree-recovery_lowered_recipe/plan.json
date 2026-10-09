@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/estree/protocol.ts",
+    "line": 20,
+    "before": "unit >= 32 && unit <= 126",
+    "after": "unit >= 33 && unit <= 126",
+    "menu": "off-by-one lower ASCII bound"
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/estree/values.ts",
+    "line": 23,
+    "before": "value.number = flag ? 1 : 0;",
+    "after": "value.number = flag ? 0 : 1;",
+    "menu": "swap boolean constants"
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/estree/pipeline.ts",
+    "line": 33,
+    "before": "parser.awaitContext = true;",
+    "after": "parser.awaitContext = false;",
+    "menu": "change module await option"
+  },
+  {
+    "id": "M04",
+    "file": "stage1/cohere/estree/values.ts",
+    "line": 81,
+    "before": "let result = '0';",
+    "after": "let result = '1';",
+    "menu": "change bigint accumulator constant"
+  }
+]

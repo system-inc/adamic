@@ -1,0 +1,436 @@
+[
+  {
+    "test": "TestRecoveryLoweredRecipe",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/recovery_lowered_recipe_test.go:21",
+    "seconds": 0.589,
+    "oracle": "Own C and JS bytes must be identical across private source paths. This checks path invariance, not semantic output correctness.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "Three isolated -count=1 baseline logs: TestRecoveryLoweredRecipe.[123].log",
+    "timing_samples": [
+      0.587,
+      0.589,
+      0.622
+    ],
+    "probe_passes": [
+      "P02"
+    ],
+    "reason": "No meaningful compiler path-invariance production mutant was built within the bounded port audit. S05 repeated one input path and passed; it is supplemental construction evidence, not a production verdict."
+  },
+  {
+    "test": "TestRecoveryMutants family",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/recovery_mutants_product_proofs_test.go:15",
+    "seconds": 7.851,
+    "oracle": "Go cohere answers compared with deliberately mutated source Node and sanitized native; W01 disables the comparison and only that run decides this witness verdict.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01 recovery_mutants_product_shards_test.go:179: module-await Node: mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/W01-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestRecoveryMutants|TestRecoveryMutants_000|TestRecoveryMutants_001|TestRecoveryMutants_002|TestRecoveryMutantsUnion)$' > W01.TestRecoveryMutants_family.log 2>&1; recovery_mutants_product_shards_test.go:179: module-await Node: mutant survived",
+    "timing_samples": [
+      7.851,
+      7.751,
+      8.996
+    ],
+    "witness_edits": [
+      "W01"
+    ],
+    "members": [
+      "TestRecoveryMutants",
+      "TestRecoveryMutants_000",
+      "TestRecoveryMutants_001",
+      "TestRecoveryMutants_002",
+      "TestRecoveryMutantsUnion"
+    ]
+  },
+  {
+    "test": "TestRecoveryMutantsShardSurvivor",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/recovery_mutants_product_proofs_test.go:21",
+    "seconds": 0.092,
+    "oracle": "Synthetic bytes; requires exactly the owning child shard to fail.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01 recovery_shards_test.go:251: planted empty-type-list-range/008 must fail only shard-001: exit status 1",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/W01-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRecoveryMutantsShardSurvivor$' > W01.TestRecoveryMutantsShardSurvivor.log 2>&1; recovery_shards_test.go:251: planted empty-type-list-range/008 must fail only shard-001: exit status 1",
+    "timing_samples": [
+      0.211,
+      0.035,
+      0.092
+    ],
+    "witness_edits": [
+      "W01"
+    ]
+  },
+  {
+    "test": "TestRecoveryMutantsTopSurvivor",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/recovery_mutants_product_proofs_test.go:36",
+    "seconds": 0.084,
+    "oracle": "Synthetic survivor; requires exactly the owning top-level shard to fail with mutant survived.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01 recovery_mutants_product_proofs_test.go:78: planted survivor must fail only TestRecoveryMutants_001: exit status 1",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/W01-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRecoveryMutantsTopSurvivor$' > W01.TestRecoveryMutantsTopSurvivor.log 2>&1; recovery_mutants_product_proofs_test.go:78: planted survivor must fail only TestRecoveryMutants_001: exit status 1",
+    "timing_samples": [
+      0.07,
+      0.169,
+      0.084
+    ],
+    "witness_edits": [
+      "W01"
+    ]
+  },
+  {
+    "test": "TestRecoveryMutants_Setup",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/recovery_mutants_product_proofs_test.go:84",
+    "seconds": 9.918,
+    "oracle": "Own product preparation and nonempty ready path; no agreement assertion.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S06 recovery_mutants_product_proofs_test.go:87: preparation failed for mutant first-accessibility",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S06-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestRecoveryMutants_Setup$' > S06.retry.log 2>&1; recovery_mutants_product_proofs_test.go:87: preparation failed for mutant first-accessibility",
+    "timing_samples": [
+      9.918,
+      9.255,
+      21.74
+    ],
+    "construction_edits": [
+      "S06"
+    ]
+  },
+  {
+    "test": "TestRecoveryShardProofChild",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/recovery_shards_test.go:287",
+    "seconds": 0.02,
+    "oracle": "Synthetic subprocess entry; returns immediately without ADAMIC_ESTREE_SHARD_PROOF.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "helper",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "Three isolated -count=1 baseline logs: TestRecoveryShardProofChild.[123].log",
+    "timing_samples": [
+      0.02,
+      0.02,
+      0.012
+    ],
+    "parent": "TestRecoveryMutantsShardSurvivor"
+  },
+  {
+    "test": "TestRecoveredGrammar",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/recovery_test.go:31",
+    "seconds": 1.593,
+    "oracle": "Go cohere serialized trees compared byte-for-byte with source Node, sanitized native and emitted JavaScript; subprocesses require successful exit and empty stderr.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M02",
+      "M03"
+    ],
+    "last_proven_fail": "M04 recovery_test.go:38: Node: line 57: Go \"4 .bigint string 1\", port \"4 .bigint string 11\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRecoveredGrammar",
+      "TestScalarEdges family"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u087/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredGrammar$ > M04.RecoveredGrammar.log 2>&1; recovery_test.go:38: Node: line 57: Go \"4 .bigint string 1\", port \"4 .bigint string 11\"",
+    "timing_samples": [
+      1.654,
+      1.593,
+      1.508
+    ]
+  },
+  {
+    "test": "TestRecoveryLibraryGaps",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/recovery_test.go:45",
+    "seconds": 4.966,
+    "oracle": "Pinned Go cohere accepts inputs that pinned typescript-estree refuses; handwritten accepted/refused label plus original-library comparisons. It does not execute the Adamic port.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "Three isolated -count=1 baseline logs: TestRecoveryLibraryGaps.[123].log",
+    "timing_samples": [
+      4.532,
+      5.147,
+      4.966
+    ],
+    "reason": "Only Go cohere and pinned libraries are checked; mutating those or the harness would violate the oracle rule."
+  },
+  {
+    "test": "TestScalarEdges preparation family",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/scalar_edges_split_products_test.go:152",
+    "seconds": 5.651,
+    "oracle": "Own construction of oracle, native and JS paths, plus nonempty readiness fields.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S01 scalar_edges_split_products_test.go:154: scalar-edge preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S01-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestScalarEdges|TestScalarEdges_Setup)$' > S01.TestScalarEdges_preparation_family.log 2>&1; scalar_edges_split_products_test.go:154: scalar-edge preparation failed",
+    "timing_samples": [
+      5.651,
+      5.06,
+      5.733
+    ],
+    "construction_edits": [
+      "S01"
+    ],
+    "members": [
+      "TestScalarEdges_Setup",
+      "TestScalarEdges"
+    ]
+  },
+  {
+    "test": "TestScalarEdges family",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/scalar_edges_split_products_test.go:181",
+    "seconds": 6.081,
+    "oracle": "Go cohere serialized trees compared byte-for-byte with source Node, sanitized native and emitted JavaScript; union verifies every live corpus case appears once.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01",
+      "M04"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M04 scalar_edges_split_products_test.go:277: emitted JS: line 38: Go \"2 .bigint string 1234567890123456789012345678901234567890\", port \"2 .bigint string 11234567890123456789012345678901234567890\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestRecoveredGrammar"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 1.593,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestRecoveredGrammar",
+      "TestScalarEdges family"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u087/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run \"^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003)$\" > M04.ScalarEdges_family.log 2>&1; scalar_edges_split_products_test.go:277: emitted JS: line 38: Go \"2 .bigint string 1234567890123456789012345678901234567890\", port \"2 .bigint string 11234567890123456789012345678901234567890\"",
+    "timing_samples": [
+      6.081,
+      41.539,
+      5.523
+    ],
+    "members": [
+      "TestScalarEdgesUnion",
+      "TestScalarEdges_000",
+      "TestScalarEdges_001",
+      "TestScalarEdges_002",
+      "TestScalarEdges_003"
+    ],
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestScalarEdgesPlantedFailure",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/scalar_edges_split_products_test.go:204",
+    "seconds": 4.949,
+    "oracle": "Own comparison over Go cohere observations of an edited fixture; requires one owning shard to catch it.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W02 scalar_edges_split_products_test.go:233: planted case caught 0 times in shard -1",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/W02-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestScalarEdgesPlantedFailure$' > W02.TestScalarEdgesPlantedFailure.log 2>&1; scalar_edges_split_products_test.go:233: planted case caught 0 times in shard -1",
+    "timing_samples": [
+      4.949,
+      4.91,
+      5.004
+    ],
+    "witness_edits": [
+      "W02"
+    ]
+  },
+  {
+    "test": "TestProduct_scalar_edges_go_oracle",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/scalar_edges_split_products_test.go:285",
+    "seconds": 2.406,
+    "oracle": "Own builder completion only; returned artifact paths are not checked by this row.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S03-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestProduct_scalar_edges_go_oracle$' > S03.TestProduct_scalar_edges_go_oracle.log 2>&1; PASS",
+    "timing_samples": [
+      2.914,
+      2.217,
+      2.406
+    ],
+    "construction_edits": [
+      "S03"
+    ],
+    "reason": "Permitted construction edit removes the expected artifact; row still passes."
+  },
+  {
+    "test": "TestProduct_scalar_edges_lowered",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/scalar_edges_split_products_test.go:290",
+    "seconds": 1.63,
+    "oracle": "Own builder completion only; returned artifact paths are not checked by this row.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S02-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestProduct_scalar_edges_lowered$' > S02.TestProduct_scalar_edges_lowered.log 2>&1; PASS",
+    "timing_samples": [
+      1.63,
+      1.662,
+      1.56
+    ],
+    "construction_edits": [
+      "S02"
+    ],
+    "reason": "Permitted construction edit removes the expected artifact; row still passes."
+  },
+  {
+    "test": "TestProduct_scalar_edges_sanitized_native",
+    "package": "stage1/cohere/estree",
+    "file": "stage1/cohere/estree/scalar_edges_split_products_test.go:295",
+    "seconds": 3.929,
+    "oracle": "Own builder completion only; returned artifact paths are not checked by this row.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S04-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestProduct_scalar_edges_sanitized_native$' > S04.TestProduct_scalar_edges_sanitized_native.log 2>&1; PASS",
+    "timing_samples": [
+      4.041,
+      3.9290000000000003,
+      3.352
+    ],
+    "construction_edits": [
+      "S04"
+    ],
+    "reason": "Permitted construction edit removes the expected artifact; row still passes."
+  }
+]

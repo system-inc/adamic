@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:37:48.443017005Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:37:48.455905072Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLibraryGaps"}
+{"Time":"2026-10-09T11:37:48.45600101Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLibraryGaps","Output":"=== RUN   TestRecoveryLibraryGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:49.418700174Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLibraryGaps","Output":"    recovery_test.go:52: build estree-oracle-answer 83b376736a30 hit 0.00\n"}
+{"Time":"2026-10-09T11:37:49.855188873Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLibraryGaps","Output":"    recovery_test.go:57: Go accepts \"f\u003c\u003e();\", pinned typescript-estree refuses\n"}
+{"Time":"2026-10-09T11:37:50.835860844Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLibraryGaps","Output":"    recovery_test.go:52: build estree-oracle-answer 035821c1c497 hit 0.00\n"}
+{"Time":"2026-10-09T11:37:51.262870616Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLibraryGaps","Output":"    recovery_test.go:57: Go accepts \"class C\u003c\u003e {}\", pinned typescript-estree refuses\n"}
+{"Time":"2026-10-09T11:37:52.799640325Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLibraryGaps","Output":"    estree_test.go:292: raw: 4 files, 4 identical, 0 differing\n"}
+{"Time":"2026-10-09T11:37:52.972130017Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLibraryGaps","Output":"    estree_test.go:292: postprocessed: 4 files, 4 identical, 0 differing\n"}
+{"Time":"2026-10-09T11:37:52.972217533Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLibraryGaps","Output":"--- PASS: TestRecoveryLibraryGaps (4.52s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:52.97222362Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryLibraryGaps","Elapsed":4.52}
+{"Time":"2026-10-09T11:37:52.97225611Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:52.97458697Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t4.531s\n"}
+{"Time":"2026-10-09T11:37:52.974642061Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":4.532}

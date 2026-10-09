@@ -1,0 +1,47 @@
+[
+  {
+    "id": "W01",
+    "test": "TestRecoveryMutantsShardSurvivor",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/W01-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveryMutantsShardSurvivor$"
+    ],
+    "exit": 1,
+    "seconds": 10.112644173001172
+  },
+  {
+    "id": "W01",
+    "test": "TestRecoveryMutantsTopSurvivor",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/W01-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveryMutantsTopSurvivor$"
+    ],
+    "exit": 1,
+    "seconds": 3.3184025959999417
+  },
+  {
+    "id": "W01",
+    "validation": "go vet",
+    "exit": 0
+  }
+]

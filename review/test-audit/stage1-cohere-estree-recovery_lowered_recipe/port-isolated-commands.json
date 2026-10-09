@@ -1,0 +1,192 @@
+[
+  {
+    "test": "TestRecoveryMutants family",
+    "run": 1,
+    "exit": 1,
+    "seconds": 92.46007161899979,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestRecoveryMutants|TestRecoveryMutants_000|TestRecoveryMutants_001|TestRecoveryMutants_002|TestRecoveryMutantsUnion)$"
+    ]
+  },
+  {
+    "test": "TestRecoveredGrammar",
+    "run": 1,
+    "exit": 0,
+    "seconds": 4.593824632000178,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredGrammar$"
+    ]
+  },
+  {
+    "test": "TestRecoveredGrammar",
+    "run": 2,
+    "exit": 0,
+    "seconds": 4.227094608999323,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredGrammar$"
+    ]
+  },
+  {
+    "test": "TestRecoveredGrammar",
+    "run": 3,
+    "exit": 0,
+    "seconds": 4.466832303998672,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredGrammar$"
+    ]
+  },
+  {
+    "test": "TestScalarEdges family",
+    "run": 1,
+    "exit": 0,
+    "seconds": 44.24730921599985,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003)$"
+    ]
+  },
+  {
+    "test": "TestScalarEdges family",
+    "run": 2,
+    "exit": 0,
+    "seconds": 10.665172900997277,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003)$"
+    ]
+  },
+  {
+    "test": "TestScalarEdges family",
+    "run": 3,
+    "exit": 0,
+    "seconds": 9.468330773997877,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003)$"
+    ]
+  },
+  {
+    "test": "TestScalarEdgesPlantedFailure",
+    "run": 1,
+    "exit": 0,
+    "seconds": 7.560861573001603,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestScalarEdgesPlantedFailure$"
+    ]
+  },
+  {
+    "test": "TestScalarEdgesPlantedFailure",
+    "run": 2,
+    "exit": 0,
+    "seconds": 7.432087671000772,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestScalarEdgesPlantedFailure$"
+    ]
+  },
+  {
+    "test": "TestScalarEdgesPlantedFailure",
+    "run": 3,
+    "exit": 0,
+    "seconds": 7.689118580001377,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestScalarEdgesPlantedFailure$"
+    ]
+  }
+]

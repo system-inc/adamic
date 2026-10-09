@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/pipeline.ts
++++ b/stage1/cohere/estree/pipeline.ts
+@@ -30,7 +30,7 @@
+     if(!['.d.ts', '.d.mts', '.d.cts'].some((suffix) => file.endsWith(suffix)) && externalModule(parser.nodes, root)) {
+         parser = new Parser(convertedText, path);
+         parser.jsx = babel || file.endsWith('.tsx');
+-        parser.awaitContext = true;
++        parser.awaitContext = false;
+         root = parser.file();
+     }
+     if(parser.diagnostics.length > 0) {

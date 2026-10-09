@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:37:28.076308182Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:37:28.118539504Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsTopSurvivor"}
+{"Time":"2026-10-09T11:37:28.118645732Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsTopSurvivor","Output":"=== RUN   TestRecoveryMutantsTopSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:28.118680783Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsTopSurvivor","Output":"=== PAUSE TestRecoveryMutantsTopSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:28.118683716Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsTopSurvivor"}
+{"Time":"2026-10-09T11:37:28.118688457Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsTopSurvivor"}
+{"Time":"2026-10-09T11:37:28.118690706Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsTopSurvivor","Output":"=== CONT  TestRecoveryMutantsTopSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:28.210868213Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsTopSurvivor","Output":"    recovery_mutants_product_proofs_test.go:80: planted surviving mutant first-accessibility/ad07ff7faf6ea44e13e407d895d03393c5febb47a9256fd0ad84054c2cb2d608/0 caught only by TestRecoveryMutants_001\n"}
+{"Time":"2026-10-09T11:37:28.211033781Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsTopSurvivor","Output":"--- PASS: TestRecoveryMutantsTopSurvivor (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:28.211064328Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsTopSurvivor","Elapsed":0.09}
+{"Time":"2026-10-09T11:37:28.211320829Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:28.245434229Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.168s\n"}
+{"Time":"2026-10-09T11:37:28.24548659Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.169}

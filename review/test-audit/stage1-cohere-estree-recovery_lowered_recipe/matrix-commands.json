@@ -1,0 +1,212 @@
+[
+  {
+    "id": "M01",
+    "row": "RecoveredGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredGrammar$"
+    ],
+    "exit": 1,
+    "wall_seconds": 73.09574267599965,
+    "apply_check_exit": 0,
+    "cache": "/tmp/u087/cache/M01"
+  },
+  {
+    "id": "M01",
+    "row": "ScalarEdges_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 39.08208257300066,
+    "apply_check_exit": 0,
+    "cache": "/tmp/u087/cache/M01"
+  },
+  {
+    "id": "M02",
+    "row": "RecoveredGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredGrammar$"
+    ],
+    "exit": 1,
+    "wall_seconds": 69.30797933999929,
+    "apply_check_exit": 0,
+    "cache": "/tmp/u087/cache/M02"
+  },
+  {
+    "id": "M02",
+    "row": "ScalarEdges_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 40.59434816400244,
+    "apply_check_exit": 0,
+    "cache": "/tmp/u087/cache/M02"
+  },
+  {
+    "id": "M03",
+    "row": "RecoveredGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredGrammar$"
+    ],
+    "exit": 1,
+    "wall_seconds": 71.95452120499976,
+    "apply_check_exit": 0,
+    "cache": "/tmp/u087/cache/M03"
+  },
+  {
+    "id": "M03",
+    "row": "ScalarEdges_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 44.0275103999993,
+    "apply_check_exit": 0,
+    "cache": "/tmp/u087/cache/M03"
+  },
+  {
+    "id": "M04",
+    "row": "RecoveredGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredGrammar$"
+    ],
+    "exit": 1,
+    "wall_seconds": 74.05411574399841,
+    "apply_check_exit": 0,
+    "cache": "/tmp/u087/cache/M04"
+  },
+  {
+    "id": "M04",
+    "row": "ScalarEdges_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 43.21010606599884,
+    "apply_check_exit": 0,
+    "cache": "/tmp/u087/cache/M04"
+  },
+  {
+    "id": "P01",
+    "row": "RecoveredGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredGrammar$"
+    ],
+    "exit": 1,
+    "wall_seconds": 43.08552086199779,
+    "apply_check_exit": 0,
+    "cache": "/tmp/u087/cache/P01"
+  },
+  {
+    "id": "P01",
+    "row": "ScalarEdges_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 68.40651559699836,
+    "apply_check_exit": 0,
+    "cache": "/tmp/u087/cache/P01"
+  }
+]

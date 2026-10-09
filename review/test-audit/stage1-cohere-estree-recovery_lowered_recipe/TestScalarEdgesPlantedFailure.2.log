@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T11:42:05.53615709Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:42:05.548143761Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure"}
+{"Time":"2026-10-09T11:42:05.548238821Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure","Output":"=== RUN   TestScalarEdgesPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:05.548273239Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure","Output":"=== PAUSE TestScalarEdgesPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:05.548276855Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure"}
+{"Time":"2026-10-09T11:42:05.548284835Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure"}
+{"Time":"2026-10-09T11:42:05.548288173Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure","Output":"=== CONT  TestScalarEdgesPlantedFailure\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:07.032098818Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure","Output":"    scalar_edges_split_products_test.go:128: build scalar-edges-go-oracle cce69e57ded0 hit 1.48\n"}
+{"Time":"2026-10-09T11:42:08.753145536Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure","Output":"    scalar_edges_split_products_test.go:129: build scalar-edges-lowered b54509e5ad3a hit 1.72\n"}
+{"Time":"2026-10-09T11:42:10.443636672Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure","Output":"    scalar_edges_split_products_test.go:129: build scalar-edges-sanitized-native-v2 a2039de55165 hit 1.67\n"}
+{"Time":"2026-10-09T11:42:10.481426914Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure","Output":"    scalar_edges_split_products_test.go:235: planted failure: case 0 changed to 0; caught only by TestScalarEdges_000\n"}
+{"Time":"2026-10-09T11:42:10.481524203Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure","Output":"--- PASS: TestScalarEdgesPlantedFailure (4.93s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:10.481530735Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesPlantedFailure","Elapsed":4.93}
+{"Time":"2026-10-09T11:42:10.481593448Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:42:10.485039053Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t4.948s\n"}
+{"Time":"2026-10-09T11:42:10.485077026Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":4.949}

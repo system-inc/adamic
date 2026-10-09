@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:37:20.717826477Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:37:20.779978056Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsShardSurvivor"}
+{"Time":"2026-10-09T11:37:20.780100661Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsShardSurvivor","Output":"=== RUN   TestRecoveryMutantsShardSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:20.780149014Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsShardSurvivor","Output":"=== PAUSE TestRecoveryMutantsShardSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:20.780152233Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsShardSurvivor"}
+{"Time":"2026-10-09T11:37:20.780160175Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsShardSurvivor"}
+{"Time":"2026-10-09T11:37:20.780162207Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsShardSurvivor","Output":"=== CONT  TestRecoveryMutantsShardSurvivor\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:20.780164936Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsShardSurvivor","Output":"    recovery_shards_test.go:251: union: 48 cases, 48 unique IDs, 3 shards\n"}
+{"Time":"2026-10-09T11:37:20.808677921Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsShardSurvivor","Output":"    recovery_shards_test.go:251: planted mutant empty-type-list-range/008 failed only shard-001\n"}
+{"Time":"2026-10-09T11:37:20.808837407Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsShardSurvivor","Output":"--- PASS: TestRecoveryMutantsShardSurvivor (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:20.808846215Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutantsShardSurvivor","Elapsed":0.03}
+{"Time":"2026-10-09T11:37:20.808870028Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:37:20.810016466Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.090s\n"}
+{"Time":"2026-10-09T11:37:20.810057993Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.092}

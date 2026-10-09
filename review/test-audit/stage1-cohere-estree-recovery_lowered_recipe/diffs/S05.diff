@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/recovery_lowered_recipe_test.go
++++ b/stage1/cohere/estree/recovery_lowered_recipe_test.go
+@@ -28,7 +28,7 @@
+ 	const anchor = "(scanner.flags & 1) === 0 &&\n        (token"
+ 	copied := mutantPort(t, "sourceLookahead.ts", anchor, anchor)
+ 	var products []string
+-	for i, path := range []string{main, copied} {
++	for i, path := range []string{main, main + copied[len(copied):]} {
+ 		inputs := recoveryCacheInputs(t, path)
+ 		inputs.Name = []string{"estree-lowering-proof-a", "estree-lowering-proof-b"}[i]
+ 		inputs.Files = append(inputs.Files, "stage1/cohere/estree/recovery_lowered_recipe_test.go")

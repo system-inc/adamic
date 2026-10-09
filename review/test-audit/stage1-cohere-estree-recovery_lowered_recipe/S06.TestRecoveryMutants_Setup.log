@@ -1,0 +1,6 @@
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/estree.test","Action":"build-output","Output":"# github.com/system-inc/adamic/stage1/cohere/estree.test\n"}
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/estree.test","Action":"build-output","Output":"/workspace/adamic-tools/go/pkg/tool/linux_amd64/link: mapping output file failed: no space left on device\n"}
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/estree.test","Action":"build-fail"}
+{"Time":"2026-10-09T11:55:48.171049648Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:55:48.171300999Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree [build failed]\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:48.171362264Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0,"FailedBuild":"github.com/system-inc/adamic/stage1/cohere/estree.test"}

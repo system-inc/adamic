@@ -1,0 +1,21 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S06-overlay.json",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^TestRecoveryMutants_Setup$"
+  ],
+  "exit": 1,
+  "seconds": 14.472231242001726,
+  "vet_exit": 0,
+  "file": "stage1/cohere/estree/recovery_mutants_product_shards_test.go",
+  "line": 198
+}

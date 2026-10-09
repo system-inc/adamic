@@ -1,0 +1,79 @@
+{
+  "setup_seconds": 0,
+  "nproc": 5,
+  "initial_commands": [
+    {
+      "name": "list",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-list",
+        ".",
+        "./stage1/cohere/estree/"
+      ],
+      "exit": 0,
+      "seconds": 7.9494595090000075
+    },
+    {
+      "name": "npm",
+      "command": [
+        "timeout",
+        "90",
+        "npm",
+        "ci",
+        "--prefix",
+        "stage3/api"
+      ],
+      "exit": 0,
+      "seconds": 0.7077757859988196
+    },
+    {
+      "name": "library-install",
+      "command": [
+        "timeout",
+        "90",
+        "npm",
+        "install",
+        "--prefix",
+        "/tmp/u087-estree-library",
+        "--no-audit",
+        "--no-fund",
+        "@typescript-eslint/typescript-estree@8.65.0",
+        "typescript@6.0.3",
+        "prettier@3.9.6"
+      ],
+      "exit": 0,
+      "seconds": 4.481750666000153
+    },
+    {
+      "name": "baseline",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/estree/",
+        "-run",
+        "."
+      ],
+      "exit": 1,
+      "seconds": 92.58934424299878,
+      "env": {
+        "ADAMIC_ESTREE_LIBRARY": "/tmp/u087-estree-library",
+        "ADAMIC_GATE_UNCACHED": "1"
+      }
+    }
+  ],
+  "production_matrix_command_seconds": 455.32640616799836,
+  "port_probe_command_seconds": 111.49203645899615,
+  "logged_production_lowering_seconds": 113.259251,
+  "logged_production_native_build_seconds": 155.559024,
+  "construction_measurement_command_seconds": 313.3393466430025,
+  "phase_totals_are_command_sums_not_session_wall_time": true
+}

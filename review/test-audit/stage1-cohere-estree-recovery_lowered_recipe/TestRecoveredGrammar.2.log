@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:40:45.127915357Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:40:45.138990959Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredGrammar"}
+{"Time":"2026-10-09T11:40:45.140908321Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredGrammar","Output":"=== RUN   TestRecoveredGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:40:45.931010818Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredGrammar","Output":"    recovery_test.go:33: build estree-oracle-answer 6ec2bbbf823a hit 0.00\n"}
+{"Time":"2026-10-09T11:40:46.170954326Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredGrammar","Output":"    recovery_test.go:35: build estree-lowered-program 4c65968c2627 hit 0.05\n"}
+{"Time":"2026-10-09T11:40:46.20063401Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredGrammar","Output":"    recovery_test.go:35: build estree-sanitized-native 1223d02cedaa hit 0.00\n"}
+{"Time":"2026-10-09T11:40:46.200688312Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredGrammar","Output":"    recovery_shards_test.go:38: setup wall=0.269803s builds=0.053108s without-builds=0.216695s\n"}
+{"Time":"2026-10-09T11:40:46.633970239Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredGrammar","Output":"    recovery_test.go:41: 16 recovered grammar cases, 23734 identical bytes in all three port builds\n"}
+{"Time":"2026-10-09T11:40:46.634033249Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredGrammar","Output":"    recovery_shards_test.go:33: TEST totalCPU=1.308346s\n"}
+{"Time":"2026-10-09T11:40:46.634786185Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredGrammar","Output":"--- PASS: TestRecoveredGrammar (1.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:40:46.634797163Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveredGrammar","Elapsed":1.5}
+{"Time":"2026-10-09T11:40:46.634853022Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:40:46.636353044Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t1.508s\n"}
+{"Time":"2026-10-09T11:40:46.636393746Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":1.508}

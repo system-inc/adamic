@@ -1,0 +1,17 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^(TestRecoveredGrammar|TestRecoveryMutants_000|TestRecoveryMutants_001|TestRecoveryMutants_002|TestRecoveryMutants_Setup|TestScalarEdges_Setup|TestScalarEdges|TestScalarEdgesPlantedFailure|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003|TestProduct_scalar_edges_go_oracle|TestProduct_scalar_edges_lowered|TestProduct_scalar_edges_sanitized_native)$"
+  ],
+  "exit": 1,
+  "seconds": 92.99291824199827
+}

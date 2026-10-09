@@ -1,0 +1,28 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S06-overlay.json",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^TestRecoveryMutants_Setup$"
+  ],
+  "log": "S06.retry.log",
+  "exit": 1,
+  "binary_seconds": 0.022,
+  "failing_line": "recovery_mutants_product_proofs_test.go:87: preparation failed for mutant first-accessibility",
+  "first_attempt": "link failure, no space left on device, not a kill",
+  "cache_cleanup": [
+    "/tmp/u087/cache/M01",
+    "/tmp/u087/cache/M02",
+    "/tmp/u087/cache/M03",
+    "/tmp/u087/cache/M04",
+    "/tmp/u087/cache/P01"
+  ]
+}

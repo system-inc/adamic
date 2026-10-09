@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:05:04.839797002Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T12:05:04.861385701Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutants_Setup"}
+{"Time":"2026-10-09T12:05:04.861477277Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutants_Setup","Output":"=== RUN   TestRecoveryMutants_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:04.861532729Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutants_Setup","Output":"=== PAUSE TestRecoveryMutants_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:04.861535534Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutants_Setup"}
+{"Time":"2026-10-09T12:05:04.86154165Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutants_Setup"}
+{"Time":"2026-10-09T12:05:04.861543871Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutants_Setup","Output":"=== CONT  TestRecoveryMutants_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:04.861546774Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutants_Setup","Output":"    recovery_mutants_product_proofs_test.go:87: preparation failed for mutant first-accessibility\n","OutputType":"error"}
+{"Time":"2026-10-09T12:05:04.861562563Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutants_Setup","Output":"--- FAIL: TestRecoveryMutants_Setup (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:04.861564822Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRecoveryMutants_Setup","Elapsed":0}
+{"Time":"2026-10-09T12:05:04.861576655Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:04.861776246Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.021s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:05:04.861807877Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.022}

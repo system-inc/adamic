@@ -1,0 +1,56 @@
+{"Time":"2026-10-09T11:41:40.493391156Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:41:40.505524756Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesUnion"}
+{"Time":"2026-10-09T11:41:40.505619686Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesUnion","Output":"=== RUN   TestScalarEdgesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505650206Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesUnion","Output":"=== PAUSE TestScalarEdgesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505652798Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesUnion"}
+{"Time":"2026-10-09T11:41:40.505655915Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_000"}
+{"Time":"2026-10-09T11:41:40.505658039Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_000","Output":"=== RUN   TestScalarEdges_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505660939Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_000","Output":"=== PAUSE TestScalarEdges_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505662665Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_000"}
+{"Time":"2026-10-09T11:41:40.505664652Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_001"}
+{"Time":"2026-10-09T11:41:40.50566618Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_001","Output":"=== RUN   TestScalarEdges_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505668155Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_001","Output":"=== PAUSE TestScalarEdges_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505669718Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_001"}
+{"Time":"2026-10-09T11:41:40.505671461Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_002"}
+{"Time":"2026-10-09T11:41:40.505673014Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_002","Output":"=== RUN   TestScalarEdges_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505676057Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_002","Output":"=== PAUSE TestScalarEdges_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505677706Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_002"}
+{"Time":"2026-10-09T11:41:40.505679633Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003"}
+{"Time":"2026-10-09T11:41:40.505681355Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003","Output":"=== RUN   TestScalarEdges_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505683454Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003","Output":"=== PAUSE TestScalarEdges_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.50568504Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003"}
+{"Time":"2026-10-09T11:41:40.505686956Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesUnion"}
+{"Time":"2026-10-09T11:41:40.505688586Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesUnion","Output":"=== CONT  TestScalarEdgesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505698773Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesUnion","Output":"    scalar_edges_split_products_test.go:201: union: 8 cases, each exactly once; 4 shards\n"}
+{"Time":"2026-10-09T11:41:40.505708367Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesUnion","Output":"--- PASS: TestScalarEdgesUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505712025Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdgesUnion","Elapsed":0}
+{"Time":"2026-10-09T11:41:40.50572525Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003"}
+{"Time":"2026-10-09T11:41:40.505726982Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003","Output":"=== CONT  TestScalarEdges_003\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505728913Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_001"}
+{"Time":"2026-10-09T11:41:40.505730453Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_001","Output":"=== CONT  TestScalarEdges_001\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505732345Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_000"}
+{"Time":"2026-10-09T11:41:40.505733904Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_000","Output":"=== CONT  TestScalarEdges_000\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:40.505741369Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_002"}
+{"Time":"2026-10-09T11:41:40.505743048Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_002","Output":"=== CONT  TestScalarEdges_002\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:41.98790134Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003","Output":"    scalar_edges_split_products_test.go:128: build scalar-edges-go-oracle cce69e57ded0 hit 1.48\n"}
+{"Time":"2026-10-09T11:41:43.55273595Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003","Output":"    scalar_edges_split_products_test.go:129: build scalar-edges-lowered b54509e5ad3a hit 1.56\n"}
+{"Time":"2026-10-09T11:41:45.191745708Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003","Output":"    scalar_edges_split_products_test.go:129: build scalar-edges-sanitized-native-v2 a2039de55165 hit 1.63\n"}
+{"Time":"2026-10-09T11:41:45.984349681Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003","Output":"    scalar_edges_split_products_test.go:281: 2 scalar edge files, 1483 bytes identical on Go, source Node, sanitized native and emitted JS\n"}
+{"Time":"2026-10-09T11:41:45.984477641Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003","Output":"    scalar_edges_split_products_test.go:249: shard-003 cases: 0.792s\n"}
+{"Time":"2026-10-09T11:41:45.984518555Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003","Output":"--- PASS: TestScalarEdges_003 (5.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:45.986818661Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_003","Elapsed":5.48}
+{"Time":"2026-10-09T11:41:45.986866391Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_002","Output":"    scalar_edges_split_products_test.go:277: 2 scalar edge files, 1422 bytes identical on Go, source Node, sanitized native and emitted JS\n"}
+{"Time":"2026-10-09T11:41:45.986890994Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_002","Output":"    scalar_edges_split_products_test.go:249: shard-002 cases: 0.794s\n"}
+{"Time":"2026-10-09T11:41:45.986899849Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_002","Output":"--- PASS: TestScalarEdges_002 (5.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:46.001969957Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_002","Elapsed":5.48}
+{"Time":"2026-10-09T11:41:46.002045914Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_000","Output":"    scalar_edges_split_products_test.go:269: 2 scalar edge files, 1819 bytes identical on Go, source Node, sanitized native and emitted JS\n"}
+{"Time":"2026-10-09T11:41:46.002056016Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_000","Output":"    scalar_edges_split_products_test.go:249: shard-000 cases: 0.810s\n"}
+{"Time":"2026-10-09T11:41:46.002064577Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_000","Output":"--- PASS: TestScalarEdges_000 (5.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:46.01431908Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_000","Elapsed":5.5}
+{"Time":"2026-10-09T11:41:46.014351122Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_001","Output":"    scalar_edges_split_products_test.go:273: 2 scalar edge files, 1245 bytes identical on Go, source Node, sanitized native and emitted JS\n"}
+{"Time":"2026-10-09T11:41:46.014358141Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_001","Output":"    scalar_edges_split_products_test.go:249: shard-001 cases: 0.823s\n"}
+{"Time":"2026-10-09T11:41:46.014363795Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_001","Output":"--- PASS: TestScalarEdges_001 (5.51s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:46.014366824Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestScalarEdges_001","Elapsed":5.51}
+{"Time":"2026-10-09T11:41:46.014369119Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:41:46.016033586Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t5.522s\n"}
+{"Time":"2026-10-09T11:41:46.016075837Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":5.523}

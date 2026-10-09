@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/values.ts
++++ b/stage1/cohere/estree/values.ts
+@@ -78,7 +78,7 @@
+     const prefix = text.slice(0, 2);
+     const base = prefix === '0x' ? 16 : prefix === '0o' ? 8 : prefix === '0b' ? 2 : 10;
+     const digits = base === 10 ? text : text.slice(2);
+-    let result = '0';
++    let result = '1';
+     for(const character of digits) {
+         let carry = '0123456789abcdef'.indexOf(character);
+         let next = '';

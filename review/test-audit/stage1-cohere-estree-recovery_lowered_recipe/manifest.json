@@ -1,0 +1,17 @@
+{
+  "unit": "u087",
+  "starting_commit": "571e74cf555b9db994c5dec6c2f8dbee676e5111",
+  "branch": "test-audit/stage1-cohere-estree-recovery_lowered_recipe",
+  "rows": 14,
+  "named_functions": 23,
+  "production_mutants": 4,
+  "witness_edits": 2,
+  "construction_edits": 6,
+  "probes": 2,
+  "production_matrix_rows": [
+    "TestRecoveredGrammar",
+    "TestScalarEdges family"
+  ],
+  "bounded": true,
+  "source_restored": true
+}

@@ -1,0 +1,412 @@
+Conservative transitive source inventory, including possibly unused declarations; runtime reachability of each declaration is not established.
+stage1/cohere/estree/arena.ts:7: newNode(type: string, start: number, end: number): number {
+stage1/cohere/estree/arena.ts:11: node(id: number): Node {
+stage1/cohere/estree/arena.ts:14: type(id: number): string {
+stage1/cohere/estree/arena.ts:17: children(id: number): number[] {
+stage1/cohere/estree/binaryConvert.ts:12: constructor(nodes: readonly ParseNode[], text: string, offsets: readonly number[]) {
+stage1/cohere/estree/binaryConvert.ts:18: child(id: number, index: number): number {
+stage1/cohere/estree/binaryConvert.ts:22: start(id: number): number {
+stage1/cohere/estree/binaryConvert.ts:27: raw(id: number): string {
+stage1/cohere/estree/binaryConvert.ts:30: create(arena: Arena, id: number, type: string): number {
+stage1/cohere/estree/binaryConvert.ts:38: export function ordinaryBinary(
+stage1/cohere/estree/binaryConvert.ts:49: while(nodes[current]?.kind === 'BinaryExpression') {
+stage1/cohere/estree/binaryConvert.ts:58: while(spine.length > 0) {
+stage1/cohere/estree/comments.ts:5: export function collectComments(converter: Converter, root: number): number[] {
+stage1/cohere/estree/comments.ts:8: while(stack.length > 0) {
+stage1/cohere/estree/comments.ts:33: for(let index = 0; index < converter.text.length;) {
+stage1/cohere/estree/convert.ts:30: constructor(parser: Parser, text: string) {
+stage1/cohere/estree/convert.ts:50: ts(id: number): ParseNode {
+stage1/cohere/estree/convert.ts:53: kind(id: number): string {
+stage1/cohere/estree/convert.ts:56: child(id: number, index: number): number {
+stage1/cohere/estree/convert.ts:59: startUnit(id: number): number {
+stage1/cohere/estree/convert.ts:65: byte(unit: number): number {
+stage1/cohere/estree/convert.ts:68: start(id: number): number {
+stage1/cohere/estree/convert.ts:71: raw(id: number): string {
+stage1/cohere/estree/convert.ts:74: create(id: number, type: string): number {
+stage1/cohere/estree/convert.ts:77: set(id: number, key: string, value: Value): void {
+stage1/cohere/estree/convert.ts:80: converted(id: number, pattern = false, parent = -1): Value {
+stage1/cohere/estree/convert.ts:83: list(ids: readonly number[], pattern = false, parent = -1): Value {
+stage1/cohere/estree/convert.ts:90: identifier(id: number): number {
+stage1/cohere/estree/convert.ts:105: patternFields(id: number): void {
+stage1/cohere/estree/convert.ts:110: annotation(id: number): number {
+stage1/cohere/estree/convert.ts:119: bind(id: number, type: number): number {
+stage1/cohere/estree/convert.ts:128: property(id: number, pattern: boolean): number {
+stage1/cohere/estree/convert.ts:155: body(ids: readonly number[], parent: number, directives: boolean): Value {
+stage1/cohere/estree/convert.ts:178: chain(result: number, source: number): number {
+stage1/cohere/estree/convert.ts:198: hasModifier(id: number, kind: string): boolean {
+stage1/cohere/estree/convert.ts:213: exports(id: number, result: number): number {
+stage1/cohere/estree/convert.ts:253: isTypeParameter(id: number): boolean {
+stage1/cohere/estree/convert.ts:256: wrapper(ids: readonly number[], parameters: boolean): number {
+stage1/cohere/estree/convert.ts:261: parameters(ids: readonly number[]): Value {
+stage1/cohere/estree/convert.ts:276: separated(left: number, right: number, token: string): boolean {
+stage1/cohere/estree/convert.ts:284: parameter(id: number, parent: number): number {
+stage1/cohere/estree/convert.ts:352: functionNode(id: number): number {
+stage1/cohere/estree/convert.ts:412: bindingElement(id: number, parent: number): number {
+stage1/cohere/estree/convert.ts:482: bodyStart(id: number, after: number): number {
+stage1/cohere/estree/convert.ts:493: entityExpression(id: number): number {
+stage1/cohere/estree/convert.ts:504: heritage(id: number, interface_: boolean): number {
+stage1/cohere/estree/convert.ts:521: classNode(id: number, interface_: boolean): number {
+stage1/cohere/estree/convert.ts:617: member(id: number, parent: number): number {
+stage1/cohere/estree/convert.ts:841: importDeclaration(id: number): number {
+stage1/cohere/estree/convert.ts:888: exportDeclaration(id: number): number {
+stage1/cohere/estree/convert.ts:909: moduleNode(id: number): number {
+stage1/cohere/estree/convert.ts:972: mapped(id: number): number {
+stage1/cohere/estree/convert.ts:1013: forNode(id: number): number {
+stage1/cohere/estree/convert.ts:1044: unit(byte: number): number {
+stage1/cohere/estree/convert.ts:1047: importType(id: number): number {
+stage1/cohere/estree/convert.ts:1127: convert(id: number, pattern = false, parentInput = -1): number {
+stage1/cohere/estree/convert.ts:1984: template(id: number, tail: boolean): number {
+stage1/cohere/estree/jsxConvert.ts:6: export function convertJsx(
+stage1/cohere/estree/jsxConvert.ts:34: if(source.kind === 'JsxTypeArguments') {
+stage1/cohere/estree/jsxEntities.ts:2: export function jsxText(text: string): string {
+stage1/cohere/estree/jsxEntities.ts:5: while(index < text.length) {
+stage1/cohere/estree/jsxParser.ts:9: constructor(scanner: Scanner, nodes: ParseNode[], expression: () => number, types: () => number[]) {
+stage1/cohere/estree/jsxParser.ts:15: add(kind: string, start: number, end: number, children: number[] = [], text = ''): number {
+stage1/cohere/estree/jsxParser.ts:22: leaf(kind: string, start: number, end: number, text: string): number {
+stage1/cohere/estree/jsxParser.ts:26: kind(): string {
+stage1/cohere/estree/jsxParser.ts:29: expect(kind: string): void {
+stage1/cohere/estree/jsxParser.ts:34: identifier(): number {
+stage1/cohere/estree/jsxParser.ts:56: name(): number {
+stage1/cohere/estree/jsxParser.ts:72: container(child: boolean, attributeSpread = false): number {
+stage1/cohere/estree/jsxParser.ts:103: parse(child: boolean): number {
+stage1/cohere/estree/jsxParser.ts:220: export function readJsx(scanner: Scanner, nodes: ParseNode[], expression: () => number, types: () => number[]): number {
+stage1/cohere/estree/literal.ts:13: export function literalFields(node: ParseNode, raw: string): Property[] {
+stage1/cohere/estree/literal.ts:16: if(node.kind === 'BigIntLiteral') {
+stage1/cohere/estree/literal.ts:20: if(node.kind === 'RegularExpressionLiteral') {
+stage1/cohere/estree/location.ts:3: export function locStart(arena: Arena, id: number): number {
+stage1/cohere/estree/location.ts:13: export function shouldAddContentEnd(type: string): boolean {
+stage1/cohere/estree/location.ts:26: export function bodyOverride(type: string): boolean {
+stage1/cohere/estree/location.ts:36: export function locEnd(arena: Arena, id: number): number {
+stage1/cohere/estree/location.ts:38: if(node.type === 'IfStatement') {
+stage1/cohere/estree/location.ts:42: if(bodyOverride(node.type)) {
+stage1/cohere/estree/location.ts:45: if(node.type === 'BreakStatement' || node.type === 'ContinueStatement') {
+stage1/cohere/estree/location.ts:49: if(node.type === 'DebuggerStatement') {
+stage1/cohere/estree/location.ts:52: if(node.type === 'VariableDeclaration') {
+stage1/cohere/estree/location.ts:58: export function ignoredSemicolon(arena: Arena, id: number): boolean {
+stage1/cohere/estree/location.ts:60: if(shouldAddContentEnd(node.type) && node.hasContentEnd && node.contentEnd !== 0) {
+stage1/cohere/estree/location.ts:63: if(['BreakStatement', 'ContinueStatement', 'DebuggerStatement', 'VariableDeclaration'].includes(node.type)) {
+stage1/cohere/estree/location.ts:66: if(node.type === 'IfStatement') {
+stage1/cohere/estree/location.ts:72: export function sameLocStart(arena: Arena, left: number, right: number): boolean {
+stage1/cohere/estree/location.ts:75: export function sameLoc(arena: Arena, left: number, right: number): boolean {
+stage1/cohere/estree/main.ts:3: function run(path: string): void {
+stage1/cohere/estree/main.ts:5: if(file.kind === 'Error') {
+stage1/cohere/estree/main.ts:14: if(manifest.kind === 'Error') {
+stage1/cohere/estree/main.ts:17: for(const item of manifest.text.split('\n')) {
+stage1/cohere/estree/main.ts:24: run(path);
+stage1/cohere/estree/modifiers.ts:6: export function accessibility(nodes: readonly ParseNode[], id: number): Value {
+stage1/cohere/estree/modifiers.ts:8: if(owner === undefined) {
+stage1/cohere/estree/modifiers.ts:11: for(const child of owner.children) {
+stage1/cohere/estree/modifiers.ts:22: export function emptyIdentifier(arena: Arena, position: number): number {
+stage1/cohere/estree/modifiers.ts:32: export function dataChildren(nodes: readonly ParseNode[], id: number): number[] {
+stage1/cohere/estree/modifiers.ts:35: if(owner === undefined) {
+stage1/cohere/estree/modifiers.ts:38: for(const child of owner.children) {
+stage1/cohere/estree/nodes.ts:13: constructor(type: string, start: number, end: number) {
+stage1/cohere/estree/nodes.ts:18: get(key: string): Value {
+stage1/cohere/estree/nodes.ts:26: has(key: string): boolean {
+stage1/cohere/estree/nodes.ts:34: set(key: string, value: Value): void {
+stage1/cohere/estree/nodes.ts:43: delete(key: string): void {
+stage1/cohere/estree/nodes.ts:51: child(key: string): number {
+stage1/cohere/estree/nodes.ts:55: list(key: string): number[] {
+stage1/cohere/estree/nodes.ts:60: string(key: string): string {
+stage1/cohere/estree/nodes.ts:64: bool(key: string): boolean {
+stage1/cohere/estree/nodes.ts:68: truthy(key: string): boolean {
+stage1/cohere/estree/nodes.ts:80: keys(): string[] {
+stage1/cohere/estree/pipeline.ts:10: export function answer(path: string, text: string): string {
+stage1/cohere/estree/pipeline.ts:11: if(text.includes('\ufffd')) {
+stage1/cohere/estree/pipeline.ts:16: if(
+stage1/cohere/estree/pipeline.ts:30: if(!['.d.ts', '.d.mts', '.d.cts'].some((suffix) => file.endsWith(suffix)) && externalModule(parser.nodes, root)) {
+stage1/cohere/estree/pipeline.ts:36: if(parser.diagnostics.length > 0) {
+stage1/cohere/estree/pipeline.ts:40: if(parser.scanner.errors.length > 0) {
+stage1/cohere/estree/pipeline.ts:44: if(syntax !== '') {
+stage1/cohere/estree/pipeline.ts:49: for(let id = 0; id < parser.nodes.length; id++) {
+stage1/cohere/estree/pipeline.ts:56: if(reference !== '') {
+stage1/cohere/estree/pipeline.ts:59: if(babel) {
+stage1/cohere/estree/pipeline.ts:74: if(babel) {
+stage1/cohere/estree/pipeline.ts:91: for(const comment of comments) {
+stage1/cohere/estree/postprocess.ts:8: export function indentableLines(arena: Arena, id: number): string[] {
+stage1/cohere/estree/postprocess.ts:11: if(comment.type !== 'Block' || !comment.string('value').includes('\n')) {
+stage1/cohere/estree/postprocess.ts:15: for(const line of `*${comment.string('value')}*`.split('\n')) {
+stage1/cohere/estree/postprocess.ts:24: export function mergeComments(arena: Arena, comments: number[]): number[] {
+stage1/cohere/estree/postprocess.ts:26: for(let index = comments.length - 1; index >= 0; index--) {
+stage1/cohere/estree/postprocess.ts:50: constructor(arena: Arena, text: string, comments: readonly number[], offsets: readonly number[]) {
+stage1/cohere/estree/postprocess.ts:56: contentEnd(id: number): void {
+stage1/cohere/estree/postprocess.ts:72: unbalanced(id: number): boolean {
+stage1/cohere/estree/postprocess.ts:81: logical(start: number, end: number, operator: string, left: number, right: number): number {
+stage1/cohere/estree/postprocess.ts:89: rebalance(id: number): number {
+stage1/cohere/estree/postprocess.ts:114: visit(root: number): number {
+stage1/cohere/estree/postprocess.ts:191: program(id: number): number {
+stage1/cohere/estree/property.ts:5: constructor(key: string, value: Value) {
+stage1/cohere/estree/protocol.ts:4: export function written(text: string): string {
+stage1/cohere/estree/protocol.ts:6: for(let index = 0; index < text.length; index++) {
+stage1/cohere/estree/protocol.ts:30: constructor(id: number, depth: number, property: number) {
+stage1/cohere/estree/protocol.ts:36: export function dump(arena: Arena, root: number, depth = 0): string {
+stage1/cohere/estree/protocol.ts:39: while(stack.length > 0) {
+stage1/cohere/estree/sourceBinary.ts:3: export function assertionRank(nodes: readonly ParseNode[], last: number): number {
+stage1/cohere/estree/sourceBinary.ts:7: export function bindsBeforeAssertion(operator: string, lastRank: number): boolean {
+stage1/cohere/estree/sourceBinary.ts:9: if(nextRank > lastRank || (nextRank === lastRank && operator === 'AsteriskAsteriskToken')) {
+stage1/cohere/estree/sourceGrammar.ts:3: export function precedence(kind: string): number {
+stage1/cohere/estree/sourceGrammar.ts:4: switch(kind) {
+stage1/cohere/estree/sourceGrammar.ts:89: export function tokenSpelling(kind: string): string {
+stage1/cohere/estree/sourceGrammar.ts:90: if(kind.endsWith('Keyword')) {
+stage1/cohere/estree/sourceGrammar.ts:93: switch(kind) {
+stage1/cohere/estree/sourceLexical.ts:4: export function lexicalMessage(code: number): string {
+stage1/cohere/estree/sourceLexical.ts:5: switch(code) {
+stage1/cohere/estree/sourceLookahead.ts:18: function kind(scanner: Scanner): string {
+stage1/cohere/estree/sourceLookahead.ts:33: constructor(scanner: Scanner) {
+stage1/cohere/estree/sourceLookahead.ts:43: prepare(): void {
+stage1/cohere/estree/sourceLookahead.ts:76: next(): void {
+stage1/cohere/estree/sourceLookahead.ts:81: restore(): void {
+stage1/cohere/estree/sourceLookahead.ts:92: function optionalParameterAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:100: export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
+stage1/cohere/estree/sourceLookahead.ts:101: if(kind(scanner) === 'EqualsGreaterThanToken') {
+stage1/cohere/estree/sourceLookahead.ts:106: if(kind(scanner) === 'AsyncKeyword') {
+stage1/cohere/estree/sourceLookahead.ts:123: if(generic) {
+stage1/cohere/estree/sourceLookahead.ts:138: if(kind(scanner) === 'OpenParenToken') {
+stage1/cohere/estree/sourceLookahead.ts:209: export function typeArgumentsAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:217: while(kind(scanner) !== 'EndOfFile') {
+stage1/cohere/estree/sourceLookahead.ts:311: export function declarationAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:314: while(kind(scanner) !== 'EndOfFile') {
+stage1/cohere/estree/sourceLookahead.ts:408: export function statementAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:410: if(current === 'ExportKeyword' || current === 'ConstKeyword') {
+stage1/cohere/estree/sourceLookahead.ts:413: if(current === 'ImportKeyword') {
+stage1/cohere/estree/sourceLookahead.ts:420: if(
+stage1/cohere/estree/sourceLookahead.ts:500: export function typeMemberAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:501: if(['OpenParenToken', 'LessThanToken', 'GetKeyword', 'SetKeyword'].includes(kind(scanner))) {
+stage1/cohere/estree/sourceLookahead.ts:506: while(modifierKinds.includes(kind(scanner))) {
+stage1/cohere/estree/sourceLookahead.ts:510: if(kind(scanner) === 'OpenBracketToken') {
+stage1/cohere/estree/sourceLookahead.ts:514: if(
+stage1/cohere/estree/sourceLookahead.ts:541: export function typeTokenStart(tokenKind: string): boolean {
+stage1/cohere/estree/sourceLookahead.ts:587: export function modifierAhead(scanner: Scanner, permitConst: boolean): boolean {
+stage1/cohere/estree/sourceLookahead.ts:589: if(!modifierKinds.includes(current)) {
+stage1/cohere/estree/sourceLookahead.ts:595: if(current === 'DefaultKeyword' || (current === 'ExportKeyword' && kind(scanner) === 'DefaultKeyword')) {
+stage1/cohere/estree/sourceLookahead.ts:635: export function sameLineAfter(scanner: Scanner, count: number): boolean {
+stage1/cohere/estree/sourceLookahead.ts:637: for(let index = 0; index <= count; index++) {
+stage1/cohere/estree/sourceLookahead.ts:644: export function indexSignatureAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:648: if(modifierKinds.includes(kind(scanner))) {
+stage1/cohere/estree/sourceLookahead.ts:668: export function nextAwaitOperand(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:681: export function heritageElementAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:685: if(current === 'OpenBraceToken') {
+stage1/cohere/estree/sourceLookahead.ts:750: export function accessorAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:762: export function usingDeclarationAhead(scanner: Scanner, disallowOf: boolean): boolean {
+stage1/cohere/estree/sourceLookahead.ts:765: if(await_) {
+stage1/cohere/estree/sourceLookahead.ts:776: if(disallowOf && !await_ && token === 'OfKeyword') {
+stage1/cohere/estree/sourceLookahead.ts:784: export function leftHandSide(nodeKind: string): boolean {
+stage1/cohere/estree/sourceLookahead.ts:820: export function functionTypeAhead(
+stage1/cohere/estree/sourceLookahead.ts:827: if(kind(scanner) === 'LessThanToken') {
+stage1/cohere/estree/sourceLookahead.ts:833: if(!result) {
+stage1/cohere/estree/sourceLookahead.ts:862: export function tupleNameAhead(scanner: Scanner): boolean {
+stage1/cohere/estree/sourceLookahead.ts:864: if(current !== 'Identifier' && (!current.endsWith('Keyword') || reservedKinds.includes(current))) {
+stage1/cohere/estree/sourceLookahead.ts:869: if(kind(scanner) === 'QuestionToken') {
+stage1/cohere/estree/sourceModules.ts:2: export function externalModule(nodes: readonly ParseNode[], root: number): boolean {
+stage1/cohere/estree/sourceModules.ts:4: if(source === undefined) {
+stage1/cohere/estree/sourceModules.ts:7: for(const id of source.children) {
+stage1/cohere/estree/sourceModules.ts:32: for(const node of nodes) {
+stage1/cohere/estree/sourceParser.ts:46: errorAt(code: number, start: number, end: number, message: string): void {
+stage1/cohere/estree/sourceParser.ts:51: error(code: number, message: string): void {
+stage1/cohere/estree/sourceParser.ts:54: constructor(text: string, path = 'source') {
+stage1/cohere/estree/sourceParser.ts:59: kind(): string {
+stage1/cohere/estree/sourceParser.ts:62: scannerErrors(start: number): void {
+stage1/cohere/estree/sourceParser.ts:68: next(): void {
+stage1/cohere/estree/sourceParser.ts:87: beginList(context: string): void {
+stage1/cohere/estree/sourceParser.ts:90: endList(context: string): void {
+stage1/cohere/estree/sourceParser.ts:95: expressionStart(): boolean {
+stage1/cohere/estree/sourceParser.ts:105: literalPropertyName(): boolean {
+stage1/cohere/estree/sourceParser.ts:113: parameterStart(): boolean {
+stage1/cohere/estree/sourceParser.ts:128: typeStart(inParameter = false): boolean {
+stage1/cohere/estree/sourceParser.ts:144: listTerminator(context: string): boolean {
+stage1/cohere/estree/sourceParser.ts:147: listElement(context: string, recovery = false): boolean {
+stage1/cohere/estree/sourceParser.ts:211: listError(context: string): void {
+stage1/cohere/estree/sourceParser.ts:215: recoverList(context: string): boolean {
+stage1/cohere/estree/sourceParser.ts:225: delimitedList(context: string, parseElement: () => number): number[] {
+stage1/cohere/estree/sourceParser.ts:262: node(index: number): ParseNode {
+stage1/cohere/estree/sourceParser.ts:265: make(kind: string, pos: number, children: number[] = []): number {
+stage1/cohere/estree/sourceParser.ts:269: token(): number {
+stage1/cohere/estree/sourceParser.ts:275: expect(kind: string): boolean {
+stage1/cohere/estree/sourceParser.ts:287: expectedToken(kind: string): number {
+stage1/cohere/estree/sourceParser.ts:294: literal(): number {
+stage1/cohere/estree/sourceParser.ts:314: missingIdentifier(code: number, message: string): number {
+stage1/cohere/estree/sourceParser.ts:325: identifier(allowReserved = true): number {
+stage1/cohere/estree/sourceParser.ts:348: primary(): number {
+stage1/cohere/estree/sourceParser.ts:457: bindingIdentifier(): boolean {
+stage1/cohere/estree/sourceParser.ts:462: nextIdentifierSameLine(): boolean {
+stage1/cohere/estree/sourceParser.ts:469: mark(): ParserStateInterface {
+stage1/cohere/estree/sourceParser.ts:483: rewind(state: ParserStateInterface): void {
+stage1/cohere/estree/sourceParser.ts:495: typeArguments(): number[] {
+stage1/cohere/estree/sourceParser.ts:512: typeParameters(): number[] {
+stage1/cohere/estree/sourceParser.ts:558: entityName(): number {
+stage1/cohere/estree/sourceParser.ts:568: importType(): number {
+stage1/cohere/estree/sourceParser.ts:608: functionTypeAhead(): boolean {
+stage1/cohere/estree/sourceParser.ts:620: type(minimum = 0, conditional = true): number {
+stage1/cohere/estree/sourceParser.ts:916: mappedAhead(): boolean {
+stage1/cohere/estree/sourceParser.ts:934: mappedType(): number {
+stage1/cohere/estree/sourceParser.ts:976: typeLiteral(): number {
+stage1/cohere/estree/sourceParser.ts:985: typeMembers(): number[] {
+stage1/cohere/estree/sourceParser.ts:1071: parameters(): number[] {
+stage1/cohere/estree/sourceParser.ts:1079: modifiers(decorators: boolean, permitConst: boolean, stopStaticBlock = false): number[] {
+stage1/cohere/estree/sourceParser.ts:1114: parameter(): number {
+stage1/cohere/estree/sourceParser.ts:1142: bindingElement(object: boolean): number {
+stage1/cohere/estree/sourceParser.ts:1165: bindingName(): number {
+stage1/cohere/estree/sourceParser.ts:1182: decorator(): number {
+stage1/cohere/estree/sourceParser.ts:1194: rootAssignment(): number {
+stage1/cohere/estree/sourceParser.ts:1203: rootExpression(): number {
+stage1/cohere/estree/sourceParser.ts:1212: arrow(allowReturn: boolean): number {
+stage1/cohere/estree/sourceParser.ts:1256: returnType(): number {
+stage1/cohere/estree/sourceParser.ts:1292: functionExpression(): number {
+stage1/cohere/estree/sourceParser.ts:1331: statements(): Statements {
+stage1/cohere/estree/sourceParser.ts:1394: block(): number {
+stage1/cohere/estree/sourceParser.ts:1397: statement(): number {
+stage1/cohere/estree/sourceParser.ts:1400: semicolon(): void {
+stage1/cohere/estree/sourceParser.ts:1403: classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+stage1/cohere/estree/sourceParser.ts:1407: peek(): string {
+stage1/cohere/estree/sourceParser.ts:1428: optionalChain(index: number): boolean {
+stage1/cohere/estree/sourceParser.ts:1443: spread(): number {
+stage1/cohere/estree/sourceParser.ts:1449: arguments(): number[] {
+stage1/cohere/estree/sourceParser.ts:1460: suffix(expression: number, allowCall: boolean): number {
+stage1/cohere/estree/sourceParser.ts:1606: templatePart(): number {
+stage1/cohere/estree/sourceParser.ts:1619: templateSpanLiteral(): number {
+stage1/cohere/estree/sourceParser.ts:1629: templateType(): number {
+stage1/cohere/estree/sourceParser.ts:1644: template(): number {
+stage1/cohere/estree/sourceParser.ts:1659: array(): number {
+stage1/cohere/estree/sourceParser.ts:1678: propertyName(): number {
+stage1/cohere/estree/sourceParser.ts:1694: methodBody(
+stage1/cohere/estree/sourceParser.ts:1742: objectProperty(): number {
+stage1/cohere/estree/sourceParser.ts:1781: object(): number {
+stage1/cohere/estree/sourceParser.ts:1794: unary(): number {
+stage1/cohere/estree/sourceParser.ts:1866: binary(minimum: number): number {
+stage1/cohere/estree/sourceParser.ts:1900: assignment(allowReturn = true): number {
+stage1/cohere/estree/sourceParser.ts:1945: allowInAssignment(allowReturn = true): number {
+stage1/cohere/estree/sourceParser.ts:1955: allowInExpression(): number {
+stage1/cohere/estree/sourceParser.ts:1965: expression(): number {
+stage1/cohere/estree/sourceParser.ts:1975: file(): number {
+stage1/cohere/estree/sourceRecovery.ts:10: export function listTerminator(kind: string, context: string, lineBreak: boolean): boolean {
+stage1/cohere/estree/sourceRecovery.ts:11: if(kind === 'EndOfFile') {
+stage1/cohere/estree/sourceRecovery.ts:14: switch(context) {
+stage1/cohere/estree/sourceRecovery.ts:60: export function listDiagnostic(kind: string, context: string): ListDiagnosticInterface {
+stage1/cohere/estree/sourceRecovery.ts:61: switch(context) {
+stage1/cohere/estree/sourceReferences.ts:5: function blanks(text: string, start: number): number {
+stage1/cohere/estree/sourceReferences.ts:7: while(pos < text.length && [' ', '\t'].includes(text.slice(pos, pos + 1))) {
+stage1/cohere/estree/sourceReferences.ts:12: function nameEnd(text: string, start: number): number {
+stage1/cohere/estree/sourceReferences.ts:14: while(pos < text.length) {
+stage1/cohere/estree/sourceReferences.ts:23: export function referenceError(text: string, arena: Arena, comments: readonly number[]): string {
+stage1/cohere/estree/sourceReferences.ts:27: for(const id of comments) {
+stage1/cohere/estree/sourceSpelling.ts:5: function characters(text: string): string[] {
+stage1/cohere/estree/sourceSpelling.ts:7: for(const character of text) {
+stage1/cohere/estree/sourceSpelling.ts:13: function distance(name: readonly string[], candidate: readonly string[], maximum: number): number {
+stage1/cohere/estree/sourceSpelling.ts:16: for(let column = 0; column <= candidate.length; column++) {
+stage1/cohere/estree/sourceSpelling.ts:21: for(let row = 1; row <= name.length; row++) {
+stage1/cohere/estree/sourceSpelling.ts:60: export function keywordSuggestion(text: string): string {
+stage1/cohere/estree/sourceSpelling.ts:65: for(const candidate of keywords.keys()) {
+stage1/cohere/estree/sourceSpelling.ts:79: if(best !== '') {
+stage1/cohere/estree/sourceSpelling.ts:82: for(const candidate of keywords.keys()) {
+stage1/cohere/estree/sourceStatements.ts:69: constructor(parser: StatementContextInterface) {
+stage1/cohere/estree/sourceStatements.ts:72: make(kind: string, pos: number, children: number[] = []): number {
+stage1/cohere/estree/sourceStatements.ts:75: type(minimum = 0, conditional = true): number {
+stage1/cohere/estree/sourceStatements.ts:78: statementList(context: string): number[] {
+stage1/cohere/estree/sourceStatements.ts:96: block(): number {
+stage1/cohere/estree/sourceStatements.ts:105: semicolon(): void {
+stage1/cohere/estree/sourceStatements.ts:117: expressionSemicolon(expression: number, tokenStart: number): void {
+stage1/cohere/estree/sourceStatements.ts:166: keywordStatementError(text: string, start: number, end: number): boolean {
+stage1/cohere/estree/sourceStatements.ts:207: variableList(): number {
+stage1/cohere/estree/sourceStatements.ts:251: variableDeclaration(): number {
+stage1/cohere/estree/sourceStatements.ts:267: lookahead(offset: number): string {
+stage1/cohere/estree/sourceStatements.ts:290: decorator(): number {
+stage1/cohere/estree/sourceStatements.ts:293: canExportName(): boolean {
+stage1/cohere/estree/sourceStatements.ts:300: specifiers(importing: boolean): number {
+stage1/cohere/estree/sourceStatements.ts:379: attributes(): number {
+stage1/cohere/estree/sourceStatements.ts:393: attributeBody(pos: number, operator: string): number {
+stage1/cohere/estree/sourceStatements.ts:419: moduleSpecifier(): number {
+stage1/cohere/estree/sourceStatements.ts:422: importDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/cohere/estree/sourceStatements.ts:512: exportDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/cohere/estree/sourceStatements.ts:566: moduleDeclaration(pos: number, prefix: readonly number[], keyword: string): number {
+stage1/cohere/estree/sourceStatements.ts:604: exportedClauseAhead(): boolean {
+stage1/cohere/estree/sourceStatements.ts:628: functionDeclaration(pos: number, prefix: readonly number[], async: boolean): number {
+stage1/cohere/estree/sourceStatements.ts:685: heritageName(id: number): number {
+stage1/cohere/estree/sourceStatements.ts:701: heritageElement(type: boolean): number {
+stage1/cohere/estree/sourceStatements.ts:723: heritageClause(interface_: boolean): number {
+stage1/cohere/estree/sourceStatements.ts:756: classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+stage1/cohere/estree/sourceStatements.ts:874: forStatement(): number {
+stage1/cohere/estree/sourceStatements.ts:924: switchStatement(): number {
+stage1/cohere/estree/sourceStatements.ts:959: tryStatement(): number {
+stage1/cohere/estree/sourceStatements.ts:1001: enumDeclaration(pos: number, prefix: readonly number[]): number {
+stage1/cohere/estree/sourceStatements.ts:1053: letDeclaration(): boolean {
+stage1/cohere/estree/sourceStatements.ts:1062: statement(): number {
+stage1/cohere/estree/sourceValidation.ts:5: export function syntaxError(nodes: readonly ParseNode[]): string {
+stage1/cohere/estree/sourceValidation.ts:7: for(let remaining = nodes.length; remaining > 0; remaining--) {
+stage1/cohere/estree/sourceValidation.ts:10: for(let index = 0; index < nodes.length; index++) {
+stage1/cohere/estree/sourceValidation.ts:19: for(let index = 0; index < nodes.length; index++) {
+stage1/cohere/estree/sourceValidation.ts:38: return 'function or constructor type must be parenthesized in a union or intersection';
+stage1/cohere/estree/strippedText.ts:4: export function unitOffsets(text: string): number[] {
+stage1/cohere/estree/strippedText.ts:7: for(let index = 0; index < text.length; index++) {
+stage1/cohere/estree/strippedText.ts:16: if(bytes !== utf8Length(text)) {
+stage1/cohere/estree/strippedText.ts:21: export function byteUnit(offsets: readonly number[], byte: number): number {
+stage1/cohere/estree/strippedText.ts:24: while(left < right) {
+stage1/cohere/estree/strippedText.ts:33: if(offsets[left] === byte) {
+stage1/cohere/estree/strippedText.ts:46: constructor(source: string, arena: Arena, comments: readonly number[], offsets: readonly number[]) {
+stage1/cohere/estree/strippedText.ts:52: text(): string {
+stage1/cohere/estree/strippedText.ts:78: export function trimEndGo(text: string): string {
+stage1/cohere/estree/strippedText.ts:80: while(end > 0) {
+stage1/cohere/estree/templateValidation.ts:2: export function validTemplate(id: number, nodes: readonly ParseNode[], parents: readonly number[]): boolean {
+stage1/cohere/estree/templateValidation.ts:4: if((nodes[parent]?.kind ?? '') === 'TemplateSpan') {
+stage1/cohere/estree/templateValidation.ts:7: if((nodes[parent]?.kind ?? '') === 'TemplateExpression') {
+stage1/cohere/estree/templateValidation.ts:10: if((nodes[parent]?.kind ?? '') !== 'TaggedTemplateExpression') {
+stage1/cohere/estree/templateValidation.ts:14: for(let index = 0; index + 1 < raw.length; index++) {
+stage1/cohere/estree/typeLists.ts:7: export function typeList(
+stage1/cohere/estree/typeLists.ts:16: if(ids.length === 0) {
+stage1/cohere/estree/typeLists.ts:22: if(ids.length === 1 && ['EmptyTypeArguments', 'EmptyTypeParameters'].includes(first.kind)) {
+stage1/cohere/estree/typeLists.ts:35: if(text.slice(start, start + 1) !== '<') {
+stage1/cohere/estree/typeLists.ts:40: if(scanner.kind === 'CommaToken') {
+stage1/cohere/estree/typeLists.ts:43: if(scanner.kind !== 'GreaterThanToken') {
+stage1/cohere/estree/typeLists.ts:52: for(const id of ids) {
+stage1/cohere/estree/values.ts:9: constructor(kind: string) {
+stage1/cohere/estree/values.ts:13: export function absent(): Value {
+stage1/cohere/estree/values.ts:16: export function stringValue(text: string): Value {
+stage1/cohere/estree/values.ts:21: export function boolValue(flag: boolean): Value {
+stage1/cohere/estree/values.ts:26: export function numberValue(number: number): Value {
+stage1/cohere/estree/values.ts:31: export function childValue(node: number): Value {
+stage1/cohere/estree/values.ts:32: if(node < 0) {
+stage1/cohere/estree/values.ts:39: export function listValue(list: number[]): Value {
+stage1/cohere/estree/values.ts:44: export function templateValue(raw: string, cooked: string, valid: boolean): Value {
+stage1/cohere/estree/values.ts:55: export function goNumber(raw: string): number {
+stage1/cohere/estree/values.ts:59: if(base !== 10) {
+stage1/cohere/estree/values.ts:76: export function bigintDecimal(raw: string): string {
+stage1/cohere/estree/values.ts:82: for(const character of digits) {
+stage1/cohere/estree/values.ts:97: while(start < result.length - 1 && result.slice(start, start + 1) === '0') {
+stage1/typescript/parser/nodes.ts:18: constructor(kind: string, pos: number, end: number, children: number[]) {
+stage1/typescript/parser/nodes.ts:26: export function written(text: string): string {
+stage1/typescript/parser/nodes.ts:28: for(let index = 0; index < text.length; index++) {
+stage1/typescript/parser/nodes.ts:38: export function printTree(
+stage1/typescript/parser/nodes.ts:50: for(const child of node.children) {
+stage1/typescript/parser/nodes.ts:56: export function countTree(nodes: readonly ParseNode[], root: number): number {
+stage1/typescript/parser/nodes.ts:59: for(const child of node.children) {
+stage1/typescript/scanner/characters.ts:240: function contains(ranges: readonly number[], code: number): boolean {
+stage1/typescript/scanner/characters.ts:243: while(low <= high) {
+stage1/typescript/scanner/characters.ts:259: export function isIdentifierStart(code: number): boolean {
+stage1/typescript/scanner/characters.ts:268: export function isIdentifierPart(code: number): boolean {
+stage1/typescript/scanner/characters.ts:271: export function isLineBreak(code: number): boolean {
+stage1/typescript/scanner/characters.ts:274: export function isSpace(code: number): boolean {
+stage1/typescript/scanner/characters.ts:290: export function digit(code: number): number {
+stage1/typescript/scanner/scanner.ts:14: function decimalDigits(text: string, base: number): string {
+stage1/typescript/scanner/scanner.ts:16: for(const character of text) {
+stage1/typescript/scanner/scanner.ts:31: while(first < result.length - 1 && result.charCodeAt(first) === 48) {
+stage1/typescript/scanner/scanner.ts:37: function numberValue(text: string): string {
+stage1/typescript/scanner/scanner.ts:38: if(text === '') {
+stage1/typescript/scanner/scanner.ts:62: constructor(text: string) {
+stage1/typescript/scanner/scanner.ts:65: code(offset = 0): number {
+stage1/typescript/scanner/scanner.ts:73: advance(code: number): void {
+stage1/typescript/scanner/scanner.ts:76: error(code: number, start: number = this.pos, length = 0): void {
+stage1/typescript/scanner/scanner.ts:81: fragment(base: number, separators: boolean, minimum = 0, maximum: number = Number.MAX_SAFE_INTEGER): string {
+stage1/typescript/scanner/scanner.ts:122: unicode(report: boolean): number {
+stage1/typescript/scanner/scanner.ts:173: escape(report: boolean): string {
+stage1/typescript/scanner/scanner.ts:251: identifier(prefix: number): boolean {
+stage1/typescript/scanner/scanner.ts:289: string(): void {
+stage1/typescript/scanner/scanner.ts:324: template(report: boolean): void {
+stage1/typescript/scanner/scanner.ts:370: bigint(): void {
+stage1/typescript/scanner/scanner.ts:385: number(): void {
+stage1/typescript/scanner/scanner.ts:492: scan(): string {
+stage1/typescript/scanner/scanner.ts:676: punctuation(code: number): string {
+stage1/typescript/scanner/scanner.ts:817: rescanGreater(): void {
+stage1/typescript/scanner/scanner.ts:834: rescanTemplate(): void {
+stage1/typescript/scanner/scanner.ts:840: rescanSlash(): void {
+stage1/typescript/scanner/scanner.ts:936: scanJsxIdentifier(): void {
+stage1/typescript/scanner/scanner.ts:948: scanJsxAttributeValue(): void {
+stage1/typescript/scanner/scanner.ts:978: scanJsx(): string {

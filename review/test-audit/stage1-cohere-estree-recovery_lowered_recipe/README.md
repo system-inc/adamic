@@ -1,0 +1,7 @@
+Evidence for u087 at origin/main 571e74cf555b9db994c5dec6c2f8dbee676e5111. Read REPORT.md for the complete deliverable, rows.json for medians and exact evidence, matrix.json for grouped observations, and rebuilds.json for logged cold phases.
+
+Every diffs/*.diff applies independently to the starting commit. M01-M04 are production port mutants; P01/P02 are probes; W01/W02 are permitted comparison weakening; S01-S06 are permitted construction edits, with S05 supplemental. There is no mutant selector in any standalone diff. All 14 diffs apply and compile, recorded in standalone-validation.json.
+
+For central replay, use a fresh checkout of the starting commit and apply one diff. Source /workspace/adamic-tools/env.sh and use a distinct ADAMIC_BUILD_CACHE_DIR per mutant. Install the pinned library as recorded in commands.json and set ADAMIC_ESTREE_LIBRARY. Replay commands from matrix-commands.json for M edits; use the construction and witness commands without -overlay after applying their standalone diffs. Redirect all test output to a log. The original whole-package baseline timed out; full-package/repository uniqueness remains for central replay.
+
+mutation-run.py and construction-run.py preserve the actual execution scripts. Overlay sources are *.go.txt and never changed the production source. code-inventory.txt is a conservative source inventory, not exact runtime coverage. construction-witnesses.json records missing required artifacts for passing construction rows.

@@ -1,0 +1,585 @@
+[
+  {
+    "id": "baseline-1",
+    "test": "TestRecoveryMutants_Setup",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveryMutants_Setup$"
+    ],
+    "exit": 0,
+    "seconds": 24.149664810000104,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-2",
+    "test": "TestRecoveryMutants_Setup",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveryMutants_Setup$"
+    ],
+    "exit": 0,
+    "seconds": 12.41197802899842,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-3",
+    "test": "TestRecoveryMutants_Setup",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveryMutants_Setup$"
+    ],
+    "exit": 0,
+    "seconds": 12.34763656799987,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-1",
+    "test": "TestRecoveryMutants_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestRecoveryMutants|TestRecoveryMutants_000|TestRecoveryMutants_001|TestRecoveryMutants_002|TestRecoveryMutantsUnion)$"
+    ],
+    "exit": 0,
+    "seconds": 10.510957315000269,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-2",
+    "test": "TestRecoveryMutants_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestRecoveryMutants|TestRecoveryMutants_000|TestRecoveryMutants_001|TestRecoveryMutants_002|TestRecoveryMutantsUnion)$"
+    ],
+    "exit": 0,
+    "seconds": 11.46176099999866,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-3",
+    "test": "TestRecoveryMutants_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestRecoveryMutants|TestRecoveryMutants_000|TestRecoveryMutants_001|TestRecoveryMutants_002|TestRecoveryMutantsUnion)$"
+    ],
+    "exit": 0,
+    "seconds": 10.937970831997518,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "W01",
+    "test": "TestRecoveryMutants_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/W01-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestRecoveryMutants|TestRecoveryMutants_000|TestRecoveryMutants_001|TestRecoveryMutants_002|TestRecoveryMutantsUnion)$"
+    ],
+    "exit": 1,
+    "seconds": 11.209907152002415,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-1",
+    "test": "TestScalarEdges_preparation_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdges|TestScalarEdges_Setup)$"
+    ],
+    "exit": 0,
+    "seconds": 7.702002324000205,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-2",
+    "test": "TestScalarEdges_preparation_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdges|TestScalarEdges_Setup)$"
+    ],
+    "exit": 0,
+    "seconds": 8.464149510000425,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-3",
+    "test": "TestScalarEdges_preparation_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdges|TestScalarEdges_Setup)$"
+    ],
+    "exit": 0,
+    "seconds": 14.49397056000089,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-1",
+    "test": "TestProduct_scalar_edges_go_oracle",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_go_oracle$"
+    ],
+    "exit": 0,
+    "seconds": 4.794284690000495,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-2",
+    "test": "TestProduct_scalar_edges_go_oracle",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_go_oracle$"
+    ],
+    "exit": 0,
+    "seconds": 5.788114894003229,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-3",
+    "test": "TestProduct_scalar_edges_go_oracle",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_go_oracle$"
+    ],
+    "exit": 0,
+    "seconds": 6.515453190000699,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-1",
+    "test": "TestProduct_scalar_edges_lowered",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_lowered$"
+    ],
+    "exit": 0,
+    "seconds": 3.988141171001189,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-2",
+    "test": "TestProduct_scalar_edges_lowered",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_lowered$"
+    ],
+    "exit": 0,
+    "seconds": 3.877465339999617,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-3",
+    "test": "TestProduct_scalar_edges_lowered",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_lowered$"
+    ],
+    "exit": 0,
+    "seconds": 4.0063789389969315,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-1",
+    "test": "TestProduct_scalar_edges_sanitized_native",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_sanitized_native$"
+    ],
+    "exit": 0,
+    "seconds": 6.593081128001359,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-2",
+    "test": "TestProduct_scalar_edges_sanitized_native",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_sanitized_native$"
+    ],
+    "exit": 0,
+    "seconds": 7.207691955001792,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "baseline-3",
+    "test": "TestProduct_scalar_edges_sanitized_native",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_sanitized_native$"
+    ],
+    "exit": 0,
+    "seconds": 6.847340526997868,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "W02",
+    "validation": "go vet",
+    "exit": 0
+  },
+  {
+    "id": "W02",
+    "test": "TestScalarEdgesPlantedFailure",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/W02-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestScalarEdgesPlantedFailure$"
+    ],
+    "exit": 1,
+    "seconds": 19.709160335998604,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "S01",
+    "validation": "go vet",
+    "exit": 0
+  },
+  {
+    "id": "S01",
+    "test": "TestScalarEdges_preparation_family",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S01-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestScalarEdges|TestScalarEdges_Setup)$"
+    ],
+    "exit": 1,
+    "seconds": 14.521046297002613,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "S02",
+    "validation": "go vet",
+    "exit": 0
+  },
+  {
+    "id": "S02",
+    "test": "TestProduct_scalar_edges_lowered",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S02-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_lowered$"
+    ],
+    "exit": 0,
+    "seconds": 12.214718800998526,
+    "cache": "/tmp/u087/cache/S02"
+  },
+  {
+    "id": "S03",
+    "validation": "go vet",
+    "exit": 0
+  },
+  {
+    "id": "S03",
+    "test": "TestProduct_scalar_edges_go_oracle",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S03-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_go_oracle$"
+    ],
+    "exit": 0,
+    "seconds": 9.937377653997828,
+    "cache": "/tmp/u087/cache/S03"
+  },
+  {
+    "id": "S04",
+    "validation": "go vet",
+    "exit": 0
+  },
+  {
+    "id": "S04",
+    "test": "TestProduct_scalar_edges_sanitized_native",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S04-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestProduct_scalar_edges_sanitized_native$"
+    ],
+    "exit": 0,
+    "seconds": 49.74339854500067,
+    "cache": "/tmp/u087/cache/S04"
+  },
+  {
+    "id": "S05",
+    "validation": "go vet",
+    "exit": 0
+  },
+  {
+    "id": "S05",
+    "test": "TestRecoveryLoweredRecipe",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/S05-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveryLoweredRecipe$"
+    ],
+    "exit": 0,
+    "seconds": 11.055275045000599,
+    "cache": "/tmp/u087/cache/baseline"
+  },
+  {
+    "id": "P02",
+    "validation": "go vet",
+    "exit": 0
+  },
+  {
+    "id": "P02",
+    "test": "TestRecoveryLoweredRecipe",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-recovery_lowered_recipe/P02-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveryLoweredRecipe$"
+    ],
+    "exit": 0,
+    "seconds": 10.006185629001266,
+    "cache": "/tmp/u087/cache/P02"
+  },
+  {
+    "id": "restored",
+    "test": "control",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestRecoveredGrammar|TestScalarEdgesUnion|TestScalarEdges_000|TestScalarEdges_001|TestScalarEdges_002|TestScalarEdges_003|TestRecoveryMutantsShardSurvivor|TestRecoveryMutantsTopSurvivor|TestScalarEdgesPlantedFailure|TestRecoveryLoweredRecipe)$"
+    ],
+    "exit": 0,
+    "seconds": 12.844234402000438,
+    "cache": "/tmp/u087/cache/baseline"
+  }
+]
