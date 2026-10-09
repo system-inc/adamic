@@ -1,0 +1,11 @@
+--- main/src/compiler/scanner.ts
++++ 42/src/compiler/scanner.ts
+@@ -219,7 +219,7 @@
+     of: SyntaxKind.OfKeyword,
+ };
+ 
+-const textToKeyword = new Map(Object.entries(textToKeywordObj));
++const textToKeyword = new Map<string, KeywordSyntaxKind>(Object.entries(textToKeywordObj));
+ 
+ const textToToken = new Map(Object.entries({
+     ...textToKeywordObj,

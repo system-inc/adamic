@@ -1,0 +1,72 @@
+{
+  "type_expectations": [
+    {
+      "name": "convertConfigFileToObject",
+      "expected": "AdamicJsonRecoveryObject",
+      "count": 1,
+      "mutant": "string",
+      "exit": 1,
+      "no_source_writes": true
+    },
+    {
+      "name": "convertToJson",
+      "expected": "AdamicJsonRecoveryValue | undefined",
+      "count": 1,
+      "mutant": "string",
+      "exit": 1,
+      "no_source_writes": true
+    }
+  ],
+  "runtime_families": [
+    {
+      "family": "diagnostics",
+      "owner": "convertToJson",
+      "statement": "errors.push(undefined);",
+      "exit": 1,
+      "source_unchanged_after_rejection": true
+    },
+    {
+      "family": "tuples",
+      "owner": "getTypeArguments",
+      "statement": "type.target = type.target;",
+      "exit": 1,
+      "source_unchanged_after_rejection": true
+    },
+    {
+      "family": "empty-arrays",
+      "owner": "addAntecedent",
+      "statement": "label.antecedent = [label];",
+      "exit": 1,
+      "source_unchanged_after_rejection": true
+    }
+  ],
+  "plan_mutants": [
+    {
+      "name": "holder-type",
+      "exit": 1,
+      "guard": "fresh array holder type changed",
+      "source_unchanged": true
+    },
+    {
+      "name": "runtime-copy",
+      "exit": 1,
+      "guard": "adaptation changes runtime syntax",
+      "source_unchanged": true
+    },
+    {
+      "name": "any-type",
+      "exit": 1,
+      "guard": "adaptation adds any or unknown",
+      "source_unchanged": true
+    },
+    {
+      "name": "unknown-type",
+      "exit": 1,
+      "guard": "adaptation adds any or unknown",
+      "source_unchanged": true
+    }
+  ],
+  "caught": 9,
+  "apply_exit": 0,
+  "patch_rows": 27
+}
