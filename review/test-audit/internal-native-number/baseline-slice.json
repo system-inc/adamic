@@ -1,0 +1,59 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/native/",
+    "-run",
+    "^(TestNumbersFormatExactlyAsJavaScriptDoes|TestNumbersParseExactlyAsJavaScriptDoes|TestPowersOfTwoFormatAsJavaScriptDoes|TestArtifactInputsAndReuse)$",
+    "-coverpkg=./internal/native,./internal/buildcache",
+    "-coverprofile=review/test-audit/internal-native-number/coverage.out"
+  ],
+  "wall": 16.106531343000825,
+  "exit": 0,
+  "seconds": 3.022,
+  "failed": [],
+  "passed": [
+    "TestArtifactInputsAndReuse",
+    "TestPowersOfTwoFormatAsJavaScriptDoes",
+    "TestNumbersParseExactlyAsJavaScriptDoes",
+    "TestNumbersFormatExactlyAsJavaScriptDoes"
+  ],
+  "outputs": {
+    "TestNumbersFormatExactlyAsJavaScriptDoes": [
+      "=== RUN   TestNumbersFormatExactlyAsJavaScriptDoes\n",
+      "=== PAUSE TestNumbersFormatExactlyAsJavaScriptDoes\n",
+      "=== CONT  TestNumbersFormatExactlyAsJavaScriptDoes\n",
+      "    number_test.go:120: 255974 values, 0 mismatches\n",
+      "--- PASS: TestNumbersFormatExactlyAsJavaScriptDoes (2.75s)\n"
+    ],
+    "TestNumbersParseExactlyAsJavaScriptDoes": [
+      "=== RUN   TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "=== PAUSE TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "=== CONT  TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "    parse_test.go:191: 108023 texts, 0 mismatches\n",
+      "--- PASS: TestNumbersParseExactlyAsJavaScriptDoes (2.05s)\n"
+    ],
+    "TestPowersOfTwoFormatAsJavaScriptDoes": [
+      "=== RUN   TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "=== PAUSE TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "=== CONT  TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "    power_of_two_test.go:58: 20980 values (2,098 powers of two, two neighbors each side, and their negatives), 0 mismatches\n",
+      "--- PASS: TestPowersOfTwoFormatAsJavaScriptDoes (0.49s)\n"
+    ],
+    "TestArtifactInputsAndReuse": [
+      "=== RUN   TestArtifactInputsAndReuse\n",
+      "--- PASS: TestArtifactInputsAndReuse (0.23s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "coverage: 3.9% of statements in ./internal/native, ./internal/buildcache\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/native\t3.021s\tcoverage: 3.9% of statements in ./internal/native, ./internal/buildcache\n"
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+internal/native/parse_test.go:44:		double result = line[0] == 'i' ? adamic_number_parse_int(&text, radix) : adamic_number_parse_float(&text);
+internal/native/number_test.go:32:		size_t length = adamic_number_format(value, buffer);
+internal/native/math_test.go:30:	size_t length = adamic_number_format(value, buffer);

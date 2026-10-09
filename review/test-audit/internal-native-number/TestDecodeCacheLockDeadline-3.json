@@ -1,0 +1,34 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/native/",
+    "-run",
+    "^TestDecodeCacheLockDeadline$"
+  ],
+  "wall": 1.8723067229984736,
+  "exit": 0,
+  "seconds": 0.042,
+  "failed": [],
+  "passed": [
+    "TestDecodeCacheLockDeadline"
+  ],
+  "outputs": {
+    "TestDecodeCacheLockDeadline": [
+      "=== RUN   TestDecodeCacheLockDeadline\n",
+      "=== PAUSE TestDecodeCacheLockDeadline\n",
+      "=== CONT  TestDecodeCacheLockDeadline\n",
+      "--- PASS: TestDecodeCacheLockDeadline (0.03s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/native\t0.042s\n"
+    ]
+  }
+}

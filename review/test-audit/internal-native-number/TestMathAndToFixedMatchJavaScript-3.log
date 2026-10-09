@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:37:56.17615291Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T08:37:56.187786641Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript"}
+{"Time":"2026-10-09T08:37:56.188226848Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Output":"=== RUN   TestMathAndToFixedMatchJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:56.188287068Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Output":"=== PAUSE TestMathAndToFixedMatchJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:56.188290553Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript"}
+{"Time":"2026-10-09T08:37:56.188300999Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript"}
+{"Time":"2026-10-09T08:37:56.188303077Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Output":"=== CONT  TestMathAndToFixedMatchJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:57.012656896Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Output":"    math_test.go:147: 69132 answers, 0 mismatches\n"}
+{"Time":"2026-10-09T08:37:57.012921389Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Output":"--- PASS: TestMathAndToFixedMatchJavaScript (0.83s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:57.01294096Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Elapsed":0.83}
+{"Time":"2026-10-09T08:37:57.012963621Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:37:57.014461769Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.838s\n"}
+{"Time":"2026-10-09T08:37:57.014509483Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.838}

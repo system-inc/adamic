@@ -1,0 +1,49 @@
+ --- Call graph Dump --- 
+  Function: < root > calls: adamic_closure_call adamic_object_size adamic_object_initialized adamic_object_field_types adamic_object_optional_field adamic_object_optional_find adamic_object_data_field adamic_object_find adamic_object_field adamic_static_field adamic_object_check_data_write adamic_object_check_write adamic_array_at_integer adamic_array_at adamic_string_length adamic_string_units adamic_string_char_code_at adamic_string_char_code __bswap_16 __bswap_32 __bswap_64 __uint16_identity __uint32_identity __uint64_identity to_int32 __builtin_isfinite fmod trunc is_digit digit_value signed_zero base_ten strtod power_of_two ldexp generic adamic_number_parse_int __builtin_nanf adamic_string_trim_sides adamic_release adamic_number_parse_float memcmp __builtin_inff malloc adamic_panic memcpy free 
+  Function: adamic_number_parse_float calls: adamic_string_trim_sides __builtin_nanf memcmp __builtin_inff __builtin_inff adamic_release malloc adamic_panic memcpy strtod free adamic_release 
+  Function: free calls: 
+  Function: memcpy calls: 
+  Function: adamic_panic calls: 
+  Function: malloc calls: 
+  Function: __builtin_inff calls: 
+  Function: memcmp calls: 
+  Function: adamic_number_parse_int calls: to_int32 __builtin_nanf adamic_string_trim_sides __builtin_nanf signed_zero signed_zero is_digit signed_zero base_ten power_of_two generic adamic_release 
+  Function: adamic_release calls: 
+  Function: adamic_string_trim_sides calls: 
+  Function: __builtin_nanf calls: 
+  Function: generic calls: is_digit digit_value 
+  Function: power_of_two calls: is_digit digit_value is_digit ldexp 
+  Function: ldexp calls: 
+  Function: base_ten calls: strtod 
+  Function: strtod calls: 
+  Function: signed_zero calls: 
+  Function: digit_value calls: 
+  Function: is_digit calls: 
+  Function: to_int32 calls: __builtin_isfinite fmod trunc 
+  Function: trunc calls: 
+  Function: fmod calls: 
+  Function: __builtin_isfinite calls: 
+  Function: __uint64_identity calls: 
+  Function: __uint32_identity calls: 
+  Function: __uint16_identity calls: 
+  Function: __bswap_64 calls: 
+  Function: __bswap_32 calls: 
+  Function: __bswap_16 calls: 
+  Function: adamic_string_char_code_at calls: adamic_string_char_code 
+  Function: adamic_string_char_code calls: 
+  Function: adamic_string_length calls: adamic_string_units 
+  Function: adamic_string_units calls: 
+  Function: adamic_array_at calls: 
+  Function: adamic_array_at_integer calls: 
+  Function: adamic_object_check_data_write calls: adamic_object_check_write 
+  Function: adamic_object_check_write calls: 
+  Function: adamic_object_field calls: adamic_static_field adamic_object_data_field 
+  Function: adamic_static_field calls: 
+  Function: adamic_object_data_field calls: adamic_object_find 
+  Function: adamic_object_find calls: 
+  Function: adamic_object_optional_field calls: adamic_object_optional_find 
+  Function: adamic_object_optional_find calls: 
+  Function: adamic_object_field_types calls: adamic_object_initialized 
+  Function: adamic_object_initialized calls: 
+  Function: adamic_object_size calls: 
+  Function: adamic_closure_call calls: 

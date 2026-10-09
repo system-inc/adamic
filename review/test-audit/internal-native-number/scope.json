@@ -1,0 +1,13 @@
+{
+  "rows": [
+    "TestNumbersFormatExactlyAsJavaScriptDoes",
+    "TestNumbersParseExactlyAsJavaScriptDoes",
+    "TestPowersOfTwoFormatAsJavaScriptDoes",
+    "TestArtifactInputsAndReuse",
+    "TestMathAndToFixedMatchJavaScript",
+    "TestDecodeCacheLockDeadline"
+  ],
+  "bounded": true,
+  "pattern": "^(TestNumbersFormatExactlyAsJavaScriptDoes|TestNumbersParseExactlyAsJavaScriptDoes|TestPowersOfTwoFormatAsJavaScriptDoes|TestArtifactInputsAndReuse|TestMathAndToFixedMatchJavaScript|TestDecodeCacheLockDeadline)$",
+  "unknown": "Every omitted package row"
+}

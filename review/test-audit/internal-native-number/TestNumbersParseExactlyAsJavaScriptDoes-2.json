@@ -1,0 +1,35 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/native/",
+    "-run",
+    "^TestNumbersParseExactlyAsJavaScriptDoes$"
+  ],
+  "wall": 2.9808422839996638,
+  "exit": 0,
+  "seconds": 0.975,
+  "failed": [],
+  "passed": [
+    "TestNumbersParseExactlyAsJavaScriptDoes"
+  ],
+  "outputs": {
+    "TestNumbersParseExactlyAsJavaScriptDoes": [
+      "=== RUN   TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "=== PAUSE TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "=== CONT  TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "    parse_test.go:191: 108023 texts, 0 mismatches\n",
+      "--- PASS: TestNumbersParseExactlyAsJavaScriptDoes (0.96s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/native\t0.975s\n"
+    ]
+  }
+}

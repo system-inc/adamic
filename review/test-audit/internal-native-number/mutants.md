@@ -1,0 +1,18 @@
+| ID | origin/main file:line | Change | Failed rows |
+|---|---|---|---|
+| M01 | internal/native/runtime/number.c:20 | change constant: `append(buffer, 0, "NaN")` becomes `append(buffer, 0, "nan")` | TestMathAndToFixedMatchJavaScript, TestNumbersFormatExactlyAsJavaScriptDoes |
+| M02 | internal/native/runtime/number.c:75 | off-by-one: `-6 < point` becomes `-5 < point` | TestMathAndToFixedMatchJavaScript, TestNumbersFormatExactlyAsJavaScriptDoes, TestPowersOfTwoFormatAsJavaScriptDoes |
+| M03 | internal/native/runtime/number.c:93 | off-by-one: `int exponent = point - 1;` becomes `int exponent = point;` | TestMathAndToFixedMatchJavaScript, TestNumbersFormatExactlyAsJavaScriptDoes, TestPowersOfTwoFormatAsJavaScriptDoes |
+| M04 | internal/native/runtime/number.c:34 | change constant: `value < 9007199254740992.0` becomes `value < 4503599627370496.0` | [] |
+| M05 | internal/native/runtime/dtoa.c:706 | change constant: `if ((double_bits(v) & double_significand_mask) == 0) {` becomes `if ((double_bits(v) & double_significand_mask) == 1) {` | TestMathAndToFixedMatchJavaScript, TestPowersOfTwoFormatAsJavaScriptDoes |
+| M06 | internal/native/runtime/parse.c:157 | off-by-one: `radix < 2 \|\| radix > 36` becomes `radix < 2 \|\| radix > 35` | TestNumbersParseExactlyAsJavaScriptDoes |
+| M07 | internal/native/runtime/parse.c:22 | change constant: `fmod(trunc(value), 4294967296.0)` becomes `fmod(trunc(value), 4294967295.0)` | TestNumbersParseExactlyAsJavaScriptDoes |
+| M08 | internal/native/runtime/parse.c:236 | off-by-one: `end - cursor >= 8 && memcmp` becomes `end - cursor >= 9 && memcmp` | TestNumbersParseExactlyAsJavaScriptDoes |
+| M09 | internal/native/runtime/parse.c:253 | off-by-one: `if (digits > 0) {` becomes `if (digits > 1) {` | TestNumbersParseExactlyAsJavaScriptDoes |
+| M10 | internal/buildcache/buildcache.go:132 | drop statement: `	for _, flag := range inputs.Flags { 		field("flag", flag) 	}` becomes `	// Flag hashing loop dropped.` | TestArtifactInputsAndReuse |
+| M11 | internal/buildcache/buildcache.go:126 | change constant: `field("name", inputs.Name)` becomes `field("name", "artifact")` | [] |
+| M12 | internal/buildcache/buildcache.go:83 | flip condition: `product := filepath.Join(cache, key) 	if _, err = os.Stat(product); err == nil {` becomes `product := filepath.Join(cache, key) 	if _, err = os.Stat(product); err != nil {` | TestArtifactInputsAndReuse |
+| E01 | internal/native/runtime/number.c:18 | return early: `size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX]) {` becomes `size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX]) { return 0;` | TestMathAndToFixedMatchJavaScript, TestNumbersFormatExactlyAsJavaScriptDoes, TestPowersOfTwoFormatAsJavaScriptDoes |
+| E02 | internal/native/runtime/parse.c:155 | return early: `double adamic_number_parse_int(const adamic_string *text, double radix_value) {` becomes `double adamic_number_parse_int(const adamic_string *text, double radix_value) { return 0;` | TestNumbersParseExactlyAsJavaScriptDoes |
+| E03 | internal/native/runtime/parse.c:223 | return early: `double adamic_number_parse_float(const adamic_string *text) {` becomes `double adamic_number_parse_float(const adamic_string *text) { return 0;` | TestNumbersParseExactlyAsJavaScriptDoes |
+| E04 | internal/buildcache/buildcache.go:54 | return early: `func Get(inputs Inputs, build func(directory string) error) (string, error) { 	directory, _, err := get(inputs, build) 	return directory, err }` becomes `func Get(inputs Inputs, build func(directory string) error) (string, error) { 	return "", nil }` | TestArtifactInputsAndReuse |

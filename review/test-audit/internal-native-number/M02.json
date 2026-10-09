@@ -1,0 +1,105 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/native/",
+    "-run",
+    "^(TestNumbersFormatExactlyAsJavaScriptDoes|TestNumbersParseExactlyAsJavaScriptDoes|TestPowersOfTwoFormatAsJavaScriptDoes|TestArtifactInputsAndReuse|TestMathAndToFixedMatchJavaScript|TestDecodeCacheLockDeadline)$"
+  ],
+  "wall": 4.628911676998541,
+  "exit": 1,
+  "seconds": 2.327,
+  "failed": [
+    "TestPowersOfTwoFormatAsJavaScriptDoes",
+    "TestMathAndToFixedMatchJavaScript",
+    "TestNumbersFormatExactlyAsJavaScriptDoes"
+  ],
+  "passed": [
+    "TestArtifactInputsAndReuse",
+    "TestDecodeCacheLockDeadline",
+    "TestNumbersParseExactlyAsJavaScriptDoes"
+  ],
+  "outputs": {
+    "TestDecodeCacheLockDeadline": [
+      "=== RUN   TestDecodeCacheLockDeadline\n",
+      "=== PAUSE TestDecodeCacheLockDeadline\n",
+      "=== CONT  TestDecodeCacheLockDeadline\n",
+      "--- PASS: TestDecodeCacheLockDeadline (0.03s)\n"
+    ],
+    "TestMathAndToFixedMatchJavaScript": [
+      "=== RUN   TestMathAndToFixedMatchJavaScript\n",
+      "=== PAUSE TestMathAndToFixedMatchJavaScript\n",
+      "=== CONT  TestMathAndToFixedMatchJavaScript\n",
+      "    math_test.go:140: pow c0520f5c28f5c28f c008000000000000: native \"-2.6525696002109714e-6\", Node \"-0.0000026525696002109714\"\n",
+      "    math_test.go:140: pow c048deb851eb851f c008000000000000: native \"-8.126109257022593e-6\", Node \"-0.000008126109257022593\"\n",
+      "    math_test.go:140: pow c05869999999999a c008000000000000: native \"-1.0739480088213019e-6\", Node \"-0.0000010739480088213019\"\n",
+      "    math_test.go:140: pow c081ca6666666666 c000000000000000: native \"3.085443743428198e-6\", Node \"0.000003085443743428198\"\n",
+      "    math_test.go:140: pow c015f5c28f5c28f6 c01c000000000000: native \"-6.652633353656044e-6\", Node \"-0.000006652633353656044\"\n",
+      "    math_test.go:140: pow c0547ae147ae147b c008000000000000: native \"-1.8189894035458563e-6\", Node \"-0.0000018189894035458563\"\n",
+      "    math_test.go:140: pow 407a31999999999a c000000000000000: native \"5.693307989003489e-6\", Node \"0.000005693307989003489\"\n",
+      "    math_test.go:140: pow 40894ccccccccccd c000000000000000: native \"1.5256643596994172e-6\", Node \"0.0000015256643596994172\"\n",
+      "    math_test.go:140: pow 4051347ae147ae14 c008000000000000: native \"3.068004520245001e-6\", Node \"0.000003068004520245001\"\n",
+      "    math_test.go:140: pow 408b24cccccccccd bfffae147ae147ae: native \"1.5175281168242037e-6\", Node \"0.0000015175281168242037\"\n",
+      "    math_test.go:145: 177 of 69132 answers differ\n",
+      "    math_test.go:147: 69132 answers, 177 mismatches\n",
+      "--- FAIL: TestMathAndToFixedMatchJavaScript (1.40s)\n"
+    ],
+    "TestNumbersFormatExactlyAsJavaScriptDoes": [
+      "=== RUN   TestNumbersFormatExactlyAsJavaScriptDoes\n",
+      "=== PAUSE TestNumbersFormatExactlyAsJavaScriptDoes\n",
+      "=== CONT  TestNumbersFormatExactlyAsJavaScriptDoes\n",
+      "    number_test.go:113: 3eb0c6f7a0b5ed8d: native \"1e-6\", Node \"0.000001\"\n",
+      "    number_test.go:113: 3eb4b3fd5942cd96: native \"1.234e-6\", Node \"0.000001234\"\n",
+      "    number_test.go:113: 3eb0c6f7a0b5ed8d: native \"1e-6\", Node \"0.000001\"\n",
+      "    number_test.go:113: 3eb0c6f7a0b5ed8e: native \"1.0000000000000002e-6\", Node \"0.0000010000000000000002\"\n",
+      "    number_test.go:113: beb0c6f7a0b5ed8d: native \"-1e-6\", Node \"-0.000001\"\n",
+      "    number_test.go:113: 3ee4f8b588e368f0: native \"9.999999999999999e-6\", Node \"0.000009999999999999999\"\n",
+      "    number_test.go:113: bedff938ec0669be: native \"-7.623082354158598e-6\", Node \"-0.000007623082354158598\"\n",
+      "    number_test.go:113: bee33cc757c7ff72: native \"-9.173115125271395e-6\", Node \"-0.000009173115125271395\"\n",
+      "    number_test.go:113: beb5c4e7b1e16464: native \"-1.2975430716737367e-6\", Node \"-0.0000012975430716737367\"\n",
+      "    number_test.go:113: beb78c3f2bc37148: native \"-1.4035605735907356e-6\", Node \"-0.0000014035605735907356\"\n",
+      "    number_test.go:118: 4561 of 255974 values format differently\n",
+      "    number_test.go:120: 255974 values, 4561 mismatches\n",
+      "--- FAIL: TestNumbersFormatExactlyAsJavaScriptDoes (2.26s)\n"
+    ],
+    "TestNumbersParseExactlyAsJavaScriptDoes": [
+      "=== RUN   TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "=== PAUSE TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "=== CONT  TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "    parse_test.go:191: 108023 texts, 0 mismatches\n",
+      "--- PASS: TestNumbersParseExactlyAsJavaScriptDoes (1.46s)\n"
+    ],
+    "TestPowersOfTwoFormatAsJavaScriptDoes": [
+      "=== RUN   TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "=== PAUSE TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "=== CONT  TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "    power_of_two_test.go:52: 3ec0000000000000: native \"1.9073486328125e-6\", Node \"0.0000019073486328125\"\n",
+      "    power_of_two_test.go:52: 3ebfffffffffffff: native \"1.9073486328124998e-6\", Node \"0.0000019073486328124998\"\n",
+      "    power_of_two_test.go:52: 3ec0000000000001: native \"1.9073486328125004e-6\", Node \"0.0000019073486328125004\"\n",
+      "    power_of_two_test.go:52: 3ebffffffffffffe: native \"1.9073486328124996e-6\", Node \"0.0000019073486328124996\"\n",
+      "    power_of_two_test.go:52: 3ec0000000000002: native \"1.907348632812501e-6\", Node \"0.000001907348632812501\"\n",
+      "    power_of_two_test.go:52: 3ed0000000000000: native \"3.814697265625e-6\", Node \"0.000003814697265625\"\n",
+      "    power_of_two_test.go:52: 3ecfffffffffffff: native \"3.8146972656249996e-6\", Node \"0.0000038146972656249996\"\n",
+      "    power_of_two_test.go:52: 3ed0000000000001: native \"3.814697265625001e-6\", Node \"0.000003814697265625001\"\n",
+      "    power_of_two_test.go:52: 3ecffffffffffffe: native \"3.814697265624999e-6\", Node \"0.000003814697265624999\"\n",
+      "    power_of_two_test.go:52: 3ed0000000000002: native \"3.814697265625002e-6\", Node \"0.000003814697265625002\"\n",
+      "    power_of_two_test.go:56: 30 of 20980 values format differently (6 of them powers of two)\n",
+      "    power_of_two_test.go:58: 20980 values (2,098 powers of two, two neighbors each side, and their negatives), 30 mismatches\n",
+      "--- FAIL: TestPowersOfTwoFormatAsJavaScriptDoes (0.68s)\n"
+    ],
+    "TestArtifactInputsAndReuse": [
+      "=== RUN   TestArtifactInputsAndReuse\n",
+      "--- PASS: TestArtifactInputsAndReuse (0.05s)\n"
+    ],
+    "": [
+      "FAIL\n",
+      "FAIL\tgithub.com/system-inc/adamic/internal/native\t2.327s\n"
+    ]
+  }
+}

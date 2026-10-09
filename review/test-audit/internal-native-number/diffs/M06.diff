@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/parse.c
++++ b/internal/native/runtime/parse.c
+@@ -154,7 +154,7 @@
+ 
+ double adamic_number_parse_int(const adamic_string *text, double radix_value) {
+ 	int radix = to_int32(radix_value);
+-	if (radix != 0 && (radix < 2 || radix > 36)) {
++	if (radix != 0 && (radix < 2 || radix > 35)) {
+ 		return NAN;
+ 	}
+ 	adamic_string *trimmed = adamic_string_trim_sides((adamic_string *)text, true, false);

@@ -1,0 +1,1 @@
+COMMAND ["timeout", "90", "go", "vet", "-overlay", "/tmp/u051-standalone/overlay.json", "./internal/buildcache/"]

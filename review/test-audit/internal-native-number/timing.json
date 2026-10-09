@@ -1,0 +1,17 @@
+{
+  "nproc": 5,
+  "setup_seconds": 0,
+  "setup": "Skipped; warm env.sh worked",
+  "npm_ci": {
+    "seconds": 0.6690498590014613,
+    "exit": 0
+  },
+  "test_commands": 38,
+  "test_wall_seconds": 254.9306238309964,
+  "test_binary_seconds": 149.108,
+  "standalone_validation_seconds": 10.077723794995109,
+  "standalone_validated": 16,
+  "control_wall": 21.67572622300031,
+  "control_binary": 11.118,
+  "note": "Runtime archive building is inside binary duration. Control wall minus binary is startup/Go-build overhead, not separately measured compiler time. Probe builds not separately timed."
+}

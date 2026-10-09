@@ -1,0 +1,44 @@
+ --- Call graph Dump --- 
+  Function: < root > calls: adamic_closure_call adamic_object_size adamic_object_initialized adamic_object_field_types adamic_object_optional_field adamic_object_optional_find adamic_object_data_field adamic_object_find adamic_object_field adamic_static_field adamic_object_check_data_write adamic_object_check_write adamic_array_at_integer adamic_array_at adamic_string_length adamic_string_units adamic_string_char_code_at adamic_string_char_code __bswap_16 __bswap_32 __bswap_64 __uint16_identity __uint32_identity __uint64_identity append adamic_number_format __builtin_isnan __builtin_isinf_sign adamic_number_shortest_digits snprintf abs adamic_power __builtin_nanf __builtin_inff sqrt pow adamic_number_to_fixed trunc adamic_panic adamic_string_concat fabs adamic_string_from_number 
+  Function: adamic_number_to_fixed calls: __builtin_isnan trunc adamic_panic __builtin_isnan adamic_string_concat fabs adamic_string_from_number snprintf fabs adamic_string_concat 
+  Function: adamic_string_from_number calls: 
+  Function: fabs calls: 
+  Function: adamic_string_concat calls: 
+  Function: adamic_panic calls: 
+  Function: trunc calls: 
+  Function: adamic_power calls: __builtin_isnan __builtin_nanf __builtin_isinf_sign __builtin_nanf __builtin_isinf_sign __builtin_inff sqrt pow 
+  Function: pow calls: 
+  Function: sqrt calls: 
+  Function: __builtin_inff calls: 
+  Function: __builtin_nanf calls: 
+  Function: adamic_number_format calls: __builtin_isnan append append __builtin_isinf_sign append adamic_number_shortest_digits append snprintf abs 
+  Function: abs calls: 
+  Function: snprintf calls: 
+  Function: adamic_number_shortest_digits calls: 
+  Function: __builtin_isinf_sign calls: 
+  Function: __builtin_isnan calls: 
+  Function: append calls: 
+  Function: __uint64_identity calls: 
+  Function: __uint32_identity calls: 
+  Function: __uint16_identity calls: 
+  Function: __bswap_64 calls: 
+  Function: __bswap_32 calls: 
+  Function: __bswap_16 calls: 
+  Function: adamic_string_char_code_at calls: adamic_string_char_code 
+  Function: adamic_string_char_code calls: 
+  Function: adamic_string_length calls: adamic_string_units 
+  Function: adamic_string_units calls: 
+  Function: adamic_array_at calls: 
+  Function: adamic_array_at_integer calls: 
+  Function: adamic_object_check_data_write calls: adamic_object_check_write 
+  Function: adamic_object_check_write calls: 
+  Function: adamic_object_field calls: adamic_static_field adamic_object_data_field 
+  Function: adamic_static_field calls: 
+  Function: adamic_object_data_field calls: adamic_object_find 
+  Function: adamic_object_find calls: 
+  Function: adamic_object_optional_field calls: adamic_object_optional_find 
+  Function: adamic_object_optional_find calls: 
+  Function: adamic_object_field_types calls: adamic_object_initialized 
+  Function: adamic_object_initialized calls: 
+  Function: adamic_object_size calls: 
+  Function: adamic_closure_call calls: 

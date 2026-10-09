@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:31:57.945040925Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T08:31:57.954117783Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:31:57.954292815Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Output":"=== RUN   TestPowersOfTwoFormatAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:31:57.954322401Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Output":"=== PAUSE TestPowersOfTwoFormatAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:31:57.954325015Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:31:57.954329044Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:31:57.954330951Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Output":"=== CONT  TestPowersOfTwoFormatAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:31:58.440840872Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Output":"    power_of_two_test.go:58: 20980 values (2,098 powers of two, two neighbors each side, and their negatives), 0 mismatches\n"}
+{"Time":"2026-10-09T08:31:58.441411404Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Output":"--- PASS: TestPowersOfTwoFormatAsJavaScriptDoes (0.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:31:58.441420781Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Elapsed":0.49}
+{"Time":"2026-10-09T08:31:58.441444762Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:31:58.44259169Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.497s\n"}
+{"Time":"2026-10-09T08:31:58.442648392Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.498}

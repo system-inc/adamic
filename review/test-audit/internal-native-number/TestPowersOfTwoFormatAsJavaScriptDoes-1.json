@@ -1,0 +1,35 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/native/",
+    "-run",
+    "^TestPowersOfTwoFormatAsJavaScriptDoes$"
+  ],
+  "wall": 2.947427389999575,
+  "exit": 0,
+  "seconds": 0.498,
+  "failed": [],
+  "passed": [
+    "TestPowersOfTwoFormatAsJavaScriptDoes"
+  ],
+  "outputs": {
+    "TestPowersOfTwoFormatAsJavaScriptDoes": [
+      "=== RUN   TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "=== PAUSE TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "=== CONT  TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "    power_of_two_test.go:58: 20980 values (2,098 powers of two, two neighbors each side, and their negatives), 0 mismatches\n",
+      "--- PASS: TestPowersOfTwoFormatAsJavaScriptDoes (0.49s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/native\t0.497s\n"
+    ]
+  }
+}

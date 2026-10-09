@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/number.c
++++ b/internal/native/runtime/number.c
+@@ -15,7 +15,7 @@
+ 	return length;
+ }
+ 
+-size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX]) {
++size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX]) { return 0;
+ 	if (isnan(value)) {
+ 		return append(buffer, 0, "NaN");
+ 	}

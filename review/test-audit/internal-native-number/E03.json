@@ -1,0 +1,83 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/native/",
+    "-run",
+    "^(TestNumbersFormatExactlyAsJavaScriptDoes|TestNumbersParseExactlyAsJavaScriptDoes|TestPowersOfTwoFormatAsJavaScriptDoes|TestArtifactInputsAndReuse|TestMathAndToFixedMatchJavaScript|TestDecodeCacheLockDeadline)$"
+  ],
+  "wall": 3.885909663000348,
+  "exit": 1,
+  "seconds": 1.533,
+  "failed": [
+    "TestNumbersParseExactlyAsJavaScriptDoes"
+  ],
+  "passed": [
+    "TestArtifactInputsAndReuse",
+    "TestDecodeCacheLockDeadline",
+    "TestPowersOfTwoFormatAsJavaScriptDoes",
+    "TestMathAndToFixedMatchJavaScript",
+    "TestNumbersFormatExactlyAsJavaScriptDoes"
+  ],
+  "outputs": {
+    "TestDecodeCacheLockDeadline": [
+      "=== RUN   TestDecodeCacheLockDeadline\n",
+      "=== PAUSE TestDecodeCacheLockDeadline\n",
+      "=== CONT  TestDecodeCacheLockDeadline\n",
+      "--- PASS: TestDecodeCacheLockDeadline (0.03s)\n"
+    ],
+    "TestMathAndToFixedMatchJavaScript": [
+      "=== RUN   TestMathAndToFixedMatchJavaScript\n",
+      "=== PAUSE TestMathAndToFixedMatchJavaScript\n",
+      "=== CONT  TestMathAndToFixedMatchJavaScript\n",
+      "    math_test.go:147: 69132 answers, 0 mismatches\n",
+      "--- PASS: TestMathAndToFixedMatchJavaScript (1.22s)\n"
+    ],
+    "TestNumbersFormatExactlyAsJavaScriptDoes": [
+      "=== RUN   TestNumbersFormatExactlyAsJavaScriptDoes\n",
+      "=== PAUSE TestNumbersFormatExactlyAsJavaScriptDoes\n",
+      "=== CONT  TestNumbersFormatExactlyAsJavaScriptDoes\n",
+      "    number_test.go:120: 255974 values, 0 mismatches\n",
+      "--- PASS: TestNumbersFormatExactlyAsJavaScriptDoes (1.46s)\n"
+    ],
+    "TestNumbersParseExactlyAsJavaScriptDoes": [
+      "=== RUN   TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "=== PAUSE TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "=== CONT  TestNumbersParseExactlyAsJavaScriptDoes\n",
+      "    parse_test.go:184: parseInt false, radix 0, text \"\": native 0000000000000000, Node NaN\n",
+      "    parse_test.go:184: parseInt false, radix 0, text \"junk\": native 0000000000000000, Node NaN\n",
+      "    parse_test.go:184: parseInt false, radix 0, text \" \": native 0000000000000000, Node NaN\n",
+      "    parse_test.go:184: parseInt false, radix 0, text \" junk\": native 0000000000000000, Node NaN\n",
+      "    parse_test.go:184: parseInt false, radix 0, text \"\\t\\n\": native 0000000000000000, Node NaN\n",
+      "    parse_test.go:184: parseInt false, radix 0, text \"\\t\\njunk\": native 0000000000000000, Node NaN\n",
+      "    parse_test.go:184: parseInt false, radix 0, text \"\\u00a0\": native 0000000000000000, Node NaN\n",
+      "    parse_test.go:184: parseInt false, radix 0, text \"\\u00a0junk\": native 0000000000000000, Node NaN\n",
+      "    parse_test.go:184: parseInt false, radix 0, text \"\\u3000\": native 0000000000000000, Node NaN\n",
+      "    parse_test.go:184: parseInt false, radix 0, text \"\\u3000junk\": native 0000000000000000, Node NaN\n",
+      "    parse_test.go:189: 63357 of 108023 texts parse differently\n",
+      "    parse_test.go:191: 108023 texts, 63357 mismatches\n",
+      "--- FAIL: TestNumbersParseExactlyAsJavaScriptDoes (1.28s)\n"
+    ],
+    "TestPowersOfTwoFormatAsJavaScriptDoes": [
+      "=== RUN   TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "=== PAUSE TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "=== CONT  TestPowersOfTwoFormatAsJavaScriptDoes\n",
+      "    power_of_two_test.go:58: 20980 values (2,098 powers of two, two neighbors each side, and their negatives), 0 mismatches\n",
+      "--- PASS: TestPowersOfTwoFormatAsJavaScriptDoes (0.48s)\n"
+    ],
+    "TestArtifactInputsAndReuse": [
+      "=== RUN   TestArtifactInputsAndReuse\n",
+      "--- PASS: TestArtifactInputsAndReuse (0.05s)\n"
+    ],
+    "": [
+      "FAIL\n",
+      "FAIL\tgithub.com/system-inc/adamic/internal/native\t1.532s\n"
+    ]
+  }
+}

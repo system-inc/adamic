@@ -1,0 +1,81 @@
+ --- Call graph Dump --- 
+  Function: < root > calls: adamic_closure_call adamic_object_size adamic_object_initialized adamic_object_field_types adamic_object_optional_field adamic_object_optional_find adamic_object_data_field adamic_object_find adamic_object_field adamic_static_field adamic_object_check_data_write adamic_object_check_write adamic_array_at_integer adamic_array_at adamic_string_length adamic_string_units adamic_string_char_code_at adamic_string_char_code double_bits memcpy double_is_denormal double_exponent double_significand bignum_init memset bignum_ensure_capacity adamic_unreachable bignum_bigit_length bignum_zero bignum_clamp bignum_assign_uint16 bignum_assign_uint64 bignum_assign_bignum bignum_align bignum_bigits_shift_left bignum_shift_left bignum_subtract_bignum bignum_multiply_by_uint32 bignum_times_10 bignum_multiply_by_uint64 bignum_square bignum_assign_power_uint16 bignum_bigit_at bignum_compare bignum_equal bignum_less_equal bignum_less bignum_plus_compare bignum_subtract_times bignum_divide_modulo_int_bignum normalized_exponent generate_shortest_digits generate_counted_digits estimate_power ceil initial_scaled_start_values_positive_exponent initial_scaled_start_values_negative_exponent_positive_power initial_scaled_start_values_negative_exponent_negative_power initial_scaled_start_values fixup_multiply_10 bignum_dtoa double_to_ascii adamic_number_shortest_digits append_text append_padding append_decimal_integer create_exponential_representation double_to_exponential double_to_precision conversion_result adamic_string_concat conversion_special __builtin_isnan adamic_number_to_exponential trunc __builtin_isinf_sign adamic_panic adamic_number_to_precision adamic_string_from_number 
+  Function: adamic_number_to_precision calls: adamic_string_from_number __builtin_isnan trunc __builtin_isnan __builtin_isinf_sign conversion_special adamic_panic double_to_precision conversion_result 
+  Function: adamic_string_from_number calls: 
+  Function: adamic_number_to_exponential calls: __builtin_isnan trunc __builtin_isnan __builtin_isinf_sign conversion_special adamic_panic double_to_exponential conversion_result 
+  Function: adamic_panic calls: 
+  Function: __builtin_isinf_sign calls: 
+  Function: trunc calls: 
+  Function: conversion_special calls: __builtin_isnan conversion_result conversion_result conversion_result 
+  Function: __builtin_isnan calls: 
+  Function: conversion_result calls: adamic_string_concat 
+  Function: adamic_string_concat calls: 
+  Function: double_to_precision calls: double_to_ascii create_exponential_representation append_text append_padding append_padding append_padding append_padding 
+  Function: double_to_exponential calls: double_to_ascii double_to_ascii create_exponential_representation 
+  Function: create_exponential_representation calls: append_padding append_decimal_integer 
+  Function: append_decimal_integer calls: 
+  Function: append_padding calls: 
+  Function: append_text calls: 
+  Function: adamic_number_shortest_digits calls: double_to_ascii 
+  Function: double_to_ascii calls: bignum_dtoa 
+  Function: bignum_dtoa calls: double_significand double_exponent estimate_power normalized_exponent bignum_init bignum_init bignum_init bignum_init initial_scaled_start_values fixup_multiply_10 generate_shortest_digits generate_counted_digits 
+  Function: fixup_multiply_10 calls: bignum_plus_compare bignum_plus_compare bignum_times_10 bignum_equal bignum_times_10 bignum_assign_bignum bignum_times_10 bignum_times_10 
+  Function: initial_scaled_start_values calls: double_exponent initial_scaled_start_values_positive_exponent initial_scaled_start_values_negative_exponent_positive_power initial_scaled_start_values_negative_exponent_negative_power 
+  Function: initial_scaled_start_values_negative_exponent_negative_power calls: double_significand double_exponent bignum_assign_power_uint16 bignum_assign_bignum bignum_assign_bignum bignum_multiply_by_uint64 bignum_assign_uint16 bignum_shift_left bignum_shift_left bignum_shift_left double_bits bignum_shift_left bignum_shift_left bignum_shift_left 
+  Function: initial_scaled_start_values_negative_exponent_positive_power calls: double_significand double_exponent bignum_assign_uint64 bignum_assign_power_uint16 bignum_shift_left bignum_shift_left bignum_shift_left bignum_assign_uint16 bignum_assign_uint16 double_bits bignum_shift_left bignum_shift_left bignum_shift_left 
+  Function: initial_scaled_start_values_positive_exponent calls: bignum_assign_uint64 double_significand bignum_shift_left double_exponent bignum_assign_power_uint16 bignum_shift_left bignum_shift_left bignum_assign_uint16 bignum_shift_left double_exponent bignum_assign_uint16 bignum_shift_left double_exponent double_bits bignum_shift_left bignum_shift_left bignum_shift_left 
+  Function: estimate_power calls: ceil 
+  Function: ceil calls: 
+  Function: generate_counted_digits calls: bignum_divide_modulo_int_bignum bignum_times_10 bignum_divide_modulo_int_bignum bignum_plus_compare 
+  Function: generate_shortest_digits calls: bignum_equal bignum_divide_modulo_int_bignum bignum_less_equal bignum_less bignum_plus_compare bignum_plus_compare bignum_times_10 bignum_times_10 bignum_times_10 bignum_plus_compare 
+  Function: normalized_exponent calls: 
+  Function: bignum_divide_modulo_int_bignum calls: bignum_bigit_length bignum_bigit_length bignum_align bignum_bigit_length bignum_bigit_length bignum_subtract_times bignum_clamp bignum_subtract_times bignum_less_equal bignum_subtract_bignum 
+  Function: bignum_subtract_times calls: bignum_subtract_bignum bignum_clamp 
+  Function: bignum_plus_compare calls: bignum_bigit_length bignum_bigit_length bignum_plus_compare bignum_bigit_length bignum_bigit_length bignum_bigit_length bignum_bigit_length bignum_bigit_length bignum_bigit_length bignum_bigit_length bignum_bigit_length bignum_bigit_at bignum_bigit_at bignum_bigit_at 
+  Function: bignum_less calls: bignum_compare 
+  Function: bignum_less_equal calls: bignum_compare 
+  Function: bignum_equal calls: bignum_compare 
+  Function: bignum_compare calls: bignum_bigit_length bignum_bigit_length bignum_bigit_at bignum_bigit_at 
+  Function: bignum_bigit_at calls: bignum_bigit_length 
+  Function: bignum_assign_power_uint16 calls: bignum_assign_uint16 bignum_zero bignum_ensure_capacity bignum_assign_uint64 bignum_multiply_by_uint32 bignum_square bignum_multiply_by_uint32 bignum_shift_left 
+  Function: bignum_square calls: bignum_ensure_capacity adamic_unreachable bignum_clamp 
+  Function: bignum_multiply_by_uint64 calls: bignum_zero bignum_ensure_capacity 
+  Function: bignum_times_10 calls: bignum_multiply_by_uint32 
+  Function: bignum_multiply_by_uint32 calls: bignum_zero bignum_ensure_capacity 
+  Function: bignum_subtract_bignum calls: bignum_align bignum_clamp 
+  Function: bignum_shift_left calls: bignum_ensure_capacity bignum_bigits_shift_left 
+  Function: bignum_bigits_shift_left calls: 
+  Function: bignum_align calls: bignum_ensure_capacity 
+  Function: bignum_assign_bignum calls: 
+  Function: bignum_assign_uint64 calls: bignum_zero bignum_ensure_capacity bignum_clamp 
+  Function: bignum_assign_uint16 calls: bignum_zero bignum_ensure_capacity 
+  Function: bignum_clamp calls: 
+  Function: bignum_zero calls: 
+  Function: bignum_bigit_length calls: 
+  Function: bignum_ensure_capacity calls: adamic_unreachable 
+  Function: adamic_unreachable calls: 
+  Function: bignum_init calls: memset 
+  Function: memset calls: 
+  Function: double_significand calls: double_bits double_is_denormal 
+  Function: double_exponent calls: double_is_denormal double_bits 
+  Function: double_is_denormal calls: double_bits 
+  Function: double_bits calls: memcpy 
+  Function: memcpy calls: 
+  Function: adamic_string_char_code_at calls: adamic_string_char_code 
+  Function: adamic_string_char_code calls: 
+  Function: adamic_string_length calls: adamic_string_units 
+  Function: adamic_string_units calls: 
+  Function: adamic_array_at calls: 
+  Function: adamic_array_at_integer calls: 
+  Function: adamic_object_check_data_write calls: adamic_object_check_write 
+  Function: adamic_object_check_write calls: 
+  Function: adamic_object_field calls: adamic_static_field adamic_object_data_field 
+  Function: adamic_static_field calls: 
+  Function: adamic_object_data_field calls: adamic_object_find 
+  Function: adamic_object_find calls: 
+  Function: adamic_object_optional_field calls: adamic_object_optional_find 
+  Function: adamic_object_optional_find calls: 
+  Function: adamic_object_field_types calls: adamic_object_initialized 
+  Function: adamic_object_initialized calls: 
+  Function: adamic_object_size calls: 
+  Function: adamic_closure_call calls: 

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:31:51.101599409Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T08:31:51.112888215Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:31:51.112996364Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Output":"=== RUN   TestNumbersParseExactlyAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:31:51.113066853Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Output":"=== PAUSE TestNumbersParseExactlyAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:31:51.113071465Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:31:51.113075716Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:31:51.113080364Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Output":"=== CONT  TestNumbersParseExactlyAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:31:52.072674819Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Output":"    parse_test.go:191: 108023 texts, 0 mismatches\n"}
+{"Time":"2026-10-09T08:31:52.07315971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Output":"--- PASS: TestNumbersParseExactlyAsJavaScriptDoes (0.96s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:31:52.073259411Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Elapsed":0.96}
+{"Time":"2026-10-09T08:31:52.07328315Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:31:52.076911081Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.975s\n"}
+{"Time":"2026-10-09T08:31:52.076963077Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.975}

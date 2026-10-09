@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/parse.c
++++ b/internal/native/runtime/parse.c
+@@ -250,7 +250,7 @@
+ 			digits++;
+ 		}
+ 	}
+-	if (digits > 0) {
++	if (digits > 1) {
+ 		if (cursor != end && (*cursor == 'e' || *cursor == 'E')) {
+ 			const char *exponent = cursor + 1;
+ 			if (exponent != end && (*exponent == '+' || *exponent == '-')) {

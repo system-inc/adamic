@@ -1,0 +1,11 @@
+--- a/internal/buildcache/buildcache.go
++++ b/internal/buildcache/buildcache.go
+@@ -81,7 +81,7 @@
+ 		return "", "", err
+ 	}
+ 	product := filepath.Join(cache, key)
+-	if _, err = os.Stat(product); err == nil {
++	if _, err = os.Stat(product); err != nil {
+ 		return product, record(inputs.Name, key, "hit", started), nil
+ 	}
+ 	// One builder per key across every process on the machine: the rest wait, then find it built.

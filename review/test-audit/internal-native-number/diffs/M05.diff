@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/dtoa.c
++++ b/internal/native/runtime/dtoa.c
+@@ -703,7 +703,7 @@
+ 		// just half a ulp (unit in the last place). There is only one exception: if the next lower
+ 		// number is a denormal then the distance is 1 ulp. This cannot be the case for exponent >= 0
+ 		// (but we have to test it in the other function where exponent < 0).
+-		if ((double_bits(v) & double_significand_mask) == 0) {
++		if ((double_bits(v) & double_significand_mask) == 1) {
+ 			// The lower boundary is closer at half the distance of "normal" numbers. Increase the
+ 			// common denominator and adapt all but the delta_minus.
+ 			bignum_shift_left(denominator, 1); // *2

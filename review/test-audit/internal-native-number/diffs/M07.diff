@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/parse.c
++++ b/internal/native/runtime/parse.c
+@@ -19,7 +19,7 @@
+ 	if (!isfinite(value)) {
+ 		return 0;
+ 	}
+-	double wrapped = fmod(trunc(value), 4294967296.0);
++	double wrapped = fmod(trunc(value), 4294967295.0);
+ 	if (wrapped < 0) {
+ 		wrapped += 4294967296.0;
+ 	}

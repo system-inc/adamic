@@ -1,0 +1,20 @@
+internal/native/decode_ascii_test.go:39:	cache, err := newTestBuildCache(repository, "internal/native/decode_ascii")
+internal/native/decode_ascii_test.go:45:	corpusDirectory, err := cache.Tree("decode-node-corpus", nil, func(destination string) error {
+internal/native/normalize_test.go:221:	cache, err := newTestBuildCache(repository)
+internal/native/normalize_test.go:226:	built, err := cache.Tree("normalization-probe", [][]byte{[]byte(source)}, func(destination string) error {
+internal/native/products_reuse_test.go:11:	cache, err := newTestBuildCache("../..")
+internal/native/products_reuse_test.go:22:	first, err := cache.Tree("fixture", [][]byte{[]byte("one")}, build)
+internal/native/products_reuse_test.go:26:	same, err := cache.Tree("fixture", [][]byte{[]byte("one")}, build)
+internal/native/products_reuse_test.go:30:	changed, err := cache.Tree("fixture", [][]byte{[]byte("two")}, build)
+internal/native/record_test.go:200:	cache, err := newTestBuildCache(repository)
+internal/native/record_test.go:206:	if output, err := cache.Command(command, directory); err != nil {
+internal/native/split_units_test.go:170:func newTestBuildCache(repository string, directories ...string) (*testBuildCache, error) {
+internal/native/units_tsgo_test.go:54:	cache, err := newTestBuildCache(repository)
+internal/native/units_tsgo_test.go:62:	archiveProduct, err := cache.Tree("checker-archive", [][]byte{archiveBytes}, func(destination string) error {
+internal/native/units_tsgo_test.go:70:	built, err := cache.Tree("whole-tsgo-baseline", [][]byte{[]byte(source), archiveBytes, optionBytes}, func(destination string) error {
+internal/native/decode_ascii_cache_test.go:99:	entry, err := cache.Tree("decode-parallel-"+target, inputs, func(destination string) error {
+internal/native/decode_ascii_cache_test.go:130:					_, failures[index] = cache.Command(command, destination, headers...)
+internal/native/wasm_test.go:93:	cache, err := newTestBuildCache(repository, "cmd/adamic")
+internal/native/wasm_test.go:108:		built, err := cache.Tree("strict-wasi-runtime", inputs, func(destination string) error {
+internal/native/wasm_test.go:138:	if output, err := cache.Command(command, setupDirectory); err != nil {
+internal/native/wasm_test.go:166:		if data, err := cache.Command(command, filepath.Dir(output), contents...); err != nil {

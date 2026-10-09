@@ -1,0 +1,131 @@
+[
+  {
+    "test": "TestNumbersFormatExactlyAsJavaScriptDoes",
+    "package": "internal/native",
+    "file": "internal/native/number_test.go",
+    "seconds": 1.764,
+    "oracle": "Node execution",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M03: number_test.go:113: 444b1ae4d6e2ef50: native \"1e+22\", Node \"1e+21\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "mutants_in_matrix": 12,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumbersFormatExactlyAsJavaScriptDoes",
+      "TestNumbersParseExactlyAsJavaScriptDoes",
+      "TestPowersOfTwoFormatAsJavaScriptDoes",
+      "TestArtifactInputsAndReuse",
+      "TestMathAndToFixedMatchJavaScript",
+      "TestDecodeCacheLockDeadline"
+    ],
+    "evidence": "python3 review/test-audit/internal-native-number/matrix.py; M03.log: number_test.go:113: 444b1ae4d6e2ef50: native \"1e+22\", Node \"1e+21\""
+  },
+  {
+    "test": "TestNumbersParseExactlyAsJavaScriptDoes",
+    "package": "internal/native",
+    "file": "internal/native/parse_test.go",
+    "seconds": 1.1280000000000001,
+    "oracle": "Node execution",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M06",
+      "M07",
+      "M08",
+      "M09"
+    ],
+    "unique_kills": [
+      "M06",
+      "M07",
+      "M08",
+      "M09"
+    ],
+    "last_proven_fail": "M09: parse_test.go:184: parseInt false, radix 0, text \".5\": native NaN, Node 3fe0000000000000",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumbersFormatExactlyAsJavaScriptDoes",
+      "TestNumbersParseExactlyAsJavaScriptDoes",
+      "TestPowersOfTwoFormatAsJavaScriptDoes",
+      "TestArtifactInputsAndReuse",
+      "TestMathAndToFixedMatchJavaScript",
+      "TestDecodeCacheLockDeadline"
+    ],
+    "evidence": "python3 review/test-audit/internal-native-number/matrix.py; M09.log: parse_test.go:184: parseInt false, radix 0, text \".5\": native NaN, Node 3fe0000000000000"
+  },
+  {
+    "test": "TestPowersOfTwoFormatAsJavaScriptDoes",
+    "package": "internal/native",
+    "file": "internal/native/power_of_two_test.go",
+    "seconds": 0.427,
+    "oracle": "Node execution",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M02",
+      "M03",
+      "M05"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M05: power_of_two_test.go:52: 43f0000000000000: native \"18446744073709550000\", Node \"18446744073709552000\"",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "mutants_in_matrix": 12,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumbersFormatExactlyAsJavaScriptDoes",
+      "TestNumbersParseExactlyAsJavaScriptDoes",
+      "TestPowersOfTwoFormatAsJavaScriptDoes",
+      "TestArtifactInputsAndReuse",
+      "TestMathAndToFixedMatchJavaScript",
+      "TestDecodeCacheLockDeadline"
+    ],
+    "evidence": "python3 review/test-audit/internal-native-number/matrix.py; M05.log: power_of_two_test.go:52: 43f0000000000000: native \"18446744073709550000\", Node \"18446744073709552000\"",
+    "verdict_note": "Single common catcher is 86.9% slower, so it does not qualify for subsumption. The brief lacks this case; overlapping is a provisional retain label, not a claim that no common catcher exists."
+  },
+  {
+    "test": "TestArtifactInputsAndReuse",
+    "package": "internal/native",
+    "file": "internal/native/products_reuse_test.go",
+    "seconds": 0.073,
+    "oracle": "Self-authored directory identity and build-count expectations",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M12"
+    ],
+    "unique_kills": [
+      "M10",
+      "M12"
+    ],
+    "last_proven_fail": "M12: products_reuse_test.go:35: artifact inputs/reuse: first=/tmp/adamic-gate/TestArtifactInputsAndReuse1450669162/001/e0d7089b608407d7ac794f2ac37075eb8045f5b1f94bc849b52d2efca49d3a6c same=/tmp/adamic-gate/TestArtifactInputsAndReuse1450669162/001/e0d7089b608407d7ac794f2ac37075eb8045f5b1f94bc849b52d2efca49d3a6c changed=/tmp/adamic-gate/TestArtifactInputsAndReuse1450669162/001/0e442233c0f16d32081701263596ec6e8900d321aa9bd15b048f1a27b2f5e239 builds=0",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNumbersFormatExactlyAsJavaScriptDoes",
+      "TestNumbersParseExactlyAsJavaScriptDoes",
+      "TestPowersOfTwoFormatAsJavaScriptDoes",
+      "TestArtifactInputsAndReuse",
+      "TestMathAndToFixedMatchJavaScript",
+      "TestDecodeCacheLockDeadline"
+    ],
+    "evidence": "python3 review/test-audit/internal-native-number/matrix.py; M12.log: products_reuse_test.go:35: artifact inputs/reuse: first=/tmp/adamic-gate/TestArtifactInputsAndReuse1450669162/001/e0d7089b608407d7ac794f2ac37075eb8045f5b1f94bc849b52d2efca49d3a6c same=/tmp/adamic-gate/TestArtifactInputsAndReuse1450669162/001/e0d7089b608407d7ac794f2ac37075eb8045f5b1f94bc849b52d2efca49d3a6c changed=/tmp/adamic-gate/TestArtifactInputsAndReuse1450669162/001/0e442233c0f16d32081701263596ec6e8900d321aa9bd15b048f1a27b2f5e239 builds=0"
+  }
+]

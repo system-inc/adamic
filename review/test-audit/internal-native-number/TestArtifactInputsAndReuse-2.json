@@ -1,0 +1,32 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/native/",
+    "-run",
+    "^TestArtifactInputsAndReuse$"
+  ],
+  "wall": 2.5260602950002067,
+  "exit": 0,
+  "seconds": 0.059,
+  "failed": [],
+  "passed": [
+    "TestArtifactInputsAndReuse"
+  ],
+  "outputs": {
+    "TestArtifactInputsAndReuse": [
+      "=== RUN   TestArtifactInputsAndReuse\n",
+      "--- PASS: TestArtifactInputsAndReuse (0.05s)\n"
+    ],
+    "": [
+      "PASS\n",
+      "ok  \tgithub.com/system-inc/adamic/internal/native\t0.058s\n"
+    ]
+  }
+}

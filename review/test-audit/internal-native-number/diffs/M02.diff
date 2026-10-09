@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/number.c
++++ b/internal/native/runtime/number.c
+@@ -72,7 +72,7 @@
+ 			}
+ 			buffer[length++] = digits[index];
+ 		}
+-	} else if (-6 < point && point <= 0) {
++	} else if (-5 < point && point <= 0) {
+ 		// Small: "0.", zeros, then the digits.
+ 		length = append(buffer, length, "0.");
+ 		for (int index = point; index < 0; index++) {

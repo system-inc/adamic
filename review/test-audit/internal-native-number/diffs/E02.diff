@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/parse.c
++++ b/internal/native/runtime/parse.c
+@@ -152,7 +152,7 @@
+ 	return result;
+ }
+ 
+-double adamic_number_parse_int(const adamic_string *text, double radix_value) {
++double adamic_number_parse_int(const adamic_string *text, double radix_value) { return 0;
+ 	int radix = to_int32(radix_value);
+ 	if (radix != 0 && (radix < 2 || radix > 36)) {
+ 		return NAN;

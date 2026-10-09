@@ -1,0 +1,536 @@
+[
+  {
+    "id": "M01",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/number.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 7.212986951999483
+  },
+  {
+    "id": "M02",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/number.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.22104804499940656
+  },
+  {
+    "id": "M03",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/number.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.18369750899910287
+  },
+  {
+    "id": "M04",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/number.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.1789343939999526
+  },
+  {
+    "id": "M05",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/dtoa.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.20755485400150064
+  },
+  {
+    "id": "M06",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/parse.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.18886276099874522
+  },
+  {
+    "id": "M07",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/parse.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.18848629700005404
+  },
+  {
+    "id": "M08",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/parse.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.19140784399860422
+  },
+  {
+    "id": "M09",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/parse.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.18526865300009376
+  },
+  {
+    "id": "M10",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/buildcache/"
+      ]
+    ],
+    "exits": [
+      0
+    ],
+    "seconds": 0.10490650900101173
+  },
+  {
+    "id": "M11",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/buildcache/"
+      ]
+    ],
+    "exits": [
+      0
+    ],
+    "seconds": 0.10890086399922438
+  },
+  {
+    "id": "M12",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/buildcache/"
+      ]
+    ],
+    "exits": [
+      0
+    ],
+    "seconds": 0.10337665299994114
+  },
+  {
+    "id": "E01",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/number.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.17245068600095692
+  },
+  {
+    "id": "E02",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/parse.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.19324679799865407
+  },
+  {
+    "id": "E03",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/native/"
+      ],
+      [
+        "timeout",
+        "90",
+        "clang",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-Wno-unused-function",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-unused-but-set-variable",
+        "-I",
+        "internal/native/runtime",
+        "-fsyntax-only",
+        "/tmp/u051-standalone/parse.c"
+      ]
+    ],
+    "exits": [
+      0,
+      0
+    ],
+    "seconds": 0.34856796999883954
+  },
+  {
+    "id": "E04",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/buildcache/"
+      ]
+    ],
+    "exits": [
+      1
+    ],
+    "seconds": 0.1841983269987395
+  },
+  {
+    "id": "E04",
+    "commands": [
+      [
+        "timeout",
+        "90",
+        "go",
+        "vet",
+        "-overlay",
+        "/tmp/u051-standalone/overlay.json",
+        "./internal/buildcache/"
+      ]
+    ],
+    "exits": [
+      0
+    ],
+    "seconds": 0.10382867900079873
+  }
+]

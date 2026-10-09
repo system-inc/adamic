@@ -1,0 +1,146 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/runtime/number.c",
+    "line": 20,
+    "old": "append(buffer, 0, \"NaN\")",
+    "new": "append(buffer, 0, \"nan\")",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M02",
+    "file": "internal/native/runtime/number.c",
+    "line": 75,
+    "old": "-6 < point",
+    "new": "-5 < point",
+    "menu": "off-by-one",
+    "kind": "production"
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/runtime/number.c",
+    "line": 93,
+    "old": "int exponent = point - 1;",
+    "new": "int exponent = point;",
+    "menu": "off-by-one",
+    "kind": "production"
+  },
+  {
+    "id": "M04",
+    "file": "internal/native/runtime/number.c",
+    "line": 34,
+    "old": "value < 9007199254740992.0",
+    "new": "value < 4503599627370496.0",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M05",
+    "file": "internal/native/runtime/dtoa.c",
+    "line": 706,
+    "old": "if ((double_bits(v) & double_significand_mask) == 0) {",
+    "new": "if ((double_bits(v) & double_significand_mask) == 1) {",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M06",
+    "file": "internal/native/runtime/parse.c",
+    "line": 157,
+    "old": "radix < 2 || radix > 36",
+    "new": "radix < 2 || radix > 35",
+    "menu": "off-by-one",
+    "kind": "production"
+  },
+  {
+    "id": "M07",
+    "file": "internal/native/runtime/parse.c",
+    "line": 22,
+    "old": "fmod(trunc(value), 4294967296.0)",
+    "new": "fmod(trunc(value), 4294967295.0)",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M08",
+    "file": "internal/native/runtime/parse.c",
+    "line": 236,
+    "old": "end - cursor >= 8 && memcmp",
+    "new": "end - cursor >= 9 && memcmp",
+    "menu": "off-by-one",
+    "kind": "production"
+  },
+  {
+    "id": "M09",
+    "file": "internal/native/runtime/parse.c",
+    "line": 253,
+    "old": "if (digits > 0) {",
+    "new": "if (digits > 1) {",
+    "menu": "off-by-one",
+    "kind": "production"
+  },
+  {
+    "id": "M10",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 132,
+    "old": "\tfor _, flag := range inputs.Flags {\n\t\tfield(\"flag\", flag)\n\t}",
+    "new": "\t// Flag hashing loop dropped.",
+    "menu": "drop statement",
+    "kind": "production"
+  },
+  {
+    "id": "M11",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 126,
+    "old": "field(\"name\", inputs.Name)",
+    "new": "field(\"name\", \"artifact\")",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M12",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 83,
+    "old": "product := filepath.Join(cache, key)\n\tif _, err = os.Stat(product); err == nil {",
+    "new": "product := filepath.Join(cache, key)\n\tif _, err = os.Stat(product); err != nil {",
+    "menu": "flip condition",
+    "kind": "production"
+  },
+  {
+    "id": "E01",
+    "file": "internal/native/runtime/number.c",
+    "line": 18,
+    "old": "size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX]) {",
+    "new": "size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX]) { return 0;",
+    "menu": "return early",
+    "kind": "empty-answer"
+  },
+  {
+    "id": "E02",
+    "file": "internal/native/runtime/parse.c",
+    "line": 155,
+    "old": "double adamic_number_parse_int(const adamic_string *text, double radix_value) {",
+    "new": "double adamic_number_parse_int(const adamic_string *text, double radix_value) { return 0;",
+    "menu": "return early",
+    "kind": "empty-answer"
+  },
+  {
+    "id": "E03",
+    "file": "internal/native/runtime/parse.c",
+    "line": 223,
+    "old": "double adamic_number_parse_float(const adamic_string *text) {",
+    "new": "double adamic_number_parse_float(const adamic_string *text) { return 0;",
+    "menu": "return early",
+    "kind": "empty-answer"
+  },
+  {
+    "id": "E04",
+    "file": "internal/buildcache/buildcache.go",
+    "line": 54,
+    "old": "func Get(inputs Inputs, build func(directory string) error) (string, error) {",
+    "new": "func Get(inputs Inputs, build func(directory string) error) (string, error) { return \"\", nil;",
+    "menu": "return early",
+    "kind": "empty-answer"
+  }
+]

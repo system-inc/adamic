@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/parse.c
++++ b/internal/native/runtime/parse.c
+@@ -233,7 +233,7 @@
+ 		negative = *cursor == '-';
+ 		cursor++;
+ 	}
+-	if (end - cursor >= 8 && memcmp(cursor, "Infinity", 8) == 0) {
++	if (end - cursor >= 9 && memcmp(cursor, "Infinity", 8) == 0) {
+ 		result = negative ? -INFINITY : INFINITY;
+ 		adamic_release(trimmed);
+ 		return result;

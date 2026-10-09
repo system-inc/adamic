@@ -1,0 +1,2 @@
+COMMAND ["timeout", "90", "go", "vet", "-overlay", "/tmp/u051-standalone/overlay.json", "./internal/native/"]
+COMMAND ["timeout", "90", "clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-I", "internal/native/runtime", "-fsyntax-only", "/tmp/u051-standalone/parse.c"]

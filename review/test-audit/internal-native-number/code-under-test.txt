@@ -1,0 +1,25 @@
+CODE UNDER TEST: Adamic C number formatting, shortest decimal digits and parsers; production internal/buildcache address/reuse logic. ORACLE: real Node execution for numbers; self-authored expected path equality and builds==2 for artifacts. No harness or oracle mutations.
+Go functions with nonzero clean-slice coverage:
+github.com/system-inc/adamic/internal/buildcache/buildcache.go:54:			Get				100.0%
+github.com/system-inc/adamic/internal/buildcache/buildcache.go:59:			get				54.8%
+github.com/system-inc/adamic/internal/buildcache/buildcache.go:120:			Key				92.3%
+github.com/system-inc/adamic/internal/buildcache/buildcache.go:141:			hashPath			59.3%
+github.com/system-inc/adamic/internal/buildcache/buildcache.go:189:			Tool				77.8%
+github.com/system-inc/adamic/internal/buildcache/buildcache.go:203:			cacheDirectory			42.9%
+github.com/system-inc/adamic/internal/buildcache/buildcache.go:222:			repositoryRoot			75.0%
+github.com/system-inc/adamic/internal/buildcache/buildcache.go:246:			describe			100.0%
+github.com/system-inc/adamic/internal/buildcache/buildcache.go:262:			record				50.0%
+github.com/system-inc/adamic/internal/native/library.go:32:				RuntimeLibraryForSource		100.0%
+github.com/system-inc/adamic/internal/native/library.go:46:				featureFlags			80.0%
+github.com/system-inc/adamic/internal/native/library.go:56:				runtimeLibrary			80.6%
+github.com/system-inc/adamic/internal/native/library.go:102:				readRuntime			75.0%
+github.com/system-inc/adamic/internal/native/library.go:121:				runtimeKey			100.0%
+github.com/system-inc/adamic/internal/native/library.go:143:				cachedRuntime			18.6%
+github.com/system-inc/adamic/internal/native/library.go:212:				RuntimeLinkFlags		66.7%
+github.com/system-inc/adamic/internal/native/library.go:219:				slicesContain			50.0%
+github.com/system-inc/adamic/internal/native/native.go:78:				Flags				77.3%
+github.com/system-inc/adamic/internal/native/native.go:110:				Build				71.0%
+github.com/system-inc/adamic/internal/native/target.go:10:				ValidateOptions			18.8%
+github.com/system-inc/adamic/internal/native/target.go:37:				compilerName			40.0%
+github.com/system-inc/adamic/internal/native/view_unions_read.go:8:			init				100.0%
+C numeric entry functions: adamic_number_format, adamic_number_parse_int, adamic_number_parse_float. Formatter calls append and adamic_number_shortest_digits; parseInt calls to_int32, is_digit, digit_value, signed_zero, base_ten, power_of_two, generic. Both parsers call adamic_string_trim_sides and adamic_release. dtoa shortest mode calls double_to_ascii, bignum_dtoa, normalized_exponent, estimate_power, initial_scaled_start_values (all three cases), fixup_multiply_10, generate_shortest_digits, and their bignum/double helper functions. C static callgraph recorded separately; Go coverage does not instrument C.

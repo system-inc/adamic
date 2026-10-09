@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/number.c
++++ b/internal/native/runtime/number.c
+@@ -31,7 +31,7 @@
+ 	if (isinf(value)) {
+ 		return append(buffer, length, "Infinity");
+ 	}
+-	if (value < 9007199254740992.0 && value == (double)(uint64_t)value) {
++	if (value < 4503599627370496.0 && value == (double)(uint64_t)value) {
+ 		// A whole number below 2^53: every integer there is a double, and so are its neighbours, so no
+ 		// shorter digits read back as it, and its shortest form is its own digits, written directly
+ 		// rather than searched for. 2^53 and past, 2^60 is 1152921504606847000, so those search.

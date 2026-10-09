@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/parse.c
++++ b/internal/native/runtime/parse.c
+@@ -220,7 +220,7 @@
+ 	return result;
+ }
+ 
+-double adamic_number_parse_float(const adamic_string *text) {
++double adamic_number_parse_float(const adamic_string *text) { return 0;
+ 	// The longest prefix, after leading space, that is a decimal literal (StrDecimalLiteral, with no
+ 	// separators): a sign, then Infinity, or digits with perhaps a fraction and an exponent. An
+ 	// exponent with no digits isn't part of it, so "1e" is 1. strtod rounds what's found correctly.

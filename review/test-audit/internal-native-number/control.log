@@ -1,0 +1,52 @@
+{"Time":"2026-10-09T08:35:39.731688623Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T08:35:39.742383536Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDecodeCacheLockDeadline"}
+{"Time":"2026-10-09T08:35:39.742451869Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDecodeCacheLockDeadline","Output":"=== RUN   TestDecodeCacheLockDeadline\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.742475967Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDecodeCacheLockDeadline","Output":"=== PAUSE TestDecodeCacheLockDeadline\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.742478543Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDecodeCacheLockDeadline"}
+{"Time":"2026-10-09T08:35:39.742481408Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript"}
+{"Time":"2026-10-09T08:35:39.742483292Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Output":"=== RUN   TestMathAndToFixedMatchJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.7424861Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Output":"=== PAUSE TestMathAndToFixedMatchJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.742488124Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript"}
+{"Time":"2026-10-09T08:35:39.742490261Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersFormatExactlyAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:35:39.742492684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersFormatExactlyAsJavaScriptDoes","Output":"=== RUN   TestNumbersFormatExactlyAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.742495781Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersFormatExactlyAsJavaScriptDoes","Output":"=== PAUSE TestNumbersFormatExactlyAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.742497673Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersFormatExactlyAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:35:39.742499557Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:35:39.742501197Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Output":"=== RUN   TestNumbersParseExactlyAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.742504881Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Output":"=== PAUSE TestNumbersParseExactlyAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.742506451Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:35:39.74250822Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:35:39.742509926Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Output":"=== RUN   TestPowersOfTwoFormatAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.742512163Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Output":"=== PAUSE TestPowersOfTwoFormatAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.742513907Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:35:39.74257067Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse"}
+{"Time":"2026-10-09T08:35:39.742573086Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse","Output":"=== RUN   TestArtifactInputsAndReuse\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.791753483Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse","Output":"--- PASS: TestArtifactInputsAndReuse (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.791788271Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestArtifactInputsAndReuse","Elapsed":0.05}
+{"Time":"2026-10-09T08:35:39.792240304Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDecodeCacheLockDeadline"}
+{"Time":"2026-10-09T08:35:39.79225115Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDecodeCacheLockDeadline","Output":"=== CONT  TestDecodeCacheLockDeadline\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.792325207Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:35:39.792329576Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Output":"=== CONT  TestNumbersParseExactlyAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.792638415Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:35:39.792646557Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Output":"=== CONT  TestPowersOfTwoFormatAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.792823153Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersFormatExactlyAsJavaScriptDoes"}
+{"Time":"2026-10-09T08:35:39.792830007Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersFormatExactlyAsJavaScriptDoes","Output":"=== CONT  TestNumbersFormatExactlyAsJavaScriptDoes\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.793028559Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript"}
+{"Time":"2026-10-09T08:35:39.793033454Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Output":"=== CONT  TestMathAndToFixedMatchJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:39.826682569Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDecodeCacheLockDeadline","Output":"--- PASS: TestDecodeCacheLockDeadline (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:49.979837389Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestDecodeCacheLockDeadline","Elapsed":0.03}
+{"Time":"2026-10-09T08:35:49.98092744Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Output":"    power_of_two_test.go:58: 20980 values (2,098 powers of two, two neighbors each side, and their negatives), 0 mismatches\n"}
+{"Time":"2026-10-09T08:35:49.981346546Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Output":"--- PASS: TestPowersOfTwoFormatAsJavaScriptDoes (10.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:50.49934878Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestPowersOfTwoFormatAsJavaScriptDoes","Elapsed":10.19}
+{"Time":"2026-10-09T08:35:50.499466596Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Output":"    parse_test.go:191: 108023 texts, 0 mismatches\n"}
+{"Time":"2026-10-09T08:35:50.499787603Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Output":"--- PASS: TestNumbersParseExactlyAsJavaScriptDoes (10.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:50.661009183Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersParseExactlyAsJavaScriptDoes","Elapsed":10.71}
+{"Time":"2026-10-09T08:35:50.661073728Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Output":"    math_test.go:147: 69132 answers, 0 mismatches\n"}
+{"Time":"2026-10-09T08:35:50.661426287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Output":"--- PASS: TestMathAndToFixedMatchJavaScript (10.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:50.842386168Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestMathAndToFixedMatchJavaScript","Elapsed":10.87}
+{"Time":"2026-10-09T08:35:50.842440163Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersFormatExactlyAsJavaScriptDoes","Output":"    number_test.go:120: 255974 values, 0 mismatches\n"}
+{"Time":"2026-10-09T08:35:50.842713859Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersFormatExactlyAsJavaScriptDoes","Output":"--- PASS: TestNumbersFormatExactlyAsJavaScriptDoes (11.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:50.842792175Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestNumbersFormatExactlyAsJavaScriptDoes","Elapsed":11.05}
+{"Time":"2026-10-09T08:35:50.846413495Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:35:50.849418278Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t11.117s\n"}
+{"Time":"2026-10-09T08:35:50.849557808Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":11.118}
