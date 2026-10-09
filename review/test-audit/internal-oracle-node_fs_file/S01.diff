@@ -1,0 +1,11 @@
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -47,7 +47,7 @@
+ 	{"internal/oracle/testdata/string_views_characters.a", true, false},
+ 	{"internal/oracle/testdata/string_views_calls.a", true, false},
+ 	{"internal/oracle/testdata/string_views_surrogates.a", true, false},
+-	{"internal/oracle/testdata/non_null.ts", true, false},
++	{"internal/oracle/testdata/non_null.ts", false, false},
+ 	{"internal/oracle/testdata/non_null_map.ts", true, true},
+ 	{"internal/oracle/testdata/non_null_catch.ts", true, true},
+ 	{"internal/oracle/testdata/non_null_field.ts", true, true},

@@ -1,0 +1,11 @@
+--- a/internal/lower/non_null.go
++++ b/internal/lower/non_null.go
+@@ -111,7 +111,7 @@
+ 	if proven {
+ 		counts.Proven++
+ 	} else {
+-		counts.Checked++
++		counts.Checked += 2
+ 	}
+ 	counts.Sites = append(counts.Sites, ir.NonNullCheck{Where: l.program.Where(node), Expression: sourceExpression(node), Proven: proven})
+ }

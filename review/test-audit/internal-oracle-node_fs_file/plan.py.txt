@@ -1,0 +1,16 @@
+import pathlib,json,subprocess,difflib
+R=pathlib.Path('/workspace/adamic');O=R/'review/test-audit/internal-oracle-node_fs_file';changes=[
+('M01','internal/lower/non_null.go','strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")','strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a")','change source-extension constant'),
+('M02','internal/lower/non_null.go','counts.Checked++','counts.Checked += 2','change increment constant'),
+('M03','internal/lower/non_null.go','"non-null assertion failed at "','"non-null assertion missing at "','change diagnostic constant'),
+('M04','internal/native/runtime/node_fs_file.c','strcmp(name, "a") == 0) { value = O_WRONLY | O_CREAT | O_APPEND;','strcmp(name, "a") == 0) { value = O_WRONLY | O_CREAT | O_TRUNC;','change open option'),
+('W01','internal/oracle/oracle_test.go','func disagreement(oracle run, native run) string {\n\tswitch {\n\tcase oracle.exitCode != native.exitCode:\n\t\treturn "exit codes differ"\n\tcase !bytes.Equal(oracle.stdout, native.stdout):\n\t\treturn "stdout differs"\n\tcase !bytes.Equal(oracle.stderr, native.stderr):\n\t\treturn "stderr differs"\n\t}\n\treturn ""\n}','func disagreement(oracle run, native run) string { return "" }','witness: comparison always agrees'),
+('W02','internal/oracle/node_fs_file_test.go','bytes.Equal(got.stdout, truth.stdout)','bytes.Equal(got.stdout, got.stdout)','witness: stdout comparison always agrees'),
+('W03','internal/oracle/non_null_migration_test.go','string(got.stdout) == string(native.stdout)','string(got.stdout) == string(got.stdout)','witness: stdout comparison always agrees'),
+('W04','internal/oracle/non_null_checked_test.go','returned.Value.Type() != function.Returns','returned.Value.Type() != returned.Value.Type()','witness: disable return representation comparison'),
+('S01','internal/oracle/oracle_test.go','{"internal/oracle/testdata/non_null.ts", true, false}','{"internal/oracle/testdata/non_null.ts", false, false}','setup: unregister runnable migrated fixture')]
+base={};plan=[]
+for id,f,old,new,menu in changes:
+ if f not in base:base[f]=subprocess.check_output(['git','show','origin/main:'+f],cwd=R,text=True)
+ t=base[f];assert old in t,(id,f);x=dict(id=id,file=f,line=t[:t.index(old)].count('\n')+1,old=old,new=new,menu=menu);plan.append(x);c=t.replace(old,new,1);(O/(id+'.diff')).write_text(''.join(difflib.unified_diff(t.splitlines(True),c.splitlines(True),fromfile='a/'+f,tofile='b/'+f)))
+(O/'plan.json').write_text(json.dumps(plan,indent=2));pathlib.Path('/tmp/u065-base.json').write_text(json.dumps(base));(O/'code-oracle.txt').write_text('CODE UNDER TEST: compiler non-null lowering/refusal and native filesystem runtime; entered through Lower and native.C. Go reach inventory: reached-functions.txt. C flag handling call chain: adamic_fs_file_write_file/write_buffer -> open_file -> flags -> bytes/invalid_value; error construction raise_error/text/system_error. ORACLE: source Node plus hand-authored panic/refusal expectations and count snapshots. Witnesses guard agreement/representation comparisons; setup row guards the fixture registry against migration metadata. Fixed plan frozen before mutation runs. Four production mutations, four weakened comparison checks, one construction mutation.\n')

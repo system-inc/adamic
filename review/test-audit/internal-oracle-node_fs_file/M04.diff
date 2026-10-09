@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/node_fs_file.c
++++ b/internal/native/runtime/node_fs_file.c
+@@ -168,7 +168,7 @@
+     else if (strcmp(name, "wx") == 0 || strcmp(name, "xw") == 0) { value = O_WRONLY | O_CREAT | O_TRUNC | O_EXCL; }
+     else if (strcmp(name, "w+") == 0) { value = O_RDWR | O_CREAT | O_TRUNC; }
+     else if (strcmp(name, "wx+") == 0 || strcmp(name, "xw+") == 0) { value = O_RDWR | O_CREAT | O_TRUNC | O_EXCL; }
+-    else if (strcmp(name, "a") == 0) { value = O_WRONLY | O_CREAT | O_APPEND; }
++    else if (strcmp(name, "a") == 0) { value = O_WRONLY | O_CREAT | O_TRUNC; }
+     else if (strcmp(name, "ax") == 0 || strcmp(name, "xa") == 0) { value = O_WRONLY | O_CREAT | O_APPEND | O_EXCL; }
+     else if (strcmp(name, "a+") == 0) { value = O_RDWR | O_CREAT | O_APPEND; }
+     else if (strcmp(name, "ax+") == 0 || strcmp(name, "xa+") == 0) { value = O_RDWR | O_CREAT | O_APPEND | O_EXCL; }

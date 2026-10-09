@@ -1,0 +1,11 @@
+--- a/internal/oracle/node_fs_file_test.go
++++ b/internal/oracle/node_fs_file_test.go
+@@ -220,7 +220,7 @@
+ 			if truth.exitCode != 0 || len(truth.stderr) != 0 {
+ 				t.Fatalf("Node source failed: %+v", truth)
+ 			}
+-			if bytes.Equal(got.stdout, truth.stdout) {
++			if bytes.Equal(got.stdout, got.stdout) {
+ 				t.Fatal("Node stdout did not catch the mutant")
+ 			}
+ 			t.Log("caught only by Node stdout; exit 0, no sanitizer findings or leaks")

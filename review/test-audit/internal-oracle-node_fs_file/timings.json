@@ -1,0 +1,114 @@
+{
+  "TestNodeFSFileAgreesWithNode": {
+    "runs": [
+      2.842,
+      1.916,
+      2.077
+    ],
+    "median": 2.077
+  },
+  "TestNodeFSFileMutants": {
+    "runs": [
+      2.331,
+      2.227,
+      2.394
+    ],
+    "median": 2.331
+  },
+  "TestCheckedNonNullTypeScript": {
+    "runs": [
+      1.216,
+      1.02,
+      1.068
+    ],
+    "median": 1.068
+  },
+  "TestCheckedNonNullAdamicRefusal": {
+    "runs": [
+      0.068,
+      0.104,
+      0.067
+    ],
+    "median": 0.068
+  },
+  "TestCheckedNonNullCounts": {
+    "runs": [
+      1.195,
+      0.4,
+      0.667
+    ],
+    "median": 0.667
+  },
+  "TestImpossibleNonNullFixturesAreRefused": {
+    "runs": [
+      0.859,
+      1.284,
+      1.182
+    ],
+    "median": 1.182
+  },
+  "TestPossibleNonNullAdamicAssertionsAreRefused": {
+    "runs": [
+      0.146,
+      0.137,
+      0.107
+    ],
+    "median": 0.137
+  },
+  "TestMigratedNonNullFixturesRemainCovered": {
+    "runs": [
+      0.023,
+      0.026,
+      0.026
+    ],
+    "median": 0.026
+  },
+  "TestNonNullLiteralUnionInitializers": {
+    "runs": [
+      1.291,
+      1.217,
+      1.221
+    ],
+    "median": 1.221
+  },
+  "TestParserNonNullSourceExtension": {
+    "runs": [
+      0.808,
+      0.698,
+      0.802
+    ],
+    "median": 0.802
+  },
+  "TestNonNullAdamicRefusal": {
+    "runs": [
+      0.085,
+      0.139,
+      0.084
+    ],
+    "median": 0.085
+  },
+  "TestNotYetLibraryObjectEntriesConstMutant": {
+    "runs": [
+      0.849,
+      0.177,
+      0.206
+    ],
+    "median": 0.206
+  },
+  "TestNotYetLibraryRegex family": {
+    "runs": [
+      2.854,
+      1.771,
+      1.816
+    ],
+    "median": 1.816
+  },
+  "TestNotYetLibraryStringBoundsMutants": {
+    "runs": [
+      0.634,
+      0.171,
+      0.182
+    ],
+    "median": 0.182
+  }
+}

@@ -1,0 +1,22 @@
+import pathlib,json,subprocess,time,os,difflib
+R=pathlib.Path('/workspace/adamic');O=R/'review/test-audit/internal-oracle-node_fs_file';base=json.loads(pathlib.Path('/tmp/u065-base.json').read_text());plan=json.loads((O/'plan.json').read_text())
+for f,t in base.items():(R/f).write_text(t)
+for p in ['lower','native','oracle']:(R/('internal/'+p+'/audit_switch.go')).unlink()
+checks=[]
+for x in plan+ [dict(id='P01',file='internal/lower/lower.go'),dict(id='P02',file='internal/native/emit.go')]:
+ id,f=x['id'],x['file'];start=time.monotonic()
+ if 'old' in x:
+  c=base[f].replace(x['old'],x['new'],1)
+  if f.endswith('.go'):c=subprocess.check_output(['gofmt'],input=c,text=True)
+  (O/(id+'.diff')).write_text(''.join(difflib.unified_diff(base[f].splitlines(True),c.splitlines(True),fromfile='a/'+f,tofile='b/'+f)))
+ subprocess.run(['git','apply','--check',str(O/(id+'.diff'))],cwd=R,check=True);subprocess.run(['git','apply',str(O/(id+'.diff'))],cwd=R,check=True)
+ if f.endswith('.c'):
+  cmd=['clang','-std=c11','-Wall','-Wextra','-Werror','-Wcast-function-type-strict','-pedantic','-Wno-unused-variable','-Wno-unused-but-set-variable','-Wno-unused-function','-Wno-unused-parameter','-Wno-self-assign','-ffp-contract=off','-fno-optimize-sibling-calls','-O1','-g','-fsanitize=address,undefined','-fno-sanitize-recover=all','-I','internal/native/runtime','-c',f,'-o','/tmp/u065-M04.o']
+ else:cmd=['timeout','90','go','vet','./'+str(pathlib.Path(f).parent)+'/']
+ with open(O/(id+'-standalone-check.log'),'w') as out:p=subprocess.run(cmd,cwd=R,stdout=out,stderr=subprocess.STDOUT)
+ (R/f).write_text(base[f]);checks.append(dict(id=id,command=cmd,code=p.returncode,seconds=time.monotonic()-start));(O/'standalone-checks.json').write_text(json.dumps(checks,indent=2));print(checks[-1],flush=True);assert p.returncode==0,(O/(id+'-standalone-check.log')).read_text()
+names=json.loads((O/'names.json').read_text());pat='^('+'|'.join(names)+')$';start=time.monotonic()
+with open(O/'restored-slice.log','w') as out:p=subprocess.run(['timeout','120','go','test','-json','-count=1','-timeout','90s','./internal/oracle/','-run',pat],cwd=R,stdout=out,stderr=subprocess.STDOUT)
+assert p.returncode==0
+subprocess.run(['git','diff','--exit-code','--','internal/lower','internal/native','internal/oracle'],cwd=R,check=True)
+(O/'finish-status.json').write_text(json.dumps(dict(code=p.returncode,restored_wall=time.monotonic()-start,finished=time.time()),indent=2))

@@ -1,0 +1,11 @@
+--- a/internal/lower/non_null.go
++++ b/internal/lower/non_null.go
+@@ -93,7 +93,7 @@
+ 	}
+ 	file := ast.GetSourceFileOfNode(node)
+ 	text := file.Text()[scanner.GetTokenPosOfNode(node, file, false):node.End()]
+-	message := ir.StringConstant{Index: l.constant("non-null assertion failed at " + l.program.Where(node) + ": " + text + " is null or undefined")}
++	message := ir.StringConstant{Index: l.constant("non-null assertion missing at " + l.program.Where(node) + ": " + text + " is null or undefined")}
+ 	result := ir.Expression(ir.Coalesce{Value: value, Panic: message, Of: value.Type().Present()})
+ 	if result.Type() == ir.Union && of != ir.Union {
+ 		result = ir.Narrow{Value: result, To: of}

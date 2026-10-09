@@ -1,0 +1,17 @@
+import pathlib,json,subprocess,time,re
+R=pathlib.Path('/workspace/adamic');O=R/'review/test-audit/internal-oracle-node_fs_file'
+names='TestNodeFSFileAgreesWithNode TestNodeFSFileMutants TestCheckedNonNullTypeScript TestCheckedNonNullAdamicRefusal TestCheckedNonNullCounts TestImpossibleNonNullFixturesAreRefused TestPossibleNonNullAdamicAssertionsAreRefused TestMigratedNonNullFixturesRemainCovered TestNonNullLiteralUnionInitializers TestParserNonNullSourceExtension TestNonNullAdamicRefusal TestNotYetLibraryObjectEntriesConstMutant TestNotYetLibraryRegexCallbackMutants TestNotYetLibraryRegexOffsetMutants TestNotYetLibraryStringBoundsMutants'.split();listing=(O/'list.log').read_text().splitlines();assert all(x in listing for x in names)
+(O/'names.json').write_text(json.dumps(names,indent=2));groups=[[n] for n in names if n!='TestNotYetLibraryRegexOffsetMutants'];groups[12]=names[12:14];(O/'groups.json').write_text(json.dumps(groups,indent=2))
+def run(cmd,file):
+ start=time.monotonic()
+ with open(O/file,'w') as out:p=subprocess.run(cmd,cwd=R,stdout=out,stderr=subprocess.STDOUT)
+ return p.returncode,time.monotonic()-start
+pattern='^('+'|'.join(names)+')$'
+code,seconds=run(['timeout','120','go','test','-json','-count=1','-timeout','90s','-coverpkg=./internal/lower,./internal/native','-coverprofile='+str(O/'coverage.out'),'./internal/oracle/','-run',pattern],'slice-baseline.log');(O/'slice-status.json').write_text(json.dumps(dict(code=code,wall=seconds)));assert code==0
+run(['go','tool','cover','-func='+str(O/'coverage.out')],'functions-coverage.txt');lines=(O/'functions-coverage.txt').read_text().splitlines();(O/'reached-functions.txt').write_text('\n'.join(l for l in lines if float(re.search(r'([0-9.]+)%$',l)[1])>0)+'\n')
+timings={}
+for group in groups:
+ key=group[0] if len(group)==1 else 'TestNotYetLibraryRegex family';values=[]
+ for i in range(3):
+  file='time-'+group[0]+'-'+str(i+1)+'.log';code,wall=run(['timeout','120','go','test','-count=1','-timeout','90s','./internal/oracle/','-run','^('+'|'.join(group)+')$'],file);assert code==0,(file,code);values.append(float(re.search(r'ok\s+\S+\s+([0-9.]+)s',(O/file).read_text())[1]))
+ timings[key]=dict(runs=values,median=sorted(values)[1]);(O/'timings.json').write_text(json.dumps(timings,indent=2));print(key,values,flush=True)

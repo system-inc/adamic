@@ -1,0 +1,153 @@
+[
+  {
+    "id": "M01",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "code": 0,
+    "seconds": 0.757831384000383
+  },
+  {
+    "id": "M02",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "code": 0,
+    "seconds": 0.6704534210002748
+  },
+  {
+    "id": "M03",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "code": 0,
+    "seconds": 0.6786551639997924
+  },
+  {
+    "id": "M04",
+    "command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "internal/native/runtime",
+      "-c",
+      "internal/native/runtime/node_fs_file.c",
+      "-o",
+      "/tmp/u065-M04.o"
+    ],
+    "code": 0,
+    "seconds": 0.33952679300000455
+  },
+  {
+    "id": "W01",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "code": 0,
+    "seconds": 0.9056858439998905
+  },
+  {
+    "id": "W02",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "code": 0,
+    "seconds": 0.37403156099935586
+  },
+  {
+    "id": "W03",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "code": 0,
+    "seconds": 0.42846109500078455
+  },
+  {
+    "id": "W04",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "code": 0,
+    "seconds": 0.41414127400003053
+  },
+  {
+    "id": "S01",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/oracle/"
+    ],
+    "code": 0,
+    "seconds": 0.39886421899973357
+  },
+  {
+    "id": "P01",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "code": 0,
+    "seconds": 0.6722791310003231
+  },
+  {
+    "id": "P02",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "code": 0,
+    "seconds": 0.8828565630001322
+  }
+]

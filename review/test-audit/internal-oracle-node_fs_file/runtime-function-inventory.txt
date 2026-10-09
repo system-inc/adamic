@@ -1,0 +1,51 @@
+Conservative C source inventory; not dynamic coverage.
+21: static adamic_string *text(const char *bytes) {
+25: static void raise_error(const char *name, const char *code, const char *message) {
+33: static void system_error(int error, const char *operation, const char *path) {
+72: static char *bytes(const adamic_string *value) {
+87: static void invalid_value(const char *prefix, const adamic_string *value) {
+125: static char *path_bytes(const adamic_string *path, bool throwing) {
+131: static bool integer(double value, double maximum, const char *argument) {
+145: static void read_range(const char *argument, const char *range, double value) {
+152: static bool file_descriptor(double value) {
+159: static int flags(const adamic_string *flag) {
+182: static int open_file(const adamic_string *path, const adamic_string *flag, double mode) {
+195: double adamic_fs_file_open(const adamic_string *path, const adamic_string *flag, double mode) {
+200: int adamic_fs_file_read_bytes(int descriptor, unsigned char **out, size_t *length) {
+220: static adamic_string *read_file(int descriptor, bool owned) {
+238: adamic_string *adamic_fs_file_read_file(const adamic_string *path, const adamic_string *flag) {
+244: adamic_string *adamic_fs_file_read_fd(double descriptor, const adamic_string *flag) {
+251: static adamic_array *read_buffer(int descriptor, bool owned) {
+266: adamic_array *adamic_fs_file_read_buffer(const adamic_string *path, const adamic_string *flag) {
+271: adamic_array *adamic_fs_file_read_buffer_fd(double descriptor, const adamic_string *flag) {
+278: double adamic_fs_file_close(double descriptor) {
+285: double adamic_fs_file_read_sync(double descriptor, adamic_array *buffer, double offset, double length, double position) {
+311: double adamic_fs_file_write(double descriptor, const adamic_string *string, double position) {
+327: static double write_data(int descriptor, const char *buffer, size_t length, bool owned, bool flush) {
+348: static double write_file(int descriptor, const adamic_string *string, bool owned, bool flush) {
+354: static double write_buffer(int descriptor, const adamic_array *buffer, bool owned, bool flush) {
+362: double adamic_fs_file_write_buffer(const adamic_string *path, const adamic_array *buffer, const adamic_string *flag, double mode, bool flush) {
+367: double adamic_fs_file_write_buffer_fd(double descriptor, const adamic_array *buffer, const adamic_string *flag, double mode, bool flush) {
+374: double adamic_fs_file_write_file(const adamic_string *path, const adamic_string *string, const adamic_string *flag, double mode, bool flush) {
+380: double adamic_fs_file_write_fd(double descriptor, const adamic_string *string, const adamic_string *flag, double mode, bool flush) {
+387: bool adamic_fs_file_exists(const adamic_string *path) {
+401: adamic_object *adamic_fs_file_date_new(double milliseconds) {
+408: double adamic_fs_file_date_time(const adamic_object *date) {
+417: adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_missing) {
+445: static mode_t stat_mode(const adamic_object *information) {
+449: bool adamic_fs_file_is_file(const adamic_object *information) { return S_ISREG(stat_mode(information)); }
+450: bool adamic_fs_file_is_directory(const adamic_object *information) { return S_ISDIR(stat_mode(information)); }
+451: bool adamic_fs_file_is_symbolic_link(const adamic_object *information) { return S_ISLNK(stat_mode(information)); }
+455: static int make_directory(char *name, mode_t mode, bool recursive, adamic_string **first) {
+487: adamic_string *adamic_fs_file_mkdir(const adamic_string *path, bool recursive, double mode) {
+504: static char *mkdtemp(char *name) {
+519: adamic_string *adamic_fs_file_mkdtemp(const adamic_string *prefix) {
+538: static void remove_error(int error, const char *operation, const char *name) {
+551: static void remove_path(const char *name, bool recursive, bool force) {
+591: double adamic_fs_file_rm(const adamic_string *path, bool recursive, bool force) {
+600: double adamic_fs_file_unlink(const adamic_string *path) {
+609: static double fs_utimes(const adamic_string *path, double atime, double mtime, bool atime_date, bool mtime_date) {
+637: double adamic_fs_file_utimes(const adamic_string *path,double atime,double mtime) {return fs_utimes(path,atime,mtime,false,false);}
+638: double adamic_fs_file_utimes_dates(const adamic_string *path,const adamic_object *atime,const adamic_object *mtime) {return fs_utimes(path,adamic_fs_file_date_time(atime)/1000,adamic_fs_file_date_time(mtime)/1000,true,true);}
+639: double adamic_fs_file_utimes_atime_date(const adamic_string *path,const adamic_object *atime,double mtime) {return fs_utimes(path,adamic_fs_file_date_time(atime)/1000,mtime,true,false);}
+640: double adamic_fs_file_utimes_mtime_date(const adamic_string *path,double atime,const adamic_object *mtime) {return fs_utimes(path,atime,adamic_fs_file_date_time(mtime)/1000,false,true);}

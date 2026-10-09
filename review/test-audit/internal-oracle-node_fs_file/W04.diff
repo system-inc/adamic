@@ -1,0 +1,11 @@
+--- a/internal/oracle/non_null_checked_test.go
++++ b/internal/oracle/non_null_checked_test.go
+@@ -119,7 +119,7 @@
+ 				for _, function := range program.Functions {
+ 					if function.Name == "narrowed" {
+ 						mutateReadiness(function.Body, func(node any) any {
+-							if returned, ok := node.(ir.Return); ok && returned.Value.Type() != function.Returns {
++							if returned, ok := node.(ir.Return); ok && returned.Value.Type() != returned.Value.Type() {
+ 								caught = true
+ 							}
+ 							return node

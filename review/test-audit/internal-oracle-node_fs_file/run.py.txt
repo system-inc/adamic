@@ -1,0 +1,36 @@
+import pathlib,json,subprocess,time,os,difflib
+R=pathlib.Path('/workspace/adamic');O=R/'review/test-audit/internal-oracle-node_fs_file';base=json.loads(pathlib.Path('/tmp/u065-base.json').read_text());plan=json.loads((O/'plan.json').read_text());names=json.loads((O/'names.json').read_text());pattern='^('+'|'.join(names)+')$';work=dict(base)
+for x in plan:
+ id,f,old,new=x['id'],x['file'],x['old'],x['new']
+ if id=='M01':c='strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), auditPick("M01", ".ts", ".a"))'
+ elif id=='M02':c='counts.Checked += auditPick("M02", 1, 2)'
+ elif id=='M03':c='auditPick("M03", "non-null assertion failed at ", "non-null assertion missing at ")'
+ elif id=='M04':c='strcmp(name, "a") == 0) { value = O_WRONLY | O_CREAT | ((getenv("ADAMIC_MUTANT") != NULL && strcmp(getenv("ADAMIC_MUTANT"), "M04") == 0) ? O_TRUNC : O_APPEND);'
+ elif id=='W01':c=old.replace('{\n\tswitch','{\n if auditOn("W01") { return "" };\n\tswitch',1)
+ elif id=='W02':c='auditPick("W02", bytes.Equal(got.stdout, truth.stdout), bytes.Equal(got.stdout, got.stdout))'
+ elif id=='W03':c='auditPick("W03", string(got.stdout) == string(native.stdout), string(got.stdout) == string(got.stdout))'
+ elif id=='W04':c='auditPick("W04", returned.Value.Type() != function.Returns, false)'
+ elif id=='S01':c='{"internal/oracle/testdata/non_null.ts", auditPick("S01", true, false), false}'
+ work[f]=work[f].replace(old,c,1)
+for id,f,sig,ret in [('P01','internal/lower/lower.go','func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {','return nil, nil'),('P02','internal/native/emit.go','func C(program *ir.Program) string {','return ""')]:
+ base[f]=subprocess.check_output(['git','show','origin/main:'+f],cwd=R,text=True);work[f]=base[f].replace(sig,sig+'\n if auditOn("'+id+'") { '+ret+' }',1)
+ pathlib.Path('/tmp/u065-probe-input.go').write_text(base[f]);subprocess.run(['/tmp/u044-probe-gen','/tmp/u065-probe-input.go','Lower' if id=='P01' else 'C',ret,'/tmp/u065-probe-output.go'],check=True);c=pathlib.Path('/tmp/u065-probe-output.go').read_text();(O/(id+'.diff')).write_text(''.join(difflib.unified_diff(base[f].splitlines(True),c.splitlines(True),fromfile='a/'+f,tofile='b/'+f)))
+pathlib.Path('/tmp/u065-base.json').write_text(json.dumps(base))
+for f,t in work.items():(R/f).write_text(t)
+helpers=[]
+for package in ['lower','native','oracle']:
+ f='internal/'+package+'/audit_switch.go';helpers.append(f);(R/f).write_text('package '+package+'\nimport "os"\nfunc auditOn(id string) bool { return os.Getenv("ADAMIC_MUTANT")==id }\nfunc auditPick[T any](id string,a,b T) T { if auditOn(id) { return b };return a }\n')
+subprocess.run(['gofmt','-w']+[str(R/f) for f in work if f.endswith('.go')]+[str(R/f) for f in helpers],check=True)
+for f in list(work)+helpers:(O/(pathlib.Path(f).name+'.'+f.split('/')[1]+'.switched.txt')).write_text((R/f).read_text())
+status=[]
+def run(id,scope,file):
+ env=dict(os.environ,ADAMIC_MUTANT=id,ADAMIC_BUILD_CACHE_DIR='/tmp/u065/cache/'+id,ADAMIC_GATE_UNCACHED='1');start=time.monotonic()
+ with open(O/file,'w') as out:p=subprocess.run(['timeout','120','go','test','-json','-count=1','-timeout','90s','./internal/oracle/','-run',scope],cwd=R,env=env,stdout=out,stderr=subprocess.STDOUT)
+ x=dict(id=id,code=p.returncode,wall=time.monotonic()-start,scope=scope,log=file);status.append(x);(O/'run-status.json').write_text(json.dumps(status,indent=2));print(x,flush=True);return x
+for x in plan:
+ d=run(x['id'],pattern,x['id']+'.log');text=(O/d['log']).read_text()
+ if 'panic:' in text or d['code']==124:
+  for n in names:run(x['id'],'^'+n+'$',x['id']+'-'+n+'.log')
+entries={'TestNodeFSFileAgreesWithNode':'P02','TestCheckedNonNullAdamicRefusal':'P01','TestCheckedNonNullCounts':'P02','TestImpossibleNonNullFixturesAreRefused':'P01','TestPossibleNonNullAdamicAssertionsAreRefused':'P01','TestNonNullAdamicRefusal':'P01'}
+(O/'probe-entries.json').write_text(json.dumps(entries,indent=2))
+for n,id in entries.items():run(id,'^'+n+'$',id+'-'+n+'.log')

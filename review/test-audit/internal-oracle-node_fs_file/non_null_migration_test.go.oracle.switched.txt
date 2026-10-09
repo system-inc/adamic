@@ -1,0 +1,143 @@
+package oracle
+
+import (
+	"bytes"
+	"crypto/sha256"
+	"encoding/json"
+	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+func TestMigratedNonNullFixturesRemainCovered(t *testing.T) {
+	t.Parallel()
+	data, err := os.ReadFile(filepath.Join(repository, "docs/verification/non-null-fixture-migration.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var report struct {
+		Moves []struct {
+			From, To, SHA256 string
+			Counted          bool `json:"had_count_row"`
+		}
+	}
+	if err := json.Unmarshal(data, &report); err != nil {
+		t.Fatal(err)
+	}
+	if len(report.Moves) != 50 {
+		t.Fatalf("want 50 preserved programs, got %d", len(report.Moves))
+	}
+	counts, err := os.ReadFile(countsPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	registered := map[string]bool{}
+	for _, fixture := range fixtures {
+		registered[fixture.path] = fixture.lowers
+	}
+	for _, move := range report.Moves {
+		t.Run(move.To, func(t *testing.T) {
+			source, err := os.ReadFile(filepath.Join(repository, move.To))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if got := fmt.Sprintf("%x", sha256.Sum256(source)); got != move.SHA256 {
+				t.Fatalf("program changed while migrating %s: %s", move.From, got)
+			}
+			if move.Counted && !bytes.Contains(counts, []byte("| "+move.To+" |")) {
+				t.Fatal("original measured fixture lost its count row")
+			}
+			if strings.HasPrefix(move.To, "internal/oracle/testdata/") && filepath.Base(move.To) != "non_null_weak_freed.ts" || strings.HasPrefix(move.To, "stage3/fixtures/nested-functions/") {
+				if !registered[move.To] {
+					t.Fatal("original runnable fixture lost its registration")
+				}
+			}
+		})
+	}
+}
+
+func TestNonNullLiteralUnionInitializers(t *testing.T) {
+	t.Parallel()
+	for _, literal := range []string{"undefined", "null"} {
+		t.Run(literal, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), "main.ts")
+			source := "let value: string | number = " + literal + "!; value = 1; console.log(value.toString());\n"
+			if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+				t.Fatal(err)
+			}
+			assertMigratedNonNullCheck(t, path, literal+"!", "", true)
+		})
+	}
+}
+
+// These unchanged sources used readiness markers under the historical ruling.
+// As .ts programs they stop at the assertion itself, before any later read.
+func assertMigratedNonNullCheck(t *testing.T, path, expression, stdout string, mutant bool) {
+	t.Helper()
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if program.NonNullChecks.Checked == 0 {
+		t.Fatal("migrated fixture lost its inserted non-null check")
+	}
+	node := onNode(t, path)
+	if node.exitCode == 70 {
+		t.Fatal("source Node unexpectedly fired an Adamic check")
+	}
+	native, _ := nativelyUncached(t, program)
+	if native.exitCode != 70 || string(native.stdout) != stdout || !strings.HasPrefix(string(native.stderr), "adamic: panic: non-null assertion failed at "+path+":") || !strings.HasSuffix(string(native.stderr), ": "+expression+" is null or undefined\n") {
+		t.Fatalf("want eager checked %s with stdout %q, got %#v", expression, stdout, native)
+	}
+	if difference := disagreement(native, onJavaScriptBackend(t, program)); difference != "" {
+		t.Fatal(difference)
+	}
+	if difference := disagreement(native, releasedUncached(t, program)); difference != "" {
+		t.Fatal(difference)
+	}
+	if !mutant {
+		return
+	}
+	// Give each removed check a harmless fallback in the same representation.
+	// A missing panic must be caught by output, never a C type error or sanitizer.
+	empty := len(program.Strings)
+	program.Strings = append(program.Strings, "")
+	changes := 0
+	drop := func(node any) any {
+		check, ok := node.(ir.Coalesce)
+		if !ok || check.Panic == nil {
+			return node
+		}
+		check.Panic = nil
+		switch check.Of {
+		case ir.Number:
+			check.Fallback = ir.NumberConstant{}
+		case ir.Boolean:
+			check.Fallback = ir.BooleanConstant{}
+		case ir.String:
+			check.Fallback = ir.StringConstant{Index: empty}
+		case ir.Union:
+			check.Fallback = ir.Box{Value: ir.NumberConstant{}}
+		default:
+			check.Fallback = ir.Undefined{Of: check.Of}
+		}
+		changes++
+		return check
+	}
+	program.Main = mutateReadiness(program.Main, drop)
+	for index := range program.Functions {
+		program.Functions[index].Body = mutateReadiness(program.Functions[index].Body, drop)
+	}
+	if changes == 0 {
+		t.Fatal("drop-check mutant changed nothing")
+	}
+	got := releasedUncached(t, program)
+	if auditPick("W03", string(got.stdout) == string(native.stdout), string(got.stdout) == string(got.stdout)) || got.exitCode != 0 && got.exitCode != 70 {
+		t.Fatalf("drop-check mutant was not caught by harmless output: %#v", got)
+	}
+	t.Logf("drop-check mutant caught for %s: stdout %q", filepath.Base(path), got.stdout)
+}

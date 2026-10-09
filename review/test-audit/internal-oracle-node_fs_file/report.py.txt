@@ -1,0 +1,48 @@
+import pathlib,json,re,subprocess,time,gzip,shutil,collections
+R=pathlib.Path('/workspace/adamic');O=R/'review/test-audit/internal-oracle-node_fs_file';names=json.loads((O/'names.json').read_text());groups=json.loads((O/'groups.json').read_text());timing=json.loads((O/'timings.json').read_text());plan=json.loads((O/'plan.json').read_text());statuses=json.loads((O/'run-status.json').read_text());entries=json.loads((O/'probe-entries.json').read_text());base=subprocess.check_output(['git','rev-parse','origin/main'],cwd=R,text=True).strip()
+def parse(path):
+ ev=[]
+ for line in path.read_text().splitlines():
+  try:ev.append(json.loads(line))
+  except:pass
+ failed={e['Test'] for e in ev if e.get('Action')=='fail' and e.get('Test')};rootfails={t.split('/')[0] for t in failed};passed={e['Test'] for e in ev if e.get('Action')=='pass' and e.get('Test') and '/' not in e['Test']};messages={}
+ for e in ev:
+  if e.get('Action')=='output' and e.get('Test') in failed and re.search(r'_test.go:\d+:',e.get('Output','')):messages.setdefault(e['Test'].split('/')[0],[]).append(e['Output'].strip())
+ return dict(fails=sorted(rootfails),passed=sorted(passed),messages=messages,skips=[e['Test'] for e in ev if e.get('Action')=='skip'],seconds=next((e.get('Elapsed') for e in reversed(ev) if not e.get('Test') and e.get('Action') in ['pass','fail']),None),panic='panic:' in path.read_text())
+parsed={x['id']:parse(O/(x['id']+'.log')) for x in plan};rowkeys=[g[0] if len(g)==1 else 'TestNotYetLibraryRegex family' for g in groups];ordinary={names[0],names[3],names[4],names[5],names[6],names[10]};setup=names[7];wchecks={names[1]:['W02'],names[2]:['W01','W04'],names[8]:['W03'],names[9]:['W01'],names[11]:['W01'],names[12]:['W01'],names[14]:['W01']};matrix={}
+for id,d in parsed.items():
+ matrix[id]={k:'fail' if any(n in d['fails'] for n in g) else 'pass' if all(n in d['passed'] for n in g) else 'unknown' for k,g in zip(rowkeys,groups)}
+ assert all(v!='unknown' for v in matrix[id].values()),(id,matrix[id])
+killsets={n:{id for id in ['M01','M02','M03','M04'] if n in parsed[id]['fails']} for n in ordinary};killsets[names[4]]=set();results=[]
+oracles={names[0]:('Source Node stdout/stderr/exit plus filesystem contents, modes, symlinks; native sanitizer and leak checks.','external-run'),names[1]:('Source Node stdout comparison guarded by built-in runtime mutants; sanitizer/exit preconditions.','external-run'),names[2]:('Source Node for ordinary successful cases; handwritten panic bytes/sites/counts and IR return representation for checked cases. Mixed production/witness row.',['external-run','self']),names[3]:('Handwritten Refused class, What, and Fix strings.','self'),names[4]:('Snapshot of native allocation/reference counts in counts.md; no independent external expected counts.','self'),names[5]:('Source Node is checked for TS operands; native/JS expected panic bytes and .a Refused diagnostics are handwritten.',['external-run','self']),names[6]:('Handwritten Refused class, What, and Fix strings.','self'),names[7]:('Own migration metadata: 50 moves, SHA256 source hashes, count rows, and fixture registry.','self'),names[8]:('Node is run but only forbidden from exiting 70; handwritten native panic expectations and backend agreement; built-in output witness allows exit 0 or 70.',['external-run','self']),names[9]:('Source Node supplies ordinary bytes; handwritten non-null counts/refusal expectations; built-in indexed-value witness.',['external-run','self']),names[10]:('Handwritten exact refusal text and source position.','self'),names[11]:('Source Node stdout compared after planted IR field-order swap.','external-run'),names[12]:('Source Node stdout compared after planted regexp callback runtime changes.','external-run'),names[14]:('Source Node stdout compared after planted string-bound IR changes.','external-run')}
+for key,group in zip(rowkeys,groups):
+ n=group[0];ks=sorted(killsets[n]) if n in ordinary else [];uniques=[id for id in ks if sum(id in s for s in killsets.values())==1];sub=[];subsec=None;special=[]
+ if n==setup:verdict='setup-check';special=['S01'];assert n in parsed['S01']['fails']
+ elif n not in ordinary:
+  verdict='witness';special=wchecks[n]
+  for id in special:assert any(t in parsed[id]['fails'] for t in group),(n,id)
+ elif n==names[4]:
+  verdict='cannot-judge';ks=[];uniques=[]
+ elif uniques:verdict='sacred'
+ elif ks:
+  cand=[r for r,s in killsets.items() if r!=n and set(ks)<=s];assert cand
+  chosen=min(cand,key=lambda r:(timing[r]['median'],r));sub=[chosen];subsec=timing[chosen]['median'];verdict='subsumed'
+ else:verdict='untrue'
+ id=(special or ks or ['M01'])[-1];member=next(t for t in group if t in parsed[id]['fails']);line=parsed[id]['messages'][member][0]
+ files=[]
+ for t in group:
+  for path in (R/'internal/oracle').glob('*_test.go'):
+   text=path.read_text();m=re.search(r'^func '+t+r'\(',text,re.M)
+   if m:files.append(str(path.relative_to(R))+':'+str(text[:m.start()].count('\n')+1));break
+ probe=entries.get(n);pcode=next((x['code'] for x in statuses if probe and x['log']==probe+'-'+n+'.log'),None)
+ command='ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT='+id+' ADAMIC_BUILD_CACHE_DIR=/tmp/u065/cache/'+id+' timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '+next(x['scope'] for x in statuses if x['log']==id+'.log')+' > '+id+'.log 2>&1'
+ results.append(dict(test=key,members=group,package='internal/oracle',file=files[0] if len(files)==1 else files,seconds=timing[key]['median'],oracle=oracles[n][0],oracle_kind=oracles[n][1],kills=ks,unique_kills=uniques,last_proven_fail=id+': '+line,verdict=verdict,subsumed_by=sub,mutants_in_matrix=4,probe_kills=[probe] if probe and pcode else [],subsumer_seconds=subsec,vacuous=pcode==0 if probe else None,bounded=True,matrix_rows=rowkeys,evidence=command+'; '+line,witness_checks=special if verdict=='witness' else [],setup_checks=special if verdict=='setup-check' else [],ignored_production_failures=[id for id in ['M01','M02','M03','M04'] if any(t in parsed[id]['fails'] for t in group)] if verdict in ['witness','setup-check'] else [],subsumption_mutants=len(ks) if verdict=='subsumed' else None))
+for result in results:
+ if result['test']==names[4]:
+  result['cannot_judge_reason']='The frozen mutants did not change native allocation/reference counts. M01 failed Lower before the count comparison, so it is a precondition failure rather than count-oracle evidence.'
+  result['precondition_failures']=['M01']
+  result['last_proven_fail']='M01 precondition only: '+result['last_proven_fail'].split(': ',1)[1]
+(O/'results.json').write_text(json.dumps(results,indent=2));(O/'matrix.json').write_text(json.dumps(dict(rows=rowkeys,members=groups,cells=matrix,observed_failures=parsed,production_verdict_rows=sorted(ordinary),outside_slice='unknown for every mutant'),indent=2))
+(O/'matrix.tsv').write_text('id\t'+'\t'.join(rowkeys)+'\n'+'\n'.join(id+'\t'+'\t'.join(matrix[id][k] for k in rowkeys) for id in matrix)+'\n')
+summary=dict(base=base,nproc=5,requested_tests=len(names),grouped_rows=len(groups),counts=dict(collections.Counter(x['verdict'] for x in results)),survivors=[id for id in ['M01','M02','M03','M04'] if not any(id in s for s in killsets.values())],baseline=parse(O/'baseline.log'),slice_baseline=parse(O/'slice-baseline.log'),elapsed_minutes=(time.time()-int(subprocess.check_output(['git','reflog','show','--format=%ct','test-audit/internal-oracle-node_fs_file'],cwd=R,text=True).splitlines()[-1]))/60,checks=json.loads((O/'standalone-checks.json').read_text()),runs=statuses)
+(O/'summary.json').write_text(json.dumps(summary,indent=2));print({k:summary[k] for k in ['counts','survivors','elapsed_minutes']});print([(r['test'],r['verdict'],r['kills'],r['last_proven_fail'][:180]) for r in results])
