@@ -1,0 +1,24 @@
+{"Time":"2026-10-08T21:13:25.79643636-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-08T21:13:25.817998023-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixRuleAgreementAndMutants"}
+{"Time":"2026-10-08T21:13:25.81815729-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestSixRuleAgreementAndMutants","Output":"=== RUN   TestSixRuleAgreementAndMutants\n","OutputType":"frame"}
+{"Time":"2026-10-08T21:13:25.819609277-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-08T21:13:25.828080544-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-08T21:13:25.830536564-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeAgreementAndMutants"}
+{"Time":"2026-10-08T21:13:25.830777925-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeAgreementAndMutants","Output":"=== RUN   TestVolumeAgreementAndMutants\n","OutputType":"frame"}
+{"Time":"2026-10-08T21:13:25.853008106-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareAgreementAndMutants"}
+{"Time":"2026-10-08T21:13:25.853190986-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestTypeAwareAgreementAndMutants","Output":"=== RUN   TestTypeAwareAgreementAndMutants\n","OutputType":"frame"}
+{"Time":"2026-10-08T21:13:25.867247331-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-08T21:13:25.882756266-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestInspectRequestRefusals"}
+{"Time":"2026-10-08T21:13:25.883016217-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestInspectRequestRefusals","Output":"=== RUN   TestInspectRequestRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-08T21:13:25.883073794-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-08T21:13:25.893380695-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutant"}
+{"Time":"2026-10-08T21:13:25.893590405-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeConfigGuardAndMutant","Output":"=== RUN   TestVolumeConfigGuardAndMutant\n","OutputType":"frame"}
+{"Time":"2026-10-08T21:13:25.899020135-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-08T21:13:25.918064584-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-08T21:13:25.918382715-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestFactsDecoderGuards"}
+{"Time":"2026-10-08T21:13:25.918574539-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestFactsDecoderGuards","Output":"=== RUN   TestFactsDecoderGuards\n","OutputType":"frame"}
+{"Time":"2026-10-08T21:13:25.938237264-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeProfileAgreementAndMutants"}
+{"Time":"2026-10-08T21:13:25.938403363-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestVolumeProfileAgreementAndMutants","Output":"=== RUN   TestVolumeProfileAgreementAndMutants\n","OutputType":"frame"}
+{"Time":"2026-10-08T21:13:26.071766875-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware"}
+{"Time":"2026-10-08T21:13:26.099345446-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding"}
+{"Time":"2026-10-08T21:13:26.099497545-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/typeaware","Test":"TestShadowIndexMissingBinding","Output":"=== RUN   TestShadowIndexMissingBinding\n","OutputType":"frame"}
