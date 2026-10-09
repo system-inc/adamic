@@ -53,3 +53,5 @@ Final validation on restored final sources:
 - counts.md: five new execution rows plus the corrected historical valid-producer row.
 - New oracle execution leaf seconds: p23 1.68, p22_adapted 1.61, p59_adapted 1.49, p62_adapted 1.43, tagged unread method 18.83. All below the leaf budget.
 - git diff --check: PASS.
+
+Final item 135 lane checks PASS 2.0s: gofmt/tools on 26 Go files, parallel rule on 2 test packages, vet 2 packages.
