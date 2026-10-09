@@ -783,6 +783,9 @@ func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string,
 	case operandType == ir.Union && operator == ir.NotEqual:
 		return fmt.Sprintf("(!adamic_union_equal(%s, %s))", left, right)
 	}
+	if operator == ir.Equal || operator == ir.NotEqual {
+		return e.scalarEquality(operator, operandType, left, right)
+	}
 	return fmt.Sprintf("(%s %s %s)", left, cOperators[operator], right)
 }
 
