@@ -18,6 +18,11 @@ import (
 
 var updateSerialBaseline = flag.Bool("update-serial-baseline", false, "rewrite the repository's serial-test baseline")
 
+// enforceParallelRule was off for an hour on Oct 9: hundreds of serial shard tests landed through integration's
+// test-only lane, which ran no checks then, after the baseline, and turned main red. Since cloud/merge-tree 81cde1e6
+// the lane runs this test on the merged tree (lane-checks.py), so a violator is refused at its own landing.
+const enforceParallelRule = true
+
 func TestEveryTestIsParallelOrSaysWhy(t *testing.T) {
 	t.Parallel()
 	root := parallelCheckRoot(t)
@@ -125,7 +130,11 @@ func TestEveryTestIsParallelOrSaysWhy(t *testing.T) {
 	t.Logf("serial baseline contains %d entries", len(allowed))
 	for _, key := range keys {
 		if !allowed[key] {
-			t.Errorf("%s: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state it touches> directly above the test with a non-empty reason", key)
+			report := t.Errorf
+			if !enforceParallelRule {
+				report = t.Logf
+			}
+			report("%s: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state it touches> directly above the test with a non-empty reason", key)
 		}
 	}
 }

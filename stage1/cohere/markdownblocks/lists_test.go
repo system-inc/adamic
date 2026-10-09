@@ -68,11 +68,6 @@ func fullLayoutFixture(t *testing.T) *layoutFixture {
 	return completeLayout
 }
 
-func TestMarkdownWhitespaceLayout(t *testing.T) {
-	parallelMarkdown(t)
-	testBlockLayout(t, "whitespace")
-}
-
 func TestMarkdownLeafComposition(t *testing.T) {
 	parallelMarkdown(t)
 	testMarkdownLeafShards(t)

@@ -2,24 +2,67 @@ package typeaware
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha256"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 )
 
-func typeSymbolCommand(directory string, command *exec.Cmd) error {
+// Bound the complete process group, including compiler grandchildren. Unix
+// process groups work on both Linux and macOS without an external timeout tool.
+func typeSymbolExec(limit time.Duration, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
+	ctx, cancel := context.WithTimeout(context.Background(), limit)
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command, cancel
+}
+
+func typeSymbolCommand(directory string, name string, args ...string) error {
+	command, cancel := typeSymbolExec(90*time.Second, name, args...)
+	defer cancel()
 	command.Dir = directory
 	output, err := command.CombinedOutput()
 	if err != nil {
 		return fmt.Errorf("%s: %w\n%s", command, err, output)
 	}
 	return nil
+}
+
+func typeSymbolMust(h *harness, label, name string, args ...string) result {
+	command, cancel := typeSymbolExec(90*time.Second, name, args...)
+	defer cancel()
+	return h.must(label, command)
+}
+
+func typeSymbolOracle(h *harness) string {
+	virtual := filepath.Join(h.repository, "cohere/adamic_type_symbol_oracle.go")
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	binary := filepath.Join(h.directory, "type-symbol-oracle")
+	command, cancel := typeSymbolExec(90*time.Second, "go", "build", "-overlay", h.write("oracle-overlay.json", string(overlay)), "-o", binary, virtual)
+	defer cancel()
+	command.Dir = filepath.Join(h.repository, "cohere")
+	h.must("type-symbol-oracle", command)
+	return binary
 }
 
 func typeSymbolFileHash(path string) (string, error) {
@@ -70,7 +113,7 @@ func typeSymbolNativeSpec(repository, stage0, name, entry, archive string, sanit
 			args = append(args, "--sanitize")
 		}
 		started := time.Now()
-		err := typeSymbolCommand(repository, exec.Command(stage0, args...))
+		err := typeSymbolCommand(repository, stage0, args...)
 		fmt.Printf("typeSymbol-build %s cold=%.6fs\n", name, time.Since(started).Seconds())
 		return err
 	}
@@ -163,10 +206,11 @@ func TestVolumeTypeSymbol_000(t *testing.T) {
 	// GoBuild is not on this main base yet. Go products build once per invocation;
 	// overlay mutant archives remain private, as required by buildcache.
 	stage0 := filepath.Join(h.directory, "adamic")
-	h.must("type-symbol-stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
-	oracle := volumeOracle(h, "type-symbol-oracle", "oracle_volume.go")
+	typeSymbolMust(h, "type-symbol-stage0", "go", "build", "-o", stage0, "./cmd/adamic")
+	oracle := typeSymbolOracle(h)
 	overlay := h.overlay("type-symbol", "bridge/tsgo/checker/facts.go", "name = symbol.Name", "name = symbol.Name + \"wrong\"")
-	archive := h.archive("type-symbol-checker", overlay, false)
+	archive := filepath.Join(h.directory, "type-symbol-checker.a")
+	typeSymbolMust(h, "type-symbol-checker", "go", "build", "-buildmode=c-archive", "-o", archive, "-overlay", overlay, "./bridge/tsgo/archive")
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
 	inputs, build, err := typeSymbolNativeSpec(repository, stage0, "volume-type-symbol-native", entry, archive, false)
 	if err != nil {
@@ -203,7 +247,8 @@ func TestVolumeTypeSymbol_000(t *testing.T) {
 	}
 	outputInputs := buildcache.Inputs{Name: "volume-type-symbol-oracle-output", Files: []string{"stage1/cohere/typeaware/testdata/tsconfig.json"}, Flags: flags, Toolchain: []string{buildcache.Tool("go", "version")}}
 	outputDir := buildcache.Product(t, outputInputs, func(dir string) error {
-		command := exec.Command(oracle, config, manifest)
+		command, cancel := typeSymbolExec(90*time.Second, oracle, config, manifest)
+		defer cancel()
 		command.Dir = repository
 		var stdout, stderr bytes.Buffer
 		command.Stdout = &stdout
@@ -218,9 +263,26 @@ func TestVolumeTypeSymbol_000(t *testing.T) {
 		t.Fatal(err)
 	}
 	truth := result{stdout: truthBytes}
-	observed := h.must("type-symbol-run", exec.Command(mutant, config, manifest))
+	observed := typeSymbolMust(h, "type-symbol-run", mutant, config, manifest)
 	if err := typeSymbolSurvived(observed, truth); err != nil {
 		t.Fatal(err)
 	}
 	t.Logf("type-symbol mutant caught at byte %d over %d cases", firstDifference(observed.stdout, truth.stdout), len(paths))
+}
+
+func TestVolumeTypeSymbolCommandDeadline(t *testing.T) {
+	if os.Getenv("ADAMIC_TYPE_SYMBOL_DEADLINE_CHILD") == "1" {
+		time.Sleep(30 * time.Second)
+		return
+	}
+	command, cancel := typeSymbolExec(100*time.Millisecond, os.Args[0], "-test.run=^TestVolumeTypeSymbolCommandDeadline$")
+	defer cancel()
+	command.Env = append(os.Environ(), "ADAMIC_TYPE_SYMBOL_DEADLINE_CHILD=1")
+	started := time.Now()
+	if err := command.Run(); err == nil {
+		t.Fatal("deadline child escaped cancellation")
+	}
+	if time.Since(started) > 3*time.Second {
+		t.Fatal("deadline failed to bound child")
+	}
 }
