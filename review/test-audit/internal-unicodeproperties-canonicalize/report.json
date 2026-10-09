@@ -1,0 +1,247 @@
+[
+  {
+    "test": "TestCanonicalizeExamples",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/canonicalize_test.go:18",
+    "seconds": 0.002,
+    "oracle": "Unicode 17 CaseFolding C/S mappings and ECMA-262 22.2.2.7.3 Canonicalize. Checked A -> a against downloaded CaseFolding.txt: 0041; C; 0061. Legacy a -> A also checked by Node.",
+    "oracle_kind": "external-authority",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M12"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M12: canonicalize_test.go:63: CanonicalizeLegacy(U+0061) = U+0042, want U+0041",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01",
+      "P02",
+      "P03",
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "entry_vacuity": {
+      "P01": false,
+      "P02": false,
+      "P03": false,
+      "P04": false
+    },
+    "bounded": true,
+    "matrix_rows": [
+      "TestCanonicalizeExamples",
+      "TestEquivalentsAreClosed",
+      "TestCanonicalizeLegacyNode",
+      "TestCanonicalizeUnicodeNodeRange family",
+      "TestUnicodeNodeBatchOrderAndLimit"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run ^(TestCanonicalizeExamples|TestEquivalentsAreClosed|TestCanonicalizeLegacyNode|TestUnicodeNodeBatchOrderAndLimit|TestCanonicalizeUnicodeNodeRange0)$/^0000-0016-; ADAMIC_MUTANT=M12; canonicalize_test.go:63: CanonicalizeLegacy(U+0061) = U+0042, want U+0041"
+  },
+  {
+    "test": "TestEquivalentsAreClosed",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/canonicalize_test.go:96",
+    "seconds": 0.064,
+    "oracle": "Self-written idempotence, containment, sortedness and class-consistency invariants; not an independent semantic oracle.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M05",
+      "M06",
+      "M07",
+      "M08",
+      "M09",
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [
+      "M10"
+    ],
+    "last_proven_fail": "M12: canonicalize_test.go:149: legacy U+0061 is listed with U+0041 but maps to U+0042",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P02",
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "entry_vacuity": {
+      "P01": true,
+      "P02": false,
+      "P03": true,
+      "P04": false
+    },
+    "bounded": true,
+    "matrix_rows": [
+      "TestCanonicalizeExamples",
+      "TestEquivalentsAreClosed",
+      "TestCanonicalizeLegacyNode",
+      "TestCanonicalizeUnicodeNodeRange family",
+      "TestUnicodeNodeBatchOrderAndLimit"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run ^(TestCanonicalizeExamples|TestEquivalentsAreClosed|TestCanonicalizeLegacyNode|TestUnicodeNodeBatchOrderAndLimit|TestCanonicalizeUnicodeNodeRange0)$/^0000-0016-; ADAMIC_MUTANT=M12; canonicalize_test.go:149: legacy U+0061 is listed with U+0041 but maps to U+0042",
+    "vacuous_subcases": [
+      "Entire row passes P01: CanonicalizeUnicode returns zero.",
+      "Entire row passes P03: CanonicalizeLegacy returns zero."
+    ]
+  },
+  {
+    "test": "TestCanonicalizeLegacyNode",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/canonicalize_test.go:160",
+    "seconds": 4.664,
+    "oracle": "Node toUpperCase values and case-insensitive RegExp scans over every UTF-16 code unit; exact equivalence members compared, with scan counts.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M07",
+      "M08",
+      "M09",
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12: canonicalize_test.go:164: legacy value U+0061: tables U+0042, node U+0041",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEquivalentsAreClosed"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P04"
+    ],
+    "subsumer_seconds": 0.064,
+    "vacuous": false,
+    "entry_vacuity": {
+      "P04": false
+    },
+    "bounded": true,
+    "matrix_rows": [
+      "TestCanonicalizeExamples",
+      "TestEquivalentsAreClosed",
+      "TestCanonicalizeLegacyNode",
+      "TestCanonicalizeUnicodeNodeRange family",
+      "TestUnicodeNodeBatchOrderAndLimit"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run ^(TestCanonicalizeExamples|TestEquivalentsAreClosed|TestCanonicalizeLegacyNode|TestUnicodeNodeBatchOrderAndLimit|TestCanonicalizeUnicodeNodeRange0)$/^0000-0016-; ADAMIC_MUTANT=M12; canonicalize_test.go:164: legacy value U+0061: tables U+0042, node U+0041"
+  },
+  {
+    "test": "TestCanonicalizeUnicodeNodeRange family",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/canonicalize_test.go:203",
+    "seconds": null,
+    "oracle": "Node RegExp iu/iv scans compared against generated class tables; table input preparation does not call CanonicalizeUnicode or UnicodeEquivalents. Only the first 16-line shard was in the bounded matrix.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M11"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M11: canonicalize_test.go:327: BAD CLASS iu 61 EXTRA 41 MISSING 42",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEquivalentsAreClosed"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [],
+    "subsumer_seconds": 0.064,
+    "vacuous": null,
+    "entry_vacuity": {},
+    "bounded": true,
+    "matrix_rows": [
+      "TestCanonicalizeExamples",
+      "TestEquivalentsAreClosed",
+      "TestCanonicalizeLegacyNode",
+      "TestCanonicalizeUnicodeNodeRange family",
+      "TestUnicodeNodeBatchOrderAndLimit"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run ^(TestCanonicalizeExamples|TestEquivalentsAreClosed|TestCanonicalizeLegacyNode|TestUnicodeNodeBatchOrderAndLimit|TestCanonicalizeUnicodeNodeRange0)$/^0000-0016-; ADAMIC_MUTANT=M11; canonicalize_test.go:327: BAD CLASS iu 61 EXTRA 41 MISSING 42",
+    "members": [
+      "TestCanonicalizeUnicodeNodeRange0",
+      "TestCanonicalizeUnicodeNodeRange1",
+      "TestCanonicalizeUnicodeNodeRange2",
+      "TestCanonicalizeUnicodeNodeRange3",
+      "TestCanonicalizeUnicodeNodeRange4",
+      "TestCanonicalizeUnicodeNodeRange5",
+      "TestCanonicalizeUnicodeNodeRange6",
+      "TestCanonicalizeUnicodeNodeRange7",
+      "TestCanonicalizeUnicodeNodeRange8",
+      "TestCanonicalizeUnicodeNodeRange9",
+      "TestCanonicalizeUnicodeNodeRange10",
+      "TestCanonicalizeUnicodeNodeRange11",
+      "TestCanonicalizeUnicodeNodeRange12",
+      "TestCanonicalizeUnicodeNodeRange13",
+      "TestCanonicalizeUnicodeNodeRange14",
+      "TestCanonicalizeUnicodeNodeRange15",
+      "TestCanonicalizeUnicodeNodeRange16",
+      "TestCanonicalizeUnicodeNodeRange17",
+      "TestCanonicalizeUnicodeNodeRange18",
+      "TestCanonicalizeUnicodeNodeRange19",
+      "TestCanonicalizeUnicodeNodeRange20",
+      "TestCanonicalizeUnicodeNodeRange21",
+      "TestCanonicalizeUnicodeNodeRange22",
+      "TestCanonicalizeUnicodeNodeRange23",
+      "TestCanonicalizeUnicodeNodeRange24",
+      "TestCanonicalizeUnicodeNodeRange25",
+      "TestCanonicalizeUnicodeNodeRange26",
+      "TestCanonicalizeUnicodeNodeRange27",
+      "TestCanonicalizeUnicodeNodeRange28",
+      "TestCanonicalizeUnicodeNodeRange29",
+      "TestCanonicalizeUnicodeNodeRange30",
+      "TestCanonicalizeUnicodeNodeRange31",
+      "TestCanonicalizeUnicodeNodeRange32",
+      "TestCanonicalizeUnicodeNodeRange33"
+    ],
+    "timing_lower_bound_seconds": 90,
+    "timing_status": "All three full-family attempts timed out at 90 seconds; no completed median."
+  },
+  {
+    "test": "TestUnicodeNodeBatchOrderAndLimit",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/canonicalize_test.go:428",
+    "seconds": 0.003,
+    "oracle": "Self-written expected peak=2 and ordered callback-result indices for suite-owned unicodeNodeBatches. S02 rotates slots and fails the order assertion; S03 returns empty results and fails peak=2.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S03: canonicalize_test.go:460: peak workers 0, want GOMAXPROCS=2",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "S03"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "entry_vacuity": {
+      "S03": false
+    },
+    "bounded": true,
+    "matrix_rows": [
+      "TestCanonicalizeExamples",
+      "TestEquivalentsAreClosed",
+      "TestCanonicalizeLegacyNode",
+      "TestCanonicalizeUnicodeNodeRange family",
+      "TestUnicodeNodeBatchOrderAndLimit"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run ^TestUnicodeNodeBatchOrderAndLimit$; canonicalize_test.go:460: peak workers 0, want GOMAXPROCS=2",
+    "construction_kills": [
+      "S01",
+      "S02"
+    ]
+  }
+]

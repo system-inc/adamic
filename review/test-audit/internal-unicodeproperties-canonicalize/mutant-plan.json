@@ -1,0 +1,122 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 11,
+    "old": "if codePoint < 0 || codePoint > 0x10FFFF {\n\t\treturn codePoint",
+    "new": "if codePoint >= 0 || codePoint > 0x10FFFF {\n\t\treturn codePoint",
+    "kind": "flip condition",
+    "validation_seconds": 0.1871057970001857,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M02",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 15,
+    "old": "return unicodeFold[i][0] >= cp",
+    "new": "return unicodeFold[i][0] > cp",
+    "kind": "flip comparison",
+    "validation_seconds": 0.19495443899995735,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M03",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 17,
+    "old": "return rune(unicodeFold[index][1])",
+    "new": "return rune(unicodeFold[index][0])",
+    "kind": "change constant index",
+    "validation_seconds": 0.18384677199992439,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M04",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 28,
+    "old": "if codePoint < 0 || codePoint > 0x10FFFF {\n\t\treturn nil",
+    "new": "if codePoint < -1 || codePoint > 0x10FFFF {\n\t\treturn nil",
+    "kind": "off-by-one bound",
+    "validation_seconds": 0.1855356390005909,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M05",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 36,
+    "old": "\t\tfor i, member := range members {\n\t\t\tout[i] = rune(member)\n\t\t}",
+    "new": "",
+    "kind": "drop whole copy loop",
+    "validation_seconds": 0.18468280199977016,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M06",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 41,
+    "old": "return []rune{codePoint}",
+    "new": "return []rune{codePoint + 1}",
+    "kind": "off-by-one value",
+    "validation_seconds": 0.20424633599941444,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M07",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 52,
+    "old": "return legacyFold[i][0] >= codeUnit",
+    "new": "return legacyFold[i][0] > codeUnit",
+    "kind": "flip comparison",
+    "validation_seconds": 0.2229440370001612,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M08",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 68,
+    "old": "\t\tcopy(out, members)",
+    "new": "",
+    "kind": "drop statement",
+    "validation_seconds": 0.2217360650001865,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M09",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "line": 71,
+    "old": "return []uint16{codeUnit}",
+    "new": "return []uint16{codeUnit + 1}",
+    "kind": "off-by-one value",
+    "validation_seconds": 0.21878391500013095,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M10",
+    "file": "internal/unicodeproperties/canonicalize_tables.go",
+    "line": 1532,
+    "old": "\t{0x1E921, 0x1E943},\n}\n\n// unicodeClassCanon[i]",
+    "new": "\t{0x1E921, 0x1E944},\n}\n\n// unicodeClassCanon[i]",
+    "kind": "change last Unicode fold target constant",
+    "validation_seconds": 0.2059324560004825,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M11",
+    "file": "internal/unicodeproperties/canonicalize_tables.go",
+    "line": 3022,
+    "old": "var unicodeClass = [][]uint32{\n\t{0x0041, 0x0061},",
+    "new": "var unicodeClass = [][]uint32{\n\t{0x0042, 0x0061},",
+    "kind": "change first Unicode class member constant",
+    "validation_seconds": 0.1909963489997608,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "M12",
+    "file": "internal/unicodeproperties/canonicalize_tables.go",
+    "line": 4508,
+    "old": "var legacyFold = [][2]uint16{\n\t{0x0061, 0x0041},",
+    "new": "var legacyFold = [][2]uint16{\n\t{0x0061, 0x0042},",
+    "kind": "change first legacy fold target constant",
+    "validation_seconds": 0.18552142399948934,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  }
+]

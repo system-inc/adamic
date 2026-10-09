@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -25,7 +25,7 @@
+ // contains codePoint also matches this set. The slice is newly allocated. An
+ // argument that is not a code point returns nil.
+ func UnicodeEquivalents(codePoint rune) []rune {
+-	if codePoint < 0 || codePoint > 0x10FFFF {
++	if codePoint < -1 || codePoint > 0x10FFFF {
+ 		return nil
+ 	}
+ 	canon := uint32(CanonicalizeUnicode(codePoint))

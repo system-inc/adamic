@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize_tables.go
++++ b/internal/unicodeproperties/canonicalize_tables.go
+@@ -3019,7 +3019,7 @@
+ }
+ 
+ var unicodeClass = [][]uint32{
+-	{0x0041, 0x0061},
++	{0x0042, 0x0061},
+ 	{0x0042, 0x0062},
+ 	{0x0043, 0x0063},
+ 	{0x0044, 0x0064},

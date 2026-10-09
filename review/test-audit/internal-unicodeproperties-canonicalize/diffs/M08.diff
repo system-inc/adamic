@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -65,7 +65,7 @@
+ 	if index < len(legacyClassCanon) && legacyClassCanon[index] == canon {
+ 		members := legacyClass[index]
+ 		out := make([]uint16, len(members))
+-		copy(out, members)
++
+ 		return out
+ 	}
+ 	return []uint16{codeUnit}

@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -49,7 +49,7 @@
+ // neither matches the ASCII letter. A supplementary character is two code units
+ // and is not an input here.
+ func CanonicalizeLegacy(codeUnit uint16) uint16 {
+-	index := sort.Search(len(legacyFold), func(i int) bool { return legacyFold[i][0] >= codeUnit })
++	index := sort.Search(len(legacyFold), func(i int) bool { return legacyFold[i][0] > codeUnit })
+ 	if index < len(legacyFold) && legacyFold[index][0] == codeUnit {
+ 		return legacyFold[index][1]
+ 	}

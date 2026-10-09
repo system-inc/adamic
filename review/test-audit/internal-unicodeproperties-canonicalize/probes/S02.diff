@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize_test.go
++++ b/internal/unicodeproperties/canonicalize_test.go
+@@ -407,7 +407,7 @@
+ 	runs := make([]int, batchCount)
+ 	for result := range completed {
+ 		runs[result.index]++
+-		results[result.index] = result
++		results[(result.index+1)%len(results)] = result
+ 	}
+ 	for index, result := range results {
+ 		if runs[index] != 1 {

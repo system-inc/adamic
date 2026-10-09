@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize_tables.go
++++ b/internal/unicodeproperties/canonicalize_tables.go
+@@ -1529,7 +1529,7 @@
+ 	{0x1E91E, 0x1E940},
+ 	{0x1E91F, 0x1E941},
+ 	{0x1E920, 0x1E942},
+-	{0x1E921, 0x1E943},
++	{0x1E921, 0x1E944},
+ }
+ 
+ // unicodeClassCanon[i] is the simple case fold shared by unicodeClass[i].

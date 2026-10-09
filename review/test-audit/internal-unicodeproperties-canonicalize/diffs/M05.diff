@@ -1,0 +1,13 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -33,9 +33,7 @@
+ 	if index < len(unicodeClassCanon) && unicodeClassCanon[index] == canon {
+ 		members := unicodeClass[index]
+ 		out := make([]rune, len(members))
+-		for i, member := range members {
+-			out[i] = rune(member)
+-		}
++
+ 		return out
+ 	}
+ 	return []rune{codePoint}

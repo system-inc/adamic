@@ -1,0 +1,150 @@
+[
+  {
+    "id": "S02",
+    "old": "results[result.index] = result",
+    "new": "results[(result.index+1)%len(results)] = result",
+    "file": "internal/unicodeproperties/canonicalize_test.go",
+    "line": 410,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run ^TestUnicodeNodeBatchOrderAndLimit$",
+    "exit": 1,
+    "wall_seconds": 0.21525616999952035,
+    "events": [
+      {
+        "Time": "2026-10-09T11:36:49.973970325Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties"
+      },
+      {
+        "Time": "2026-10-09T11:36:49.977840117Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestUnicodeNodeBatchOrderAndLimit"
+      },
+      {
+        "Time": "2026-10-09T11:36:49.977947178Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestUnicodeNodeBatchOrderAndLimit",
+        "Output": "=== RUN   TestUnicodeNodeBatchOrderAndLimit\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:36:49.977984034Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestUnicodeNodeBatchOrderAndLimit",
+        "Output": "    canonicalize_test.go:464: batch 0 reported out of order: {index:5 examined:1114112 disagreements:[5] err:<nil>}\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:36:49.977998886Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestUnicodeNodeBatchOrderAndLimit",
+        "Output": "--- FAIL: TestUnicodeNodeBatchOrderAndLimit (0.00s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:36:49.978004344Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestUnicodeNodeBatchOrderAndLimit",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T11:36:49.978020218Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:36:49.978291906Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/unicodeproperties\t0.004s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:36:49.978310104Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Elapsed": 0.004
+      }
+    ]
+  },
+  {
+    "id": "S03",
+    "old": "func unicodeNodeBatches(lines []string, batchSize, workers int, run func(string) (int, []string, error)) ([]unicodeNodeResult, error) {",
+    "new": "func unicodeNodeBatches(lines []string, batchSize, workers int, run func(string) (int, []string, error)) ([]unicodeNodeResult, error) { if true {return nil,nil}",
+    "file": "internal/unicodeproperties/canonicalize_test.go",
+    "line": 364,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run ^TestUnicodeNodeBatchOrderAndLimit$",
+    "exit": 1,
+    "wall_seconds": 0.6100275829994644,
+    "events": [
+      {
+        "Time": "2026-10-09T11:36:50.843866014Z",
+        "Action": "start",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties"
+      },
+      {
+        "Time": "2026-10-09T11:36:50.845763709Z",
+        "Action": "run",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestUnicodeNodeBatchOrderAndLimit"
+      },
+      {
+        "Time": "2026-10-09T11:36:50.845833804Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestUnicodeNodeBatchOrderAndLimit",
+        "Output": "=== RUN   TestUnicodeNodeBatchOrderAndLimit\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:36:50.845868857Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestUnicodeNodeBatchOrderAndLimit",
+        "Output": "    canonicalize_test.go:460: peak workers 0, want GOMAXPROCS=2\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T11:36:50.845882247Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestUnicodeNodeBatchOrderAndLimit",
+        "Output": "--- FAIL: TestUnicodeNodeBatchOrderAndLimit (0.00s)\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:36:50.845885682Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Test": "TestUnicodeNodeBatchOrderAndLimit",
+        "Elapsed": 0
+      },
+      {
+        "Time": "2026-10-09T11:36:50.845899864Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Output": "FAIL\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:36:50.846128498Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Output": "FAIL\tgithub.com/system-inc/adamic/internal/unicodeproperties\t0.002s\n",
+        "OutputType": "frame"
+      },
+      {
+        "Time": "2026-10-09T11:36:50.846140936Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+        "Elapsed": 0.002
+      }
+    ]
+  }
+]

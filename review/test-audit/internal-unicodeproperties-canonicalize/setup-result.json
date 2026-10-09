@@ -1,0 +1,74 @@
+{
+  "id": "S01",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run ^TestUnicodeNodeBatchOrderAndLimit$",
+  "exit": 1,
+  "wall_seconds": 0.5393620310005645,
+  "events": [
+    {
+      "Time": "2026-10-09T11:35:01.721141044Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties"
+    },
+    {
+      "Time": "2026-10-09T11:35:01.722919634Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestUnicodeNodeBatchOrderAndLimit"
+    },
+    {
+      "Time": "2026-10-09T11:35:01.722973916Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestUnicodeNodeBatchOrderAndLimit",
+      "Output": "=== RUN   TestUnicodeNodeBatchOrderAndLimit\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:35:01.723201048Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestUnicodeNodeBatchOrderAndLimit",
+      "Output": "    canonicalize_test.go:460: peak workers 1, want GOMAXPROCS=2\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T11:35:01.723229971Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestUnicodeNodeBatchOrderAndLimit",
+      "Output": "--- FAIL: TestUnicodeNodeBatchOrderAndLimit (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:35:01.723233687Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestUnicodeNodeBatchOrderAndLimit",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:35:01.723248599Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Output": "FAIL\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:35:01.723470072Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Output": "FAIL\tgithub.com/system-inc/adamic/internal/unicodeproperties\t0.002s\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:35:01.723483833Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Elapsed": 0.002
+    }
+  ],
+  "kills": [
+    "TestUnicodeNodeBatchOrderAndLimit"
+  ],
+  "cooked": false
+}

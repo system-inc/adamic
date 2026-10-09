@@ -1,0 +1,313 @@
+{
+  "id": "bounded-baseline",
+  "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run ^(TestCanonicalizeExamples|TestEquivalentsAreClosed|TestCanonicalizeLegacyNode|TestUnicodeNodeBatchOrderAndLimit|TestCanonicalizeUnicodeNodeRange0)$/^0000-0016-",
+  "exit": 0,
+  "wall_seconds": 4.8960634260001825,
+  "events": [
+    {
+      "Time": "2026-10-09T11:33:25.304043169Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.305892095Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeExamples"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.305969912Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeExamples",
+      "Output": "=== RUN   TestCanonicalizeExamples\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.305999227Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeExamples",
+      "Output": "=== PAUSE TestCanonicalizeExamples\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.306002922Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeExamples"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.30600809Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestEquivalentsAreClosed"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.306011154Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestEquivalentsAreClosed",
+      "Output": "=== RUN   TestEquivalentsAreClosed\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.30601453Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestEquivalentsAreClosed",
+      "Output": "=== PAUSE TestEquivalentsAreClosed\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.306017033Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestEquivalentsAreClosed"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.306020058Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeLegacyNode"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.306022812Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeLegacyNode",
+      "Output": "=== RUN   TestCanonicalizeLegacyNode\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:25.34239118Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeLegacyNode",
+      "Output": "legacy canonicalize values: 65536 code units against Node toUpperCase, disagreements 0\n"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.621257246Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeLegacyNode",
+      "Output": "legacy canonicalize: 65536 patterns x 65536 code units = 4294967296, disagreements 0\n"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.621331818Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeLegacyNode",
+      "Output": "--- PASS: TestCanonicalizeLegacyNode (4.32s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.621335844Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeLegacyNode",
+      "Elapsed": 4.32
+    },
+    {
+      "Time": "2026-10-09T11:33:29.621367752Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.621369985Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0",
+      "Output": "=== RUN   TestCanonicalizeUnicodeNodeRange0\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.844848257Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.844896169Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34",
+      "Output": "=== RUN   TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.844913405Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34",
+      "Output": "=== PAUSE TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.844926564Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.851365751Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.851399311Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34",
+      "Output": "=== CONT  TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980181242Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34",
+      "Output": "    canonicalize_test.go:326: 16 complete scans, 17825792 code points, disagreements 0\n"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980285869Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34",
+      "Output": "--- PASS: TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34 (0.13s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.98032629Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0/0000-0016-06e12bb8ad34",
+      "Elapsed": 0.13
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980341773Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0",
+      "Output": "--- PASS: TestCanonicalizeUnicodeNodeRange0 (0.23s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980394563Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeUnicodeNodeRange0",
+      "Elapsed": 0.23
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980518299Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestUnicodeNodeBatchOrderAndLimit"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980527022Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestUnicodeNodeBatchOrderAndLimit",
+      "Output": "=== RUN   TestUnicodeNodeBatchOrderAndLimit\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980786322Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestUnicodeNodeBatchOrderAndLimit",
+      "Output": "--- PASS: TestUnicodeNodeBatchOrderAndLimit (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980813863Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestUnicodeNodeBatchOrderAndLimit",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980843748Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeExamples"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980849407Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeExamples",
+      "Output": "=== CONT  TestCanonicalizeExamples\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980920173Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestEquivalentsAreClosed"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980925401Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestEquivalentsAreClosed",
+      "Output": "=== CONT  TestEquivalentsAreClosed\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:29.980992232Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeExamples",
+      "Output": "--- PASS: TestCanonicalizeExamples (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:30.036172668Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestCanonicalizeExamples",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T11:33:30.036245268Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestEquivalentsAreClosed",
+      "Output": "--- PASS: TestEquivalentsAreClosed (0.06s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:30.036256504Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Test": "TestEquivalentsAreClosed",
+      "Elapsed": 0.06
+    },
+    {
+      "Time": "2026-10-09T11:33:30.0362602Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T11:33:30.040651055Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/unicodeproperties\t4.736s\n"
+    },
+    {
+      "Time": "2026-10-09T11:33:30.040726919Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/unicodeproperties",
+      "Elapsed": 4.737
+    }
+  ],
+  "kills": [],
+  "cooked": false
+}

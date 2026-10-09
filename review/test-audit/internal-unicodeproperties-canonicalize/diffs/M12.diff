@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize_tables.go
++++ b/internal/unicodeproperties/canonicalize_tables.go
+@@ -4505,7 +4505,7 @@
+ 
+ // legacyFold is from, to, for one UTF-16 code unit. Identity is not stored.
+ var legacyFold = [][2]uint16{
+-	{0x0061, 0x0041},
++	{0x0061, 0x0042},
+ 	{0x0062, 0x0042},
+ 	{0x0063, 0x0043},
+ 	{0x0064, 0x0044},

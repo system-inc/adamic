@@ -1,0 +1,9 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -68,5 +68,5 @@
+ 		copy(out, members)
+ 		return out
+ 	}
+-	return []uint16{codeUnit}
++	return []uint16{codeUnit + 1}
+ }

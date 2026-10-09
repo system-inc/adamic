@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -38,7 +38,7 @@
+ 		}
+ 		return out
+ 	}
+-	return []rune{codePoint}
++	return []rune{codePoint + 1}
+ }
+ 
+ // CanonicalizeLegacy is Canonicalize for the i flag without u or v. codeUnit is

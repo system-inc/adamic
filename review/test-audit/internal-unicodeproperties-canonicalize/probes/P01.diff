@@ -1,0 +1,10 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -8,6 +8,7 @@
+ // is Turkic; neither is used. A code point with no such mapping returns itself,
+ // and so does an argument that is not a code point.
+ func CanonicalizeUnicode(codePoint rune) rune {
++	if true { return 0 }
+ 	if codePoint < 0 || codePoint > 0x10FFFF {
+ 		return codePoint
+ 	}

@@ -1,0 +1,10 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -60,6 +60,7 @@
+ // value as codeUnit, sorted, including codeUnit. A character class under i
+ // without u or v closes over this set. The slice is newly allocated.
+ func LegacyEquivalents(codeUnit uint16) []uint16 {
++	if true { return nil }
+ 	canon := CanonicalizeLegacy(codeUnit)
+ 	index := sort.Search(len(legacyClassCanon), func(i int) bool { return legacyClassCanon[i] >= canon })
+ 	if index < len(legacyClassCanon) && legacyClassCanon[index] == canon {

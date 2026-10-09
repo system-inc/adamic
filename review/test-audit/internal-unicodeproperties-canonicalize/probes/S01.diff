@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize_test.go
++++ b/internal/unicodeproperties/canonicalize_test.go
+@@ -373,7 +373,7 @@
+ 	}
+ 	limit := runtime.GOMAXPROCS(0)
+ 	if workers == 0 || workers > limit {
+-		workers = limit
++
+ 	}
+ 	batchCount := (len(lines)-1)/batchSize + 1
+ 	if workers > batchCount {

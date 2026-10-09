@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize.go
++++ b/internal/unicodeproperties/canonicalize.go
+@@ -14,7 +14,7 @@
+ 	cp := uint32(codePoint)
+ 	index := sort.Search(len(unicodeFold), func(i int) bool { return unicodeFold[i][0] >= cp })
+ 	if index < len(unicodeFold) && unicodeFold[index][0] == cp {
+-		return rune(unicodeFold[index][1])
++		return rune(unicodeFold[index][0])
+ 	}
+ 	return codePoint
+ }

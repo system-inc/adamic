@@ -1,0 +1,38 @@
+[
+  {
+    "id": "P01",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "old": "func CanonicalizeUnicode(codePoint rune) rune {",
+    "new": "func CanonicalizeUnicode(codePoint rune) rune {\n\tif true { return 0 }",
+    "line": 10,
+    "validation_seconds": 0.18526126300002943,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "P02",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "old": "func UnicodeEquivalents(codePoint rune) []rune {",
+    "new": "func UnicodeEquivalents(codePoint rune) []rune {\n\tif true { return nil }",
+    "line": 27,
+    "validation_seconds": 0.17200933799995255,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "P03",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "old": "func CanonicalizeLegacy(codeUnit uint16) uint16 {",
+    "new": "func CanonicalizeLegacy(codeUnit uint16) uint16 {\n\tif true { return 0 }",
+    "line": 51,
+    "validation_seconds": 0.1791946570001528,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  },
+  {
+    "id": "P04",
+    "file": "internal/unicodeproperties/canonicalize.go",
+    "old": "func LegacyEquivalents(codeUnit uint16) []uint16 {",
+    "new": "func LegacyEquivalents(codeUnit uint16) []uint16 {\n\tif true { return nil }",
+    "line": 62,
+    "validation_seconds": 0.19581552799991186,
+    "validation_command": "go vet ./internal/unicodeproperties/"
+  }
+]
