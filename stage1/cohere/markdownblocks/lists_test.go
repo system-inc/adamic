@@ -23,10 +23,12 @@ func TestMarkdownListLayout(t *testing.T) {
 	listLayoutSetup(t)
 }
 
+// Not parallel: quoteLayoutShared is initialized for the parallel quote layout shards.
 func TestMarkdownQuoteLayout(t *testing.T) {
 	quoteLayoutSetup(t)
 }
 
+// Not parallel: tableLayoutSharedProducts and tableLayoutInputs are initialized for the parallel table layout shards.
 func TestMarkdownTableLayout(t *testing.T) {
 	testMarkdownTableLayout(t)
 }
@@ -83,6 +85,7 @@ func TestMarkdownRootLayout(t *testing.T) {
 	testBlockLayout(t, "root")
 }
 
+// Not parallel: structureLayoutComplete is initialized for the parallel structure layout shards.
 func TestMarkdownStructureLayout(t *testing.T) {
 	configureMarkdownMemory(t)
 	structureLayoutShared(t)
