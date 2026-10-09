@@ -6,6 +6,7 @@ import glob
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -14,11 +15,17 @@ BOX_PATHS = ('cloud/fast-gate.sh cloud/fast-gate cloud/darwin-leg.sh '
              'cloud/fast-gate-classify.sh cloud/idle-preempt.sh internal/skipcensus go.mod go.sum').split()
 
 
+# The Mac-only tests under cloud/fast-gate that boxTools() leaves out (969b9dc0): a test edit doesn't change the box.
+macOnlyTest = re.compile(rb'\tcloud/fast-gate/[^/]*_test\.py$')
+
+
 def tools_fingerprint(tree):
-    # Byte-for-byte boxTools(): non-recursive ls-tree, including its final newline, then SHA-1.
-    listing = subprocess.run(['git', '-C', tree, 'ls-tree', 'HEAD', '--'] + BOX_PATHS,
+    # Byte-for-byte boxTools() in cloud/fast-gate-watch.sh: recursive ls-tree of boxSide, the Mac-only fast-gate tests
+    # dropped, then SHA-1. UnitInputHashes runs the watcher's own function against this one.
+    listing = subprocess.run(['git', '-C', tree, 'ls-tree', '-r', 'HEAD', '--'] + BOX_PATHS,
                              capture_output=True, check=True, timeout=10).stdout
-    return hashlib.sha1(listing).hexdigest()
+    kept = b''.join(line for line in listing.splitlines(keepends=True) if not macOnlyTest.search(line.rstrip(b'\n')))
+    return hashlib.sha1(kept).hexdigest()
 
 
 def objects(text):

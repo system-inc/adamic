@@ -9,6 +9,7 @@ all-pass case proves the harness can go green at all. Run: python3 -m unittest c
 
 import io
 import re
+import shlex
 import shutil
 import json
 import os
@@ -2924,12 +2925,16 @@ class UnitInputHashes(unittest.TestCase):
     def test_box_tools_matches_watchers_bytes(self):
         from input_hashes import BOX_PATHS, tools_fingerprint
         import hashlib
-        listing = realRun(['git', '-C', PhaseInputs.tree, 'ls-tree', 'HEAD', '--'] + BOX_PATHS,
-                          capture_output=True, check=True, timeout=10).stdout
-        self.assertEqual(tools_fingerprint(PhaseInputs.tree), hashlib.sha1(listing).hexdigest())
         with open(os.path.join(PhaseInputs.tree, 'cloud/fast-gate-watch.sh')) as handle:
-            declared = re.search(r'^boxSide="([^"]+)"', handle.read(), re.M)[1].split()
+            script = handle.read()
+        declared = re.search(r'^boxSide="([^"]+)"', script, re.M)[1].split()
         self.assertEqual(BOX_PATHS, declared)
+        # The watcher's own function, run as written, so a change to how it fingerprints fails here (969b9dc0 changed
+        # it to ls-tree -r without the Mac-only tests while this file still copied the old one).
+        function = re.search(r'^boxTools\(\) \{\n.*?^\}\n', script, re.M | re.S)[0]
+        watcher = realRun(['bash', '-c', 'here=%s; boxSide="%s"\n%sboxTools HEAD' % (shlex.quote(PhaseInputs.tree), ' '.join(declared), function)],
+                          capture_output=True, text=True, check=True, timeout=10).stdout.strip()
+        self.assertEqual(tools_fingerprint(PhaseInputs.tree), watcher)
 
     def test_missing_closure_cannot_match(self):
         from input_hashes import InputHashes
