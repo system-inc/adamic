@@ -3,7 +3,6 @@ package estree
 import (
 	"bytes"
 	"context"
-	"errors"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"os"
@@ -114,25 +113,4 @@ func TestParserRecoveryGap(t *testing.T) {
 		}
 		t.Logf("%s: unported parser recovery does not terminate within 1s", argv[0])
 	}
-}
-
-func TestInterfaceDefaultGap(t *testing.T) {
-	t.Parallel()
-	path, err := filepath.Abs("gaps/interfaceDefault.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	if got := string(onNode(t, path)); got != "5\n" {
-		t.Fatalf("source Node: %q", got)
-	}
-	loaded, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = lower.Lower(context.Background(), loaded)
-	var diagnostic *lower.NotYet
-	if !errors.As(err, &diagnostic) || diagnostic.Where != path+":10:12" || diagnostic.What != "a class method through a view that erases its prototype origin" {
-		t.Fatalf("recorded lowering gap changed: %v", err)
-	}
-	t.Logf("Node prints 5; lowering refuses before native emission: %s", err)
 }

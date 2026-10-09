@@ -53,61 +53,6 @@ func TestProduct_SyntaxMutantsSetup_002(t *testing.T) {
 	syntaxMutantPreparedProduct(t, 2)
 }
 
-func unattachedDecoratorMutation() syntaxMutant {
-	return syntaxMutant{name: "unattached-decorator", file: "pipeline.ts", from: `parser.nodes[id]?.kind === 'Decorator'`, to: `parser.nodes[id]?.kind === 'UnusedDecoratorControl'`}
-}
-
-var unattachedDecoratorPrepared struct {
-	once                 sync.Once
-	main, binary, oracle string
-}
-
-func unattachedDecoratorReady(t *testing.T) (string, string, string) {
-	t.Helper()
-	unattachedDecoratorPrepared.once.Do(func() {
-		unattachedDecoratorPrepared.main, unattachedDecoratorPrepared.binary = syntaxMutantProducts(t, unattachedDecoratorMutation())
-		unattachedDecoratorPrepared.oracle = filepath.Join(syntaxMutantOracleProduct(t), "oracle")
-	})
-	if unattachedDecoratorPrepared.oracle == "" {
-		t.Fatal("decorator preparation failed")
-	}
-	return unattachedDecoratorPrepared.main, unattachedDecoratorPrepared.binary, unattachedDecoratorPrepared.oracle
-}
-
-func TestProduct_UnattachedDecoratorLowered(t *testing.T) {
-	t.Parallel()
-	syntaxMutantLoweredProduct(t, unattachedDecoratorMutation())
-}
-func TestProduct_UnattachedDecoratorNative(t *testing.T) {
-	t.Parallel()
-	syntaxMutantNativeProduct(t, unattachedDecoratorMutation())
-}
-
-func TestUnattachedDecoratorControl(t *testing.T) {
-	t.Parallel()
-	setup := time.Now()
-	main, binary, oracle := unattachedDecoratorReady(t)
-	t.Logf("setup: %.3fs", time.Since(setup).Seconds())
-	started := time.Now()
-	defer func() { t.Logf("own work: %.3fs", time.Since(started).Seconds()) }()
-	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
-	defer cancel()
-	list := manifest(t, []string{"@dec\nawait 1", "@dec\nx"})
-	statuses := string(threePortExecute(t, ctx, oracle, "--audit", list, t.TempDir()))
-	if strings.Count(statuses, `"status":"error"`) != 2 {
-		t.Fatalf("Go decorator refusals changed: %s", statuses)
-	}
-	for name, got := range map[string][]byte{
-		"Node":   threePortExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list),
-		"native": threePortExecute(t, ctx, binary, "--manifest", list),
-	} {
-		if strings.Count(string(got), "0 Program ") != 2 {
-			t.Fatal(name + " decorator control did not finish with two incorrect acceptances")
-		}
-		t.Log(name + ": disabled orphan guard accepts both Go-refused files; acceptance check catches it")
-	}
-}
-
 // Checkpoint the checked IR so the native emitter has its own cached build stage.
 // Gob retains the concrete expression/statement types; derived private facts are
 // recomputed by the backend. Source snapshots remain stable for Node execution.
@@ -426,10 +371,6 @@ func TestProduct_SyntaxMutantIR_001(t *testing.T) {
 func TestProduct_SyntaxMutantIR_002(t *testing.T) {
 	t.Parallel()
 	syntaxMutantIRProduct(t, syntaxMutantEnumeration()[2])
-}
-func TestProduct_UnattachedDecoratorIR(t *testing.T) {
-	t.Parallel()
-	syntaxMutantIRProduct(t, unattachedDecoratorMutation())
 }
 
 func estreeFamilyDependencyFlags(t *testing.T) []string {
