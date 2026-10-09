@@ -1,6 +1,6 @@
 from pathlib import Path
 import json,subprocess,difflib
-p=Path('/workspace/adamic/review/test-defend/stage1-cohere-css-print')
+p=Path(__file__).resolve().parent
 menu=json.loads((p/'menu.json').read_text());(p/'planned-menu.json').write_text(json.dumps(menu,indent=2)+'\n')
 used=[x for x in menu if x['mutant'] in ['D1','D2','D3','D4','D8']]
 for x in used:
