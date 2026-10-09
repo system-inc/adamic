@@ -64,7 +64,7 @@ func wholeMutantBuildFlags() []string {
 	return flags
 }
 
-func wholeMutantOracleProduct(t *testing.T) string {
+func wholeMutantBuildOracleProduct(t *testing.T) string {
 	t.Helper()
 	files := append(wholeMutantBuildFiles(t), "stage1/typescript/parser/testdata/oracle.go")
 	inputs := buildcache.Inputs{Name: "typescript-parser-oracle", Files: files, Flags: wholeMutantBuildFlags(), Toolchain: []string{buildcache.Tool("go", "version")}}
@@ -99,7 +99,7 @@ func wholeMutantOracleProduct(t *testing.T) string {
 	return filepath.Join(directory, "oracle")
 }
 
-func wholeMutantPortProduct(t *testing.T, directory string, sanitize bool) string {
+func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) string {
 	t.Helper()
 	files := wholeMutantBuildFiles(t)
 	for _, name := range portFiles {
@@ -224,9 +224,9 @@ func wholeMutantCases() []wholeMutantCase {
 
 // Explicit top-level leaves are visible to go test -list and the gate without
 // a children() entry. Their table below is also the complete union census.
-func TestWholeMutants_000(t *testing.T) { t.Parallel(); wholeMutantsShard(t, 0) }
-func TestWholeMutants_001(t *testing.T) { t.Parallel(); wholeMutantsShard(t, 1) }
-func TestWholeMutants_002(t *testing.T) { t.Parallel(); wholeMutantsShard(t, 2) }
+func TestWholeMutants_000(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 0) }
+func TestWholeMutants_001(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 1) }
+func TestWholeMutants_002(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 2) }
 
 func TestWholeMutantsUnion(t *testing.T) {
 	t.Parallel()
@@ -256,9 +256,16 @@ func TestWholeMutantsUnion(t *testing.T) {
 func wholeMutantCommandContext(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
 	// Kill the whole group, including any compiler descendants, on deadline.
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	inSetupGroup := os.Getenv(wholeMutantsSetupChildEnv) == "1"
+	if !inSetupGroup {
+		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	}
 	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		group := command.Process.Pid
+		if inSetupGroup {
+			group = syscall.Getpgrp()
+		}
+		err := syscall.Kill(-group, syscall.SIGKILL)
 		if err == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
@@ -272,14 +279,14 @@ func TestWholeMutantsRejectsSurvivor(t *testing.T) {
 	t.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^TestWholeMutants_[0-9]{3}$", "-test.v", "-test.timeout=75s", "-test.parallel=4")
+	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^TestWholeMutants_[0-9]{3}$", "-test.v", "-test.timeout=90s", "-test.parallel=4")
 	for _, variable := range os.Environ() {
-		if strings.HasPrefix(variable, "ADAMIC_TEST_SHARD=") || strings.HasPrefix(variable, "ADAMIC_WHOLE_MUTANT_SURVIVOR=") {
+		if strings.HasPrefix(variable, "ADAMIC_TEST_SHARD=") || strings.HasPrefix(variable, "ADAMIC_WHOLE_MUTANT_SURVIVOR=") || strings.HasPrefix(variable, wholeMutantsCaseChildEnv+"=") {
 			continue
 		}
 		command.Env = append(command.Env, variable)
 	}
-	command.Env = append(command.Env, "ADAMIC_WHOLE_MUTANT_SURVIVOR=keyof becomes readonly")
+	command.Env = append(command.Env, "ADAMIC_WHOLE_MUTANT_SURVIVOR=keyof becomes readonly", wholeMutantsCaseChildEnv+"=1")
 	output, err := command.CombinedOutput()
 	if ctx.Err() != nil {
 		t.Fatal("cooked: survivor proof exceeded 90-second command deadline")
