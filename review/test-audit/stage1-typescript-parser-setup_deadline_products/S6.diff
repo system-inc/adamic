@@ -1,0 +1,15 @@
+--- a/stage1/typescript/parser/whole_mutants_setup_test.go
++++ b/stage1/typescript/parser/whole_mutants_setup_test.go
+@@ -102,12 +102,6 @@
+ 		}()
+ 	}
+ 	builds.Wait()
+-	for i, source := range directories {
+-		if binaries[i] == "" {
+-			t.Fatal("setup product build did not complete")
+-		}
+-		inputs.Binaries[wholeMutantsSourceHash(t, source)] = binaries[i]
+-	}
+ 	wholeMutantsPrepared = inputs
+ 	wholeMutantsCheckInputs(t)
+ 

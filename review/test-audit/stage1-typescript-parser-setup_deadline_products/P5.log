@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:59:57.443542973Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:59:57.453846063Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative"}
+{"Time":"2026-10-09T13:59:57.453918067Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Output":"=== RUN   TestProduct_CompilerExpressionsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:57.45397346Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Output":"=== PAUSE TestProduct_CompilerExpressionsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:57.453978235Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative"}
+{"Time":"2026-10-09T13:59:57.453982406Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative"}
+{"Time":"2026-10-09T13:59:57.453985496Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Output":"=== CONT  TestProduct_CompilerExpressionsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:57.453994704Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Output":"--- PASS: TestProduct_CompilerExpressionsNative (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:57.454000897Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Elapsed":0}
+{"Time":"2026-10-09T13:59:57.454020052Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:57.454283457Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.010s\n"}
+{"Time":"2026-10-09T13:59:57.454371192Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.011}

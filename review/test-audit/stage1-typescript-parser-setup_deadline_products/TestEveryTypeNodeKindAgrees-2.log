@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:39:34.379641011Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:39:34.458153722Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees"}
+{"Time":"2026-10-09T13:39:34.458310108Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Output":"=== RUN   TestEveryTypeNodeKindAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:34.458346777Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Output":"=== PAUSE TestEveryTypeNodeKindAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:34.458350548Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees"}
+{"Time":"2026-10-09T13:39:34.458355574Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees"}
+{"Time":"2026-10-09T13:39:34.458360541Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Output":"=== CONT  TestEveryTypeNodeKindAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:55.336735041Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Output":"    type_kinds_test.go:46: Go IsTypeNodeKind inventory: 42 kinds, each covered; 250 identical doc-type bytes\n"}
+{"Time":"2026-10-09T13:39:55.336925791Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Output":"--- PASS: TestEveryTypeNodeKindAgrees (20.88s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:55.336932883Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Elapsed":20.88}
+{"Time":"2026-10-09T13:39:55.33697225Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:39:55.34553223Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t20.964s\n"}
+{"Time":"2026-10-09T13:39:55.345596556Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":20.966}

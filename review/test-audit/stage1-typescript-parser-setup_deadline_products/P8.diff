@@ -1,0 +1,19 @@
+--- a/stage1/typescript/parser/whole_mutants_setup_test.go
++++ b/stage1/typescript/parser/whole_mutants_setup_test.go
+@@ -66,15 +66,7 @@
+ }
+ 
+ func wholeMutantsPrepare(t *testing.T) {
+-	t.Helper()
+-	wholeMutantsPrepareOnce.Do(func() {
+-		// Setup has no deadline; Loom's kill still covers the whole unit.
+-		if wholeMutantsPrepared != nil {
+-			return
+-		}
+-		wholeMutantsBuildInputs(t)
+-	})
+-	wholeMutantsCheckInputs(t)
++	return
+ }
+ 
+ func wholeMutantsBuildInputs(t *testing.T) {

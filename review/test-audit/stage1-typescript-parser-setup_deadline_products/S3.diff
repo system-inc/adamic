@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/compiler_expressions_shards_test.go
++++ b/stage1/typescript/parser/compiler_expressions_shards_test.go
+@@ -80,7 +80,7 @@
+ 		if err != nil {
+ 			return err
+ 		}
+-		return native.Build(string(source), filepath.Join(dir, "parser"), native.Options{Sanitize: true})
++		return native.Build(string(source), filepath.Join(dir, "absent/parser"), native.Options{Sanitize: true})
+ 	})
+ 	return filepath.Join(product, "parser")
+ }

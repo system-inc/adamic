@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:41:27.778374971Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:41:27.789552944Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees"}
+{"Time":"2026-10-09T13:41:27.789688968Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Output":"=== RUN   TestObsoleteImportAttributesAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:41:27.789763859Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Output":"=== PAUSE TestObsoleteImportAttributesAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:41:27.789768628Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees"}
+{"Time":"2026-10-09T13:41:27.789772699Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees"}
+{"Time":"2026-10-09T13:41:27.789775349Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Output":"=== CONT  TestObsoleteImportAttributesAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:41:49.576279824Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Output":"    whole_generated_test.go:92: obsolete assert forms: Go required to emit only diagnostic 2880; 1021 identical tree bytes\n"}
+{"Time":"2026-10-09T13:41:49.57731926Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Output":"--- PASS: TestObsoleteImportAttributesAgrees (21.79s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:41:49.577339851Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Elapsed":21.79}
+{"Time":"2026-10-09T13:41:49.577389252Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:41:49.5795862Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t21.800s\n"}
+{"Time":"2026-10-09T13:41:49.579655466Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":21.801}

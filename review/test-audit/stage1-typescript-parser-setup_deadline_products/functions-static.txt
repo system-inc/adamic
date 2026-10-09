@@ -1,0 +1,122 @@
+Static declaration inventory, not proof of runtime reach. Preparation functions and their callers were read in their complete test files.
+grammar.ts:2 export function precedence(kind: string): number {
+grammar.ts:3 switch(kind) {
+jsx.ts:26 constructor(parser: JsxContextInterface) {
+jsx.ts:29 make(kind: string, pos: number, children: number[] = []): number {
+jsx.ts:32 identifier(): number {
+jsx.ts:41 name(tag: boolean): number {
+jsx.ts:64 text(): number {
+jsx.ts:74 finishGreater(expression: boolean): void {
+jsx.ts:87 expression(attribute: boolean): number {
+jsx.ts:108 attributes(): number {
+jsx.ts:143 tagKey(index: number): string {
+jsx.ts:151 element(inExpression: boolean): number {
+lookahead.ts:16 function kind(scanner: Scanner): string {
+lookahead.ts:31 constructor(scanner: Scanner) {
+lookahead.ts:41 prepare(): void {
+lookahead.ts:74 next(): void {
+lookahead.ts:79 restore(): void {
+lookahead.ts:90 function optionalParameterAhead(scanner: Scanner): boolean {
+lookahead.ts:98 export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {
+lookahead.ts:101 if(kind(scanner) === 'AsyncKeyword') {
+lookahead.ts:117 if(kind(scanner) === 'LessThanToken') {
+lookahead.ts:132 if(kind(scanner) === 'OpenParenToken') {
+lookahead.ts:188 export function jsxArrowAhead(scanner: Scanner): boolean {
+lookahead.ts:190 if(kind(scanner) === 'AsyncKeyword') {
+lookahead.ts:193 if(kind(scanner) !== 'LessThanToken') {
+lookahead.ts:198 if(kind(scanner) === 'ConstKeyword') {
+lookahead.ts:203 if(kind(scanner) === 'ExtendsKeyword') {
+lookahead.ts:212 export function typeArgumentsAhead(scanner: Scanner): boolean {
+lookahead.ts:220 while(kind(scanner) !== 'EndOfFile') {
+main.ts:5 function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {
+main.ts:7 if(source.kind === 'Error') {
+main.ts:14 if(!countOnly) {
+main.ts:30 for(const root of docTypes ? types : whole ? [file] : parser.roots) {
+main.ts:44 if(manifest.kind === 'Error') {
+main.ts:50 for(const path of manifest.text.split('\n')) {
+main.ts:60 if(countOnly) {
+nodes.ts:18 constructor(kind: string, pos: number, end: number, children: number[]) {
+nodes.ts:26 export function written(text: string): string {
+nodes.ts:38 export function printTree(
+nodes.ts:50 for(const child of node.children) {
+nodes.ts:56 export function countTree(nodes: readonly ParseNode[], root: number): number {
+nodes.ts:59 for(const child of node.children) {
+parser.ts:19 constructor(text: string, path = 'source') {
+parser.ts:27 kind(): string {
+parser.ts:30 next(): void {
+parser.ts:33 node(index: number): ParseNode {
+parser.ts:36 make(kind: string, pos: number, children: number[] = []): number {
+parser.ts:40 token(): number {
+parser.ts:46 expect(kind: string): void {
+parser.ts:52 literal(): number {
+parser.ts:72 identifier(): number {
+parser.ts:80 primary(): number {
+parser.ts:179 jsxParser(): Jsx {
+parser.ts:204 bindingIdentifier(): boolean {
+parser.ts:209 nextIdentifierSameLine(): boolean {
+parser.ts:218 yieldOperandAhead(): boolean {
+parser.ts:229 mark(): ParserStateInterface {
+parser.ts:241 rewind(state: ParserStateInterface): void {
+parser.ts:251 docTypes(): number[] {
+parser.ts:280 tupleNameAhead(): boolean {
+parser.ts:294 typeArguments(): number[] {
+parser.ts:310 typeParameters(): number[] {
+parser.ts:340 entityName(): number {
+parser.ts:350 importType(): number {
+parser.ts:387 type(minimum = 0, conditional = true): number {
+parser.ts:667 mappedAhead(): boolean {
+parser.ts:685 mappedType(): number {
+parser.ts:724 indexSignatureAhead(): boolean {
+parser.ts:732 typeLiteral(): number {
+parser.ts:812 parameters(): number[] {
+parser.ts:857 bindingName(): number {
+parser.ts:897 decorator(): number {
+parser.ts:909 rootAssignment(): number {
+parser.ts:918 rootExpression(): number {
+parser.ts:927 arrow(allowReturn: boolean): number {
+parser.ts:964 returnType(): number {
+parser.ts:988 functionExpression(): number {
+parser.ts:1027 statements(): Statements {
+parser.ts:1075 block(): number {
+parser.ts:1078 statement(): number {
+parser.ts:1081 semicolon(): void {
+parser.ts:1084 classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+parser.ts:1088 peek(): string {
+parser.ts:1107 optionalChain(index: number): boolean {
+parser.ts:1122 spread(): number {
+parser.ts:1128 arguments(): number[] {
+parser.ts:1147 suffix(expression: number, allowCall: boolean): number {
+parser.ts:1276 templatePart(): number {
+parser.ts:1289 templateType(): number {
+parser.ts:1305 template(): number {
+parser.ts:1324 array(): number {
+parser.ts:1351 propertyName(): number {
+parser.ts:1367 methodBody(pos: number, prefix: readonly number[], kind: string, async: boolean, generator: boolean): number {
+parser.ts:1396 object(): number {
+parser.ts:1478 unary(): number {
+parser.ts:1548 binary(minimum: number): number {
+parser.ts:1576 assignment(allowReturn = true): number {
+parser.ts:1612 allowInAssignment(allowReturn = true): number {
+parser.ts:1622 allowInExpression(): number {
+parser.ts:1632 expression(): number {
+parser.ts:1642 file(): number {
+statements.ts:51 constructor(parser: StatementContextInterface) {
+statements.ts:54 block(): number {
+statements.ts:64 semicolon(): void {
+statements.ts:76 variableList(): number {
+statements.ts:117 lookahead(offset: number): string {
+statements.ts:140 decorator(): number {
+statements.ts:143 canExportName(): boolean {
+statements.ts:150 specifiers(importing: boolean): number {
+statements.ts:212 attributes(): number {
+statements.ts:218 attributeBody(pos: number, operator: string): number {
+statements.ts:244 importDeclaration(pos: number, prefix: readonly number[]): number {
+statements.ts:335 exportDeclaration(pos: number, prefix: readonly number[]): number {
+statements.ts:389 moduleDeclaration(pos: number, prefix: readonly number[], keyword: string): number {
+statements.ts:420 exportedClauseAhead(): boolean {
+statements.ts:442 functionDeclaration(pos: number, prefix: readonly number[], async: boolean): number {
+statements.ts:479 classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {
+statements.ts:640 forStatement(): number {
+statements.ts:682 switchStatement(): number {
+statements.ts:713 tryStatement(): number {
+statements.ts:741 statement(): number {

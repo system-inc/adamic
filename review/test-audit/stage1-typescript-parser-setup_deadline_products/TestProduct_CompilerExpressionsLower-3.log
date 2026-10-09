@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:38:23.726065419Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:38:23.769348536Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsLower"}
+{"Time":"2026-10-09T13:38:23.769448859Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsLower","Output":"=== RUN   TestProduct_CompilerExpressionsLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:38:23.769501237Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsLower","Output":"=== PAUSE TestProduct_CompilerExpressionsLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:38:23.769505425Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsLower"}
+{"Time":"2026-10-09T13:38:23.769509521Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsLower"}
+{"Time":"2026-10-09T13:38:23.76951229Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsLower","Output":"=== CONT  TestProduct_CompilerExpressionsLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:38:25.842663069Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsLower","Output":"    setup_deadline_products_test.go:33: build compiler-expressions-lowered 0251843126f4 hit 2.04\n"}
+{"Time":"2026-10-09T13:38:25.842830749Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsLower","Output":"--- PASS: TestProduct_CompilerExpressionsLower (2.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:38:25.842835751Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsLower","Elapsed":2.07}
+{"Time":"2026-10-09T13:38:25.842861012Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:38:25.849066347Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t2.122s\n"}
+{"Time":"2026-10-09T13:38:25.849121405Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":2.123}

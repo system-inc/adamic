@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T13:38:40.423108678Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T13:38:40.432950631Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative"}
+{"Time":"2026-10-09T13:38:40.433024842Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Output":"=== RUN   TestProduct_CompilerExpressionsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:38:40.433334228Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Output":"=== PAUSE TestProduct_CompilerExpressionsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:38:40.433345183Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative"}
+{"Time":"2026-10-09T13:38:40.43335114Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative"}
+{"Time":"2026-10-09T13:38:40.433353403Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Output":"=== CONT  TestProduct_CompilerExpressionsNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:38:42.441226299Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Output":"    setup_deadline_products_test.go:37: build compiler-expressions-lowered 0251843126f4 hit 1.99\n"}
+{"Time":"2026-10-09T13:38:44.483373548Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Output":"    setup_deadline_products_test.go:37: build compiler-expressions-native 53351088343c hit 2.04\n"}
+{"Time":"2026-10-09T13:38:44.483511805Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Output":"--- PASS: TestProduct_CompilerExpressionsNative (4.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:38:44.48351672Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestProduct_CompilerExpressionsNative","Elapsed":4.05}
+{"Time":"2026-10-09T13:38:44.483548206Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:38:44.485011323Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t4.061s\n"}
+{"Time":"2026-10-09T13:38:44.485087518Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":4.062}

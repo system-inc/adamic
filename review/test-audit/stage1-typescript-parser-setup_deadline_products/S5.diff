@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/whole_mutants_split_test.go
++++ b/stage1/typescript/parser/whole_mutants_split_test.go
+@@ -157,7 +157,7 @@
+ 	options := native.Options{Sanitize: sanitize}
+ 	nativeInputs := buildcache.Inputs{Name: "typescript-parser-native", Files: files, Flags: append(append(flags, native.Flags(options)...), fmt.Sprintf("C=%x", sha256.Sum256(source))), Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+ 	product := buildcache.Product(t, nativeInputs, func(dir string) error {
+-		return native.Build(string(source), filepath.Join(dir, "scanner"), options)
++		return native.Build(string(source), filepath.Join(dir, "absent/scanner"), options)
+ 	})
+ 	return filepath.Join(product, "scanner")
+ }

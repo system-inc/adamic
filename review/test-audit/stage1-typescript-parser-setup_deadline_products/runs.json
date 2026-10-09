@@ -1,0 +1,994 @@
+[
+  {
+    "name": "TestProduct_ParserOracle-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle)$'",
+    "environment": {},
+    "wall": 3.054722633001802,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.426,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_ParserOracle-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle)$'",
+    "environment": {},
+    "wall": 2.8927184080021107,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.426,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_ParserOracle-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle)$'",
+    "environment": {},
+    "wall": 2.7445190270009334,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.527,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_CompilerExpressionsLower-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_CompilerExpressionsLower)$'",
+    "environment": {},
+    "wall": 3.7134740040055476,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 1.49,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_CompilerExpressionsLower-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_CompilerExpressionsLower)$'",
+    "environment": {},
+    "wall": 4.37611829299567,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 1.881,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_CompilerExpressionsLower-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_CompilerExpressionsLower)$'",
+    "environment": {},
+    "wall": 4.665257373999339,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 2.123,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_CompilerExpressionsNative-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_CompilerExpressionsNative)$'",
+    "environment": {},
+    "wall": 5.817770704001305,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 3.904,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_CompilerExpressionsNative-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_CompilerExpressionsNative)$'",
+    "environment": {},
+    "wall": 6.418841613995028,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 3.762,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_CompilerExpressionsNative-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_CompilerExpressionsNative)$'",
+    "environment": {},
+    "wall": 6.404040212000837,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 4.062,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_WholeMutantsLower_family-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002)$'",
+    "environment": {},
+    "wall": 4.179207815002883,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.908,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_WholeMutantsLower_family-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002)$'",
+    "environment": {},
+    "wall": 3.0653018279990647,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.531,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_WholeMutantsLower_family-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002)$'",
+    "environment": {},
+    "wall": 3.704939294999349,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 1.232,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_WholeMutantsNative_family-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002)$'",
+    "environment": {},
+    "wall": 4.945832409001014,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 2.005,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_WholeMutantsNative_family-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002)$'",
+    "environment": {},
+    "wall": 3.303570216994558,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.948,
+    "cooked": false
+  },
+  {
+    "name": "TestProduct_WholeMutantsNative_family-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002)$'",
+    "environment": {},
+    "wall": 4.237742971999978,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 1.905,
+    "cooked": false
+  },
+  {
+    "name": "TestEveryTypeNodeKindAgrees-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestEveryTypeNodeKindAgrees)$'",
+    "environment": {},
+    "wall": 22.85070876700047,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 20.202,
+    "cooked": false
+  },
+  {
+    "name": "TestEveryTypeNodeKindAgrees-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestEveryTypeNodeKindAgrees)$'",
+    "environment": {},
+    "wall": 24.561021876994346,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 20.966,
+    "cooked": false
+  },
+  {
+    "name": "TestEveryTypeNodeKindAgrees-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestEveryTypeNodeKindAgrees)$'",
+    "environment": {},
+    "wall": 22.34299769000063,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 20.211,
+    "cooked": false
+  },
+  {
+    "name": "TestWholeGeneratedAgrees-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeGeneratedAgrees)$'",
+    "environment": {},
+    "wall": 21.82686417899822,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 19.436,
+    "cooked": false
+  },
+  {
+    "name": "TestWholeGeneratedAgrees-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeGeneratedAgrees)$'",
+    "environment": {},
+    "wall": 22.022295857001154,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 19.309,
+    "cooked": false
+  },
+  {
+    "name": "TestWholeGeneratedAgrees-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeGeneratedAgrees)$'",
+    "environment": {},
+    "wall": 21.619988546997774,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 19.392,
+    "cooked": false
+  },
+  {
+    "name": "TestObsoleteImportAttributesAgrees-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestObsoleteImportAttributesAgrees)$'",
+    "environment": {},
+    "wall": 26.416130791003525,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 21.801,
+    "cooked": false
+  },
+  {
+    "name": "TestObsoleteImportAttributesAgrees-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestObsoleteImportAttributesAgrees)$'",
+    "environment": {},
+    "wall": 25.098092644002463,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 20.991,
+    "cooked": false
+  },
+  {
+    "name": "TestObsoleteImportAttributesAgrees-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestObsoleteImportAttributesAgrees)$'",
+    "environment": {},
+    "wall": 22.339224698996986,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 19.586,
+    "cooked": false
+  },
+  {
+    "name": "TestWholeMutants_Setup-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeMutants_Setup)$'",
+    "environment": {},
+    "wall": 3.79876875699847,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 1.55,
+    "cooked": false
+  },
+  {
+    "name": "TestWholeMutants_Setup-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeMutants_Setup)$'",
+    "environment": {},
+    "wall": 4.5919857019980554,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 2.294,
+    "cooked": false
+  },
+  {
+    "name": "TestWholeMutants_Setup-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeMutants_Setup)$'",
+    "environment": {},
+    "wall": 4.418951633000688,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 2.185,
+    "cooked": false
+  },
+  {
+    "name": "count-before",
+    "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/typescript/parser/main.ts --manifest /tmp/u157/manifest.txt --whole --count",
+    "environment": {},
+    "wall": 0.18065776400180766,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "M1-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/typescript/parser/main.ts -o /tmp/u157/M1 --sanitize",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/M1"
+    },
+    "wall": 20.38339996400464,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "M1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/M1"
+    },
+    "wall": 66.92806286000268,
+    "exit": 1,
+    "fail": [
+      "TestWholeGeneratedAgrees",
+      "TestEveryTypeNodeKindAgrees",
+      "TestObsoleteImportAttributesAgrees"
+    ],
+    "elapsed": 64.255,
+    "cooked": false
+  },
+  {
+    "name": "M2-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/typescript/parser/main.ts -o /tmp/u157/M2 --sanitize",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/M2"
+    },
+    "wall": 19.889101626999036,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "M2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/M2"
+    },
+    "wall": 57.83696475200122,
+    "exit": 1,
+    "fail": [
+      "TestEveryTypeNodeKindAgrees"
+    ],
+    "elapsed": 51.335,
+    "cooked": false
+  },
+  {
+    "name": "M3-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/typescript/parser/main.ts -o /tmp/u157/M3 --sanitize",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/M3"
+    },
+    "wall": 15.755020793003496,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "M3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/M3"
+    },
+    "wall": 58.18544694600132,
+    "exit": 1,
+    "fail": [
+      "TestObsoleteImportAttributesAgrees"
+    ],
+    "elapsed": 56.258,
+    "cooked": false
+  },
+  {
+    "name": "M4-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/typescript/parser/main.ts -o /tmp/u157/M4 --sanitize",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/M4"
+    },
+    "wall": 16.05189452000195,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "M4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/M4"
+    },
+    "wall": 60.78567752500385,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 55.157,
+    "cooked": false
+  },
+  {
+    "name": "count-after",
+    "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs stage1/typescript/parser/main.ts --manifest /tmp/u157/manifest.txt --whole --count",
+    "environment": {},
+    "wall": 0.22852260600484442,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "count-after-native",
+    "command": "ASAN_OPTIONS=detect_leaks=0 /tmp/u157/M4 --manifest /tmp/u157/manifest.txt --whole --count",
+    "environment": {},
+    "wall": 0.010433331997774076,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S1-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S1"
+    },
+    "wall": 0.308330890002253,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S1"
+    },
+    "wall": 70.50110165099613,
+    "exit": 1,
+    "fail": [
+      "TestWholeMutants_Setup"
+    ],
+    "elapsed": 64.546,
+    "cooked": false
+  },
+  {
+    "name": "S2-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S2"
+    },
+    "wall": 0.2792110530062928,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S2"
+    },
+    "wall": 88.57553554300102,
+    "exit": 1,
+    "fail": [
+      "TestProduct_CompilerExpressionsNative",
+      "TestProduct_CompilerExpressionsLower"
+    ],
+    "elapsed": 75.581,
+    "cooked": false
+  },
+  {
+    "name": "S3-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S3"
+    },
+    "wall": 0.6010688700043829,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S3"
+    },
+    "wall": 84.9451808369995,
+    "exit": 1,
+    "fail": [
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "elapsed": 76.807,
+    "cooked": false
+  },
+  {
+    "name": "S4-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S4"
+    },
+    "wall": 0.30500838499574456,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S4"
+    },
+    "wall": 83.32776340099372,
+    "exit": 1,
+    "fail": [
+      "TestProduct_WholeMutantsLower_001",
+      "TestProduct_WholeMutantsNative_000",
+      "TestProduct_WholeMutantsNative_001",
+      "TestProduct_WholeMutantsLower_000",
+      "TestProduct_WholeMutantsNative_Control",
+      "TestProduct_WholeMutantsLower_Control",
+      "TestWholeMutants_Setup",
+      "TestProduct_WholeMutantsNative_002",
+      "TestProduct_WholeMutantsLower_002"
+    ],
+    "elapsed": 72.07,
+    "cooked": false
+  },
+  {
+    "name": "S5-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S5"
+    },
+    "wall": 0.6001209819951328,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S5",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S5"
+    },
+    "wall": 90.00885197600292,
+    "exit": 1,
+    "fail": [
+      "TestProduct_WholeMutantsNative_Control",
+      "TestProduct_WholeMutantsNative_002",
+      "TestProduct_WholeMutantsNative_001",
+      "TestWholeMutants_Setup",
+      "TestProduct_WholeMutantsNative_000"
+    ],
+    "elapsed": 78.014,
+    "cooked": false
+  },
+  {
+    "name": "S6-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S6"
+    },
+    "wall": 0.21866647199931322,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S6",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/S6"
+    },
+    "wall": 58.36530649299675,
+    "exit": 1,
+    "fail": [
+      "TestWholeMutants_Setup"
+    ],
+    "elapsed": 51.679,
+    "cooked": false
+  },
+  {
+    "name": "P1-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/typescript/parser/main.ts -o /tmp/u157/P1 --sanitize",
+    "environment": {},
+    "wall": 15.925584058000823,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/P1"
+    },
+    "wall": 22.900565474999894,
+    "exit": 1,
+    "fail": [
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees"
+    ],
+    "elapsed": 17.034,
+    "cooked": false
+  },
+  {
+    "name": "P2-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/typescript/parser/main.ts -o /tmp/u157/P2 --sanitize",
+    "environment": {},
+    "wall": 14.987471633998211,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/P2"
+    },
+    "wall": 23.46705557200039,
+    "exit": 1,
+    "fail": [
+      "TestEveryTypeNodeKindAgrees"
+    ],
+    "elapsed": 21.585,
+    "cooked": false
+  },
+  {
+    "name": "S5-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/S5.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.06580949899944244,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P2-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/P2.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.04648289200122235,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S6-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/S6.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.04810286100109806,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "M3-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/M3.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.04496919699886348,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P1-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/P1.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.045781521999742836,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "M2-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/M2.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.04738527000154136,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S2-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/S2.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.04293260799749987,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S3-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/S3.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.04340751900599571,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S1-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/S1.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.04434154800401302,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "S4-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/S4.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.04491838900139555,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "M1-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/M1.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.04343673699622741,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "M4-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/M4.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.04500272700533969,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "restored",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$'",
+    "environment": {},
+    "wall": 28.121284855995327,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 26.173,
+    "cooked": false
+  },
+  {
+    "name": "P3-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {},
+    "wall": 0.34325325100508053,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/P3"
+    },
+    "wall": 5.84107225099433,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.011,
+    "cooked": false
+  },
+  {
+    "name": "P3-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/P3.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.05650584200338926,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P4-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {},
+    "wall": 0.22235820299829356,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_CompilerExpressionsLower)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/P4"
+    },
+    "wall": 6.21272481699998,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.01,
+    "cooked": false
+  },
+  {
+    "name": "P4-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/P4.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.050290786995901726,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P5-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {},
+    "wall": 0.25057742100034375,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P5",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_CompilerExpressionsNative)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/P5"
+    },
+    "wall": 6.628736579994438,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.011,
+    "cooked": false
+  },
+  {
+    "name": "P5-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/P5.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.05145574000198394,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P6-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {},
+    "wall": 0.2094993170030648,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P6",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/P6"
+    },
+    "wall": 6.583723284995358,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.014,
+    "cooked": false
+  },
+  {
+    "name": "P6-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/P6.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.052130530995782465,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P7-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {},
+    "wall": 0.24130449700169265,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P7",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/P7"
+    },
+    "wall": 6.492560640996089,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.015,
+    "cooked": false
+  },
+  {
+    "name": "P7-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/P7.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.051699988995096646,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P8-vet",
+    "command": "timeout 90 go vet ./stage1/typescript/parser/",
+    "environment": {},
+    "wall": 0.23357997400307795,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "P8",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestWholeMutants_Setup)$'",
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u157/cache/P8"
+    },
+    "wall": 6.847765340004116,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.013,
+    "cooked": false
+  },
+  {
+    "name": "P8-apply",
+    "command": "git read-tree 23a19b8b48662dfb6a19baa00b8efbb52ab5275e && git apply --cached --check review/test-audit/stage1-typescript-parser-setup_deadline_products/P8.diff",
+    "environment": {
+      "GIT_INDEX_FILE": "/tmp/u157-index"
+    },
+    "wall": 0.07061882199923275,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null,
+    "cooked": false
+  },
+  {
+    "name": "coverage",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run \"^(TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees)$\"",
+    "environment": {
+      "NODE_V8_COVERAGE": "/tmp/u157/coverage"
+    },
+    "wall": 21.097355548998166,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 18.561,
+    "cooked": false
+  }
+]

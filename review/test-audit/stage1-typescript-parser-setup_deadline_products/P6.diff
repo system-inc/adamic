@@ -1,0 +1,34 @@
+--- a/stage1/typescript/parser/whole_mutants_split_test.go
++++ b/stage1/typescript/parser/whole_mutants_split_test.go
+@@ -18,8 +18,6 @@
+ 	"time"
+ 
+ 	"github.com/system-inc/adamic/internal/buildcache"
+-	"github.com/system-inc/adamic/internal/load"
+-	"github.com/system-inc/adamic/internal/lower"
+ 	"github.com/system-inc/adamic/internal/native"
+ )
+ 
+@@ -129,21 +127,7 @@
+ }
+ 
+ func wholeMutantLowerProduct(t *testing.T, directory string) string {
+-	t.Helper()
+-	files, flags := wholeMutantPortInputs(t, directory)
+-	inputs := buildcache.Inputs{Name: "typescript-parser-lowered", Files: files, Flags: flags, Toolchain: []string{runtime.Version()}}
+-	lowered := buildcache.Product(t, inputs, func(dir string) error {
+-		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
+-		if err != nil {
+-			return err
+-		}
+-		lowered, err := lower.Lower(context.Background(), program)
+-		if err != nil {
+-			return err
+-		}
+-		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644)
+-	})
+-	return lowered
++	return ""
+ }
+ 
+ func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) string {

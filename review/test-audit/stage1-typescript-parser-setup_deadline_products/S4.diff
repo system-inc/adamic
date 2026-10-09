@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/whole_mutants_split_test.go
++++ b/stage1/typescript/parser/whole_mutants_split_test.go
+@@ -141,7 +141,7 @@
+ 		if err != nil {
+ 			return err
+ 		}
+-		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644)
++		return os.WriteFile(filepath.Join(dir, "absent/main.c"), []byte(native.C(lowered)), 0644)
+ 	})
+ 	return lowered
+ }

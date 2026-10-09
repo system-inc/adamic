@@ -1,0 +1,37 @@
+--- a/stage1/typescript/parser/parser.ts
++++ b/stage1/typescript/parser/parser.ts
+@@ -249,33 +249,7 @@
+         this.nodes.splice(state.nodes);
+     }
+     docTypes(): number[] {
+-        const types: number[] = [];
+-        let index = this.scanner.text.indexOf('@type');
+-        while(index >= 0) {
+-            const brace = this.scanner.text.indexOf('{', index);
+-            if(brace < 0) {
+-                panic('doc type missing brace');
+-            }
+-            this.scanner.pos = brace + 1;
+-            this.next();
+-            const pos = this.scanner.fullStart;
+-            const variadic = this.kind() === 'DotDotDotToken';
+-            if(variadic) {
+-                this.next();
+-            }
+-            let type = this.returnType();
+-            if(variadic) {
+-                type = this.make('JSDocVariadicType', pos, [type]);
+-            }
+-            if(this.kind() === 'EqualsToken') {
+-                this.next();
+-                type = this.make('JSDocOptionalType', pos, [type]);
+-            }
+-            this.expect('CloseBraceToken');
+-            types.push(type);
+-            index = this.scanner.text.indexOf('@type', this.scanner.pos);
+-        }
+-        return types;
++        return [];
+     }
+     tupleNameAhead(): boolean {
+         if(!this.bindingIdentifier()) {

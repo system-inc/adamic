@@ -1,0 +1,42 @@
+--- a/stage1/typescript/parser/compiler_expressions_shards_test.go
++++ b/stage1/typescript/parser/compiler_expressions_shards_test.go
+@@ -2,7 +2,6 @@
+ 
+ import (
+ 	"bytes"
+-	"context"
+ 	"fmt"
+ 	"hash/fnv"
+ 	"os"
+@@ -13,8 +12,6 @@
+ 	"time"
+ 
+ 	"github.com/system-inc/adamic/internal/buildcache"
+-	"github.com/system-inc/adamic/internal/load"
+-	"github.com/system-inc/adamic/internal/lower"
+ 	"github.com/system-inc/adamic/internal/native"
+ )
+ 
+@@ -52,21 +49,7 @@
+ }
+ 
+ func compilerExpressionsLower(t *testing.T, absolute string) string {
+-	t.Helper()
+-	files := []string{"stage1/typescript/parser", "stage1/typescript/scanner", "internal/load", "internal/lower", "internal/ir", "internal/native", "cohere", "go.mod"}
+-	tools := []string{buildcache.Tool("clang", "--version"), buildcache.Tool("go", "version")}
+-	lowered := buildcache.Product(t, buildcache.Inputs{Name: "compiler-expressions-lowered", Files: files, Flags: []string{"native.C"}, Toolchain: tools}, func(dir string) error {
+-		program, err := load.Load([]string{filepath.Join(absolute, "main.ts")})
+-		if err != nil {
+-			return err
+-		}
+-		ir, err := lower.Lower(context.Background(), program)
+-		if err != nil {
+-			return err
+-		}
+-		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(ir)), 0644)
+-	})
+-	return lowered
++	return ""
+ }
+ 
+ func compilerExpressionsNative(t *testing.T, absolute string) string {

@@ -1,0 +1,31 @@
+{"Time":"2026-10-09T14:00:20.84059012Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T14:00:20.852543923Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees"}
+{"Time":"2026-10-09T14:00:20.852689739Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Output":"=== RUN   TestEveryTypeNodeKindAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:20.852732295Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Output":"=== PAUSE TestEveryTypeNodeKindAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:20.852736281Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees"}
+{"Time":"2026-10-09T14:00:20.852741898Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeGeneratedAgrees"}
+{"Time":"2026-10-09T14:00:20.85274478Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeGeneratedAgrees","Output":"=== RUN   TestWholeGeneratedAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:20.852748493Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeGeneratedAgrees","Output":"=== PAUSE TestWholeGeneratedAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:20.852751073Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeGeneratedAgrees"}
+{"Time":"2026-10-09T14:00:20.852754412Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees"}
+{"Time":"2026-10-09T14:00:20.852757207Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Output":"=== RUN   TestObsoleteImportAttributesAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:20.852761119Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Output":"=== PAUSE TestObsoleteImportAttributesAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:20.852763785Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees"}
+{"Time":"2026-10-09T14:00:20.852767259Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees"}
+{"Time":"2026-10-09T14:00:20.852772682Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Output":"=== CONT  TestEveryTypeNodeKindAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:20.852777658Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeGeneratedAgrees"}
+{"Time":"2026-10-09T14:00:20.85278047Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeGeneratedAgrees","Output":"=== CONT  TestWholeGeneratedAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:20.852930606Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees"}
+{"Time":"2026-10-09T14:00:20.852939806Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Output":"=== CONT  TestObsoleteImportAttributesAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:38.520068688Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Output":"    type_kinds_test.go:46: Go IsTypeNodeKind inventory: 42 kinds, each covered; 250 identical doc-type bytes\n"}
+{"Time":"2026-10-09T14:00:38.522572984Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Output":"--- PASS: TestEveryTypeNodeKindAgrees (17.67s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:38.954433373Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestEveryTypeNodeKindAgrees","Elapsed":17.67}
+{"Time":"2026-10-09T14:00:38.95471537Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Output":"    whole_generated_test.go:92: obsolete assert forms: Go required to emit only diagnostic 2880; 1021 identical tree bytes\n"}
+{"Time":"2026-10-09T14:00:38.956145284Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Output":"--- PASS: TestObsoleteImportAttributesAgrees (18.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:39.395772711Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestObsoleteImportAttributesAgrees","Elapsed":18.1}
+{"Time":"2026-10-09T14:00:39.395825581Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeGeneratedAgrees","Output":"    whole_generated_test.go:72: 68 generated whole files, 93323 identical bytes\n"}
+{"Time":"2026-10-09T14:00:39.39712762Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeGeneratedAgrees","Output":"--- PASS: TestWholeGeneratedAgrees (18.54s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:39.397305698Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestWholeGeneratedAgrees","Elapsed":18.54}
+{"Time":"2026-10-09T14:00:39.397311012Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:00:39.401629397Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t18.560s\n"}
+{"Time":"2026-10-09T14:00:39.401677001Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":18.561}

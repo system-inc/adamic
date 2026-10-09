@@ -1,0 +1,19 @@
+--- a/stage1/typescript/parser/parser.ts
++++ b/stage1/typescript/parser/parser.ts
+@@ -1640,15 +1640,7 @@
+         return left;
+     }
+     file(): number {
+-        const parser = this.statements();
+-        const children: number[] = [];
+-        while(this.kind() !== 'EndOfFile') {
+-            children.push(parser.statement());
+-        }
+-        const eof = this.make('EndOfFile', this.scanner.fullStart);
+-        children.push(eof);
+-        this.node(eof).end = this.scanner.text.length;
+-        const root = this.make('SourceFile', 0, children);
++        const root = this.make('SourceFile', 0, []);
+         this.node(root).end = this.scanner.text.length;
+         return root;
+     }

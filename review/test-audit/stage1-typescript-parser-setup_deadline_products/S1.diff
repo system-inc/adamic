@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/whole_mutants_split_test.go
++++ b/stage1/typescript/parser/whole_mutants_split_test.go
+@@ -88,7 +88,7 @@
+ 		}
+ 		ctx, cancel := context.WithCancel(context.Background())
+ 		defer cancel()
+-		command := wholeMutantCommandContext(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
++		command := wholeMutantCommandContext(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "absent/oracle"), virtual)
+ 		command.Dir = root
+ 		output, err := command.CombinedOutput()
+ 		if err != nil {

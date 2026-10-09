@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/parser.ts
++++ b/stage1/typescript/parser/parser.ts
+@@ -265,7 +265,7 @@
+             }
+             let type = this.returnType();
+             if(variadic) {
+-                type = this.make('JSDocVariadicType', pos, [type]);
++                type = this.make('JSDocNullableType', pos, [type]);
+             }
+             if(this.kind() === 'EqualsToken') {
+                 this.next();

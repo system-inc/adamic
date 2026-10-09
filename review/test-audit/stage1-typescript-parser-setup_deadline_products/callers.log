@@ -1,0 +1,80 @@
+stage1/typescript/parser/compiler_expressions_shards_test.go:54:func compilerExpressionsLower(t *testing.T, absolute string) string {
+stage1/typescript/parser/compiler_expressions_shards_test.go:72:func compilerExpressionsNative(t *testing.T, absolute string) string {
+stage1/typescript/parser/compiler_expressions_shards_test.go:74:	lowered := compilerExpressionsLower(t, absolute)
+stage1/typescript/parser/compiler_expressions_shards_test.go:104:		compilerExpressionsProducts.oracle = wholeMutantBuildOracleProduct(t)
+stage1/typescript/parser/compiler_expressions_shards_test.go:106:		compilerExpressionsProducts.binary = compilerExpressionsNative(t, absolute)
+stage1/typescript/parser/expressions_products_test.go:85:	product.once.Do(func() { product.binary = wholeMutantBuildPortProduct(t, expressionSource(t, index), true) })
+stage1/typescript/parser/expressions_products_test.go:91:		expressionProducts.oracle = wholeMutantBuildOracleProduct(t)
+stage1/typescript/parser/expressions_products_test.go:141:func TestProduct_ExpressionsOracle(t *testing.T)    { t.Parallel(); wholeMutantBuildOracleProduct(t) }
+stage1/typescript/parser/expressions_products_test.go:144:	wholeMutantLowerProduct(t, expressionSource(t, 0))
+stage1/typescript/parser/expressions_products_test.go:149:	wholeMutantLowerProduct(t, expressionSource(t, 1))
+stage1/typescript/parser/expressions_products_test.go:154:	wholeMutantLowerProduct(t, expressionSource(t, 2))
+stage1/typescript/parser/expressions_products_test.go:159:	wholeMutantLowerProduct(t, expressionSource(t, 3))
+stage1/typescript/parser/generated_test.go:118:	oracle := goOracle(t)
+stage1/typescript/parser/generated_test.go:128:	got = execute(t, "", buildPort(t, absolute, true), "--manifest", path)
+stage1/typescript/parser/jsx_rejection_test.go:41:	oracle := goOracle(t)
+stage1/typescript/parser/jsx_rejection_test.go:48:	binary := buildPort(t, directory, true)
+stage1/typescript/parser/jsx_rejection_test.go:61:	mutantBinary := buildPort(t, mutant, true)
+stage1/typescript/parser/jsx_rejection_test.go:78:	oracle := goOracle(t)
+stage1/typescript/parser/jsx_rejection_test.go:81:	binary := buildPort(t, directory, true)
+stage1/typescript/parser/jsx_rejection_test.go:117:			mutantBinary := buildPort(t, mutant, true)
+stage1/typescript/parser/jsx_scanner_mutants_test.go:13:	oracle := goOracle(t)
+stage1/typescript/parser/jsx_scanner_mutants_test.go:16:	for _, got := range []execution{wholeNode(t, directory, manifest, false), execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")} {
+stage1/typescript/parser/jsx_scanner_mutants_test.go:62:			native := execute(t, "", buildPort(t, mutant, true), "--manifest", manifest, "--whole")
+stage1/typescript/parser/jsx_test.go:74:	oracle := goOracle(t)
+stage1/typescript/parser/jsx_test.go:101:	oracle := goOracle(t)
+stage1/typescript/parser/jsx_test.go:104:		binary := buildPort(t, directory, sanitize)
+stage1/typescript/parser/parser_test.go:59:func goOracle(t *testing.T) string {
+stage1/typescript/parser/parser_test.go:84:func buildPort(t *testing.T, directory string, sanitize bool) string {
+stage1/typescript/parser/performance_test.go:28:	oracle := goOracle(t)
+stage1/typescript/parser/performance_test.go:29:	binary := buildPort(t, directory, false)
+stage1/typescript/parser/performance_test.go:153:	oracle := goOracle(t)
+stage1/typescript/parser/performance_test.go:160:	baseline := buildPort(t, absolute, true)
+stage1/typescript/parser/performance_test.go:169:	binary := buildPort(t, mutant, true)
+stage1/typescript/parser/setup_deadline_products_test.go:29:	wholeMutantBuildOracleProduct(t)
+stage1/typescript/parser/setup_deadline_products_test.go:33:	compilerExpressionsLower(t, compilerExpressionsProductDirectory(t))
+stage1/typescript/parser/setup_deadline_products_test.go:37:	compilerExpressionsNative(t, compilerExpressionsProductDirectory(t))
+stage1/typescript/parser/setup_deadline_products_test.go:42:	wholeMutantLowerProduct(t, wholeMutantsProductSource(t, -1))
+stage1/typescript/parser/setup_deadline_products_test.go:47:	wholeMutantBuildPortProduct(t, wholeMutantsProductSource(t, -1), true)
+stage1/typescript/parser/setup_deadline_products_test.go:52:	wholeMutantLowerProduct(t, wholeMutantsProductSource(t, 0))
+stage1/typescript/parser/setup_deadline_products_test.go:57:	wholeMutantBuildPortProduct(t, wholeMutantsProductSource(t, 0), true)
+stage1/typescript/parser/setup_deadline_products_test.go:62:	wholeMutantLowerProduct(t, wholeMutantsProductSource(t, 1))
+stage1/typescript/parser/setup_deadline_products_test.go:67:	wholeMutantBuildPortProduct(t, wholeMutantsProductSource(t, 1), true)
+stage1/typescript/parser/setup_deadline_products_test.go:72:	wholeMutantLowerProduct(t, wholeMutantsProductSource(t, 2))
+stage1/typescript/parser/setup_deadline_products_test.go:77:	wholeMutantBuildPortProduct(t, wholeMutantsProductSource(t, 2), true)
+stage1/typescript/parser/type_kinds_test.go:11:	oracle := goOracle(t)
+stage1/typescript/parser/type_kinds_test.go:29:	got = execute(t, "", buildPort(t, directory, true), "--manifest", docs, "--doc-types")
+stage1/typescript/parser/whole_generated_test.go:58:	oracle := goOracle(t)
+stage1/typescript/parser/whole_generated_test.go:68:	got = execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")
+stage1/typescript/parser/whole_generated_test.go:78:	oracle := goOracle(t)
+stage1/typescript/parser/whole_generated_test.go:87:	}{{"Node", wholeNode(t, directory, manifest, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")}} {
+stage1/typescript/parser/whole_mutants_setup_test.go:21:type wholeMutantsPreparedInputs struct {
+stage1/typescript/parser/whole_mutants_setup_test.go:27:var wholeMutantsPrepared *wholeMutantsPreparedInputs
+stage1/typescript/parser/whole_mutants_setup_test.go:28:var wholeMutantsPrepareOnce sync.Once
+stage1/typescript/parser/whole_mutants_setup_test.go:35:			err = json.Unmarshal(data, &wholeMutantsPrepared)
+stage1/typescript/parser/whole_mutants_setup_test.go:65:	wholeMutantsPrepare(t)
+stage1/typescript/parser/whole_mutants_setup_test.go:68:func wholeMutantsPrepare(t *testing.T) {
+stage1/typescript/parser/whole_mutants_setup_test.go:70:	wholeMutantsPrepareOnce.Do(func() {
+stage1/typescript/parser/whole_mutants_setup_test.go:72:		if wholeMutantsPrepared != nil {
+stage1/typescript/parser/whole_mutants_setup_test.go:87:	inputs := &wholeMutantsPreparedInputs{
+stage1/typescript/parser/whole_mutants_setup_test.go:88:		Oracle:   wholeMutantBuildOracleProduct(t),
+stage1/typescript/parser/whole_mutants_setup_test.go:101:			binaries[i] = wholeMutantBuildPortProduct(t, source, true)
+stage1/typescript/parser/whole_mutants_setup_test.go:111:	wholeMutantsPrepared = inputs
+stage1/typescript/parser/whole_mutants_setup_test.go:119:	if wholeMutantsPrepared == nil || len(wholeMutantsPrepared.Binaries) != testWholeMutantsShards+1 {
+stage1/typescript/parser/whole_mutants_setup_test.go:122:	for _, path := range append([]string{wholeMutantsPrepared.Oracle}, wholeMutantsBinaryPaths()...) {
+stage1/typescript/parser/whole_mutants_setup_test.go:131:	for _, path := range wholeMutantsPrepared.Binaries {
+stage1/typescript/parser/whole_mutants_setup_test.go:140:	return wholeMutantsPrepared.Oracle
+stage1/typescript/parser/whole_mutants_setup_test.go:149:	binary, ok := wholeMutantsPrepared.Binaries[wholeMutantsSourceHash(t, directory)]
+stage1/typescript/parser/whole_mutants_setup_test.go:161:	wholeMutantsPrepare(t)
+stage1/typescript/parser/whole_mutants_setup_test.go:188:	wholeMutantsPrepare(t)
+stage1/typescript/parser/whole_mutants_setup_test.go:189:	data, err := json.Marshal(wholeMutantsPrepared)
+stage1/typescript/parser/whole_mutants_split_test.go:67:func wholeMutantBuildOracleProduct(t *testing.T) string {
+stage1/typescript/parser/whole_mutants_split_test.go:131:func wholeMutantLowerProduct(t *testing.T, directory string) string {
+stage1/typescript/parser/whole_mutants_split_test.go:149:func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) string {
+stage1/typescript/parser/whole_mutants_split_test.go:151:	lowered := wholeMutantLowerProduct(t, directory)
+stage1/typescript/parser/whole_mutants_test.go:73:	oracle := goOracle(t)
+stage1/typescript/parser/whole_mutants_test.go:78:	binary := buildPort(t, mutant, true)
+stage1/typescript/parser/whole_test.go:26:	oracle := goOracle(t)
+stage1/typescript/parser/whole_test.go:36:	got = execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")
+stage1/typescript/parser/yield_test.go:32:	want := execute(t, "", goOracle(t), "--manifest", path).output
+stage1/typescript/parser/yield_test.go:42:		{"native", execute(t, "", buildPort(t, port, true), "--manifest", path).output},

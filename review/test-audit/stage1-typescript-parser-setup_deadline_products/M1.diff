@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/nodes.ts
++++ b/stage1/typescript/parser/nodes.ts
+@@ -10,7 +10,7 @@
+     raw = '';
+     operator = '';
+     semantic = '';
+-    optional = false;
++    optional = true;
+     literalFlags = 0;
+     list = -1;
+     trailing = false;

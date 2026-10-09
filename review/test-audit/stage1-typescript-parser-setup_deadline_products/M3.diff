@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/statements.ts
++++ b/stage1/typescript/parser/statements.ts
+@@ -235,7 +235,7 @@
+         this.parser.expect('CloseBraceToken');
+         const id = this.parser.make('ImportAttributes', pos, children);
+         const node = this.parser.node(id);
+-        node.operator = operator;
++        node.operator = 'WithKeyword';
+         node.list = children.length;
+         node.trailing = trailing;
+         node.multiLine = multiLine;

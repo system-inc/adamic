@@ -1,0 +1,48 @@
+import pathlib,json,statistics,re
+p=pathlib.Path('/workspace/adamic/review/test-audit/stage1-typescript-parser-setup_deadline_products');plan=json.loads((p/'plan.json').read_text());records=json.loads((p/'runs.json').read_text());by={r['name']:r for r in records};rows=plan['rows'];names=sum(rows.values(),[])
+def events(id):
+ e=[]
+ for line in (p/(id+'.log')).read_text().splitlines():
+  try:
+   x=json.loads(line)
+   if isinstance(x,dict):e.append(x)
+  except:pass
+ return e
+def failures(id):
+ top={e['Test'].split('/')[0] for e in events(id) if e.get('Action')=='fail' and e.get('Test')};return [row for row,mem in rows.items() if top.intersection(mem)]
+def assertion(id,row):
+ for e in events(id):
+  if e.get('Test','').split('/')[0] in rows[row] and re.search(r'\.go:\d+:',e.get('Output','')) and not any(x in e.get('Output','') for x in ['build typescript-','build compiler-','setup:']):return e['Output'].strip()
+ return None
+production={id:failures(id) for id in ['M1','M2','M3','M4']};construction={id:failures(id) for id in ['S1','S2','S3','S4','S5','S6']};allrows=[]
+probe={'TestProduct_ParserOracle':'P3','TestProduct_CompilerExpressionsLower':'P4','TestProduct_CompilerExpressionsNative':'P5','TestProduct_WholeMutantsLower family':'P6','TestProduct_WholeMutantsNative family':'P7','TestEveryTypeNodeKindAgrees':'P2','TestWholeGeneratedAgrees':'P1','TestObsoleteImportAttributesAgrees':'P1','TestWholeMutants_Setup':'P8'}
+med={row:statistics.median(by[row.replace(' ','_')+'-'+str(i)]['elapsed'] for i in [1,2,3]) for row in rows}
+for row,members in rows.items():
+ issetup=row.startswith('TestProduct_') or row=='TestWholeMutants_Setup';kills=[id for id,f in production.items() if row in f] if not issetup else [];unique=[id for id in kills if len(production[id])==1];sk=[id for id,f in construction.items() if row in f];sub=[];subs=None
+ if issetup:verdict='setup-check' if sk else 'untrue';last=sk[-1] if sk else None
+ elif unique:verdict='sacred';last=kills[-1]
+ elif kills:
+  sub=[other for other in rows if other!=row and all(other in production[m] for m in kills)];verdict='subsumed' if sub else 'overlapping';sub=sub[:1];subs=med[sub[0]] if sub else None;last=kills[-1]
+ else:verdict='untrue';last=None
+ pr=probe[row];caught=row in failures(pr);fail=assertion(last,row) if last else None
+ evidence=('ADAMIC_TYPESCRIPT_SOURCE=/tmp/u157-typescript ADAMIC_BUILD_CACHE_DIR=/tmp/u157/cache/'+last+' '+by[last]['command']+' > review/test-audit/stage1-typescript-parser-setup_deadline_products/'+last+'.log 2>&1; '+str(fail)) if last else 'S1 completed without failure in this row; P3 empty builder also passed. See S1.log and P3.log.'
+ file='setup_deadline_products_test.go' if row.startswith('TestProduct_') else 'whole_mutants_setup_test.go' if row=='TestWholeMutants_Setup' else 'type_kinds_test.go' if row=='TestEveryTypeNodeKindAgrees' else 'whole_generated_test.go'
+ oracle='self: construction must succeed; wrapper discards returned artifact path and checks no parser answers' if row.startswith('TestProduct_') else 'self: prepared map must contain four binaries and every returned path must exist; no parser-answer comparison' if issetup else 'Runs unmodified typescript-go via a Go overlay; compares full tree bytes from the port on Node and native. Type-kind inventory is also from typescript-go.' if row=='TestEveryTypeNodeKindAgrees' else 'Runs unmodified typescript-go and compares full tree bytes with the port on Node and native; obsolete case additionally requires Go diagnostics to be nonempty and all code 2880.' if row=='TestObsoleteImportAttributesAgrees' else 'Runs unmodified typescript-go and compares full tree bytes with the port on Node and native.'
+ allrows.append(dict(test=row,members=members,package='stage1/typescript/parser',file='stage1/typescript/parser/'+file,seconds=med[row],oracle=oracle,oracle_kind='self' if issetup else 'external-run',kills=kills,unique_kills=unique,last_proven_fail=last+': '+str(fail) if last else None,verdict=verdict,subsumed_by=sub,mutants_in_matrix=4,probe_kills=[pr] if caught else [],subsumer_seconds=subs,vacuous=not caught,bounded=True,matrix_rows=list(rows),setup_kills=sk,evidence=evidence))
+for m in plan['mutants']:
+ if m['id']=='M4':m['line']=58
+(p/'plan.json').write_text(json.dumps(plan,indent=2));(p/'rows.json').write_text(json.dumps(allrows,indent=2));(p/'matrix.json').write_text(json.dumps({'production':production,'construction':construction,'probes':{id:failures(id) for id in ['P1','P2','P3','P4','P5','P6','P7','P8']}},indent=2))
+timing=dict(nproc=5,warm_tool_verification_seconds=0.019276350998552516,npm_seconds=0.6945820190012455,whole_baseline_wall_seconds=91.77505630900123,whole_baseline_binary_seconds=90.023,bounded_baseline_binary_seconds=53.334,builds={r['name']:r['wall'] for r in records if r['name'].endswith('-build')},recorded_run_wall_seconds=sum(r['wall'] for r in records if r['elapsed'] is not None),all_recorded_wall_seconds=sum(r['wall'] for r in records))
+(p/'timings.json').write_text(json.dumps(timing,indent=2))
+t='Unit u157 at '+plan['base']+'.\nAll 15 requested names exist, grouped into nine rows.\nWhole baseline exceeded 90 s; narrowed baseline passed in 53.334 binary seconds.\nFour production mutants, six separate construction faults, eight empty-entry probes.\nSource restored; evidence branch test-audit/stage1-typescript-parser-setup_deadline_products.\n\n```json\n'+json.dumps(allrows,indent=2)+'\n```\n\n'
+t+='| ID | origin/main location | Change | Failed rows |\n|---|---|---|---|\n'
+for m in plan['mutants']:
+ matrix=production if m['role']=='production' else construction
+ change=m['from_text'].replace('\n',' ')+' -> '+m['to_text'].replace('\n',' ')
+ t+='| '+m['id']+' | '+m['file']+':'+str(m['line'])+' | `'+change+'` | '+', '.join(matrix[m['id']])+' |\n'
+t+='\nProduction survivor M4: countTree stops counting each node. count-before.log prints '+(p/'count-before.log').read_text().strip()+', count-after.log and count-after-native.log print '+(p/'count-after.log').read_text().strip()+'. This is unguarded count-only behavior in the bounded matrix; kills outside it are unknown. TestWholeCountCheckCatchesMutant is a caller outside the slice, not run here.\n\n'
+t+='Code under test: TypeScript parser port; for construction rows the Go preparation recipes themselves. Oracle: typescript-go for semantic answers, self-written setup expectations for construction. No oracle source, copied-file list or corpus was mutated. S1-S6 edit only construction under the explicit setup-check exception. They never support sacred, subsumed or production kills.\n\n'
+t+='Functions: functions-static.txt records declarations; functions-reached.json records observed V8 calls; callers.log lists additional callers. Static declarations are not claimed as proof that every branch was reached.\n\n'
+t+='Brief ambiguities, limitations and costs:\n\n- Fifteen named functions group into nine rows. Four Lower wrappers and four Native wrappers each share a recipe and differ only by input. Family timings are grouped package runs, not sums of member durations.\n- Product-only tests do not execute a parser or compare an answer. Their construction faults need the allowed setup-check exception; production semantic defects passing them do not imply semantic coverage.\n- Product wrappers discard returned paths. S1 tests whether a wrongly placed oracle artifact is noticed; the logs distinguish successful construction from prepared-input validation. Empty-entry probes show whether each row notices no construction at all.\n- Whole-package timeout is not a red assertion baseline. It timed out before parallel rows could finish; narrowed clean baseline passed. All verdicts are bounded, and neither package-wide nor repo-wide uniqueness is established. Other callers identified by grep were not added when that would exceed the budget.\n- The pinned corpus was absent and was installed at 050880ce59e30b356b686bd3144efe24f875ebc8. Corpus-dependent setup was enabled. Performance benchmarks outside this slice remain unmeasured; no requested row skipped in the bounded baseline.\n- Four-rebuild stage1 exception limits production mutants below three per grouped row. Construction edits are listed separately, not used to inflate production uniqueness.\n- count-only mode is reached by other package tests but not these semantic agreement rows. M4 survival is explicitly bounded to this matrix, with an observed output witness.\n- Audit runner error: numeric count output is valid JSON but is not a test event. Parsing was fixed to accept only objects; completed timings were retained, and no production mutant had been planted before that failure.\n- Optional type-kind coverage includes a corpus construction check and doc-type agreement in one row. The port entry exercised for doc-type agreement is docTypes, so P2 judges its vacuity, not P1 file.\n- Empty-entry probes P3-P8 target construction subjects only for their own rows. Their effects on preparation for semantic rows are not semantic probe kills.\n\n'
+t+='Timing: '+json.dumps(timing)+'. Matrix test-binary times include internal product builds; standalone build validations have separate wall measurements. Warm setup reused, no cloud/setup.sh.\n\nNot covered: full-package replay after narrowing, other packages, repository-wide uniqueness, all parser branches, nonlisted setup recipes, performance opt-ins and alternate systems. Standalone diffs apply to the pinned starting commit; build/vet and apply-check logs are saved.\n'
+(p/'REPORT.md').write_text(t);print(json.dumps(allrows,indent=2));print(json.dumps(timing,indent=2))
