@@ -193,6 +193,9 @@ func (l *lowering) recordInterveningMutation(node *ast.Node) bool {
 	found := false
 	var mutation ast.Visitor
 	mutation = func(n *ast.Node) bool {
+		if ast.IsFunctionLike(n) {
+			return false
+		}
 		if n.Kind == ast.KindDeleteExpression && l.recordTarget(n.AsDeleteExpression().Expression) {
 			if l.symbol(ast.SkipParentheses(recordReceiver(n.AsDeleteExpression().Expression))) == symbol && l.recordSameSlot(n.AsDeleteExpression().Expression, node) {
 				found = true
@@ -207,6 +210,9 @@ func (l *lowering) recordInterveningMutation(node *ast.Node) bool {
 	}
 	var calls ast.Visitor
 	calls = func(n *ast.Node) bool {
+		if ast.IsFunctionLike(n) {
+			return false
+		}
 		if n.Kind == ast.KindCallExpression {
 			s := l.checker.GetResolvedSignature(n)
 			if s != nil && s.Declaration() != nil && s.Declaration().Body() != nil {
@@ -219,7 +225,6 @@ func (l *lowering) recordInterveningMutation(node *ast.Node) bool {
 		if prior == statement {
 			break
 		}
-		prior.ForEachChild(calls)
 		calls(prior)
 	}
 	return found

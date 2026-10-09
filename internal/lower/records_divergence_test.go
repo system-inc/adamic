@@ -5,6 +5,7 @@ import "testing"
 func TestRecordDivergenceSupportedNeighbors(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
+		`const r:Record<string,number>={value:1};function unchanged():void{function unused():void{delete r["value"];}}if(r["value"]!==undefined){unchanged();console.log(String(r["value"]+1));}`,
 		`const r:Record<string,number>={x:1}; function read(k:string):void{console.log(String(r[k]));} read("x");`,
 		`const r:Record<string,number>={}; function has(k:string):void{console.log(String(k in r));} has("x");`,
 		`const r:Record<string,number>={}; function set(k:string):void{r[k]=1;} set("x");`,
