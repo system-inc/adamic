@@ -4,7 +4,7 @@ Base: c6cd4c9b74e5d1924ba2f82ca33bc41c6572aa13. Merge: d8e6f59c6d60bcd7551e1ec1f
 
 Value order: allocations / frees / retains / releases / peak live heap values / values released in regions. All 115 old/new pairs were checked directly against both committed counts.md files. The 16 new fixtures are outside this existing-row audit. Counts were regenerated once by member 17; this report does not regenerate or edit them.
 
-Numbers are recorded observations. Causes are source-level explanations checked against the member-17 diff and the fixtures, not fresh instrumented operation traces. Two one-pair reductions remain unexplained rather than inferred from their deltas. The old attribution for 10_identifier_multimap.a is corrected below: it contains repeat calls, not a catch.
+Numbers are recorded observations. Causes are source-level explanations checked against the member-17 diff and the fixtures, not fresh instrumented operation traces. The two initially unexplained reductions were resolved by emitted-C comparison and fresh uncached sanitized Node comparisons; the follow-up below names their exact pairs. The old attribution for 10_identifier_multimap.a is corrected below: it contains repeat calls, not a catch.
 
 Source mechanisms are in internal/lower/locals.go, library_exceptions.go and library_array.go; internal/native/exceptions.go and reuse.go; internal/native/runtime/exceptions.c and node_crypto.c. count.h counts even immortal/NULL retain/release calls. A class pointer alone does not allocate another heap object.
 
@@ -14,11 +14,11 @@ Source mechanisms are in internal/lower/locals.go, library_exceptions.go and lib
 | B. Uncaught payload and scope cleanup | 4 |
 | C. Required-read TypeError and uncaught cleanup | 12 |
 | D. Required-read TypeError caught in tagged storage | 2 |
-| E. Successful library-wrapper ownership | 9 |
+| E. Successful library-wrapper ownership | 11 |
 | F. Catchable library validation failure | 13 |
 | G. Validation-wrapper result cleanup | 5 |
 | H. Stored Error catches plus repeat wrappers | 1 |
-| I. Unexplained net ownership reduction | 2 |
+| Unexplained | 0 |
 | Total | 115 |
 
 ## A. Tagged catches and checked nominal Error reads
@@ -139,6 +139,8 @@ Source mechanisms are in internal/lower/locals.go, library_exceptions.go and lib
 | internal/oracle/testdata/method_coverage_string_repeat.a | 2 / 2 / 3 / 6 / 2 / 0 | 2 / 2 / 5 / 8 / 2 / 0 | lower/library_exceptions.go repeat validation uses libraryArrayBuilder helper parameters/results instead of the direct primitive call. Ordinary helper ownership changes the successful path by the recorded balanced retain/release pairs; allocations and peak do not change. Observed delta: +0, +0, +2, +2, +0, +0. |
 | stage3/fixtures/generics/10_identifier_multimap.a | 11 / 11 / 29 / 38 / 9 / 0 | 11 / 11 / 30 / 39 / 9 / 0 | lower/library_exceptions.go repeat validation uses libraryArrayBuilder helper parameters/results instead of the direct primitive call. Ordinary helper ownership changes the successful path by the recorded balanced retain/release pairs; allocations and peak do not change. This fixture has repeat calls and no catch or throw. This corrects the previous ledger attribution to an Error catch; the generic class lowering is unchanged. Observed delta: +0, +0, +1, +1, +0, +0. |
 | internal/oracle/testdata/walk.a | 222 / 222 / 117 / 288 / 36 / 0 | 222 / 222 / 131 / 302 / 36 / 0 | lower/library_exceptions.go repeat validation uses libraryArrayBuilder helper parameters/results instead of the direct primitive call. Ordinary helper ownership changes the successful path by the recorded balanced retain/release pairs; allocations and peak do not change. Observed delta: +0, +0, +14, +14, +0, +0. |
+| internal/oracle/testdata/regexp.a | 437 / 437 / 383 / 418 / 58 / 0 | 437 / 437 / 382 / 417 / 58 / 0 | Sound borrowed global regex read at regexp.a:44 (matchAll(all)). Before: adamic_retain(adamic_global_7_all) into adamic_temporary_192, then adamic_release(adamic_temporary_192) after iterator installation. After: adamic_temporary_227 snapshots that global without retaining, passed to adamic_function_8_exception_regexp_global; there is no matching temporary release. Member 17 library_exceptions.go RegExpCall matchAll/replaceAll hunk builds checkedLibrary(exception_regexp_global). Existing lower/borrow.go and native/borrow.go lentArgument recognize its unassigned borrowed regex parameter and prove the callee does not touch the global. The global owns the regex throughout the synchronous call; the runtime matchAll result owns a regex copy. Observed delta: 0, 0, -1, -1, 0, 0. |
+| internal/oracle/testdata/regexp_replace.a | 625 / 625 / 206 / 336 / 113 / 0 | 625 / 625 / 205 / 335 / 113 / 0 | Sound borrowed replacement-string read at regexp_replace.a:7 (replaceAll(regex, tokens)). Before: adamic_retain(adamic_global_0_tokens) into adamic_temporary_13, then adamic_release(adamic_temporary_13) after output. After: adamic_temporary_23 snapshots that global without retaining, passed as parameter 3 to adamic_function_0_exception_regexp_global; its temporary release is absent. The same member-17 library_exceptions.go RegExpCall wrapper hunk exposes a borrowed, unassigned replacement parameter to existing lentArgument analysis. No later argument or callback can change tokens; its global owner survives the synchronous replacement. Observed delta: 0, 0, -1, -1, 0, 0. |
 
 ## F. Catchable library validation failure
 
@@ -174,13 +176,51 @@ Source mechanisms are in internal/lower/locals.go, library_exceptions.go and lib
 | --- | --- | --- | --- |
 | internal/oracle/testdata/statements_small_throw.a | 5 / 5 / 9 / 13 / 4 / 0 | 5 / 5 / 16 / 20 / 4 / 0 | The two message-building repeat calls now use library_exceptions.go helpers. The aliased stored Error and finally/rethrow enter tagged catch storage; locals.go checked receiver reads for identity/name/message add ownership pairs. These changes together add seven balanced pairs, with unchanged allocation/free/peak/region totals. Observed delta: +0, +0, +7, +7, +0, +0. |
 
-## I. Unexplained net ownership reduction
-
-| Fixture | Old | New | Named cause |
-| --- | --- | --- | --- |
-| internal/oracle/testdata/regexp.a | 437 / 437 / 383 / 418 / 58 / 0 | 437 / 437 / 382 / 417 / 58 / 0 | UNEXPLAINED: library_exceptions.go introduces matchAll/replaceAll global-flag wrappers, but the net removal of one retain/release pair has not been traced. The previous generic ownership attribution does not explain that reduction; allocations, frees, peak and regions do not move. Observed delta: +0, +0, -1, -1, +0, +0. |
-| internal/oracle/testdata/regexp_replace.a | 625 / 625 / 206 / 336 / 113 / 0 | 625 / 625 / 205 / 335 / 113 / 0 | UNEXPLAINED: library_exceptions.go introduces matchAll/replaceAll global-flag wrappers, but the net removal of one retain/release pair has not been traced. The previous generic ownership attribution does not explain that reduction; allocations, frees, peak and regions do not move. Observed delta: +0, +0, -1, -1, +0, +0. |
-
 ## Validation and limits
 
-The changed-row set is exactly the 115-row intersection diff between the base and landing tip; every old/new six-value tuple matches those committed tables. No compiler, runtime, fixture, status record or generated count file changes. No tests or mutants were rerun for this report-only unit; original executions remain in member-17-report.md and member-17-results.json. The two unexplained regexp reductions need generated-C/ownership tracing to name their precise removed operation.
+The changed-row set is exactly the 115-row intersection diff between the base and landing tip; every old/new six-value tuple matches those committed tables. No compiler, runtime, fixture, status record or generated count file changes. The original audit did not rerun tests. The follow-up below reruns both regexp fixtures uncached on the landing code. Original member-17 executions remain in member-17-report.md and member-17-results.json. No unexplained row remains.
+
+## Follow-up: exact removed pairs and soundness
+
+The full emitted C of each fixture was generated with compiler sources at c6cd4c9b and 72a2497d, then compared with a unified diff. The before compiler uses a Go overlay restoring all 31 changed non-test Go/C/header sources to c6cd4c9b, removing sources absent there; the after compiler is built on the audit branch, whose compiler/runtime are byte-identical to 72a2497d. Fixture texts did not change. A detached-worktree build first failed VCS stamping, then hit its 120-second build limit; the source overlay at the original paths built successfully under the same limit. Neither attempt is counted as fixture validation.
+
+For regexp.a:44, before C lines 4582 and 4588 are the pair:
+
+```c
+adamic_object * adamic_temporary_192 = adamic_retain(adamic_global_7_all);
+adamic_object * adamic_temporary_193 = adamic_regex_match_all(&adamic_string_53, adamic_temporary_192);
+/* install the returned iterator in its global owner */
+adamic_release(adamic_temporary_192);
+```
+
+After C lines 4772-4773 use:
+
+```c
+adamic_object * adamic_temporary_227 = adamic_global_7_all;
+adamic_object * adamic_temporary_228 = adamic_function_8_exception_regexp_global(&adamic_string_53, adamic_temporary_227);
+```
+
+The helper reads its borrowed regex parameter's global flag, then calls adamic_regex_match_all; it does not retain/release that parameter. runtime/regexp.c adamic_regex_match_all creates a new regex copy and stores it in the iterator, retaining the source and flags through regex construction. Thus the iterator does not depend on the borrowed original regex surviving after the call. The global continues to own the original until ordinary cleanup. The next lastIndex write still retains its receiver; it was not the removed pair.
+
+For regexp_replace.a:7, before C lines 320 and 324 are the pair:
+
+```c
+adamic_string * adamic_temporary_13 = adamic_retain(adamic_global_0_tokens);
+adamic_string * adamic_temporary_14 = adamic_regex_replace(&adamic_string_6, adamic_temporary_12, adamic_temporary_13, true);
+adamic_write_line(adamic_stdout, adamic_temporary_14);
+adamic_release(adamic_temporary_14);
+adamic_release(adamic_temporary_13);
+```
+
+After C lines 359-360 use:
+
+```c
+adamic_string * adamic_temporary_23 = adamic_global_0_tokens;
+adamic_string * adamic_temporary_24 = adamic_function_0_exception_regexp_global(&adamic_string_6, adamic_temporary_22, adamic_temporary_23);
+```
+
+The helper's replacement parameter is borrowed. It checks the regex and calls the synchronous string-substitution primitive; no callback, global read/write or reference escape can free tokens during use. The global's final release remains. The preceding and following ordinary replace calls still retain/release their tokens snapshots, confirming which single call lost the pair.
+
+The enabling member-17 hunk is internal/lower/library_exceptions.go, libraryException's RegExpCall branch: it builds parameters for receiver/arguments, rewrites their uses to parameter reads, and returns checkedLibrary(b, "regexp_global", value). Existing internal/lower/borrow.go marks these unassigned non-closure parameters Borrowed. Existing native/emit_functions.go arguments calls native/borrow.go lentArgument, which requires a direct global read, pure later operands, a borrowed non-consumed parameter and all callees not touching the global. Direct ir.RegExpCall did not use that ordinary-call optimization, hence the old snapshot retain. These are borrowed reads, not removals caused by exception cleanup or the required-read TypeError emitter. The newly added failure branches do not execute for either fixture's global regexes.
+
+Fresh validation on compiler/runtime identical to 72a2497d: GOMAXPROCS=4 ADAMIC_GATE_UNCACHED=1 timeout 120s go test -p 1 -parallel 2 -timeout 90s ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(regexp|regexp_replace)\.a$' -count=1 -json. PASS: regexp.a 1.57 seconds; regexp_replace.a 0.63 seconds. Each compares source Node, JavaScript, sanitized native (ASan and UBSan), and release native, then reruns the sanitized binary with ASAN_OPTIONS=detect_leaks=1. Both finish with matching stdout/stderr/exit and no sanitizer or LeakSanitizer report. No under-retained value or read after release was found; no compiler/runtime code changed.
