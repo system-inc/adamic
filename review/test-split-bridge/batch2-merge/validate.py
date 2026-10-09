@@ -26,6 +26,7 @@ for mode in ('sample','corpus'):
   assert p.returncode==0 and len(terminal)==1,(mode,test,p.returncode,path)
   result=dict(mode=mode,test=test,action=terminal[0]['Action'],seconds=terminal[0].get('Elapsed',0),wall=time.monotonic()-beg,cooked=False,hard_limit_seconds=90)
   assert result['seconds']<30,result
+  assert result['wall']<60,('over budget: split smaller',result)
   results.append(result);(logs/'units.json').write_text(json.dumps(results,indent=2)+'\n')
  print(mode,'completed',flush=True)
 ledger=(logs/'cache.log').read_text().splitlines();counts={}
