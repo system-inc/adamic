@@ -1,6 +1,8 @@
 package buildcache
 
 import (
+	"crypto/sha256"
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -30,9 +32,9 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(t *testing.T) {
 		t.Fatalf("flags %v, toolchain %v", inputs.Flags, inputs.Toolchain)
 	}
 	binary := GoBuild(t, "withc", "./internal/buildcache/testdata/withc", nil)
-	// Built path-independent: no Go build ID, which differs between two checkout paths.
-	if id, err := exec.Command("go", "tool", "buildid", binary).Output(); err != nil || strings.TrimSpace(string(id)) != "" {
-		t.Fatalf("the product's build ID is %q, %v", id, err)
+	// GoBuild built it with the reproducible flags, as its recorded inputs say.
+	if described, err := os.ReadFile(filepath.Dir(binary) + ".inputs"); err != nil || !strings.Contains(string(described), "flag arguments -trimpath -ldflags=-buildid=") {
+		t.Fatalf("the product's inputs: %q, %v", described, err)
 	}
 	output, err := exec.Command(binary).Output()
 	if err != nil || strings.TrimSpace(string(output)) != "hello from a header" {
@@ -75,8 +77,40 @@ func TestGoBuildKeysArgumentsAndEnvironment(t *testing.T) {
 	}
 }
 
-// GoBuild builds the same bytes from any checkout path, so a product another machine published audits clean.
+// GoBuild builds the same bytes from any checkout path, so a product another machine published audits clean: the cgo
+// package, copied into two module directories at different paths and built with GoBuild's flags, is byte-identical.
 func TestGoBuildIsReproducibleAcrossCheckoutPaths(t *testing.T) {
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	var sums []string
+	for _, name := range []string{"one", "elsewhere/two"} {
+		module := filepath.Join(t.TempDir(), name)
+		for _, file := range []string{"withc/main.go", "include/greeting.h"} {
+			content, err := os.ReadFile(filepath.Join(root, "internal/buildcache/testdata", file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			os.MkdirAll(filepath.Join(module, filepath.Dir(file)), 0o755)
+			os.WriteFile(filepath.Join(module, file), content, 0o644)
+		}
+		os.WriteFile(filepath.Join(module, "go.mod"), []byte("module example.com/reproducible\n\ngo 1.21\n"), 0o644)
+		command := exec.Command("go", append(append([]string{"build"}, reproducible(nil)...), "-o", filepath.Join(module, "out"), "./withc")...)
+		command.Dir = module
+		command.Env = append(os.Environ(), "GOWORK=off", "GOFLAGS=")
+		if output, err := command.CombinedOutput(); err != nil {
+			t.Fatalf("%v\n%s", err, output)
+		}
+		content, err := os.ReadFile(filepath.Join(module, "out"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		sums = append(sums, fmt.Sprintf("%x", sha256.Sum256(content)))
+	}
+	if sums[0] != sums[1] {
+		t.Fatalf("two checkout paths built %s and %s", sums[0], sums[1])
+	}
 	arguments := reproducible([]string{"-buildmode=c-archive"})
 	if !slices.Equal(arguments, []string{"-trimpath", "-ldflags=-buildid=", "-buildmode=c-archive"}) {
 		t.Fatalf("arguments %v", arguments)
