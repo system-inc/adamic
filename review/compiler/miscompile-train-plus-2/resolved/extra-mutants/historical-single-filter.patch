@@ -1,0 +1,15 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -256,12 +256,6 @@
+ 		contract.ProducerCertified = true
+ 		contract.Functions = nil
+ 		for _, producer := range l.closureRecords {
+-			function := l.result.Functions[producer.function]
+-			// Named functions also have a direct-call record. Only their closure
+-			// thunk has the code convention registered by the callable adapter.
+-			if !function.Closure || function.Receiver {
+-				continue
+-			}
+ 			if l.checker.IsTypeAssignableTo(producer.proven, target) && l.untaggedCallableABI(producer.function, *contract) {
+ 				contract.Functions = append(contract.Functions, producer.function)
+ 			}

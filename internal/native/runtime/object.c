@@ -153,24 +153,28 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 
 adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *declared, bool absent) {
     adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+    // Current callers pass false; a future optional reader can request undefined
+    // for a missing own slot. Required reads use the readiness failure below.
     if (object != NULL && slot == NULL && absent) {
-        return (adamic_view_union_value){adamic_view_union_undefined, {.reference = NULL}};
+        return (adamic_view_union_value){adamic_view_union_undefined, {0}};
     }
     const adamic_object *owner = NULL;
     slot = adamic_object_read_mode(object, name, cache, expression, declared, &owner);
     size_t index = adamic_slot_index(owner, slot);
     unsigned char storage = adamic_object_field_types(owner)[index];
-    adamic_view_union_value value = {adamic_view_union_unknown, *slot};
-    if (storage == adamic_rep_number) { value.kind = adamic_view_union_number; }
-    else if (storage == adamic_rep_boolean) { value.kind = adamic_view_union_boolean; }
+    adamic_view_union_value value = {adamic_view_union_unknown, {0}};
+    // Unknown storage is the one exception: its readers decide from the raw slot.
+    if (storage == 0) { value.payload = *slot; }
+    if (storage == adamic_rep_number) { value.kind = adamic_view_union_number; value.payload.number = slot->number; }
+    else if (storage == adamic_rep_boolean) { value.kind = adamic_view_union_boolean; value.payload.boolean = slot->boolean; }
     else if (storage == adamic_rep_maybe_number) {
         adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
         value.kind = number.present ? adamic_view_union_number : adamic_view_union_undefined;
-        value.payload.number = number.number;
+        if (number.present) { value.payload.number = number.number; }
     } else if (storage == adamic_rep_maybe_boolean) {
         adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
         value.kind = boolean.present ? adamic_view_union_boolean : adamic_view_union_undefined;
-        value.payload.boolean = boolean.boolean;
+        if (boolean.present) { value.payload.boolean = boolean.boolean; }
     } else if (storage == adamic_rep_null) { value.kind = adamic_view_union_null; }
     else if (storage == adamic_rep_undefined) { value.kind = adamic_view_union_undefined; }
     else if ((storage >= adamic_rep_string && storage <= adamic_rep_map) || storage == adamic_rep_closure || storage == adamic_rep_union || storage == adamic_rep_weak) {
@@ -178,6 +182,8 @@ adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *o
         adamic_view_union_kind expected = storage == adamic_rep_string ? adamic_view_union_string : storage == adamic_rep_object || storage == adamic_rep_weak ? adamic_view_union_object : storage == adamic_rep_array ? adamic_view_union_array : storage == adamic_rep_map ? adamic_view_union_map : storage == adamic_rep_closure ? adamic_view_union_function : value.kind;
         if (value.kind != adamic_view_union_undefined && value.kind != expected) { value.kind = adamic_view_union_unknown; }
     }
+    // These counted references have no named mixed-union kind yet.
+    if (storage >= adamic_rep_record) { value.payload.reference = slot->reference; }
     return value;
 }
 
@@ -225,6 +231,11 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 	if (actual == 10) {
 		const adamic_heap *boxed = slot->reference;
 		found = boxed == NULL ? "nullish" : boxed->kind == adamic_kind_number ? "number" : boxed->kind == adamic_kind_boolean ? "boolean" : boxed->kind == adamic_kind_string ? "string" : boxed->kind == adamic_kind_object ? "object" : boxed->kind == adamic_kind_array ? "array" : boxed->kind == adamic_kind_map ? "Map" : "function";
+	}
+	if ((actual == adamic_rep_object || actual == adamic_rep_union || actual == adamic_rep_weak) && slot->reference != NULL && ((const adamic_heap *)slot->reference)->kind == adamic_kind_object) {
+		const adamic_object *value = slot->reference;
+		if (value->tuple) { found = "array"; }
+		else if (value->class != NULL && value->class->is_static) { found = "function"; }
 	}
 	size_t capacity = strlen(expression) + strlen(type) + strlen(found) + 100;
 	char *message = malloc(capacity);

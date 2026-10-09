@@ -6,11 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Lane 1 calls this hook only after wiring member selection at reads.
-var viewMixedUnionContractHook viewContractHook = internMixedUnionViewContract
-
-// Intern a complete union graph using the shared member builder. This is not an
-// admission hook until lane 1 wires selection and representation conversion.
+// Shared union read dispatch interns a complete graph with its member builder.
 // Reserve before recursion, but discard every newly reserved id on failure:
 // a later lookup must not mistake a partial graph for a complete contract.
 func internMixedUnionViewContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (id ir.ViewContractID, err error) {

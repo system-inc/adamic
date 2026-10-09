@@ -1,0 +1,11 @@
+--- a/internal/lower/view_member_read.go
++++ b/internal/lower/view_member_read.go
+@@ -55,7 +55,7 @@
+ 			receiver = l.concrete(constraint)
+ 		}
+ 	}
+-	return int(l.checker.GetNonNullableType(receiver).Id())
++	return int(receiver.Id())
+ }
+ 
+ // A union receiver can carry a checked member's allocation. Preserve that

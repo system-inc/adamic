@@ -1,0 +1,11 @@
+--- a/internal/lower/testdata/view_element_reads/p72.a
++++ b/internal/lower/testdata/view_element_reads/p72.a
+@@ -1,7 +1,7 @@
+ // A wrong mixed union view (string or number) read by a string-literal key: the slot holds a boolean.
+ interface Root { readonly kind: 'Holder'; }
+ interface View extends Root { readonly value: string | number; }
+-const raw = { kind: 'Holder' as const, value: true };
++const raw = { kind: 'Holder' as const, value: 'hello' };
+ const base: Root = raw;
+ const viewed = base as View;
+ const value = viewed['value'];

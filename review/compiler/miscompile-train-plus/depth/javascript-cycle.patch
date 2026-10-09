@@ -1,0 +1,11 @@
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -67,7 +67,7 @@
+   }
+   const reference=value!==null && typeof value==='object';
+   let seen=reference ? active.get(value) : undefined;
+-  if(seen?.has(id)) return true;
++  if(seen?.has(id)) return false;
+   if(reference){if(seen===undefined){seen=new Set();active.set(value,seen);}seen.add(id);}
+   try {
+   const contract=contracts[id-1];

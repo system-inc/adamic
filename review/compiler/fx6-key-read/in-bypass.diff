@@ -1,0 +1,11 @@
+--- a/internal/lower/unknown.go
++++ b/internal/lower/unknown.go
+@@ -65,7 +65,7 @@
+ 		return nil, l.notYet(binary.Right, "in on this runtime representation")
+ 	}
+ 	if object.Type() == ir.Object {
+-		object, err = l.checkedViewMembers(node, binary.Right, object, key.Text())
++		object, err = object, nil
+ 		if err != nil {
+ 			return nil, err
+ 		}

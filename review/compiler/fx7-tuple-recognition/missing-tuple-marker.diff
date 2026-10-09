@@ -1,0 +1,11 @@
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -837,7 +837,7 @@
+ 			for _, field := range expression.Fields {
+ 				elements = append(elements, e.value(field.Value))
+ 			}
+-			return "adamicTuple([" + strings.Join(elements, ", ") + "])"
++			return "[" + strings.Join(elements, ", ") + "]"
+ 		}
+ 		spreadValue := ""
+ 		fields := []string{}

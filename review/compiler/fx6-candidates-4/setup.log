@@ -1,0 +1,24 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.075s)
+v24.19.0
+setup: node ready (0.105s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.686s)
+
+added 3 packages in 1s
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.988s
+setup: markdown dependencies ready (2.242s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (25.860s)
+# github.com/system-inc/adamic/internal/lower
+internal/lower/class_features.go:130:17: l.checkedViewMembers undefined (type *lowering has no field or method checkedViewMembers)
+internal/lower/collections.go:363:14: l.readViewMember undefined (type *lowering has no field or method readViewMember)
+internal/lower/element_access_fields.go:92:12: l.readViewMember undefined (type *lowering has no field or method readViewMember)
+internal/lower/interface_cast.go:92:57: l.checkedViewReceiverField undefined (type *lowering has no field or method checkedViewReceiverField)
+internal/lower/interface_cast.go:101:57: l.checkedViewReceiverField undefined (type *lowering has no field or method checkedViewReceiverField)
+internal/lower/interface_cast.go:420:57: l.checkedViewReceiverField undefined (type *lowering has no field or method checkedViewReceiverField)
+internal/lower/library_object.go:89:19: l.checkedViewMembers undefined (type *lowering has no field or method checkedViewMembers)
+internal/lower/object.go:36:20: l.checkedViewMembers undefined (type *lowering has no field or method checkedViewMembers)
+internal/lower/object.go:585:11: l.readViewMember undefined (type *lowering has no field or method readViewMember)
+internal/lower/unknown.go:68:19: l.checkedViewMembers undefined (type *lowering has no field or method checkedViewMembers)
+internal/lower/unknown.go:68:19: too many errors

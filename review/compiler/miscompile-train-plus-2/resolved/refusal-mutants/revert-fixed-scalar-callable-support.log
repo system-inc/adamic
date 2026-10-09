@@ -1,0 +1,8 @@
+=== RUN   TestSupportedCallableViewMember
+=== PAUSE TestSupportedCallableViewMember
+=== CONT  TestSupportedCallableViewMember
+    view_unsupported_test.go:60: Lower refused acceptance row: /tmp/TestSupportedCallableViewMember2510309882/001/main.a:11:14: Adamic 0.1 refuses view type has an unsupported member: value; use a supported, checked type for value (currently Target) before creating this view
+--- FAIL: TestSupportedCallableViewMember (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.040s
+FAIL

@@ -1,0 +1,14 @@
+constructor-revert {'name': 'constructor-revert', 'exit': 1, 'caught': True}
+reject-tuple-objects {'name': 'reject-tuple-objects', 'exit': 1, 'caught': True}
+missing-tuple-marker {'name': 'missing-tuple-marker', 'exit': 1, 'caught': True}
+admit-arbitrary-arrays {'name': 'admit-arbitrary-arrays', 'exit': 1, 'caught': True}
+clear-contract {'name': 'clear-contract', 'exit': 1, 'caught': True}
+source-argument-layout {'name': 'source-argument-layout', 'exit': 1, 'caught': True}
+missing-producer-mask {'name': 'missing-producer-mask', 'exit': 1, 'caught': True}
+spread-refusal {'name': 'spread-refusal', 'exit': 1, 'caught': True}
+{'name': 'checked-cast-metadata', 'exit': 0, 'caught': False}
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/fx6-candidates-4/run-extra.py", line 27, in <module>
+    assert all(r['caught'] for r in results),results
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: [{'name': 'constructor-revert', 'exit': 1, 'caught': True}, {'name': 'reject-tuple-objects', 'exit': 1, 'caught': True}, {'name': 'missing-tuple-marker', 'exit': 1, 'caught': True}, {'name': 'admit-arbitrary-arrays', 'exit': 1, 'caught': True}, {'name': 'clear-contract', 'exit': 1, 'caught': True}, {'name': 'source-argument-layout', 'exit': 1, 'caught': True}, {'name': 'missing-producer-mask', 'exit': 1, 'caught': True}, {'name': 'spread-refusal', 'exit': 1, 'caught': True}, {'name': 'checked-cast-metadata', 'exit': 0, 'caught': False}]

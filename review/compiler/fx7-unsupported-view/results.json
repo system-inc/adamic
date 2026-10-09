@@ -1,0 +1,26 @@
+{
+  "refusal_commit": "c8a7eb5dad82622b8d04e8e3a58821ce14ae406a",
+  "fixture_commit": "5483cc0a",
+  "merge_commit": "9d1f1c3cdeba1c38c3b3da3d45a86fee8cb9a7eb",
+  "lower_seconds": 121.415,
+  "call_targets_seconds": 29.159,
+  "oracle_views_seconds": 32.724,
+  "counts_seconds": 148.765,
+  "new_leaf_seconds": {
+    "UnreadMember": 0.28,
+    "CallableMember": 0.43,
+    "MapMember": 0.51,
+    "SupportedControl": 3.55
+  },
+  "revert_killed": true,
+  "creation_refusal_assertions_killed": 11,
+  "p37_node_stdout": "xx / 0\n",
+  "p37_native_stdout": "xx / undefined\n",
+  "p37_node_exit": 0,
+  "p37_native_exit": 0,
+  "p21_node_stdout": "xx\n3\n12\n",
+  "p21_native_stdout": "",
+  "p21_native_exit": -1,
+  "vet_exit": 0,
+  "counts_other_rows_changed": false
+}

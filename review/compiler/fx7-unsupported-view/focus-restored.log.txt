@@ -1,0 +1,18 @@
+=== RUN   TestUnsupportedViewMapMember
+=== PAUSE TestUnsupportedViewMapMember
+=== RUN   TestUnsupportedViewCallableMember
+=== PAUSE TestUnsupportedViewCallableMember
+=== RUN   TestUnsupportedViewUnreadMember
+=== PAUSE TestUnsupportedViewUnreadMember
+=== RUN   TestSupportedViewMembersAgree
+=== PAUSE TestSupportedViewMembersAgree
+=== CONT  TestUnsupportedViewMapMember
+=== CONT  TestUnsupportedViewCallableMember
+=== CONT  TestUnsupportedViewUnreadMember
+=== CONT  TestSupportedViewMembersAgree
+--- PASS: TestUnsupportedViewCallableMember (0.08s)
+--- PASS: TestUnsupportedViewMapMember (0.08s)
+--- PASS: TestUnsupportedViewUnreadMember (0.09s)
+--- PASS: TestSupportedViewMembersAgree (0.44s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.462s

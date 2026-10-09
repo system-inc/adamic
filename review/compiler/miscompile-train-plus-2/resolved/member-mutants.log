@@ -1,0 +1,107 @@
+nullable-receiver: caught by optional checked read escaped
+generic-receiver: caught by exit codes differ
+union-receiver: caught by gap changed
+receiver: runner passed
+revert-receiver exit 1
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== CONT  TestFX6P37
+    fx6_valid_test.go:29: JavaScript backend stdout = "3\n", source Node = "3\nnumber 5\n"
+--- FAIL: TestFX6P37 (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.163s
+FAIL
+
+revert-destructure-type-id exit 1
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== CONT  TestFX6P53
+    fx6_valid_test.go:44: JavaScript backend stdout = "", source Node = "n5\n"
+--- FAIL: TestFX6P53 (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.160s
+FAIL
+
+revert-p70 exit 1
+=== RUN   TestTupleObjectViewRefused
+=== PAUSE TestTupleObjectViewRefused
+=== CONT  TestTupleObjectViewRefused
+    view_tuple_objects_test.go:33: want located tuple object refusal, got <nil>
+--- FAIL: TestTupleObjectViewRefused (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.110s
+FAIL
+
+valid: runner passed
+element-bypass exit 1
+destructure-bypass exit 1
+routing: runner passed
+skip-conversion-check: caught by native and sanitized misfit fixture runtime comparisons; exit 1
+scalar: runner passed
+unfiltered-native caught; test exit 1
+direct-producer-certificate caught; test exit 1
+callable: runner passed
+assignable-direct-certificate caught; test exit 1
+exact-identity caught; test exit 1
+skip-adapter-refusal caught; test exit 1
+skip-result-registry-bound caught; test exit 1
+eager-tagged-callable caught; test exit 1
+assignable: runner passed
+147-name-wide-undefined-write 1 === RUN   TestFX7P04
+=== PAUSE TestFX7P04
+=== RUN   TestFX7P06
+=== PAUSE TestFX7P06
+=== CONT  TestFX7P04
+=== CONT  TestFX7P06
+=== NAME  TestFX7P04
+    fx7_name_family_test.go:22: Native backend stdout = "true\nwrittenwritten\n", source Node = "true\nwrittenwritten\ntrue\n"
+--- FAIL: TestFX7P04 (0.43s)
+=== NAME  TestFX7P06
+    fx7_name_family_test.go:30: Native backend stdout = "3\nxxx\n", source Node = "3\nxxx\ntrue\n"
+--- FAIL: TestFX7P06 (0.43s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.446s
+FAIL
+
+148-name-wide-read 1 === RUN   TestFX7P75
+=== PAUSE TestFX7P75
+=== RUN   TestFX7P77
+=== PAUSE TestFX7P77
+=== CONT  TestFX7P75
+=== CONT  TestFX7P77
+    fx7_name_family_test.go:60: JavaScript backend stdout = "3\n", source Node = "3\nundefined\n"
+--- FAIL: TestFX7P77 (0.16s)
+=== NAME  TestFX7P75
+    fx7_name_family_test.go:52: JavaScript backend stdout = "3\n", source Node = "3\nundefined\n"
+--- FAIL: TestFX7P75 (0.16s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.171s
+FAIL
+
+149-name-wide-null-write 1 === RUN   TestFX7P08
+=== PAUSE TestFX7P08
+=== RUN   TestFX7P59
+=== PAUSE TestFX7P59
+=== CONT  TestFX7P08
+=== CONT  TestFX7P59
+    fx7_name_family_test.go:46: Native backend stdout = "3\n", source Node = "3\n0\n"
+--- FAIL: TestFX7P59 (0.42s)
+=== NAME  TestFX7P08
+    fx7_name_family_test.go:38: Native backend stdout = "3\n", source Node = "3\n2\ntrue\n"
+--- FAIL: TestFX7P08 (0.42s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.433s
+FAIL
+
+name: runner passed
+final-spread: caught by TestCheckedViewSpread
+final-in: caught by TestCheckedViewIn
+final-keys: caught by TestCheckedViewKeys
+final-keys-alias: caught by TestCheckedViewKeysAlias
+final-values: caught by TestCheckedViewValues
+final-entries: caught by TestCheckedViewEntries
+p19-read: caught by TestCheckedViewElementP19Read
+p72-input: caught by TestCheckedViewElementP72
+in-empty-selector: caught by TestViewInEmptyKeyControl
+spread-method: caught by TestViewSpreadMethodRefused
+All 29 member mutant runs caught (certificate obligations overlap)
