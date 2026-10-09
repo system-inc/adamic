@@ -2,13 +2,17 @@ package markdownblocks
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 )
@@ -41,9 +45,9 @@ func prepareWholeDocumentPreflight(t *testing.T, root string) *preflightProducts
 		}
 		path := binary + ".overlay.json"
 		write(t, path, overlay)
-		command := bounded(t, "go", "build", "-overlay="+path, "-o", binary, mainPath)
+		command := preflightCommand(t, "go", "build", "-overlay="+path, "-o", binary, mainPath)
 		command.Dir = cohere
-		if output, err := combinedOutput(command); err != nil {
+		if output, err := command.CombinedOutput(); err != nil {
 			t.Fatalf("build: %v\n%s", err, output)
 		}
 	}
@@ -105,10 +109,10 @@ func runWholeDocumentPreflightShard(t *testing.T, root string, inputs []auditInp
 	cases := filepath.Join(dir, "cases.jsonl")
 	write(t, cases, batch.Bytes())
 	binary := products.binary
-	goRun := execute(t, nil, binary, cases)
+	goRun := preflightExecute(t, nil, binary, cases)
 	goAnswers := auditResults(t, "Go", goRun)
 	fork, script := products.fork, products.script
-	nodeRun := execute(t, nil, "node", script, fork, cases, "fork")
+	nodeRun := preflightExecute(t, nil, "node", script, fork, cases, "fork")
 	nodeAnswers := auditResults(t, "pinned fork", nodeRun)
 	if len(goAnswers) != len(inputs) || len(nodeAnswers) != len(inputs) {
 		t.Fatal("oracle lost a document")
@@ -207,7 +211,7 @@ func runWholeDocumentPreflightShard(t *testing.T, root string, inputs []auditInp
 		var elapsed time.Duration
 		for round := 0; round < 3; round++ {
 			start := time.Now()
-			answer := execute(t, nil, side.command, side.args...)
+			answer := preflightExecute(t, nil, side.command, side.args...)
 			elapsed += time.Since(start)
 			answers := auditResults(t, side.name, answer)
 			if len(answers) != len(inputs) {
@@ -350,14 +354,25 @@ func TestWholeDocumentOraclePreflightUnion(t *testing.T) {
 }
 func wholeDocumentPreflightLeaf(t *testing.T, shard int) {
 	t.Helper()
-	t.Parallel()
 	fixture := wholeDocumentPreflight(t)
 	runWholeDocumentPreflightShard(t, fixture.root, fixture.shards[shard], fixture.physical[shard], shard, fixture.products)
 }
-func TestWholeDocumentOraclePreflight_000(t *testing.T) { wholeDocumentPreflightLeaf(t, 0) }
-func TestWholeDocumentOraclePreflight_001(t *testing.T) { wholeDocumentPreflightLeaf(t, 1) }
-func TestWholeDocumentOraclePreflight_002(t *testing.T) { wholeDocumentPreflightLeaf(t, 2) }
-func TestWholeDocumentOraclePreflight_003(t *testing.T) { wholeDocumentPreflightLeaf(t, 3) }
+func TestWholeDocumentOraclePreflight_000(t *testing.T) {
+	t.Parallel()
+	wholeDocumentPreflightLeaf(t, 0)
+}
+func TestWholeDocumentOraclePreflight_001(t *testing.T) {
+	t.Parallel()
+	wholeDocumentPreflightLeaf(t, 1)
+}
+func TestWholeDocumentOraclePreflight_002(t *testing.T) {
+	t.Parallel()
+	wholeDocumentPreflightLeaf(t, 2)
+}
+func TestWholeDocumentOraclePreflight_003(t *testing.T) {
+	t.Parallel()
+	wholeDocumentPreflightLeaf(t, 3)
+}
 
 // Mutation witnesses are a property of the entire corpus, rather than every
 // arbitrary hash bucket. This leaf retains the original full-corpus must-fail check.
@@ -373,7 +388,7 @@ func TestWholeDocumentOraclePreflightMutants(t *testing.T) {
 	}
 	cases := filepath.Join(t.TempDir(), "cases.jsonl")
 	write(t, cases, batch.Bytes())
-	nodeAnswers := auditResults(t, "pinned fork", execute(t, nil, "node", products.script, products.fork, cases, "fork"))
+	nodeAnswers := auditResults(t, "pinned fork", preflightExecute(t, nil, "node", products.script, products.fork, cases, "fork"))
 	if len(nodeAnswers) != len(inputs) {
 		t.Fatal("oracle lost a document")
 	}
@@ -384,7 +399,7 @@ func TestWholeDocumentOraclePreflightMutants(t *testing.T) {
 	}
 	for _, mutant := range products.mutants {
 		{
-			answers := auditResults(t, "Go mutant", execute(t, nil, mutant, cases))
+			answers := auditResults(t, "Go mutant", preflightExecute(t, nil, mutant, cases))
 			if len(answers) != len(inputs) {
 				t.Fatal("mutant lost a document")
 			}
@@ -405,4 +420,37 @@ func TestWholeDocumentOraclePreflightMutants(t *testing.T) {
 		}
 	}
 
+}
+
+// A deadline kills the whole group so Go builds cannot leave compilers running.
+func preflightCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	t.Cleanup(cancel)
+	command := exec.CommandContext(ctx, name, arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
+}
+func preflightExecute(t *testing.T, environment []string, name string, arguments ...string) run {
+	t.Helper()
+	command := preflightCommand(t, name, arguments...)
+	if environment != nil {
+		command.Env = append(os.Environ(), environment...)
+	}
+	var stdout, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	err := command.Run()
+	var exitError *exec.ExitError
+	if err != nil && !errors.As(err, &exitError) {
+		t.Fatalf("running %s: %v", name, err)
+	}
+	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }

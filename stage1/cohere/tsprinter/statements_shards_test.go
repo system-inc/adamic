@@ -1,11 +1,15 @@
 package tsprinter
 
 import (
+	"bytes"
+	"context"
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/fs"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strconv"
@@ -90,13 +94,13 @@ func statementLeaks(t *testing.T, sanitized, release string, arguments ...string
 	t.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
+		report := statementExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
 		if report.exitCode == 0 {
 			return ""
 		}
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	case "darwin":
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", release}, arguments...)...)
+		report := statementExecute(t, nil, "leaks", append([]string{"--atExit", "--", release}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
@@ -196,6 +200,7 @@ func statementProofKeys(count int) []string {
 }
 
 func TestStatementsShardAssignmentStable(t *testing.T) {
+	t.Parallel()
 	root, upstream := "/repository", "/typescript"
 	items := []printerCase{
 		{Label: root + "/stage1/a.ts:0:SourceFile"},
@@ -394,6 +399,7 @@ func statementSelection(value string) (func(int) bool, error) {
 }
 
 func TestStatementsShardSelection(t *testing.T) {
+	t.Parallel()
 	for n := 1; n <= 2*testStatementsAgainstGoAndPrettierShards; n++ {
 		counts := make([]int, testStatementsAgainstGoAndPrettierShards)
 		for i := 0; i < n; i++ {
@@ -459,6 +465,7 @@ func statementDisagreement(name string, result run, want string, labels []string
 // A real Node run passes first. A child test process then plants one changed
 // answer and takes the same fatal comparison path as the production leaves.
 func TestStatementsShardDisagreement(t *testing.T) {
+	t.Parallel()
 	const count, plantedID = 256, 17
 	partition, err := statementPartition(statementProofKeys(count))
 	if err != nil {
@@ -479,7 +486,7 @@ func TestStatementsShardDisagreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result := executeOne(t, []string{"ADAMIC_STATEMENTS_SHARD_PROOF=1", "ADAMIC_TEST_SHARD="}, binary, "-test.run=^TestStatementsAgainstGoAndPrettier_[0-9]{3}$", "-test.v", "-test.parallel=4", "-test.timeout=75s")
+	result := statementExecute(t, []string{"ADAMIC_STATEMENTS_SHARD_PROOF=1", "ADAMIC_TEST_SHARD="}, binary, "-test.run=^TestStatementsAgainstGoAndPrettier_[0-9]{3}$", "-test.v", "-test.parallel=4", "-test.timeout=75s")
 	name := fmt.Sprintf("TestStatementsAgainstGoAndPrettier_%03d", target)
 	if result.exitCode != 1 || len(result.stderr) != 0 || strings.Count(string(result.stdout), "--- FAIL: TestStatementsAgainstGoAndPrettier_") != 1 || !strings.Contains(string(result.stdout), "--- FAIL: "+name) || !strings.Contains(string(result.stdout), "planted case 17") {
 		t.Fatalf("expected exactly %s to catch planted disagreement: exit %d stdout %s stderr %s", name, result.exitCode, result.stdout, result.stderr)
@@ -513,7 +520,7 @@ func statementRunShardProof(t *testing.T, number int) {
 	if err := os.WriteFile(path, []byte(input.String()), 0644); err != nil {
 		t.Fatal(err)
 	}
-	result := onNode(t, port, "--cases", path, "80")
+	result := statementOnNode(t, port, "--cases", path, "80")
 	if err := statementDisagreement("Node", result, want.String(), labels); err != nil {
 		t.Fatal(err)
 	}
@@ -528,6 +535,7 @@ func statementRunShardProof(t *testing.T, number int) {
 }
 
 func TestStatementsShardUnionRejectsMissingAndRepeatedIDs(t *testing.T) {
+	t.Parallel()
 	keys := statementProofKeys(256)
 	shards, err := statementPartition(keys)
 	if err != nil {
@@ -613,3 +621,49 @@ func statementPrinterLibrary(t *testing.T, name string, result run, specs string
 }
 
 func statementShardProofEnabled() bool { return os.Getenv("ADAMIC_STATEMENTS_SHARD_PROOF") == "1" }
+
+// Command deadlines use only Go APIs and kill the entire child process group.
+func statementCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	t.Cleanup(cancel)
+	command := exec.CommandContext(ctx, name, arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		if command.Process == nil {
+			return os.ErrProcessDone
+		}
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 5 * time.Second
+	return command
+}
+
+func statementExecute(t *testing.T, environment []string, name string, arguments ...string) run {
+	t.Helper()
+	command := statementCommand(t, name, arguments...)
+	if environment != nil {
+		command.Env = append(os.Environ(), environment...)
+	}
+	var stdout, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	err := command.Run()
+	var exitError *exec.ExitError
+	if err != nil && !errors.As(err, &exitError) {
+		t.Fatalf("running %s: %v", name, err)
+	}
+	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+}
+
+func statementOnNode(t *testing.T, path string, arguments ...string) run {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return statementExecute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+}

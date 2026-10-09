@@ -346,6 +346,7 @@ func jsonPreparePort(t *testing.T, release, sanitized bool) jsonProducts {
 
 // A warm product must have the same key despite Go's fresh compiler scratch path.
 func TestJSONGoToolchainStable(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
