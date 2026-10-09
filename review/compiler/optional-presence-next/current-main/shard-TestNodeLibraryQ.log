@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:59:02.151526461Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:59:02.250378495Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion"}
+{"Time":"2026-10-09T19:59:02.250474331Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Output":"=== RUN   TestNodeLibraryQualifiedTypeAssertion\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:02.25051576Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Output":"=== PAUSE TestNodeLibraryQualifiedTypeAssertion\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:02.250518039Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion"}
+{"Time":"2026-10-09T19:59:02.250524039Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion"}
+{"Time":"2026-10-09T19:59:02.250529249Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Output":"=== CONT  TestNodeLibraryQualifiedTypeAssertion\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:04.202650862Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Output":"--- PASS: TestNodeLibraryQualifiedTypeAssertion (1.95s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:04.202704491Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeLibraryQualifiedTypeAssertion","Elapsed":1.95}
+{"Time":"2026-10-09T19:59:04.202717374Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:04.271237282Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":2.12}

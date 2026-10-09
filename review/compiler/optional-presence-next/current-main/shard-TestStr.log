@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T20:00:07.959586127Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T20:00:08.037118075Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed"}
+{"Time":"2026-10-09T20:00:08.037192017Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed","Output":"=== RUN   TestStringEnumsStayClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:08.03725918Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed","Output":"=== PAUSE TestStringEnumsStayClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:08.037263245Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed"}
+{"Time":"2026-10-09T20:00:08.037267044Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed"}
+{"Time":"2026-10-09T20:00:08.037269366Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed","Output":"=== CONT  TestStringEnumsStayClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:08.388311348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed","Output":"--- PASS: TestStringEnumsStayClosed (0.35s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:08.388403071Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStringEnumsStayClosed","Elapsed":0.35}
+{"Time":"2026-10-09T20:00:08.388422766Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:08.403779927Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.444}

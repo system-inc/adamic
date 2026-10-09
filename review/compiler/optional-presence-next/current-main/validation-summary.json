@@ -1,0 +1,30 @@
+{
+  "lower": {
+    "tests": 345,
+    "shards": 238,
+    "passed": 342,
+    "skips": [
+      "TestGenericBodyRelationsCensus",
+      "TestOptionalWideningCensus",
+      "TestOriginalCycleLedger"
+    ],
+    "max_wall": 41.502,
+    "max_leaf": 40.67
+  },
+  "optional": {
+    "groups": 21,
+    "max_wall": 44.6
+  },
+  "counts": "unchanged",
+  "host_status": "unchanged; not remeasured",
+  "native": {
+    "passed": 51,
+    "wasi_leaves": 39,
+    "associated_native_leaves": 12,
+    "retried": "TestRuntimeFeatureSetsWASI",
+    "retry_leaf_seconds": 14.16,
+    "outer_bound_seconds": 85,
+    "max_successful_wall": 66.152
+  },
+  "host_fixtures": 25
+}

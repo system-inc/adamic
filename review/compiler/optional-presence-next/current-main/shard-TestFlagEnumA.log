@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:56:51.457928844Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:56:51.558086683Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumAliasBoundaries"}
+{"Time":"2026-10-09T19:56:51.558162769Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumAliasBoundaries","Output":"=== RUN   TestFlagEnumAliasBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:51.558244126Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumAliasBoundaries","Output":"=== PAUSE TestFlagEnumAliasBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:51.558248649Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumAliasBoundaries"}
+{"Time":"2026-10-09T19:56:51.563114884Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumAliasBoundaries"}
+{"Time":"2026-10-09T19:56:51.563139529Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumAliasBoundaries","Output":"=== CONT  TestFlagEnumAliasBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:56.843271266Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumAliasBoundaries","Output":"--- PASS: TestFlagEnumAliasBoundaries (5.28s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:56.843330686Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFlagEnumAliasBoundaries","Elapsed":5.28}
+{"Time":"2026-10-09T19:56:56.84335257Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:56.873608367Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":5.416}

@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:58:37.500288053Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:58:37.643173381Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal"}
+{"Time":"2026-10-09T19:58:37.643330698Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Output":"=== RUN   TestNodeFSFileKeepsDetachedMethodRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:37.643364117Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Output":"=== PAUSE TestNodeFSFileKeepsDetachedMethodRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:37.643367836Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal"}
+{"Time":"2026-10-09T19:58:37.643370741Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal"}
+{"Time":"2026-10-09T19:58:37.643373068Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Output":"=== CONT  TestNodeFSFileKeepsDetachedMethodRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:41.195014734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Output":"--- PASS: TestNodeFSFileKeepsDetachedMethodRefusal (3.55s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:41.207259202Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileKeepsDetachedMethodRefusal","Elapsed":3.55}
+{"Time":"2026-10-09T19:58:41.207298381Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:41.240550996Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":3.74}

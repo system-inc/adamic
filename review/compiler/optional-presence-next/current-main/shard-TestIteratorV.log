@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T19:57:51.992060557Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:57:52.076533729Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchHiddenReturn"}
+{"Time":"2026-10-09T19:57:52.076664032Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchHiddenReturn","Output":"=== RUN   TestIteratorViewsDispatchHiddenReturn\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:52.076704718Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchHiddenReturn","Output":"=== PAUSE TestIteratorViewsDispatchHiddenReturn\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:52.076708032Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchHiddenReturn"}
+{"Time":"2026-10-09T19:57:52.07671943Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchReceivers"}
+{"Time":"2026-10-09T19:57:52.076722414Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchReceivers","Output":"=== RUN   TestIteratorViewsDispatchReceivers\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:52.076730164Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchReceivers","Output":"=== PAUSE TestIteratorViewsDispatchReceivers\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:52.076732826Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchReceivers"}
+{"Time":"2026-10-09T19:57:52.076735766Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchHiddenReturn"}
+{"Time":"2026-10-09T19:57:52.076742396Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchHiddenReturn","Output":"=== CONT  TestIteratorViewsDispatchHiddenReturn\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:52.076961054Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchReceivers"}
+{"Time":"2026-10-09T19:57:52.076965695Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchReceivers","Output":"=== CONT  TestIteratorViewsDispatchReceivers\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:52.39510338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchHiddenReturn","Output":"--- PASS: TestIteratorViewsDispatchHiddenReturn (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:52.493792014Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchHiddenReturn","Elapsed":0.31}
+{"Time":"2026-10-09T19:57:52.493837152Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchReceivers","Output":"--- PASS: TestIteratorViewsDispatchReceivers (0.42s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:52.499243455Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorViewsDispatchReceivers","Elapsed":0.42}
+{"Time":"2026-10-09T19:57:52.499275869Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:52.534255294Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.542}

@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:57:33.012657715Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:57:33.107091622Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceVoidBooleanOverrideReason"}
+{"Time":"2026-10-09T19:57:33.107168733Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceVoidBooleanOverrideReason","Output":"=== RUN   TestInheritanceVoidBooleanOverrideReason\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:33.107190411Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceVoidBooleanOverrideReason","Output":"=== PAUSE TestInheritanceVoidBooleanOverrideReason\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:33.107193114Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceVoidBooleanOverrideReason"}
+{"Time":"2026-10-09T19:57:33.107195627Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceVoidBooleanOverrideReason"}
+{"Time":"2026-10-09T19:57:33.107197284Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceVoidBooleanOverrideReason","Output":"=== CONT  TestInheritanceVoidBooleanOverrideReason\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:33.601466608Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceVoidBooleanOverrideReason","Output":"--- PASS: TestInheritanceVoidBooleanOverrideReason (0.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:33.601538488Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceVoidBooleanOverrideReason","Elapsed":0.5}
+{"Time":"2026-10-09T19:57:33.601568597Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:33.602999105Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.59}

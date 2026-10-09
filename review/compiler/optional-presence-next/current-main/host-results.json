@@ -1,0 +1,77 @@
+[
+  {
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixturesHost$/^host$/^(0[1-5])",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 124,
+    "seconds": 85.02
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixturesHost$/^host$/^(0[6-9]|10)",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 23.542
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixturesHost$/^host$/^(1[1-5])",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 21.804
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixturesHost$/^host$/^(1[6-9]|20)",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 22.397
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-run",
+      "^TestFixturesHost$/^host$/^(2[1-5])",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-json"
+    ],
+    "status": 0,
+    "seconds": 26.302
+  }
+]

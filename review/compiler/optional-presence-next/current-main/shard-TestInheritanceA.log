@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:57:18.376821932Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:57:18.478509911Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides"}
+{"Time":"2026-10-09T19:57:18.478610919Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides","Output":"=== RUN   TestInheritanceAllowsSoundOverrides\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:18.478668145Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides","Output":"=== PAUSE TestInheritanceAllowsSoundOverrides\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:18.478671668Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides"}
+{"Time":"2026-10-09T19:57:18.478675251Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides"}
+{"Time":"2026-10-09T19:57:18.478677585Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides","Output":"=== CONT  TestInheritanceAllowsSoundOverrides\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:19.789232212Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides","Output":"--- PASS: TestInheritanceAllowsSoundOverrides (1.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:19.789325924Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceAllowsSoundOverrides","Elapsed":1.31}
+{"Time":"2026-10-09T19:57:19.789348312Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:19.811132901Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.434}

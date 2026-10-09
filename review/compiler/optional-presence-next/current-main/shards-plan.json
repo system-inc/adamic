@@ -1,0 +1,1537 @@
+[
+  {
+    "prefix": "TestAM",
+    "names": [
+      "TestAMutableLocationSeenWiderIsRefused",
+      "TestAMethodReadAsAValueIsRefused"
+    ]
+  },
+  {
+    "prefix": "TestAT",
+    "names": [
+      "TestATupleSeenAsAnArrayIsNotYet"
+    ]
+  },
+  {
+    "prefix": "TestAV",
+    "names": [
+      "TestAViewThatCantWriteIsNotRefused"
+    ]
+  },
+  {
+    "prefix": "TestAb",
+    "names": [
+      "TestAbfe962OverrideDefaultAddedRefusesNativeSignature"
+    ]
+  },
+  {
+    "prefix": "TestAd",
+    "names": [
+      "TestAdamicNullishAssertionsAreRefused"
+    ]
+  },
+  {
+    "prefix": "TestAgreementA",
+    "names": [
+      "TestAgreementAcceptsComputedAnswer",
+      "TestAgreementAcceptsExpectedPanic"
+    ]
+  },
+  {
+    "prefix": "TestAgreementE",
+    "names": [
+      "TestAgreementEnumConstantWitness"
+    ]
+  },
+  {
+    "prefix": "TestAgreementI",
+    "names": [
+      "TestAgreementInheritedFieldWitness"
+    ]
+  },
+  {
+    "prefix": "TestAgreementP",
+    "names": [
+      "TestAgreementParameterPropertyWitness",
+      "TestAgreementParseIntRadixWitness"
+    ]
+  },
+  {
+    "prefix": "TestAgreementR",
+    "names": [
+      "TestAgreementRejectsWrongLoweredOutput",
+      "TestAgreementRejectsEmptyAnswer"
+    ]
+  },
+  {
+    "prefix": "TestAgreementS",
+    "names": [
+      "TestAgreementStaticInitializerWitness"
+    ]
+  },
+  {
+    "prefix": "TestArgumentsLengthRea",
+    "names": [
+      "TestArgumentsLengthReadNeighbors",
+      "TestArgumentsLengthReadKeepsReaderFact"
+    ]
+  },
+  {
+    "prefix": "TestArgumentsLengthRef",
+    "names": [
+      "TestArgumentsLengthRefusals",
+      "TestArgumentsLengthRefusalFixtures"
+    ]
+  },
+  {
+    "prefix": "TestArrayPredicateC",
+    "names": [
+      "TestArrayPredicateCannotInventAnElementContract",
+      "TestArrayPredicateCoexistsWithUnknownReflection"
+    ]
+  },
+  {
+    "prefix": "TestArrayPredicateD",
+    "names": [
+      "TestArrayPredicateDoesNotMisclassifyNativeTuples"
+    ]
+  },
+  {
+    "prefix": "TestArrayPredicateP",
+    "names": [
+      "TestArrayPredicatePreservesDeclaredElementContract"
+    ]
+  },
+  {
+    "prefix": "TestAs",
+    "names": [
+      "TestAsyncGeneratorsAreRefusedEvenWithoutYield"
+    ]
+  },
+  {
+    "prefix": "TestCa",
+    "names": [
+      "TestCallableNamespaceLimitsStayLoud",
+      "TestCallableNamespaceReceiverStaysLoud"
+    ]
+  },
+  {
+    "prefix": "TestCensusB",
+    "names": [
+      "TestCensusBooleanDeadBranch"
+    ]
+  },
+  {
+    "prefix": "TestCensusM",
+    "names": [
+      "TestCensusMarkerResultIsAssignable",
+      "TestCensusMarkerZeroCallIsNotAssumedSafe"
+    ]
+  },
+  {
+    "prefix": "TestCensusO",
+    "names": [
+      "TestCensusOverloadBinderGuards",
+      "TestCensusOverloadReturnProof",
+      "TestCensusOverloadRelation"
+    ]
+  },
+  {
+    "prefix": "TestCensusPredicateI",
+    "names": [
+      "TestCensusPredicateInteractionBoundary",
+      "TestCensusPredicateInteractionEscapes"
+    ]
+  },
+  {
+    "prefix": "TestCensusPredicateM",
+    "names": [
+      "TestCensusPredicateMarkerKeepsProofBoundaries",
+      "TestCensusPredicateMarkerCallStaysNotYet"
+    ]
+  },
+  {
+    "prefix": "TestCensusR",
+    "names": [
+      "TestCensusRestMutableElements"
+    ]
+  },
+  {
+    "prefix": "TestCensusS",
+    "names": [
+      "TestCensusSmallFiniteKeyRead"
+    ]
+  },
+  {
+    "prefix": "TestCh",
+    "names": [
+      "TestCheckedCastProofAndElision",
+      "TestCheckPragmasAreRefused",
+      "TestCheckPragmaNeighborsCompile"
+    ]
+  },
+  {
+    "prefix": "TestClassA",
+    "names": [
+      "TestClassArgumentsUseCheckerIdentity"
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesA",
+    "names": [
+      "TestClassFeaturesAccessorRefusals",
+      "TestClassFeaturesAccessorCaptureCycle"
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesN",
+    "names": [
+      "TestClassFeaturesNarrowedAccessor"
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesP",
+    "names": [
+      "TestClassFeaturesPrivateChecker",
+      "TestClassFeaturesPrivateStorage"
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesR",
+    "names": [
+      "TestClassFeaturesReadonlyChecker"
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesStaticD",
+    "names": [
+      "TestClassFeaturesStaticDeclarationsExecute"
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesStaticI",
+    "names": [
+      "TestClassFeaturesStaticInterfaceCycle"
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesStaticP",
+    "names": [
+      "TestClassFeaturesStaticParentCycle"
+    ]
+  },
+  {
+    "prefix": "TestClassFeaturesStaticS",
+    "names": [
+      "TestClassFeaturesStaticSoundness"
+    ]
+  },
+  {
+    "prefix": "TestClassS",
+    "names": [
+      "TestClassStaticInitializerCallIsEmitted",
+      "TestClassStaticSideEffectMatchesNode"
+    ]
+  },
+  {
+    "prefix": "TestClassW",
+    "names": [
+      "TestClassWrongOutputIteratorReceiver",
+      "TestClassWrongOutputKeysRepair",
+      "TestClassWrongOutputPrivateRepair"
+    ]
+  },
+  {
+    "prefix": "TestClockGenericReturnsT01D",
+    "names": [
+      "TestClockGenericReturnsT01DeclinesBrandedPrimitives"
+    ]
+  },
+  {
+    "prefix": "TestClockGenericReturnsT01R",
+    "names": [
+      "TestClockGenericReturnsT01RejectsNullBeforeBody",
+      "TestClockGenericReturnsT01RejectsIndexBeforeBody"
+    ]
+  },
+  {
+    "prefix": "TestClockGenericReturnsT01S",
+    "names": [
+      "TestClockGenericReturnsT01Shapes"
+    ]
+  },
+  {
+    "prefix": "TestClos",
+    "names": [
+      "TestClosedFrameInputRejectsMutation"
+    ]
+  },
+  {
+    "prefix": "TestCond",
+    "names": [
+      "TestConditionAssertionAdmission"
+    ]
+  },
+  {
+    "prefix": "TestCons",
+    "names": [
+      "TestConstructorCacheOneArgumentRemainsNotYet",
+      "TestConstEnumErasesRuntimeObject",
+      "TestConsoleLowersToWriteLine"
+    ]
+  },
+  {
+    "prefix": "TestDeb",
+    "names": [
+      "TestDebugNamespaceMergedCapabilities"
+    ]
+  },
+  {
+    "prefix": "TestDefa",
+    "names": [
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestDefaultTaggedInterfaceNeedsNoFlag"
+    ]
+  },
+  {
+    "prefix": "TestDefi",
+    "names": [
+      "TestDefiniteAssignmentUsesReadiness",
+      "TestDefiniteAssignmentSoundNeighbors"
+    ]
+  },
+  {
+    "prefix": "TestDes",
+    "names": [
+      "TestDestructuredMethodsCannotLoadOwnSlots"
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence0",
+    "names": [
+      "TestEEPPresence0"
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence1",
+    "names": [
+      "TestEEPPresence1"
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence2",
+    "names": [
+      "TestEEPPresence2"
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence3",
+    "names": [
+      "TestEEPPresence3"
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence4",
+    "names": [
+      "TestEEPPresence4"
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence5",
+    "names": [
+      "TestEEPPresence5"
+    ]
+  },
+  {
+    "prefix": "TestEEPPresence6",
+    "names": [
+      "TestEEPPresence6"
+    ]
+  },
+  {
+    "prefix": "TestEEPPresenceS",
+    "names": [
+      "TestEEPPresenceSupported"
+    ]
+  },
+  {
+    "prefix": "TestEm",
+    "names": [
+      "TestEmptyLiteralGenericReturnUsesSamePath",
+      "TestEmptyNeverMapCannotGainWritableInhabitants"
+    ]
+  },
+  {
+    "prefix": "TestEnt",
+    "names": [
+      "TestEntriesAllocationProof",
+      "TestEntriesRecordBoundaries"
+    ]
+  },
+  {
+    "prefix": "TestEnumF",
+    "names": [
+      "TestEnumFlagProofsWithoutObservableLoweringEffect"
+    ]
+  },
+  {
+    "prefix": "TestEnumI",
+    "names": [
+      "TestEnumInitializationReach",
+      "TestEnumInitializationGraphMemo",
+      "TestEnumIdentityAcrossModules"
+    ]
+  },
+  {
+    "prefix": "TestEnumL",
+    "names": [
+      "TestEnumLimitsStayLoud"
+    ]
+  },
+  {
+    "prefix": "TestEnumM",
+    "names": [
+      "TestEnumMemberValuesAndReverseNameMatchNode"
+    ]
+  },
+  {
+    "prefix": "TestEnumN",
+    "names": [
+      "TestEnumNeverDefault",
+      "TestEnumNameEnumeration",
+      "TestEnumNamespaceSharedCycle"
+    ]
+  },
+  {
+    "prefix": "TestEnumR",
+    "names": [
+      "TestEnumReverseMappingUsesSingleSlot"
+    ]
+  },
+  {
+    "prefix": "TestEnumS",
+    "names": [
+      "TestEnumSlotViews",
+      "TestEnumSwitchExhaustiveness"
+    ]
+  },
+  {
+    "prefix": "TestEv",
+    "names": [
+      "TestEveryNeedsCallbackEffects"
+    ]
+  },
+  {
+    "prefix": "TestFSE",
+    "names": [
+      "TestFSExistsOperation"
+    ]
+  },
+  {
+    "prefix": "TestFSO",
+    "names": [
+      "TestFSOpenStringFlagsLower"
+    ]
+  },
+  {
+    "prefix": "TestFSR",
+    "names": [
+      "TestFSRemoveDefaultRetryDelayLowers"
+    ]
+  },
+  {
+    "prefix": "TestFSS",
+    "names": [
+      "TestFSStatThrowsByDefault"
+    ]
+  },
+  {
+    "prefix": "TestFlagEnumA",
+    "names": [
+      "TestFlagEnumAliasBoundaries"
+    ]
+  },
+  {
+    "prefix": "TestFlagEnumI",
+    "names": [
+      "TestFlagEnumInlineIteration"
+    ]
+  },
+  {
+    "prefix": "TestFlagEnumL",
+    "names": [
+      "TestFlagEnumLiteralSpellings"
+    ]
+  },
+  {
+    "prefix": "TestFlagEnumM",
+    "names": [
+      "TestFlagEnumMemberAliases"
+    ]
+  },
+  {
+    "prefix": "TestFlagEnums",
+    "names": [
+      "TestFlagEnumsOpen",
+      "TestFlagEnumsDomain"
+    ]
+  },
+  {
+    "prefix": "TestFu",
+    "names": [
+      "TestFunctionValueUnionViewsStayNotYet"
+    ]
+  },
+  {
+    "prefix": "TestGeneratorD",
+    "names": [
+      "TestGeneratorDestructuredParameterCycle"
+    ]
+  },
+  {
+    "prefix": "TestGeneratorE",
+    "names": [
+      "TestGeneratorEmptyBodyUsesOwnedFrame"
+    ]
+  },
+  {
+    "prefix": "TestGeneratorN",
+    "names": [
+      "TestGeneratorNextPromiseNeedsResumeProof",
+      "TestGeneratorNestedFrameCaptureRemainsExplicit"
+    ]
+  },
+  {
+    "prefix": "TestGeneratorO",
+    "names": [
+      "TestGeneratorOpaqueReceiverRemainsExplicit"
+    ]
+  },
+  {
+    "prefix": "TestGeneratorP",
+    "names": [
+      "TestGeneratorPrimitiveThrowRemainsExplicit",
+      "TestGeneratorProtocolReplacementRemainsExplicit"
+    ]
+  },
+  {
+    "prefix": "TestGenericBodyRelationsC",
+    "names": [
+      "TestGenericBodyRelationsCensus"
+    ]
+  },
+  {
+    "prefix": "TestGenericBodyRelationsI",
+    "names": [
+      "TestGenericBodyRelationsIndexedReturnMapper"
+    ]
+  },
+  {
+    "prefix": "TestGenericBodyRelationsR",
+    "names": [
+      "TestGenericBodyRelationsRefuse",
+      "TestGenericBodyRelationsReadonlyBound"
+    ]
+  },
+  {
+    "prefix": "TestGenericBodyRelationsT",
+    "names": [
+      "TestGenericBodyRelationsThisRead"
+    ]
+  },
+  {
+    "prefix": "TestGenericBodyRelationsW",
+    "names": [
+      "TestGenericBodyRelationsWitness"
+    ]
+  },
+  {
+    "prefix": "TestGenericF",
+    "names": [
+      "TestGenericFunctionPolymorphicRecursionIsRefused"
+    ]
+  },
+  {
+    "prefix": "TestGenericI",
+    "names": [
+      "TestGenericIteratorViewsPreserveNativeArguments"
+    ]
+  },
+  {
+    "prefix": "TestGenericJ",
+    "names": [
+      "TestGenericJSONUnionArrayIsNotYet"
+    ]
+  },
+  {
+    "prefix": "TestGenericU",
+    "names": [
+      "TestGenericUnionFixtureHasSeparateInstances"
+    ]
+  },
+  {
+    "prefix": "TestInd",
+    "names": [
+      "TestIndirectPredicateOverloadIsPending"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceA",
+    "names": [
+      "TestInheritanceAllowsSoundOverrides"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceC",
+    "names": [
+      "TestInheritanceCycleFinderIncludesInheritedFields",
+      "TestInheritanceConditionalThisRules"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceD",
+    "names": [
+      "TestInheritanceDerivedFieldOrder"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceGenericF",
+    "names": [
+      "TestInheritanceGenericFactoryLayouts"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceGenericM",
+    "names": [
+      "TestInheritanceGenericMonomorphizations"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceGenericN",
+    "names": [
+      "TestInheritanceGenericNominalConstraints"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceGenericS",
+    "names": [
+      "TestInheritanceGenericSoundness"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceGenericV",
+    "names": [
+      "TestInheritanceGenericViewsKeepNominalArguments"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceH",
+    "names": [
+      "TestInheritanceHasClassIdentity"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceK",
+    "names": [
+      "TestInheritanceKeepsCheckerConstructorRules",
+      "TestInheritanceKeepsNominalTupleDestructuring"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceN",
+    "names": [
+      "TestInheritanceNativeSignatureNeighbors",
+      "TestInheritanceNativeSignatureLimits"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceRefusesF",
+    "names": [
+      "TestInheritanceRefusesFalseNominalViews"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceRefusesG",
+    "names": [
+      "TestInheritanceRefusesGrowingGenericClasses"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceRefusesT",
+    "names": [
+      "TestInheritanceRefusesThisBeforeSuperReturns"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceRefusesU",
+    "names": [
+      "TestInheritanceRefusesUnsoundOverrides"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceRej",
+    "names": [
+      "TestInheritanceRejectsUnsupportedConstructorShapes"
+    ]
+  },
+  {
+    "prefix": "TestInheritanceV",
+    "names": [
+      "TestInheritanceVoidBooleanOverrideReason"
+    ]
+  },
+  {
+    "prefix": "TestInherite",
+    "names": [
+      "TestInheritedLibraryReadsNeverLoadOwnFields"
+    ]
+  },
+  {
+    "prefix": "TestInp",
+    "names": [
+      "TestInputSpreadArgumentsAreNotYet",
+      "TestInputSpreadCoverage"
+    ]
+  },
+  {
+    "prefix": "TestIs",
+    "names": [
+      "TestIsPrototypeOfReadsExplainThePrototypeRefusal"
+    ]
+  },
+  {
+    "prefix": "TestIteratorB",
+    "names": [
+      "TestIteratorBuiltInStorageViewsArePending"
+    ]
+  },
+  {
+    "prefix": "TestIteratorD",
+    "names": [
+      "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+      "TestIteratorDescriptorReasons",
+      "TestIteratorDeclaredNextHasNoRuntimeMethod"
+    ]
+  },
+  {
+    "prefix": "TestIteratorG",
+    "names": [
+      "TestIteratorGapsAreExplicit"
+    ]
+  },
+  {
+    "prefix": "TestIteratorM",
+    "names": [
+      "TestIteratorMapperIndexHasNumberRepresentation"
+    ]
+  },
+  {
+    "prefix": "TestIteratorO",
+    "names": [
+      "TestIteratorOptionalCloseResultMustBeObject"
+    ]
+  },
+  {
+    "prefix": "TestIteratorS",
+    "names": [
+      "TestIteratorSymbolKeysAreNotStringKeys"
+    ]
+  },
+  {
+    "prefix": "TestIteratorV",
+    "names": [
+      "TestIteratorViewsDispatchHiddenReturn",
+      "TestIteratorViewsDispatchReceivers"
+    ]
+  },
+  {
+    "prefix": "TestLibraryL",
+    "names": [
+      "TestLibraryLanguageBoundaries"
+    ]
+  },
+  {
+    "prefix": "TestLibraryMa",
+    "names": [
+      "TestLibraryMapSetGapsStayRefused",
+      "TestLibraryMapSetIteratorCopyTypesRefused"
+    ]
+  },
+  {
+    "prefix": "TestLibraryMe",
+    "names": [
+      "TestLibraryMethodValues",
+      "TestLibraryMethodValueBoundaries",
+      "TestLibraryMethodValueSafety"
+    ]
+  },
+  {
+    "prefix": "TestLibraryR",
+    "names": [
+      "TestLibraryRegexOffsetRequiresNoCaptures"
+    ]
+  },
+  {
+    "prefix": "TestLibraryS",
+    "names": [
+      "TestLibraryStringRefusals"
+    ]
+  },
+  {
+    "prefix": "TestLit",
+    "names": [
+      "TestLiteralMethodCapturesCannotMakeCycles",
+      "TestLiteralMethodViewsDoNotLoseThis",
+      "TestLiteralMethodSignatureViewsDoNotLoseThis"
+    ]
+  },
+  {
+    "prefix": "TestMis",
+    "names": [
+      "TestMissingBindingSymbolHasStructuredLocation"
+    ]
+  },
+  {
+    "prefix": "TestMixedT",
+    "names": [
+      "TestMixedTupleSpreadIsNotYet"
+    ]
+  },
+  {
+    "prefix": "TestMixedUnionContractF",
+    "names": [
+      "TestMixedUnionContractFailureDoesNotCertifyRetry"
+    ]
+  },
+  {
+    "prefix": "TestMixedUnionContractG",
+    "names": [
+      "TestMixedUnionContractGraph"
+    ]
+  },
+  {
+    "prefix": "TestMixedUnionContractP",
+    "names": [
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined"
+    ]
+  },
+  {
+    "prefix": "TestMixedUnionContractR",
+    "names": [
+      "TestMixedUnionContractRecursiveMember"
+    ]
+  },
+  {
+    "prefix": "TestMixedUnionContractU",
+    "names": [
+      "TestMixedUnionContractUnknownMemberFails"
+    ]
+  },
+  {
+    "prefix": "TestMo",
+    "names": [
+      "TestModuleNamespaceLimitsStayLoud",
+      "TestModuleNamespaceInitializedReadProof"
+    ]
+  },
+  {
+    "prefix": "TestNamespaceA",
+    "names": [
+      "TestNamespaceAmbientHostInitialization",
+      "TestNamespaceAmbientContextsDoNotExecute"
+    ]
+  },
+  {
+    "prefix": "TestNamespaceCa",
+    "names": [
+      "TestNamespaceCallGraphLinearWork",
+      "TestNamespaceCallGraphCycleUnion"
+    ]
+  },
+  {
+    "prefix": "TestNamespaceCl",
+    "names": [
+      "TestNamespaceClassEarlyConstructionStaysLoud",
+      "TestNamespaceClosedCallGraphEdges"
+    ]
+  },
+  {
+    "prefix": "TestNamespaceE",
+    "names": [
+      "TestNamespaceEnumInitializationIndependentOfModuleAnalysis"
+    ]
+  },
+  {
+    "prefix": "TestNamespaceF",
+    "names": [
+      "TestNamespaceFactoryBindingsAgreeWithNode"
+    ]
+  },
+  {
+    "prefix": "TestNamespaceI",
+    "names": [
+      "TestNamespaceInitializationReachability"
+    ]
+  },
+  {
+    "prefix": "TestNamespaceL",
+    "names": [
+      "TestNamespaceLimitsStayLoud"
+    ]
+  },
+  {
+    "prefix": "TestNamespaceR",
+    "names": [
+      "TestNamespaceReceiverArrowInheritsScope",
+      "TestNamespaceReceiverRefusal",
+      "TestNamespaceReturnedAssignmentLimits"
+    ]
+  },
+  {
+    "prefix": "TestNamespaceT",
+    "names": [
+      "TestNamespaceTypesErase"
+    ]
+  },
+  {
+    "prefix": "TestNat",
+    "names": [
+      "TestNativeAgreementRejectsWrongOutput",
+      "TestNativeAgreementRejectsWrongExit"
+    ]
+  },
+  {
+    "prefix": "TestNestedB",
+    "names": [
+      "TestNestedBodylessDeclarationsAreLoud"
+    ]
+  },
+  {
+    "prefix": "TestNestedC",
+    "names": [
+      "TestNestedCapturedParametersAreOwned",
+      "TestNestedCallbackCycleIsRefused"
+    ]
+  },
+  {
+    "prefix": "TestNestedE",
+    "names": [
+      "TestNestedEmptyArrayElementKinds",
+      "TestNestedEnvironmentHasOneAllocationSite",
+      "TestNestedEnvironmentCycleIncludesDisjointSlots"
+    ]
+  },
+  {
+    "prefix": "TestNestedF",
+    "names": [
+      "TestNestedFunctionGapsAreLoud",
+      "TestNestedFunctionCycleIsRefused"
+    ]
+  },
+  {
+    "prefix": "TestNestedR",
+    "names": [
+      "TestNestedRebindingNotYet",
+      "TestNestedRestIsSupported"
+    ]
+  },
+  {
+    "prefix": "TestNodeB",
+    "names": [
+      "TestNodeBufferRefusals"
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileB",
+    "names": [
+      "TestNodeFSFileBufferBorrow"
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileD",
+    "names": [
+      "TestNodeFSFileDoesNotAuthorizeMutableWidening"
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileK",
+    "names": [
+      "TestNodeFSFileKeepsDetachedMethodRefusal"
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileN",
+    "names": [
+      "TestNodeFSFileNamespaceImport"
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileO",
+    "names": [
+      "TestNodeFSFileOptionsBorrow"
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileQ",
+    "names": [
+      "TestNodeFSFileQualifiedErrorType"
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileR",
+    "names": [
+      "TestNodeFSFileRefusesOptionEffects",
+      "TestNodeFSFileRefusesVoidValues",
+      "TestNodeFSFileRefusesPinnedUnsupportedOverloads"
+    ]
+  },
+  {
+    "prefix": "TestNodeFSFileS",
+    "names": [
+      "TestNodeFSFileScratchOptionsBorrow",
+      "TestNodeFSFileScratchOverloadsAreNamed"
+    ]
+  },
+  {
+    "prefix": "TestNodeLibraryD",
+    "names": [
+      "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+      "TestNodeLibraryDistinguishesReceiverOwners"
+    ]
+  },
+  {
+    "prefix": "TestNodeLibraryN",
+    "names": [
+      "TestNodeLibraryNamesUnimplementedMembers"
+    ]
+  },
+  {
+    "prefix": "TestNodeLibraryQ",
+    "names": [
+      "TestNodeLibraryQualifiedTypeAssertion"
+    ]
+  },
+  {
+    "prefix": "TestNon",
+    "names": [
+      "TestNonNullAssertionLowersToNullishPanic",
+      "TestNonNullAssertionOnPresentTypeIsErased"
+    ]
+  },
+  {
+    "prefix": "TestNul",
+    "names": [
+      "TestNullishPrototypeReadsAreRejectedByChecker"
+    ]
+  },
+  {
+    "prefix": "TestNum",
+    "names": [
+      "TestNumericEnumsAreOpen",
+      "TestNumericEnumNeverProof",
+      "TestNumericEnumLiteralPromises"
+    ]
+  },
+  {
+    "prefix": "TestOb",
+    "names": [
+      "TestObjectRefusalsExplainSoundness",
+      "TestObjectUnprovenShapesStayNotYet",
+      "TestObjectHasOwnInterface"
+    ]
+  },
+  {
+    "prefix": "TestOptionalA",
+    "names": [
+      "TestOptionalAssignHiddenKeys"
+    ]
+  },
+  {
+    "prefix": "TestOptionalD",
+    "names": [
+      "TestOptionalDeletionRequiresPlainStorage"
+    ]
+  },
+  {
+    "prefix": "TestOptionalF",
+    "names": [
+      "TestOptionalFunctionValueRelation"
+    ]
+  },
+  {
+    "prefix": "TestOptionalI",
+    "names": [
+      "TestOptionalIndexingMapShapeRefused",
+      "TestOptionalIndexingKeepsIndexSignaturesRefused",
+      "TestOptionalIndexingKeepsUnsupportedStorageNotYet"
+    ]
+  },
+  {
+    "prefix": "TestOptionalWideningA",
+    "names": [
+      "TestOptionalWideningAllowed"
+    ]
+  },
+  {
+    "prefix": "TestOptionalWideningC",
+    "names": [
+      "TestOptionalWideningCensus"
+    ]
+  },
+  {
+    "prefix": "TestOptionalWideningR",
+    "names": [
+      "TestOptionalWideningRefused"
+    ]
+  },
+  {
+    "prefix": "TestOptionalWideningS",
+    "names": [
+      "TestOptionalWideningSpreadOverwrite"
+    ]
+  },
+  {
+    "prefix": "TestOr",
+    "names": [
+      "TestOriginalCycleLedger"
+    ]
+  },
+  {
+    "prefix": "TestOverl",
+    "names": [
+      "TestOverloadedShorthandFunctionValueStaysNotYet",
+      "TestOverloadInferenceWitnesses"
+    ]
+  },
+  {
+    "prefix": "TestOverr",
+    "names": [
+      "TestOverrideOptionalNumberRefusesNativeSignature",
+      "TestOverrideOptionalRefusesNativeSignature"
+    ]
+  },
+  {
+    "prefix": "TestParameterProperti",
+    "names": [
+      "TestParameterPropertiesSoundness"
+    ]
+  },
+  {
+    "prefix": "TestParameterProperty",
+    "names": [
+      "TestParameterPropertyCheckerContracts",
+      "TestParameterPropertyCallbackReceiver",
+      "TestParameterPropertyValueMatchesNode"
+    ]
+  },
+  {
+    "prefix": "TestParseI",
+    "names": [
+      "TestParseIntMapUsesIndexRadix"
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryB",
+    "names": [
+      "TestParserFactoryBindingHoisting"
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionA",
+    "names": [
+      "TestParserFactoryCompletionAlias"
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionB",
+    "names": [
+      "TestParserFactoryCompletionBeforeReturn",
+      "TestParserFactoryCompletionBothBranches",
+      "TestParserFactoryCompletionBeforeEscape"
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionC",
+    "names": [
+      "TestParserFactoryCompletionCaptured"
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionE",
+    "names": [
+      "TestParserFactoryCompletionEarlyReturn"
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionL",
+    "names": [
+      "TestParserFactoryCompletionLoopMayNotRun"
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionO",
+    "names": [
+      "TestParserFactoryCompletionOneBranch"
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionS",
+    "names": [
+      "TestParserFactoryCompletionShortCircuit"
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryCompletionW",
+    "names": [
+      "TestParserFactoryCompletionWrongPayloadAssertion"
+    ]
+  },
+  {
+    "prefix": "TestParserFactoryR",
+    "names": [
+      "TestParserFactoryReadBeforeCompletion"
+    ]
+  },
+  {
+    "prefix": "TestParserN",
+    "names": [
+      "TestParserNodeArrayLayout",
+      "TestParserNodeArrayPresence",
+      "TestParserNodeArraySchemaFailsClosed"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryAl",
+    "names": [
+      "TestPlaceholderTypedBoundaryAliasReset"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryAr",
+    "names": [
+      "TestPlaceholderTypedBoundaryArgument",
+      "TestPlaceholderTypedBoundaryArrayElement"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryAs",
+    "names": [
+      "TestPlaceholderTypedBoundaryAssignmentResult"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryC",
+    "names": [
+      "TestPlaceholderTypedBoundaryCall"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryD",
+    "names": [
+      "TestPlaceholderTypedBoundaryDominatingWrite"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryE",
+    "names": [
+      "TestPlaceholderTypedBoundaryElementWrite"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryOp",
+    "names": [
+      "TestPlaceholderTypedBoundaryOptionalArrayElement",
+      "TestPlaceholderTypedBoundaryOptionalReceiver",
+      "TestPlaceholderTypedBoundaryOptionalParameterLaterTUse"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryOr",
+    "names": [
+      "TestPlaceholderTypedBoundaryOrdinaryField"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryP",
+    "names": [
+      "TestPlaceholderTypedBoundaryProperty",
+      "TestPlaceholderTypedBoundaryPresence",
+      "TestPlaceholderTypedBoundaryPlaceholderFieldCopy"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryR",
+    "names": [
+      "TestPlaceholderTypedBoundaryReturnAssignment",
+      "TestPlaceholderTypedBoundaryReturn"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryS",
+    "names": [
+      "TestPlaceholderTypedBoundarySavedCopy",
+      "TestPlaceholderTypedBoundarySavedAfterWrite"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderTypedBoundaryT",
+    "names": [
+      "TestPlaceholderTypedBoundaryTypedLocal"
+    ]
+  },
+  {
+    "prefix": "TestPlaceholderW",
+    "names": [
+      "TestPlaceholderWeakSlotStaysNotYet"
+    ]
+  },
+  {
+    "prefix": "TestPredicateB",
+    "names": [
+      "TestPredicateBodyProof",
+      "TestPredicateBodiesAreProven"
+    ]
+  },
+  {
+    "prefix": "TestPredicateC",
+    "names": [
+      "TestPredicateCallbackContracts"
+    ]
+  },
+  {
+    "prefix": "TestPredicateO",
+    "names": [
+      "TestPredicateOverloadRuntime",
+      "TestPredicateOverloadCallback"
+    ]
+  },
+  {
+    "prefix": "TestPredicateS",
+    "names": [
+      "TestPredicateSummaryParameterIndex"
+    ]
+  },
+  {
+    "prefix": "TestPredicateU",
+    "names": [
+      "TestPredicateUseRegions",
+      "TestPredicateUsesBelongToEachCall"
+    ]
+  },
+  {
+    "prefix": "TestPri",
+    "names": [
+      "TestPrimitiveAdmittingSlotsUseBoxes",
+      "TestPrivateAndPublicStaticsAgreeWithNode"
+    ]
+  },
+  {
+    "prefix": "TestProt",
+    "names": [
+      "TestPrototypeMethodsAreRefusedWithReasons",
+      "TestPrototypeHazardsBehindObjectViewsAreNotYet"
+    ]
+  },
+  {
+    "prefix": "TestProv",
+    "names": [
+      "TestProvenRelationsRefuse",
+      "TestProvenRelationsErase"
+    ]
+  },
+  {
+    "prefix": "TestRea",
+    "names": [
+      "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+      "TestReadinessElisionRequiresDominatingAssignment",
+      "TestReadinessErrorIncludesReceiverExpression"
+    ]
+  },
+  {
+    "prefix": "TestRegExpE",
+    "names": [
+      "TestRegExpEscapedSlashSourceAgreesWithNode"
+    ]
+  },
+  {
+    "prefix": "TestRegExpN",
+    "names": [
+      "TestRegExpNativeRefusals"
+    ]
+  },
+  {
+    "prefix": "TestRegExpS",
+    "names": [
+      "TestRegExpSourceNode",
+      "TestRegExpSlashClassSourceAgreesWithNode"
+    ]
+  },
+  {
+    "prefix": "TestRegExpU",
+    "names": [
+      "TestRegExpUnicodeClassSourceAgreesWithNode"
+    ]
+  },
+  {
+    "prefix": "TestRep",
+    "names": [
+      "TestRepresentedMethodReplacementIsNotYet",
+      "TestRepresentationClockSourceCheckedTypes"
+    ]
+  },
+  {
+    "prefix": "TestStep18C",
+    "names": [
+      "TestStep18CallableReceiverContract"
+    ]
+  },
+  {
+    "prefix": "TestStep18D",
+    "names": [
+      "TestStep18DetachedCallableOrigins"
+    ]
+  },
+  {
+    "prefix": "TestStep18O",
+    "names": [
+      "TestStep18OptionalCallableBoundaries"
+    ]
+  },
+  {
+    "prefix": "TestStep18U",
+    "names": [
+      "TestStep18UnknownDetachedCallable"
+    ]
+  },
+  {
+    "prefix": "TestStep2",
+    "names": [
+      "TestStep21LibraryAdmission"
+    ]
+  },
+  {
+    "prefix": "TestStr",
+    "names": [
+      "TestStringEnumsStayClosed"
+    ]
+  },
+  {
+    "prefix": "TestSu",
+    "names": [
+      "TestSuppressionDirectivesAreRefused",
+      "TestSuppressionDirectiveSoundNeighbors"
+    ]
+  },
+  {
+    "prefix": "TestSwitchC",
+    "names": [
+      "TestSwitchConditionalBreakFallsThrough"
+    ]
+  },
+  {
+    "prefix": "TestSwitchE",
+    "names": [
+      "TestSwitchEmptyElseFallsThrough",
+      "TestSwitchEmptyCaseFallsThrough",
+      "TestSwitchEmptyBlockFallsThrough"
+    ]
+  },
+  {
+    "prefix": "TestTa",
+    "names": [
+      "TestTasteRepresentationLimitsStayExplicit"
+    ]
+  },
+  {
+    "prefix": "TestTr",
+    "names": [
+      "TestTracingNamespaceEscapeLowers"
+    ]
+  },
+  {
+    "prefix": "TestTs",
+    "names": [
+      "TestTsgoHonorsNoCheckInAdamicFiles",
+      "TestTscNamespaceDeclarationShapes"
+    ]
+  },
+  {
+    "prefix": "TestTypedArrayF",
+    "names": [
+      "TestTypedArrayFromArray",
+      "TestTypedArrayFromEmptyArray"
+    ]
+  },
+  {
+    "prefix": "TestTypedArrayG",
+    "names": [
+      "TestTypedArrayGaps"
+    ]
+  },
+  {
+    "prefix": "TestTypedArrayV",
+    "names": [
+      "TestTypedArrayViewsCannotChangeRepresentation"
+    ]
+  },
+  {
+    "prefix": "TestTypedArrays",
+    "names": [
+      "TestTypedArraysLower"
+    ]
+  },
+  {
+    "prefix": "TestUnc",
+    "names": [
+      "TestUncheckableCastsStayRefused"
+    ]
+  },
+  {
+    "prefix": "TestUnd",
+    "names": [
+      "TestUndecidedCycleReadsUseReadyChecks"
+    ]
+  },
+  {
+    "prefix": "TestUnk",
+    "names": [
+      "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+      "TestUnknownReflectionRefusals",
+      "TestUnknownAbsentSpreadPresence"
+    ]
+  },
+  {
+    "prefix": "TestUnp",
+    "names": [
+      "TestUnprovenPredicateReturnsAreRefused"
+    ]
+  },
+  {
+    "prefix": "TestUnr",
+    "names": [
+      "TestUnrepresentedPrototypeCallsAreNotYet"
+    ]
+  },
+  {
+    "prefix": "TestUnt",
+    "names": [
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ]
+  },
+  {
+    "prefix": "TestV",
+    "names": [
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate"
+    ]
+  },
+  {
+    "prefix": "TestW",
+    "names": [
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix"
+    ]
+  }
+]

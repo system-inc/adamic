@@ -1,0 +1,51 @@
+[
+  {
+    "version": 1,
+    "packages": {
+      "stage3/checked-any/probe": [
+        "internal/load",
+        "internal/lower",
+        "internal/native",
+        "internal/javascript",
+        "internal/ir",
+        "internal/flow",
+        "cmd/adamic"
+      ],
+      "stage3/project-loader/probe": [
+        "internal/load"
+      ],
+      "cmd/adamic-gocacheprog": [
+        "internal/load",
+        "internal/lower",
+        "internal/native",
+        "internal/javascript",
+        "internal/ir",
+        "internal/flow",
+        "cmd/adamic"
+      ]
+    }
+  },
+  {
+    "version": 1,
+    "packages": {
+      "cmd/adamic-gocacheprog": [
+        "internal/load",
+        "internal/lower",
+        "internal/native",
+        "internal/javascript",
+        "internal/ir",
+        "internal/flow",
+        "cmd/adamic"
+      ],
+      "internal/buildcache/cmd/productidentity": [
+        "internal/load",
+        "internal/lower",
+        "internal/native",
+        "internal/javascript",
+        "internal/ir",
+        "internal/flow",
+        "cmd/adamic"
+      ]
+    }
+  }
+]

@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:59:27.084431421Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:59:27.169026258Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryAliasReset"}
+{"Time":"2026-10-09T19:59:27.169097202Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryAliasReset","Output":"=== RUN   TestPlaceholderTypedBoundaryAliasReset\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:27.169248349Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryAliasReset","Output":"=== PAUSE TestPlaceholderTypedBoundaryAliasReset\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:27.16925532Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryAliasReset"}
+{"Time":"2026-10-09T19:59:27.169343937Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryAliasReset"}
+{"Time":"2026-10-09T19:59:27.169348646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryAliasReset","Output":"=== CONT  TestPlaceholderTypedBoundaryAliasReset\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:27.478613324Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryAliasReset","Output":"--- PASS: TestPlaceholderTypedBoundaryAliasReset (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:27.47870948Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPlaceholderTypedBoundaryAliasReset","Elapsed":0.31}
+{"Time":"2026-10-09T19:59:27.478724522Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:27.485424203Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.401}
