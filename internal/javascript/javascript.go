@@ -51,6 +51,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicCanonical = (identity, code, cells) => { const values = identity.functions ??= new Map(); if (!values.has(code)) values.set(code, new AdamicClosure(code, cells)); return values.get(code); };\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
 	builder.WriteString(fieldReadinessRuntime)
+	if ir.HasArrayViews(program) {
+		builder.WriteString(viewArraysRuntime + viewArrayElementsRuntime + viewArrayOperationsRuntime + viewArrayJoinRuntime)
+	}
 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
@@ -487,6 +490,10 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
 	case ir.SetIndex:
+		if ir.HasArrayViews(e.program) {
+			e.line("adamicViewSetIndex(%s,%s,%s,%d);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value), statement.Element)
+			break
+		}
 		e.line("adamicSetIndex(%s, %s, %s);", e.value(statement.Array), e.value(statement.Index), e.value(statement.Value))
 	case ir.Return:
 		if statement.Value == nil {
@@ -648,7 +655,11 @@ func (e *emitter) forOf(at *ir.Statement, statement ir.ForOf) {
 		e.line("for (const %s of %s) {", index, held)
 	default:
 		e.line("for (let %s_index = 0; %s_index < %s.length; %s_index++) {", index, index, held, index)
-		e.line("\tconst %s = %s[%s_index];", index, held, index)
+		if statement.ViewRead.View != "" {
+			e.line("\tconst %s = %s;", index, e.viewArrayElementCheck(statement.ViewRead, held+"["+index+"_index]"))
+		} else {
+			e.line("\tconst %s = %s[%s_index];", index, held, index)
+		}
 	}
 	e.indent++
 	for _, name := range statement.Labels {
@@ -690,7 +701,7 @@ var operators = map[ir.Operator]string{
 
 // value is a JavaScript expression for a value. JavaScript evaluates left to right and short-circuits
 // as the IR means, so nesting expressions keeps every order the native backend makes explicit.
-func (e *emitter) value(expression ir.Expression) string {
+func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	switch expression := expression.(type) {
 	case ir.TypedArrayNew:
 		return "new " + typedArrayName(expression.Of) + "(" + e.value(expression.Source) + ")"
@@ -1015,8 +1026,14 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + " ?? " + e.value(expression.Fallback) + ")"
 	case ir.ArrayPush:
+		if ir.HasArrayViews(e.program) {
+			return "adamicViewPush(" + e.value(expression.Array) + ", " + e.value(expression.Value) + ", " + fmt.Sprint(expression.Element) + ")"
+		}
 		return e.value(expression.Array) + ".push(" + e.value(expression.Value) + ")"
 	case ir.ArrayJoin:
+		if expression.ViewRead.View != "" {
+			return "adamicViewJoin(" + e.value(expression.Array) + ", " + e.value(expression.Separator) + ", " + e.viewArrayChecker(expression.ViewRead) + ")"
+		}
 		return e.value(expression.Array) + ".join(" + e.value(expression.Separator) + ")"
 	case ir.CharCodeAt:
 		return e.value(expression.Value) + ".charCodeAt(" + e.value(expression.Index) + ")"
@@ -1027,6 +1044,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.CodePoints:
 		return "[..." + e.value(expression.Value) + "]"
 	case ir.ArrayIndex:
+		if expression.View != "" {
+			return e.emitViewArrayRead(expression)
+		}
 		if expression.Relative {
 			return e.value(expression.Array) + ".at(" + e.value(expression.Index) + ")"
 		}
@@ -1051,6 +1071,10 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "adamicFrom(" + e.value(expression.Length) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayReverse:
 		return e.value(expression.Array) + ".reverse()"
+	case ir.ArrayRangeErrorIs:
+		return "(" + e.value(expression.Value) + " instanceof RangeError)"
+	case ir.ArrayHoles:
+		return "new Array(" + e.value(expression.Length) + ")"
 	case ir.ArrayFill:
 		if expression.Array == nil {
 			return "new Array(" + e.value(expression.Length) + ").fill(" + e.value(expression.Value) + ")"
@@ -1073,6 +1097,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ArrayConcat:
 		return e.value(expression.Array) + ".concat(" + e.values(expression.Others) + ")"
 	case ir.ArrayReduce:
+		if expression.ViewRead.View != "" {
+			return "adamicViewReduce(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ", " + e.value(expression.Initial) + ", " + e.viewArrayChecker(expression.ViewRead) + ")"
+		}
 		return "adamicReduce(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ", " + e.value(expression.Initial) + ")"
 	case ir.StringIndex:
 		return e.value(expression.Value) + "[" + e.value(expression.Index) + "]"
@@ -1082,6 +1109,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "adamicCast(" + e.value(expression.Value) + ", " + quote(expression.Field) + ", [" + e.values(expression.Allowed) + "], " + quote(expression.Message) + ")"
 	case ir.ArrayPop:
+		if expression.ViewRead.View != "" {
+			return "adamicViewPop(" + e.value(expression.Array) + ", " + e.viewArrayChecker(expression.ViewRead) + ")"
+		}
 		return e.value(expression.Array) + ".pop()"
 	case ir.ObjectKeys:
 		return "Object.keys(" + e.value(expression.Object) + ")"
@@ -1114,8 +1144,18 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return "adamicCall(" + e.value(expression.Closure) + ", [" + e.callValues(expression.Arguments, expression.Spread) + "])"
 	case ir.ArrayMap:
+		if expression.ViewRead.View != "" {
+			return "adamicViewMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ", " + e.viewArrayChecker(expression.ViewRead) + ")"
+		}
 		return "adamicMap(" + e.value(expression.Array) + ", " + e.value(expression.Callback) + ")"
 	case ir.ArrayVisit:
+		if expression.ViewRead.View != "" {
+			helper := "adamicViewVisit"
+			if expression.Method == "find" || expression.Method == "findIndex" || expression.Method == "findLast" || expression.Method == "findLastIndex" {
+				helper = "adamicViewFind"
+			}
+			return helper + "(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ", " + e.viewArrayChecker(expression.ViewRead) + ")"
+		}
 		if expression.Method == "find" || expression.Method == "findIndex" || expression.Method == "findLast" || expression.Method == "findLastIndex" {
 			return "adamicFind(" + e.value(expression.Array) + ", " + quote(expression.Method) + ", " + e.value(expression.Callback) + ")"
 		}
@@ -1177,6 +1217,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapEntries:
 		return "[..." + e.value(expression.Map) + "]"
 	case ir.ArraySlice:
+		if ir.HasArrayViews(e.program) {
+			return "adamicViewSlice(" + e.value(expression.Array) + ", [" + e.values(expression.Arguments) + "])"
+		}
 		return e.value(expression.Array) + ".slice(" + e.values(expression.Arguments) + ")"
 	case ir.ArraySort:
 		if expression.Callback != nil {

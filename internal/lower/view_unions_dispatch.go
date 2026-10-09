@@ -20,12 +20,6 @@ func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, b
 	contract := l.result.ViewContracts[id-1]
 	contract.Undefined = l.includesUndefined(target)
 	contract.Null = l.includesNull(target)
-	for _, member := range contract.Members {
-		child := l.result.ViewContracts[member-1]
-		if child.Kind == ir.ViewArray {
-			contract.Unsupported = "views-v3: array element kind: " + child.Name
-		}
-	}
 	if contract.Of == ir.Object {
 		for _, field := range l.checker.GetPropertiesOfType(target) {
 			child, err := build(l.checker.GetTypeOfSymbol(field))
@@ -36,6 +30,13 @@ func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, b
 		}
 		l.result.ViewContracts[id-1] = contract
 		if contract.Unsupported == "" && !l.supportsUntaggedRead(contract) {
+			contract.Unsupported = "untagged object union"
+		}
+	}
+	// Array arms require a supported element graph even in boxed mixed unions.
+	// Dictionaries, nominal objects and unavailable callables keep their boundary.
+	for _, member := range contract.Members {
+		if l.result.ViewContracts[member-1].Kind == ir.ViewArray && !l.supportsUntaggedRead(contract) {
 			contract.Unsupported = "untagged object union"
 		}
 	}

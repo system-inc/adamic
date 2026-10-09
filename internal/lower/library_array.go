@@ -629,5 +629,5 @@ func (l *lowering) libraryArrayJoin(node, receiver *ast.Node, array ir.Expressio
 			return nil, true, l.notYet(node, "join with a nonstring separator")
 		}
 	}
-	return ir.ArrayJoin{Array: array, Separator: separator, Element: element, Depth: depth}, true, nil
+	return ir.ArrayJoin{Array: array, Separator: separator, Element: element, Depth: depth, ViewRead: l.viewArrayUse(node, receiver, element, false)}, true, nil
 }
