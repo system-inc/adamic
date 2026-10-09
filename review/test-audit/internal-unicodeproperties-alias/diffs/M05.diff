@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -77,7 +77,7 @@
+ 	next := uint32(0)
+ 	for _, r := range ranges {
+ 		if r.Start > next {
+-			out = append(out, Range{Start: next, End: r.Start - 1})
++			out = append(out, Range{Start: next, End: r.Start})
+ 		}
+ 		if r.End == 0x10FFFF {
+ 			return &Set{Ranges: out}

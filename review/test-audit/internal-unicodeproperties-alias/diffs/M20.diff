@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/tables.go
++++ b/internal/unicodeproperties/tables.go
+@@ -20,7 +20,7 @@
+ var sets = []*Set{
+ 	{ // 0 ASCII
+ 		Ranges: []Range{
+-			{0x0000, 0x007F},
++			{0x0000, 0x007E},
+ 		},
+ 	},
+ 	{ // 1 ASCII_Hex_Digit

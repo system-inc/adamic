@@ -1,0 +1,178 @@
+diff --git a/internal/unicodeproperties/tables.go b/internal/unicodeproperties/tables.go
+index 3a6bc9f2..5770dc46 100644
+--- a/internal/unicodeproperties/tables.go
++++ b/internal/unicodeproperties/tables.go
+@@ -20,7 +20,7 @@ package unicodeproperties
+ var sets = []*Set{
+ 	{ // 0 ASCII
+ 		Ranges: []Range{
+-			{0x0000, 0x007F},
++			{0x0000, auditChoose[uint32]("M20", 0x007F, 0x007E)},
+ 		},
+ 	},
+ 	{ // 1 ASCII_Hex_Digit
+@@ -24922,7 +24922,7 @@ var binaryNames = map[string]entry{
+ 	"Uppercase":                    {name: "Uppercase", value: "True", set: 48},
+ 	"VS":                           {name: "Variation_Selector", value: "True", set: 49},
+ 	"Variation_Selector":           {name: "Variation_Selector", value: "True", set: 49},
+-	"WSpace":                       {name: "White_Space", value: "True", set: 50},
++	"WSpace":                       {name: "White_Space", value: auditChoose("M18", "True", "False"), set: 50},
+ 	"White_Space":                  {name: "White_Space", value: "True", set: 50},
+ 	"space":                        {name: "White_Space", value: "True", set: 50},
+ 	"XIDC":                         {name: "XID_Continue", value: "True", set: 51},
+@@ -24957,7 +24957,7 @@ var generalCategoryNames = map[string]entry{
+ 	"Other_Letter":          {name: "General_Category", value: "Other_Letter", set: 63},
+ 	"Lt":                    {name: "General_Category", value: "Titlecase_Letter", set: 64},
+ 	"Titlecase_Letter":      {name: "General_Category", value: "Titlecase_Letter", set: 64},
+-	"Lu":                    {name: "General_Category", value: "Uppercase_Letter", set: 65},
++	"Lu":                    {name: "General_Category", value: auditChoose("M19", "Uppercase_Letter", "Lowercase_Letter"), set: 65},
+ 	"Uppercase_Letter":      {name: "General_Category", value: "Uppercase_Letter", set: 65},
+ 	"M":                     {name: "General_Category", value: "Mark", set: 66},
+ 	"Mark":                  {name: "General_Category", value: "Mark", set: 66},
+diff --git a/internal/unicodeproperties/unicodeproperties.go b/internal/unicodeproperties/unicodeproperties.go
+index ac48e5e3..3f26f7e0 100644
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -49,7 +49,8 @@ type Set struct {
+ // Contains reports whether codePoint is in the set. Values outside 0..U+10FFFF
+ // are not, and a negative rune is not a code point.
+ func (s *Set) Contains(codePoint rune) bool {
+-	if s == nil || codePoint < 0 || codePoint > 0x10FFFF {
++ if auditSelected("P2") { return false }
++	if s == nil || codePoint < 0 || auditChoose("M03", codePoint > 0x10FFFF, codePoint > 0xFFFF) {
+ 		return false
+ 	}
+ 	cp := uint32(codePoint)
+@@ -57,18 +58,19 @@ func (s *Set) Contains(codePoint rune) bool {
+ 	lo, hi := 0, len(ranges)
+ 	for lo < hi {
+ 		mid := (lo + hi) / 2
+-		if ranges[mid].End < cp {
++		if auditChoose("M01", ranges[mid].End < cp, ranges[mid].End <= cp) {
+ 			lo = mid + 1
+ 		} else {
+ 			hi = mid
+ 		}
+ 	}
+-	return lo < len(ranges) && ranges[lo].Start <= cp
++	return lo < len(ranges) && auditChoose("M02", ranges[lo].Start <= cp, ranges[lo].Start < cp)
+ }
+ 
+ // Complement is the set of code points from 0 to U+10FFFF that are not in s.
+ // That is what \P matches when \p matches s.
+ func (s *Set) Complement() *Set {
++ if auditSelected("P3") { return &Set{} }
+ 	ranges := []Range(nil)
+ 	if s != nil {
+ 		ranges = s.Ranges
+@@ -76,16 +78,16 @@ func (s *Set) Complement() *Set {
+ 	var out []Range
+ 	next := uint32(0)
+ 	for _, r := range ranges {
+-		if r.Start > next {
+-			out = append(out, Range{Start: next, End: r.Start - 1})
++		if auditChoose("M04", r.Start > next, r.Start >= next) {
++			out = append(out, Range{Start: next, End: auditChoose("M05", r.Start - 1, r.Start)})
+ 		}
+ 		if r.End == 0x10FFFF {
+ 			return &Set{Ranges: out}
+ 		}
+-		next = r.End + 1
++		next = auditChoose("M06", r.End + 1, r.End)
+ 	}
+ 	if next <= 0x10FFFF {
+-		out = append(out, Range{Start: next, End: 0x10FFFF})
++		out = append(out, Range{Start: next, End: auditChoose[uint32]("M07", 0x10FFFF, 0x10FFFE)})
+ 	}
+ 	return &Set{Ranges: out}
+ }
+@@ -120,7 +122,8 @@ type Property struct {
+ 
+ // Contains reports whether a code point is in a code-point property.
+ func (p Property) Contains(codePoint rune) bool {
+-	if p.Kind != KindCodePoints {
++ if auditSelected("P4") { return false }
++	if auditChoose("M08", p.Kind != KindCodePoints, p.Kind == KindCodePoints) {
+ 		return false
+ 	}
+ 	return p.Set.Contains(codePoint)
+@@ -128,13 +131,14 @@ func (p Property) Contains(codePoint rune) bool {
+ 
+ // ContainsSequence reports whether text is one of a string property's sequences.
+ func (p Property) ContainsSequence(text string) bool {
+-	if p.Kind != KindStrings {
++ if auditSelected("P5") { return false }
++	if auditChoose("M09", p.Kind != KindStrings, p.Kind == KindStrings) {
+ 		return false
+ 	}
+ 	i := sort.Search(len(p.Sequences), func(i int) bool {
+-		return p.Sequences[i] >= text
++		return auditChoose("M10", p.Sequences[i] >= text, p.Sequences[i] > text)
+ 	})
+-	return i < len(p.Sequences) && p.Sequences[i] == text
++	return i < len(p.Sequences) && auditChoose("M11", p.Sequences[i] == text, p.Sequences[i] != text)
+ }
+ 
+ // Lookup resolves the text inside \p{...}. unicodeSets is true for a pattern
+@@ -146,6 +150,7 @@ func (p Property) ContainsSequence(text string) bool {
+ // different set. A binary property is only the bare name ("White_Space",
+ // "space", "WSpace"), never "White_Space=Yes".
+ func Lookup(expression string, unicodeSets bool) (Property, bool) {
++ if auditSelected("P1") { return Property{}, false }
+ 	if !expressionOK(expression) {
+ 		return Property{}, false
+ 	}
+@@ -157,7 +162,7 @@ func Lookup(expression string, unicodeSets bool) (Property, bool) {
+ 		case "Script", "sc":
+ 			table = scriptNames
+ 		case "Script_Extensions", "scx":
+-			table = scriptExtensionNames
++			table = auditChoose("M13", scriptExtensionNames, scriptNames)
+ 		default:
+ 			return Property{}, false
+ 		}
+@@ -172,7 +177,7 @@ func Lookup(expression string, unicodeSets bool) (Property, bool) {
+ 	if p, ok := codePoint(binaryNames, expression); ok {
+ 		return p, true
+ 	}
+-	if unicodeSets {
++	if auditChoose("M12", unicodeSets, !unicodeSets) {
+ 		if s, ok := stringProperties[expression]; ok {
+ 			return Property{Kind: KindStrings, Name: s.name, Value: "True", Sequences: s.sequences}, true
+ 		}
+@@ -185,7 +190,7 @@ func codePoint(table map[string]entry, name string) (Property, bool) {
+ 	if !ok {
+ 		return Property{}, false
+ 	}
+-	return Property{Kind: KindCodePoints, Name: e.name, Value: e.value, Set: sets[e.set]}, true
++	return Property{Kind: KindCodePoints, Name: e.name, Value: auditChoose("M14", e.value, e.name), Set: sets[e.set]}, true
+ }
+ 
+ // expressionOK is the lexical shape of UnicodePropertyValueExpression: letters,
+@@ -193,7 +198,7 @@ func codePoint(table map[string]entry, name string) (Property, bool) {
+ // so a space or a hyphen is a different expression and not a property.
+ func expressionOK(expression string) bool {
+ 	if expression == "" || expression == "=" {
+-		return false
++		return auditChoose("M15", false, true)
+ 	}
+ 	equals := 0
+ 	for i := 0; i < len(expression); i++ {
+@@ -201,7 +206,7 @@ func expressionOK(expression string) bool {
+ 		switch {
+ 		case c == '=':
+ 			equals++
+-			if equals > 1 || i == 0 || i == len(expression)-1 {
++			if auditChoose("M16", equals > 1, equals > 2) || i == 0 || i == len(expression)-1 {
+ 				return false
+ 			}
+ 		case c >= 'A' && c <= 'Z', c >= 'a' && c <= 'z', c >= '0' && c <= '9', c == '_':
+@@ -215,7 +220,7 @@ func expressionOK(expression string) bool {
+ func splitPair(expression string) (string, string, bool) {
+ 	for i := 0; i < len(expression); i++ {
+ 		if expression[i] == '=' {
+-			return expression[:i], expression[i+1:], true
++			return expression[:i], auditChoose("M17", expression[i+1:], expression[i:]), true
+ 		}
+ 	}
+ 	return "", "", false

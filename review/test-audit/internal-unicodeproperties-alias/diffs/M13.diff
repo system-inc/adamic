@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -157,7 +157,7 @@
+ 		case "Script", "sc":
+ 			table = scriptNames
+ 		case "Script_Extensions", "scx":
+-			table = scriptExtensionNames
++			table = scriptNames
+ 		default:
+ 			return Property{}, false
+ 		}

@@ -1,0 +1,4 @@
+package unicodeproperties
+import "os"
+func auditSelected(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
+func auditChoose[T any](id string, normal, mutant T) T { if auditSelected(id) { return mutant }; return normal }

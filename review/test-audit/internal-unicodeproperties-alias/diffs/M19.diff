@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/tables.go
++++ b/internal/unicodeproperties/tables.go
+@@ -24957,7 +24957,7 @@
+ 	"Other_Letter":          {name: "General_Category", value: "Other_Letter", set: 63},
+ 	"Lt":                    {name: "General_Category", value: "Titlecase_Letter", set: 64},
+ 	"Titlecase_Letter":      {name: "General_Category", value: "Titlecase_Letter", set: 64},
+-	"Lu":                    {name: "General_Category", value: "Uppercase_Letter", set: 65},
++	"Lu":                    {name: "General_Category", value: "Lowercase_Letter", set: 65},
+ 	"Uppercase_Letter":      {name: "General_Category", value: "Uppercase_Letter", set: 65},
+ 	"M":                     {name: "General_Category", value: "Mark", set: 66},
+ 	"Mark":                  {name: "General_Category", value: "Mark", set: 66},

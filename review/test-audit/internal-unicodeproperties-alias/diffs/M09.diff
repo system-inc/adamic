@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -128,7 +128,7 @@
+ 
+ // ContainsSequence reports whether text is one of a string property's sequences.
+ func (p Property) ContainsSequence(text string) bool {
+-	if p.Kind != KindStrings {
++	if p.Kind == KindStrings {
+ 		return false
+ 	}
+ 	i := sort.Search(len(p.Sequences), func(i int) bool {

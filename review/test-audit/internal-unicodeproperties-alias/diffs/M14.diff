@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -185,7 +185,7 @@
+ 	if !ok {
+ 		return Property{}, false
+ 	}
+-	return Property{Kind: KindCodePoints, Name: e.name, Value: e.value, Set: sets[e.set]}, true
++	return Property{Kind: KindCodePoints, Name: e.name, Value: e.name, Set: sets[e.set]}, true
+ }
+ 
+ // expressionOK is the lexical shape of UnicodePropertyValueExpression: letters,

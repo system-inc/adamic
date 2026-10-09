@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/tables.go
++++ b/internal/unicodeproperties/tables.go
+@@ -24922,7 +24922,7 @@
+ 	"Uppercase":                    {name: "Uppercase", value: "True", set: 48},
+ 	"VS":                           {name: "Variation_Selector", value: "True", set: 49},
+ 	"Variation_Selector":           {name: "Variation_Selector", value: "True", set: 49},
+-	"WSpace":                       {name: "White_Space", value: "True", set: 50},
++	"WSpace":                       {name: "White_Space", value: "False", set: 50},
+ 	"White_Space":                  {name: "White_Space", value: "True", set: 50},
+ 	"space":                        {name: "White_Space", value: "True", set: 50},
+ 	"XIDC":                         {name: "XID_Continue", value: "True", set: 51},

@@ -1,0 +1,14 @@
+WSpace "\n" true
+gc=Lu "A" true
+sc=Latn "A" true
+scx=Latin "·" true
+RGI_Emoji "😀" true
+ascii rejected
+ASCII=Yes rejected
+sc=Hrkt rejected
+Basic_Emoji=Yes rejected
+review/test-audit/internal-unicodeproperties-alias/PropertyValueAliases.txt:gc ; Lu                               ; Uppercase_Letter
+review/test-audit/internal-unicodeproperties-alias/PropertyValueAliases.txt:sc ; Latn                             ; Latin
+review/test-audit/internal-unicodeproperties-alias/PropertyValueAliases.txt:WSpace; N                             ; No                               ; F                                ; False
+review/test-audit/internal-unicodeproperties-alias/PropertyValueAliases.txt:WSpace; Y                             ; Yes                              ; T                                ; True
+review/test-audit/internal-unicodeproperties-alias/PropertyAliases.txt:WSpace                   ; White_Space                 ; space

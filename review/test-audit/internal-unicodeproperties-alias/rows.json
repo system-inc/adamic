@@ -1,0 +1,289 @@
+[
+  {
+    "test": "TestBinaryAliases",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/alias_test.go",
+    "seconds": 0.002,
+    "oracle": "ECMA-262 binary property table and Unicode 17 PropertyAliases.txt. Checked WSpace=White_Space=space against the downloaded source and newline membership with Node.",
+    "oracle_kind": "external-authority",
+    "kills": [
+      "M14",
+      "M18"
+    ],
+    "unique_kills": [
+      "M18"
+    ],
+    "last_proven_fail": "M18: alias_test.go:170: \\p{WSpace}: got name \"White_Space\" value \"False\" ok true",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run \"^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$\"; alias_test.go:170: \\p{WSpace}: got name \"White_Space\" value \"False\" ok true"
+  },
+  {
+    "test": "TestGeneralCategoryAliases",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/alias_test.go",
+    "seconds": 0.003,
+    "oracle": "Unicode 17 PropertyValueAliases.txt. Checked gc;Lu;Uppercase_Letter against the downloaded source. Shared Set pointer identity is a self expectation.",
+    "oracle_kind": [
+      "external-authority",
+      "self"
+    ],
+    "kills": [
+      "M14",
+      "M17",
+      "M19"
+    ],
+    "unique_kills": [
+      "M19"
+    ],
+    "last_proven_fail": "M19: alias_test.go:192: \\p{Lu}: got name \"General_Category\" value \"Lowercase_Letter\" ok true",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "evidence": "ADAMIC_MUTANT=M19 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run \"^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$\"; alias_test.go:192: \\p{Lu}: got name \"General_Category\" value \"Lowercase_Letter\" ok true"
+  },
+  {
+    "test": "TestScriptAliasSet",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/alias_test.go",
+    "seconds": 0.002,
+    "oracle": "Unicode 17 script aliases and ECMAScript qualified-name rules; checked Latn=Latin against the downloaded source and Node rejecting sc=Hrkt. Count/digest and distinct Set pointers are self expectations, not independently regenerated.",
+    "oracle_kind": [
+      "external-authority",
+      "self"
+    ],
+    "kills": [
+      "M13",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: alias_test.go:230: script Latin: sc false scx false same set false",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestKnownMembership"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.002,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "evidence": "ADAMIC_MUTANT=M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run \"^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$\"; alias_test.go:230: script Latin: sc false scx false same set false"
+  },
+  {
+    "test": "TestRejectedNames",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/alias_test.go",
+    "seconds": 0.002,
+    "oracle": "ECMAScript exact property-name and v-flag rules. Manually checked Node rejects ascii, ASCII=Yes, sc=Hrkt and Basic_Emoji=Yes and accepts RGI_Emoji under v. The test itself does not run Node.",
+    "oracle_kind": "external-authority",
+    "kills": [
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12: alias_test.go:262: accepted \"RGI_Emoji\" without the v flag",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestKnownMembership"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.002,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run \"^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$\"; alias_test.go:262: accepted \"RGI_Emoji\" without the v flag"
+  },
+  {
+    "test": "TestStringPropertyCensus",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/alias_test.go",
+    "seconds": 0.003,
+    "oracle": "Stored counts and SHA256 hashes of our generated sequence output, plus self-written membership checks. This test does not run the separate Node comparison.",
+    "oracle_kind": "self",
+    "kills": [
+      "M09",
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12: alias_test.go:316: Lookup RGI_Emoji_ZWJ_Sequence: ok false kind 0 len 0",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestKnownMembership"
+    ],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1",
+      "P5"
+    ],
+    "subsumer_seconds": 0.002,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run \"^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$\"; alias_test.go:316: Lookup RGI_Emoji_ZWJ_Sequence: ok false kind 0 len 0"
+  },
+  {
+    "test": "TestSetBoundaries",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/alias_test.go",
+    "seconds": 0.033,
+    "oracle": "Self-written ordered-range, endpoint, complement and double-complement invariants. These do not independently establish table membership.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M05",
+      "M06",
+      "M07"
+    ],
+    "unique_kills": [
+      "M04",
+      "M05",
+      "M06",
+      "M07"
+    ],
+    "last_proven_fail": "M07: alias_test.go:348: set 0 complement agrees at an end",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P2",
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "evidence": "ADAMIC_MUTANT=M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run \"^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$\"; alias_test.go:348: set 0 complement agrees at an end"
+  },
+  {
+    "test": "TestKnownMembership",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/alias_test.go",
+    "seconds": 0.002,
+    "oracle": "Handwritten Unicode membership expectations. Checked scx=Latin membership for U+00B7, WSpace newline, gc=Lu A, and RGI_Emoji with Node 24 in this session; the test itself does not run Node.",
+    "oracle_kind": "external-authority",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M08",
+      "M09",
+      "M10",
+      "M11",
+      "M12",
+      "M13",
+      "M17"
+    ],
+    "unique_kills": [
+      "M08"
+    ],
+    "last_proven_fail": "M17: alias_test.go:378: Lookup gc=Ll failed",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 20,
+    "probe_kills": [
+      "P1",
+      "P4",
+      "P5"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "evidence": "ADAMIC_MUTANT=M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run \"^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$\"; alias_test.go:378: Lookup gc=Ll failed"
+  }
+]

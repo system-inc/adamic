@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -76,7 +76,7 @@
+ 	var out []Range
+ 	next := uint32(0)
+ 	for _, r := range ranges {
+-		if r.Start > next {
++		if r.Start >= next {
+ 			out = append(out, Range{Start: next, End: r.Start - 1})
+ 		}
+ 		if r.End == 0x10FFFF {

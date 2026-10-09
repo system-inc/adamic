@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -49,7 +49,7 @@
+ // Contains reports whether codePoint is in the set. Values outside 0..U+10FFFF
+ // are not, and a negative rune is not a code point.
+ func (s *Set) Contains(codePoint rune) bool {
+-	if s == nil || codePoint < 0 || codePoint > 0x10FFFF {
++	if s == nil || codePoint < 0 || codePoint > 0xFFFF {
+ 		return false
+ 	}
+ 	cp := uint32(codePoint)

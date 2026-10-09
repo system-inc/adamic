@@ -1,0 +1,14 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -120,10 +120,7 @@
+ 
+ // Contains reports whether a code point is in a code-point property.
+ func (p Property) Contains(codePoint rune) bool {
+-	if p.Kind != KindCodePoints {
+-		return false
+-	}
+-	return p.Set.Contains(codePoint)
++	return false
+ }
+ 
+ // ContainsSequence reports whether text is one of a string property's sequences.

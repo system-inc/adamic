@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -63,7 +63,7 @@
+ 			hi = mid
+ 		}
+ 	}
+-	return lo < len(ranges) && ranges[lo].Start <= cp
++	return lo < len(ranges) && ranges[lo].Start < cp
+ }
+ 
+ // Complement is the set of code points from 0 to U+10FFFF that are not in s.

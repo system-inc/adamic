@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -132,7 +132,7 @@
+ 		return false
+ 	}
+ 	i := sort.Search(len(p.Sequences), func(i int) bool {
+-		return p.Sequences[i] >= text
++		return p.Sequences[i] > text
+ 	})
+ 	return i < len(p.Sequences) && p.Sequences[i] == text
+ }

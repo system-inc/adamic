@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -193,7 +193,7 @@
+ // so a space or a hyphen is a different expression and not a property.
+ func expressionOK(expression string) bool {
+ 	if expression == "" || expression == "=" {
+-		return false
++		return true
+ 	}
+ 	equals := 0
+ 	for i := 0; i < len(expression); i++ {

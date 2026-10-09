@@ -1,0 +1,6 @@
+=== RUN   TestAuditBehaviorWitness
+expressionOK(empty)=false expressionOK(gc=Lu=X)=false
+Lookup(ASCII)=true Contains(127)=false ranges=[{0 126}]
+--- PASS: TestAuditBehaviorWitness (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/unicodeproperties	0.002s

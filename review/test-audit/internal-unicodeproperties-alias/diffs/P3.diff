@@ -1,0 +1,29 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -69,25 +69,7 @@
+ // Complement is the set of code points from 0 to U+10FFFF that are not in s.
+ // That is what \P matches when \p matches s.
+ func (s *Set) Complement() *Set {
+-	ranges := []Range(nil)
+-	if s != nil {
+-		ranges = s.Ranges
+-	}
+-	var out []Range
+-	next := uint32(0)
+-	for _, r := range ranges {
+-		if r.Start > next {
+-			out = append(out, Range{Start: next, End: r.Start - 1})
+-		}
+-		if r.End == 0x10FFFF {
+-			return &Set{Ranges: out}
+-		}
+-		next = r.End + 1
+-	}
+-	if next <= 0x10FFFF {
+-		out = append(out, Range{Start: next, End: 0x10FFFF})
+-	}
+-	return &Set{Ranges: out}
++	return &Set{}
+ }
+ 
+ // Kind distinguishes a property that matches code points from one that matches

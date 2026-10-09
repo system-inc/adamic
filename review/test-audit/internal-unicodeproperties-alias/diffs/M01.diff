@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -57,7 +57,7 @@
+ 	lo, hi := 0, len(ranges)
+ 	for lo < hi {
+ 		mid := (lo + hi) / 2
+-		if ranges[mid].End < cp {
++		if ranges[mid].End <= cp {
+ 			lo = mid + 1
+ 		} else {
+ 			hi = mid

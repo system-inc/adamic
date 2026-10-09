@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -215,7 +215,7 @@
+ func splitPair(expression string) (string, string, bool) {
+ 	for i := 0; i < len(expression); i++ {
+ 		if expression[i] == '=' {
+-			return expression[:i], expression[i+1:], true
++			return expression[:i], expression[i:], true
+ 		}
+ 	}
+ 	return "", "", false

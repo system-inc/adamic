@@ -1,0 +1,182 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 60,
+    "before": "ranges[mid].End < cp",
+    "after": "ranges[mid].End <= cp"
+  },
+  {
+    "id": "M02",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 66,
+    "before": "ranges[lo].Start <= cp",
+    "after": "ranges[lo].Start < cp"
+  },
+  {
+    "id": "M03",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 52,
+    "before": "codePoint > 0x10FFFF",
+    "after": "codePoint > 0xFFFF"
+  },
+  {
+    "id": "M04",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 79,
+    "before": "r.Start > next",
+    "after": "r.Start >= next"
+  },
+  {
+    "id": "M05",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 80,
+    "before": "End: r.Start - 1",
+    "after": "End: r.Start"
+  },
+  {
+    "id": "M06",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 85,
+    "before": "next = r.End + 1",
+    "after": "next = r.End"
+  },
+  {
+    "id": "M07",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 88,
+    "before": "End: 0x10FFFF",
+    "after": "End: 0x10FFFE"
+  },
+  {
+    "id": "M08",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 123,
+    "before": "p.Kind != KindCodePoints",
+    "after": "p.Kind == KindCodePoints"
+  },
+  {
+    "id": "M09",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 131,
+    "before": "p.Kind != KindStrings",
+    "after": "p.Kind == KindStrings"
+  },
+  {
+    "id": "M10",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 135,
+    "before": "p.Sequences[i] >= text",
+    "after": "p.Sequences[i] > text"
+  },
+  {
+    "id": "M11",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 137,
+    "before": "p.Sequences[i] == text",
+    "after": "p.Sequences[i] != text"
+  },
+  {
+    "id": "M12",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 175,
+    "before": "if unicodeSets {",
+    "after": "if !unicodeSets {"
+  },
+  {
+    "id": "M13",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 160,
+    "before": "table = scriptExtensionNames",
+    "after": "table = scriptNames"
+  },
+  {
+    "id": "M14",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 188,
+    "before": "Value: e.value",
+    "after": "Value: e.name"
+  },
+  {
+    "id": "M15",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 196,
+    "before": "if expression == \"\" || expression == \"=\" {\n\t\treturn false",
+    "after": "if expression == \"\" || expression == \"=\" {\n\t\treturn true"
+  },
+  {
+    "id": "M16",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 204,
+    "before": "equals > 1",
+    "after": "equals > 2"
+  },
+  {
+    "id": "M17",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 218,
+    "before": "expression[i+1:]",
+    "after": "expression[i:]"
+  },
+  {
+    "id": "M18",
+    "file": "internal/unicodeproperties/tables.go",
+    "line": 24925,
+    "before": "\"WSpace\":                       {name: \"White_Space\", value: \"True\", set: 50}",
+    "after": "\"WSpace\":                       {name: \"White_Space\", value: \"False\", set: 50}"
+  },
+  {
+    "id": "M19",
+    "file": "internal/unicodeproperties/tables.go",
+    "line": 24960,
+    "before": "\"Lu\":                    {name: \"General_Category\", value: \"Uppercase_Letter\", set: 65}",
+    "after": "\"Lu\":                    {name: \"General_Category\", value: \"Lowercase_Letter\", set: 65}"
+  },
+  {
+    "id": "M20",
+    "file": "internal/unicodeproperties/tables.go",
+    "line": 23,
+    "before": "{0x0000, 0x007F}",
+    "after": "{0x0000, 0x007E}"
+  },
+  {
+    "id": "P1",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 148,
+    "before": "func Lookup(expression string, unicodeSets bool) (Property, bool) {",
+    "after": "return Property{}, false",
+    "probe": true
+  },
+  {
+    "id": "P2",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 51,
+    "before": "func (s *Set) Contains(codePoint rune) bool {",
+    "after": "return false",
+    "probe": true
+  },
+  {
+    "id": "P3",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 71,
+    "before": "func (s *Set) Complement() *Set {",
+    "after": "return &Set{}",
+    "probe": true
+  },
+  {
+    "id": "P4",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 122,
+    "before": "func (p Property) Contains(codePoint rune) bool {",
+    "after": "return false",
+    "probe": true
+  },
+  {
+    "id": "P5",
+    "file": "internal/unicodeproperties/unicodeproperties.go",
+    "line": 130,
+    "before": "func (p Property) ContainsSequence(text string) bool {",
+    "after": "return false",
+    "probe": true
+  }
+]

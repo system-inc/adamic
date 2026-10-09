@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -134,7 +134,7 @@
+ 	i := sort.Search(len(p.Sequences), func(i int) bool {
+ 		return p.Sequences[i] >= text
+ 	})
+-	return i < len(p.Sequences) && p.Sequences[i] == text
++	return i < len(p.Sequences) && p.Sequences[i] != text
+ }
+ 
+ // Lookup resolves the text inside \p{...}. unicodeSets is true for a pattern

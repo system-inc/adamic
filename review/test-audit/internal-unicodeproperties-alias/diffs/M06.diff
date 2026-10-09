@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -82,7 +82,7 @@
+ 		if r.End == 0x10FFFF {
+ 			return &Set{Ranges: out}
+ 		}
+-		next = r.End + 1
++		next = r.End
+ 	}
+ 	if next <= 0x10FFFF {
+ 		out = append(out, Range{Start: next, End: 0x10FFFF})
