@@ -1,0 +1,136 @@
+[
+  {
+    "id": "M1",
+    "kind": "production",
+    "file": "stage1/cohere/yaml/cstParser.ts",
+    "line": 799,
+    "old": "this.lineStarts.push(0);",
+    "new": "this.lineStarts.push(1);",
+    "indices": [
+      1,
+      2,
+      0,
+      6
+    ]
+  },
+  {
+    "id": "M2",
+    "kind": "production",
+    "file": "stage1/cohere/yaml/directives.ts",
+    "line": 79,
+    "old": "version = '1.2';",
+    "new": "version = '1.1';",
+    "indices": [
+      1,
+      0,
+      6
+    ]
+  },
+  {
+    "id": "M3",
+    "kind": "production",
+    "file": "stage1/cohere/yaml/format.ts",
+    "line": 36,
+    "old": "result.text = (bom ? '\\ufeff' : '') + printer.format(root);",
+    "new": "result.text = (bom ? '' : '') + printer.format(root);",
+    "indices": [
+      0,
+      6
+    ]
+  },
+  {
+    "id": "M4",
+    "kind": "production",
+    "file": "stage1/cohere/yaml/layout.ts",
+    "line": 202,
+    "old": "80 - this.column",
+    "new": "40 - this.column",
+    "indices": [
+      0,
+      6
+    ]
+  },
+  {
+    "id": "S1",
+    "kind": "construction",
+    "file": "stage1/cohere/yaml/file_driver_shards_test.go",
+    "line": 130,
+    "old": "filepath.Join(directory, \"format.c\")",
+    "new": "filepath.Join(directory, \"missing.c\")",
+    "indices": [
+      8
+    ]
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "file": "stage1/cohere/yaml/compose_main.ts",
+    "line": 54,
+    "change": "Empty top-level port entry: skip its body and produce no stdout",
+    "indices": [
+      1
+    ]
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "file": "stage1/cohere/yaml/cst_main.ts",
+    "line": 71,
+    "change": "Empty top-level port entry: skip its body and produce no stdout",
+    "indices": [
+      2
+    ]
+  },
+  {
+    "id": "P3",
+    "kind": "probe",
+    "file": "stage1/cohere/yaml/main.ts",
+    "line": 20,
+    "change": "Empty top-level port entry: skip its body and produce no stdout",
+    "indices": [
+      0,
+      6
+    ]
+  },
+  {
+    "id": "P4",
+    "kind": "probe",
+    "file": "stage1/cohere/yaml/file_driver_shards_test.go",
+    "line": 91,
+    "old": "func fileDriverSetup(t *testing.T) *fileDriverState {",
+    "new": "func fileDriverSetup(t *testing.T) *fileDriverState { if true { return nil };",
+    "indices": [
+      8
+    ]
+  },
+  {
+    "id": "W1",
+    "kind": "witness",
+    "file": "stage1/cohere/yaml/compose_test.go",
+    "line": 208,
+    "change": "Weaken equality to always agree within the witness; assertions unchanged",
+    "indices": [
+      3
+    ]
+  },
+  {
+    "id": "W2",
+    "kind": "witness",
+    "file": "stage1/cohere/yaml/cst_test.go",
+    "line": 142,
+    "change": "Weaken equality to always agree within the witness; assertions unchanged",
+    "indices": [
+      4
+    ]
+  },
+  {
+    "id": "W3",
+    "kind": "witness",
+    "file": "stage1/cohere/yaml/file_driver_shards_test.go",
+    "line": 195,
+    "change": "Always agree on planted output; native precondition comparison unchanged",
+    "indices": [
+      5
+    ]
+  }
+]

@@ -1,0 +1,139 @@
+[
+  {
+    "test": "TestComposeMatchGo",
+    "package": "stage1/cohere/yaml",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestFormatterMatchesGo"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 stage1/cohere/yaml/composer.ts:62",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/yaml/composer.ts:62",
+        "change": "this.document.warnings.push(new ComposeError(token.offset, token.offset + token.source.length, code, message)); -> this.document.warnings.push(new ComposeError(token.offset, token.offset + token.source.length + 1, code, message));",
+        "rows_failed": [
+          "TestComposeMatchGo"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_NATIVE_SPLIT=1 ADAMIC_YAML_LIBRARY=/tmp/defend-yaml/library ADAMIC_BUILD_CACHE_DIR=/tmp/defend-yaml/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestComposeMatchGo)$'; compose_test.go:148: native ASan/UBSan/LSan: byte 1709597: got \"02a007200650066|0|0|||||0|0|1|007200650066|||0|[]|-|-,]|-|-|errors:|warnings:3,32,TAG_RESOLVE_FAILED,0055006e007200650073006f006c0076006500640020007400610067003\", want \"02a007200650066|0|0|||||0|0|1|007200650066|||0|[]|-|-,]|-|-|errors:|warnings:3,31,TAG_RESOLVE_FAILED,0055006e007200650073006f006c0076006500640020007400610067003\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestComposeMatchGo",
+      "TestFileDriver family",
+      "TestFileDriverUnion",
+      "TestFormatterMatchesGo",
+      "TestUnistMatchesGo"
+    ],
+    "rows_passed": [
+      "TestFileDriver family",
+      "TestFileDriverUnion",
+      "TestFormatterMatchesGo",
+      "TestUnistMatchesGo"
+    ],
+    "unknown_rows": [],
+    "diff": "D1.diff",
+    "failed_members": [
+      "TestComposeMatchGo"
+    ],
+    "members": []
+  },
+  {
+    "test": "TestCSTMatchesGo",
+    "package": "stage1/cohere/yaml",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestFileDriver family"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 stage1/cohere/yaml/cstParser.ts:717",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/yaml/cstParser.ts:717",
+        "change": "this.stack.push(this.make('doc-end', this.offset, 0, this.source, false)); -> this.stack.push(this.make('doc-end', this.offset, 0, this.source, true));",
+        "rows_failed": [
+          "TestCSTMatchesGo"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_NATIVE_SPLIT=1 ADAMIC_YAML_LIBRARY=/tmp/defend-yaml/library ADAMIC_BUILD_CACHE_DIR=/tmp/defend-yaml/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestCSTMatchesGo)$'; cst_test.go:78: native ASan/UBSan/LSan: byte 1395977: got \"|0062||[]|-|-|[newline|22|0|000a||[]|-|-|-|[]|[],]|[]|[]|0,]|-|[]|[]\\ndoc-end|23|0|002e002e002e||[]|-|-|[newline|26|0|000a||[]|-|-|-|[]|[],]|[]|[]\\nlines 0,14,18,\", want \"|0062||[]|-|-|[newline|22|0|000a||[]|-|-|-|[]|[],]|[]|[]|0,]|-|[]|[]\\ndoc-end|23|-|002e002e002e||[]|-|-|[newline|26|0|000a||[]|-|-|-|[]|[],]|[]|[]\\nlines 0,14,18,\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCSTMatchesGo",
+      "TestComposeMatchGo",
+      "TestFileDriver family",
+      "TestFileDriverUnion",
+      "TestFormatterMatchesGo",
+      "TestPropsMatchGo",
+      "TestScalarsMatchGo family",
+      "TestUnistMatchesGo"
+    ],
+    "rows_passed": [
+      "TestComposeMatchGo",
+      "TestFileDriver family",
+      "TestFileDriverUnion",
+      "TestFormatterMatchesGo",
+      "TestPropsMatchGo",
+      "TestScalarsMatchGo family",
+      "TestUnistMatchesGo"
+    ],
+    "unknown_rows": [],
+    "diff": "D2.diff",
+    "failed_members": [
+      "TestCSTMatchesGo"
+    ],
+    "members": []
+  },
+  {
+    "test": "TestFileDriver family",
+    "package": "stage1/cohere/yaml",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestFormatterMatchesGo"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D3 stage1/cohere/yaml/main.ts:36",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/yaml/main.ts:36",
+        "change": "const result = format(read.text); -> const result = format(read.text.slice(0, -1));",
+        "rows_failed": [
+          "TestFileDriver family"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_NATIVE_SPLIT=1 ADAMIC_YAML_LIBRARY=/tmp/defend-yaml/library ADAMIC_BUILD_CACHE_DIR=/tmp/defend-yaml/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFileDriver_[0-9]+)$'; file_driver_shards_test.go:260: native file 43: byte 1: got \">\\n\", want \">+\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestFileDriver family",
+      "TestFileDriverUnion",
+      "TestFormatterMatchesGo"
+    ],
+    "rows_passed": [
+      "TestFileDriverUnion",
+      "TestFormatterMatchesGo"
+    ],
+    "unknown_rows": [],
+    "diff": "D3.diff",
+    "failed_members": [
+      "TestFileDriver_001",
+      "TestFileDriver_002",
+      "TestFileDriver_003",
+      "TestFileDriver_005"
+    ],
+    "members": [
+      "TestFileDriver_000",
+      "TestFileDriver_001",
+      "TestFileDriver_002",
+      "TestFileDriver_003",
+      "TestFileDriver_004",
+      "TestFileDriver_005",
+      "TestFileDriver_006",
+      "TestFileDriver_007"
+    ]
+  }
+]

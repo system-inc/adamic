@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/yaml/composer.ts b/stage1/cohere/yaml/composer.ts
+index b5e1d98f..de41b8e7 100644
+--- a/stage1/cohere/yaml/composer.ts
++++ b/stage1/cohere/yaml/composer.ts
+@@ -59,7 +59,7 @@ export class Composer {
+     }
+     warning(index: number, code: string, message: string): void {
+         const token = this.parser.get(index);
+-        this.document.warnings.push(new ComposeError(token.offset, token.offset + token.source.length, code, message));
++        this.document.warnings.push(new ComposeError(token.offset, token.offset + token.source.length + 1, code, message));
+     }
+     properties(
+         tokens: readonly number[],

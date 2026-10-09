@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/yaml/main.ts b/stage1/cohere/yaml/main.ts
+index 5f12b5ec..10160736 100644
+--- a/stage1/cohere/yaml/main.ts
++++ b/stage1/cohere/yaml/main.ts
+@@ -33,7 +33,7 @@ if(batch) {
+     }
+ }
+ else {
+-    const result = format(read.text);
++    const result = format(read.text.slice(0, -1));
+     if(result.kind === 'Error') panic(result.message);
+     const written = writeTextFile('/dev/stdout', result.text);
+     if(written.kind === 'Error') panic(written.message);

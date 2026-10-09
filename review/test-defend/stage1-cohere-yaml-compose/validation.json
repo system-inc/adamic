@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "D1",
+    "applies_to": "bfe0553300773c0b37db2c10df97adeb909705f8",
+    "native_build": "successful native execution recorded before assertion",
+    "assertion": "compose_test.go:148: native ASan/UBSan/LSan: byte 1709597: got \"02a007200650066|0|0|||||0|0|1|007200650066|||0|[]|-|-,]|-|-|errors:|warnings:3,32,TAG_RESOLVE_FAILED,0055006e007200650073006f006c0076006500640020007400610067003\", want \"02a007200650066|0|0|||||0|0|1|007200650066|||0|[]|-|-,]|-|-|errors:|warnings:3,31,TAG_RESOLVE_FAILED,0055006e007200650073006f006c0076006500640020007400610067003\"",
+    "cache": "/tmp/defend-yaml/cache/D1",
+    "options": "native.Options{Sanitize:true}, ADAMIC_NATIVE_SPLIT=1"
+  },
+  {
+    "mutant": "D2",
+    "applies_to": "bfe0553300773c0b37db2c10df97adeb909705f8",
+    "native_build": "successful native execution recorded before assertion",
+    "assertion": "cst_test.go:78: native ASan/UBSan/LSan: byte 1395977: got \"|0062||[]|-|-|[newline|22|0|000a||[]|-|-|-|[]|[],]|[]|[]|0,]|-|[]|[]\\ndoc-end|23|0|002e002e002e||[]|-|-|[newline|26|0|000a||[]|-|-|-|[]|[],]|[]|[]\\nlines 0,14,18,\", want \"|0062||[]|-|-|[newline|22|0|000a||[]|-|-|-|[]|[],]|[]|[]|0,]|-|[]|[]\\ndoc-end|23|-|002e002e002e||[]|-|-|[newline|26|0|000a||[]|-|-|-|[]|[],]|[]|[]\\nlines 0,14,18,\"",
+    "cache": "/tmp/defend-yaml/cache/D2",
+    "options": "native.Options{Sanitize:true}, ADAMIC_NATIVE_SPLIT=1"
+  },
+  {
+    "mutant": "D3",
+    "applies_to": "bfe0553300773c0b37db2c10df97adeb909705f8",
+    "native_build": "successful native execution recorded before assertion",
+    "assertion": "file_driver_shards_test.go:260: native file 43: byte 1: got \">\\n\", want \">+\"",
+    "cache": "/tmp/defend-yaml/cache/D3",
+    "options": "native.Options{Sanitize:true}, ADAMIC_NATIVE_SPLIT=1"
+  }
+]

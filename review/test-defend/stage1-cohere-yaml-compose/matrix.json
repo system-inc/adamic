@@ -1,0 +1,503 @@
+[
+  {
+    "mutant": "D1",
+    "row": "TestComposeMatchGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestComposeMatchGo)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D1",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D1-TestComposeMatchGo.log",
+    "exit": 1,
+    "wall": 64.78231288800089,
+    "cooked": false,
+    "failed": [
+      "TestComposeMatchGo"
+    ],
+    "passed": [],
+    "assertions": [
+      "compose_test.go:148: native ASan/UBSan/LSan: byte 1709597: got \"02a007200650066|0|0|||||0|0|1|007200650066|||0|[]|-|-,]|-|-|errors:|warnings:3,32,TAG_RESOLVE_FAILED,0055006e007200650073006f006c0076006500640020007400610067003\", want \"02a007200650066|0|0|||||0|0|1|007200650066|||0|[]|-|-,]|-|-|errors:|warnings:3,31,TAG_RESOLVE_FAILED,0055006e007200650073006f006c0076006500640020007400610067003\""
+    ]
+  },
+  {
+    "mutant": "D1",
+    "row": "TestUnistMatchesGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestUnistMatchesGo)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D1",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D1-TestUnistMatchesGo.log",
+    "exit": 0,
+    "wall": 72.26410000900069,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestUnistMatchesGo"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D1",
+    "row": "TestFormatterMatchesGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMatchesGo)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D1",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D1-TestFormatterMatchesGo.log",
+    "exit": 0,
+    "wall": 72.67211450300238,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestFormatterMatchesGo"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D1",
+    "row": "TestFileDriver_[0-9]+",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_[0-9]+)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D1",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D1-TestFileDriver_family.log",
+    "exit": 0,
+    "wall": 56.99551954200069,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestFileDriver_Setup",
+      "TestFileDriver_000",
+      "TestFileDriver_006",
+      "TestFileDriver_002",
+      "TestFileDriver_003",
+      "TestFileDriver_004",
+      "TestFileDriver_001",
+      "TestFileDriver_007",
+      "TestFileDriver_005"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D1",
+    "row": "TestFileDriverUnion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriverUnion)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D1",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D1-TestFileDriverUnion.log",
+    "exit": 0,
+    "wall": 9.148360630999377,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestFileDriver_Setup",
+      "TestFileDriverUnion"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestComposeMatchGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestComposeMatchGo)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D2",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D2-TestComposeMatchGo.log",
+    "exit": 0,
+    "wall": 35.92035120500077,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestComposeMatchGo"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestCSTMatchesGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestCSTMatchesGo)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D2",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D2-TestCSTMatchesGo.log",
+    "exit": 1,
+    "wall": 20.027640136999253,
+    "cooked": false,
+    "failed": [
+      "TestCSTMatchesGo"
+    ],
+    "passed": [],
+    "assertions": [
+      "cst_test.go:78: native ASan/UBSan/LSan: byte 1395977: got \"|0062||[]|-|-|[newline|22|0|000a||[]|-|-|-|[]|[],]|[]|[]|0,]|-|[]|[]\\ndoc-end|23|0|002e002e002e||[]|-|-|[newline|26|0|000a||[]|-|-|-|[]|[],]|[]|[]\\nlines 0,14,18,\", want \"|0062||[]|-|-|[newline|22|0|000a||[]|-|-|-|[]|[],]|[]|[]|0,]|-|[]|[]\\ndoc-end|23|-|002e002e002e||[]|-|-|[newline|26|0|000a||[]|-|-|-|[]|[],]|[]|[]\\nlines 0,14,18,\""
+    ]
+  },
+  {
+    "mutant": "D2",
+    "row": "TestPropsMatchGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestPropsMatchGo)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D2",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D2-TestPropsMatchGo.log",
+    "exit": 0,
+    "wall": 21.22468982099963,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestPropsMatchGo"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestScalarsMatchGo_[0-9]+",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestScalarsMatchGo_[0-9]+)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D2",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D2-TestScalarsMatchGo_family.log",
+    "exit": 0,
+    "wall": 46.550772573998984,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestScalarsMatchGo_007",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_005"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestUnistMatchesGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestUnistMatchesGo)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D2",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D2-TestUnistMatchesGo.log",
+    "exit": 0,
+    "wall": 60.672327101998235,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestUnistMatchesGo"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestFormatterMatchesGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMatchesGo)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D2",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D2-TestFormatterMatchesGo.log",
+    "exit": 0,
+    "wall": 82.85099686300236,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestFormatterMatchesGo"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestFileDriver_[0-9]+",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_[0-9]+)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D2",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D2-TestFileDriver_family.log",
+    "exit": 0,
+    "wall": 56.65676769499987,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestFileDriver_Setup",
+      "TestFileDriver_000",
+      "TestFileDriver_006",
+      "TestFileDriver_007",
+      "TestFileDriver_005",
+      "TestFileDriver_004",
+      "TestFileDriver_002",
+      "TestFileDriver_003",
+      "TestFileDriver_001"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D2",
+    "row": "TestFileDriverUnion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriverUnion)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D2",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D2-TestFileDriverUnion.log",
+    "exit": 0,
+    "wall": 9.841683018999902,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestFileDriver_Setup",
+      "TestFileDriverUnion"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D3",
+    "row": "TestFormatterMatchesGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMatchesGo)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D3",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D3-TestFormatterMatchesGo.log",
+    "exit": 1,
+    "wall": 94.4551493129984,
+    "cooked": true,
+    "failed": [],
+    "passed": [],
+    "assertions": []
+  },
+  {
+    "mutant": "D3",
+    "row": "TestFileDriver_[0-9]+",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_[0-9]+)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D3",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D3-TestFileDriver_family.log",
+    "exit": 1,
+    "wall": 58.708793894002156,
+    "cooked": false,
+    "failed": [
+      "TestFileDriver_005",
+      "TestFileDriver_002",
+      "TestFileDriver_003",
+      "TestFileDriver_001"
+    ],
+    "passed": [
+      "TestFileDriver_Setup",
+      "TestFileDriver_006",
+      "TestFileDriver_000",
+      "TestFileDriver_007",
+      "TestFileDriver_004"
+    ],
+    "assertions": [
+      "file_driver_shards_test.go:260: native file 43: byte 1: got \">\\n\", want \">+\"",
+      "file_driver_shards_test.go:248: native file 44: byte 4: got \"a: |\\n\", want \"a: |+\"",
+      "file_driver_shards_test.go:252: native file 40: byte 1: got \"|\\n\", want \"|+\""
+    ]
+  },
+  {
+    "mutant": "D3",
+    "row": "TestFileDriverUnion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriverUnion)$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D3",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D3-TestFileDriverUnion.log",
+    "exit": 0,
+    "wall": 4.74075532900315,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestFileDriver_Setup",
+      "TestFileDriverUnion"
+    ],
+    "assertions": []
+  },
+  {
+    "mutant": "D3",
+    "row": "TestFormatterMatchesGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFormatterMatchesGo$"
+    ],
+    "cache": "/tmp/defend-yaml/cache/D3",
+    "GOGC": "200",
+    "log": "review/test-defend/stage1-cohere-yaml-compose/D3-formatter-retry.log",
+    "exit": 0,
+    "wall": 74.7004795339999,
+    "cooked": false,
+    "failed": [],
+    "passed": [
+      "TestFormatterMatchesGo"
+    ],
+    "assertions": []
+  }
+]

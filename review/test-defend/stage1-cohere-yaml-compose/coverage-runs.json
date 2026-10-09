@@ -1,0 +1,82 @@
+[
+  {
+    "tag": "compose",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-yaml-compose/compose.cover",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestComposeMatchGo$"
+    ],
+    "exit": 0,
+    "wall": 64.08636348499931
+  },
+  {
+    "tag": "cst",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-yaml-compose/cst.cover",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestCSTMatchesGo$"
+    ],
+    "exit": 0,
+    "wall": 23.586772820999613
+  },
+  {
+    "tag": "file",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-yaml-compose/file.cover",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFileDriver_[0-9]+$"
+    ],
+    "exit": 0,
+    "wall": 18.927677856998343
+  },
+  {
+    "tag": "formatter",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/native",
+      "-coverprofile=review/test-defend/stage1-cohere-yaml-compose/formatter.cover",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFormatterMatchesGo$"
+    ],
+    "exit": 1,
+    "wall": 94.63261605599837
+  }
+]

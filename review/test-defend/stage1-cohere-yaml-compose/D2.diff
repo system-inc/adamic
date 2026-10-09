@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/yaml/cstParser.ts b/stage1/cohere/yaml/cstParser.ts
+index 9e23908d..93301195 100644
+--- a/stage1/cohere/yaml/cstParser.ts
++++ b/stage1/cohere/yaml/cstParser.ts
+@@ -714,7 +714,7 @@ export class CSTParser {
+         const index = this.peek(1);
+         if(this.type === 'doc-end' && (index < 0 || this.get(index).type !== 'doc-end')) {
+             while(this.stack.length > 0) this.pop(-1);
+-            this.stack.push(this.make('doc-end', this.offset, 0, this.source, false));
++            this.stack.push(this.make('doc-end', this.offset, 0, this.source, true));
+             return;
+         }
+         if(index < 0) {

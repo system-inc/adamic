@@ -1,0 +1,32 @@
+[
+  {
+    "id": "D1",
+    "target": "TestComposeMatchGo",
+    "file": "stage1/cohere/yaml/composer.ts",
+    "old": "this.document.warnings.push(new ComposeError(token.offset, token.offset + token.source.length, code, message));",
+    "new": "this.document.warnings.push(new ComposeError(token.offset, token.offset + token.source.length + 1, code, message));",
+    "menu": "off-by-one",
+    "difference": "Composition serializes warning end offsets. Formatting and unist do not serialize warnings.",
+    "line": 62
+  },
+  {
+    "id": "D2",
+    "target": "TestCSTMatchesGo",
+    "file": "stage1/cohere/yaml/cstParser.ts",
+    "old": "this.stack.push(this.make('doc-end', this.offset, 0, this.source, false));",
+    "new": "this.stack.push(this.make('doc-end', this.offset, 0, this.source, true));",
+    "menu": "change option",
+    "difference": "CST serialization distinguishes absent indent from indent zero on document-end tokens. Downstream composition consumes source and offsets.",
+    "line": 717
+  },
+  {
+    "id": "D3",
+    "target": "TestFileDriver family",
+    "file": "stage1/cohere/yaml/main.ts",
+    "old": "const result = format(read.text);",
+    "new": "const result = format(read.text.slice(0, -1));",
+    "menu": "off-by-one implicit bound",
+    "difference": "Standalone file mode versus batch mode. Removing the final input unit can change keep-chomp block scalars even when ordinary formatting reconstructs the newline.",
+    "line": 36
+  }
+]

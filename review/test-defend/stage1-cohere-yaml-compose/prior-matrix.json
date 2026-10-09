@@ -1,0 +1,324 @@
+[
+  {
+    "id": "M0",
+    "index": 2,
+    "failed": [],
+    "lines": [],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestCSTMatchesGo)$'",
+    "exit": 0,
+    "log": "M0-2-clean-switch.log"
+  },
+  {
+    "id": "M0",
+    "index": 1,
+    "failed": [],
+    "lines": [],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestComposeMatchGo)$'",
+    "exit": 0,
+    "log": "M0-1-clean-switch.log"
+  },
+  {
+    "id": "M0",
+    "index": 0,
+    "failed": [],
+    "lines": [],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFormatterMatchesGo)$'",
+    "exit": 0,
+    "log": "M0-0-clean-switch.log"
+  },
+  {
+    "id": "M0",
+    "index": 6,
+    "failed": [],
+    "lines": [],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFileDriver_000|TestFileDriver_001|TestFileDriver_002|TestFileDriver_003|TestFileDriver_004|TestFileDriver_005|TestFileDriver_006|TestFileDriver_007)$'",
+    "exit": 0,
+    "log": "M0-6-clean-switch.log"
+  },
+  {
+    "id": "M1",
+    "index": 1,
+    "failed": [],
+    "lines": [],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestComposeMatchGo)$'",
+    "exit": 0,
+    "log": "M1-1-matrix.log"
+  },
+  {
+    "id": "M1",
+    "index": 2,
+    "failed": [
+      "TestCSTMatchesGo"
+    ],
+    "lines": [
+      "cst_test.go:78: native ASan/UBSan/LSan: byte 180487: got \"[],newline|30285|14|000a||[]|-|-|-|[]|[],]|[]|0,]|0,]|0,]|0,]|0,]|-|[]|[]\\nlines 1,76,78,168,268,366,467,519,521,618,716,816,883,885,988,1087,1189,1292,1351,1353\", want \"[],newline|30285|14|000a||[]|-|-|-|[]|[],]|[]|0,]|0,]|0,]|0,]|0,]|-|[]|[]\\nlines 0,76,78,168,268,366,467,519,521,618,716,816,883,885,988,1087,1189,1292,1351,1353\""
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestCSTMatchesGo)$'",
+    "exit": 1,
+    "log": "M1-2-matrix.log"
+  },
+  {
+    "id": "M1",
+    "index": 0,
+    "failed": [
+      "TestFormatterMatchesGo"
+    ],
+    "lines": [
+      "format_test.go:122: /tmp/adamic-gate/TestFormatterMatchesGo194179448/006/format: exit status 70"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFormatterMatchesGo)$'",
+    "exit": 1,
+    "log": "M1-0-matrix.log"
+  },
+  {
+    "id": "M1",
+    "index": 6,
+    "failed": [
+      "TestFileDriver_002",
+      "TestFileDriver_000",
+      "TestFileDriver_005",
+      "TestFileDriver_006",
+      "TestFileDriver_001",
+      "TestFileDriver_007",
+      "TestFileDriver_003",
+      "TestFileDriver_004"
+    ],
+    "lines": [
+      "file_driver_shards_test.go:248: /tmp/u150/cache/switched/38130a7a0315f7bf7dca096673cfcb28a4992a2b5660c2a29923b37fe307d48c/format: exit status 70",
+      "file_driver_shards_test.go:240: /tmp/u150/cache/switched/38130a7a0315f7bf7dca096673cfcb28a4992a2b5660c2a29923b37fe307d48c/format: exit status 70",
+      "file_driver_shards_test.go:260: /tmp/u150/cache/switched/38130a7a0315f7bf7dca096673cfcb28a4992a2b5660c2a29923b37fe307d48c/format: exit status 70",
+      "file_driver_shards_test.go:264: /tmp/u150/cache/switched/38130a7a0315f7bf7dca096673cfcb28a4992a2b5660c2a29923b37fe307d48c/format: exit status 70",
+      "file_driver_shards_test.go:268: /tmp/u150/cache/switched/38130a7a0315f7bf7dca096673cfcb28a4992a2b5660c2a29923b37fe307d48c/format: exit status 70",
+      "file_driver_shards_test.go:244: /tmp/u150/cache/switched/38130a7a0315f7bf7dca096673cfcb28a4992a2b5660c2a29923b37fe307d48c/format: exit status 70",
+      "file_driver_shards_test.go:252: /tmp/u150/cache/switched/38130a7a0315f7bf7dca096673cfcb28a4992a2b5660c2a29923b37fe307d48c/format: exit status 70",
+      "file_driver_shards_test.go:256: /tmp/u150/cache/switched/38130a7a0315f7bf7dca096673cfcb28a4992a2b5660c2a29923b37fe307d48c/format: exit status 70"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFileDriver_000|TestFileDriver_001|TestFileDriver_002|TestFileDriver_003|TestFileDriver_004|TestFileDriver_005|TestFileDriver_006|TestFileDriver_007)$'",
+    "exit": 1,
+    "log": "M1-6-matrix.log"
+  },
+  {
+    "id": "M2",
+    "index": 1,
+    "failed": [
+      "TestComposeMatchGo"
+    ],
+    "lines": [
+      "compose_test.go:148: native ASan/UBSan/LSan: byte 9: got \"case 0\\n1.1|0|0|0|00210021=007400610067003a00790061006d006c002e006f00720067002c00320030003\", want \"case 0\\n1.2|0|0|0|00210021=007400610067003a00790061006d006c002e006f00720067002c00320030003\""
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestComposeMatchGo)$'",
+    "exit": 1,
+    "log": "M2-1-matrix.log"
+  },
+  {
+    "id": "M2",
+    "index": 0,
+    "failed": [
+      "TestFormatterMatchesGo"
+    ],
+    "lines": [
+      "format_test.go:137: native ASan/UBSan/LSan: byte 765324: got \"\\\\n\\nok\\t!!null { a: 1 }\\\\n\\nok\\t!!null [{ a: 1 }, { a: 2 }]\\\\n\\nok\\t!!null [{}, word]\\\\n\\nok\\t!!timestamp word\\\\n\\nok\\t!!timestamp 2000-01-01\\\\n\\nok\\t!!timestamp null\\\\n\\nok\\t!!tim\", want \"\\\\n\\nok\\t!!null { a: 1 }\\\\n\\nok\\t!!null [{ a: 1 }, { a: 2 }]\\\\n\\nok\\t!!null [{}, word]\\\\n\\nerror\\t!!timestamp expects a date, starting with yyyy-mm-dd\\nok\\t!!timestamp 2000-0\""
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFormatterMatchesGo)$'",
+    "exit": 1,
+    "log": "M2-0-matrix.log"
+  },
+  {
+    "id": "M2",
+    "index": 6,
+    "failed": [],
+    "lines": [],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFileDriver_000|TestFileDriver_001|TestFileDriver_002|TestFileDriver_003|TestFileDriver_004|TestFileDriver_005|TestFileDriver_006|TestFileDriver_007)$'",
+    "exit": 0,
+    "log": "M2-6-matrix.log"
+  },
+  {
+    "id": "M3",
+    "index": 0,
+    "failed": [
+      "TestFormatterMatchesGo"
+    ],
+    "lines": [
+      "format_test.go:137: native ASan/UBSan/LSan: byte 203139: got \"         GH_TOKEN: $(GH_TOKEN)\\\\n\\nok\\t\\nok\\t\\nok\\t\\nok\\t\\nok\\t\\ufeff\\nok\\t\\ufeff\\nok\\t\\ufeff\\nok\\t\\ufeff\\nok\\ta: b\\\\n\\nok\\ta: b\\\\n\\nok\\ta: b\\\\n\\nok\\ta: b\\\\n\\nok\\t%YAML 1.1 # c\\\\n---\\\\na: b\\\\n...\\\\n\\nok\\t%YAML\", want \"         GH_TOKEN: $(GH_TOKEN)\\\\n\\nok\\t\\nok\\t\\nok\\t\\nok\\t\\nok\\t\\ufeff\\nok\\t\\ufeff\\nok\\t\\ufeff\\nok\\t\\ufeff\\nok\\t\\ufeffa: b\\\\n\\nok\\t\\ufeffa: b\\\\n\\nok\\t\\ufeffa: b\\\\n\\nok\\t\\ufeffa: b\\\\n\\nok\\t%YAML 1.1 # c\\\\n---\\\\na: b\\\\n..\""
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFormatterMatchesGo)$'",
+    "exit": 1,
+    "log": "M3-0-matrix.log"
+  },
+  {
+    "id": "M3",
+    "index": 6,
+    "failed": [
+      "TestFileDriver_006"
+    ],
+    "lines": [
+      "file_driver_shards_test.go:264: native file 39: byte 0: got \"a: b\\n\", want \"\\ufeffa:\""
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFileDriver_000|TestFileDriver_001|TestFileDriver_002|TestFileDriver_003|TestFileDriver_004|TestFileDriver_005|TestFileDriver_006|TestFileDriver_007)$'",
+    "exit": 1,
+    "log": "M3-6-matrix.log"
+  },
+  {
+    "id": "M4",
+    "index": 0,
+    "failed": [
+      "TestFormatterMatchesGo"
+    ],
+    "lines": [
+      "format_test.go:137: native ASan/UBSan/LSan: byte 23905: got \"ry proof, so a package one of them refused is never on the registry.\\\\n    needs:\\\\n      [\\\\n        release,\\\\n        swift-on-intel,\\\\n        windows,\\\\n        \", want \"ry proof, so a package one of them refused is never on the registry.\\\\n    needs: [release, swift-on-intel, windows, clean-machine]\\\\n    if: ${{ inputs.publish }\""
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFormatterMatchesGo)$'",
+    "exit": 1,
+    "log": "M4-0-matrix.log"
+  },
+  {
+    "id": "M4",
+    "index": 6,
+    "failed": [
+      "TestFileDriver_006",
+      "TestFileDriver_007",
+      "TestFileDriver_003"
+    ],
+    "lines": [
+      "file_driver_shards_test.go:264: native file 16: byte 39: got \"name: CodeQL\\n\\non:\\n  push:\\n    branches:\\n      [\\n        main,\\n        main-ts7,\\n        ts7-release,\\n        release-*,\", want \"name: CodeQL\\n\\non:\\n  push:\\n    branches: [main, main-ts7, ts7-release, release-*]\\n  pull_request:\\n    branches: [main, m\"",
+      "file_driver_shards_test.go:268: native file 14: byte 35: got \"name: CI\\n\\non:\\n  push:\\n    branches:\\n      [\\n        main,\\n        main-ts7,\\n        ts7-release,\\n        \\\"release-*\", want \"name: CI\\n\\non:\\n  push:\\n    branches: [main, main-ts7, ts7-release, \\\"release-*\\\"]\\n  pull_request:\\n    branches: [main,\"",
+      "file_driver_shards_test.go:252: native file 0: byte 23413: got \"ery proof, so a package one of them refused is never on the registry.\\n    needs:\\n      [\\n        release,\\n        swift-on-intel,\\n        windows,\\n        clean\", want \"ery proof, so a package one of them refused is never on the registry.\\n    needs: [release, swift-on-intel, windows, clean-machine]\\n    if: ${{ inputs.publish }}\""
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFileDriver_000|TestFileDriver_001|TestFileDriver_002|TestFileDriver_003|TestFileDriver_004|TestFileDriver_005|TestFileDriver_006|TestFileDriver_007)$'",
+    "exit": 1,
+    "log": "M4-6-matrix.log"
+  },
+  {
+    "id": "S1",
+    "index": 8,
+    "failed": [
+      "TestFileDriver_Setup"
+    ],
+    "lines": [
+      "file_driver_shards_test.go:138: build yaml-file-driver-native: open /tmp/u150/cache/S1/2b644a6a5e774b64bd9c0828637f0ad8943a4dd0480099186ae26eaf305aa0ca/format.c: no such file or directory"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFileDriver_Setup)$'",
+    "exit": 1,
+    "log": "S1-8-matrix.log"
+  },
+  {
+    "id": "P1",
+    "index": 1,
+    "failed": [
+      "TestComposeMatchGo"
+    ],
+    "lines": [
+      "compose_test.go:148: native ASan/UBSan/LSan: lengths 0 and 13238287"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestComposeMatchGo)$'",
+    "exit": 1,
+    "log": "P1-1-matrix.log"
+  },
+  {
+    "id": "P2",
+    "index": 2,
+    "failed": [
+      "TestCSTMatchesGo"
+    ],
+    "lines": [
+      "cst_test.go:78: native ASan/UBSan/LSan: lengths 0 and 8199675"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestCSTMatchesGo)$'",
+    "exit": 1,
+    "log": "P2-2-matrix.log"
+  },
+  {
+    "id": "P3",
+    "index": 0,
+    "failed": [
+      "TestFormatterMatchesGo"
+    ],
+    "lines": [
+      "format_test.go:137: native ASan/UBSan/LSan: lengths 0 and 992483"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFormatterMatchesGo)$'",
+    "exit": 1,
+    "log": "P3-0-matrix.log"
+  },
+  {
+    "id": "P3",
+    "index": 6,
+    "failed": [
+      "TestFileDriver_000",
+      "TestFileDriver_005",
+      "TestFileDriver_002",
+      "TestFileDriver_004",
+      "TestFileDriver_006",
+      "TestFileDriver_003",
+      "TestFileDriver_007",
+      "TestFileDriver_001"
+    ],
+    "lines": [
+      "file_driver_shards_test.go:240: native file 20: lengths 0 and 2236",
+      "file_driver_shards_test.go:260: native file 10: lengths 0 and 209",
+      "file_driver_shards_test.go:248: native file 9: lengths 0 and 198",
+      "file_driver_shards_test.go:256: native file 3: lengths 0 and 630",
+      "file_driver_shards_test.go:264: native file 16: lengths 0 and 981",
+      "file_driver_shards_test.go:252: native file 0: lengths 0 and 27703",
+      "file_driver_shards_test.go:268: native file 2: lengths 0 and 4412",
+      "file_driver_shards_test.go:244: native file 4: lengths 0 and 3414"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFileDriver_000|TestFileDriver_001|TestFileDriver_002|TestFileDriver_003|TestFileDriver_004|TestFileDriver_005|TestFileDriver_006|TestFileDriver_007)$'",
+    "exit": 1,
+    "log": "P3-6-matrix.log"
+  },
+  {
+    "id": "P4",
+    "index": 8,
+    "failed": [
+      "TestFileDriver_Setup"
+    ],
+    "lines": [],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFileDriver_Setup)$'",
+    "exit": 1,
+    "log": "P4-8-matrix.log"
+  },
+  {
+    "id": "W1",
+    "index": 3,
+    "failed": [
+      "TestComposeMutants"
+    ],
+    "lines": [
+      "compose_test.go:209: native missed mutant",
+      "compose_test.go:209: native missed mutant",
+      "compose_test.go:209: native missed mutant"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestComposeMutants)$'",
+    "exit": 1,
+    "log": "W1-3-matrix.log"
+  },
+  {
+    "id": "W2",
+    "index": 4,
+    "failed": [
+      "TestCSTMutants"
+    ],
+    "lines": [
+      "cst_test.go:143: native missed mutant",
+      "cst_test.go:143: native missed mutant",
+      "cst_test.go:143: native missed mutant"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestCSTMutants)$'",
+    "exit": 1,
+    "log": "W2-4-matrix.log"
+  },
+  {
+    "id": "W3",
+    "index": 5,
+    "failed": [
+      "TestFileDriverUnion"
+    ],
+    "lines": [
+      "file_driver_shards_test.go:201: planted disagreement caught by []"
+    ],
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestFileDriverUnion)$'",
+    "exit": 1,
+    "log": "W3-5-matrix.log"
+  }
+]

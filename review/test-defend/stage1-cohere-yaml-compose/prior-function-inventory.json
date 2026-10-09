@@ -1,0 +1,2524 @@
+{
+  "method": "Static transitive imports and all declared functions/methods in those modules; conservative superset, not dynamic coverage",
+  "entries": {
+    "compose_main.ts": {
+      "modules": [
+        "blockLine.ts",
+        "collectionItem.ts",
+        "composeError.ts",
+        "compose_main.ts",
+        "composedDocument.ts",
+        "composedNode.ts",
+        "composer.ts",
+        "cst.ts",
+        "cstParser.ts",
+        "directives.ts",
+        "lexer.ts",
+        "newlineFold.ts",
+        "patternNode.ts",
+        "props.ts",
+        "propsResolver.ts",
+        "scalar.ts",
+        "scalarResolution.ts",
+        "scalarText.ts",
+        "schemaPattern.ts",
+        "schemaTag.ts",
+        "schemaTags.ts"
+      ],
+      "candidate_functions": [
+        {
+          "file": "stage1/cohere/yaml/compose_main.ts",
+          "line": 5,
+          "declaration": "function unescaped(text: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/compose_main.ts",
+          "line": 19,
+          "declaration": "function hex(text: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/compose_main.ts",
+          "line": 27,
+          "declaration": "constructor(composer: Composer) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/compose_main.ts",
+          "line": 30,
+          "declaration": "token(index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/compose_main.ts",
+          "line": 35,
+          "declaration": "outline(index: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/compose_main.ts",
+          "line": 73,
+          "declaration": "for(const document of composer.documents) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 31,
+          "declaration": "constructor(parser: CSTParser) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 35,
+          "declaration": "node(index: number): ComposedNode {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 38,
+          "declaration": "make(kind: string, className: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 42,
+          "declaration": "error(offset: number, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 45,
+          "declaration": "tokenError(index: number, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 56,
+          "declaration": "rangeError(index: number, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 60,
+          "declaration": "warning(index: number, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 78,
+          "declaration": "collectDirectives(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 84,
+          "declaration": "tagName(index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 91,
+          "declaration": "scalarValue(node: ComposedNode, tagName: string, errorSource: number, plain: boolean): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 180,
+          "declaration": "composeScalar(token: Token, tag: number, sourceIndex: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 195,
+          "declaration": "empty(offset: number, before: readonly number[], props: Props): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 224,
+          "declaration": "composeNode(index: number, props: Props): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 284,
+          "declaration": "newline(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 307,
+          "declaration": "pair(key: number, value: number, collection: number, item: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 315,
+          "declaration": "appendComment(index: number, comment: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 320,
+          "declaration": "collection(index: number, props: Props): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 350,
+          "declaration": "blockMap(index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 446,
+          "declaration": "blockSequence(index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 475,
+          "declaration": "isBlock(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 480,
+          "declaration": "flowCollection(index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 654,
+          "declaration": "sameValue(first: number, second: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 667,
+          "declaration": "valueText(index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 674,
+          "declaration": "prototypeTag(tagName: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 690,
+          "declaration": "collectionTag(index: number, tokenIndex: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 791,
+          "declaration": "decorate(after: boolean): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 834,
+          "declaration": "compose(endOffset: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 943,
+          "declaration": "quoted(source: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaTags.ts",
+          "line": 3,
+          "declaration": "export function schemaTags(version: string): SchemaTag[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaTags.ts",
+          "line": 5,
+          "declaration": "if(version === '1.1') {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaTag.ts",
+          "line": 8,
+          "declaration": "constructor(tag: string, format: string, resolve: string, defaultKey: boolean, pattern: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 7,
+          "declaration": "function matchPattern(nodes: readonly PatternNode[], index: number, source: string, position: number): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 10,
+          "declaration": "if(node.kind === 'class') {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 52,
+          "declaration": "constructor(pattern: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 65,
+          "declaration": "character(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 68,
+          "declaration": "make(kind: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 72,
+          "declaration": "node(index: number): PatternNode {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 75,
+          "declaration": "escaped(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 80,
+          "declaration": "atom(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 147,
+          "declaration": "concatenate(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 153,
+          "declaration": "alternative(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 162,
+          "declaration": "match(index: number, source: string, position: number): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 166,
+          "declaration": "leading(index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 177,
+          "declaration": "test(source: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/patternNode.ts",
+          "line": 8,
+          "declaration": "constructor(kind: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composeError.ts",
+          "line": 7,
+          "declaration": "constructor(start: number, end: number, code: string, message: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 3,
+          "declaration": "function parts(text: string): string[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 18,
+          "declaration": "function versionPattern(text: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 21,
+          "declaration": "for(const group of groups) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 30,
+          "declaration": "function hexByte(source: string, index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 38,
+          "declaration": "function decode(source: string): string[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 84,
+          "declaration": "constructor() {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 87,
+          "declaration": "atDocument(): Directives {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 102,
+          "declaration": "error(token: Token, relative: number, message: string, warning: boolean): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 112,
+          "declaration": "add(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 141,
+          "declaration": "tagError(token: Token, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 146,
+          "declaration": "tagName(token: Token): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 17,
+          "declaration": "constructor(type: string, offset: number, indent: number, source: string, indentPresent: boolean) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 25,
+          "declaration": "export function tokenType(source: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 26,
+          "declaration": "switch(source) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 60,
+          "declaration": "switch(source.slice(0, 1)) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/collectionItem.ts",
+          "line": 10,
+          "declaration": "constructor(start: number[]) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composedDocument.ts",
+          "line": 12,
+          "declaration": "constructor(directives: Directives) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarResolution.ts",
+          "line": 9,
+          "declaration": "error(offset: number, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarResolution.ts",
+          "line": 12,
+          "declaration": "tokenError(token: Token, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composedNode.ts",
+          "line": 29,
+          "declaration": "constructor(kind: string, className: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 10,
+          "declaration": "constructor(parser: CSTParser) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 14,
+          "declaration": "end(tokens: readonly number[], start: number, reqSpace: boolean, result: ScalarResolution): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 49,
+          "declaration": "characterCode(source: string, offset: number, length: number, base: number, result: ScalarResolution): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 64,
+          "declaration": "doubleQuoted(source: string, base: number, result: ScalarResolution): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 107,
+          "declaration": "flow(token: Token): ScalarResolution {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 163,
+          "declaration": "block(token: Token, atRoot: boolean): ScalarResolution {"
+        },
+        {
+          "file": "stage1/cohere/yaml/blockLine.ts",
+          "line": 5,
+          "declaration": "constructor(source: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 2,
+          "declaration": "export function char(source: string, index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 5,
+          "declaration": "export function whitespace(character: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 8,
+          "declaration": "function lineEnd(source: string, from: number, newline: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 14,
+          "declaration": "export function foldLines(source: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 20,
+          "declaration": "while(true) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 42,
+          "declaration": "export function escapeCode(character: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 43,
+          "declaration": "switch(character) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 79,
+          "declaration": "export function emptyContent(content: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/newlineFold.ts",
+          "line": 5,
+          "declaration": "constructor(source: string, start: number) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 6,
+          "declaration": "function pair(start: number[], key: number, sep: number[]): CollectionItem {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 16,
+          "declaration": "append(target: number[], source: readonly number[]): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 32,
+          "declaration": "get(index: number): Token {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 35,
+          "declaration": "peek(count: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 38,
+          "declaration": "last(token: Token): CollectionItem {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 41,
+          "declaration": "make(type: string, offset: number, indent: number, source: string, indentPresent: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 46,
+          "declaration": "sourceToken(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 49,
+          "declaration": "error(message: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 54,
+          "declaration": "includes(list: readonly number[], type: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 58,
+          "declaration": "nonEmpty(list: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 65,
+          "declaration": "flowToken(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 76,
+          "declaration": "previousProps(parent: Token): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 86,
+          "declaration": "firstKeyProps(previous: number[]): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 106,
+          "declaration": "fixFlowSequence(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 132,
+          "declaration": "commentLessIndented(list: readonly number[], indent: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 139,
+          "declaration": "pop(error: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 228,
+          "declaration": "newLines(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 235,
+          "declaration": "flowScalar(type: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 239,
+          "declaration": "map(start: number[], key: number, sep: number[], offset: number, indent: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 244,
+          "declaration": "startBlockValue(parent: Token): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 286,
+          "declaration": "stream(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 308,
+          "declaration": "document(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 334,
+          "declaration": "scalar(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 349,
+          "declaration": "blockScalar(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 368,
+          "declaration": "indentedComment(start: readonly number[], indent: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 378,
+          "declaration": "appendItemEnd(collection: Token, item: CollectionItem): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 389,
+          "declaration": "moveIndentedComment(collection: Token, item: CollectionItem): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 401,
+          "declaration": "blockMap(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 565,
+          "declaration": "blockSequence(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 602,
+          "declaration": "flowCollection(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 689,
+          "declaration": "documentEnd(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 696,
+          "declaration": "lineEnd(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 713,
+          "declaration": "step(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 753,
+          "declaration": "next(source: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 797,
+          "declaration": "parse(source: string, incomplete = false): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 2,
+          "declaration": "function asciiCharacters(): string[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 8,
+          "declaration": "function character(text: string, index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 13,
+          "declaration": "function codeUnit(text: string, index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 16,
+          "declaration": "function isEmptyCode(unit: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 20,
+          "declaration": "function isFlowIndicatorCode(unit: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 23,
+          "declaration": "function member(set: string, unit: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 93,
+          "declaration": "function isEmpty(unit: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 118,
+          "declaration": "atLineEnd(): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 129,
+          "declaration": "charAt(count: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 132,
+          "declaration": "continueScalar(offset: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 152,
+          "declaration": "getLine(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 163,
+          "declaration": "hasChars(count: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 166,
+          "declaration": "setNext(state: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 173,
+          "declaration": "peek(count: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 176,
+          "declaration": "pushCount(count: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 184,
+          "declaration": "pushSpaces(allowTabs: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 200,
+          "declaration": "pushNewline(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 206,
+          "declaration": "parseBlockStart(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 223,
+          "declaration": "parseLineStart(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 240,
+          "declaration": "parseStream(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 279,
+          "declaration": "pushToIndex(index: number, allowEmpty: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 289,
+          "declaration": "pushTag(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 318,
+          "declaration": "pushUntil(header: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 327,
+          "declaration": "pushIndicators(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 357,
+          "declaration": "parseBlockScalarHeader(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 370,
+          "declaration": "parseQuotedScalar(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 406,
+          "declaration": "parseBlockScalar(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 486,
+          "declaration": "parsePlainScalar(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 527,
+          "declaration": "parseDocument(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 569,
+          "declaration": "parseFlowCollection(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 653,
+          "declaration": "parseNext(next: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 674,
+          "declaration": "lex(source: string, incomplete = false): string[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/propsResolver.ts",
+          "line": 8,
+          "declaration": "constructor(parser: CSTParser, diagnostics: ScalarResolution) {"
+        }
+      ]
+    },
+    "cst_main.ts": {
+      "modules": [
+        "collectionItem.ts",
+        "cst.ts",
+        "cstParser.ts",
+        "cst_main.ts",
+        "lexer.ts"
+      ],
+      "candidate_functions": [
+        {
+          "file": "stage1/cohere/yaml/cst_main.ts",
+          "line": 4,
+          "declaration": "function unescaped(text: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst_main.ts",
+          "line": 18,
+          "declaration": "function hex(text: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst_main.ts",
+          "line": 26,
+          "declaration": "constructor(parser: CSTParser) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst_main.ts",
+          "line": 29,
+          "declaration": "list(children: readonly number[]): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst_main.ts",
+          "line": 37,
+          "declaration": "outline(index: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst_main.ts",
+          "line": 88,
+          "declaration": "for(const root of parser.roots) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 6,
+          "declaration": "function pair(start: number[], key: number, sep: number[]): CollectionItem {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 16,
+          "declaration": "append(target: number[], source: readonly number[]): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 32,
+          "declaration": "get(index: number): Token {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 35,
+          "declaration": "peek(count: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 38,
+          "declaration": "last(token: Token): CollectionItem {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 41,
+          "declaration": "make(type: string, offset: number, indent: number, source: string, indentPresent: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 46,
+          "declaration": "sourceToken(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 49,
+          "declaration": "error(message: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 54,
+          "declaration": "includes(list: readonly number[], type: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 58,
+          "declaration": "nonEmpty(list: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 65,
+          "declaration": "flowToken(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 76,
+          "declaration": "previousProps(parent: Token): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 86,
+          "declaration": "firstKeyProps(previous: number[]): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 106,
+          "declaration": "fixFlowSequence(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 132,
+          "declaration": "commentLessIndented(list: readonly number[], indent: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 139,
+          "declaration": "pop(error: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 228,
+          "declaration": "newLines(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 235,
+          "declaration": "flowScalar(type: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 239,
+          "declaration": "map(start: number[], key: number, sep: number[], offset: number, indent: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 244,
+          "declaration": "startBlockValue(parent: Token): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 286,
+          "declaration": "stream(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 308,
+          "declaration": "document(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 334,
+          "declaration": "scalar(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 349,
+          "declaration": "blockScalar(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 368,
+          "declaration": "indentedComment(start: readonly number[], indent: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 378,
+          "declaration": "appendItemEnd(collection: Token, item: CollectionItem): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 389,
+          "declaration": "moveIndentedComment(collection: Token, item: CollectionItem): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 401,
+          "declaration": "blockMap(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 565,
+          "declaration": "blockSequence(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 602,
+          "declaration": "flowCollection(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 689,
+          "declaration": "documentEnd(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 696,
+          "declaration": "lineEnd(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 713,
+          "declaration": "step(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 753,
+          "declaration": "next(source: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 797,
+          "declaration": "parse(source: string, incomplete = false): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 2,
+          "declaration": "function asciiCharacters(): string[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 8,
+          "declaration": "function character(text: string, index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 13,
+          "declaration": "function codeUnit(text: string, index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 16,
+          "declaration": "function isEmptyCode(unit: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 20,
+          "declaration": "function isFlowIndicatorCode(unit: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 23,
+          "declaration": "function member(set: string, unit: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 93,
+          "declaration": "function isEmpty(unit: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 118,
+          "declaration": "atLineEnd(): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 129,
+          "declaration": "charAt(count: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 132,
+          "declaration": "continueScalar(offset: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 152,
+          "declaration": "getLine(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 163,
+          "declaration": "hasChars(count: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 166,
+          "declaration": "setNext(state: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 173,
+          "declaration": "peek(count: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 176,
+          "declaration": "pushCount(count: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 184,
+          "declaration": "pushSpaces(allowTabs: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 200,
+          "declaration": "pushNewline(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 206,
+          "declaration": "parseBlockStart(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 223,
+          "declaration": "parseLineStart(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 240,
+          "declaration": "parseStream(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 279,
+          "declaration": "pushToIndex(index: number, allowEmpty: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 289,
+          "declaration": "pushTag(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 318,
+          "declaration": "pushUntil(header: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 327,
+          "declaration": "pushIndicators(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 357,
+          "declaration": "parseBlockScalarHeader(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 370,
+          "declaration": "parseQuotedScalar(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 406,
+          "declaration": "parseBlockScalar(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 486,
+          "declaration": "parsePlainScalar(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 527,
+          "declaration": "parseDocument(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 569,
+          "declaration": "parseFlowCollection(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 653,
+          "declaration": "parseNext(next: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 674,
+          "declaration": "lex(source: string, incomplete = false): string[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/collectionItem.ts",
+          "line": 10,
+          "declaration": "constructor(start: number[]) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 17,
+          "declaration": "constructor(type: string, offset: number, indent: number, source: string, indentPresent: boolean) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 25,
+          "declaration": "export function tokenType(source: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 26,
+          "declaration": "switch(source) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 60,
+          "declaration": "switch(source.slice(0, 1)) {"
+        }
+      ]
+    },
+    "main.ts": {
+      "modules": [
+        "blockLine.ts",
+        "collectionItem.ts",
+        "composeError.ts",
+        "composedDocument.ts",
+        "composedNode.ts",
+        "composer.ts",
+        "cst.ts",
+        "cstParser.ts",
+        "directives.ts",
+        "format.ts",
+        "formatResult.ts",
+        "layout.ts",
+        "layoutCommand.ts",
+        "layoutIndent.ts",
+        "layoutNode.ts",
+        "lexer.ts",
+        "main.ts",
+        "newlineFold.ts",
+        "patternNode.ts",
+        "printer.ts",
+        "props.ts",
+        "propsResolver.ts",
+        "scalar.ts",
+        "scalarResolution.ts",
+        "scalarText.ts",
+        "schemaPattern.ts",
+        "schemaTag.ts",
+        "schemaTags.ts",
+        "unistContext.ts",
+        "unistDocumentData.ts",
+        "unistNode.ts",
+        "unistPoint.ts",
+        "unistPosition.ts",
+        "width.ts",
+        "widthTables.ts"
+      ],
+      "candidate_functions": [
+        {
+          "file": "stage1/cohere/yaml/main.ts",
+          "line": 3,
+          "declaration": "function escaped(text: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/main.ts",
+          "line": 6,
+          "declaration": "function unescaped(text: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/main.ts",
+          "line": 26,
+          "declaration": "for(const line of read.text.split('\\n')) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/format.ts",
+          "line": 8,
+          "declaration": "export function format(source: string): FormatResult {"
+        },
+        {
+          "file": "stage1/cohere/yaml/format.ts",
+          "line": 12,
+          "declaration": "if(text.trim() === '') {"
+        },
+        {
+          "file": "stage1/cohere/yaml/format.ts",
+          "line": 20,
+          "declaration": "for(const document of composer.documents) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/format.ts",
+          "line": 30,
+          "declaration": "if(context.errorName !== '') {"
+        },
+        {
+          "file": "stage1/cohere/yaml/format.ts",
+          "line": 37,
+          "declaration": "if(context.errorName !== '') {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 13,
+          "declaration": "constructor(context: UnistContext) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 20,
+          "declaration": "node(index: number) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 23,
+          "declaration": "child(index: number, at: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 26,
+          "declaration": "raw(index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 29,
+          "declaration": "inline(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 37,
+          "declaration": "single(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 45,
+          "declaration": "comments(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 55,
+          "declaration": "emptyNode(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 58,
+          "declaration": "printEnds(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 64,
+          "declaration": "previousEmpty(offset: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 83,
+          "declaration": "nextEmpty(index: number, parent: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 96,
+          "declaration": "last(index: number, ancestors: readonly number[], listPositions: readonly number[]): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 104,
+          "declaration": "descendant(index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 125,
+          "declaration": "print(index: number, ancestors: readonly number[], positions: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 203,
+          "declaration": "scalar(type: string, content: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 215,
+          "declaration": "printChild(index: number, at: number, path: readonly number[], positions: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 218,
+          "declaration": "printNode(index: number, path: readonly number[], positions: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 347,
+          "declaration": "mapping(index: number, parent: number, path: readonly number[], positions: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 445,
+          "declaration": "flow(index: number, path: readonly number[], positions: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 486,
+          "declaration": "block(index: number, path: readonly number[], positions: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/printer.ts",
+          "line": 558,
+          "declaration": "format(root: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 14,
+          "declaration": "get(index: number): LayoutNode {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 17,
+          "declaration": "indentAt(index: number): LayoutIndent {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 20,
+          "declaration": "make(kind: string, parts: number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 27,
+          "declaration": "text(text: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 33,
+          "declaration": "concat(parts: number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 36,
+          "declaration": "join(separator: number, parts: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 44,
+          "declaration": "line(soft: boolean, hard: boolean, literal: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 51,
+          "declaration": "group(content: number, id: number, conditional: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 57,
+          "declaration": "ifBreak(broken: number, flat: number, group: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 62,
+          "declaration": "align(amount: number, content: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 68,
+          "declaration": "propagate(index: number, groups: number[]): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 84,
+          "declaration": "trailing(text: string, previous: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 151,
+          "declaration": "aligned(base: number, amount: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 165,
+          "declaration": "trim(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layout.ts",
+          "line": 179,
+          "declaration": "print(root: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 4,
+          "declaration": "function mapped(code: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 8,
+          "declaration": "function match(program: readonly (readonly number[])[], instruction: number, text: string, position: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 13,
+          "declaration": "if(op === 0 || op === 1) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 17,
+          "declaration": "if(op === 2 || op === 6) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 20,
+          "declaration": "if(op === 3) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 29,
+          "declaration": "if(op === 4) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 32,
+          "declaration": "if(op === 5 || position >= text.length) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 37,
+          "declaration": "if(row.length === 4) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 53,
+          "declaration": "function wide(code: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 56,
+          "declaration": "while(left < right) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 71,
+          "declaration": "function emojiEntries(): (number[] | undefined)[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 76,
+          "declaration": "while(stack.length > 0) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 103,
+          "declaration": "function matchEmoji(text: string, position: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 106,
+          "declaration": "for(const instruction of entries) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 112,
+          "declaration": "export function stringWidth(text: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/width.ts",
+          "line": 121,
+          "declaration": "if(ascii) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layoutCommand.ts",
+          "line": 6,
+          "declaration": "constructor(document: number, indentation: number, mode: number) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/layoutNode.ts",
+          "line": 12,
+          "declaration": "constructor(kind: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 21,
+          "declaration": "constructor(text: string, parser: CSTParser, composer: Composer) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 26,
+          "declaration": "token(index: number): Token {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 29,
+          "declaration": "composed(index: number): ComposedNode {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 32,
+          "declaration": "node(index: number): UnistNode {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 35,
+          "declaration": "point(index: number): UnistPoint {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 38,
+          "declaration": "position(index: number): UnistPosition {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 41,
+          "declaration": "start(index: number): UnistPoint {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 44,
+          "declaration": "end(index: number): UnistPoint {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 47,
+          "declaration": "fail(message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 52,
+          "declaration": "typeError(receiver: string, field: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 57,
+          "declaration": "offset(offset: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 68,
+          "declaration": "makePosition(start: number, end: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 73,
+          "declaration": "range(start: number, end: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 76,
+          "declaration": "make(type: string, position: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 81,
+          "declaration": "tokens(list: readonly number[]): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 89,
+          "declaration": "property(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 92,
+          "declaration": "comment(index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 99,
+          "declaration": "extractComments(list: readonly number[]): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 108,
+          "declaration": "content(target: UnistNode, composed: number, props: readonly number[]): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 149,
+          "declaration": "empty(index: number, props: readonly number[]): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 160,
+          "declaration": "transform(index: number, props: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 237,
+          "declaration": "itemValue(index: number, props: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 253,
+          "declaration": "collection(index: number, props: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 352,
+          "declaration": "pair(index: number, collection: number, itemIndex: number, flow: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 431,
+          "declaration": "pointText(offset: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 435,
+          "declaration": "documents(): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 494,
+          "declaration": "document(data: UnistDocumentData): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 626,
+          "declaration": "parents(index: number, parent: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 639,
+          "declaration": "explicit(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 647,
+          "declaration": "ownsEnd(index: number, comment: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 679,
+          "declaration": "table(index: number, leading: number[], trailing: number[], ends: number[]): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 707,
+          "declaration": "attach(root: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 792,
+          "declaration": "extendStart(index: number, point: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 795,
+          "declaration": "extendEnd(index: number, point: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 798,
+          "declaration": "update(index: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistContext.ts",
+          "line": 831,
+          "declaration": "parse(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistPosition.ts",
+          "line": 4,
+          "declaration": "constructor(startPoint: number, endPoint: number) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistPoint.ts",
+          "line": 5,
+          "declaration": "constructor(line: number, column: number, offset: number) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistNode.ts",
+          "line": 21,
+          "declaration": "constructor(type: string, position: number) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistNode.ts",
+          "line": 27,
+          "declaration": "export function hasLeadingCommentsField(type: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistNode.ts",
+          "line": 46,
+          "declaration": "export function hasTrailingCommentField(type: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/unistNode.ts",
+          "line": 62,
+          "declaration": "export function hasChildrenField(type: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composedNode.ts",
+          "line": 29,
+          "declaration": "constructor(kind: string, className: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 17,
+          "declaration": "constructor(type: string, offset: number, indent: number, source: string, indentPresent: boolean) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 25,
+          "declaration": "export function tokenType(source: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 26,
+          "declaration": "switch(source) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cst.ts",
+          "line": 60,
+          "declaration": "switch(source.slice(0, 1)) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/collectionItem.ts",
+          "line": 10,
+          "declaration": "constructor(start: number[]) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 6,
+          "declaration": "function pair(start: number[], key: number, sep: number[]): CollectionItem {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 16,
+          "declaration": "append(target: number[], source: readonly number[]): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 32,
+          "declaration": "get(index: number): Token {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 35,
+          "declaration": "peek(count: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 38,
+          "declaration": "last(token: Token): CollectionItem {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 41,
+          "declaration": "make(type: string, offset: number, indent: number, source: string, indentPresent: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 46,
+          "declaration": "sourceToken(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 49,
+          "declaration": "error(message: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 54,
+          "declaration": "includes(list: readonly number[], type: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 58,
+          "declaration": "nonEmpty(list: readonly number[]): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 65,
+          "declaration": "flowToken(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 76,
+          "declaration": "previousProps(parent: Token): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 86,
+          "declaration": "firstKeyProps(previous: number[]): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 106,
+          "declaration": "fixFlowSequence(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 132,
+          "declaration": "commentLessIndented(list: readonly number[], indent: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 139,
+          "declaration": "pop(error: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 228,
+          "declaration": "newLines(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 235,
+          "declaration": "flowScalar(type: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 239,
+          "declaration": "map(start: number[], key: number, sep: number[], offset: number, indent: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 244,
+          "declaration": "startBlockValue(parent: Token): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 286,
+          "declaration": "stream(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 308,
+          "declaration": "document(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 334,
+          "declaration": "scalar(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 349,
+          "declaration": "blockScalar(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 368,
+          "declaration": "indentedComment(start: readonly number[], indent: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 378,
+          "declaration": "appendItemEnd(collection: Token, item: CollectionItem): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 389,
+          "declaration": "moveIndentedComment(collection: Token, item: CollectionItem): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 401,
+          "declaration": "blockMap(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 565,
+          "declaration": "blockSequence(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 602,
+          "declaration": "flowCollection(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 689,
+          "declaration": "documentEnd(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 696,
+          "declaration": "lineEnd(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 713,
+          "declaration": "step(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 753,
+          "declaration": "next(source: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/cstParser.ts",
+          "line": 797,
+          "declaration": "parse(source: string, incomplete = false): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 2,
+          "declaration": "function asciiCharacters(): string[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 8,
+          "declaration": "function character(text: string, index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 13,
+          "declaration": "function codeUnit(text: string, index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 16,
+          "declaration": "function isEmptyCode(unit: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 20,
+          "declaration": "function isFlowIndicatorCode(unit: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 23,
+          "declaration": "function member(set: string, unit: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 93,
+          "declaration": "function isEmpty(unit: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 118,
+          "declaration": "atLineEnd(): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 129,
+          "declaration": "charAt(count: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 132,
+          "declaration": "continueScalar(offset: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 152,
+          "declaration": "getLine(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 163,
+          "declaration": "hasChars(count: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 166,
+          "declaration": "setNext(state: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 173,
+          "declaration": "peek(count: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 176,
+          "declaration": "pushCount(count: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 184,
+          "declaration": "pushSpaces(allowTabs: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 200,
+          "declaration": "pushNewline(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 206,
+          "declaration": "parseBlockStart(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 223,
+          "declaration": "parseLineStart(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 240,
+          "declaration": "parseStream(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 279,
+          "declaration": "pushToIndex(index: number, allowEmpty: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 289,
+          "declaration": "pushTag(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 318,
+          "declaration": "pushUntil(header: boolean): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 327,
+          "declaration": "pushIndicators(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 357,
+          "declaration": "parseBlockScalarHeader(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 370,
+          "declaration": "parseQuotedScalar(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 406,
+          "declaration": "parseBlockScalar(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 486,
+          "declaration": "parsePlainScalar(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 527,
+          "declaration": "parseDocument(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 569,
+          "declaration": "parseFlowCollection(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 653,
+          "declaration": "parseNext(next: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/lexer.ts",
+          "line": 674,
+          "declaration": "lex(source: string, incomplete = false): string[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 31,
+          "declaration": "constructor(parser: CSTParser) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 35,
+          "declaration": "node(index: number): ComposedNode {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 38,
+          "declaration": "make(kind: string, className: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 42,
+          "declaration": "error(offset: number, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 45,
+          "declaration": "tokenError(index: number, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 56,
+          "declaration": "rangeError(index: number, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 60,
+          "declaration": "warning(index: number, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 78,
+          "declaration": "collectDirectives(): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 84,
+          "declaration": "tagName(index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 91,
+          "declaration": "scalarValue(node: ComposedNode, tagName: string, errorSource: number, plain: boolean): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 180,
+          "declaration": "composeScalar(token: Token, tag: number, sourceIndex: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 195,
+          "declaration": "empty(offset: number, before: readonly number[], props: Props): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 224,
+          "declaration": "composeNode(index: number, props: Props): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 284,
+          "declaration": "newline(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 307,
+          "declaration": "pair(key: number, value: number, collection: number, item: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 315,
+          "declaration": "appendComment(index: number, comment: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 320,
+          "declaration": "collection(index: number, props: Props): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 350,
+          "declaration": "blockMap(index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 446,
+          "declaration": "blockSequence(index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 475,
+          "declaration": "isBlock(index: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 480,
+          "declaration": "flowCollection(index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 654,
+          "declaration": "sameValue(first: number, second: number): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 667,
+          "declaration": "valueText(index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 674,
+          "declaration": "prototypeTag(tagName: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 690,
+          "declaration": "collectionTag(index: number, tokenIndex: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 791,
+          "declaration": "decorate(after: boolean): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 834,
+          "declaration": "compose(endOffset: number): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composer.ts",
+          "line": 943,
+          "declaration": "quoted(source: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaTags.ts",
+          "line": 3,
+          "declaration": "export function schemaTags(version: string): SchemaTag[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaTags.ts",
+          "line": 5,
+          "declaration": "if(version === '1.1') {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaTag.ts",
+          "line": 8,
+          "declaration": "constructor(tag: string, format: string, resolve: string, defaultKey: boolean, pattern: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 7,
+          "declaration": "function matchPattern(nodes: readonly PatternNode[], index: number, source: string, position: number): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 10,
+          "declaration": "if(node.kind === 'class') {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 52,
+          "declaration": "constructor(pattern: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 65,
+          "declaration": "character(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 68,
+          "declaration": "make(kind: string): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 72,
+          "declaration": "node(index: number): PatternNode {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 75,
+          "declaration": "escaped(): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 80,
+          "declaration": "atom(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 147,
+          "declaration": "concatenate(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 153,
+          "declaration": "alternative(): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 162,
+          "declaration": "match(index: number, source: string, position: number): number[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 166,
+          "declaration": "leading(index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/schemaPattern.ts",
+          "line": 177,
+          "declaration": "test(source: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/patternNode.ts",
+          "line": 8,
+          "declaration": "constructor(kind: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composeError.ts",
+          "line": 7,
+          "declaration": "constructor(start: number, end: number, code: string, message: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 3,
+          "declaration": "function parts(text: string): string[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 18,
+          "declaration": "function versionPattern(text: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 21,
+          "declaration": "for(const group of groups) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 30,
+          "declaration": "function hexByte(source: string, index: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 38,
+          "declaration": "function decode(source: string): string[] {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 84,
+          "declaration": "constructor() {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 87,
+          "declaration": "atDocument(): Directives {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 102,
+          "declaration": "error(token: Token, relative: number, message: string, warning: boolean): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 112,
+          "declaration": "add(token: Token): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 141,
+          "declaration": "tagError(token: Token, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/directives.ts",
+          "line": 146,
+          "declaration": "tagName(token: Token): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/composedDocument.ts",
+          "line": 12,
+          "declaration": "constructor(directives: Directives) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarResolution.ts",
+          "line": 9,
+          "declaration": "error(offset: number, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarResolution.ts",
+          "line": 12,
+          "declaration": "tokenError(token: Token, code: string, message: string): void {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 10,
+          "declaration": "constructor(parser: CSTParser) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 14,
+          "declaration": "end(tokens: readonly number[], start: number, reqSpace: boolean, result: ScalarResolution): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 49,
+          "declaration": "characterCode(source: string, offset: number, length: number, base: number, result: ScalarResolution): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 64,
+          "declaration": "doubleQuoted(source: string, base: number, result: ScalarResolution): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 107,
+          "declaration": "flow(token: Token): ScalarResolution {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalar.ts",
+          "line": 163,
+          "declaration": "block(token: Token, atRoot: boolean): ScalarResolution {"
+        },
+        {
+          "file": "stage1/cohere/yaml/blockLine.ts",
+          "line": 5,
+          "declaration": "constructor(source: string) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 2,
+          "declaration": "export function char(source: string, index: number): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 5,
+          "declaration": "export function whitespace(character: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 8,
+          "declaration": "function lineEnd(source: string, from: number, newline: number): number {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 14,
+          "declaration": "export function foldLines(source: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 20,
+          "declaration": "while(true) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 42,
+          "declaration": "export function escapeCode(character: string): string {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 43,
+          "declaration": "switch(character) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/scalarText.ts",
+          "line": 79,
+          "declaration": "export function emptyContent(content: string): boolean {"
+        },
+        {
+          "file": "stage1/cohere/yaml/newlineFold.ts",
+          "line": 5,
+          "declaration": "constructor(source: string, start: number) {"
+        },
+        {
+          "file": "stage1/cohere/yaml/propsResolver.ts",
+          "line": 8,
+          "declaration": "constructor(parser: CSTParser, diagnostics: ScalarResolution) {"
+        }
+      ]
+    }
+  }
+}
