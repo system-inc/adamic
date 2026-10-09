@@ -1,0 +1,9 @@
+stage1/cohere/suppression/main.ts:122: anonymous callback: const rules = directive.rules.map((rule) => quote(rule)).join(',');
+stage1/cohere/suppression/scan.ts:201: anonymous callback: export function scanEnables(text: string, lineOf: (offset: number) => number): EnableSpan[] {
+stage1/cohere/suppression/scan.ts:217: anonymous callback: export function buildLineIndex(text: string): (offset: number) => number {
+stage1/cohere/suppression/scan.ts:224: anonymous callback: return (offset: number): number => {
+stage1/cohere/suppression/suppression.ts:142: anonymous callback: function resolveFileScopeEnds(found: readonly Directive[], sourceText: string, lineOf: (offset: number) => number): void {
+stage1/cohere/suppression/suppression.ts:175: anonymous callback: readonly #lineOf: (offset: number) => number;
+stage1/cohere/suppression/suppression.ts:177: anonymous callback: constructor(directives: readonly Directive[], ruleReferences: readonly RuleReference[], lineOf: (offset: number) => number) {
+stage1/cohere/suppression/suppression.ts:233: anonymous callback: return this.#directives.filter((candidate) => candidate.applied === 0);
+stage1/cohere/suppression/suppression.ts:238: anonymous callback: return this.#directives.filter((candidate) => !candidate.hasReason());

@@ -1,0 +1,64 @@
+[
+  {
+    "package": "stage1/cohere/suppression",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "subsumed_by": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "subsumer_seconds": 23.626,
+    "mutants_in_matrix": 4,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "file": "stage1/cohere/suppression/gaps_test.go",
+    "seconds": 0.362,
+    "oracle": "Node actually runs both closed-gap programs and must match hand-written stdout values; native output is checked against those same values, including exit success and leak checks.",
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: gaps_test.go:77: natively: exit 0, stdout \"false\\n\", stderr \"\"; Node prints \"true\\n\"",
+    "verdict": "subsumed",
+    "probe_kills": [
+      "P2"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run . > M4.log 2>&1; gaps_test.go:77: natively: exit 0, stdout \"false\\n\", stderr \"\"; Node prints \"true\\n\""
+  },
+  {
+    "package": "stage1/cohere/suppression",
+    "oracle_kind": "external-run",
+    "subsumed_by": [],
+    "subsumer_seconds": null,
+    "mutants_in_matrix": 4,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "file": "stage1/cohere/suppression/suppression_test.go",
+    "seconds": 23.626,
+    "oracle": "External Go cohere overlay computes complete answers. Source Node, emitted JavaScript and sanitized native output must agree byte for byte. M1-M3 cause healthy-output disagreements; M4 is caught by native exit 70. Built-in witness failures under M4 are excluded.",
+    "kills": [
+      "M1",
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "last_proven_fail": "M4 positive subcase: suppression_test.go:66: native: exit 70, stderr \"adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\\n\"",
+    "verdict": "sacred",
+    "probe_kills": [
+      "P1"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run . > M1.log 2>&1; suppression_test.go:69: Node and Go cohere differ: line 75: \"applied 0\", Go cohere \"applied 30\"",
+    "witness_evidence": "W1: suppression_test.go:114: natively the mutant agrees with Go cohere: the comparison cannot see it",
+    "witness_result": "positive subcase passes; all 12 builtin mutant subcases fail when firstDifference returns empty"
+  }
+]

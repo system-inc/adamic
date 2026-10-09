@@ -1,0 +1,56 @@
+--- a/stage1/cohere/suppression/suppression.ts
++++ b/stage1/cohere/suppression/suppression.ts
+@@ -246,51 +246,5 @@
+ 
+ // suppression.go: Build scans source text once and resolves every directive in it.
+ export function build(sourceText: string): Index {
+-	const lineOf = buildLineIndex(sourceText);
+-	const found: Directive[] = [];
+-	const references: RuleReference[] = [];
+-
+-	for (const comment of scanComments(sourceText)) {
+-		const commentText = sourceText.slice(comment.pos, comment.end);
+-		const parsed = parseDirective(commentText);
+-		if (parsed === undefined) {
+-			const enable = parseEnable(commentText);
+-			if (enable !== undefined) {
+-				for (const name of enable.rules) {
+-					references.push({ name, pos: comment.pos, end: comment.end });
+-				}
+-			}
+-			continue;
+-		}
+-		for (const name of parsed.rules) {
+-			references.push({ name, pos: comment.pos, end: comment.end });
+-		}
+-
+-		parsed.pos = comment.pos;
+-		parsed.end = comment.end;
+-		parsed.line = lineOf(comment.pos);
+-
+-		switch (parsed.kind) {
+-			case 'next-line':
+-				parsed.startLine = parsed.line + 1;
+-				parsed.endLine = parsed.line + 1;
+-				break;
+-			case 'same-line':
+-				parsed.startLine = parsed.line;
+-				parsed.endLine = parsed.line;
+-				break;
+-			case 'file':
+-				// Runs from its own line to a matching enable, or to the end of the file. It must not
+-				// reach backward.
+-				parsed.startLine = parsed.line;
+-				parsed.endLine = lineOf(sourceText.length);
+-				break;
+-		}
+-
+-		found.push(parsed);
+-	}
+-
+-	resolveFileScopeEnds(found, sourceText, lineOf);
+-
+-	return new Index(found, references, lineOf);
+-}
++	return new Index([], [], buildLineIndex(sourceText));
++}

@@ -1,0 +1,78 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/suppression/suppression.ts",
+    "line": 204,
+    "change": "candidate.applied++; -> [drop statement]",
+    "menu": "drop statement",
+    "failed_rows": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "bounded": false
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/suppression/directives.ts",
+    "line": 27,
+    "change": "export const DirectiveOxlint = 'oxlint-disable'; -> export const DirectiveOxlint = 'oxlint-disabled';",
+    "menu": "change constant",
+    "failed_rows": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "bounded": false
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/suppression/scan.ts",
+    "line": 122,
+    "change": "while (index < text.length && text[index] !== '\\n') -> while (index < text.length && text[index] !== '\\r')",
+    "menu": "change constant",
+    "failed_rows": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "bounded": false
+  },
+  {
+    "id": "M4",
+    "file": "internal/native/emit_expressions.go",
+    "line": 226,
+    "change": "== NULL -> != NULL for ir.IsUndefined",
+    "menu": "flip condition",
+    "failed_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "bounded": false
+  },
+  {
+    "id": "P1",
+    "file": "stage1/cohere/suppression/suppression.ts",
+    "line": 248,
+    "change": "replace body with new Index([], [], buildLineIndex(sourceText))",
+    "failed_rows": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "kind": "probe"
+  },
+  {
+    "id": "P2",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "change": "replace body with return &ir.Program{}, nil; remove unused fmt/path imports",
+    "failed_rows": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "kind": "probe"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/suppression/suppression_test.go",
+    "line": 320,
+    "change": "replace body with return \"\"",
+    "failed_rows": [
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "kind": "witness"
+  }
+]

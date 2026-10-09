@@ -1,0 +1,11 @@
+--- a/stage1/cohere/suppression/suppression.ts
++++ b/stage1/cohere/suppression/suppression.ts
+@@ -201,7 +201,7 @@
+ 				continue;
+ 			}
+ 			if (candidate.covers(ruleName, line)) {
+-				candidate.applied++;
++
+ 				return true;
+ 			}
+ 		}

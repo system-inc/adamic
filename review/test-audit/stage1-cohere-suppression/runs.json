@@ -1,0 +1,526 @@
+[
+  {
+    "name": "timing-TestEachGapStandsWhereGapsMdSaysItDoes-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run ^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "wall": 2.332419343998481,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "elapsed": [
+      0.531
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "timing-TestEachGapStandsWhereGapsMdSaysItDoes-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run ^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "wall": 2.216588007999235,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "elapsed": [
+      0.355
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "timing-TestEachGapStandsWhereGapsMdSaysItDoes-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run ^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "wall": 2.1241258180016303,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "elapsed": [
+      0.362
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "timing-TestThePortParsesAsGoCohereDoes-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run ^TestThePortParsesAsGoCohereDoes$",
+    "wall": 24.783463513998868,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": [
+      23.015
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "timing-TestThePortParsesAsGoCohereDoes-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run ^TestThePortParsesAsGoCohereDoes$",
+    "wall": 25.73741034900013,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": [
+      23.626
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "timing-TestThePortParsesAsGoCohereDoes-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run ^TestThePortParsesAsGoCohereDoes$",
+    "wall": 29.016006455000024,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": [
+      24.022
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "M1-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/suppression/main.ts -o /tmp/u138/M1 --sanitize",
+    "wall": 1.3308628740014683,
+    "exit": 1,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "M1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run .",
+    "wall": 26.171856365002895,
+    "exit": 1,
+    "fails": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace"
+    ],
+    "elapsed": [
+      23.764
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "M2-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/suppression/main.ts -o /tmp/u138/M2 --sanitize",
+    "wall": 1.2583300549995329,
+    "exit": 1,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "M2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run .",
+    "wall": 23.666668958001537,
+    "exit": 1,
+    "fails": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression"
+    ],
+    "elapsed": [
+      21.873
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "M3-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/suppression/main.ts -o /tmp/u138/M3 --sanitize",
+    "wall": 1.23667014899911,
+    "exit": 1,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "M3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run .",
+    "wall": 25.228196118998312,
+    "exit": 1,
+    "fails": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression"
+    ],
+    "elapsed": [
+      23.448
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "M4-vet",
+    "command": "timeout 90 go vet ./internal/native/",
+    "wall": 0.4284116079979867,
+    "exit": 0,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "M4-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/suppression/gaps/2_return_undefined_array.ts -o /tmp/u138/M4 --sanitize",
+    "wall": 6.425311250000959,
+    "exit": 0,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "M4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run .",
+    "wall": 21.849014031999104,
+    "exit": 1,
+    "fails": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts"
+    ],
+    "elapsed": [
+      14.525
+    ],
+    "cooked": false,
+    "panic": true
+  },
+  {
+    "name": "M4-isolated-TestEachGapStandsWhereGapsMdSaysItDoes",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run ^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "wall": 5.0391394719990785,
+    "exit": 1,
+    "fails": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts"
+    ],
+    "elapsed": [
+      0.433
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "M4-isolated-TestThePortParsesAsGoCohereDoes",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run ^TestThePortParsesAsGoCohereDoes$",
+    "wall": 16.478292848998535,
+    "exit": 1,
+    "fails": [
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "passes": [],
+    "elapsed": [
+      13.766
+    ],
+    "cooked": false,
+    "panic": true
+  },
+  {
+    "name": "P1-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/suppression/main.ts -o /tmp/u138/P1 --sanitize",
+    "wall": 1.1453137999997125,
+    "exit": 0,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "P1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run .",
+    "wall": 23.1666510440009,
+    "exit": 1,
+    "fails": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it"
+    ],
+    "elapsed": [
+      20.405
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "P2-vet",
+    "command": "timeout 90 go vet ./internal/lower/",
+    "wall": 0.6099279759982892,
+    "exit": 0,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "P2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run .",
+    "wall": 19.29276345100152,
+    "exit": 1,
+    "fails": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "passes": [
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored"
+    ],
+    "elapsed": [
+      7.324
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "W1-vet",
+    "command": "timeout 90 go vet ./stage1/cohere/suppression/",
+    "wall": 0.1829983509996964,
+    "exit": 0,
+    "fails": [],
+    "passes": [],
+    "elapsed": [],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "W1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run .",
+    "wall": 28.21755450300043,
+    "exit": 1,
+    "fails": [
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere"
+    ],
+    "elapsed": [
+      22.709
+    ],
+    "cooked": false,
+    "panic": false
+  },
+  {
+    "name": "final-clean",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/suppression/ -run .",
+    "wall": 23.13988098200207,
+    "exit": 0,
+    "fails": [],
+    "passes": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_mutual_recursion.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_return_undefined_array.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes/catches_a_//_file-scope_disable_honored",
+      "TestThePortParsesAsGoCohereDoes/catches_an_interpolation_closing_on_an_object's_brace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_word_in_any_case",
+      "TestThePortParsesAsGoCohereDoes/catches_a_directive_covering_the_finding_about_itself",
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/catches_only_space_or_tab_ending_a_directive_word",
+      "TestThePortParsesAsGoCohereDoes/catches_an_enable_on_the_block's_own_line_closing_it",
+      "TestThePortParsesAsGoCohereDoes/catches_a_regular_expression's_class_ignored",
+      "TestThePortParsesAsGoCohereDoes/catches_a_string_running_past_its_line",
+      "TestThePortParsesAsGoCohereDoes/catches_a_vertical_tab_skipped_as_space",
+      "TestThePortParsesAsGoCohereDoes/catches_Go_whitespace_instead_of_JavaScript_whitespace",
+      "TestThePortParsesAsGoCohereDoes/catches_a_)_opening_a_regular_expression",
+      "TestThePortParsesAsGoCohereDoes/catches_a_suffix_match_off_a_/_boundary",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": [
+      21.28
+    ],
+    "cooked": false,
+    "panic": false
+  }
+]

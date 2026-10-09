@@ -1,0 +1,32 @@
+[
+  {
+    "name": "M1-build-validated",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/suppression/main.ts -o /tmp/u138/M1 --sanitize",
+    "wall": 1.7843902509994223,
+    "exit": 0
+  },
+  {
+    "name": "M2-build-validated",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/suppression/main.ts -o /tmp/u138/M2 --sanitize",
+    "wall": 1.3939972440020938,
+    "exit": 0
+  },
+  {
+    "name": "M3-build-validated",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/suppression/main.ts -o /tmp/u138/M3 --sanitize",
+    "wall": 1.4678164230026596,
+    "exit": 0
+  },
+  {
+    "name": "gap-coverage",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/lower,./internal/native -coverprofile=review/test-audit/stage1-cohere-suppression/gap.cover ./stage1/cohere/suppression/ -run ^TestEachGapStandsWhereGapsMdSaysItDoes$",
+    "wall": 7.134987827997975,
+    "exit": 0
+  },
+  {
+    "name": "port-coverage",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/lower,./internal/native -coverprofile=review/test-audit/stage1-cohere-suppression/port.cover ./stage1/cohere/suppression/ -run ^TestThePortParsesAsGoCohereDoes$/^natively",
+    "wall": 17.465069178000704,
+    "exit": 0
+  }
+]

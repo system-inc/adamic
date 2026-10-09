@@ -1,0 +1,29 @@
+--- a/stage1/cohere/suppression/suppression_test.go
++++ b/stage1/cohere/suppression/suppression_test.go
+@@ -317,25 +317,7 @@
+ }
+ 
+ // firstDifference says where two outputs first differ, line by line, or "" when they don't.
+-func firstDifference(got string, want string) string {
+-	if got == want {
+-		return ""
+-	}
+-	gotLines, wantLines := strings.Split(got, "\n"), strings.Split(want, "\n")
+-	for index := 0; index < len(gotLines) || index < len(wantLines); index++ {
+-		var gotLine, wantLine string
+-		if index < len(gotLines) {
+-			gotLine = gotLines[index]
+-		}
+-		if index < len(wantLines) {
+-			wantLine = wantLines[index]
+-		}
+-		if gotLine != wantLine {
+-			return fmt.Sprintf("line %d: %q, Go cohere %q", index+1, gotLine, wantLine)
+-		}
+-	}
+-	return "the same lines, not the same bytes"
+-}
++func firstDifference(got string, want string) string { return "" }
+ 
+ // lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
+ func lowered(t *testing.T, path string) *ir.Program {

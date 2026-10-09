@@ -1,0 +1,11 @@
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -223,7 +223,7 @@
+ 		if expression.Value.Type().IsMaybe() {
+ 			return fmt.Sprintf("(!(%s).present)", e.value(expression.Value))
+ 		}
+-		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
++		return fmt.Sprintf("(%s != NULL)", e.value(expression.Value))
+ 	case ir.Unwrap:
+ 		// The checker narrowed undefined away, but a call since may have put it back (ir.Unwrap).
+ 		value := e.snapshot(expression.Value.Type(), e.value(expression.Value))

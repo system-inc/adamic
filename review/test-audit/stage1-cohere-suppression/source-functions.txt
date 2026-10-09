@@ -1,0 +1,56 @@
+stage1/cohere/suppression/main.ts:37: function escapeOf(character: string): string {
+stage1/cohere/suppression/main.ts:58: function quote(text: string): string {
+stage1/cohere/suppression/main.ts:74: function unescapeOf(letter: string, field: string): string {
+stage1/cohere/suppression/main.ts:86: panic(`an unknown escape \\${letter} in ${field}`);
+stage1/cohere/suppression/main.ts:91: function unescape(field: string): string {
+stage1/cohere/suppression/main.ts:105: function indexesOf(all: readonly Directive[], some: readonly Directive[]): string {
+stage1/cohere/suppression/main.ts:114: function describe(source: string, index: Index): void {
+stage1/cohere/suppression/main.ts:133: function summarize(index: Index): void {
+stage1/cohere/suppression/main.ts:148: panic(read.message);
+stage1/cohere/suppression/main.ts:192: summarize(current);
+stage1/cohere/suppression/directives.ts:54: function isJavaScriptSpace(unit: number): boolean {
+stage1/cohere/suppression/directives.ts:76: export function trimWhitespace(text: string): string {
+stage1/cohere/suppression/directives.ts:90: function isLineComment(commentText: string): boolean {
+stage1/cohere/suppression/directives.ts:96: function stripCommentMarkers(commentText: string): string {
+stage1/cohere/suppression/directives.ts:130: function splitDirective(body: string): DirectiveRest | undefined {
+stage1/cohere/suppression/directives.ts:140: function endsWord(rest: string): boolean {
+stage1/cohere/suppression/directives.ts:153: function splitScope(rest: string): ScopeRead | undefined {
+stage1/cohere/suppression/directives.ts:178: function splitReason(rest: string): RuleList {
+stage1/cohere/suppression/directives.ts:188: function parseRuleNames(list: string): readonly string[] {
+stage1/cohere/suppression/directives.ts:209: export function parseDisable(commentText: string): Disable | undefined {
+stage1/cohere/suppression/directives.ts:238: export function parseEnable(commentText: string): Enable | undefined {
+stage1/cohere/suppression/directives.ts:260: export function recognize(commentText: string): string {
+stage1/cohere/suppression/directives.ts:285: export function registerSubject(ruleName: string): void {
+stage1/cohere/suppression/directives.ts:290: export function isSubject(ruleName: string): boolean {
+stage1/cohere/suppression/scan.ts:18: function isSpace(character: string): boolean {
+stage1/cohere/suppression/scan.ts:25: function opensRegularExpression(previousToken: string): boolean {
+stage1/cohere/suppression/scan.ts:55: function skipQuoted(text: string, start: number, quote: string): number {
+stage1/cohere/suppression/scan.ts:77: function skipRegularExpression(text: string, start: number): number {
+stage1/cohere/suppression/scan.ts:106: function scanCode(text: string, start: number, inInterpolation: boolean, comments: CommentSpan[]): number {
+stage1/cohere/suppression/scan.ts:188: export function scanComments(text: string): CommentSpan[] {
+stage1/cohere/suppression/scan.ts:190: scanCode(text, 0, false, comments);
+stage1/cohere/suppression/scan.ts:201: export function scanEnables(text: string, lineOf: (offset: number) => number): EnableSpan[] {
+stage1/cohere/suppression/scan.ts:217: export function buildLineIndex(text: string): (offset: number) => number {
+stage1/cohere/suppression/suppression.ts:32: function matchesRuleName(named: string, ruleName: string): boolean {
+stage1/cohere/suppression/suppression.ts:69: constructor(kind: Kind, rules: readonly string[], reason: string) {
+stage1/cohere/suppression/suppression.ts:76: hasReason(): boolean {
+stage1/cohere/suppression/suppression.ts:83: covers(ruleName: string, line: number): boolean {
+stage1/cohere/suppression/suppression.ts:102: function coversAFindingAboutADirective(candidate: Directive, line: number): boolean {
+stage1/cohere/suppression/suppression.ts:108: function parseDirective(commentText: string): Directive | undefined {
+stage1/cohere/suppression/suppression.ts:125: function namesIntersect(enableRules: readonly string[], blockRules: readonly string[]): boolean {
+stage1/cohere/suppression/suppression.ts:142: function resolveFileScopeEnds(found: readonly Directive[], sourceText: string, lineOf: (offset: number) => number): void {
+stage1/cohere/suppression/suppression.ts:177: constructor(directives: readonly Directive[], ruleReferences: readonly RuleReference[], lineOf: (offset: number) => number) {
+stage1/cohere/suppression/suppression.ts:185: ruleReferences(): readonly RuleReference[] {
+stage1/cohere/suppression/suppression.ts:192: suppresses(ruleName: string, offset: number): boolean {
+stage1/cohere/suppression/suppression.ts:212: directives(): readonly Directive[] {
+stage1/cohere/suppression/suppression.ts:217: appliedCount(index: number): number {
+stage1/cohere/suppression/suppression.ts:223: totalApplied(): number {
+stage1/cohere/suppression/suppression.ts:232: unused(): readonly Directive[] {
+stage1/cohere/suppression/suppression.ts:237: withoutReason(): readonly Directive[] {
+stage1/cohere/suppression/suppression.ts:242: lineOf(offset: number): number {
+stage1/cohere/suppression/suppression.ts:248: export function build(sourceText: string): Index {
+stage1/cohere/suppression/suppression.ts:293: resolveFileScopeEnds(found, sourceText, lineOf);
+stage1/cohere/suppression/gaps/1_mutual_recursion.ts:4: function isEven(value: number): boolean {
+stage1/cohere/suppression/gaps/1_mutual_recursion.ts:7: function isOdd(value: number): boolean {
+stage1/cohere/suppression/gaps/2_return_undefined_array.ts:4: function names(found: boolean): readonly string[] | undefined {
+Compiler gap path: load.Load -> lower.Lower -> native.C -> emitter.evaluate (including ir.IsUndefined) -> native.Build. Node source execution is oracle, not mutation target.

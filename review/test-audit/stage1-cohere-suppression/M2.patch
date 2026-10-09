@@ -1,0 +1,11 @@
+--- a/stage1/cohere/suppression/directives.ts
++++ b/stage1/cohere/suppression/directives.ts
+@@ -24,7 +24,7 @@
+ export const DirectiveCohere = 'cohere-disable';
+ export const DirectiveVerify = 'verify-disable';
+ export const DirectiveEslint = 'eslint-disable';
+-export const DirectiveOxlint = 'oxlint-disable';
++export const DirectiveOxlint = 'oxlint-disabled';
+ 
+ // directives.go: disableDirectives, every honored disable spelling.
+ const disableDirectives: readonly string[] = [DirectiveCohere, DirectiveVerify, DirectiveEslint, DirectiveOxlint];

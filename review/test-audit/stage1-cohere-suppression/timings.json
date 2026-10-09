@@ -1,0 +1,24 @@
+{
+  "nproc": 5,
+  "setup_skipped": true,
+  "tools_seconds": 0.02976606999800424,
+  "npm_ci_seconds": 0.628910082999937,
+  "test_list_wall_seconds": 5.581958622999082,
+  "baseline_binary_seconds": 23.979,
+  "baseline_wall_seconds": 26.273780945000908,
+  "medians": {
+    "TestEachGapStandsWhereGapsMdSaysItDoes": 0.362,
+    "TestThePortParsesAsGoCohereDoes": 23.626
+  },
+  "standalone_native_rebuild_wall_seconds": {
+    "M1": 1.7843902509994223,
+    "M2": 1.3939972440020938,
+    "M3": 1.4678164230026596,
+    "M4": 6.425311250000959
+  },
+  "runner_wall_seconds": 311.0778573259995,
+  "post_validation_and_coverage_wall_seconds": 29.246260924002854,
+  "logged_runner_binary_seconds": 241.43800000000002,
+  "final_clean_binary_seconds": 21.28,
+  "generated_utc": "2026-10-09T13:04:44.340972+00:00"
+}
