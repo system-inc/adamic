@@ -2,10 +2,12 @@ package printer
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/corpusfiles"
 )
@@ -105,32 +107,123 @@ func printerDirectory(t *testing.T, file, from, to string) string {
 	return filepath.Join(directory, "graphql/printer/main.ts")
 }
 
-// Not parallel: the corpus keep path is shared with the option sweeps.
+const testPrinterMutantsShards = 3
+
+var printerMutations = [...]struct{ name, file, from, to string }{
+	{"line width ignored", "doc.ts", "this.settings.printWidth - column", "100000 - column"},
+	{"end of line comment leads next node", "printer.ts", "if(own && around.following >= 0)", "if((own || end) && around.following >= 0)"},
+	{"block string indentation discarded", "printer.ts", "for(const line of lines) parts.push(documents.text(line));", "for(const line of lines) parts.push(documents.text(line.trim()));"},
+}
+
+// Each fixed mutant owns one shard-NNN and checks the entire corpus on both
+// original sides. ADAMIC_TEST_SHARD=i/n selects indices modulo n equal to i;
+// unset runs all. Builds are shared inputs prepared before t.Parallel.
 func TestPrinterMutants(t *testing.T) {
-	cases, want := printerCases(t, "defaults")
-	for _, mutation := range []struct{ name, file, from, to string }{
-		{"line width ignored", "doc.ts", "this.settings.printWidth - column", "100000 - column"},
-		{"end of line comment leads next node", "printer.ts", "if(own && around.following >= 0)", "if((own || end) && around.following >= 0)"},
-		{"block string indentation discarded", "printer.ts", "for(const line of lines) parts.push(documents.text(line));", "for(const line of lines) parts.push(documents.text(line.trim()));"},
-	} {
-		t.Run(mutation.name, func(t *testing.T) {
-			path := printerDirectory(t, mutation.file, mutation.from, mutation.to)
-			program := lowered(t, path)
+	if len(printerMutations) != testPrinterMutantsShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(printerMutations), testPrinterMutantsShards)
+	}
+	cases, want := printerCases(t, "defaults", printerOracle(t))
+	enumeration := enumeratePrinter(t, "defaults", cases, want)
+	var whole []printerCase
+	for number := range printerMutations {
+		whole = append(whole, printerMutantCases(number, enumeration)...)
+	}
+	shards := make([]printerShard, len(printerMutations))
+	products := make([]printerProducts, len(printerMutations))
+	for number, mutation := range printerMutations {
+		shards[number] = printerShard{mode: "defaults", path: cases, cases: printerMutantCases(number, enumeration)}
+		path := printerDirectory(t, mutation.file, mutation.from, mutation.to)
+		products[number] = preparePrinterProducts(t, path)
+	}
+	if len(shards) != testPrinterMutantsShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterMutantsShards)
+	}
+	if err := printerShardUnion(whole, shards); err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("union: %d unique mutant/case ids across %d shards (%d cases per mutant)", len(whole), len(shards), len(enumeration))
+	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for number, mutation := range printerMutations {
+		if !selected[number] {
+			continue
+		}
+		product := products[number]
+		t.Run(fmt.Sprintf("shard-%03d", number), func(t *testing.T) {
+			t.Parallel()
+			start := time.Now()
+			t.Cleanup(func() {
+				if elapsed := time.Since(start); elapsed > 30*time.Second {
+					t.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())
+				}
+			})
+			t.Logf("mutant %s, cases 0..%d", mutation.name, len(shards[number].cases)-1)
 			for _, side := range []struct {
 				name   string
 				result run
-			}{{"native", nativelyRun(t, program, "--cases", cases)}, {"Node", onNode(t, path, "--cases", cases)}} {
-				if side.result.exitCode != 0 || len(side.result.stderr) > 0 {
-					t.Fatalf("%s mutant must run: exit %d, %s", side.name, side.result.exitCode, side.result.stderr)
-				}
-				difference := firstDifference(string(side.result.stdout), want)
-				if difference == "" {
-					t.Errorf("%s mutant escaped oracle", side.name)
+			}{
+				{"native", execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, product.sanitized, "--cases", cases)},
+				{"Node", onNode(t, product.source, "--cases", cases)},
+			} {
+				difference, err := printerMutantDisagreement(number, side.name, side.result, want)
+				if err != nil {
+					t.Error(err)
 				} else {
 					t.Logf("%s caught: %s", side.name, difference)
 				}
 			}
 		})
+	}
+}
+
+func printerMutantCases(number int, enumeration []printerCase) []printerCase {
+	owned := make([]printerCase, len(enumeration))
+	for i, item := range enumeration {
+		item.id = fmt.Sprintf("mutant-%03d/%s", number, item.id)
+		owned[i] = item
+	}
+	return owned
+}
+
+func printerMutantDisagreement(number int, side string, result run, want string) (string, error) {
+	if result.exitCode != 0 || len(result.stderr) != 0 {
+		return "", fmt.Errorf("shard-%03d %s mutant must run: exit %d, %s", number, side, result.exitCode, result.stderr)
+	}
+	difference := firstDifference(string(result.stdout), want)
+	if difference == "" {
+		return "", fmt.Errorf("shard-%03d %s mutant escaped oracle", number, side)
+	}
+	return difference, nil
+}
+
+// A real process emits an unchanged answer for one planted surviving mutant;
+// exactly its owning shard must reject it through the production comparison.
+func TestPrinterMutantPlantedSurvivor(t *testing.T) {
+	caught := 0
+	for number := range printerMutations {
+		answer := "ok\tmutated\n"
+		if number == 1 {
+			answer = "ok\toriginal\n"
+		}
+		encoded, _ := json.Marshal(answer)
+		result := execute(t, nil, "node", "-e", "process.stdout.write("+string(encoded)+")")
+		_, err := printerMutantDisagreement(number, "Node", result, "ok\toriginal\n")
+		if err == nil {
+			if number == 1 {
+				t.Fatal("planted survivor escaped shard-001")
+			}
+			continue
+		}
+		if number != 1 || !strings.Contains(err.Error(), "shard-001 Node mutant escaped oracle") {
+			t.Fatalf("wrong owner: %v", err)
+		}
+		t.Log(err)
+		caught++
+	}
+	if caught != 1 {
+		t.Fatalf("%d shards caught planted survivor, want 1", caught)
 	}
 }
 
