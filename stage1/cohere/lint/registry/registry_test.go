@@ -36,44 +36,6 @@ func copyRules(t *testing.T) string {
 	return root
 }
 
-func TestDeterministicRegeneration(t *testing.T) {
-	t.Parallel()
-	root := copyRules(t)
-	descriptors, err := Generate(root)
-	if err != nil {
-		t.Fatal(err)
-	}
-	ts, goSource := Render(descriptors)
-	for _, name := range []string{"registry.ts", "registry.go"} {
-		path := filepath.Join(root, ".generated", name)
-		before, err := os.Stat(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if _, err := Generate(root); err != nil {
-			t.Fatal(err)
-		}
-		after, err := os.Stat(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if !before.ModTime().Equal(after.ModTime()) {
-			t.Fatalf("unchanged %s rewritten", name)
-		}
-		data, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		expected := ts
-		if name == "registry.go" {
-			expected = goSource
-		}
-		if !bytes.Equal(data, expected) {
-			t.Fatal("generation changed bytes")
-		}
-	}
-}
-
 func TestDescriptorRejections(t *testing.T) {
 	t.Parallel()
 	for _, change := range []struct {

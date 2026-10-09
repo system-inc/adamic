@@ -1,0 +1,29 @@
+{
+  "pins": {
+    "node": "v24.19.0",
+    "typescript": "6.0.3",
+    "typescript_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "typescript_cli_sha256": "1c59e77a54b186ec43fa7f3e0d3c4bb15ca5eb5ba43e96b1d3a267139eddd3e3",
+    "mitt_commit": "6b41670516ed8e8b738612f60491995470aa63b3",
+    "sampling_interval": 16384,
+    "heap_observation_every_constructors": 256
+  },
+  "node_sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+  "cli_sha256": "1c59e77a54b186ec43fa7f3e0d3c4bb15ca5eb5ba43e96b1d3a267139eddd3e3",
+  "tsc_version": "Version 6.0.3",
+  "base_commit": "89ac4a8c1de0b02d95965be72f7f8bf1c92433d2",
+  "nproc": "5",
+  "cpu_max": "400000 100000\n",
+  "cpu_model": "model name\t: AMD EPYC 9V74 80-Core Processor",
+  "harness_hashes": {
+    "run.py": "57ce3a14c1b917a57cdb2f486f1ec8e175f9510ebe82a06721fb5fa6252caf0a",
+    "package.json": "ed6a45ad1d30f5d3f218d65af1d9c2d573a48722c17b97fa6db5ff9f382ed591",
+    "report.py": "fe57295398e12c75c8b2768a74a36a5ee7b2cebd3347db191226399869f553e4",
+    "package-lock.json": "34c58229cbd1dcca6ebc1b0b28c1506d17bc8ec768dc8733a281109df0343915",
+    "fixture.a": "d6635175e259e9b4cfd6ae263f72c3ffbc352eda0f1cc86c46cf2b218d988f9c",
+    "pins.json": "f9000846bf5d0e718a445dce838fadf6c873881213eb2cdc0424bc1412bdc9e9",
+    "parse.py": "fc8afaf569315b114c1077e81b493a8eb93a1f97114fae69153585a5e9d4c9b7",
+    "observe.cjs": "cb67e71f76ee23e63f97c2df1db2a62b53acfba4851c08726f9b359eb7eded01",
+    "run.sh": "2175beb45850308822d9e967cef7ba787d1bbaaef922945bcdd59aa00b3bca22"
+  }
+}

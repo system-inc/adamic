@@ -48,7 +48,7 @@ type fixture struct {
 	Stage0   stage0   `json:"stage0"`
 }
 
-func execute(t *testing.T, directory string, environment []string, name string, arguments ...string) behavior {
+func execute(t testing.TB, directory string, environment []string, name string, arguments ...string) behavior {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Minute)
 	defer cancel()
@@ -116,6 +116,18 @@ func validFixturePath(name string) bool {
 	return fs.ValidPath(name) && !strings.ContainsAny(name, "\\:") && filepath.Ext(name) == ".a"
 }
 
+// Check the supported mode independently of the broader call and URL guards.
+// Its fatal must be observable even when another guard rejects the same runner.
+func nodeRunnerMode(t *testing.T, text string) int {
+	t.Helper()
+	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
+	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })")
+	if erasable+transformedCalls != 1 {
+		t.Fatal("source Node runner changed: review the transform-mode hook")
+	}
+	return erasable
+}
+
 // The enum and namespace branches use Node's transform mode. Derive that runner
 // from the current source oracle, preserving its runtime and import hooks while
 // accepting either source mode without changing the original runner.
@@ -128,9 +140,8 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 	}
 	text := string(source)
 	// Parameter properties may already require transform mode in the source oracle.
-	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
-	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })")
-	if erasable+transformedCalls != 1 || strings.Count(text, "stripTypeScriptTypes(source") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
+	erasable := nodeRunnerMode(t, text)
+	if strings.Count(text, "stripTypeScriptTypes(source") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
 		t.Fatal("source Node runner changed: review the transform-mode hook")
 	}
 	if erasable == 1 {
@@ -176,6 +187,10 @@ func TestFixturesObjects(t *testing.T) {
 func TestFixturesPredicates(t *testing.T) {
 	t.Parallel()
 	testFixtureDirectory(t, "predicates")
+}
+func TestFixturesReal(t *testing.T) {
+	t.Parallel()
+	testFixtureDirectory(t, "real")
 }
 func TestFixturesRecords(t *testing.T) {
 	t.Parallel()
@@ -395,33 +410,6 @@ func testFixtureDirectory(t *testing.T, directory string) {
 			}
 		})
 	}
-}
-
-var oracleHookOnce sync.Once
-var oracleHookResult behavior
-
-func fixtureOracleHook(t *testing.T, repository string) string {
-	t.Helper()
-	oracleHookOnce.Do(func() {
-		oracleHookResult = execute(t, repository, nil, "python3", "stage3/fixtures/build-hook.py", "--prepare")
-	})
-	if oracleHookResult.Exit != 0 || strings.TrimSpace(oracleHookResult.Stdout) == "" {
-		t.Fatalf("preparing or fetching oracle hook: %s%s", oracleHookResult.Stdout, oracleHookResult.Stderr)
-	}
-	return strings.TrimSpace(oracleHookResult.Stdout)
-}
-
-// Not parallel: prepare before this package's parallel fixture workers. The
-// gate can dispatch this named build unit separately; each directory test prepares
-// on demand when it is dispatched alone on a fresh worker.
-func TestPrepareFixtureOracleHook(t *testing.T) {
-	repository, err := filepath.Abs("../..")
-	if err != nil {
-		t.Fatal(err)
-	}
-	started := time.Now()
-	fixtureOracleHook(t, repository)
-	t.Logf("keyed oracle hook preparation/fetch: %s", time.Since(started))
 }
 
 func TestFixturePaths(t *testing.T) {

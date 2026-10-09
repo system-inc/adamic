@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/workspace/adamic-tools/bin/node",
+    "/tmp/allocation-complete/dependencies/node_modules/typescript/lib/tsc.js",
+    "-p",
+    "/tmp/allocation-complete/mitt-source/allocation.json",
+    "--noEmit",
+    "--pretty",
+    "false"
+  ],
+  "cwd": "/tmp/allocation-complete/mitt-source"
+}
