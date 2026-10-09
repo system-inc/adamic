@@ -1,0 +1,14 @@
+interface ChildBase { readonly kind: number; }
+interface Base { readonly kind: number; readonly original?: ChildBase | undefined; }
+interface Child { readonly kind: number; readonly text: string; }
+interface Node extends Base { readonly original?: Child | undefined; }
+function inspect(node: Base): void {
+    const view = node as Node;
+    const alias = view.original;
+    console.log(String(view.hasOwnProperty("original")));
+    console.log(alias === undefined ? "undefined" : alias.text);
+    console.log(String(view.hasOwnProperty("original")));
+}
+const child = {kind: 2, text: 42};
+const raw: Base = {kind: 1, original: child};
+inspect(raw);

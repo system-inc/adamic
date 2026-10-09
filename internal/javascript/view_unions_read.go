@@ -16,10 +16,10 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 	if contract.Kind != ir.ViewUnion && !contract.FixedTuple && !(contract.Kind == ir.ViewCallable && contract.ProducerCertified) {
 		return "", false
 	}
-	if contract.Unsupported != "" || property.Optional || property.Absent || property.Method {
+	if contract.Unsupported != "" || property.Optional || (property.Absent && !ir.OptionalObjectViewContract(e.program.ViewContracts, id)) || property.Method {
 		panic("compiler bug: unavailable checked union read")
 	}
-	raw := fmt.Sprintf("adamicReadField(%s,%s,%s,false,false,%s)", e.value(property.Object), quote(property.Name), quote(property.View), quote(contract.Name))
+	raw := fmt.Sprintf("adamicReadField(%s,%s,%s,false,%t,%s)", e.value(property.Object), quote(property.Name), quote(property.View), property.Absent, quote(contract.Name))
 	if contract.Of == ir.Closure {
 		recorded := e.unionCallableRecorded("v")
 		expected := e.untaggedCallableUnionExpected(property, recorded, e.unionCallableExpected(property))

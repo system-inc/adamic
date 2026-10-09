@@ -18,14 +18,14 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 	if contract.Kind != ir.ViewUnion && !contract.FixedTuple && !(contract.Kind == ir.ViewCallable && contract.ProducerCertified) {
 		return "", false
 	}
-	if contract.Unsupported != "" || property.Optional || property.Absent || property.Method {
+	if contract.Unsupported != "" || property.Optional || (property.Absent && !ir.OptionalObjectViewContract(e.program.ViewContracts, id)) || property.Method {
 		panic("compiler bug: unavailable checked union read")
 	}
 	e.declarations = append(e.declarations, "#include \"view_unions_mixed.h\"")
 	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"")
 	object := e.value(property.Object)
 	snapshot := e.temporary()
-	e.line("adamic_view_union_value %s = adamic_object_view_union_snapshot(%s, %s, &%s, %s, %s, false);", snapshot, object, cString(property.Name), e.cache(), cString(property.View), cString(contract.Name))
+	e.line("adamic_view_union_value %s = adamic_object_view_union_snapshot(%s, %s, &%s, %s, %s, %t);", snapshot, object, cString(property.Name), e.cache(), cString(property.View), cString(contract.Name), property.Absent)
 	// An unknown physical slot cannot be interpreted or counted as a reference.
 	e.line("if (%s.kind == adamic_view_union_unknown) {", snapshot)
 	e.line("(void)adamic_view_mixed_union_select(&%s, NULL, 0, NULL, NULL, %s, %s);", snapshot, cString(property.View), cString(contract.Name))

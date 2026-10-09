@@ -1,0 +1,12 @@
+interface Base { readonly kind: number; readonly original?: Base | undefined; }
+interface Node extends Base { readonly text: string; readonly original?: Node | undefined; }
+function inspect(node: Base): string {
+ const view = node as Node;
+ const first = view.original;
+ if (first === undefined) return "missing";
+ const second = first.original;
+ return second === undefined ? first.text : second.text;
+}
+const last: Node = {kind: 3, text: "leaf"};
+const first: Node = {kind: 2, text: "middle", original: last};
+console.log(inspect({kind: 1, original: first}));
