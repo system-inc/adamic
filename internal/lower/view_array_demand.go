@@ -30,6 +30,9 @@ func (l *lowering) activateViewArrayReads(graph *allocationFlowGraph, viewed map
 			demand = demand || viewed[site]
 		}
 		p.ArrayViewEnabled = p.ArrayViewEnabled || demand
+		if demand && !p.ViewContracts[id-1].ArrayReadonly {
+			p.ArrayViewNeedsSourceCertificate = true
+		}
 		return true
 	})
 	if !p.ArrayViewEnabled {
@@ -94,7 +97,7 @@ func (l *lowering) activateViewArrayReads(graph *allocationFlowGraph, viewed map
 			if v.Kind() == reflect.Struct {
 				f := v.FieldByName("Site")
 				if f.IsValid() && f.Kind() == reflect.Int && f.Int() != 0 {
-					refused = &NotYet{What: "writing through an array cast without its source-slot type certificate"}
+					refused = &NotYet{Where: p.Source, What: "writing through an array cast without its source-slot type certificate"}
 				}
 			}
 		}

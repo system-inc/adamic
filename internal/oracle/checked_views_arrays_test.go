@@ -5,6 +5,7 @@ import "testing"
 func TestCheckedViewArrays(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, stdout, diagnostic string }{
+		{"array-holes-view", "-1\n7\n", ""},
 		{"array-lazy", "2\n", ""},
 		{"array-iteration", "7\n8\n", ""},
 		{"array-map", "8:9\n", ""},
@@ -20,6 +21,7 @@ func TestCheckedViewArrays(t *testing.T) {
 		{"array-undefined", "", "element read failed: items(raw).values[1] expected number, found undefined"},
 		{"array-string-literal", "", "field read failed: values[element] expected \"ok\", found string bad"},
 		{"nullable-array-string", "", "element read failed: values[element] expected number, found string"},
+		{"nullable-array-missing", "", "element read failed: values[0] expected number, found undefined"},
 		{"nullable-array-element", "", "element read failed: values[0] expected number, found string"},
 		{"generic-array-element", "", "element read failed: values[0] expected string, found number"},
 		{"array-field", "2\n", ""},

@@ -12,7 +12,7 @@ func buildViewArrayContract(l *lowering, node *ast.Node, target *checker.Type, b
 		return 0, l.notYet(node, "a checked tuple view with optional or rest positions")
 	}
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-	contract := ir.ViewContract{Kind: ir.ViewArray, Name: l.checker.TypeToString(target), Of: ir.Array}
+	contract := ir.ViewContract{Kind: ir.ViewArray, Name: l.checker.TypeToString(target), Of: ir.Array, ArrayReadonly: l.isLibraryType(target, "ReadonlyArray")}
 	l.result.ViewContractTypes[int(target.Id())] = id
 	l.result.ViewContracts = append(l.result.ViewContracts, contract)
 	handled, err := l.viewArrayContract(node, target, func(element *checker.Type) error {

@@ -76,10 +76,11 @@ func (l *lowering) viewArrayOwnProperties(target, base *checker.Type) []*ast.Sym
 	return fields
 }
 
+// Keep array-arm descriptors restricted to ordinary arrays until own fields
+// have independent contracts. An ancestry helper is not that certificate.
 func (l *lowering) viewArrayElementType(target *checker.Type) *checker.Type {
-	base := l.viewArrayBase(l.checker.GetNonNullableType(target))
-	if base == nil {
+	if !l.checker.IsArrayType(target) {
 		return nil
 	}
-	return l.checker.GetElementTypeOfArrayType(base)
+	return l.checker.GetElementTypeOfArrayType(target)
 }

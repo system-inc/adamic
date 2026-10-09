@@ -28,6 +28,9 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	if proof.arrayView {
+		if !l.isLibraryType(l.checker.GetNonNullableType(target), "ReadonlyArray") {
+			l.result.ArrayViewNeedsSourceCertificate = true
+		}
 		if err := l.widened(source, target, map[[2]*checker.Type]bool{}); err != nil {
 			l.result.ArrayViewNeedsSourceCertificate = true
 		}

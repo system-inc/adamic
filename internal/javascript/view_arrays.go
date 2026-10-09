@@ -32,9 +32,11 @@ func emitViewArrayFieldRead(object, member, expression, expected string) string 
 	return fmt.Sprintf("adamicViewArray(adamicReadField(%s, %s, %s, false, false, %s), %s, %s)", object, quote(member), quote(expression), quote(expected), quote(expression), quote(expected))
 }
 
-const viewArrayElementsRuntime = `const adamicViewArrayIndex = (array, index, relative, check) => {
+const viewArrayElementsRuntime = `const adamicViewArrayIndex = (array, index, relative, check, expression, expected) => {
+    if (array === undefined) panic("element read failed: " + expression + " expected " + expected + ", found undefined");
     if (relative) { index = Math.trunc(Number(index)) || 0; if (index < 0) index += array.length; }
     if (!Number.isInteger(index) || index < 0 || index >= array.length) return undefined;
+    if (!Object.prototype.hasOwnProperty.call(array, index)) return undefined;
     return check(array[index]);
 };
 const adamicViewArrayElement = (value, expression, type, expected, allowed, required = false) => {
@@ -65,14 +67,15 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 			allowed = append(allowed, quote(literal.String))
 		}
 	}
-	checked := fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => adamicViewArrayElement(value, %s, %d, %s, [%s], %t))", array, index, read.Relative, quote(read.View), read.Element, quote(read.ViewType), strings.Join(allowed, ", "), !read.UndefinedAllowed)
+	checked := fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => adamicViewArrayElement(value, %s, %d, %s, [%s], %t), %s, %s)", array, index, read.Relative, quote(read.View), read.Element, quote(read.ViewType), strings.Join(allowed, ", "), !read.UndefinedAllowed, quote(read.View), quote(read.ViewType))
 	return checked
 }
 
 const viewArrayOperationsRuntime = `const adamicArrayStorage = new WeakMap();
-const adamicArrayStorageValue = (array, storage) => { adamicArrayStorage.set(array, storage); return array; };
+const adamicArrayStorageKind = storage => storage >= 3 && storage <= 6 || storage === 8 || storage >= 10 ? 10 : storage;
+const adamicArrayStorageValue = (array, storage) => { adamicArrayStorage.set(array, adamicArrayStorageKind(storage)); return array; };
 const adamicViewSlice = (array, arguments_) => adamicArrayStorageValue(array.slice(...arguments_), adamicArrayStorage.get(array));
-const adamicArrayWriteCheck = (array, storage) => { const actual = adamicArrayStorage.get(array); if (actual !== storage) panic("element read failed: <array write> expected " + (storage === 7 ? "number" : adamicViewTypeNames[storage] || "uncertified storage") + ", found " + (actual === 7 ? "number" : adamicViewTypeNames[actual] || "uncertified storage")); };
+const adamicArrayWriteCheck = (array, storage) => { const actual = adamicArrayStorage.get(array); const wanted = adamicArrayStorageKind(storage); if (actual === undefined) return; if (actual !== wanted) panic("element read failed: <array write> expected " + (wanted === 10 ? "heap pointers" : wanted === 7 ? "number" : adamicViewTypeNames[wanted] || "uncertified storage") + ", found " + (actual === 10 ? "heap pointers" : actual === 7 ? "number" : adamicViewTypeNames[actual] || "uncertified storage")); };
 const adamicViewMap = (array, callback, check) => adamicMap(array, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
 const adamicViewVisit = (array, method, callback, check) => adamicVisit(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
 const adamicViewFind = (array, method, callback, check) => adamicFind(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));

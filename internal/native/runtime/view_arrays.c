@@ -12,7 +12,7 @@ static void array_view_failure(const char *expression, const char *expected, con
 }
 
 static const char *array_storage_name(unsigned char storage) {
-    return storage == 1 || storage == 7 ? "number" : storage == 2 || storage == 9 ? "boolean" : storage == 3 ? "string" : storage == 4 ? "object" : storage == 5 ? "array" : storage == 6 ? "Map" : storage == 8 ? "function" : "uncertified storage";
+    return storage == 1 || storage == 7 ? "number" : storage == 2 || storage == 9 ? "boolean" : storage == 3 ? "string" : storage == 4 ? "object" : storage == 5 ? "array" : storage == 6 ? "Map" : storage == 8 ? "function" : storage == 10 ? "heap pointers" : "uncertified storage";
 }
 
 void adamic_array_view_storage(adamic_array *array, unsigned char storage) {
@@ -20,7 +20,9 @@ void adamic_array_view_storage(adamic_array *array, unsigned char storage) {
 }
 
 void adamic_view_array_storage_check(const adamic_array *array, unsigned char storage, const char *expression) {
-    if (array->element_kind != (array->references ? 10 : storage)) { array_view_failure(expression, array_storage_name(storage), array_storage_name(array->element_kind)); }
+    unsigned char wanted = (storage >= 3 && storage <= 6) || storage == 8 || storage >= 10 ? 10 : storage;
+    unsigned char actual = array->references ? 10 : array->element_kind;
+    if (actual != wanted) { array_view_failure(expression, array_storage_name(wanted), array_storage_name(actual)); }
 }
 
 adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot) {
