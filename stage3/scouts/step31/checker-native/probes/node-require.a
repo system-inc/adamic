@@ -1,0 +1,3 @@
+import type {} from "node:util";
+const path = require("node:path");
+console.log(path.basename("/tmp/leaf"));
