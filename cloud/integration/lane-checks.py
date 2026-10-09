@@ -9,6 +9,8 @@ stands, no tests run here; these refuse a violator at its own landing, with the 
 - The t.Parallel analyzer (cmd/adamic-gate's TestEveryTestIsParallelOrSaysWhy, which only reads the tree): a
   changed test file's top-level test either calls Parallel() first or says why not.
 - go vet on the changed test packages, when it finishes inside 10 s; past that it's skipped and said so.
+- a-check on each added or changed .a outside a Go package's tree (and not a-check-exempt): stage 0's front end,
+  as the gate runs it, since a-check type-checks every such .a in the tree.
 
 usage: lane-checks.py <old main> <tree> <commit holding the tree>   (push-main, from the merge tree)
 Prints one summary line and exits 0, or prints each violation and exits 1.
@@ -75,9 +77,29 @@ for path in goFiles:
             if declared and name not in declared:
                 problems.append(f"{path}:{number} runs {name}, which cloud/fast-gate/tools.txt doesn't declare (declare it on devtools/fast-gate, or don't shell out)")
 
-# The analyzer and vet need the tree on disk: the lane's own worktree, moved to this commit.
+# a-check type-checks every .a outside a Go package's tree, so a .a is never test-only to it (@system_adamic, Oct 9
+# 08:22: a review/ witness that didn't type-check reddened main's canary through this lane). The same selection as the
+# gate's: no package directory at or above it, and no a-check-exempt glob in developer tools' executors.txt.
+aFiles = [path for path in changed if path.endswith(".a")]
+aChecked = []
+if aFiles:
+    import fnmatch
+    goDirectories = {os.path.dirname(path) for path in run("git", "ls-tree", "-r", "--name-only", tree).stdout.split() if path.endswith(".go")}
+
+    def owned(path):
+        directory = os.path.dirname(path)
+        while directory:
+            if directory in goDirectories:
+                return True
+            directory = os.path.dirname(directory)
+        return False
+    exemptions = [line.split()[1] for line in run("git", "show", f"{toolsRef}:cloud/fast-gate/executors.txt").stdout.splitlines()
+                  if line.startswith("a-check-exempt") and len(line.split()) >= 2]
+    aChecked = [path for path in aFiles if not owned(path) and not any(fnmatch.fnmatchcase(path, glob) for glob in exemptions)]
+
+# The analyzer, a-check and vet need the tree on disk: the lane's own worktree, moved to this commit.
 testPackages = sorted({"./" + os.path.dirname(path) for path in goFiles if path.endswith("_test.go")})
-if testPackages and not problems:
+if (testPackages or aChecked) and not problems:
     if not inPlace and not os.path.isdir(laneTree):
         run("git", "worktree", "add", "-q", "--detach", laneTree, commit)
     checkedOut = run("true") if inPlace else run("git", "-C", laneTree, "checkout", "-q", "--detach", "--force", commit)
@@ -109,7 +131,44 @@ if testPackages and not problems:
                         problems.append(f"{path} {test}: call the test parameter's Parallel() as the first statement, or add // Not parallel: <shared state> above it")
         else:
             notes.append("no t.Parallel analyzer on this tree")
+        # a-check, as the gate runs it (run.py aCheck): stage 0's front end on each file; a clean result or a
+        # "can't lower ... yet" stop passes, and a first line "// a-check: refused <rule>" or "// a-check: type
+        # error <code>" must fail exactly that way.
+        if aChecked:
+            with tempfile.TemporaryDirectory() as binaries:
+                adamic = os.path.join(binaries, "adamic")
+                built = run("go", "build", "-o", adamic, "./cmd/adamic", cwd=laneTree, timeout=300, env=goEnvironment)
+                if built.returncode != 0:
+                    problems.append("a-check couldn't build cmd/adamic: " + (built.stdout + built.stderr).strip().splitlines()[-1][:200])
+                for path in aChecked if built.returncode == 0 else []:
+                    with open(os.path.join(laneTree, path), errors="replace") as handle:
+                        header = handle.readline().strip()
+                    expect = header[len("// a-check:"):].strip() if header.startswith("// a-check:") else ""
+                    errors = run(adamic, "c", path, cwd=laneTree, timeout=120)
+                    text = errors.stderr
+                    if errors.returncode == 0 or ("can't lower" in text and " yet" in text):
+                        outcome = "checked"
+                    elif "Adamic 0.1 refuses" in text:
+                        outcome = "refused"
+                    elif " error TS" in text:
+                        outcome = "type error"
+                    else:
+                        outcome = "failed"
+                    if expect.startswith("refused"):
+                        ok = outcome == "refused" and expect[len("refused"):].strip() in text
+                    elif expect.startswith("type error"):
+                        code = expect[len("type error"):].strip()
+                        ok = outcome == "type error" and (not code or ("error " + code) in text)
+                    else:
+                        ok = outcome == "checked"
+                    if not ok:
+                        first = text.strip().splitlines()[0][:200] if text.strip() else ""
+                        problems.append(f"a-check: {path}: {outcome}, expected {expect or 'checked'} ({first})")
+            notes.append(f"a-check {len(aChecked)} .a files")
         try:
+            if not testPackages:
+                # Only a .a brought the tree here; there's nothing to vet.
+                raise LookupError
             vetted = run("go", "vet", *testPackages, cwd=laneTree, timeout=vetSeconds, env=goEnvironment)
             # A finding names a file and position; a package that can't load here (it needs the cohere
             # submodule, say) is the gate's to vet, not a reason to refuse.
@@ -135,6 +194,8 @@ if testPackages and not problems:
                 notes.append("vet couldn't load every package here: " + (vetted.stdout + vetted.stderr).strip().splitlines()[-1][:120])
             else:
                 notes.append(f"vet {len(testPackages)} packages")
+        except LookupError:
+            pass
         except subprocess.TimeoutExpired:
             notes.append(f"vet skipped, over {vetSeconds} s")
 
