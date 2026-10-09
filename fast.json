@@ -1,0 +1,4237 @@
+{
+  "sha": "d24cba2659a58b6ba26b7827cdfe0e54169a0fcd",
+  "branch": "gate-mutant/wasi-family-must-run",
+  "branch_source": "given",
+  "session": "",
+  "session_source": "none",
+  "base": "946a8f095a7fa419a92117406314b7b3d44630f0",
+  "base_name": "main",
+  "tools_sha": "0b76ca8b88a0ddfc9c44d17666b80bc4cbd93b40",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": true,
+  "box_load": {
+    "start": {
+      "load_1m": 7.2,
+      "cores": 64
+    },
+    "end": {
+      "load_1m": 10.6,
+      "cores": 64
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "d169e076c3b0ea2eb0062808650403e6c2212217",
+  "deferred_run_by_request": [
+    "github.com/system-inc/adamic/internal/native TestWASI"
+  ],
+  "compiler_consumers_without_test_package": [
+    "stage3/drivers/parser/build-metrics/main.go",
+    "stage3/drivers/scanner/build-metrics.go"
+  ],
+  "compiler_dependency_map": {
+    "root": "/home/cloud/fast-gate/tools-2 + /home/cloud/fast-gate/tree-2",
+    "path": "cloud/fast-gate/compiler-dependencies.json"
+  },
+  "selected_compiler_drivers": [
+    "stage3/drivers/parser",
+    "stage3/drivers/scanner",
+    "stage3/drivers/tsc",
+    "stage3/drivers/tsc-entry"
+  ],
+  "oracle_selection": {
+    "whole": true,
+    "reason": "compiler dependency changed"
+  },
+  "direct_packages": [
+    "github.com/system-inc/adamic/internal/native"
+  ],
+  "reads": [
+    {
+      "line": 104,
+      "package": "cmd/adamic-test262",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/adamic.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 160,
+      "package": "internal/fuzz",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/adamic.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 392,
+      "package": "stage1/cohere/css",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/adamic.c"
+      ],
+      "map_changed": false
+    },
+    {
+      "line": 1455,
+      "package": "stage1/typescript/scanner",
+      "glob": "internal/native/runtime/*.c",
+      "paths": [
+        "internal/native/runtime/adamic.c"
+      ],
+      "map_changed": false
+    }
+  ],
+  "unchecked_a_files": [],
+  "a_check_exempt": [],
+  "executors": {},
+  "uncovered_files": [],
+  "coverage_enforced": true,
+  "changed_files": [
+    "internal/native/runtime/adamic.c"
+  ],
+  "packages": [
+    "github.com/system-inc/adamic/bench",
+    "github.com/system-inc/adamic/bench/regex",
+    "github.com/system-inc/adamic/bridge/tsgo",
+    "github.com/system-inc/adamic/cloud",
+    "github.com/system-inc/adamic/cloud/reports/decode-ascii",
+    "github.com/system-inc/adamic/cmd/adamic",
+    "github.com/system-inc/adamic/cmd/adamic-fuzz",
+    "github.com/system-inc/adamic/cmd/adamic-gate",
+    "github.com/system-inc/adamic/cmd/adamic-gocacheprog",
+    "github.com/system-inc/adamic/cmd/adamic-meter",
+    "github.com/system-inc/adamic/cmd/adamic-reduce",
+    "github.com/system-inc/adamic/cmd/adamic-stage1-progress",
+    "github.com/system-inc/adamic/cmd/adamic-test262",
+    "github.com/system-inc/adamic/cmd/lint-shards",
+    "github.com/system-inc/adamic/internal/buildcache",
+    "github.com/system-inc/adamic/internal/buildcache/cmd/productidentity",
+    "github.com/system-inc/adamic/internal/childguard",
+    "github.com/system-inc/adamic/internal/corpusfiles",
+    "github.com/system-inc/adamic/internal/flow",
+    "github.com/system-inc/adamic/internal/fresh",
+    "github.com/system-inc/adamic/internal/fuzz",
+    "github.com/system-inc/adamic/internal/ir",
+    "github.com/system-inc/adamic/internal/javascript",
+    "github.com/system-inc/adamic/internal/load",
+    "github.com/system-inc/adamic/internal/lower",
+    "github.com/system-inc/adamic/internal/native",
+    "github.com/system-inc/adamic/internal/oracle",
+    "github.com/system-inc/adamic/internal/regexp",
+    "github.com/system-inc/adamic/internal/testguard",
+    "github.com/system-inc/adamic/internal/unicodeproperties",
+    "github.com/system-inc/adamic/stage1/cohere/css",
+    "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+    "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+    "github.com/system-inc/adamic/stage1/cohere/estree",
+    "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+    "github.com/system-inc/adamic/stage1/cohere/gitignore",
+    "github.com/system-inc/adamic/stage1/cohere/graphql",
+    "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+    "github.com/system-inc/adamic/stage1/cohere/json",
+    "github.com/system-inc/adamic/stage1/cohere/lint",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+    "github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments",
+    "github.com/system-inc/adamic/stage1/cohere/lint/inventory",
+    "github.com/system-inc/adamic/stage1/cohere/lint/regex",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-negation",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias",
+    "github.com/system-inc/adamic/stage1/cohere/lint/shards",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_classes",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_entities",
+    "github.com/system-inc/adamic/stage1/cohere/markdownblocks/tools/generate_width",
+    "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+    "github.com/system-inc/adamic/stage1/cohere/mediaquery",
+    "github.com/system-inc/adamic/stage1/cohere/selector",
+    "github.com/system-inc/adamic/stage1/cohere/static_single_assignment",
+    "github.com/system-inc/adamic/stage1/cohere/suppression",
+    "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+    "github.com/system-inc/adamic/stage1/cohere/typeaware",
+    "github.com/system-inc/adamic/stage1/cohere/values",
+    "github.com/system-inc/adamic/stage1/cohere/yaml",
+    "github.com/system-inc/adamic/stage1/typescript/parser",
+    "github.com/system-inc/adamic/stage1/typescript/scanner",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite",
+    "github.com/system-inc/adamic/stage3/census/latent/refusalrewrite/cmd",
+    "github.com/system-inc/adamic/stage3/census/latent/replay",
+    "github.com/system-inc/adamic/stage3/census/latent/statecopy",
+    "github.com/system-inc/adamic/stage3/census/latent/statementrewrite",
+    "github.com/system-inc/adamic/stage3/census/tool",
+    "github.com/system-inc/adamic/stage3/drivers/parser/probe",
+    "github.com/system-inc/adamic/stage3/fixtures",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259",
+    "github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08"
+  ],
+  "unowned_files": [],
+  "smoke_list": "cloud/fast-gate/smoke.txt",
+  "smoke_list_source": {
+    "root": "/home/cloud/fast-gate/tools-2",
+    "from": "tools checkout"
+  },
+  "smoke_list_blob": "eb1bc6ebef73bbea46cfbe96f12512edcc7a19b7",
+  "smoke_fixtures": [
+    "TestNativeAgreesWithNode internal/oracle/testdata/array_from_length.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/bitwise.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/borrow_chain_reassigned.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/call_targets_sort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/casts.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/class_oct6_parameters.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/classes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/closures_throw_uncaught.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_abstract.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/enums_names.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/exceptions_empty.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/finally_leaves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/fresh_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/generic_method_return.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/inherited_static_field_read.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/json_stringify_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/library_object_freeze_write.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/lint_runtime_search_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/map_zero_keys.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/maybe_boolean_panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/narrowed_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/nbody_runtime_fields.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/normalize_form.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/number_parsing.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/optional_numbers.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/override_same_representation.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/panic.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/regions_constructor_capture.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/reuse_global_sibling.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/route_targets_accessor.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/search_halves.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/set_foreach_fnexpr.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/spread_calls.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/stack_forever.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/string_too_long.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/throw_in_writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/timsort.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/typeof_string_literal.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/undefined_elements.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/utf8_view_fails.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/weak_narrowed.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/writes.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/devirtualize_modules/main.a",
+    "TestNativeAgreesWithNode internal/oracle/testdata/modules/main.a",
+    "TestWASIInputAgreesWithNode internal/oracle/testdata/walk.a"
+  ],
+  "test_outcomes": [],
+  "test_starts": [],
+  "product_units": [
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_ApiDriver",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_HealthyRegion",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_LeakArchive",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_LeakDriver",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_LengthArchive",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_LengthDriver",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_LinkageTest",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_Oracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_RegionNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_RegionStage0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_SanitizedNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_Stage0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_StaleArchive",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_StaleDriver",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_TsgoArchive",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_TsgoSanitizedArchive",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_WrongArchive",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/bridge/tsgo",
+      "test": "TestProduct_WrongNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSCompositionCorpusOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSCompositionGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSCompositionLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSCompositionNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserClosingBraceMutantLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserClosingBraceMutantNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserCommentMutantLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserCommentMutantNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserCorpus",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserCustomPropertyMutantLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserCustomPropertyMutantNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserDarwinLeaks",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserParserLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSParserParserNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSPrinterDarwinLeaks",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSPrinterIndentMutant",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSPrinterOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSPrinterParserOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSPrinterSanitizedAndLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSPrinterSemicolonMutant",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/css",
+      "test": "TestProduct_CSSPrinterWidthMutant",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersFastNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersGoAnswers",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersMutant0Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersMutant0Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersMutant1Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersMutant1Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersMutant2Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersMutant2Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersPortLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssnumbers",
+      "test": "TestProduct_CSSNumbersPortNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsFastNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsGoAnswers",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsMutant0Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsMutant0Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsMutant1Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsMutant1Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsMutant2Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsMutant2Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsPortLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/cssstrings",
+      "test": "TestProduct_CSSStringsPortNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_AcceptanceCatchLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_AcceptanceCatchNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_AcceptanceClassLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_AcceptanceClassNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_AcceptanceOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_DeepMutantsFixture",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_DeepMutantsIR0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_DeepMutantsIR1",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_DeepMutantsIR2",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_DeepMutantsLowered0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_DeepMutantsLowered1",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_DeepMutantsLowered2",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_DeepMutantsNative0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_DeepMutantsNative1",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_DeepMutantsNative2",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_EstreeBoundedAnswers",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_EstreeBoundedPort",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_EstreeExportAnswers",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_EstreeExportPort",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_EstreeExportSource",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_EstreeGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_EstreeLoweredRecipeA",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_EstreeLoweredRecipeB",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_EstreeStallPort",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_EstreeStallSource",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_LossyInputControlLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_LossyInputControlNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_RecoveryMutantsAnswer",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_RecoveryMutantsLowered0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_RecoveryMutantsLowered1",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_RecoveryMutantsLowered2",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_RecoveryMutantsNative0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_RecoveryMutantsNative1",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_RecoveryMutantsNative2",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantIR_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantIR_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantIR_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantLowered_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantLowered_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantLowered_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantNative_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantNative_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantNative_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantsGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantsSetup_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantsSetup_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_SyntaxMutantsSetup_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_ThreePortLowered0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_ThreePortLowered1",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_ThreePortLowered2",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_ThreePortNative0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_ThreePortNative1",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_ThreePortNative2",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_ThreePortOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_UnattachedDecoratorIR",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_UnattachedDecoratorLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_UnattachedDecoratorNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_scalar_edges_go_oracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_scalar_edges_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/estree",
+      "test": "TestProduct_scalar_edges_sanitized_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeBareAdamicName",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeDanglingGit",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeDanglingLink",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeDanglingPrettierignore",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeLinkLoop",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeQuoteDEL",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeQuoteMark",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeTrailingDot",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeUTF16Sort",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeUnsanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/formatfiles",
+      "test": "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantDefaults",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantLowered000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantLowered001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantLowered002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantSanitized000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantSanitized001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantSanitized002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantSource000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantSource001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLMutantSource002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLPrinterDefaults",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLPrinterGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLPrinterLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLPrinterNarrow",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLPrinterOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLPrinterRelease",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLPrinterSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLPrinterSource",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLPrinterTabs",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/graphql/printer",
+      "test": "TestProduct_GraphQLPrinterTight",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProduct_JSONGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProduct_JSONLoweredPort",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProduct_JSONNativeRelease",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProduct_JSONNativeSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/json",
+      "test": "TestProduct_JSONUpstreamOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_CompilerAgreementGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_CompilerAgreementLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_CompilerAgreementReleaseNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_CompilerAgreementSanitizedNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_CompleteSuggestionGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_CompleteSuggestionLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_CompleteSuggestionMutantLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_CompleteSuggestionNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_DecodedOptionsGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_DecodedOptionsLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_DecodedOptionsMutantLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_DecodedOptionsNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_DotARenameOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_DotARenameSource",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_EmittedMismatchLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_EmittedMismatchNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_EmittedMismatchOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_FactoryHooksLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_FactoryHooksMutantLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_FactoryHooksNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutantNativeCanary",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_adamic_no_type_predicate",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_base_boundary_no_global_container",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_base_consistency_no_console",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_base_consistency_no_hand_built_declared_error",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_base_consistency_require_pagination_argument_name",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_eqeqeq",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_max_classes_per_file",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_max_depth",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_max_nested_callbacks",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_nexus_consistency_no_abbreviated_identifier",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_nexus_consistency_no_ambiguous_identifier",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_nexus_consistency_no_enum",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_nexus_consistency_no_for_in",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_nexus_consistency_no_long_line_comment",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_nexus_consistency_no_multiline_arrow_function",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_nexus_consistency_no_shouting",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_nexus_consistency_no_single_line_jsdoc",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_nexus_consistency_no_stuttering_name",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_nexus_consistency_require_type_suffix",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_await_in_loop",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_bitwise",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_caller",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_continue",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_debugger",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_div_regex",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_duplicate_case",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_empty",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_empty_character_class",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_empty_pattern",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_empty_static_block",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_ex_assign",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_iterator",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_labels",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_multi_assign",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_negated_condition",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_new",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_octal_escape",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_plusplus",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_proto",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_return_assign",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_script_url",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_self_compare",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_sequences",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_sparse_arrays",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_template_curly_in_string",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_underscore_dangle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_unexpected_multiline",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_unneeded_ternary",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_unsafe_finally",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_unsafe_negation",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_unsafe_optional_chaining",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_unused_private_class_members",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_useless_catch",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_useless_concat",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_useless_constructor",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_var",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_warning_comments",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_no_with",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_prefer_destructuring",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_prefer_template",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_react_forward_ref_uses_ref",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_react_jsx_no_comment_textnodes",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_react_no_find_dom_node",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_react_no_is_mounted",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_react_no_redundant_should_component_update",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_require_yield",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_typescript_adjacent_overload_signatures",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_typescript_init_declarations",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_typescript_method_signature_style",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_typescript_no_this_alias",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_typescript_no_wrapper_object_types",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_typescript_prefer_literal_enum_member",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_unicode_bom",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintMutant_vars_on_top",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintOwnedWitnessesLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_LintOwnedWitnessesSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_NodeTableCapture",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_NodeTableEmitted",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_NodeTableLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_NodeTableNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_NodeTableOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ProfileCompilationC",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ProfileCompilationCounted",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ProfileCompilationJavaScript",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ProfileCompilationLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ProfileCompilationOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ProfileCompilationOracleOutputs",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ProfileCompilationProfiled",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ProfileCompilationScanner",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_RulesAgreeCapture",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_RulesAgreeLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_RulesAgreeNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_RulesAgreeOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ShardsAgreeCapture",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ShardsAgreeLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ShardsAgreeNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ShardsAgreeOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_ShardsAgreePrepared",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_SuggestionAlongsideGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_SuggestionAlongsideLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_SuggestionAlongsideNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_WitnessScriptKindGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_WitnessScriptKindLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_WitnessScriptKindNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_YepestaOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_jsx_membership",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_jsx_parser",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_jsx_tree_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_jsx_tree_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint",
+      "test": "TestProduct_jsx_tree_setup",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "test": "TestProduct_HelperMutantsJSON",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "test": "TestProduct_HelperMutantsMessage",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "test": "TestProduct_HelperMutantsOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "test": "TestProduct_HelperMutantsSchema",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/lint/helpers",
+      "test": "TestProduct_HelperMutantsStrict",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdownEntitiesGenerator",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdownFormatter",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdownWidthGenerator",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_decode_go",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_decode_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_decode_release",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_decode_sanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_mdast_go",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_mdast_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_mdast_release",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_mdast_sanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_path_go",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_path_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_path_release",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_path_sanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_width_go",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_width_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_width_release",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_GrainMarkdown_width_sanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownIdentifierGo",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownIdentifierLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownIdentifierNativeRelease",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownIdentifierNativeSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownLeafGoDocLayout",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownLeafGoLists",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownLeafLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownLeafNativeRelease",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownLeafNativeSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownMalformedEventsGo",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownMalformedEventsLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownMalformedEventsNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownQuote_layout",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownQuote_lists",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownQuote_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownQuote_native_false",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownQuote_native_true",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownStructure_adamic_markdown_doclayout",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownStructure_adamic_markdown_lists",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownStructure_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownStructure_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTable_document",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTable_list",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTable_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTable_native_false",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTable_native_true",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTextFormatter",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTextGenerator",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTextGo",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTextLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTextNativeRelease",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownTextNativeSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownWhitespace_layout",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownWhitespace_lists",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownWhitespace_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownWhitespace_manifest",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownWhitespace_native_false",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownWhitespace_native_true",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownWhitespace_policy_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_MarkdownWhitespace_policy_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_TokenizerEventsGo",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_TokenizerEventsLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_TokenizerEventsNativeRelease",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdownblocks",
+      "test": "TestProduct_TokenizerEventsNativeSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineFenceLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineFenceNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineFenceNode",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineFenceSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineGoOverlay",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineNode",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineOriginalLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineOriginalNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineOriginalSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineParityLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineParityNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineParityNode",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlineParitySanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlinePipeLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlinePipeNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlinePipeNode",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlinePipeSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlinePlantedLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlinePlantedNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/markdowninline",
+      "test": "TestProduct_MarkdownInlinePlantedSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterExpressionsCorpus",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterExpressionsLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterExpressionsRelease",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterExpressionsSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterGoOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_003",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_004",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_005",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_006",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_007",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_008",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_009",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_010",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_011",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_012",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_013",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_014",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_015",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_016",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_017",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_018",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_019",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_020",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_021",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_022",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_023",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_024",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_025",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_026",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_027",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantNative_028",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_003",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_004",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_005",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_006",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_007",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_008",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_009",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_010",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_011",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_012",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_013",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_014",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_015",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_016",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_017",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_018",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_019",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_020",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_021",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_022",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_023",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_024",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_025",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_026",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_027",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterMutantOracle_028",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsCorpus",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_003",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_004",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_005",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_006",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_007",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_008",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_009",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_010",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_011",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_012",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_013",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_014",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsEmbedded_015",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_003",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_004",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_005",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_006",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_007",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_008",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_009",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_010",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_011",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_012",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_013",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_014",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsNPM_015",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsRelease",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterStatementsSanitized",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterTSCExpressionsCorpus",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterTSCManifest",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/tsprinter",
+      "test": "TestProduct_TSPrinterTSCStatementsCorpus",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_checker",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_checker_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_corpus_checker",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_corpus_checker_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_corpus_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_corpus_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_corpus_native_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_corpus_oracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_corpus_record",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_corpus_stage0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_facts_cost_go",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_facts_cost_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_facts_cost_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_profile_controls_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_profile_controls_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_profile_controls_native_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_profile_missing_binding",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_profile_mutant_binding_slot",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_profile_mutant_first_binding",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_profile_mutant_scope_containment",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_query_cost_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_query_cost_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_six_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_six_oracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_stage0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_suite",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_suite_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_type_symbol_archive",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_type_symbol_fixtures",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_type_symbol_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_type_symbol_oracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_type_symbol_truth",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_typeaware_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_typeaware_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_typeaware_native_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_typeaware_oracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_apparent_shape",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_apparent_shape_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_archive_checker",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_archive_checker_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_assignable_types",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_assignable_types_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_base_shapes",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_base_shapes_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_call_count",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_call_count_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_call_parameters",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_call_parameters_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_call_returns",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_call_returns_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_contextual_shape",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_contextual_shape_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_enum_types",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_enum_types_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_oracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_property_info",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_property_info_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_property_shape",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_property_shape_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_released_handle_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_released_registry",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_released_registry_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_released_source",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_scope_locals",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_scope_locals_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_symbol_origin",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_symbol_origin_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_type_origin",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_type_origin_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_volume",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_volume_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_volume_source",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_widened_shape",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_agreement_widened_shape_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_guard_archive_checker",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_guard_archive_checker_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_guard_archive_strict_this_checker",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_guard_oracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_guard_stage0",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_guard_strict_this_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_guard_volume",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_guard_volume_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_native_asan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/typeaware",
+      "test": "TestProduct_volume_oracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant000Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant000Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant000Sources",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant001Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant001Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant001Sources",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant002Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant002Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant002Sources",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant003Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant003Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant003Sources",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant004Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant004Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant004Sources",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant005Lowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant005Native",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutant005Sources",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YAMLFormatterMutantsOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YamlScalarsGo",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YamlScalarsLowered",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/cohere/yaml",
+      "test": "TestProduct_YamlScalarsNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_CompilerExpressionsLower",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_CompilerExpressionsNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsLower000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsLower001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsLower002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsLower003",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsNative000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsNative001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsNative002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsNative003",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsSource001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsSource002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ExpressionsSource003",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsLower_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsLower_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsLower_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsLower_003",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsLower_004",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsLower_005",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsLower_006",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsLower_007",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsLower_008",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsLower_Control",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsNative_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsNative_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsNative_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsNative_003",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsNative_004",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsNative_005",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsNative_006",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsNative_007",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsNative_008",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsNative_Control",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_JsxMutantsOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_NodeCountLower",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_NodeCountNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_NodeCountOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_ParserOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_WholeMutantsLower_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_WholeMutantsLower_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_WholeMutantsLower_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_WholeMutantsLower_Control",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_WholeMutantsNative_000",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_WholeMutantsNative_001",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_WholeMutantsNative_002",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+      "test": "TestProduct_WholeMutantsNative_Control",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "test": "TestProduct_ScannerDecimalSeparator",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "test": "TestProduct_ScannerNative",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "test": "TestProduct_ScannerOracle",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "test": "TestProduct_ScannerPunctuator",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "test": "TestProduct_ScannerRegexRescan",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "test": "TestProduct_ScannerRelease",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage1/typescript/scanner",
+      "test": "TestProduct_ScannerSourceIdentifier",
+      "product": true,
+      "status": "not run"
+    },
+    {
+      "package": "github.com/system-inc/adamic/stage3/fixtures",
+      "test": "TestProduct_FixtureOracleHook",
+      "product": true,
+      "status": "not run"
+    }
+  ],
+  "undeclared_tools": [],
+  "split_tally": {
+    "packages": 0,
+    "planned": 0,
+    "passed": 0,
+    "touched": 74
+  },
+  "emission_sha256": {
+    "internal/oracle/testdata/array_from_length.a": "ee8b2d882c9258626a4dcfbcffd035648e0ed943bd4b390bbd46bff5814a348b",
+    "internal/oracle/testdata/bitwise.a": "fd3681c39f5cfb107ddaf7398ca5b6498619818e31679fe9850c16d377429560",
+    "internal/oracle/testdata/borrow_chain_reassigned.a": "7d07fc61d8e517cd6dcad3791e8427c03bc60a721d2ca2bfb9f70c019ed3a230",
+    "internal/oracle/testdata/call_targets_sort.a": "8fdf976d88b1f1f4b564bcde2aa7c6b642d3cf0b9e378239f2ae2b7b79673bb4",
+    "internal/oracle/testdata/casts.a": "9cb15504b4bdedfbd23ca0d3bfda74bd4972beea5d917286ed08a2d742b1ca21",
+    "internal/oracle/testdata/class_oct6_parameters.a": "1094195b3fd8314300a75968493fed2627d06541e2591dc3e1dbf8c85337b289",
+    "internal/oracle/testdata/classes.a": "75e923f64e36773de6fe2e45f054043b162fe7847a8785dba7fc436aee291a2f",
+    "internal/oracle/testdata/closures_throw_uncaught.a": "1ccad9aa02ff6947ce58692385a05b55d22d22e9884c3cf3e5ddc03fa176982f",
+    "internal/oracle/testdata/devirtualize_abstract.a": "d9f42e02a75e5ea156b1aa5827e642c66e9b498ecf635698d39430d94a78f442",
+    "internal/oracle/testdata/devirtualize_modules/main.a": "1fe477a0cb140a571ecdf2f9f3193c9442a3c51e5dc386ddbdbda236a768d702",
+    "internal/oracle/testdata/enums_names.a": "1eb4ee1b47793ce8df5b4b72a5a1c2a27c3b6057f118f80b6ae71ae034ed4fab",
+    "internal/oracle/testdata/exceptions_empty.a": "828ff6cc0fff05638e3815a62be0c92db8d3e6f66f89cc6bf59c7cad9504d30f",
+    "internal/oracle/testdata/finally_leaves.a": "09f5ef02e9388d0f1b9e163e47135f35ad395cc2e9e5b87bf7c9117f60fc5175",
+    "internal/oracle/testdata/fresh_calls.a": "6457637b990d8228cfe3b9d11913270a2372a4252eaa8902fe2a36dde6cd6b09",
+    "internal/oracle/testdata/generic_method_return.a": "a6d9ad5e9e1c04cb1fbb6ac1c4e7851a88599825902758add92d4ec80e03764e",
+    "internal/oracle/testdata/inherited_static_field_read.a": "2c455df627edb7c31ee6d39176114946c982b326746eab64e2924504205aee31"
+  },
+  "heavy_skips": [],
+  "heavy_units": [],
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "Cloud",
+    "cpus": 64,
+    "load": [
+      10.6,
+      4.1,
+      3.0
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "products_over_budget": [],
+  "units": [],
+  "wall_seconds": 6.9,
+  "steps_seconds": {
+    "coverage": 0.0,
+    "tools": 0.1,
+    "vet": 2.9,
+    "smoke": 5.8,
+    "build": 5.8,
+    "products": 5.82,
+    "tests": 5.9,
+    "determinism": 5.9
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "coverage",
+    "tools",
+    "build",
+    "vet",
+    "products",
+    "tests",
+    "smoke",
+    "determinism",
+    "census"
+  ],
+  "stages_exit": {
+    "coverage": 0,
+    "tools": 0,
+    "vet": 0,
+    "smoke": 1,
+    "build": -9,
+    "products": 1,
+    "tests": 1,
+    "determinism": 1
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "stopped": {
+    "reason": "its suite's staged tools e02cb8390 were superseded by 0b76ca8b8",
+    "at_seconds": 6.8
+  },
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "fast",
+  "candidate": "15e7f9faa8733da808570aa6b63777161d1402c0",
+  "gated": "d24cba2659a58b6ba26b7827cdfe0e54169a0fcd",
+  "merged_onto": "946a8f095a7fa419a92117406314b7b3d44630f0"
+}
