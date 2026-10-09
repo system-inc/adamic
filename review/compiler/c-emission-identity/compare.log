@@ -1,0 +1,35 @@
+{
+  "diff_exit_code": 0,
+  "program_count": 19,
+  "tests": {
+    "TestSixRuleAgreementAndMutants": {
+      "program_count": 7,
+      "diff_exit_code": 0
+    },
+    "TestTypeAwareAgreementAndMutants": {
+      "program_count": 5,
+      "diff_exit_code": 0
+    },
+    "TestVolumeConfigGuardAndMutant": {
+      "program_count": 1,
+      "diff_exit_code": 0
+    },
+    "TestVolumeAgreementCompiler": {
+      "program_count": 1,
+      "diff_exit_code": 0
+    },
+    "TestCompositionMatchesGoUnion": {
+      "program_count": 1,
+      "diff_exit_code": 0
+    },
+    "TestCSSPrinterAgreesWithGo": {
+      "program_count": 4,
+      "diff_exit_code": 0
+    },
+    "TestUnicodeNodeShardPlantedFailure": {
+      "program_count": 0,
+      "diff_exit_code": 0
+    }
+  },
+  "comparator_mutant_exit_code": 1
+}

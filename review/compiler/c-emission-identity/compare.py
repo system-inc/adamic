@@ -22,6 +22,6 @@ for side in ['before','mutant']:
  d=Path('/tmp/cemit-diff-control')/side;d.mkdir(parents=True,exist_ok=True);shutil.copyfile(dirs['cut']/'six-released.c',d/'six-released.c')
 with Path('/tmp/cemit-diff-control/mutant/six-released.c').open('a') as f:f.write('/* planted emitted-byte disagreement */\n')
 with (root/'comparator-mutant.diff').open('w') as log:
- mutant=subprocess.run(['diff','-ru','/tmp/cemit-diff-control/before','/tmp/cemit-diff-control/mutant'],stdout=log,stderr=subprocess.STDOUT,timeout=30).returncode
+ mutant=subprocess.run(['diff','-ru','-U0','/tmp/cemit-diff-control/before','/tmp/cemit-diff-control/mutant'],stdout=log,stderr=subprocess.STDOUT,timeout=30).returncode
 assert mutant==1;result['comparator_mutant_exit_code']=mutant
 (root/'results.json').write_text(json.dumps(result,indent=2)+'\n');(root/'manifest.json').write_text(json.dumps(m,indent=2)+'\n');print(json.dumps(result,indent=2))
