@@ -92,3 +92,5 @@ Toolchain setup skipped; env.sh works, nproc=5. npm ci succeeded before baseline
   }
 ]
 ```
+
+Publication: the requested remote defense branch already contained b97c22ef. The first push was rejected as non-fast-forward. This session was moved intact to session-76c59c81, existing evidence was preserved at its original paths, and histories were merged without force pushing. Historical command paths in logs describe their original execution location. The copied Python drivers are execution records and refer to /tmp/defend-interface-cast; standalone diffs and logged go commands are the central replay artifacts.
