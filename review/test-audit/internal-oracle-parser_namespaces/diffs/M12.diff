@@ -1,0 +1,11 @@
+--- a/internal/lower/unknown.go
++++ b/internal/lower/unknown.go
+@@ -41,7 +41,7 @@
+ 				objects++
+ 			}
+ 		}
+-		if objects > 1 {
++		if objects > 2 {
+ 			return nil, &Refused{Where: l.program.Where(node), What: "in that narrows a union of object types (any object with the key passes)", Fix: "use a discriminant, or a Map"}
+ 		}
+ 	}

@@ -1,0 +1,1 @@
+adamic: /workspace/adamic/internal/lower/testdata/namespaces_notyet/reaching_direct.a:1:35: stage 0 can't lower a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration yet

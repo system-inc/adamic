@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:13:54.345716065Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:13:54.359249793Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded"}
+{"Time":"2026-10-09T11:13:54.359330282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Output":"=== RUN   TestPredicateDirectionCountsAreRecorded\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:54.359407759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Output":"=== PAUSE TestPredicateDirectionCountsAreRecorded\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:54.35941103Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded"}
+{"Time":"2026-10-09T11:13:54.359414406Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded"}
+{"Time":"2026-10-09T11:13:54.359416411Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Output":"=== CONT  TestPredicateDirectionCountsAreRecorded\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:55.043213353Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Output":"--- PASS: TestPredicateDirectionCountsAreRecorded (0.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:55.043278025Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Elapsed":0.68}
+{"Time":"2026-10-09T11:13:55.043311515Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:55.046130753Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.700s\n"}
+{"Time":"2026-10-09T11:13:55.046177129Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.7}

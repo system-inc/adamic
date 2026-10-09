@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T11:20:50.933815917Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:20:50.948139033Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant"}
+{"Time":"2026-10-09T11:20:50.948486004Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"=== RUN   TestParserCallableNamespaceMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:20:50.948542666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"=== PAUSE TestParserCallableNamespaceMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:20:50.948545732Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant"}
+{"Time":"2026-10-09T11:20:50.948549059Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant"}
+{"Time":"2026-10-09T11:20:50.94855091Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"=== CONT  TestParserCallableNamespaceMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:20:51.734268417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"    parser_namespaces_test.go:83: native attached function mutant survived: {stdout:[108 111 103 58 102 105 114 115 116 10 108 111 103 58 115 101 99 111 110 100 10 108 111 103 58 116 104 105 114 100 10 116 114 117 101 58 116 114 117 101 58 116 114 117 101 58 102 117 110 99 116 105 111 110 58 51 10 112 114 105 110 116 58 102 111 117 114 116 104 10 55 58 116 114 117 101 10] stderr:[] exitCode:0}\n","OutputType":"error"}
+{"Time":"2026-10-09T11:20:51.734768956Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"--- FAIL: TestParserCallableNamespaceMutant (0.79s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:20:51.734811593Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Elapsed":0.79}
+{"Time":"2026-10-09T11:20:51.734841937Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:20:51.734846147Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=1\n"}
+{"Time":"2026-10-09T11:20:51.734849128Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T11:20:51.734852045Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:20:51.737134611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.803s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:20:51.737155754Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.803}

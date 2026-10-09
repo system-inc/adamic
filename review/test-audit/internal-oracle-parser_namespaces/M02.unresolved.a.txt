@@ -1,0 +1,3 @@
+let read = () => Debug.isDebugging;
+console.log(`${read()}`);
+namespace Debug { export let isDebugging = false; }

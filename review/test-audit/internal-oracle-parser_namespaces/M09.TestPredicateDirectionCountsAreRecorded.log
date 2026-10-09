@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:17:40.071237636Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:17:40.085022044Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded"}
+{"Time":"2026-10-09T11:17:40.085121074Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Output":"=== RUN   TestPredicateDirectionCountsAreRecorded\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.085153332Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Output":"=== PAUSE TestPredicateDirectionCountsAreRecorded\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.085158038Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded"}
+{"Time":"2026-10-09T11:17:40.085166324Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded"}
+{"Time":"2026-10-09T11:17:40.085169226Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Output":"=== CONT  TestPredicateDirectionCountsAreRecorded\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.14606591Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Output":"    predicate_counts_test.go:95: invalid direction: {Direction:false Status:unobservable Reason:no narrowed read in the false region}\n","OutputType":"error"}
+{"Time":"2026-10-09T11:17:40.146145196Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Output":"--- FAIL: TestPredicateDirectionCountsAreRecorded (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.146152107Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPredicateDirectionCountsAreRecorded","Elapsed":0.06}
+{"Time":"2026-10-09T11:17:40.146188505Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.147971415Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.076s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:17:40.147998579Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.077}

@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -34,7 +34,7 @@
+ }
+ 
+ func (p *predicateFlowProof) refused(node *ast.Node, reason string) error {
+-	return &Refused{Where: p.l.program.Where(node), What: "a type predicate whose return is not proven (" + reason + ")", Fix: "inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
++	return &Refused{Where: p.l.program.Where(node), What: "a predicate whose return is not proven (" + reason + ")", Fix: "inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+ }
+ 
+ func (l *lowering) proveFlowPredicate(node *ast.Node) error {

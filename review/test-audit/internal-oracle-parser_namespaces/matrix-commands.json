@@ -1,0 +1,695 @@
+[
+  {
+    "id": "",
+    "label": "switched-control",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/base timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 0,
+    "wall": 22.94410396600142
+  },
+  {
+    "id": "",
+    "label": "family-baseline.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/base timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 11.284915034000733
+  },
+  {
+    "id": "",
+    "label": "family-baseline.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/base timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 8.338992245000554
+  },
+  {
+    "id": "",
+    "label": "family-baseline.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/base timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 6.273529525999038
+  },
+  {
+    "id": "M01",
+    "label": "M01.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 12.39995866100071
+  },
+  {
+    "id": "M01",
+    "label": "M01.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 1,
+    "wall": 4.328593474998343
+  },
+  {
+    "id": "M01",
+    "label": "M01.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 3.7350907549989643
+  },
+  {
+    "id": "M01",
+    "label": "M01.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 5.773977197997738
+  },
+  {
+    "id": "M01",
+    "label": "M01.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 2.698439887000859
+  },
+  {
+    "id": "M01",
+    "label": "M01.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 1,
+    "wall": 4.267843726000137
+  },
+  {
+    "id": "M02",
+    "label": "M02.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 0,
+    "wall": 6.22311905999959
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.31740127699959
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 3.477738596000563
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 5.977338453998527
+  },
+  {
+    "id": "M02",
+    "label": "M02.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 3.1235570200005895
+  },
+  {
+    "id": "M02",
+    "label": "M02.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 4.852605754997057
+  },
+  {
+    "id": "M03",
+    "label": "M03.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 6.637715469998511
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 1,
+    "wall": 4.151790885996888
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 2.9652619890002825
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 5.368138989000727
+  },
+  {
+    "id": "M03",
+    "label": "M03.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 2.8066675000009127
+  },
+  {
+    "id": "M03",
+    "label": "M03.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 1,
+    "wall": 8.642810098001064
+  },
+  {
+    "id": "M04",
+    "label": "M04.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 12.004513439998846
+  },
+  {
+    "id": "M04",
+    "label": "M04.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 1,
+    "wall": 7.440423539999756
+  },
+  {
+    "id": "M04",
+    "label": "M04.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 5.99172542299857
+  },
+  {
+    "id": "M04",
+    "label": "M04.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 14.87020318299983
+  },
+  {
+    "id": "M04",
+    "label": "M04.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 3.4170375899993815
+  },
+  {
+    "id": "M04",
+    "label": "M04.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 1,
+    "wall": 4.164557026000693
+  },
+  {
+    "id": "M05",
+    "label": "M05.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 6.650024647002283
+  },
+  {
+    "id": "M05",
+    "label": "M05.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 1,
+    "wall": 6.82293666500118
+  },
+  {
+    "id": "M05",
+    "label": "M05.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 4.741790906999086
+  },
+  {
+    "id": "M05",
+    "label": "M05.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 6.355110561999027
+  },
+  {
+    "id": "M05",
+    "label": "M05.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 3.450457105998794
+  },
+  {
+    "id": "M05",
+    "label": "M05.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 1,
+    "wall": 4.778618779000681
+  },
+  {
+    "id": "M06",
+    "label": "M06.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 0,
+    "wall": 8.370573801999853
+  },
+  {
+    "id": "M06",
+    "label": "M06.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.8841930409980705
+  },
+  {
+    "id": "M06",
+    "label": "M06.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 3.364568589000555
+  },
+  {
+    "id": "M06",
+    "label": "M06.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 6.489086746001703
+  },
+  {
+    "id": "M06",
+    "label": "M06.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 3.147625262001384
+  },
+  {
+    "id": "M06",
+    "label": "M06.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 4.518460522998794
+  },
+  {
+    "id": "M07",
+    "label": "M07.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 6.457983044001594
+  },
+  {
+    "id": "M07",
+    "label": "M07.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.298971134998283
+  },
+  {
+    "id": "M07",
+    "label": "M07.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 1,
+    "wall": 2.703849134999473
+  },
+  {
+    "id": "M07",
+    "label": "M07.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 1,
+    "wall": 5.538383895000152
+  },
+  {
+    "id": "M07",
+    "label": "M07.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 2.9033810460023233
+  },
+  {
+    "id": "M07",
+    "label": "M07.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 4.625678637003148
+  },
+  {
+    "id": "M08",
+    "label": "M08.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 6.437844584001141
+  },
+  {
+    "id": "M08",
+    "label": "M08.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.124286077996658
+  },
+  {
+    "id": "M08",
+    "label": "M08.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 1,
+    "wall": 2.5841924120031763
+  },
+  {
+    "id": "M08",
+    "label": "M08.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 7.3254207049976685
+  },
+  {
+    "id": "M08",
+    "label": "M08.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 3.897253035000176
+  },
+  {
+    "id": "M08",
+    "label": "M08.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 4.85245942000256
+  },
+  {
+    "id": "M09",
+    "label": "M09.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 6.23798714899749
+  },
+  {
+    "id": "M09",
+    "label": "M09.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.384137709999777
+  },
+  {
+    "id": "M09",
+    "label": "M09.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 1,
+    "wall": 2.7041820359991107
+  },
+  {
+    "id": "M09",
+    "label": "M09.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 6.849661092001043
+  },
+  {
+    "id": "M09",
+    "label": "M09.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 2.7073951640013547
+  },
+  {
+    "id": "M09",
+    "label": "M09.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 4.9918075050009065
+  },
+  {
+    "id": "M10",
+    "label": "M10.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 6.549644262999209
+  },
+  {
+    "id": "M10",
+    "label": "M10.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.157352792000893
+  },
+  {
+    "id": "M10",
+    "label": "M10.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 1,
+    "wall": 3.807230726000853
+  },
+  {
+    "id": "M10",
+    "label": "M10.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 1,
+    "wall": 6.583313671999349
+  },
+  {
+    "id": "M10",
+    "label": "M10.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 2.8751758440012054
+  },
+  {
+    "id": "M10",
+    "label": "M10.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 4.970912439999665
+  },
+  {
+    "id": "M11",
+    "label": "M11.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 6.984198168000148
+  },
+  {
+    "id": "M11",
+    "label": "M11.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.3961134780001885
+  },
+  {
+    "id": "M11",
+    "label": "M11.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 4.083915983999759
+  },
+  {
+    "id": "M11",
+    "label": "M11.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 8.006389653000952
+  },
+  {
+    "id": "M11",
+    "label": "M11.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 1,
+    "wall": 2.9247743179985264
+  },
+  {
+    "id": "M11",
+    "label": "M11.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 5.003257407999627
+  },
+  {
+    "id": "M12",
+    "label": "M12.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 7.313675735000288
+  },
+  {
+    "id": "M12",
+    "label": "M12.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.272938542999327
+  },
+  {
+    "id": "M12",
+    "label": "M12.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 3.280302713999845
+  },
+  {
+    "id": "M12",
+    "label": "M12.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 5.783736402998329
+  },
+  {
+    "id": "M12",
+    "label": "M12.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 1,
+    "wall": 2.986990158999106
+  },
+  {
+    "id": "M12",
+    "label": "M12.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 4.683319083000242
+  },
+  {
+    "id": "M13",
+    "label": "M13.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 6.5004280480025045
+  },
+  {
+    "id": "M13",
+    "label": "M13.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.126615810000658
+  },
+  {
+    "id": "M13",
+    "label": "M13.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 3.006118080000306
+  },
+  {
+    "id": "M13",
+    "label": "M13.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 1,
+    "wall": 5.902132220999192
+  },
+  {
+    "id": "M13",
+    "label": "M13.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 3.0735765600002196
+  },
+  {
+    "id": "M13",
+    "label": "M13.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 6.25897867599997
+  },
+  {
+    "id": "M14",
+    "label": "M14.primary",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 1,
+    "wall": 7.752116649997333
+  },
+  {
+    "id": "M14",
+    "label": "M14.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.224984830001631
+  },
+  {
+    "id": "M14",
+    "label": "M14.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 3.2241597950014693
+  },
+  {
+    "id": "M14",
+    "label": "M14.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 1,
+    "wall": 5.5261083349978435
+  },
+  {
+    "id": "M14",
+    "label": "M14.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 2.8235653799965803
+  },
+  {
+    "id": "M14",
+    "label": "M14.family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-parser-stops)$/^(testdata|native-namespace-object-receiver\\.a|native-namespace-class\\.a|native-callable-namespace\\.a)$/^(namespace_method_receiver\\.a|namespace_class_registration\\.a|namespace_callable_properties\\.a|predicate_refusals)$/^oct8_predicates_(p14_overload_optional_chain_container|p27_overload_parameter_rebound)\\.a$'",
+    "exit": 0,
+    "wall": 4.545836088000215
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 1,
+    "wall": 3.011091161999502
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 1,
+    "wall": 2.4962686210019456
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 1,
+    "wall": 3.57119672099725
+  },
+  {
+    "id": "P01",
+    "label": "P01.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 1,
+    "wall": 2.615730959998473
+  },
+  {
+    "id": "P02",
+    "label": "P02.TestParserNamespace_family",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P02 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/P02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 1,
+    "wall": 3.9992093479995674
+  },
+  {
+    "id": "P02",
+    "label": "P02.TestPredicateDirectionCountsAreRecorded",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P02 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/P02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 1,
+    "wall": 3.7228718229998776
+  },
+  {
+    "id": "P02",
+    "label": "P02.TestPredicateMiscompileRefusals",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P02 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/P02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 1,
+    "wall": 5.43479090099936
+  },
+  {
+    "id": "P02",
+    "label": "P02.TestInUnionNarrowingIsRefused",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=P02 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/P02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 1,
+    "wall": 2.885848743000679
+  },
+  {
+    "id": "W01",
+    "label": "W01.TestParserCallableNamespaceMutant",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserCallableNamespaceMutant$'",
+    "exit": 1,
+    "wall": 3.608979681001074
+  },
+  {
+    "id": "W01",
+    "label": "W01.TestParserNamespaceClassRegistrationMutant",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserNamespaceClassRegistrationMutant$'",
+    "exit": 1,
+    "wall": 4.2596528560025035
+  },
+  {
+    "id": "W01",
+    "label": "W01.TestParserNamespaceReceiverMutant",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u067/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserNamespaceReceiverMutant$'",
+    "exit": 1,
+    "wall": 5.1379445019993
+  }
+]

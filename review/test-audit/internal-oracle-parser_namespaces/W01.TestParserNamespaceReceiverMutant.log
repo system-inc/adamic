@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T11:21:00.170383818Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:21:00.182013916Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant"}
+{"Time":"2026-10-09T11:21:00.182114887Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"=== RUN   TestParserNamespaceReceiverMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:21:00.182381833Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"=== PAUSE TestParserNamespaceReceiverMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:21:00.182388406Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant"}
+{"Time":"2026-10-09T11:21:00.182391526Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant"}
+{"Time":"2026-10-09T11:21:00.182393594Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"=== CONT  TestParserNamespaceReceiverMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:21:01.137018267Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"    parser_namespaces_test.go:175: native wrong receiver mutant survived: {stdout:[57 57 58 57 57 10 57 57 10] stderr:[] exitCode:0}\n","OutputType":"error"}
+{"Time":"2026-10-09T11:21:01.137555187Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"--- FAIL: TestParserNamespaceReceiverMutant (0.96s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:21:01.137566732Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Elapsed":0.96}
+{"Time":"2026-10-09T11:21:01.13759106Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:21:01.13759819Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=1\n"}
+{"Time":"2026-10-09T11:21:01.137601417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T11:21:01.137604213Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:21:01.139975211Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.969s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:21:01.140022654Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.97}

@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T11:08:05.442385937Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:08:05.463566572Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant"}
+{"Time":"2026-10-09T11:08:05.463663122Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"=== RUN   TestParserCallableNamespaceMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:05.463691977Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"=== PAUSE TestParserCallableNamespaceMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:05.463695532Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant"}
+{"Time":"2026-10-09T11:08:05.463699538Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant"}
+{"Time":"2026-10-09T11:08:05.463702148Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"=== CONT  TestParserCallableNamespaceMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:06.146917362Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"    parser_namespaces_test.go:85: native attached function confused with callable root caught by Node stdout\n"}
+{"Time":"2026-10-09T11:08:06.147776078Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"    parser_namespaces_test.go:85: javascript attached function confused with callable root caught by Node stdout\n"}
+{"Time":"2026-10-09T11:08:06.147829269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Output":"--- PASS: TestParserCallableNamespaceMutant (0.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:06.147834563Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserCallableNamespaceMutant","Elapsed":0.68}
+{"Time":"2026-10-09T11:08:06.147866729Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:06.147871047Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=1\n"}
+{"Time":"2026-10-09T11:08:06.147874172Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T11:08:06.147877579Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:08:06.151513697Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.709s\n"}
+{"Time":"2026-10-09T11:08:06.151561901Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.709}

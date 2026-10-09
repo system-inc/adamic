@@ -1,0 +1,195 @@
+--- before
++++ after
+@@ -102,8 +102,8 @@
+ let ready_8 = false;
+ let local_13_error_value;
+ let ready_13 = false;
+-let local_20_log_value;
+-let ready_20 = false;
++let local_15_log_value;
++let ready_15 = false;
+ 
+ function function_0_log(local_3_message) {
+ 	console.log(("log:" + local_3_message));
+@@ -146,154 +146,9 @@
+ 	function_1_error(local_12_message);
+ }
+ 
+-function function_7_namespace_ready(local_14_argument) {
+-	if ((!local_14_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'error')");
+-	}
+-	return true;
+-}
+-
+-function function_8_namespace_ready(local_15_argument) {
+-	if ((!local_15_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'log')");
+-	}
+-	return true;
+-}
+-
+-function function_9_namespace_read(local_16_argument, local_17_argument, local_18_argument) {
+-	return local_18_argument;
+-}
+-
+-function function_10_log_value(self, values) {
+-	let local_19_message = values[0];
+-	function_0_log(local_19_message);
+-}
+-
+-function function_11_namespace_ready(local_21_argument) {
+-	if ((!local_21_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'log')");
+-	}
+-	return true;
+-}
+-
+-function function_12_namespace_read(local_22_argument, local_23_argument) {
+-	return local_23_argument;
+-}
+-
+-function function_13_namespace_ready(local_24_argument) {
+-	if ((!local_24_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'log')");
+-	}
+-	return true;
+-}
+-
+-function function_14_namespace_read(local_25_argument, local_26_argument) {
+-	return local_26_argument;
+-}
+-
+-function function_15_namespace_ready(local_27_argument) {
+-	if ((!local_27_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'error')");
+-	}
+-	return true;
+-}
+-
+-function function_16_namespace_ready(local_28_argument) {
+-	if ((!local_28_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'log')");
+-	}
+-	return true;
+-}
+-
+-function function_17_namespace_read(local_29_argument, local_30_argument, local_31_argument) {
+-	return local_31_argument;
+-}
+-
+-function function_18_namespace_ready(local_32_argument) {
+-	if ((!local_32_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'error')");
+-	}
+-	return true;
+-}
+-
+-function function_19_namespace_ready(local_33_argument) {
+-	if ((!local_33_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'log')");
+-	}
+-	return true;
+-}
+-
+-function function_20_namespace_read(local_34_argument, local_35_argument, local_36_argument) {
+-	return local_36_argument;
+-}
+-
+-function function_21_namespace_ready(local_37_argument) {
+-	if ((!local_37_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'log')");
+-	}
+-	return true;
+-}
+-
+-function function_22_namespace_read(local_38_argument, local_39_argument) {
+-	return local_39_argument;
+-}
+-
+-function function_23_namespace_ready(local_40_argument) {
+-	if ((!local_40_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'error')");
+-	}
+-	return true;
+-}
+-
+-function function_24_namespace_ready(local_41_argument) {
+-	if ((!local_41_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'log')");
+-	}
+-	return true;
+-}
+-
+-function function_25_namespace_read(local_42_argument, local_43_argument, local_44_argument) {
+-	return local_44_argument;
+-}
+-
+-function function_26_namespace_ready(local_45_argument) {
+-	if ((!local_45_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'log')");
+-	}
+-	return true;
+-}
+-
+-function function_27_namespace_read(local_46_argument, local_47_argument) {
+-	return local_47_argument;
+-}
+-
+-function function_28_namespace_ready(local_48_argument) {
+-	if ((!local_48_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'level')");
+-	}
+-	return true;
+-}
+-
+-function function_29_namespace_ready(local_49_argument) {
+-	if ((!local_49_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'log')");
+-	}
+-	return true;
+-}
+-
+-function function_30_namespace_read(local_50_argument, local_51_argument, local_52_argument) {
+-	return local_52_argument;
+-}
+-
+-function function_31_namespace_ready(local_53_argument) {
+-	if ((!local_53_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'level')");
+-	}
+-	return true;
+-}
+-
+-function function_32_namespace_read(local_54_argument, local_55_argument) {
+-	return local_55_argument;
++function function_7_log_value(self, values) {
++	let local_14_message = values[0];
++	function_0_log(local_14_message);
+ }
+ 
+ local_6_log = false;
+@@ -304,8 +159,8 @@
+ ready_8 = true;
+ local_13_error_value = new AdamicClosure(function_6_error_value, [], false);
+ ready_13 = true;
+-local_20_log_value = new AdamicClosure(function_10_log_value, [], false);
+-ready_20 = true;
++local_15_log_value = new AdamicClosure(function_7_log_value, [], false);
++ready_15 = true;
+ local_0_level = (3);
+ ready_0 = true;
+ local_6_log = true;
+@@ -324,9 +179,9 @@
+ function_1_error("second");
+ return undefined;
+ })();
+-local_2_detached = function_9_namespace_read(function_8_namespace_ready(local_7_Debug), function_7_namespace_ready(local_6_log), local_13_error_value);
++local_2_detached = local_13_error_value;
+ ready_2 = true;
+ adamicCall(local_2_detached, ["third"]);
+-console.log((String((function_12_namespace_read(function_11_namespace_ready(local_7_Debug), local_20_log_value) === function_14_namespace_read(function_13_namespace_ready(local_7_Debug), local_20_log_value))) + ":" + String((function_17_namespace_read(function_16_namespace_ready(local_7_Debug), function_15_namespace_ready(local_6_log), local_13_error_value) === function_20_namespace_read(function_19_namespace_ready(local_7_Debug), function_18_namespace_ready(local_6_log), local_13_error_value))) + ":" + String((function_22_namespace_read(function_21_namespace_ready(local_7_Debug), local_20_log_value) !== function_25_namespace_read(function_24_namespace_ready(local_7_Debug), function_23_namespace_ready(local_6_log), local_13_error_value))) + ":" + adamicTypeOf(function_27_namespace_read(function_26_namespace_ready(local_7_Debug), local_20_log_value)) + ":" + String(function_30_namespace_read(function_29_namespace_ready(local_7_Debug), function_28_namespace_ready(local_6_log), local_0_level))));
++console.log((String((local_15_log_value === local_15_log_value)) + ":" + String((local_13_error_value === local_13_error_value)) + ":" + String((local_15_log_value !== local_13_error_value)) + ":" + adamicTypeOf(local_15_log_value) + ":" + String(local_0_level)));
+ function_2_print("fourth");
+-console.log((String(function_32_namespace_read(function_31_namespace_ready(local_8_print), local_1_level)) + ":" + String((local_8_print === local_8_print))));
++console.log((String(local_1_level) + ":" + String((local_8_print === local_8_print))));

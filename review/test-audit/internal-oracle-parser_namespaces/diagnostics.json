@@ -1,0 +1,197 @@
+[
+  {
+    "id": "M01",
+    "test": "TestParserNamespaceReceiver/stage3/namespace-parser-stops/native-namespace-object-receiver.a",
+    "line": "parser_namespaces_test.go:101: /workspace/adamic/stage3/namespace-parser-stops/native-namespace-object-receiver.a:3:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this"
+  },
+  {
+    "id": "M01",
+    "test": "TestParserNamespaceReceiver/internal/oracle/testdata/namespace_method_receiver.a",
+    "line": "parser_namespaces_test.go:101: /workspace/adamic/internal/oracle/testdata/namespace_method_receiver.a:3:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this"
+  },
+  {
+    "id": "M01",
+    "test": "TestNativeAgreesWithNode/stage3/namespace-parser-stops/native-namespace-object-receiver.a",
+    "line": "oracle_test.go:752: Lower: /workspace/adamic/stage3/namespace-parser-stops/native-namespace-object-receiver.a:3:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this"
+  },
+  {
+    "id": "M01",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespace_method_receiver.a",
+    "line": "oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/namespace_method_receiver.a:3:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this"
+  },
+  {
+    "id": "M03",
+    "test": "TestParserNamespaceReceiver/internal/oracle/testdata/namespace_method_receiver.a",
+    "line": "parser_namespaces_test.go:106: internal/oracle/testdata/namespace_method_receiver.a native: exit codes differ; Node {stdout:[55 58 57 57 10 49 49 10] stderr:[] exitCode:0}; backend {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 84 121 112 101 69 114 114 111 114 58 32 67 97 110 110 111 116 32 114 101 97 100 32 112 114 111 112 101 114 116 105 101 115 32 111 102 32 117 110 100 101 102 105 110 101 100 32 40 114 101 97 100 105 110 103 32 39 97 116 116 97 99 104 70 108 111 119 78 111 100 101 68 101 98 117 103 73 110 102 111 87 111 114 107 101 114 39 41 10] exitCode:70}"
+  },
+  {
+    "id": "M03",
+    "test": "TestParserCallableNamespace/internal/oracle/testdata/namespace_callable_properties.a",
+    "line": "parser_namespaces_test.go:106: internal/oracle/testdata/namespace_callable_properties.a native: exit codes differ; Node {stdout:[108 111 103 58 102 105 114 115 116 10 101 114 114 111 114 58 51 58 115 101 99 111 110 100 10 101 114 114 111 114 58 51 58 116 104 105 114 100 10 116 114 117 101 58 116 114 117 101 58 116 114 117 101 58 102 117 110 99 116 105 111 110 58 51 10 112 114 105 110 116 58 102 111 117 114 116 104 10 55 58 116 114 117 101 10] stderr:[] exitCode:0}; backend {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 84 121 112 101 69 114 114 111 114 58 32 67 97 110 110 111 116 32 114 101 97 100 32 112 114 111 112 101 114 116 105 101 115 32 111 102 32 117 110 100 101 102 105 110 101 100 32 40 114 101 97 100 105 110 103 32 39 108 111 103 39 41 10] exitCode:70}"
+  },
+  {
+    "id": "M03",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespace_method_receiver.a",
+    "line": "oracle_test.go:775: exit codes differ"
+  },
+  {
+    "id": "M03",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespace_method_receiver.a",
+    "line": "oracle_test.go:781: JavaScript backend: exit codes differ"
+  },
+  {
+    "id": "M03",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespace_method_receiver.a",
+    "line": "oracle_test.go:788: leaks:"
+  },
+  {
+    "id": "M03",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespace_callable_properties.a",
+    "line": "oracle_test.go:775: exit codes differ"
+  },
+  {
+    "id": "M03",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespace_callable_properties.a",
+    "line": "oracle_test.go:781: JavaScript backend: exit codes differ"
+  },
+  {
+    "id": "M03",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespace_callable_properties.a",
+    "line": "oracle_test.go:788: leaks:"
+  },
+  {
+    "id": "M04",
+    "test": "TestParserNamespaceReceiver/internal/oracle/testdata/namespace_method_receiver.a",
+    "line": "parser_namespaces_test.go:101: /workspace/adamic/internal/oracle/testdata/namespace_method_receiver.a:11:32: stage 0 can't lower a computed namespace member; use a qualified name yet"
+  },
+  {
+    "id": "M04",
+    "test": "TestParserCallableNamespace/internal/oracle/testdata/namespace_callable_properties.a",
+    "line": "parser_namespaces_test.go:101: /workspace/adamic/internal/oracle/testdata/namespace_callable_properties.a:12:18: stage 0 can't lower a computed namespace member; use a qualified name yet"
+  },
+  {
+    "id": "M04",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespace_method_receiver.a",
+    "line": "oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/namespace_method_receiver.a:11:32: stage 0 can't lower a computed namespace member; use a qualified name yet"
+  },
+  {
+    "id": "M04",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespace_callable_properties.a",
+    "line": "oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/namespace_callable_properties.a:12:18: stage 0 can't lower a computed namespace member; use a qualified name yet"
+  },
+  {
+    "id": "M05",
+    "test": "TestParserCallableNamespace/internal/oracle/testdata/namespace_callable_properties.a",
+    "line": "parser_namespaces_test.go:101: /workspace/adamic/internal/oracle/testdata/namespace_callable_properties.a:10:1: stage 0 can't lower observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented yet"
+  },
+  {
+    "id": "M05",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/namespace_callable_properties.a",
+    "line": "oracle_test.go:752: Lower: /workspace/adamic/internal/oracle/testdata/namespace_callable_properties.a:10:1: stage 0 can't lower observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented yet"
+  },
+  {
+    "id": "M07",
+    "test": "TestPredicateDirectionCountsAreRecorded",
+    "line": "predicate_counts_test.go:95: ../../internal/lower/testdata/predicates/overload_array_alias.a: direction records (1,1,1) disagree with aggregate {Proven:1 Checked:0 Unobservable:1 Sites:[{Where:/workspace/adamic/internal/lower/testdata/predicates/overload_array_alias.a:7:50 Function:corrupt Overload:1 Directions:[{Direction:true Status:checked Reason:a narrowed read consumes this direction} {Direction:false Status:unobservable Reason:no narrowed read in the false region}]}]}"
+  },
+  {
+    "id": "M07",
+    "test": "TestPredicateMiscompileRefusals/p14_overload_optional_chain_container",
+    "line": "predicate_refusals_test.go:87: direction report: {Proven:1 Checked:0 Unobservable:1 Sites:[{Where:/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a:10:7 Function:isText Overload:1 Directions:[{Direction:true Status:checked Reason:a narrowed read consumes this direction} {Direction:false Status:unobservable Reason:no narrowed read in the false region}]}]}"
+  },
+  {
+    "id": "M07",
+    "test": "TestPredicateMiscompileRefusals/p27_overload_parameter_rebound",
+    "line": "predicate_refusals_test.go:87: direction report: {Proven:0 Checked:0 Unobservable:0 Sites:[{Where:/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p27_overload_parameter_rebound.a:7:7 Function:isText Overload:1 Directions:[{Direction:true Status:checked Reason:a narrowed read consumes this direction} {Direction:false Status:checked Reason:a narrowed read consumes this direction}]}]}"
+  },
+  {
+    "id": "M08",
+    "test": "TestPredicateDirectionCountsAreRecorded",
+    "line": "predicate_counts_test.go:95: ../../internal/lower/testdata/predicates/overload_array_alias.a: direction records (1,1,0) disagree with aggregate {Proven:1 Checked:1 Unobservable:1 Sites:[{Where:/workspace/adamic/internal/lower/testdata/predicates/overload_array_alias.a:7:50 Function:corrupt Overload:1 Directions:[{Direction:true Status:checked Reason:a narrowed read consumes this direction} {Direction:false Status:proven Reason:no narrowed read in the false region}]}]}"
+  },
+  {
+    "id": "M09",
+    "test": "TestPredicateDirectionCountsAreRecorded",
+    "line": "predicate_counts_test.go:95: invalid direction: {Direction:false Status:unobservable Reason:no narrowed read in the false region}"
+  },
+  {
+    "id": "M10",
+    "test": "TestPredicateDirectionCountsAreRecorded",
+    "line": "predicate_counts_test.go:96: predicate counts changed; update counts.md with the full count writer:"
+  },
+  {
+    "id": "M10",
+    "test": "TestPredicateMiscompileRefusals/p27_overload_parameter_rebound",
+    "line": "predicate_refusals_test.go:79: javascript: want named predicate check, exit=70 stdout=\"text a\\n\" stderr=\"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\""
+  },
+  {
+    "id": "M10",
+    "test": "TestPredicateMiscompileRefusals/p27_overload_parameter_rebound",
+    "line": "predicate_refusals_test.go:79: release: want named predicate check, exit=70 stdout=\"text a\\n\" stderr=\"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\""
+  },
+  {
+    "id": "M10",
+    "test": "TestPredicateMiscompileRefusals/p27_overload_parameter_rebound",
+    "line": "predicate_refusals_test.go:79: sanitized: want named predicate check, exit=70 stdout=\"text a\\n\" stderr=\"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\""
+  },
+  {
+    "id": "M10",
+    "test": "TestPredicateMiscompileRefusals/p27_overload_parameter_rebound",
+    "line": "predicate_refusals_test.go:87: direction report: {Proven:2 Checked:0 Unobservable:0 Sites:[{Where:/workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p27_overload_parameter_rebound.a:7:7 Function:isText Overload:1 Directions:[{Direction:true Status:proven Reason:implementation body proves this direction} {Direction:false Status:proven Reason:implementation body proves this direction}]}]}"
+  },
+  {
+    "id": "M11",
+    "test": "TestInUnionNarrowingIsRefused",
+    "line": "presence_refused_test.go:44: diagnostic: got \"internal/oracle/testdata/presence_refused/in_union_narrowing.a:12:9: Adamic 0.1 refuses in that narrows a union of object types (any object with the key passes); use a discriminant\", want \"internal/oracle/testdata/presence_refused/in_union_narrowing.a:12:9: Adamic 0.1 refuses in that narrows a union of object types (any object with the key passes); use a discriminant, or a Map\""
+  },
+  {
+    "id": "M12",
+    "test": "TestInUnionNarrowingIsRefused",
+    "line": "presence_refused_test.go:36: want a refusal, got <nil>"
+  },
+  {
+    "id": "M13",
+    "test": "TestPredicateMiscompileRefusals/p05_helper_second_parameter",
+    "line": "predicate_refusals_test.go:52: want path-bearing \"type predicate whose return is not proven\" refusal/pending, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:5:3: Adamic 0.1 refuses a predicate whose return is not proven (return expression is not a trusted check on v); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+  },
+  {
+    "id": "M13",
+    "test": "TestPredicateMiscompileRefusals/p06_helper_second_parameter_undefined",
+    "line": "predicate_refusals_test.go:52: want path-bearing \"type predicate whose return is not proven\" refusal/pending, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:5:3: Adamic 0.1 refuses a predicate whose return is not proven (return expression is not a trusted check on v); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+  },
+  {
+    "id": "M13",
+    "test": "TestPredicateMiscompileRefusals/p26_assert_nested_if_without_else",
+    "line": "predicate_refusals_test.go:52: want path-bearing \"type predicate whose return is not proven\" refusal/pending, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p26_assert_nested_if_without_else.a:3:5: Adamic 0.1 refuses a predicate whose return is not proven (branch is not a trusted parameter check); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+  },
+  {
+    "id": "M14",
+    "test": "TestPredicateMiscompileRefusals/p14_overload_optional_chain_container",
+    "line": "predicate_refusals_test.go:79: release: want named predicate check, exit=70 stdout=\"claimed box: box a\\ndirect: box\\n\" stderr=\"adamic: panic: overload 1 of isText result: predicate x failed\\n\""
+  },
+  {
+    "id": "M14",
+    "test": "TestPredicateMiscompileRefusals/p14_overload_optional_chain_container",
+    "line": "predicate_refusals_test.go:79: sanitized: want named predicate check, exit=70 stdout=\"claimed box: box a\\ndirect: box\\n\" stderr=\"adamic: panic: overload 1 of isText result: predicate x failed\\n\""
+  },
+  {
+    "id": "M14",
+    "test": "TestPredicateMiscompileRefusals/p14_overload_optional_chain_container",
+    "line": "predicate_refusals_test.go:79: javascript: want named predicate check, exit=70 stdout=\"claimed box: box a\\ndirect: box\\n\" stderr=\"adamic: panic: overload 1 of isText result: predicate x failed\\n\""
+  },
+  {
+    "id": "M14",
+    "test": "TestPredicateMiscompileRefusals/p27_overload_parameter_rebound",
+    "line": "predicate_refusals_test.go:79: javascript: want named predicate check, exit=70 stdout=\"text a\\n\" stderr=\"adamic: panic: overload 1 of isText result: predicate x failed\\n\""
+  },
+  {
+    "id": "M14",
+    "test": "TestPredicateMiscompileRefusals/p27_overload_parameter_rebound",
+    "line": "predicate_refusals_test.go:79: release: want named predicate check, exit=70 stdout=\"text a\\n\" stderr=\"adamic: panic: overload 1 of isText result: predicate x failed\\n\""
+  },
+  {
+    "id": "M14",
+    "test": "TestPredicateMiscompileRefusals/p27_overload_parameter_rebound",
+    "line": "predicate_refusals_test.go:79: sanitized: want named predicate check, exit=70 stdout=\"text a\\n\" stderr=\"adamic: panic: overload 1 of isText result: predicate x failed\\n\""
+  }
+]

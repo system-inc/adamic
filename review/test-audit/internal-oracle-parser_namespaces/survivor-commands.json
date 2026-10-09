@@ -1,0 +1,67 @@
+[
+  {
+    "command": "timeout 90 go build -o /tmp/u067-adamic ./cmd/adamic",
+    "exit": 0,
+    "wall": 16.523721895999188
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u067-adamic js internal/oracle/testdata/namespace_callable_properties.a",
+    "exit": 0,
+    "wall": 0.08599406699795509
+  },
+  {
+    "command": "ADAMIC_MUTANT=M02 /tmp/u067-adamic js internal/oracle/testdata/namespace_callable_properties.a",
+    "exit": 0,
+    "wall": 0.07628398399901926
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u067-adamic js internal/oracle/testdata/namespace_class_registration.a",
+    "exit": 0,
+    "wall": 0.06745949700052734
+  },
+  {
+    "command": "ADAMIC_MUTANT=M02 /tmp/u067-adamic js internal/oracle/testdata/namespace_class_registration.a",
+    "exit": 0,
+    "wall": 0.06591489200218348
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u067-adamic js internal/oracle/testdata/namespace_method_receiver.a",
+    "exit": 0,
+    "wall": 0.06585333000111859
+  },
+  {
+    "command": "ADAMIC_MUTANT=M02 /tmp/u067-adamic js internal/oracle/testdata/namespace_method_receiver.a",
+    "exit": 0,
+    "wall": 0.07120371199926012
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u067-adamic js internal/oracle/testdata/namespace_callable_properties.a",
+    "exit": 0,
+    "wall": 0.0701775790003012
+  },
+  {
+    "command": "ADAMIC_MUTANT=M06 /tmp/u067-adamic js internal/oracle/testdata/namespace_callable_properties.a",
+    "exit": 0,
+    "wall": 0.08243869099896983
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u067-adamic js internal/oracle/testdata/namespace_class_registration.a",
+    "exit": 0,
+    "wall": 0.06902692600124283
+  },
+  {
+    "command": "ADAMIC_MUTANT=M06 /tmp/u067-adamic js internal/oracle/testdata/namespace_class_registration.a",
+    "exit": 0,
+    "wall": 0.07679650600039167
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u067-adamic js internal/oracle/testdata/namespace_method_receiver.a",
+    "exit": 0,
+    "wall": 0.13928985300299246
+  },
+  {
+    "command": "ADAMIC_MUTANT=M06 /tmp/u067-adamic js internal/oracle/testdata/namespace_method_receiver.a",
+    "exit": 0,
+    "wall": 0.14540818099703756
+  }
+]

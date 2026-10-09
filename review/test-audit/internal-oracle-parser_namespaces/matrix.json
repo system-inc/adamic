@@ -1,0 +1,340 @@
+[
+  {
+    "id": "M01",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestNativeAgreesWithNode family (eight selected inputs)",
+      "TestParserNamespace family"
+    ],
+    "observations": {
+      "TestParserNamespace family": "fail",
+      "TestPredicateDirectionCountsAreRecorded": "pass",
+      "TestPredicateMiscompileRefusals": "pass",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "fail"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M02",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [],
+    "observations": {
+      "TestParserNamespace family": "pass",
+      "TestPredicateDirectionCountsAreRecorded": "pass",
+      "TestPredicateMiscompileRefusals": "pass",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "pass"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": true
+  },
+  {
+    "id": "M03",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestNativeAgreesWithNode family (eight selected inputs)",
+      "TestParserNamespace family"
+    ],
+    "observations": {
+      "TestParserNamespace family": "fail",
+      "TestPredicateDirectionCountsAreRecorded": "pass",
+      "TestPredicateMiscompileRefusals": "pass",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "fail"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M04",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestNativeAgreesWithNode family (eight selected inputs)",
+      "TestParserNamespace family"
+    ],
+    "observations": {
+      "TestParserNamespace family": "fail",
+      "TestPredicateDirectionCountsAreRecorded": "pass",
+      "TestPredicateMiscompileRefusals": "pass",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "fail"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M05",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestNativeAgreesWithNode family (eight selected inputs)",
+      "TestParserNamespace family"
+    ],
+    "observations": {
+      "TestParserNamespace family": "fail",
+      "TestPredicateDirectionCountsAreRecorded": "pass",
+      "TestPredicateMiscompileRefusals": "pass",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "fail"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M06",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [],
+    "observations": {
+      "TestParserNamespace family": "pass",
+      "TestPredicateDirectionCountsAreRecorded": "pass",
+      "TestPredicateMiscompileRefusals": "pass",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "pass"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": true
+  },
+  {
+    "id": "M07",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals"
+    ],
+    "observations": {
+      "TestParserNamespace family": "pass",
+      "TestPredicateDirectionCountsAreRecorded": "fail",
+      "TestPredicateMiscompileRefusals": "fail",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "pass"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M08",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestPredicateDirectionCountsAreRecorded"
+    ],
+    "observations": {
+      "TestParserNamespace family": "pass",
+      "TestPredicateDirectionCountsAreRecorded": "fail",
+      "TestPredicateMiscompileRefusals": "pass",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "pass"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M09",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestPredicateDirectionCountsAreRecorded"
+    ],
+    "observations": {
+      "TestParserNamespace family": "pass",
+      "TestPredicateDirectionCountsAreRecorded": "fail",
+      "TestPredicateMiscompileRefusals": "pass",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "pass"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M10",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals"
+    ],
+    "observations": {
+      "TestParserNamespace family": "pass",
+      "TestPredicateDirectionCountsAreRecorded": "fail",
+      "TestPredicateMiscompileRefusals": "fail",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "pass"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M11",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestInUnionNarrowingIsRefused"
+    ],
+    "observations": {
+      "TestParserNamespace family": "pass",
+      "TestPredicateDirectionCountsAreRecorded": "pass",
+      "TestPredicateMiscompileRefusals": "pass",
+      "TestInUnionNarrowingIsRefused": "fail",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "pass"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M12",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestInUnionNarrowingIsRefused"
+    ],
+    "observations": {
+      "TestParserNamespace family": "pass",
+      "TestPredicateDirectionCountsAreRecorded": "pass",
+      "TestPredicateMiscompileRefusals": "pass",
+      "TestInUnionNarrowingIsRefused": "fail",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "pass"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M13",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestPredicateMiscompileRefusals"
+    ],
+    "observations": {
+      "TestParserNamespace family": "pass",
+      "TestPredicateDirectionCountsAreRecorded": "pass",
+      "TestPredicateMiscompileRefusals": "fail",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "pass"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  },
+  {
+    "id": "M14",
+    "bounded": true,
+    "matrix_rows": [
+      "TestParserNamespace family",
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals",
+      "TestInUnionNarrowingIsRefused",
+      "TestNativeAgreesWithNode family (eight selected inputs)"
+    ],
+    "failed_rows": [
+      "TestPredicateMiscompileRefusals"
+    ],
+    "observations": {
+      "TestParserNamespace family": "pass",
+      "TestPredicateDirectionCountsAreRecorded": "pass",
+      "TestPredicateMiscompileRefusals": "fail",
+      "TestInUnionNarrowingIsRefused": "pass",
+      "TestNativeAgreesWithNode family (eight selected inputs)": "pass"
+    },
+    "go_panic": false,
+    "outside_scope": "unknown",
+    "survivor": false
+  }
+]

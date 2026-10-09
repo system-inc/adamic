@@ -1,0 +1,149 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -91,7 +91,7 @@
+ 	if node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression || !l.namespaceMember(node) {
+ 		return nil, false, nil
+ 	}
+-	if node.Kind == ast.KindElementAccessExpression {
++	if auditU067Bool("M04", func() bool { return node.Kind == ast.KindElementAccessExpression }, func() bool { return node.Kind == ast.KindPropertyAccessExpression }) {
+ 		return nil, true, l.notYet(node, "a computed namespace member; use a qualified name")
+ 	}
+ 	if node.AsPropertyAccessExpression().QuestionDotToken != nil || node.Flags&ast.NodeFlagsOptionalChain != 0 {
+@@ -424,6 +424,7 @@
+ }
+ 
+ func (l *lowering) namespaceReadyValue(node *ast.Node, value ir.Expression) ir.Expression {
++ if auditU067Selected("M02") { return value }
+ 	checks := l.namespaceReadyReads(node, false)
+ 	if len(checks) == 0 {
+ 		return value
+@@ -499,7 +500,7 @@
+ 		return nil, err
+ 	}
+ 	if namespaceRuntime(node) {
+-		body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})
++		if auditU067Selected("M03") { body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: false}}) } else { body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}}) }
+ 	}
+ 	return append(hoisted, body...), nil
+ }
+--- a/internal/lower/namespace_receiver_scope.go
++++ b/internal/lower/namespace_receiver_scope.go
+@@ -10,7 +10,7 @@
+ 		if node == nil || ast.IsTypeNode(node) {
+ 			return false
+ 		}
+-		if ast.IsClassLike(node) || ast.IsFunctionLike(node) && node.Kind != ast.KindArrowFunction {
++		if ast.IsClassLike(node) || ast.IsFunctionLike(node) && auditU067Bool("M01", func() bool { return node.Kind != ast.KindArrowFunction }, func() bool { return node.Kind == ast.KindArrowFunction }) {
+ 			return false
+ 		}
+ 		if node.Kind == ast.KindThisKeyword {
+--- a/internal/lower/namespace_callable.go
++++ b/internal/lower/namespace_callable.go
+@@ -18,7 +18,7 @@
+ // A closure represents the callable identity, but has no attached object storage.
+ // Only uses that cannot observe that omitted container are admitted.
+ func (l *lowering) callableNamespaceUse(node *ast.Node) bool {
+-	if called(node) {
++	if auditU067Bool("M05", func() bool { return called(node) }, func() bool { return !called(node) }) {
+ 		return true
+ 	}
+ 	use := node
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -701,7 +701,7 @@
+ 		return false
+ 	}
+ 	implementation.Body().ForEachChild(writes)
+-	if changed {
++	if auditU067Bool("M10", func() bool { return changed }, func() bool { return !changed }) {
+ 		return false
+ 	}
+ 	target := claim.Type()
+@@ -750,7 +750,7 @@
+ 		return nil, l.notYet(overload, "a checked predicate overload with a non-boolean result")
+ 	}
+ 	ordinal := l.predicateOverloadOrdinal(implementation, overload)
+-	message := fmt.Sprintf("overload %d of %s result: predicate %s is false", ordinal, implementation.Name().Text(), claim.ParameterName())
++	message := fmt.Sprintf(auditU067String("M14", "overload %d of %s result: predicate %s is false", "overload %d of %s result: predicate %s failed"), ordinal, implementation.Name().Text(), claim.ParameterName())
+ 	wrapper := len(l.result.Functions)
+ 	l.result.Functions = append(l.result.Functions, ir.Function{Name: fmt.Sprintf("%s_overload_%d_check_%d", implementation.Name().Text(), ordinal, wrapper), Returns: invoked.Type()})
+ 	local := func(name string, of ir.Type) int {
+@@ -1208,7 +1208,7 @@
+ 		if l.predicateDirectionCount(call, direction) == 0 {
+ 			continue
+ 		}
+-		name := "true"
++		name := auditU067String("M09", "true", "false")
+ 		if direction == predicateFalse {
+ 			name = "false"
+ 		}
+@@ -1219,9 +1219,9 @@
+ 			counts.Proven++
+ 		case observed&direction != 0:
+ 			report.Status, report.Reason = "checked", "a narrowed read consumes this direction"
+-			counts.Checked++
++if !auditU067Selected("M07") { counts.Checked++ }
+ 		default:
+-			report.Status, report.Reason = "unobservable", "no narrowed read in the "+name+" region"
++			report.Status, report.Reason = auditU067String("M08", "unobservable", "proven"), "no narrowed read in the "+name+" region"
+ 			counts.Proven++
+ 			counts.Unobservable++
+ 		}
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -34,7 +34,7 @@
+ }
+ 
+ func (p *predicateFlowProof) refused(node *ast.Node, reason string) error {
+-	return &Refused{Where: p.l.program.Where(node), What: "a type predicate whose return is not proven (" + reason + ")", Fix: "inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
++	return &Refused{Where: p.l.program.Where(node), What: auditU067String("M13", "a type predicate whose return is not proven (", "a predicate whose return is not proven (") + reason + ")", Fix: "inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"}
+ }
+ 
+ func (l *lowering) proveFlowPredicate(node *ast.Node) error {
+--- a/internal/lower/unknown.go
++++ b/internal/lower/unknown.go
+@@ -41,8 +41,8 @@
+ 				objects++
+ 			}
+ 		}
+-		if objects > 1 {
+-			return nil, &Refused{Where: l.program.Where(node), What: "in that narrows a union of object types (any object with the key passes)", Fix: "use a discriminant, or a Map"}
++		if auditU067Bool("M12", func() bool { return objects > 1 }, func() bool { return objects > 2 }) {
++			return nil, &Refused{Where: l.program.Where(node), What: "in that narrows a union of object types (any object with the key passes)", Fix: auditU067String("M11", "use a discriminant, or a Map", "use a discriminant")}
+ 		}
+ 	}
+ 	if checker.IsTupleType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(binary.Right))) {
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,8 @@
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++ if auditU067Selected("P02") { return &ir.Program{}, nil }
++ if auditU067Selected("P01") { return nil, nil }
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+@@ -40,9 +42,9 @@
+ 	}
+ 	lowering.noteAccessorNames(modules)
+ 	lowering.noteOmittedOptionals(modules)
+-	if err := lowering.namespaceInitialization(modules); err != nil {
+-		return nil, err
+-	}
++if !auditU067Selected("M06") { if err := lowering.namespaceInitialization(modules); err != nil {
++		return nil, err
++	} }
+ 	for _, module := range modules {
+ 		if err := lowering.refuse(module); err != nil {
+ 			return nil, err
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -714,6 +714,7 @@
+ 
+ // disagreement says how two runs differ, or "" when they don't.
+ func disagreement(oracle run, native run) string {
++ if os.Getenv("ADAMIC_MUTANT") == "W01" { return "" }
+ 	switch {
+ 	case oracle.exitCode != native.exitCode:
+ 		return "exit codes differ"

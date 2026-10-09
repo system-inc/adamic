@@ -1,0 +1,32 @@
+{
+  "names": [
+    "TestParserNamespaceReceiver",
+    "TestParserNamespaceClass",
+    "TestParserCallableNamespace",
+    "TestParserCallableNamespaceMutant",
+    "TestParserNamespaceClassRegistrationMutant",
+    "TestParserNamespaceReceiverMutant",
+    "TestPredicateDirectionCountsAreRecorded",
+    "TestPredicateMiscompileRefusals",
+    "TestInUnionNarrowingIsRefused"
+  ],
+  "rows": [
+    "TestParserNamespace family",
+    "TestParserCallableNamespaceMutant",
+    "TestParserNamespaceClassRegistrationMutant",
+    "TestParserNamespaceReceiverMutant",
+    "TestPredicateDirectionCountsAreRecorded",
+    "TestPredicateMiscompileRefusals",
+    "TestInUnionNarrowingIsRefused"
+  ],
+  "family": [
+    "TestParserNamespaceReceiver",
+    "TestParserNamespaceClass",
+    "TestParserCallableNamespace"
+  ],
+  "witnesses": [
+    "TestParserCallableNamespaceMutant",
+    "TestParserNamespaceClassRegistrationMutant",
+    "TestParserNamespaceReceiverMutant"
+  ]
+}

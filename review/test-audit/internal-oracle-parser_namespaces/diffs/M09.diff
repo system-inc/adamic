@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -1208,7 +1208,7 @@
+ 		if l.predicateDirectionCount(call, direction) == 0 {
+ 			continue
+ 		}
+-		name := "true"
++		name := "false"
+ 		if direction == predicateFalse {
+ 			name = "false"
+ 		}

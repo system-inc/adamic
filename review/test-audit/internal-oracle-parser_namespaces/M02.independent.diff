@@ -1,0 +1,22 @@
+--- before
++++ after
+@@ -96,18 +96,7 @@
+ let ready_2 = false;
+ 
+ function function_0_closure(self, values) {
+-	return function_2_namespace_read(function_1_namespace_ready(local_2_Debug), (ready_1 ? local_1_isDebugging : adamicUnready("isDebugging")));
+-}
+-
+-function function_1_namespace_ready(local_3_argument) {
+-	if ((!local_3_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'isDebugging')");
+-	}
+-	return true;
+-}
+-
+-function function_2_namespace_read(local_4_argument, local_5_argument) {
+-	return local_5_argument;
++	return (ready_1 ? local_1_isDebugging : adamicUnready("isDebugging"));
+ }
+ 
+ local_2_Debug = false;

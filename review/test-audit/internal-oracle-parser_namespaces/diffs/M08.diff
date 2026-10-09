@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -1221,7 +1221,7 @@
+ 			report.Status, report.Reason = "checked", "a narrowed read consumes this direction"
+ 			counts.Checked++
+ 		default:
+-			report.Status, report.Reason = "unobservable", "no narrowed read in the "+name+" region"
++			report.Status, report.Reason = "proven", "no narrowed read in the "+name+" region"
+ 			counts.Proven++
+ 			counts.Unobservable++
+ 		}

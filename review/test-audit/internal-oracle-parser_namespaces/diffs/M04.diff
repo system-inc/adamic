@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -91,7 +91,7 @@
+ 	if node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression || !l.namespaceMember(node) {
+ 		return nil, false, nil
+ 	}
+-	if node.Kind == ast.KindElementAccessExpression {
++	if node.Kind == ast.KindPropertyAccessExpression {
+ 		return nil, true, l.notYet(node, "a computed namespace member; use a qualified name")
+ 	}
+ 	if node.AsPropertyAccessExpression().QuestionDotToken != nil || node.Flags&ast.NodeFlagsOptionalChain != 0 {

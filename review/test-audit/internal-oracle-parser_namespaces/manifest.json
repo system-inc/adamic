@@ -1,0 +1,155 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/namespace_receiver_scope.go",
+    "line": 13,
+    "old": "node.Kind != ast.KindArrowFunction",
+    "new": "node.Kind == ast.KindArrowFunction",
+    "menu": "flip condition",
+    "mode": "bool"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/namespaces.go",
+    "line": 426,
+    "old": "func (l *lowering) namespaceReadyValue(node *ast.Node, value ir.Expression) ir.Expression {\n\tchecks := l.namespaceReadyReads(node, false)\n\tif len(checks) == 0 {\n\t\treturn value\n\t}\n\tb := l.libraryArrayBuilder(append(checks, value))\n\treturn b.finish(\"namespace_read\", b.read(b.parameters[len(checks)]))\n}",
+    "new": "func (l *lowering) namespaceReadyValue(node *ast.Node, value ir.Expression) ir.Expression {\n\treturn value\n}",
+    "menu": "return early",
+    "mode": "early"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/namespaces.go",
+    "line": 502,
+    "old": "body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})",
+    "new": "body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: false}})",
+    "menu": "change constant",
+    "mode": "statement"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/namespaces.go",
+    "line": 94,
+    "old": "if node.Kind == ast.KindElementAccessExpression {\n\t\treturn nil, true",
+    "new": "if node.Kind == ast.KindPropertyAccessExpression {\n\t\treturn nil, true",
+    "menu": "change constant",
+    "mode": "guard"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/namespace_callable.go",
+    "line": 21,
+    "old": "if called(node) {",
+    "new": "if !called(node) {",
+    "menu": "flip condition",
+    "mode": "guard"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/lower.go",
+    "line": 43,
+    "old": "\tif err := lowering.namespaceInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n",
+    "new": "",
+    "menu": "drop statement",
+    "mode": "drop"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 1222,
+    "old": "\t\t\tcounts.Checked++\n",
+    "new": "",
+    "menu": "drop statement",
+    "mode": "drop"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 1224,
+    "old": "\"unobservable\", \"no narrowed read in the \"",
+    "new": "\"proven\", \"no narrowed read in the \"",
+    "menu": "change constant",
+    "mode": "status"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 1211,
+    "old": "name := \"true\"",
+    "new": "name := \"false\"",
+    "menu": "change constant",
+    "mode": "statement"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 703,
+    "old": "implementation.Body().ForEachChild(writes)\n\tif changed {",
+    "new": "implementation.Body().ForEachChild(writes)\n\tif !changed {",
+    "menu": "flip condition",
+    "mode": "guard"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/unknown.go",
+    "line": 45,
+    "old": "\"use a discriminant, or a Map\"",
+    "new": "\"use a discriminant\"",
+    "menu": "change constant",
+    "mode": "string"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/unknown.go",
+    "line": 44,
+    "old": "objects > 1",
+    "new": "objects > 2",
+    "menu": "off-by-one bound",
+    "mode": "bool"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/predicates.go",
+    "line": 37,
+    "old": "\"a type predicate whose return is not proven (\"",
+    "new": "\"a predicate whose return is not proven (\"",
+    "menu": "change constant",
+    "mode": "string"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 753,
+    "old": "\"overload %d of %s result: predicate %s is false\"",
+    "new": "\"overload %d of %s result: predicate %s failed\"",
+    "menu": "change constant",
+    "mode": "string"
+  },
+  {
+    "id": "P01",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tfiles := program.Files()\n\tif len(files) != 1 {\n\t\treturn nil, fmt.Errorf(\"lower: stage 0 compiles a program from one entry file, got %d\", len(files))\n\t}\n\tentry := files[0]\n\t// Stage 0 checks single-threaded, so one checker answers for every file.\n\ttypeChecker, release := program.Checker(ctx, entry)\n\tdefer release()\n\n\tlowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}\n\t// The base name only, so the same program emits the same C on every machine.\n\tlowering.result.Source = filepath.Base(program.FileName(entry))\n\tmodules, err := lowering.moduleOrder(entry)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteInheritance(modules)\n\tif err := lowering.enumInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteAccessorNames(modules)\n\tlowering.noteOmittedOptionals(modules)\n\tif err := lowering.namespaceInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tif err := lowering.refuse(module); err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\t// Link every declaration before lowering any function body, including across back edges.\n\tvar declarations []*ast.Node\n\tfor _, module := range modules {\n\t\tdeclarations = append(declarations, module.Statements.Nodes...)\n\t}\n\tif err := lowering.declareModule(declarations); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tbody, err := lowering.statements(module.Statements.Nodes)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tlowering.result.Main = append(lowering.result.Main, body...)\n\t}\n\tif lowering.unlowerable != nil {\n\t\treturn nil, lowering.unlowerable\n\t}\n\tlowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)\n\tlowering.finishClassCalls()\n\tif err := lowering.finishAccessors(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.exceptions(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.checkAccessorSpreads(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.findCycles(modules); err != nil {\n\t\treturn nil, err\n\t}\n\treadiness(lowering.result)\n\tborrow(lowering.result)\n\tcounters(lowering.result)\n\treturn lowering.result, nil\n}",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\treturn nil, nil\n}",
+    "menu": "nil entry probe",
+    "mode": "early"
+  },
+  {
+    "id": "P02",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tfiles := program.Files()\n\tif len(files) != 1 {\n\t\treturn nil, fmt.Errorf(\"lower: stage 0 compiles a program from one entry file, got %d\", len(files))\n\t}\n\tentry := files[0]\n\t// Stage 0 checks single-threaded, so one checker answers for every file.\n\ttypeChecker, release := program.Checker(ctx, entry)\n\tdefer release()\n\n\tlowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1}\n\t// The base name only, so the same program emits the same C on every machine.\n\tlowering.result.Source = filepath.Base(program.FileName(entry))\n\tmodules, err := lowering.moduleOrder(entry)\n\tif err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteInheritance(modules)\n\tif err := lowering.enumInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tlowering.noteAccessorNames(modules)\n\tlowering.noteOmittedOptionals(modules)\n\tif err := lowering.namespaceInitialization(modules); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tif err := lowering.refuse(module); err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t}\n\t// Link every declaration before lowering any function body, including across back edges.\n\tvar declarations []*ast.Node\n\tfor _, module := range modules {\n\t\tdeclarations = append(declarations, module.Statements.Nodes...)\n\t}\n\tif err := lowering.declareModule(declarations); err != nil {\n\t\treturn nil, err\n\t}\n\tfor _, module := range modules {\n\t\tbody, err := lowering.statements(module.Statements.Nodes)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tlowering.result.Main = append(lowering.result.Main, body...)\n\t}\n\tif lowering.unlowerable != nil {\n\t\treturn nil, lowering.unlowerable\n\t}\n\tlowering.result.Main = append(lowering.forwarderValues, lowering.result.Main...)\n\tlowering.finishClassCalls()\n\tif err := lowering.finishAccessors(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.exceptions(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.checkAccessorSpreads(); err != nil {\n\t\treturn nil, err\n\t}\n\tif err := lowering.findCycles(modules); err != nil {\n\t\treturn nil, err\n\t}\n\treadiness(lowering.result)\n\tborrow(lowering.result)\n\tcounters(lowering.result)\n\treturn lowering.result, nil\n}",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\treturn &ir.Program{}, nil\n}",
+    "menu": "empty IR entry probe",
+    "mode": "early"
+  },
+  {
+    "id": "W01",
+    "file": "internal/oracle/oracle_test.go",
+    "line": 716,
+    "old": "func disagreement(oracle run, native run) string {\n\tswitch {\n\tcase oracle.exitCode != native.exitCode:\n\t\treturn \"exit codes differ\"\n\tcase !bytes.Equal(oracle.stdout, native.stdout):\n\t\treturn \"stdout differs\"\n\tcase !bytes.Equal(oracle.stderr, native.stderr):\n\t\treturn \"stderr differs\"\n\t}\n\treturn \"\"\n}",
+    "new": "func disagreement(oracle run, native run) string {\n\treturn \"\"\n}",
+    "menu": "weaken witnessed comparison",
+    "mode": "witness"
+  }
+]

@@ -1,0 +1,16 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -424,12 +424,7 @@
+ }
+ 
+ func (l *lowering) namespaceReadyValue(node *ast.Node, value ir.Expression) ir.Expression {
+-	checks := l.namespaceReadyReads(node, false)
+-	if len(checks) == 0 {
+-		return value
+-	}
+-	b := l.libraryArrayBuilder(append(checks, value))
+-	return b.finish("namespace_read", b.read(b.parameters[len(checks)]))
++	return value
+ }
+ 
+ // Run readiness before evaluating the call. Keep the call itself intact so its

@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T11:08:29.864019837Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:08:29.875630003Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant"}
+{"Time":"2026-10-09T11:08:29.8757385Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"=== RUN   TestParserNamespaceReceiverMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:29.875778691Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"=== PAUSE TestParserNamespaceReceiverMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:29.875781948Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant"}
+{"Time":"2026-10-09T11:08:29.875784864Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant"}
+{"Time":"2026-10-09T11:08:29.875786675Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"=== CONT  TestParserNamespaceReceiverMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:30.467224018Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"    parser_namespaces_test.go:177: native namespace receiver substituted for method receiver: Node stdout catches clean exit 0\n"}
+{"Time":"2026-10-09T11:08:30.467300715Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"    parser_namespaces_test.go:177: javascript namespace receiver substituted for method receiver: Node stdout catches clean exit 0\n"}
+{"Time":"2026-10-09T11:08:30.467487222Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Output":"--- PASS: TestParserNamespaceReceiverMutant (0.59s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:30.470475481Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestParserNamespaceReceiverMutant","Elapsed":0.59}
+{"Time":"2026-10-09T11:08:30.470544395Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:30.470552372Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=1\n"}
+{"Time":"2026-10-09T11:08:30.470554905Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T11:08:30.470556897Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:08:30.470647659Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.606s\n"}
+{"Time":"2026-10-09T11:08:30.470661513Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.607}

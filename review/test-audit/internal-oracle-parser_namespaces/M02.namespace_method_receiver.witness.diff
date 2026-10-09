@@ -1,0 +1,28 @@
+--- before
++++ after
+@@ -112,17 +112,6 @@
+ 	return true;
+ }
+ 
+-function function_3_namespace_ready(local_6_argument) {
+-	if ((!local_6_argument)) {
+-		panic("TypeError: Cannot read properties of undefined (reading 'flags')");
+-	}
+-	return true;
+-}
+-
+-function function_4_namespace_read(local_7_argument, local_8_argument) {
+-	return local_8_argument;
+-}
+-
+ local_4_Debug = false;
+ ready_4 = true;
+ local_0_flags = (99);
+@@ -133,6 +122,6 @@
+ return function_0_attachFlowNodeDebugInfoWorker();
+ })();
+ ready_1 = true;
+-console.log((String(adamicCall(adamicCallee(local_1_node, "value"), [])) + ":" + String(function_4_namespace_read(function_3_namespace_ready(local_4_Debug), local_0_flags))));
++console.log((String(adamicCall(adamicCallee(local_1_node, "value"), [])) + ":" + String(local_0_flags)));
+ adamicWriteField(local_1_node, "flags", (11));
+ console.log(String(adamicCall(adamicCallee(local_1_node, "value"), [])));

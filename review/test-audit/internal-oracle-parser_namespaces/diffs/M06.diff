@@ -1,0 +1,12 @@
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -40,9 +40,6 @@
+ 	}
+ 	lowering.noteAccessorNames(modules)
+ 	lowering.noteOmittedOptionals(modules)
+-	if err := lowering.namespaceInitialization(modules); err != nil {
+-		return nil, err
+-	}
+ 	for _, module := range modules {
+ 		if err := lowering.refuse(module); err != nil {
+ 			return nil, err

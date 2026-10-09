@@ -1,0 +1,47 @@
+[
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u067-adamic js /tmp/u067-unresolved.a",
+    "exit": 0,
+    "wall": 0.17358449699895573
+  },
+  {
+    "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs /workspace/adamic/review/test-audit/internal-oracle-parser_namespaces/M02.independent.before.mjs",
+    "exit": 70,
+    "wall": 0.09839589900002466
+  },
+  {
+    "command": "ADAMIC_MUTANT=M02 /tmp/u067-adamic js /tmp/u067-unresolved.a",
+    "exit": 0,
+    "wall": 0.11655792300007306
+  },
+  {
+    "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs /workspace/adamic/review/test-audit/internal-oracle-parser_namespaces/M02.independent.after.mjs",
+    "exit": 70,
+    "wall": 0.06496314399919356
+  },
+  {
+    "command": "ADAMIC_MUTANT= /tmp/u067-adamic js internal/lower/testdata/namespaces_notyet/reaching_direct.a",
+    "exit": 1,
+    "wall": 0.06336578499758616
+  },
+  {
+    "command": "ADAMIC_MUTANT=M06 /tmp/u067-adamic js internal/lower/testdata/namespaces_notyet/reaching_direct.a",
+    "exit": 0,
+    "wall": 0.061108085999876494
+  },
+  {
+    "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs /workspace/adamic/review/test-audit/internal-oracle-parser_namespaces/M06.independent.after.mjs",
+    "exit": 70,
+    "wall": 0.044408476998796687
+  },
+  {
+    "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs /tmp/u067-unresolved.a",
+    "exit": 70,
+    "wall": 0.2853055020023021
+  },
+  {
+    "command": "node --disable-warning=ExperimentalWarning oracle/node.mjs internal/lower/testdata/namespaces_notyet/reaching_direct.a",
+    "exit": 70,
+    "wall": 0.13982652200138546
+  }
+]

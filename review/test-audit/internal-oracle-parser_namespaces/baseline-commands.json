@@ -1,0 +1,140 @@
+[
+  {
+    "label": "bounded-baseline",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 0,
+    "wall": 26.40047212799982
+  },
+  {
+    "label": "TestParserNamespace_family.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 9.588983693000046
+  },
+  {
+    "label": "TestParserNamespace_family.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.639600755999709
+  },
+  {
+    "label": "TestParserNamespace_family.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$'",
+    "exit": 0,
+    "wall": 4.262410085997544
+  },
+  {
+    "label": "TestParserCallableNamespaceMutant.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserCallableNamespaceMutant$'",
+    "exit": 0,
+    "wall": 3.4952899429990794
+  },
+  {
+    "label": "TestParserCallableNamespaceMutant.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserCallableNamespaceMutant$'",
+    "exit": 0,
+    "wall": 3.6047171030004392
+  },
+  {
+    "label": "TestParserCallableNamespaceMutant.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserCallableNamespaceMutant$'",
+    "exit": 0,
+    "wall": 3.6829146150012093
+  },
+  {
+    "label": "TestParserNamespaceClassRegistrationMutant.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserNamespaceClassRegistrationMutant$'",
+    "exit": 0,
+    "wall": 4.051183232000767
+  },
+  {
+    "label": "TestParserNamespaceClassRegistrationMutant.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserNamespaceClassRegistrationMutant$'",
+    "exit": 0,
+    "wall": 3.4270374039988383
+  },
+  {
+    "label": "TestParserNamespaceClassRegistrationMutant.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserNamespaceClassRegistrationMutant$'",
+    "exit": 0,
+    "wall": 3.1697081010024704
+  },
+  {
+    "label": "TestParserNamespaceReceiverMutant.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserNamespaceReceiverMutant$'",
+    "exit": 0,
+    "wall": 3.146405309002148
+  },
+  {
+    "label": "TestParserNamespaceReceiverMutant.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserNamespaceReceiverMutant$'",
+    "exit": 0,
+    "wall": 3.2302753100011614
+  },
+  {
+    "label": "TestParserNamespaceReceiverMutant.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestParserNamespaceReceiverMutant$'",
+    "exit": 0,
+    "wall": 3.2360145960010414
+  },
+  {
+    "label": "TestPredicateDirectionCountsAreRecorded.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 3.1453433880014927
+  },
+  {
+    "label": "TestPredicateDirectionCountsAreRecorded.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 3.2380658740003128
+  },
+  {
+    "label": "TestPredicateDirectionCountsAreRecorded.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateDirectionCountsAreRecorded$'",
+    "exit": 0,
+    "wall": 4.6584041389978665
+  },
+  {
+    "label": "TestPredicateMiscompileRefusals.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 8.165499388000171
+  },
+  {
+    "label": "TestPredicateMiscompileRefusals.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 6.9456276839991915
+  },
+  {
+    "label": "TestPredicateMiscompileRefusals.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestPredicateMiscompileRefusals$'",
+    "exit": 0,
+    "wall": 6.44525024199902
+  },
+  {
+    "label": "TestInUnionNarrowingIsRefused.1",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 3.3078557409971836
+  },
+  {
+    "label": "TestInUnionNarrowingIsRefused.2",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 2.797262670999771
+  },
+  {
+    "label": "TestInUnionNarrowingIsRefused.3",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInUnionNarrowingIsRefused$'",
+    "exit": 0,
+    "wall": 3.0504837140033487
+  },
+  {
+    "label": "coverage",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/lower -coverprofile=review/test-audit/internal-oracle-parser_namespaces/coverage.out ./internal/oracle/ -run '^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace|TestParserCallableNamespaceMutant|TestParserNamespaceClassRegistrationMutant|TestParserNamespaceReceiverMutant|TestPredicateDirectionCountsAreRecorded|TestPredicateMiscompileRefusals|TestInUnionNarrowingIsRefused)$'",
+    "exit": 0,
+    "wall": 14.052783570001338
+  }
+]
