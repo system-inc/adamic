@@ -12,7 +12,7 @@ ArrayPending: lowering's unsupported array-element refusal, particularly arrayEl
 
 Attempts and broadened replay
 
-F1, generic.go:147: drop the concrete typeMapper assignment. SourceFlows and every replayed row pass. No changed source-level behavior was established; it is a survivor, not a claimed uncovered bug.
+F1, generic.go:131: drop the concrete typeMapper assignment. SourceFlows and every replayed row pass. No changed source-level behavior was established; it is a survivor, not a claimed uncovered bug.
 F2, emit_functions.go:365: remove ownership bookkeeping from the closure-reference-result return. All original 33 rows pass. TestNativeAgreesWithNode catches it with leaks at oracle_test.go:787 in all four additional fixtures. SourceFlows does not call the separate leaks helper; nativelyUncached ordinarily sets detect_leaks=0, as the unchanged harness shows. The name promises source flows, not leak checking, so this is not a demonstrated name/assertion mismatch.
 F3, emit_functions.go:365: return NULL early for closure reference results. SourceFlows/callback/good prints false rather than true in both native backends, failing checked_views_v2_source_test.go:143. TestNativeAgreesWithNode also catches it in all four additional fixtures, including function_values_return.a at oracle_test.go:774 (exit codes differ). This is not unique, so SourceFlows is not defended after the three attempts.
 C1, runtime/view_unions_untagged.c:44: flip the own-slot static-class condition. OwnClassData alone fails, at checked_views_v2_source_test.go:168 (native: exit codes differ). Other 32 complete rows and the additional differential-family subcases pass.
