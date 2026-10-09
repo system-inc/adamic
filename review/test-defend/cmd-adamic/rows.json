@@ -1,0 +1,23 @@
+[
+  {
+    "test": "TestBuildTargetParsing",
+    "package": "cmd/adamic",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestWASIRejectsTSGoArchive"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 cmd/adamic/tsgo.go:21",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "cmd/adamic/tsgo.go:21",
+        "change": "Change malformed-target rejection from return 2 to return 1.",
+        "rows_failed": [
+          "TestBuildTargetParsing"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_ORACLE_WASI=1 WASI_SYSROOT=/tmp/defend-cmd-adamic/sdk/share/wasi-sysroot ADAMIC_BUILD_CACHE_DIR=/tmp/defend-cmd-adamic/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run . > D1.log 2>&1; target_test.go:18: [build --target unknown missing.a -o out.wasm]: got 1, want usage error (2)"
+  }
+]

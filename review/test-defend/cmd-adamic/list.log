@@ -1,0 +1,14 @@
+TestExplainChecksOutput
+TestExplainChecksDriver
+TestUsageExitStatus
+TestBuildWASISanitizeTargetBeforeSource
+TestBuildWASISanitizeTargetAfterSource
+TestNonNullExplainChecks
+TestWASIRequestSelection
+TestWASIRequest
+TestRequestNativeStaysCommand
+TestWASIRequestModuleSelection
+TestWASIRequestThrows
+TestBuildTargetParsing
+TestWASIRejectsTSGoArchive
+ok  	github.com/system-inc/adamic/cmd/adamic	0.007s

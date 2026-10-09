@@ -1,0 +1,8 @@
+{
+  "target": "TestBuildTargetParsing",
+  "subsumer": "TestWASIRejectsTSGoArchive",
+  "exclusive_blocks": [
+    "github.com/system-inc/adamic/cmd/adamic/main.go:97.3,97.58",
+    "github.com/system-inc/adamic/cmd/adamic/tsgo.go:20.5,22.1"
+  ]
+}

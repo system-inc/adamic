@@ -1,0 +1,250 @@
+[
+  {
+    "test": "TestExplainChecksOutput",
+    "package": "cmd/adamic",
+    "file": "cmd/adamic/checks_test.go",
+    "seconds": 9.836,
+    "oracle": "hand-written expected explanation text",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M04",
+      "E_RUN",
+      "E_CHECK",
+      "E_COMPILE"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "E_COMPILE: checks_test.go:42: c explanation:",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M04 ADAMIC_NATIVE_SPLIT=u007-M04 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .; checks_test.go:42: c explanation:"
+  },
+  {
+    "test": "TestExplainChecksDriver",
+    "package": "cmd/adamic",
+    "file": "cmd/adamic/checks_test.go",
+    "seconds": 0.009,
+    "oracle": "no assertion in ordinary invocation; subprocess helper",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "none; E_RUN passed",
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=E_RUN ADAMIC_NATIVE_SPLIT=u007-E_RUN timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .; TestExplainChecksDriver PASS"
+  },
+  {
+    "test": "TestNonNullExplainChecks",
+    "package": "cmd/adamic",
+    "file": "cmd/adamic/non_null_checks_test.go",
+    "seconds": 17.24,
+    "oracle": "hand-written expected explanation text",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M05",
+      "E_RUN",
+      "E_CHECK",
+      "E_COMPILE"
+    ],
+    "unique_kills": [
+      "M05"
+    ],
+    "last_proven_fail": "E_COMPILE: non_null_checks_test.go:53: c explanation:",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M05 ADAMIC_NATIVE_SPLIT=u007-M05 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .; non_null_checks_test.go:53: c explanation:"
+  },
+  {
+    "test": "TestWASIRequestSelection",
+    "package": "cmd/adamic",
+    "file": "cmd/adamic/request_test.go",
+    "seconds": 0.823,
+    "oracle": "hand-written expected selection, diagnostics, exit status or IR values",
+    "oracle_kind": "self",
+    "kills": [
+      "M11",
+      "E_CHECK",
+      "E_WASI",
+      "E_SELECT"
+    ],
+    "unique_kills": [
+      "M11"
+    ],
+    "last_proven_fail": "E_SELECT: request_test.go:69: handler = -1, want present true",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M11 ADAMIC_NATIVE_SPLIT=u007-M11 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .; request_test.go:53: signature selection returned \"serve\", <nil>, want refused true"
+  },
+  {
+    "test": "TestWASIRequest",
+    "package": "cmd/adamic",
+    "file": "cmd/adamic/request_test.go",
+    "seconds": 0.605,
+    "oracle": "Node runs source independently and compares WASM response; hand-written ABI, lifetime and region-count checks",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M06",
+      "M08",
+      "E_RUN",
+      "E_CHECK",
+      "E_WASI",
+      "E_SELECT"
+    ],
+    "unique_kills": [
+      "M06"
+    ],
+    "last_proven_fail": "E_SELECT: request_test.go:94: request host: exit status 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M06 ADAMIC_NATIVE_SPLIT=u007-M06 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .; request_test.go:94: request host: exit status 1"
+  },
+  {
+    "test": "TestRequestNativeStaysCommand",
+    "package": "cmd/adamic",
+    "file": "cmd/adamic/request_test.go",
+    "seconds": 0.216,
+    "oracle": "hand-written expected selection, diagnostics, exit status or IR values",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "E_CHECK",
+      "E_COMPILE"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "E_COMPILE: panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M03 ADAMIC_NATIVE_SPLIT=u007-M03 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .; request_test.go:106: compile returned 1"
+  },
+  {
+    "test": "TestWASIRequestModuleSelection",
+    "package": "cmd/adamic",
+    "file": "cmd/adamic/request_test.go",
+    "seconds": 0.069,
+    "oracle": "hand-written expected selection, diagnostics, exit status or IR values",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "E_CHECK",
+      "E_WASI",
+      "E_SELECT"
+    ],
+    "unique_kills": [
+      "M10"
+    ],
+    "last_proven_fail": "E_SELECT: request_test.go:143: accepted ambiguous IR function names",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M10 ADAMIC_NATIVE_SPLIT=u007-M10 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .; request_test.go:143: accepted ambiguous IR function names"
+  },
+  {
+    "test": "TestWASIRequestThrows",
+    "package": "cmd/adamic",
+    "file": "cmd/adamic/request_test.go",
+    "seconds": 0.174,
+    "oracle": "hand-written exit 70 and panic text; Node hosts WASM only",
+    "oracle_kind": "self",
+    "kills": [
+      "M08",
+      "M12",
+      "E_RUN",
+      "E_CHECK",
+      "E_WASI",
+      "E_SELECT"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "E_SELECT: request_test.go:167: uncaught handler exception: exit status 1, TypeError [ERR_INVALID_ARG_TYPE] (full line in matrix.json)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M12 ADAMIC_NATIVE_SPLIT=u007-M12 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .; request_test.go:167: uncaught handler exception: exit status 1 (full line in matrix.json)"
+  },
+  {
+    "test": "TestBuildTargetParsing",
+    "package": "cmd/adamic",
+    "file": "cmd/adamic/target_test.go",
+    "seconds": 0.008,
+    "oracle": "hand-written expected selection, diagnostics, exit status or IR values",
+    "oracle_kind": "self",
+    "kills": [
+      "M08",
+      "E_RUN"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "E_RUN: target_test.go:17: [build --target wasm32-wasi missing.a -o out.wasm --sanitize]: got 0, want unsupported options (1)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestWASIRejectsTSGoArchive"
+    ],
+    "mutants_in_matrix": 17,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M08 ADAMIC_NATIVE_SPLIT=u007-M08 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .; target_test.go:17: [build --target wasm32-wasi missing.a -o out.wasm --sanitize]: got 2, want unsupported options (1)"
+  },
+  {
+    "test": "TestWASIRejectsTSGoArchive",
+    "package": "cmd/adamic",
+    "file": "cmd/adamic/target_test.go",
+    "seconds": 0.007,
+    "oracle": "hand-written expected selection, diagnostics, exit status or IR values",
+    "oracle_kind": "self",
+    "kills": [
+      "M08",
+      "M09",
+      "E_RUN"
+    ],
+    "unique_kills": [
+      "M09"
+    ],
+    "last_proven_fail": "E_RUN: target_test.go:48: got exit 0 and \"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M09 ADAMIC_NATIVE_SPLIT=u007-M09 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic/ -run .; target_test.go:48: got exit 1 and \"adamic: load: no file at missing.a\\n\""
+  }
+]

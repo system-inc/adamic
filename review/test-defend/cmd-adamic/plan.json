@@ -1,0 +1,10 @@
+{
+  "mutant": "D1",
+  "file": "cmd/adamic/tsgo.go",
+  "line": 21,
+  "menu": "change constant",
+  "old": "\t\t\t\treturn 2",
+  "new": "\t\t\t\treturn 1",
+  "context": "First return in build target rejection guard; classify unknown, missing or duplicate target as compilation failure instead of usage error.",
+  "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6"
+}

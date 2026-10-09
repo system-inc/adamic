@@ -1,0 +1,54 @@
+[
+  {
+    "mutant": "D1",
+    "file": "cmd/adamic/tsgo.go",
+    "line": 21,
+    "menu": "change constant",
+    "old": "\t\t\t\treturn 2",
+    "new": "\t\t\t\treturn 1",
+    "context": "First return in build target rejection guard; classify unknown, missing or duplicate target as compilation failure instead of usage error.",
+    "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cmd/adamic/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/defend-cmd-adamic/cache/D1",
+      "ADAMIC_ORACLE_WASI": "1",
+      "WASI_SYSROOT": "/tmp/defend-cmd-adamic/sdk/share/wasi-sysroot"
+    },
+    "exit": 1,
+    "wall_seconds": 26.178419853000378,
+    "rows_failed": [
+      "TestBuildTargetParsing"
+    ],
+    "rows_passed": [
+      "TestExplainChecksDriver",
+      "TestWASIRequestSelection",
+      "TestWASIRequest",
+      "TestRequestNativeStaysCommand",
+      "TestWASIRequestModuleSelection",
+      "TestWASIRequestThrows",
+      "TestWASIRejectsTSGoArchive",
+      "TestUsageExitStatus",
+      "TestBuildWASISanitizeTargetAfterSource",
+      "TestBuildWASISanitizeTargetBeforeSource",
+      "TestExplainChecksOutput",
+      "TestNonNullExplainChecks"
+    ],
+    "rows_skipped": [],
+    "panics": [],
+    "failing_lines": [
+      "target_test.go:18: [build --target unknown missing.a -o out.wasm]: got 1, want usage error (2)"
+    ]
+  }
+]

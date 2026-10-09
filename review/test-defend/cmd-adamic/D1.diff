@@ -1,0 +1,13 @@
+diff --git a/cmd/adamic/tsgo.go b/cmd/adamic/tsgo.go
+index cf1c5523..37414e7a 100644
+--- a/cmd/adamic/tsgo.go
++++ b/cmd/adamic/tsgo.go
+@@ -18,7 +18,7 @@ func build(path, output string, arguments []string) int {
+ 			index++
+ 			if index >= len(arguments) || options.Target != "" || arguments[index] != "wasm32-wasi" {
+ 				fmt.Fprintln(os.Stderr, usage)
+-				return 2
++				return 1
+ 			}
+ 			options.Target = arguments[index]
+ 		case "--explain-checks":

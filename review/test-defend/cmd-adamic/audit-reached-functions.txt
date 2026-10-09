@@ -1,0 +1,14 @@
+Starting commit: 1f34d0d300301faebc94d397adee1a090923d2c7
+Static caller inspection of every complete cmd/adamic test file:
+cmd/adamic/main.go:38 run (directly and through TestExplainChecksDriver subprocess)
+cmd/adamic/main.go:104 check (directly and from compilation)
+cmd/adamic/main.go:121 compile (directly and from rendering)
+cmd/adamic/main.go:125 compileLibrary (from compile and build)
+cmd/adamic/main.go:143 relative (diagnostic rendering)
+cmd/adamic/tsgo.go:11 build (from run)
+cmd/adamic/request.go:17 compileWASI (directly and from build)
+cmd/adamic/request.go:52 requestFunction (directly and from compileWASI), including invalid closure at line 71
+cmd/adamic/checks.go:14 renderWithChecks (from run)
+cmd/adamic/checks.go:36 explainPredicateChecks (from rendering/build), including sort comparator at line 38
+cmd/adamic/checks.go:57 explainNonNullChecks (from explainPredicateChecks), including sort comparator at line 60
+main is not called by the Go test binary. Test helpers and imported packages are not mutated.
