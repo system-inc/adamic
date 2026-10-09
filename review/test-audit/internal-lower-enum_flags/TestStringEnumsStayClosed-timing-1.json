@@ -1,0 +1,89 @@
+{
+  "command": "timeout 95 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestStringEnumsStayClosed$",
+  "exit": 0,
+  "wall_seconds": 2.195911425002123,
+  "binary_seconds": 0.068,
+  "events": [
+    {
+      "Time": "2026-10-09T10:05:56.936881959Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:05:56.944422474Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed"
+    },
+    {
+      "Time": "2026-10-09T10:05:56.944499978Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Output": "=== RUN   TestStringEnumsStayClosed\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:56.944536222Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Output": "=== PAUSE TestStringEnumsStayClosed\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:56.944538796Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed"
+    },
+    {
+      "Time": "2026-10-09T10:05:56.944540869Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed"
+    },
+    {
+      "Time": "2026-10-09T10:05:56.944542291Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Output": "=== CONT  TestStringEnumsStayClosed\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:57.002334196Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Output": "--- PASS: TestStringEnumsStayClosed (0.06s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:57.002438629Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Elapsed": 0.06
+    },
+    {
+      "Time": "2026-10-09T10:05:57.002462585Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:57.004663768Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.067s\n"
+    },
+    {
+      "Time": "2026-10-09T10:05:57.004693042Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.068
+    }
+  ]
+}

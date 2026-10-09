@@ -1,0 +1,10 @@
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -97,7 +97,6 @@
+ 		}
+ 		if g.lowering.namespaceValueNode(node) {
+ 			if declaration := g.lowering.namespaceRuntimeEnum(node); declaration != nil {
+-				entry.reads[declaration] = node
+ 			}
+ 			if declaration := g.lowering.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) {
+ 				entry.reads[declaration] = node

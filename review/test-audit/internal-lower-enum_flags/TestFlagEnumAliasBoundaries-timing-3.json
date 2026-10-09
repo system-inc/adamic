@@ -1,0 +1,89 @@
+{
+  "command": "timeout 95 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestFlagEnumAliasBoundaries$",
+  "exit": 0,
+  "wall_seconds": 2.2726636590014095,
+  "binary_seconds": 0.196,
+  "events": [
+    {
+      "Time": "2026-10-09T10:05:28.974173306Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:05:28.981344578Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries"
+    },
+    {
+      "Time": "2026-10-09T10:05:28.98143396Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Output": "=== RUN   TestFlagEnumAliasBoundaries\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:28.982696748Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Output": "=== PAUSE TestFlagEnumAliasBoundaries\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:28.982713102Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries"
+    },
+    {
+      "Time": "2026-10-09T10:05:28.982717218Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries"
+    },
+    {
+      "Time": "2026-10-09T10:05:28.982719331Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Output": "=== CONT  TestFlagEnumAliasBoundaries\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:29.166116777Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Output": "--- PASS: TestFlagEnumAliasBoundaries (0.18s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:29.166161733Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Elapsed": 0.18
+    },
+    {
+      "Time": "2026-10-09T10:05:29.166184366Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:29.169738225Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.195s\n"
+    },
+    {
+      "Time": "2026-10-09T10:05:29.169777833Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.196
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "id": "P_LOWER",
+  "label": "P_LOWER-TestFlagEnumAliasBoundaries",
+  "command": "ADAMIC_MUTANT='P_LOWER' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/P_LOWER' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestFlagEnumAliasBoundaries$",
+  "exit": 1,
+  "wall_seconds": 2.2555739380004525,
+  "binary_seconds": 0.155,
+  "status": {
+    "TestFlagEnumAliasBoundaries": "fail"
+  },
+  "aborted": false,
+  "events": [
+    {
+      "Time": "2026-10-09T10:26:35.339433798Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.347102259Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.347182157Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Output": "=== RUN   TestFlagEnumAliasBoundaries\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.347210729Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Output": "=== PAUSE TestFlagEnumAliasBoundaries\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.347213312Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.347215496Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.347217138Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Output": "=== CONT  TestFlagEnumAliasBoundaries\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.492025212Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Output": "    enum_flags_test.go:133: want Refused, got <nil> for enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30, Both = A | B } const combined = Flags.A | Flags.B; function use(box: { flags: Flags.A }): void {} use({flags: combined});\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.49210543Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Output": "--- FAIL: TestFlagEnumAliasBoundaries (0.14s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.492122696Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumAliasBoundaries",
+      "Elapsed": 0.14
+    },
+    {
+      "Time": "2026-10-09T10:26:35.492151358Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "FAIL\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.49410372Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.154s\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:35.494131Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.155
+    }
+  ]
+}

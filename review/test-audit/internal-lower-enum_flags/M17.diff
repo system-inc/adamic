@@ -1,0 +1,9 @@
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -149,5 +149,5 @@
+ 	if declaration == nil || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) {
+ 		return nil
+ 	}
+-	return declaration
++	return nil
+ }

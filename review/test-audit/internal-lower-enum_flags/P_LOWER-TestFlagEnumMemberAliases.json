@@ -1,0 +1,95 @@
+{
+  "id": "P_LOWER",
+  "label": "P_LOWER-TestFlagEnumMemberAliases",
+  "command": "ADAMIC_MUTANT='P_LOWER' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/P_LOWER' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestFlagEnumMemberAliases$",
+  "exit": 0,
+  "wall_seconds": 2.020063926000148,
+  "binary_seconds": 0.045,
+  "status": {
+    "TestFlagEnumMemberAliases": "pass"
+  },
+  "aborted": false,
+  "events": [
+    {
+      "Time": "2026-10-09T10:26:28.912520704Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:26:28.920159627Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases"
+    },
+    {
+      "Time": "2026-10-09T10:26:28.920267455Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases",
+      "Output": "=== RUN   TestFlagEnumMemberAliases\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:28.92029128Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases",
+      "Output": "=== PAUSE TestFlagEnumMemberAliases\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:28.920293774Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases"
+    },
+    {
+      "Time": "2026-10-09T10:26:28.920298731Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases"
+    },
+    {
+      "Time": "2026-10-09T10:26:28.920302267Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases",
+      "Output": "=== CONT  TestFlagEnumMemberAliases\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:28.956909459Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases",
+      "Output": "--- PASS: TestFlagEnumMemberAliases (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:28.95695824Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T10:26:28.956983618Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:28.957137108Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.044s\n"
+    },
+    {
+      "Time": "2026-10-09T10:26:28.957159992Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.045
+    }
+  ]
+}

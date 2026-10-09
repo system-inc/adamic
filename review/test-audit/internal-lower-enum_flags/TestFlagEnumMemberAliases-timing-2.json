@@ -1,0 +1,89 @@
+{
+  "command": "timeout 95 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestFlagEnumMemberAliases$",
+  "exit": 0,
+  "wall_seconds": 2.020463677999942,
+  "binary_seconds": 0.037,
+  "events": [
+    {
+      "Time": "2026-10-09T10:05:08.205098921Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:05:08.21181999Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases"
+    },
+    {
+      "Time": "2026-10-09T10:05:08.211879217Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases",
+      "Output": "=== RUN   TestFlagEnumMemberAliases\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:08.211929721Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases",
+      "Output": "=== PAUSE TestFlagEnumMemberAliases\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:08.211932185Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases"
+    },
+    {
+      "Time": "2026-10-09T10:05:08.211934137Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases"
+    },
+    {
+      "Time": "2026-10-09T10:05:08.211935479Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases",
+      "Output": "=== CONT  TestFlagEnumMemberAliases\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:08.241682621Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases",
+      "Output": "--- PASS: TestFlagEnumMemberAliases (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:08.241733686Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumMemberAliases",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:05:08.241761046Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:08.241804445Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.036s\n"
+    },
+    {
+      "Time": "2026-10-09T10:05:08.241827419Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.037
+    }
+  ]
+}

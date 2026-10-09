@@ -1,0 +1,278 @@
+diff --git a/internal/lower/enum_flags.go b/internal/lower/enum_flags.go
+index 50a4e472..8e3b79f9 100644
+--- a/internal/lower/enum_flags.go
++++ b/internal/lower/enum_flags.go
+@@ -45,7 +45,12 @@ func (l *lowering) flagLiteral(node *ast.Node, value float64) bool {
+ 		return false
+ 	}
+ 	number := reflect.ValueOf(literal.AsLiteralType().Value())
+-	return number.Kind() == reflect.Float64 && number.Float() == value
++	return number.Kind() == reflect.Float64 && func() bool {
++		if auditMutant == "M14" {
++			return number.Float() != value
++		}
++		return number.Float() == value
++	}()
+ }
+ 
+ func (l *lowering) flagInitializer(node, declaration *ast.Node, memberAllowed bool) bool {
+@@ -65,7 +70,12 @@ func (l *lowering) flagInitializer(node, declaration *ast.Node, memberAllowed bo
+ 		if memberAllowed || !l.flagLiteral(binary.Left, 1) {
+ 			return false
+ 		}
+-		for bit := 0; bit <= 30; bit++ {
++		for bit := 0; bit <= func() int {
++			if auditMutant == "M15" {
++				return 29
++			}
++			return 30
++		}(); bit++ {
+ 			if l.flagLiteral(binary.Right, float64(bit)) {
+ 				return true
+ 			}
+@@ -104,6 +114,9 @@ func (l *lowering) flagDomainSeen(node *ast.Node, target *ast.Symbol, seen map[*
+ 		binary := node.AsBinaryExpression()
+ 		switch binary.OperatorToken.Kind {
+ 		case ast.KindAmpersandToken:
++			if auditMutant == "M16" {
++				return l.flagDomainSeen(binary.Left, target, seen) && l.flagDomainSeen(binary.Right, target, seen)
++			}
+ 			return l.flagDomainSeen(binary.Left, target, seen) || l.flagDomainSeen(binary.Right, target, seen)
+ 		case ast.KindBarToken:
+ 			return l.flagDomainSeen(binary.Left, target, seen) && l.flagDomainSeen(binary.Right, target, seen)
+diff --git a/internal/lower/enum_never.go b/internal/lower/enum_never.go
+index 87649b1b..3ddcfbc7 100644
+--- a/internal/lower/enum_never.go
++++ b/internal/lower/enum_never.go
+@@ -26,6 +26,9 @@ func (l *lowering) enumStoredType(node *ast.Node) *checker.Type {
+ // Follow the declared type, not the flow type that has already become never. A never alias
+ // keeps its initializer's enum identity, but never acquires a runtime member proof.
+ func (l *lowering) enumNeverIdentity(node *ast.Node, seen map[*ast.Node]bool) *ast.Symbol {
++	if auditMutant == "M10" {
++		return nil
++	}
+ 	node = ast.SkipParentheses(node)
+ 	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || seen[node] {
+ 		return nil
+@@ -70,7 +73,12 @@ func (l *lowering) enumMemberOrigin(node *ast.Node, identity *ast.Symbol, seen m
+ 	seen[node] = true
+ 	if symbol := l.symbol(node); symbol != nil && symbol.ValueDeclaration != nil {
+ 		declaration := symbol.ValueDeclaration
+-		if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
++		if declaration.Kind == ast.KindVariableDeclaration && func() bool {
++			if auditMutant == "M11" {
++				return declaration.Parent.Flags&ast.NodeFlagsConst == 0
++			}
++			return declaration.Parent.Flags&ast.NodeFlagsConst != 0
++		}() {
+ 			if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
+ 				return l.enumMemberOrigin(initializer, identity, seen)
+ 			}
+@@ -107,7 +115,12 @@ func (l *lowering) enumNeverCheck(node *ast.Node, value ir.Expression, identity
+ 		ir.StringConstant{Index: l.constant(" for numeric enum " + identity.Name)},
+ 	}}
+ 	l.result.Functions = append(l.result.Functions, ir.Function{
+-		Name: "enum_never", Parameters: []int{local}, Returns: of,
++		Name: func() string {
++			if auditMutant == "M12" {
++				return "enum_unreachable"
++			}
++			return "enum_never"
++		}(), Parameters: []int{local}, Returns: of,
+ 		Body: []ir.Statement{ir.Panic{Message: message}},
+ 	})
+ 	return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: of}
+diff --git a/internal/lower/enums.go b/internal/lower/enums.go
+index d1cf5872..b09c5b4c 100644
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -32,10 +32,16 @@ func (l *lowering) enumAssignable(from, to *checker.Type) bool {
+ 	}
+ 	if l.numericEnum(l.enumIdentity(to)) {
+ 		if !l.openNumericEnumType(to) {
++			if auditMutant == "M08" {
++				return true
++			}
+ 			return !l.openNumericEnumType(from) && from.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.checker.IsTypeAssignableTo(from, to)
+ 		}
+ 		return from.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsNever) != 0
+ 	}
++	if auditMutant == "M09" {
++		return true
++	}
+ 	return from.Flags()&checker.TypeFlagsEnumLike != 0 && l.enumIdentity(from) == l.enumIdentity(to) && l.checker.IsTypeAssignableTo(from, to)
+ }
+ 
+@@ -47,7 +53,7 @@ func (l *lowering) openNumericEnumType(proven *checker.Type) bool {
+ 		return false
+ 	}
+ 	whole := l.checker.GetTypeAtLocation(identity.ValueDeclaration.Name())
+-	if proven == whole {
++	if !(auditMutant == "M07") && (proven == whole) {
+ 		return true
+ 	}
+ 	if proven.Flags()&checker.TypeFlagsUnion == 0 || whole.Flags()&checker.TypeFlagsUnion == 0 || len(proven.Types()) != len(whole.Types()) {
+@@ -68,6 +74,9 @@ func (l *lowering) openNumericEnumType(proven *checker.Type) bool {
+ }
+ 
+ func (l *lowering) numericEnum(symbol *ast.Symbol) bool {
++	if auditMutant == "M06" {
++		return false
++	}
+ 	if symbol == nil || symbol.ValueDeclaration == nil || symbol.ValueDeclaration.Kind != ast.KindEnumDeclaration {
+ 		return false
+ 	}
+@@ -154,10 +163,15 @@ func (l *lowering) enumConstant(member *ast.Node) (ir.Expression, error) {
+ 	constant := l.checker.GetConstantValue(member)
+ 	if constant != nil && reflect.TypeOf(constant).Kind() == reflect.Float64 {
+ 		value := reflect.ValueOf(constant).Float()
+-		if math.IsNaN(value) || math.IsInf(value, 0) {
++		if auditMutant == "M05" || (math.IsNaN(value) || math.IsInf(value, 0)) {
+ 			return nil, l.notYet(member, "a non-finite enum member")
+ 		}
+-		return ir.NumberConstant{Value: value}, nil
++		return ir.NumberConstant{Value: func() float64 {
++			if auditMutant == "M01" {
++				return value + 1
++			}
++			return value
++		}()}, nil
+ 	}
+ 	if value, ok := constant.(string); ok {
+ 		return ir.StringConstant{Index: l.constant(value)}, nil
+@@ -172,9 +186,12 @@ func (l *lowering) enumFields(node *ast.Node) ([]ir.Field, error) {
+ 	fields := []ir.Field{}
+ 	positions := map[string]int{}
+ 	set := func(name string, value ir.Expression) {
+-		if position, exists := positions[name]; exists {
+-			fields[position].Value = value
+-			return
++		if !(auditMutant == "M04") {
++			if position, exists := positions[name]; exists {
++				fields[position].Value = value
++				return
++			}
++
+ 		}
+ 		positions[name] = len(fields)
+ 		fields = append(fields, ir.Field{Name: name, Value: value})
+@@ -190,7 +207,10 @@ func (l *lowering) enumFields(node *ast.Node) ([]ir.Field, error) {
+ 		if value.Type() == ir.Number && (member.Name().Text() == "NaN" || member.Name().Text() == "Infinity" || member.Name().Text() == "-Infinity") {
+ 			return nil, &Refused{Where: l.program.Where(member), What: "a numeric enum member named like a non-finite number; numeric indexing could read a number where tsc promises a string", Fix: "rename the member so numeric reverse mapping stays string-valued"}
+ 		}
+-		set(member.Name().Text(), value)
++		if !(auditMutant == "M03") {
++			set(member.Name().Text(), value)
++
++		}
+ 		if number, numeric := value.(ir.NumberConstant); numeric {
+ 			key := strconv.FormatFloat(number.Value, 'f', -1, 64)
+ 			if printed, ok := l.checker.GetConstantValue(member).(interface{ String() string }); ok {
+@@ -199,7 +219,11 @@ func (l *lowering) enumFields(node *ast.Node) ([]ir.Field, error) {
+ 			if number.Value == 0 {
+ 				key = "0"
+ 			}
+-			set(key, ir.StringConstant{Index: l.constant(member.Name().Text())})
++			if auditMutant == "M02" {
++				set(key, ir.StringConstant{Index: l.constant("")})
++			} else {
++				set(key, ir.StringConstant{Index: l.constant(member.Name().Text())})
++			}
+ 		}
+ 	}
+ 	return fields, nil
+@@ -472,6 +496,9 @@ func (l *lowering) enumSwitch(node *ast.Node) error {
+ // A numeric enum default is unreachable only with a member origin proof and full coverage.
+ // This permits the never-default idiom without inventing a machine representation for never.
+ func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
++	if auditMutant == "M13" {
++		return false
++	}
+ 	statement := node.AsSwitchStatement()
+ 	proven := l.checker.GetTypeAtLocation(statement.Expression)
+ 	return l.enumSwitchCovered(node) && (!l.numericEnum(l.enumIdentity(proven)) || l.enumMemberOrigin(statement.Expression, l.enumIdentity(proven), map[*ast.Node]bool{}))
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..3a15f2f8 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditMutant == "P_LOWER" {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/namespaces.go b/internal/lower/namespaces.go
+index b34c6b8d..f29add8b 100644
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -363,6 +363,9 @@ func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {
+ 			return declaration
+ 		case ast.KindFunctionDeclaration:
+ 			if declaration.Body() != nil {
++				if auditMutant == "M20" {
++					return nil
++				}
+ 				return declaration
+ 			}
+ 			return nil
+diff --git a/internal/lower/namespaces_call_graph.go b/internal/lower/namespaces_call_graph.go
+index 3a316015..8d25db73 100644
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -22,6 +22,9 @@ type namespaceCallNode struct {
+ }
+ 
+ func (g *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node {
++	if auditMutant == "P_REACH" {
++		return nil
++	}
+ 	return g.discover(function).reaches
+ }
+ 
+@@ -29,7 +32,11 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
+ 	if cached := g.functions[function]; cached != nil {
+ 		return cached
+ 	}
+-	g.walks++
++	if auditMutant == "M18" {
++		g.walks += 2
++	} else {
++		g.walks++
++	}
+ 	entry := &namespaceCallNode{index: g.next, low: g.next, active: true, reads: map[*ast.Node]*ast.Node{}}
+ 	g.next++
+ 	g.functions[function] = entry
+@@ -97,7 +104,9 @@ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
+ 		}
+ 		if g.lowering.namespaceValueNode(node) {
+ 			if declaration := g.lowering.namespaceRuntimeEnum(node); declaration != nil {
+-				entry.reads[declaration] = node
++				if !(auditMutant == "M19") {
++					entry.reads[declaration] = node
++				}
+ 			}
+ 			if declaration := g.lowering.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) {
+ 				entry.reads[declaration] = node
+@@ -149,5 +158,9 @@ func (l *lowering) namespaceRuntimeEnum(node *ast.Node) *ast.Node {
+ 	if declaration == nil || ast.HasSyntacticModifier(declaration, ast.ModifierFlagsConst) {
+ 		return nil
+ 	}
++	if auditMutant == "M17" {
++		return nil
++	}
+ 	return declaration
++
+ }
+
+--- /dev/null
++++ b/internal/lower/audit_mutant.go
+@@ -0,0 +1,5 @@
++package lower
++
++import "os"
++
++var auditMutant = os.Getenv("ADAMIC_MUTANT")

@@ -1,0 +1,95 @@
+{
+  "id": "P_LOWER",
+  "label": "P_LOWER-TestFlagEnumLiteralSpellings",
+  "command": "ADAMIC_MUTANT='P_LOWER' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/P_LOWER' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestFlagEnumLiteralSpellings$",
+  "exit": 0,
+  "wall_seconds": 2.0770132360012212,
+  "binary_seconds": 0.056,
+  "status": {
+    "TestFlagEnumLiteralSpellings": "pass"
+  },
+  "aborted": false,
+  "events": [
+    {
+      "Time": "2026-10-09T10:26:26.879316752Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:26:26.886873525Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumLiteralSpellings"
+    },
+    {
+      "Time": "2026-10-09T10:26:26.886954223Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumLiteralSpellings",
+      "Output": "=== RUN   TestFlagEnumLiteralSpellings\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:26.88698577Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumLiteralSpellings",
+      "Output": "=== PAUSE TestFlagEnumLiteralSpellings\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:26.886988284Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumLiteralSpellings"
+    },
+    {
+      "Time": "2026-10-09T10:26:26.890924855Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumLiteralSpellings"
+    },
+    {
+      "Time": "2026-10-09T10:26:26.890944964Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumLiteralSpellings",
+      "Output": "=== CONT  TestFlagEnumLiteralSpellings\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:26.933868817Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumLiteralSpellings",
+      "Output": "--- PASS: TestFlagEnumLiteralSpellings (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:26.933915415Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumLiteralSpellings",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T10:26:26.933937538Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:26.935430544Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.056s\n"
+    },
+    {
+      "Time": "2026-10-09T10:26:26.935455171Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.056
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+--- a/internal/lower/enum_never.go
++++ b/internal/lower/enum_never.go
+@@ -70,7 +70,7 @@
+ 	seen[node] = true
+ 	if symbol := l.symbol(node); symbol != nil && symbol.ValueDeclaration != nil {
+ 		declaration := symbol.ValueDeclaration
+-		if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
++		if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+ 			if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
+ 				return l.enumMemberOrigin(initializer, identity, seen)
+ 			}

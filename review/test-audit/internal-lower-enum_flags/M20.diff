@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -363,7 +363,7 @@
+ 			return declaration
+ 		case ast.KindFunctionDeclaration:
+ 			if declaration.Body() != nil {
+-				return declaration
++				return nil
+ 			}
+ 			return nil
+ 		case ast.KindVariableDeclaration:

@@ -1,0 +1,12 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -68,6 +68,9 @@
+ }
+ 
+ func (l *lowering) numericEnum(symbol *ast.Symbol) bool {
++	if true {
++		return false
++	}
+ 	if symbol == nil || symbol.ValueDeclaration == nil || symbol.ValueDeclaration.Kind != ast.KindEnumDeclaration {
+ 		return false
+ 	}

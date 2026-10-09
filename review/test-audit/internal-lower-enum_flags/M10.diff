@@ -1,0 +1,12 @@
+--- a/internal/lower/enum_never.go
++++ b/internal/lower/enum_never.go
+@@ -26,6 +26,9 @@
+ // Follow the declared type, not the flow type that has already become never. A never alias
+ // keeps its initializer's enum identity, but never acquires a runtime member proof.
+ func (l *lowering) enumNeverIdentity(node *ast.Node, seen map[*ast.Node]bool) *ast.Symbol {
++	if true {
++		return nil
++	}
+ 	node = ast.SkipParentheses(node)
+ 	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsNever == 0 || seen[node] {
+ 		return nil

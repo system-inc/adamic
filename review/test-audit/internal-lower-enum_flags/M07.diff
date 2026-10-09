@@ -1,0 +1,11 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -47,7 +47,7 @@
+ 		return false
+ 	}
+ 	whole := l.checker.GetTypeAtLocation(identity.ValueDeclaration.Name())
+-	if proven == whole {
++	if false && proven == whole {
+ 		return true
+ 	}
+ 	if proven.Flags()&checker.TypeFlagsUnion == 0 || whole.Flags()&checker.TypeFlagsUnion == 0 || len(proven.Types()) != len(whole.Types()) {

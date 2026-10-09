@@ -1,0 +1,89 @@
+{
+  "command": "timeout 95 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestEnumNamespaceSharedCycle$",
+  "exit": 0,
+  "wall_seconds": 2.099496069997258,
+  "binary_seconds": 0.048,
+  "events": [
+    {
+      "Time": "2026-10-09T10:05:44.442289995Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:05:44.458889085Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNamespaceSharedCycle"
+    },
+    {
+      "Time": "2026-10-09T10:05:44.458993739Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNamespaceSharedCycle",
+      "Output": "=== RUN   TestEnumNamespaceSharedCycle\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:44.45903477Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNamespaceSharedCycle",
+      "Output": "=== PAUSE TestEnumNamespaceSharedCycle\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:44.459037995Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNamespaceSharedCycle"
+    },
+    {
+      "Time": "2026-10-09T10:05:44.459043473Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNamespaceSharedCycle"
+    },
+    {
+      "Time": "2026-10-09T10:05:44.459045946Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNamespaceSharedCycle",
+      "Output": "=== CONT  TestEnumNamespaceSharedCycle\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:44.48892472Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNamespaceSharedCycle",
+      "Output": "--- PASS: TestEnumNamespaceSharedCycle (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:44.488960072Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNamespaceSharedCycle",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:05:44.488979691Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:44.490591834Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.048s\n"
+    },
+    {
+      "Time": "2026-10-09T10:05:44.490614047Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.048
+    }
+  ]
+}

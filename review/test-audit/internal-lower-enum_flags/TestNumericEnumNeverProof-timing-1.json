@@ -1,0 +1,234 @@
+{
+  "command": "timeout 95 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNumericEnumNeverProof$",
+  "exit": 0,
+  "wall_seconds": 2.0914288989988563,
+  "binary_seconds": 0.16,
+  "events": [
+    {
+      "Time": "2026-10-09T10:06:03.184927982Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.192800586Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.192890979Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof",
+      "Output": "=== RUN   TestNumericEnumNeverProof\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.192922796Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof",
+      "Output": "=== PAUSE TestNumericEnumNeverProof\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.192925771Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.192929015Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.192931159Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof",
+      "Output": "=== CONT  TestNumericEnumNeverProof\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.192934043Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/member"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.192938109Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/member",
+      "Output": "=== RUN   TestNumericEnumNeverProof/member\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.23229501Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/member",
+      "Output": "--- PASS: TestNumericEnumNeverProof/member (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.23234958Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/member",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T10:06:03.232370792Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/parameter"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.232373335Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/parameter",
+      "Output": "=== RUN   TestNumericEnumNeverProof/parameter\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.260210937Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/parameter",
+      "Output": "--- PASS: TestNumericEnumNeverProof/parameter (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.260304735Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/parameter",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:06:03.260312296Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/combination"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.26031486Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/combination",
+      "Output": "=== RUN   TestNumericEnumNeverProof/combination\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.285088714Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/combination",
+      "Output": "--- PASS: TestNumericEnumNeverProof/combination (0.02s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.285784277Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/combination",
+      "Elapsed": 0.02
+    },
+    {
+      "Time": "2026-10-09T10:06:03.285797056Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/array_read"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.28579952Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/array_read",
+      "Output": "=== RUN   TestNumericEnumNeverProof/array_read\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.313052561Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/array_read",
+      "Output": "--- PASS: TestNumericEnumNeverProof/array_read (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.313103196Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/array_read",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:06:03.313117277Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/closed_return"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.313120351Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/closed_return",
+      "Output": "=== RUN   TestNumericEnumNeverProof/closed_return\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.343014669Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/closed_return",
+      "Output": "--- PASS: TestNumericEnumNeverProof/closed_return (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.343055469Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof/closed_return",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:06:03.343066795Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof",
+      "Output": "--- PASS: TestNumericEnumNeverProof (0.15s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.343069299Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumNeverProof",
+      "Elapsed": 0.15
+    },
+    {
+      "Time": "2026-10-09T10:06:03.343071623Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.344611734Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.159s\n"
+    },
+    {
+      "Time": "2026-10-09T10:06:03.344645293Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.16
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "id": "P_LOWER",
+  "label": "P_LOWER-TestEnumNameEnumeration",
+  "command": "ADAMIC_MUTANT='P_LOWER' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/P_LOWER' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestEnumNameEnumeration$",
+  "exit": 0,
+  "wall_seconds": 2.1137580019967572,
+  "binary_seconds": 0.042,
+  "status": {
+    "TestEnumNameEnumeration": "pass"
+  },
+  "aborted": false,
+  "events": [
+    {
+      "Time": "2026-10-09T10:26:31.026770559Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:26:31.034924239Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNameEnumeration"
+    },
+    {
+      "Time": "2026-10-09T10:26:31.035025428Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNameEnumeration",
+      "Output": "=== RUN   TestEnumNameEnumeration\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:31.035093097Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNameEnumeration",
+      "Output": "=== PAUSE TestEnumNameEnumeration\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:31.035095982Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNameEnumeration"
+    },
+    {
+      "Time": "2026-10-09T10:26:31.035098005Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNameEnumeration"
+    },
+    {
+      "Time": "2026-10-09T10:26:31.035099607Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNameEnumeration",
+      "Output": "=== CONT  TestEnumNameEnumeration\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:31.067465219Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNameEnumeration",
+      "Output": "--- PASS: TestEnumNameEnumeration (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:31.06751369Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumNameEnumeration",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:26:31.067536624Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:31.069136172Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.042s\n"
+    },
+    {
+      "Time": "2026-10-09T10:26:31.069159196Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.042
+    }
+  ]
+}

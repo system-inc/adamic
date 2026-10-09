@@ -1,0 +1,11 @@
+--- a/internal/lower/enum_never.go
++++ b/internal/lower/enum_never.go
+@@ -107,7 +107,7 @@
+ 		ir.StringConstant{Index: l.constant(" for numeric enum " + identity.Name)},
+ 	}}
+ 	l.result.Functions = append(l.result.Functions, ir.Function{
+-		Name: "enum_never", Parameters: []int{local}, Returns: of,
++		Name: "enum_unreachable", Parameters: []int{local}, Returns: of,
+ 		Body: []ir.Statement{ir.Panic{Message: message}},
+ 	})
+ 	return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: of}

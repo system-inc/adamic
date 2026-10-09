@@ -1,0 +1,321 @@
+{
+  "command": "timeout 95 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNumericEnumsAreOpen$",
+  "exit": 0,
+  "wall_seconds": 2.090144566998788,
+  "binary_seconds": 0.247,
+  "events": [
+    {
+      "Time": "2026-10-09T10:05:52.333725293Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.34110899Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.341172834Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen",
+      "Output": "=== RUN   TestNumericEnumsAreOpen\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.341197621Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen",
+      "Output": "=== PAUSE TestNumericEnumsAreOpen\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.341200124Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.341202317Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.34120381Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen",
+      "Output": "=== CONT  TestNumericEnumsAreOpen\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.341205753Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/singleton"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.341207225Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/singleton",
+      "Output": "=== RUN   TestNumericEnumsAreOpen/singleton\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.37111877Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/singleton",
+      "Output": "--- PASS: TestNumericEnumsAreOpen/singleton (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.371163376Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/singleton",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:05:52.371190596Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/member_tags"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.371193611Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/member_tags",
+      "Output": "=== RUN   TestNumericEnumsAreOpen/member_tags\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.39774446Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/member_tags",
+      "Output": "--- PASS: TestNumericEnumsAreOpen/member_tags (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.397783989Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/member_tags",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:05:52.397799522Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/coalesce"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.397802516Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/coalesce",
+      "Output": "=== RUN   TestNumericEnumsAreOpen/coalesce\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.426582406Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/coalesce",
+      "Output": "--- PASS: TestNumericEnumsAreOpen/coalesce (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.426621343Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/coalesce",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:05:52.426627593Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/arithmetic"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.426630196Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/arithmetic",
+      "Output": "=== RUN   TestNumericEnumsAreOpen/arithmetic\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.453276496Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/arithmetic",
+      "Output": "--- PASS: TestNumericEnumsAreOpen/arithmetic (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.453323325Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/arithmetic",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:05:52.453332679Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/signed_flags"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.453335142Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/signed_flags",
+      "Output": "=== RUN   TestNumericEnumsAreOpen/signed_flags\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.490152142Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/signed_flags",
+      "Output": "--- PASS: TestNumericEnumsAreOpen/signed_flags (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.490188015Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/signed_flags",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T10:05:52.490194965Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/cast"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.490197579Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/cast",
+      "Output": "=== RUN   TestNumericEnumsAreOpen/cast\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.524336597Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/cast",
+      "Output": "--- PASS: TestNumericEnumsAreOpen/cast (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.52437257Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/cast",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:05:52.524382675Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/containers"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.524385659Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/containers",
+      "Output": "=== RUN   TestNumericEnumsAreOpen/containers\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.554725125Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/containers",
+      "Output": "--- PASS: TestNumericEnumsAreOpen/containers (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.554762079Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/containers",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:05:52.55476919Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/optional_object"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.554777382Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/optional_object",
+      "Output": "=== RUN   TestNumericEnumsAreOpen/optional_object\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.57937114Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/optional_object",
+      "Output": "--- PASS: TestNumericEnumsAreOpen/optional_object (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.579409116Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen/optional_object",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:05:52.57941863Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen",
+      "Output": "--- PASS: TestNumericEnumsAreOpen (0.24s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.579425581Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumsAreOpen",
+      "Elapsed": 0.24
+    },
+    {
+      "Time": "2026-10-09T10:05:52.579428204Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.581071623Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.247s\n"
+    },
+    {
+      "Time": "2026-10-09T10:05:52.581101948Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.247
+    }
+  ]
+}

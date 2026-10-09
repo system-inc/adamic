@@ -1,0 +1,244 @@
+[
+  {
+    "id": "M01",
+    "mode": "fields",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='fields' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.10160049999831244,
+      "output": "=== RUN   TestAuditObservation\nOBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false}] error=<nil>\n--- PASS: TestAuditObservation (0.08s)\nPASS\n",
+      "observation": [
+        "OBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false}] error=<nil>"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M01' AUDIT_OBSERVATION='fields' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.09961547499915469,
+      "output": "=== RUN   TestAuditObservation\nOBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":3},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":2},\"Private\":false}] error=<nil>\n--- PASS: TestAuditObservation (0.09s)\nPASS\n",
+      "observation": [
+        "OBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":3},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":2},\"Private\":false}] error=<nil>"
+      ]
+    }
+  },
+  {
+    "id": "M02",
+    "mode": "fields",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='fields' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.1272835150011815,
+      "output": "=== RUN   TestAuditObservation\nOBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false}] error=<nil>\n--- PASS: TestAuditObservation (0.11s)\nPASS\n",
+      "observation": [
+        "OBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false}] error=<nil>"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M02' AUDIT_OBSERVATION='fields' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.20673438099765917,
+      "output": "=== RUN   TestAuditObservation\nOBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":0},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":0},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false}] error=<nil>\n--- PASS: TestAuditObservation (0.15s)\nPASS\n",
+      "observation": [
+        "OBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":0},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":0},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false}] error=<nil>"
+      ]
+    }
+  },
+  {
+    "id": "M03",
+    "mode": "fields",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='fields' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.19451937499979977,
+      "output": "=== RUN   TestAuditObservation\nOBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false}] error=<nil>\n--- PASS: TestAuditObservation (0.14s)\nPASS\n",
+      "observation": [
+        "OBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false}] error=<nil>"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M03' AUDIT_OBSERVATION='fields' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.20574090099762543,
+      "output": "=== RUN   TestAuditObservation\nOBS fields=[{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false}] error=<nil>\n--- PASS: TestAuditObservation (0.15s)\nPASS\n",
+      "observation": [
+        "OBS fields=[{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false}] error=<nil>"
+      ]
+    }
+  },
+  {
+    "id": "M04",
+    "mode": "fields",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='fields' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.16392316999917966,
+      "output": "=== RUN   TestAuditObservation\nOBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false}] error=<nil>\n--- PASS: TestAuditObservation (0.11s)\nPASS\n",
+      "observation": [
+        "OBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false}] error=<nil>"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M04' AUDIT_OBSERVATION='fields' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.17452643399883527,
+      "output": "=== RUN   TestAuditObservation\nOBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":0},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false}] error=<nil>\n--- PASS: TestAuditObservation (0.14s)\nPASS\n",
+      "observation": [
+        "OBS fields=[{\"Uninitialized\":false,\"Name\":\"A\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":0},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"B\",\"Value\":{\"Value\":2},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"2\",\"Value\":{\"Index\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"Alias\",\"Value\":{\"Value\":1},\"Private\":false},{\"Uninitialized\":false,\"Name\":\"1\",\"Value\":{\"Index\":2},\"Private\":false}] error=<nil>"
+      ]
+    }
+  },
+  {
+    "id": "M09",
+    "mode": "string-relation",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='string-relation' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.17169139299949165,
+      "output": "=== RUN   TestAuditObservation\nOBS enumAssignable=false\n--- PASS: TestAuditObservation (0.13s)\nPASS\n",
+      "observation": [
+        "OBS enumAssignable=false"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M09' AUDIT_OBSERVATION='string-relation' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.14823211499970057,
+      "output": "=== RUN   TestAuditObservation\nOBS enumAssignable=true\n--- PASS: TestAuditObservation (0.12s)\nPASS\n",
+      "observation": [
+        "OBS enumAssignable=true"
+      ]
+    }
+  },
+  {
+    "id": "M14",
+    "mode": "flags",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='flags' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.15364111799863167,
+      "output": "=== RUN   TestAuditObservation\nOBS flagEnum=true\n--- PASS: TestAuditObservation (0.13s)\nPASS\n",
+      "observation": [
+        "OBS flagEnum=true"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M14' AUDIT_OBSERVATION='flags' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.1629052180032886,
+      "output": "=== RUN   TestAuditObservation\nOBS flagEnum=false\n--- PASS: TestAuditObservation (0.12s)\nPASS\n",
+      "observation": [
+        "OBS flagEnum=false"
+      ]
+    }
+  },
+  {
+    "id": "M15",
+    "mode": "flags",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='flags' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.19784950200119056,
+      "output": "=== RUN   TestAuditObservation\nOBS flagEnum=true\n--- PASS: TestAuditObservation (0.15s)\nPASS\n",
+      "observation": [
+        "OBS flagEnum=true"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M15' AUDIT_OBSERVATION='flags' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.174325472999044,
+      "output": "=== RUN   TestAuditObservation\nOBS flagEnum=false\n--- PASS: TestAuditObservation (0.13s)\nPASS\n",
+      "observation": [
+        "OBS flagEnum=false"
+      ]
+    }
+  },
+  {
+    "id": "M16",
+    "mode": "domain",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='domain' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.0649647919999552,
+      "output": "=== RUN   TestAuditObservation\nOBS flagDomain=true\n--- PASS: TestAuditObservation (0.06s)\nPASS\n",
+      "observation": [
+        "OBS flagDomain=true"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M16' AUDIT_OBSERVATION='domain' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.04955587099902914,
+      "output": "=== RUN   TestAuditObservation\nOBS flagDomain=false\n--- PASS: TestAuditObservation (0.04s)\nPASS\n",
+      "observation": [
+        "OBS flagDomain=false"
+      ]
+    }
+  },
+  {
+    "id": "M07",
+    "mode": "open",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='open' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.06952104700030759,
+      "output": "=== RUN   TestAuditObservation\nOBS openNumericEnumType=true\n--- PASS: TestAuditObservation (0.06s)\nPASS\n",
+      "observation": [
+        "OBS openNumericEnumType=true"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M07' AUDIT_OBSERVATION='open' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.1118751229987538,
+      "output": "=== RUN   TestAuditObservation\nOBS openNumericEnumType=false\n--- PASS: TestAuditObservation (0.09s)\nPASS\n",
+      "observation": [
+        "OBS openNumericEnumType=false"
+      ]
+    }
+  },
+  {
+    "id": "M08",
+    "mode": "member-relation",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='member-relation' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.08751457100152038,
+      "output": "=== RUN   TestAuditObservation\nOBS enumAssignable=false\n--- PASS: TestAuditObservation (0.06s)\nPASS\n",
+      "observation": [
+        "OBS enumAssignable=false"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M08' AUDIT_OBSERVATION='member-relation' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.08204228899921873,
+      "output": "=== RUN   TestAuditObservation\nOBS enumAssignable=true\n--- PASS: TestAuditObservation (0.07s)\nPASS\n",
+      "observation": [
+        "OBS enumAssignable=true"
+      ]
+    }
+  },
+  {
+    "id": "M13",
+    "mode": "default-proof",
+    "baseline": {
+      "command": "ADAMIC_MUTANT='' AUDIT_OBSERVATION='default-proof' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.09054088799894089,
+      "output": "=== RUN   TestAuditObservation\nOBS enumDefaultUnreachable=true\n--- PASS: TestAuditObservation (0.08s)\nPASS\n",
+      "observation": [
+        "OBS enumDefaultUnreachable=true"
+      ]
+    },
+    "mutant": {
+      "command": "ADAMIC_MUTANT='M13' AUDIT_OBSERVATION='default-proof' timeout 10 /tmp/u031/observation.test -test.run=^TestAuditObservation$ -test.v",
+      "exit": 0,
+      "seconds": 0.08025661200008471,
+      "output": "=== RUN   TestAuditObservation\nOBS enumDefaultUnreachable=false\n--- PASS: TestAuditObservation (0.07s)\nPASS\n",
+      "observation": [
+        "OBS enumDefaultUnreachable=false"
+      ]
+    }
+  }
+]

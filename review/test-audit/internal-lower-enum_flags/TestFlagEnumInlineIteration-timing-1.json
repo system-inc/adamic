@@ -1,0 +1,89 @@
+{
+  "command": "timeout 95 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestFlagEnumInlineIteration$",
+  "exit": 0,
+  "wall_seconds": 1.9903965359990252,
+  "binary_seconds": 0.041,
+  "events": [
+    {
+      "Time": "2026-10-09T10:05:18.503321976Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:05:18.511877399Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumInlineIteration"
+    },
+    {
+      "Time": "2026-10-09T10:05:18.511937407Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumInlineIteration",
+      "Output": "=== RUN   TestFlagEnumInlineIteration\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:18.511990445Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumInlineIteration",
+      "Output": "=== PAUSE TestFlagEnumInlineIteration\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:18.511993059Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumInlineIteration"
+    },
+    {
+      "Time": "2026-10-09T10:05:18.511995263Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumInlineIteration"
+    },
+    {
+      "Time": "2026-10-09T10:05:18.511996855Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumInlineIteration",
+      "Output": "=== CONT  TestFlagEnumInlineIteration\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:18.543403072Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumInlineIteration",
+      "Output": "--- PASS: TestFlagEnumInlineIteration (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:18.543443692Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestFlagEnumInlineIteration",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:05:18.543464622Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:05:18.54469313Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.041s\n"
+    },
+    {
+      "Time": "2026-10-09T10:05:18.544722393Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.041
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "id": "P_LOWER",
+  "label": "P_LOWER-TestEnumInitializationGraphMemo",
+  "command": "ADAMIC_MUTANT='P_LOWER' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/P_LOWER' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestEnumInitializationGraphMemo$",
+  "exit": 0,
+  "wall_seconds": 2.1005487319998792,
+  "binary_seconds": 0.054,
+  "status": {
+    "TestEnumInitializationGraphMemo/12": "pass",
+    "TestEnumInitializationGraphMemo/24": "pass",
+    "TestEnumInitializationGraphMemo": "pass"
+  },
+  "aborted": false,
+  "events": [
+    {
+      "Time": "2026-10-09T10:26:39.818605965Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826031118Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826132527Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo",
+      "Output": "=== RUN   TestEnumInitializationGraphMemo\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826171625Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo",
+      "Output": "=== PAUSE TestEnumInitializationGraphMemo\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826173638Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826175721Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826177233Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo",
+      "Output": "=== CONT  TestEnumInitializationGraphMemo\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826179436Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/12"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826180989Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/12",
+      "Output": "=== RUN   TestEnumInitializationGraphMemo/12\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826183142Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/12",
+      "Output": "=== PAUSE TestEnumInitializationGraphMemo/12\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826184544Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/12"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826186397Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/24"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826187608Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/24",
+      "Output": "=== RUN   TestEnumInitializationGraphMemo/24\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826189511Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/24",
+      "Output": "=== PAUSE TestEnumInitializationGraphMemo/24\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826190733Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/24"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826193768Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/12"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.82619518Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/12",
+      "Output": "=== CONT  TestEnumInitializationGraphMemo/12\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826200187Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/24"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.826201799Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/24",
+      "Output": "=== CONT  TestEnumInitializationGraphMemo/24\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.868476451Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/12",
+      "Output": "    enum_initialization_reach_test.go:53: depth 12: 13 function body expansions\n"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.868532874Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/12",
+      "Output": "--- PASS: TestEnumInitializationGraphMemo/12 (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.870180007Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/12",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T10:26:39.870210101Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/24",
+      "Output": "    enum_initialization_reach_test.go:53: depth 24: 25 function body expansions\n"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.870215049Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/24",
+      "Output": "--- PASS: TestEnumInitializationGraphMemo/24 (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.870217312Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo/24",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T10:26:39.870219115Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo",
+      "Output": "--- PASS: TestEnumInitializationGraphMemo (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.870226996Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationGraphMemo",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T10:26:39.870228849Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "PASS\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.872501542Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "ok  \tgithub.com/system-inc/adamic/internal/lower\t0.054s\n"
+    },
+    {
+      "Time": "2026-10-09T10:26:39.872546889Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.054
+    }
+  ]
+}

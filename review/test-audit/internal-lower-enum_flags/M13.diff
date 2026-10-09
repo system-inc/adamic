@@ -1,0 +1,12 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -472,6 +472,9 @@
+ // A numeric enum default is unreachable only with a member origin proof and full coverage.
+ // This permits the never-default idiom without inventing a machine representation for never.
+ func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
++	if true {
++		return false
++	}
+ 	statement := node.AsSwitchStatement()
+ 	proven := l.checker.GetTypeAtLocation(statement.Expression)
+ 	return l.enumSwitchCovered(node) && (!l.numericEnum(l.enumIdentity(proven)) || l.enumMemberOrigin(statement.Expression, l.enumIdentity(proven), map[*ast.Node]bool{}))

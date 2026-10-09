@@ -1,0 +1,1006 @@
+{
+  "id": "P_LOWER",
+  "label": "P_LOWER-TestEnumInitializationReach",
+  "command": "ADAMIC_MUTANT='P_LOWER' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/P_LOWER' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestEnumInitializationReach$",
+  "exit": 1,
+  "wall_seconds": 2.2763980599993374,
+  "binary_seconds": 0.278,
+  "status": {
+    "TestEnumInitializationReach/unknown-callback": "pass",
+    "TestEnumInitializationReach/reaching-helper": "fail",
+    "TestEnumInitializationReach/native-enum-map": "pass",
+    "TestEnumInitializationReach/reaching-cycle": "fail",
+    "TestEnumInitializationReach/reaching-derived": "fail",
+    "TestEnumInitializationReach/reaching-direct": "fail",
+    "TestEnumInitializationReach/callable-selection": "pass",
+    "TestEnumInitializationReach/unknown-property": "pass",
+    "TestEnumInitializationReach/reaching-constructor": "fail",
+    "TestEnumInitializationReach/unknown-before": "pass",
+    "TestEnumInitializationReach/unknown-after": "pass",
+    "TestEnumInitializationReach/call-graph-24": "pass",
+    "TestEnumInitializationReach/safe-helper": "pass",
+    "TestEnumInitializationReach/safe-constructor": "pass",
+    "TestEnumInitializationReach/native-call-before-enum": "pass",
+    "TestEnumInitializationReach": "fail"
+  },
+  "aborted": false,
+  "events": [
+    {
+      "Time": "2026-10-09T10:26:37.495637028Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502768793Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502878744Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach",
+      "Output": "=== RUN   TestEnumInitializationReach\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502920265Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach",
+      "Output": "=== PAUSE TestEnumInitializationReach\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.50292369Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502932503Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502934787Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach",
+      "Output": "=== CONT  TestEnumInitializationReach\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502937711Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-enum-map"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502941577Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-enum-map",
+      "Output": "=== RUN   TestEnumInitializationReach/native-enum-map\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502948637Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-enum-map",
+      "Output": "=== PAUSE TestEnumInitializationReach/native-enum-map\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502951521Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-enum-map"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502955267Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-call-before-enum"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.50295738Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-call-before-enum",
+      "Output": "=== RUN   TestEnumInitializationReach/native-call-before-enum\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502961065Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-call-before-enum",
+      "Output": "=== PAUSE TestEnumInitializationReach/native-call-before-enum\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502962648Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-call-before-enum"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502982227Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-helper"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.5029844Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-helper",
+      "Output": "=== RUN   TestEnumInitializationReach/safe-helper\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502986563Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-helper",
+      "Output": "=== PAUSE TestEnumInitializationReach/safe-helper\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502987925Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-helper"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502990158Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-constructor"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.50299158Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-constructor",
+      "Output": "=== RUN   TestEnumInitializationReach/safe-constructor\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.502999061Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-constructor",
+      "Output": "=== PAUSE TestEnumInitializationReach/safe-constructor\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503000654Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-constructor"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503002386Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/callable-selection"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503003778Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/callable-selection",
+      "Output": "=== RUN   TestEnumInitializationReach/callable-selection\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503005791Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/callable-selection",
+      "Output": "=== PAUSE TestEnumInitializationReach/callable-selection\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503007193Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/callable-selection"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503009026Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/call-graph-24"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503010498Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/call-graph-24",
+      "Output": "=== RUN   TestEnumInitializationReach/call-graph-24\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503013112Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/call-graph-24",
+      "Output": "=== PAUSE TestEnumInitializationReach/call-graph-24\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503014564Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/call-graph-24"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503016257Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-after"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503017438Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-after",
+      "Output": "=== RUN   TestEnumInitializationReach/unknown-after\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503020533Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-after",
+      "Output": "=== PAUSE TestEnumInitializationReach/unknown-after\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503021755Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-after"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503024349Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-before"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503029055Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-before",
+      "Output": "=== RUN   TestEnumInitializationReach/unknown-before\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.50303233Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-before",
+      "Output": "=== PAUSE TestEnumInitializationReach/unknown-before\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503035084Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-before"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503089865Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-callback"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.50309348Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-callback",
+      "Output": "=== RUN   TestEnumInitializationReach/unknown-callback\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503096084Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-callback",
+      "Output": "=== PAUSE TestEnumInitializationReach/unknown-callback\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503097476Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-callback"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503099459Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-property"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503100811Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-property",
+      "Output": "=== RUN   TestEnumInitializationReach/unknown-property\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503102704Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-property",
+      "Output": "=== PAUSE TestEnumInitializationReach/unknown-property\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503104216Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-property"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503105999Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-direct"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503107261Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-direct",
+      "Output": "=== RUN   TestEnumInitializationReach/reaching-direct\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503109514Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-direct",
+      "Output": "=== PAUSE TestEnumInitializationReach/reaching-direct\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503111727Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-direct"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503116925Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-helper"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503119288Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-helper",
+      "Output": "=== RUN   TestEnumInitializationReach/reaching-helper\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503123795Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-helper",
+      "Output": "=== PAUSE TestEnumInitializationReach/reaching-helper\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503126929Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-helper"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503129914Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-cycle"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503132377Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-cycle",
+      "Output": "=== RUN   TestEnumInitializationReach/reaching-cycle\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503140569Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-cycle",
+      "Output": "=== PAUSE TestEnumInitializationReach/reaching-cycle\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503143404Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-cycle"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503146458Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-constructor"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503150504Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-constructor",
+      "Output": "=== RUN   TestEnumInitializationReach/reaching-constructor\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.50315461Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-constructor",
+      "Output": "=== PAUSE TestEnumInitializationReach/reaching-constructor\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503157054Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-constructor"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.50316103Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-derived"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503163463Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-derived",
+      "Output": "=== RUN   TestEnumInitializationReach/reaching-derived\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503166788Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-derived",
+      "Output": "=== PAUSE TestEnumInitializationReach/reaching-derived\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503169262Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-derived"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503175641Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-enum-map"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503177954Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-enum-map",
+      "Output": "=== CONT  TestEnumInitializationReach/native-enum-map\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503180989Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-callback"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503182942Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-callback",
+      "Output": "=== CONT  TestEnumInitializationReach/unknown-callback\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503488371Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-cycle"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.503495592Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-cycle",
+      "Output": "=== CONT  TestEnumInitializationReach/reaching-cycle\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.504590632Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-helper"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.504600447Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-helper",
+      "Output": "=== CONT  TestEnumInitializationReach/reaching-helper\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.504606816Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-derived"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.50460955Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-derived",
+      "Output": "=== CONT  TestEnumInitializationReach/reaching-derived\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.607201659Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-callback",
+      "Output": "--- PASS: TestEnumInitializationReach/unknown-callback (0.10s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.607285031Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-callback",
+      "Elapsed": 0.1
+    },
+    {
+      "Time": "2026-10-09T10:26:37.607320634Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-direct"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.60732521Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-direct",
+      "Output": "=== CONT  TestEnumInitializationReach/reaching-direct\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.617530282Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-helper",
+      "Output": "    enum_initialization_reach_test.go:29: pending enum read on line 2 must stay refused: <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.617585123Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-helper",
+      "Output": "--- FAIL: TestEnumInitializationReach/reaching-helper (0.11s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.617590911Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-helper",
+      "Elapsed": 0.11
+    },
+    {
+      "Time": "2026-10-09T10:26:37.617598582Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-constructor"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.617602208Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-constructor",
+      "Output": "=== CONT  TestEnumInitializationReach/reaching-constructor\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.619940988Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-enum-map",
+      "Output": "--- PASS: TestEnumInitializationReach/native-enum-map (0.12s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.619970241Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-enum-map",
+      "Elapsed": 0.12
+    },
+    {
+      "Time": "2026-10-09T10:26:37.61997646Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-property"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.619980076Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-property",
+      "Output": "=== CONT  TestEnumInitializationReach/unknown-property\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.621789157Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-cycle",
+      "Output": "    enum_initialization_reach_test.go:29: pending enum read on line 2 must stay refused: <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.621919759Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-cycle",
+      "Output": "--- FAIL: TestEnumInitializationReach/reaching-cycle (0.12s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.621945617Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-cycle",
+      "Elapsed": 0.12
+    },
+    {
+      "Time": "2026-10-09T10:26:37.621950634Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/callable-selection"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.621953619Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/callable-selection",
+      "Output": "=== CONT  TestEnumInitializationReach/callable-selection\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.633415218Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-derived",
+      "Output": "    enum_initialization_reach_test.go:29: pending enum read on line 2 must stay refused: <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.633641891Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-derived",
+      "Output": "--- FAIL: TestEnumInitializationReach/reaching-derived (0.13s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.633651826Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-derived",
+      "Elapsed": 0.13
+    },
+    {
+      "Time": "2026-10-09T10:26:37.633659077Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-before"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.633662592Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-before",
+      "Output": "=== CONT  TestEnumInitializationReach/unknown-before\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.670676087Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-direct",
+      "Output": "    enum_initialization_reach_test.go:29: pending enum read on line 2 must stay refused: <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.670729716Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-direct",
+      "Output": "--- FAIL: TestEnumInitializationReach/reaching-direct (0.06s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.670736776Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-direct",
+      "Elapsed": 0.06
+    },
+    {
+      "Time": "2026-10-09T10:26:37.670744898Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-after"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.670748253Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-after",
+      "Output": "=== CONT  TestEnumInitializationReach/unknown-after\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.707375931Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/callable-selection",
+      "Output": "--- PASS: TestEnumInitializationReach/callable-selection (0.08s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.707416531Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/callable-selection",
+      "Elapsed": 0.08
+    },
+    {
+      "Time": "2026-10-09T10:26:37.707425704Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/call-graph-24"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.707428598Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/call-graph-24",
+      "Output": "=== CONT  TestEnumInitializationReach/call-graph-24\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.720802781Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-property",
+      "Output": "--- PASS: TestEnumInitializationReach/unknown-property (0.10s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.720879504Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-property",
+      "Elapsed": 0.1
+    },
+    {
+      "Time": "2026-10-09T10:26:37.720888107Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-helper"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.720891502Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-helper",
+      "Output": "=== CONT  TestEnumInitializationReach/safe-helper\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.725190115Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-constructor",
+      "Output": "    enum_initialization_reach_test.go:29: pending enum read on line 2 must stay refused: <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.725341738Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-constructor",
+      "Output": "--- FAIL: TestEnumInitializationReach/reaching-constructor (0.11s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.725352544Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/reaching-constructor",
+      "Elapsed": 0.11
+    },
+    {
+      "Time": "2026-10-09T10:26:37.725359614Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-constructor"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.725366284Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-constructor",
+      "Output": "=== CONT  TestEnumInitializationReach/safe-constructor\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.727345525Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-before",
+      "Output": "--- PASS: TestEnumInitializationReach/unknown-before (0.09s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.727363071Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-before",
+      "Elapsed": 0.09
+    },
+    {
+      "Time": "2026-10-09T10:26:37.727367798Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-call-before-enum"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.727371053Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-call-before-enum",
+      "Output": "=== CONT  TestEnumInitializationReach/native-call-before-enum\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.756524106Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-after",
+      "Output": "--- PASS: TestEnumInitializationReach/unknown-after (0.09s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.762721171Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/unknown-after",
+      "Elapsed": 0.09
+    },
+    {
+      "Time": "2026-10-09T10:26:37.762751536Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/call-graph-24",
+      "Output": "--- PASS: TestEnumInitializationReach/call-graph-24 (0.05s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.763705469Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/call-graph-24",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T10:26:37.763715835Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-helper",
+      "Output": "--- PASS: TestEnumInitializationReach/safe-helper (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.768205098Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-helper",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T10:26:37.768214782Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-constructor",
+      "Output": "--- PASS: TestEnumInitializationReach/safe-constructor (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.769181184Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/safe-constructor",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T10:26:37.769194454Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-call-before-enum",
+      "Output": "--- PASS: TestEnumInitializationReach/native-call-before-enum (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.769198319Z",
+      "Action": "pass",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach/native-call-before-enum",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T10:26:37.769204859Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach",
+      "Output": "--- FAIL: TestEnumInitializationReach (0.00s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.769215685Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestEnumInitializationReach",
+      "Elapsed": 0
+    },
+    {
+      "Time": "2026-10-09T10:26:37.769218769Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "FAIL\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.773227787Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.277s\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:37.773271912Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.278
+    }
+  ]
+}

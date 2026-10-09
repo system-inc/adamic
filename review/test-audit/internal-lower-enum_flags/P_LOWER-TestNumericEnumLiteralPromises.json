@@ -1,0 +1,324 @@
+{
+  "id": "P_LOWER",
+  "label": "P_LOWER-TestNumericEnumLiteralPromises",
+  "command": "ADAMIC_MUTANT='P_LOWER' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/P_LOWER' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNumericEnumLiteralPromises$",
+  "exit": 1,
+  "wall_seconds": 2.2023603660018125,
+  "binary_seconds": 0.214,
+  "status": {
+    "TestNumericEnumLiteralPromises/member_tag": "fail",
+    "TestNumericEnumLiteralPromises/narrowed_member": "fail",
+    "TestNumericEnumLiteralPromises/plain_literal": "fail",
+    "TestNumericEnumLiteralPromises/indexed_subset": "fail",
+    "TestNumericEnumLiteralPromises/subset_member": "fail",
+    "TestNumericEnumLiteralPromises/open_tag": "fail",
+    "TestNumericEnumLiteralPromises": "fail"
+  },
+  "aborted": false,
+  "events": [
+    {
+      "Time": "2026-10-09T10:26:50.630553101Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.641149755Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.641258094Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises",
+      "Output": "=== RUN   TestNumericEnumLiteralPromises\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.641283451Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises",
+      "Output": "=== PAUSE TestNumericEnumLiteralPromises\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.641285675Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.641287798Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.64128948Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises",
+      "Output": "=== CONT  TestNumericEnumLiteralPromises\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.641291533Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/member_tag"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.641294097Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/member_tag",
+      "Output": "=== RUN   TestNumericEnumLiteralPromises/member_tag\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.672206753Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/member_tag",
+      "Output": "    enums_open_test.go:93: want literal-promise refusal, got <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.672304397Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/member_tag",
+      "Output": "--- FAIL: TestNumericEnumLiteralPromises/member_tag (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.672308873Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/member_tag",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:26:50.672353329Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/narrowed_member"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.672356533Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/narrowed_member",
+      "Output": "=== RUN   TestNumericEnumLiteralPromises/narrowed_member\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.720571078Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/narrowed_member",
+      "Output": "    enums_open_test.go:93: want literal-promise refusal, got <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.720975312Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/narrowed_member",
+      "Output": "--- FAIL: TestNumericEnumLiteralPromises/narrowed_member (0.05s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.720983945Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/narrowed_member",
+      "Elapsed": 0.05
+    },
+    {
+      "Time": "2026-10-09T10:26:50.720990314Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/plain_literal"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.720992788Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/plain_literal",
+      "Output": "=== RUN   TestNumericEnumLiteralPromises/plain_literal\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.749634163Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/plain_literal",
+      "Output": "    enums_open_test.go:93: want literal-promise refusal, got <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.749689835Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/plain_literal",
+      "Output": "--- FAIL: TestNumericEnumLiteralPromises/plain_literal (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.749694191Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/plain_literal",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:26:50.749700831Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/indexed_subset"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.749702884Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/indexed_subset",
+      "Output": "=== RUN   TestNumericEnumLiteralPromises/indexed_subset\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.780938755Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/indexed_subset",
+      "Output": "    enums_open_test.go:93: want literal-promise refusal, got <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.780988709Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/indexed_subset",
+      "Output": "--- FAIL: TestNumericEnumLiteralPromises/indexed_subset (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.780992815Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/indexed_subset",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:26:50.780998253Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/subset_member"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.781000336Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/subset_member",
+      "Output": "=== RUN   TestNumericEnumLiteralPromises/subset_member\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.816682204Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/subset_member",
+      "Output": "    enums_open_test.go:93: want literal-promise refusal, got <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.816737615Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/subset_member",
+      "Output": "--- FAIL: TestNumericEnumLiteralPromises/subset_member (0.04s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.816741481Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/subset_member",
+      "Elapsed": 0.04
+    },
+    {
+      "Time": "2026-10-09T10:26:50.81674787Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/open_tag"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.816764575Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/open_tag",
+      "Output": "=== RUN   TestNumericEnumLiteralPromises/open_tag\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.842297246Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/open_tag",
+      "Output": "    enums_open_test.go:93: want literal-promise refusal, got <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.842355883Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/open_tag",
+      "Output": "--- FAIL: TestNumericEnumLiteralPromises/open_tag (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.842363073Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises/open_tag",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:26:50.842371836Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises",
+      "Output": "--- FAIL: TestNumericEnumLiteralPromises (0.20s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.842398145Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestNumericEnumLiteralPromises",
+      "Elapsed": 0.2
+    },
+    {
+      "Time": "2026-10-09T10:26:50.842404314Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "FAIL\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.844380616Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.213s\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:50.84439708Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.214
+    }
+  ]
+}

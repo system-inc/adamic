@@ -1,0 +1,104 @@
+{
+  "id": "P_LOWER",
+  "label": "P_LOWER-TestStringEnumsStayClosed",
+  "command": "ADAMIC_MUTANT='P_LOWER' ADAMIC_BUILD_CACHE_DIR='/tmp/u031/cache/P_LOWER' timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestStringEnumsStayClosed$",
+  "exit": 1,
+  "wall_seconds": 2.092687410000508,
+  "binary_seconds": 0.045,
+  "status": {
+    "TestStringEnumsStayClosed": "fail"
+  },
+  "aborted": false,
+  "events": [
+    {
+      "Time": "2026-10-09T10:26:46.535842588Z",
+      "Action": "start",
+      "Package": "github.com/system-inc/adamic/internal/lower"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.545583448Z",
+      "Action": "run",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.545671898Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Output": "=== RUN   TestStringEnumsStayClosed\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.545698447Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Output": "=== PAUSE TestStringEnumsStayClosed\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.545700901Z",
+      "Action": "pause",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.545703064Z",
+      "Action": "cont",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.545704626Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Output": "=== CONT  TestStringEnumsStayClosed\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.578500192Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Output": "    enums_open_test.go:40: want closed string enum refusal, got <nil>\n",
+      "OutputType": "error"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.578586029Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Output": "--- FAIL: TestStringEnumsStayClosed (0.03s)\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.578590145Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Test": "TestStringEnumsStayClosed",
+      "Elapsed": 0.03
+    },
+    {
+      "Time": "2026-10-09T10:26:46.578612778Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "FAIL\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.580425515Z",
+      "Action": "output",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Output": "FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.044s\n",
+      "OutputType": "frame"
+    },
+    {
+      "Time": "2026-10-09T10:26:46.58044278Z",
+      "Action": "fail",
+      "Package": "github.com/system-inc/adamic/internal/lower",
+      "Elapsed": 0.045
+    }
+  ]
+}

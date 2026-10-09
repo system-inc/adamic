@@ -1,0 +1,10 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -190,7 +190,6 @@
+ 		if value.Type() == ir.Number && (member.Name().Text() == "NaN" || member.Name().Text() == "Infinity" || member.Name().Text() == "-Infinity") {
+ 			return nil, &Refused{Where: l.program.Where(member), What: "a numeric enum member named like a non-finite number; numeric indexing could read a number where tsc promises a string", Fix: "rename the member so numeric reverse mapping stays string-valued"}
+ 		}
+-		set(member.Name().Text(), value)
+ 		if number, numeric := value.(ir.NumberConstant); numeric {
+ 			key := strconv.FormatFloat(number.Value, 'f', -1, 64)
+ 			if printed, ok := l.checker.GetConstantValue(member).(interface{ String() string }); ok {

@@ -1,0 +1,247 @@
+[
+  {
+    "id": "M01",
+    "aborted": false,
+    "failed": [],
+    "reruns": []
+  },
+  {
+    "id": "M02",
+    "aborted": false,
+    "failed": [],
+    "reruns": []
+  },
+  {
+    "id": "M03",
+    "aborted": false,
+    "failed": [
+      "TestEnumInitializationReach"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M04",
+    "aborted": false,
+    "failed": [],
+    "reruns": []
+  },
+  {
+    "id": "M05",
+    "aborted": false,
+    "failed": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestConstEnumErasesRuntimeObject",
+      "TestEnumSwitchExhaustiveness",
+      "TestNumericEnumNeverProof",
+      "TestNumericEnumLiteralPromises",
+      "TestFlagEnumAliasBoundaries",
+      "TestEnumNameEnumeration",
+      "TestFlagEnumInlineIteration",
+      "TestFlagEnumMemberAliases",
+      "TestFlagEnumLiteralSpellings",
+      "TestEnumNeverDefault",
+      "TestNumericEnumsAreOpen",
+      "TestEnumLimitsStayLoud",
+      "TestTracingNamespaceEscapeStaysNotYet",
+      "TestNamespaceLimitsStayLoud",
+      "TestEnumSlotViews",
+      "TestEnumInitializationReach",
+      "TestFlagEnumsDomain",
+      "TestFlagEnumsOpen",
+      "TestCheckedCastProofAndElision",
+      "TestUncheckableCastsStayRefused",
+      "TestTscNamespaceDeclarationShapes"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M06",
+    "aborted": false,
+    "failed": [
+      "TestEnumSwitchExhaustiveness",
+      "TestNumericEnumLiteralPromises",
+      "TestNumericEnumNeverProof",
+      "TestFlagEnumAliasBoundaries",
+      "TestNumericEnumsAreOpen",
+      "TestEnumSlotViews",
+      "TestFlagEnumsOpen"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M07",
+    "aborted": false,
+    "failed": [
+      "TestNumericEnumsAreOpen"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M08",
+    "aborted": false,
+    "failed": [
+      "TestNumericEnumLiteralPromises",
+      "TestFlagEnumAliasBoundaries",
+      "TestFlagEnumsOpen"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M09",
+    "aborted": false,
+    "failed": [
+      "TestEnumIdentityAcrossModules"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M10",
+    "aborted": false,
+    "failed": [
+      "TestEnumNeverDefault",
+      "TestNumericEnumNeverProof"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M11",
+    "aborted": false,
+    "failed": [
+      "TestNumericEnumNeverProof"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M12",
+    "aborted": false,
+    "failed": [
+      "TestNumericEnumNeverProof"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M13",
+    "aborted": false,
+    "failed": [
+      "TestNumericEnumNeverProof"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M14",
+    "aborted": false,
+    "failed": [],
+    "reruns": []
+  },
+  {
+    "id": "M15",
+    "aborted": false,
+    "failed": [],
+    "reruns": []
+  },
+  {
+    "id": "M16",
+    "aborted": false,
+    "failed": [],
+    "reruns": []
+  },
+  {
+    "id": "M17",
+    "aborted": false,
+    "failed": [
+      "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+      "TestNamespaceLimitsStayLoud",
+      "TestEnumLimitsStayLoud",
+      "TestEnumNamespaceSharedCycle",
+      "TestEnumInitializationGraphMemo",
+      "TestEnumInitializationReach"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M18",
+    "aborted": false,
+    "failed": [
+      "TestNamespaceCallGraphCycleUnion",
+      "TestNamespaceCallGraphLinearWork",
+      "TestEnumNamespaceSharedCycle",
+      "TestEnumInitializationGraphMemo"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M19",
+    "aborted": false,
+    "failed": [
+      "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+      "TestNamespaceLimitsStayLoud",
+      "TestEnumLimitsStayLoud",
+      "TestEnumNamespaceSharedCycle",
+      "TestEnumInitializationGraphMemo",
+      "TestEnumInitializationReach"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "M20",
+    "aborted": false,
+    "failed": [
+      "TestEnumLimitsStayLoud",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+      "TestNamespaceCallGraphCycleUnion",
+      "TestNamespaceCallGraphLinearWork",
+      "TestNamespaceClassEarlyConstructionStaysLoud",
+      "TestEnumNamespaceSharedCycle",
+      "TestNamespaceLimitsStayLoud",
+      "TestCallableNamespaceLimitsStayLoud",
+      "TestEnumInitializationGraphMemo",
+      "TestEnumInitializationReach"
+    ],
+    "reruns": []
+  },
+  {
+    "id": "P_LOWER",
+    "aborted": true,
+    "failed": [
+      "TestUndecidedCycleReadsUseReadyChecks"
+    ],
+    "reruns": [
+      "P_LOWER-TestFlagEnumsOpen",
+      "P_LOWER-TestFlagEnumsDomain",
+      "P_LOWER-TestEnumNeverDefault",
+      "P_LOWER-TestFlagEnumLiteralSpellings",
+      "P_LOWER-TestFlagEnumMemberAliases",
+      "P_LOWER-TestEnumNameEnumeration",
+      "P_LOWER-TestFlagEnumInlineIteration",
+      "P_LOWER-TestFlagEnumAliasBoundaries",
+      "P_LOWER-TestEnumInitializationReach",
+      "P_LOWER-TestEnumInitializationGraphMemo",
+      "P_LOWER-TestEnumNamespaceSharedCycle",
+      "P_LOWER-TestNumericEnumsAreOpen",
+      "P_LOWER-TestStringEnumsStayClosed",
+      "P_LOWER-TestNumericEnumNeverProof",
+      "P_LOWER-TestNumericEnumLiteralPromises"
+    ]
+  },
+  {
+    "id": "P_REACH",
+    "aborted": false,
+    "failed": [
+      "TestNamespaceClassEarlyConstructionStaysLoud",
+      "TestNamespaceClosedCallGraphEdges",
+      "TestNamespaceInitializationReachability",
+      "TestNamespaceEnumInitializationIndependentOfModuleAnalysis",
+      "TestNamespaceCallGraphCycleUnion",
+      "TestNamespaceCallGraphLinearWork",
+      "TestNamespaceLimitsStayLoud",
+      "TestEnumLimitsStayLoud",
+      "TestEnumNamespaceSharedCycle",
+      "TestCallableNamespaceLimitsStayLoud",
+      "TestEnumInitializationGraphMemo",
+      "TestEnumInitializationReach"
+    ],
+    "reruns": []
+  }
+]
