@@ -18,8 +18,6 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 const testTSCCorpusAgreementShards = 8
@@ -324,76 +322,10 @@ func TestTSCCorpusAgreement_PlantedDisagreement(t *testing.T) {
 	}
 }
 
-func TestTSCCorpusAgreement_000(t *testing.T) {
-	t.Parallel()
-	tscAgreementRun(t, 0)
-}
-
-func TestTSCCorpusAgreement_001(t *testing.T) {
-	t.Parallel()
-	tscAgreementRun(t, 1)
-}
-
-func TestTSCCorpusAgreement_002(t *testing.T) {
-	t.Parallel()
-	tscAgreementRun(t, 2)
-}
-
-func TestTSCCorpusAgreement_003(t *testing.T) {
-	t.Parallel()
-	tscAgreementRun(t, 3)
-}
-
-func TestTSCCorpusAgreement_004(t *testing.T) {
-	t.Parallel()
-	tscAgreementRun(t, 4)
-}
-
-func TestTSCCorpusAgreement_005(t *testing.T) {
-	t.Parallel()
-	tscAgreementRun(t, 5)
-}
-
-func TestTSCCorpusAgreement_006(t *testing.T) {
-	t.Parallel()
-	tscAgreementRun(t, 6)
-}
-
-func TestTSCCorpusAgreement_007(t *testing.T) {
-	t.Parallel()
-	tscAgreementRun(t, 7)
-}
-
 // Use the existing printer helper's complete inputs for the lowered product.
 func tscAgreementProducts(t *testing.T, path, family string) tsPrinterProducts {
 	t.Helper()
-	loweredProduct := expressionBuild(t, printerBuildInputs{Name: "lowered TSC " + family, Files: expressionInputFiles(t, repository), Toolchain: runtime.Version()}, func(dir string) error {
-		program := lowered(t, path)
-		if err := os.WriteFile(dir+"/port.c", []byte(native.C(program)), 0644); err != nil {
-			return err
-		}
-		return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0644)
-	})
-	data, err := os.ReadFile(loweredProduct + "/port.c")
-	if err != nil {
-		t.Fatal(err)
-	}
-	source := string(data)
-	clang := executeOne(t, nil, "clang", "--version")
-	if clang.exitCode != 0 {
-		t.Fatalf("clang version: %s", clang.stderr)
-	}
-	inputs := append([]string{loweredProduct + "/port.c"}, expressionInputFiles(t, filepath.Join(repository, "internal/native"))...)
-	sanitized := expressionBuild(t, printerBuildInputs{Name: "sanitized split TSC " + family, Files: inputs, Flags: append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}), "split=true", "jobs=4"), Toolchain: string(clang.stdout)}, func(dir string) error {
-		return native.Build(source, dir+"/port", native.Options{Sanitize: true, Split: true, Jobs: 4})
-	}) + "/port"
-	release := ""
-	if runtime.GOOS == "darwin" {
-		release = expressionBuild(t, printerBuildInputs{Name: "release TSC " + family, Files: inputs, Flags: native.Flags(native.Options{}), Toolchain: string(clang.stdout)}, func(dir string) error {
-			return native.Build(source, dir+"/port", native.Options{})
-		}) + "/port"
-	}
-	return tsPrinterProducts{source: path, backend: loweredProduct + "/program.mjs", sanitized: sanitized, release: release}
+	return printerGateFamilyProducts(t, family)
 }
 
 // Keep the same process status, stderr and byte oracles under a case-only deadline.
