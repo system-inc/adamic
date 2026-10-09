@@ -12,6 +12,7 @@ import (
 )
 
 // Parallel execution reserves memory: the full event transport and multiple independently computed trees are large.
+// Not parallel: ADAMIC_MDAST_KEEP export directory and shared markdownMemory budget; existing helper controls parallel execution.
 func TestNativeMdastConstruction(t *testing.T) {
 	parallelMarkdownMemory(t, 3)
 	root, e := filepath.Abs(repository)

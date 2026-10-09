@@ -10,6 +10,7 @@ import (
 	"unicode"
 )
 
+// Not parallel: shared markdownMemory configuration and artifacts build cache; existing helper controls parallel execution.
 func TestMdastIdentifierScalars(t *testing.T) {
 	parallelMarkdownMemory(t, 4)
 	root, e := filepath.Abs(repository)
