@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T11:05:37.240893196Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:05:37.249404571Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation"}
+{"Time":"2026-10-09T11:05:37.24948936Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation","Output":"=== RUN   TestFieldReadinessRepresentation\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:37.249515592Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation","Output":"=== PAUSE TestFieldReadinessRepresentation\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:37.249518049Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation"}
+{"Time":"2026-10-09T11:05:37.249523794Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation"}
+{"Time":"2026-10-09T11:05:37.249526659Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation","Output":"=== CONT  TestFieldReadinessRepresentation\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:37.295545447Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation","Output":"    field_readiness_test.go:23: gate cache node hit\n"}
+{"Time":"2026-10-09T11:05:37.597539164Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation","Output":"    field_readiness_test.go:43: drop field check mutant caught by pinned exit and message\n"}
+{"Time":"2026-10-09T11:05:37.597703733Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation","Output":"    field_readiness_test.go:23: gate cache node hit\n"}
+{"Time":"2026-10-09T11:05:37.754453571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation","Output":"--- PASS: TestFieldReadinessRepresentation (0.50s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:37.754492414Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestFieldReadinessRepresentation","Elapsed":0.5}
+{"Time":"2026-10-09T11:05:37.754523984Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:37.754535703Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:05:37.754538728Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=2 misses=0\n"}
+{"Time":"2026-10-09T11:05:37.754541459Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:05:37.755538179Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.514s\n"}
+{"Time":"2026-10-09T11:05:37.755625608Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.515}

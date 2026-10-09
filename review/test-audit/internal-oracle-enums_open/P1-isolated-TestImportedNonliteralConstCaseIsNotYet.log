@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T11:07:51.395720712Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:07:51.458325307Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportedNonliteralConstCaseIsNotYet"}
+{"Time":"2026-10-09T11:07:51.45840125Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportedNonliteralConstCaseIsNotYet","Output":"=== RUN   TestImportedNonliteralConstCaseIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:51.458425338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportedNonliteralConstCaseIsNotYet","Output":"=== PAUSE TestImportedNonliteralConstCaseIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:51.458428527Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportedNonliteralConstCaseIsNotYet"}
+{"Time":"2026-10-09T11:07:51.458431899Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportedNonliteralConstCaseIsNotYet"}
+{"Time":"2026-10-09T11:07:51.4584344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportedNonliteralConstCaseIsNotYet","Output":"=== CONT  TestImportedNonliteralConstCaseIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:51.78936228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportedNonliteralConstCaseIsNotYet","Output":"    imported_const_case_test.go:35: got \u003cnil\u003e; want /workspace/adamic/internal/oracle/testdata/imported_const_cases/nonliteral.a:3:7: stage 0 can't lower a case label using const WIDE with type number (not a number or string literal type) yet\n","OutputType":"error"}
+{"Time":"2026-10-09T11:07:51.789497907Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportedNonliteralConstCaseIsNotYet","Output":"--- FAIL: TestImportedNonliteralConstCaseIsNotYet (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:51.789505582Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportedNonliteralConstCaseIsNotYet","Elapsed":0.33}
+{"Time":"2026-10-09T11:07:51.789529816Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:51.7895339Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:07:51.789536589Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T11:07:51.789538649Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:07:51.791161972Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.395s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:51.79119541Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.395}

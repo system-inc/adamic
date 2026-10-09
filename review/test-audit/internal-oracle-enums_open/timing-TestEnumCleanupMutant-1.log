@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T11:05:22.942001233Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:05:22.950449901Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant"}
+{"Time":"2026-10-09T11:05:22.950502235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"=== RUN   TestEnumCleanupMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:22.950521367Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"=== PAUSE TestEnumCleanupMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:22.950523763Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant"}
+{"Time":"2026-10-09T11:05:22.95052896Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant"}
+{"Time":"2026-10-09T11:05:22.950530794Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"=== CONT  TestEnumCleanupMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:23.389254416Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"    enums_test.go:150: gate cache node hit\n"}
+{"Time":"2026-10-09T11:05:23.389305619Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"    enums_test.go:153: skipped enum cleanup caught only by LeakSanitizer; Node stdout unchanged\n"}
+{"Time":"2026-10-09T11:05:23.389523114Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"--- PASS: TestEnumCleanupMutant (0.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:23.389528643Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Elapsed":0.44}
+{"Time":"2026-10-09T11:05:23.389547644Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:23.389549902Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:05:23.389553942Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=1 misses=0\n"}
+{"Time":"2026-10-09T11:05:23.389555861Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:05:23.391647654Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.449s\n"}
+{"Time":"2026-10-09T11:05:23.391662609Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.45}

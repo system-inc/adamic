@@ -1,0 +1,10 @@
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -22,6 +22,7 @@
+ // JavaScript is a program as one JavaScript module, importing panic and the functions that read and
+ // write files from 'adamic'.
+ func JavaScript(program *ir.Program) string {
++	return ""
+ 	return JavaScriptWith(program, Options{})
+ }
+ 

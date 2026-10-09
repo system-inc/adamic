@@ -1,0 +1,23 @@
+{"Time":"2026-10-09T11:07:46.797058723Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:07:46.805395987Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls"}
+{"Time":"2026-10-09T11:07:46.805471114Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"=== RUN   TestImportCycleRuntimeCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:46.925062481Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"--- FAIL: TestImportCycleRuntimeCalls (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:46.927187162Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T11:07:46.927193867Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x100 pc=0xc7ad74]\n"}
+{"Time":"2026-10-09T11:07:46.927196289Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"\n"}
+{"Time":"2026-10-09T11:07:46.927199213Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"goroutine 8 [running]:\n"}
+{"Time":"2026-10-09T11:07:46.927203326Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"testing.tRunner.func1.2({0x1d63af8, 0x1e72930})\n"}
+{"Time":"2026-10-09T11:07:46.927207455Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T11:07:46.92721183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T11:07:46.927213793Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T11:07:46.927215673Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"panic({0x1d63af8?, 0x1e72930?})\n"}
+{"Time":"2026-10-09T11:07:46.927220013Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T11:07:46.927222265Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"github.com/system-inc/adamic/internal/oracle.TestImportCycleRuntimeCalls(0x8eecd3aad88)\n"}
+{"Time":"2026-10-09T11:07:46.927238118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"\t/workspace/adamic/internal/oracle/import_cycles_test.go:51 +0x534\n"}
+{"Time":"2026-10-09T11:07:46.927240241Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"testing.tRunner(0x8eecd3aad88, 0x1e10478)\n"}
+{"Time":"2026-10-09T11:07:46.927244639Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T11:07:46.927246878Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T11:07:46.927249016Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T11:07:46.92827403Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Elapsed":0.12}
+{"Time":"2026-10-09T11:07:46.928304786Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.131s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:46.928313754Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.131}

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "M1",
+    "command": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M1 timeout 90 go run ./review/test-audit/internal-oracle-enums_open/buildhelper /tmp/u060-M1-rebuild",
+    "wall_seconds": 4.432,
+    "exit": 0,
+    "fixture": "internal/oracle/testdata/enums_open_never.a",
+    "native_build_seconds": 0.169194173,
+    "selector": "M1"
+  },
+  {
+    "id": "M2",
+    "command": "ADAMIC_MUTANT=M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M2 timeout 90 go run ./review/test-audit/internal-oracle-enums_open/buildhelper /tmp/u060-M2-rebuild",
+    "wall_seconds": 0.304,
+    "exit": 0,
+    "fixture": "internal/oracle/testdata/enums_open_never.a",
+    "native_build_seconds": 0.15861866,
+    "selector": "M2"
+  },
+  {
+    "id": "M3",
+    "command": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M3 timeout 90 go run ./review/test-audit/internal-oracle-enums_open/buildhelper /tmp/u060-M3-rebuild",
+    "wall_seconds": 0.287,
+    "exit": 0,
+    "fixture": "internal/oracle/testdata/enums_open_never.a",
+    "native_build_seconds": 0.154286805,
+    "selector": "M3"
+  },
+  {
+    "id": "M4",
+    "command": "ADAMIC_MUTANT=M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M4 timeout 90 go run ./review/test-audit/internal-oracle-enums_open/buildhelper /tmp/u060-M4-rebuild",
+    "wall_seconds": 0.297,
+    "exit": 0,
+    "fixture": "internal/oracle/testdata/enums_open_never.a",
+    "native_build_seconds": 0.160868696,
+    "selector": "M4"
+  }
+]

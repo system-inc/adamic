@@ -1,0 +1,1370 @@
+[
+  {
+    "label": "timing-TestNumericEnumNeverPathsPinned-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNumericEnumNeverPathsPinned$"
+    ],
+    "seconds": 2.572,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestNumericEnumNeverPathsPinned-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNumericEnumNeverPathsPinned$"
+    ],
+    "seconds": 1.807,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestNumericEnumNeverPathsPinned-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNumericEnumNeverPathsPinned$"
+    ],
+    "seconds": 1.769,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestNumericEnumNeverPinned-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNumericEnumNeverPinned$"
+    ],
+    "seconds": 2.018,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestNumericEnumNeverPinned-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNumericEnumNeverPinned$"
+    ],
+    "seconds": 1.667,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestNumericEnumNeverPinned-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNumericEnumNeverPinned$"
+    ],
+    "seconds": 1.679,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestStage3EnumBoundaries-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestStage3EnumBoundaries$"
+    ],
+    "seconds": 1.713,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestStage3EnumBoundaries-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestStage3EnumBoundaries$"
+    ],
+    "seconds": 1.781,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestStage3EnumBoundaries-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestStage3EnumBoundaries$"
+    ],
+    "seconds": 1.669,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestStage3EnumSparseArrayBoundary-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestStage3EnumSparseArrayBoundary$"
+    ],
+    "seconds": 2.34,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestStage3EnumSparseArrayBoundary-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestStage3EnumSparseArrayBoundary$"
+    ],
+    "seconds": 1.672,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestStage3EnumSparseArrayBoundary-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestStage3EnumSparseArrayBoundary$"
+    ],
+    "seconds": 1.683,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestEnumNameEnumerationMutant-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumNameEnumerationMutant$"
+    ],
+    "seconds": 1.93,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestEnumNameEnumerationMutant-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumNameEnumerationMutant$"
+    ],
+    "seconds": 1.685,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestEnumNameEnumerationMutant-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumNameEnumerationMutant$"
+    ],
+    "seconds": 1.671,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestEnumSemanticMutants-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumSemanticMutants$"
+    ],
+    "seconds": 2.581,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestEnumSemanticMutants-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumSemanticMutants$"
+    ],
+    "seconds": 2.665,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestEnumSemanticMutants-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumSemanticMutants$"
+    ],
+    "seconds": 2.432,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestEnumCleanupMutant-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumCleanupMutant$"
+    ],
+    "seconds": 2.031,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestEnumCleanupMutant-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumCleanupMutant$"
+    ],
+    "seconds": 2.031,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestEnumCleanupMutant-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumCleanupMutant$"
+    ],
+    "seconds": 2.034,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFallthroughMutants-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFallthroughMutants$"
+    ],
+    "seconds": 2.027,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFallthroughMutants-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFallthroughMutants$"
+    ],
+    "seconds": 1.803,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFallthroughMutants-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFallthroughMutants$"
+    ],
+    "seconds": 1.715,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFieldReadinessRepresentation-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFieldReadinessRepresentation$"
+    ],
+    "seconds": 2.545,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFieldReadinessRepresentation-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFieldReadinessRepresentation$"
+    ],
+    "seconds": 2.206,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFieldReadinessRepresentation-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFieldReadinessRepresentation$"
+    ],
+    "seconds": 2.172,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFreshWriteProbesStayRefused-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFreshWriteProbesStayRefused$"
+    ],
+    "seconds": 2.431,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFreshWriteProbesStayRefused-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFreshWriteProbesStayRefused$"
+    ],
+    "seconds": 2.72,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFreshWriteProbesStayRefused-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFreshWriteProbesStayRefused$"
+    ],
+    "seconds": 2.648,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFunctionValueBoundaryBoxing-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFunctionValueBoundaryBoxing$"
+    ],
+    "seconds": 2.015,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFunctionValueBoundaryBoxing-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFunctionValueBoundaryBoxing$"
+    ],
+    "seconds": 1.978,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestFunctionValueBoundaryBoxing-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFunctionValueBoundaryBoxing$"
+    ],
+    "seconds": 2.041,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestImportCycleRuntimeCalls-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportCycleRuntimeCalls$"
+    ],
+    "seconds": 2.196,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestImportCycleRuntimeCalls-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportCycleRuntimeCalls$"
+    ],
+    "seconds": 1.944,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestImportCycleRuntimeCalls-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportCycleRuntimeCalls$"
+    ],
+    "seconds": 2.079,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestImportCycleLoadTimeReads-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportCycleLoadTimeReads$"
+    ],
+    "seconds": 3.473,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestImportCycleLoadTimeReads-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportCycleLoadTimeReads$"
+    ],
+    "seconds": 2.455,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestImportCycleLoadTimeReads-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportCycleLoadTimeReads$"
+    ],
+    "seconds": 2.248,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestImportedNonliteralConstCaseIsNotYet-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportedNonliteralConstCaseIsNotYet$"
+    ],
+    "seconds": 2.041,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestImportedNonliteralConstCaseIsNotYet-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportedNonliteralConstCaseIsNotYet$"
+    ],
+    "seconds": 1.923,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestImportedNonliteralConstCaseIsNotYet-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportedNonliteralConstCaseIsNotYet$"
+    ],
+    "seconds": 1.799,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestInputAgreesWithNode-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestInputAgreesWithNode$"
+    ],
+    "seconds": 3.299,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestInputAgreesWithNode-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestInputAgreesWithNode$"
+    ],
+    "seconds": 2.25,
+    "exit": 0
+  },
+  {
+    "label": "timing-TestInputAgreesWithNode-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestInputAgreesWithNode$"
+    ],
+    "seconds": 2.074,
+    "exit": 0
+  },
+  {
+    "label": "M1-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "seconds": 0.585,
+    "exit": 0
+  },
+  {
+    "label": "M2-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.452,
+    "exit": 0
+  },
+  {
+    "label": "M3-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.496,
+    "exit": 0
+  },
+  {
+    "label": "M4-vet",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "seconds": 0.454,
+    "exit": 0
+  },
+  {
+    "label": "switch-gofmt",
+    "command": [
+      "gofmt",
+      "-w",
+      "internal/native/emit.go",
+      "internal/lower/expression.go",
+      "internal/lower/diagnostics.go",
+      "internal/lower/lower.go",
+      "internal/javascript/javascript.go",
+      "internal/oracle/oracle_test.go"
+    ],
+    "seconds": 0.016,
+    "exit": 0
+  },
+  {
+    "label": "switch-compile",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u060-oracle.test",
+      "./internal/oracle/"
+    ],
+    "seconds": 11.398,
+    "exit": 0
+  },
+  {
+    "label": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$"
+    ],
+    "seconds": 7.858,
+    "exit": 1,
+    "selector": "M1",
+    "cache": "/tmp/u060/cache/M1"
+  },
+  {
+    "label": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$"
+    ],
+    "seconds": 11.355,
+    "exit": 1,
+    "selector": "M2",
+    "cache": "/tmp/u060/cache/M2"
+  },
+  {
+    "label": "M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$"
+    ],
+    "seconds": 11.961,
+    "exit": 1,
+    "selector": "M3",
+    "cache": "/tmp/u060/cache/M3"
+  },
+  {
+    "label": "M4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$"
+    ],
+    "seconds": 11.943,
+    "exit": 1,
+    "selector": "M4",
+    "cache": "/tmp/u060/cache/M4"
+  },
+  {
+    "label": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$"
+    ],
+    "seconds": 2.378,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestNumericEnumNeverPathsPinned",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNumericEnumNeverPathsPinned$"
+    ],
+    "seconds": 2.382,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestNumericEnumNeverPinned",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNumericEnumNeverPinned$"
+    ],
+    "seconds": 2.074,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestStage3EnumBoundaries",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestStage3EnumBoundaries$"
+    ],
+    "seconds": 1.964,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestStage3EnumSparseArrayBoundary",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestStage3EnumSparseArrayBoundary$"
+    ],
+    "seconds": 2.45,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestEnumNameEnumerationMutant",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumNameEnumerationMutant$"
+    ],
+    "seconds": 1.867,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestEnumSemanticMutants",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumSemanticMutants$"
+    ],
+    "seconds": 2.106,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestEnumCleanupMutant",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumCleanupMutant$"
+    ],
+    "seconds": 2.253,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestFallthroughMutants",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFallthroughMutants$"
+    ],
+    "seconds": 2.163,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestFieldReadinessRepresentation",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFieldReadinessRepresentation$"
+    ],
+    "seconds": 2.642,
+    "exit": 0,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestFreshWriteProbesStayRefused",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFreshWriteProbesStayRefused$"
+    ],
+    "seconds": 2.249,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestFunctionValueBoundaryBoxing",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestFunctionValueBoundaryBoxing$"
+    ],
+    "seconds": 1.86,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestImportCycleRuntimeCalls",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportCycleRuntimeCalls$"
+    ],
+    "seconds": 2.397,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestImportCycleLoadTimeReads",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportCycleLoadTimeReads$"
+    ],
+    "seconds": 2.232,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestImportedNonliteralConstCaseIsNotYet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestImportedNonliteralConstCaseIsNotYet$"
+    ],
+    "seconds": 2.629,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P1-isolated-TestInputAgreesWithNode",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestInputAgreesWithNode$"
+    ],
+    "seconds": 2.065,
+    "exit": 1,
+    "selector": "P1",
+    "cache": "/tmp/u060/cache/P1"
+  },
+  {
+    "label": "P2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$"
+    ],
+    "seconds": 7.647,
+    "exit": 1,
+    "selector": "P2",
+    "cache": "/tmp/u060/cache/P2"
+  },
+  {
+    "label": "P3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestStage3EnumBoundaries|TestStage3EnumSparseArrayBoundary|TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestEnumCleanupMutant|TestFallthroughMutants|TestFieldReadinessRepresentation|TestFreshWriteProbesStayRefused|TestFunctionValueBoundaryBoxing|TestImportCycleRuntimeCalls|TestImportCycleLoadTimeReads|TestImportedNonliteralConstCaseIsNotYet|TestInputAgreesWithNode)$"
+    ],
+    "seconds": 10.88,
+    "exit": 1,
+    "selector": "P3",
+    "cache": "/tmp/u060/cache/P3"
+  },
+  {
+    "label": "W1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestEnumNameEnumerationMutant|TestEnumSemanticMutants|TestFallthroughMutants|TestFieldReadinessRepresentation)$"
+    ],
+    "seconds": 4.29,
+    "exit": 1,
+    "selector": "W1",
+    "cache": "/tmp/u060/cache/W1"
+  },
+  {
+    "label": "W2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestEnumCleanupMutant$"
+    ],
+    "seconds": 2.143,
+    "exit": 1,
+    "selector": "W2",
+    "cache": "/tmp/u060/cache/W2"
+  }
+]

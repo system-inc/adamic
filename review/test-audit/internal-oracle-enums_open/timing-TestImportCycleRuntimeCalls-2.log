@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T11:05:57.745599449Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:05:57.754691836Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls"}
+{"Time":"2026-10-09T11:05:57.75475588Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"=== RUN   TestImportCycleRuntimeCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:57.908944967Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"    import_cycles_test.go:66: gate cache node hit\n"}
+{"Time":"2026-10-09T11:05:57.909198421Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"    oracle_test.go:596: gate cache native hit\n"}
+{"Time":"2026-10-09T11:05:57.909316304Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"    oracle_test.go:603: gate cache native hit\n"}
+{"Time":"2026-10-09T11:05:57.90944566Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"    oracle_test.go:589: gate cache native hit\n"}
+{"Time":"2026-10-09T11:05:57.909524638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Output":"--- PASS: TestImportCycleRuntimeCalls (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:57.909535729Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestImportCycleRuntimeCalls","Elapsed":0.15}
+{"Time":"2026-10-09T11:05:57.909598237Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:57.909603411Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=3 misses=0\n"}
+{"Time":"2026-10-09T11:05:57.909606414Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=1 misses=0\n"}
+{"Time":"2026-10-09T11:05:57.909609207Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:05:57.910824587Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.165s\n"}
+{"Time":"2026-10-09T11:05:57.910860207Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.165}

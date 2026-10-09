@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T11:05:08.296122162Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:05:08.304474621Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary"}
+{"Time":"2026-10-09T11:05:08.304528944Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary","Output":"=== RUN   TestStage3EnumSparseArrayBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:08.304546759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary","Output":"=== PAUSE TestStage3EnumSparseArrayBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:08.304549024Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary"}
+{"Time":"2026-10-09T11:05:08.304553912Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary"}
+{"Time":"2026-10-09T11:05:08.304555797Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary","Output":"=== CONT  TestStage3EnumSparseArrayBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:08.390969292Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary","Output":"    oracle_test.go:596: gate cache native hit\n"}
+{"Time":"2026-10-09T11:05:08.391218587Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary","Output":"    enums_stage3_test.go:80: gate cache node hit\n"}
+{"Time":"2026-10-09T11:05:08.391268465Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary","Output":"    enums_stage3_test.go:85: gate cache node hit\n"}
+{"Time":"2026-10-09T11:05:08.391364262Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary","Output":"--- PASS: TestStage3EnumSparseArrayBoundary (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:08.391371681Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStage3EnumSparseArrayBoundary","Elapsed":0.09}
+{"Time":"2026-10-09T11:05:08.39139269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:05:08.391399392Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=1 misses=0\n"}
+{"Time":"2026-10-09T11:05:08.391402189Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=2 misses=0\n"}
+{"Time":"2026-10-09T11:05:08.391405671Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:05:08.392879058Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.096s\n"}
+{"Time":"2026-10-09T11:05:08.392901186Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.097}

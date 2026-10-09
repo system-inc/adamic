@@ -1,0 +1,152 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..80adaf16 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -12,6 +12,7 @@ package javascript
+ 
+ import (
+ 	"fmt"
++	"os"
+ 	"regexp"
+ 	"strconv"
+ 	"strings"
+@@ -22,6 +23,9 @@ import (
+ // JavaScript is a program as one JavaScript module, importing panic and the functions that read and
+ // write files from 'adamic'.
+ func JavaScript(program *ir.Program) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P3" {
++		return ""
++	}
+ 	return JavaScriptWith(program, Options{})
+ }
+ 
+diff --git a/internal/lower/diagnostics.go b/internal/lower/diagnostics.go
+index 4e462e16..261a55db 100644
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -4,6 +4,7 @@ package lower
+ import (
+ 	"fmt"
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
++	"os"
+ 	"strings"
+ )
+ 
+@@ -14,6 +15,9 @@ type NotYet struct {
+ }
+ 
+ func (n *NotYet) Error() string {
++	if os.Getenv("ADAMIC_MUTANT") == "M4" {
++		return fmt.Sprintf("%s: stage 0 can't lower %s now", n.Where, n.What)
++	}
+ 	return fmt.Sprintf("%s: stage 0 can't lower %s yet", n.Where, n.What)
+ }
+ 
+@@ -26,6 +30,9 @@ type Refused struct {
+ }
+ 
+ func (r *Refused) Error() string {
++	if os.Getenv("ADAMIC_MUTANT") == "M3" {
++		return fmt.Sprintf("%s: Adamic 0.1 refuses %s; %.0s", r.Where, r.What, r.Fix)
++	}
+ 	return fmt.Sprintf("%s: Adamic 0.1 refuses %s; %s", r.Where, r.What, r.Fix)
+ }
+ 
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..48aeb327 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -2,6 +2,7 @@ package lower
+ 
+ import (
+ 	"errors"
++	"os"
+ 	"reflect"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+@@ -681,7 +682,7 @@ func fit(value ir.Expression, to ir.Type) ir.Expression {
+ 	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
+ 		return ir.WeakOf{Value: value}
+ 	}
+-	if to == ir.Union && value != nil && value.Type() != ir.Union {
++	if to == ir.Union && value != nil && (value.Type() != ir.Union) != (os.Getenv("ADAMIC_MUTANT") == "M2") {
+ 		return ir.Box{Value: value}
+ 	}
+ 	if _, isNull := value.(ir.Null); isNull && to.IsReference() && to != ir.Union {
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..0a15d5e7 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -13,11 +13,15 @@ import (
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
++	"os"
+ 	"path/filepath"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P1" {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..e6a148ff 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -3,6 +3,7 @@ package native
+ import (
+ 	"fmt"
+ 	"github.com/system-inc/adamic/internal/ir"
++	"os"
+ 	"strings"
+ )
+ 
+@@ -20,6 +21,9 @@ import (
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P2" {
++		return ""
++	}
+ 	return cProgram(program, -1)
+ }
+ 
+@@ -103,7 +107,9 @@ func cProgram(program *ir.Program, handler int) string {
+ 	bodies.WriteString("int main(int argc, char **argv) {\n")
+ 	bodies.WriteString("\tadamic_start(argc, argv);\n")
+ 	emitter.indent = 1
+-	emitter.block(program.Main, nil)
++	if os.Getenv("ADAMIC_MUTANT") != "M1" {
++		emitter.block(program.Main, nil)
++	}
+ 	if handler < 0 {
+ 		emitter.releaseGlobals()
+ 	}
+diff --git a/internal/oracle/oracle_test.go b/internal/oracle/oracle_test.go
+index 8f73e788..3ef5a99c 100644
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -509,6 +509,9 @@ func executeWith(t *testing.T, environment []string, name string, arguments ...s
+ 	command := bounded(t, name, arguments...)
+ 	if environment != nil {
+ 		command.Env = append(os.Environ(), environment...)
++		if os.Getenv("ADAMIC_MUTANT") == "W2" {
++			command.Env = append(command.Env, "ASAN_OPTIONS=detect_leaks=0")
++		}
+ 	}
+ 	var stdout, stderr bytes.Buffer
+ 	command.Stdout = &stdout
+@@ -714,6 +717,9 @@ func leakSanitizer(t *testing.T, binary string) string {
+ 
+ // disagreement says how two runs differ, or "" when they don't.
+ func disagreement(oracle run, native run) string {
++	if os.Getenv("ADAMIC_MUTANT") == "W1" {
++		return ""
++	}
+ 	switch {
+ 	case oracle.exitCode != native.exitCode:
+ 		return "exit codes differ"

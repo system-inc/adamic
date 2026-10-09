@@ -1,0 +1,35 @@
+{"Time":"2026-10-09T11:07:35.505457266Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:07:35.517182862Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant"}
+{"Time":"2026-10-09T11:07:35.517242968Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"=== RUN   TestEnumCleanupMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:35.517265667Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"=== PAUSE TestEnumCleanupMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:35.51726784Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant"}
+{"Time":"2026-10-09T11:07:35.517270603Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant"}
+{"Time":"2026-10-09T11:07:35.517272169Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"=== CONT  TestEnumCleanupMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:35.601605998Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"--- FAIL: TestEnumCleanupMutant (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:35.610892977Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T11:07:35.610987889Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x108 pc=0xbdc806]\n"}
+{"Time":"2026-10-09T11:07:35.61099809Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\n"}
+{"Time":"2026-10-09T11:07:35.611063248Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"goroutine 21 [running]:\n"}
+{"Time":"2026-10-09T11:07:35.611102955Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"testing.tRunner.func1.2({0x1d63af8, 0x1e72930})\n"}
+{"Time":"2026-10-09T11:07:35.611161902Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T11:07:35.611177742Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T11:07:35.611322906Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T11:07:35.611326586Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"panic({0x1d63af8?, 0x1e72930?})\n"}
+{"Time":"2026-10-09T11:07:35.611427027Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T11:07:35.611434178Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"github.com/system-inc/adamic/internal/native.changingFunctions(0x0)\n"}
+{"Time":"2026-10-09T11:07:35.611436826Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\t/workspace/adamic/internal/native/element_borrow.go:121 +0x26\n"}
+{"Time":"2026-10-09T11:07:35.611439127Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"github.com/system-inc/adamic/internal/native.planElementBorrows(0x0)\n"}
+{"Time":"2026-10-09T11:07:35.611448661Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\t/workspace/adamic/internal/native/element_borrow.go:25 +0x27\n"}
+{"Time":"2026-10-09T11:07:35.611451016Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"github.com/system-inc/adamic/internal/native.cProgram(0x0, 0xffffffffffffffff)\n"}
+{"Time":"2026-10-09T11:07:35.611454117Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\t/workspace/adamic/internal/native/emit.go:32 +0x32\n"}
+{"Time":"2026-10-09T11:07:35.61145845Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"github.com/system-inc/adamic/internal/native.C(0x0)\n"}
+{"Time":"2026-10-09T11:07:35.611460606Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\t/workspace/adamic/internal/native/emit.go:27 +0x4d\n"}
+{"Time":"2026-10-09T11:07:35.611465912Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"github.com/system-inc/adamic/internal/oracle.TestEnumCleanupMutant(0x15bddd2aed88)\n"}
+{"Time":"2026-10-09T11:07:35.611468156Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\t/workspace/adamic/internal/oracle/enums_test.go:129 +0x145\n"}
+{"Time":"2026-10-09T11:07:35.61146993Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"testing.tRunner(0x15bddd2aed88, 0x1e103f8)\n"}
+{"Time":"2026-10-09T11:07:35.611472423Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T11:07:35.611474154Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T11:07:35.611476187Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T11:07:35.612812189Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Elapsed":0.08}
+{"Time":"2026-10-09T11:07:35.612854762Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.105s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:07:35.612863747Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.107}

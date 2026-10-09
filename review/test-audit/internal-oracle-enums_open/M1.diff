@@ -1,0 +1,10 @@
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -103,7 +103,6 @@
+ 	bodies.WriteString("int main(int argc, char **argv) {\n")
+ 	bodies.WriteString("\tadamic_start(argc, argv);\n")
+ 	emitter.indent = 1
+-	emitter.block(program.Main, nil)
+ 	if handler < 0 {
+ 		emitter.releaseGlobals()
+ 	}

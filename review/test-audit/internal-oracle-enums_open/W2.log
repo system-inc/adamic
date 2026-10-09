@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:08:18.43606331Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:08:18.445604042Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant"}
+{"Time":"2026-10-09T11:08:18.445683748Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"=== RUN   TestEnumCleanupMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:18.445709665Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"=== PAUSE TestEnumCleanupMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:18.445712578Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant"}
+{"Time":"2026-10-09T11:08:18.445716486Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant"}
+{"Time":"2026-10-09T11:08:18.445718806Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"=== CONT  TestEnumCleanupMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:18.828950571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"    enums_test.go:148: enum cleanup mutant not caught: exit 0, stderr \n","OutputType":"error"}
+{"Time":"2026-10-09T11:08:18.829276524Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Output":"--- FAIL: TestEnumCleanupMutant (0.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:18.829295771Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestEnumCleanupMutant","Elapsed":0.38}
+{"Time":"2026-10-09T11:08:18.829317365Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:18.830784358Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.394s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:08:18.83079692Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.395}

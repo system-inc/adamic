@@ -1,0 +1,149 @@
+{
+  "nproc": 5,
+  "setup_seconds": 0,
+  "npm_reported_seconds": 0.438,
+  "runs": {
+    "TestNumericEnumNeverPathsPinned": [
+      0.685,
+      0.195,
+      0.183
+    ],
+    "TestNumericEnumNeverPinned": [
+      0.366,
+      0.087,
+      0.088
+    ],
+    "TestStage3EnumBoundaries": [
+      0.08,
+      0.087,
+      0.087
+    ],
+    "TestStage3EnumSparseArrayBoundary": [
+      0.593,
+      0.098,
+      0.097
+    ],
+    "TestEnumNameEnumerationMutant": [
+      0.34,
+      0.088,
+      0.089
+    ],
+    "TestEnumSemanticMutants": [
+      0.99,
+      0.878,
+      0.853
+    ],
+    "TestEnumCleanupMutant": [
+      0.45,
+      0.451,
+      0.452
+    ],
+    "TestFallthroughMutants": [
+      0.463,
+      0.123,
+      0.128
+    ],
+    "TestFieldReadinessRepresentation": [
+      0.607,
+      0.515,
+      0.532
+    ],
+    "TestFreshWriteProbesStayRefused": [
+      0.69,
+      0.675,
+      0.678
+    ],
+    "TestFunctionValueBoundaryBoxing": [
+      0.051,
+      0.05,
+      0.048
+    ],
+    "TestImportCycleRuntimeCalls": [
+      0.439,
+      0.165,
+      0.167
+    ],
+    "TestImportCycleLoadTimeReads": [
+      1.806,
+      0.412,
+      0.417
+    ],
+    "TestImportedNonliteralConstCaseIsNotYet": [
+      0.234,
+      0.144,
+      0.138
+    ],
+    "TestInputAgreesWithNode": [
+      1.557,
+      0.428,
+      0.38
+    ]
+  },
+  "medians": {
+    "TestNumericEnumNeverPathsPinned": 0.195,
+    "TestNumericEnumNeverPinned": 0.088,
+    "TestStage3EnumBoundaries": 0.087,
+    "TestStage3EnumSparseArrayBoundary": 0.098,
+    "TestEnumNameEnumerationMutant": 0.089,
+    "TestEnumSemanticMutants": 0.878,
+    "TestEnumCleanupMutant": 0.451,
+    "TestFallthroughMutants": 0.128,
+    "TestFieldReadinessRepresentation": 0.532,
+    "TestFreshWriteProbesStayRefused": 0.678,
+    "TestFunctionValueBoundaryBoxing": 0.05,
+    "TestImportCycleRuntimeCalls": 0.167,
+    "TestImportCycleLoadTimeReads": 0.417,
+    "TestImportedNonliteralConstCaseIsNotYet": 0.144,
+    "TestInputAgreesWithNode": 0.428
+  },
+  "switch_go_compile_seconds": 11.398,
+  "matrix_wall_seconds": {
+    "M1": 7.858,
+    "M2": 11.355,
+    "M3": 11.961,
+    "M4": 11.943,
+    "P1": 2.378,
+    "P2": 7.647,
+    "P3": 10.88,
+    "W1": 4.29,
+    "W2": 2.143
+  },
+  "representative_native_rebuilds": [
+    {
+      "id": "M1",
+      "command": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M1 timeout 90 go run ./review/test-audit/internal-oracle-enums_open/buildhelper /tmp/u060-M1-rebuild",
+      "wall_seconds": 4.432,
+      "exit": 0,
+      "fixture": "internal/oracle/testdata/enums_open_never.a",
+      "native_build_seconds": 0.169194173,
+      "selector": "M1"
+    },
+    {
+      "id": "M2",
+      "command": "ADAMIC_MUTANT=M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M2 timeout 90 go run ./review/test-audit/internal-oracle-enums_open/buildhelper /tmp/u060-M2-rebuild",
+      "wall_seconds": 0.304,
+      "exit": 0,
+      "fixture": "internal/oracle/testdata/enums_open_never.a",
+      "native_build_seconds": 0.15861866,
+      "selector": "M2"
+    },
+    {
+      "id": "M3",
+      "command": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M3 timeout 90 go run ./review/test-audit/internal-oracle-enums_open/buildhelper /tmp/u060-M3-rebuild",
+      "wall_seconds": 0.287,
+      "exit": 0,
+      "fixture": "internal/oracle/testdata/enums_open_never.a",
+      "native_build_seconds": 0.154286805,
+      "selector": "M3"
+    },
+    {
+      "id": "M4",
+      "command": "ADAMIC_MUTANT=M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u060/cache/M4 timeout 90 go run ./review/test-audit/internal-oracle-enums_open/buildhelper /tmp/u060-M4-rebuild",
+      "wall_seconds": 0.297,
+      "exit": 0,
+      "fixture": "internal/oracle/testdata/enums_open_never.a",
+      "native_build_seconds": 0.160868696,
+      "selector": "M4"
+    }
+  ]
+}
