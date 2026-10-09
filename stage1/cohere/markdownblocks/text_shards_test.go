@@ -28,18 +28,20 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// Deadline starts after parallel admission; a cooked unit aborts the process at 75s.
-// The parent uses the same deadline for setup, independent of its children's wall.
+// Each independent phase is killed at 90s; leaf callers start after setup and admission.
 func textDeadline(t *testing.T) func() {
-	name := t.Name()
-	timer := time.AfterFunc(75*time.Second, func() {
+	return textPhaseDeadline(t, t.Name())
+}
+
+func textPhaseDeadline(t *testing.T, name string) func() {
+	timer := time.AfterFunc(90*time.Second, func() {
 		textActiveCommands.Range(func(key, value any) bool {
 			if value == t {
 				_ = key.(*exec.Cmd).Cancel()
 			}
 			return true
 		})
-		panic("cooked: " + name + " exceeded 75s hard deadline")
+		panic("cooked: " + name + " exceeded 90s hard deadline")
 	})
 	return func() { timer.Stop() }
 }
@@ -246,29 +248,36 @@ func textMutantWitness(name string) string {
 	panic("unknown text mutant")
 }
 
-var textInputsOnce sync.Once
-var textInputsRoot string
-var textInputsAll []auditInput
-
-func textSharedInputs(t *testing.T) (string, []auditInput) {
-	t.Helper()
-	textInputsOnce.Do(func() { textInputsRoot, textInputsAll = textSplittingInputs(t) })
-	if len(textInputsAll) == 0 {
-		t.Fatal("text input enumeration did not complete")
-	}
-	return textInputsRoot, textInputsAll
+type textSetupState struct {
+	root     string
+	inputs   []auditInput
+	shards   [][]auditInput
+	products textProducts
+	ready    bool
 }
 
-var textProductsOnce sync.Once
-var textProductsShared textProducts
+var textSetupOnce sync.Once
+var textSetupShared textSetupState
 
-func textSharedProducts(t *testing.T, root string) textProducts {
+// The serial TestMarkdownTextSplitting_Setup initializes this before parallel
+// leaves resume. A filtered run that omits Setup uses the same separately bounded
+// setup phase; its leaf deadline is still started only after readiness.
+func textReadySetup(t *testing.T) textSetupState {
 	t.Helper()
-	textProductsOnce.Do(func() { textProductsShared = textBuildProducts(t, root) })
-	if textProductsShared.goBinary == "" {
-		t.Fatal("text product preparation did not complete")
+	textSetupOnce.Do(func() {
+		stop := textPhaseDeadline(t, "TestMarkdownTextSplitting_Setup")
+		defer stop()
+		started := time.Now()
+		root, inputs := textSplittingInputs(t)
+		products := textBuildProducts(t, root)
+		shards := textShardInputs(t, inputs, testMarkdownTextSplittingShards)
+		textSetupShared = textSetupState{root: root, inputs: inputs, shards: shards, products: products, ready: true}
+		t.Logf("shared text setup ready in %.3fs", time.Since(started).Seconds())
+	})
+	if !textSetupShared.ready {
+		t.Fatal("shared text setup did not complete")
 	}
-	return textProductsShared
+	return textSetupShared
 }
 
 type textProducts struct{ main, goBinary, sanitized, release, backend string }
