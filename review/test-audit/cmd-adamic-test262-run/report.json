@@ -1,0 +1,34 @@
+[
+  {
+    "test": "TestProgramCPUDeadline",
+    "package": "github.com/system-inc/adamic/cmd/adamic-test262",
+    "file": "cmd/adamic-test262/run_test.go",
+    "seconds": 3.652,
+    "oracle": "Self-written execution-field and literal stdout expectations, using an unmodified C clock() helper. The saturated clean run consumed one CPU second in 2.582271724 wall seconds with a 2-second CPU budget. The spin result alone cannot distinguish CPU exhaustion from an early wall deadline; M3 is caught by the saturated subcase.",
+    "oracle_kind": "self",
+    "kills": [
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M2",
+      "M3"
+    ],
+    "last_proven_fail": "M3: run_test.go:72: 1 CPU second under load: {Stdout: Stderr: Exit:-1 Signal: TimedOut:true} after 2.045062464s; want successful completion",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "E_RUN_PROGRAM"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_TEST262_MEASURE=1 ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > M3-matrix.log 2>&1; run_test.go:72: 1 CPU second under load: {Stdout: Stderr: Exit:-1 Signal: TimedOut:true} after 2.045062464s; want successful completion",
+    "own_entry_probes": [
+      "E_RUN_PROGRAM"
+    ],
+    "vacuous_subcases": []
+  }
+]

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -372,7 +372,7 @@
+ 	// Set only the soft limit so the kernel delivers SIGXCPU, not SIGKILL.
+ 	wrapper := fmt.Sprintf(`ulimit -S -t %d || exit; exec "$0" "$@"`, seconds)
+ 	arguments := append([]string{"-c", wrapper, name}, args...)
+-	return runCommand(2*time.Minute, extra, "/bin/sh", arguments...)
++	return runCommand(cpuLimit, extra, "/bin/sh", arguments...)
+ }
+ 
+ func runCommand(timeout time.Duration, extra []string, name string, args ...string) execution {

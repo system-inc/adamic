@@ -1,0 +1,7 @@
+=== RUN   TestAuditObservation
+fractional CPU limit: {Stdout:2
+ Stderr: Exit:0 Signal: TimedOut:false}
+exact capture capacity: {Stdout:abc Stderr:command output exceeded capture limit
+ Exit:-1 Signal: TimedOut:false}
+--- PASS: TestAuditObservation (0.00s)
+PASS

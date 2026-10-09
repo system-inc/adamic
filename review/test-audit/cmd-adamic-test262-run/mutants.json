@@ -1,0 +1,47 @@
+[
+  {
+    "id": "M1",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 371,
+    "old": "int64((cpuLimit + time.Second - 1) / time.Second)",
+    "new": "int64(cpuLimit / time.Second)",
+    "menu": "off-by-one rounding",
+    "probe": false
+  },
+  {
+    "id": "M2",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 417,
+    "old": "status.Signal() == syscall.SIGXCPU",
+    "new": "status.Signal() != syscall.SIGXCPU",
+    "menu": "flip condition",
+    "probe": false
+  },
+  {
+    "id": "M3",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 375,
+    "old": "return runCommand(2*time.Minute, extra, \"/bin/sh\", arguments...)",
+    "new": "return runCommand(cpuLimit, extra, \"/bin/sh\", arguments...)",
+    "menu": "change option",
+    "probe": false
+  },
+  {
+    "id": "M4",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 444,
+    "old": "if written > room {",
+    "new": "if written >= room {",
+    "menu": "off-by-one bound",
+    "probe": false
+  },
+  {
+    "id": "E_RUN_PROGRAM",
+    "file": "cmd/adamic-test262/run.go",
+    "line": 370,
+    "old": "func runProgram(cpuLimit time.Duration, extra []string, name string, args ...string) execution {",
+    "new": "func runProgram(cpuLimit time.Duration, extra []string, name string, args ...string) execution {\n if true { return execution{} }",
+    "menu": "empty-answer probe",
+    "probe": true
+  }
+]

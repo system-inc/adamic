@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -441,7 +441,7 @@
+ func (buffer *limitedBuffer) Write(data []byte) (int, error) {
+ 	written := len(data)
+ 	room := buffer.limit - buffer.buf.Len()
+-	if written > room {
++	if written >= room {
+ 		buffer.exceeded = true
+ 	}
+ 	if room > 0 {

@@ -1,0 +1,48 @@
+diff --git a/cmd/adamic-test262/run.go b/cmd/adamic-test262/run.go
+index 204b7932..759383f8 100644
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -368,11 +368,23 @@ const outputLimit = 256 << 10
+ // Test programs get a CPU budget; time waiting for a core does not spend it.
+ // Keep a wall-clock backstop for programs that block without consuming CPU.
+ func runProgram(cpuLimit time.Duration, extra []string, name string, args ...string) execution {
+-	seconds := int64((cpuLimit + time.Second - 1) / time.Second)
++	if os.Getenv("ADAMIC_MUTANT") == "E_RUN_PROGRAM" {
++		return execution{}
++	}
++	seconds := func() int64 {
++		if os.Getenv("ADAMIC_MUTANT") == "M1" {
++			return int64(cpuLimit / time.Second)
++		}
++		return int64((cpuLimit + time.Second - 1) / time.Second)
++	}()
+ 	// Set only the soft limit so the kernel delivers SIGXCPU, not SIGKILL.
+ 	wrapper := fmt.Sprintf(`ulimit -S -t %d || exit; exec "$0" "$@"`, seconds)
+ 	arguments := append([]string{"-c", wrapper, name}, args...)
+-	return runCommand(2*time.Minute, extra, "/bin/sh", arguments...)
++	wallLimit := 2 * time.Minute
++	if os.Getenv("ADAMIC_MUTANT") == "M3" {
++		wallLimit = cpuLimit
++	}
++	return runCommand(wallLimit, extra, "/bin/sh", arguments...)
+ }
+ 
+ func runCommand(timeout time.Duration, extra []string, name string, args ...string) execution {
+@@ -414,7 +426,7 @@ func runCommandWithLimit(timeout time.Duration, extra []string, limit int, name
+ 	}
+ 	if status, ok := exit.Sys().(syscall.WaitStatus); ok {
+ 		if status.Signaled() {
+-			if status.Signal() == syscall.SIGXCPU {
++			if (os.Getenv("ADAMIC_MUTANT") == "M2") != (status.Signal() == syscall.SIGXCPU) {
+ 				result.TimedOut = true
+ 				result.Exit = -1
+ 				return result
+@@ -441,7 +453,7 @@ type limitedBuffer struct {
+ func (buffer *limitedBuffer) Write(data []byte) (int, error) {
+ 	written := len(data)
+ 	room := buffer.limit - buffer.buf.Len()
+-	if written > room {
++	if written > room || (os.Getenv("ADAMIC_MUTANT") == "M4" && written == room) {
+ 		buffer.exceeded = true
+ 	}
+ 	if room > 0 {

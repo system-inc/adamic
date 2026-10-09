@@ -1,0 +1,8 @@
+package main
+import("testing";"fmt";"time")
+func TestAuditObservation(t *testing.T) {
+ fractional:=runProgram(1500*time.Millisecond,nil,"/bin/sh","-c","ulimit -S -t")
+ fmt.Printf("fractional CPU limit: %+v\n",fractional)
+ exact:=runCommandWithLimit(time.Second,nil,3,"/bin/sh","-c","printf abc")
+ fmt.Printf("exact capture capacity: %+v\n",exact)
+}
