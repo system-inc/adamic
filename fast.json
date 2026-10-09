@@ -1,0 +1,28 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T223200-224793fc",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "f3ac159ae9b6c16f42a4fe26a98d62027025f311",
+  "branch": "codex/stage3-speculative-census-main",
+  "base": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "candidate": "155445a9072cd089f8ab386780399a5d2a7e4680",
+  "gated": "f3ac159ae9b6c16f42a4fe26a98d62027025f311",
+  "unplanned_packages_not_run": 54,
+  "loom_tools": "5c3cc7116cadad13a213e6f89d6668b6d5bc6ca1ce77ab532f4570d65472ae0b",
+  "loom_tools_promoted": "d0c80ee6a1d426c42ef3414264d87e6478902c5aa9b5b81e46ae9c81c81b0e3e",
+  "gate_tools": "ec73409fe1b06a2f75c71c7837a8262a428c8051",
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ],
+  "wall_seconds": 0.0,
+  "steps_seconds": {
+    "tests": 0.0
+  }
+}
