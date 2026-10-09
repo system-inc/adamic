@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:43:07.953259135Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/scanner"}
+{"Time":"2026-10-09T13:43:07.959811233Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestProfileArtifacts"}
+{"Time":"2026-10-09T13:43:07.959869631Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestProfileArtifacts","Output":"=== RUN   TestProfileArtifacts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:08.015823167Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestProfileArtifacts","Output":"    profile_test.go:35: corpus-files: upstream /tmp/u159/typescript root src/compiler pin 050880ce59e30b356b686bd3144efe24f875ebc8 count 77\n"}
+{"Time":"2026-10-09T13:43:08.798136495Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestProfileArtifacts","Output":"    scanner_products_test.go:50: build scanner-go-oracle efebc3d117c0 hit 0.78\n"}
+{"Time":"2026-10-09T13:43:10.957595721Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestProfileArtifacts","Output":"    profile_test.go:68: corpus-files: repository ../../.. root internal/native/runtime pin cf735d9fba9e38de6368575e5630e44375a86eaf count 84\n"}
+{"Time":"2026-10-09T13:43:15.608695929Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestProfileArtifacts","Output":"    profile_test.go:88: release, counted and -O2 -g profiling builds saved in /tmp/u159/artifacts/clean\n"}
+{"Time":"2026-10-09T13:43:15.609864341Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestProfileArtifacts","Output":"--- PASS: TestProfileArtifacts (7.65s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:15.609871371Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestProfileArtifacts","Elapsed":7.65}
+{"Time":"2026-10-09T13:43:15.609892894Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:15.609946599Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/scanner\t7.656s\n"}
+{"Time":"2026-10-09T13:43:15.609992919Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Elapsed":7.657}

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:41:37.783671885Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/scanner"}
+{"Time":"2026-10-09T13:41:37.789979317Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays"}
+{"Time":"2026-10-09T13:41:37.790026218Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays","Output":"=== RUN   TestBigintGapStandsWhereGapsMdSays\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:41:37.790043254Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays","Output":"=== PAUSE TestBigintGapStandsWhereGapsMdSays\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:41:37.790045577Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays"}
+{"Time":"2026-10-09T13:41:37.79004743Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays"}
+{"Time":"2026-10-09T13:41:37.790049083Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays","Output":"=== CONT  TestBigintGapStandsWhereGapsMdSays\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:41:37.880857383Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays","Output":"--- PASS: TestBigintGapStandsWhereGapsMdSays (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:41:37.880917724Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Test":"TestBigintGapStandsWhereGapsMdSays","Elapsed":0.09}
+{"Time":"2026-10-09T13:41:37.880939016Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:41:37.881864857Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/scanner\t0.098s\n"}
+{"Time":"2026-10-09T13:41:37.881904567Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/scanner","Elapsed":0.098}
