@@ -1,0 +1,38 @@
+{
+  "code_under_test": "Owned rule.a and profile.a compiled by lower.Lower, native.C, native.Build and javascript.JavaScript; products are not executed by the row",
+  "oracle": "self: successful compilation and successful emitted file write",
+  "port_functions": [
+    "Rule.constructor",
+    "Rule.pattern",
+    "Rule.reaching",
+    "Rule.visit",
+    "create",
+    "profile.ancestry",
+    "profile.visit",
+    "profile.run",
+    "profile top-level entry"
+  ],
+  "mutants": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+      "line": 22,
+      "old": "if(!node.optional) { return; }",
+      "new": "if(node.optional) { return; }"
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+      "line": 32,
+      "old": "read('disallowarithmeticoperators', 'false')",
+      "new": "read('disallowarithmeticoperators', 'true')"
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+      "line": 28,
+      "old": "        this.context.report(index, 'no-unsafe-optional-chaining', arithmetic ? 'unsafeArithmetic' : 'unsafeOptionalChain', arithmetic ? arithmeticMessage : unsafe, '', '', '');",
+      "new": ""
+    }
+  ]
+}

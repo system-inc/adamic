@@ -1,0 +1,144 @@
+[
+  {
+    "id": "clean",
+    "kind": "witness",
+    "command": [
+      "/tmp/u123/clean",
+      "/tmp/u123/manifest.txt"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.0012069270014762878
+  },
+  {
+    "id": "M1",
+    "kind": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall_seconds": 32.33473362600125
+  },
+  {
+    "id": "M1",
+    "kind": "build",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u123/adamic",
+      "build",
+      "stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a",
+      "-o",
+      "/tmp/u123/M1"
+    ],
+    "exit": 0,
+    "wall_seconds": 11.539842140999099
+  },
+  {
+    "id": "M1",
+    "kind": "witness",
+    "command": [
+      "/tmp/u123/M1",
+      "/tmp/u123/manifest.txt"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.0011735160005628131
+  },
+  {
+    "id": "M2",
+    "kind": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall_seconds": 32.240750152001056
+  },
+  {
+    "id": "M2",
+    "kind": "build",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u123/adamic",
+      "build",
+      "stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a",
+      "-o",
+      "/tmp/u123/M2"
+    ],
+    "exit": 0,
+    "wall_seconds": 11.423766823001642
+  },
+  {
+    "id": "M2",
+    "kind": "witness",
+    "command": [
+      "/tmp/u123/M2",
+      "/tmp/u123/manifest.txt"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.0012791829994966974
+  },
+  {
+    "id": "M3",
+    "kind": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall_seconds": 32.56247675299892
+  },
+  {
+    "id": "M3",
+    "kind": "build",
+    "command": [
+      "timeout",
+      "90",
+      "/tmp/u123/adamic",
+      "build",
+      "stage1/cohere/lint/rules/no-unsafe-optional-chaining/profile.a",
+      "-o",
+      "/tmp/u123/M3"
+    ],
+    "exit": 0,
+    "wall_seconds": 11.574522658000205
+  },
+  {
+    "id": "M3",
+    "kind": "witness",
+    "command": [
+      "/tmp/u123/M3",
+      "/tmp/u123/manifest.txt"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.0012694880006165477
+  }
+]

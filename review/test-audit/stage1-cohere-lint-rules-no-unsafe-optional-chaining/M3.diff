@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a
++++ b/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a
+@@ -25,7 +25,7 @@
+             const outer = this.context.node(parent);
+             if(outer.optional && ['PropertyAccessExpression','ElementAccessExpression','CallExpression','NonNullExpression'].includes(outer.kind) && outer.children[0] === index) { return; }
+         }
+-        this.context.report(index, 'no-unsafe-optional-chaining', arithmetic ? 'unsafeArithmetic' : 'unsafeOptionalChain', arithmetic ? arithmeticMessage : unsafe, '', '', '');
++
+     }
+     visit(node: ParseNode, index: number): void {
+         const first = node.children[0] ?? -1;

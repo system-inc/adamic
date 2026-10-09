@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M1",
+    "kind": "mutant",
+    "rows": {
+      "TestCompileProfiles": "pass"
+    },
+    "log": "M1-matrix.log"
+  },
+  {
+    "id": "M2",
+    "kind": "mutant",
+    "rows": {
+      "TestCompileProfiles": "pass"
+    },
+    "log": "M2-matrix.log"
+  },
+  {
+    "id": "M3",
+    "kind": "mutant",
+    "rows": {
+      "TestCompileProfiles": "pass"
+    },
+    "log": "M3-matrix.log"
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "rows": {
+      "TestCompileProfiles": "fail"
+    },
+    "log": "P1-matrix.log"
+  }
+]

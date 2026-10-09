@@ -1,0 +1,41 @@
+[
+  {
+    "name": "npm-ci",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.4339015509995079
+  },
+  {
+    "name": "list",
+    "command": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining/"
+    ],
+    "exit": 0,
+    "wall_seconds": 4.7865339780000795
+  },
+  {
+    "name": "baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/no-unsafe-optional-chaining/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall_seconds": 32.37072451000131
+  }
+]

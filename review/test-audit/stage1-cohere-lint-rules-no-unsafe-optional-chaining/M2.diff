@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a
++++ b/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a
+@@ -29,7 +29,7 @@
+     }
+     visit(node: ParseNode, index: number): void {
+         const first = node.children[0] ?? -1;
+-        const arithmetic = this.context.settings.read('disallowarithmeticoperators', 'false') === 'true';
++        const arithmetic = this.context.settings.read('disallowarithmeticoperators', 'true') === 'true';
+         if(['PropertyAccessExpression','ElementAccessExpression','CallExpression'].includes(node.kind)) {
+             for(const child of node.children) { if(this.context.node(child).kind === 'QuestionDotToken') { return; } }
+             this.reaching(first, false); return;

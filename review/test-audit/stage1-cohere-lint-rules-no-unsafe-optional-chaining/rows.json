@@ -1,0 +1,26 @@
+[
+  {
+    "test": "TestCompileProfiles",
+    "package": "stage1/cohere/lint/rules/no-unsafe-optional-chaining",
+    "file": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/build_test.go:16",
+    "seconds": 30.809,
+    "oracle": "Handwritten successful-build expectation: lower.Lower and sanitized/release native.Build must succeed; emitted JavaScript is only written, not compiled or executed. No lint findings or runtime behavior are compared. Three semantic native-output changes pass.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestCompileProfiles"
+    ],
+    "evidence": "M1/M2/M3: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/no-unsafe-optional-chaining/ -run .; all --- PASS: TestCompileProfiles. P1 alone -run ^TestCompileProfiles$: --- FAIL: TestCompileProfiles; panic: runtime error: invalid memory address or nil pointer dereference; build_test.go:30. P1 is a probe, not a production mutant kill."
+  }
+]

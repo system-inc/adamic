@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a
++++ b/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a
+@@ -19,7 +19,7 @@
+             if(['AmpersandAmpersandToken','BarBarToken','QuestionQuestionToken','CommaToken'].includes(operator)) { this.reaching(node.children[2] ?? -1, arithmetic); }
+             return;
+         }
+-        if(!node.optional) { return; }
++        if(node.optional) { return; }
+         const parent = this.context.parents[index] ?? -1;
+         if(parent >= 0) {
+             const outer = this.context.node(parent);

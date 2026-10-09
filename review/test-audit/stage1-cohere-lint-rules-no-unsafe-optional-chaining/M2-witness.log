@@ -1,0 +1,4 @@
+case 0
+finding 1 9 unsafeOptionalChain	This optional chain can evaluate to `undefined`, and the code around it then reaches into that `undefined` rather than short-circuiting with it. The `?.` protects only the links inside its own chain: once the chain ends, the result is an ordinary value and the next access, call, spread, or destructuring throws a TypeError. Either extend the chain so the whole expression short-circuits, or supply a fallback with `??`.
+finding 16 24 unsafeArithmetic	This optional chain can evaluate to `undefined`, and arithmetic on `undefined` produces NaN rather than throwing. So this does not fail where the value is missing, it silently poisons every number computed from it, and the NaN surfaces somewhere far from the cause. Supply a fallback with `??` before doing arithmetic on it.
+fixed	(obj?.foo).bar;\u000aobj?.foo + 1;\u000a
