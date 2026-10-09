@@ -1,0 +1,32 @@
+[
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "cache": "/tmp/defend-no-this-alias/cache/D1",
+    "exit": 0,
+    "wall_seconds": 0.549040972997318
+  },
+  {
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias/",
+      "-run",
+      "."
+    ],
+    "cache": "/tmp/defend-no-this-alias/cache/D1",
+    "exit": 1,
+    "wall_seconds": 10.529616633000842
+  }
+]

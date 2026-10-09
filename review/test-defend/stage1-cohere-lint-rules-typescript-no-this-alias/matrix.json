@@ -1,0 +1,12 @@
+{
+  "D1": {
+    "failed": [
+      "TestCompileProfiles"
+    ],
+    "passed": [],
+    "unknown": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-no-this-alias/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run .",
+    "failing_line": "build_test.go:28: lower: stage 0 compiles a program from one entry file, got 1",
+    "binary_seconds": 0.102
+  }
+}

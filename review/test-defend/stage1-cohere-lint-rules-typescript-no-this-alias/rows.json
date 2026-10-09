@@ -1,0 +1,23 @@
+[
+  {
+    "test": "TestCompileProfiles",
+    "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/lower.go:22",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/lower.go:22",
+        "change": "if len(files) != 1 { -> if len(files) == 1 {",
+        "rows_failed": [
+          "TestCompileProfiles"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-no-this-alias/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run .; build_test.go:28: lower: stage 0 compiles a program from one entry file, got 1",
+    "bounded": false,
+    "rows_passed": []
+  }
+]

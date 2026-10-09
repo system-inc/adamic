@@ -1,0 +1,8 @@
+{
+  "id": "D1",
+  "file": "internal/lower/lower.go",
+  "line": 22,
+  "change": "if len(files) != 1 { -> if len(files) == 1 {",
+  "menu": "flip condition",
+  "lead": "The test claims compilation acceptance for one valid owned profile. Earlier audit mutants changed only runtime finding behavior, which this test does not execute. Lower accepts precisely one entry; this regression refuses the profile before code generation."
+}
