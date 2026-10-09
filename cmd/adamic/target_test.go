@@ -10,14 +10,6 @@ import (
 func TestBuildTargetParsing(t *testing.T) {
 	t.Setenv("WASI_SYSROOT", t.TempDir())
 	for _, arguments := range [][]string{
-		{"build", "--target", "wasm32-wasi", "missing.a", "-o", "out.wasm", "--sanitize"},
-		{"build", "missing.a", "-o", "out.wasm", "--target", "wasm32-wasi", "--sanitize"},
-	} {
-		if code := run(arguments); code != 1 {
-			t.Fatalf("%v: got %d, want unsupported options (1)", arguments, code)
-		}
-	}
-	for _, arguments := range [][]string{
 		{"build", "--target", "unknown", "missing.a", "-o", "out.wasm"},
 		{"build", "missing.a", "-o", "out", "--target"},
 		{"build", "missing.a", "-o", "out", "--target", "wasm32-wasi", "--target", "wasm32-wasi"},

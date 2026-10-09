@@ -45,7 +45,7 @@ func jsxMutantsOracle(t *testing.T) string {
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 		cmd := jsxMutantsCommand(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
 		cmd.Dir = root

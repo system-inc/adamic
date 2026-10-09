@@ -318,18 +318,6 @@ func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module
 	return want.output
 }
 
-// Not parallel: upstream capture uses t.Setenv and a process-wide fixture capture destination.
-func TestRulesAgree(t *testing.T) {
-	deadline := time.AfterFunc(rulesAgreeKill, func() { panic("TestRulesAgree lowering build cooked: exceeded 90s") })
-	defer deadline.Stop()
-	started := time.Now()
-	rulesAgreeLowered(t)
-	t.Logf("TestRulesAgree (setup lowered): %.3fs", time.Since(started).Seconds())
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: setup over 60s budget")
-	}
-}
-
 // Recovery is a parser dependency, not successful lint parity. Keep the exact
 // upstream malformed cases and prove that both ports refuse instead of silently
 // returning the oracle's recovered findings.

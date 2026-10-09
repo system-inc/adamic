@@ -1,0 +1,195 @@
+[
+  {
+    "probe": "M06",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./internal/lower",
+      "-run",
+      "^TestPrivateAndPublicStaticsAgreeWithNode$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.376,
+    "failed_tests": [
+      "TestPrivateAndPublicStaticsAgreeWithNode"
+    ]
+  },
+  {
+    "probe": "M13",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./internal/lower",
+      "-run",
+      "^TestReadinessErrorIncludesReceiverExpression$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 1.876,
+    "failed_tests": [
+      "TestReadinessErrorIncludesReceiverExpression"
+    ]
+  },
+  {
+    "probe": "M12",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./internal/lower",
+      "-run",
+      "^Test(NamespaceFactoryBindingsAgreeWithNode|ParserFactoryBindingHoisting)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.811,
+    "failed_tests": [
+      "TestParserFactoryBindingHoisting"
+    ]
+  },
+  {
+    "probe": "u030-P1",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./internal/lower",
+      "-run",
+      "Test(ClassWrongOutputKeysRepair|ClassWrongOutputPrivateRepair|DefiniteAssignmentSoundNeighbors)$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.489,
+    "failed_tests": [
+      "TestClassWrongOutputPrivateRepair",
+      "TestDefiniteAssignmentSoundNeighbors",
+      "TestClassWrongOutputKeysRepair"
+    ]
+  },
+  {
+    "probe": "u030-P2",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./internal/lower",
+      "-run",
+      "TestClockGenericReturnsT01Rejects(Null|Index)BeforeBody$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.548,
+    "failed_tests": [
+      "TestClockGenericReturnsT01RejectsNullBeforeBody",
+      "TestClockGenericReturnsT01RejectsIndexBeforeBody"
+    ]
+  },
+  {
+    "probe": "u037-P01",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./internal/lower",
+      "-run",
+      "^TestModuleNamespaceInitializedReadProof$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.385,
+    "failed_tests": [
+      "TestModuleNamespaceInitializedReadProof"
+    ]
+  },
+  {
+    "probe": "u037-P02",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./internal/lower",
+      "-run",
+      "^TestNamespaceAmbientHostInitialization$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.502,
+    "failed_tests": [
+      "TestNamespaceAmbientHostInitialization"
+    ]
+  },
+  {
+    "probe": "u037-P05",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryBindingHoisting$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.236,
+    "failed_tests": [
+      "TestParserFactoryBindingHoisting"
+    ]
+  },
+  {
+    "probe": "u037-P06",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryBindingHoisting$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.386,
+    "failed_tests": [
+      "TestParserFactoryBindingHoisting"
+    ]
+  },
+  {
+    "probe": "u037-P08",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "./internal/lower",
+      "-run",
+      "^TestParserFactoryBindingHoisting$",
+      "-count=1",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 1,
+    "seconds": 7.199,
+    "failed_tests": [
+      "TestParserFactoryBindingHoisting"
+    ]
+  }
+]

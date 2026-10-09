@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "M09",
+    "test": "TestFSOpenStringFlagsLower",
+    "exit": 1,
+    "wall_seconds": 8.822
+  },
+  {
+    "mutant": "M11",
+    "test": "TestFSRemoveDefaultRetryDelayLowers",
+    "exit": 1,
+    "wall_seconds": 9.215
+  },
+  {
+    "mutant": "M12",
+    "test": "TestFSExistsOperation",
+    "exit": 1,
+    "wall_seconds": 8.42
+  },
+  {
+    "mutant": "M13",
+    "test": "TestFSStatThrowsByDefault",
+    "exit": 1,
+    "wall_seconds": 8.437
+  }
+]

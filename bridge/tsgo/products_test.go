@@ -10,130 +10,155 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
+	"sort"
 	"strings"
-	"sync"
+	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 var bridgeProductNames = []string{"tsgo.a", "tsgo-asan.a", "length.a", "stale.a", "wrong.a", "leak.a", "stage0", "oracle", "api", "length-driver", "stale-driver", "leak-driver", "native-asan", "native", "wrong-native", "healthy-region", "region-stage0", "region-native", "linkage.test"}
 
-func bridgeProductKey(repository string) (string, error) {
-	// Go validates dependency actions against content, including local replacements
-	// and embeds. Build IDs avoid reimplementing the checker dependency graph.
-	command := exec.Command("go", "list", "-deps", "-export", "-json", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
+// The same recipe is called by the product unit and every consumer. Dependency
+// discovery does not compile: Files retain the source and embed content, including
+// local module replacements, rather than an exported package's build ID.
+func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Inputs {
+	t.Helper()
+	command := exec.Command("go", "list", "-deps", "-test", "-json", "./bridge/tsgo", "./bridge/tsgo/archive", "./bridge/tsgo/oracle", "./cmd/adamic")
 	command.Dir = repository
 	data, err := command.Output()
 	if err != nil {
-		return "", err
+		t.Fatalf("product dependencies: %v", err)
 	}
 	decoder := json.NewDecoder(bytes.NewReader(data))
-	hash := sha256.New()
-	fmt.Fprintln(hash, "bridge-test-products-v1", repository)
+	external := map[string]string{}
+	files := map[string]bool{"go.mod": true, "go.work": true, "bridge/tsgo/products_test.go": true,
+		"bridge/tsgo/testdata/api.c": true, "bridge/tsgo/testdata/queries.a": true,
+		"bridge/tsgo/testdata/region.a": true, "bridge/tsgo/tsgo.h": true}
 	for {
-		var dependency struct{ ImportPath, BuildID string }
-		err := decoder.Decode(&dependency)
-		if err == io.EOF {
+		var dependency struct {
+			Dir                                                                        string
+			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
+			Module                                                                     *struct{ GoMod, Dir string }
+		}
+		if err := decoder.Decode(&dependency); err == io.EOF {
 			break
+		} else if err != nil {
+			t.Fatal(err)
 		}
-		if err != nil {
-			return "", err
-		}
-		fmt.Fprintf(hash, "%q %q\n", dependency.ImportPath, dependency.BuildID)
-	}
-	testFiles, err := filepath.Glob(filepath.Join(repository, "bridge/tsgo/*_test.go"))
-	if err != nil {
-		return "", err
-	}
-	names := []string{"bridge/tsgo/testdata/api.c", "bridge/tsgo/testdata/queries.a", "bridge/tsgo/testdata/region.a", "bridge/tsgo/tsgo.h"}
-	for _, path := range testFiles {
-		name, err := filepath.Rel(repository, path)
-		if err != nil {
-			return "", err
-		}
-		names = append(names, name)
-	}
-	for _, name := range names {
-		data, err := os.ReadFile(filepath.Join(repository, name))
-		if err != nil {
-			return "", err
-		}
-		fmt.Fprintf(hash, "%q %x\n", name, sha256.Sum256(data))
-	}
-	for _, tool := range [][]string{{"go", "version"}, {"clang", "--version"}, {"go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT", "CC", "CXX"}} {
-		data, err := exec.Command(tool[0], tool[1:]...).CombinedOutput()
-		if err != nil {
-			return "", err
-		}
-		fmt.Fprintf(hash, "%q %q\n", tool, data)
-	}
-	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "WASI_SYSROOT"} {
-		fmt.Fprintf(hash, "%q %q\n", name, os.Getenv(name))
-	}
-	fmt.Fprintln(hash, "c-archive; sanitized CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all; native --sanitize; region --count; clang c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -lpthread -ldl -lm")
-	return fmt.Sprintf("%x", hash.Sum(nil)), nil
-}
-
-// Products are requested by the unit that uses them. In-process reuse is once per
-// product; main's content cache shares the same inputs across test invocations.
-var bridgeKey struct {
-	sync.Once
-	value string
-	err   error
-}
-var bridgeBuilt sync.Map
-
-type bridgeProductResult struct {
-	sync.Once
-	path string
-	err  error
-}
-
-func bridgeProduct(repository, name string) (string, error) {
-	bridgeKey.Do(func() { bridgeKey.value, bridgeKey.err = bridgeProductKey(repository) })
-	if bridgeKey.err != nil {
-		return "", bridgeKey.err
-	}
-	entry, _ := bridgeBuilt.LoadOrStore(name, &bridgeProductResult{})
-	result := entry.(*bridgeProductResult)
-	result.Do(func() {
-		inputs := buildcache.Inputs{Name: "bridge-test-" + name, Flags: []string{bridgeKey.value, name}}
-		directory, err := buildcache.Get(inputs, func(directory string) error {
-			if err := buildBridgeProduct(repository, directory, name); err != nil {
-				return err
+		add := func(path string) {
+			relative, err := filepath.Rel(repository, path)
+			if err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+				files[filepath.ToSlash(relative)] = true
+				return
 			}
-			data, err := os.ReadFile(filepath.Join(directory, name))
-			if err != nil {
-				return err
+			// Module-cache sources cannot be repository-relative Files. Include
+			// their content fingerprints as named flags, without copying them.
+			// GOROOT belongs to Toolchain; generated test mains are not sources.
+			if dependency.Module != nil {
+				module, err := filepath.Rel(repository, dependency.Module.Dir)
+				if err == nil && (module == ".." || strings.HasPrefix(module, ".."+string(filepath.Separator))) {
+					content, err := os.ReadFile(path)
+					if err != nil {
+						t.Fatal(err)
+					}
+					external[path] = fmt.Sprintf("%x", sha256.Sum256(content))
+				}
 			}
-			digest := fmt.Sprintf("%x", sha256.Sum256(data))
-			return os.WriteFile(filepath.Join(directory, "sha256"), []byte(digest), 0o644)
-		})
-		if err != nil {
-			result.err = err
-			return
+		}
+		for _, list := range [][]string{dependency.GoFiles, dependency.CgoFiles, dependency.CFiles, dependency.CXXFiles, dependency.HFiles, dependency.SFiles, dependency.SysoFiles, dependency.EmbedFiles} {
+			for _, file := range list {
+				if filepath.IsAbs(file) {
+					add(file)
+				} else {
+					add(filepath.Join(dependency.Dir, file))
+				}
+			}
+		}
+		if dependency.Module != nil {
+			add(dependency.Module.GoMod)
+			sum := filepath.Join(filepath.Dir(dependency.Module.GoMod), "go.sum")
+			if _, err := os.Stat(sum); err == nil {
+				add(sum)
+			}
+		}
+	}
+	for _, optional := range []string{"go.sum", "go.work.sum"} {
+		if _, err := os.Stat(filepath.Join(repository, optional)); err == nil {
+			files[optional] = true
+		}
+	}
+	inputs := buildcache.Inputs{Name: "bridge-test-" + name, Flags: []string{
+		"product=" + name,
+		"go build -buildmode=c-archive; go build; go test -c; -overlay; -o=<product>",
+		"asan: CC=clang CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all",
+		"clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -I bridge/tsgo -lpthread -ldl -lm",
+		"native build --tsgo <archive>; --sanitize; --count",
+		"repository=" + repository,
+	}, Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	for file := range files {
+		inputs.Files = append(inputs.Files, file)
+	}
+	sort.Strings(inputs.Files)
+	var externalNames []string
+	for path := range external {
+		externalNames = append(externalNames, path)
+	}
+	sort.Strings(externalNames)
+	for _, path := range externalNames {
+		inputs.Flags = append(inputs.Flags, "external-source:"+path+"="+external[path])
+	}
+
+	// Go reports effective values, including settings loaded from GOENV. Runtime
+	// cache locations and logging switches do not change the compiled product.
+	inputs.Flags = append(inputs.Flags, buildcache.Tool("go", "env", "GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM", "CGO_ENABLED", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_FFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT", "GOTOOLCHAIN", "GOENV", "GOROOT", "GOPATH", "GOWORK", "CC", "CXX", "AR", "PKG_CONFIG", "GODEBUG", "GOFIPS140"))
+	for _, variable := range []string{"ADAMIC_GATE_UNCACHED", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "WASI_SYSROOT", "PATH", "CPATH", "C_INCLUDE_PATH", "CPLUS_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "CGO_CFLAGS_ALLOW", "CGO_CFLAGS_DISALLOW", "CGO_LDFLAGS_ALLOW", "CGO_LDFLAGS_DISALLOW"} {
+		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
+	}
+	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "env", "GOVERSION", "GOTOOLDIR"))
+	for _, options := range []native.Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}} {
+		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
+	}
+	for _, variable := range []string{"CC", "CXX", "AR", "PKG_CONFIG"} {
+		fields := strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "))
+		if len(fields) != 0 {
+			inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool(fields[0], "--version"))
+		}
+	}
+	return inputs
+}
+
+func bridgeProduct(t testing.TB, repository, name string) string {
+	t.Helper()
+	inputs := bridgeProductInputs(t, repository, name)
+	directory := buildcache.Product(t, inputs, func(directory string) error {
+		if err := buildBridgeProduct(t, repository, directory, name); err != nil {
+			return err
 		}
 		data, err := os.ReadFile(filepath.Join(directory, name))
 		if err != nil {
-			result.err = err
-			return
+			return err
 		}
-		digest, err := os.ReadFile(filepath.Join(directory, "sha256"))
-		if err != nil {
-			result.err = err
-			return
-		}
-		if string(digest) != fmt.Sprintf("%x", sha256.Sum256(data)) {
-			result.err = fmt.Errorf("product digest: %s", name)
-			return
-		}
-		result.path = filepath.Join(directory, name)
+		return os.WriteFile(filepath.Join(directory, "sha256"), []byte(fmt.Sprintf("%x", sha256.Sum256(data))), 0o644)
 	})
-	return result.path, result.err
+	data, err := os.ReadFile(filepath.Join(directory, name))
+	if err != nil {
+		t.Fatal(err)
+	}
+	digest, err := os.ReadFile(filepath.Join(directory, "sha256"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if string(digest) != fmt.Sprintf("%x", sha256.Sum256(data)) {
+		t.Fatalf("product digest: %s", name)
+	}
+	return filepath.Join(directory, name)
 }
 
-func buildBridgeProduct(repository, directory, name string) error {
+func buildBridgeProduct(t testing.TB, repository, directory, name string) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 	defer cancel()
 	run := func(command *exec.Cmd) error {
@@ -215,10 +240,7 @@ func buildBridgeProduct(repository, directory, name string) error {
 	}
 	drivers := map[string]string{"api": "tsgo-asan.a", "length-driver": "length.a", "stale-driver": "stale.a", "leak-driver": "leak.a"}
 	if archiveName, ok := drivers[name]; ok {
-		archive, err := bridgeProduct(repository, archiveName)
-		if err != nil {
-			return err
-		}
+		archive := bridgeProduct(t, repository, archiveName)
 		return run(command("clang", "-std=c11", "-Wall", "-Wextra", "-Werror", "-pedantic", "-O1", "-g", "-fsanitize=address,undefined", "-I", filepath.Join(repository, "bridge/tsgo"), filepath.Join(repository, "bridge/tsgo/testdata/api.c"), archive, "-lpthread", "-ldl", "-lm", "-o", destination))
 	}
 	binaries := map[string]struct {
@@ -235,14 +257,8 @@ func buildBridgeProduct(repository, directory, name string) error {
 	if !ok {
 		return fmt.Errorf("unknown bridge product: %s", name)
 	}
-	compiler, err := bridgeProduct(repository, binary.compiler)
-	if err != nil {
-		return err
-	}
-	archive, err := bridgeProduct(repository, binary.archive)
-	if err != nil {
-		return err
-	}
+	compiler := bridgeProduct(t, repository, binary.compiler)
+	archive := bridgeProduct(t, repository, binary.archive)
 	arguments := []string{"build", filepath.Join(repository, "bridge/tsgo/testdata", binary.fixture), "-o", destination, "--tsgo", archive}
 	if binary.sanitized {
 		arguments = append(arguments, "--sanitize")

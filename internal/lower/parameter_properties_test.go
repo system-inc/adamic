@@ -47,8 +47,12 @@ func TestParameterPropertyCheckerContracts(t *testing.T) {
 			t.Fatalf("got %v, want checker rejection", err)
 		}
 	}
-	if _, err := lowerSource(t, "class C {constructor(public value:number){}} const c=new C(1); c.value=2; console.log(`${c.value}`);"); err != nil {
+	program, err := lowerSource(t, "class C {constructor(public value:number){}} const c=new C(1); c.value=2; console.log(`${c.value}`);")
+	if err != nil {
 		t.Fatal(err)
+	}
+	if program == nil || len(program.Classes) != 1 || len(program.Main) == 0 {
+		t.Fatal("accepted parameter-property program must produce its class and executable statements, not an empty answer")
 	}
 }
 

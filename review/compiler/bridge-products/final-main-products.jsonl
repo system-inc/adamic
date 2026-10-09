@@ -1,0 +1,175 @@
+{"Time":"2026-10-09T07:01:47.331591945Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T07:01:47.33834152Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive"}
+{"Time":"2026-10-09T07:01:47.338442719Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"=== RUN   TestProduct_TsgoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338481537Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"=== PAUSE TestProduct_TsgoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.33848389Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive"}
+{"Time":"2026-10-09T07:01:47.338486334Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive"}
+{"Time":"2026-10-09T07:01:47.338489178Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"=== RUN   TestProduct_TsgoSanitizedArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338494846Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"=== PAUSE TestProduct_TsgoSanitizedArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338496659Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive"}
+{"Time":"2026-10-09T07:01:47.338498582Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive"}
+{"Time":"2026-10-09T07:01:47.338501246Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"=== RUN   TestProduct_LengthArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338503509Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"=== PAUSE TestProduct_LengthArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338505081Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive"}
+{"Time":"2026-10-09T07:01:47.338507475Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive"}
+{"Time":"2026-10-09T07:01:47.338509969Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"=== RUN   TestProduct_StaleArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338517099Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"=== PAUSE TestProduct_StaleArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338519833Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive"}
+{"Time":"2026-10-09T07:01:47.338522527Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive"}
+{"Time":"2026-10-09T07:01:47.338525231Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"=== RUN   TestProduct_WrongArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338528846Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"=== PAUSE TestProduct_WrongArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.33859911Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive"}
+{"Time":"2026-10-09T07:01:47.338635584Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive"}
+{"Time":"2026-10-09T07:01:47.338649605Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"=== RUN   TestProduct_LeakArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338663976Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"=== PAUSE TestProduct_LeakArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338666189Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive"}
+{"Time":"2026-10-09T07:01:47.338668593Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0"}
+{"Time":"2026-10-09T07:01:47.338670195Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"=== RUN   TestProduct_Stage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338674952Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"=== PAUSE TestProduct_Stage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338676465Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0"}
+{"Time":"2026-10-09T07:01:47.338678347Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle"}
+{"Time":"2026-10-09T07:01:47.33867983Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"=== RUN   TestProduct_Oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338681672Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"=== PAUSE TestProduct_Oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338683144Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle"}
+{"Time":"2026-10-09T07:01:47.338684937Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver"}
+{"Time":"2026-10-09T07:01:47.338686489Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"=== RUN   TestProduct_ApiDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338688612Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"=== PAUSE TestProduct_ApiDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338690215Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver"}
+{"Time":"2026-10-09T07:01:47.338697676Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver"}
+{"Time":"2026-10-09T07:01:47.33870052Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"=== RUN   TestProduct_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338704025Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"=== PAUSE TestProduct_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338706399Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver"}
+{"Time":"2026-10-09T07:01:47.338710004Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver"}
+{"Time":"2026-10-09T07:01:47.338712968Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"=== RUN   TestProduct_StaleDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338716594Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"=== PAUSE TestProduct_StaleDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338719017Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver"}
+{"Time":"2026-10-09T07:01:47.338722543Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver"}
+{"Time":"2026-10-09T07:01:47.338725247Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"=== RUN   TestProduct_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338731055Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"=== PAUSE TestProduct_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.33873404Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver"}
+{"Time":"2026-10-09T07:01:47.338737224Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative"}
+{"Time":"2026-10-09T07:01:47.338739938Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"=== RUN   TestProduct_SanitizedNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338743724Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"=== PAUSE TestProduct_SanitizedNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338746288Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative"}
+{"Time":"2026-10-09T07:01:47.338749653Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native"}
+{"Time":"2026-10-09T07:01:47.338752287Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"=== RUN   TestProduct_Native\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338755762Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"=== PAUSE TestProduct_Native\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338758726Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native"}
+{"Time":"2026-10-09T07:01:47.33876169Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative"}
+{"Time":"2026-10-09T07:01:47.338764244Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"=== RUN   TestProduct_WrongNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.33876791Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"=== PAUSE TestProduct_WrongNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338770814Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative"}
+{"Time":"2026-10-09T07:01:47.338773738Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T07:01:47.338776442Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== RUN   TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338779497Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== PAUSE TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.3387817Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T07:01:47.338796472Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0"}
+{"Time":"2026-10-09T07:01:47.338799416Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"=== RUN   TestProduct_RegionStage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338802681Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"=== PAUSE TestProduct_RegionStage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338805625Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0"}
+{"Time":"2026-10-09T07:01:47.338811234Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T07:01:47.338814218Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== RUN   TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338818064Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== PAUSE TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338821278Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T07:01:47.338827998Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest"}
+{"Time":"2026-10-09T07:01:47.338830772Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"=== RUN   TestProduct_LinkageTest\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338834107Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"=== PAUSE TestProduct_LinkageTest\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338836962Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest"}
+{"Time":"2026-10-09T07:01:47.338840737Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive"}
+{"Time":"2026-10-09T07:01:47.338845184Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"=== CONT  TestProduct_TsgoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338848979Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver"}
+{"Time":"2026-10-09T07:01:47.338852705Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"=== CONT  TestProduct_StaleDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.33885651Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T07:01:47.338859345Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== CONT  TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:47.338865434Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest"}
+{"Time":"2026-10-09T07:01:47.338868458Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"=== CONT  TestProduct_LinkageTest\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.067969725Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"    product_units_test.go:48: build bridge-test-tsgo.a 1dccd8c0f00b hit 0.06\n"}
+{"Time":"2026-10-09T07:01:48.069424995Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"    product_units_test.go:138: build bridge-test-linkage.test 80db9f65f405 hit 0.06\n"}
+{"Time":"2026-10-09T07:01:48.069464032Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"    product_units_test.go:123: build bridge-test-healthy-region 87b567f49f08 hit 0.06\n"}
+{"Time":"2026-10-09T07:01:48.077766216Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"    product_units_test.go:98: build bridge-test-stale-driver cc37323fa0b0 hit 0.07\n"}
+{"Time":"2026-10-09T07:01:48.11223449Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Output":"--- PASS: TestProduct_LinkageTest (0.77s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.112317423Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LinkageTest","Elapsed":0.77}
+{"Time":"2026-10-09T07:01:48.112349199Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative"}
+{"Time":"2026-10-09T07:01:48.112352414Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"=== CONT  TestProduct_RegionNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.116464683Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"--- PASS: TestProduct_HealthyRegion (0.78s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.116513245Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Elapsed":0.78}
+{"Time":"2026-10-09T07:01:48.116519594Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0"}
+{"Time":"2026-10-09T07:01:48.116522689Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"=== CONT  TestProduct_RegionStage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.119088439Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Output":"--- PASS: TestProduct_StaleDriver (0.78s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.119121397Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleDriver","Elapsed":0.78}
+{"Time":"2026-10-09T07:01:48.119126695Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive"}
+{"Time":"2026-10-09T07:01:48.11913001Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"=== CONT  TestProduct_LeakArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.128203593Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Output":"--- PASS: TestProduct_TsgoArchive (0.79s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.128234458Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoArchive","Elapsed":0.79}
+{"Time":"2026-10-09T07:01:48.128239105Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver"}
+{"Time":"2026-10-09T07:01:48.128243352Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"=== CONT  TestProduct_LengthDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.769240562Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"    product_units_test.go:133: build bridge-test-region-native fa294734d8a3 hit 0.03\n"}
+{"Time":"2026-10-09T07:01:48.772929432Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"    product_units_test.go:93: build bridge-test-length-driver 575c6ce71bd5 hit 0.04\n"}
+{"Time":"2026-10-09T07:01:48.789715787Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"    product_units_test.go:73: build bridge-test-leak.a db64dcddc86e hit 0.04\n"}
+{"Time":"2026-10-09T07:01:48.806127349Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"    product_units_test.go:128: build bridge-test-region-stage0 a7920b020218 hit 0.03\n"}
+{"Time":"2026-10-09T07:01:48.80820651Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver"}
+{"Time":"2026-10-09T07:01:48.808231086Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"=== CONT  TestProduct_ApiDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.808244306Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Output":"--- PASS: TestProduct_LengthDriver (0.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.823665255Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthDriver","Elapsed":0.68}
+{"Time":"2026-10-09T07:01:48.823703221Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Output":"--- PASS: TestProduct_RegionNative (0.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.823713456Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionNative","Elapsed":0.71}
+{"Time":"2026-10-09T07:01:48.82371627Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle"}
+{"Time":"2026-10-09T07:01:48.823719775Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"=== CONT  TestProduct_Oracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.840880254Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Output":"--- PASS: TestProduct_LeakArchive (0.72s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.840919983Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakArchive","Elapsed":0.72}
+{"Time":"2026-10-09T07:01:48.840927414Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0"}
+{"Time":"2026-10-09T07:01:48.840931369Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"=== CONT  TestProduct_Stage0\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.842133395Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Output":"--- PASS: TestProduct_RegionStage0 (0.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:48.842159754Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_RegionStage0","Elapsed":0.73}
+{"Time":"2026-10-09T07:01:48.842165623Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive"}
+{"Time":"2026-10-09T07:01:48.842190429Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"=== CONT  TestProduct_StaleArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:49.450339804Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"    product_units_test.go:63: build bridge-test-stale.a 5d1468ed0228 hit 0.03\n"}
+{"Time":"2026-10-09T07:01:49.457435345Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"    product_units_test.go:83: build bridge-test-oracle c2591af0bb72 hit 0.03\n"}
+{"Time":"2026-10-09T07:01:49.462349985Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"    product_units_test.go:88: build bridge-test-api 37cc78490e79 hit 0.04\n"}
+{"Time":"2026-10-09T07:01:49.464930126Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"    product_units_test.go:78: build bridge-test-stage0 6430d092d416 hit 0.04\n"}
+{"Time":"2026-10-09T07:01:49.486318709Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Output":"--- PASS: TestProduct_Oracle (0.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:49.486365619Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Oracle","Elapsed":0.66}
+{"Time":"2026-10-09T07:01:49.486371657Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive"}
+{"Time":"2026-10-09T07:01:49.486374382Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"=== CONT  TestProduct_WrongArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:49.499096745Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Output":"--- PASS: TestProduct_Stage0 (0.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:49.499130264Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Stage0","Elapsed":0.66}
+{"Time":"2026-10-09T07:01:49.4991346Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native"}
+{"Time":"2026-10-09T07:01:49.499136764Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"=== CONT  TestProduct_Native\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:49.508938923Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Output":"--- PASS: TestProduct_ApiDriver (0.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:49.508969788Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_ApiDriver","Elapsed":0.7}
+{"Time":"2026-10-09T07:01:49.508974695Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative"}
+{"Time":"2026-10-09T07:01:49.508977269Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"=== CONT  TestProduct_WrongNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:49.511155787Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Output":"--- PASS: TestProduct_StaleArchive (0.67s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:49.511176918Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_StaleArchive","Elapsed":0.67}
+{"Time":"2026-10-09T07:01:49.511180734Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative"}
+{"Time":"2026-10-09T07:01:49.511182417Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"=== CONT  TestProduct_SanitizedNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.147504921Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"    product_units_test.go:113: build bridge-test-native 349b298fbd88 hit 0.04\n"}
+{"Time":"2026-10-09T07:01:50.150031623Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"    product_units_test.go:118: build bridge-test-wrong-native 71046f136619 hit 0.04\n"}
+{"Time":"2026-10-09T07:01:50.162687798Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"    product_units_test.go:108: build bridge-test-native-asan 2755fa2da08f hit 0.04\n"}
+{"Time":"2026-10-09T07:01:50.17191596Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"    product_units_test.go:68: build bridge-test-wrong.a 837c98adeecc hit 0.05\n"}
+{"Time":"2026-10-09T07:01:50.18081173Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Output":"--- PASS: TestProduct_Native (0.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.180883115Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_Native","Elapsed":0.68}
+{"Time":"2026-10-09T07:01:50.180891307Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver"}
+{"Time":"2026-10-09T07:01:50.180894923Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"=== CONT  TestProduct_LeakDriver\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.194828214Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Output":"--- PASS: TestProduct_WrongNative (0.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.194870807Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongNative","Elapsed":0.69}
+{"Time":"2026-10-09T07:01:50.194876435Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive"}
+{"Time":"2026-10-09T07:01:50.194897907Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"=== CONT  TestProduct_LengthArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.216194234Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Output":"--- PASS: TestProduct_SanitizedNative (0.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.216239811Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_SanitizedNative","Elapsed":0.7}
+{"Time":"2026-10-09T07:01:50.216246591Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive"}
+{"Time":"2026-10-09T07:01:50.216249956Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"=== CONT  TestProduct_TsgoSanitizedArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.22818041Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Output":"--- PASS: TestProduct_WrongArchive (0.74s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.669950311Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_WrongArchive","Elapsed":0.74}
+{"Time":"2026-10-09T07:01:50.669982328Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"    product_units_test.go:103: build bridge-test-leak-driver de654189d1d0 hit 0.03\n"}
+{"Time":"2026-10-09T07:01:50.699086338Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"    product_units_test.go:53: build bridge-test-tsgo-asan.a 5176b3f575d6 hit 0.03\n"}
+{"Time":"2026-10-09T07:01:50.702835736Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Output":"--- PASS: TestProduct_LeakDriver (0.52s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.713002154Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LeakDriver","Elapsed":0.52}
+{"Time":"2026-10-09T07:01:50.713046179Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"    product_units_test.go:58: build bridge-test-length.a 318254b4915b hit 0.03\n"}
+{"Time":"2026-10-09T07:01:50.752882282Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Output":"--- PASS: TestProduct_LengthArchive (0.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.756243126Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_LengthArchive","Elapsed":0.56}
+{"Time":"2026-10-09T07:01:50.756333479Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Output":"--- PASS: TestProduct_TsgoSanitizedArchive (0.54s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.756343725Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_TsgoSanitizedArchive","Elapsed":0.54}
+{"Time":"2026-10-09T07:01:50.75634731Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:01:50.768000133Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t3.436s\n"}
+{"Time":"2026-10-09T07:01:50.768067202Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":3.436}
