@@ -444,52 +444,53 @@ func leafCompositionLeaks(t *testing.T, source, sanitized string, arguments ...s
 
 type leafCompositionProducts struct{ root, main, fork, script, goList, goLayout, source, backend, sanitized, release string }
 
-func prepareLeafCompositionGo(t *testing.T, root string) leafCompositionProducts {
-	p := leafCompositionProducts{root: root}
+func leafCompositionGoProduct(t *testing.T, root, name, driverName string) string {
+	t.Helper()
 	cohere := filepath.Join(root, "cohere")
 	bridge, err := filepath.Abs("testdata/list_bridge.go")
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, item := range []struct {
-		name, driver string
-		target       *string
-	}{
-		{"adamic_markdown_lists", "list_go.go", &p.goList}, {"adamic_markdown_doclayout", "document_go.go", &p.goLayout},
-	} {
-		driver, err := filepath.Abs(filepath.Join("testdata", item.driver))
-		if err != nil {
-			t.Fatal(err)
-		}
-		main := filepath.Join(cohere, "cmd", item.name, "main.go")
-		inputs := buildcache.Inputs{Name: "markdown-leaf-go-" + item.name, Files: []string{
-			"stage1/cohere/markdownblocks/testdata/" + item.driver,
-			"stage1/cohere/markdownblocks/testdata/list_bridge.go",
-			"cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
-			"cohere/go.mod", "cohere/go.sum", "cohere/go.work", "cohere/go.work.sum", "go.mod", "go.work",
-		}, Flags: []string{"overlay=" + item.driver, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}
-		product := buildcache.Product(t, inputs, func(out string) error {
-			replacements := map[string]string{main: driver}
-			if item.name == "adamic_markdown_lists" {
-				replacements[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
-			}
-			overlay, err := json.Marshal(map[string]any{"Replace": replacements})
-			if err != nil {
-				return err
-			}
-			overlayPath := filepath.Join(out, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			command := leafCompositionCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(out, "oracle"), main)
-			command.Dir = cohere
-			if output, err := command.CombinedOutput(); err != nil {
-				return fmt.Errorf("Go bridge: %v\n%s", err, output)
-			}
-			return nil
-		})
-		*item.target = filepath.Join(product, "oracle")
+	driver, err := filepath.Abs(filepath.Join("testdata", driverName))
+	if err != nil {
+		t.Fatal(err)
 	}
+	main := filepath.Join(cohere, "cmd", name, "main.go")
+	inputs := buildcache.Inputs{Name: "markdown-leaf-go-" + name, Files: []string{
+		"stage1/cohere/markdownblocks/testdata/" + driverName,
+		"stage1/cohere/markdownblocks/testdata/list_bridge.go",
+		"cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
+		"cohere/go.mod", "cohere/go.sum", "cohere/go.work", "cohere/go.work.sum", "go.mod", "go.work",
+	}, Flags: []string{"overlay=" + driverName, "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}
+	product := buildcache.Product(t, inputs, func(out string) error {
+		replacements := map[string]string{main: driver}
+		if name == "adamic_markdown_lists" {
+			replacements[filepath.Join(cohere, "internal/format/markdown/adamic_lists.go")] = bridge
+		}
+		overlay, err := json.Marshal(map[string]any{"Replace": replacements})
+		if err != nil {
+			return err
+		}
+		overlayPath := filepath.Join(out, "overlay.json")
+		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+			return err
+		}
+		command := leafCompositionCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(out, "oracle"), main)
+		command.Dir = cohere
+		if output, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("Go bridge: %v\n%s", err, output)
+		}
+		return nil
+	})
+	return filepath.Join(product, "oracle")
+}
+
+func prepareLeafCompositionGo(t *testing.T, root string) leafCompositionProducts {
+	p := leafCompositionProducts{root: root}
+	p.goList = leafCompositionGoProduct(t, root, "adamic_markdown_lists", "list_go.go")
+	p.goLayout = leafCompositionGoProduct(t, root, "adamic_markdown_doclayout", "document_go.go")
+	var err error
+	cohere := filepath.Join(root, "cohere")
 	p.main, err = filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
 		t.Fatal(err)
