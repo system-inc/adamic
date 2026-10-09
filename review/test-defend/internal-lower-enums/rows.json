@@ -1,0 +1,59 @@
+[
+  {
+    "test": "TestConstEnumErasesRuntimeObject",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestEnumSwitchExhaustiveness",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/enums.go:221",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/enums.go:221",
+        "change": "func (l *lowering) enumDeclaration(node *ast.Node) ([]ir.Statement, error) {\n\tif ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {\n\t\treturn nil, nil\n\t} -> func (l *lowering) enumDeclaration(node *ast.Node) ([]ir.Statement, error) {",
+        "rows_failed": [
+          "TestConstEnumErasesRuntimeObject"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D1 timeout 120 go test -json -overlay /tmp/defend-lower-enums/D1-overlay.json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-defend/internal-lower-enums/D1.log 2>&1; enums_test.go:146: const enum made a runtime binding"
+  },
+  {
+    "test": "TestFunctionValueUnionViewsStayNotYet",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestEnumSlotViews",
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/expression.go:305",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/expression.go:305",
+        "change": "fromKept == ir.Union && !toKept.IsReference() -> fromKept == ir.Array && !toKept.IsReference()",
+        "rows_failed": [
+          "TestFunctionValueUnionViewsStayNotYet"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D2 timeout 120 go test -json -overlay /tmp/defend-lower-enums/D2-overlay.json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-defend/internal-lower-enums/D2.log 2>&1; function_values_test.go:19: callable view requires a union slot adapter, got <nil>"
+  },
+  {
+    "test": "TestGenericUnionFixtureHasSeparateInstances",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestGenericJSONUnionArrayIsNotYet",
+    "defense": "defended",
+    "unique_mutant": "D3 internal/lower/generic.go:96",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/generic.go:96",
+        "change": "if existing, isLowered := l.genericInstances[key]; isLowered {\n\t\treturn existing, nil\n\t} -> (drop)",
+        "rows_failed": [
+          "TestGenericUnionFixtureHasSeparateInstances"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D3 timeout 120 go test -json -overlay /tmp/defend-lower-enums/D3-overlay.json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-defend/internal-lower-enums/D3.log 2>&1; generic_instance_key_test.go:43: got 4 describe instances for distinct unions, want 2"
+  }
+]

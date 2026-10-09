@@ -1,0 +1,23 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "internal/lower/enums.go:221",
+    "change": "func (l *lowering) enumDeclaration(node *ast.Node) ([]ir.Statement, error) {\n\tif ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {\n\t\treturn nil, nil\n\t} -> func (l *lowering) enumDeclaration(node *ast.Node) ([]ir.Statement, error) {",
+    "menu": "drop whole conditional early return",
+    "target": "TestConstEnumErasesRuntimeObject"
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/lower/expression.go:305",
+    "change": "fromKept == ir.Union && !toKept.IsReference() -> fromKept == ir.Array && !toKept.IsReference()",
+    "menu": "change constant",
+    "target": "TestFunctionValueUnionViewsStayNotYet"
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/lower/generic.go:96",
+    "change": "if existing, isLowered := l.genericInstances[key]; isLowered {\n\t\treturn existing, nil\n\t} -> (drop)",
+    "menu": "drop whole cache lookup conditional",
+    "target": "TestGenericUnionFixtureHasSeparateInstances"
+  }
+]

@@ -1,0 +1,12 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -218,9 +218,6 @@
+ }
+ 
+ func (l *lowering) enumDeclaration(node *ast.Node) ([]ir.Statement, error) {
+-	if ast.HasSyntacticModifier(node, ast.ModifierFlagsConst) {
+-		return nil, nil
+-	}
+ 	fields, err := l.enumFields(node)
+ 	if err != nil {
+ 		return nil, err
