@@ -4,7 +4,7 @@ Step 09, task #63pvx2b. Six common-lowering guards stop eight differential witne
 
 ## Observations
 
-The untouched base was e8ac330e. The delivery tree also incorporates current main f54b8bd3; that merge changes tests and evidence, not these lowering paths. See before.json for Node, native sanitizer and JavaScript results, and after.json for all nine negative witnesses through `c`, `js` and `build --sanitize` (27 path-bearing stops).
+The untouched base was e8ac330e. The delivery tree also incorporates current main cd9930fa; that merge changes tests and evidence, not these lowering paths. See before.json for Node, native sanitizer and JavaScript results, and after.json for all nine negative witnesses through `c`, `js` and `build --sanitize` (27 path-bearing stops).
 
 | Program | Node stdout | Native before | After |
 | --- | --- | --- | --- |
@@ -45,3 +45,5 @@ Each mutant disables only one guard: Error spread, optional Error argument, opti
 An attempted worktree cleanup was rejected by automatic approval review because it could destroy uncommitted work. It was not performed; only the safe Go cache cleanup was used.
 
 Real enumerability-aware spread, optional Error runtime construction, setter C representation, long metadata literals and inherited computed-member lowering remain deferred. This unit deliberately stops their narrow shapes rather than repairing those implementations. No whole package or full gate was run. Integration lane results are recorded separately in lane-checks.log.
+
+Integration lane checks passed in 4.2 s: gofmt and tools on three Go files, t.Parallel on one test package, vet on one package. The final main merge adds only unrelated test changes.

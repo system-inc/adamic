@@ -1,0 +1,13 @@
+=== RUN   TestMiscompile2AOptionalError
+=== PAUSE TestMiscompile2AOptionalError
+=== CONT  TestMiscompile2AOptionalError
+    miscompile_2a_test.go:40: gate cache node miss
+    miscompile_2a_test.go:40: Node: exit=0 stdout="[] [m]\n"
+    miscompile_2a_test.go:40: want path-bearing stop "possibly undefined message", got <nil>
+--- FAIL: TestMiscompile2AOptionalError (0.56s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.585s
+FAIL
