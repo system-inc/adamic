@@ -1,0 +1,44 @@
+[
+  {
+    "mutant": "missing-source-site",
+    "exit": 1,
+    "catcher": "a write lowering didn't record",
+    "caught": true,
+    "command": "go test -overlay=/workspace/adamic/review/compiler/after-chain-fix-fresh/missing-source-site.json ./internal/fresh -run 'TestFreshCorpusRemainder/../oracle/testdata/step21_saved_error.a' -count=1 -timeout 90s"
+  },
+  {
+    "mutant": "markdown-drop-second-push",
+    "exit": 1,
+    "catcher": "first byte difference",
+    "caught": true,
+    "command": "go test -overlay=/workspace/adamic/review/compiler/after-chain-fix-fresh/drop-second-push.json ./stage1/cohere/markdownblocks -run '^TestParserRepresentationProbes$/^gaps$/^10_multiple_push.ts$' -count=1 -timeout 90s"
+  },
+  {
+    "mutant": "scanner-drop-second-push",
+    "exit": 1,
+    "catcher": "native push:",
+    "caught": true,
+    "command": "go test -overlay=/workspace/adamic/review/compiler/after-chain-fix-fresh/drop-second-push.json ./stage1/typescript/scanner -run '^TestGapStandsWhereGapsMdSays$' -count=1 -timeout 90s"
+  },
+  {
+    "mutant": "wrong-supplementary-offset",
+    "exit": 1,
+    "catcher": "Go",
+    "caught": true,
+    "command": "go test ./stage1/typescript/scanner -run '^TestGapStandsWhereGapsMdSays$' -count=1 -timeout 90s"
+  },
+  {
+    "mutant": "missing-directory-unit",
+    "exit": 1,
+    "catcher": "fixture directory self-compare has no top-level test",
+    "caught": true,
+    "command": "go test ./stage3/fixtures -run '^TestFixtureDirectoriesHaveTopLevelTests$' -count=1 -timeout 90s"
+  },
+  {
+    "mutant": "wrong-self-comparison",
+    "exit": 1,
+    "catcher": "recorded Node byte comparison failed",
+    "caught": true,
+    "command": "go test ./stage3/fixtures -run '^TestFixturesSelfCompare$/^self-compare$/^closure.a$' -count=1 -timeout 90s"
+  }
+]
