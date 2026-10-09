@@ -1,0 +1,78 @@
+[
+  {
+    "test": "TestPredicateOverloadCallback",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestPredicateCallbackContracts"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/predicates.go:430",
+        "change": "Flip the ordinary-boolean implementation callback condition.",
+        "rows_failed": [
+          "TestPredicateOverloadRuntime"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/predicates.go:405",
+        "change": "Drop mapping of the overload callback parameter to the implementation parameter.",
+        "rows_failed": [
+          "TestPredicateOverloadRuntime"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/lower/predicates.go:406",
+        "change": "Drop mapping of the bodyless overload function to its implementation.",
+        "rows_failed": [
+          "TestPredicateOverloadCallback",
+          "TestPredicateOverloadRuntime"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D5.log 2>&1; predicates_proof_test.go:162: Lower refused acceptance row: there is no body proving this parameter. TestPredicateOverloadRuntime also failed."
+  },
+  {
+    "test": "TestPredicateUseRegions",
+    "package": "internal/lower",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/predicates_proof.go:1095",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/predicates_proof.go:1095",
+        "change": "Drop const-alias initializer recursion.",
+        "rows_failed": [
+          "TestPredicateUseRegions"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; predicates_proof_test.go:225: directions 0, want 1 (const result alias and compound result alias)."
+  },
+  {
+    "test": "TestPredicateUsesBelongToEachCall",
+    "package": "internal/lower",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/predicates_proof.go:1159",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/predicates_proof.go:1159",
+        "change": "Return nil early when revisiting a memoized flow node, cutting the shared flow edge.",
+        "rows_failed": [
+          "TestPredicateUsesBelongToEachCall"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestPredicateUsesBelongToEachCall$; panic: runtime error: invalid memory address or nil pointer dereference; predicates_proof_test.go:266. D2-rest.log: all other 275 rows completed, no failures."
+  }
+]

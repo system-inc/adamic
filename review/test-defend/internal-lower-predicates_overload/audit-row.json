@@ -1,0 +1,43 @@
+{
+  "test": "TestPredicateBodiesAreProven",
+  "package": "internal/lower",
+  "file": "internal/lower/predicates_test.go",
+  "seconds": 0.341,
+  "oracle": "Handwritten proof/admission/IR expectations; no external authority checked.",
+  "oracle_kind": "self",
+  "kills": [
+    "M01",
+    "M02",
+    "M04"
+  ],
+  "unique_kills": [],
+  "last_proven_fail": "M04: predicates_test.go:67: function isText(x: string | undefined): x is string { return x !== undefined; }: /tmp/adamic-gate/TestPredicateBodiesAreProven384616363/003/main.a:1:55: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to undefined, not string); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+  "verdict": "subsumed",
+  "subsumed_by": [
+    "TestUnprovenPredicateReturnsAreRefused"
+  ],
+  "mutants_in_matrix": 20,
+  "probe_kills": [],
+  "subsumer_seconds": 0.51,
+  "vacuous": true,
+  "bounded": true,
+  "matrix_rows": [
+    "TestPredicateOverloadRuntime",
+    "TestIndirectPredicateOverloadIsPending",
+    "TestPredicateBodyProof",
+    "TestConditionAssertionAdmission",
+    "TestPredicateCallbackContracts",
+    "TestEveryNeedsCallbackEffects",
+    "TestPredicateOverloadCallback",
+    "TestPredicateUseRegions",
+    "TestPredicateUsesBelongToEachCall",
+    "TestUnprovenPredicateReturnsAreRefused",
+    "TestPredicateBodiesAreProven",
+    "TestPrimitiveAdmittingSlotsUseBoxes"
+  ],
+  "bounded_mutants": [
+    "M01"
+  ],
+  "evidence": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u042/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M04.log 2>&1; predicates_test.go:67: function isText(x: string | undefined): x is string { return x !== undefined; }: /tmp/adamic-gate/TestPredicateBodiesAreProven384616363/003/main.a:1:55: Adamic 0.1 refuses a type predicate whose return is not proven (true return narrows to undefined, not string); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+  "subsumption_mutants": 3
+}

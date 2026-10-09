@@ -1,0 +1,12 @@
+diff --git a/internal/lower/predicates.go b/internal/lower/predicates.go
+index 8cc600d9..044da7a8 100644
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -402,7 +402,6 @@ func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
+ 		}
+ 		for index, candidate := range function.Parameters() {
+ 			if candidate == parameter && index < len(implementation.Parameters()) {
+-				parameter = implementation.Parameters()[index]
+ 				function = implementation
+ 				break
+ 			}

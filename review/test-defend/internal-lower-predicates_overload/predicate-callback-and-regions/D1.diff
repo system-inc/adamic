@@ -1,0 +1,13 @@
+diff --git a/internal/lower/predicates_proof.go b/internal/lower/predicates_proof.go
+index 86451984..271929e0 100644
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -1092,7 +1092,7 @@ func (l *lowering) predicateConditionDirection(node, call *ast.Node, truth bool,
+ 		if symbol := l.symbol(node); symbol != nil {
+ 			for _, declaration := range symbol.Declarations {
+ 				if declaration.Kind == ast.KindVariableDeclaration && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+-					return l.predicateConditionDirection(declaration.AsVariableDeclaration().Initializer, call, truth, depth+1)
++					
+ 				}
+ 			}
+ 		}

@@ -1,0 +1,26 @@
+[
+  {
+    "test": "TestPredicateBodiesAreProven",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "prior_subsumed_by": [
+      "TestUnprovenPredicateReturnsAreRefused"
+    ],
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/predicates.go:311",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/predicates.go:311",
+        "change": "Change undefined literal recognition constant from \"undefined\" to \"null\".",
+        "rows_failed": [
+          "TestPredicateBodiesAreProven"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-pred/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-pred/D1.log 2>&1; predicates_test.go:67: function isText(x: string | undefined): x is string { return x !== undefined; }: /tmp/adamic-gate/TestPredicateBodiesAreProven2131165089/003/main.a:1:55: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on x); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "uniqueness_scope": "Whole-package completed run: 274 executed top-level tests, 2 opt-in rows skipped; one unsupported subcase skipped.",
+    "rows_passed_evidence": "D1-result.json: rows_passed lists all 273 passing top-level tests."
+  }
+]

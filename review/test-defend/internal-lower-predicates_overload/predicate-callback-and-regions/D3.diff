@@ -1,0 +1,13 @@
+diff --git a/internal/lower/predicates.go b/internal/lower/predicates.go
+index 8cc600d9..fbea638b 100644
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -427,7 +427,7 @@ func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
+ 	}
+ 	// A bodyless overload's callback predicate is not the implementation's
+ 	// contract when the implementation takes an ordinary boolean callback.
+-	if signature.Parent != parameter && parameter.Type() != nil && parameter.Type().Kind == ast.KindFunctionType && parameter.Type().Type() != nil && parameter.Type().Type().Kind != ast.KindTypePredicate {
++	if signature.Parent != parameter && parameter.Type() != nil && parameter.Type().Kind == ast.KindFunctionType && parameter.Type().Type() != nil && parameter.Type().Type().Kind == ast.KindTypePredicate {
+ 		return parameter
+ 	}
+ 	if !l.predicateCallbackCallers(function, symbol) {

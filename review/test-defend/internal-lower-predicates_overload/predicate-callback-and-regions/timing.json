@@ -1,0 +1,35 @@
+{
+  "finished_utc": "2026-10-09T17:41:09.237449+00:00",
+  "setup": "skipped, warm env.sh worked",
+  "nproc": 5,
+  "baseline_binary_seconds": 35.989,
+  "npm_seconds": null,
+  "npm_timing_note": "not separately timed",
+  "mutants": {
+    "D1": {
+      "command": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+      "exit": 1,
+      "wall": 44.542561769485474
+    },
+    "D2": {
+      "command": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+      "exit": 1,
+      "wall": 24.698475122451782
+    },
+    "D3": {
+      "command": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+      "exit": 1,
+      "wall": 43.29919171333313
+    },
+    "D4": {
+      "command": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+      "exit": 1,
+      "wall": 43.017815351486206
+    },
+    "D5": {
+      "command": "source /workspace/adamic-tools/env.sh; ADAMIC_BUILD_CACHE_DIR=/tmp/defend-predicates/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+      "exit": 1,
+      "wall": 40.79675006866455
+    }
+  }
+}
