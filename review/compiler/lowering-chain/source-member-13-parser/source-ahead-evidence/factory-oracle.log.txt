@@ -1,0 +1,16 @@
+=== RUN   TestParserAheadFactoryBoundaries
+=== RUN   TestParserAheadFactoryBoundaries/complete
+    parser_ahead_test.go:34: pending: staged field allocation and writes; this is a boundary pin, not native acceptance
+=== RUN   TestParserAheadFactoryBoundaries/escaped
+    parser_ahead_test.go:34: pending: staged field allocation and writes; this is a boundary pin, not native acceptance
+--- PASS: TestParserAheadFactoryBoundaries (0.71s)
+    --- PASS: TestParserAheadFactoryBoundaries/complete (0.40s)
+    --- PASS: TestParserAheadFactoryBoundaries/escaped (0.32s)
+=== RUN   TestParserAheadFactoryCompleteControl
+    parser_ahead_test.go:81: factory payload mutant caught in native and JavaScript by source Node stdout
+--- PASS: TestParserAheadFactoryCompleteControl (0.54s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=7
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.261s

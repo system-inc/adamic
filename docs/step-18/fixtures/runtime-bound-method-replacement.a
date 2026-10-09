@@ -1,0 +1,16 @@
+// a-check: refused method read as a value
+// Derived from checker.ts:6910's optional method; an argument replaces its own slot.
+interface Reporter { report?(value: string): string }
+const original = {
+	label: `original${1}`,
+	report(value: string): string { return `${this.label}:${value}`; },
+};
+function replace(): string {
+	original.report = (value: string): string => `replacement:${value}`;
+	return `argument${2}`;
+}
+function invoke(value: Reporter): void {
+	console.log(value.report?.(replace()) ?? 'absent');
+	console.log(value.report?.('next') ?? 'absent');
+}
+invoke(original);

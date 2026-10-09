@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T05:58:34.71725306Z","Action":"start","Package":"github.com/system-inc/adamic/internal/ir"}
+{"Time":"2026-10-09T05:58:34.724759447Z","Action":"run","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallbackAdapterTargets"}
+{"Time":"2026-10-09T05:58:34.724854871Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallbackAdapterTargets","Output":"=== RUN   TestCallbackAdapterTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:34.724884586Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallbackAdapterTargets","Output":"=== PAUSE TestCallbackAdapterTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:34.72488739Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallbackAdapterTargets"}
+{"Time":"2026-10-09T05:58:34.724889924Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallbackAdapterTargets"}
+{"Time":"2026-10-09T05:58:34.724891987Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallbackAdapterTargets","Output":"=== CONT  TestCallbackAdapterTargets\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:34.724896063Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallbackAdapterTargets","Output":"    callback_adapter_test.go:12: ir.ArrayMap: ir.FunctionTargets{Functions:[]int(nil), Unknown:true}\n","OutputType":"error"}
+{"Time":"2026-10-09T05:58:34.724909604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallbackAdapterTargets","Output":"--- FAIL: TestCallbackAdapterTargets (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:34.724913459Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/ir","Test":"TestCallbackAdapterTargets","Elapsed":0}
+{"Time":"2026-10-09T05:58:34.724927721Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:34.725097778Z","Action":"output","Package":"github.com/system-inc/adamic/internal/ir","Output":"FAIL\tgithub.com/system-inc/adamic/internal/ir\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:58:34.725108574Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/ir","Elapsed":0.008}

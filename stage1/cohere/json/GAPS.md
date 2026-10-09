@@ -93,10 +93,11 @@ its refusal, then runs its source on Node and checks the stated output:
    `stage 0 can't lower an array of never yet`. Node prints `0`, and `TestClosedEmptyFallbackGap` holds
    native ASan/UBSan, the JavaScript backend and the leak check to it. The workaround still stands: comment-bearing inputs initialize all comment lists; indexed reads
    use a checked `panic` fallback instead of an untyped `[]`.
-3. `gaps/repeatInTry.ts`: `stage 0 can't lower a try around repeat, whose failure
-   is a panic natively but a throw a catch can take on Node (docs/memory.md) yet`.
-   Node prints `xxx` with three arguments. Around it: indentation caches string
-   prefixes rather than calling dynamic `repeat` inside caught formatting code.
+3. `gaps/repeatInTry.ts`: closed by step 21's catchable library validation.
+   Node prints `xxx` with three arguments. `TestClosedRepeatInTryGap` holds the
+   unchanged program to Node, native ASan/UBSan, the JavaScript backend and
+   LeakSanitizer. The indentation cache remains an optional workaround for
+   the JSON owner to remove.
 
 The parser also uses the existing GraphQL slice's table-of-nodes shape and one
 self-recursive value method around the documented ownership-cycle and forward

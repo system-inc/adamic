@@ -1,0 +1,5 @@
+// a-check: refused the non-null assertion !
+// Run as a real TypeScript source in the checked assertion test, since .a refuses ordinary !.
+function missing(): string | undefined { return undefined; }
+const value = missing()!;
+console.log("after assertion");

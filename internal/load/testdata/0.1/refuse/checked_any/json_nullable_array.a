@@ -1,0 +1,10 @@
+function convert(raw: any): number[] | null | undefined { return raw; }
+const a = convert(null);
+const b = convert(undefined);
+const c = convert([14]);
+console.log(String(a === null));
+console.log(String(a === undefined));
+console.log(String(b === undefined));
+console.log(String(a?.length ?? 0));
+console.log(String(b?.length ?? 0));
+console.log(String(c?.length ?? 0));

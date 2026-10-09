@@ -1,0 +1,2 @@
+interface Item {readonly id:number;}
+const found=[{id:1},{id:2},{id:3}].find((x: Item | number): boolean => (typeof x === 'number' ? x : x.id) === 2); console.log(`${found?.id ?? -1}`);

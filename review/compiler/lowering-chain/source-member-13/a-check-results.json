@@ -1,0 +1,104 @@
+{
+  "a_check": {
+    "internal/lower/testdata/placeholders/nonliteral.a": {
+      "outcome": "refused",
+      "expected": "refused the non-null assertion !",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/placeholders/nonliteral.a:4:15: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
+    },
+    "internal/oracle/testdata/placeholder_nonnull_alias_reset.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_assignment_result.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_before_use.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_field.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_local.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_before_use.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_coalesce.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_copy.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_equality.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_json.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_loose.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_optional.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_truthiness.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_null_typeof.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_observe.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_return_assignment.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_saved_leak.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/placeholder_nonnull_scanner.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  }
+}

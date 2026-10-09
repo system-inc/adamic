@@ -1,0 +1,11 @@
+--- a/internal/lower/checked_json.go
++++ b/internal/lower/checked_json.go
+@@ -80,7 +80,7 @@
+ 			schema.Alternatives = append(schema.Alternatives, child)
+ 		}
+ 	case flags&checker.TypeFlagsObject != 0:
+-		if len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 0 {
++		if false {
+ 			return nil, l.notYet(node, "checked JSON callable contract "+name+" (requires verified parameter and result behavior)")
+ 		}
+ 		if isClassInstance(target) {

@@ -1,0 +1,3 @@
+import { State } from "./state.a";
+export function retain(): typeof State { return State; }
+export function update(): void { State.z += State.a; }

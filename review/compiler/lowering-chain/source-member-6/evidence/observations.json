@@ -1,0 +1,32 @@
+{
+  "base": "7a10c877667582a15326acb10fa22fa7a0c45fb8",
+  "stock_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "stock_tracing_sha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+  "namespace_escape_provenance": {
+    "path": "src/compiler/tracing.ts",
+    "line": 95,
+    "column": 19,
+    "reached_in_full_stock": false
+  },
+  "reduced_first_stop": "stage3/fixtures/namespaces/10_tracing_escape.a:38:11",
+  "full_stock_first_stop": "src/compiler/binder.ts:1109:17 TS2412",
+  "outcome": "NotYet: no runtime namespace container",
+  "counts_added": {
+    "qualified-live.a": [
+      4,
+      4,
+      9,
+      15,
+      3,
+      0
+    ],
+    "tracing-qualified.a": [
+      11,
+      11,
+      12,
+      21,
+      8,
+      0
+    ]
+  }
+}

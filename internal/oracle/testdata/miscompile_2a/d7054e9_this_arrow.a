@@ -1,0 +1,10 @@
+class Box {
+ readonly first: string; readonly later: string; readonly count: number;
+ constructor(label: string) {
+  const read = (): string => this.later;
+  const counted = (): number => this.count + 1;
+  this.first = `${read()}:${counted()}`;
+  this.later = label; this.count = 2;
+ }
+}
+const box = new Box('set'); console.log(`${box.first}|${box.later}`);

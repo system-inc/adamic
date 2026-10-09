@@ -13,11 +13,16 @@ type Program struct {
 	ViewOrigins       []Expression
 	ViewContracts     []ViewContract
 	ViewContractTypes map[int]ViewContractID
+	// PlaceholderSources records source-slot provenance during lowering, keyed by declaration.
+	PlaceholderSources map[string]string
+	PlaceholderViews   map[string]string
+	PlaceholderChecks  []PlaceholderCheck
 
 	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
 	argumentFacts *argumentFacts
 	// UninitializedFields records the field names whose readiness can be observed.
 	UninitializedFields map[string]bool
+	FactoryFields       map[string]string
 	// PredicateChecks counts overload-result directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
 	PredicateChecks PredicateCheckCounts
@@ -25,6 +30,12 @@ type Program struct {
 	// CheckedFields conservatively checks these field names at every object read.
 	CheckedFields map[string]bool
 	NonNullChecks NonNullCheckCounts
+
+	JSONCheckedFields       map[string]bool
+	JSONCheckedArrays       bool
+	JSONCheckedDictionaries bool
+	JSONTaggedNull          bool
+	JSONChecksPrepared      bool
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -64,7 +75,22 @@ type Program struct {
 	// out, and the ones the runtime's loops make (map, the visits, reduce, Array.from, sort), whose
 	// callers test for it after each.
 	ClosuresMayThrow bool
+
+	// CheckedLibrary marks a compiler-built validation wrapper, never a source claim.
+	CheckedLibrary bool
 }
+
+// PlaceholderCheck records one readiness or storage-arm boundary in the checked-sites report.
+type PlaceholderCheck struct{ Origin, Use, Path, Where, Status string }
+
+type PlaceholderUse struct {
+	Value                    Expression
+	Origin, Use, Path, Where string
+	CheckArm                 bool
+	Of                       Type
+}
+
+func (p PlaceholderUse) Type() Type { return p.Of }
 
 // PredicateCheckCounts counts emitted overload-result directions. Unobservable
 // directions are proven and are also counted separately so erasure is visible.
@@ -96,6 +122,7 @@ type NonNullCheck struct {
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
+	BuiltinError string // built-in nominal ancestor for the shared name/message prefix
 	// Definition is the erased source identity, shared by distinct native layouts.
 	Definition   int
 	Name         string
@@ -119,6 +146,10 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// SourceLength is ECMAScript length: parameters before the first default or rest.
+	SourceLength int
+	Generator    *GeneratorTypes
+
 	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
 	CheckedUnionNarrow bool
 	Name               string
@@ -164,6 +195,9 @@ type Function struct {
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
 	MayThrow bool
+
+	// CheckedLibrary marks a compiler-built validation wrapper, never a source claim.
+	CheckedLibrary bool
 }
 
 // Type is a value's representation. The checker proved the TypeScript type; this is what's left of
@@ -256,16 +290,22 @@ func (t Type) IsReference() bool {
 type Local struct {
 	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
 	Uninitialized         bool
+	Placeholder           string
 	InitializerExpression string
-	Hoisted               bool
-	Name                  string
-	Type                  Type
+	// UnsetField identifies a tagged, flow-bounded factory save.
+	UnsetField string
+	Hoisted    bool
+	Name       string
+	Type       Type
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
 
 	// NamespaceState stays unready until assigned when its type excludes undefined.
 	NamespaceState bool
+	// NamespaceObject is the canonical escaped container; NamespaceReady is its creation flag.
+	NamespaceObject bool
+	NamespaceReady  int
 
 	// NamespaceVar has hoisted storage; its initializer is an assignment in source order.
 	NamespaceVar bool
@@ -324,6 +364,7 @@ type (
 		Of        Type
 		Checked   bool
 		Readiness string
+		Unset     bool // Reads honest placeholder storage, preserving undefined.
 	}
 
 	// Call calls a function. Returns is its result type, 0 for void.
@@ -398,6 +439,7 @@ type (
 	ObjectLiteral struct {
 		// Record uses counted own-key storage when indexed aliases can add fields.
 		Record          bool
+		Namespace       bool
 		GraphTypes      []int
 		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
@@ -422,6 +464,10 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		// CallableAccessor keeps getter selection attached to a direct callable
+		// invocation; the receiver is saved before that getter runs.
+		CallableAccessor   bool
+		Namespace          bool
 		ViewContract       ViewContractID
 		ViewTypeID         int
 		ViewReceiverTypeID int
@@ -434,6 +480,8 @@ type (
 		ViewAllowed []Expression
 		// Readiness is the source expression for a checked field read, empty when proven ready.
 		Readiness string
+		Unset     bool
+		UnsetType Type
 		Object    Expression
 		Name      string
 		Of        Type
@@ -460,6 +508,8 @@ type (
 		Element  Type
 		Elements []Expression
 		Spread   []bool
+		// Metadata is fixed inline storage; absent fields are not own properties.
+		Metadata []Field
 	}
 
 	// Length is array.length.
@@ -529,7 +579,10 @@ type (
 	// Unwrap is a Maybe pair the checker has proven present (narrowed), as what it holds. A narrowing
 	// outlives a call that assigns the variable again (the checker doesn't look inside the call), so
 	// it's checked, in both backends: undefined there panics.
-	Unwrap struct{ Value Expression }
+	Unwrap struct {
+		Value  Expression
+		Proven bool
+	}
 
 	// Defined is a reference the checker narrowed undefined out of, checked for the same reason as
 	// Unwrap: undefined there panics with Message. Where the value is about to be read through a
@@ -558,8 +611,10 @@ type (
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
 	// undefined).
 	Narrow struct {
-		Value Expression
-		To    Type
+		Value   Expression
+		To      Type
+		Checked bool
+		Message string
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
@@ -570,7 +625,10 @@ type (
 	}
 
 	// MakeError is an Error with Message and an optional Name (nil means "Error").
-	MakeError struct{ Message, Name Expression }
+	MakeError struct {
+		Message, Name Expression
+		Constructor   string
+	}
 
 	// WeakOf is Value, a reference, kept weakly: the handle to it, made if it has none yet, or
 	// undefined when Value is.
@@ -732,6 +790,16 @@ type (
 		Spread       []bool
 		FunctionType int
 		Returns      Type
+		// Optional tests the selected callable before arguments; OptionalResult is
+		// the widened result, or zero when discarded. Returns keeps the call ABI.
+		// RequiredCallable selects a member inside a guarded chain without guarding
+		// the callable itself: missing values fail after argument effects.
+		RequiredCallable bool
+		Optional         bool
+		OptionalResult   Type
+		// OptionalPresent names a boolean local plus one, set only after selection.
+		// It distinguishes a skipped invocation from a present undefined result.
+		OptionalPresent int
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the
@@ -915,11 +983,15 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
+	// Absent reserves a typed slot without an observable own property.
+	Absent bool
 	// Uninitialized reserves storage without making its typed value readable.
 	Uninitialized bool
-	Name          string
-	Value         Expression
-	Private       bool
+	// Unset has an observable nullish payload, without typed-use readiness.
+	Unset   bool
+	Name    string
+	Value   Expression
+	Private bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter
@@ -996,15 +1068,20 @@ func (l StringLength) Type() Type {
 	}
 	return Number
 }
-func (CharCodeAt) Type() Type    { return Number }
-func (Trim) Type() Type          { return String }
-func (CodePoints) Type() Type    { return Array }
-func (StringIndex) Type() Type   { return String }
-func (MapEntries) Type() Type    { return Array }
-func (MakeClosure) Type() Type   { return Closure }
-func (CheckedCast) Type() Type   { return Object }
-func (c CallClosure) Type() Type { return c.Returns }
-func (ArrayMap) Type() Type      { return Array }
+func (CharCodeAt) Type() Type  { return Number }
+func (Trim) Type() Type        { return String }
+func (CodePoints) Type() Type  { return Array }
+func (StringIndex) Type() Type { return String }
+func (MapEntries) Type() Type  { return Array }
+func (MakeClosure) Type() Type { return Closure }
+func (CheckedCast) Type() Type { return Object }
+func (c CallClosure) Type() Type {
+	if c.Optional {
+		return c.OptionalResult
+	}
+	return c.Returns
+}
+func (ArrayMap) Type() Type { return Array }
 
 func (v ArrayVisit) Type() Type {
 	switch v.Method {
@@ -1166,9 +1243,10 @@ type (
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
 	// Read: a write to an unready switch binding or a global from inside a function.
 	Assign struct {
-		Local   int
-		Value   Expression
-		Checked bool
+		Local         int
+		Value         Expression
+		Checked       bool
+		Uninitialized bool // A literal placeholder resets the existing readiness flag.
 	}
 
 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
@@ -1189,11 +1267,15 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Record        bool // write into counted own-key storage
-		Uninitialized bool
-		Object        Expression
-		Name          string
-		Value         Expression
+		NamespaceInstall  bool
+		NamespaceReadonly bool
+		Record            bool // write into counted own-key storage
+		Uninitialized     bool
+		// Unset stores observable null or undefined while typed-use readiness is false.
+		Unset  bool
+		Object Expression
+		Name   string
+		Value  Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -1269,7 +1351,7 @@ type (
 	}
 	Continue struct{ Label string }
 
-	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
+	// Throw throws Value, an owned tagged payload: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
 	Throw struct{ Value Expression }
 

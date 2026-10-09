@@ -1,0 +1,1 @@
+let calls=0;try{[1,2,3].map((x:number|string):string=>{calls++;if(x===2)throw new Error('stop');return `${x}`;});}catch(error){console.log('caught');}console.log(`${calls}`);

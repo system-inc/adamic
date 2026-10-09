@@ -1,0 +1,20 @@
+// Specialized from core.ts:1627 (values), builderState.ts:486 (keys),
+// executeCommandLine.ts:1175 (entries), and core.ts:1731 (Set entry pairs).
+const references = new Map<string, number>([['a', 1], ['b', 2]]);
+for (const key of references.keys()) {
+    console.log(key);
+}
+for (const value of references.values()) {
+    console.log(`${value}`);
+}
+const entries = references.entries();
+for (const [key, value] of entries) {
+    console.log(`${key}:${value}`);
+}
+const values = new Set<number>([4, 5]);
+for (const value of values.values()) {
+    console.log(`${value}`);
+}
+for (const [key, value] of values.entries()) {
+    console.log(`${key}:${value}`);
+}

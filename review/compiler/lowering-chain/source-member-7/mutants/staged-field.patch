@@ -1,0 +1,11 @@
+--- internal/lower/unknown.go
++++ internal/lower/unknown.go
+@@ -204,7 +204,7 @@
+ 	}
+ 	for _, declaration := range l.classes {
+ 		for _, member := range declaration.Members() {
+-			if member.Name() != nil && member.Name().Text() == name && (member.Kind != ast.KindPropertyDeclaration || l.uninitializedDeclaration(member)) {
++			if member.Name() != nil && member.Name().Text() == name && member.Kind != ast.KindPropertyDeclaration {
+ 				return true
+ 			}
+ 		}

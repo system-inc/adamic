@@ -1,0 +1,41 @@
+{
+  "authored_checked": [
+    "stage3/project-loader/fixture/app/main.a",
+    "stage3/project-loader/fixture/dependency/value.a",
+    "stage3/project-references-source/fixture/chain/app/main-print.a",
+    "stage3/project-references-source/fixture/chain/app/main.a",
+    "stage3/project-references-source/fixture/chain/leaf/base.a",
+    "stage3/project-references-source/fixture/chain/leaf/unused.a",
+    "stage3/project-references-source/fixture/chain/middle/value.a",
+    "stage3/project-references-source/fixture/two/app/main.a",
+    "stage3/project-references-source/fixture/two/dependency/value.a",
+    "stage3/project-references-source/fixture/types/app/main.a",
+    "stage3/project-references-source/fixture/types/dependency/value.a",
+    "stage3/project-references-source/fixture/types/packages/dependency.a",
+    "stage3/project-references-source/fixture/types/packages/entry.a"
+  ],
+  "clean_output": "7\n",
+  "duplicate_diagnostics": [
+    [
+      "@types/dependency/index.d.ts",
+      "2",
+      "15",
+      "2451",
+      "Cannot redeclare block-scoped variable 'sharedAmbient'."
+    ],
+    [
+      "@types/entry/index.d.ts",
+      "2",
+      "15",
+      "2451",
+      "Cannot redeclare block-scoped variable 'sharedAmbient'."
+    ]
+  ],
+  "mutants_caught": [
+    "entry-types-only",
+    "audit-entry-types-only",
+    "skip-union-declarations",
+    "audit-skip-union-declarations"
+  ],
+  "logs": "<verification>"
+}

@@ -1,0 +1,19 @@
+v24.19.0
+setup: node ready (0.332s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.420s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (1.559s)
+
+added 3 packages in 3s
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=6.120s
+setup: markdown dependencies ready (7.038s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (106.807s)
+setup: go build ready (3000.547s)
+setup: test binaries deferred (use --warm-tests) (3002.357s)
+setup: build cache warm (3002.363s)
+setup: build-flags commit=dcdbb9098f77f30ad41790c56df1bd63ad462b63 nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false load-before=0.55 0.27 0.10 2/138 732 load-after=8.53 12.25 13.24 2/150 6237
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (3002.670s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.Cxwhoh

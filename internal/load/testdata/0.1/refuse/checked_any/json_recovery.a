@@ -1,0 +1,5 @@
+function normalizeNonListOptionValue(value: any): string | number | null | undefined { return value; }
+console.log(String(normalizeNonListOptionValue(null) === null));
+console.log(String(normalizeNonListOptionValue(undefined) === undefined));
+console.log(String(normalizeNonListOptionValue('node') === 'node'));
+console.log(String(normalizeNonListOptionValue(14) === 14));

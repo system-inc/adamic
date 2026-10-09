@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T07:55:26.053755188Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T07:55:26.061985188Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode"}
+{"Time":"2026-10-09T07:55:26.062089614Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"=== RUN   TestNativeAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:55:26.062127071Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"=== PAUSE TestNativeAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:55:26.062129274Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode"}
+{"Time":"2026-10-09T07:55:26.062131638Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode"}
+{"Time":"2026-10-09T07:55:26.06213349Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"=== CONT  TestNativeAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:55:26.091930126Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"--- PASS: TestNativeAgreesWithNode (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:55:26.092013691Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-09T07:55:26.092017357Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Elapsed":0.03}
+{"Time":"2026-10-09T07:55:26.092042284Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:55:26.093630223Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.040s [no tests to run]\n"}
+{"Time":"2026-10-09T07:55:26.093670824Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.04}

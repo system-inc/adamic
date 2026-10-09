@@ -1,0 +1,2 @@
+const value: number = 14 as any;
+console.log(String(value + 1));

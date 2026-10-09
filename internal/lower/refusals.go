@@ -21,7 +21,6 @@ type refusal struct {
 var refusals = map[ast.Kind]refusal{
 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
-	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDeleteExpression:  {"delete", "an object's shape is fixed; use a Map for keys that come and go"},
@@ -37,6 +36,8 @@ var refusedOperators = map[ast.Kind]refusal{
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
+	l.notePlaceholderSlots()
+	l.prepareJSONChecks()
 	// Use the parser's directives, which also recognize the block forms honored by the checker.
 	// Text in a string or a prose comment never enters this list.
 	if len(module.CommentDirectives) > 0 {
@@ -55,6 +56,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			line, column := scanner.GetLineAndCharacterOfPosition(module, pragma.Pos())
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
+	}
+	if err := l.mergedFieldRulings(module); err != nil {
+		return err
+	}
+	if err := l.functionAnnotations(module); err != nil {
+		return err
 	}
 	// Validate arguments before visiting their annotations, so a failed contract
 	// names the actual argument and parameter even for an inline arrow.
@@ -82,12 +89,49 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if err := l.genericBodyRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if node.Kind == ast.KindVariableDeclaration && l.program.FileName(module) != module.FileName().AsString() {
+			declaration := node.AsVariableDeclaration()
+			if declaration.Type == nil && declaration.Initializer == nil && l.evolvingObject(node.Name()) == nil && l.checker.GetTypeAtLocation(node.Name()).Flags()&checker.TypeFlagsAny != 0 {
+				found = l.notYet(node.Name(), "a value of type any (an evolving unannotated .a binding; declare unknown)")
+				return true
+			}
+		}
+		if reason := l.jsonViewHazard(node); reason != "" {
+			found = l.notYet(node, reason)
+			return true
+		}
+		if node.Kind == ast.KindAnyKeyword && l.program.FileName(module) != module.FileName().AsString() {
+			found = &Refused{Where: l.program.Where(node), What: "explicit any in .a", Fix: "use unknown and validate it before a typed use"}
+			return true
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Flags()&checker.TypeFlagsAny == 0 {
+			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && l.checker.GetTypeOfSymbol(field).Flags()&checker.TypeFlagsAny != 0 {
+				found = l.notYet(node, "an any field in a typed object (dynamic slot adaptation is not established)")
+				return true
+			}
+		}
 		if branch := l.literalCallableBranch(node); branch != nil {
 			return visit(branch)
+		}
+		if err := l.functionCallRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		if err := l.knownLoweringGap(node); err != nil {
+			found = err
+			return true
 		}
 		if node.Kind == ast.KindTypePredicate {
 			found = l.predicateRefusal(node)
 			return found != nil
+		}
+		if err := l.intrinsicIteratorWrite(node); err != nil {
+			found = err
+			return true
 		}
 		if err := l.enumerationIndexedWriteRefusal(node); err != nil {
 			found = err
@@ -101,7 +145,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && l.enumerationIndexSignature(node)) && (node.Kind != ast.KindNonNullExpression || !l.checkedAssertionSource(node)) {
+		if refused, isRefused := refusals[node.Kind]; isRefused && !(node.Kind == ast.KindIndexSignature && (l.enumerationIndexSignature(node) || l.checkedJSONIndexSignature(node))) && (node.Kind != ast.KindNonNullExpression || (!l.placeholderDeclaration(node) && !l.checkedAssertionSource(node))) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
@@ -133,7 +177,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {
-			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {
+			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !l.placeholderNullishTest(node) {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 				return true
 			}
@@ -147,8 +191,8 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		case ast.KindMethodDeclaration:
 			generator = node.AsMethodDeclaration().AsteriskToken != nil
 		}
-		if generator {
-			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+		if generator && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
+			found = &Refused{Where: l.program.Where(node), What: "an async generator function", Fix: "use a synchronous generator; async resumption awaits the async ownership and cancellation model"}
 			return true
 		}
 		if ast.IsFunctionLike(node) && ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {

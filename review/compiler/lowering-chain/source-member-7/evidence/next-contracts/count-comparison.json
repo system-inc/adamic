@@ -1,0 +1,23 @@
+{
+  "added_runtime_rows": [
+    "checked .ts copy: checked_any/json_depth_misfit.a",
+    "checked .ts copy: checked_any/json_dictionary.a",
+    "checked .ts copy: checked_any/json_dictionary_misfit.a",
+    "checked .ts copy: checked_any/json_dictionary_order_misfit.a",
+    "checked .ts copy: checked_any/json_nullable.a",
+    "checked .ts copy: checked_any/json_nullable_array.a",
+    "checked .ts copy: checked_any/json_nullable_array_misfit.a",
+    "checked .ts copy: checked_any/json_nullable_misfit.a",
+    "checked .ts copy: checked_any/json_nullable_validated.a",
+    "checked .ts copy: checked_any/json_recursive.a",
+    "checked .ts copy: checked_any/json_recursive_misfit.a"
+  ],
+  "changed_existing_rows": [],
+  "comparison": "Part 2 against b726ac3d3",
+  "pending_witnesses_not_counted": [
+    "json_maplike_pending: awaits compiler/records-maplike: any-valued own-key storage"
+  ],
+  "removed_rows": [],
+  "unchanged_existing_rows": 995,
+  "why": "Eleven new runtime witnesses add rows; all existing measurements remain identical. Fitting witnesses allocate and free equally; terminal exit 70 witnesses intentionally stop before cleanup. Native key snapshots are allocated only when a shape contains a numeric key."
+}

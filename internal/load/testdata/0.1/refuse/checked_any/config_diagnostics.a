@@ -1,0 +1,16 @@
+// Boolean branch reduced from commandLineParser.ts convertJsonOption (3803)
+// and convertCompileOnSaveOptionFromJson (3725), stock commit 050880ce.
+// Lists, paths, nullable options and diagnostic locations are outside this slice.
+function convertJsonOption(value: any, errors: string[]): boolean {
+    if (typeof value === 'boolean') return value;
+    errors.push("Compiler option 'compileOnSave' requires a value of type boolean.");
+    return false;
+}
+function convertCompileOnSaveOptionFromJson(config: any, errors: string[]): boolean {
+    const result = convertJsonOption(config.compileOnSave, errors);
+    return typeof result === 'boolean' && result;
+}
+const errors: string[] = [];
+console.log(`${convertCompileOnSaveOptionFromJson({ compileOnSave: true }, errors)}`);
+console.log(`${convertCompileOnSaveOptionFromJson({ compileOnSave: 'wrong' }, errors)}`);
+console.log(errors.join('\n'));

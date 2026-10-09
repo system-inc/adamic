@@ -10,6 +10,9 @@ type checkedViewReadHook func(*emitter, ir.Property) (string, bool)
 var checkedViewReadAdapter checkedViewReadHook
 
 func (e *emitter) checkedViewField(property ir.Property) string {
+	if property.Namespace {
+		return fmt.Sprintf("adamicNamespaceRead(%s, %s, %d)", e.value(property.Object), quote(property.Name), property.Of)
+	}
 	if checkedViewReadAdapter != nil {
 		if value, handled := checkedViewReadAdapter(e, property); handled {
 			return value

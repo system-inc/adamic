@@ -1,0 +1,7 @@
+let value: any = 'node';
+function mutate(): void { value = 14; }
+if (typeof value === 'string') {
+    mutate();
+    const result: string = value;
+    console.log(result);
+}

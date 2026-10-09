@@ -1,0 +1,19 @@
+// Reduced from checker.ts:7440's labeledElementDeclarations?.[i].
+let indices = 0;
+let receivers = 0;
+function index(): number { indices += 1; return 0; }
+function words(present: boolean): readonly string[] | undefined {
+	receivers += 1;
+	return present ? [`word${receivers}`] : undefined;
+}
+console.log(`${words(false)?.[index()]?.length ?? -1}`);
+console.log(`${words(true)?.[index()]?.length ?? -1}`);
+console.log(`${receivers} ${indices}`);
+function text(value: string | undefined): string {
+	return value?.[index()] ?? 'absent';
+}
+console.log(text(undefined));
+console.log(text('hello'));
+console.log(`${indices}`);
+console.log(`${(words(false)?.[index()])?.length ?? -1}`);
+console.log(`${receivers} ${indices}`);

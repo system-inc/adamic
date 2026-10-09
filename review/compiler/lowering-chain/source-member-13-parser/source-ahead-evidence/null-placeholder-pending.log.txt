@@ -1,0 +1,9 @@
+=== RUN   TestParserConstructionNullPlaceholderPending
+    parser_construction_test.go:71: gate cache node miss
+    parser_construction_test.go:79: pending codex/placeholder-nonnull; no backend acceptance claimed
+--- PASS: TestParserConstructionNullPlaceholderPending (0.23s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.237s

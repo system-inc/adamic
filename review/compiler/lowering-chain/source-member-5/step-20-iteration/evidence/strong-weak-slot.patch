@@ -1,0 +1,12 @@
+--- internal/lower/object.go
++++ internal/lower/object.go
+@@ -282,9 +282,6 @@
+ 		// kept weakly.
+ 		contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+ 		if contextual != nil {
+-			if base := l.readonlyArrayView(contextual); base != nil {
+-				contextual = base
+-			}
+ 		}
+ 		if contextual != nil && l.checker.IsArrayType(contextual) {
+ 			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
