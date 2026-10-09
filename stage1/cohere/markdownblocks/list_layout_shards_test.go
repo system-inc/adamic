@@ -110,7 +110,6 @@ func TestMarkdownListLayoutUnion(t *testing.T) {
 
 func runListLayoutShard(t *testing.T, shard int) {
 	t.Helper()
-	t.Parallel()
 	products := listLayoutSetup(t)
 	fixture := listLayoutShardFixture(t, products, listLayoutBuckets[shard])
 	for i, mutant := range products.mutants {
@@ -132,22 +131,70 @@ func runListLayoutShard(t *testing.T, shard int) {
 	}
 }
 
-func TestMarkdownListLayout_000(t *testing.T) { runListLayoutShard(t, 0) }
-func TestMarkdownListLayout_001(t *testing.T) { runListLayoutShard(t, 1) }
-func TestMarkdownListLayout_002(t *testing.T) { runListLayoutShard(t, 2) }
-func TestMarkdownListLayout_003(t *testing.T) { runListLayoutShard(t, 3) }
-func TestMarkdownListLayout_004(t *testing.T) { runListLayoutShard(t, 4) }
-func TestMarkdownListLayout_005(t *testing.T) { runListLayoutShard(t, 5) }
-func TestMarkdownListLayout_006(t *testing.T) { runListLayoutShard(t, 6) }
-func TestMarkdownListLayout_007(t *testing.T) { runListLayoutShard(t, 7) }
-func TestMarkdownListLayout_008(t *testing.T) { runListLayoutShard(t, 8) }
-func TestMarkdownListLayout_009(t *testing.T) { runListLayoutShard(t, 9) }
-func TestMarkdownListLayout_010(t *testing.T) { runListLayoutShard(t, 10) }
-func TestMarkdownListLayout_011(t *testing.T) { runListLayoutShard(t, 11) }
-func TestMarkdownListLayout_012(t *testing.T) { runListLayoutShard(t, 12) }
-func TestMarkdownListLayout_013(t *testing.T) { runListLayoutShard(t, 13) }
-func TestMarkdownListLayout_014(t *testing.T) { runListLayoutShard(t, 14) }
-func TestMarkdownListLayout_015(t *testing.T) { runListLayoutShard(t, 15) }
+func TestMarkdownListLayout_000(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 0)
+}
+func TestMarkdownListLayout_001(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 1)
+}
+func TestMarkdownListLayout_002(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 2)
+}
+func TestMarkdownListLayout_003(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 3)
+}
+func TestMarkdownListLayout_004(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 4)
+}
+func TestMarkdownListLayout_005(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 5)
+}
+func TestMarkdownListLayout_006(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 6)
+}
+func TestMarkdownListLayout_007(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 7)
+}
+func TestMarkdownListLayout_008(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 8)
+}
+func TestMarkdownListLayout_009(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 9)
+}
+func TestMarkdownListLayout_010(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 10)
+}
+func TestMarkdownListLayout_011(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 11)
+}
+func TestMarkdownListLayout_012(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 12)
+}
+func TestMarkdownListLayout_013(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 13)
+}
+func TestMarkdownListLayout_014(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 14)
+}
+func TestMarkdownListLayout_015(t *testing.T) {
+	t.Parallel()
+	runListLayoutShard(t, 15)
+}
 
 func prepareListLayoutProducts(t *testing.T, root string) listLayoutProducts {
 	t.Helper()
