@@ -1,0 +1,8 @@
+{
+  "mutant": "D1",
+  "file_line": "stage1/cohere/selector/main.ts:57",
+  "before": "args[2] === 'repeat' ? 10 : 1",
+  "after": "args[2] === 'repeat' ? 9 : 1",
+  "menu": "off-by-one repetition bound",
+  "semantic_difference": "Throughput uses count repeat; the subsumer requests AST output without repeat. The independent upstream count mode still executes ten passes."
+}

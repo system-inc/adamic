@@ -1,0 +1,12 @@
+{
+  "base": "2b1be38362046455e0e5454d8b0e674a8630e95d",
+  "nproc": 5,
+  "setup": "warm env.sh, setup skipped",
+  "oracle_library": "/tmp/defend-selector/library",
+  "oracle_release": "postcss-selector-parser 2.2.3",
+  "optins": {
+    "ADAMIC_SELECTOR_BENCH": "1",
+    "ADAMIC_SELECTOR_LIBRARY": "/tmp/defend-selector/library"
+  },
+  "baseline_binary_seconds": 41.862
+}

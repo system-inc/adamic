@@ -1,0 +1,45 @@
+{
+  "base": "d054e3578d4e53bef8cb8c9ab82d6ace69cdafeb",
+  "code_under_test": "TS selector port/module driver; lower.Lower for compiler gaps; own corpus/nontermination setup constructions",
+  "oracles": "live Go cohere; Node; pinned postcss-selector-parser 2.2.3; self-written gap labels and one-second observation contract",
+  "functions": "port-functions.json and lower-functions-reached.txt",
+  "mutants": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/selector/tokenize.ts",
+      "old": "let line = 1;",
+      "new": "let line = 2;",
+      "menu": "change constant"
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/selector/parser.ts",
+      "old": "        root.children.push(1);\n",
+      "new": "",
+      "menu": "drop statement"
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/selector/nodes.ts",
+      "old": "if(code === 34) {",
+      "new": "if(code === 35) {",
+      "menu": "change constant"
+    },
+    {
+      "id": "M4",
+      "file": "internal/lower/object.go",
+      "old": "push with other than one value",
+      "new": "push with other than two values",
+      "menu": "change constant"
+    }
+  ],
+  "controls": {
+    "W1": "firstDifference always returns empty: embedded mutant witnesses must fail",
+    "S1": "drop selectors.push collection statement in own CSS corpus construction",
+    "S2": "drop upstream invocation in nontermination construction, preserve markers",
+    "P1": "empty TS module driver body",
+    "P2": "lower.Lower returns nil,nil",
+    "P3": "empty corpus-mode body",
+    "P4": "empty nontermination module entry"
+  }
+}

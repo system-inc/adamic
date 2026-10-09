@@ -1,0 +1,28 @@
+[
+  {
+    "test": "TestSelectorThroughput",
+    "package": "stage1/cohere/selector",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestThePortParsesAsGoCohereDoes",
+    "defense": "defended",
+    "unique_mutant": "D1 stage1/cohere/selector/main.ts:57",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/selector/main.ts:57",
+        "change": "Repeat bound 10 -> 9, leaving the one-pass branch unchanged.",
+        "rows_failed": [
+          "TestSelectorThroughput"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_SELECTOR_LIBRARY=/tmp/defend-selector/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-selector/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > D1-matrix.log 2>&1; selector_test.go:464: throughput checksums differ: \"97335 of 252675 selectors parsed, 105381 nodes\\n\" and \"108150 of 280750 selectors parsed, 117090 nodes\\n\"",
+    "passed_rows": [
+      "TestCorpusKeepsEveryParseableFile",
+      "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars",
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "bounded": false
+  }
+]

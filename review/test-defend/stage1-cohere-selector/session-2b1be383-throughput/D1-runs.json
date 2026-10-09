@@ -1,0 +1,37 @@
+[
+  {
+    "label": "build",
+    "argv": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "stage1/cohere/selector/main.ts",
+      "-o",
+      "/tmp/defend-selector/D1-native",
+      "--sanitize"
+    ],
+    "status": 0,
+    "wall_seconds": 7.115214094999828
+  },
+  {
+    "label": "matrix",
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/selector/",
+      "-run",
+      "."
+    ],
+    "status": 1,
+    "wall_seconds": 31.782677846997103
+  }
+]

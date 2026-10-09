@@ -1,0 +1,34 @@
+{
+  "command": "ADAMIC_SELECTOR_LIBRARY=/tmp/defend-selector/library ADAMIC_SELECTOR_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-selector/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/selector/ -run . > D1-matrix.log 2>&1",
+  "results": {
+    "TestSelectorThroughput": "fail",
+    "TestCorpusKeepsEveryParseableFile": "pass",
+    "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars": "pass",
+    "TestEachGapStandsWhereGapsMdSaysItDoes": "pass",
+    "TestThePortParsesAsGoCohereDoes": "pass"
+  },
+  "subcase_results": {
+    "TestSelectorThroughput": "fail",
+    "TestCorpusKeepsEveryParseableFile": "pass",
+    "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/*|)": "pass",
+    "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|@x": "pass",
+    "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/a|_b": "pass",
+    "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/6_undefined_case.ts": "pass",
+    "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_optional_boolean.ts": "pass",
+    "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_array_from_iterator.ts": "pass",
+    "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars/:is(a|)": "pass",
+    "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars": "pass",
+    "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_mixed_field.ts": "pass",
+    "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_conditional_panic.ts": "pass",
+    "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts": "pass",
+    "TestEachGapStandsWhereGapsMdSaysItDoes": "pass",
+    "TestThePortParsesAsGoCohereDoes/as_postcss-selector-parser": "pass",
+    "TestThePortParsesAsGoCohereDoes/catches_a_merged_word_uses_its_first_token_position": "pass",
+    "TestThePortParsesAsGoCohereDoes/catches_the_suffix_operator_loses_|=": "pass",
+    "TestThePortParsesAsGoCohereDoes/catches_a_quote_ignores_escape_parity": "pass",
+    "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere": "pass",
+    "TestThePortParsesAsGoCohereDoes": "pass"
+  },
+  "binary_seconds": 29.621,
+  "skips": []
+}

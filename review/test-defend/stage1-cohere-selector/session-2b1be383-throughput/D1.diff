@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/selector/main.ts b/stage1/cohere/selector/main.ts
+index 6573fcf2..83cfc3ef 100644
+--- a/stage1/cohere/selector/main.ts
++++ b/stage1/cohere/selector/main.ts
+@@ -54,7 +54,7 @@ for(const line of read.text.split('\n')) {
+ let count = 0;
+ let parsed = 0;
+ let nodes = 0;
+-for(let round = 0; round < (args[2] === 'repeat' ? 10 : 1); round++) {
++for(let round = 0; round < (args[2] === 'repeat' ? 9 : 1); round++) {
+     for(const css of texts) {
+         const result = parse(css);
+         if(args[1] !== 'count') {
