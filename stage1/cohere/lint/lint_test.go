@@ -543,7 +543,7 @@ func copyPort(t *testing.T, directory, from, to string, targets ...string) strin
 	return directory
 }
 
-// Not parallel: this semantic overlap check precedes timing samples.
+// Not parallel: shares the CPU with interleaved timing samples.
 func TestLegacyMutants(t *testing.T) {
 	path := manifest(t, generated(t))
 	oracle := goOracle(t)
