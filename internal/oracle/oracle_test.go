@@ -735,6 +735,10 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
+			if refusedAdamicNonNullFixture(fixture.path) {
+				assertAdamicNonNullRefusal(t, err)
+				return
+			}
 			if !fixture.lowers {
 				var notYet *lower.NotYet
 				if !errors.As(err, &notYet) {

@@ -24,7 +24,7 @@ import (
 
 // Census protocol: literal count, uniform zero-padded shard names. Full corpus
 // enumeration must match this constant; sampling keeps the same shard slots.
-const testMarkdownInlineShards = 1287
+const testMarkdownInlineShards = 1322
 const inlineModes = "wefnspctrukvhijlboq"
 
 // Products are shared and read-only. Only the Go overlay bridge is built into
@@ -327,8 +327,8 @@ func inlineNativeRun(t *testing.T, sanitized, fast string, args ...string) run {
 	}
 }
 func runInlineShards(t *testing.T, paths, texts []string, files, generatedEnd, unicodeEnd int, selected map[string]bool) {
-	if len(texts)*len(inlineModes) != 115045 {
-		t.Fatalf("full enumeration: %d cases, want 115045", len(texts)*len(inlineModes))
+	if len(texts)*len(inlineModes) != 115995 {
+		t.Fatalf("full enumeration: %d cases, want 115995", len(texts)*len(inlineModes))
 	}
 	shards := enumerateInlineShards(texts, files, generatedEnd, unicodeEnd)
 	if len(shards) != testMarkdownInlineShards {

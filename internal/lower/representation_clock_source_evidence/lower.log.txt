@@ -1,0 +1,7 @@
+=== RUN   TestRepresentationClockSourceCheckedTypes
+=== PAUSE TestRepresentationClockSourceCheckedTypes
+=== CONT  TestRepresentationClockSourceCheckedTypes
+    representation_clock_source_test.go:78: CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI
+--- PASS: TestRepresentationClockSourceCheckedTypes (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.046s

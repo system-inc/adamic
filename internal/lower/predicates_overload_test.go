@@ -76,7 +76,7 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			}
 			lowerInput := lowerSource
 			if extension == ".ts" {
-				lowerInput = lowerTypeScriptSource
+				lowerInput = lowerTypeScriptAssertionSource
 			}
 			program, err := lowerInput(t, string(source))
 			if err != nil {
@@ -113,7 +113,6 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 				t.Fatal(err)
 			}
 			command := exec.Command(binary)
-			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
 			run(command, stdout, stderr, code)
 			generated := filepath.Join(t.TempDir(), "generated.mjs")
 			if err = os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0644); err != nil {

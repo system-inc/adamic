@@ -1142,13 +1142,13 @@
     "main_sha": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
     "patch": "08-narrowed-number-field.patch",
     "status": "verified",
-    "adaptation": "Remove only the declared maybe-field read/unwrap guard; retain the newer boxed-union refusal and checked-view machinery.",
+    "adaptation": "Remove only the declared maybe-field read/unwrap guard; retain the boxed-union and record-storage refusals and all field readiness and representation checks.",
     "expected_failure_line": "oracle_test.go:604: stdout differs",
     "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
     "expected_tests": [
       "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a"
     ],
-    "made_against": "d772b5c990de4304de990e723835f19ebb613641",
+    "made_against": "9272c54ea9c122cd49f6890066552953a949b4cd",
     "history": [
       {
         "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
@@ -1284,6 +1284,16 @@
           "only_fix_fixture_family_detects": true
         },
         "patch": "history/08-narrowed-number-field-pre-closure.patch"
+      },
+      {
+        "made_against": "d772b5c990de4304de990e723835f19ebb613641",
+        "command": "go test -count=1 ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^e4eec87_f1_field_narrowed[.]a$'",
+        "expected_tests": [
+          "TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_f1_field_narrowed.a"
+        ],
+        "expected_failure_line": "oracle_test.go:604: stdout differs",
+        "adaptation": "Remove only the declared maybe-field read/unwrap guard; retain the newer boxed-union refusal and checked-view machinery.",
+        "patch": "history/08-narrowed-number-field-before-entries.patch"
       }
     ]
   },
