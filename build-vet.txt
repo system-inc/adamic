@@ -1,0 +1,5 @@
+loom-build: tree ae2420867b65dcfceddb0f5fe62db4816a93d20e setup 1 s
+loom-runner: still running after 150 s
+loom-build: go build ./... FAILED (exit 1)
+loom-build: go vet ./... passed
+loom-build: a failed step left an empty log, so nothing in the tree is named: Loom's fault, not the tree's

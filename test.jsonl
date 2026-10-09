@@ -1,0 +1,65 @@
+{"Time":"2026-10-09T22:07:37.679722827Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress"}
+{"Time":"2026-10-09T22:07:37.681458757Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestFirstParagraphJoinsTwoLinesWithSpace"}
+{"Time":"2026-10-09T22:07:37.681503774Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestFirstParagraphJoinsTwoLinesWithSpace","Output":"=== RUN   TestFirstParagraphJoinsTwoLinesWithSpace\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:37.681563545Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestFirstParagraphJoinsTwoLinesWithSpace","Output":"=== PAUSE TestFirstParagraphJoinsTwoLinesWithSpace\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:37.681566108Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestFirstParagraphJoinsTwoLinesWithSpace"}
+{"Time":"2026-10-09T22:07:37.681572618Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestFirstParagraphJoinsTwoLinesWithSpace"}
+{"Time":"2026-10-09T22:07:37.681574421Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestFirstParagraphJoinsTwoLinesWithSpace","Output":"=== CONT  TestFirstParagraphJoinsTwoLinesWithSpace\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:37.681578237Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestFirstParagraphJoinsTwoLinesWithSpace","Output":"--- PASS: TestFirstParagraphJoinsTwoLinesWithSpace (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:37.681579869Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestFirstParagraphJoinsTwoLinesWithSpace","Elapsed":0}
+{"Time":"2026-10-09T22:07:37.681586169Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:37.681778513Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-stage1-progress\t0.002s\n"}
+{"Time":"2026-10-09T22:07:37.681799314Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Elapsed":0.002}
+{"Time":"2026-10-09T22:07:10.931459417Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress"}
+{"Time":"2026-10-09T22:07:10.933023277Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary"}
+{"Time":"2026-10-09T22:07:10.933090729Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary","Output":"=== RUN   TestGitSnapshotAndEvidenceBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:10.933169317Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary","Output":"=== PAUSE TestGitSnapshotAndEvidenceBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:10.933175216Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary"}
+{"Time":"2026-10-09T22:07:10.93317782Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary"}
+{"Time":"2026-10-09T22:07:10.933180694Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary","Output":"=== CONT  TestGitSnapshotAndEvidenceBoundary\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:11.007492667Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary","Output":"--- PASS: TestGitSnapshotAndEvidenceBoundary (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:11.007548732Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestGitSnapshotAndEvidenceBoundary","Elapsed":0.07}
+{"Time":"2026-10-09T22:07:11.007565437Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:11.00804177Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-stage1-progress\t0.076s\n"}
+{"Time":"2026-10-09T22:07:11.00806169Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Elapsed":0.077}
+{"Time":"2026-10-09T22:07:28.725175681Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress"}
+{"Time":"2026-10-09T22:07:28.727057883Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestDeclarationCreditIsBoundedAndFailsClosed"}
+{"Time":"2026-10-09T22:07:28.727156863Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestDeclarationCreditIsBoundedAndFailsClosed","Output":"=== RUN   TestDeclarationCreditIsBoundedAndFailsClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:28.727187639Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestDeclarationCreditIsBoundedAndFailsClosed","Output":"=== PAUSE TestDeclarationCreditIsBoundedAndFailsClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:28.727190573Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestDeclarationCreditIsBoundedAndFailsClosed"}
+{"Time":"2026-10-09T22:07:28.727193638Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestDeclarationCreditIsBoundedAndFailsClosed"}
+{"Time":"2026-10-09T22:07:28.727195871Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestDeclarationCreditIsBoundedAndFailsClosed","Output":"=== CONT  TestDeclarationCreditIsBoundedAndFailsClosed\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:28.727204094Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestDeclarationCreditIsBoundedAndFailsClosed","Output":"--- PASS: TestDeclarationCreditIsBoundedAndFailsClosed (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:28.727206778Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestDeclarationCreditIsBoundedAndFailsClosed","Elapsed":0}
+{"Time":"2026-10-09T22:07:28.727212877Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:28.727607813Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-stage1-progress\t0.002s\n"}
+{"Time":"2026-10-09T22:07:28.727629916Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Elapsed":0.002}
+{"Time":"2026-10-09T22:07:20.134313882Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress"}
+{"Time":"2026-10-09T22:07:20.136163447Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestUnionDoesNotCountSharedLinesTwice"}
+{"Time":"2026-10-09T22:07:20.136214153Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestUnionDoesNotCountSharedLinesTwice","Output":"=== RUN   TestUnionDoesNotCountSharedLinesTwice\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:20.136233793Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestUnionDoesNotCountSharedLinesTwice","Output":"=== PAUSE TestUnionDoesNotCountSharedLinesTwice\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:20.136236838Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestUnionDoesNotCountSharedLinesTwice"}
+{"Time":"2026-10-09T22:07:20.136239802Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestUnionDoesNotCountSharedLinesTwice"}
+{"Time":"2026-10-09T22:07:20.136243608Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestUnionDoesNotCountSharedLinesTwice","Output":"=== CONT  TestUnionDoesNotCountSharedLinesTwice\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:20.136251219Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestUnionDoesNotCountSharedLinesTwice","Output":"--- PASS: TestUnionDoesNotCountSharedLinesTwice (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:20.136295245Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestUnionDoesNotCountSharedLinesTwice","Elapsed":0}
+{"Time":"2026-10-09T22:07:20.136305331Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:20.136369477Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-stage1-progress\t0.002s\n"}
+{"Time":"2026-10-09T22:07:20.13638431Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Elapsed":0.002}
+{"Time":"2026-10-09T22:07:01.418751249Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress"}
+{"Time":"2026-10-09T22:07:01.420371734Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestPhysicalInventoryBoundaries"}
+{"Time":"2026-10-09T22:07:01.420547339Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestPhysicalInventoryBoundaries","Output":"=== RUN   TestPhysicalInventoryBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:01.420579758Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestPhysicalInventoryBoundaries","Output":"=== PAUSE TestPhysicalInventoryBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:01.420582301Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestPhysicalInventoryBoundaries"}
+{"Time":"2026-10-09T22:07:01.420584595Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestPhysicalInventoryBoundaries"}
+{"Time":"2026-10-09T22:07:01.420586478Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestPhysicalInventoryBoundaries","Output":"=== CONT  TestPhysicalInventoryBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:01.420605086Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestPhysicalInventoryBoundaries","Output":"--- PASS: TestPhysicalInventoryBoundaries (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:01.420609392Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Test":"TestPhysicalInventoryBoundaries","Elapsed":0}
+{"Time":"2026-10-09T22:07:01.420615752Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:01.421058884Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-stage1-progress\t0.002s\n"}
+{"Time":"2026-10-09T22:07:01.42108316Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Elapsed":0.002}
+{"Time":"2026-10-09T22:07:01.421528761Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress"}
+{"Time":"2026-10-09T22:07:01.423545874Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"testing: warning: no tests to run\n"}
+{"Time":"2026-10-09T22:07:01.423594878Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T22:07:01.423637853Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-stage1-progress\t0.002s [no tests to run]\n"}
+{"Time":"2026-10-09T22:07:01.423650371Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-stage1-progress","Elapsed":0.002}
