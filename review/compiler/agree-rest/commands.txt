@@ -1,0 +1,7 @@
+export GOPROXY='https://proxy.golang.org|direct'
+ timeout 300 bash cloud/setup.sh > /tmp/agree-rest-setup.log 2>&1
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower -run "$(cat /tmp/agree-rest-run)" -count=1 -timeout 90s -v > review/compiler/agree-rest/tests.log 2>&1
+go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s -v > review/compiler/agree-rest/call-targets.log 2>&1
+Each mutant: go test ./internal/lower -run ^<test>$ -count=1 -timeout 90s -v
+Tests and mutants additionally bounded by timeout 110 in the shell/runner. The test filter is preserved in test-filter.txt.

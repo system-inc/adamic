@@ -1,0 +1,8 @@
+=== RUN   TestArgumentsLengthReadNeighbors
+=== PAUSE TestArgumentsLengthReadNeighbors
+=== CONT  TestArgumentsLengthReadNeighbors
+    arguments_length_test.go:50: JavaScript backend stdout = "9\n", source Node = "0\n"
+--- FAIL: TestArgumentsLengthReadNeighbors (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.135s
+FAIL

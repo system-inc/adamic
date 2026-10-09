@@ -1,0 +1,8 @@
+=== RUN   TestCensusSmallFiniteKeyRead
+=== PAUSE TestCensusSmallFiniteKeyRead
+=== CONT  TestCensusSmallFiniteKeyRead
+    census_small_test.go:52: JavaScript backend stdout = "wrong\n", source Node = "file\n"
+--- FAIL: TestCensusSmallFiniteKeyRead (0.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.210s
+FAIL
