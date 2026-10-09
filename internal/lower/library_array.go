@@ -27,9 +27,6 @@ func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name st
 	if name == "join" && element != ir.Array {
 		return l.arrayMethod(node, receiver, name)
 	}
-	if err := l.checkArrayCallbackRepresentation(node, receiver, name, written, element); err != nil {
-		return nil, true, err
-	}
 	array, err := l.expression(receiver)
 	if err != nil {
 		return nil, true, err

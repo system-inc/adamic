@@ -1,0 +1,22 @@
+[
+  {
+    "fixture": "number-generic-map",
+    "javascript_exit": 0,
+    "javascript_stdout": "1,2,3\n",
+    "native_exit": -1,
+    "native_stderr": "",
+    "native_stdout": "",
+    "node_exit": 0,
+    "node_stdout": "1,2,3\n"
+  },
+  {
+    "fixture": "object-generic-map",
+    "javascript_exit": 0,
+    "javascript_stdout": "1,2,3\n",
+    "native_exit": 0,
+    "native_stderr": "",
+    "native_stdout": "1,2,3\n",
+    "node_exit": 0,
+    "node_stdout": "1,2,3\n"
+  }
+]
