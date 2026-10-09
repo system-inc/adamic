@@ -1,0 +1,7 @@
+FIRST FAILURE (tests, at 257.2 s):
+github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo_005
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo_005
+    answers_shards_test.go:375: build gitignore-go-oracle c9b5df31c330 hit 37.53
+cooked: shard-005 exceeded 75s hard deadline
+
+(box load 74.7 on 64 cores at first failure)
