@@ -196,6 +196,9 @@ func (l *lowering) checkLazyViewReads() error {
 
 		switch read := node.(type) {
 		case ir.Property:
+			if read.Object != nil && read.Object.Type() == ir.Closure {
+				return true
+			}
 			if !program.CheckedFields[read.Name] {
 				return true
 			}

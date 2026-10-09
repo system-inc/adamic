@@ -124,6 +124,9 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// Surface records JavaScript reflection from the source, independently of ABI.
+	Surface *FunctionSurface
+
 	// CallableMasks records producer signature members independently of any view.
 	CallableMasks      []uint16
 	CallableParameters []ViewContractID

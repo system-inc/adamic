@@ -144,6 +144,9 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
+		if expression.Object.Type() == ir.Closure {
+			return e.closureSurface(expression)
+		}
 		if expression.View != "" {
 			return e.viewField(expression)
 		}

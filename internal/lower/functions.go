@@ -182,6 +182,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			function.OptionalParameters[function.Parameters[i+offset]] = true
 		}
 	}
+	function.Surface = l.sourceFunctionSurface(declaration)
 	l.recordViewCallableRepresentations(index, &function, declaration)
 	l.result.Functions[index] = function
 	if !function.Closure && declaration.Kind != ast.KindConstructor && declaration.Name() != nil {

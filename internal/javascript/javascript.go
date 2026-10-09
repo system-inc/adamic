@@ -902,6 +902,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return object
 	case ir.Property:
+		if expression.Object.Type() == ir.Closure {
+			return e.closureSurface(expression)
+		}
 		if expression.View != "" {
 			return e.checkedViewField(expression)
 		}
