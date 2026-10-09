@@ -1,0 +1,98 @@
+{
+  "D1": {
+    "results": {
+      "TestNodeAgrees": "pass",
+      "TestBinaryAliases": "pass",
+      "TestRejectedNames": "pass",
+      "TestGeneralCategoryAliases": "pass",
+      "TestScriptAliasSet": "fail",
+      "TestStringPropertyCensus": "pass",
+      "TestKnownMembership": "pass",
+      "TestSetBoundaries": "pass",
+      "TestNodeStringProperties": "pass"
+    },
+    "rows_failed": [
+      "TestScriptAliasSet"
+    ],
+    "rows_passed": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "errors": [
+      "alias_test.go:230: script Adlam: sc true scx true same set false"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-unicode-alias/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run '^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$' > D1.log 2>&1",
+    "bounded": true
+  },
+  "D2": {
+    "results": {
+      "TestNodeAgrees": "pass",
+      "TestBinaryAliases": "pass",
+      "TestScriptAliasSet": "pass",
+      "TestKnownMembership": "pass",
+      "TestRejectedNames": "fail",
+      "TestStringPropertyCensus": "pass",
+      "TestGeneralCategoryAliases": "pass",
+      "TestSetBoundaries": "pass",
+      "TestNodeStringProperties": "pass"
+    },
+    "rows_failed": [
+      "TestRejectedNames"
+    ],
+    "rows_passed": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "errors": [
+      "alias_test.go:262: accepted \"\" without the v flag",
+      "alias_test.go:262: accepted \"=\" without the v flag",
+      "alias_test.go:262: accepted \"Age=1.1\" without the v flag",
+      "alias_test.go:262: accepted \"sc=Old_Persian \" without the v flag"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-unicode-alias/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run '^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$' > D2.log 2>&1",
+    "bounded": true
+  },
+  "D3": {
+    "results": {
+      "TestNodeAgrees": "pass",
+      "TestBinaryAliases": "pass",
+      "TestRejectedNames": "pass",
+      "TestScriptAliasSet": "pass",
+      "TestGeneralCategoryAliases": "pass",
+      "TestKnownMembership": "pass",
+      "TestStringPropertyCensus": "fail",
+      "TestSetBoundaries": "pass",
+      "TestNodeStringProperties": "pass"
+    },
+    "rows_failed": [
+      "TestStringPropertyCensus"
+    ],
+    "rows_passed": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "errors": [
+      "alias_test.go:312: RGI_Emoji_Tag_Sequence: 2 sequences, sha256 da8091ff33578db62e71203ad1eddc2ae9d78c632ba202b2d8e696c4b263bafd"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-unicode-alias/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run '^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$' > D3.log 2>&1",
+    "bounded": true
+  }
+}

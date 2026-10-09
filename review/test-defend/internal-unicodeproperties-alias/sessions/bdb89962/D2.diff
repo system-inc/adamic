@@ -1,0 +1,13 @@
+diff --git a/internal/unicodeproperties/unicodeproperties.go b/internal/unicodeproperties/unicodeproperties.go
+index ac48e5e3..cb23fcf5 100644
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -147,7 +147,7 @@ func (p Property) ContainsSequence(text string) bool {
+ // "space", "WSpace"), never "White_Space=Yes".
+ func Lookup(expression string, unicodeSets bool) (Property, bool) {
+ 	if !expressionOK(expression) {
+-		return Property{}, false
++		return Property{}, true
+ 	}
+ 	if name, value, isPair := splitPair(expression); isPair {
+ 		var table map[string]entry

@@ -1,0 +1,45 @@
+internal/unicodeproperties/alias_test.go:164:	if len(binaryNames) != len(specBinary) {
+internal/unicodeproperties/alias_test.go:165:		t.Fatalf("%d binary names, spec lists %d", len(binaryNames), len(specBinary))
+internal/unicodeproperties/alias_test.go:168:		property, ok := Lookup(alias, false)
+internal/unicodeproperties/alias_test.go:172:		if _, ok := Lookup(alias+"=Yes", false); ok {
+internal/unicodeproperties/alias_test.go:176:	for alias := range binaryNames {
+internal/unicodeproperties/alias_test.go:185:	if len(generalCategoryNames) != len(specGeneralCategory) {
+internal/unicodeproperties/alias_test.go:186:		t.Fatalf("%d general category names, spec lists %d", len(generalCategoryNames), len(specGeneralCategory))
+internal/unicodeproperties/alias_test.go:190:			property, ok := Lookup(expression, false)
+internal/unicodeproperties/alias_test.go:195:		lone, _ := Lookup(alias, false)
+internal/unicodeproperties/alias_test.go:196:		qualified, _ := Lookup("gc="+alias, false)
+internal/unicodeproperties/alias_test.go:213:	names := make([]string, 0, len(scriptNames))
+internal/unicodeproperties/alias_test.go:214:	for name := range scriptNames {
+internal/unicodeproperties/alias_test.go:223:	if len(scriptExtensionNames) != len(scriptNames) {
+internal/unicodeproperties/alias_test.go:224:		t.Fatalf("script extensions names %d, script names %d", len(scriptExtensionNames), len(scriptNames))
+internal/unicodeproperties/alias_test.go:227:		script, ok := Lookup("sc="+required, false)
+internal/unicodeproperties/alias_test.go:228:		extensions, extOK := Lookup("scx="+required, false)
+internal/unicodeproperties/alias_test.go:232:		if _, ok := Lookup("Script="+required, false); !ok {
+internal/unicodeproperties/alias_test.go:235:		if _, ok := Lookup("Script_Extensions="+required, false); !ok {
+internal/unicodeproperties/alias_test.go:240:	if _, ok := Lookup("Latin", false); ok {
+internal/unicodeproperties/alias_test.go:243:	if _, ok := Lookup("sc=Hrkt", false); ok {
+internal/unicodeproperties/alias_test.go:246:	if _, ok := Lookup("sc=Katakana_Or_Hiragana", false); ok {
+internal/unicodeproperties/alias_test.go:261:		if _, ok := Lookup(expression, false); ok {
+internal/unicodeproperties/alias_test.go:265:	if _, ok := Lookup("RGI_Emoji", true); !ok {
+internal/unicodeproperties/alias_test.go:268:	if _, ok := Lookup("Basic_Emoji=Yes", true); ok {
+internal/unicodeproperties/alias_test.go:271:	if _, ok := Lookup("Basic_Emoji", false); ok {
+internal/unicodeproperties/alias_test.go:276:	if property, ok := Lookup("ASCII", true); !ok || property.Kind != KindCodePoints {
+internal/unicodeproperties/alias_test.go:300:	if len(stringProperties) != len(stringPropertyCensus) {
+internal/unicodeproperties/alias_test.go:301:		t.Fatalf("%d string properties, want %d", len(stringProperties), len(stringPropertyCensus))
+internal/unicodeproperties/alias_test.go:304:		property, ok := stringProperties[name]
+internal/unicodeproperties/alias_test.go:314:		resolved, ok := Lookup(name, true)
+internal/unicodeproperties/alias_test.go:318:		if len(property.sequences) > 0 && !resolved.ContainsSequence(property.sequences[0]) {
+internal/unicodeproperties/alias_test.go:321:		if resolved.ContainsSequence(property.sequences[0] + "\u0000") {
+internal/unicodeproperties/alias_test.go:366:		property, ok := Lookup(expression, false)
+internal/unicodeproperties/alias_test.go:406:	watch, ok := Lookup("Basic_Emoji", true)
+internal/unicodeproperties/alias_test.go:407:	if !ok || !watch.ContainsSequence("\u231A") || watch.ContainsSequence("A") {
+internal/unicodeproperties/alias_test.go:410:	keycap, ok := Lookup("Emoji_Keycap_Sequence", true)
+internal/unicodeproperties/alias_test.go:411:	if !ok || !keycap.ContainsSequence("#\uFE0F\u20E3") || keycap.ContainsSequence("#\u20E3") {
+internal/unicodeproperties/node_test.go:168:	expressions := make([]string, 0, len(binaryNames)+len(generalCategoryNames)*3+len(scriptNames)*4)
+internal/unicodeproperties/node_test.go:169:	for name := range binaryNames {
+internal/unicodeproperties/node_test.go:172:	for name := range generalCategoryNames {
+internal/unicodeproperties/node_test.go:175:	for name := range scriptNames {
+internal/unicodeproperties/node_test.go:178:	for name := range scriptExtensionNames {
+internal/unicodeproperties/node_test.go:226:					property, ok := Lookup(expression, false)
+internal/unicodeproperties/node_test.go:385:		property, ok := Lookup(name, true)
+internal/unicodeproperties/node_test.go:424:		property, _ := Lookup(name, true)

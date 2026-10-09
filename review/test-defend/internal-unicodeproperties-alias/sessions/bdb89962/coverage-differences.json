@@ -1,0 +1,22 @@
+{
+  "TestScriptAliasSet": {
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:180.2,180.26"
+    ],
+    "semantic_difference": "Adlam canonical Value must be nonempty. KnownMembership samples different scripts; NodeAgrees only checks ranges, not metadata."
+  },
+  "TestRejectedNames": {
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:150.3,151.1",
+      "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:162.4,162.28",
+      "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:180.2,180.26",
+      "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:196.3,197.1",
+      "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:209.4,209.16"
+    ],
+    "semantic_difference": "Lexically invalid empty, equals-only and space-suffixed expressions are rejected; KnownMembership only uses valid spellings."
+  },
+  "TestStringPropertyCensus": {
+    "exclusive_blocks": [],
+    "semantic_difference": "Drop one valid tag sequence. Census pins completeness while NodeStringProperties only validates sequences still present; KnownMembership samples Basic_Emoji and keycaps."
+  }
+}

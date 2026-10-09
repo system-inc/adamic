@@ -1,0 +1,65 @@
+[
+  {
+    "mutant": "D1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/unicodeproperties/",
+      "-run",
+      "^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$"
+    ],
+    "cache": "/tmp/defend-unicode-alias/cache/D1",
+    "exit": 1,
+    "wall_seconds": 8.574877813000057,
+    "vet_exit": 0,
+    "vet_wall_seconds": 0.20489822699892102
+  },
+  {
+    "mutant": "D2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/unicodeproperties/",
+      "-run",
+      "^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$"
+    ],
+    "cache": "/tmp/defend-unicode-alias/cache/D2",
+    "exit": 1,
+    "wall_seconds": 8.414060447001248,
+    "vet_exit": 0,
+    "vet_wall_seconds": 0.1740590509980393
+  },
+  {
+    "mutant": "D3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/unicodeproperties/",
+      "-run",
+      "^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$"
+    ],
+    "cache": "/tmp/defend-unicode-alias/cache/D3",
+    "exit": 1,
+    "wall_seconds": 8.332039376000466,
+    "vet_exit": 0,
+    "vet_wall_seconds": 0.1759415140004421
+  }
+]

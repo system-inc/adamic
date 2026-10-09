@@ -1,0 +1,17 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/unicodeproperties/",
+    "-run",
+    "^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$"
+  ],
+  "exit": 0,
+  "wall_seconds": 8.073177562000637
+}

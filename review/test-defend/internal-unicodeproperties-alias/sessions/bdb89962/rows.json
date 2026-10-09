@@ -1,0 +1,163 @@
+[
+  {
+    "test": "TestScriptAliasSet",
+    "package": "internal/unicodeproperties",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestKnownMembership"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/unicodeproperties/tables.go:25019",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/unicodeproperties/tables.go:25019",
+        "change": "\"Adlam\":                  {name: \"Script\", value: \"\", set: 91}",
+        "rows_failed": [
+          "TestScriptAliasSet"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-unicode-alias/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run '^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$' > D1.log 2>&1; alias_test.go:230: script Adlam: sc true scx true same set false",
+    "bounded": true,
+    "matrix_rows": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "rows_passed": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "code_under_test": "Lookup/codePoint and generated scriptNames/stringProperties, ContainsSequence for sequence lookup",
+    "oracle": "Unicode 17 script aliases and ECMAScript qualified-name rules, plus self count/digest, nonempty canonical Value and distinct Set invariants. Adlm=Adlam checked against Unicode 17 PropertyValueAliases.txt this session.",
+    "oracle_kind": [
+      "external-authority",
+      "self"
+    ],
+    "coverage": {
+      "exclusive_blocks": [
+        "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:180.2,180.26"
+      ],
+      "semantic_difference": "Adlam canonical Value must be nonempty. KnownMembership samples different scripts; NodeAgrees only checks ranges, not metadata."
+    }
+  },
+  {
+    "test": "TestRejectedNames",
+    "package": "internal/unicodeproperties",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestKnownMembership"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/unicodeproperties/unicodeproperties.go:150",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/unicodeproperties/unicodeproperties.go:150",
+        "change": "if !expressionOK(expression) {\n\t\treturn Property{}, true",
+        "rows_failed": [
+          "TestRejectedNames"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-unicode-alias/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run '^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$' > D2.log 2>&1; alias_test.go:262: accepted \"\" without the v flag",
+    "bounded": true,
+    "matrix_rows": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "rows_passed": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "code_under_test": "Lookup/codePoint and generated scriptNames/stringProperties, ContainsSequence for sequence lookup",
+    "oracle": "ECMAScript Unicode property-expression grammar and exact-name/v-flag rules. Node 24 independently rejected all four D2-accepted invalid strings this session. The row itself does not run Node.",
+    "oracle_kind": "external-authority",
+    "coverage": {
+      "exclusive_blocks": [
+        "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:150.3,151.1",
+        "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:162.4,162.28",
+        "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:180.2,180.26",
+        "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:196.3,197.1",
+        "github.com/system-inc/adamic/internal/unicodeproperties/unicodeproperties.go:209.4,209.16"
+      ],
+      "semantic_difference": "Lexically invalid empty, equals-only and space-suffixed expressions are rejected; KnownMembership only uses valid spellings."
+    }
+  },
+  {
+    "test": "TestStringPropertyCensus",
+    "package": "internal/unicodeproperties",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestKnownMembership"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D3 internal/unicodeproperties/tables.go:33643",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/unicodeproperties/tables.go:33643",
+        "change": "name: \"RGI_Emoji_Tag_Sequence\", sequences: sequences_RGI_Emoji_Tag_Sequence[1:]}",
+        "rows_failed": [
+          "TestStringPropertyCensus"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-unicode-alias/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/unicodeproperties/ -run '^(TestBinaryAliases|TestGeneralCategoryAliases|TestScriptAliasSet|TestRejectedNames|TestStringPropertyCensus|TestSetBoundaries|TestKnownMembership|TestNodeAgrees|TestNodeStringProperties)$' > D3.log 2>&1; alias_test.go:312: RGI_Emoji_Tag_Sequence: 2 sequences, sha256 da8091ff33578db62e71203ad1eddc2ae9d78c632ba202b2d8e696c4b263bafd",
+    "bounded": true,
+    "matrix_rows": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "rows_passed": [
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestSetBoundaries",
+      "TestKnownMembership",
+      "TestNodeAgrees",
+      "TestNodeStringProperties"
+    ],
+    "code_under_test": "Lookup/codePoint and generated scriptNames/stringProperties, ContainsSequence for sequence lookup",
+    "oracle": "Stored sequence counts and SHA256 digests of generated output, plus sequence membership invariants. Self snapshot oracle; the separate Node test only checks retained sequences.",
+    "oracle_kind": "self",
+    "coverage": {
+      "exclusive_blocks": [],
+      "semantic_difference": "Drop one valid tag sequence. Census pins completeness while NodeStringProperties only validates sequences still present; KnownMembership samples Basic_Emoji and keycaps."
+    }
+  }
+]

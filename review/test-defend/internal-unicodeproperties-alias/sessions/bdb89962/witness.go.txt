@@ -1,0 +1,3 @@
+package main
+import("fmt";u "github.com/system-inc/adamic/internal/unicodeproperties")
+func main(){for _,s:=range []string{"sc=Adlam","","RGI_Emoji_Tag_Sequence"}{p,ok:=u.Lookup(s,s=="RGI_Emoji_Tag_Sequence");fmt.Printf("%q ok=%v name=%q value=%q sequences=%d\n",s,ok,p.Name,p.Value,len(p.Sequences))}}

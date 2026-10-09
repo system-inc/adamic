@@ -1,0 +1,35 @@
+[
+  {
+    "mutant": "D1",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/tmp/defend-unicode-alias/D1.diff"
+    ],
+    "exit": 0,
+    "origin_file_line": "internal/unicodeproperties/tables.go:25019"
+  },
+  {
+    "mutant": "D2",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/tmp/defend-unicode-alias/D2.diff"
+    ],
+    "exit": 0,
+    "origin_file_line": "internal/unicodeproperties/unicodeproperties.go:150"
+  },
+  {
+    "mutant": "D3",
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/tmp/defend-unicode-alias/D3.diff"
+    ],
+    "exit": 0,
+    "origin_file_line": "internal/unicodeproperties/tables.go:33643"
+  }
+]

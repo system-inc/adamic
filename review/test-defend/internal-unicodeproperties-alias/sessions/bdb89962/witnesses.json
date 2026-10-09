@@ -1,0 +1,46 @@
+[
+  {
+    "variant": "clean",
+    "command": [
+      "go",
+      "run",
+      "./.defend-unicode-probe"
+    ],
+    "exit": 0,
+    "stdout": "\"sc=Adlam\" ok=true name=\"Script\" value=\"Adlam\" sequences=0\n\"\" ok=false name=\"\" value=\"\" sequences=0\n\"RGI_Emoji_Tag_Sequence\" ok=true name=\"RGI_Emoji_Tag_Sequence\" value=\"True\" sequences=3\n",
+    "wall_seconds": 0.15221316699899035
+  },
+  {
+    "variant": "D1",
+    "command": [
+      "go",
+      "run",
+      "./.defend-unicode-probe"
+    ],
+    "exit": 0,
+    "stdout": "\"sc=Adlam\" ok=true name=\"Script\" value=\"\" sequences=0\n\"\" ok=false name=\"\" value=\"\" sequences=0\n\"RGI_Emoji_Tag_Sequence\" ok=true name=\"RGI_Emoji_Tag_Sequence\" value=\"True\" sequences=3\n",
+    "wall_seconds": 0.32049264299712377
+  },
+  {
+    "variant": "D2",
+    "command": [
+      "go",
+      "run",
+      "./.defend-unicode-probe"
+    ],
+    "exit": 0,
+    "stdout": "\"sc=Adlam\" ok=true name=\"Script\" value=\"Adlam\" sequences=0\n\"\" ok=true name=\"\" value=\"\" sequences=0\n\"RGI_Emoji_Tag_Sequence\" ok=true name=\"RGI_Emoji_Tag_Sequence\" value=\"True\" sequences=3\n",
+    "wall_seconds": 0.35022230799950194
+  },
+  {
+    "variant": "D3",
+    "command": [
+      "go",
+      "run",
+      "./.defend-unicode-probe"
+    ],
+    "exit": 0,
+    "stdout": "\"sc=Adlam\" ok=true name=\"Script\" value=\"Adlam\" sequences=0\n\"\" ok=false name=\"\" value=\"\" sequences=0\n\"RGI_Emoji_Tag_Sequence\" ok=true name=\"RGI_Emoji_Tag_Sequence\" value=\"True\" sequences=2\n",
+    "wall_seconds": 0.31969153200043365
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "base": "bdb89962b178f618e2e6d34e9a7ea5c395089faf",
+  "code_under_test": "Lookup/codePoint and generated scriptNames/stringProperties, ContainsSequence for sequence lookup",
+  "oracle": "Unicode 17 and ECMAScript exact name rules plus self-written metadata invariants and stored census snapshots; independent Node membership comparisons run unchanged.",
+  "mutants": [
+    {
+      "id": "D1",
+      "target": "TestScriptAliasSet",
+      "file": "internal/unicodeproperties/tables.go",
+      "old": "\"Adlam\":                  {name: \"Script\", value: \"Adlam\", set: 91}",
+      "new": "\"Adlam\":                  {name: \"Script\", value: \"\", set: 91}",
+      "menu": "change a constant",
+      "difference": "Adlam canonical Value must be nonempty. KnownMembership samples different scripts; NodeAgrees only checks ranges, not metadata.",
+      "line": 25019
+    },
+    {
+      "id": "D2",
+      "target": "TestRejectedNames",
+      "file": "internal/unicodeproperties/unicodeproperties.go",
+      "old": "if !expressionOK(expression) {\n\t\treturn Property{}, false",
+      "new": "if !expressionOK(expression) {\n\t\treturn Property{}, true",
+      "menu": "change a constant",
+      "difference": "Lexically invalid empty, equals-only and space-suffixed expressions are rejected; KnownMembership only uses valid spellings.",
+      "line": 150
+    },
+    {
+      "id": "D3",
+      "target": "TestStringPropertyCensus",
+      "file": "internal/unicodeproperties/tables.go",
+      "old": "name: \"RGI_Emoji_Tag_Sequence\", sequences: sequences_RGI_Emoji_Tag_Sequence}",
+      "new": "name: \"RGI_Emoji_Tag_Sequence\", sequences: sequences_RGI_Emoji_Tag_Sequence[1:]}",
+      "menu": "off-by-one an implicit slice bound",
+      "difference": "Drop one valid tag sequence. Census pins completeness while NodeStringProperties only validates sequences still present; KnownMembership samples Basic_Emoji and keycaps.",
+      "line": 33643
+    }
+  ]
+}

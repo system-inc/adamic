@@ -1,0 +1,82 @@
+[
+  {
+    "test": "TestScriptAliasSet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/unicodeproperties/",
+      "-run",
+      "^TestScriptAliasSet$",
+      "-coverpkg=github.com/system-inc/adamic/internal/unicodeproperties",
+      "-coverprofile=/tmp/defend-unicode-alias/TestScriptAliasSet.cover"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.5610537200009276
+  },
+  {
+    "test": "TestRejectedNames",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/unicodeproperties/",
+      "-run",
+      "^TestRejectedNames$",
+      "-coverpkg=github.com/system-inc/adamic/internal/unicodeproperties",
+      "-coverprofile=/tmp/defend-unicode-alias/TestRejectedNames.cover"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.17541238199919462
+  },
+  {
+    "test": "TestStringPropertyCensus",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/unicodeproperties/",
+      "-run",
+      "^TestStringPropertyCensus$",
+      "-coverpkg=github.com/system-inc/adamic/internal/unicodeproperties",
+      "-coverprofile=/tmp/defend-unicode-alias/TestStringPropertyCensus.cover"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.16702879700096673
+  },
+  {
+    "test": "TestKnownMembership",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/unicodeproperties/",
+      "-run",
+      "^TestKnownMembership$",
+      "-coverpkg=github.com/system-inc/adamic/internal/unicodeproperties",
+      "-coverprofile=/tmp/defend-unicode-alias/TestKnownMembership.cover"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.18279040900233667
+  }
+]

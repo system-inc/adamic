@@ -1,0 +1,13 @@
+diff --git a/internal/unicodeproperties/tables.go b/internal/unicodeproperties/tables.go
+index 3a6bc9f2..edad6906 100644
+--- a/internal/unicodeproperties/tables.go
++++ b/internal/unicodeproperties/tables.go
+@@ -25016,7 +25016,7 @@ var generalCategoryNames = map[string]entry{
+ 
+ var scriptNames = map[string]entry{
+ 	"Adlm":                   {name: "Script", value: "Adlam", set: 91},
+-	"Adlam":                  {name: "Script", value: "Adlam", set: 91},
++	"Adlam":                  {name: "Script", value: "", set: 91},
+ 	"Aghb":                   {name: "Script", value: "Caucasian_Albanian", set: 93},
+ 	"Caucasian_Albanian":     {name: "Script", value: "Caucasian_Albanian", set: 93},
+ 	"Ahom":                   {name: "Script", value: "Ahom", set: 95},
