@@ -1,0 +1,10 @@
+package main
+import ("bytes";"fmt")
+func formatterMutantSurvived(actual, expected []byte) error {
+	if bytes.Equal(actual, expected) {
+		return fmt.Errorf("missed mutant")
+	}
+	return nil
+}
+
+func main(){for _, v:=range []struct{name string; actual []byte}{{"identical",[]byte("oracle bytes")},{"unrelated wrong answer",[]byte("unrelated wrong bytes")},{"empty answer",nil}}{fmt.Printf("%s: %v\n",v.name,formatterMutantSurvived(v.actual,[]byte("oracle bytes")))}}

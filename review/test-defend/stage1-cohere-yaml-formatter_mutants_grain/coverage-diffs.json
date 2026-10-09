@@ -1,0 +1,16 @@
+{
+  "status": "cannot measure exclusive guarded-check lines",
+  "reason": "Go coverage excludes _test.go; both profiles contain only mode: set",
+  "family_members": [
+    "TestFormatterMutants_000",
+    "TestFormatterMutants_001",
+    "TestFormatterMutants_002",
+    "TestFormatterMutants_003",
+    "TestFormatterMutants_004",
+    "TestFormatterMutants_005"
+  ],
+  "other_guard_callers": [
+    "TestFormatterMutantsPlantedFailure"
+  ],
+  "native_and_node_port_coverage": "not collected; the prior audit judged the survivor guard rather than production formatter correctness"
+}

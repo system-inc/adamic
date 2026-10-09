@@ -1,0 +1,348 @@
+[
+  {
+    "id": "W1",
+    "kind": "weakened comparison",
+    "raw_failed_tests": [
+      "TestFormatterMutantsPlantedFailure"
+    ],
+    "failed_rows": [
+      "TestFormatterMutantsPlantedFailure"
+    ],
+    "raw_passed_tests": [
+      "TestProduct_YAMLFormatterMutantsOracle",
+      "TestProduct_YAMLFormatterMutant002Sources",
+      "TestProduct_YAMLFormatterMutant004Sources",
+      "TestProduct_YAMLFormatterMutant003Native",
+      "TestFormatterMutants_003",
+      "TestProduct_YAMLFormatterMutant005Lowered",
+      "TestFormatterMutants_004",
+      "TestProduct_YAMLFormatterMutant005Native",
+      "TestProduct_YAMLFormatterMutant004Native",
+      "TestProduct_YAMLFormatterMutant005Sources",
+      "TestProduct_YAMLFormatterMutant003Lowered",
+      "TestProduct_YAMLFormatterMutant001Sources",
+      "TestProduct_YAMLFormatterMutant003Sources",
+      "TestProduct_YAMLFormatterMutant001Native",
+      "TestFormatterMutants_005",
+      "TestFormatterMutants_001",
+      "TestProduct_YAMLFormatterMutant002Native",
+      "TestProduct_YAMLFormatterMutant000Sources",
+      "TestProduct_YAMLFormatterMutant001Lowered",
+      "TestProduct_YAMLFormatterMutant004Lowered",
+      "TestProduct_YAMLFormatterMutant002Lowered",
+      "TestProduct_YAMLFormatterMutant000Lowered",
+      "TestFormatterMutants_002",
+      "TestProduct_YAMLFormatterMutant000Native",
+      "TestFormatterMutants_000"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/W1.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall_seconds": 16.286101535999478,
+    "binary_seconds": 11.486,
+    "exit": 1
+  },
+  {
+    "id": "S1",
+    "kind": "construction artifact option change",
+    "raw_failed_tests": [
+      "TestProduct_YAMLFormatterMutantsOracle",
+      "TestFormatterMutants_000",
+      "TestFormatterMutants_005",
+      "TestFormatterMutants_004",
+      "TestFormatterMutants_003",
+      "TestFormatterMutants_002",
+      "TestFormatterMutants_001"
+    ],
+    "failed_rows": [
+      "TestFormatterMutants family",
+      "TestProduct_YAMLFormatterMutantsOracle"
+    ],
+    "raw_passed_tests": [
+      "TestFormatterMutantsPlantedFailure",
+      "TestProduct_YAMLFormatterMutant002Sources",
+      "TestProduct_YAMLFormatterMutant004Sources",
+      "TestProduct_YAMLFormatterMutant001Sources",
+      "TestProduct_YAMLFormatterMutant003Sources",
+      "TestProduct_YAMLFormatterMutant001Lowered",
+      "TestProduct_YAMLFormatterMutant003Lowered",
+      "TestProduct_YAMLFormatterMutant002Lowered",
+      "TestProduct_YAMLFormatterMutant001Native",
+      "TestProduct_YAMLFormatterMutant005Sources",
+      "TestProduct_YAMLFormatterMutant003Native",
+      "TestProduct_YAMLFormatterMutant002Native",
+      "TestProduct_YAMLFormatterMutant005Lowered",
+      "TestProduct_YAMLFormatterMutant004Lowered",
+      "TestProduct_YAMLFormatterMutant000Sources",
+      "TestProduct_YAMLFormatterMutant005Native",
+      "TestProduct_YAMLFormatterMutant000Lowered",
+      "TestProduct_YAMLFormatterMutant004Native",
+      "TestProduct_YAMLFormatterMutant000Native"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/S1.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u151/cache/S1"
+    },
+    "wall_seconds": 65.57751735600141,
+    "binary_seconds": 60.582,
+    "exit": 1
+  },
+  {
+    "id": "S2",
+    "kind": "construction artifact option change",
+    "raw_failed_tests": [
+      "TestFormatterMutants_004",
+      "TestFormatterMutants_002",
+      "TestFormatterMutants_001",
+      "TestFormatterMutants_003",
+      "TestProduct_YAMLFormatterMutant004Lowered",
+      "TestProduct_YAMLFormatterMutant004Native",
+      "TestProduct_YAMLFormatterMutant003Native",
+      "TestProduct_YAMLFormatterMutant003Lowered",
+      "TestProduct_YAMLFormatterMutant002Native",
+      "TestProduct_YAMLFormatterMutant002Lowered",
+      "TestProduct_YAMLFormatterMutant001Native",
+      "TestProduct_YAMLFormatterMutant001Lowered",
+      "TestFormatterMutants_005",
+      "TestProduct_YAMLFormatterMutant005Lowered",
+      "TestProduct_YAMLFormatterMutant005Native",
+      "TestProduct_YAMLFormatterMutant000Lowered",
+      "TestFormatterMutants_000",
+      "TestProduct_YAMLFormatterMutant000Native"
+    ],
+    "failed_rows": [
+      "TestFormatterMutants family",
+      "TestProduct_YAMLFormatterMutant family"
+    ],
+    "raw_passed_tests": [
+      "TestProduct_YAMLFormatterMutant004Sources",
+      "TestFormatterMutantsPlantedFailure",
+      "TestProduct_YAMLFormatterMutantsOracle",
+      "TestProduct_YAMLFormatterMutant005Sources",
+      "TestProduct_YAMLFormatterMutant002Sources",
+      "TestProduct_YAMLFormatterMutant003Sources",
+      "TestProduct_YAMLFormatterMutant001Sources",
+      "TestProduct_YAMLFormatterMutant000Sources"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/S2.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u151/cache/S2"
+    },
+    "wall_seconds": 12.634382926999024,
+    "binary_seconds": 7.797,
+    "exit": 1
+  },
+  {
+    "id": "P1",
+    "kind": "empty entry probe",
+    "raw_failed_tests": [
+      "TestFormatterMutantsPlantedFailure"
+    ],
+    "failed_rows": [
+      "TestFormatterMutantsPlantedFailure"
+    ],
+    "raw_passed_tests": [
+      "TestProduct_YAMLFormatterMutant004Sources",
+      "TestProduct_YAMLFormatterMutant005Sources",
+      "TestProduct_YAMLFormatterMutantsOracle",
+      "TestProduct_YAMLFormatterMutant005Lowered",
+      "TestProduct_YAMLFormatterMutant004Lowered",
+      "TestProduct_YAMLFormatterMutant004Native",
+      "TestProduct_YAMLFormatterMutant005Native",
+      "TestFormatterMutants_005",
+      "TestFormatterMutants_004",
+      "TestProduct_YAMLFormatterMutant002Sources",
+      "TestFormatterMutants_000",
+      "TestProduct_YAMLFormatterMutant003Sources",
+      "TestFormatterMutants_001",
+      "TestProduct_YAMLFormatterMutant003Lowered",
+      "TestProduct_YAMLFormatterMutant001Sources",
+      "TestProduct_YAMLFormatterMutant001Native",
+      "TestProduct_YAMLFormatterMutant001Lowered",
+      "TestProduct_YAMLFormatterMutant000Lowered",
+      "TestProduct_YAMLFormatterMutant000Native",
+      "TestProduct_YAMLFormatterMutant000Sources",
+      "TestProduct_YAMLFormatterMutant002Lowered",
+      "TestProduct_YAMLFormatterMutant003Native",
+      "TestFormatterMutants_003",
+      "TestProduct_YAMLFormatterMutant002Native",
+      "TestFormatterMutants_002"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/P1.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall_seconds": 13.638535054000386,
+    "binary_seconds": 11.923,
+    "exit": 1
+  },
+  {
+    "id": "P2",
+    "kind": "empty entry probe",
+    "raw_failed_tests": [
+      "TestFormatterMutants_003",
+      "TestFormatterMutants_005",
+      "TestFormatterMutants_004",
+      "TestFormatterMutants_000",
+      "TestFormatterMutants_002",
+      "TestFormatterMutants_001"
+    ],
+    "failed_rows": [
+      "TestFormatterMutants family"
+    ],
+    "raw_passed_tests": [
+      "TestProduct_YAMLFormatterMutantsOracle",
+      "TestFormatterMutantsPlantedFailure",
+      "TestProduct_YAMLFormatterMutant004Sources",
+      "TestProduct_YAMLFormatterMutant003Native",
+      "TestProduct_YAMLFormatterMutant003Lowered",
+      "TestProduct_YAMLFormatterMutant003Sources",
+      "TestProduct_YAMLFormatterMutant001Sources",
+      "TestProduct_YAMLFormatterMutant002Lowered",
+      "TestProduct_YAMLFormatterMutant001Lowered",
+      "TestProduct_YAMLFormatterMutant005Sources",
+      "TestProduct_YAMLFormatterMutant002Sources",
+      "TestProduct_YAMLFormatterMutant005Native",
+      "TestProduct_YAMLFormatterMutant000Native",
+      "TestProduct_YAMLFormatterMutant005Lowered",
+      "TestProduct_YAMLFormatterMutant000Lowered",
+      "TestProduct_YAMLFormatterMutant000Sources",
+      "TestProduct_YAMLFormatterMutant004Native",
+      "TestProduct_YAMLFormatterMutant004Lowered",
+      "TestProduct_YAMLFormatterMutant002Native",
+      "TestProduct_YAMLFormatterMutant001Native"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/P2.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall_seconds": 13.757743489999484,
+    "binary_seconds": 8.915,
+    "exit": 1
+  },
+  {
+    "id": "P3",
+    "kind": "empty entry probe",
+    "raw_failed_tests": [
+      "TestFormatterMutants_003",
+      "TestFormatterMutants_002",
+      "TestFormatterMutants_004",
+      "TestFormatterMutants_005",
+      "TestFormatterMutants_001",
+      "TestFormatterMutants_000"
+    ],
+    "failed_rows": [
+      "TestFormatterMutants family"
+    ],
+    "raw_passed_tests": [
+      "TestProduct_YAMLFormatterMutant004Sources",
+      "TestProduct_YAMLFormatterMutant002Sources",
+      "TestProduct_YAMLFormatterMutant002Native",
+      "TestProduct_YAMLFormatterMutant002Lowered",
+      "TestFormatterMutantsPlantedFailure",
+      "TestProduct_YAMLFormatterMutantsOracle",
+      "TestProduct_YAMLFormatterMutant001Sources",
+      "TestProduct_YAMLFormatterMutant001Native",
+      "TestProduct_YAMLFormatterMutant001Lowered",
+      "TestProduct_YAMLFormatterMutant005Lowered",
+      "TestProduct_YAMLFormatterMutant005Native",
+      "TestProduct_YAMLFormatterMutant003Native",
+      "TestProduct_YAMLFormatterMutant003Sources",
+      "TestProduct_YAMLFormatterMutant004Native",
+      "TestProduct_YAMLFormatterMutant005Sources",
+      "TestProduct_YAMLFormatterMutant003Lowered",
+      "TestProduct_YAMLFormatterMutant000Lowered",
+      "TestProduct_YAMLFormatterMutant000Native",
+      "TestProduct_YAMLFormatterMutant004Lowered",
+      "TestProduct_YAMLFormatterMutant000Sources"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/P3.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall_seconds": 6.072081260001141,
+    "binary_seconds": 1.087,
+    "exit": 1
+  }
+]

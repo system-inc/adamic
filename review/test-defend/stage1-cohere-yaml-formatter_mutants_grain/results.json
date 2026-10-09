@@ -1,0 +1,20 @@
+[
+  {
+    "test": "TestFormatterMutants family",
+    "package": "stage1/cohere/yaml",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "timeout 120 go test -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^TestFormatterMutants_[0-9]+$' -coverpkg=github.com/system-inc/adamic/stage1/cohere/yaml -coverprofile=family.cover > family-coverage.log 2>&1; ok github.com/system-inc/adamic/stage1/cohere/yaml 89.838s coverage: [no statements]. No mutant failure claimed: the audited survivor guard is test-harness code, which this defense brief forbids mutating.",
+    "members": [
+      "TestFormatterMutants_000",
+      "TestFormatterMutants_001",
+      "TestFormatterMutants_002",
+      "TestFormatterMutants_003",
+      "TestFormatterMutants_004",
+      "TestFormatterMutants_005"
+    ]
+  }
+]
