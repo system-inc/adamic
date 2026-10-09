@@ -1,0 +1,13 @@
+{
+  "base": "e77a4ae41f473c149aee910c51b73637686a804a",
+  "audit_commit": "9e378707ce011528e61eaf9c01250bd735d62012",
+  "nproc": 5,
+  "inventory": 198,
+  "warm_setup": true,
+  "initial_free_GB": {
+    "tmp": 8.8,
+    "workspace": 12
+  },
+  "earlier_tmp_unit_scratch": "None substantial remained after prior-unit cleanup; /tmp total capacity is only 8.8 GB.",
+  "mutant_runs_wall_seconds": 237.6128742299952
+}

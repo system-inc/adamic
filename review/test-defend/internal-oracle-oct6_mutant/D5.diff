@@ -1,0 +1,11 @@
+--- a/internal/native/emit_values.go
++++ b/internal/native/emit_values.go
+@@ -58,7 +58,7 @@
+ 	case ir.String:
+ 		return "&adamic_string_empty"
+ 	case ir.MaybeNumber:
+-		return "(adamic_maybe_number){false, 0.0}"
++		return "(adamic_maybe_number){true, 0.0}"
+ 	case ir.MaybeBoolean:
+ 		return "(adamic_maybe_boolean){false, false}"
+ 	}

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -400,7 +400,7 @@
+ 		return failure(path, errno, true);
+ 	}
+ 	char *bytes = utf8(text);
+-	int error = write_all(descriptor, bytes, text->length);
++	int error = write_all(descriptor, bytes, text->length == 0 ? 0 : text->length - 1);
+ 	free(bytes);
+ 	if (!borrowed && close(descriptor) != 0 && error == 0 && errno != EINTR) {
+ 		error = errno;

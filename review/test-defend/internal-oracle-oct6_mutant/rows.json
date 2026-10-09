@@ -1,0 +1,140 @@
+[
+  {
+    "test": "TestOmittedOriginalProbePolicy",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNativeAgreesWithNode"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/non_null.go:106",
+        "change": "change source-extension constant: no longer admit checked .ts assertions",
+        "rows_failed": [
+          "TestCheckedNonNullCounts",
+          "TestCheckedNonNullTypeScript",
+          "TestImpossibleNonNullFixturesAreRefused",
+          "TestNativeAgreesWithNode",
+          "TestNonNullLiteralUnionInitializers",
+          "TestOmittedOriginalProbePolicy",
+          "TestParserNonNullSourceExtension"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/native/emit_values.go:61",
+        "change": "change optional-number absence bit: absent scalar becomes present zero",
+        "rows_failed": [
+          "TestArgumentsLengthTypeScriptSource",
+          "TestCheckedNonNullCounts",
+          "TestCheckedNonNullTypeScript",
+          "TestNativeAgreesWithNode",
+          "TestOmittedOriginalProbePolicy"
+        ]
+      },
+      {
+        "mutant": "D6",
+        "file_line": "internal/lower/expression.go:1024",
+        "change": "swap conditional branch arguments: omitted length selects the wrong branch",
+        "rows_failed": [
+          "TestAPromptComesBeforeTheRead",
+          "TestArgumentsLengthTypeScriptSource",
+          "TestFileWritesLandInNodesOrder",
+          "TestNativeAgreesWithNode",
+          "TestOmittedArgumentZeroMutantIsCaught",
+          "TestOmittedOriginalProbePolicy",
+          "TestOneFileHoldsNodesOrder"
+        ]
+      }
+    ],
+    "evidence": "Exact commands in runs.json, timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run <bounded selector>, separate caches per mutant. D4 omitted_arguments_test.go:82: Adamic 0.1 refuses the non-null assertion !. D5 omitted_arguments_test.go:88: native: stdout differs. D6 omitted_arguments_test.go:88: native: exit codes differ. NativeAgrees also fails each mutant."
+  },
+  {
+    "test": "TestNativeAgreesWithNode",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D7 internal/native/runtime/ieee754.c:1254",
+    "attempts": [
+      {
+        "mutant": "D7",
+        "file_line": "internal/native/runtime/ieee754.c:1254",
+        "change": "change atan2 pi constant on negative-x zero-y boundary",
+        "rows_failed": [
+          "TestNativeAgreesWithNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-oracle/cache/D7 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(navigation\\.a|method_coverage_math\\.a)$; oracle_test.go:774: stdout differs, navigation.a. All executed rows in D7-rows.log pass; two WASI rows skip. Filtered counts parent fails identically clean, with no changed measured row and both selected fixtures passing.",
+    "bounded": true,
+    "passed_rows": [
+      "TestAPromptComesBeforeTheRead",
+      "TestASignalLeavesWhatWasPrinted",
+      "TestClosedStdoutEndsAsOnNode",
+      "TestFileWritesLandInNodesOrder",
+      "TestFractionalPowersReachRuntime",
+      "TestLibraryMethodAliasReadMutant",
+      "TestLibraryMethodCaptureMutants",
+      "TestLibraryMethodOwnLoadMutants",
+      "TestLibraryMethodValueMutants",
+      "TestMathNumberOracleCatchesMutants",
+      "TestOmittedArgumentZeroMutantIsCaught",
+      "TestOmittedOriginalProbePolicy",
+      "TestOmittedReaderZeroMutantIsCaught",
+      "TestOneFileHoldsNodesOrder",
+      "TestOverloadContractRulings",
+      "TestTheOracleCatchesOneByte"
+    ],
+    "skipped_rows": [
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission"
+    ],
+    "selection_artifacts": [
+      "TestCountsAreRecorded"
+    ]
+  },
+  {
+    "test": "TestFileWritesLandInNodesOrder",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNativeAgreesWithNode"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/input.c:366",
+        "change": "drop statement: flush before aliasing file write",
+        "rows_failed": [
+          "TestFileWritesLandInNodesOrder",
+          "TestNativeAgreesWithNode"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/runtime/input.c:395",
+        "change": "change option: append instead of truncate",
+        "rows_failed": [
+          "TestInputAgreesWithNode"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/runtime/input.c:403",
+        "change": "off by one byte bound for nonempty file writes",
+        "rows_failed": [
+          "TestFileWritesLandInNodesOrder",
+          "TestInputAgreesWithNode",
+          "TestNativeAgreesWithNode"
+        ]
+      }
+    ],
+    "evidence": "Exact commands in runs.json, timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run <bounded selector>, separate caches per mutant. D1 output_test.go:222: program: exit 0, \"second\\nfirst\\nthird\\n\"; Node: exit 0, \"first\\nsecond\\nthird\\n\". D3 also fails target and NativeAgrees; D2 target passes and InputAgrees fails."
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "name": "omitted",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native",
+      "-coverprofile=review/test-defend/internal-oracle-oct6_mutant/omitted.cover",
+      "./internal/oracle/",
+      "-run",
+      "^TestOmittedOriginalProbePolicy$"
+    ],
+    "exit": 0,
+    "seconds": 8.315297733002808
+  },
+  {
+    "name": "files",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native",
+      "-coverprofile=review/test-defend/internal-oracle-oct6_mutant/files.cover",
+      "./internal/oracle/",
+      "-run",
+      "^TestFileWritesLandInNodesOrder$"
+    ],
+    "exit": 0,
+    "seconds": 2.9769898390004528
+  },
+  {
+    "name": "prompt",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native",
+      "-coverprofile=review/test-defend/internal-oracle-oct6_mutant/prompt.cover",
+      "./internal/oracle/",
+      "-run",
+      "^TestAPromptComesBeforeTheRead$"
+    ],
+    "exit": 0,
+    "seconds": 2.5491992119968927
+  },
+  {
+    "name": "native",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/lower,./internal/native",
+      "-coverprofile=review/test-defend/internal-oracle-oct6_mutant/native.cover",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(navigation\\.a|omitted_scanner\\.a|omitted_reader\\.a|write_stdout_order\\.a|write_stderr_order\\.a|non_null\\.ts)$"
+    ],
+    "exit": 0,
+    "seconds": 3.439009661000455
+  }
+]

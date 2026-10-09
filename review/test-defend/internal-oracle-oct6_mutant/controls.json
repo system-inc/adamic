@@ -1,0 +1,56 @@
+[
+  {
+    "name": "restored-rows",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted|TestArgumentsLengthTypeScriptSource|TestCheckedCastFlushesOutput|TestCheckedNonNullAdamicRefusal|TestCheckedNonNullCounts|TestCheckedNonNullTypeScript|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestFractionalPowersReachRuntime|TestImpossibleNonNullFixturesAreRefused|TestInputAgreesWithNode|TestLibraryMethodAliasReadMutant|TestLibraryMethodCaptureMutants|TestLibraryMethodOwnLoadMutants|TestLibraryMethodValueMutants|TestMathNumberOracleCatchesMutants|TestNodeFSFileAgreesWithNode|TestNonNullAdamicRefusal|TestNonNullLiteralUnionInitializers|TestOmittedArgumentZeroMutantIsCaught|TestOmittedOriginalProbePolicy|TestOmittedReaderZeroMutantIsCaught|TestOneFileHoldsNodesOrder|TestOverloadContractRulings|TestParserNonNullSourceExtension|TestPossibleNonNullAdamicAssertionsAreRefused|TestTheOracleCatchesOneByte|TestWASIAgreesWithNode|TestWASIEmission)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 17.346681484999863
+  },
+  {
+    "name": "restored-native",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(navigation\\.a|method_coverage_math\\.a|omitted_.*\\.a|non_null.*\\.ts|write_stdout_order\\.a|write_stderr_order\\.a|interleaved\\.a)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 11.368734584000777
+  },
+  {
+    "name": "clean-counts-selector",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestCountsAreRecorded$/^fixtures$/^internal$/^oracle$/^testdata$/^(navigation\\.a|method_coverage_math\\.a)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 18.392004717999953
+  }
+]

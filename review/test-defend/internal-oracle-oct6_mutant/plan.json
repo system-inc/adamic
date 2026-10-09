@@ -1,0 +1,65 @@
+[
+  {
+    "mutant": "D1",
+    "aim": "files",
+    "file": "internal/native/runtime/input.c",
+    "line": 366,
+    "before": "\t// What was printed comes first, as on Node: the file may be stdout or stderr themselves.\n\tadamic_output_flush();",
+    "after": "\t// What was printed comes first, as on Node: the file may be stdout or stderr themselves.",
+    "change": "drop statement: flush before aliasing file write"
+  },
+  {
+    "mutant": "D2",
+    "aim": "files",
+    "file": "internal/native/runtime/input.c",
+    "line": 395,
+    "before": "O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC",
+    "after": "O_WRONLY | O_CREAT | O_APPEND | O_CLOEXEC",
+    "change": "change option: append instead of truncate"
+  },
+  {
+    "mutant": "D3",
+    "aim": "files",
+    "file": "internal/native/runtime/input.c",
+    "line": 403,
+    "before": "int error = write_all(descriptor, bytes, text->length);",
+    "after": "int error = write_all(descriptor, bytes, text->length == 0 ? 0 : text->length - 1);",
+    "change": "off by one byte bound for nonempty file writes"
+  },
+  {
+    "mutant": "D4",
+    "aim": "omitted",
+    "file": "internal/lower/non_null.go",
+    "line": 106,
+    "before": "return strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), \".ts\")",
+    "after": "return strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), \".tsx\")",
+    "change": "change source-extension constant: no longer admit checked .ts assertions"
+  },
+  {
+    "mutant": "D5",
+    "aim": "omitted",
+    "file": "internal/native/emit_values.go",
+    "line": 61,
+    "before": "return \"(adamic_maybe_number){false, 0.0}\"",
+    "after": "return \"(adamic_maybe_number){true, 0.0}\"",
+    "change": "change optional-number absence bit: absent scalar becomes present zero"
+  },
+  {
+    "mutant": "D6",
+    "aim": "omitted",
+    "file": "internal/lower/expression.go",
+    "line": 1024,
+    "before": "return ir.Conditional{Condition: condition, WhenTrue: whenTrue, WhenNot: whenNot}, nil",
+    "after": "return ir.Conditional{Condition: condition, WhenTrue: whenNot, WhenNot: whenTrue}, nil",
+    "change": "swap conditional branch arguments: omitted length selects the wrong branch"
+  },
+  {
+    "mutant": "D7",
+    "aim": "native",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1254,
+    "before": "pi = 3.1415926535897931160E+00;     /* 0x400921FB, 0x54442D18 */",
+    "after": "pi = 3.0;                        /* deliberate atan2 constant mutant */",
+    "change": "change atan2 pi constant on negative-x zero-y boundary"
+  }
+]

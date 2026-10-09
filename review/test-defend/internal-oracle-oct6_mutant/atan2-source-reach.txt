@@ -1,0 +1,4 @@
+internal/oracle/testdata/method_coverage_math.a:30:const atan2 = Math.atan2;
+internal/oracle/testdata/method_coverage_math.a:31:console.log(`${atan2(0.5, 0.5)}|${atan2.call(null, 0.5, 0.5)}|${atan2.apply(undefined, [0.5, 0.5])}`);
+internal/oracle/testdata/navigation.a:29:	const angle = Math.atan2(y, x) / degrees;
+internal/oracle/testdata/navigation.a:99:console.log(`${Math.hypot(0 / 0, 1 / 0)} ${Math.hypot(0 / 0, 1)} ${Math.hypot(-0, -0)} ${Math.atan2(-0, -1)} ${Math.atan2(0, -0)} ${Math.atan2(1, 0)}`);
