@@ -41,6 +41,7 @@ func init() {
 }
 
 func TestNamespaceSemanticMutants(t *testing.T) {
+	t.Parallel()
 	for _, family := range []string{"wrong scoped function", "wrong scoped constant", "wrong namespace enum", "wrong body order", "wrong exported state", "wrong debug initialization", "drop returned assignment", "wrong factory binding"} {
 		t.Run(family, func(t *testing.T) {
 			t.Parallel()

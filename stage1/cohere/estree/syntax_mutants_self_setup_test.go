@@ -225,6 +225,7 @@ func TestProduct_SyntaxMutantNative_002(t *testing.T) {
 func runSyntaxMutantShard(t *testing.T, shard int) {
 	setup := time.Now()
 	prepared := syntaxMutantReady(t)[shard]
+	script := mutantEmittedProduct(t, prepared.Main)
 	t.Logf("setup: %.3fs", time.Since(setup).Seconds())
 	started := time.Now()
 	defer func() { t.Logf("shard work: %.3fs", time.Since(started).Seconds()) }()
@@ -235,7 +236,7 @@ func runSyntaxMutantShard(t *testing.T, shard int) {
 	if shard != 0 && !strings.Contains(string(prepared.Want), `"status":"error"`) {
 		t.Fatal(string(prepared.Want))
 	}
-	for name, got := range map[string][]byte{"Node": onNode(t, prepared.Main, "--manifest", list), "native": execute(t, "", prepared.Binary, "--manifest", list)} {
+	for name, got := range map[string][]byte{"Node": onNode(t, prepared.Main, "--manifest", list), "native": execute(t, "", prepared.Binary, "--manifest", list), "emitted": mutantEmittedOutput(t, prepared.Main, script, "--manifest", list)} {
 		if os.Getenv("ADAMIC_SYNTAX_MUTANTS_PLANT") == "1" && shard == 0 && name == "native" {
 			wantCases := syntaxMutantCanonicalCases(t, prepared.Want, len(prepared.Sources))
 			gotCases := syntaxMutantCanonicalCases(t, got, len(prepared.Sources))

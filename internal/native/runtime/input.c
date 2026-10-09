@@ -254,6 +254,10 @@ static char *file_name(const adamic_string *path) {
 // read_all reads every byte from a descriptor into a buffer the caller frees, through partial reads
 // and interrupted calls. It returns 0, or the errno that stopped it.
 static int read_all(int descriptor, unsigned char **bytes, size_t *length) {
+	// Both outputs are defined on every path, so a caller that reads them after an error reads
+	// nothing it didn't set.
+	*bytes = NULL;
+	*length = 0;
 	size_t capacity = 4096, used = 0;
 	unsigned char *buffer = malloc(capacity);
 	for (;;) {
@@ -275,7 +279,8 @@ static int read_all(int descriptor, unsigned char **bytes, size_t *length) {
 			if (errno == EINTR) {
 				continue;
 			}
-			int error = errno;
+			// read sets errno when it fails; an error with none is still an error, never success.
+			int error = errno != 0 ? errno : EIO;
 			free(buffer);
 			return error;
 		}

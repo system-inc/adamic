@@ -69,6 +69,7 @@ func wholeMutantsShard(t *testing.T, index int) {
 }
 
 func TestWholeCountCheckCatchesMutant(t *testing.T) {
+	t.Parallel()
 	manifest := wholeManifest(t, []string{`const x = 1; type T = keyof X;`})
 	oracle := goOracle(t)
 	wantTree := execute(t, "", oracle, "--manifest", manifest, "--whole").output

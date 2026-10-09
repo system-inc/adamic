@@ -1,0 +1,2 @@
+async function f(value: number = 1): Promise<number> { return value; }
+await f();

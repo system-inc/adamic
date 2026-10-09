@@ -124,11 +124,15 @@ func runRecoveryMutantTop(t *testing.T, shard int) {
 	sources := recoveredGrammar()
 	cases := recoveryMutantLiveSlices(t, sources)[shard]
 	products := map[string]string{}
+	emitted := map[string]string{}
+	sourcePaths := map[string]string{}
 	var want []byte
 	if os.Getenv("ADAMIC_RECOVERY_MUTANT_SURVIVOR") == "" {
 		for _, m := range recoveryMutations {
 			if recoveryMutantOwner(m.name) == shard {
 				products[m.name] = recoveryMutantPrepared(t, m.name)
+				sourcePaths[m.name] = mutantPort(t, m.file, m.from, m.to)
+				emitted[m.name] = mutantEmittedProduct(t, sourcePaths[m.name])
 			}
 		}
 		if len(cases) != 0 {
@@ -171,10 +175,10 @@ func runRecoveryMutantTop(t *testing.T, shard int) {
 		if count != len(sources) {
 			t.Fatalf("%s lost grammar cases: %d/%d", m.name, count, len(sources))
 		}
-		main := mutantPort(t, m.file, m.from, m.to)
+		main := sourcePaths[m.name]
 		product := products[m.name]
 		binary := filepath.Join(product, "port")
-		for name, got := range map[string][]byte{"Node": recoveryMutantExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list), "native": recoveryMutantExecute(t, ctx, binary, "--manifest", list)} {
+		for name, got := range map[string][]byte{"Node": recoveryMutantExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list), "native": recoveryMutantExecute(t, ctx, binary, "--manifest", list), "emitted": mutantEmittedOutput(t, main, emitted[m.name], "--manifest", list)} {
 			if failure := recoveryComparison(want, got, true); failure != "" {
 				t.Fatal(m.name + " " + name + ": " + failure)
 			}

@@ -17,6 +17,7 @@ func init() {
 }
 
 func TestNumericEnumNeverPathsPinned(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"if", "field", "update", "implicit", "return", "index"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

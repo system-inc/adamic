@@ -10,8 +10,8 @@ import (
 	"testing/fstest"
 )
 
+// Not parallel: enable observations even when the surrounding gate is uncached.
 func TestEditCacheSeparation(t *testing.T) {
-	// Not parallel: enable observations even when the surrounding gate is uncached.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, true)
 	if err != nil {
@@ -92,8 +92,8 @@ func TestWorkerLazyFallback(t *testing.T) {
 	}
 }
 
+// Not parallel: explicitly enable cached observations for successive source edits.
 func TestLoweringSourceEdit(t *testing.T) {
-	// Not parallel: explicitly enable cached observations for successive source edits.
 	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
 	root := t.TempDir()
 	runtime, err := filepath.Abs("../../internal/native/runtime")

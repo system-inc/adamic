@@ -8,7 +8,7 @@ import (
 
 func TestTypedArraysLower(t *testing.T) {
 	t.Parallel()
-	for _, kind := range []string{"Uint8Array", "Int32Array", "Float64Array"} {
+	for _, kind := range []string{"Uint8Array", "Uint16Array", "Int32Array", "Float64Array"} {
 		t.Run(kind, func(t *testing.T) {
 			lowersAndAgreesWithNode(t, `const source: number[] = [300, -1, NaN];
 const values = new `+kind+`(source);
@@ -19,6 +19,7 @@ values.fill(-1, 1);
 values.set(values.subarray(0, 1), 2);
 for (const value of values) { console.log(value.toString()); }
 console.log((values[values.length] ?? -999).toString());
+console.log(values.byteLength.toString());
 `)
 		})
 	}
@@ -33,6 +34,8 @@ func TestTypedArrayGaps(t *testing.T) {
 		{`const v = new DataView(new ArrayBuffer(4));`, "DataView"},
 		{`const b = new ArrayBuffer(4, {maxByteLength: 8});`, "resizable ArrayBuffer"},
 		{`const v = new Int8Array(4);`, "typed array element type Int8Array"},
+		{`const v = new Uint32Array(4);`, "typed array element type Uint32Array"},
+		{`const v = new Uint16Array(4); const b = new Uint16Array(v.buffer);`, "another view's buffer"},
 		{`const v = new Uint8Array(4); const b = new Uint8Array(v.buffer);`, "another view's buffer"},
 		{`const v = new Uint8Array(4); v.set(new Int32Array(2));`, "different element type"},
 		{`const v = new Uint8Array(4); console.log(v.slice(1).length.toString());`, "typed array method slice"},

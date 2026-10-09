@@ -1,0 +1,28 @@
+// Node oracle only. This is not accepted by Adamic today.
+const fs = require('node:fs/promises');
+const mode = process.argv[2] ?? 'success';
+let cancelled = false;
+async function threeAwaits() {
+    const held = ['held'].join('');
+    console.log('start');
+    await Promise.resolve('sync');
+    console.log(`after sync ${held}`);
+    await new Promise((resolve) => setTimeout(() => {
+        console.log('timer');
+        if (mode === 'cancel') cancelled = true;
+        resolve();
+        queueMicrotask(() => console.log('timer microtask'));
+    }, 1));
+    if (cancelled) throw new Error('cancelled');
+    console.log(`after timer ${held}`);
+    const text = await fs.readFile(process.argv[3], 'utf8');
+    console.log(`after file ${text.trim()}`);
+    if (mode === 'throw') throw new Error('boom');
+    return held;
+}
+threeAwaits().then(
+    (value) => console.log(`done ${value}`),
+    (error) => console.log(`caught ${error.message}`),
+);
+queueMicrotask(() => console.log('top microtask'));
+console.log('end');
