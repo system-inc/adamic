@@ -1,0 +1,7 @@
+// awaits views-v1: checked-view optional-write integration.
+interface Source { readonly kind: string; slot?: number }
+interface View { readonly kind: 'record'; slot?: number }
+const source: Source = { kind: 'record' };
+const view = source as View;
+view.slot = 0;
+console.log(String(view.slot));

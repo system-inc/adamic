@@ -26,7 +26,6 @@ func TestUnknownReflectionRefusals(t *testing.T) {
 		{`function box(value: unknown): unknown { return value; } box(JSON);`, "JSON as a value"},
 		{`class Code { static code = 'x'; } console.log(String('code' in Code));`, "class constructor"},
 		{`class Code { inspect(value: unknown): void {} } console.log(String('inspect' in new Code()));`, "dispatch table"},
-		{`function has(value: {code:number}|undefined): boolean { return 'code' in {...value}; }`, "presence descriptors"},
 		{`class Code { declare code: string; } function has(value: unknown): boolean { return typeof value === 'object' && value !== null && 'code' in value; } has(new Code());`, "ambient class field"},
 	} {
 		t.Run(probe.reason+probe.source, func(t *testing.T) {
@@ -37,5 +36,13 @@ func TestUnknownReflectionRefusals(t *testing.T) {
 				t.Fatalf("got %v, want NotYet explaining %q", err, probe.reason)
 			}
 		})
+	}
+}
+
+func TestUnknownAbsentSpreadPresence(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `function has(value: {code:number}|undefined): boolean { return 'code' in {...value}; }`)
+	if err != nil {
+		t.Fatal(err)
 	}
 }
