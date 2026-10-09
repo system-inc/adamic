@@ -1,0 +1,11 @@
+--- a/internal/fresh/fresh.go
++++ b/internal/fresh/fresh.go
+@@ -149,7 +149,7 @@
+ 	}
+ 	for _, class := range program.Classes {
+ 		for _, method := range class.Methods {
+-			delete(direct, method)
++			_ = method
+ 		}
+ 	}
+ 	walk(reflect.ValueOf(program.Main))

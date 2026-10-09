@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T08:03:56.810724824Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-09T08:03:56.818002506Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown"}
+{"Time":"2026-10-09T08:03:56.818148415Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Output":"=== RUN   TestFutureBufferOperationRemainsUnknown\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:56.818173352Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Output":"=== PAUSE TestFutureBufferOperationRemainsUnknown\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:56.818175926Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown"}
+{"Time":"2026-10-09T08:03:56.818182085Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown"}
+{"Time":"2026-10-09T08:03:56.818183928Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Output":"=== CONT  TestFutureBufferOperationRemainsUnknown\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:56.818189426Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Output":"--- PASS: TestFutureBufferOperationRemainsUnknown (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:56.818192341Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Elapsed":0}
+{"Time":"2026-10-09T08:03:56.818202696Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:56.818228996Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"ok  \tgithub.com/system-inc/adamic/internal/fresh\t0.007s\n"}
+{"Time":"2026-10-09T08:03:56.818237629Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.008}
