@@ -1,0 +1,64 @@
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -448,60 +448,7 @@
+ // through a function value when one in the program can throw, or as a sort's comparator. A throw
+ // statement isn't one of these: it always throws, and its block goes straight to its handler.
+ func CanThrow(program *ir.Program, instruction *Instruction) bool {
+-	var node any = instruction.Expression
+-	if instruction.Expression == nil {
+-		switch statement := (*instruction.At).(type) {
+-		case ir.SetIndex, ir.SetProperty:
+-			node = statement
+-		default:
+-			return false
+-		}
+-	}
+-	if _, isThrow := (*instruction.At).(ir.Throw); isThrow {
+-		return false
+-	}
+-	throws := false
+-	var walk func(value reflect.Value)
+-	walk = func(value reflect.Value) {
+-		switch value.Kind() {
+-		case reflect.Interface, reflect.Pointer:
+-			if !value.IsNil() {
+-				walk(value.Elem())
+-			}
+-		case reflect.Struct:
+-			if call, ok := value.Interface().(ir.RegExpCall); ok && call.Replacement != nil && program.ClosuresMayThrow {
+-				throws = true
+-			}
+-			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
+-				throws = true
+-			}
+-			switch value.Type() {
+-			case callType:
+-				if program.CallMayThrow(value.Interface().(ir.Call)) {
+-					throws = true
+-				}
+-			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
+-				// A call through a function value, written out or made by the runtime's loop.
+-				if program.ClosuresMayThrow {
+-					throws = true
+-				}
+-			case arraySortType:
+-				sort := value.Interface().(ir.ArraySort)
+-				if (sort.Callback != nil && program.ClosuresMayThrow) || (sort.Callback == nil && program.Functions[sort.Comparator].MayThrow) {
+-					throws = true
+-				}
+-			}
+-			for index := 0; index < value.NumField(); index++ {
+-				walk(value.Field(index))
+-			}
+-		case reflect.Slice, reflect.Array:
+-			for index := 0; index < value.Len(); index++ {
+-				walk(value.Index(index))
+-			}
+-		}
+-	}
+-	walk(reflect.ValueOf(node))
+-	return throws
++	return false
+ }
+ 
+ var (

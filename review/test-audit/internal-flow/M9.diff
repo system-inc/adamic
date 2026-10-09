@@ -1,0 +1,11 @@
+--- a/internal/flow/ranges.go
++++ b/internal/flow/ranges.go
+@@ -194,7 +194,7 @@
+ 	if !r.IsSet() {
+ 		return false
+ 	}
+-	return order >= r.Start && order < r.End
++	return order > r.Start && order < r.End
+ }
+ 
+ // IsValid reports whether a range satisfies upstream's invariant.

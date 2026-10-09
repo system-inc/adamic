@@ -1,0 +1,1 @@
+An initial coverage probe changed corpusTestName digest[:12] to digest[:11]. That changes the expected-name oracle, not the registered corpus construction. It was rejected, is excluded from every verdict and count, and was replaced with SSetupCorpus, which changes the first registered input to the already registered hello input.

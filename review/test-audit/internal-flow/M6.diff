@@ -1,0 +1,11 @@
+--- a/internal/flow/ssa.go
++++ b/internal/flow/ssa.go
+@@ -181,7 +181,7 @@
+ 			// Uses first, then definitions. `x = x + 1` must read the OLD x before the store mints
+ 			// the new one; visiting in the other order would make the increment read itself.
+ 			EachInstructionPlacePointer(instruction, func(place *Place, role PlaceRole) {
+-				if role != PlaceRoleDefine {
++				if role == PlaceRoleDefine {
+ 					b.useIn(block.Id, place)
+ 				}
+ 			})

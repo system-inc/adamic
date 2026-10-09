@@ -1,0 +1,11 @@
+--- a/internal/flow/ssa.go
++++ b/internal/flow/ssa.go
+@@ -102,7 +102,7 @@
+ 	// in would mean 89% of the merge points a consumer sees are not merges, and every pass above
+ 	// this would have to re-derive which ones are real.
+ 	//
+-	EliminateRedundantPhis(function)
++	// Elimination dropped.
+ }
+ 
+ // ssaState is one block's view: what each original binding currently resolves to, and the phis

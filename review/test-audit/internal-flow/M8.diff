@@ -1,0 +1,11 @@
+--- a/internal/flow/ranges.go
++++ b/internal/flow/ranges.go
+@@ -351,7 +351,7 @@
+ 	}
+ 
+ 	// Part 1: build the alias graph and widen every range a mutation reaches.
+-	widenRanges(function, effects, result)
++	// Widening dropped.
+ 
+ 	// Part 2: open a range at every definition point that the widening left unopened.
+ 	for _, block := range function.Blocks {

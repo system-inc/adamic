@@ -1,0 +1,126 @@
+internal/flow/build.go:16:func Build(program *ir.Program, function int) *Function {
+internal/flow/build.go:86:func (b *builder) tracked(local int) bool {
+internal/flow/build.go:92:func (b *builder) place(local int) Place {
+internal/flow/build.go:103:func (b *builder) emit(at *ir.Statement, part int, expression ir.Expression, uses []Place, defines []Place) {
+internal/flow/build.go:114:func (b *builder) throwTarget() BlockId {
+internal/flow/build.go:128:func (b *builder) route(target BlockId, index int) BlockId {
+internal/flow/build.go:140:func (b *builder) leaving(depth int) int {
+internal/flow/build.go:151:func (b *builder) terminate(terminal Terminal) {
+internal/flow/build.go:157:func (b *builder) enter(block *BasicBlock) {
+internal/flow/build.go:164:func (b *builder) statements(statements []ir.Statement) {
+internal/flow/build.go:170:func (b *builder) statement(at *ir.Statement) {
+internal/flow/build.go:256:func (b *builder) loop(at *ir.Statement, statement ir.Loop) {
+internal/flow/build.go:282:func (b *builder) forOf(at *ir.Statement, statement ir.ForOf) {
+internal/flow/build.go:308:func (b *builder) switchStatement(at *ir.Statement, statement ir.Switch) {
+internal/flow/build.go:337:func (b *builder) defines(local int) []Place {
+internal/flow/build.go:351:func (b *builder) uses(node any) []Place {
+internal/flow/build.go:389:func (b *builder) try(at *ir.Statement, statement ir.Try) {
+internal/flow/build.go:450:func CanThrow(program *ir.Program, instruction *Instruction) bool {
+internal/flow/build.go:518:func (b *builder) linkLabels(names []string, target BlockId) {
+internal/flow/flow.go:193:func (*Goto) terminal()        {}
+internal/flow/flow.go:194:func (*If) terminal()          {}
+internal/flow/flow.go:195:func (*Return) terminal()      {}
+internal/flow/flow.go:196:func (*Unreachable) terminal() {}
+internal/flow/flow.go:197:func (*MayThrow) terminal()    {}
+internal/flow/flow.go:198:func (*Throw) terminal()       {}
+internal/flow/flow.go:199:func (*Choose) terminal()      {}
+internal/flow/flow.go:202:func NewFunction(name string) *Function {
+internal/flow/flow.go:207:func (f *Function) NewBlock() *BasicBlock {
+internal/flow/flow.go:217:func (f *Function) Block(id BlockId) (*BasicBlock, bool) {
+internal/flow/flow.go:223:func (f *Function) NewIdentifier(name string, declaration DeclarationId) *Identifier {
+internal/flow/flow.go:230:func (f *Function) AddInstruction(block *BasicBlock, instruction *Instruction) InstructionId {
+internal/flow/flow.go:239:func (f *Function) PlaceString(place Place) string {
+internal/flow/flow.go:245:func EachInstructionPlacePointer(instruction *Instruction, visit func(place *Place, role PlaceRole)) {
+internal/flow/flow.go:255:func EachInstructionPlace(instruction *Instruction, visit func(place Place, role PlaceRole)) {
+internal/flow/flow.go:260:func EachTerminalPlace(terminal Terminal, visit func(place Place, role PlaceRole)) {}
+internal/flow/flow.go:264:func EachTerminalPlacePointer(terminal Terminal, visit func(place *Place, role PlaceRole)) {}
+internal/flow/flow.go:267:func EachSuccessor(terminal Terminal, visit func(block BlockId)) {
+internal/flow/flow.go:288:func TerminalOrder(terminal Terminal) EvaluationOrder {
+internal/flow/graph.go:20:func Finalize(function *Function) {
+internal/flow/graph.go:45:func ReversePostorder(function *Function) {
+internal/flow/graph.go:155:func MarkPredecessors(function *Function) {
+internal/flow/graph.go:183:func MarkEvaluationOrder(function *Function) {
+internal/flow/graph.go:195:func setTerminalOrder(terminal Terminal, order EvaluationOrder) {
+internal/flow/ssa.go:61:func Construct(function *Function) {
+internal/flow/ssa.go:159:func (b *ssaBuilder) run() {
+internal/flow/ssa.go:223:func newSSAState() *ssaState {
+internal/flow/ssa.go:232:func (b *ssaBuilder) defineIn(blockId BlockId, place *Place) {
+internal/flow/ssa.go:240:func (b *ssaBuilder) useIn(blockId BlockId, place *Place) {
+internal/flow/ssa.go:249:func (b *ssaBuilder) mint(original IdentifierId) IdentifierId {
+internal/flow/ssa.go:268:func (b *ssaBuilder) valueAt(place *Place, blockId BlockId) IdentifierId {
+internal/flow/ssa.go:323:func (b *ssaBuilder) addPhi(blockId BlockId, original Place, renamed Place) {
+internal/flow/ssa.go:341:func (b *ssaBuilder) fixIncompletePhis(blockId BlockId) {
+internal/flow/ssa.go:359:func PhiOperandsInOrder(phi *Phi) []BlockId {
+internal/flow/ssa_eliminate.go:30:func EliminateRedundantPhis(function *Function) {
+internal/flow/ssa_eliminate.go:85:func redundantPhiValue(phi *Phi) (IdentifierId, bool) {
+internal/flow/ssa_eliminate.go:108:func applyRewrites(function *Function, resolve func(IdentifierId) IdentifierId) {
+internal/flow/ssa_verify.go:50:func (v SSAViolation) String() string { return v.Detail }
+internal/flow/ssa_verify.go:69:func VerifySSA(function *Function) []SSAViolation {
+internal/flow/ssa_verify.go:201:func CollectSSAStats(function *Function) SSAStats {
+internal/flow/ssa_verify.go:251:func computeDominance(function *Function) *dominanceTree {
+internal/flow/ssa_verify.go:304:func (t *dominanceTree) dominates(dominator, block BlockId) bool {
+internal/flow/liveness.go:10:func LiveOut(function *Function) map[InstructionId]map[DeclarationId]bool {
+internal/flow/infer.go:31:func InferAliasingEffects(function *Function) *AliasingEffects {
+internal/flow/infer.go:77:func (s shape) roots() []Place {
+internal/flow/infer.go:81:func (s *shape) merge(other shape) {
+internal/flow/infer.go:91:func (n *inference) run() {
+internal/flow/infer.go:130:func (n *inference) declaration(place Place) DeclarationId {
+internal/flow/infer.go:135:func (n *inference) run1(instruction *Instruction) {
+internal/flow/infer.go:173:func (n *inference) define(into Place, value shape) {
+internal/flow/infer.go:218:func (n *inference) store(container shape, value shape) {
+internal/flow/infer.go:235:func (n *inference) call(operands []shape) shape {
+internal/flow/infer.go:249:func (n *inference) mutateEscaped() {
+internal/flow/infer.go:264:func (n *inference) escape(value shape) {
+internal/flow/infer.go:270:func (n *inference) typeOf(value IdentifierId) ir.Type {
+internal/flow/infer.go:274:func anyEscaped(escaped map[IdentifierId]bool, places []Place) bool {
+internal/flow/infer.go:285:func mutable(valueType ir.Type) bool {
+internal/flow/infer.go:290:func (n *inference) value(expression ir.Expression) shape {
+internal/flow/infer.go:426:func (n *inference) operands(expression ir.Expression) []shape {
+internal/flow/infer.go:455:func writes(expression ir.Expression) bool {
+internal/flow/infer.go:466:func callsBack(expression ir.Expression) bool {
+internal/flow/ranges.go:187:func (r MutableRange) IsSet() bool { return r.Start != 0 || r.End != 0 }
+internal/flow/ranges.go:193:func (r MutableRange) Contains(order EvaluationOrder) bool {
+internal/flow/ranges.go:205:func (r MutableRange) IsValid() bool {
+internal/flow/ranges.go:242:func RangeGaps() []RangeGap {
+internal/flow/ranges.go:270:func (m *MutableRanges) Get(id IdentifierId) MutableRange {
+internal/flow/ranges.go:278:func (m *MutableRanges) Len() int {
+internal/flow/ranges.go:288:func (m *MutableRanges) Contains(id IdentifierId, order EvaluationOrder) bool {
+internal/flow/ranges.go:293:func (m *MutableRanges) set(id IdentifierId, r MutableRange) {
+internal/flow/ranges.go:323:func InferMutableRanges(function *Function) *MutableRanges {
+internal/flow/ranges.go:347:func InferMutableRangesWithEffects(function *Function, effects *AliasingEffects) *MutableRanges {
+internal/flow/ranges.go:507:func RangeOf(ranges *MutableRanges, id IdentifierId) MutableRange {
+internal/flow/ranges.go:516:func IsMutableAt(ranges *MutableRanges, id IdentifierId, order EvaluationOrder) bool {
+internal/flow/ranges.go:532:func ValidateMutableRanges(ranges *MutableRanges) []IdentifierId {
+internal/flow/ranges.go:568:func phiOpensBefore(existing MutableRange, firstOrder EvaluationOrder) bool {
+internal/flow/ranges.go:586:func phiOpenedRange(existing MutableRange, firstOrder EvaluationOrder) (MutableRange, bool) {
+internal/flow/ranges.go:600:func blockFirstOrder(function *Function, block *BasicBlock) EvaluationOrder {
+internal/flow/ranges.go:614:func maxOrder(a, b EvaluationOrder) EvaluationOrder {
+internal/flow/ranges.go:705:func newAliasingNode(id IdentifierId, value aliasingNodeValue) *aliasingNode {
+internal/flow/ranges.go:723:func insertBackEdge(into map[IdentifierId]int, order *[]IdentifierId, from IdentifierId, index int) {
+internal/flow/ranges.go:786:func newAliasingState() *aliasingState {
+internal/flow/ranges.go:798:func (s *aliasingState) markImmutable(id IdentifierId, kind EffectValueKind) {
+internal/flow/ranges.go:809:func (s *aliasingState) freeze(id IdentifierId) bool {
+internal/flow/ranges.go:813:func (s *aliasingState) freezeWithSeen(id IdentifierId, seen map[IdentifierId]bool) bool {
+internal/flow/ranges.go:846:func (s *aliasingState) notMutable(id IdentifierId) bool {
+internal/flow/ranges.go:856:func (s *aliasingState) deriveImmutable(from IdentifierId, into IdentifierId) {
+internal/flow/ranges.go:874:func (s *aliasingState) derivePhiImmutable(phi *Phi, seenBlocks map[BlockId]bool) {
+internal/flow/ranges.go:912:func (s *aliasingState) create(place Place, value aliasingNodeValue) {
+internal/flow/ranges.go:924:func (s *aliasingState) recordFreezeSources(into IdentifierId, sources []Place) {
+internal/flow/ranges.go:940:func (s *aliasingState) shareIdentity(from IdentifierId, into IdentifierId) {
+internal/flow/ranges.go:955:func (s *aliasingState) detachIdentity(id IdentifierId) {
+internal/flow/ranges.go:974:func (s *aliasingState) createFrom(index int, from Place, into Place) {
+internal/flow/ranges.go:989:func (s *aliasingState) assign(index int, from Place, into Place) {
+internal/flow/ranges.go:1003:func (s *aliasingState) capture(index int, from Place, into Place) {
+internal/flow/ranges.go:1017:func (s *aliasingState) maybeAlias(index int, from Place, into Place) {
+internal/flow/ranges.go:1104:func (s *aliasingState) mutate(
+internal/flow/ranges.go:1253:func buildAliasingGraph(function *Function, effects *AliasingEffects) (*aliasingState, []pendingMutation) {
+internal/flow/ranges.go:1511:func widenRanges(function *Function, effects *AliasingEffects, result *MutableRanges) {
+internal/flow/effects.go:58:func (k AliasingEffectKind) String() string {
+internal/flow/effects.go:97:func (k AliasingEffectKind) IsMutation() bool {
+internal/flow/effects.go:112:func (k AliasingEffectKind) IsAliasing() bool {
+internal/flow/effects.go:164:func (k EffectValueKind) String() string {
+internal/flow/effects.go:190:func (e *AliasingEffects) Get(id InstructionId) []AliasingEffect {
+internal/flow/effects.go:198:func (e *AliasingEffects) Len() int {
+internal/flow/effects.go:206:func create(into Place, kind EffectValueKind) AliasingEffect {
+internal/flow/effects.go:211:func flow(kind AliasingEffectKind, from Place, into Place) AliasingEffect {
+internal/flow/effects.go:216:func mutate(kind AliasingEffectKind, value Place) AliasingEffect {

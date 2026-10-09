@@ -1,0 +1,13 @@
+--- a/internal/flow/liveness.go
++++ b/internal/flow/liveness.go
+@@ -41,9 +41,7 @@
+ 						live[variable] = true
+ 					}
+ 				}
+-				for _, use := range instruction.Uses {
+-					live[declaration(use)] = true
+-				}
++				// Read propagation dropped.
+ 			}
+ 			if len(live) != len(liveIn[block.Id]) {
+ 				liveIn[block.Id] = live

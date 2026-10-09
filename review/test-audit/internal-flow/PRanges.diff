@@ -1,0 +1,14 @@
+--- a/internal/flow/ranges.go
++++ b/internal/flow/ranges.go
+@@ -321,10 +321,7 @@
+ // Idempotent: every guard tests the range this pass itself wrote, so a second run over the same
+ // function produces an equal table. `TestRangesAreIdempotent` pins it.
+ func InferMutableRanges(function *Function) *MutableRanges {
+-	if function == nil {
+-		return &MutableRanges{}
+-	}
+-	return InferMutableRangesWithEffects(function, InferAliasingEffects(function))
++	return &MutableRanges{}
+ }
+ 
+ // InferMutableRangesWithEffects is the full pass, taking an effect table the caller already has.

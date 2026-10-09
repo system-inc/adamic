@@ -1,0 +1,104 @@
+[
+  {
+    "test": "TestFlowProgram family",
+    "seconds": 62.734,
+    "kills": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9"
+    ],
+    "unique_kills": [
+      "M4",
+      "M9"
+    ],
+    "verdict": "slow-worthy",
+    "subsumed_by": [],
+    "vacuous": false
+  },
+  {
+    "test": "TestFlowCorpusSetupIsShared",
+    "seconds": 0.046,
+    "kills": [],
+    "unique_kills": [],
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "vacuous": null
+  },
+  {
+    "test": "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95",
+    "seconds": 0.059,
+    "kills": [
+      "M1",
+      "M2",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [],
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlowProgram family"
+    ],
+    "vacuous": false
+  },
+  {
+    "test": "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95",
+    "seconds": 13.205,
+    "kills": [
+      "M1",
+      "M2",
+      "M8"
+    ],
+    "unique_kills": [],
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlowProgram family"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95",
+    "seconds": 13.339,
+    "kills": [
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlowProgram family"
+    ],
+    "vacuous": false
+  },
+  {
+    "test": "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95",
+    "seconds": 14.11,
+    "kills": [
+      "M7"
+    ],
+    "unique_kills": [],
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlowProgram family"
+    ],
+    "vacuous": false
+  },
+  {
+    "test": "TestDebuggerHasNoFlowInstruction",
+    "seconds": 0.009,
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [],
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95"
+    ],
+    "vacuous": false
+  }
+]

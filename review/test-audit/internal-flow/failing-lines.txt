@@ -1,0 +1,31 @@
+M1 | TestFlowProgram family | corpus_units_test.go:9103: testdata/mutations.a, function 0 (throughField): the graph reads tracked locals 0 times, the IR 3
+M1 | TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:8533: ../oracle/testdata/timsort.a, function -1 (main): the graph reads tracked locals 6 times, the IR 22
+M1 | TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:9109: function -1 (main): words$9 was mutated at instruction 20 (order 31), outside its range [26, 27)
+M2 | TestDebuggerHasNoFlowInstruction | debugger_test.go:18: debugger changed the flow: 0 instructions, want 1
+M2 | TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:8533: ../oracle/testdata/timsort.a, function -1 (main): the graph reads tracked locals 10 times, the IR 22
+M2 | TestFlowProgram family | corpus_units_test.go:9103: testdata/mutations.a, function 3 (throughMap): the graph reads tracked locals 3 times, the IR 4
+M2 | TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:9109: function 2 (numbers): made$7 was mutated at instruction 2 (order 6), outside its range [1, 2)
+M2 | TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:9115: function -1 ran a point the graph says can't be reached
+M3 | TestFlowProgram family | corpus_units_test.go:9103: function 2 (throughLoop): instruction 8 ran after 5, and no edge from bb4 leads there
+M3 | TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:9115: function -1 (main): instruction 17 ran after 6, and no edge from bb3 leads there
+M4 | TestFlowProgram family | corpus_units_test.go:7711: function 3 ran a point the graph says can't be reached
+M5 | TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:8533: ../oracle/testdata/timsort.a, function -1 (main): length$9 in instruction 7 names [{5 0}], want the one definition that reaches it, [{5 0}]
+M5 | TestFlowProgram family | corpus_units_test.go:9097: testdata/joins.a, function 1 (sumTo): limit$7 in instruction 5 names [{-1 0}], want the one definition that reaches it, [{-1 0}]
+M6 | TestFlowProgram family | corpus_units_test.go:9103: testdata/mutations.a, function 0 (throughField): box$0 in instruction 1 names [], want the one definition that reaches it, [{0 0}]
+M6 | TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:8533: ../oracle/testdata/timsort.a, function -1 (main): shape$1 in instruction 17 names [] (a phi: false), want a phi over what reaches it, [{6 0} {16 0}]
+M7 | TestFlowProgram family | corpus_units_test.go:9103: function 0 (throughField): a variable (declaration 5) is read after instruction 2, where liveness says it's dead
+M7 | TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:9121: function 2 (numbers): a variable (declaration 12) is read after instruction 9, where liveness says it's dead
+M8 | TestFlowProgram family | corpus_units_test.go:9103: function 0 (throughField): box$2 was mutated at instruction 2 (order 3), outside its range [1, 2)
+M8 | TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:9109: function 2 (numbers): made$7 was mutated at instruction 3 (order 8), outside its range [1, 2)
+M9 | TestFlowProgram family | corpus_units_test.go:9103: function 6 (bump): counter$1 was mutated at instruction 0 (order 1), outside its range [1, 2)
+PBuild | TestFlowProgram family | panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+PBuild | TestFlowCorpusSetupIsShared | panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+PBuild | TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95 | panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+PBuild | TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95 | panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+PBuild | TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95 | panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+PBuild | TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95 | panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+PBuild | TestDebuggerHasNoFlowInstruction | panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+PConstruct | TestFlowProgram family | corpus_units_test.go:9097: testdata/joins.a, function 0 (clamp): value result$3 is defined in bb1 and again in bb2
+PConstruct | TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:8533: ../oracle/testdata/timsort.a, function -1 (main): value shape$1 is defined in bb3 and again in bb7
+PLiveOut | TestFlowProgram family | corpus_units_test.go:9103: function 0 (throughField): a variable (declaration 5) is read after instruction 2, where liveness says it's dead
+PLiveOut | TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95 | corpus_units_test.go:9121: function 2 (numbers): a variable (declaration 12) is read after instruction 9, where liveness says it's dead

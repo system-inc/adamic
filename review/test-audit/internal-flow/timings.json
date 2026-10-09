@@ -1,0 +1,37 @@
+{
+  "TestFlowProgram family": [
+    63.214,
+    60.318,
+    62.734
+  ],
+  "TestFlowCorpusSetupIsShared": [
+    0.046,
+    0.06,
+    0.041
+  ],
+  "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": [
+    0.054,
+    0.061,
+    0.059
+  ],
+  "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": [
+    13.509,
+    12.999,
+    13.205
+  ],
+  "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": [
+    13.167,
+    13.416,
+    13.339
+  ],
+  "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": [
+    14.11,
+    14.241,
+    13.949
+  ],
+  "TestDebuggerHasNoFlowInstruction": [
+    0.011,
+    0.007,
+    0.009
+  ]
+}

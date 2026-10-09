@@ -1,0 +1,11 @@
+--- a/internal/flow/trace_test.go
++++ b/internal/flow/trace_test.go
+@@ -198,7 +198,7 @@
+ 	value, _ := preparedTraces.LoadOrStore(path, &preparedTrace{})
+ 	entry := value.(*preparedTrace)
+ 	entry.once.Do(func() { setup := prepareTrace(t, path); entry.setup = &setup })
+-	return entry.setup
++	return &traceSetup{}
+ }
+ 
+ func traced(t *testing.T, path string) run {

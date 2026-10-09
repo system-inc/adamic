@@ -1,0 +1,4 @@
+Code under test: internal/flow graph construction, SSA construction/elimination, alias effects and mutable ranges, liveness.
+Oracles: Node traces for paths, mutations, liveness; self verifier/reaching/read counts for SSA; self instruction count for debugger; suite construction for setup.
+Menu fixed before any kill inspection: M1 flip global tracking; M2 drop Evaluate emission; M3 flip CheckAfter; M4 return early CanThrow false; M5 drop EliminateRedundantPhis call; M6 flip use role condition; M7 drop whole read propagation loop; M8 drop widening call; M9 off-by-one range lower bound.
+Probes: PBuild nil; PConstruct early return; PLiveOut nil; PRanges empty table.

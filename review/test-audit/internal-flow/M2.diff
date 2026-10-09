@@ -1,0 +1,11 @@
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -175,7 +175,7 @@
+ 	case ir.WriteLine:
+ 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
+ 	case ir.Evaluate:
+-		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
++		return
+ 	case ir.SetIndex:
+ 		b.emit(at, 0, nil, b.uses(statement), nil)
+ 	case ir.SetProperty:

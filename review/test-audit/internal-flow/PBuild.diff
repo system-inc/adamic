@@ -1,0 +1,39 @@
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -14,35 +14,7 @@
+ // Before Construct, every read and every write of a variable names the same identifier, the
+ // variable's own: Braun's construction keys on the declaration, and mints a value per definition.
+ func Build(program *ir.Program, function int) *Function {
+-	builder := &builder{program: program, identifiers: map[int]IdentifierId{}}
+-	var statements []ir.Statement
+-	if function < 0 {
+-		builder.function = NewFunction("main")
+-		statements = program.Main
+-	} else {
+-		builder.function = NewFunction(program.Functions[function].Name)
+-		statements = program.Functions[function].Body
+-	}
+-	entry := builder.function.NewBlock()
+-	builder.function.Entry = entry.Id
+-	builder.current = entry
+-	if function >= 0 {
+-		for _, parameter := range program.Functions[function].Parameters {
+-			if builder.tracked(parameter) {
+-				builder.function.Params = append(builder.function.Params, builder.place(parameter))
+-			}
+-		}
+-		if count := program.Functions[function].ArgumentsCount; count != 0 && builder.tracked(count-1) {
+-			builder.function.Params = append(builder.function.Params, builder.place(count-1))
+-		}
+-
+-	}
+-	builder.function.Program = program
+-	builder.statements(statements)
+-	// Falling off the end returns, as a void function and the top level do.
+-	builder.terminate(&Return{})
+-	Finalize(builder.function)
+-	return builder.function
++	return nil
+ }
+ 
+ type builder struct {

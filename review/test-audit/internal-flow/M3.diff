@@ -1,0 +1,11 @@
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -255,7 +255,7 @@
+ // update after the body, and continue going to the update.
+ func (b *builder) loop(at *ir.Statement, statement ir.Loop) {
+ 	test, body, update, after := b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock()
+-	if statement.CheckAfter {
++	if !statement.CheckAfter {
+ 		b.enter(body)
+ 	} else {
+ 		b.enter(test)

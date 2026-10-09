@@ -1,0 +1,122 @@
+{
+  "PBuild": {
+    "rows": {
+      "TestFlowProgram family": "fail",
+      "TestFlowCorpusSetupIsShared": "fail",
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": "fail",
+      "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": "fail",
+      "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": "fail",
+      "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": "fail",
+      "TestDebuggerHasNoFlowInstruction": "fail"
+    },
+    "errors": {
+      "TestFlowProgram family": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
+      "TestFlowCorpusSetupIsShared": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
+      "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
+      "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
+      "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
+      "TestDebuggerHasNoFlowInstruction": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    },
+    "members": {
+      "TestFlowProgram_______dedication_dedication_a_5b18fcb1ef6f": "fail",
+      "TestFlowCorpusSetupIsShared": "fail",
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": "fail",
+      "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": "fail",
+      "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": "fail",
+      "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": "fail",
+      "TestDebuggerHasNoFlowInstruction": "fail"
+    },
+    "bounded": true
+  },
+  "PConstruct": {
+    "rows": {
+      "TestDebuggerHasNoFlowInstruction": "pass",
+      "TestFlowProgram family": "fail",
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": "fail",
+      "TestFlowCorpusSetupIsShared": "pass",
+      "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": "pass"
+    },
+    "members": {
+      "TestDebuggerHasNoFlowInstruction": "pass",
+      "TestFlowCorpusUnitsCoverEveryProgram": "pass",
+      "TestFlowProgram_testdata_joins_a_091c4a59e83f": "fail",
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": "fail",
+      "TestFlowCorpusRemainder": "pass",
+      "TestFlowProgram_testdata_mutations_a_fe30ed94ac7e": "fail",
+      "TestFlowCorpusSetupIsShared": "pass",
+      "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": "pass"
+    },
+    "errors": {
+      "TestFlowProgram family": "corpus_units_test.go:9097: testdata/joins.a, function 0 (clamp): value result$3 is defined in bb1 and again in bb2",
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": "corpus_units_test.go:8533: ../oracle/testdata/timsort.a, function -1 (main): value shape$1 is defined in bb3 and again in bb7"
+    },
+    "panic": false,
+    "timeout": false,
+    "seconds": 17.015,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run ."
+  },
+  "PLiveOut": {
+    "rows": {
+      "TestFlowProgram family": "fail",
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowCorpusSetupIsShared": "pass",
+      "TestDebuggerHasNoFlowInstruction": "pass",
+      "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": "fail"
+    },
+    "members": {
+      "TestFlowCorpusUnitsCoverEveryProgram": "pass",
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowCorpusRemainder": "pass",
+      "TestFlowCorpusSetupIsShared": "pass",
+      "TestDebuggerHasNoFlowInstruction": "pass",
+      "TestFlowProgram_testdata_mutations_a_fe30ed94ac7e": "fail",
+      "TestFlowProgram_testdata_joins_a_091c4a59e83f": "fail",
+      "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": "fail"
+    },
+    "errors": {
+      "TestFlowProgram family": "corpus_units_test.go:9103: function 0 (throughField): a variable (declaration 5) is read after instruction 2, where liveness says it's dead",
+      "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": "corpus_units_test.go:9121: function 2 (numbers): a variable (declaration 12) is read after instruction 9, where liveness says it's dead"
+    },
+    "panic": false,
+    "timeout": false,
+    "seconds": 27.85,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run ."
+  },
+  "PRanges": {
+    "rows": {
+      "TestFlowProgram family": "pass",
+      "TestDebuggerHasNoFlowInstruction": "pass",
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowCorpusSetupIsShared": "pass",
+      "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": "pass"
+    },
+    "members": {
+      "TestFlowCorpusUnitsCoverEveryProgram": "pass",
+      "TestDebuggerHasNoFlowInstruction": "pass",
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowProgram_testdata_mutations_a_fe30ed94ac7e": "pass",
+      "TestFlowCorpusRemainder": "pass",
+      "TestFlowCorpusSetupIsShared": "pass",
+      "TestFlowProgram_testdata_joins_a_091c4a59e83f": "pass",
+      "TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95": "pass",
+      "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95": "pass"
+    },
+    "errors": {},
+    "panic": false,
+    "timeout": false,
+    "seconds": 15.529,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run ."
+  }
+}

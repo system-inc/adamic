@@ -1,0 +1,195 @@
+diff --git a/internal/flow/build.go b/internal/flow/build.go
+index 6a789ded..f26fa076 100644
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -2,6 +2,7 @@ package flow
+ 
+ import (
+ 	"fmt"
++	"os"
+ 	"reflect"
+ 	"slices"
+ 
+@@ -14,6 +15,9 @@ import (
+ // Before Construct, every read and every write of a variable names the same identifier, the
+ // variable's own: Braun's construction keys on the declaration, and mints a value per definition.
+ func Build(program *ir.Program, function int) *Function {
++	if os.Getenv("ADAMIC_MUTANT") == "PBuild" {
++		return nil
++	}
+ 	builder := &builder{program: program, identifiers: map[int]IdentifierId{}}
+ 	var statements []ir.Statement
+ 	if function < 0 {
+@@ -85,6 +89,9 @@ type jump struct {
+ // tracked reports whether a local is a value the graph follows: one only its own function writes.
+ func (b *builder) tracked(local int) bool {
+ 	declared := b.program.Locals[local]
++	if os.Getenv("ADAMIC_MUTANT") == "M1" {
++		return declared.Global && !declared.Captured && !declared.ExpressionAssigned
++	}
+ 	return !declared.Global && !declared.Captured && !declared.ExpressionAssigned
+ }
+ 
+@@ -175,6 +182,9 @@ func (b *builder) statement(at *ir.Statement) {
+ 	case ir.WriteLine:
+ 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
+ 	case ir.Evaluate:
++		if os.Getenv("ADAMIC_MUTANT") == "M2" {
++			return
++		}
+ 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
+ 	case ir.SetIndex:
+ 		b.emit(at, 0, nil, b.uses(statement), nil)
+@@ -255,7 +265,7 @@ func (b *builder) statement(at *ir.Statement) {
+ // update after the body, and continue going to the update.
+ func (b *builder) loop(at *ir.Statement, statement ir.Loop) {
+ 	test, body, update, after := b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock(), b.function.NewBlock()
+-	if statement.CheckAfter {
++	if statement.CheckAfter != (os.Getenv("ADAMIC_MUTANT") == "M3") {
+ 		b.enter(body)
+ 	} else {
+ 		b.enter(test)
+@@ -448,6 +458,9 @@ func (b *builder) try(at *ir.Statement, statement ir.Try) {
+ // through a function value when one in the program can throw, or as a sort's comparator. A throw
+ // statement isn't one of these: it always throws, and its block goes straight to its handler.
+ func CanThrow(program *ir.Program, instruction *Instruction) bool {
++	if os.Getenv("ADAMIC_MUTANT") == "M4" {
++		return false
++	}
+ 	var node any = instruction.Expression
+ 	if instruction.Expression == nil {
+ 		switch statement := (*instruction.At).(type) {
+diff --git a/internal/flow/liveness.go b/internal/flow/liveness.go
+index d3837836..b50cd0b1 100644
+--- a/internal/flow/liveness.go
++++ b/internal/flow/liveness.go
+@@ -1,5 +1,7 @@
+ package flow
+ 
++import "os"
++
+ // LiveOut is, for every instruction, the variables whose current value something may still read
+ // after it: classic backward liveness over the graph, by variable rather than by value, so it can be
+ // run on a graph before or after single assignment. Reuse in place reads it (internal/native): a
+@@ -8,6 +10,9 @@ package flow
+ // Only the variables the graph tracks are here (flow.go): a global or a captured variable is never
+ // in a set, and a caller must treat it as always live.
+ func LiveOut(function *Function) map[InstructionId]map[DeclarationId]bool {
++	if os.Getenv("ADAMIC_MUTANT") == "PLiveOut" {
++		return nil
++	}
+ 	declaration := func(place Place) DeclarationId { return function.Identifiers[place.Identifier].Declaration }
+ 	liveIn := map[BlockId]map[DeclarationId]bool{}
+ 	result := map[InstructionId]map[DeclarationId]bool{}
+@@ -41,8 +46,12 @@ func LiveOut(function *Function) map[InstructionId]map[DeclarationId]bool {
+ 						live[variable] = true
+ 					}
+ 				}
+-				for _, use := range instruction.Uses {
+-					live[declaration(use)] = true
++				if os.Getenv("ADAMIC_MUTANT") == "M7" {
++					// Read propagation dropped.
++				} else {
++					for _, use := range instruction.Uses {
++						live[declaration(use)] = true
++					}
+ 				}
+ 			}
+ 			if len(live) != len(liveIn[block.Id]) {
+diff --git a/internal/flow/ranges.go b/internal/flow/ranges.go
+index ba8bf1a9..aaaa9e66 100644
+--- a/internal/flow/ranges.go
++++ b/internal/flow/ranges.go
+@@ -167,7 +167,10 @@
+ // report over blocks would not be.
+ package flow
+ 
+-import "sort"
++import (
++	"os"
++	"sort"
++)
+ 
+ // MutableRange is the half-open span of evaluation over which a value is still being written.
+ //
+@@ -191,6 +194,9 @@ func (r MutableRange) IsSet() bool { return r.Start != 0 || r.End != 0 }
+ // Half-open, matching React's `inRange`: the start is inside and the end is not. An unset range
+ // contains nothing, which is the answer that keeps a caller from having to check IsSet first.
+ func (r MutableRange) Contains(order EvaluationOrder) bool {
++	if os.Getenv("ADAMIC_MUTANT") == "M9" {
++		return r.IsSet() && order > r.Start && order < r.End
++	}
+ 	if !r.IsSet() {
+ 		return false
+ 	}
+@@ -321,6 +327,9 @@ func (m *MutableRanges) set(id IdentifierId, r MutableRange) {
+ // Idempotent: every guard tests the range this pass itself wrote, so a second run over the same
+ // function produces an equal table. `TestRangesAreIdempotent` pins it.
+ func InferMutableRanges(function *Function) *MutableRanges {
++	if os.Getenv("ADAMIC_MUTANT") == "PRanges" {
++		return &MutableRanges{}
++	}
+ 	if function == nil {
+ 		return &MutableRanges{}
+ 	}
+@@ -351,7 +360,11 @@ func InferMutableRangesWithEffects(function *Function, effects *AliasingEffects)
+ 	}
+ 
+ 	// Part 1: build the alias graph and widen every range a mutation reaches.
+-	widenRanges(function, effects, result)
++	if os.Getenv("ADAMIC_MUTANT") == "M8" {
++		// Widening dropped.
++	} else {
++		widenRanges(function, effects, result)
++	}
+ 
+ 	// Part 2: open a range at every definition point that the widening left unopened.
+ 	for _, block := range function.Blocks {
+diff --git a/internal/flow/ssa.go b/internal/flow/ssa.go
+index 4a8a8b40..a6826ce5 100644
+--- a/internal/flow/ssa.go
++++ b/internal/flow/ssa.go
+@@ -46,7 +46,10 @@
+ // Redundant-phi elimination is a separate pass, `EliminateRedundantPhis`, in ssa_eliminate.go.
+ package flow
+ 
+-import "sort"
++import (
++	"os"
++	"sort"
++)
+ 
+ // Construct converts a function to single static assignment form, in place, and recursively for
+ // every nested function.
+@@ -59,6 +62,9 @@ import "sort"
+ // Neither arises: Build resolves every variable through the IR's own local numbering, and leaves
+ // globals and captured variables out of the graph (flow.go says why).
+ func Construct(function *Function) {
++	if os.Getenv("ADAMIC_MUTANT") == "PConstruct" {
++		return
++	}
+ 	if function == nil {
+ 		return
+ 	}
+@@ -102,7 +108,11 @@ func Construct(function *Function) {
+ 	// in would mean 89% of the merge points a consumer sees are not merges, and every pass above
+ 	// this would have to re-derive which ones are real.
+ 	//
+-	EliminateRedundantPhis(function)
++	if os.Getenv("ADAMIC_MUTANT") == "M5" {
++		// Elimination dropped.
++	} else {
++		EliminateRedundantPhis(function)
++	}
+ }
+ 
+ // ssaState is one block's view: what each original binding currently resolves to, and the phis
+@@ -181,7 +191,7 @@ func (b *ssaBuilder) run() {
+ 			// Uses first, then definitions. `x = x + 1` must read the OLD x before the store mints
+ 			// the new one; visiting in the other order would make the increment read itself.
+ 			EachInstructionPlacePointer(instruction, func(place *Place, role PlaceRole) {
+-				if role != PlaceRoleDefine {
++				if (role != PlaceRoleDefine) != (os.Getenv("ADAMIC_MUTANT") == "M6") {
+ 					b.useIn(block.Id, place)
+ 				}
+ 			})

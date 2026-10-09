@@ -1,0 +1,11 @@
+--- a/internal/flow/corpus_units_test.go
++++ b/internal/flow/corpus_units_test.go
+@@ -4,7 +4,7 @@
+ import "testing"
+ 
+ var flowCorpusPaths = []string{
+-	"../../dedication/dedication.a",
++	"../load/testdata/0.1/compile/01_hello.ts",
+ 	"../load/testdata/0.1/compile/01_hello.ts",
+ 	"../load/testdata/0.1/compile/02_fizzbuzz.ts",
+ 	"../load/testdata/0.1/compile/03_shapes.ts",

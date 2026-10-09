@@ -1,0 +1,11 @@
+--- a/internal/flow/build.go
++++ b/internal/flow/build.go
+@@ -85,7 +85,7 @@
+ // tracked reports whether a local is a value the graph follows: one only its own function writes.
+ func (b *builder) tracked(local int) bool {
+ 	declared := b.program.Locals[local]
+-	return !declared.Global && !declared.Captured && !declared.ExpressionAssigned
++	return declared.Global && !declared.Captured && !declared.ExpressionAssigned
+ }
+ 
+ // place is a tracked local's place: its one identifier, minted the first time it's met.
