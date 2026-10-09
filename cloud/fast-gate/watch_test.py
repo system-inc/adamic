@@ -932,6 +932,31 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'stopped codex/test0 %s on box0: over the box ceiling of 1800 s' % w.tips[0][1] in w.read('output'))
         self.assertIn('box0 ', w.read('stops'))
 
+    def test_a_whole_box_stage_canary_gets_two_hours_and_a_slot_canary_an_hour(self):
+        # Oct 9 20:14Z: c0232217's whole-box canary was stopped at the hour with no failure; main~10 runs about 105 minutes.
+        w = Watcher(1, mode='hold', slots='box0 S\nbox1 S\n')
+        self.addCleanup(w.close)
+        holders = {}
+        for directory in ('running', 'running-started', 'reserved-running', 'logs'):
+            (w.state / directory).mkdir(parents=True, exist_ok=True)
+        for name, box, whole in (('whole', 'box0', True), ('slot', 'box1', False)):
+            holder = subprocess.Popen(['sleep', '60'])
+            self.addCleanup(holder.kill)
+            holders[name] = holder.pid
+            (w.state / 'running' / str(holder.pid)).write_text('canary/main %s S %s S tools-zero:main %s\n' % ('a' * 40, box, w.state / 'logs' / (name + '.log')))
+            (w.state / 'running-started' / str(holder.pid)).write_text('1000\n')
+            if whole:
+                (w.state / 'reserved-running' / str(holder.pid)).write_text(box + '\n')
+        w.put('clock', '4700')
+        w.put('initial', 'pass')
+        w.wait(lambda: 'on box1: over the box ceiling of 3600 s' in w.read('output'))
+        self.assertNotIn('on box0: over the box ceiling', w.read('output'))
+        w.put('clock', '6400')
+        time.sleep(.3)
+        self.assertNotIn('on box0: over the box ceiling', w.read('output'))
+        w.put('clock', '8200')
+        w.wait(lambda: 'on box0: over the box ceiling of 7200 s' in w.read('output'))
+
     def test_a_newer_run_of_a_sha_stops_its_older_box_run_on_other_tools(self):
         # #z4emxxy: the old run is stopped on purpose and its partial record is no verdict; same tools would be a race.
         w = self.reservation('box0 S\nbox1 S\n', [], release=False)
