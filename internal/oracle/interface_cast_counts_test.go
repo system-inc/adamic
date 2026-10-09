@@ -50,5 +50,11 @@ func interfaceCastCounts(t *testing.T) []string {
 	for _, name := range []string{"identifier", "identifier-uninitialized", "number", "number-uninitialized"} {
 		rows = append(rows, counted(t, "stage3/interface-downcasts/readiness-"+name+".ts", false, nil, false, false))
 	}
+	for _, name := range []string{
+		"interfaces-good", "interfaces-missing-inherited", "interfaces-uninitialized-object", "interfaces-wrong-inherited",
+		"objects-good", "objects-missing-nested", "objects-uninitialized-nested", "objects-untagged-good", "objects-untagged-wrong", "objects-wrong-nested", "optional-read-control", "flag-downcast-wrong",
+	} {
+		rows = append(rows, counted(t, "stage3/interface-downcasts/lane1/"+name+".a", false, nil, false, false))
+	}
 	return rows
 }
