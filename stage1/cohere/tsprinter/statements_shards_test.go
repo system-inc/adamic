@@ -125,12 +125,127 @@ type statementShard struct {
 	text, specs, want string
 }
 
-func statementPartition(weights []int) ([][]int, error) {
-	shards := assignCorpus(weights, testStatementsAgainstGoAndPrettierShards)
-	if err := statementUnion(len(weights), shards); err != nil {
+// Keys use a file's relative path, node mode and ordinal within that file/mode.
+// Repository growth cannot change another file's assignment. Generated cases
+// use their generator file and mode, with an ordinal local to that mode.
+func statementCaseKeys(items []printerCase, root, upstream string) ([]string, error) {
+	keys := make([]string, len(items))
+	counts := map[string]int{}
+	for i, item := range items {
+		base := "stage1/cohere/tsprinter/testdata/statements_side_test.go:" + item.Label
+		end := strings.LastIndex(item.Label, ":")
+		if end >= 0 {
+			start := strings.LastIndex(item.Label[:end], ":")
+			if start < 0 {
+				return nil, fmt.Errorf("invalid statement label %q", item.Label)
+			}
+			path, err := filepath.Abs(item.Label[:start])
+			if err != nil {
+				return nil, err
+			}
+			relative, err := filepath.Rel(root, path)
+			if err != nil {
+				return nil, err
+			}
+			if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+				relative, err = filepath.Rel(upstream, path)
+				if err != nil {
+					return nil, err
+				}
+				if relative == ".." || strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+					return nil, fmt.Errorf("statement outside corpus roots: %s", path)
+				}
+				relative = "typescript@050880ce59e30b356b686bd3144efe24f875ebc8/" + filepath.ToSlash(relative)
+			}
+			base = filepath.ToSlash(relative) + ":" + item.Label[end+1:]
+		}
+		keys[i] = fmt.Sprintf("%s:%d", base, counts[base])
+		counts[base]++
+	}
+	return keys, nil
+}
+
+func statementPartition(keys []string) ([][]int, error) {
+	shards := make([][]int, testStatementsAgainstGoAndPrettierShards)
+	seen := map[string]bool{}
+	for id, key := range keys {
+		if seen[key] {
+			return nil, fmt.Errorf("repeated stable case key %q", key)
+		}
+		seen[key] = true
+		digest := sha256.Sum256([]byte(key))
+		var value uint64
+		for _, b := range digest[:8] {
+			value = value<<8 | uint64(b)
+		}
+		number := int(value % uint64(testStatementsAgainstGoAndPrettierShards))
+		shards[number] = append(shards[number], id)
+	}
+	if err := statementUnion(len(keys), shards); err != nil {
 		return nil, err
 	}
 	return shards, nil
+}
+
+func statementProofKeys(count int) []string {
+	keys := make([]string, count)
+	for i := range keys {
+		keys[i] = fmt.Sprintf("stage1/cohere/tsprinter/statements_shards_test.go:proof:%d", i)
+	}
+	return keys
+}
+
+func TestStatementsShardAssignmentStable(t *testing.T) {
+	root, upstream := "/repository", "/typescript"
+	items := []printerCase{
+		{Label: root + "/stage1/a.ts:0:SourceFile"},
+		{Label: root + "/stage1/a.ts:3:VariableStatement"},
+		{Label: root + "/stage1/a.ts:9:VariableStatement"},
+		{Label: upstream + "/src/compiler/b.ts:0:SourceFile"},
+		{Label: "program-sequence"}, {Label: "program-sequence"},
+	}
+	before, err := statementCaseKeys(items, root, upstream)
+	if err != nil {
+		t.Fatal(err)
+	}
+	grown := append([]printerCase{{Label: root + "/bench/new.ts:0:SourceFile"}}, items...)
+	grown = append(grown, printerCase{Label: root + "/stage1/last.ts:0:SourceFile"})
+	after, err := statementCaseKeys(grown, root, upstream)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, key := range before {
+		if key != after[i+1] {
+			t.Fatalf("added file moved case key: %q -> %q", key, after[i+1])
+		}
+	}
+	// Exercise actual modulo assignment and its union, with enough cases for all shards.
+	keys := statementProofKeys(256)
+	old, err := statementPartition(keys)
+	if err != nil {
+		t.Fatal(err)
+	}
+	added := append([]string{"stage1/new.ts:SourceFile:0"}, keys...)
+	next, err := statementPartition(added)
+	if err != nil {
+		t.Fatal(err)
+	}
+	owners := map[string]int{}
+	for n, ids := range old {
+		for _, id := range ids {
+			owners[keys[id]] = n
+		}
+	}
+	for n, ids := range next {
+		for _, id := range ids {
+			if owner, exists := owners[added[id]]; exists && owner != n {
+				t.Fatalf("added file moved %s from shard-%03d to shard-%03d", added[id], owner, n)
+			}
+		}
+	}
+	if _, err := statementPartition(append(keys, keys[0])); err == nil {
+		t.Fatal("repeated stable key accepted")
+	}
 }
 
 func statementUnion(count int, shards [][]int) error {
@@ -204,11 +319,19 @@ func statementShards(t *testing.T, cases, want, specs string) []statementShard {
 			t.Fatalf("recorded upstream case absent: %s", record.Label)
 		}
 	}
-	weights := make([]int, len(rows))
-	for i, row := range rows {
-		weights[i] = len(row)
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
 	}
-	partition, err := statementPartition(weights)
+	upstream, err := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	keys, err := statementCaseKeys(items, root, upstream)
+	if err != nil {
+		t.Fatal(err)
+	}
+	partition, err := statementPartition(keys)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -336,12 +459,8 @@ func statementDisagreement(name string, result run, want string, labels []string
 // A real Node run passes first. A child test process then plants one changed
 // answer and takes the same fatal comparison path as the production leaves.
 func TestStatementsShardDisagreement(t *testing.T) {
-	const count, plantedID = 33, 17
-	weights := make([]int, count)
-	for id := range weights {
-		weights[id] = len(fmt.Sprintf(">const x=%d;", id))
-	}
-	partition, err := statementPartition(weights)
+	const count, plantedID = 256, 17
+	partition, err := statementPartition(statementProofKeys(count))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -405,11 +524,8 @@ func TestStatementsShardDisagreement(t *testing.T) {
 }
 
 func TestStatementsShardUnionRejectsMissingAndRepeatedIDs(t *testing.T) {
-	weights := make([]int, 33)
-	for i := range weights {
-		weights[i] = 1
-	}
-	shards, err := statementPartition(weights)
+	keys := statementProofKeys(256)
+	shards, err := statementPartition(keys)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -425,11 +541,11 @@ func TestStatementsShardUnionRejectsMissingAndRepeatedIDs(t *testing.T) {
 			case "repeated":
 				changed[0] = append(changed[0], changed[1][0])
 			case "extra":
-				changed[0] = append(changed[0], 33)
+				changed[0] = append(changed[0], len(keys))
 			case "shard-count":
 				changed = changed[1:]
 			}
-			if err := statementUnion(len(weights), changed); err == nil {
+			if err := statementUnion(len(keys), changed); err == nil {
 				t.Fatal("invalid union accepted")
 			}
 		})

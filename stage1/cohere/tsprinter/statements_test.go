@@ -23,6 +23,33 @@ func statementCorpus(t *testing.T) (string, string, string) {
 	directory := t.TempDir()
 	root, _ := filepath.Abs(repository)
 	files := printerCorpusFiles(t)
+	// This count is fixed by the upstream commit, never by the live case total.
+	upstream, err := filepath.Abs(os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	upstreamFiles, repositoryFiles := 0, 0
+	for _, file := range files {
+		path, err := filepath.Abs(file)
+		if err != nil {
+			t.Fatal(err)
+		}
+		relative, err := filepath.Rel(upstream, path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+			upstreamFiles++
+		} else {
+			repositoryFiles++
+		}
+	}
+	if upstreamFiles != 77 {
+		t.Fatalf("TypeScript 050880ce src/compiler: %d .ts files, want pinned 77", upstreamFiles)
+	}
+	if repositoryFiles == 0 {
+		t.Fatal("repository statement corpus is empty")
+	}
 	expressionSide, _ := filepath.Abs("testdata/expressions_side_test.go")
 	statementSide, _ := filepath.Abs("testdata/statements_side_test.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{root + "/cohere/internal/format/javascript/adamic_expressions_test.go": expressionSide, root + "/cohere/internal/format/javascript/adamic_statements_test.go": statementSide}})
@@ -92,7 +119,9 @@ func statementCorpus(t *testing.T) (string, string, string) {
 const testStatementsAgainstGoAndPrettierShards = 16
 
 // ADAMIC_TEST_SHARD=i/n runs the shards whose number modulo n is i;
-// unset runs all shards. Build products are prepared once and shared by leaves.
+// unset runs all shards. The mixed live repository/pinned TypeScript corpus uses
+// a fixed 16 shards and SHA-256(relative path, file/mode-local index) modulo 16.
+// Build products are prepared once and shared by leaves.
 func TestStatementsAgainstGoAndPrettier(t *testing.T) {
 	setup := time.Now()
 	cpu := statementCPU()
