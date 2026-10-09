@@ -173,6 +173,7 @@ func difference(got, want []byte) string {
 	return "different bytes"
 }
 
+// Not parallel: native compiler build capacity is shared with compiler-expression setup.
 func TestExpressionsAgree(t *testing.T) {
 	cases := []string{"x => x + 1;", "(x) => x;", "(x);", "(x = 10);", "(x, y);", "(x = 10, y = 2) => x + y;", "() => ({x: 1});", "(x: number, y?: string, ...z: unknown[]) => [x, y, ...z];", "<T extends object>(x: T): T => x;", "async x => await f(x);", "async (x) => await f(x);", "x => { const y = x + 1; return y; };", "(function f(x: number) { return x * 2; });", "(async function() { return await f(); });", "(function*() { yield x; yield* xs; });", "({f(x) {return x;}, get x() {return 1;}, set x(v) {f(v);}, async g() {return await f();}});", "a as T;", "<T[]>a;", "value satisfies { readonly x: number; y?: string };", "value as A | B & C;", "value as readonly [number, string];", "value as const;", "f<T>(x);", "new Foo<T>();", "tag<T>`a${x}b`;", "f?.<T>(x);", "x as typeof ns.value;", "((x): number => x)(1);", "f(x, ...xs,);", "a.b[c](d).e;", "a?.b.c?.[x]?.(y);", "a?.b!.c;", "(a?.b).c;", "new Foo(a).bar();", "new new Foo();", "new Foo; new Foo();", "new.target; import.meta; import('module');", "[x,,y,...xs,];", "[\n1,\n2\n];", "({x, y: 2, [key + 1]: value, ...rest});", "({x = 3,});", "`a${x + y}b${f(z)}c`;", "tag`x${a?.b}y`;", "`a\\r\\n${x}\\u{1f600}`;", "x;", "  x + y * z;", "a - b - c;", "a ** b ** c;", "(a + b) * c;", "a ? b : c ? d : e;", "a = b = c;", "x++, --y;", "typeof x === \"number\";", "a >> b >= c;", "0xff + 1_000 / 2e3;", "'héllo' + \"😀\";", "/a[b]+/gi;", "/* trivia */ (x) + y;"}
 	dir := t.TempDir()
@@ -271,6 +272,7 @@ func compilerManifest(t *testing.T) (string, int) {
 	return path, files
 }
 
+// Not parallel: initializes shared compilerExpressionsProducts before the parallel shards run.
 func TestCompilerExpressionsAgree(t *testing.T) {
 	compilerExpressionsSetup(t)
 }
