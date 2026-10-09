@@ -1,0 +1,11 @@
+interface Tree { id: string; children: Tree[]; parent: Tree | undefined; }
+function run(): void {
+ const root: Tree = { id: '7', children: [], parent: undefined };
+ for (let i=0; i<1000; i++) {
+  const child: Tree = { id: `${i}`, children: [], parent: undefined };
+  root.children.push(child); child.parent = root;
+ }
+ const child = root.children[999];
+ if (child !== undefined) { console.log(`${child.parent?.id}`); }
+}
+run();

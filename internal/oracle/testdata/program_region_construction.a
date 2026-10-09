@@ -1,0 +1,14 @@
+interface Link { next: Link | undefined; value?: string; }
+class Node {
+ next: Node | undefined = undefined;
+ value: string | undefined = undefined;
+ constructor(parent: Node | undefined) { if (parent !== undefined) parent.next = this; this.next = parent; }
+}
+function run(): void {
+ const root:Link={next:undefined};
+ const child:Link={next:root,value:`payload${7}`};root.next=child;
+ console.log(`${child.value}`);
+ const first=new Node(undefined);const second=new Node(first);second.value=`ctor${8}`;
+ console.log(`${first.next===second} ${second.next===first} ${second.value}`);
+}
+run();

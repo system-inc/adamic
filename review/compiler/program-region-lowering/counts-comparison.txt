@@ -1,0 +1,18 @@
+Existing recorded rows: 1045
+Changed or missing existing rows: 0
+Added rows: 15
+| internal/oracle/testdata/cycles_weak_parent.a | 4004 | 4004 | 3004 | 3006 | 3004 | 0 |
+| internal/oracle/testdata/cycles_weak_relations.a | 8005 | 8005 | 4004 | 6007 | 6004 | 0 |
+| internal/oracle/testdata/cycles_weak_symbols.a | 3006 | 3006 | 3008 | 3010 | 2005 | 0 |
+| internal/oracle/testdata/program_region_map_storage.a | 11 | 11 | 5 | 12 | 8 | 0 |
+| internal/oracle/testdata/cycles_graph_parent.a (Program region) | 4003 | 2001 | 2003 | 5005 | 3003 | 2002 |
+| internal/oracle/testdata/cycles_graph_relations.a (Program region) | 6005 | 4003 | 6003 | 10009 | 4004 | 2002 |
+| internal/oracle/testdata/cycles_graph_symbols.a (Program region) | 3005 | 2002 | 3007 | 5011 | 2004 | 1003 |
+| internal/oracle/testdata/cycles_weak_parent.a (Program region) | 4004 | 2002 | 3004 | 7007 | 3004 | 2002 |
+| internal/oracle/testdata/cycles_weak_relations.a (Program region) | 8005 | 8005 | 4004 | 6007 | 6004 | 0 |
+| internal/oracle/testdata/cycles_weak_symbols.a (Program region) | 3006 | 3006 | 3008 | 3010 | 2005 | 0 |
+| internal/oracle/testdata/graph_regions/million.a (Program region) | 1000003 | 3 | 2949999 | 2050002 | 1000003 | 1000000 |
+| internal/oracle/testdata/program_region_ownership.a (Program region) | 21 | 19 | 10 | 25 | 12 | 2 |
+| internal/oracle/testdata/program_region_map_storage.a (Program region) | 12 | 7 | 4 | 15 | 10 | 5 |
+| internal/oracle/testdata/program_region_construction.a (Program region) | 10 | 6 | 9 | 14 | 7 | 4 |
+| internal/oracle/testdata/program_region_closure.a (Program region) | 8 | 5 | 9 | 19 | 6 | 3 |

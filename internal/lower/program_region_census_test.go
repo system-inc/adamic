@@ -10,7 +10,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"reflect"
 	"regexp"
 	"sort"
 	"strings"
@@ -36,6 +35,18 @@ var updateProgramMembership = flag.Bool("update-program-membership", false, "reg
 // original compiler lowers, nor invent lowered capture cells or generic instances.
 func TestProgramRegionCensusMembership(t *testing.T) {
 	t.Parallel()
+	programCensusMembership(t, true)
+}
+
+func TestProgramRegionCensusSelectionBeforeIndex(t *testing.T) {
+	t.Parallel()
+	programCensusMembership(t, false)
+}
+
+// Each selector checks the same pinned ledger using an independent checker.
+// Separate top-level tests keep the original quadratic scan within the leaf budget.
+func programCensusMembership(t *testing.T, indexed bool) {
+	t.Helper()
 	root := os.Getenv("ADAMIC_PROGRAM_CENSUS_ROOT")
 	if root == "" {
 		t.Skip("set ADAMIC_PROGRAM_CENSUS_ROOT to pristine TypeScript 6.0.3 with generated diagnostics")
@@ -191,25 +202,9 @@ func TestProgramRegionCensusMembership(t *testing.T) {
 		file.AsNode().ForEachChild(visit)
 	}
 	started := time.Now()
-	baseline := finder.selectProgramRegion(false)
-	before := time.Since(started)
-	started = time.Now()
-	selected := finder.programRegionSelection()
-	after := time.Since(started)
-	if !reflect.DeepEqual(baseline, selected) {
-		t.Fatal("shape index changed membership")
-	}
-	t.Logf("selection cold before=%s after=%s selected=%d candidate-types=%d", before, after, len(selected), len(finder.where))
-	started = time.Now()
-	warmedBaseline := finder.selectProgramRegion(false)
-	warmBefore := time.Since(started)
-	started = time.Now()
-	warmedSelected := finder.programRegionSelection()
-	warmAfter := time.Since(started)
-	if !reflect.DeepEqual(warmedBaseline, warmedSelected) {
-		t.Fatal("warm selection differs")
-	}
-	t.Logf("selection warm before=%s after=%s", warmBefore, warmAfter)
+	selected := finder.selectProgramRegion(indexed)
+	t.Logf("selection indexed=%t duration=%s selected=%d candidate-types=%d", indexed, time.Since(started), len(selected), len(finder.where))
+
 	labels := map[string]*checker.Type{}
 	format := func(proven *checker.Type) string {
 		return typeChecker.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation, nil)
@@ -288,6 +283,26 @@ func TestProgramRegionCensusMembership(t *testing.T) {
 				in++
 				why = "owning-field SCC selected by programRegionSelection; declaration audit has no lowered capture cells"
 			}
+		}
+		if row[0] == "K60" || row[0] == "K144" {
+			t.Logf("%s selector=%s compiler=%s schema=%s", row[0], membership, programCompilerContainerReading[row[0]], declared)
+			var describe func(*checker.Type, int)
+			describe = func(value *checker.Type, depth int) {
+				if depth > 3 {
+					return
+				}
+				t.Logf("%s depth=%d type=%s flags=%v selected=%t container=%t scalar=%t", row[0], depth, format(value), value.Flags(), selected[cycleNode{proven: value}], finder.programContainer(value), finder.programScalarStorage(value))
+				if value.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+					for _, part := range value.Types() {
+						describe(part, depth+1)
+					}
+				} else if finder.programContainer(value) {
+					for _, arg := range typeChecker.GetTypeArguments(value) {
+						describe(arg, depth+1)
+					}
+				}
+			}
+			describe(candidate, 0)
 		}
 		if expected, reviewed := programCompilerContainerReading[row[0]]; reviewed {
 			if candidate == nil {

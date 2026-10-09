@@ -195,7 +195,10 @@ func (f *cycleFinder) selectProgramRegion(indexed bool) map[cycleNode]bool {
 			candidates = append(candidates, cycleNode{cell: local + 1})
 		}
 	}
-	views := newProgramShapeIndex(f, candidates)
+	views := &programShapeIndex{all: candidates}
+	if indexed {
+		views = newProgramShapeIndex(f, candidates)
+	}
 	edges, owning := map[cycleNode][]cycleNode{}, map[cycleNode][]cycleNode{}
 	queue := append([]cycleNode{}, candidates...)
 	for len(queue) != 0 {

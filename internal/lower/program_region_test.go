@@ -2,6 +2,8 @@ package lower
 
 import (
 	"context"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"os"
 	"path/filepath"
 	"strings"
@@ -169,5 +171,39 @@ function run():void {
 	}
 	if memberMaps != 2 || countedMaps != 1 || memberSets != 1 || genericArrays != 1 || memberTuples != 1 {
 		t.Fatalf("containers after monomorphization: member Maps=%d counted Maps=%d member Sets=%d generic Node arrays=%d member tuples=%d", memberMaps, countedMaps, memberSets, genericArrays, memberTuples)
+	}
+}
+
+func TestProgramRegionShapeIndex(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "main.a")
+	if err := os.WriteFile(path, []byte(`interface Source { a:number; c:number; }
+interface View { a:number; b?:string; }
+interface Missing { z:number; }
+console.log('shape');`), 0644); err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	entry := loaded.Files()[0]
+	typeChecker, release := loaded.Checker(context.Background(), entry)
+	defer release()
+	finder := &cycleFinder{l: &lowering{checker: typeChecker, result: &ir.Program{}}, where: map[*checker.Type]*ast.Node{}}
+	types := []*checker.Type{}
+	for _, node := range entry.Statements.Nodes[:3] {
+		types = append(types, typeChecker.GetDeclaredTypeOfSymbol(typeChecker.GetSymbolAtLocation(node.Name())))
+	}
+	index := newProgramShapeIndex(finder, []cycleNode{{proven: types[0]}, {proven: types[1]}, {proven: types[2]}})
+	found := map[*checker.Type]bool{}
+	for _, node := range index.candidates(types[0], true) {
+		found[node.proven] = true
+	}
+	if !found[types[1]] {
+		t.Fatal("shape index dropped an assignable optional-property view")
+	}
+	if found[types[2]] {
+		t.Fatal("shape index retained a structurally unrelated view")
 	}
 }
