@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -19,12 +20,17 @@ type fakeStore struct {
 	mutex   sync.Mutex
 	objects map[string][]byte
 	reads   []string
+	writes  []string
 	broken  string
 }
 
 func (s *fakeStore) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
+	if request.Method == http.MethodPut {
+		s.write(writer, request)
+		return
+	}
 	s.reads = append(s.reads, request.URL.Path)
 	if request.URL.Path == s.broken {
 		http.Error(writer, "upstream timeout", http.StatusBadGateway)
@@ -36,6 +42,34 @@ func (s *fakeStore) ServeHTTP(writer http.ResponseWriter, request *http.Request)
 		return
 	}
 	writer.Write(content)
+}
+
+// write is Loom's Worker: a bearer token, blobs that hash to their name, a ref only to a held blob, never changed.
+func (s *fakeStore) write(writer http.ResponseWriter, request *http.Request) {
+	name := strings.TrimPrefix(request.URL.Path, "/public")
+	s.writes = append(s.writes, name)
+	if request.Header.Get("Authorization") != "Bearer gate-box-token" {
+		http.Error(writer, "forbidden", http.StatusForbidden)
+		return
+	}
+	content, _ := io.ReadAll(request.Body)
+	switch {
+	case strings.HasPrefix(name, "/blobs/"):
+		if sum := sha256.Sum256(content); "/blobs/"+hex.EncodeToString(sum[:]) != name {
+			http.Error(writer, "hash", http.StatusBadRequest)
+			return
+		}
+		s.objects[name] = content
+		writer.WriteHeader(http.StatusCreated)
+	case strings.HasPrefix(name, "/refs/build/"):
+		held, ok := s.objects[name]
+		if _, blob := s.objects["/blobs/"+string(content)]; !blob || (ok && string(held) != string(content)) {
+			http.Error(writer, "conflict", http.StatusConflict)
+			return
+		}
+		s.objects[name] = content
+		writer.WriteHeader(http.StatusCreated)
+	}
 }
 
 func (s *fakeStore) blob(content []byte) string {
@@ -72,6 +106,7 @@ func shared(t *testing.T) (*fakeStore, string) {
 	server := httptest.NewServer(store)
 	t.Cleanup(server.Close)
 	t.Setenv("ADAMIC_BUILD_STORE", server.URL)
+	t.Setenv("ADAMIC_BUILD_STORE_WRITE", server.URL+"/public")
 	t.Setenv("ADAMIC_BUILD_AUDIT", "0")
 	return store, log
 }
@@ -182,42 +217,52 @@ func TestAnUnstoredOrUnreachableProductIsBuilt(t *testing.T) {
 // the ref never names a blob the store doesn't hold. Another machine then fetches it.
 func TestABuildPublishesBlobsThenItsRefAndAnotherMachineFetchesIt(t *testing.T) {
 	store, _ := shared(t)
-	calls := filepath.Join(t.TempDir(), "calls")
-	program := filepath.Join(t.TempDir(), "put")
-	// The stand-in writer stores what it's given in the fake store's directory, through a file the test reads back.
-	if err := os.WriteFile(program, []byte("#!/bin/sh\nprintf '%s %s\\n' \"$1\" \"$2\" >> "+calls+"\nif [ \"$1\" = blob ]; then cp \"$3\" \""+calls+".$2\"; else printf '%s' \"$3\" > \""+calls+".ref\"; fi\n"), 0o755); err != nil {
-		t.Fatal(err)
-	}
-	t.Setenv("ADAMIC_BUILD_STORE_PUT", program)
-	Product(t, thisPackage, func(directory string) error {
+	build := func(directory string) error {
 		os.MkdirAll(filepath.Join(directory, "bin"), 0o755)
 		os.WriteFile(filepath.Join(directory, "bin", "checker"), []byte("the checker"), 0o755)
 		return os.WriteFile(filepath.Join(directory, "notes"), []byte("notes"), 0o644)
-	})
-	lines, err := os.ReadFile(calls)
-	if err != nil {
-		t.Fatal(err)
 	}
-	order := strings.Split(strings.TrimSpace(string(lines)), "\n")
-	if len(order) != 4 || !strings.HasPrefix(order[0], "blob ") || !strings.HasPrefix(order[2], "blob ") || order[3] != "ref build/"+thisKey(t) {
-		t.Fatalf("writes: %q", order)
+	// Without the token nothing is written.
+	Product(t, thisPackage, build)
+	if len(store.writes) != 0 {
+		t.Fatalf("a machine without the token wrote %v", store.writes)
 	}
-	// Serve what was written, empty the local cache, and fetch it as another machine would.
-	for _, line := range order[:3] {
-		hash := strings.Fields(line)[1]
-		content, err := os.ReadFile(calls + "." + hash)
-		if err != nil {
-			t.Fatal(err)
-		}
-		store.objects["/blobs/"+hash] = content
+	token := filepath.Join(t.TempDir(), "publish-token")
+	os.WriteFile(token, []byte("gate-box-token\n"), 0o600)
+	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
+	Product(t, thisPackage, build)
+	if len(store.writes) != 4 || !strings.HasPrefix(store.writes[0], "/blobs/") || !strings.HasPrefix(store.writes[2], "/blobs/") || store.writes[3] != "/refs/build/"+thisKey(t) {
+		t.Fatalf("writes: %q", store.writes)
 	}
-	reference, _ := os.ReadFile(calls + ".ref")
-	store.objects["/refs/build/"+thisKey(t)] = reference
+	// Another machine, an empty local cache: fetched, never built, exec bit kept.
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
 	directory := Product(t, thisPackage, func(string) error { t.Fatal("rebuilt what the store holds"); return nil })
 	info, err := os.Stat(filepath.Join(directory, "bin", "checker"))
 	if err != nil || info.Mode()&0o111 == 0 {
 		t.Fatalf("the fetched checker: %v, mode %v", err, info)
+	}
+}
+
+// A ref never changes: a store already holding a different product for the key refuses, and the build says the
+// key isn't honest without failing the product it built.
+func TestADifferentProductForAStoredKeyIsSaidLoudly(t *testing.T) {
+	store, log := shared(t)
+	token := filepath.Join(t.TempDir(), "publish-token")
+	os.WriteFile(token, []byte("gate-box-token"), 0o600)
+	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", token)
+	store.put(t, thisKey(t), map[string]string{"product": "another machine's"})
+	// Reads can't reach the store, so this machine builds its own, then tries to publish it under the same key.
+	t.Setenv("ADAMIC_BUILD_STORE", "http://127.0.0.1:1")
+	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
+	directory := Product(t, thisPackage, func(directory string) error {
+		return os.WriteFile(filepath.Join(directory, "product"), []byte("this machine's"), 0o644)
+	})
+	if content, _ := os.ReadFile(filepath.Join(directory, "product")); string(content) != "this machine's" {
+		t.Fatalf("the built product reads %q", content)
+	}
+	if lines, _ := os.ReadFile(log); !strings.Contains(string(lines), "isn't honest") {
+		t.Fatalf("log: %q", lines)
 	}
 }
 

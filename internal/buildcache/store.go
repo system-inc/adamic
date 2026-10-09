@@ -12,7 +12,6 @@ import (
 	"math/rand/v2"
 	"net/http"
 	"os"
-	"os/exec"
 	"path"
 	"path/filepath"
 	"sort"
@@ -28,10 +27,14 @@ import (
 // be wrong without failing loudly: a mismatch is an error, never a quiet rebuild. An unreachable store is a miss.
 //
 // ADAMIC_BUILD_STORE overrides the store's address, and "off" turns the shared tier off. Only a machine holding the
-// write credential publishes: ADAMIC_BUILD_STORE_PUT names a program called as '<program> blob <sha256> <file>' and
-// '<program> ref build/<key> <sha256>', which a gate box's setup provides; the ref goes last, so it never names a
-// blob the store doesn't hold.
+// write credential publishes, through Loom's Worker: the gate boxes hold a publish-scoped token at
+// ~/.loom/publish-token (ADAMIC_BUILD_STORE_TOKEN names another file). Every file's blob goes first, then the
+// manifest's, then the ref, so a ref never names a blob the store doesn't hold. A ref never changes: the store
+// refuses one naming a different manifest, which means a key that isn't honest, and that is said loudly.
 const defaultStore = "https://adamic-store.kirkouimet.com"
+
+// Where writes go (ADAMIC_BUILD_STORE_WRITE overrides it): /blobs/<sha256> and /refs/build/<key> under it.
+const defaultWriter = "https://loom.kirkouimet.com/public"
 
 // A fetched product is rebuilt and compared file by file at this rate (ADAMIC_BUILD_AUDIT overrides it): a store
 // that served a wrong product fails the test as poisoned (the ruling on #x2651cf: audit every gate's hits).
@@ -195,19 +198,45 @@ func describeProduct(key, name, directory string) (manifest, error) {
 	return product, err
 }
 
+// publishToken is the write credential, or "" on a machine that doesn't hold one.
+func publishToken() string {
+	path := os.Getenv("ADAMIC_BUILD_STORE_TOKEN")
+	if path == "" {
+		home, err := os.UserHomeDir()
+		if err != nil {
+			return ""
+		}
+		path = filepath.Join(home, ".loom", "publish-token")
+	}
+	token, err := os.ReadFile(path)
+	if err != nil {
+		return ""
+	}
+	return strings.TrimSpace(string(token))
+}
+
 // publish stores a product this machine built, when it holds the write credential: every file's blob, the
 // manifest's, then the ref.
 func publish(key, name, directory string) error {
-	program := os.Getenv("ADAMIC_BUILD_STORE_PUT")
-	if program == "" || os.Getenv("ADAMIC_BUILD_STORE") == "off" {
+	token := publishToken()
+	if token == "" || os.Getenv("ADAMIC_BUILD_STORE") == "off" {
 		return nil
 	}
+	writer := os.Getenv("ADAMIC_BUILD_STORE_WRITE")
+	if writer == "" {
+		writer = defaultWriter
+	}
+	writer = strings.TrimSuffix(writer, "/")
 	product, err := describeProduct(key, name, directory)
 	if err != nil {
 		return err
 	}
 	for _, file := range product.Files {
-		if err = put(program, "blob", file.SHA256, filepath.Join(directory, filepath.FromSlash(file.Path))); err != nil {
+		content, err := os.ReadFile(filepath.Join(directory, filepath.FromSlash(file.Path)))
+		if err != nil {
+			return err
+		}
+		if err = upload(writer+"/blobs/"+file.SHA256, token, content); err != nil {
 			return err
 		}
 	}
@@ -215,27 +244,35 @@ func publish(key, name, directory string) error {
 	if err != nil {
 		return err
 	}
-	written, err := os.CreateTemp("", "adamic-manifest-")
-	if err != nil {
-		return err
-	}
-	defer os.Remove(written.Name())
-	if _, err = written.Write(encoded); err != nil {
-		written.Close()
-		return err
-	}
-	written.Close()
 	sum := sha256.Sum256(encoded)
-	if err = put(program, "blob", hex.EncodeToString(sum[:]), written.Name()); err != nil {
+	manifestHash := hex.EncodeToString(sum[:])
+	if err = upload(writer+"/blobs/"+manifestHash, token, encoded); err != nil {
 		return err
 	}
-	return put(program, "ref", "build/"+key, hex.EncodeToString(sum[:]))
+	if err = upload(writer+"/refs/build/"+key, token, []byte(manifestHash)); err != nil {
+		if strings.Contains(err.Error(), "409") {
+			return fmt.Errorf("the store already holds a different product for key %s (%s): the key isn't honest or the build isn't reproducible: %v", key[:12], name, err)
+		}
+		return err
+	}
+	return nil
 }
 
-func put(program string, arguments ...string) error {
-	output, err := exec.Command(program, arguments...).CombinedOutput()
+// upload PUTs one object through Loom's Worker: 201 stored, 200 already held.
+func upload(address, token string, content []byte) error {
+	request, err := http.NewRequest(http.MethodPut, address, bytes.NewReader(content))
 	if err != nil {
-		return fmt.Errorf("%s %s: %v: %s", program, strings.Join(arguments, " "), err, bytes.TrimSpace(output))
+		return err
+	}
+	request.Header.Set("Authorization", "Bearer "+token)
+	response, err := storeClient.Do(request)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+	if response.StatusCode != http.StatusOK && response.StatusCode != http.StatusCreated {
+		body, _ := io.ReadAll(io.LimitReader(response.Body, 512))
+		return fmt.Errorf("PUT %s answered %s: %s", address, response.Status, bytes.TrimSpace(body))
 	}
 	return nil
 }
