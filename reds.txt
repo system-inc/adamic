@@ -1,0 +1,385 @@
+run adamic-verify-20261009T125410-936fa223: red, 35987 tests in 85 units, 110 failed, 0 units broken, 0 killed over budget
+AGAIN tests-00: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-03: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-06: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-07: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-10: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-11: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r1: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r2: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r3: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r4: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r5: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r6: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r7: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r8: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r9: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r10: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r11: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r12: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r13: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r14: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r15: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r16: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r17: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r18: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r19: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r20: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r21: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r22: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r23: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r24: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r25: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r26: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r27: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r28: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r29: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r30: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-00-r31: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-03-r3: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-06-r1: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-06-r2: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-06-r3: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-06-r4: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-06-r5: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-06-r6: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-06-r7: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-06-r8: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-07-r1: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-07-r2: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-07-r3: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-07-r4: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-10-r1: from run adamic-verify-again-20261009T131437-302b12c4
+AGAIN tests-10-r2: from run adamic-verify-again-20261009T135110-838c9ec3
+FAIL github.com/system-inc/adamic/stage1/cohere/css TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_repeat_in_try.ts (tests-00)
+    gaps_test.go:35: gap closed: update GAPS.md and remove the workaround or unblock native composition
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/regex TestDynamicPatternGap (tests-01)
+    regex_test.go:128: expected named native gap, got <nil>
+FAIL github.com/system-inc/adamic/stage1/cohere/selector TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_multiple_push.ts (tests-01)
+    gaps_test.go:50: this gap lowers now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-000/internal/oracle/testdata/arguments_length_no_reader.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-000/internal/oracle/testdata/arguments_length_no_reader.a: stdout differs
+    node: exit 0, stdout "-1\n-1\n7\n\n1,2,3\n4,5\n9\n9\n-1 6\n", stderr ""
+    wasi: exit 0, stdout "-1\n-1\n7\n\n1,2,3\n4,5\n0\n9\n-1 6\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-000/internal/oracle/testdata/closure_convention_receiver_rest.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-000/internal/oracle/testdata/closure_convention_receiver_rest.a: stdout differs
+    node: exit 0, stdout "3\n35\n45\n", stderr ""
+    wasi: exit 0, stdout "13\n35\n45\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-001/internal/oracle/testdata/arguments_length_reduce_left.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-001/internal/oracle/testdata/arguments_length_reduce_left.a: stdout differs
+    node: exit 0, stdout "12\n112\n22\n14\nundefined\n12\n112\n", stderr ""
+    wasi: exit 0, stdout "12\n112\n22\n14\nundefined\n112\n112\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-003/internal/oracle/testdata/omitted_defaults.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-003/internal/oracle/testdata/omitted_defaults.a: stdout differs
+    node: exit 0, stdout "hi a\n7:ok:true\n0::false\n7:ok:true\n9\n9\n9,10\n11\ntrue:0:6,true:1:6\n", stderr ""
+    wasi: exit 0, stdout "hi a\n0:ok:false\n0::false\n7:ok:true\n0\n9\n9,10\n11\ntrue:0:6,true:1:6\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-003/internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_lifetimes.a (tests-02)
+    wasi_test.go:59: want NotYet, got /tmp/adamic/internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_lifetimes.a:11:2: Adamic 0.1 refuses changing prototypes after creation; outside the .a sound subset; use a .ts program with proven heap lifetimes
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/arguments_length.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/arguments_length.a: stdout differs
+    node: exit 0, stdout "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n0:-1\n1:-1\n1:8\n", stderr ""
+    wasi: exit 0, stdout "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n1:-1\n1:-1\n1:8\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_links.a (tests-02)
+    wasi_test.go:59: want NotYet, got /tmp/adamic/internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_links.a:7:1: Adamic 0.1 refuses changing prototypes after creation; outside the .a sound subset; use a .ts program with proven heap lifetimes
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/arguments_length_extended.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/arguments_length_extended.a: stdout differs
+    node: exit 0, stdout "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n", stderr ""
+    wasi: exit 0, stdout "0:0\n1:1\n1:9\n1:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/arguments_length_value.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/arguments_length_value.a: stdout differs
+    node: exit 0, stdout "plain:-1\n0:-1\n1:-1\n1:4\n3\n0:-1\n1:-1\n1:-1\n1:hi a\n2:hi b\n2:hello c\n", stderr ""
+    wasi: exit 0, stdout "plain:-1\n1:-1\n1:-1\n1:4\n3\n1:-1\n1:-1\n1:-1\n2:hi a\n2:hi b\n2:hello c\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/closure_convention_nested.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/closure_convention_nested.a: stdout differs
+    node: exit 0, stdout "1 11 25\ntrue\n3 5\n", stderr ""
+    wasi: exit 0, stdout "11 11 35\ntrue\n3 5\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/arguments_length_method.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/arguments_length_method.a: stdout differs
+    node: exit 0, stdout "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n0:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n", stderr ""
+    wasi: exit 0, stdout "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n1:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/census_optional_values_forms.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/census_optional_values_forms.a: stdout differs
+    node: exit 0, stdout "10\n0\n20\n4\ndefault:1\ndefault:2\n4\ndefault:3\ndefault:4\n10\ndefault:5\n15\n0\ndefault:6\ndefault:7\n19\n9\ndefault:8\ndefault:9\n25\n6\ndefault:10\ndefault:11\n31\nundefined\nfalse\ntrue\ntrue\nfalse\nundefined\ntrue\nundefined:0,undefined:1\ndefault:12\ndefault:13\n15,18\nhi Ada\nfirst/first:second\nfirst/given\ndefault:14\n14\n0\ndefault:15\ndefault:16\n15,17\n", stderr ""
+    wasi: exit 0, stdout "10\n0\n20\n4\ndefault:1\ndefault:2\n4\ndefault:3\ndefault:4\n10\n5\n0\ndefault:5\ndefault:6\n16\n9\n0\n6\ndefault:7\ndefault:8\n22\nundefined\nfalse\ntrue\nfalse\nfalse\nundefined\ntrue\nundefined:0,undefined:1\ndefault:9\ndefault:10\n12,15\nhi Ada\nfirst/first:second\nfirst/given\n0\n0\ndefault:11\ndefault:12\n11,13\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/closure_convention_plain.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/closure_convention_plain.a: stdout differs
+    node: exit 0, stdout "-1\n-1\n7\n9\n9\n-1 6\n", stderr ""
+    wasi: exit 0, stdout "-1\n-1\n7\n0\n9\n-1 6\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/statements_small_parameters.a (tests-02)
+    wasi_test.go:75: TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/statements_small_parameters.a: stdout differs
+    node: exit 0, stdout "3/4\n3/20\n2/tail\n8/9/17\n2/4/30\n5/6/11\n10/12\n10/40\n", stderr ""
+    wasi: exit 0, stdout "3/4\n3/20\n2/tail\n8/9/17\n2/4/30\n5/6/11\n10/0\n10/40\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/flow TestFlowCorpusUnitsCoverEveryProgram (tests-03)
+    corpus_coverage_test.go:78: corpus coverage at 129: "../oracle/testdata/class_features_accessors.a" is missing or duplicated
+FAIL github.com/system-inc/adamic/internal/flow TestFlowProgram____oracle_testdata_class_features_accessors_a_c021ae465538 (tests-03)
+    corpus_units_test.go:4937: ../oracle/testdata/class_features_accessors.a: Lower: class_features_accessors.a: stage 0 can't lower spreading an accessor literal whose getter may throw yet
+FAIL github.com/system-inc/adamic/stage1/cohere/cssstrings TestMultiPushGap (tests-04)
+    gaps_test.go:29: gap changed: <nil>; update GAPS.md and remove the workaround if closed
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter TestCompilerGaps/defaultSort (tests-04)
+    gaps_test.go:34: expected recorded gap "Adamic 0.1 refuses sort without a comparator", got <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestOmittedArgumentZeroMutantIsCaught (tests-06)
+    omitted_arguments_test.go:53: want two omitted scalar slots, changed 0
+FAIL github.com/system-inc/adamic/stage1/cohere/json TestDocumentedStageZeroGaps/multiplePush.ts (tests-06)
+    gaps_test.go:34: gap changed: <nil>; update GAPS.md
+FAIL github.com/system-inc/adamic/stage1/cohere/json TestDocumentedStageZeroGaps/repeatInTry.ts (tests-06)
+    gaps_test.go:34: gap changed: <nil>; update GAPS.md
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks TestParserRepresentationProbes/gaps/10_multiple_push.ts (tests-06)
+    gaps_test.go:51: NotYet gap changed: <nil>; update GAPS.md
+FAIL github.com/system-inc/adamic/stage1/typescript/parser TestClosedOptionalFunctionValueGap (tests-06)
+    gaps_test.go:132: native ASan/UBSan/LSan: "0\n", Node "1\n"
+FAIL github.com/system-inc/adamic/internal/oracle TestArgumentsLengthTypeScriptSource/arguments_length.a (tests-07)
+    arguments_length_test.go:59: native: stdout differs; Node "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n0:-1\n1:-1\n1:8\n", compiled "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n1:-1\n1:-1\n1:8\n"
+    arguments_length_test.go:59: JavaScript: stdout differs; Node "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n0:-1\n1:-1\n1:8\n", compiled "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n1:-1\n1:-1\n1:8\n"
+    arguments_length_test.go:59: release: stdout differs; Node "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n0:-1\n1:-1\n1:8\n", compiled "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n1:-1\n1:-1\n1:8\n"
+FAIL github.com/system-inc/adamic/internal/oracle TestArgumentsLengthTypeScriptSource/arguments_length_extended.a (tests-07)
+    arguments_length_test.go:59: native: stdout differs; Node "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n", compiled "0:0\n1:1\n1:9\n1:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n"
+    arguments_length_test.go:59: JavaScript: stdout differs; Node "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n", compiled "0:0\n1:1\n1:9\n1:1\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n"
+    arguments_length_test.go:59: release: stdout differs; Node "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n", compiled "0:0\n1:1\n1:9\n1:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n"
+FAIL github.com/system-inc/adamic/internal/oracle TestArgumentsLengthTypeScriptSource/arguments_length_method.a (tests-07)
+    arguments_length_test.go:59: native: stdout differs; Node "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n0:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n", compiled "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n1:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n"
+    arguments_length_test.go:59: JavaScript: stdout differs; Node "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n0:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n", compiled "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n1:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n"
+    arguments_length_test.go:59: release: stdout differs; Node "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n0:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n", compiled "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n1:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n"
+FAIL github.com/system-inc/adamic/internal/oracle TestArgumentsLengthTypeScriptSource/arguments_length_no_reader.a (tests-07)
+    arguments_length_test.go:59: native: stdout differs; Node "-1\n-1\n7\n\n1,2,3\n4,5\n9\n9\n-1 6\n", compiled "-1\n-1\n7\n\n1,2,3\n4,5\n0\n9\n-1 6\n"
+    arguments_length_test.go:59: release: stdout differs; Node "-1\n-1\n7\n\n1,2,3\n4,5\n9\n9\n-1 6\n", compiled "-1\n-1\n7\n\n1,2,3\n4,5\n0\n9\n-1 6\n"
+FAIL github.com/system-inc/adamic/internal/oracle TestArgumentsLengthTypeScriptSource/arguments_length_reduce_left.a (tests-07)
+    arguments_length_test.go:59: native: stdout differs; Node "12\n112\n22\n14\nundefined\n12\n112\n", compiled "12\n112\n22\n14\nundefined\n112\n112\n"
+    arguments_length_test.go:59: JavaScript: stdout differs; Node "12\n112\n22\n14\nundefined\n12\n112\n", compiled "12\n112\n22\n14\nundefined\n112\n112\n"
+    arguments_length_test.go:59: release: stdout differs; Node "12\n112\n22\n14\nundefined\n12\n112\n", compiled "12\n112\n22\n14\nundefined\n112\n112\n"
+FAIL github.com/system-inc/adamic/internal/oracle TestArgumentsLengthTypeScriptSource/arguments_length_value.a (tests-07)
+    arguments_length_test.go:59: native: stdout differs; Node "plain:-1\n0:-1\n1:-1\n1:4\n3\n0:-1\n1:-1\n1:-1\n1:hi a\n2:hi b\n2:hello c\n", compiled "plain:-1\n1:-1\n1:-1\n1:4\n3\n1:-1\n1:-1\n1:-1\n2:hi a\n2:hi b\n2:hello c\n"
+    arguments_length_test.go:59: JavaScript: stdout differs; Node "plain:-1\n0:-1\n1:-1\n1:4\n3\n0:-1\n1:-1\n1:-1\n1:hi a\n2:hi b\n2:hello c\n", compiled "plain:-1\n1:-1\n1:-1\n1:4\n3\n1:-1\n1:-1\n1:-1\n2:hi a\n2:hi b\n2:hello c\n"
+    arguments_length_test.go:59: release: stdout differs; Node "plain:-1\n0:-1\n1:-1\n1:4\n3\n0:-1\n1:-1\n1:-1\n1:hi a\n2:hi b\n2:hello c\n", compiled "plain:-1\n1:-1\n1:-1\n1:4\n3\n1:-1\n1:-1\n1:-1\n2:hi a\n2:hi b\n2:hello c\n"
+FAIL github.com/system-inc/adamic/stage1/typescript/parser TestPushSpreadGap (tests-07)
+    gaps_test.go:64: GAPS.md records push spread NotYet, got <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestOmittedReaderZeroMutantIsCaught (tests-08)
+    omitted_arguments_test.go:126: want one omitted method slot, changed 0
+FAIL github.com/system-inc/adamic/internal/oracle TestSyntaxSubstrMutants/undefined-length (tests-08)
+    syntax_substr_test.go:97: mutant changed no expression
+FAIL github.com/system-inc/adamic/stage1/cohere/yaml TestLexerGaps/multiplePush.ts (tests-08)
+    gaps_test.go:44: gap changed or closed: <nil>; update GAPS.md and remove its workaround
+FAIL github.com/system-inc/adamic/stage1/typescript/scanner TestGapStandsWhereGapsMdSays (tests-08)
+    gaps_test.go:34: gap changed: <nil>; update GAPS.md and undo gap 1 workaround
+FAIL github.com/system-inc/adamic/cmd/adamic-meter TestFixtureCorpusCountsEveryDiagnosticKind (tests-09)
+    main_test.go:24: counts = map[string]int{"NotYet":2}, want one Refused and one NotYet
+FAIL github.com/system-inc/adamic/internal/oracle TestArrayFamilyMutants/method_metadata (tests-09)
+    library_array_mutant_test.go:73: mutant changed nothing
+FAIL github.com/system-inc/adamic/internal/oracle TestStatementsSmallRulings/template (tests-09)
+    statements_small_rulings_test.go:36: want preserved stop "a template interpolating an object, an array, a map, a function or undefined"; admitted program: native ; JavaScript
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNative (tests-09)
+    formatfiles_products_test.go:14: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeAdamicFilesDeclined (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-1895110646/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeBareAdamicName (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-4119817701/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeDanglingGit (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-223664951/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeDanglingLink (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-2211674997/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeDanglingPrettierignore (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-857164161/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeJavaScriptLowercase (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-3801672817/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeLinkLoop (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-3508170207/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeQuoteDEL (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-3380013325/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeQuoteMark (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-3341777768/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeTrailingDot (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-2517835128/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeUTF16Sort (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-942372904/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeUnsanitized (tests-09)
+    formatfiles_prepare_test.go:116: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-3783737182/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeUppercaseAdamicExtension (tests-09)
+    formatfiles_prepare_test.go:104: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-2217393255/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_000 (tests-09)
+    formatfiles_shards_test.go:241: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_001 (tests-09)
+    formatfiles_shards_test.go:245: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_002 (tests-09)
+    formatfiles_shards_test.go:249: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_003 (tests-09)
+    formatfiles_shards_test.go:253: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_004 (tests-09)
+    formatfiles_shards_test.go:257: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_005 (tests-09)
+    formatfiles_shards_test.go:261: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_006 (tests-09)
+    formatfiles_shards_test.go:265: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_007 (tests-09)
+    formatfiles_shards_test.go:269: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_008 (tests-09)
+    formatfiles_prepare_test.go:94: Load: /tmp/adamic-gate/formatfiles-shared-1647538330/fixture-3942163465/formatfiles/enumerate.ts:19:26: error TS2307: Cannot find module '../config/glob.ts' or its corresponding type declarations.
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_009 (tests-09)
+    formatfiles_shards_test.go:277: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_010 (tests-09)
+    formatfiles_shards_test.go:281: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_011 (tests-09)
+    formatfiles_shards_test.go:285: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_012 (tests-09)
+    formatfiles_shards_test.go:289: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_013 (tests-09)
+    formatfiles_shards_test.go:293: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_014 (tests-09)
+    formatfiles_shards_test.go:297: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_015 (tests-09)
+    formatfiles_shards_test.go:301: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_016 (tests-09)
+    formatfiles_shards_test.go:305: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_017 (tests-09)
+    formatfiles_shards_test.go:309: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_018 (tests-09)
+    formatfiles_shards_test.go:313: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_019 (tests-09)
+    formatfiles_shards_test.go:317: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_020 (tests-09)
+    formatfiles_shards_test.go:321: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_021 (tests-09)
+    formatfiles_shards_test.go:325: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_022 (tests-09)
+    formatfiles_shards_test.go:329: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_023 (tests-09)
+    formatfiles_shards_test.go:333: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_024 (tests-09)
+    formatfiles_shards_test.go:337: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_025 (tests-09)
+    formatfiles_shards_test.go:341: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_026 (tests-09)
+    formatfiles_shards_test.go:345: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_027 (tests-09)
+    formatfiles_shards_test.go:349: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_028 (tests-09)
+    formatfiles_shards_test.go:353: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_029 (tests-09)
+    formatfiles_shards_test.go:357: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_030 (tests-09)
+    formatfiles_shards_test.go:361: shared port preparation failed
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles TestThePortParsesAsGoCohereDoes_031 (tests-09)
+    formatfiles_shards_test.go:365: shared port preparation failed
+FAIL github.com/system-inc/adamic/internal/oracle TestCountsAreRecorded (tests-10)
+    counts_test.go:239: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):
+    recorded: | internal/oracle/testdata/node_fs_directory_system.a | 5324 | 5324 | 10049 | 7985 | 3516 | 0 |
+    measured: | internal/oracle/testdata/node_fs_directory_system.a | 5332 | 5332 | 10065 | 7997 | 3522 | 0 |
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n0:-1\n1:-1\n1:8\n", stderr ""
+    native: exit 0, stdout "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n1:-1\n1:-1\n1:8\n", stderr ""
+    oracle_test.go:859: JavaScript backend: stdout differs
+    node:    exit 0, stdout "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n0:-1\n1:-1\n1:8\n", stderr ""
+    backend: exit 0, stdout "0:-1\n1:-1\n1:7\n1:1:\n4:1:2,3,4\n0:9\n1:9\n1:5\n1:-1\n1:-1\n1:8\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length_extended.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n", stderr ""
+    native: exit 0, stdout "0:0\n1:1\n1:9\n1:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n", stderr ""
+    oracle_test.go:859: JavaScript backend: stdout differs
+    node:    exit 0, stdout "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n", stderr ""
+    backend: exit 0, stdout "0:0\n1:1\n1:9\n1:1\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length_method.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n0:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n", stderr ""
+    native: exit 0, stdout "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n1:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n", stderr ""
+    oracle_test.go:859: JavaScript backend: stdout differs
+    node:    exit 0, stdout "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n0:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n", stderr ""
+    backend: exit 0, stdout "0:-1 1:-1 1:3\nother:-1 other:-1 other:3\n1:-1 1:-1 1:4\n3:1,2,3\n2:4,5\n4:6,7,8,9\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length_no_reader.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "-1\n-1\n7\n\n1,2,3\n4,5\n9\n9\n-1 6\n", stderr ""
+    native: exit 0, stdout "-1\n-1\n7\n\n1,2,3\n4,5\n0\n9\n-1 6\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length_reduce_left.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "12\n112\n22\n14\nundefined\n12\n112\n", stderr ""
+    native: exit 0, stdout "12\n112\n22\n14\nundefined\n112\n112\n", stderr ""
+    oracle_test.go:859: JavaScript backend: stdout differs
+    node:    exit 0, stdout "12\n112\n22\n14\nundefined\n12\n112\n", stderr ""
+    backend: exit 0, stdout "12\n112\n22\n14\nundefined\n112\n112\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length_value.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "plain:-1\n0:-1\n1:-1\n1:4\n3\n0:-1\n1:-1\n1:-1\n1:hi a\n2:hi b\n2:hello c\n", stderr ""
+    native: exit 0, stdout "plain:-1\n1:-1\n1:-1\n1:4\n3\n1:-1\n1:-1\n1:-1\n2:hi a\n2:hi b\n2:hello c\n", stderr ""
+    oracle_test.go:859: JavaScript backend: stdout differs
+    node:    exit 0, stdout "plain:-1\n0:-1\n1:-1\n1:4\n3\n0:-1\n1:-1\n1:-1\n1:hi a\n2:hi b\n2:hello c\n", stderr ""
+    backend: exit 0, stdout "plain:-1\n1:-1\n1:-1\n1:4\n3\n1:-1\n1:-1\n1:-1\n2:hi a\n2:hi b\n2:hello c\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/census_optional_values_forms.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "10\n0\n20\n4\ndefault:1\ndefault:2\n4\ndefault:3\ndefault:4\n10\ndefault:5\n15\n0\ndefault:6\ndefault:7\n19\n9\ndefault:8\ndefault:9\n25\n6\ndefault:10\ndefault:11\n31\nundefined\nfalse\ntrue\ntrue\nfalse\nundefined\ntrue\nundefined:0,undefined:1\ndefault:12\ndefault:13\n15,18\nhi Ada\nfirst/first:second\nfirst/given\ndefault:14\n14\n0\ndefault:15\ndefault:16\n15,17\n", stderr ""
+    native: exit 0, stdout "10\n0\n20\n4\ndefault:1\ndefault:2\n4\ndefault:3\ndefault:4\n10\n5\n0\ndefault:5\ndefault:6\n16\n9\n0\n6\ndefault:7\ndefault:8\n22\nundefined\nfalse\ntrue\nfalse\nfalse\nundefined\ntrue\nundefined:0,undefined:1\ndefault:9\ndefault:10\n12,15\nhi Ada\nfirst/first:second\nfirst/given\n0\n0\ndefault:11\ndefault:12\n11,13\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_nested.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "1 11 25\ntrue\n3 5\n", stderr ""
+    native: exit 0, stdout "11 11 35\ntrue\n3 5\n", stderr ""
+    oracle_test.go:859: JavaScript backend: stdout differs
+    node:    exit 0, stdout "1 11 25\ntrue\n3 5\n", stderr ""
+    backend: exit 0, stdout "11 11 35\ntrue\n3 5\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_plain.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "-1\n-1\n7\n9\n9\n-1 6\n", stderr ""
+    native: exit 0, stdout "-1\n-1\n7\n0\n9\n-1 6\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/closure_convention_receiver_rest.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "3\n35\n45\n", stderr ""
+    native: exit 0, stdout "13\n35\n45\n", stderr ""
+    oracle_test.go:859: JavaScript backend: stdout differs
+    node:    exit 0, stdout "3\n35\n45\n", stderr ""
+    backend: exit 0, stdout "13\n35\n45\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/omitted_defaults.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "hi a\n7:ok:true\n0::false\n7:ok:true\n9\n9\n9,10\n11\ntrue:0:6,true:1:6\n", stderr ""
+    native: exit 0, stdout "hi a\n0:ok:false\n0::false\n7:ok:true\n0\n9\n9,10\n11\ntrue:0:6,true:1:6\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_lifetimes.a (tests-11)
+    oracle_test.go:812: want stage 0 to refuse with where and what, got /tmp/adamic/internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_lifetimes.a:11:2: Adamic 0.1 refuses changing prototypes after creation; outside the .a sound subset; use a .ts program with proven heap lifetimes
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_links.a (tests-11)
+    oracle_test.go:812: want stage 0 to refuse with where and what, got /tmp/adamic/internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_links.a:7:1: Adamic 0.1 refuses changing prototypes after creation; outside the .a sound subset; use a .ts program with proven heap lifetimes
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/statements_small_parameters.a (tests-11)
+    oracle_test.go:853: stdout differs
+    node:   exit 0, stdout "3/4\n3/20\n2/tail\n8/9/17\n2/4/30\n5/6/11\n10/12\n10/40\n", stderr ""
+    native: exit 0, stdout "3/4\n3/20\n2/tail\n8/9/17\n2/4/30\n5/6/11\n10/0\n10/40\n", stderr ""
+FAIL github.com/system-inc/adamic/internal/fuzz TestParallelRunnerAgreesAndCanFail (tests-00-r7)
+    parallel_test.go:18: thread sanitizer: ready
+    parallel_test.go:44: generated string parallel program: finding sanitizer: heap-buffer-overflow
+    =================================================================
+    ==662656==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7b8b71de0038 at pc 0x55f94370f431 bp 0x7ffe559facd0 sp 0x7ffe559facc8
+    WRITE of size 8 at 0x7b8b71de0038 thread T0
+    #0 0x55f94370f430 in adamic_function_1_makeTally /tmp/adamic-gate/TestParallelRunnerAgreesAndCanFail3917535094/001/generated/main.c:1044:31
+    #1 0x55f94370f430 in main /tmp/adamic-gate/TestParallelRunnerAgreesAndCanFail3917535094/001/generated/main.c:4447:42
+    #2 0x7f4b72c31ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+FAIL github.com/system-inc/adamic/internal/lower TestNativeAgreementRejectsWrongExit (tests-00-r10)
+    agree_test.go:331: native main has no successful exit to mutate
+FAIL github.com/system-inc/adamic/internal/native TestRuntimeStaticsAreListed (tests-00-r11)
+    runtime_statics_test.go:278: runtime/census_small.c:1: unaudited runtime file; review its storage in docs/runtime-statics.md
+    runtime_statics_test.go:293: runtime/map_set.c:112: unlisted mutable storage collection_next; audit it in docs/runtime-statics.md
+    runtime_statics_test.go:278: runtime/node_host.c:1: unaudited runtime file; review its storage in docs/runtime-statics.md
+    runtime_statics_test.go:293: runtime/node_host.c:111: unlisted mutable storage current_directory; audit it in docs/runtime-statics.md
+    runtime_statics_test.go:293: runtime/node_host.c:112: unlisted mutable storage cleanup_registered; audit it in docs/runtime-statics.md
+    runtime_statics_test.go:293: runtime/node_host.c:133: unlisted mutable storage error_name; audit it in docs/runtime-statics.md
+    runtime_statics_test.go:278: runtime/regexp_replace.c:1: unaudited runtime file; review its storage in docs/runtime-statics.md
+    runtime_statics_test.go:293: runtime/string_slice_impl.h:72: unlisted mutable storage characters; audit it in docs/runtime-statics.md
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIHostRuntimeRefusals/mkdtemp (tests-00-r12)
+    wasi_host_test.go:121: native: clang failed: exit status 1
+    wasm-ld: error: /tmp/adamic-gate/main-7fc0dd.o: undefined symbol: adamic_fs_file_mkdtemp
+    clang: error: linker command failed with exit code 1 (use -v to see invocation)
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestRecoveryLoweredRecipe/shard-000 (tests-00-r16)
+    recovery_lowered_recipe_test.go:62: port.c differs across source paths
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-00-r18)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint	2087.589s
+FAIL github.com/system-inc/adamic/internal/fresh TestFreshCorpusRemainder/../oracle/testdata/scout19_slice2_create_set.a (tests-06-r2)
+    corpus_coverage_test.go:82: ../oracle/testdata/scout19_slice2_create_set.a: Load: /tmp/adamic/internal/oracle/testdata/scout19_slice2_create_set.a:144:34: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.
+    'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+    /tmp/adamic/internal/oracle/testdata/scout19_slice2_create_set.a:162:5: error TS2322: Type 'T | undefined' is not assignable to type 'T'.
+    'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'.
+    /tmp/adamic/internal/oracle/testdata/scout19_slice2_create_set.a:71:32: error TS2345: Argument of type 'TElement | undefined' is not assignable to parameter of type 'TElement'.
+    'TElement' could be instantiated with an arbitrary type which could be unrelated to 'TElement | undefined'.
+    /tmp/adamic/internal/oracle/testdata/scout19_slice2_create_set.a:76:48: error TS2345: Argument of type 'TElement | undefined' is not assignable to parameter of type 'TElement | TElement[]'.
+    Type 'undefined' is not assignable to type 'TElement | TElement[]'.
+FAIL github.com/system-inc/adamic/internal/fresh TestFreshCorpusRemainder/../oracle/testdata/scout19_slice2_range.a (tests-06-r2)
+    corpus_coverage_test.go:82: ../oracle/testdata/scout19_slice2_range.a: Load: /tmp/adamic/internal/oracle/testdata/scout19_slice2_range.a:7:29: error TS2345: Argument of type 'V1 | undefined' is not assignable to parameter of type 'V1'.
+    'V1' could be instantiated with an arbitrary type which could be unrelated to 'V1 | undefined'.
+    /tmp/adamic/internal/oracle/testdata/scout19_slice2_range.a:8:58: error TS2345: Argument of type 'V1 | undefined' is not assignable to parameter of type 'V1'.
+    'V1' could be instantiated with an arbitrary type which could be unrelated to 'V1 | undefined'.
+FAIL github.com/system-inc/adamic/stage1/typescript/collections TestSlice2BodiesMatchPinnedTSC (tests-11-r5)
+    multimap_test.go:37: original MultiMap adaptation input drifted
+FAIL github.com/system-inc/adamic/internal/flow requested tests ran: 0 (tests-01): note: stale, the tree holds no test TestEveryPathNodeTakesIsInTheGraph
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0 (tests-04): note: stale, the tree holds no test TestVolumeProfileAgreementAndMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-01): requested tests started 10, verdicts 9 of: TestCompleteSuggestionSerialization (TestCompleteSuggestionSerialization_IsolatedShard)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-01): whole package started 6739, verdicts 6708 of: TestCompilerAndStage1Agree_6454, TestCompilerAndStage1Agree_6455, TestCompilerAndStage1Agree_6456, TestCompilerAndStage1Agree_6457, TestCompilerAndStage1Agree_6458, TestCompilerAndStage1Agree_6459, TestCompilerAndStage1Agree_6460, TestCompilerAndStage1Agree_6461, TestCompilerAndStage1Agree_6462, TestCompilerAndStage1Agree_6463, TestCompilerAndStage1Agree_6464, TestCompilerAndStage1Agree_6465
