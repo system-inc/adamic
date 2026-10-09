@@ -1,0 +1,13 @@
+diff --git a/internal/lower/namespaces.go b/internal/lower/namespaces.go
+index b34c6b8d..2655fb03 100644
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -415,7 +415,7 @@ func (l *lowering) namespaceReadyReads(node *ast.Node, writing bool) []ir.Expres
+ 			if setting {
+ 				message = "TypeError: Cannot set properties of undefined (setting '" + member + "')"
+ 			}
+-			b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(b.parameters[0])}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
++			b.body = append(b.body, ir.If{Condition: b.read(b.parameters[0]), Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+ 			// The outer container is read first in Outer.Inner.member.
+ 			checks = append([]ir.Expression{b.finish("namespace_ready", ir.BooleanConstant{Value: true})}, checks...)
+ 		}

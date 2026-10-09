@@ -1,0 +1,34 @@
+{
+  "mutants": [
+    [
+      "D1",
+      "internal/lower/namespace_callable.go",
+      "if parent.Kind == ast.KindTypeOfExpression {\n\t\treturn true",
+      "if parent.Kind == ast.KindTypeOfExpression {\n\t\treturn false",
+      33,
+      "Change the typeof-use acceptance constant true to false"
+    ],
+    [
+      "D2",
+      "internal/lower/namespace_receiver_scope.go",
+      "node.Kind != ast.KindArrowFunction",
+      "node.Kind != ast.KindMethodDeclaration",
+      13,
+      "Change the nested-function scope exemption from ArrowFunction to MethodDeclaration"
+    ],
+    [
+      "D3",
+      "internal/lower/namespaces.go",
+      "Condition: ir.Unary{Operator: ir.Not, Operand: b.read(b.parameters[0])}",
+      "Condition: b.read(b.parameters[0])",
+      418,
+      "Flip the Boolean namespace-readiness condition by removing negation"
+    ]
+  ],
+  "code_under_test": "Adamic namespace lowering in internal/lower",
+  "oracle": "Node executing the unmodified original sources",
+  "matrix_regexes": [
+    "^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$",
+    "^TestNativeAgreesWithNode$/(stage3|internal)/(namespace-parser-stops|oracle)/(native-(namespace|callable)|testdata)/(namespace_(method_receiver|class_registration|callable_properties))"
+  ]
+}

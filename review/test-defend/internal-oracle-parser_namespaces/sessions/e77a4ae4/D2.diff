@@ -1,0 +1,13 @@
+diff --git a/internal/lower/namespace_receiver_scope.go b/internal/lower/namespace_receiver_scope.go
+index dcf34b70..43c74100 100644
+--- a/internal/lower/namespace_receiver_scope.go
++++ b/internal/lower/namespace_receiver_scope.go
+@@ -10,7 +10,7 @@ func namespaceOwnThis(declaration *ast.Node) bool {
+ 		if node == nil || ast.IsTypeNode(node) {
+ 			return false
+ 		}
+-		if ast.IsClassLike(node) || ast.IsFunctionLike(node) && node.Kind != ast.KindArrowFunction {
++		if ast.IsClassLike(node) || ast.IsFunctionLike(node) && node.Kind != ast.KindMethodDeclaration {
+ 			return false
+ 		}
+ 		if node.Kind == ast.KindThisKeyword {

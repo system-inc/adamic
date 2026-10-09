@@ -1,0 +1,338 @@
+[
+  {
+    "mutant": "D1",
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "exit": 0,
+    "wall": 0.4855308289988898,
+    "cache": "/tmp/defend-parser-namespaces/cache/D1"
+  },
+  {
+    "mutant": "D1",
+    "label": "target",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$"
+    ],
+    "exit": 1,
+    "wall": 11.841746194000734,
+    "cache": "/tmp/defend-parser-namespaces/cache/D1"
+  },
+  {
+    "mutant": "D1",
+    "label": "subsumer",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/(stage3|internal)/(namespace-parser-stops|oracle)/(native-(namespace|callable)|testdata)/(namespace_(method_receiver|class_registration|callable_properties))"
+    ],
+    "exit": 1,
+    "wall": 2.553159275001235,
+    "cache": "/tmp/defend-parser-namespaces/cache/D1"
+  },
+  {
+    "mutant": "D2",
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "exit": 0,
+    "wall": 0.5114641220025078,
+    "cache": "/tmp/defend-parser-namespaces/cache/D2"
+  },
+  {
+    "mutant": "D2",
+    "label": "target",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$"
+    ],
+    "exit": 1,
+    "wall": 11.209759208999458,
+    "cache": "/tmp/defend-parser-namespaces/cache/D2"
+  },
+  {
+    "mutant": "D2",
+    "label": "subsumer",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/(stage3|internal)/(namespace-parser-stops|oracle)/(native-(namespace|callable)|testdata)/(namespace_(method_receiver|class_registration|callable_properties))"
+    ],
+    "exit": 1,
+    "wall": 2.3077476789985667,
+    "cache": "/tmp/defend-parser-namespaces/cache/D2"
+  },
+  {
+    "mutant": "D3",
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "exit": 0,
+    "wall": 0.5225085069978377,
+    "cache": "/tmp/defend-parser-namespaces/cache/D3"
+  },
+  {
+    "mutant": "D3",
+    "label": "target",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)$"
+    ],
+    "exit": 1,
+    "wall": 11.572584647998156,
+    "cache": "/tmp/defend-parser-namespaces/cache/D3"
+  },
+  {
+    "mutant": "D3",
+    "label": "subsumer",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/(stage3|internal)/(namespace-parser-stops|oracle)/(native-(namespace|callable)|testdata)/(namespace_(method_receiver|class_registration|callable_properties))"
+    ],
+    "exit": 1,
+    "wall": 2.643389461998595,
+    "cache": "/tmp/defend-parser-namespaces/cache/D3"
+  },
+  {
+    "mutant": "D1",
+    "label": "expanded",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary)$"
+    ],
+    "exit": 0,
+    "wall": 5.423932066001726,
+    "cache": "/tmp/defend-parser-namespaces/cache/D1"
+  },
+  {
+    "mutant": "D1",
+    "label": "review",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^smoke\\.a$"
+    ],
+    "exit": 0,
+    "wall": 2.1462688780011376,
+    "cache": "/tmp/defend-parser-namespaces/cache/D1"
+  },
+  {
+    "mutant": "D2",
+    "label": "expanded",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary)$"
+    ],
+    "exit": 0,
+    "wall": 5.26092333500128,
+    "cache": "/tmp/defend-parser-namespaces/cache/D2"
+  },
+  {
+    "mutant": "D2",
+    "label": "review",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^smoke\\.a$"
+    ],
+    "exit": 0,
+    "wall": 2.220572407997679,
+    "cache": "/tmp/defend-parser-namespaces/cache/D2"
+  },
+  {
+    "mutant": "D3",
+    "label": "expanded",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestFractionalPowersReachRuntime|TestReviewProgramsNoLooseFiles|TestReviewProgramsRefuse|TestReviewProgramsSelfTest|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary)$"
+    ],
+    "exit": 1,
+    "wall": 5.370842470998468,
+    "cache": "/tmp/defend-parser-namespaces/cache/D3"
+  },
+  {
+    "mutant": "D3",
+    "label": "review",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^smoke\\.a$"
+    ],
+    "exit": 0,
+    "wall": 2.119702108000638,
+    "cache": "/tmp/defend-parser-namespaces/cache/D3"
+  },
+  {
+    "mutant": "D1",
+    "label": "review-corrected",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^smoke\\.a$"
+    ],
+    "exit": 0,
+    "wall": 2.2072250919991347,
+    "cache": "/tmp/defend-parser-namespaces/cache/D1"
+  },
+  {
+    "mutant": "D2",
+    "label": "review-corrected",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^smoke\\.a$"
+    ],
+    "exit": 0,
+    "wall": 2.0853555149988097,
+    "cache": "/tmp/defend-parser-namespaces/cache/D2"
+  },
+  {
+    "mutant": "D3",
+    "label": "review-corrected",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestReviewProgramsAgreeWithNode$/^smoke\\.a$"
+    ],
+    "exit": 0,
+    "wall": 2.0802327370001876,
+    "cache": "/tmp/defend-parser-namespaces/cache/D3"
+  }
+]

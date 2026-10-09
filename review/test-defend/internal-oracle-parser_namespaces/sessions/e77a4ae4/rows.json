@@ -1,0 +1,50 @@
+[
+  {
+    "test": "TestParserNamespace family",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNativeAgreesWithNode family (D in audit)"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/namespace_callable.go:33",
+        "change": "Change the typeof-use acceptance constant true to false",
+        "rows_failed": [
+          "TestParserNamespace family",
+          "TestNativeAgreesWithNode family (six selected inputs)"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/namespace_receiver_scope.go:13",
+        "change": "Change the nested-function scope exemption from ArrowFunction to MethodDeclaration",
+        "rows_failed": [
+          "TestParserNamespace family",
+          "TestNativeAgreesWithNode family (six selected inputs)"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/namespaces.go:418",
+        "change": "Flip the Boolean namespace-readiness condition by removing negation",
+        "rows_failed": [
+          "TestParserNamespace family",
+          "TestNativeAgreesWithNode family (six selected inputs)",
+          "TestNamespaceLiveExportBoundary"
+        ]
+      }
+    ],
+    "evidence": "commands.json records timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run <bounded selectors>; D1: parser_namespaces_test.go:101: /workspace/adamic/internal/oracle/testdata/namespace_callable_properties.a:14:122: stage 0 can't lower observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented yet; D2: parser_namespaces_test.go:101: /workspace/adamic/stage3/namespace-parser-stops/native-namespace-object-receiver.a:3:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this; D3: parser_namespaces_test.go:106: internal/oracle/testdata/namespace_method_receiver.a native: exit codes differ; Node {stdout:[55 58 57 57 10 49 49 10] stderr:[] exitCode:0}; backend {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 84 121 112 101 69 114 114 111 114 58 32 67 97 110 110 111 116 32 114 101 97 100 32 112 114 111 112 101 114 116 105 101 115 32 111 102 32 117 110 100 101 102 105 110 101 100 32 40 114 101 97 100 105 110 103 32 39 97 116 116 97 99 104 70 108 111 119 78 111 100 101 68 101 98 117 103 73 110 102 111 87 111 114 107 101 114 39 41 10] exitCode:70}",
+    "bounded": true,
+    "members": [
+      "TestParserNamespaceReceiver",
+      "TestParserNamespaceClass",
+      "TestParserCallableNamespace"
+    ],
+    "base": "e77a4ae41f473c149aee910c51b73637686a804a"
+  }
+]
