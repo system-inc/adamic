@@ -57,7 +57,6 @@ func TestMethodReplacementGap(t *testing.T) {
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestRawInputGap(t *testing.T) {
-	t.Parallel()
 	dir := t.TempDir()
 	first := filepath.Join(dir, "malformed.ts")
 	second := filepath.Join(dir, "replacement.ts")
@@ -93,7 +92,6 @@ func TestRawInputGap(t *testing.T) {
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestParserRecoveryGap(t *testing.T) {
-	t.Parallel()
 	path, err := filepath.Abs("gaps/parserRecovery.ts")
 	if err != nil {
 		t.Fatal(err)

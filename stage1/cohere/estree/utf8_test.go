@@ -1,7 +1,6 @@
 package estree
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -14,21 +13,31 @@ func cookedSurrogates() []string {
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestCookedSurrogates(t *testing.T) {
-	t.Parallel()
 	list := manifest(t, cookedSurrogates())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
-	checkPort(t, main, []string{"--manifest", list}, want, false, false)
+	binary, script := build(t, main, true)
+	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+		if d := firstDifference(want, got); d != "" {
+			t.Fatal(name + ": " + d)
+		}
+	}
 	t.Logf("%d cooked-surrogate files, %d bytes match Go", len(cookedSurrogates()), len(want))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestCookedSurrogateMutant(t *testing.T) {
-	t.Parallel()
 	list := manifest(t, cookedSurrogates())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	path := mutantPort(t, "protocol.ts", `result += '\\ufffd\\ufffd\\ufffd';`, `result += '\\ufffd';`)
-	checkPort(t, path, []string{"--manifest", list}, want, true, false)
+	binary, _ := build(t, path, true)
+	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+		if d := firstDifference(want, got); d == "" {
+			t.Fatal(name + " mutant survived")
+		} else {
+			t.Log(name + ": " + d)
+		}
+	}
 }
 func TestCookedSurrogateLibraryGap(t *testing.T) {
 	t.Parallel()
@@ -51,27 +60,30 @@ func TestCookedSurrogateLibraryGap(t *testing.T) {
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestLossyInputRefusal(t *testing.T) {
-	t.Parallel()
 	main, _ := filepath.Abs("main.ts")
 	binary, script := build(t, main, true)
-	for index, body := range [][]byte{{47, 47, 240, 144, 128, 10, 120, 59}, {47, 47, 239, 191, 189, 10, 120, 59}} {
-		t.Run(fmt.Sprintf("%04d", index), func(t *testing.T) {
-			t.Parallel()
-			path := filepath.Join(t.TempDir(), "input.ts")
-			os.WriteFile(path, body, 0644)
-			checkRefusalModes(t, main, binary, script, path, "cannot recover original UTF-8 bytes")
-
-		})
+	for _, body := range [][]byte{{47, 47, 240, 144, 128, 10, 120, 59}, {47, 47, 239, 191, 189, 10, 120, 59}} {
+		path := filepath.Join(t.TempDir(), "input.ts")
+		os.WriteFile(path, body, 0644)
+		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
+			refusedBeforeDeadline(t, argv, "cannot recover original UTF-8 bytes")
+		}
 	}
 	t.Log("equal-size malformed and valid replacement inputs both explicitly refuse; raw-byte API remains required")
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestLossyInputControl(t *testing.T) {
-	t.Parallel()
 	path := filepath.Join(t.TempDir(), "malformed.ts")
 	os.WriteFile(path, []byte{47, 47, 240, 144, 128, 10, 120, 59}, 0644)
 	want := execute(t, "", goOracle(t), path)
 	main := mutantPort(t, "pipeline.ts", `if(text.includes('\ufffd'))`, `if(false)`)
-	checkPort(t, main, []string{path}, want, true, false)
+	binary, _ := build(t, main, true)
+	for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path)} {
+		if d := firstDifference(want, got); d == "" {
+			t.Fatal(name + " lossy-input mutant survived")
+		} else {
+			t.Log(name + ": " + d)
+		}
+	}
 }

@@ -23,44 +23,57 @@ func syntaxGrammar() []string {
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestSyntaxGrammar(t *testing.T) {
-	t.Parallel()
 	list := manifest(t, syntaxGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
-	checkPort(t, main, []string{"--manifest", list}, want, false, false)
+	binary, script := build(t, main, true)
+	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+		if diff := firstDifference(want, got); diff != "" {
+			t.Fatal(name + ": " + diff)
+		}
+	}
 	t.Logf("%d syntax cases, %d identical canonical bytes", len(syntaxGrammar()), len(want))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestSyntaxMutants(t *testing.T) {
-	t.Parallel()
-	list := manifest(t, syntaxGrammar())
-	want := execute(t, "", goOracle(t), "--manifest", list)
 	t.Run("mapped-constraint", func(t *testing.T) {
-		t.Parallel()
+		list := manifest(t, syntaxGrammar())
+		want := execute(t, "", goOracle(t), "--manifest", list)
 		main := mutantPort(t, "convert.ts", "this.set(result, 'constraint', this.converted(this.child(parameter, 1)));", "this.set(result, 'constraint', absent());")
-		checkPort(t, main, []string{"--manifest", list}, want, true, false)
+		binary, _ := build(t, main, true)
+		for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+			if diff := firstDifference(want, got); diff == "" {
+				t.Fatal(name + " mutant survived")
+			} else {
+				t.Log(name + ": " + diff)
+			}
+		}
 	})
 	for _, item := range []struct{ name, file, from, to, source string }{
 		{"erasure-precedence", "sourceBinary.ts", "if(nextRank > lastRank ||", "if(false && nextRank > lastRank ||", "1+1 as number *2;"},
 		{"reference-pragma", "pipeline.ts", "if(reference !== '')", "if(false)", "/// <reference path='missingquote.ts />\nx;"},
 	} {
 		t.Run(item.name, func(t *testing.T) {
-			t.Parallel()
 			list := manifest(t, []string{item.source})
 			statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
 			if !strings.Contains(statuses, `"status":"error"`) {
 				t.Fatal(statuses)
 			}
 			main := mutantPort(t, item.file, item.from, item.to)
-			checkAcceptanceControl(t, main, list, 1)
+			binary, _ := build(t, main, true)
+			for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+				if !strings.Contains(string(got), "0 Program ") {
+					t.Fatal(name + " control did not accept")
+				}
+				t.Log(name + ": disabled check accepts Go-refused input; acceptance oracle catches it")
+			}
 		})
 	}
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestSyntaxRefusals(t *testing.T) {
-	t.Parallel()
 	sources := []string{"1+1 as number *2;", "/// <reference path='missingquote.ts />\nx;", "/// <reference types='m' resolution-mode='invalid' />\nx;"}
 	list := manifest(t, sources)
 	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
@@ -74,10 +87,9 @@ func TestSyntaxRefusals(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, path := range strings.Fields(string(paths)) {
-		t.Run(filepath.Base(path), func(t *testing.T) {
-			t.Parallel()
-			checkRefusalModes(t, main, binary, script, path, "ESTree parser")
-		})
+		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
+			refusedBeforeDeadline(t, argv, "ESTree parser")
+		}
 	}
 	t.Log("three Go refusals explicitly refused with empty stdout on all builds")
 }
