@@ -14,6 +14,7 @@ import (
 
 // Probe checked types before monomorphization. A structural base constrains
 // properties, but cannot fix the runtime header of every possible subtype.
+// Constraint-backed Union storage preserves those headers without choosing one.
 func TestRepresentationClockSourceCheckedTypes(t *testing.T) {
 	t.Parallel()
 	path := filepath.Join(t.TempDir(), "probe.a")
@@ -58,7 +59,7 @@ function lengthOnly<Length extends { readonly length: number }>(lengthSource: Le
 	}{
 		{"objectSource", ir.Object, true}, {"callableSource", ir.Closure, true},
 		{"arraySource", ir.Array, true}, {"stringSource", ir.String, true},
-		{"source", 0, false}, {"lengthSource", 0, false},
+		{"source", ir.Union, true}, {"lengthSource", 0, false},
 	} {
 		proven := types[probe.name]
 		if proven == nil {
@@ -75,5 +76,5 @@ function lengthOnly<Length extends { readonly length: number }>(lengthSource: Le
 			t.Fatalf("%s must satisfy %s constraint", relation[0], relation[1])
 		}
 	}
-	t.Log("CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI")
+	t.Log("CompilerType admits Object and Closure; length-only admits Array and String; Source uses tagged Union storage, not an Object header; length-only storage remains unsupported")
 }

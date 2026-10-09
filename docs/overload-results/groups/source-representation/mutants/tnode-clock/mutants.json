@@ -1,0 +1,74 @@
+[
+  {
+    "mutant": "default-node",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/hidden-clock-mutant-w60k0der/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^hidden_boundary_generic_tnode[.]a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "generic-value",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/hidden-clock-mutant-48cer0yh/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeGenericValueRemainsNotYet$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "source-object-header",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/hidden-clock-mutant-_mtr6rbi/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestRepresentationClockSourceCheckedTypes$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "source-no-tagged-storage",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/hidden-clock-mutant-mv12onra/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestRepresentationClockSourceCheckedTypes$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  }
+]

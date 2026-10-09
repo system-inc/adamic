@@ -1,0 +1,372 @@
+[
+  {
+    "group": "admission",
+    "mutant": "drop-fixed-return-proof",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralResults$"
+  },
+  {
+    "group": "admission",
+    "mutant": "reverse-result-covariance",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralRefuses$/^factory_literal_covariance$"
+  },
+  {
+    "group": "admission",
+    "mutant": "trust-visitor-input",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralRefuses$/^visitor_domain_liar$"
+  },
+  {
+    "group": "admission",
+    "mutant": "trust-writable-result",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralRefuses$/^factory_writable_invariance$"
+  },
+  {
+    "group": "admission",
+    "mutant": "drop-return-storage",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralRefuses$/^factory_field_storage$"
+  },
+  {
+    "group": "admission",
+    "mutant": "drop-relation-diagnostic",
+    "caught": true,
+    "exit": 1,
+    "selector": "^TestOverloadStructuralRefuses$/^factory_result_covariance$"
+  },
+  {
+    "group": "visitors",
+    "mutant": "erase-TIn-to-Node",
+    "caught": true,
+    "exit": 1
+  },
+  {
+    "group": "visitors",
+    "mutant": "admit-unproven-invocation",
+    "caught": true,
+    "exit": 1
+  },
+  {
+    "group": "fields",
+    "mutant": "drop-field-storage",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-8xii0tjq/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestOverloadStructuralRefuses$/^mixed_field_storage$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "group": "fields",
+    "mutant": "drop-constraint-storage",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-s8o0up3m/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintRepresentation$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "group": "fields",
+    "mutant": "object-layout",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-1nci5w71/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintMutationRemainsNotYet$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "group": "fields",
+    "mutant": "array-layout",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-obv7ptnr/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintRepresentation$/^array_layout$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "group": "fields",
+    "mutant": "unconstrained-layout",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-tpjvshgh/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintRepresentation$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "group": "fields",
+    "mutant": "ignore-substitution",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-_mowdqi3/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintRepresentation$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "group": "fields",
+    "mutant": "ignore-mapper",
+    "exit": 1,
+    "caught": true,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/overload-fields-mutant-aqchsbpn/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintRepresentation$",
+      "-timeout",
+      "90s",
+      "-count=1",
+      "-v"
+    ]
+  },
+  {
+    "group": "field-hatch",
+    "mutant": "drop-kind-check",
+    "caught": true,
+    "exit": 1
+  },
+  {
+    "group": "field-hatch",
+    "mutant": "drop-value-check",
+    "caught": true,
+    "exit": 1
+  },
+  {
+    "group": "callback",
+    "mutant": "input",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "callback",
+    "mutant": "result",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "callback",
+    "mutant": "representation",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "callback",
+    "mutant": "field-storage",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "values",
+    "mutant": "drop-indirect-check",
+    "caught": true,
+    "exit": 1
+  },
+  {
+    "group": "values",
+    "mutant": "skip-single-signature-check",
+    "caught": true,
+    "exit": 1
+  },
+  {
+    "group": "structural",
+    "mutant": "drop-proof",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "structural",
+    "mutant": "trust-shape",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "structural",
+    "mutant": "reverse-covariance",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "structural",
+    "mutant": "mutable-variance",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "base",
+    "mutant": "trust-optional-property",
+    "selector": "^TestOverloadResultsRefuses$/optional_result_property$",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "base",
+    "mutant": "trust-result",
+    "selector": "^TestOverloadResultsLiarStops$",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "base",
+    "mutant": "drop-specialization",
+    "selector": "^TestNativeAgreesWithNode$/internal/oracle/testdata/overload_results_binding.a$",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "base",
+    "mutant": "drop-parameter-check",
+    "selector": "^TestOverloadResultsLiarStops$/parameter-liar$",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "base",
+    "mutant": "trust-shared-result",
+    "selector": "^TestOverloadResultsRefuses$",
+    "exit": 1,
+    "caught": true
+  },
+  {
+    "group": "tnode-clock",
+    "mutant": "default-node",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/hidden-clock-mutant-w60k0der/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^hidden_boundary_generic_tnode[.]a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "group": "tnode-clock",
+    "mutant": "generic-value",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/hidden-clock-mutant-48cer0yh/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeGenericValueRemainsNotYet$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "group": "tnode-clock",
+    "mutant": "source-object-header",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/hidden-clock-mutant-_mtr6rbi/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestRepresentationClockSourceCheckedTypes$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "group": "tnode-clock",
+    "mutant": "source-no-tagged-storage",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/hidden-clock-mutant-mv12onra/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestRepresentationClockSourceCheckedTypes$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  }
+]
