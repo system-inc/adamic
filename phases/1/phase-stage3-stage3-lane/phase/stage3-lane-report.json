@@ -1,0 +1,19 @@
+{
+  "status": "fail",
+  "errors": [
+    "missing or invalid lane evidence: [Errno 2] No such file or directory: '/tmp/adamic-stage3-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+  ],
+  "execution": {
+    "commit": "b524594354a2abb7eaafd1286fd5189ff507ff2f",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 250.02
+  },
+  "results": "/tmp/adamic-stage3-lane",
+  "verdict": "FAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/tmp/adamic-stage3-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+}

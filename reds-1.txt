@@ -1,0 +1,21 @@
+run adamic-gate-phases-20261009T074739-9a4d9ec3: red, 0 tests in 43 units, 10 failed, 0 units broken, 0 killed over budget
+FAIL phase-wasi-testwasiunit24 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-stage3-stage3-lane (stage)
+    red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at stage3 after 250.1 s, under load (load 10.0 on 5 cores at first failure), cancelled after first failure (stage3=250.1s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 7.9 on 5 cores at start, load 10.0 on 5 cores at first failure, load 10.0 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-1 (stage)
+    red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at catalog/01 shared-slice-append after 314.9 s, cancelled after first failure (catalog=314.9s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 0.6 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-2 (stage)
+    red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at catalog/02 liveness-throw after 329.7 s, cancelled after first failure (catalog=329.7s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 10.3 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-3 (stage)
+    red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at catalog/03 defined-lent after 199.6 s, cancelled after first failure (catalog=199.6s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 8.8 on 5 cores at start, load 1.2 on 5 cores at first failure, load 1.2 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-4 (stage)
+    red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at catalog/04 borrowed-array-move after 143.2 s, cancelled after first failure (catalog=143.2s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 5.7 on 5 cores at start, load 1.5 on 5 cores at first failure, load 1.5 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-5 (stage)
+    red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at catalog/05 spread-method-reuse after 249.6 s, cancelled after first failure (catalog=249.6s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 3.7 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-6 (stage)
+    red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at catalog/06 constructor-capture-region after 301.7 s, cancelled after first failure (catalog=301.7s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 3.1 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-7 (stage)
+    red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at catalog/07 borrowed-element-reads after 422.7 s, cancelled after first failure (catalog=422.8s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 10.6 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-11 (stage)
+    red: b524594354a2abb7eaafd1286fd5189ff507ff2f full gate, first failure at catalog/11 refuse-definite-assignment after 261.7 s, cancelled after first failure (catalog=261.7s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 7.4 on 5 cores at start, load 1.1 on 5 cores at first failure, load 1.1 on 5 cores at end), 0 fail, 0 pass

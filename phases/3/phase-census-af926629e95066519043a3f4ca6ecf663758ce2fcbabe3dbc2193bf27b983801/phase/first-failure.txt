@@ -1,0 +1,38 @@
+g timing and RSS observations.
+measurement	github.com/system-inc/adamic/internal/native	TestRecordBenchmark	TestRecordBenchmark:06ee23e4bcdbf34555e793a31d7dc4a10bdb21fb5c9a110c068aa7683ad1f84d	Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness.
+measurement	github.com/system-inc/adamic/internal/native	TestMeasureClangUnits	TestMeasureClangUnits:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Checker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeOracleUtilities
+measurement	github.com/system-inc/adamic/cmd/adamic-test262	TestCompilerStartupMeasurement	TestCompilerStartupMeasurement:c4a4cc95e992b9399ab2a21ae7e3a1caca9c71a5d9b0b7f5d48200073d19ce03	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Parser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Types
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound2Checker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound1Utilities
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Checker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound2Utilities
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit25
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit26
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit27
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit28
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit29
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit30
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit31
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit32
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit33
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit34
+unknown	github.com/system-inc/adamic/internal/native	TestWASIUnit35
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileArtifacts	TestProfileArtifacts:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestPerformance	TestPerformance:fc2cecddef6499ecfc230850eb4569d7b20ef412ad51c601308d2654dfebb2e1	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/stage1/typescript/scanner	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:3bd24aa7ec39b0814f83da55e2fa69db6694d0b9024893cf146dc5f7e1cbb1b4	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Parser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Types
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionChecker
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeTimingRound3Utilities
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionParser
+unknown	github.com/system-inc/adamic/bridge/tsgo	TestBridgeWrongPositionTypes
+measurement	github.com/system-inc/adamic/internal/lower	TestOptionalWideningCensus	TestOptionalWideningCensus:6db2c24faa7463ea36fb143a758faf5111de53a4d3f94c7e93eaf86c24f8af9e	Opt-in inventory of a project's optional-widening sites (OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT); measurement, never a required input of the gate.
+skips=4473 required-input=0 unknown=4439 pending=9
+gate skipped 0 required-input tests; 4439 unclassified skips; 0 pending skips past or unsure of their reason
+exit status 1
+
+(box load 1.4 on 5 cores at first failure)

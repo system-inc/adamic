@@ -1,0 +1,7 @@
+stage 3 tier 1 failed: stage3-lane exit 1 (logs: stage3-lane.log)
+FAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/tmp/adamic-stage3-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'
+stage3-lane, last lines:
+/tmp/adamic-stage3-lane
+missing or invalid lane evidence: [Errno 2] No such file or directory: '/tmp/adamic-stage3-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'
+FAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/tmp/adamic-stage3-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'
+(box load 10.0 on 5 cores at first failure)

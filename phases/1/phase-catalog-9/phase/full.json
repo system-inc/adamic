@@ -1,0 +1,118 @@
+{
+  "sha": "b524594354a2abb7eaafd1286fd5189ff507ff2f",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "b524594354a2abb7eaafd1286fd5189ff507ff2f",
+  "base_name": "main",
+  "tools_sha": "ef66f596c4665cad60da2aba81204f8c6b8b7022",
+  "machine": {
+    "hostname": "b323378133e9",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 1.0,
+      "cores": 5
+    },
+    "end": {
+      "load_1m": 1.0,
+      "cores": 5
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "unit": "9",
+  "catalog_units": [
+    {
+      "name": "09 literal-undefined-field",
+      "command": [
+        "bash",
+        "verify/catalog/check.sh",
+        "--entry",
+        "9",
+        "--jobs",
+        "1",
+        "b524594354a2abb7eaafd1286fd5189ff507ff2f"
+      ],
+      "status": "passed",
+      "scratch": "/tmp/loom-units/loom-unit-991110123/workspace/loom-out/phase/catalog-units/00-f39rl7za",
+      "exit": 0,
+      "ok": true,
+      "caught": true,
+      "stale": false,
+      "skipped": false,
+      "verdicts": [
+        "09 literal-undefined-field: applies-and-fails-as-recorded"
+      ],
+      "log": "/tmp/loom-units/loom-unit-991110123/workspace/loom-out/phase/catalog-units/00-f39rl7za/catalog.log",
+      "wall_seconds": 376.20686,
+      "over_budget": true
+    }
+  ],
+  "catalog_unit_count": 1,
+  "catalog_unit_budget_seconds": 30,
+  "catalog_slowest_unit_seconds": 376.20686,
+  "catalog": {
+    "exit": 0,
+    "caught": 1,
+    "stale": [],
+    "uncaught": []
+  },
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "b323378133e9",
+    "cpus": 5,
+    "load": [
+      1.0,
+      1.0,
+      1.1
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "products_over_budget": [],
+  "units": [],
+  "wall_seconds": 376.2,
+  "steps_seconds": {
+    "catalog": 376.208
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "catalog"
+  ],
+  "stages_exit": {
+    "catalog": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "full"
+}

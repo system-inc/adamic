@@ -1,0 +1,31 @@
+run adamic-gate-phases-again-20261009T081554-9c38b7a3: red, 0 tests in 17 units, 15 failed, 0 units broken, 0 killed over budget
+FAIL phase-tools (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-build (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-wasi-testwasiunit03 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-wasi-testwasiunit07 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-wasi-testwasiunit13 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-wasi-testwasiunit22 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-wasi-testwasiunit23 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-wasi-testwasiunit27 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-wasi-testwasiunit28 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-stage3-stage3-apply-tests (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-catalog-8 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-catalog-10 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-catalog-12 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-catalog-16 (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.
+FAIL phase-determinism (stage)
+    subprocess.CalledProcessError: Command '['git', '-C', '/tmp/adamic-gate-tools/ef66f596c466', 'rev-parse', 'HEAD']' returned non-zero exit status 128.

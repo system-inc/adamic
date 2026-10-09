@@ -1,0 +1,94 @@
+{
+  "sha": "b524594354a2abb7eaafd1286fd5189ff507ff2f",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "b524594354a2abb7eaafd1286fd5189ff507ff2f",
+  "base_name": "main",
+  "tools_sha": "ef66f596c4665cad60da2aba81204f8c6b8b7022",
+  "machine": {
+    "hostname": "bdef2594c4f4",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 7.9,
+      "cores": 5
+    },
+    "first_failure": {
+      "load_1m": 10.0,
+      "cores": 5
+    },
+    "end": {
+      "load_1m": 10.0,
+      "cores": 5
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "unit": "stage3-lane",
+  "stage3_exits": {
+    "stage3-lane": 1
+  },
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "bdef2594c4f4",
+    "cpus": 5,
+    "load": [
+      10.0,
+      5.5,
+      3.1
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "products_over_budget": [],
+  "units": [],
+  "wall_seconds": 250.1,
+  "steps_seconds": {
+    "stage3": 250.1
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": {
+    "step": "stage3",
+    "detail": "stage 3 tier 1 failed: stage3-lane exit 1 (logs: stage3-lane.log)\nFAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/tmp/adamic-stage3-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'\nstage3-lane, last lines:\n/tmp/adamic-stage3-lane\nmissing or invalid lane evidence: [Errno 2] No such file or directory: '/tmp/adamic-stage3-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'\nFAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/tmp/adamic-stage3-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'",
+    "after_seconds": 250.1,
+    "under_load": true
+  },
+  "planned_stages": [
+    "stage3"
+  ],
+  "stages_exit": {
+    "stage3": 1
+  },
+  "cancelled_after_first_failure": true,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "full"
+}

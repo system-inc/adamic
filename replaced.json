@@ -1,0 +1,90 @@
+{
+ "replaced": [
+  {
+   "unit": "phase-tools",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-build",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-vet",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-wasi-testwasiunit03",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-wasi-testwasiunit07",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-wasi-testwasiunit13",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-wasi-testwasiunit22",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-wasi-testwasiunit23",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-wasi-testwasiunit27",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-wasi-testwasiunit28",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-wasi-testwasiunit35",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-stage3-stage3-apply-tests",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-catalog-8",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-catalog-10",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-catalog-12",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-catalog-16",
+   "was": "failed",
+   "run": 1
+  },
+  {
+   "unit": "phase-determinism",
+   "was": "failed",
+   "run": 1
+  }
+ ],
+ "why_red_was_rerun": null
+}

@@ -1,0 +1,9 @@
+11 refuse-definite-assignment wall=261.659s
+target b524594354a2abb7eaafd1286fd5189ff507ff2f
+logs /tmp/loom-units/loom-unit-2224301308/workspace/loom-out/phase/catalog-units/00-m7d1wr67/adamic-catalog-logs-_mvu_1y7
+build flags: commit=b524594354a2abb7eaafd1286fd5189ff507ff2f; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+11 refuse-definite-assignment: baseline-fails-or-test-missing (needs investigation)
+11 made against=d772b5c990de4304de990e723835f19ebb613641
+11 wall=261.579s setup=16.837s check=242.582s cleanup=0.502s load=7.39 7.16 6.08 2/470 451831 -> 1.07 3.51 4.80 1/474 453060
+total wall=261.604s load=7.39 7.16 6.08 1/469 451822 -> 1.07 3.51 4.80 1/473 453060
