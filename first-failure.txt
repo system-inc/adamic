@@ -1,0 +1,16 @@
+FIRST FAILURE (tests, at 573.9 s):
+github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownListLayout
+=== RUN   TestMarkdownListLayout
+=== PAUSE TestMarkdownListLayout
+=== CONT  TestMarkdownListLayout
+    list_layout_shards_test.go:374: build markdown-list-layout-lowered 57492e005ecf miss 87.47
+    list_layout_shards_test.go:96: build markdown-list-layout-canary-lowered 81565a07175b miss 87.50
+panic: cooked: Markdown list layout setup exceeded 90s
+
+goroutine 183 [running]:
+github.com/system-inc/adamic/stage1/cohere/markdownblocks.listLayoutDeadline.func1()
+	/home/ahra/fast-gate/tree/stage1/cohere/markdownblocks/list_layout_shards_test.go:151 +0x67
+created by time.goFunc
+	/home/ahra/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+(box load 76.0 on 64 cores at first failure)
