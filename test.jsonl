@@ -1,0 +1,32 @@
+{"Time":"2026-10-09T07:44:49.212208542Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T07:44:49.235341361Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly"}
+{"Time":"2026-10-09T07:44:49.235419676Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"=== RUN   TestNodeTableIsLinkOnly\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:44:52.000500655Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:173: build lint-node-table-oracle ccc42963a908 miss 2.74\n"}
+{"Time":"2026-10-09T07:45:35.533695193Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:206: build lint-node-table-capture 5ae86fd75377 miss 43.53\n"}
+{"Time":"2026-10-09T07:45:35.712889784Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:258: union: 3914 live cases, each exactly once across 8 shards\n"}
+{"Time":"2026-10-09T07:45:35.714302262Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"    node_table_split_test.go:168: TestNodeTableIsLinkOnly (setup corpus): 46.478s\n"}
+{"Time":"2026-10-09T07:45:35.714315862Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Output":"--- PASS: TestNodeTableIsLinkOnly (46.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:45:35.714319908Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNodeTableIsLinkOnly","Elapsed":46.48}
+{"Time":"2026-10-09T07:45:35.714338946Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:45:35.716508904Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t46.504s\n"}
+{"Time":"2026-10-09T07:45:35.7165333Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":46.504}
+{"Time":"2026-10-09T07:44:39.459431093Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-gate"}
+{"Time":"2026-10-09T07:44:39.461014718Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestTypeAwareChildrenAndParentCost"}
+{"Time":"2026-10-09T07:44:39.46107557Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestTypeAwareChildrenAndParentCost","Output":"=== RUN   TestTypeAwareChildrenAndParentCost\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:44:39.461090372Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestTypeAwareChildrenAndParentCost","Output":"=== PAUSE TestTypeAwareChildrenAndParentCost\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:44:39.461092685Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestTypeAwareChildrenAndParentCost"}
+{"Time":"2026-10-09T07:44:39.461097403Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestResumeCleanupPreservesForeignPaths"}
+{"Time":"2026-10-09T07:44:39.461100227Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestResumeCleanupPreservesForeignPaths","Output":"=== RUN   TestResumeCleanupPreservesForeignPaths\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:44:39.461102871Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestResumeCleanupPreservesForeignPaths","Output":"=== PAUSE TestResumeCleanupPreservesForeignPaths\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:44:39.461104443Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestResumeCleanupPreservesForeignPaths"}
+{"Time":"2026-10-09T07:44:39.461106676Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestTypeAwareChildrenAndParentCost"}
+{"Time":"2026-10-09T07:44:39.461108629Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestTypeAwareChildrenAndParentCost","Output":"=== CONT  TestTypeAwareChildrenAndParentCost\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:44:39.461650837Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestResumeCleanupPreservesForeignPaths"}
+{"Time":"2026-10-09T07:44:39.461658539Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestResumeCleanupPreservesForeignPaths","Output":"=== CONT  TestResumeCleanupPreservesForeignPaths\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:44:39.461664488Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestTypeAwareChildrenAndParentCost","Output":"--- PASS: TestTypeAwareChildrenAndParentCost (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:44:39.461667963Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestTypeAwareChildrenAndParentCost","Elapsed":0}
+{"Time":"2026-10-09T07:44:39.461673532Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestResumeCleanupPreservesForeignPaths","Output":"--- PASS: TestResumeCleanupPreservesForeignPaths (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:44:39.461675454Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestResumeCleanupPreservesForeignPaths","Elapsed":0}
+{"Time":"2026-10-09T07:44:39.461676967Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:44:39.461851514Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-gate\t0.002s\n"}
+{"Time":"2026-10-09T07:44:39.461865545Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Elapsed":0.002}
