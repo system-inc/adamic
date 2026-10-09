@@ -1,0 +1,450 @@
+[
+  {
+    "test": "TestShardsAgree family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/shards_agree_split_test.go",
+    "seconds": null,
+    "oracle": "Same native lint driver run serially, exact byte and count comparison; self consistency does not establish semantic parity.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestShardsAgree_[0-9]+$; panic: test timed out after 1m30s; no completed clean baseline or mutant observation",
+    "members": [
+      "TestShardsAgree_000",
+      "TestShardsAgree_001",
+      "TestShardsAgree_002",
+      "TestShardsAgree_003",
+      "TestShardsAgree_004",
+      "TestShardsAgree_005",
+      "TestShardsAgree_006",
+      "TestShardsAgree_007",
+      "TestShardsAgree_008",
+      "TestShardsAgree_009",
+      "TestShardsAgree_010",
+      "TestShardsAgree_011",
+      "TestShardsAgree_012",
+      "TestShardsAgree_013",
+      "TestShardsAgree_014",
+      "TestShardsAgree_015",
+      "TestShardsAgree_016",
+      "TestShardsAgree_017",
+      "TestShardsAgree_018",
+      "TestShardsAgree_019",
+      "TestShardsAgree_020",
+      "TestShardsAgree_021",
+      "TestShardsAgree_022",
+      "TestShardsAgree_023",
+      "TestShardsAgree_024",
+      "TestShardsAgree_025",
+      "TestShardsAgree_026",
+      "TestShardsAgree_027",
+      "TestShardsAgree_028",
+      "TestShardsAgree_029",
+      "TestShardsAgree_030",
+      "TestShardsAgree_031"
+    ]
+  },
+  {
+    "test": "TestShardsAgree_Union",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/shards_agree_split_test.go",
+    "seconds": null,
+    "oracle": "Hand-written enumeration, exact-once ownership, and planted byte disagreement checked with difference; witness could not reach its check within budget.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestShardsAgree_Union$; panic: test timed out after 1m30s; no completed clean baseline or mutant observation",
+    "members": [
+      "TestShardsAgree_Union"
+    ]
+  },
+  {
+    "test": "TestShardsAgree_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+    "seconds": null,
+    "oracle": "Suite product/corpus construction, build success; preparation did not complete.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestShardsAgree_Setup$; panic: test timed out after 1m30s; no completed clean baseline or mutant observation",
+    "members": [
+      "TestShardsAgree_Setup"
+    ]
+  },
+  {
+    "test": "TestShardsAgree_SetupRequired",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+    "seconds": null,
+    "oracle": "Hand-written child PASS, named prepared-product build and cache-miss checks; preparation did not complete.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestShardsAgree_SetupRequired$; panic: test timed out after 1m30s; no completed clean baseline or mutant observation",
+    "members": [
+      "TestShardsAgree_SetupRequired"
+    ]
+  },
+  {
+    "test": "TestSuggestionAlongsideAutomaticFix_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/suggestion_alongside_shards_test.go",
+    "seconds": 7.145,
+    "oracle": "Construction success only: setting ready=false still passes; no assertion requires the ready flag.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S2.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestSuggestionAlongsideAutomaticFix_Setup$; --- PASS: TestSuggestionAlongsideAutomaticFix_Setup (7.93s)",
+    "members": [
+      "TestSuggestionAlongsideAutomaticFix_Setup"
+    ]
+  },
+  {
+    "test": "TestSuggestionAlongsideAutomaticFix family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/suggestion_alongside_shards_test.go",
+    "seconds": 5.307,
+    "oracle": "Go cohere executes the pinned rule adapter; exact output bytes across source Node, emitted JavaScript and sanitized native, plus hand-written automatic-fix substring.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M2: suggestion_alongside_shards_test.go:206: native: case 0 line 5: port \"range 9 17 unexpectedDebugger suggestions\\t\\t\\t8 17\", Go \"range 8 17 unexpectedDebugger suggestions\\t\\t\\t8 17\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestWitnessScriptKind family"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 8.129,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestSuggestionAlongsideAutomaticFix_[0-9]+$; selector=M2; suggestion_alongside_shards_test.go:206: native: case 0 line 5: port \"range 9 17 unexpectedDebugger suggestions\\t\\t\\t8 17\", Go \"range 8 17 unexpectedDebugger suggestions\\t\\t\\t8 17\"",
+    "members": [
+      "TestSuggestionAlongsideAutomaticFix_000",
+      "TestSuggestionAlongsideAutomaticFix_001",
+      "TestSuggestionAlongsideAutomaticFix_002"
+    ],
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestSuggestionAlongsideAutomaticFixPlantedFailure",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/suggestion_alongside_shards_test.go",
+    "seconds": 9.748,
+    "oracle": "Built-in native-only byte mismatch; parent requires exactly shard 002 failure and specific planted text. W1 makes difference accept all bytes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1-suggestion: suggestion_alongside_shards_test.go:283: wrong planted failure: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/W1.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestSuggestionAlongsideAutomaticFixPlantedFailure$; suggestion_alongside_shards_test.go:283: wrong planted failure: <nil>",
+    "members": [
+      "TestSuggestionAlongsideAutomaticFixPlantedFailure"
+    ]
+  },
+  {
+    "test": "TestSuggestionAlongsideAutomaticFixSetupIsRequired",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/suggestion_alongside_shards_test.go",
+    "seconds": 25.747,
+    "oracle": "Fresh-process child PASS and cache-miss assertions; S5 disables selected leaf preparation and parent fails.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S5-required: suggestion_alongside_shards_test.go:294: standalone cold shard: exit status 1 (scratch line 294 maps to origin/main line 295)",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S5.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestSuggestionAlongsideAutomaticFixSetupIsRequired$; suggestion_alongside_shards_test.go:294: standalone cold shard: exit status 1 (scratch line 294 maps to origin/main line 295)",
+    "members": [
+      "TestSuggestionAlongsideAutomaticFixSetupIsRequired"
+    ]
+  },
+  {
+    "test": "TestProduct_WitnessScriptKindLowered",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/witness_script_kind_products_test.go",
+    "seconds": 3.003,
+    "oracle": "Product construction only; S1 returns empty directory from all product makers and this wrapper still passes. No output comparison.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S1.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_WitnessScriptKind; --- PASS: TestProduct_WitnessScriptKindLowered (0.00s)",
+    "members": [
+      "TestProduct_WitnessScriptKindLowered"
+    ]
+  },
+  {
+    "test": "TestProduct_WitnessScriptKindNative",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/witness_script_kind_products_test.go",
+    "seconds": 4.369,
+    "oracle": "Product construction only; S1 returns empty directory from all product makers and this wrapper still passes. No output comparison.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S1.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_WitnessScriptKind; --- PASS: TestProduct_WitnessScriptKindLowered (0.00s)",
+    "members": [
+      "TestProduct_WitnessScriptKindNative"
+    ]
+  },
+  {
+    "test": "TestProduct_WitnessScriptKindGoOracle",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/witness_script_kind_products_test.go",
+    "seconds": 2.18,
+    "oracle": "Product construction only; S1 returns empty directory from all product makers and this wrapper still passes. No output comparison.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S1.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_WitnessScriptKind; --- PASS: TestProduct_WitnessScriptKindLowered (0.00s)",
+    "members": [
+      "TestProduct_WitnessScriptKindGoOracle"
+    ]
+  },
+  {
+    "test": "TestWitnessScriptKind family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/witness_script_kind_shards_test.go,stage1/cohere/lint/witness_script_kind_union_test.go",
+    "seconds": 8.129,
+    "oracle": "Go cohere executes no-debugger; exact output bytes across source Node, emitted JavaScript and sanitized native; union has hand-written exact-once live-corpus coverage.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M2: witness_script_kind_shards_test.go:153: Node: case 0 line 5: port \"range 17 25 unexpectedDebugger fix\\t\\t\\t16 25\", Go \"range 16 25 unexpectedDebugger fix\\t\\t\\t16 25\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestSuggestionAlongsideAutomaticFix family"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 5.307,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestWitnessScriptKind(?:_[0-9]+)?$; selector=M2; witness_script_kind_shards_test.go:153: Node: case 0 line 5: port \"range 17 25 unexpectedDebugger fix\\t\\t\\t16 25\", Go \"range 16 25 unexpectedDebugger fix\\t\\t\\t16 25\"",
+    "members": [
+      "TestWitnessScriptKind_000",
+      "TestWitnessScriptKind_001",
+      "TestWitnessScriptKind"
+    ],
+    "subsumption_mutants": 1,
+    "vacuous_subcases": [
+      "TestWitnessScriptKind (coverage union)"
+    ]
+  },
+  {
+    "test": "TestWitnessScriptKindPlantedFailure",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/witness_script_kind_shards_test.go",
+    "seconds": 16.161,
+    "oracle": "Built-in emitted-JavaScript-only byte mismatch; parent requires exactly assigned leaf failure and emitted JavaScript diagnostic. W1 accepts all bytes, exposing planted mismatch survived instead.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1-kind: witness_script_kind_shards_test.go:199: wrong planted failure: exit status 1",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/W1.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestWitnessScriptKindPlantedFailure$; witness_script_kind_shards_test.go:199: wrong planted failure: exit status 1",
+    "members": [
+      "TestWitnessScriptKindPlantedFailure"
+    ]
+  },
+  {
+    "test": "TestWitnessScriptKind_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/witness_script_kind_shards_test.go",
+    "seconds": 7.674,
+    "oracle": "Hand-written witness extension and ready/products/source-count construction checks; S3 constructs .ts filenames for .tsx witnesses and the unchanged extension assertion fails.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S3-kind-setup: witness_script_kind_shards_test.go:81: witness script kind lost",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S3.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestWitnessScriptKind_Setup$; witness_script_kind_shards_test.go:81: witness script kind lost",
+    "members": [
+      "TestWitnessScriptKind_Setup"
+    ]
+  },
+  {
+    "test": "TestWitnessScriptKindStandalone",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/witness_script_kind_shards_test.go",
+    "seconds": 17.752,
+    "oracle": "Parent requires child named-leaf PASS; S4 selects a nonexistent child row and fails that assertion.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S4-kind-standalone: witness_script_kind_shards_test.go:306: standalone leaf failed: <nil>",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix family",
+      "TestWitnessScriptKind family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u112/weak/S4.json -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestWitnessScriptKindStandalone$; witness_script_kind_shards_test.go:306: standalone leaf failed: <nil>",
+    "members": [
+      "TestWitnessScriptKindStandalone"
+    ]
+  }
+]

@@ -1,0 +1,6642 @@
+{
+  "scope": "observed source-Node no-debugger witness; full-corpus reach remains unknown until clean shard baseline",
+  "port_functions": [
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/main.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 6676,
+          "count": 1
+        },
+        {
+          "startOffset": 5366,
+          "endOffset": 5430,
+          "count": 0
+        },
+        {
+          "startOffset": 5504,
+          "endOffset": 5532,
+          "count": 0
+        },
+        {
+          "startOffset": 5570,
+          "endOffset": 5610,
+          "count": 0
+        },
+        {
+          "startOffset": 5778,
+          "endOffset": 6201,
+          "count": 0
+        },
+        {
+          "startOffset": 6293,
+          "endOffset": 6581,
+          "count": 2
+        },
+        {
+          "startOffset": 6319,
+          "endOffset": 6581,
+          "count": 1
+        },
+        {
+          "startOffset": 6601,
+          "endOffset": 6641,
+          "count": 0
+        },
+        {
+          "startOffset": 6643,
+          "endOffset": 6675,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/main.ts",
+      "function": "run",
+      "ranges": [
+        {
+          "startOffset": 386,
+          "endOffset": 5310,
+          "count": 1
+        },
+        {
+          "startOffset": 480,
+          "endOffset": 504,
+          "count": 0
+        },
+        {
+          "startOffset": 578,
+          "endOffset": 616,
+          "count": 0
+        },
+        {
+          "startOffset": 856,
+          "endOffset": 864,
+          "count": 0
+        },
+        {
+          "startOffset": 1000,
+          "endOffset": 1008,
+          "count": 0
+        },
+        {
+          "startOffset": 1112,
+          "endOffset": 1158,
+          "count": 0
+        },
+        {
+          "startOffset": 1313,
+          "endOffset": 1645,
+          "count": 15
+        },
+        {
+          "startOffset": 1367,
+          "endOffset": 1371,
+          "count": 0
+        },
+        {
+          "startOffset": 1398,
+          "endOffset": 1444,
+          "count": 1
+        },
+        {
+          "startOffset": 1471,
+          "endOffset": 1536,
+          "count": 1
+        },
+        {
+          "startOffset": 1565,
+          "endOffset": 1568,
+          "count": 14
+        },
+        {
+          "startOffset": 1569,
+          "endOffset": 1609,
+          "count": 1
+        },
+        {
+          "startOffset": 1583,
+          "endOffset": 1586,
+          "count": 0
+        },
+        {
+          "startOffset": 1602,
+          "endOffset": 1605,
+          "count": 0
+        },
+        {
+          "startOffset": 1735,
+          "endOffset": 1769,
+          "count": 0
+        },
+        {
+          "startOffset": 1812,
+          "endOffset": 1850,
+          "count": 0
+        },
+        {
+          "startOffset": 1935,
+          "endOffset": 2164,
+          "count": 2
+        },
+        {
+          "startOffset": 2027,
+          "endOffset": 2031,
+          "count": 0
+        },
+        {
+          "startOffset": 2051,
+          "endOffset": 2154,
+          "count": 1
+        },
+        {
+          "startOffset": 2248,
+          "endOffset": 2252,
+          "count": 0
+        },
+        {
+          "startOffset": 2254,
+          "endOffset": 2258,
+          "count": 0
+        },
+        {
+          "startOffset": 2537,
+          "endOffset": 2541,
+          "count": 0
+        },
+        {
+          "startOffset": 2590,
+          "endOffset": 2594,
+          "count": 0
+        },
+        {
+          "startOffset": 2670,
+          "endOffset": 3967,
+          "count": 0
+        },
+        {
+          "startOffset": 4160,
+          "endOffset": 4345,
+          "count": 0
+        },
+        {
+          "startOffset": 4368,
+          "endOffset": 4854,
+          "count": 0
+        },
+        {
+          "startOffset": 4895,
+          "endOffset": 4949,
+          "count": 0
+        },
+        {
+          "startOffset": 5043,
+          "endOffset": 5090,
+          "count": 0
+        },
+        {
+          "startOffset": 5134,
+          "endOffset": 5218,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/nodes.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1632,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/nodes.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 61,
+          "endOffset": 268,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/nodes.ts",
+      "function": "ParseNode",
+      "ranges": [
+        {
+          "startOffset": 274,
+          "endOffset": 426,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/nodes.ts",
+      "function": "written",
+      "ranges": [
+        {
+          "startOffset": 436,
+          "endOffset": 743,
+          "count": 3
+        },
+        {
+          "startOffset": 534,
+          "endOffset": 722,
+          "count": 7
+        },
+        {
+          "startOffset": 610,
+          "endOffset": 624,
+          "count": 6
+        },
+        {
+          "startOffset": 625,
+          "endOffset": 639,
+          "count": 4
+        },
+        {
+          "startOffset": 640,
+          "endOffset": 670,
+          "count": 4
+        },
+        {
+          "startOffset": 671,
+          "endOffset": 715,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 63248,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 363,
+          "endOffset": 40755,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "Parser",
+      "ranges": [
+        {
+          "startOffset": 469,
+          "endOffset": 783,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "kind",
+      "ranges": [
+        {
+          "startOffset": 788,
+          "endOffset": 836,
+          "count": 26
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "next",
+      "ranges": [
+        {
+          "startOffset": 841,
+          "endOffset": 884,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "node",
+      "ranges": [
+        {
+          "startOffset": 889,
+          "endOffset": 967,
+          "count": 23
+        },
+        {
+          "startOffset": 936,
+          "endOffset": 960,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "make",
+      "ranges": [
+        {
+          "startOffset": 972,
+          "endOffset": 1133,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "statements",
+      "ranges": [
+        {
+          "startOffset": 38440,
+          "endOffset": 40405,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "kind",
+      "ranges": [
+        {
+          "startOffset": 38600,
+          "endOffset": 38615,
+          "count": 23
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "next",
+      "ranges": [
+        {
+          "startOffset": 38635,
+          "endOffset": 38683,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "make",
+      "ranges": [
+        {
+          "startOffset": 38828,
+          "endOffset": 38886,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/parser.ts",
+      "function": "file",
+      "ranges": [
+        {
+          "startOffset": 62772,
+          "endOffset": 63245,
+          "count": 2
+        },
+        {
+          "startOffset": 62894,
+          "endOffset": 62952,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/scanner.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 32188,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/scanner.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 1306,
+          "endOffset": 1427,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/scanner.ts",
+      "function": "Scanner",
+      "ranges": [
+        {
+          "startOffset": 1433,
+          "endOffset": 1483,
+          "count": 4
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/scanner.ts",
+      "function": "code",
+      "ranges": [
+        {
+          "startOffset": 1488,
+          "endOffset": 1746,
+          "count": 37
+        },
+        {
+          "startOffset": 1596,
+          "endOffset": 1613,
+          "count": 3
+        },
+        {
+          "startOffset": 1615,
+          "endOffset": 1693,
+          "count": 3
+        },
+        {
+          "startOffset": 1677,
+          "endOffset": 1682,
+          "count": 0
+        },
+        {
+          "startOffset": 1693,
+          "endOffset": 1728,
+          "count": 34
+        },
+        {
+          "startOffset": 1728,
+          "endOffset": 1732,
+          "count": 2
+        },
+        {
+          "startOffset": 1733,
+          "endOffset": 1739,
+          "count": 32
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/scanner.ts",
+      "function": "advance",
+      "ranges": [
+        {
+          "startOffset": 1751,
+          "endOffset": 1815,
+          "count": 18
+        },
+        {
+          "startOffset": 1801,
+          "endOffset": 1804,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/scanner.ts",
+      "function": "identifier",
+      "ranges": [
+        {
+          "startOffset": 7062,
+          "endOffset": 8281,
+          "count": 2
+        },
+        {
+          "startOffset": 7267,
+          "endOffset": 8086,
+          "count": 18
+        },
+        {
+          "startOffset": 7333,
+          "endOffset": 7356,
+          "count": 0
+        },
+        {
+          "startOffset": 7358,
+          "endOffset": 7886,
+          "count": 0
+        },
+        {
+          "startOffset": 7902,
+          "endOffset": 7927,
+          "count": 2
+        },
+        {
+          "startOffset": 7928,
+          "endOffset": 7952,
+          "count": 16
+        },
+        {
+          "startOffset": 7954,
+          "endOffset": 8005,
+          "count": 16
+        },
+        {
+          "startOffset": 8005,
+          "endOffset": 8049,
+          "count": 2
+        },
+        {
+          "startOffset": 8049,
+          "endOffset": 8086,
+          "count": 16
+        },
+        {
+          "startOffset": 8106,
+          "endOffset": 8143,
+          "count": 0
+        },
+        {
+          "startOffset": 8173,
+          "endOffset": 8218,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/scanner.ts",
+      "function": "scan",
+      "ranges": [
+        {
+          "startOffset": 14889,
+          "endOffset": 21834,
+          "count": 5
+        },
+        {
+          "startOffset": 14972,
+          "endOffset": 21828,
+          "count": 10
+        },
+        {
+          "startOffset": 15073,
+          "endOffset": 15163,
+          "count": 2
+        },
+        {
+          "startOffset": 15163,
+          "endOffset": 15195,
+          "count": 8
+        },
+        {
+          "startOffset": 15195,
+          "endOffset": 15272,
+          "count": 0
+        },
+        {
+          "startOffset": 15272,
+          "endOffset": 15308,
+          "count": 8
+        },
+        {
+          "startOffset": 15308,
+          "endOffset": 15418,
+          "count": 2
+        },
+        {
+          "startOffset": 15418,
+          "endOffset": 15447,
+          "count": 6
+        },
+        {
+          "startOffset": 15447,
+          "endOffset": 15469,
+          "count": 3
+        },
+        {
+          "startOffset": 15471,
+          "endOffset": 15814,
+          "count": 0
+        },
+        {
+          "startOffset": 15814,
+          "endOffset": 15843,
+          "count": 6
+        },
+        {
+          "startOffset": 15843,
+          "endOffset": 15865,
+          "count": 3
+        },
+        {
+          "startOffset": 15867,
+          "endOffset": 17562,
+          "count": 3
+        },
+        {
+          "startOffset": 15949,
+          "endOffset": 15971,
+          "count": 0
+        },
+        {
+          "startOffset": 16023,
+          "endOffset": 16393,
+          "count": 9
+        },
+        {
+          "startOffset": 16132,
+          "endOffset": 16176,
+          "count": 3
+        },
+        {
+          "startOffset": 16178,
+          "endOffset": 16232,
+          "count": 3
+        },
+        {
+          "startOffset": 16232,
+          "endOffset": 16279,
+          "count": 6
+        },
+        {
+          "startOffset": 16279,
+          "endOffset": 16343,
+          "count": 0
+        },
+        {
+          "startOffset": 16343,
+          "endOffset": 16393,
+          "count": 6
+        },
+        {
+          "startOffset": 16445,
+          "endOffset": 16502,
+          "count": 0
+        },
+        {
+          "startOffset": 16590,
+          "endOffset": 17522,
+          "count": 0
+        },
+        {
+          "startOffset": 17562,
+          "endOffset": 17591,
+          "count": 3
+        },
+        {
+          "startOffset": 17591,
+          "endOffset": 17613,
+          "count": 0
+        },
+        {
+          "startOffset": 17615,
+          "endOffset": 18171,
+          "count": 0
+        },
+        {
+          "startOffset": 18171,
+          "endOffset": 18215,
+          "count": 3
+        },
+        {
+          "startOffset": 18216,
+          "endOffset": 18230,
+          "count": 3
+        },
+        {
+          "startOffset": 18231,
+          "endOffset": 18246,
+          "count": 3
+        },
+        {
+          "startOffset": 18248,
+          "endOffset": 18322,
+          "count": 0
+        },
+        {
+          "startOffset": 18323,
+          "endOffset": 18409,
+          "count": 0
+        },
+        {
+          "startOffset": 18410,
+          "endOffset": 18446,
+          "count": 0
+        },
+        {
+          "startOffset": 18447,
+          "endOffset": 18486,
+          "count": 0
+        },
+        {
+          "startOffset": 18488,
+          "endOffset": 19532,
+          "count": 0
+        },
+        {
+          "startOffset": 19532,
+          "endOffset": 19575,
+          "count": 3
+        },
+        {
+          "startOffset": 19577,
+          "endOffset": 19657,
+          "count": 0
+        },
+        {
+          "startOffset": 19657,
+          "endOffset": 19687,
+          "count": 3
+        },
+        {
+          "startOffset": 19687,
+          "endOffset": 19774,
+          "count": 0
+        },
+        {
+          "startOffset": 19774,
+          "endOffset": 19815,
+          "count": 3
+        },
+        {
+          "startOffset": 19816,
+          "endOffset": 19874,
+          "count": 3
+        },
+        {
+          "startOffset": 19831,
+          "endOffset": 19852,
+          "count": 0
+        },
+        {
+          "startOffset": 19853,
+          "endOffset": 19874,
+          "count": 0
+        },
+        {
+          "startOffset": 19876,
+          "endOffset": 20691,
+          "count": 0
+        },
+        {
+          "startOffset": 20691,
+          "endOffset": 20721,
+          "count": 3
+        },
+        {
+          "startOffset": 20721,
+          "endOffset": 20973,
+          "count": 0
+        },
+        {
+          "startOffset": 20973,
+          "endOffset": 21015,
+          "count": 3
+        },
+        {
+          "startOffset": 21015,
+          "endOffset": 21029,
+          "count": 1
+        },
+        {
+          "startOffset": 21031,
+          "endOffset": 21052,
+          "count": 2
+        },
+        {
+          "startOffset": 21054,
+          "endOffset": 21173,
+          "count": 2
+        },
+        {
+          "startOffset": 21109,
+          "endOffset": 21124,
+          "count": 0
+        },
+        {
+          "startOffset": 21173,
+          "endOffset": 21207,
+          "count": 1
+        },
+        {
+          "startOffset": 21207,
+          "endOffset": 21393,
+          "count": 0
+        },
+        {
+          "startOffset": 21393,
+          "endOffset": 21658,
+          "count": 1
+        },
+        {
+          "startOffset": 21658,
+          "endOffset": 21715,
+          "count": 0
+        },
+        {
+          "startOffset": 21716,
+          "endOffset": 21719,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/scanner.ts",
+      "function": "punctuation",
+      "ranges": [
+        {
+          "startOffset": 21839,
+          "endOffset": 26046,
+          "count": 1
+        },
+        {
+          "startOffset": 21893,
+          "endOffset": 22141,
+          "count": 0
+        },
+        {
+          "startOffset": 22154,
+          "endOffset": 22284,
+          "count": 0
+        },
+        {
+          "startOffset": 22297,
+          "endOffset": 22639,
+          "count": 0
+        },
+        {
+          "startOffset": 22652,
+          "endOffset": 22994,
+          "count": 0
+        },
+        {
+          "startOffset": 23007,
+          "endOffset": 23231,
+          "count": 0
+        },
+        {
+          "startOffset": 23244,
+          "endOffset": 23468,
+          "count": 0
+        },
+        {
+          "startOffset": 23481,
+          "endOffset": 23635,
+          "count": 0
+        },
+        {
+          "startOffset": 23648,
+          "endOffset": 23778,
+          "count": 0
+        },
+        {
+          "startOffset": 23791,
+          "endOffset": 24133,
+          "count": 0
+        },
+        {
+          "startOffset": 24146,
+          "endOffset": 24488,
+          "count": 0
+        },
+        {
+          "startOffset": 24501,
+          "endOffset": 24537,
+          "count": 0
+        },
+        {
+          "startOffset": 24550,
+          "endOffset": 24939,
+          "count": 0
+        },
+        {
+          "startOffset": 24952,
+          "endOffset": 25082,
+          "count": 0
+        },
+        {
+          "startOffset": 25095,
+          "endOffset": 25440,
+          "count": 0
+        },
+        {
+          "startOffset": 25453,
+          "endOffset": 25490,
+          "count": 0
+        },
+        {
+          "startOffset": 25503,
+          "endOffset": 25539,
+          "count": 0
+        },
+        {
+          "startOffset": 25552,
+          "endOffset": 25588,
+          "count": 0
+        },
+        {
+          "startOffset": 25601,
+          "endOffset": 25637,
+          "count": 0
+        },
+        {
+          "startOffset": 25650,
+          "endOffset": 25686,
+          "count": 0
+        },
+        {
+          "startOffset": 25699,
+          "endOffset": 25735,
+          "count": 0
+        },
+        {
+          "startOffset": 25748,
+          "endOffset": 25785,
+          "count": 0
+        },
+        {
+          "startOffset": 25798,
+          "endOffset": 25835,
+          "count": 0
+        },
+        {
+          "startOffset": 25897,
+          "endOffset": 25933,
+          "count": 0
+        },
+        {
+          "startOffset": 25946,
+          "endOffset": 25982,
+          "count": 0
+        },
+        {
+          "startOffset": 25995,
+          "endOffset": 26030,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/characters.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 44338,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/characters.ts",
+      "function": "isIdentifierStart",
+      "ranges": [
+        {
+          "startOffset": 43452,
+          "endOffset": 43634,
+          "count": 21
+        },
+        {
+          "startOffset": 43539,
+          "endOffset": 43552,
+          "count": 18
+        },
+        {
+          "startOffset": 43567,
+          "endOffset": 43581,
+          "count": 18
+        },
+        {
+          "startOffset": 43582,
+          "endOffset": 43631,
+          "count": 3
+        },
+        {
+          "startOffset": 43597,
+          "endOffset": 43631,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/characters.ts",
+      "function": "isIdentifierPart",
+      "ranges": [
+        {
+          "startOffset": 43642,
+          "endOffset": 43790,
+          "count": 16
+        },
+        {
+          "startOffset": 43711,
+          "endOffset": 43738,
+          "count": 2
+        },
+        {
+          "startOffset": 43739,
+          "endOffset": 43787,
+          "count": 2
+        },
+        {
+          "startOffset": 43754,
+          "endOffset": 43787,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/characters.ts",
+      "function": "isLineBreak",
+      "ranges": [
+        {
+          "startOffset": 43798,
+          "endOffset": 43905,
+          "count": 14
+        },
+        {
+          "startOffset": 43850,
+          "endOffset": 43864,
+          "count": 12
+        },
+        {
+          "startOffset": 43865,
+          "endOffset": 43883,
+          "count": 12
+        },
+        {
+          "startOffset": 43884,
+          "endOffset": 43902,
+          "count": 12
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/characters.ts",
+      "function": "isSpace",
+      "ranges": [
+        {
+          "startOffset": 43913,
+          "endOffset": 44172,
+          "count": 8
+        },
+        {
+          "startOffset": 44076,
+          "endOffset": 44093,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/scanner/tokens.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 8108,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/statements.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 37944,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/statements.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 62,
+          "endOffset": 68,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/statements.ts",
+      "function": "Statements",
+      "ranges": [
+        {
+          "startOffset": 74,
+          "endOffset": 130,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/statements.ts",
+      "function": "semicolon",
+      "ranges": [
+        {
+          "startOffset": 497,
+          "endOffset": 864,
+          "count": 1
+        },
+        {
+          "startOffset": 607,
+          "endOffset": 858,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/statements.ts",
+      "function": "statement",
+      "ranges": [
+        {
+          "startOffset": 27817,
+          "endOffset": 37941,
+          "count": 1
+        },
+        {
+          "startOffset": 27932,
+          "endOffset": 28274,
+          "count": 0
+        },
+        {
+          "startOffset": 28326,
+          "endOffset": 28355,
+          "count": 0
+        },
+        {
+          "startOffset": 28357,
+          "endOffset": 28420,
+          "count": 0
+        },
+        {
+          "startOffset": 28474,
+          "endOffset": 28518,
+          "count": 0
+        },
+        {
+          "startOffset": 28572,
+          "endOffset": 28675,
+          "count": 0
+        },
+        {
+          "startOffset": 28769,
+          "endOffset": 29304,
+          "count": 0
+        },
+        {
+          "startOffset": 29355,
+          "endOffset": 29394,
+          "count": 0
+        },
+        {
+          "startOffset": 29514,
+          "endOffset": 29553,
+          "count": 0
+        },
+        {
+          "startOffset": 29595,
+          "endOffset": 29635,
+          "count": 0
+        },
+        {
+          "startOffset": 29637,
+          "endOffset": 29825,
+          "count": 0
+        },
+        {
+          "startOffset": 29915,
+          "endOffset": 30594,
+          "count": 0
+        },
+        {
+          "startOffset": 30644,
+          "endOffset": 30695,
+          "count": 0
+        },
+        {
+          "startOffset": 30748,
+          "endOffset": 30802,
+          "count": 0
+        },
+        {
+          "startOffset": 30852,
+          "endOffset": 30903,
+          "count": 0
+        },
+        {
+          "startOffset": 30952,
+          "endOffset": 31478,
+          "count": 0
+        },
+        {
+          "startOffset": 31683,
+          "endOffset": 31701,
+          "count": 0
+        },
+        {
+          "startOffset": 31745,
+          "endOffset": 31766,
+          "count": 0
+        },
+        {
+          "startOffset": 31900,
+          "endOffset": 31938,
+          "count": 0
+        },
+        {
+          "startOffset": 31939,
+          "endOffset": 31979,
+          "count": 0
+        },
+        {
+          "startOffset": 31981,
+          "endOffset": 32053,
+          "count": 0
+        },
+        {
+          "startOffset": 32151,
+          "endOffset": 32238,
+          "count": 0
+        },
+        {
+          "startOffset": 32240,
+          "endOffset": 32645,
+          "count": 0
+        },
+        {
+          "startOffset": 32646,
+          "endOffset": 32688,
+          "count": 0
+        },
+        {
+          "startOffset": 32689,
+          "endOffset": 32731,
+          "count": 0
+        },
+        {
+          "startOffset": 32732,
+          "endOffset": 32775,
+          "count": 0
+        },
+        {
+          "startOffset": 32776,
+          "endOffset": 32860,
+          "count": 0
+        },
+        {
+          "startOffset": 32861,
+          "endOffset": 32941,
+          "count": 0
+        },
+        {
+          "startOffset": 32942,
+          "endOffset": 33508,
+          "count": 0
+        },
+        {
+          "startOffset": 33509,
+          "endOffset": 33547,
+          "count": 0
+        },
+        {
+          "startOffset": 33548,
+          "endOffset": 33628,
+          "count": 0
+        },
+        {
+          "startOffset": 33629,
+          "endOffset": 33710,
+          "count": 0
+        },
+        {
+          "startOffset": 33712,
+          "endOffset": 33971,
+          "count": 0
+        },
+        {
+          "startOffset": 33973,
+          "endOffset": 34012,
+          "count": 0
+        },
+        {
+          "startOffset": 34014,
+          "endOffset": 37156,
+          "count": 0
+        },
+        {
+          "startOffset": 37158,
+          "endOffset": 37241,
+          "count": 0
+        },
+        {
+          "startOffset": 37242,
+          "endOffset": 37326,
+          "count": 0
+        },
+        {
+          "startOffset": 37328,
+          "endOffset": 37646,
+          "count": 0
+        },
+        {
+          "startOffset": 37647,
+          "endOffset": 37683,
+          "count": 0
+        },
+        {
+          "startOffset": 37685,
+          "endOffset": 37940,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/jsx.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 7899,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/grammar.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2043,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/typescript/parser/lookahead.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 8494,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/lint.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 5852,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/lint.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 856,
+          "endOffset": 1072,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/lint.ts",
+      "function": "Linter",
+      "ranges": [
+        {
+          "startOffset": 1078,
+          "endOffset": 1551,
+          "count": 2
+        },
+        {
+          "startOffset": 1332,
+          "endOffset": 1339,
+          "count": 0
+        },
+        {
+          "startOffset": 1384,
+          "endOffset": 1394,
+          "count": 1
+        },
+        {
+          "startOffset": 1395,
+          "endOffset": 1401,
+          "count": 1
+        },
+        {
+          "startOffset": 1472,
+          "endOffset": 1482,
+          "count": 1
+        },
+        {
+          "startOffset": 1483,
+          "endOffset": 1495,
+          "count": 1
+        },
+        {
+          "startOffset": 1496,
+          "endOffset": 1506,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/lint.ts",
+      "function": "run",
+      "ranges": [
+        {
+          "startOffset": 1556,
+          "endOffset": 2413,
+          "count": 2
+        },
+        {
+          "startOffset": 1631,
+          "endOffset": 1835,
+          "count": 0
+        },
+        {
+          "startOffset": 2310,
+          "endOffset": 2362,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/lint.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 1881,
+          "endOffset": 1887,
+          "count": 5
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/lint.ts",
+      "function": "ancestry",
+      "ranges": [
+        {
+          "startOffset": 2418,
+          "endOffset": 2594,
+          "count": 5
+        },
+        {
+          "startOffset": 2536,
+          "endOffset": 2588,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/lint.ts",
+      "function": "node",
+      "ranges": [
+        {
+          "startOffset": 2599,
+          "endOffset": 2658,
+          "count": 10
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/lint.ts",
+      "function": "walk",
+      "ranges": [
+        {
+          "startOffset": 2663,
+          "endOffset": 2843,
+          "count": 5
+        },
+        {
+          "startOffset": 2782,
+          "endOffset": 2837,
+          "count": 3
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/lint.ts",
+      "function": "fixed",
+      "ranges": [
+        {
+          "startOffset": 2848,
+          "endOffset": 5849,
+          "count": 1
+        },
+        {
+          "startOffset": 3015,
+          "endOffset": 5532,
+          "count": 2
+        },
+        {
+          "startOffset": 3094,
+          "endOffset": 3593,
+          "count": 1
+        },
+        {
+          "startOffset": 3248,
+          "endOffset": 3561,
+          "count": 0
+        },
+        {
+          "startOffset": 3811,
+          "endOffset": 4672,
+          "count": 1
+        },
+        {
+          "startOffset": 3896,
+          "endOffset": 3936,
+          "count": 0
+        },
+        {
+          "startOffset": 3938,
+          "endOffset": 4186,
+          "count": 0
+        },
+        {
+          "startOffset": 4305,
+          "endOffset": 4372,
+          "count": 0
+        },
+        {
+          "startOffset": 4468,
+          "endOffset": 4536,
+          "count": 0
+        },
+        {
+          "startOffset": 4711,
+          "endOffset": 5532,
+          "count": 1
+        },
+        {
+          "startOffset": 5532,
+          "endOffset": 5848,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/context.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 10109,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/context.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 1521,
+          "endOffset": 1728,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/context.ts",
+      "function": "RuleContext",
+      "ranges": [
+        {
+          "startOffset": 1734,
+          "endOffset": 2280,
+          "count": 2
+        },
+        {
+          "startOffset": 2003,
+          "endOffset": 2010,
+          "count": 0
+        },
+        {
+          "startOffset": 2055,
+          "endOffset": 2065,
+          "count": 0
+        },
+        {
+          "startOffset": 2143,
+          "endOffset": 2153,
+          "count": 0
+        },
+        {
+          "startOffset": 2167,
+          "endOffset": 2177,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/context.ts",
+      "function": "node",
+      "ranges": [
+        {
+          "startOffset": 2285,
+          "endOffset": 2344,
+          "count": 9
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/context.ts",
+      "function": "enabled",
+      "ranges": [
+        {
+          "startOffset": 2349,
+          "endOffset": 2436,
+          "count": 150
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/context.ts",
+      "function": "start",
+      "ranges": [
+        {
+          "startOffset": 2441,
+          "endOffset": 2601,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/context.ts",
+      "function": "report",
+      "ranges": [
+        {
+          "startOffset": 2606,
+          "endOffset": 2870,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/finding.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 579,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/finding.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 27,
+          "endOffset": 188,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/finding.ts",
+      "function": "Finding",
+      "ranges": [
+        {
+          "startOffset": 194,
+          "endOffset": 576,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/suggestions.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 366,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/.generated/registry.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 39753,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/.generated/registry.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 5725,
+          "endOffset": 7784,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/.generated/registry.ts",
+      "function": "RuleSet",
+      "ranges": [
+        {
+          "startOffset": 7790,
+          "endOffset": 15746,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/.generated/registry.ts",
+      "function": "prepare",
+      "ranges": [
+        {
+          "startOffset": 15751,
+          "endOffset": 15852,
+          "count": 2
+        },
+        {
+          "startOffset": 15796,
+          "endOffset": 15846,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/.generated/registry.ts",
+      "function": "finish",
+      "ranges": [
+        {
+          "startOffset": 15857,
+          "endOffset": 15956,
+          "count": 2
+        },
+        {
+          "startOffset": 15901,
+          "endOffset": 15950,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/.generated/registry.ts",
+      "function": "visit",
+      "ranges": [
+        {
+          "startOffset": 15961,
+          "endOffset": 36300,
+          "count": 5
+        },
+        {
+          "startOffset": 16070,
+          "endOffset": 16237,
+          "count": 0
+        },
+        {
+          "startOffset": 16250,
+          "endOffset": 16412,
+          "count": 0
+        },
+        {
+          "startOffset": 16425,
+          "endOffset": 16796,
+          "count": 0
+        },
+        {
+          "startOffset": 16809,
+          "endOffset": 16972,
+          "count": 0
+        },
+        {
+          "startOffset": 16985,
+          "endOffset": 17130,
+          "count": 0
+        },
+        {
+          "startOffset": 17143,
+          "endOffset": 18490,
+          "count": 0
+        },
+        {
+          "startOffset": 18503,
+          "endOffset": 18657,
+          "count": 0
+        },
+        {
+          "startOffset": 18670,
+          "endOffset": 18924,
+          "count": 0
+        },
+        {
+          "startOffset": 18937,
+          "endOffset": 19091,
+          "count": 0
+        },
+        {
+          "startOffset": 19104,
+          "endOffset": 19777,
+          "count": 0
+        },
+        {
+          "startOffset": 19790,
+          "endOffset": 20050,
+          "count": 0
+        },
+        {
+          "startOffset": 20063,
+          "endOffset": 20649,
+          "count": 0
+        },
+        {
+          "startOffset": 20662,
+          "endOffset": 21247,
+          "count": 0
+        },
+        {
+          "startOffset": 21260,
+          "endOffset": 21427,
+          "count": 0
+        },
+        {
+          "startOffset": 21440,
+          "endOffset": 21710,
+          "count": 0
+        },
+        {
+          "startOffset": 21723,
+          "endOffset": 21866,
+          "count": 0
+        },
+        {
+          "startOffset": 21879,
+          "endOffset": 22145,
+          "count": 0
+        },
+        {
+          "startOffset": 22158,
+          "endOffset": 22315,
+          "count": 1
+        },
+        {
+          "startOffset": 22328,
+          "endOffset": 22477,
+          "count": 0
+        },
+        {
+          "startOffset": 22490,
+          "endOffset": 22641,
+          "count": 0
+        },
+        {
+          "startOffset": 22654,
+          "endOffset": 23245,
+          "count": 0
+        },
+        {
+          "startOffset": 23258,
+          "endOffset": 23413,
+          "count": 0
+        },
+        {
+          "startOffset": 23426,
+          "endOffset": 23576,
+          "count": 0
+        },
+        {
+          "startOffset": 23589,
+          "endOffset": 23748,
+          "count": 0
+        },
+        {
+          "startOffset": 23761,
+          "endOffset": 23905,
+          "count": 0
+        },
+        {
+          "startOffset": 23918,
+          "endOffset": 24290,
+          "count": 0
+        },
+        {
+          "startOffset": 24303,
+          "endOffset": 24792,
+          "count": 0
+        },
+        {
+          "startOffset": 24805,
+          "endOffset": 25066,
+          "count": 0
+        },
+        {
+          "startOffset": 25079,
+          "endOffset": 25347,
+          "count": 0
+        },
+        {
+          "startOffset": 25360,
+          "endOffset": 25736,
+          "count": 0
+        },
+        {
+          "startOffset": 25749,
+          "endOffset": 26117,
+          "count": 0
+        },
+        {
+          "startOffset": 26130,
+          "endOffset": 26390,
+          "count": 0
+        },
+        {
+          "startOffset": 26403,
+          "endOffset": 26672,
+          "count": 0
+        },
+        {
+          "startOffset": 26685,
+          "endOffset": 26826,
+          "count": 0
+        },
+        {
+          "startOffset": 26839,
+          "endOffset": 27206,
+          "count": 0
+        },
+        {
+          "startOffset": 27219,
+          "endOffset": 27374,
+          "count": 0
+        },
+        {
+          "startOffset": 27387,
+          "endOffset": 27538,
+          "count": 0
+        },
+        {
+          "startOffset": 27551,
+          "endOffset": 27813,
+          "count": 0
+        },
+        {
+          "startOffset": 27826,
+          "endOffset": 28104,
+          "count": 0
+        },
+        {
+          "startOffset": 28117,
+          "endOffset": 28260,
+          "count": 0
+        },
+        {
+          "startOffset": 28273,
+          "endOffset": 28419,
+          "count": 0
+        },
+        {
+          "startOffset": 28432,
+          "endOffset": 28600,
+          "count": 0
+        },
+        {
+          "startOffset": 28613,
+          "endOffset": 28762,
+          "count": 0
+        },
+        {
+          "startOffset": 28775,
+          "endOffset": 28937,
+          "count": 0
+        },
+        {
+          "startOffset": 28950,
+          "endOffset": 29329,
+          "count": 0
+        },
+        {
+          "startOffset": 29342,
+          "endOffset": 30160,
+          "count": 0
+        },
+        {
+          "startOffset": 30173,
+          "endOffset": 30332,
+          "count": 0
+        },
+        {
+          "startOffset": 30345,
+          "endOffset": 30502,
+          "count": 0
+        },
+        {
+          "startOffset": 30515,
+          "endOffset": 30889,
+          "count": 0
+        },
+        {
+          "startOffset": 30902,
+          "endOffset": 31057,
+          "count": 0
+        },
+        {
+          "startOffset": 31070,
+          "endOffset": 31874,
+          "count": 2
+        },
+        {
+          "startOffset": 31126,
+          "endOffset": 31197,
+          "count": 0
+        },
+        {
+          "startOffset": 31235,
+          "endOffset": 31306,
+          "count": 0
+        },
+        {
+          "startOffset": 31344,
+          "endOffset": 31415,
+          "count": 0
+        },
+        {
+          "startOffset": 31453,
+          "endOffset": 31524,
+          "count": 0
+        },
+        {
+          "startOffset": 31562,
+          "endOffset": 31633,
+          "count": 0
+        },
+        {
+          "startOffset": 31671,
+          "endOffset": 31742,
+          "count": 0
+        },
+        {
+          "startOffset": 31780,
+          "endOffset": 31851,
+          "count": 0
+        },
+        {
+          "startOffset": 31887,
+          "endOffset": 32040,
+          "count": 0
+        },
+        {
+          "startOffset": 32053,
+          "endOffset": 32525,
+          "count": 0
+        },
+        {
+          "startOffset": 32538,
+          "endOffset": 32903,
+          "count": 0
+        },
+        {
+          "startOffset": 32916,
+          "endOffset": 33181,
+          "count": 0
+        },
+        {
+          "startOffset": 33194,
+          "endOffset": 33344,
+          "count": 0
+        },
+        {
+          "startOffset": 33357,
+          "endOffset": 33511,
+          "count": 0
+        },
+        {
+          "startOffset": 33524,
+          "endOffset": 33667,
+          "count": 0
+        },
+        {
+          "startOffset": 33680,
+          "endOffset": 33832,
+          "count": 0
+        },
+        {
+          "startOffset": 33845,
+          "endOffset": 34005,
+          "count": 0
+        },
+        {
+          "startOffset": 34018,
+          "endOffset": 34169,
+          "count": 0
+        },
+        {
+          "startOffset": 34182,
+          "endOffset": 34335,
+          "count": 0
+        },
+        {
+          "startOffset": 34348,
+          "endOffset": 34501,
+          "count": 0
+        },
+        {
+          "startOffset": 34514,
+          "endOffset": 35109,
+          "count": 0
+        },
+        {
+          "startOffset": 35122,
+          "endOffset": 35519,
+          "count": 0
+        },
+        {
+          "startOffset": 35532,
+          "endOffset": 35689,
+          "count": 0
+        },
+        {
+          "startOffset": 35702,
+          "endOffset": 35856,
+          "count": 0
+        },
+        {
+          "startOffset": 35869,
+          "endOffset": 36240,
+          "count": 0
+        },
+        {
+          "startOffset": 36253,
+          "endOffset": 36284,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/.generated/registry.ts",
+      "function": "createRuleSet",
+      "ranges": [
+        {
+          "startOffset": 36310,
+          "endOffset": 39752,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-debugger/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 772,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-debugger/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 73,
+          "endOffset": 80,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-debugger/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 86,
+          "endOffset": 145,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-debugger/rule.ts",
+      "function": "visit",
+      "ranges": [
+        {
+          "startOffset": 150,
+          "endOffset": 703,
+          "count": 1
+        },
+        {
+          "startOffset": 258,
+          "endOffset": 262,
+          "count": 0
+        },
+        {
+          "startOffset": 673,
+          "endOffset": 677,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-debugger/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 713,
+          "endOffset": 771,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-debugger/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 370,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1407,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 85,
+          "endOffset": 92,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 98,
+          "endOffset": 157,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1348,
+          "endOffset": 1406,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 686,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/eqeqeq/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2106,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/eqeqeq/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 124,
+          "endOffset": 131,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/eqeqeq/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 137,
+          "endOffset": 196,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/eqeqeq/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2047,
+          "endOffset": 2105,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/eqeqeq/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 631,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-var/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1146,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-var/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 68,
+          "endOffset": 75,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-var/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 81,
+          "endOffset": 140,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-var/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1087,
+          "endOffset": 1145,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-var/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 545,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1035,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 663,
+          "endOffset": 670,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 676,
+          "endOffset": 735,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 976,
+          "endOffset": 1034,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-duplicate-case/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 375,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1667,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 1457,
+          "endOffset": 1464,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 1470,
+          "endOffset": 1529,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1608,
+          "endOffset": 1666,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-octal-escape/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 418,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2957,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 2739,
+          "endOffset": 2746,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 2752,
+          "endOffset": 2811,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2898,
+          "endOffset": 2956,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unexpected-multiline/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1132,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 5183,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 4959,
+          "endOffset": 4966,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 4972,
+          "endOffset": 5031,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 5124,
+          "endOffset": 5182,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 4668,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 4451,
+          "endOffset": 4458,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 4464,
+          "endOffset": 4523,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 4609,
+          "endOffset": 4667,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-constructor/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 505,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-template/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 7434,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-template/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 7182,
+          "endOffset": 7215,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-template/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 7221,
+          "endOffset": 7280,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-template/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 7375,
+          "endOffset": 7433,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-template/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 565,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3765,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 3551,
+          "endOffset": 3558,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 3564,
+          "endOffset": 3623,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 3706,
+          "endOffset": 3764,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-forward-ref-uses-ref/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 615,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1289,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 1071,
+          "endOffset": 1078,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 1084,
+          "endOffset": 1143,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1230,
+          "endOffset": 1288,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 453,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1396,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 1186,
+          "endOffset": 1193,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 1199,
+          "endOffset": 1258,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1337,
+          "endOffset": 1395,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-find-dom-node/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 465,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1415,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 1207,
+          "endOffset": 1214,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 1220,
+          "endOffset": 1279,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1356,
+          "endOffset": 1414,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-is-mounted/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 503,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2729,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 2500,
+          "endOffset": 2507,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 2513,
+          "endOffset": 2572,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2670,
+          "endOffset": 2728,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3303,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 550,
+          "endOffset": 557,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 563,
+          "endOffset": 622,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 3244,
+          "endOffset": 3302,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 358,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2102,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 148,
+          "endOffset": 188,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 194,
+          "endOffset": 405,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2043,
+          "endOffset": 2101,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/initializer.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 330,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-init-declarations/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 239,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 6409,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 272,
+          "endOffset": 279,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 285,
+          "endOffset": 344,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 6350,
+          "endOffset": 6408,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-method-signature-style/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 892,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3657,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 1435,
+          "endOffset": 1442,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 1448,
+          "endOffset": 1507,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 3598,
+          "endOffset": 3656,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1904,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 88,
+          "endOffset": 126,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 132,
+          "endOffset": 191,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1845,
+          "endOffset": 1903,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-no-wrapper-object-types/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 381,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 4312,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 181,
+          "endOffset": 188,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 194,
+          "endOffset": 253,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 4253,
+          "endOffset": 4311,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 289,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 365,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 78,
+          "endOffset": 85,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 91,
+          "endOffset": 150,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 306,
+          "endOffset": 364,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/adamic-no-type-predicate/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 464,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 512,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 89,
+          "endOffset": 96,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 102,
+          "endOffset": 161,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 453,
+          "endOffset": 511,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-boundary-no-global-container/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 97,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 801,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 117,
+          "endOffset": 124,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 130,
+          "endOffset": 189,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 742,
+          "endOffset": 800,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-console/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 290,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1738,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 64,
+          "endOffset": 71,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 77,
+          "endOffset": 136,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1679,
+          "endOffset": 1737,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 308,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2366,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 131,
+          "endOffset": 138,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 144,
+          "endOffset": 203,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2307,
+          "endOffset": 2365,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 334,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/patterns.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 313,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-classes-per-file/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1875,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-classes-per-file/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 103,
+          "endOffset": 161,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-classes-per-file/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 167,
+          "endOffset": 819,
+          "count": 2
+        },
+        {
+          "startOffset": 338,
+          "endOffset": 729,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-classes-per-file/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1816,
+          "endOffset": 1874,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-classes-per-file/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 292,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-depth/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2227,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-depth/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 112,
+          "endOffset": 146,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-depth/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 152,
+          "endOffset": 361,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-depth/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2168,
+          "endOffset": 2226,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-depth/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 290,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-depth/options.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 465,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-depth/options.a",
+      "function": "integer",
+      "ranges": [
+        {
+          "startOffset": 39,
+          "endOffset": 464,
+          "count": 2
+        },
+        {
+          "startOffset": 151,
+          "endOffset": 197,
+          "count": 0
+        },
+        {
+          "startOffset": 305,
+          "endOffset": 310,
+          "count": 0
+        },
+        {
+          "startOffset": 336,
+          "endOffset": 392,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-nested-callbacks/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3056,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-nested-callbacks/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 70,
+          "endOffset": 149,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-nested-callbacks/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 155,
+          "endOffset": 693,
+          "count": 2
+        },
+        {
+          "startOffset": 423,
+          "endOffset": 447,
+          "count": 0
+        },
+        {
+          "startOffset": 448,
+          "endOffset": 465,
+          "count": 0
+        },
+        {
+          "startOffset": 479,
+          "endOffset": 492,
+          "count": 0
+        },
+        {
+          "startOffset": 510,
+          "endOffset": 527,
+          "count": 0
+        },
+        {
+          "startOffset": 544,
+          "endOffset": 560,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-nested-callbacks/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2997,
+          "endOffset": 3055,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/max-nested-callbacks/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 462,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 11071,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 10793,
+          "endOffset": 10831,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 10837,
+          "endOffset": 10896,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 11012,
+          "endOffset": 11070,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/bindings.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 671,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/bindings.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 28,
+          "endOffset": 159,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 4655,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 4668,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/policy_data.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 7462,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2621,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2211,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1381,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 270,
+          "endOffset": 277,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 283,
+          "endOffset": 342,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1322,
+          "endOffset": 1380,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3866,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1026,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 410,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 71,
+          "endOffset": 78,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 84,
+          "endOffset": 143,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 351,
+          "endOffset": 409,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-enum/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 230,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 366,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 69,
+          "endOffset": 76,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 82,
+          "endOffset": 141,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 307,
+          "endOffset": 365,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-for-in/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 596,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3269,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 3014,
+          "endOffset": 3021,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 3027,
+          "endOffset": 3086,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 3210,
+          "endOffset": 3268,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 298,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 6197,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/comment_ranges.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2425,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/comments.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 5969,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/unicode.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 78483,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 6105,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 5872,
+          "endOffset": 5879,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 5885,
+          "endOffset": 5944,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 6046,
+          "endOffset": 6104,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 921,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 758,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1881,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 680,
+          "endOffset": 687,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 693,
+          "endOffset": 752,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1822,
+          "endOffset": 1880,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 8036,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 4420,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/patterns.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 884,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/policy_data.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 4702,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 565,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2191,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 1834,
+          "endOffset": 1841,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 1847,
+          "endOffset": 1906,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2132,
+          "endOffset": 2190,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2431,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 6665,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 537,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 259,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1465,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 71,
+          "endOffset": 101,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 107,
+          "endOffset": 623,
+          "count": 2
+        },
+        {
+          "startOffset": 514,
+          "endOffset": 524,
+          "count": 0
+        },
+        {
+          "startOffset": 572,
+          "endOffset": 617,
+          "count": 18
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1406,
+          "endOffset": 1464,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 433,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2868,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 134,
+          "endOffset": 141,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 147,
+          "endOffset": 206,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2809,
+          "endOffset": 2867,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 879,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2134,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 70,
+          "endOffset": 77,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 83,
+          "endOffset": 142,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2075,
+          "endOffset": 2133,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-await-in-loop/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 423,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-bitwise/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1906,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-bitwise/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 1032,
+          "endOffset": 1039,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-bitwise/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 1045,
+          "endOffset": 1104,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-bitwise/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1847,
+          "endOffset": 1905,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-bitwise/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 261,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-caller/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 848,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-caller/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 72,
+          "endOffset": 79,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-caller/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 85,
+          "endOffset": 144,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-caller/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 789,
+          "endOffset": 847,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-caller/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 326,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-continue/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 362,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-continue/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 73,
+          "endOffset": 80,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-continue/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 86,
+          "endOffset": 145,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-continue/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 303,
+          "endOffset": 361,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-continue/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 534,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-div-regex/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 620,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-div-regex/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 127,
+          "endOffset": 134,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-div-regex/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 140,
+          "endOffset": 199,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-div-regex/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 561,
+          "endOffset": 619,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-div-regex/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 345,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-character-class/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1708,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-character-class/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 124,
+          "endOffset": 131,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-character-class/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 137,
+          "endOffset": 196,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-character-class/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1649,
+          "endOffset": 1707,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-character-class/escapes.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 888,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-character-class/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 415,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-pattern/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1307,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-pattern/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 108,
+          "endOffset": 152,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-pattern/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 158,
+          "endOffset": 342,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-pattern/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1248,
+          "endOffset": 1306,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-pattern/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 587,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-static-block/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 660,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-static-block/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 90,
+          "endOffset": 97,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-static-block/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 103,
+          "endOffset": 162,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-static-block/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 601,
+          "endOffset": 659,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-empty-static-block/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 454,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-ex-assign/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2267,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-ex-assign/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 93,
+          "endOffset": 100,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-ex-assign/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 106,
+          "endOffset": 165,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-ex-assign/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2208,
+          "endOffset": 2266,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-ex-assign/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 424,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-iterator/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1190,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-iterator/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 186,
+          "endOffset": 193,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-iterator/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 199,
+          "endOffset": 258,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-iterator/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1131,
+          "endOffset": 1189,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-iterator/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 427,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-labels/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2177,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-labels/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 177,
+          "endOffset": 184,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-labels/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 190,
+          "endOffset": 249,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-labels/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2118,
+          "endOffset": 2176,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-labels/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1208,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-multi-assign/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1914,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-multi-assign/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 815,
+          "endOffset": 822,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-multi-assign/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 828,
+          "endOffset": 887,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-multi-assign/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1855,
+          "endOffset": 1913,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-multi-assign/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 337,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1081,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 115,
+          "endOffset": 122,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 128,
+          "endOffset": 187,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1022,
+          "endOffset": 1080,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-negated-condition/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 267,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-new/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 503,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-new/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 68,
+          "endOffset": 75,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-new/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 81,
+          "endOffset": 140,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-new/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 444,
+          "endOffset": 502,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-new/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 395,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-plusplus/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2046,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-plusplus/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 114,
+          "endOffset": 121,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-plusplus/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 127,
+          "endOffset": 186,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-plusplus/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1987,
+          "endOffset": 2045,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-plusplus/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 516,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-proto/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1266,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-proto/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 71,
+          "endOffset": 78,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-proto/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 84,
+          "endOffset": 143,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-proto/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1207,
+          "endOffset": 1265,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-proto/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 447,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-return-assign/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1910,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-return-assign/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 137,
+          "endOffset": 144,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-return-assign/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 150,
+          "endOffset": 209,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-return-assign/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1851,
+          "endOffset": 1909,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-return-assign/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 863,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-script-url/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 752,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-script-url/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 73,
+          "endOffset": 80,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-script-url/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 86,
+          "endOffset": 145,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-script-url/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 693,
+          "endOffset": 751,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-script-url/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 439,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-self-compare/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1328,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-self-compare/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 72,
+          "endOffset": 79,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-self-compare/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 85,
+          "endOffset": 144,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-self-compare/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1269,
+          "endOffset": 1327,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-self-compare/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 343,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-sequences/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3387,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-sequences/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 122,
+          "endOffset": 129,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-sequences/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 135,
+          "endOffset": 194,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-sequences/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 3328,
+          "endOffset": 3386,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-sequences/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 477,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3388,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 103,
+          "endOffset": 110,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 116,
+          "endOffset": 175,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 3329,
+          "endOffset": 3387,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-sparse-arrays/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 491,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 724,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 78,
+          "endOffset": 85,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 91,
+          "endOffset": 150,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 665,
+          "endOffset": 723,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-template-curly-in-string/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 375,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 5656,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 104,
+          "endOffset": 111,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 117,
+          "endOffset": 176,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 5597,
+          "endOffset": 5655,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 7725,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 182,
+          "endOffset": 189,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 195,
+          "endOffset": 254,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 7666,
+          "endOffset": 7724,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unneeded-ternary/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 684,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-finally/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2393,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-finally/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 167,
+          "endOffset": 174,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-finally/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 180,
+          "endOffset": 239,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-finally/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2334,
+          "endOffset": 2392,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-finally/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1354,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2822,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 170,
+          "endOffset": 177,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 183,
+          "endOffset": 242,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-negation/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 2763,
+          "endOffset": 2821,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 6918,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 897,
+          "endOffset": 904,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 910,
+          "endOffset": 969,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 6859,
+          "endOffset": 6917,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-catch/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1815,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-catch/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 111,
+          "endOffset": 118,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-catch/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 124,
+          "endOffset": 183,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-catch/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1756,
+          "endOffset": 1814,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-catch/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 654,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-concat/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1826,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-concat/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 544,
+          "endOffset": 551,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-concat/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 557,
+          "endOffset": 616,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-concat/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1767,
+          "endOffset": 1825,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-useless-concat/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 280,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 8847,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 1271,
+          "endOffset": 1296,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 1302,
+          "endOffset": 1361,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 8788,
+          "endOffset": 8846,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-warning-comments/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 360,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-with/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 376,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-with/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 69,
+          "endOffset": 76,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-with/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 82,
+          "endOffset": 141,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-with/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 317,
+          "endOffset": 375,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/no-with/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 396,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/rule.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 3226,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/rule.a",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 168,
+          "endOffset": 175,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/rule.a",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 181,
+          "endOffset": 240,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/rule.a",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 3167,
+          "endOffset": 3225,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/helpers.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1878,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/settings.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 2762,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/settings.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 120,
+          "endOffset": 153,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/settings.ts",
+      "function": "load",
+      "ranges": [
+        {
+          "startOffset": 159,
+          "endOffset": 2484,
+          "count": 1
+        },
+        {
+          "startOffset": 222,
+          "endOffset": 240,
+          "count": 0
+        },
+        {
+          "startOffset": 273,
+          "endOffset": 475,
+          "count": 0
+        },
+        {
+          "startOffset": 534,
+          "endOffset": 561,
+          "count": 0
+        },
+        {
+          "startOffset": 617,
+          "endOffset": 650,
+          "count": 0
+        },
+        {
+          "startOffset": 710,
+          "endOffset": 2483,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/settings.ts",
+      "function": "read",
+      "ranges": [
+        {
+          "startOffset": 2489,
+          "endOffset": 2676,
+          "count": 21
+        },
+        {
+          "startOffset": 2632,
+          "endOffset": 2669,
+          "count": 0
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/settings.ts",
+      "function": "list",
+      "ranges": [
+        {
+          "startOffset": 2681,
+          "endOffset": 2759,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/prefer-destructuring/messages.a",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 197,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/require-yield/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1290,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/require-yield/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 70,
+          "endOffset": 77,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/require-yield/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 83,
+          "endOffset": 142,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/require-yield/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1231,
+          "endOffset": 1289,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/require-yield/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 383,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/unicode-bom/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 910,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/unicode-bom/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 166,
+          "endOffset": 173,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/unicode-bom/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 179,
+          "endOffset": 238,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/unicode-bom/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 851,
+          "endOffset": 909,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/unicode-bom/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 694,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/vars-on-top/rule.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 1828,
+          "count": 1
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/vars-on-top/rule.ts",
+      "function": "<instance_members_initializer>",
+      "ranges": [
+        {
+          "startOffset": 69,
+          "endOffset": 76,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/vars-on-top/rule.ts",
+      "function": "Rule",
+      "ranges": [
+        {
+          "startOffset": 82,
+          "endOffset": 141,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/vars-on-top/rule.ts",
+      "function": "create",
+      "ranges": [
+        {
+          "startOffset": 1769,
+          "endOffset": 1827,
+          "count": 2
+        }
+      ]
+    },
+    {
+      "file": "file:///workspace/adamic/stage1/cohere/lint/rules/vars-on-top/messages.ts",
+      "function": "",
+      "ranges": [
+        {
+          "startOffset": 0,
+          "endOffset": 343,
+          "count": 1
+        }
+      ]
+    }
+  ],
+  "shards_functions": [
+    "Run",
+    "Merge",
+    "isCaseLine"
+  ]
+}

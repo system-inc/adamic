@@ -1,0 +1,16 @@
+--- a/stage1/cohere/lint/shards/shards.go
++++ b/stage1/cohere/lint/shards/shards.go
+@@ -129,13 +129,6 @@
+ 		return nil, fmt.Errorf("%d cases printed, want the manifest's %d", len(blocks), rows)
+ 	}
+ 	var merged bytes.Buffer
+-	for number := 0; number < rows; number++ {
+-		block, ok := blocks[number]
+-		if !ok {
+-			return nil, fmt.Errorf("case %d missing from every shard", number)
+-		}
+-		merged.Write(block)
+-	}
+ 	return merged.Bytes(), nil
+ }
+ 

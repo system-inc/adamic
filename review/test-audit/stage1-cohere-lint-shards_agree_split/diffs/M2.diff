@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/main.ts
++++ b/stage1/cohere/lint/main.ts
+@@ -110,7 +110,7 @@
+             }
+         }
+         console.log(
+-            `range ${start} ${end} ${finding.id} ${repair}\t${written(replacement)}\t${written(description)}\t${editStart} ${editEnd}`,
++            `range ${start + 1} ${end} ${finding.id} ${repair}\t${written(replacement)}\t${written(description)}\t${editStart} ${editEnd}`,
+         );
+         for(const extra of finding.extraFixes) {
+             console.log(

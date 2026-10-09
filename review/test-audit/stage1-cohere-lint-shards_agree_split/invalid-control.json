@@ -1,0 +1,39 @@
+{
+  "excluded_from_all_verdicts": true,
+  "reason": "Flipped an assertion rather than breaking construction; replaced with wrong filename extension construction.",
+  "observation": {
+    "id": "S3-kind-setup",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u112/weak/S3.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind_Setup$"
+    ],
+    "exit": 1,
+    "wall": 12.762907484999232,
+    "events": [
+      {
+        "Time": "2026-10-09T12:41:19.046040719Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_Setup",
+        "Elapsed": 0.07
+      },
+      {
+        "Time": "2026-10-09T12:41:19.049406466Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 0.105
+      }
+    ],
+    "timeout": false
+  }
+}

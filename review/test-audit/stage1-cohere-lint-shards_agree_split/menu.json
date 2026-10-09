@@ -1,0 +1,49 @@
+{
+  "selected_before_any_production_mutant_execution": true,
+  "mutants": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/lint/main.ts",
+      "anchor": "if(caseNumber % shardCount === shardIndex)",
+      "change": "if(caseNumber % (shardCount + 1) === shardIndex)",
+      "kind": "off-by-one bound",
+      "line": 178
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/lint/main.ts",
+      "anchor": "`range ${start} ${end}",
+      "change": "`range ${start + 1} ${end}",
+      "kind": "off-by-one bound",
+      "line": 113
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/lint/shards/shards.go",
+      "anchor": "total := 0",
+      "change": "total := 1",
+      "kind": "change constant",
+      "line": 65
+    },
+    {
+      "id": "M4",
+      "file": "stage1/cohere/lint/shards/shards.go",
+      "anchor": "for number := 0; number < rows; number++ { (the final assembly loop)",
+      "change": "drop the entire final assembly loop, avoiding an unused block variable",
+      "kind": "drop statement",
+      "line": 132
+    }
+  ],
+  "probes": [
+    {
+      "id": "P1",
+      "entry": "main.run",
+      "empty": "return 0 before output"
+    },
+    {
+      "id": "P2",
+      "entry": "shards.Run",
+      "empty": "return nil, nil"
+    }
+  ]
+}

@@ -1,0 +1,943 @@
+[
+  {
+    "id": "clean-kind-family-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(?:_[0-9]+)?$"
+    ],
+    "environment": {},
+    "exit": 0,
+    "wall": 11.36778203600079,
+    "events": [
+      {
+        "Time": "2026-10-09T12:42:06.373614469Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind",
+        "Elapsed": 7.54
+      },
+      {
+        "Time": "2026-10-09T12:42:06.450342451Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_001",
+        "Elapsed": 8.16
+      },
+      {
+        "Time": "2026-10-09T12:42:06.450416578Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_000",
+        "Elapsed": 8.24
+      },
+      {
+        "Time": "2026-10-09T12:42:06.454691733Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 8.305
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "clean-kind-family-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(?:_[0-9]+)?$"
+    ],
+    "environment": {},
+    "exit": 0,
+    "wall": 10.377161955000702,
+    "events": [
+      {
+        "Time": "2026-10-09T12:42:16.780916509Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind",
+        "Elapsed": 7.37
+      },
+      {
+        "Time": "2026-10-09T12:42:16.832849506Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_000",
+        "Elapsed": 8.02
+      },
+      {
+        "Time": "2026-10-09T12:42:16.832972726Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_001",
+        "Elapsed": 8.07
+      },
+      {
+        "Time": "2026-10-09T12:42:16.838057918Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 8.129
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "clean-kind-family-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(?:_[0-9]+)?$"
+    ],
+    "environment": {},
+    "exit": 0,
+    "wall": 10.703873165000914,
+    "events": [
+      {
+        "Time": "2026-10-09T12:42:27.440226805Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind",
+        "Elapsed": 7.29
+      },
+      {
+        "Time": "2026-10-09T12:42:27.531447796Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_001",
+        "Elapsed": 7.91
+      },
+      {
+        "Time": "2026-10-09T12:42:27.531903649Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_000",
+        "Elapsed": 8.01
+      },
+      {
+        "Time": "2026-10-09T12:42:27.537023024Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 8.056
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "switched-control-suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "environment": {},
+    "exit": 0,
+    "wall": 56.372911037999074,
+    "events": [
+      {
+        "Time": "2026-10-09T12:43:23.775593296Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_002",
+        "Elapsed": 45.08
+      },
+      {
+        "Time": "2026-10-09T12:43:23.91646123Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_001",
+        "Elapsed": 45.13
+      },
+      {
+        "Time": "2026-10-09T12:43:23.916968924Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_000",
+        "Elapsed": 45.27
+      },
+      {
+        "Time": "2026-10-09T12:43:23.920982848Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 45.332
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "switched-control-kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(?:_[0-9]+)?$"
+    ],
+    "environment": {},
+    "exit": 0,
+    "wall": 53.83505182299996,
+    "events": [
+      {
+        "Time": "2026-10-09T12:44:17.2627574Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind",
+        "Elapsed": 50.09
+      },
+      {
+        "Time": "2026-10-09T12:44:17.269096577Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_001",
+        "Elapsed": 50.95
+      },
+      {
+        "Time": "2026-10-09T12:44:17.269211727Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_000",
+        "Elapsed": 50.96
+      },
+      {
+        "Time": "2026-10-09T12:44:17.2744371Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 50.995
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "M1-suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M1"
+    },
+    "exit": 0,
+    "wall": 8.543300192999595,
+    "events": [
+      {
+        "Time": "2026-10-09T12:44:26.120639039Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_002",
+        "Elapsed": 5.35
+      },
+      {
+        "Time": "2026-10-09T12:44:26.302496866Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_001",
+        "Elapsed": 5.4
+      },
+      {
+        "Time": "2026-10-09T12:44:26.30268657Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_000",
+        "Elapsed": 5.59
+      },
+      {
+        "Time": "2026-10-09T12:44:26.309317887Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 5.663
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "M1-kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(?:_[0-9]+)?$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M1"
+    },
+    "exit": 0,
+    "wall": 13.612808675999986,
+    "events": [
+      {
+        "Time": "2026-10-09T12:44:39.774764737Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind",
+        "Elapsed": 9.46
+      },
+      {
+        "Time": "2026-10-09T12:44:39.888909677Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_000",
+        "Elapsed": 10.19
+      },
+      {
+        "Time": "2026-10-09T12:44:39.889004463Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_001",
+        "Elapsed": 10.3
+      },
+      {
+        "Time": "2026-10-09T12:44:39.922634423Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 10.366
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "M2-suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M2"
+    },
+    "exit": 1,
+    "wall": 9.735768419999658,
+    "events": [
+      {
+        "Time": "2026-10-09T12:44:49.493312743Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_002",
+        "Elapsed": 5.23
+      },
+      {
+        "Time": "2026-10-09T12:44:49.645803613Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_001",
+        "Elapsed": 5.28
+      },
+      {
+        "Time": "2026-10-09T12:44:49.646272934Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_000",
+        "Elapsed": 5.43
+      },
+      {
+        "Time": "2026-10-09T12:44:49.649570556Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 5.471
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "M2-kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(?:_[0-9]+)?$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M2"
+    },
+    "exit": 1,
+    "wall": 13.442554433000623,
+    "events": [
+      {
+        "Time": "2026-10-09T12:45:03.070051657Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind",
+        "Elapsed": 8.88
+      },
+      {
+        "Time": "2026-10-09T12:45:03.102075248Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_001",
+        "Elapsed": 10.09
+      },
+      {
+        "Time": "2026-10-09T12:45:03.102197145Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_000",
+        "Elapsed": 10.12
+      },
+      {
+        "Time": "2026-10-09T12:45:03.106565553Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 10.168
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "M3-suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M3"
+    },
+    "exit": 0,
+    "wall": 11.501681953001025,
+    "events": [
+      {
+        "Time": "2026-10-09T12:45:14.505344102Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_002",
+        "Elapsed": 5.97
+      },
+      {
+        "Time": "2026-10-09T12:45:14.60965894Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_001",
+        "Elapsed": 6.05
+      },
+      {
+        "Time": "2026-10-09T12:45:14.609822918Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_000",
+        "Elapsed": 6.16
+      },
+      {
+        "Time": "2026-10-09T12:45:14.612690917Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 6.198
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "M3-kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(?:_[0-9]+)?$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M3"
+    },
+    "exit": 0,
+    "wall": 11.096319270000095,
+    "events": [
+      {
+        "Time": "2026-10-09T12:45:25.695684204Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind",
+        "Elapsed": 7.43
+      },
+      {
+        "Time": "2026-10-09T12:45:25.698527147Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_001",
+        "Elapsed": 8.22
+      },
+      {
+        "Time": "2026-10-09T12:45:25.698586584Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_000",
+        "Elapsed": 8.23
+      },
+      {
+        "Time": "2026-10-09T12:45:25.709105712Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 8.279
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "M4-suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M4"
+    },
+    "exit": 0,
+    "wall": 8.327384492999045,
+    "events": [
+      {
+        "Time": "2026-10-09T12:45:33.914152336Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_002",
+        "Elapsed": 5.47
+      },
+      {
+        "Time": "2026-10-09T12:45:34.03757542Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_001",
+        "Elapsed": 5.53
+      },
+      {
+        "Time": "2026-10-09T12:45:34.037658786Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_000",
+        "Elapsed": 5.66
+      },
+      {
+        "Time": "2026-10-09T12:45:34.039524516Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 5.704
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "M4-kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(?:_[0-9]+)?$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M4"
+    },
+    "exit": 0,
+    "wall": 11.513686409000002,
+    "events": [
+      {
+        "Time": "2026-10-09T12:45:45.49327845Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind",
+        "Elapsed": 7.97
+      },
+      {
+        "Time": "2026-10-09T12:45:45.550720738Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_000",
+        "Elapsed": 8.6
+      },
+      {
+        "Time": "2026-10-09T12:45:45.550848634Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_001",
+        "Elapsed": 8.66
+      },
+      {
+        "Time": "2026-10-09T12:45:45.555913132Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 8.703
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "P1-suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P1"
+    },
+    "exit": 1,
+    "wall": 8.081530868999835,
+    "events": [
+      {
+        "Time": "2026-10-09T12:45:53.525560301Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_002",
+        "Elapsed": 5.6
+      },
+      {
+        "Time": "2026-10-09T12:45:53.634415007Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_001",
+        "Elapsed": 5.68
+      },
+      {
+        "Time": "2026-10-09T12:45:53.634944964Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_000",
+        "Elapsed": 5.78
+      },
+      {
+        "Time": "2026-10-09T12:45:53.636194214Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 5.834
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "P1-kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(?:_[0-9]+)?$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P1"
+    },
+    "exit": 1,
+    "wall": 10.643822776999514,
+    "events": [
+      {
+        "Time": "2026-10-09T12:46:04.248351025Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind",
+        "Elapsed": 7.38
+      },
+      {
+        "Time": "2026-10-09T12:46:04.259454819Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_000",
+        "Elapsed": 8.16
+      },
+      {
+        "Time": "2026-10-09T12:46:04.259556446Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_001",
+        "Elapsed": 8.17
+      },
+      {
+        "Time": "2026-10-09T12:46:04.269048985Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 8.22
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "P2-suggestion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix_[0-9]+$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P2"
+    },
+    "exit": 0,
+    "wall": 8.040370798000367,
+    "events": [
+      {
+        "Time": "2026-10-09T12:46:12.122894654Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_002",
+        "Elapsed": 5.02
+      },
+      {
+        "Time": "2026-10-09T12:46:12.321168936Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_001",
+        "Elapsed": 5.07
+      },
+      {
+        "Time": "2026-10-09T12:46:12.321239551Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestSuggestionAlongsideAutomaticFix_000",
+        "Elapsed": 5.26
+      },
+      {
+        "Time": "2026-10-09T12:46:12.323244289Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 5.302
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "P2-kind",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestWitnessScriptKind(?:_[0-9]+)?$"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P2"
+    },
+    "exit": 0,
+    "wall": 11.902972365000096,
+    "events": [
+      {
+        "Time": "2026-10-09T12:46:24.089971608Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind",
+        "Elapsed": 8.26
+      },
+      {
+        "Time": "2026-10-09T12:46:24.222948073Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_000",
+        "Elapsed": 9.05
+      },
+      {
+        "Time": "2026-10-09T12:46:24.223114787Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Test": "TestWitnessScriptKind_001",
+        "Elapsed": 9.19
+      },
+      {
+        "Time": "2026-10-09T12:46:24.227803054Z",
+        "Action": "pass",
+        "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+        "Elapsed": 9.227
+      }
+    ],
+    "timeout": false
+  },
+  {
+    "id": "M1-compile",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_WitnessScriptKindNative$"
+    ],
+    "exit": 0,
+    "wall": 25.037531644999035
+  },
+  {
+    "id": "M2-compile",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_WitnessScriptKindNative$"
+    ],
+    "exit": 0,
+    "wall": 25.890207387999908
+  },
+  {
+    "id": "M3-compile",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/lint/shards/"
+    ],
+    "exit": 0,
+    "wall": 0.2965497669993056
+  },
+  {
+    "id": "M4-compile",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/lint/shards/"
+    ],
+    "exit": 0,
+    "wall": 0.14687825500004692
+  },
+  {
+    "id": "P1-compile",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_WitnessScriptKindNative$"
+    ],
+    "exit": 0,
+    "wall": 9.673121330999493
+  },
+  {
+    "id": "P2-compile",
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/lint/shards/"
+    ],
+    "exit": 0,
+    "wall": 0.10296630399898277
+  }
+]

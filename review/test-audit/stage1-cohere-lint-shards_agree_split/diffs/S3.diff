@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/witness_script_kind_shards_test.go
++++ b/stage1/cohere/lint/witness_script_kind_shards_test.go
+@@ -73,7 +73,7 @@
+ 			if err != nil {
+ 				t.Fatal(err)
+ 			}
+-			source := filepath.Join(directory, fmt.Sprintf("source-%d%s", i, filepath.Ext(strings.TrimSuffix(path, ".txt"))))
++			source := filepath.Join(directory, fmt.Sprintf("source-%d%s", i, ".ts"))
+ 			if err := os.WriteFile(source, data, 0644); err != nil {
+ 				t.Fatal(err)
+ 			}

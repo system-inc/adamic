@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/witness_script_kind_shards_test.go
++++ b/stage1/cohere/lint/witness_script_kind_shards_test.go
+@@ -77,7 +77,7 @@
+ 			if err := os.WriteFile(source, data, 0644); err != nil {
+ 				t.Fatal(err)
+ 			}
+-			if path == renamed && filepath.Ext(source) != ".tsx" {
++			if path == renamed && filepath.Ext(source) == ".tsx" {
+ 				t.Fatal("witness script kind lost")
+ 			}
+ 			s.Keys = append(s.Keys, filepath.ToSlash(key))

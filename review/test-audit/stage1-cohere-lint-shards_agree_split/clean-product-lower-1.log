@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:35:21.292586392Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:35:21.405191595Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered"}
+{"Time":"2026-10-09T12:35:21.40549208Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Output":"=== RUN   TestProduct_WitnessScriptKindLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:35:21.405572564Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Output":"=== PAUSE TestProduct_WitnessScriptKindLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:35:21.405576897Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered"}
+{"Time":"2026-10-09T12:35:21.405580874Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered"}
+{"Time":"2026-10-09T12:35:21.405583537Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Output":"=== CONT  TestProduct_WitnessScriptKindLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:35:24.179303669Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Output":"    witness_script_kind_products_test.go:21: build witness-script-kind-lowered-no-debugger-v1 178b55991ec8 hit 2.77\n"}
+{"Time":"2026-10-09T12:35:24.179403558Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Output":"--- PASS: TestProduct_WitnessScriptKindLowered (2.77s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:35:24.17941073Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Elapsed":2.77}
+{"Time":"2026-10-09T12:35:24.179441664Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:35:24.181525487Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t2.888s\n"}
+{"Time":"2026-10-09T12:35:24.181575457Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":2.8890000000000002}

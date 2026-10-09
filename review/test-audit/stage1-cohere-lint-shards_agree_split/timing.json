@@ -1,0 +1,100 @@
+{
+  "setup": {
+    "commit": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+    "nproc": "5",
+    "npm_seconds": 1.0570434229994135,
+    "npm_exit": 0,
+    "setup_seconds": 0
+  },
+  "whole_binary_seconds": 90.662,
+  "combined_slice_binary_seconds": 90.069,
+  "clean_command_wall_seconds": 882.7010403050062,
+  "mutation_command_wall_seconds": 330.24623536299805,
+  "construction_witness_command_wall_seconds": 121.18630923500496,
+  "standalone_compilations": [
+    {
+      "id": "M1-compile",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/lint/",
+        "-run",
+        "^TestProduct_WitnessScriptKindNative$"
+      ],
+      "exit": 0,
+      "wall": 25.037531644999035
+    },
+    {
+      "id": "M2-compile",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/lint/",
+        "-run",
+        "^TestProduct_WitnessScriptKindNative$"
+      ],
+      "exit": 0,
+      "wall": 25.890207387999908
+    },
+    {
+      "id": "M3-compile",
+      "command": [
+        "go",
+        "vet",
+        "./stage1/cohere/lint/shards/"
+      ],
+      "exit": 0,
+      "wall": 0.2965497669993056
+    },
+    {
+      "id": "M4-compile",
+      "command": [
+        "go",
+        "vet",
+        "./stage1/cohere/lint/shards/"
+      ],
+      "exit": 0,
+      "wall": 0.14687825500004692
+    },
+    {
+      "id": "P1-compile",
+      "command": [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/lint/",
+        "-run",
+        "^TestProduct_WitnessScriptKindNative$"
+      ],
+      "exit": 0,
+      "wall": 9.673121330999493
+    },
+    {
+      "id": "P2-compile",
+      "command": [
+        "go",
+        "vet",
+        "./stage1/cohere/lint/shards/"
+      ],
+      "exit": 0,
+      "wall": 0.10296630399898277
+    }
+  ]
+}

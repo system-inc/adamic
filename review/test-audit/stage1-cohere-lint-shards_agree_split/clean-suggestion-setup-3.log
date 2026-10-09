@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T12:33:07.330377302Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:33:07.364433892Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix_Setup"}
+{"Time":"2026-10-09T12:33:07.364542809Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix_Setup","Output":"=== RUN   TestSuggestionAlongsideAutomaticFix_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:08.97051733Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix_Setup","Output":"    suggestion_alongside_shards_test.go:42: build suggestion-alongside-lowered-v2 cf254dee712b hit 1.54\n"}
+{"Time":"2026-10-09T12:33:10.717459763Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix_Setup","Output":"    suggestion_alongside_shards_test.go:42: build suggestion-alongside-native-v2 dde58b58b5d5 hit 1.73\n"}
+{"Time":"2026-10-09T12:33:12.643495641Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix_Setup","Output":"    suggestion_alongside_shards_test.go:42: build suggestion-alongside-go-oracle-v1 d9b6ffaed804 hit 1.91\n"}
+{"Time":"2026-10-09T12:33:12.643830187Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix_Setup","Output":"--- PASS: TestSuggestionAlongsideAutomaticFix_Setup (5.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:12.643840859Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix_Setup","Elapsed":5.27}
+{"Time":"2026-10-09T12:33:12.643904571Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:12.651274578Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t5.320s\n"}
+{"Time":"2026-10-09T12:33:12.651468192Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":5.321}

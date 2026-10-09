@@ -1,0 +1,28 @@
+{"Time":"2026-10-09T12:40:45.70081782Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:40:45.753427668Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered"}
+{"Time":"2026-10-09T12:40:45.753618665Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Output":"=== RUN   TestProduct_WitnessScriptKindLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753657403Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Output":"=== PAUSE TestProduct_WitnessScriptKindLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753661393Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered"}
+{"Time":"2026-10-09T12:40:45.753665848Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindNative"}
+{"Time":"2026-10-09T12:40:45.75366896Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindNative","Output":"=== RUN   TestProduct_WitnessScriptKindNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753675121Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindNative","Output":"=== PAUSE TestProduct_WitnessScriptKindNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753678244Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindNative"}
+{"Time":"2026-10-09T12:40:45.753681604Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle"}
+{"Time":"2026-10-09T12:40:45.753684806Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Output":"=== RUN   TestProduct_WitnessScriptKindGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753688979Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Output":"=== PAUSE TestProduct_WitnessScriptKindGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753691734Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle"}
+{"Time":"2026-10-09T12:40:45.753694784Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered"}
+{"Time":"2026-10-09T12:40:45.753697307Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Output":"=== CONT  TestProduct_WitnessScriptKindLowered\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753722884Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Output":"--- PASS: TestProduct_WitnessScriptKindLowered (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.75372874Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindLowered","Elapsed":0}
+{"Time":"2026-10-09T12:40:45.753770538Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindNative"}
+{"Time":"2026-10-09T12:40:45.753774024Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindNative","Output":"=== CONT  TestProduct_WitnessScriptKindNative\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753779241Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindNative","Output":"--- PASS: TestProduct_WitnessScriptKindNative (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753783086Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindNative","Elapsed":0}
+{"Time":"2026-10-09T12:40:45.753796429Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle"}
+{"Time":"2026-10-09T12:40:45.753799811Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Output":"=== CONT  TestProduct_WitnessScriptKindGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753804478Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Output":"--- PASS: TestProduct_WitnessScriptKindGoOracle (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.753809685Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Elapsed":0}
+{"Time":"2026-10-09T12:40:45.753814364Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:40:45.756678364Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.054s\n"}
+{"Time":"2026-10-09T12:40:45.756767729Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.056}

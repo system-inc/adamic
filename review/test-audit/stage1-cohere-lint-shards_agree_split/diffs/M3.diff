@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/shards/shards.go
++++ b/stage1/cohere/lint/shards/shards.go
+@@ -62,7 +62,7 @@
+ 		}
+ 	}
+ 	if countOnly {
+-		total := 0
++		total := 1
+ 		for index, output := range outputs {
+ 			value, err := strconv.Atoi(string(bytes.TrimSpace(output)))
+ 			if err != nil {

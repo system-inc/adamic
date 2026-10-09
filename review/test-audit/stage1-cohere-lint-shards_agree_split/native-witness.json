@@ -1,0 +1,29 @@
+[
+  {
+    "mutant": "clean",
+    "binary": "/home/agent/.cache/adamic-build/37dd81dafcf572256de04e45082e964c397346e2379dec543277b0a29dfbc827/scanner",
+    "arguments": [
+      "--manifest",
+      "/tmp/u112/two-manifest.txt"
+    ],
+    "exit": 0
+  },
+  {
+    "mutant": "M1",
+    "binary": "/home/agent/.cache/adamic-build/37dd81dafcf572256de04e45082e964c397346e2379dec543277b0a29dfbc827/scanner",
+    "arguments": [
+      "--manifest",
+      "/tmp/u112/two-manifest.txt"
+    ],
+    "exit": 0
+  },
+  {
+    "mutant": "M2",
+    "binary": "/home/agent/.cache/adamic-build/37dd81dafcf572256de04e45082e964c397346e2379dec543277b0a29dfbc827/scanner",
+    "arguments": [
+      "--manifest",
+      "/tmp/u112/two-manifest.txt"
+    ],
+    "exit": 0
+  }
+]

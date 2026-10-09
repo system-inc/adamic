@@ -1,0 +1,18 @@
+{"Time":"2026-10-09T12:39:11.966514317Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:39:12.003085806Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind"}
+{"Time":"2026-10-09T12:39:12.003216301Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"=== RUN   TestWitnessScriptKind\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:12.006185127Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"=== PAUSE TestWitnessScriptKind\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:12.006206147Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind"}
+{"Time":"2026-10-09T12:39:12.006210004Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind"}
+{"Time":"2026-10-09T12:39:12.006212055Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"=== CONT  TestWitnessScriptKind\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:14.046906656Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"    witness_script_kind_shards_test.go:86: build witness-script-kind-lowered-no-debugger-v1 178b55991ec8 hit 1.97\n"}
+{"Time":"2026-10-09T12:39:15.818491189Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"    witness_script_kind_shards_test.go:88: build witness-script-kind-lowered-no-debugger-v1 178b55991ec8 hit 1.77\n"}
+{"Time":"2026-10-09T12:39:17.822088472Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"    witness_script_kind_shards_test.go:88: build witness-script-kind-native-no-debugger-v1 475dff9eca48 hit 1.99\n"}
+{"Time":"2026-10-09T12:39:19.600560784Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"    witness_script_kind_shards_test.go:89: build witness-script-kind-go-oracle-v1 f57ecac10ff8 hit 1.77\n"}
+{"Time":"2026-10-09T12:39:19.601203896Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"    witness_script_kind_union_test.go:13: union: 2 live cases, exactly once\n"}
+{"Time":"2026-10-09T12:39:19.601278555Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"    witness_script_kind_union_test.go:14: TestWitnessScriptKind (union): rules/no-debugger/testdata/jsx.tsx.txt, rules/no-debugger/testdata/witness.tsx.txt\n"}
+{"Time":"2026-10-09T12:39:19.601302007Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Output":"--- PASS: TestWitnessScriptKind (7.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:19.601432901Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestWitnessScriptKind","Elapsed":7.6}
+{"Time":"2026-10-09T12:39:19.601454917Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:39:19.60811089Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t7.640s\n"}
+{"Time":"2026-10-09T12:39:19.608171198Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":7.642}

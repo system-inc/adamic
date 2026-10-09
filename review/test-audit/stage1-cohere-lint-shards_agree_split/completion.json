@@ -1,0 +1,15 @@
+{
+  "completed_utc": "2026-10-09T12:51:55.808225+00:00",
+  "branch_created_utc": "2026-10-09T12:20:12Z",
+  "toolchain": [
+    "go1.27.1 linux/amd64",
+    "Node v24.19.0"
+  ],
+  "verdict_counts": {
+    "cannot-judge": 4,
+    "untrue": 4,
+    "subsumed": 2,
+    "witness": 2,
+    "setup-check": 3
+  }
+}

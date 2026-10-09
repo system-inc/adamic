@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/suggestion_alongside_shards_test.go
++++ b/stage1/cohere/lint/suggestion_alongside_shards_test.go
+@@ -132,7 +132,7 @@
+ 	oracle := filepath.Join(oracleProduct, "oracle")
+ 	suggestionAlongside.directory, suggestionAlongside.manifest, suggestionAlongside.oracle = directory, path, oracle
+ 	suggestionAlongside.binary, suggestionAlongside.module = filepath.Join(built, "scanner"), filepath.Join(lowered, "lint.mjs")
+-	suggestionAlongside.ready = true
++	suggestionAlongside.ready = false
+ }
+ 
+ // Not parallel: prepares the shared fixture and cached runtime products before parallel leaves.

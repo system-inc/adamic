@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/witness_script_kind_shards_test.go
++++ b/stage1/cohere/lint/witness_script_kind_shards_test.go
+@@ -297,7 +297,7 @@
+ 	ctx, cancel := context.WithTimeout(context.Background(), 600*time.Second)
+ 	defer cancel()
+ 	// A new process selects only one leaf and fetches its own shared products.
+-	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^TestWitnessScriptKind_000$", "-test.timeout=600s", "-test.v")
++	command := witnessScriptKindCommand(ctx, os.Args[0], "-test.run=^NoSuchLeaf$", "-test.timeout=600s", "-test.v")
+ 	output, err := command.CombinedOutput()
+ 	if ctx.Err() != nil {
+ 		t.Fatalf("P0 cooked standalone probe: %v", ctx.Err())

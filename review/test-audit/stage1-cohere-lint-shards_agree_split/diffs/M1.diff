@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/main.ts
++++ b/stage1/cohere/lint/main.ts
+@@ -175,7 +175,7 @@
+         if(row === '') {
+             continue;
+         }
+-        if(caseNumber % shardCount === shardIndex) {
++        if(caseNumber % (shardCount + 1) === shardIndex) {
+             if(!countOnly) {
+                 console.log(`case ${caseNumber}`);
+             }

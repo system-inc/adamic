@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:36:09.292437357Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:36:09.332994031Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle"}
+{"Time":"2026-10-09T12:36:09.333120187Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Output":"=== RUN   TestProduct_WitnessScriptKindGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:09.333159187Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Output":"=== PAUSE TestProduct_WitnessScriptKindGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:09.333162101Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle"}
+{"Time":"2026-10-09T12:36:09.333165206Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle"}
+{"Time":"2026-10-09T12:36:09.333167109Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Output":"=== CONT  TestProduct_WitnessScriptKindGoOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:12.604324346Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Output":"    witness_script_kind_products_test.go:31: build witness-script-kind-go-oracle-v1 f57ecac10ff8 hit 3.26\n"}
+{"Time":"2026-10-09T12:36:12.604475807Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Output":"--- PASS: TestProduct_WitnessScriptKindGoOracle (3.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:12.604483478Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_WitnessScriptKindGoOracle","Elapsed":3.27}
+{"Time":"2026-10-09T12:36:12.604510409Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:36:12.605932478Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t3.313s\n"}
+{"Time":"2026-10-09T12:36:12.60597304Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":3.314}
