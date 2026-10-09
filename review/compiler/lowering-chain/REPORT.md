@@ -54,3 +54,11 @@ The green compiler prefix remains member 3. Members 5 through 11 and exceptions 
 ## Member 4 ruled retry
 
 User authorized stricter ruled expectation updates. Fixtures 11 at 1:68, 12 at 1:87 and 13 at 2:11 now pin the complete generic-body refusal, including location, body relation, binder constraints, fix and rule id. Their untouched source Node controls still print 2 and exit 0. All three touched top-level tests now call t.Parallel first. Eight executable fixtures pass uncached in both backends with native sanitizers; both IR mutants are caught. Once-only counts pass with eight additions and no existing changes. Initial path-normalization harness failures are preserved separately; final controls pass. Counts was the only textual conflict and was regenerated. Incoming reports and historical measurement data moved under review, retaining colocated helper paths.
+
+## Member 5: compiler/iteration-main 518eca83
+
+Only conflict counts.md, regenerated once preserving both parents. Added 23 executable proofs. Two existing user_iterators rows change because runtime method binding now owns receiver cells and cached next closures; the terminal TDZ row stops at its observed panic. All old and new Node observations pass, six dispatch IR mutants and four production array-view mutants caught. Historical evidence moved to review and touched tests marked parallel.
+
+ok  	github.com/system-inc/adamic/internal/oracle	56.877s
+
+Top-level pass seconds: {"TestIteratorMapperIndexHasNumberRepresentation": 0.08, "TestIteratorDeclaredNextHasNoRuntimeMethod": 0.08, "TestIteratorDestructuringDoesNotLieAboutExhaustion": 0.08, "TestIteratorOptionalCloseResultMustBeObject": 0.09, "TestIteratorSymbolKeysAreNotStringKeys": 0.07, "TestIteratorViewsDispatchHiddenReturn": 0.1, "TestIteratorViewsDispatchReceivers": 0.1, "TestIteratorBuiltInStorageViewsArePending": 0.25, "TestIteratorGapsAreExplicit": 0, "TestIteratorDescriptorReasons": 0, "TestNativeAgreesWithNode": 0.08, "TestStep20ArrayViewVariance": 0.33, "TestIterationDispatchPendingStops": 1.01, "TestClassWrongOutput107": 2.02, "TestStep20IntrinsicIteratorWrites": 0.02, "TestStep20IterationOutcomes": 3.08, "TestIterationDispatchMutants": 9.3}. All named controls pass; count-changes and results JSON retain every row and observation.

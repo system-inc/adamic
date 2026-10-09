@@ -886,6 +886,30 @@ func (e *emitter) value(expression ir.Expression) string {
 			}
 		}
 		return object
+	case ir.IteratorField:
+		object := e.value(expression.Object)
+		if len(e.program.Classes) > 0 {
+			return "((object) => adamicFindAccessor(object, " + quote(expression.Name) + ") ? adamicGetAccessor(object, " + quote(expression.Name) + ") : object[" + quote(expression.Name) + "])(" + object + ")"
+		}
+		return object + "[" + quote(expression.Name) + "]"
+	case ir.IteratorMethod:
+		object := e.value(expression.Object)
+		call := "fn(object, ...values)"
+		for _, function := range e.program.Functions {
+			if function.ArgumentsCount != 0 {
+				call = "adamicDirect(fn, [object, ...values])"
+				break
+			}
+		}
+		absent := ""
+		if expression.Optional {
+			absent = "if (fn == null) return undefined; "
+		}
+		read := "object[" + quote(expression.Name) + "]"
+		if len(e.program.Classes) > 0 {
+			read = "(adamicFindAccessor(object, " + quote(expression.Name) + ") ? adamicGetAccessor(object, " + quote(expression.Name) + ") : " + read + ")"
+		}
+		return "((object) => { const fn = " + read + "; " + absent + "if (fn instanceof AdamicClosure) return fn.receiver ? {code: (closure, values) => adamicCall(fn, [object, ...values])} : fn; return {code: (closure, values) => " + call + "}; })(" + object + ")"
 	case ir.Property:
 		if expression.View != "" {
 			return e.checkedViewField(expression)

@@ -148,7 +148,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 			break
 		}
 	}
-	if to.Flags()&checker.TypeFlagsObject != 0 && len(l.containers(to)) > 0 {
+	if to.Flags()&checker.TypeFlagsObject != 0 && len(l.containers(to)) > 0 && l.readonlyArrayView(to) == nil {
 		// An array, tuple, map or set: its elements are its slots, and its own properties (length,
 		// size) are numbers on both sides.
 		return nil
@@ -245,6 +245,10 @@ func (l *lowering) containers(proven *checker.Type) []*checker.Type {
 	}
 	var found []*checker.Type
 	for _, member := range members {
+		if base := l.readonlyArrayView(member); base != nil {
+			found = append(found, base)
+			continue
+		}
 		if member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsReference != 0 &&
 			(l.checker.IsArrayType(member) || checker.IsTupleType(member) || l.isLibraryType(member, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 			found = append(found, member)
@@ -286,7 +290,7 @@ func (l *lowering) canWrite(proven *checker.Type, visited map[*checker.Type]bool
 			}
 		}
 	}
-	if proven.Flags()&checker.TypeFlagsObject != 0 && len(containers) > 0 {
+	if proven.Flags()&checker.TypeFlagsObject != 0 && len(containers) > 0 && l.readonlyArrayView(proven) == nil {
 		return false
 	}
 	for _, property := range l.checker.GetPropertiesOfType(proven) {

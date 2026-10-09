@@ -1,0 +1,10 @@
+--- internal/lower/iteration_intrinsic.go
++++ internal/lower/iteration_intrinsic.go
+@@ -8,6 +8,7 @@
+ 
+ // Intrinsic fast paths require the whole program to leave Symbol.iterator intact.
+ func (l *lowering) intrinsicIteratorWrite(node *ast.Node) error {
++	return nil
+ 	if node.Kind != ast.KindElementAccessExpression || !ast.IsAssignmentTarget(node) {
+ 		return nil
+ 	}

@@ -9,6 +9,7 @@ import (
 )
 
 func TestClassWrongOutput103(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, output, path string }{
 		{"init_super_number", "score NaN\n", "Base.describe -> Derived.score -> Derived.count"},
 		{"init_super_getter", "score NaN\n", "Base.summary -> Derived.score -> Derived.count"},
@@ -33,6 +34,7 @@ func TestClassWrongOutput103(t *testing.T) {
 }
 
 func TestClassWrongOutput107(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, output string }{
 		{"iterators_override_this", "0\n100\nscaled:return\n0,100,200\n0,100,200\nscaled:return\n0\n"},
 		{"iterators_hidden_return", "0\nclosing:return\nclosing:return\n0\n"},
@@ -46,16 +48,26 @@ func TestClassWrongOutput107(t *testing.T) {
 			if observed.exitCode != 0 || string(observed.stdout) != probe.output || len(observed.stderr) != 0 {
 				t.Fatalf("Node: %+v", observed)
 			}
-			_, err = lowered(t, path)
-			var refusal *lower.Refused
-			if !errors.As(err, &refusal) || refusal.What != "an iterator factory returning this whose runtime next or return can differ from its declared iterator type (adamic/iterator-receiver-origin)" || refusal.Fix != "return a separate iterator object with next and return closures; do not erase subclass protocol methods behind the base iterator return type" {
-				t.Fatalf("want pinned receiver-origin refusal, got %v", err)
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if difference := disagreement(observed, onJavaScriptBackend(t, program)); difference != "" {
+				t.Fatal("JavaScript: " + difference)
+			}
+			actual, binary := natively(t, program)
+			if difference := disagreement(observed, actual); difference != "" {
+				t.Fatal("native: " + difference)
+			}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
 			}
 		})
 	}
 }
 
 func TestClassWrongOutput108(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -72,6 +84,7 @@ func TestClassWrongOutput108(t *testing.T) {
 }
 
 func TestClassWrongOutput106(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, output, member string }{
 		{"classfeat_static_private_instance", "s1\nt2\nhidden t2\n", "#secret"},
 		{"classfeat_static_private_method", "first function\nhidden s1\n", "#hidden"},

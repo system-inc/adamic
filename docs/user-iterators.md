@@ -3,11 +3,12 @@
 An explicit iterator uses the existing ownership model: the consumer holds the iterable, the
 iterator, the cached `next` function, and each result while it reads it. A literal method receives
 its object as `this`; it does not capture its owner. Other captures remain reference-counted cells
-and participate in the cycle finder. Class methods retain their existing static dispatch.
+and participate in the cycle finder. Class and literal methods dispatch through their runtime receiver and method tables.
 
 `for-of` is lazy. It caches `next` once, tests `done` before reading `value`, and gives every loop
 iteration a fresh binding. Break, return, and a throw from the body call the current `return`
-method when there is one. Exhaustion, continue, and a failure from `next` do not. An incoming throw
+method when there is one. A continue to an outer label also closes. Exhaustion, an ordinary continue,
+and a failure from `next` or from reading `done` or `value` do not. An incoming throw
 wins over a throw from `return`; a close failure replaces a break or return completion.
 
 Spread consumes the iterator to exhaustion. `Array.from` maps between steps and closes if the
@@ -17,18 +18,22 @@ Rest consumes what remains. Tuple yields also support destructured loop bindings
 and parameter destructuring of custom iterables remain stage-0 gaps. A yielded type that excludes
 `undefined` needs a default in a fixed binding: TypeScript otherwise pretends early exhaustion cannot produce `undefined`.
 
-The supported protocol has required, zero-argument methods with concrete class or literal/arrow
-origins and represented object results. `done` is a required boolean; `value` is a required field
-with a single-slot representation. Optional methods, structural method signatures which erase
-receiver conventions, protocol replacement, iterator object spreads, and incompatible views are
-explicit stage-0 gaps. `Array.from` does not yet accept `thisArg` or mappers with more than two
-parameters; mapper arguments must preserve their native representations. Known constructors,
-literal factories, and immutable factory aliases preserve method origins.
-Generic class views also need proven, invariant type arguments because their methods are
-monomorphized. Other views use conservative whole-program shape checks: an unrelated compatible shape can
-make a view unsafe. Distinct discriminants distinguish such shapes. Built-in consumers
-continue to use their existing lowering; this unit does not expand the existing array/string
-`Array.from` or destructuring forms.
+The supported object protocol accepts structural interfaces, class methods, literal methods,
+arrow functions, method getters, optional `return`, and optional boolean `done`. Dispatch caches
+`next` once with its receiver. It reads the current `return` only when closing. Discriminated
+result unions can give the completion value a different representation from yielded values;
+completion values never enter the body. Concrete protocol methods must take zero parameters
+and return represented objects. Generic class views still need invariant native arguments.
+Conservative whole-program checks refuse hidden incompatible methods and declared result
+fields absent at runtime. Optional/default method parameters need argument padding before
+admission. Object views of built-in storage and native iterator objects still need a protocol adapter; direct built-in
+arrays, tuples, strings, maps, sets and their iterators keep their existing lowering.
+
+Malformed `.ts` protocols and non-object close results await the named ruled-divergence
+infrastructure, `compiler/per-backend-stops` at `5f3b2e36`, absent from this base. They must stop
+with exit 70 until step 21 supplies catchable TypeError. The `.a` witnesses containing unchecked
+casts are refused before code generation. This unit does not claim their `.ts` backend proof.
+`Array.from` still does not accept `thisArg` or mappers with more than two parameters.
 
 ## Generators need owned suspended frames
 

@@ -1,0 +1,301 @@
+{
+  "added": [
+    {
+      "row": "stage3/fixtures/iteration-dispatch/class.a",
+      "after": [
+        "22",
+        "22",
+        "11",
+        "22",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/object.a",
+      "after": [
+        "26",
+        "26",
+        "14",
+        "28",
+        "11",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/break.a",
+      "after": [
+        "20",
+        "20",
+        "11",
+        "18",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/return.a",
+      "after": [
+        "21",
+        "21",
+        "11",
+        "18",
+        "13",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/labeled_continue.a",
+      "after": [
+        "44",
+        "44",
+        "22",
+        "38",
+        "12",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/body_throw.a",
+      "after": [
+        "22",
+        "22",
+        "17",
+        "24",
+        "12",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/next_throw.a",
+      "after": [
+        "12",
+        "12",
+        "13",
+        "16",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/close_throw_body.a",
+      "after": [
+        "22",
+        "22",
+        "20",
+        "26",
+        "12",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/close_throw_break.a",
+      "after": [
+        "20",
+        "20",
+        "16",
+        "21",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/cached_next.a",
+      "after": [
+        "29",
+        "29",
+        "17",
+        "34",
+        "12",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/completion.a",
+      "after": [
+        "20",
+        "20",
+        "10",
+        "20",
+        "11",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/done_throw.a",
+      "after": [
+        "13",
+        "13",
+        "14",
+        "16",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/value_throw.a",
+      "after": [
+        "13",
+        "13",
+        "14",
+        "16",
+        "10",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/method_getters.a",
+      "after": [
+        "26",
+        "26",
+        "16",
+        "24",
+        "15",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a",
+      "after": [
+        "57",
+        "57",
+        "31",
+        "49",
+        "9",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a",
+      "after": [
+        "28",
+        "28",
+        "16",
+        "20",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration/collections.a",
+      "after": [
+        "35",
+        "35",
+        "24",
+        "47",
+        "11",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration/strings.a",
+      "after": [
+        "20",
+        "20",
+        "14",
+        "27",
+        "9",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration/object_iteration.a",
+      "after": [
+        "5",
+        "5",
+        "1",
+        "6",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration/array_view_stress.a",
+      "after": [
+        "34",
+        "34",
+        "50",
+        "72",
+        "16",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration/test262_array_views.a",
+      "after": [
+        "11",
+        "11",
+        "25",
+        "38",
+        "11",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration/array_view_weak.a",
+      "after": [
+        "5",
+        "5",
+        "8",
+        "13",
+        "4",
+        "0"
+      ]
+    },
+    {
+      "row": "stage3/fixtures/iteration/user_forwarding.a",
+      "after": [
+        "22",
+        "22",
+        "7",
+        "17",
+        "14",
+        "0"
+      ]
+    }
+  ],
+  "changed": [
+    {
+      "row": "internal/oracle/testdata/user_iterators.a",
+      "before": [
+        "663",
+        "663",
+        "455",
+        "904",
+        "64",
+        "0"
+      ],
+      "after": [
+        "1050",
+        "1050",
+        "677",
+        "994",
+        "97",
+        "0"
+      ],
+      "reason": "Only conflict counts.md, regenerated once preserving both parents. Added 23 executable proofs. Two existing user_iterators rows change because runtime method binding now owns receiver cells and cached next closures; the terminal TDZ row stops at its observed panic. All old and new Node observations pass, six dispatch IR mutants and four production array-view mutants caught. Historical evidence moved to review and touched tests marked parallel."
+    },
+    {
+      "row": "internal/oracle/testdata/user_iterators_rest_tdz.a",
+      "before": [
+        "5",
+        "0",
+        "5",
+        "3",
+        "5",
+        "0"
+      ],
+      "after": [
+        "11",
+        "3",
+        "7",
+        "3",
+        "8",
+        "0"
+      ],
+      "reason": "Only conflict counts.md, regenerated once preserving both parents. Added 23 executable proofs. Two existing user_iterators rows change because runtime method binding now owns receiver cells and cached next closures; the terminal TDZ row stops at its observed panic. All old and new Node observations pass, six dispatch IR mutants and four production array-view mutants caught. Historical evidence moved to review and touched tests marked parallel."
+    }
+  ],
+  "removed": [],
+  "rows": 1015
+}

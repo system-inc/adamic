@@ -39,6 +39,10 @@ func labelIteration(body []ir.Statement, name string) bool {
 			if labelIteration(statement.Body, name) {
 				return true
 			}
+		case ir.Try:
+			if labelIteration(statement.Body, name) {
+				return true
+			}
 		case ir.Labeled:
 			if labelIteration(statement.Body, name) {
 				return true
