@@ -1,0 +1,9 @@
+namespace State { export interface Marker { readonly value: number; } }
+console.log(typeof State);
+namespace State { export const enum MarkerKind { Value } }
+console.log(typeof State);
+namespace State { export let value = 3; }
+const held = State;
+console.log(typeof held);
+console.log(Object.keys(held).join(","));
+console.log(String(held.value));

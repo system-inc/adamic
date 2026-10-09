@@ -1,0 +1,18 @@
+// a-check: pass; expected after assignment-expression proofs (#cvhj5fk).
+// Step 12 ruling probe, October 8 at 11:16; not an upstream source excerpt.
+let calls = 0;
+let present = true;
+function f(): string | undefined {
+    calls += 1;
+    return present ? "name" : undefined;
+}
+function lengthIfPresent(): number {
+    let x: string | undefined;
+    if ((x = f()) !== undefined) {
+        return x.length;
+    }
+    return -1;
+}
+console.log(`${lengthIfPresent()} ${calls}`);
+present = false;
+console.log(`${lengthIfPresent()} ${calls}`);

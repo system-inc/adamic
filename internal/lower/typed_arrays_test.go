@@ -38,8 +38,6 @@ func TestTypedArrayGaps(t *testing.T) {
 		{`const v = new Uint8Array(4); const b = new Uint8Array(v.buffer);`, "another view's buffer"},
 		{`const v = new Uint8Array(4); v.set(new Int32Array(2));`, "different element type"},
 		{`const v = new Uint8Array(4); console.log(v.slice(1).length.toString());`, "typed array method slice"},
-		{`const v = new Uint8Array(2); try { v.set(new Uint8Array(3)); } catch { console.log('caught'); }`, "a try around typed array set"},
-		{`function size(): number { return -1; } try { const v = new Uint8Array(size()); } catch { console.log('caught'); }`, "a try around typed array length conversion"},
 	} {
 		_, err := lowerSource(t, probe.source)
 		var gap *NotYet

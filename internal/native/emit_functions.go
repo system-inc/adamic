@@ -52,7 +52,11 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.functionDepth = len(e.scopes)
 	e.scopes = append(e.scopes, nil)
 	// Recursion that runs out of stack panics, as Node's does, rather than crashing (stack.c).
-	e.line("ADAMIC_CHECK_STACK();")
+	name := function.Name
+	if name == "" {
+		name = "<anonymous>"
+	}
+	e.line("ADAMIC_CHECK_STACK_NAMED(%s);", cString(name))
 	if function.ArgumentsCount != 0 && !function.Closure {
 		e.line("(void)%s;", e.localName(function.ArgumentsCount-1))
 	}
@@ -291,10 +295,11 @@ func (e *emitter) arguments(call ir.Call) []string {
 // evaluated, as JavaScript reads object.name first.
 func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string {
 	method := ""
+	invalid := ""
 	exactCount := false
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
-		if function, known := e.exactReceiverMethod(property.Object, property.Name); known {
+		if function, known := e.exactReceiverMethod(property.Object, property.Name); known && !expression.Optional && !expression.RequiredCallable {
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
 			method = e.methodThunk(function)
@@ -306,10 +311,49 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			} else {
 				e.line("adamic_method %s = NULL;", method)
 			}
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			lookup := "adamic_object_callee"
+			if expression.Optional || expression.RequiredCallable {
+				lookup = e.optionalCalleeLookup()
+				invalid = e.temporary()
+				e.line("bool %s = false;", invalid)
+			}
+			extra := ""
+			if invalid != "" {
+				extra = ", &" + invalid
+			}
+			selected := fmt.Sprintf("%s(%s, %s, &%s, &%s%s)", lookup, receiver, cString(property.Name), e.cache(), method, extra)
+			if invalid == "" {
+				selected = "adamic_retain(" + selected + ")"
+			}
+			closure = e.own(ir.Closure, selected)
+			if property.CallableAccessor {
+				e.closureThrown()
+			}
 		}
 	}
+	if expression.RequiredCallable {
+		missing := closure + " == NULL && " + method + " == NULL"
+		if e.program.ClosureConventionNeeded() {
+			missing = fmt.Sprintf("%s == NULL && (%s.counted ? %s.counted_code == NULL : %s.code == NULL)", closure, method, method, method)
+		}
+		e.line("%s = %s || (%s);", invalid, invalid, missing)
+		return e.callSelectedChecked(expression, closure, receiver, method, exactCount, invalid)
+	}
+	if expression.Optional {
+		return e.optionalSelectedCall(expression, closure, receiver, method, exactCount, invalid)
+	}
+	return e.callSelected(expression, closure, receiver, method, exactCount)
+}
+
+func (e *emitter) callSelected(expression ir.CallClosure, closure, receiver, method string, exactCount bool) string {
+	return e.callSelectedChecked(expression, closure, receiver, method, exactCount, "")
+}
+
+func (e *emitter) callSelectedChecked(expression ir.CallClosure, closure, receiver, method string, exactCount bool, invalid string) string {
 	packed, count := e.closureArguments(expression)
+	if invalid != "" {
+		e.line("if (%s) adamic_panic(\"TypeError: optional call value is not callable\", 46);", invalid)
+	}
 	call := e.packedClosureCall(expression, closure, packed, count)
 	if expression.Direct > 0 {
 		target := expression.Direct - 1
@@ -352,7 +396,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	}
 
 	if expression.Returns == 0 {
-		e.line("%s;", call)
+		e.discardClosureResult(expression, closure, receiver, method, call)
 		e.closureThrown()
 		return "0"
 	}

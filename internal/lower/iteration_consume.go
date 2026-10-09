@@ -163,7 +163,7 @@ func (l *lowering) destructureIterator(pattern, sourceNode *ast.Node, plan *iter
 				return nil, err
 			}
 		} else {
-			valueType := l.checker.GetTypeOfSymbol(l.checker.GetPropertyOfType(plan.step, "value"))
+			valueType := plan.value
 			if !l.includesUndefined(valueType) {
 				return nil, &Refused{Where: l.program.Where(binding), What: "an iterator binding whose type omits undefined on exhaustion", Fix: "give the binding a default, [value = fallback], or make the yielded type include undefined; TypeScript does not account for early iterator exhaustion"}
 			}
@@ -175,7 +175,7 @@ func (l *lowering) destructureIterator(pattern, sourceNode *ast.Node, plan *iter
 		}
 		of := l.result.Locals[local].Type
 		value := ir.Expression(ir.Read{Local: valueLocal, Of: plan.element})
-		if binding.AsBindingElement().Initializer != nil && l.includesUndefined(l.checker.GetTypeOfSymbol(l.checker.GetPropertyOfType(plan.step, "value"))) {
+		if binding.AsBindingElement().Initializer != nil && l.includesUndefined(plan.value) {
 			value = ir.Coalesce{Value: value, Fallback: fit(fallback, of), Of: of}
 		} else {
 			value = fit(value, of)

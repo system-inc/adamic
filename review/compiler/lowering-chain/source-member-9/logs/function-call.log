@@ -1,0 +1,8 @@
+=== RUN   TestFunctionTypeScriptCallRefused
+=== PAUSE TestFunctionTypeScriptCallRefused
+=== CONT  TestFunctionTypeScriptCallRefused
+    function_rulings_main_test.go:110: want Refused, got /tmp/adamic-gate/TestFunctionTypeScriptCallRefused755221691/001/function_call.ts:3:16: stage 0 can't lower a call returning any yet
+--- FAIL: TestFunctionTypeScriptCallRefused (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.037s
+FAIL

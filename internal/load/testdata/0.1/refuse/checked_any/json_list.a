@@ -1,0 +1,5 @@
+// List branch's typed use after a config conversion transports any unchanged.
+function convertJsonOption(value: any): readonly number[] { return value; }
+const list = convertJsonOption([14, 15]);
+console.log(String(list[0] ?? 0));
+console.log(String(list.length));

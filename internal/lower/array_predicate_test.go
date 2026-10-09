@@ -32,7 +32,11 @@ func TestArrayPredicateCannotInventAnElementContract(t *testing.T) {
 	} {
 		_, err := lowerSource(t, source)
 		var refusal *Refused
-		if !errors.As(err, &refusal) || !strings.Contains(err.Error(), "return is not proven") {
+		reason := "return is not proven"
+		if strings.Contains(source, "value: any") {
+			reason = "explicit any in .a"
+		}
+		if !errors.As(err, &refusal) || !strings.Contains(err.Error(), reason) {
 			t.Fatalf("%s: want unproven predicate refusal, got %v", source, err)
 		}
 	}

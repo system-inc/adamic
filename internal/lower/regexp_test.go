@@ -20,7 +20,6 @@ func TestRegExpNativeRefusals(t *testing.T) {
 	for _, source := range []string{
 		"function made(pattern: string): RegExp { return new RegExp(pattern); }",
 		"const matches = /a{18446744073709551616}/.test('a');",
-		"try { console.log('a'.replaceAll(/a/, 'b')); } catch {}",
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
 	} {

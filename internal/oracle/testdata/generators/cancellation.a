@@ -1,0 +1,9 @@
+function* suspended(): Generator<number, number, number> {
+ try { yield 1; yield 2; return 3; }
+ finally { console.log('finally'); yield 4; console.log('finished'); }
+}
+const g = suspended();
+console.log(`${g.next().value}`);
+console.log(`${g.return(9).value}`);
+console.log(`${g.next().value}`);
+console.log(`${g.next().done}`);

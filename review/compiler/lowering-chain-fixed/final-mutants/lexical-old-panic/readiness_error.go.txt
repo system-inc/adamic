@@ -1,0 +1,8 @@
+package native
+
+
+
+// A lexical dead-zone read uses the same owned exception payload as an explicit throw.
+func (e *emitter) readinessError(message string) {
+ e.line("adamic_panic(%s, %d);", cString("ReferenceError: "+message),len("ReferenceError: "+message))
+}

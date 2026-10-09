@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "branch-union",
+    "exit": 1,
+    "catcher": "TestParserFactoryCompletion behavior assertion",
+    "log": "/tmp/step24-ahead-mutant-branch-union.log"
+  },
+  {
+    "mutant": "omit-escape-missing",
+    "exit": 1,
+    "catcher": "TestParserFactoryCompletion behavior assertion",
+    "log": "/tmp/step24-ahead-mutant-omit-escape-missing.log"
+  },
+  {
+    "mutant": "erase-earlier-read",
+    "exit": 1,
+    "catcher": "TestParserFactoryCompletion behavior assertion",
+    "log": "/tmp/step24-ahead-mutant-erase-earlier-read.log"
+  },
+  {
+    "mutant": "trust-assertion",
+    "exit": 1,
+    "catcher": "TestParserFactoryCompletion behavior assertion",
+    "log": "/tmp/step24-ahead-mutant-trust-assertion.log"
+  }
+]

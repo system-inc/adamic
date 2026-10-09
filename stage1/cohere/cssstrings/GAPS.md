@@ -54,11 +54,10 @@ short-text throughput, not a steady-state full-CSS-formatting benchmark.
 
 ## Gap 1: multi-value Array.push
 
-`gaps/1_multi_push.ts` is accepted by the checker and prints `ab\n` on Node.
-Stage 0 refuses lowering with `push with other than one value` (`lower.NotYet`).
-The port uses one push per value instead. `TestMultiPushGap` asserts Node's output
-and the exact refusal, so a closed gap requires updating this record and removing
-the workaround. No compiler files were changed.
+`gaps/1_multi_push.ts` now lowers and prints `ab\n` on source Node,
+JavaScript backend and sanitized native with leak detection. `TestMultiPushGap`
+holds the gap closed. The sub-printer's adjacent pushes are now multi-value pushes;
+its Go oracle remains the contract for the port.
 
 ## Boundaries
 

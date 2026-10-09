@@ -1,0 +1,9 @@
+// Reduced from utilities.ts:8102, switch (parent?.kind).
+interface Parent { readonly kind: number }
+function accessKind(parent: Parent): string {
+	switch (parent?.kind) {
+		case 1: return 'read';
+		default: return 'other';
+	}
+}
+console.log(`${accessKind({ kind: 1 })}`);

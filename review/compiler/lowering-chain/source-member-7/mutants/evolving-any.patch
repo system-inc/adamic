@@ -1,0 +1,11 @@
+--- internal/lower/refusals.go
++++ internal/lower/refusals.go
+@@ -85,7 +85,7 @@
+ 		}
+ 		if node.Kind == ast.KindVariableDeclaration && l.program.FileName(module) != module.FileName().AsString() {
+ 			declaration := node.AsVariableDeclaration()
+-			if declaration.Type == nil && declaration.Initializer == nil && l.evolvingObject(node.Name()) == nil && l.checker.GetTypeAtLocation(node.Name()).Flags()&checker.TypeFlagsAny != 0 {
++			if declaration.Type == nil && declaration.Initializer == nil && l.evolvingObject(node.Name()) == nil && l.checker.GetTypeAtLocation(node.Name()).Flags()&checker.TypeFlagsAny != 0 && false {
+ 				found = l.notYet(node.Name(), "a value of type any (an evolving unannotated .a binding; declare unknown)")
+ 				return true
+ 			}

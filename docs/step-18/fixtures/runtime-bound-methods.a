@@ -1,0 +1,19 @@
+// Reduced from checker.ts:6910, tracker.reportInaccessibleThisError?.().
+// Add return observations and argument effects to expose selection and binding.
+interface Reporter { report?(value: number): string }
+let argumentsRun = 0;
+function argument(): number { argumentsRun += 1; return argumentsRun; }
+function invoke(value: Reporter): void {
+	console.log(value.report?.(argument()) ?? 'absent');
+}
+class Report {
+	readonly label: string;
+	constructor(label: string) { this.label = label; }
+	report(value: number): string { return `${this.label}:${value}`; }
+}
+invoke({});
+invoke(new Report(`class${1}`));
+const literal = { label: `literal${2}`, report(value: number): string { return `${this.label}:${value}`; } };
+invoke(literal);
+invoke({});
+console.log(`${argumentsRun}`);

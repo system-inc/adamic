@@ -88,6 +88,9 @@ func (l *lowering) namespaceMember(node *ast.Node) bool {
 }
 
 func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, error) {
+	if value, handled, err := l.namespaceObjectExpression(node); handled {
+		return value, true, err
+	}
 	if node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression || !l.namespaceMember(node) {
 		return nil, false, nil
 	}
@@ -133,6 +136,22 @@ func (l *lowering) namespaceValueNode(node *ast.Node) bool {
 }
 
 func (l *lowering) namespaceRefusal(node *ast.Node) error {
+	if node.Kind == ast.KindSpreadAssignment && l.hasNamespaceObjects() {
+		return l.notYet(node, "an object spread with escaped namespace storage; construct the selected fields explicitly")
+	}
+	if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !l.namespaceMergedFunction(node.Expression()) {
+		parent := node.Parent
+		if parent != nil && parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().Left == node && ast.IsAssignmentOperator(parent.AsBinaryExpression().OperatorToken.Kind) {
+			if symbol := l.symbol(node); symbol != nil {
+				for _, d := range symbol.Declarations {
+					if d.Kind == ast.KindFunctionDeclaration && d.Parent != nil && d.Parent.Kind == ast.KindModuleBlock && ast.HasSyntacticModifier(d, ast.ModifierFlagsExport) {
+						return &Refused{Where: l.program.Where(node), What: "replacing a fixed namespace function member", Fix: "keep the exported function identity; use a mutable function-valued variable for replacement"}
+					}
+				}
+			}
+		}
+	}
+
 	if err := l.moduleNamespaceRefusal(node); err != nil {
 		return err
 	}
@@ -146,6 +165,9 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 		symbol := l.symbol(node.Name())
 		for _, declaration := range symbol.Declarations {
 			if declaration == node || declaration.Kind == ast.KindInterfaceDeclaration || declaration.Kind == ast.KindTypeAliasDeclaration {
+				continue
+			}
+			if declaration.Kind == ast.KindModuleDeclaration {
 				continue
 			}
 			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Parent == node.Parent {
@@ -217,7 +239,7 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 			return l.notYet(node, "observing a callable namespace object; only direct calls, fixed qualified members, typeof and canonical function identity are represented")
 		}
 		if parent == nil || parent.Kind != ast.KindPropertyAccessExpression || parent.AsPropertyAccessExpression().Expression != node {
-			return l.notYet(node, "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports")
+			return nil
 		}
 	}
 	if l.isExpression(node) && l.namespaceMember(node) {
@@ -243,11 +265,12 @@ func (l *lowering) namespaceRefusal(node *ast.Node) error {
 // Follow statically known callees before executing a module statement. An unresolved
 // edge keeps namespace reads checked at runtime; it is never proof of no effects.
 func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
+	l.noteNamespaceObjects(modules)
 	initialized := map[*ast.Node]bool{}
 	graph := namespaceCallGraph{lowering: l, functions: map[*ast.Node]*namespaceCallNode{}}
 	checkCall := func(target *ast.Node) error {
 		for declaration, read := range graph.reach(target) {
-			if !initialized[declaration] {
+			if !initialized[declaration] && !l.namespaceObjectDeclaration(declaration) {
 				if declaration.Kind == ast.KindEnumDeclaration {
 					return l.notYet(read, "reading an enum before its runtime initialization; move the call after the enum declaration")
 				}
@@ -302,7 +325,7 @@ func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error {
 			if declaration := l.namespaceRuntimeEnum(node); declaration != nil && !initialized[declaration] {
 				return l.notYet(node, "reading an enum before its runtime initialization; move the call after the enum declaration")
 			}
-			if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) && !initialized[declaration] {
+			if declaration := l.namespaceDeclaration(node); declaration != nil && namespaceRuntime(declaration) && !initialized[declaration] && !l.namespaceObjectDeclaration(declaration) {
 				return l.notYet(node, "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration")
 			}
 		}
@@ -389,6 +412,9 @@ func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node {
 func (l *lowering) namespaceReadyLocal(declaration *ast.Node) int {
 	symbol := l.symbol(declaration.Name())
 	if local, found := l.locals[symbol]; found {
+		if l.result.Locals[local].NamespaceObject {
+			return l.result.Locals[local].NamespaceReady - 1
+		}
 		return local
 	}
 	if l.locals == nil {
@@ -415,7 +441,7 @@ func (l *lowering) namespaceReadyReads(node *ast.Node, writing bool) []ir.Expres
 			if setting {
 				message = "TypeError: Cannot set properties of undefined (setting '" + member + "')"
 			}
-			b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(b.parameters[0])}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+			b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: b.read(b.parameters[0])}, Then: []ir.Statement{ir.Throw{Value: fit(ir.MakeError{Message: ir.StringConstant{Index: l.constant(message[len("TypeError: "):])}, Constructor: "TypeError"}, ir.Union)}}})
 			// The outer container is read first in Outer.Inner.member.
 			checks = append([]ir.Expression{b.finish("namespace_ready", ir.BooleanConstant{Value: true})}, checks...)
 		}
@@ -456,6 +482,27 @@ func namespaceVariable(list *ast.Node) bool {
 }
 
 func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
+	if l.namespaceObjectDeclaration(node) {
+		if !namespaceObjectRuntime(node) {
+			return nil, nil
+		}
+		return l.namespaceObjectBody(node)
+	}
+	hoisted, err := l.namespaceHoisted(node)
+	if err != nil {
+		return nil, err
+	}
+	body, err := l.statements(namespaceStatements(node))
+	if err != nil {
+		return nil, err
+	}
+	if namespaceRuntime(node) {
+		body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})
+	}
+	return append(hoisted, body...), nil
+}
+
+func (l *lowering) namespaceHoisted(node *ast.Node) ([]ir.Statement, error) {
 	hoisted := []ir.Statement{}
 	seen := map[int]bool{}
 	for _, statement := range namespaceStatements(node) {
@@ -494,14 +541,7 @@ func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error) {
 			}
 		}
 	}
-	body, err := l.statements(namespaceStatements(node))
-	if err != nil {
-		return nil, err
-	}
-	if namespaceRuntime(node) {
-		body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})
-	}
-	return append(hoisted, body...), nil
+	return hoisted, nil
 }
 
 // The parser's factory destructuring declares symbols on the renamed identifiers,

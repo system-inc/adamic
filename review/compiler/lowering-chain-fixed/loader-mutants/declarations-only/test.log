@@ -1,0 +1,8 @@
+=== RUN   TestProjectLoaderReferenceSources
+=== PAUSE TestProjectLoaderReferenceSources
+=== CONT  TestProjectLoaderReferenceSources
+    project_loader_test.go:38: /workspace/scratch/optional-calls-main-tmp/TestProjectLoaderReferenceSources3673741021/001/app/main.ts:1:23: error TS6305: Output file '/workspace/scratch/optional-calls-main-tmp/TestProjectLoaderReferenceSources3673741021/001/out/dependency/value.d.ts' has not been built from source file '/workspace/scratch/optional-calls-main-tmp/TestProjectLoaderReferenceSources3673741021/001/dependency/value.ts'.
+--- FAIL: TestProjectLoaderReferenceSources (0.27s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.281s
+FAIL

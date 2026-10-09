@@ -1,0 +1,34 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a (0.44s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a (0.60s)
+PASS
+gate cache: native hits=2 misses=4
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.622s

@@ -1,0 +1,5 @@
+interface Step { value: string; done: boolean; }
+const cursor = { index: 0, next: (): Step => ({value: 'initial', done: false}), return: (): Step => { console.log('closed'); return {value: 'completion', done: true}; } };
+cursor.next = (): Step => { cursor.index += 1; console.log(`cached:${cursor.index}`); return {value: `yield:${cursor.index}`, done: cursor.index > 2}; };
+const source = { [Symbol.iterator]() { return cursor; } };
+for (const value of source) { console.log(value); cursor.next = (): Step => { console.log('replacement'); return {value: 'wrong', done: true}; }; }

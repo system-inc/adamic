@@ -1,0 +1,5 @@
+interface Config { readonly [Symbol.toStringTag]: number; }
+function convert(raw: any): Config { return raw; }
+const raw: any = { tag: 14 };
+convert(raw);
+console.log("passed");

@@ -1,0 +1,137 @@
+[
+  {
+    "file": "call-result.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nexports\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/call-result.a:6:13: stage 0 can't lower an optional chain longer than one step yet\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "an optional chain longer than one step",
+    "where": "docs/step-18/fixtures/call-result.a:6:13"
+  },
+  {
+    "file": "cross-call.a",
+    "node": {
+      "exit": 0,
+      "stdout": "exports1\nexports1\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/cross-call.a:8:13: stage 0 can't lower an optional chain longer than one step yet\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "an optional chain longer than one step",
+    "where": "docs/step-18/fixtures/cross-call.a:8:13"
+  },
+  {
+    "file": "element.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nfirst\nabsent\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/element.a:3:9: stage 0 can't lower ?.[] on a value yet\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "?.[] on a value",
+    "where": "docs/step-18/fixtures/element.a:3:9"
+  },
+  {
+    "file": "function.a",
+    "node": {
+      "exit": 0,
+      "stdout": "cleanup\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/function.a:3:2: stage 0 can't lower a call through ?. (an optional call) yet\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "a call through ?. (an optional call)",
+    "where": "docs/step-18/fixtures/function.a:3:2"
+  },
+  {
+    "file": "method.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nfilled1\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/method.a:4:14: stage 0 can't lower a call through ?. (an optional call) yet\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "a call through ?. (an optional call)",
+    "where": "docs/step-18/fixtures/method.a:4:14"
+  },
+  {
+    "file": "number.a",
+    "node": {
+      "exit": 0,
+      "stdout": "read\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/number.a:4:10: stage 0 can't lower ?. to a number, which would be number | undefined yet\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "?. to a number, which would be number | undefined",
+    "where": "docs/step-18/fixtures/number.a:4:10"
+  },
+  {
+    "file": "receiver-call.a",
+    "node": {
+      "exit": 0,
+      "stdout": "-1\n2\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/receiver-call.a:3:9: stage 0 can't lower a call through ?. (an optional call) yet\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "a call through ?. (an optional call)",
+    "where": "docs/step-18/fixtures/receiver-call.a:3:9"
+  },
+  {
+    "file": "size.a",
+    "node": {
+      "exit": 0,
+      "stdout": "true true false\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/size.a:3:10: stage 0 can't lower optional chaining to .size on a value yet\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "optional chaining to .size on a value",
+    "where": "docs/step-18/fixtures/size.a:3:10"
+  },
+  {
+    "file": "two-guards.a",
+    "node": {
+      "exit": 0,
+      "stdout": "false false true\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 1,
+      "stderr": "adamic: docs/step-18/fixtures/two-guards.a:4:9: stage 0 can't lower a call through ?. (an optional call) yet\nexit status 1\n"
+    },
+    "c_emitted": false,
+    "reason": "a call through ?. (an optional call)",
+    "where": "docs/step-18/fixtures/two-guards.a:4:9"
+  }
+]

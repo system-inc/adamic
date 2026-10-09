@@ -1,0 +1,5 @@
+function* mapIterator<T,U>(items:readonly T[], transform:(value:T)=>U): Generator<U,void,unknown> {
+ for(const value of items) yield transform(value);
+}
+function doubled(value:number):number {return value*2;}
+for(const value of mapIterator([1,2,3],doubled)) console.log(`${value}`);

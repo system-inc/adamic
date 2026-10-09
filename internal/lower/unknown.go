@@ -9,7 +9,7 @@ import (
 )
 
 func dynamicObjectType(proven *checker.Type) bool {
-	if proven.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
+	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
 		return true
 	}
 	if proven.Flags()&(checker.TypeFlagsIntersection|checker.TypeFlagsUnion) != 0 {
@@ -74,15 +74,33 @@ func (l *lowering) dynamicProperty(node *ast.Node, object ir.Expression, name st
 	if l.dynamicReadHazard(name) {
 		return nil, l.notYet(node, "a dynamic getter or method read, or a nullable field (runtime dispatch, slot tags and narrowed rereads)")
 	}
+	// Primitive prototypes are observable even through any. Their methods do
+	// not have native dynamic callable descriptors; never report them absent.
+	if name != "length" {
+		for _, primitive := range []*checker.Type{l.checker.GetNumberType(), l.checker.GetStringType(), l.checker.GetBooleanType()} {
+			if l.checker.GetPropertyOfType(primitive, name) != nil {
+				return nil, l.notYet(node, "a dynamic primitive prototype property (callable descriptors)")
+			}
+		}
+	}
 	// Prototype function values and dynamic array elements need callable and element metadata.
 	switch name {
-	case "constructor", "__proto__", "toString", "valueOf", "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable", "toLocaleString", "__defineGetter__", "__defineSetter__", "__lookupGetter__", "__lookupSetter__", "map", "filter", "push", "pop", "slice", "join", "entries", "values", "keys":
+	case "constructor", "__proto__", "toString", "valueOf", "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable", "toLocaleString", "__defineGetter__", "__defineSetter__", "__lookupGetter__", "__lookupSetter__", "map", "filter", "push", "pop", "slice", "join", "entries", "values", "keys", "at", "concat", "copyWithin", "fill", "find", "findIndex", "findLast", "findLastIndex", "lastIndexOf", "reverse", "shift", "unshift", "sort", "splice", "includes", "indexOf", "forEach", "flat", "flatMap", "every", "some", "reduce", "reduceRight", "toReversed", "toSorted", "toSpliced", "with":
 		return nil, l.notYet(node, "a dynamic prototype property value (intrinsic identity and ToPrimitive)")
 	}
-	value := ir.Expression(ir.DynamicProperty{Object: object, Name: name})
+	optional := node.Kind == ast.KindPropertyAccessExpression && node.AsPropertyAccessExpression().QuestionDotToken != nil
+	if !optional && node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Flags()&checker.TypeFlagsAny != 0 {
+		object = l.checkedAnyPropertyReceiver(node.AsPropertyAccessExpression().Expression, object)
+	}
+	value := ir.Expression(ir.DynamicProperty{Object: object, Name: name, Optional: optional})
 	of, err := l.typeOf(node)
 	if err != nil {
 		return nil, err
+	}
+	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Flags()&checker.TypeFlagsAny != 0 {
+		if of != ir.Union {
+			return l.checkedAnyType(node, value, l.checker.GetTypeAtLocation(node))
+		}
 	}
 	if of != ir.Union {
 		value = ir.Narrow{Value: value, To: of}
@@ -167,7 +185,7 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 		}
 	}
 	for _, field := range l.checker.GetPropertiesOfType(present) {
-		if l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+		if l.includesNull(l.checker.GetTypeOfSymbol(field)) && !l.result.JSONTaggedNull {
 			return l.notYet(node, "an object with a nullable field viewed as unknown or object (null and undefined slot tags)")
 		}
 	}
@@ -182,12 +200,16 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 
 // A key that could denote a getter or a prototype method cannot yet be read dynamically.
 func (l *lowering) dynamicReadHazard(name string) bool {
+	return l.propertyReadHazard(name, false)
+}
+
+func (l *lowering) propertyReadHazard(name string, taggedNull bool) bool {
 	if l.accessorNames[name] {
 		return true
 	}
 	for _, declaration := range l.classes {
 		for _, member := range declaration.Members() {
-			if member.Name() != nil && member.Name().Text() == name && member.Kind != ast.KindPropertyDeclaration {
+			if member.Name() != nil && member.Name().Text() == name && (member.Kind != ast.KindPropertyDeclaration || l.uninitializedDeclaration(member)) {
 				return true
 			}
 		}
@@ -199,8 +221,11 @@ func (l *lowering) dynamicReadHazard(name string) bool {
 	nullable := false
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindPropertyAssignment && node.Name() != nil && node.Name().Text() == name && l.uninitializedInitializer(node.AsPropertyAssignment().Initializer) {
+			nullable = true
+		}
 		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindNewExpression {
-			if field := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(node), name); field != nil && l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+			if field := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(node), name); field != nil && l.includesNull(l.checker.GetTypeOfSymbol(field)) && !l.result.JSONTaggedNull && !taggedNull {
 				nullable = true
 			}
 		}

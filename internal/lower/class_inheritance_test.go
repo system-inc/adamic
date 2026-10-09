@@ -87,12 +87,13 @@ new B();`, "abstract"},
 
 func TestInheritanceAllowsSoundOverrides(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, `interface Animal { readonly name: string }
+	program := lowersAndAgreesWithNode(t, `interface Animal { readonly name: string }
 interface Dog extends Animal { readonly bark: () => string }
 class A { readonly pet: Animal = { name: 'cat' }; accept(value: Dog): Animal { return value; } }
 class B extends A { override readonly pet: Dog = { name: 'dog', bark: () => 'woof' }; override accept(value: Animal): Dog { return this.pet; } }
 const base: A = new B();
 console.log(base.accept({ name: 'dog', bark: () => 'woof' }).name);`)
+	requireInheritanceAnswer(t, program)
 }
 
 // Class identities retain their nominal parent even when a subclass adds no fields.
@@ -182,10 +183,11 @@ func TestInheritanceRefusesThisBeforeSuperReturns(t *testing.T) {
 
 func TestInheritanceKeepsNominalTupleDestructuring(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, `class Source { readonly name = 'source'; read(): string { return this.name; } }
+	program := lowersAndAgreesWithNode(t, `class Source { readonly name = 'source'; read(): string { return this.name; } }
 const pair: readonly [boolean, boolean, Source] = [false, true, new Source()];
 const [, ignored, source] = pair;
 console.log(ignored ? source.read() : 'none');`)
+	requireInheritanceAnswer(t, program)
 }
 
 func TestInheritanceGenericMonomorphizations(t *testing.T) {
@@ -331,7 +333,8 @@ const value: Base = new Child(); value.scale();`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			lowersAndAgreesWithNode(t, probe.source)
+			program := lowersAndAgreesWithNode(t, probe.source)
+			requireInheritanceAnswer(t, program)
 		})
 	}
 }

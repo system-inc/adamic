@@ -86,9 +86,11 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 			continue
 		}
 		directory := entry.Name()
-		// This manifestless directory belongs to internal/oracle, through
-		// enum_initialization_reach_test.go; it was never in TestFixtures.
-		if directory == "enum-init-reach" {
+		// Manifestless directories are owned by internal/oracle:
+		// enum_initialization_reach_test.go, step16_generics_test.go,
+		// step20_iteration_test.go and iteration_dispatch_test.go.
+		// Their own tests pin outcomes and hold admitted programs to Node.
+		if directory == "enum-init-reach" || directory == "generics" || directory == "iteration" || directory == "iteration-dispatch" {
 			continue
 		}
 		isFixture := false

@@ -1,0 +1,95 @@
+{
+  "added": [
+    {
+      "row": "internal/oracle/testdata/refusal_rulings/function_signature.a",
+      "after": [
+        "3",
+        "3",
+        "0",
+        "3",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/refusal_rulings/merge_present.a",
+      "after": [
+        "3",
+        "3",
+        "1",
+        "4",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/refusal_rulings/function_unused.a (TypeScript mode)",
+      "after": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/refusal_rulings/function_length.a (TypeScript mode)",
+      "after": [
+        "20",
+        "20",
+        "4",
+        "29",
+        "13",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/refusal_rulings/merge_unused.a (TypeScript mode)",
+      "after": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/refusal_rulings/merge_missing.a (TypeScript mode)",
+      "after": [
+        "1",
+        "0",
+        "1",
+        "1",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/refusal_rulings/merge_missing_computed.a (TypeScript mode)",
+      "after": [
+        "1",
+        "0",
+        "1",
+        "1",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/refusal_rulings/merge_present.a (TypeScript mode)",
+      "after": [
+        "3",
+        "3",
+        "1",
+        "4",
+        "3",
+        "0"
+      ]
+    }
+  ],
+  "changed": [],
+  "removed": [],
+  "rows": 1152
+}

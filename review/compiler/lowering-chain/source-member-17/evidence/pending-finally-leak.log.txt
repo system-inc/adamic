@@ -1,0 +1,30 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion.a
+    oracle_test.go:783: leaks:
+        exit 1
+        
+        =================================================================
+        ==15965==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 120 byte(s) in 2 object(s) allocated from:
+            #0 0x555c6dcf5274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x555c6dd4b4df in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1233712921/heap.c:196:10
+            #2 0x7f3a1f85cca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+        
+        Indirect leak of 142 byte(s) in 2 object(s) allocated from:
+            #0 0x555c6dcf5274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x555c6dd4b4df in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1233712921/heap.c:196:10
+        
+        SUMMARY: AddressSanitizer: 262 byte(s) leaked in 4 allocation(s).
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion.a (0.50s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.529s
+FAIL

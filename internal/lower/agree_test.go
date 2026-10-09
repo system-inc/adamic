@@ -125,12 +125,14 @@ func compareAgreement(t agreementTesting, got, want nodeObservation) {
 	if got.code != want.code {
 		t.Fatalf("JavaScript backend exit = %d, source Node = %d", got.code, want.code)
 	}
-	if got.code != 0 {
+	// Step 21 holds uncaught errors to stdout and exit 1; engine-specific
+	// stderr rendering is outside that contract. Explicit panic diagnostics stay pinned.
+	if got.code != 0 && got.code != 1 {
 		firstLine := func(value []byte) string { return strings.SplitN(string(value), "\n", 2)[0] }
 		if firstLine(got.stderr) != firstLine(want.stderr) {
 			t.Fatalf("JavaScript backend stderr first line = %q, source Node = %q", firstLine(got.stderr), firstLine(want.stderr))
 		}
-	} else if len(got.stderr) != 0 || len(want.stderr) != 0 {
+	} else if got.code == 0 && (len(got.stderr) != 0 || len(want.stderr) != 0) {
 		t.Fatalf("unexpected stderr: JavaScript backend %q, source Node %q", got.stderr, want.stderr)
 	}
 }

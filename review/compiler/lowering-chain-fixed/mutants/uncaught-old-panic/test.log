@@ -1,0 +1,6 @@
+=== RUN   TestWASIRequestThrows
+    request_test.go:174: uncaught handler exception: exit status 70, "adamic: panic: Error: boundary\n"
+--- FAIL: TestWASIRequestThrows (7.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic	7.137s
+FAIL

@@ -1,0 +1,8 @@
+=== RUN   TestInheritanceVoidBooleanOverrideReason
+=== PAUSE TestInheritanceVoidBooleanOverrideReason
+=== CONT  TestInheritanceVoidBooleanOverrideReason
+    inherited_fields_guard_test.go:52: want NotYet naming native result representation and repair, got /tmp/adamic-gate/TestInheritanceVoidBooleanOverrideReason2505814139/001/main.a:2:21: Adamic 0.1 refuses an override that widens its return type; return the base method's result type or a subtype
+--- FAIL: TestInheritanceVoidBooleanOverrideReason (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.035s
+FAIL

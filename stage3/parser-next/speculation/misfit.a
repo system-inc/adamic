@@ -1,0 +1,4 @@
+function lookAhead(callback:()=>unknown):unknown {return callback();}
+function misfit():unknown {return 'wrong';}
+const result=lookAhead(misfit) as number;
+console.log(String(result));
