@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -506,7 +506,7 @@
+ 			declared := l.checker.GetTypeOfSymbol(field)
+ 			observed := l.checker.GetTypeAtLocation(node)
+ 			if !l.classAssignable(declared, observed) {
+-				return nil, &Refused{Where: l.program.Where(node), What: "a narrowed accessor reread, which can return a different value", Fix: "read the getter into a local once, then narrow and use that local"}
++				return nil, &Refused{Where: l.program.Where(node), What: "a getter reread after narrowing, which can return a different value", Fix: "read the getter into a local once, then narrow and use that local"}
+ 			}
+ 		}
+ 		of, err := l.typeOf(node)

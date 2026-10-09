@@ -1,0 +1,11 @@
+--- a/internal/lower/fresh.go
++++ b/internal/lower/fresh.go
+@@ -47,7 +47,7 @@
+ 			return write
+ 		}
+ 		if write.Kind != kind || (kind == fresh.WriteField && !f.l.cycleFieldMatches(holder, name, write.Name)) {
+-			continue
++			return nil
+ 		}
+ 		if write.Site == 0 {
+ 			// A write lowering didn't record: it may be into anything of its kind.
