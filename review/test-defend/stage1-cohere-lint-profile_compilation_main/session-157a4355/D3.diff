@@ -1,0 +1,13 @@
+diff --git a/internal/lower/locals.go b/internal/lower/locals.go
+index 41d91fa3..c162f3be 100644
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -229,7 +229,7 @@ func (l *lowering) constant(value string) int {
+ 	if l.strings == nil {
+ 		l.strings = map[string]int{}
+ 	}
+-	if index, isKnown := l.strings[value]; isKnown {
++	if index, isKnown := l.strings[value]; isKnown && false {
+ 		return index
+ 	}
+ 	l.strings[value] = len(l.result.Strings)

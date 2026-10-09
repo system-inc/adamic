@@ -1,0 +1,123 @@
+[
+  {
+    "mutant": "D1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilation.*|TestProduct_ProfileCompilation.*)$"
+    ],
+    "cache": "/tmp/defend-lint-profile/cache/D1",
+    "wall_seconds": 16.026314954000554,
+    "exit": 1,
+    "rows_failed": [
+      "TestProduct_ProfileCompilationCounted",
+      "TestProduct_ProfileCompilationScanner",
+      "TestProduct_ProfileCompilationLowered",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilation_000",
+      "TestProduct_ProfileCompilationJavaScript",
+      "TestProduct_ProfileCompilationC",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationPlantedFailure",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationBuildC",
+      "TestProduct_ProfileCompilationOracleOutputs",
+      "TestProfileCompilationBuildLower",
+      "TestProduct_ProfileCompilationProfiled"
+    ],
+    "rows_passed": [
+      "TestProfileCompilationUnion",
+      "TestProduct_ProfileCompilationOracle"
+    ],
+    "skips": [],
+    "binary_seconds": 5.121
+  },
+  {
+    "mutant": "D2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilation.*|TestProduct_ProfileCompilation.*)$"
+    ],
+    "cache": "/tmp/defend-lint-profile/cache/D2",
+    "wall_seconds": 91.53845718400044,
+    "exit": 0,
+    "rows_failed": [],
+    "rows_passed": [
+      "TestProfileCompilationUnion",
+      "TestProduct_ProfileCompilationLowered",
+      "TestProduct_ProfileCompilationOracle",
+      "TestProfileCompilationBuildNative",
+      "TestProduct_ProfileCompilationProfiled",
+      "TestProduct_ProfileCompilationCounted",
+      "TestProduct_ProfileCompilationScanner",
+      "TestProduct_ProfileCompilationJavaScript",
+      "TestProduct_ProfileCompilationOracleOutputs",
+      "TestProfileCompilation_Setup",
+      "TestProduct_ProfileCompilationC",
+      "TestProfileCompilation_000",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilationBuildC",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "skips": [],
+    "binary_seconds": 80.718
+  },
+  {
+    "mutant": "D3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilation.*|TestProduct_ProfileCompilation.*)$"
+    ],
+    "cache": "/tmp/defend-lint-profile/cache/D3",
+    "wall_seconds": 92.10617899600038,
+    "exit": 0,
+    "rows_failed": [],
+    "rows_passed": [
+      "TestProduct_ProfileCompilationLowered",
+      "TestProduct_ProfileCompilationJavaScript",
+      "TestProduct_ProfileCompilationOracle",
+      "TestProduct_ProfileCompilationC",
+      "TestProduct_ProfileCompilationScanner",
+      "TestProduct_ProfileCompilationCounted",
+      "TestProfileCompilationUnion",
+      "TestProduct_ProfileCompilationProfiled",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationBuildC",
+      "TestProfileCompilationBuildLower",
+      "TestProduct_ProfileCompilationOracleOutputs",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "skips": [],
+    "binary_seconds": 81.451
+  }
+]

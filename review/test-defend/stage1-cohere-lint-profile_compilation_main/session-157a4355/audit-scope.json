@@ -1,0 +1,30 @@
+{
+  "base": "16f436a16a8e3b9cd2343f449eb1b0b4577c135c",
+  "listed_functions": 15,
+  "grouped_rows": 13,
+  "matrix_rows": [
+    "TestFactoryHooks_Setup",
+    "TestProfileCompilation family",
+    "TestProfileCompilationBuildEmission family",
+    "TestNestedOutsideModuleCopy",
+    "TestProfileCompilationBuildLower",
+    "TestProfileCompilation_Setup",
+    "TestProfileCompilationBuildNative",
+    "TestProfileCompilationPlantedFailure",
+    "TestPositionIndexMutant",
+    "TestCommentFoldMutant",
+    "TestRegistrationMutant"
+  ],
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "missing": [],
+  "moved": [
+    "TestProfileCompilation_Setup",
+    "TestProfileCompilationBuildLower",
+    "TestProfileCompilationBuildC",
+    "TestProfileCompilationBuildJavaScript",
+    "TestProfileCompilationBuildNative",
+    "TestProfileCompilationPlantedFailure"
+  ],
+  "moved_to": "stage1/cohere/lint/lint_setup_clock_regression_test.go"
+}

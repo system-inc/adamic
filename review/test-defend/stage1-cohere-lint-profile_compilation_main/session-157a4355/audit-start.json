@@ -1,0 +1,29 @@
+{
+  "base": "16f436a16a8e3b9cd2343f449eb1b0b4577c135c",
+  "nproc": "5",
+  "setup_seconds": 0,
+  "env_source": "/workspace/adamic-tools/env.sh",
+  "npm": {
+    "command": [
+      "npm",
+      "ci",
+      "--prefix",
+      "stage3/api"
+    ],
+    "status": 0,
+    "wall": 0.5551708470011363
+  },
+  "list": {
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./stage1/cohere/lint/"
+    ],
+    "status": 0,
+    "wall": 7.5186735530005535
+  }
+}

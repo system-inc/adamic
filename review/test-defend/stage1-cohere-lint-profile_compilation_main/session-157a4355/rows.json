@@ -1,0 +1,69 @@
+[
+  {
+    "test": "TestProfileCompilationBuildLower",
+    "package": "stage1/cohere/lint",
+    "prior_verdict": "untrue",
+    "subsumed_by": [
+      "TestProduct_ProfileCompilationLowered"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/lower.go:22",
+        "change": "if len(files) != 1 { -> if len(files) == 1 {",
+        "rows_failed": [
+          "TestProduct_ProfileCompilationCounted",
+          "TestProduct_ProfileCompilationScanner",
+          "TestProduct_ProfileCompilationLowered",
+          "TestProfileCompilation_Setup",
+          "TestProfileCompilation_000",
+          "TestProduct_ProfileCompilationJavaScript",
+          "TestProduct_ProfileCompilationC",
+          "TestProfileCompilationBuildJavaScript",
+          "TestProfileCompilationPlantedFailure",
+          "TestProfileCompilationBuildNative",
+          "TestProfileCompilationBuildC",
+          "TestProduct_ProfileCompilationOracleOutputs",
+          "TestProfileCompilationBuildLower",
+          "TestProduct_ProfileCompilationProfiled"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/generic.go:14",
+        "change": "const maximumGenericDepth = 32 -> const maximumGenericDepth = 0",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/locals.go:232",
+        "change": "if index, isKnown := l.strings[value]; isKnown { -> if index, isKnown := l.strings[value]; isKnown && false {",
+        "rows_failed": []
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lint-profile/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestProfileCompilation.*|TestProduct_ProfileCompilation.*)$' > D1.log 2>&1; profile_compilation_main_test.go:303: build lint-profile-lowered: lower: stage 0 compiles a program from one entry file, got 1",
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_ProfileCompilationC",
+      "TestProduct_ProfileCompilationCounted",
+      "TestProduct_ProfileCompilationJavaScript",
+      "TestProduct_ProfileCompilationLowered",
+      "TestProduct_ProfileCompilationOracle",
+      "TestProduct_ProfileCompilationOracleOutputs",
+      "TestProduct_ProfileCompilationProfiled",
+      "TestProduct_ProfileCompilationScanner",
+      "TestProfileCompilationBuildC",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestProfileCompilationUnion",
+      "TestProfileCompilation_000",
+      "TestProfileCompilation_Setup"
+    ],
+    "current_finding": "Production D1 fails target and identical producer neighbor. D2 is an unreachable equivalent candidate for this driver, not evidence of guarding generic lowering. D3 changes reached work and all runtime agreement passes. No unique break was found; current evidence replaces no-caught-mutant untrue hint with bounded subsumption by identical producer.",
+    "name_assertion_finding": "Checks lowering/build callback completion. Does not inspect program.gob, validate its IR contents, or assert a timing ceiling. Build wall is only logged. No executor twin."
+  }
+]

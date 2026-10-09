@@ -1,0 +1,2 @@
+For each row TestProfileCompilationBuildLower and TestProduct_ProfileCompilationLowered, with a distinct fresh cache root:
+ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lint-profile/cache/coverage-{target,product} timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/load,./internal/lower,./internal/buildcache -coverprofile=/tmp/defend-lint-profile/{target,product}.cover ./stage1/cohere/lint/ -run '^ROW$' > coverage-ROW.log 2>&1

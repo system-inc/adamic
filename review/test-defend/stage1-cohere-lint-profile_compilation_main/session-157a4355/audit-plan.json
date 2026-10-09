@@ -1,0 +1,26 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 67,
+    "before": "const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 1;",
+    "after": "const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 2;",
+    "menu": "change constant"
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 137,
+    "before": "        const fixed = linter.fixed();\n",
+    "after": "",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 116,
+    "before": "        rules.visit(index, parent);\n",
+    "after": "",
+    "menu": "drop statement"
+  }
+]

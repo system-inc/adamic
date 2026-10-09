@@ -1,0 +1,16 @@
+{
+  "code_under_test": "Adamic checked-program lowering (Lower and reached lowering helpers) for stage1/cohere/lint/main.ts. Producer writes a gob IR product after lowering. Production compiler mutations only.",
+  "oracle": "Target: successful load, Lower, file creation and gob serialization propagated through buildcache.Product; self, no external expected-answer check. Runtime profile case additionally executes unchanged Go cohere and compares source Node, emitted JavaScript, scanner, profiled and counted answers.",
+  "coverage": "Fresh isolated build caches per test ensure Lower executes instead of cached fetch. -coverpkg=./internal/load,./internal/lower,./internal/buildcache. 3447 blocks covered identically by target and TestProduct_ProfileCompilationLowered.",
+  "semantic_difference": "Both call compilationLowered(t, compilationInputs(t)) with the same registry witnesses, source graph, flags and toolchain. The target uses deferred wall logging; product neighbor logs after completion. Neither asserts a cost threshold. A compile-time break is propagated to both. No input-history distinction was found.",
+  "matrix_rationale": "Original audit recorded a whole-package 90s timeout. Current list has 6760 functions. Use current 16 profile-compilation functions as bounded matrix; broader compiler callers and 22 added functions saved separately, outside uniqueness scope.",
+  "files_read": [
+    "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+    "stage1/cohere/lint/lint_setup_clock_products_test.go",
+    "stage1/cohere/lint/profile_compilation_main_test.go",
+    "stage1/cohere/lint/profile_compilation_ir_test.go",
+    "internal/lower/lower.go",
+    "internal/lower/locals.go",
+    "internal/lower/generic.go"
+  ]
+}

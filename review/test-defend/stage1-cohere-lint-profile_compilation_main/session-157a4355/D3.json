@@ -1,0 +1,40 @@
+{
+  "mutant": "D3",
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/lint/",
+    "-run",
+    "^(TestProfileCompilation.*|TestProduct_ProfileCompilation.*)$"
+  ],
+  "cache": "/tmp/defend-lint-profile/cache/D3",
+  "wall_seconds": 92.10617899600038,
+  "exit": 0,
+  "rows_failed": [],
+  "rows_passed": [
+    "TestProduct_ProfileCompilationLowered",
+    "TestProduct_ProfileCompilationJavaScript",
+    "TestProduct_ProfileCompilationOracle",
+    "TestProduct_ProfileCompilationC",
+    "TestProduct_ProfileCompilationScanner",
+    "TestProduct_ProfileCompilationCounted",
+    "TestProfileCompilationUnion",
+    "TestProduct_ProfileCompilationProfiled",
+    "TestProfileCompilationBuildNative",
+    "TestProfileCompilationBuildJavaScript",
+    "TestProfileCompilationBuildC",
+    "TestProfileCompilationBuildLower",
+    "TestProduct_ProfileCompilationOracleOutputs",
+    "TestProfileCompilation_Setup",
+    "TestProfileCompilation_000",
+    "TestProfileCompilationPlantedFailure"
+  ],
+  "skips": [],
+  "binary_seconds": 81.451
+}

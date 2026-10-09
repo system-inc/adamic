@@ -1,0 +1,29 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/lower/lower.go",
+    "before": "if len(files) != 1 {",
+    "after": "if len(files) == 1 {",
+    "menu": "flip condition",
+    "purpose": "Reject a valid single-entry compilation; establish whether completion errors are caught.",
+    "line": 22
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/lower/generic.go",
+    "before": "const maximumGenericDepth = 32",
+    "after": "const maximumGenericDepth = 0",
+    "menu": "change constant",
+    "purpose": "Reject generic instantiation in this lint driver; exercise deeper successful-lowering contract.",
+    "line": 14
+  },
+  {
+    "mutant": "D3",
+    "file": "internal/lower/generic.go",
+    "before": "if existing, isLowered := l.genericInstances[key]; isLowered {",
+    "after": "if existing, isLowered := l.genericInstances[key]; isLowered && l.genericDepth > 0 {",
+    "menu": "change condition",
+    "purpose": "Bypass top-level generic cache hits, repeat instantiation while retaining nested recursion cache protection; cost attempt.",
+    "line": 96
+  }
+]
