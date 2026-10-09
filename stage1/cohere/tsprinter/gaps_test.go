@@ -13,7 +13,6 @@ import (
 func TestCompilerGaps(t *testing.T) {
 	t.Parallel()
 	for _, item := range []struct{ name, reason, output string }{
-		{"prefixUpdateValue", "stage 0 can't lower a PrefixUnaryExpression on a number yet", "2\n"},
 		{"defaultSort", "Adamic 0.1 refuses sort without a comparator", "im\n"},
 	} {
 		t.Run(item.name, func(t *testing.T) {
@@ -36,6 +35,26 @@ func TestCompilerGaps(t *testing.T) {
 			}
 			t.Logf("Node %q; stage 0 %s", item.output, err)
 		})
+	}
+}
+
+// prefixUpdateValue.ts lowers on compiler/area-stack (views slice 1, Oct 8): a numeric
+// PrefixUnaryExpression whose value is read. Held to Node on native, the JavaScript backend and
+// the leak check. The port's separate decrement statement still stands; retiring it is cohere's.
+func TestClosedPrefixUpdateValueGap(t *testing.T) {
+	path, err := filepath.Abs("gaps/prefixUpdateValue.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	program := lowered(t, path)
+	native, binary := natively(t, program)
+	for _, result := range []run{onNode(t, path), native, onJavaScriptBackend(t, program)} {
+		if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "2\n" {
+			t.Fatalf("prefix update value: %+v", result)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }
 

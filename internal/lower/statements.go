@@ -29,7 +29,10 @@ func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
 func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	switch node.Kind {
 	case ast.KindModuleDeclaration:
-		return l.statements(namespaceStatements(node))
+		return l.namespaceBody(node)
+	case ast.KindDebuggerStatement:
+		// Preserve it for JavaScript; native builds have no attached debugger.
+		return []ir.Statement{ir.Debugger{}}, nil
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
@@ -205,6 +208,9 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		return []ir.Statement{returned}, nil
 	}
 	expression = ast.SkipParentheses(expression)
+	if statements, handled, err := l.namespaceReturnAssignment(expression); handled {
+		return statements, err
+	}
 	if expression.Kind == ast.KindBinaryExpression && expression.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
 		return l.returnAssignment(expression)
 	}

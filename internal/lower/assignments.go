@@ -20,7 +20,12 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		value, err := l.expression(target)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
 	}
-	if target.Kind == ast.KindPropertyAccessExpression {
+	if target.Kind == ast.KindPropertyAccessExpression && !l.namespaceMember(target) {
+		if !isCompound {
+			if body, handled, err := l.entriesRecordWrite(target, binary.Right); handled {
+				return body, err
+			}
+		}
 		if isCompound {
 			return l.updateProperty(node, target, operator, binary.Right)
 		}
@@ -41,7 +46,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return l.updateIndex(node, target, operator, binary.Right)
 	}
 	local, isLocal := l.local(target)
-	if !ast.IsIdentifier(target) || !isLocal {
+	if (!ast.IsIdentifier(target) && !l.namespaceMember(target)) || !isLocal {
 		return nil, l.notYet(target, "assigning to "+describe(target))
 	}
 	if l.result.Locals[local].NestedFunction != 0 {
@@ -67,7 +72,18 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 			return nil, err
 		}
 	}
-	return []ir.Statement{ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local)}}, nil
+	statements := l.namespaceReadyStatements(target, false)
+	if !isCompound && target.Kind == ast.KindPropertyAccessExpression && l.namespaceMember(target) {
+		// A simple property assignment evaluates its RHS before PutValue discovers
+		// an undefined receiver. Earlier containers in a nested chain are reads.
+		statements = l.namespaceReadyStatements(target.Expression(), false)
+		temporary := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "namespace_assignment", Type: value.Type(), Function: l.functionIndex})
+		statements = append(statements, ir.Declare{Local: temporary, Value: value})
+		statements = append(statements, l.namespaceReadyStatements(target, true)...)
+		value = ir.Read{Local: temporary, Of: value.Type()}
+	}
+	return append(statements, ir.Assign{Local: local, Value: fit(value, l.result.Locals[local].Type), Checked: l.checked(local) && !l.result.Locals[local].NamespaceState}), nil
 }
 
 // tupleField reads element index of the tuple held in the local held, as the tuple's element type
@@ -157,11 +173,57 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return nil, l.notYet(node, describe(node)+" as a statement")
 	}
 	operand = ast.SkipParentheses(operand)
+	if operand.Kind == ast.KindNonNullExpression {
+		assertion := operand
+		target := ast.SkipParentheses(assertion.AsNonNullExpression().Expression)
+		step := ir.Add
+		if operator == ast.KindMinusMinusToken {
+			step = ir.Subtract
+		}
+		if target.Kind != ast.KindPropertyAccessExpression {
+			return nil, l.notYet(target, "incrementing a non-null target other than a stored numeric field")
+		}
+		object, err := l.expression(target.AsPropertyAccessExpression().Expression)
+		if err != nil {
+			return nil, err
+		}
+		if object.Type() != ir.Object {
+			return nil, l.notYet(target, "incrementing a non-null field of a "+typeName(object.Type()))
+		}
+		field := l.checker.GetSymbolAtLocation(target.Name())
+		if field == nil || accessorSymbol(field) {
+			return nil, l.notYet(target, "incrementing a non-null accessor field")
+		}
+		of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+		if !known || (of != ir.Number && of != ir.MaybeNumber) {
+			return nil, l.notYet(target, "incrementing a non-null field without numeric storage")
+		}
+		// Hold the receiver once. Check the stored value before updating the slot.
+		held := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "increment_object", Type: ir.Object, Function: l.functionIndex})
+		l.noteLocal(held, l.concrete(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)), target)
+		object = l.privateStaticReceiver(target.Name(), object, false)
+		read := ir.Read{Local: held, Of: ir.Object}
+		name := l.fieldName(target.Name())
+		current := l.readObjectField(target, ir.Property{Object: read, Name: name, Of: of, Class: l.classOf(target)})
+		current, err = l.nonNullValue(assertion, current)
+		if err != nil {
+			return nil, err
+		}
+		if current.Type() != ir.Number {
+			return nil, l.notYet(target, "incrementing a non-null field whose checked value is not a number")
+		}
+		updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}
+		return []ir.Statement{ir.Block{Body: []ir.Statement{
+			ir.Declare{Local: held, Value: object},
+			ir.SetProperty{Object: read, Name: name, Value: fit(updated, of), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)},
+		}}}, nil
+	}
 	if l.enumNeverIdentity(operand, map[*ast.Node]bool{}) != nil {
 		value, err := l.expression(operand)
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
 	}
-	if operand.Kind == ast.KindPropertyAccessExpression {
+	if operand.Kind == ast.KindPropertyAccessExpression && !l.namespaceMember(operand) {
 		step := ast.KindPlusToken
 		if operator == ast.KindMinusMinusToken {
 			step = ast.KindMinusToken
@@ -169,7 +231,7 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		return l.updateProperty(node, operand, step, nil)
 	}
 	local, isLocal := l.local(operand)
-	if !ast.IsIdentifier(operand) || !isLocal {
+	if (!ast.IsIdentifier(operand) && !l.namespaceMember(operand)) || !isLocal {
 		return nil, l.notYet(operand, "incrementing "+describe(operand))
 	}
 	step := ir.Add
@@ -177,5 +239,5 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
 		step = ir.Subtract
 	}
 	current := ir.Read{Local: local, Of: ir.Number, Checked: l.checked(local)}
-	return []ir.Statement{ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}}, nil
+	return append(l.namespaceReadyStatements(operand, false), ir.Assign{Local: local, Value: ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}, Checked: l.checked(local)}), nil
 }

@@ -1,0 +1,34 @@
+// Declaration shape only: external types, bodies and enum expressions are normalized.
+function shapeInitialize():number{return 1;}
+interface BuilderState {}
+export namespace BuilderState {
+export interface FileInfo {}
+export interface ReadonlyManyToManyPathMap {}
+export interface ManyToManyPathMap {}
+export function createManyToManyPathMap(): number {return 0;}
+function addToMultimap<K,V>(): number {return 0;}
+function deleteFromMultimap<K,V>(): number {return 0;}
+function getReferencedFilesFromImportedModuleSymbol(): number {return 0;}
+function getReferencedFilesFromImportLiteral(): number {return 0;}
+function getReferencedFileFromFileName(): number {return 0;}
+function getReferencedFiles(): number {return 0;}
+export function canReuseOldState(): number {return 0;}
+export function createReferencedMap(): number {return 0;}
+export function create(): number {return 0;}
+export function releaseCache(): number {return 0;}
+export function getFilesAffectedBy(): number {return 0;}
+export function getFilesAffectedByWithOldState(): number {return 0;}
+export function updateSignatureOfFile(): number {return 0;}
+export function computeDtsSignature(): number {return 0;}
+export function updateShapeSignature(): number {return 0;}
+export function getAllDependencies(): number {return 0;}
+function getAllFileNames(): number {return 0;}
+export function getReferencedByPaths(): number {return 0;}
+function containsOnlyAmbientModules(): number {return 0;}
+function containsGlobalScopeAugmentation(): number {return 0;}
+function isFileAffectingGlobalScope(): number {return 0;}
+export function getAllFilesExcludingDefaultLibraryFile(): number {return 0;}
+function getFilesAffectedByUpdatedShapeWhenNonModuleEmit(): number {return 0;}
+function getFilesAffectedByUpdatedShapeWhenModuleEmit(): number {return 0;}
+}
+console.log("shape:BuilderState");

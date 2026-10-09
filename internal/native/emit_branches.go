@@ -139,7 +139,12 @@ func unwrap(expression string) string {
 func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	value := e.value(coalesce.Value)
 	present, unwrapped := value+" != NULL", value
-	if coalesce.Value.Type() == ir.Union {
+	_, undefined := coalesce.Value.(ir.Undefined)
+	_, null := coalesce.Value.(ir.Null)
+	if undefined || null {
+		// Literal absence is known without comparing sentinel addresses in C.
+		present = "false"
+	} else if coalesce.Value.Type() == ir.Union {
 		present += " && " + value + " != &adamic_null"
 	}
 	if coalesce.Value.Type().IsMaybe() {
