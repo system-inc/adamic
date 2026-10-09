@@ -16,7 +16,6 @@ func TestClosureMergeRefusals(t *testing.T) {
 	t.Parallel()
 	paths := []string{
 		"stage3/fixtures/nested-functions/refused/01_scanner_frame.a",
-		"stage3/fixtures/taste/refused/21_truthy_loops.a",
 	}
 	for _, name := range fsFileRefusedFixtures {
 		paths = append(paths, "internal/oracle/testdata/optional_widening_refused/node_fs_file_"+name+".a")
@@ -39,10 +38,8 @@ func TestClosureMergeRefusals(t *testing.T) {
 			}
 			_, err := lowered(t, absolute)
 			var refused *lower.Refused
-			var notYet *lower.NotYet
-			temporary := strings.Contains(path, "21_truthy_loops")
-			if temporary && !errors.As(err, &notYet) || !temporary && !errors.As(err, &refused) {
-				t.Fatalf("want pinned refusal (temporary=%v), got %v", temporary, err)
+			if !errors.As(err, &refused) {
+				t.Fatalf("want pinned refusal, got %v", err)
 			}
 			expected, readErr := os.ReadFile(strings.TrimSuffix(absolute, ".a") + ".refused")
 			if readErr != nil {

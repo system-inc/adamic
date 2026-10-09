@@ -478,11 +478,11 @@ func (e *emitter) statement(at *ir.Statement) {
 		e.line("panic(%s);", e.value(statement.Message))
 	case ir.SetProperty:
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
-			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), statement.Value.Type())
+			e.line("adamicViewWrite(%s, %s, %s, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), viewFieldRepresentation(statement.Value))
 			break
 		}
 		if statement.Define || statement.Uninitialized {
-			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized, statement.Value.Type())
+			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized, viewFieldRepresentation(statement.Value))
 		} else {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
@@ -874,7 +874,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		if len(e.program.CheckedFields) != 0 {
 			types := []string{}
 			for _, field := range expression.Fields {
-				types = append(types, quote(field.Name)+": "+fmt.Sprint(field.Value.Type()))
+				types = append(types, quote(field.Name)+": "+fmt.Sprint(viewFieldRepresentation(field.Value)))
 			}
 			parentTypes := ""
 			if spreadValue != "" {
@@ -888,11 +888,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		return object
 	case ir.Property:
 		if expression.View != "" {
-			expected := expression.ViewType
-			if expected == "" {
-				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[expression.Of]
-			}
-			return fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s])", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.Of, quote(expected), e.values(expression.ViewAllowed))
+			return e.checkedViewField(expression)
 		}
 		if expression.Readiness != "" {
 			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional, expression.Absent)
