@@ -40,13 +40,9 @@ func (l *lowering) libraryArrayFindLast(node *ast.Node, array ir.Expression, ele
 		return l.arrayVisit(node, array, element, name)
 	}
 	if element.IsReference() && len(parameters) > 0 && !l.includesUndefined(l.checker.GetTypeOfSymbol(parameters[0])) {
-		literal := ast.SkipParentheses(written)
-		if literal.Kind != ast.KindArrowFunction && literal.Kind != ast.KindFunctionExpression {
-			return nil, true, l.notYet(node, name+" with a nonliteral callback whose element excludes undefined; compiler parameter provenance is not represented")
-		}
-		if parameters := literal.Parameters(); len(parameters) > 0 && !ast.IsIdentifier(parameters[0].Name()) {
-			return nil, true, l.notYet(node, name+" with a destructured element callback; compiler missing-parameter provenance is not represented")
-		}
+		// Case 2 uses the compiler's search contract and its named exit-70 check
+		// before the callback call. Do not pass a missing reference as T.
+		return l.arrayVisit(node, array, element, name)
 	}
 	callback, err := l.expression(written)
 	if err != nil {
@@ -173,47 +169,4 @@ func (l *lowering) libraryArrayFindLastCannotShrink(node *ast.Node) bool {
 	}
 	node.ForEachChild(visit)
 	return safe
-}
-
-// The library's T callback annotation does not describe Get on a removed index.
-// Reference parameters can already hold undefined. Feed that provenance into
-// ordinary narrowed-read checks and string spelling, rather than forging a string.
-func (l *lowering) libraryArrayFindLastParameter(node *ast.Node) bool {
-	if !ast.IsIdentifier(node) {
-		return false
-	}
-	symbol := l.checker.GetSymbolAtLocation(node)
-	if symbol == nil || len(symbol.Declarations) != 1 {
-		return false
-	}
-	parameter := symbol.Declarations[0]
-	if parameter.Kind != ast.KindParameter {
-		return false
-	}
-	callback := parameter.Parent
-	if callback == nil || (callback.Kind != ast.KindArrowFunction && callback.Kind != ast.KindFunctionExpression) {
-		return false
-	}
-	parameters := callback.Parameters()
-	if len(parameters) == 0 || parameters[0] != parameter {
-		return false
-	}
-	for callback.Parent != nil && callback.Parent.Kind == ast.KindParenthesizedExpression {
-		callback = callback.Parent
-	}
-	call := callback.Parent
-	if call == nil || call.Kind != ast.KindCallExpression {
-		return false
-	}
-	arguments := call.AsCallExpression().Arguments.Nodes
-	if len(arguments) != 1 || ast.SkipParentheses(arguments[0]) != ast.SkipParentheses(callback) {
-		return false
-	}
-	callee := ast.SkipParentheses(call.AsCallExpression().Expression)
-	if callee.Kind != ast.KindPropertyAccessExpression || !l.libraryMember(callee) {
-		return false
-	}
-	name := callee.Name().Text()
-	of, known := l.representation(l.checker.GetTypeAtLocation(callee.AsPropertyAccessExpression().Expression))
-	return known && of == ir.Array && (name == "findLast" || name == "findLastIndex")
 }

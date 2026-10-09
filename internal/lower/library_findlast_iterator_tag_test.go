@@ -52,14 +52,16 @@ func TestLibraryIteratorTagBoundaries(t *testing.T) {
 }
 
 func TestLibraryFindLastReferenceTagBoundaries(t *testing.T) {
+	_, err := lowerSource(t, `const a:(string|null)[]=["a",null]; a.findLastIndex((n:string|null):boolean=>{a.splice(0,2);console.log(n ?? "null");return false;});`)
+	if err == nil || !strings.Contains(err.Error(), "compiler") {
+		t.Fatalf("want compiler null/missing-payload refusal, got %v", err)
+	}
 	for _, source := range []string{
-		`const a:(string|null)[]=["a",null]; a.findLastIndex((n:string|null):boolean=>{a.splice(0,2);console.log(n ?? "null");return false;});`,
 		`const a=[{n:1}]; a.findLastIndex(({n}:{n:number}):boolean=>{a.splice(0,1);return n===1;});`,
 		`const a=["a"]; function callback(n:string):boolean {a.splice(0,1);return false;} a.findLastIndex(callback);`,
 	} {
-		_, err := lowerSource(t, source)
-		if err == nil || !strings.Contains(err.Error(), "compiler") {
-			t.Fatalf("want compiler missing-payload refusal, got %v", err)
+		if _, err := lowerSource(t, source); err != nil {
+			t.Fatalf("want compiler-guarded callback, got %v", err)
 		}
 	}
 }

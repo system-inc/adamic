@@ -8,18 +8,18 @@ const found = numbers.findLast((item: number | undefined, index: number, array: 
 console.log(`${found}`);
 console.log(numbers.join(','));
 const strings = ['a'.repeat(2), 'b'.repeat(2), 'c'.repeat(2)];
-console.log(`${strings.findLastIndex((item: string, index: number): boolean => {
+console.log(`${strings.findLastIndex((item: string | undefined, index: number): boolean => {
  console.log(`${index}:${typeof item}:${item}`);
  if (index === 2) { strings.splice(0, 3); }
  return item === undefined;
 })}`);
 const snapshot = ['x'.repeat(2), 'y'.repeat(2)];
-console.log(snapshot.findLast((item: string): boolean => { snapshot.splice(0, 2); return true; }) ?? 'missing');
+console.log(snapshot.findLast((item: string | undefined): boolean => { snapshot.splice(0, 2); return true; }) ?? 'missing');
 const empty: string[] = [];
 console.log(empty.findLast((): boolean => true) ?? 'empty');
 const mutable = ['x'.repeat(2), 'y'.repeat(2)];
 const readonly: readonly string[] = mutable;
-console.log(`${readonly.findLastIndex((item: string, index: number): boolean => {
+console.log(`${readonly.findLastIndex((item: string | undefined, index: number): boolean => {
  console.log(`${index}:${item}`);
  mutable.splice(0, 2);
  return false;

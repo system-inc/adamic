@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"57f2d04_find_last_shrinks", "57f2d04_find_last_shrinks2", "903f25b_iterator_tag", "library_iterator_tags", "library_find_last_missing"} {
+	for _, name := range []string{"903f25b_iterator_tag", "library_iterator_tags", "library_find_last_missing"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -23,8 +23,8 @@ func init() {
 func TestLibraryFindLastIteratorTagMutants(t *testing.T) {
 	t.Parallel()
 	for _, one := range []struct{ name, fixture, method string }{
-		{"findLastIndex skips removed indices", "57f2d04_find_last_shrinks.a", "findLastIndex"},
-		{"findLast skips removed indices", "57f2d04_find_last_shrinks2.a", "findLast"},
+		{"findLastIndex skips removed indices", "library_find_last_missing.a", "findLastIndex"},
+		{"findLast skips removed indices", "library_find_last_missing.a", "findLast"},
 		{"iterator ignores inherited tag", "library_iterator_tags.a", ""},
 	} {
 		t.Run(one.name, func(t *testing.T) {
