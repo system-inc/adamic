@@ -140,10 +140,6 @@ func prepareCSSNumbersSetup(t *testing.T) {
 			t.Fatalf("enumerated %d shards, declared %d", len(units), testCSSNumbersShards)
 		}
 		verifyNumbersUnion(t, corpus, units)
-		root, err := filepath.Abs(repository)
-		if err != nil {
-			t.Fatal(err)
-		}
 		dir := numbersTopTempDir(t)
 		cases := filepath.Join(dir, "cases.txt")
 		write(t, cases, numbersInput(corpus.texts))
@@ -155,41 +151,18 @@ func prepareCSSNumbersSetup(t *testing.T) {
 			}
 			write(t, keep+".files.json", manifest)
 		}
-		bridge, _ := filepath.Abs("testdata/bridge.go")
-		driver, _ := filepath.Abs("testdata/go_driver.go")
-		cohere := filepath.Join(root, "cohere")
-		oracleDir := numbersGoProduct(t, "Go oracle", func(dir string) error {
-			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-				filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
-				filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
-			}})
-			if err != nil {
-				return err
-			}
-			overlayPath := filepath.Join(dir, "overlay.json")
-			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-				return err
-			}
-			command := numbersCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
-			command.Dir = cohere
-			if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-				return fmt.Errorf("Go bridge: %w\n%s", err, output)
-			}
-			return nil
-		})
-		goBinary := filepath.Join(oracleDir, "go-printer")
+		goBinary := numbersPreparedOracle(t)
 		main, _ := filepath.Abs("main.ts")
-		build := buildNumbersProgram(t, "port", main)
-		sanitized := buildNumbersNative(t, "sanitized", build, true)
-		fast := buildNumbersNative(t, "native-fast", build, false)
+		build := numbersPreparedProgram(t, -1)
+		sanitized := numbersPreparedNative(t, -1, true)
+		fast := numbersPreparedNative(t, -1, false)
 		// macOS's leaks tool needs the unsanitized product; Linux reuses sanitized.
 		mutants := make(map[string]numbersProgram)
 		mutantBinaries := make(map[string]string)
-		for _, mutation := range numbersMutations {
-			mutated := prepareNumbersMutant(t, mutation)
-			product := buildNumbersProgram(t, mutation.name, mutated)
+		for index, mutation := range numbersMutations {
+			product := numbersPreparedProgram(t, index)
 			mutants[mutation.name] = product
-			mutantBinaries[mutation.name] = buildNumbersNative(t, mutation.name+"-sanitized", product, true)
+			mutantBinaries[mutation.name] = numbersPreparedNative(t, index, true)
 		}
 		library := os.Getenv("ADAMIC_CSSNUMBERS_LIBRARY")
 		script, _ := filepath.Abs("testdata/library.mjs")
@@ -201,7 +174,7 @@ func prepareCSSNumbersSetup(t *testing.T) {
 		if library == "" {
 			t.Log("external library not checked: set ADAMIC_CSSNUMBERS_LIBRARY")
 		}
-		fullWant := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts), goIdentity)
+		fullWant := numbersSetupOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts), goIdentity)
 		clean(t, "Go", fullWant)
 		numbersTopSetup.units = units
 		numbersTopSetup.run = func(t *testing.T, unit numbersUnit) {
@@ -316,8 +289,10 @@ func prepareCSSNumbersSetup(t *testing.T) {
 
 func runCSSNumbersShard(t *testing.T, ordinal int) {
 	t.Helper()
+	// Fetch shared products once per process before starting this shard's clock.
+	prepareCSSNumbersSetup(t)
 	if numbersTopSetup.run == nil {
-		t.Fatal("TestCSSNumbers_Setup must finish before a shard starts")
+		t.Fatal("shared setup did not complete")
 	}
 	timer := time.AfterFunc(90*time.Second, func() { panic(fmt.Sprintf("cooked TestCSSNumbers_%03d: case deadline exceeded 90s", ordinal)) })
 	defer timer.Stop()
@@ -328,7 +303,7 @@ func runCSSNumbersShard(t *testing.T, ordinal int) {
 		}
 	}()
 	if numbersTopSetup.run == nil {
-		t.Fatal("TestCSSNumbers_Setup must finish before a shard starts")
+		t.Fatal("shared setup did not complete")
 	}
 	selected := selectedNumbersUnits(t, numbersTopSetup.units)
 	for _, unit := range selected {
@@ -361,4 +336,35 @@ func equal(t *testing.T, name string, a, b []byte) {
 		}
 		t.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
 	}
+}
+
+func numbersPreparedOracle(t *testing.T) string {
+	t.Helper()
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	bridge, _ := filepath.Abs("testdata/bridge.go")
+	driver, _ := filepath.Abs("testdata/go_driver.go")
+	cohere := filepath.Join(root, "cohere")
+	oracleDir := numbersGoProduct(t, "Go oracle", func(dir string) error {
+		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+			filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
+			filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
+		}})
+		if err != nil {
+			return err
+		}
+		overlayPath := filepath.Join(dir, "overlay.json")
+		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+			return err
+		}
+		command := numbersSetupCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
+		command.Dir = cohere
+		if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
+			return fmt.Errorf("Go bridge: %w\n%s", err, output)
+		}
+		return nil
+	})
+	return filepath.Join(oracleDir, "go-printer")
 }
