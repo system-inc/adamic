@@ -1,0 +1,84 @@
+[
+  {
+    "id": "baseline-final",
+    "batch": 4,
+    "rows": [
+      "TestProduct_YamlScalarsLowered",
+      "TestProduct_YamlScalarsNative",
+      "TestProduct_YamlScalarsGo",
+      "TestScalarsMatchGoUnion",
+      "TestScalarsMatchGoPlantedFailure",
+      "TestScalarsMatchGo_000",
+      "TestScalarsMatchGo_001",
+      "TestScalarsMatchGo_002",
+      "TestScalarsMatchGo_003",
+      "TestScalarsMatchGo_004",
+      "TestScalarsMatchGo_005",
+      "TestScalarsMatchGo_006",
+      "TestScalarsMatchGo_007",
+      "TestSchemaMatchesGo",
+      "TestSchemaMutants",
+      "TestSpeedCostProbes",
+      "TestWidthsMatchGo"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YamlScalarsLowered|TestProduct_YamlScalarsNative|TestProduct_YamlScalarsGo|TestScalarsMatchGoUnion|TestScalarsMatchGoPlantedFailure|TestScalarsMatchGo_000|TestScalarsMatchGo_001|TestScalarsMatchGo_002|TestScalarsMatchGo_003|TestScalarsMatchGo_004|TestScalarsMatchGo_005|TestScalarsMatchGo_006|TestScalarsMatchGo_007|TestSchemaMatchesGo|TestSchemaMutants|TestSpeedCostProbes|TestWidthsMatchGo)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 30.260517951999645
+  },
+  {
+    "id": "baseline-final",
+    "batch": 5,
+    "rows": [
+      "TestUnistMatchesGo"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestUnistMatchesGo)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 29.52257736199681
+  },
+  {
+    "id": "baseline-final",
+    "batch": 6,
+    "rows": [
+      "TestUnistMutants"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestUnistMutants)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 45.01842600799864
+  }
+]

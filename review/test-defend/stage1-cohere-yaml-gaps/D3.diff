@@ -1,0 +1,10 @@
+--- a/stage1/cohere/yaml/lexer.ts
++++ b/stage1/cohere/yaml/lexer.ts
+@@ -283,7 +283,6 @@
+             this.pos += piece.length;
+             return piece.length;
+         }
+-        if(allowEmpty) this.tokens.push('');
+         return 0;
+     }
+     pushTag(): number {

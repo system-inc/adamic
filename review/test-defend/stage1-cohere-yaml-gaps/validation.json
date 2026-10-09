@@ -1,0 +1,13 @@
+{
+  "base": "6eef5ae586af0354d3032d36535e54cefb2da43a",
+  "audit_commit": "ffc8ea13689004badf8f2bbdb9dd7b54ee0f12d2",
+  "nproc": 5,
+  "warm_setup_seconds": 0,
+  "baseline_all_72_passed": true,
+  "D1_D2_go_vet": "passed; mutate.py checks exit status before matrix",
+  "D3_D4_native_builds": "Sanitized native lexer, CST and property programs built and ran before exact-output disagreements",
+  "D5_native_builds": "Native CST and lexer executables built and began execution; each binary replay exhausted 90s. No semantic kill claimed.",
+  "all_diffs_apply_check": "passed on restored starting tree",
+  "source_restored": true,
+  "completed_at": "2026-10-09T15:15:29.170902+00:00"
+}

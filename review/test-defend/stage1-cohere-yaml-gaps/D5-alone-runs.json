@@ -1,0 +1,21 @@
+[
+  {
+    "row": "TestLexerMatchesGo",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestLexerMatchesGo$"
+    ],
+    "exit": 1,
+    "wall_seconds": 98.21217908300241,
+    "log": "D5-alone-TestLexerMatchesGo.log"
+  }
+]

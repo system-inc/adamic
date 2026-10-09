@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/lexer.ts
++++ b/stage1/cohere/yaml/lexer.ts
+@@ -362,7 +362,7 @@
+             index += 1;
+             const unit = codeUnit(this.buffer, index);
+             if(unit === 43) this.blockScalarKeep = true;
+-            else if(unit > 48 && unit <= 57) this.blockScalarIndent = unit - 49;
++            else if(unit > 48 && unit <= 57) this.blockScalarIndent = unit - 48;
+             else if(unit !== 45) break;
+         }
+         return this.pushUntil(true);

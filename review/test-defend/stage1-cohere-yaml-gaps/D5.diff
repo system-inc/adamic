@@ -1,0 +1,10 @@
+--- a/stage1/cohere/yaml/lexer.ts
++++ b/stage1/cohere/yaml/lexer.ts
+@@ -157,7 +157,6 @@
+         }
+         this.lineAvailable = end !== -1 || this.atEnd;
+         if(end === -1) return this.atEnd ? this.buffer.slice(this.pos) : '';
+-        if(character(this.buffer, end - 1) === '\r') end -= 1;
+         return this.buffer.slice(this.pos, end);
+     }
+     hasChars(count: number): boolean {
