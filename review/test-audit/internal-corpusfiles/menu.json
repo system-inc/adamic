@@ -1,0 +1,107 @@
+[
+  {
+    "id": "M01",
+    "line": 68,
+    "old": "strings.TrimSuffix(string(data), \"\\x00\")",
+    "new": "string(data)",
+    "change": "drop trailing NUL trim"
+  },
+  {
+    "id": "M02",
+    "line": 73,
+    "old": "strings.ToLower(path.Base(name))",
+    "new": "path.Base(name)",
+    "change": "drop filename case folding"
+  },
+  {
+    "id": "M03",
+    "line": 74,
+    "old": "return true",
+    "new": "return false",
+    "change": "change matching result constant"
+  },
+  {
+    "id": "M04",
+    "line": 98,
+    "old": "actual != pin",
+    "new": "actual == pin",
+    "change": "flip pin comparison"
+  },
+  {
+    "id": "M05",
+    "line": 107,
+    "old": "err != nil {\n\t\t\treturn nil, actual, nil, fmt.Errorf(\"%s: missing named root",
+    "new": "false && err != nil {\n\t\t\treturn nil, actual, nil, fmt.Errorf(\"%s: missing named root",
+    "change": "disable missing-root guard"
+  },
+  {
+    "id": "M06",
+    "line": 111,
+    "old": "root == \".\"",
+    "new": "root != \".\"",
+    "change": "flip whole-repository pathspec condition"
+  },
+  {
+    "id": "M07",
+    "line": 119,
+    "old": "len(status) != 0",
+    "new": "false && len(status) != 0",
+    "change": "disable upstream status guard"
+  },
+  {
+    "id": "M08",
+    "line": 141,
+    "old": "len(dirty) != 0",
+    "new": "false && len(dirty) != 0",
+    "change": "disable dirty-file guard"
+  },
+  {
+    "id": "M09",
+    "line": 163,
+    "old": "len(missing) != 0",
+    "new": "false && len(missing) != 0",
+    "change": "disable sparse missing-file guard"
+  },
+  {
+    "id": "M10",
+    "line": 166,
+    "old": "counts[i] == 0",
+    "new": "false && counts[i] == 0",
+    "change": "disable empty-root guard"
+  },
+  {
+    "id": "M11",
+    "line": 174,
+    "old": "sort.Strings(files)",
+    "new": "sort.Sort(sort.Reverse(sort.StringSlice(files)))",
+    "change": "change sorting option"
+  },
+  {
+    "id": "M12",
+    "line": 160,
+    "old": "selected[absolute] = true",
+    "new": "selected[absolute] = false",
+    "change": "change map value constant"
+  },
+  {
+    "id": "M13",
+    "line": 161,
+    "old": "counts[i]++",
+    "new": "counts[i] += 2",
+    "change": "off-by-one count increment"
+  },
+  {
+    "id": "M14",
+    "line": 97,
+    "old": "strings.TrimSpace(string(head))",
+    "new": "string(head)",
+    "change": "drop HEAD whitespace trim"
+  },
+  {
+    "id": "M15",
+    "line": 73,
+    "old": "path.Match(strings.ToLower(pattern), strings.ToLower(path.Base(name)))",
+    "new": "path.Match(strings.ToLower(path.Base(name)), strings.ToLower(pattern))",
+    "change": "swap glob arguments"
+  }
+]

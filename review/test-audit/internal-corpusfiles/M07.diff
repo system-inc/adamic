@@ -1,0 +1,11 @@
+--- a/internal/corpusfiles/files.go
++++ b/internal/corpusfiles/files.go
+@@ -116,7 +116,7 @@
+ 			if err != nil {
+ 				return nil, actual, nil, err
+ 			}
+-			if len(status) != 0 {
++			if false && len(status) != 0 {
+ 				return nil, actual, nil, fmt.Errorf("%s root %s: dirty, untracked or ignored upstream paths: %q", checkout, root, names(status))
+ 			}
+ 		}

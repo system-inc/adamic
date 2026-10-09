@@ -1,0 +1,213 @@
+[
+  {
+    "test": "TestConvertedPackageContracts",
+    "package": "internal/corpusfiles",
+    "file": "internal/corpusfiles/files_test.go:61",
+    "seconds": 0.213,
+    "oracle": "Git runs establish actual tracked, dirty, ignored, pinned and sparse states; self-written counts, order, equality and diagnostic substring assertions decide correctness. Diagnostic substrings are weaker than full text.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M03",
+      "M04",
+      "M06",
+      "M07",
+      "M08",
+      "M14",
+      "M15"
+    ],
+    "unique_kills": [
+      "M07",
+      "M08"
+    ],
+    "last_proven_fail": "M08 files_test.go:95: planted corpus fault survived",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "PRepository",
+      "PUpstream",
+      "PSelect"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestConvertedPackageContracts",
+      "TestMissingAndEmptyRoots",
+      "TestSparseCheckoutCannotShrinkCorpus",
+      "TestDeterministicRootsPatternsAndMissingGit",
+      "TestProvisionedPrettierFixtures"
+    ],
+    "evidence": "GOWORK=off ADAMIC_CSS_FIXTURES=/tmp/u017-prettier ADAMIC_MUTANT=M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/corpusfiles/ -run . > M08.log 2>&1; files_test.go:95: planted corpus fault survived",
+    "members": [
+      "scanner",
+      "scanner/profile-runtime",
+      "typeaware",
+      "markdowninline",
+      "yaml",
+      "cssstrings",
+      "cssnumbers",
+      "graphql/printer",
+      "markdownblocks/default",
+      "markdownblocks/census",
+      "selector"
+    ],
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestMissingAndEmptyRoots",
+    "package": "internal/corpusfiles",
+    "file": "internal/corpusfiles/files_test.go:112",
+    "seconds": 0.026,
+    "oracle": "Git runs establish actual tracked, dirty, ignored, pinned and sparse states; self-written counts, order, equality and diagnostic substring assertions decide correctness. Diagnostic substrings are weaker than full text.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M04",
+      "M05",
+      "M06",
+      "M10",
+      "M14"
+    ],
+    "unique_kills": [
+      "M05",
+      "M10"
+    ],
+    "last_proven_fail": "M10 files_test.go:117: planted corpus fault survived",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "PSelect"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestConvertedPackageContracts",
+      "TestMissingAndEmptyRoots",
+      "TestSparseCheckoutCannotShrinkCorpus",
+      "TestDeterministicRootsPatternsAndMissingGit",
+      "TestProvisionedPrettierFixtures"
+    ],
+    "evidence": "GOWORK=off ADAMIC_CSS_FIXTURES=/tmp/u017-prettier ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/corpusfiles/ -run . > M10.log 2>&1; files_test.go:117: planted corpus fault survived"
+  },
+  {
+    "test": "TestSparseCheckoutCannotShrinkCorpus",
+    "package": "internal/corpusfiles",
+    "file": "internal/corpusfiles/files_test.go:121",
+    "seconds": 0.032,
+    "oracle": "Git runs establish actual tracked, dirty, ignored, pinned and sparse states; self-written counts, order, equality and diagnostic substring assertions decide correctness. Diagnostic substrings are weaker than full text.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M03",
+      "M04",
+      "M09",
+      "M14",
+      "M15"
+    ],
+    "unique_kills": [
+      "M09"
+    ],
+    "last_proven_fail": "M09 files_test.go:143: planted corpus fault survived",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "PSelect"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestConvertedPackageContracts",
+      "TestMissingAndEmptyRoots",
+      "TestSparseCheckoutCannotShrinkCorpus",
+      "TestDeterministicRootsPatternsAndMissingGit",
+      "TestProvisionedPrettierFixtures"
+    ],
+    "evidence": "GOWORK=off ADAMIC_CSS_FIXTURES=/tmp/u017-prettier ADAMIC_MUTANT=M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/corpusfiles/ -run . > M09.log 2>&1; files_test.go:143: planted corpus fault survived"
+  },
+  {
+    "test": "TestDeterministicRootsPatternsAndMissingGit",
+    "package": "internal/corpusfiles",
+    "file": "internal/corpusfiles/files_test.go:147",
+    "seconds": 0.036,
+    "oracle": "Git runs establish actual tracked, dirty, ignored, pinned and sparse states; self-written counts, order, equality and diagnostic substring assertions decide correctness. Diagnostic substrings are weaker than full text.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M02",
+      "M03",
+      "M11",
+      "M15"
+    ],
+    "unique_kills": [
+      "M02",
+      "M11"
+    ],
+    "last_proven_fail": "M11 files_test.go:156: selection: [/tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/z.TS /tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/tracked file.ts /tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/a.ts] / [/tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/z.TS /tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/tracked file.ts /tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/a.ts]",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "PRepository",
+      "PSelect"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestConvertedPackageContracts",
+      "TestMissingAndEmptyRoots",
+      "TestSparseCheckoutCannotShrinkCorpus",
+      "TestDeterministicRootsPatternsAndMissingGit",
+      "TestProvisionedPrettierFixtures"
+    ],
+    "evidence": "GOWORK=off ADAMIC_CSS_FIXTURES=/tmp/u017-prettier ADAMIC_MUTANT=M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/corpusfiles/ -run . > M11.log 2>&1; files_test.go:156: selection: [/tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/z.TS /tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/tracked file.ts /tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/a.ts] / [/tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/z.TS /tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/tracked file.ts /tmp/adamic-gate/TestDeterministicRootsPatternsAndMissingGit2198410340/001/inputs/a.ts]"
+  },
+  {
+    "test": "TestProvisionedPrettierFixtures",
+    "package": "internal/corpusfiles",
+    "file": "internal/corpusfiles/files_test.go:162",
+    "seconds": 0.052,
+    "oracle": "Runs Git via Upstream and requires selection to succeed. Counts are only logged, never asserted; nil output passes PUpstream. This is a success-status oracle with no positive result assertion.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M03",
+      "M04",
+      "M06",
+      "M14",
+      "M15"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M15 files_test.go:170: corpus-files: /tmp/u017-prettier root tests/format/css: no tracked files match [\"*.css\" \"*.scss\" \"*.less\"]",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestConvertedPackageContracts"
+    ],
+    "mutants_in_matrix": 15,
+    "probe_kills": [],
+    "subsumer_seconds": 0.213,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestConvertedPackageContracts",
+      "TestMissingAndEmptyRoots",
+      "TestSparseCheckoutCannotShrinkCorpus",
+      "TestDeterministicRootsPatternsAndMissingGit",
+      "TestProvisionedPrettierFixtures"
+    ],
+    "evidence": "GOWORK=off ADAMIC_CSS_FIXTURES=/tmp/u017-prettier ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/corpusfiles/ -run . > M15.log 2>&1; files_test.go:170: corpus-files: /tmp/u017-prettier root tests/format/css: no tracked files match [\"*.css\" \"*.scss\" \"*.less\"]"
+  }
+]

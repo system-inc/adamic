@@ -1,0 +1,11 @@
+--- a/internal/corpusfiles/files.go
++++ b/internal/corpusfiles/files.go
+@@ -160,7 +160,7 @@
+ 			selected[absolute] = true
+ 			counts[i]++
+ 		}
+-		if len(missing) != 0 {
++		if false && len(missing) != 0 {
+ 			return nil, actual, nil, fmt.Errorf("%s root %s: missing tracked corpus files (including sparse-checkout omissions): %q", checkout, root, missing)
+ 		}
+ 		if counts[i] == 0 {

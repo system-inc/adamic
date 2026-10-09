@@ -1,0 +1,11 @@
+--- a/internal/corpusfiles/files.go
++++ b/internal/corpusfiles/files.go
+@@ -157,7 +157,7 @@
+ 				missing = append(missing, name)
+ 				continue
+ 			}
+-			selected[absolute] = true
++			selected[absolute] = false
+ 			counts[i]++
+ 		}
+ 		if len(missing) != 0 {

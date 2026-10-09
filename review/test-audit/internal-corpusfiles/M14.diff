@@ -1,0 +1,11 @@
+--- a/internal/corpusfiles/files.go
++++ b/internal/corpusfiles/files.go
+@@ -94,7 +94,7 @@
+ 	if err != nil {
+ 		return nil, "", nil, err
+ 	}
+-	actual := strings.TrimSpace(string(head))
++	actual := string(head)
+ 	if pin != "" && actual != pin {
+ 		return nil, actual, nil, fmt.Errorf("%s: HEAD %s differs from pin %s", checkout, actual, pin)
+ 	}

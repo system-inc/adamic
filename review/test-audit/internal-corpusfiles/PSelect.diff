@@ -1,0 +1,10 @@
+--- a/internal/corpusfiles/files.go
++++ b/internal/corpusfiles/files.go
+@@ -78,6 +78,7 @@
+ }
+ 
+ func selectFiles(checkout, pin string, roots, patterns []string) ([]string, string, []int, error) {
++ return nil, "", make([]int, len(roots)), nil
+ 	if len(roots) == 0 || len(patterns) == 0 {
+ 		return nil, "", nil, fmt.Errorf("%s: named roots and patterns are required", checkout)
+ 	}

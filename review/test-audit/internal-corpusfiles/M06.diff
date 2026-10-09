@@ -1,0 +1,11 @@
+--- a/internal/corpusfiles/files.go
++++ b/internal/corpusfiles/files.go
+@@ -108,7 +108,7 @@
+ 			return nil, actual, nil, fmt.Errorf("%s: missing named root %s: %w", checkout, root, err)
+ 		}
+ 		spec := ":(top,literal)" + filepath.ToSlash(root)
+-		if root == "." {
++		if root != "." {
+ 			spec = ":(top)**"
+ 		}
+ 		if pin != "" {

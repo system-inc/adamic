@@ -1,0 +1,754 @@
+[
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestConvertedPackageContracts$"
+    ],
+    "exit": 0,
+    "wall": 0.3693271429999925,
+    "log": "timing-TestConvertedPackageContracts-1.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestConvertedPackageContracts$"
+    ],
+    "exit": 0,
+    "wall": 0.3795083950000162,
+    "log": "timing-TestConvertedPackageContracts-2.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestConvertedPackageContracts$"
+    ],
+    "exit": 0,
+    "wall": 0.3684580110000013,
+    "log": "timing-TestConvertedPackageContracts-3.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestMissingAndEmptyRoots$"
+    ],
+    "exit": 0,
+    "wall": 0.17596671399999764,
+    "log": "timing-TestMissingAndEmptyRoots-1.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestMissingAndEmptyRoots$"
+    ],
+    "exit": 0,
+    "wall": 0.18203898100000515,
+    "log": "timing-TestMissingAndEmptyRoots-2.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestMissingAndEmptyRoots$"
+    ],
+    "exit": 0,
+    "wall": 0.16981434000001627,
+    "log": "timing-TestMissingAndEmptyRoots-3.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestSparseCheckoutCannotShrinkCorpus$"
+    ],
+    "exit": 0,
+    "wall": 0.17664405600001487,
+    "log": "timing-TestSparseCheckoutCannotShrinkCorpus-1.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestSparseCheckoutCannotShrinkCorpus$"
+    ],
+    "exit": 0,
+    "wall": 0.1948318219999976,
+    "log": "timing-TestSparseCheckoutCannotShrinkCorpus-2.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestSparseCheckoutCannotShrinkCorpus$"
+    ],
+    "exit": 0,
+    "wall": 0.17414676599997847,
+    "log": "timing-TestSparseCheckoutCannotShrinkCorpus-3.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestDeterministicRootsPatternsAndMissingGit$"
+    ],
+    "exit": 0,
+    "wall": 0.19507116299999439,
+    "log": "timing-TestDeterministicRootsPatternsAndMissingGit-1.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestDeterministicRootsPatternsAndMissingGit$"
+    ],
+    "exit": 0,
+    "wall": 0.19444417599999042,
+    "log": "timing-TestDeterministicRootsPatternsAndMissingGit-2.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestDeterministicRootsPatternsAndMissingGit$"
+    ],
+    "exit": 0,
+    "wall": 0.20417827800000055,
+    "log": "timing-TestDeterministicRootsPatternsAndMissingGit-3.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestProvisionedPrettierFixtures$"
+    ],
+    "exit": 0,
+    "wall": 0.2079833429999951,
+    "log": "timing-TestProvisionedPrettierFixtures-1.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestProvisionedPrettierFixtures$"
+    ],
+    "exit": 0,
+    "wall": 0.20590364700001373,
+    "log": "timing-TestProvisionedPrettierFixtures-2.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "^TestProvisionedPrettierFixtures$"
+    ],
+    "exit": 0,
+    "wall": 0.200716070999988,
+    "log": "timing-TestProvisionedPrettierFixtures-3.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.9086273819999917,
+    "log": "M01-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.07433867899999314,
+    "log": "M02-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.06574188800001934,
+    "log": "M03-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.07085716299999945,
+    "log": "M04-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.06651665800001183,
+    "log": "M05-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.06266055999998343,
+    "log": "M06-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.06483130399999482,
+    "log": "M07-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.06454955899999959,
+    "log": "M08-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.07051908200000412,
+    "log": "M09-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.07076136199998473,
+    "log": "M10-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.06931202999999186,
+    "log": "M11-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.06605121500001587,
+    "log": "M12-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.06848487999999975,
+    "log": "M13-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.0685319570000047,
+    "log": "M14-vet.log"
+  },
+  {
+    "command": [
+      "go",
+      "vet",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.06868706099999144,
+    "log": "M15-vet.log"
+  },
+  {
+    "command": [
+      "gofmt",
+      "-w",
+      "internal/corpusfiles/files.go"
+    ],
+    "exit": 0,
+    "wall": 0.004018457000000808,
+    "log": "switch-format.log"
+  },
+  {
+    "command": [
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u017-test",
+      "./internal/corpusfiles/"
+    ],
+    "exit": 0,
+    "wall": 0.2751886709999951,
+    "log": "switch-build.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall": 0.42214423500001885,
+    "log": "M01.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.4131557389999898,
+    "log": "M02.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.24793212499997708,
+    "log": "M03.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.2728089269999998,
+    "log": "M04.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.40370997200000147,
+    "log": "M05.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.42005051399999616,
+    "log": "M06.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.32917548999998303,
+    "log": "M07.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.34498366700000815,
+    "log": "M08.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.3874384019999866,
+    "log": "M09.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.39499254900002256,
+    "log": "M10.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.3933900090000009,
+    "log": "M11.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall": 0.3826888040000256,
+    "log": "M12.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall": 0.3925735469999836,
+    "log": "M13.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.24769653999999264,
+    "log": "M14.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.24444454499999324,
+    "log": "M15.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.2752660149999997,
+    "log": "PRepository.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.26564257900000143,
+    "log": "PUpstream.log"
+  },
+  {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/corpusfiles/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "wall": 0.23587021699998445,
+    "log": "PSelect.log"
+  }
+]

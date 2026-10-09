@@ -1,0 +1,10 @@
+--- a/internal/corpusfiles/files.go
++++ b/internal/corpusfiles/files.go
+@@ -171,6 +171,6 @@
+ 	for name := range selected {
+ 		files = append(files, name)
+ 	}
+-	sort.Strings(files)
++	sort.Sort(sort.Reverse(sort.StringSlice(files)))
+ 	return files, actual, counts, nil
+ }

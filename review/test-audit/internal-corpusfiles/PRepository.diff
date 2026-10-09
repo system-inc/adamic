@@ -1,0 +1,10 @@
+--- a/internal/corpusfiles/files.go
++++ b/internal/corpusfiles/files.go
+@@ -21,6 +21,7 @@
+ // Patterns are case-insensitive basename globs, such as *.md or *_test.go.
+ // Matching tracked files must be clean in the index and worktree separately.
+ func Repository(t testing.TB, checkout string, roots, patterns []string) []string {
++ return nil
+ 	t.Helper()
+ 	return checked(t, checkout, "", roots, patterns)
+ }

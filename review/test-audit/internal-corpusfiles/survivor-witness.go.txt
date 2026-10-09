@@ -1,0 +1,8 @@
+package corpusfiles
+import "testing"
+func TestU017Observation(t *testing.T) {
+ t.Logf("names=%q", names([]byte("tracked.ts\x00")))
+ d, _, _ := fixture(t, "inputs", ".ts")
+ files, _, counts, err := selectFiles(d, "", []string{"inputs"}, []string{"*.ts"})
+ t.Logf("files=%d counts=%v err=%v",len(files),counts,err)
+}

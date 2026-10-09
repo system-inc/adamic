@@ -1,0 +1,11 @@
+--- a/internal/corpusfiles/files.go
++++ b/internal/corpusfiles/files.go
+@@ -65,7 +65,7 @@
+ 	if len(data) == 0 {
+ 		return nil
+ 	}
+-	return strings.Split(strings.TrimSuffix(string(data), "\x00"), "\x00")
++	return strings.Split(string(data), "\x00")
+ }
+ 
+ func matches(name string, patterns []string) bool {
