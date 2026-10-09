@@ -1,0 +1,140 @@
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompilerAndStage1Agree	530.44	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestShardsAgree	480.39	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestNodeTableIsLinkOnly	288.95	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCompositionMatchesGo (setup)	281.37	pass
+github.com/system-inc/adamic/internal/native	TestDecodeASCII/native	270.67	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/default (setup)	212.24	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/narrow (setup)	211.61	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestJsxLintTrees	199.69	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline (setup)	158.20	pass
+github.com/system-inc/adamic/internal/oracle	TestLoopCountersAgreeWithNode	142.82	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterOptimizedMatchesGo	112.43	pass
+github.com/system-inc/adamic/internal/native	TestSplitTSGoAgrees	109.46	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo (setup)	107.86	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/narrow/catches_groups_ignore_the_remaining_width	104.75	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/narrow/catches_declarations_lose_their_semicolons	104.73	pass
+github.com/system-inc/adamic/internal/native	TestNormalizeMatchesNode/points	98.27	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestOptionalBooleanPrinterMatchesGo	91.37	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/narrow/catches_rule_bodies_lose_indentation	86.78	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons	86.28	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/default/catches_rule_bodies_lose_indentation	83.05	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/default/catches_groups_ignore_the_remaining_width	80.69	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSParserOptimizedMatchesNode	68.38	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/08_flags.a (setup)	67.86	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/09_assert_defined.a (setup)	67.65	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/10_nullish.a (setup)	67.50	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/11_empty_assert.a (setup)	67.34	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/02_module_name.a (setup)	67.33	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/07_typeof.a (setup)	67.13	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/03_void_zero.a (setup)	67.07	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/04_literal_or.a (setup)	66.88	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/05_kind_switch.a (setup)	66.68	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/06_signed_numeric.a (setup)	66.50	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/predicates/01_identifier.a (setup)	66.37	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/02_get_property.a (setup)	66.32	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/03_own_keys.a (setup)	66.19	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/04_own_values.a (setup)	66.13	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/05_integer_order.a (setup)	65.98	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/06_delete_readd.a (setup)	65.96	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/07_optional_view.a (setup)	65.78	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/08_option_boolean.a (setup)	65.77	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/09_option_undefined.a (setup)	65.59	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/10_option_wrong_type.a (setup)	65.56	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/11_option_string.a (setup)	65.37	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/12_nested_entries.a (setup)	65.37	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/13_strict_option.a (setup)	65.17	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/14_group_by.a (setup)	65.16	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/15_inherited_read.a (setup)	64.94	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/16_built_strings.a (setup)	64.94	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/17_compare_missing_object.a (setup)	64.72	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/18_compare_missing_scalar.a (setup)	64.70	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/19_compare_empty_objects.a (setup)	64.51	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/records/01_has_property.a (setup)	64.48	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/03_extensions/main.a (setup)	63.76	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/02_reverse_barrel/main.a (setup)	63.73	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/04_directory_callback/main.a (setup)	63.57	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/05_safe_load_read/main.a (setup)	63.36	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/06_import_order_mutant/main.a (setup)	63.16	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/07_namespace_barrel/main.a (setup)	63.03	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail (setup)	62.75	pass
+github.com/system-inc/adamic/internal/native	TestWASI (setup)	60.38	pass
+github.com/system-inc/adamic/internal/native	TestDecodeASCII/wasi	60.33	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere	60.24	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/08_named_reexports/main.a (setup)	60.19	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/09_function_value_load/main.a (setup)	60.02	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/02_diagnostic_message.a (setup)	59.81	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/03_diagnostic_file.a (setup)	59.45	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/04_jsx_runtime.a (setup)	59.06	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/05_this_type.a (setup)	58.71	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/06_localized_message.a (setup)	58.53	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/07_compact.a (setup)	58.23	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/10_hoisted_before_body/main.a (setup)	57.76	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/09_literal_cache.a (setup)	57.47	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/10_global_import_meta.a (setup)	56.90	pass
+github.com/system-inc/adamic/internal/native	TestRegExpBytecodeRandomNode	56.87	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/11_build_info_pending.a (setup)	56.68	pass
+github.com/system-inc/adamic/stage1/typescript/scanner	TestScannerAgreesWithTypescriptGo (setup)	56.67	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/12_symbol_links.a (setup)	56.52	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/13_void_callback.a (setup)	55.58	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/14_relative_complement.a (setup)	55.57	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/15_barrel.a (setup)	54.72	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/16_scan_exclamation.a (setup)	54.57	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/17_binder_flow.a (setup)	54.32	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/18_named_export.a (setup)	53.85	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestLargeCompilerOutputIsComplete	53.58	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/19_deprecated_flags.a (setup)	53.37	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/20_jsdoc_terminate.a (setup)	52.83	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/refused/21_truthy_loops.a (setup)	52.57	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/22_assignment_once.a (setup)	52.35	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/23_labels_finally.a (setup)	51.56	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestThePortParsesAsGoCohereDoes/Go_agreement	51.24	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/24_proportional_conditions.a (setup)	51.05	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/08_for_each.a (setup)	50.69	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/02_node_range.a (setup)	50.24	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestTheCanonicalRangeChecksCanFail	50.08	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/03_jsdoc_range.a (setup)	49.25	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/04_parse_tree_mask.a (setup)	48.70	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/05_local_export_flags.a (setup)	47.82	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/06_set_node_flags.a (setup)	47.44	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/07_regex_array_map.a (setup)	47.33	pass
+github.com/system-inc/adamic/stage1/cohere/gitignore	TestThePortAnswersAsGoCohereAndGitDo/natively_and_on_Node,_as_Go_cohere	47.26	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/08_debug_format_enum.a (setup)	47.02	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/09_symbol_exclusion_mask.a (setup)	46.08	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/10_string_enum.a (setup)	45.76	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/11_format_syntax_kind.a (setup)	45.66	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/12_diagnostic_reverse_lookup.a (setup)	44.60	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/13_regex_map_keys.a (setup)	44.38	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail/address_sanitizer	43.74	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/cycles/01_call_time/main.a (setup)	43.33	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/taste/01_diagnostic_code.a (setup)	43.13	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/enums/01_token_range.a (setup)	42.09	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/runner/02_is_string.a (setup)	41.98	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity	41.20	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/runner/03_return_true.a (setup)	40.83	pass
+github.com/system-inc/adamic/internal/native	TestRegExpBytecodeTest262	40.78	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/runner/01_queue_empty.a (setup)	40.78	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestComposedMemoryChecksCanFail/undefined_behavior_sanitizer	40.57	pass
+github.com/system-inc/adamic/internal/native	TestCaseMappingMatchesNode/points	39.90	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/05_writeFile.a (setup)	39.72	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/02_readFile_utf16le.a (setup)	39.63	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/04_readFile_missing.a (setup)	38.78	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/03_readFile_utf16be.a (setup)	38.56	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/06_fileExists.a (setup)	37.78	pass
+github.com/system-inc/adamic/internal/native	TestDecodeASCII (setup)	37.75	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/07_directoryExists.a (setup)	37.51	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/09_realpath.a (setup)	36.72	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/10_getModifiedTime.a (setup)	35.48	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/11_setModifiedTime.a (setup)	35.08	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestSingleFileStdoutDriver	34.81	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/missing_final_newline	34.77	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestThreePortMutantsAreCaught/wrong_filename_parser	34.68	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestAdditionalJSONBoundaries	34.58	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/12_deleteFile.a (setup)	34.28	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/13_createDirectory.a (setup)	34.09	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/08_getDirectories.a (setup)	33.07	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/15_getExecutingFilePath.a (setup)	33.00	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/16_getEnvironmentVariable.a (setup)	32.07	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/17_write.a (setup)	32.03	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/18_exit_0.a (setup)	30.94	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixtures/host/19_exit_1.a (setup)	30.83	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestThePortParsesAsGoCohereDoes/catches_comments_always_disappear_from_values	30.48	pass
