@@ -1,0 +1,46 @@
+--- a/stage1/cohere/json/builds_test.go
++++ b/stage1/cohere/json/builds_test.go
+@@ -34,42 +34,7 @@
+ }
+ 
+ func jsonGoToolchain() ([]string, error) {
+-	command := exec.Command("go", "version")
+-	directory, err := filepath.Abs(filepath.Join(repository, "cohere"))
+-	if err != nil {
+-		return nil, err
+-	}
+-	command.Dir = directory
+-	version, err := command.Output()
+-	if err != nil {
+-		return nil, err
+-	}
+-	configuration := exec.Command("go", "env", "-json")
+-	configuration.Dir = directory
+-	settings, err := configuration.Output()
+-	if err != nil {
+-		return nil, err
+-	}
+-	// Go generates a fresh scratch directory even for go env. It is mapped to
+-	// /tmp/go-build in compiler output and cannot affect a product, so normalize
+-	// only that generated prefix-map argument; retain every real compiler flag.
+-	var resolved map[string]string
+-	if err := json.Unmarshal(settings, &resolved); err != nil {
+-		return nil, err
+-	}
+-	compilerFlags := strings.Fields(resolved["GOGCCFLAGS"])
+-	for i, flag := range compilerFlags {
+-		if strings.HasPrefix(flag, "-ffile-prefix-map=") && strings.HasSuffix(flag, "=/tmp/go-build") {
+-			compilerFlags[i] = "-ffile-prefix-map=<Go scratch>=/tmp/go-build"
+-		}
+-	}
+-	resolved["GOGCCFLAGS"] = strings.Join(compilerFlags, " ")
+-	settings, err = json.Marshal(resolved)
+-	if err != nil {
+-		return nil, err
+-	}
+-	// Include resolved Go settings as well as explicit environment overrides.
+-	return []string{"runtime.Version=" + runtime.Version(), string(version), "go env=" + string(settings), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH}, nil
++	return nil, nil
+ }
+ 
+ func jsonClangToolchain() ([]string, error) {

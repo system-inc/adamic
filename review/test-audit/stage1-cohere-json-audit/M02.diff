@@ -1,0 +1,11 @@
+--- a/internal/lower/exceptions.go
++++ b/internal/lower/exceptions.go
+@@ -165,7 +165,7 @@
+ 	}
+ 	for _, record := range l.tries {
+ 		if failing := l.libraryFailure(record.body, map[int]bool{}); failing != "" {
+-			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
++			return l.notYet(record.node, "a catch around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
+ 		}
+ 	}
+ 	return nil

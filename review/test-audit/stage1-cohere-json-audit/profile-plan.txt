@@ -1,0 +1,19 @@
+Written before catches. Code under test: Documents.print indentation and main.ts module entry. Menu: change constant +2 to +3. P10 drops the entire module body to produce an empty native main. Historical final snapshot is rebuilt from 921b2e809266aa53cc30a068e369c2449bce072b; mutant and probe products are built from origin/main.
+[
+  {
+    "id": "M04",
+    "kind": "production-port",
+    "file": "stage1/cohere/json/doc.ts",
+    "old": "const indent = node.kind === 'indent' ? command.indent + 2 : command.indent;",
+    "new": "const indent = node.kind === 'indent' ? command.indent + 3 : command.indent;",
+    "line": 176
+  },
+  {
+    "id": "P10",
+    "kind": "probe-port",
+    "file": "stage1/cohere/json/main.ts",
+    "old": "module body",
+    "new": "export {};\n",
+    "line": 1
+  }
+]

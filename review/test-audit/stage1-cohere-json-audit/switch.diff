@@ -1,0 +1,240 @@
+diff --git a/internal/lower/exceptions.go b/internal/lower/exceptions.go
+index 6b81dc89..1f4c295f 100644
+--- a/internal/lower/exceptions.go
++++ b/internal/lower/exceptions.go
+@@ -165,7 +165,7 @@ func (l *lowering) exceptions() error {
+ 	}
+ 	for _, record := range l.tries {
+ 		if failing := l.libraryFailure(record.body, map[int]bool{}); failing != "" {
+-			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
++			return l.notYet(record.node, auditU102Text("M02", "a try around ", "a catch around ")+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
+ 		}
+ 	}
+ 	return nil
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..054c4f0e 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditU102() == "P01" {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 92c69d6d..71ca7bc2 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -1263,7 +1263,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
+ 	}
+ 	if name == "push" {
+ 		if len(arguments) != 1 {
+-			return nil, true, l.notYet(node, "push with other than one value")
++			return nil, true, l.notYet(node, auditU102Text("M01", "push with other than one value", "push with other than two values"))
+ 		}
+ 		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
+ 	}
+diff --git a/internal/native/emit_expressions.go b/internal/native/emit_expressions.go
+index 3549a0f5..35efedb4 100644
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -656,7 +656,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
+ 			array := e.value(expression.Array)
+ 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->length})", array, zero(ir.MaybeNumber), array))
+ 		}
+-		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->length", e.value(expression.Array)))
++		return e.snapshot(ir.Number, fmt.Sprintf(auditU102Text("M03", "(double)%s->length", "((double)%s->length + 1)"), e.value(expression.Array)))
+ 	case ir.JSONStringify:
+ 		return e.jsonStringify(expression)
+ 	case ir.JSONNull:
+diff --git a/stage1/cohere/json/audit_test.go b/stage1/cohere/json/audit_test.go
+index e706d469..db83eb9b 100644
+--- a/stage1/cohere/json/audit_test.go
++++ b/stage1/cohere/json/audit_test.go
+@@ -28,6 +28,12 @@ type answer struct {
+ // Error messages have different APIs. Compare acceptance and successful output, never erase an error
+ // into a successful empty output. This is a necessary condition for four-way formatter parity.
+ func sameAnswer(left, right answer) bool {
++	if auditU102() == "P05" {
++		return false
++	}
++	if auditU102() == "W01" {
++		return true
++	}
+ 	if (left.Error == "") != (right.Error == "") {
+ 		return false
+ 	}
+diff --git a/stage1/cohere/json/builds_test.go b/stage1/cohere/json/builds_test.go
+index dd5e5b5f..8a1d4c87 100644
+--- a/stage1/cohere/json/builds_test.go
++++ b/stage1/cohere/json/builds_test.go
+@@ -34,6 +34,9 @@ func jsonBuildEnvironment(names ...string) []string {
+ }
+ 
+ func jsonGoToolchain() ([]string, error) {
++	if auditU102() == "P02" {
++		return nil, nil
++	}
+ 	command := exec.Command("go", "version")
+ 	directory, err := filepath.Abs(filepath.Join(repository, "cohere"))
+ 	if err != nil {
+@@ -58,9 +61,11 @@ func jsonGoToolchain() ([]string, error) {
+ 		return nil, err
+ 	}
+ 	compilerFlags := strings.Fields(resolved["GOGCCFLAGS"])
+-	for i, flag := range compilerFlags {
+-		if strings.HasPrefix(flag, "-ffile-prefix-map=") && strings.HasSuffix(flag, "=/tmp/go-build") {
+-			compilerFlags[i] = "-ffile-prefix-map=<Go scratch>=/tmp/go-build"
++	if auditU102() != "S01" {
++		for i, flag := range compilerFlags {
++			if strings.HasPrefix(flag, "-ffile-prefix-map=") && strings.HasSuffix(flag, "=/tmp/go-build") {
++				compilerFlags[i] = "-ffile-prefix-map=<Go scratch>=/tmp/go-build"
++			}
+ 		}
+ 	}
+ 	resolved["GOGCCFLAGS"] = strings.Join(compilerFlags, " ")
+diff --git a/stage1/cohere/json/chunks_test.go b/stage1/cohere/json/chunks_test.go
+index 21215055..e611835f 100644
+--- a/stage1/cohere/json/chunks_test.go
++++ b/stage1/cohere/json/chunks_test.go
+@@ -22,11 +22,20 @@ type chunkResult struct {
+ }
+ 
+ func chunkRanges(total, cores int) []nativeChunk {
++	if auditU102() == "P03" {
++		return nil
++	}
+ 	count := min(cores, 8, total)
++	if auditU102() == "S02" {
++		count = min(cores, 7, total)
++	}
+ 	chunks := make([]nativeChunk, count)
+ 	for index := range chunks {
+ 		chunks[index].start = index * total / count
+ 		chunks[index].end = (index + 1) * total / count
++		if auditU102() == "S04" {
++			chunks[index].end--
++		}
+ 	}
+ 	return chunks
+ }
+@@ -69,6 +78,12 @@ func runNativeChunks(t *testing.T, binary string, environment []string, chunks [
+ // Compare every chunk with the corresponding bytes of the single-process
+ // release run, then join in input order. The caller still compares with Go.
+ func joinNativeChunks(side string, chunks []nativeChunk, results []chunkResult, single []byte, cases []textCase) (run, error) {
++	if auditU102() == "P04" {
++		return run{}, nil
++	}
++	if auditU102() == "W02" {
++		return run{stdout: single}, nil
++	}
+ 	lines := strings.Split(strings.TrimSuffix(string(single), "\n"), "\n")
+ 	if len(lines) != len(cases) {
+ 		return run{}, fmt.Errorf("%s single-process reference has %d/%d cases", side, len(lines), len(cases))
+diff --git a/stage1/cohere/json/performance_test.go b/stage1/cohere/json/performance_test.go
+index 65dfd7ba..5872f7d9 100644
+--- a/stage1/cohere/json/performance_test.go
++++ b/stage1/cohere/json/performance_test.go
+@@ -54,7 +54,7 @@ func TestCachedWidthMutantIsCaught(t *testing.T) {
+ 		if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
+ 			t.Fatalf("%s mutant must execute successfully: %+v", side.name, side.result)
+ 		}
+-		if string(side.result.stdout) == expected {
++		if auditU102() == "W04" || (auditU102() != "P09" && string(side.result.stdout) == expected) {
+ 			t.Fatalf("%s failed to catch zero cached width", side.name)
+ 		}
+ 		t.Logf("%s byte comparison caught zero cached width", side.name)
+diff --git a/stage1/cohere/json/pin_test.go b/stage1/cohere/json/pin_test.go
+index 422b64b5..cfbfc4d1 100644
+--- a/stage1/cohere/json/pin_test.go
++++ b/stage1/cohere/json/pin_test.go
+@@ -75,6 +75,12 @@ func pinForCases(cases []textCase) corpusPin {
+ }
+ 
+ func corpusPinError(want, got corpusPin) error {
++	if auditU102() == "P06" {
++		return nil
++	}
++	if auditU102() == "W03" {
++		return nil
++	}
+ 	// Recompute the committed manifest too: a corrupted count/digest cannot pass.
+ 	summarize := func(pin corpusPin) corpusPin {
+ 		var lines strings.Builder
+diff --git a/stage1/cohere/json/repository_test.go b/stage1/cohere/json/repository_test.go
+index bcb08b42..91a66778 100644
+--- a/stage1/cohere/json/repository_test.go
++++ b/stage1/cohere/json/repository_test.go
+@@ -88,6 +88,12 @@ func repositoryJSONAtHEAD(root string) (repositoryJSON, error) {
+ // Tracked repository inputs follow Git HEAD. Only externally provisioned or
+ // generated inputs retain identity pins; arbitrary untracked files are refused.
+ func validateCorpus(root string, cases []textCase, expected corpusPin) (corpusPin, int, error) {
++	if auditU102() == "P07" {
++		return corpusPin{}, 0, nil
++	}
++	if auditU102() == "W05" {
++		return corpusPin{}, 0, nil
++	}
+ 	state, err := repositoryJSONAtHEAD(root)
+ 	if err != nil {
+ 		return corpusPin{}, 0, err
+diff --git a/stage1/cohere/json/sample_test.go b/stage1/cohere/json/sample_test.go
+index 95826ae1..cd095ea7 100644
+--- a/stage1/cohere/json/sample_test.go
++++ b/stage1/cohere/json/sample_test.go
+@@ -12,6 +12,9 @@ import (
+ // ceil(888/30)=30 and ceil(226/30)=8; pin 32 and 8 respectively.
+ // These budget the corpus work, not compiler startup or mandatory fixed checks.
+ func sampledCorpusCases(t *testing.T, stride int) []textCase {
++	if auditU102() == "P08" {
++		return nil
++	}
+ 	t.Helper()
+ 	cases := corpusCases(t)
+ 	var names []string
+@@ -40,7 +43,7 @@ func sampledCorpusCases(t *testing.T, stride int) []textCase {
+ 	}
+ 	var result []textCase
+ 	for _, item := range cases {
+-		if strings.HasPrefix(item.Name, "generated/") || included[item.Name] {
++		if (auditU102() != "S03" && strings.HasPrefix(item.Name, "generated/")) || included[item.Name] {
+ 			result = append(result, item)
+ 		}
+ 	}
+--- /dev/null
++++ b/internal/lower/audit_u102.go
+@@ -0,0 +1,8 @@
++package lower
++
++import "os"
++
++func auditU102() string { return os.Getenv("ADAMIC_MUTANT") }
++func auditU102Text(id, original, changed string) string {
++	if auditU102() == id { return changed }; return original
++}
+--- /dev/null
++++ b/internal/native/audit_u102.go
+@@ -0,0 +1,8 @@
++package native
++
++import "os"
++
++func auditU102() string { return os.Getenv("ADAMIC_MUTANT") }
++func auditU102Text(id, original, changed string) string {
++	if auditU102() == id { return changed }; return original
++}
+--- /dev/null
++++ b/stage1/cohere/json/audit_u102_test.go
+@@ -0,0 +1,8 @@
++package json
++
++import "os"
++
++func auditU102() string { return os.Getenv("ADAMIC_MUTANT") }
++func auditU102Text(id, original, changed string) string {
++	if auditU102() == id { return changed }; return original
++}

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M04",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^(TestUpstreamNumericSeparatorGap|TestExternalComparisonCatchesThreePrinterMutants|TestJSONGoToolchainStable|TestNativeChunkPlan|TestNativeChunkDifferenceNamesCase|TestDocumentedStageZeroGaps|TestClosedEmptyFallbackGap|TestCachedWidthMutantIsCaught|TestCorpusPinDiagnostics|TestCorpusPinRejectsMissingProvisionedInputs|TestCorpusPinBeforeSampling|TestRepositoryCorpusMutants|TestRepositoryLandingWithoutPinEdit|TestRepositoryRequiresGit)$"
+    ],
+    "env": {
+      "ADAMIC_JSON_PRETTIER": "/tmp/u102/prettier",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u102/cache/M04"
+    },
+    "exit": 0,
+    "wall_seconds": 12.602635601000657,
+    "log": "M04-other-rows.log",
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "apply_check_exit": 0
+  },
+  {
+    "id": "P10",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^(TestUpstreamNumericSeparatorGap|TestExternalComparisonCatchesThreePrinterMutants|TestJSONGoToolchainStable|TestNativeChunkPlan|TestNativeChunkDifferenceNamesCase|TestDocumentedStageZeroGaps|TestClosedEmptyFallbackGap|TestCachedWidthMutantIsCaught|TestCorpusPinDiagnostics|TestCorpusPinRejectsMissingProvisionedInputs|TestCorpusPinBeforeSampling|TestRepositoryCorpusMutants|TestRepositoryLandingWithoutPinEdit|TestRepositoryRequiresGit)$"
+    ],
+    "env": {
+      "ADAMIC_JSON_PRETTIER": "/tmp/u102/prettier",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u102/cache/P10"
+    },
+    "exit": 0,
+    "wall_seconds": 6.2054832949979755,
+    "log": "P10-other-rows.log",
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "apply_check_exit": 0
+  }
+]

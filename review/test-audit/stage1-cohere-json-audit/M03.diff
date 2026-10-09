@@ -1,0 +1,11 @@
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -656,7 +656,7 @@
+ 			array := e.value(expression.Array)
+ 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, (double)%s->length})", array, zero(ir.MaybeNumber), array))
+ 		}
+-		return e.snapshot(ir.Number, fmt.Sprintf("(double)%s->length", e.value(expression.Array)))
++		return e.snapshot(ir.Number, fmt.Sprintf("((double)%s->length + 1)", e.value(expression.Array)))
+ 	case ir.JSONStringify:
+ 		return e.jsonStringify(expression)
+ 	case ir.JSONNull:

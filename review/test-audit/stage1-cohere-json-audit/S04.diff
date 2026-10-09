@@ -1,0 +1,11 @@
+--- a/stage1/cohere/json/chunks_test.go
++++ b/stage1/cohere/json/chunks_test.go
+@@ -26,7 +26,7 @@
+ 	chunks := make([]nativeChunk, count)
+ 	for index := range chunks {
+ 		chunks[index].start = index * total / count
+-		chunks[index].end = (index + 1) * total / count
++		chunks[index].end = (index+1)*total/count - 1
+ 	}
+ 	return chunks
+ }

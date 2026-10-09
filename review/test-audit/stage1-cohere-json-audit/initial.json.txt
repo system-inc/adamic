@@ -1,0 +1,70 @@
+[
+  {
+    "label": "environment",
+    "command": [
+      "bash",
+      "-c",
+      "nproc; go version; node --version; clang --version"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.03197553900099592
+  },
+  {
+    "label": "npm",
+    "command": [
+      "npm",
+      "ci",
+      "--prefix",
+      "stage3/api"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.5117429159981839
+  },
+  {
+    "label": "prettier",
+    "command": [
+      "npm",
+      "install",
+      "--prefix",
+      "/tmp/u102/prettier",
+      "--no-audit",
+      "--no-fund",
+      "prettier@3.9.6"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.7920664220000617
+  },
+  {
+    "label": "scope",
+    "command": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./stage1/cohere/json/"
+    ],
+    "exit": 0,
+    "wall_seconds": 8.587377740997908
+  },
+  {
+    "label": "baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "."
+    ],
+    "env": {
+      "ADAMIC_JSON_PRETTIER": "/tmp/u102/prettier"
+    },
+    "exit": 1,
+    "wall_seconds": 92.72961373900034
+  }
+]

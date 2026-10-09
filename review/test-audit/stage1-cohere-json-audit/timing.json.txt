@@ -1,0 +1,686 @@
+[
+  {
+    "test": "TestUpstreamNumericSeparatorGap",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestUpstreamNumericSeparatorGap$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.3507484090005164
+  },
+  {
+    "test": "TestUpstreamNumericSeparatorGap",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestUpstreamNumericSeparatorGap$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.2525387379973836
+  },
+  {
+    "test": "TestUpstreamNumericSeparatorGap",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestUpstreamNumericSeparatorGap$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.164435192000383
+  },
+  {
+    "test": "TestExternalComparisonCatchesThreePrinterMutants",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestExternalComparisonCatchesThreePrinterMutants$"
+    ],
+    "exit": 0,
+    "wall_seconds": 13.208156270000472
+  },
+  {
+    "test": "TestExternalComparisonCatchesThreePrinterMutants",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestExternalComparisonCatchesThreePrinterMutants$"
+    ],
+    "exit": 0,
+    "wall_seconds": 4.372414760000538
+  },
+  {
+    "test": "TestExternalComparisonCatchesThreePrinterMutants",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestExternalComparisonCatchesThreePrinterMutants$"
+    ],
+    "exit": 0,
+    "wall_seconds": 4.3811598060019605
+  },
+  {
+    "test": "TestJSONGoToolchainStable",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestJSONGoToolchainStable$"
+    ],
+    "exit": 0,
+    "wall_seconds": 1.9876247229985893
+  },
+  {
+    "test": "TestJSONGoToolchainStable",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestJSONGoToolchainStable$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.215241138001147
+  },
+  {
+    "test": "TestJSONGoToolchainStable",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestJSONGoToolchainStable$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.367703078998602
+  },
+  {
+    "test": "TestNativeChunkPlan",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestNativeChunkPlan$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.54007158800232
+  },
+  {
+    "test": "TestNativeChunkPlan",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestNativeChunkPlan$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.1543287210006383
+  },
+  {
+    "test": "TestNativeChunkPlan",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestNativeChunkPlan$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.087080629000411
+  },
+  {
+    "test": "TestNativeChunkDifferenceNamesCase",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestNativeChunkDifferenceNamesCase$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.0339353480012505
+  },
+  {
+    "test": "TestNativeChunkDifferenceNamesCase",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestNativeChunkDifferenceNamesCase$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.239394672000344
+  },
+  {
+    "test": "TestNativeChunkDifferenceNamesCase",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestNativeChunkDifferenceNamesCase$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.097470661999978
+  },
+  {
+    "test": "TestDocumentedStageZeroGaps",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestDocumentedStageZeroGaps$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.150105736000114
+  },
+  {
+    "test": "TestDocumentedStageZeroGaps",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestDocumentedStageZeroGaps$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.1795442969996657
+  },
+  {
+    "test": "TestDocumentedStageZeroGaps",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestDocumentedStageZeroGaps$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.2808725950017106
+  },
+  {
+    "test": "TestClosedEmptyFallbackGap",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestClosedEmptyFallbackGap$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.4790310880016477
+  },
+  {
+    "test": "TestClosedEmptyFallbackGap",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestClosedEmptyFallbackGap$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.3848608629996306
+  },
+  {
+    "test": "TestClosedEmptyFallbackGap",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestClosedEmptyFallbackGap$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.3670902240010037
+  },
+  {
+    "test": "TestProfileSnapshotsAgree",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestProfileSnapshotsAgree$"
+    ],
+    "exit": 0,
+    "wall_seconds": 1.9843798539986892
+  },
+  {
+    "test": "TestProfileSnapshotsAgree",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestProfileSnapshotsAgree$"
+    ],
+    "exit": 0,
+    "wall_seconds": 1.9842055079971033
+  },
+  {
+    "test": "TestProfileSnapshotsAgree",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestProfileSnapshotsAgree$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.0047000859995023
+  },
+  {
+    "test": "TestCachedWidthMutantIsCaught",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCachedWidthMutantIsCaught$"
+    ],
+    "exit": 0,
+    "wall_seconds": 8.415442026001983
+  },
+  {
+    "test": "TestCachedWidthMutantIsCaught",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCachedWidthMutantIsCaught$"
+    ],
+    "exit": 0,
+    "wall_seconds": 9.259325183000328
+  },
+  {
+    "test": "TestCachedWidthMutantIsCaught",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCachedWidthMutantIsCaught$"
+    ],
+    "exit": 0,
+    "wall_seconds": 8.770689213000878
+  },
+  {
+    "test": "TestCorpusPinDiagnostics",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCorpusPinDiagnostics$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.168798937000247
+  },
+  {
+    "test": "TestCorpusPinDiagnostics",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCorpusPinDiagnostics$"
+    ],
+    "exit": 0,
+    "wall_seconds": 1.96597194199785
+  },
+  {
+    "test": "TestCorpusPinDiagnostics",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCorpusPinDiagnostics$"
+    ],
+    "exit": 0,
+    "wall_seconds": 1.9920888300002844
+  },
+  {
+    "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCorpusPinRejectsMissingProvisionedInputs$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.491194758000347
+  },
+  {
+    "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCorpusPinRejectsMissingProvisionedInputs$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.552290596999228
+  },
+  {
+    "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCorpusPinRejectsMissingProvisionedInputs$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.707363310000801
+  },
+  {
+    "test": "TestCorpusPinBeforeSampling",
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCorpusPinBeforeSampling$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.8634369559986226
+  },
+  {
+    "test": "TestCorpusPinBeforeSampling",
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCorpusPinBeforeSampling$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.9081030680026743
+  },
+  {
+    "test": "TestCorpusPinBeforeSampling",
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/json/",
+      "-run",
+      "^TestCorpusPinBeforeSampling$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.859474295997643
+  }
+]

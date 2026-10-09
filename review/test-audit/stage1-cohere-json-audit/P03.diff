@@ -1,0 +1,17 @@
+--- a/stage1/cohere/json/chunks_test.go
++++ b/stage1/cohere/json/chunks_test.go
+@@ -22,13 +22,7 @@
+ }
+ 
+ func chunkRanges(total, cores int) []nativeChunk {
+-	count := min(cores, 8, total)
+-	chunks := make([]nativeChunk, count)
+-	for index := range chunks {
+-		chunks[index].start = index * total / count
+-		chunks[index].end = (index + 1) * total / count
+-	}
+-	return chunks
++	return nil
+ }
+ 
+ func nativeChunks(t *testing.T, cases []textCase, answers []answer) []nativeChunk {

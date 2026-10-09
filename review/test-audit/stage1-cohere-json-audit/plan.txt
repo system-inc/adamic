@@ -1,0 +1,191 @@
+[
+  {
+    "id": "M01",
+    "kind": "production",
+    "file": "internal/lower/object.go",
+    "line": 1266,
+    "old": "\"push with other than one value\"",
+    "new": "\"push with other than two values\"",
+    "function": null
+  },
+  {
+    "id": "M02",
+    "kind": "production",
+    "file": "internal/lower/exceptions.go",
+    "line": 168,
+    "old": "\"a try around \"",
+    "new": "\"a catch around \"",
+    "function": null
+  },
+  {
+    "id": "M03",
+    "kind": "production",
+    "file": "internal/native/emit_expressions.go",
+    "line": 659,
+    "old": "\"(double)%s->length\"",
+    "new": "\"((double)%s->length + 1)\"",
+    "function": null
+  },
+  {
+    "id": "S01",
+    "kind": "setup",
+    "file": "stage1/cohere/json/builds_test.go",
+    "line": 61,
+    "old": "for i, flag := range compilerFlags {\n\t\tif strings.HasPrefix(flag, \"-ffile-prefix-map=\") && strings.HasSuffix(flag, \"=/tmp/go-build\") {\n\t\t\tcompilerFlags[i] = \"-ffile-prefix-map=<Go scratch>=/tmp/go-build\"\n\t\t}\n\t}",
+    "new": "",
+    "function": null
+  },
+  {
+    "id": "S02",
+    "kind": "setup",
+    "file": "stage1/cohere/json/chunks_test.go",
+    "line": 25,
+    "old": "count := min(cores, 8, total)",
+    "new": "count := min(cores, 7, total)",
+    "function": null
+  },
+  {
+    "id": "S03",
+    "kind": "setup",
+    "file": "stage1/cohere/json/sample_test.go",
+    "line": 43,
+    "old": "strings.HasPrefix(item.Name, \"generated/\") || included[item.Name]",
+    "new": "included[item.Name]",
+    "function": null
+  },
+  {
+    "id": "S04",
+    "kind": "setup",
+    "file": "stage1/cohere/json/chunks_test.go",
+    "line": 29,
+    "old": "chunks[index].end = (index + 1) * total / count",
+    "new": "chunks[index].end = (index + 1) * total / count - 1",
+    "function": null
+  },
+  {
+    "id": "W01",
+    "kind": "witness",
+    "file": "stage1/cohere/json/audit_test.go",
+    "line": 30,
+    "old": "body",
+    "new": "return true",
+    "function": "sameAnswer"
+  },
+  {
+    "id": "W02",
+    "kind": "witness",
+    "file": "stage1/cohere/json/chunks_test.go",
+    "line": 71,
+    "old": "body",
+    "new": "return run{stdout: single}, nil",
+    "function": "joinNativeChunks"
+  },
+  {
+    "id": "W03",
+    "kind": "witness",
+    "file": "stage1/cohere/json/pin_test.go",
+    "line": 77,
+    "old": "body",
+    "new": "return nil",
+    "function": "corpusPinError"
+  },
+  {
+    "id": "W04",
+    "kind": "witness",
+    "file": "stage1/cohere/json/performance_test.go",
+    "line": 57,
+    "old": "string(side.result.stdout) == expected",
+    "new": "true",
+    "function": null
+  },
+  {
+    "id": "W05",
+    "kind": "witness",
+    "file": "stage1/cohere/json/repository_test.go",
+    "line": 90,
+    "old": "body",
+    "new": "return corpusPin{}, 0, nil",
+    "function": "validateCorpus"
+  },
+  {
+    "id": "P01",
+    "kind": "probe",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "body",
+    "new": "return nil, nil",
+    "function": "Lower"
+  },
+  {
+    "id": "P02",
+    "kind": "probe",
+    "file": "stage1/cohere/json/builds_test.go",
+    "line": 36,
+    "old": "body",
+    "new": "return nil, nil",
+    "function": "jsonGoToolchain"
+  },
+  {
+    "id": "P03",
+    "kind": "probe",
+    "file": "stage1/cohere/json/chunks_test.go",
+    "line": 24,
+    "old": "body",
+    "new": "return nil",
+    "function": "chunkRanges"
+  },
+  {
+    "id": "P04",
+    "kind": "probe",
+    "file": "stage1/cohere/json/chunks_test.go",
+    "line": 71,
+    "old": "body",
+    "new": "return run{}, nil",
+    "function": "joinNativeChunks"
+  },
+  {
+    "id": "P05",
+    "kind": "probe",
+    "file": "stage1/cohere/json/audit_test.go",
+    "line": 30,
+    "old": "body",
+    "new": "return false",
+    "function": "sameAnswer"
+  },
+  {
+    "id": "P06",
+    "kind": "probe",
+    "file": "stage1/cohere/json/pin_test.go",
+    "line": 77,
+    "old": "body",
+    "new": "return nil",
+    "function": "corpusPinError"
+  },
+  {
+    "id": "P07",
+    "kind": "probe",
+    "file": "stage1/cohere/json/repository_test.go",
+    "line": 90,
+    "old": "body",
+    "new": "return corpusPin{}, 0, nil",
+    "function": "validateCorpus"
+  },
+  {
+    "id": "P08",
+    "kind": "probe",
+    "file": "stage1/cohere/json/sample_test.go",
+    "line": 14,
+    "old": "body",
+    "new": "return nil",
+    "function": "sampledCorpusCases"
+  },
+  {
+    "id": "P09",
+    "kind": "probe",
+    "file": "stage1/cohere/json/performance_test.go",
+    "line": 57,
+    "old": "string(side.result.stdout) == expected",
+    "new": "false",
+    "function": null
+  }
+]

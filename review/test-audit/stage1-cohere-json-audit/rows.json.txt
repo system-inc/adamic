@@ -1,0 +1,555 @@
+[
+  {
+    "test": "TestUpstreamNumericSeparatorGap",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/audit_test.go",
+    "seconds": 1.074,
+    "oracle": "Go cohere and Prettier 3.9.6 gap behavior; no Adamic execution. W01 is only a harness failure, excluded from worth.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01 audit_test.go:59: Prettier's gap changed for probe.json \"[1__0]\": {Output: Error:A numeric separator is only allowed between two digits. (1:3)}; update GAPS.md",
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > W01.log 2>&1; audit_test.go:59: Prettier's gap changed for probe.json \"[1__0]\": {Output: Error:A numeric separator is only allowed between two digits. (1:3)}; update GAPS.md",
+    "cannot_judge_reason": "Only Go cohere and Prettier are executed; port-only production mutation cannot reach this row.",
+    "timing_trials": [
+      1.1,
+      1.074,
+      1.055
+    ]
+  },
+  {
+    "test": "TestExternalComparisonCatchesThreePrinterMutants",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/audit_test.go",
+    "seconds": 2.368,
+    "oracle": "Prettier 3.9.6 versus Go cohere bytes, acceptance and successful-mutant controls. Check weakened to accept every answer.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01 audit_test.go:368: external comparison did not catch the mutant",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > W01.log 2>&1; audit_test.go:368: external comparison did not catch the mutant",
+    "timing_trials": [
+      11.283,
+      2.368,
+      2.34
+    ]
+  },
+  {
+    "test": "TestJSONGoToolchainStable",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/builds_test.go",
+    "seconds": 0.029,
+    "oracle": "Self-written repeated build-key equality; it never requires a nonempty toolchain identity.",
+    "oracle_kind": "self",
+    "kills": [
+      "S01"
+    ],
+    "unique_kills": [
+      "S01"
+    ],
+    "last_proven_fail": "S01 builds_test.go:365: unchanged Go toolchain produced different product keys",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=S01 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/S01 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > S01.log 2>&1; builds_test.go:365: unchanged Go toolchain produced different product keys",
+    "timing_trials": [
+      0.028,
+      0.029,
+      0.033
+    ]
+  },
+  {
+    "test": "TestNativeChunkPlan",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/chunks_test.go",
+    "seconds": 0.011,
+    "oracle": "Self-written shard-count, contiguous ranges and final-bound expectations.",
+    "oracle_kind": "self",
+    "kills": [
+      "S02",
+      "S04"
+    ],
+    "unique_kills": [
+      "S02"
+    ],
+    "last_proven_fail": "S04 chunks_test.go:105: lost/repeated cases: [{ 0 0}]",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P03"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=S04 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/S04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > S04.log 2>&1; chunks_test.go:105: lost/repeated cases: [{ 0 0}]",
+    "timing_trials": [
+      0.015,
+      0.011,
+      0.008
+    ]
+  },
+  {
+    "test": "TestNativeChunkDifferenceNamesCase",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/chunks_test.go",
+    "seconds": 0.008,
+    "oracle": "Self-written ordered control and planted one-byte diagnostic; join check weakened to return reference bytes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W02 chunks_test.go:129: one-byte mutant survived or lost its case: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=W02 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/W02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > W02.log 2>&1; chunks_test.go:129: one-byte mutant survived or lost its case: <nil>",
+    "timing_trials": [
+      0.008,
+      0.01,
+      0.008
+    ]
+  },
+  {
+    "test": "TestDocumentedStageZeroGaps",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/gaps_test.go",
+    "seconds": 0.122,
+    "oracle": "Node runs source; self-written lower refusal substrings and Node stdout. Production kills establish diagnostic text coverage only.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02"
+    ],
+    "last_proven_fail": "M02 gaps_test.go:34: gap changed: /workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts:3:1: stage 0 can't lower a catch around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet; update GAPS.md",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > M02.log 2>&1; gaps_test.go:34: gap changed: /workspace/adamic/stage1/cohere/json/gaps/repeatInTry.ts:3:1: stage 0 can't lower a catch around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet; update GAPS.md",
+    "timing_trials": [
+      0.143,
+      0.122,
+      0.121
+    ]
+  },
+  {
+    "test": "TestClosedEmptyFallbackGap",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/gaps_test.go",
+    "seconds": 0.323,
+    "oracle": "Node source, native and JavaScript backend all checked against self-written 0 newline; LeakSanitizer checks native leaks.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M03"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "M03 gaps_test.go:63: native: 0 \"1\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > M03.log 2>&1; gaps_test.go:63: native: 0 \"1\\n\"",
+    "timing_trials": [
+      0.327,
+      0.305,
+      0.323
+    ]
+  },
+  {
+    "test": "TestProfileSnapshotsAgree",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/performance_test.go",
+    "seconds": 68.57,
+    "oracle": "Go cohere exact bytes, exit and stderr over all 3636 corpus cases. Narrowed to reconstructed final snapshot; two snapshots exceeded 90 seconds.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04 performance_test.go:27: /tmp/u102/port/M04/product case 0 .claude/settings.json byte 8: got \"ok\\t{\\\\n   \\\"$schema\\\": \\\"https://json.schemastore.org/claude-code-settings.json\\\",\\\\n   \\\"hooks\\\": {\\\\n      \\\"PreToolUse\\\": [\\\\n         {\\\\n            \\\"matcher\\\": \\\"Bash\\\",\\\\n            \\\"hooks\\\": [\\\\n               {\\\\n     \"; Go \"ok\\t{\\\\n  \\\"$schema\\\": \\\"https://json.schemastore.org/claude-code-settings.json\\\",\\\\n  \\\"hooks\\\": {\\\\n    \\\"PreToolUse\\\": [\\\\n      {\\\\n        \\\"matcher\\\": \\\"Bash\\\",\\\\n        \\\"hooks\\\": [\\\\n          {\\\\n            \\\"type\\\": \\\"comm\"",
+    "verdict": "slow-worthy",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P10"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_JSON_PROFILE_BINARIES=/tmp/u102/port/M04/product timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run ^TestProfileSnapshotsAgree$ > M04-profile.log 2>&1; performance_test.go:27: /tmp/u102/port/M04/product case 0 .claude/settings.json byte 8: got \"ok\\t{\\\\n   \\\"$schema\\\": \\\"https://json.schemastore.org/claude-code-settings.json\\\",\\\\n   \\\"hooks\\\": {\\\\n      \\\"PreToolUse\\\": [\\\\n         {\\\\n            \\\"matcher\\\": \\\"Bash\\\",\\\\n            \\\"hooks\\\": [\\\\n               {\\\\n     \"; Go \"ok\\t{\\\\n  \\\"$schema\\\": \\\"https://json.schemastore.org/claude-code-settings.json\\\",\\\\n  \\\"hooks\\\": {\\\\n    \\\"PreToolUse\\\": [\\\\n      {\\\\n        \\\"matcher\\\": \\\"Bash\\\",\\\\n        \\\"hooks\\\": [\\\\n          {\\\\n            \\\"type\\\": \\\"comm\"",
+    "timing_trials": [
+      67.47,
+      68.57,
+      69.619
+    ]
+  },
+  {
+    "test": "TestCachedWidthMutantIsCaught",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/performance_test.go",
+    "seconds": 6.428,
+    "oracle": "Go cohere bytes and successful native/Node mutant execution. Only negative equality checks; constant-false equality still passes.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W04 performance_test.go:58: native release failed to catch zero cached width",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=W04 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/W04 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > W04.log 2>&1; performance_test.go:58: native release failed to catch zero cached width",
+    "timing_trials": [
+      6.418,
+      7.134,
+      6.428
+    ]
+  },
+  {
+    "test": "TestCorpusPinDiagnostics",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/pin_test.go",
+    "seconds": 0.008,
+    "oracle": "Self-written missing/extra/changed-text diagnostics plus order-independent positive control.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W03 pin_test.go:166: pin mutant survived: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P06"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=W03 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/W03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > W03.log 2>&1; pin_test.go:166: pin mutant survived: <nil>",
+    "vacuous_subcases": [
+      "order-independent positive control passes P06"
+    ],
+    "timing_trials": [
+      0.01,
+      0.008,
+      0.008
+    ]
+  },
+  {
+    "test": "TestCorpusPinRejectsMissingProvisionedInputs",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/pin_test.go",
+    "seconds": 0.527,
+    "oracle": "Git HEAD and committed self-written corpus pin; missing 18 provisioned inputs must name file and group count.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W05 pin_test.go:199: short-box pin mutant survived: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P07"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=W05 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/W05 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > W05.log 2>&1; pin_test.go:199: short-box pin mutant survived: <nil>",
+    "vacuous_subcases": [
+      "corpusCases positive pin verification passes P07"
+    ],
+    "timing_trials": [
+      0.504,
+      0.544,
+      0.527
+    ]
+  },
+  {
+    "test": "TestCorpusPinBeforeSampling",
+    "package": "stage1/cohere/json",
+    "file": "stage1/cohere/json/pin_test.go",
+    "seconds": 0.769,
+    "oracle": "Self-written changed-path, 34 fixed controls and smaller sample expectations; checks counts and inclusion, not formatter bytes.",
+    "oracle_kind": "self",
+    "kills": [
+      "S03"
+    ],
+    "unique_kills": [
+      "S03"
+    ],
+    "last_proven_fail": "S03 pin_test.go:226: sample changed/controls/count: true 0 115",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P08"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUpstreamNumericSeparatorGap",
+      "TestExternalComparisonCatchesThreePrinterMutants",
+      "TestJSONGoToolchainStable",
+      "TestNativeChunkPlan",
+      "TestNativeChunkDifferenceNamesCase",
+      "TestDocumentedStageZeroGaps",
+      "TestClosedEmptyFallbackGap",
+      "TestProfileSnapshotsAgree",
+      "TestCachedWidthMutantIsCaught",
+      "TestCorpusPinDiagnostics",
+      "TestCorpusPinRejectsMissingProvisionedInputs",
+      "TestCorpusPinBeforeSampling",
+      "TestRepositoryCorpusMutants",
+      "TestRepositoryLandingWithoutPinEdit",
+      "TestRepositoryRequiresGit"
+    ],
+    "evidence": "ADAMIC_MUTANT=S03 ADAMIC_BUILD_CACHE_DIR=/tmp/u102/cache/S03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/json/ -run \"$R\" > S03.log 2>&1; pin_test.go:226: sample changed/controls/count: true 0 115",
+    "timing_trials": [
+      0.737,
+      0.803,
+      0.769
+    ]
+  }
+]
