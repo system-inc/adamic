@@ -163,3 +163,46 @@ func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(t *testing.T) {
 	}()
 	reproducible([]string{"-ldflags=-s"})
 }
+
+// GoTestBinary keys the package's test files and what only its test imports, builds with the reproducible flags so
+// the binary carries no checkout path (#hff1651), and the product runs as a test binary.
+// Not parallel: points the build cache (ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG) and the store at this test through t.Setenv.
+func TestGoTestBinaryKeysTheTestAndCarriesNoCheckoutPath(t *testing.T) {
+	_, log := cached(t)
+	// The flags are GoTestBinary's own to set: a machine's GOFLAGS (a gate box's env.sh, or go's own env file) adding
+	// -trimpath would hide their absence.
+	t.Setenv("GOENV", "off")
+	t.Setenv("GOFLAGS", "")
+	root, err := repositoryRoot()
+	if err != nil {
+		t.Fatal(err)
+	}
+	inputs, err := goInputs(true, ".", "oracle", "./internal/buildcache/testdata/oracle", reproducible(nil), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{"internal/buildcache/testdata/oracle/oracle.go", "internal/buildcache/testdata/oracle/oracle_test.go", "internal/buildcache/testdata/oracle/helper/helper.go"} {
+		if !slices.Contains(inputs.Files, want) {
+			t.Fatalf("%s isn't in the key's files: %v", want, inputs.Files)
+		}
+	}
+	if !slices.ContainsFunc(inputs.Flags, func(flag string) bool { return strings.HasPrefix(flag, "GOFLAGS=") }) {
+		t.Fatalf("the go flags aren't in the key: %v", inputs.Flags)
+	}
+	binary := GoTestBinary(t, ".", "oracle", "./internal/buildcache/testdata/oracle", nil)
+	content, err := os.ReadFile(binary)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(string(content), root) {
+		t.Fatalf("the test binary carries the checkout path %s", root)
+	}
+	output, err := exec.Command(binary, "-test.run", "^TestAnswer$", "-test.v").CombinedOutput()
+	if err != nil || !strings.Contains(string(output), "--- PASS: TestAnswer") {
+		t.Fatalf("the product ran: %v\n%s", err, output)
+	}
+	GoTestBinary(t, ".", "oracle", "./internal/buildcache/testdata/oracle", nil)
+	if lines, _ := os.ReadFile(log); strings.Count(string(lines), " miss ") != 1 || strings.Count(string(lines), " hit ") != 1 {
+		t.Fatalf("census: %q", lines)
+	}
+}

@@ -45,6 +45,34 @@ func GoBuild(t testing.TB, output, pkg string, arguments []string, environment .
 	return filepath.Join(directory, output)
 }
 
+// GoTestBinary is the product of 'go test -c <arguments> -o <output> <pkg>' run in directory, a directory of the
+// repository such as "cohere" whose module holds the package, with environment added: an oracle a test runs as a
+// process. It's built and keyed as GoBuild is, with the package's test files in the key (#hff1651, Oct 9: products
+// that ran go test -c by hand carried their checkout path and were keyed without the go flags, so a stored oracle
+// never matched a rebuild from another tree).
+func GoTestBinary(t testing.TB, directory, output, pkg string, arguments []string, environment ...string) string {
+	t.Helper()
+	arguments = reproducible(arguments)
+	inputs, err := goInputs(true, directory, output, pkg, arguments, environment)
+	if err != nil {
+		t.Fatalf("test binary %s: %v", pkg, err)
+	}
+	root, _ := repositoryRoot()
+	if slices.Contains(inputs.Flags, rebuildEverything) {
+		arguments = append([]string{"-a"}, arguments...)
+	}
+	product := Product(t, inputs, func(product string) error {
+		command := exec.Command("go", append(append(append([]string{"test", "-c"}, arguments...), "-o", filepath.Join(product, output)), pkg)...)
+		command.Dir = filepath.Join(root, directory)
+		command.Env = append(os.Environ(), environment...)
+		if combined, err := command.CombinedOutput(); err != nil {
+			return fmt.Errorf("go test -c %s: %v\n%s", pkg, err, combined)
+		}
+		return nil
+	})
+	return filepath.Join(product, output)
+}
+
 // reproducible adds what makes a build's bytes independent of where the checkout sits and which commit it's at:
 // without -trimpath and an empty build ID a cgo product differs between two checkout paths in Go's build ID alone
 // (measured Oct 9). Without -buildvcs=false every binary built in the repository stamps the commit (vcs.revision, 40
@@ -54,7 +82,7 @@ func reproducible(arguments []string) []string {
 	kept := []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
 	for _, argument := range arguments {
 		if argument == "-trimpath" || strings.HasPrefix(argument, "-ldflags") || strings.HasPrefix(argument, "-buildvcs") {
-			panic("buildcache.GoBuild sets -trimpath, -ldflags and -buildvcs itself, for a product that's the same from any checkout path and commit")
+			panic("buildcache.GoBuild and GoTestBinary set -trimpath, -ldflags and -buildvcs themselves, for a product that's the same from any checkout path and commit")
 		}
 	}
 	return append(kept, arguments...)
@@ -73,6 +101,12 @@ var goEnvironment = []string{"GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIME
 
 // GoInputs is GoBuild's key: what go list says the build compiles, with everything that can change its output.
 func GoInputs(output, pkg string, arguments []string, environment []string) (Inputs, error) {
+	return goInputs(false, ".", output, pkg, arguments, environment)
+}
+
+// goInputs is the key of a go build, or with test of a go test -c, of pkg as seen from directory, a directory of the
+// repository: the build runs there, so its module and go.work are the ones go itself resolves.
+func goInputs(test bool, directory, output, pkg string, arguments []string, environment []string) (Inputs, error) {
 	root, err := repositoryRoot()
 	if err != nil {
 		return Inputs{}, err
@@ -97,7 +131,7 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 	}
 	run := func(arguments ...string) ([]byte, error) {
 		command := exec.Command("go", arguments...)
-		command.Dir = root
+		command.Dir = filepath.Join(root, directory)
 		command.Env = append(os.Environ(), environment...)
 		output, err := command.Output()
 		if err != nil {
@@ -113,7 +147,11 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 	if overlayPath != "" {
 		listed = append(listed, "-overlay="+overlayPath)
 	}
-	listing, err := run(append(append([]string{"list", "-deps", "-json"}, listed...), pkg)...)
+	command := []string{"list", "-deps", "-json"}
+	if test {
+		command = append(command, "-test")
+	}
+	listing, err := run(append(append(command, listed...), pkg)...)
 	if err != nil {
 		return Inputs{}, err
 	}
@@ -121,7 +159,17 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 	outsideHeaders := false
 	add := func(directory string, names []string) error {
 		for _, name := range names {
-			relative, err := filepath.Rel(root, filepath.Join(directory, name))
+			// With -test, a test variant lists the package's _test.go files too, and files go generated (its test main,
+			// cgo's output) by absolute path in go's own cache: those follow from the inputs keyed here, so only files
+			// inside the repository are named.
+			path := filepath.Join(directory, name)
+			if filepath.IsAbs(name) {
+				if !inside(root, name) {
+					continue
+				}
+				path = name
+			}
+			relative, err := filepath.Rel(root, path)
 			if err != nil {
 				return err
 			}
@@ -191,7 +239,11 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 	for _, target := range overlay.files {
 		files[target] = true
 	}
-	inputs := Inputs{Name: "go build " + pkg + " " + output, Flags: append([]string{"arguments " + strings.Join(keyed, " ")}, overlay.flags...), Toolchain: []string{Tool("go", "version")}}
+	name := "go build " + pkg + " " + output
+	if test {
+		name = "go test -c " + directory + " " + pkg + " " + output
+	}
+	inputs := Inputs{Name: name, Flags: append([]string{"arguments " + strings.Join(keyed, " ")}, overlay.flags...), Toolchain: []string{Tool("go", "version")}}
 	if outsideHeaders {
 		inputs.Flags = append(inputs.Flags, rebuildEverything)
 	}
