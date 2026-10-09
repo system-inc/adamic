@@ -21,11 +21,26 @@ const testCommentMutantsShards = 5
 // its owner. Every unit checks all witnesses with the original sanitizer/leak checks.
 // ADAMIC_TEST_SHARD=i/n selects units locally; unset runs every unit. The generated
 // witnesses come from pinned cohere 7945d102a6c18dd36adf9114a758ce646e8b2359.
-func TestCommentMutants_000(t *testing.T) { runCommentMutant(t, 0) }
-func TestCommentMutants_001(t *testing.T) { runCommentMutant(t, 1) }
-func TestCommentMutants_002(t *testing.T) { runCommentMutant(t, 2) }
-func TestCommentMutants_003(t *testing.T) { runCommentMutant(t, 3) }
-func TestCommentMutants_004(t *testing.T) { runCommentMutant(t, 4) }
+func TestCommentMutants_000(t *testing.T) {
+	t.Parallel()
+	runCommentMutant(t, 0)
+}
+func TestCommentMutants_001(t *testing.T) {
+	t.Parallel()
+	runCommentMutant(t, 1)
+}
+func TestCommentMutants_002(t *testing.T) {
+	t.Parallel()
+	runCommentMutant(t, 2)
+}
+func TestCommentMutants_003(t *testing.T) {
+	t.Parallel()
+	runCommentMutant(t, 3)
+}
+func TestCommentMutants_004(t *testing.T) {
+	t.Parallel()
+	runCommentMutant(t, 4)
+}
 
 func commentMutants() []struct{ file, old, new string } {
 	return []struct{ file, old, new string }{
@@ -39,7 +54,6 @@ func commentMutants() []struct{ file, old, new string } {
 
 func runCommentMutant(t *testing.T, index int) {
 	t.Helper()
-	t.Parallel()
 	mutants := commentMutants()
 	if len(mutants) != testCommentMutantsShards {
 		t.Fatalf("enumerated %d mutants, declared %d shards", len(mutants), testCommentMutantsShards)
@@ -124,6 +138,7 @@ func requireCommentMutantKilled(t *testing.T, got, want []byte) {
 }
 
 func TestCommentMutantsUnion(t *testing.T) {
+	t.Parallel()
 	mutants := commentMutants()
 	if len(mutants) != testCommentMutantsShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(mutants), testCommentMutantsShards)
@@ -173,6 +188,7 @@ func TestCommentMutantsUnion(t *testing.T) {
 }
 
 func TestCommentMutantsPlantedFailure(t *testing.T) {
+	t.Parallel()
 	binary, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
