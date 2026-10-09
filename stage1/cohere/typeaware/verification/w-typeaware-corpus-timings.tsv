@@ -1,0 +1,35 @@
+# WIP-only evidence; no PR and no test source changes. Measured main 7911f07bbde04f07d9b505e219f0d78526ec0291.
+# Clean TypeScript pin 050880ce59e30b356b686bd3144efe24f875ebc8 at /workspace/scratch/typeaware-corpus/typescript.
+# ADAMIC_TYPESCRIPT_SOURCE set to that checkout, its bin first on PATH; ADAMIC_TYPEAWARE_BENCH and ADAMIC_VOLUME_REPOSITORY_MANIFEST unset.
+# Four-CPU quota, GOMAXPROCS=4, Go 1.27.1 and warm Go cache; products prebuilt individually before leaves. Source checkout and measured revision stable throughout.
+# Each leaf: go test ./stage1/cohere/typeaware -run ^LEAF$ -count=1 -timeout 90s -test.skip ^TestProduct_ -v; product units -timeout 600s.
+# command_wall_s includes go startup/compilation; unit_wall_s is Go's leaf duration; setup/own are logs inside the leaf.
+# Current TypeAware mapping: _012–013 cost/query-2–3; _014 agreement/compiler (all 77 files); _015–017 bench/compiler-1–3; _018–020 bench/generated-1–3.
+# suite_test.go's eight agreement/compiler-00–07 groups belong to SixRuleAgreementAndMutants, not the requested TypeAware family.
+# _014 passed twice: 15.69s (10.633885 setup / 5.059253 own), 15.51s (10.768191 / 4.746682); command walls 18.163s and 18.013s.
+# Compiler outputs agree: 6961 bytes, findings 2, queries 245; all 77 file markers validated.
+# Union PASS: 349 unique cases across 21 shards; planted-failure check PASS. Other eight requested leaves SKIP because benchmark flag unset, not missing compiler corpus.
+kind	unit	status	command_wall_s	unit_wall_s	setup_s	own_s	content	cases
+product	TestProduct_stage0	PASS	10.786	7.59	-	-	-	-
+product	TestProduct_checker	PASS	11.225	8.77	-	-	-	-
+product	TestProduct_checker_asan	PASS	9.440	7.39	-	-	-	-
+product	TestProduct_typeaware_lowered	PASS	11.024	9.03	-	-	-	-
+product	TestProduct_typeaware_native	PASS	13.233	11.31	-	-	-	-
+product	TestProduct_typeaware_native_asan	PASS	24.917	22.86	-	-	-	-
+product	TestProduct_typeaware_oracle	PASS	5.842	3.63	-	-	-	-
+product	TestProduct_query_cost_lowered	PASS	3.675	1.72	-	-	-	-
+product	TestProduct_query_cost_native	PASS	9.815	7.75	-	-	-	-
+leaf	TestTypeAwareAgreementAndMutants_012	SKIP	13.542	11.35	11.353568	0.000068	cost/query-2	0
+leaf	TestTypeAwareAgreementAndMutants_013	SKIP	14.323	11.07	11.066945	0.000024	cost/query-3	0
+leaf	TestTypeAwareAgreementAndMutants_014	PASS	18.163	15.69	10.633885	5.059253	agreement/compiler	77
+leaf	TestTypeAwareAgreementAndMutants_015	SKIP	14.147	10.51	10.512358	0.000017	bench/compiler-1	0
+leaf	TestTypeAwareAgreementAndMutants_016	SKIP	12.798	10.43	10.431126	0.000019	bench/compiler-2	0
+leaf	TestTypeAwareAgreementAndMutants_017	SKIP	12.842	10.71	10.710595	0.000054	bench/compiler-3	0
+leaf	TestTypeAwareAgreementAndMutants_018	SKIP	12.788	10.53	10.533293	0.000024	bench/generated-1	0
+leaf	TestTypeAwareAgreementAndMutants_019	SKIP	12.667	10.43	10.427615	0.000017	bench/generated-2	0
+leaf	TestTypeAwareAgreementAndMutants_020	SKIP	12.640	10.33	10.334464	0.000025	bench/generated-3	0
+check	TestTypeAwareAgreementAndMutantsUnion	PASS	12.542	10.35	10.349879	-	-	-
+check	TestTypeAwareTopShardPlantedFailure	PASS	2.071	0.02	-	-	-	-
+# Active compiler leaf repeat, same stable products and revision:
+kind	unit	status	command_wall_s	unit_wall_s	setup_s	own_s	content	cases
+leaf	TestTypeAwareAgreementAndMutants_014	PASS	18.013	15.51	10.768191	4.746682	agreement/compiler	77
