@@ -520,3 +520,35 @@ Their zero reference counts prevent retain/release writes, and the literal
 index marker prevents lazy string-cache writes. Error objects and messages
 are owned per call; adamic_thrown remains thread-local. The formatting header
 only declares functions and adds no storage.
+
+## Area runtime additions
+
+Reviewed files: `runtime-file:census_small.c`, `runtime-file:node_host.c`,
+`runtime-file:regexp_replace.c`, `runtime-file:typed_array.c`,
+`runtime-file:view_callables_contract.h`, `runtime-file:view_representations.h`,
+`runtime-file:view_unions_mixed.c`, `runtime-file:view_unions_mixed.h`,
+`runtime-file:view_unions_untagged.c`, `runtime-file:view_unions_untagged.h`.
+
+The census helper owns no storage. RegExp callback replacement uses automatic
+or per-call heap arrays and the existing thread-local pending-error protocol;
+its regex receiver is mutable caller-owned state, not a static. Typed arrays
+have caller-owned element buffers and const diagnostic literals. View contracts
+and selectors have const diagnostic literals, borrowed producer metadata and
+call-local selection/recursion state; they add no mutable static objects.
+
+- `node_host.c:current_directory:1`: process-wide cached cwd, populated lazily
+  by cwd and invalidated by chdir and exit cleanup. It has no lock and is not
+  safe for concurrent cwd/chdir calls. This inventory records the restriction;
+  it does not certify host directory operations as parallel-safe.
+- `node_host.c:cleanup_registered:1`: process-wide lazy atexit registration
+  flag, written by cwd without a lock. It has the same serialization requirement.
+- `node_host.c:error_name:1`: C-initialized immortal Error literal; zero count
+  prevents retain/release writes and the literal-index sentinel prevents string
+  cache writes. No writers after initialization.
+- `string_slice_impl.h:characters:1`: C-initialized immortal ASCII character
+  table; each zero-count string has the literal-index sentinel. Character lookup
+  returns a borrowed immutable entry and never initializes or updates the table.
+
+`map_set.c`'s collection_next declaration uses adamic_code_function, a function
+*type* alias from adamic.h. It is a function prototype, not a mutable pointer or
+registry. The inventory scanner separately checks pointers to this function type.

@@ -163,9 +163,15 @@ func (c *Checkout) TryFile(path string, directory string) Outcome {
 	if err := os.WriteFile(filepath.Join(directory, "program.mjs"), javascript.Stdout, 0o644); err != nil {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
+	// Runtime feature switches affect layouts as well as linked functions. The
+	// archive must use the same switches as this particular emitted program.
+	runtime, err := native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native", "runtime"), string(lowered.Stdout), native.Options{Sanitize: true})
+	if err != nil {
+		return Outcome{Verdict: Finding, Key: "runtime build failed", Detail: err.Error()}
+	}
 	binary := filepath.Join(directory, "program")
-	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(c.runtime), "-o", binary, filepath.Join(directory, "main.c"))
-	arguments = append(arguments, native.RuntimeLinkFlags(c.runtime)...)
+	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(runtime), "-o", binary, filepath.Join(directory, "main.c"))
+	arguments = append(arguments, native.RuntimeLinkFlags(runtime)...)
 	arguments = append(arguments, "-lm")
 	if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
 		key := "clang refused the C"
@@ -342,8 +348,16 @@ func (c *Checkout) parallelRuns(outcome Outcome, binary string, directory string
 	if c.tsanRuntime == "" {
 		return outcome
 	}
+	source, err := os.ReadFile(filepath.Join(directory, "main.c"))
+	if err != nil {
+		return Outcome{Verdict: Finding, Key: "reading TSan source failed", Detail: err.Error()}
+	}
+	runtime, err := native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native", "runtime"), string(source), native.Options{ThreadSanitize: true})
+	if err != nil {
+		return Outcome{Verdict: Finding, Key: "TSan runtime build failed", Detail: err.Error()}
+	}
 	tsanBinary := filepath.Join(directory, "program-tsan")
-	if err := c.link(tsanBinary, directory, native.Options{ThreadSanitize: true}, c.tsanRuntime); err != nil {
+	if err := c.link(tsanBinary, directory, native.Options{ThreadSanitize: true}, runtime); err != nil {
 		return Outcome{Verdict: Finding, Key: "clang refused the TSan build", Detail: err.Error()}
 	}
 	for _, threads := range []string{"", "1"} {

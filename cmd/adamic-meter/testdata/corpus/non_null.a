@@ -1,0 +1,2 @@
+const values: readonly number[] = [1];
+console.log(`${values[0]!}`);
