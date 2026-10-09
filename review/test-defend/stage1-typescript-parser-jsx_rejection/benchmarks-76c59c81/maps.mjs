@@ -1,0 +1,4 @@
+import {stripTypeScriptTypes} from 'node:module';
+import {readFileSync,writeFileSync,readdirSync,mkdirSync} from 'node:fs';
+const root='/workspace/adamic';const out=root+'/review/test-defend/stage1-typescript-parser-jsx_rejection/benchmarks-76c59c81/source-maps';mkdirSync(out,{recursive:true});
+for(const directory of ['stage1/typescript/parser','stage1/typescript/scanner']) for(const file of readdirSync(root+'/'+directory).filter(f=>f.endsWith('.ts'))){const source=readFileSync(root+'/'+directory+'/'+file,'utf8');const transformed=stripTypeScriptTypes(source,{mode:'transform'});const mapped=stripTypeScriptTypes(source,{mode:'transform',sourceMap:true});const b64=mapped.match(/sourceMappingURL=data:application\/json;base64,([^\s]+)/)[1];writeFileSync(out+'/'+(directory+'/'+file).replaceAll('/','__')+'.json',JSON.stringify({transformed,map:JSON.parse(Buffer.from(b64,'base64').toString())}));}
