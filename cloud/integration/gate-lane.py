@@ -52,6 +52,13 @@ def post(task, text):
 
 def main():
     os.makedirs(state, exist_ok=True)
+    # One run at a time: launchd starts one a minute, and a landing can take longer than that.
+    import fcntl
+    lock = open(os.path.join(state, "lock"), "w")
+    try:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        return
     seen = os.path.join(state, "seen")
     told = set(open(seen).read().split("\n")) if os.path.exists(seen) else set()
     if not os.path.exists(candidates):
