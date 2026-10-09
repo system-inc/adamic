@@ -30,7 +30,7 @@ const compilerAgreementFileBuckets = 64
 const compilerAgreementRuleGroups = 16
 const compilerAgreementFixBuckets = 256
 const compilerAgreementSides = 5
-const testCompilerAndStage1AgreeShards = (compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets) * compilerAgreementSides
+const testCompilerAndStage1AgreeShards = (compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets + 1) * compilerAgreementSides
 
 // Stable file and rule keys, rather than corpus ordinals, keep growing corpora covered.
 func compilerAgreementBucket(key string, count int) int {
@@ -98,6 +98,11 @@ func compilerAgreementCases(t *testing.T) []compilerAgreementCase {
 
 func compilerAgreementOwner(c compilerAgreementCase) int {
 	if c.rule == "all" {
+		// The pinned compiler's largest file gets an indivisible fix unit.
+		// Growing repository files still use the static hash buckets below.
+		if c.key == "compiler/src/compiler/checker.ts" {
+			return compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementFixBuckets
+		}
 		// Fix interactions remain indivisible; use smaller file buckets for them.
 		return compilerAgreementFileBuckets*compilerAgreementRuleGroups + compilerAgreementBucket(c.key, compilerAgreementFixBuckets)
 	}
@@ -13163,6 +13168,16 @@ func TestCompilerAndStage1Agree_6397(t *testing.T) { t.Parallel(); compilerAgree
 func TestCompilerAndStage1Agree_6398(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6398) }
 
 func TestCompilerAndStage1Agree_6399(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6399) }
+
+func TestCompilerAndStage1Agree_6400(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6400) }
+
+func TestCompilerAndStage1Agree_6401(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6401) }
+
+func TestCompilerAndStage1Agree_6402(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6402) }
+
+func TestCompilerAndStage1Agree_6403(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6403) }
+
+func TestCompilerAndStage1Agree_6404(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6404) }
 
 func compilerAgreementCompare(t *testing.T, got, want []byte) {
 	t.Helper()
