@@ -73,3 +73,7 @@ Setup first failed because the generated Go build cache occupied 25 GB and the d
 ## Item 2 implementation
 
 Named checked .ts calls and their direction report are built on the selected train. See stage3/scouts/step09/predicates/checked-report.md for source Node pins, independent removed-guard mutants, allocation rows and supported forms. Complete untagged membership, overlapping tag contracts on a narrowing false branch, and unproved indirect calls remain pending. Positive tagged results use the complete shared checked views already present on the train. .a bodies and overload claims still require independent body proof.
+
+## Item 3 implementation
+
+Independent qualified-enum and immutable kind-alias proofs are built for the largest candidate group. Checked predicate directions retire when the body proves the tag partition and the complete target's remaining field view is admitted. Optional declarations remain intact; an optional field alias read still stops on this train and is recorded as pending. See stage3/scouts/step09/predicates/kind-proof-report.md for body-liar refusals, executable default-return mutants, the readonly-getter purity mutant, exact commands and all four new counts rows. The original 577-body measurement is not relabelled as an adapted-tree pass.

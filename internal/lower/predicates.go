@@ -309,6 +309,15 @@ func (p *predicateFlowProof) literal(node *ast.Node) bool {
 		return true
 	case ast.KindIdentifier:
 		return node.Text() == "undefined" && p.l.checker.GetSymbolAtLocation(node) == p.l.checker.GetUndefinedSymbol()
+	case ast.KindPropertyAccessExpression:
+		// An enum member has an independently fixed scalar value. A readonly
+		// property or getter is not an enum constant and supplies no such fact.
+		symbol := p.l.checker.GetSymbolAtLocation(node)
+		if symbol == nil || symbol.Flags&ast.SymbolFlagsEnumMember == 0 {
+			return false
+		}
+		_, _, known := p.l.literalConstant(p.l.checker.GetTypeAtLocation(node))
+		return known
 	}
 	return false
 }
@@ -372,11 +381,6 @@ func (l *lowering) predicateRefusal(node *ast.Node) error {
 			members = target.Types()
 		}
 		for _, member := range members {
-			for _, property := range l.checker.GetPropertiesOfType(member) {
-				if property.Flags&ast.SymbolFlagsOptional != 0 {
-					return original
-				}
-			}
 			if _, err := l.view(node, nil, member); err != nil {
 				return err
 			}

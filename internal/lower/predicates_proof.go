@@ -31,6 +31,7 @@ type predicateVerifier struct {
 type predicatePath struct {
 	cell   int
 	locals map[*ast.Symbol]predicateTruth
+	kinds  map[*ast.Symbol]bool
 }
 
 func predicateFailure(l *lowering, node *ast.Node, path string) error {
@@ -365,7 +366,7 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 					matched = true
 					yes = v.cells[path.cell] == constant.Text()
 				}
-				if v.field != "" && test.Kind == ast.KindPropertyAccessExpression && test.Name().Text() == v.field && v.sameParameter(test.AsPropertyAccessExpression().Expression, parameter) {
+				if v.field != "" && v.kindValue(test, parameter, path) {
 					key, ok := predicateLiteral(v.l.checker.GetTypeAtLocation(constant))
 					if ok && v.constant(constant) {
 						matched = true
@@ -407,6 +408,16 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 	return 0, predicateFailure(v.l, n, "opaque test or possible mutation on this return path")
 }
 
+// An immutable scalar snapshot of this parameter's tag survives only the
+// already verified effect-free return paths. Object aliases supply no fact.
+func (v *predicateVerifier) kindValue(node *ast.Node, parameter *ast.Symbol, path predicatePath) bool {
+	node = ast.SkipParentheses(node)
+	if ast.IsIdentifier(node) {
+		return path.kinds[v.l.checker.GetSymbolAtLocation(node)]
+	}
+	return node.Kind == ast.KindPropertyAccessExpression && node.Flags&ast.NodeFlagsOptionalChain == 0 && node.Name().Text() == v.field && v.sameParameter(node.AsPropertyAccessExpression().Expression, parameter)
+}
+
 func (v *predicateVerifier) sameParameter(n *ast.Node, parameter *ast.Symbol) bool {
 	n = ast.SkipParentheses(n)
 	return ast.IsIdentifier(n) && v.l.checker.GetSymbolAtLocation(n) == parameter
@@ -419,7 +430,32 @@ func (v *predicateVerifier) constant(n *ast.Node) bool {
 		return true
 	case ast.KindPropertyAccessExpression:
 		symbol := v.l.checker.GetSymbolAtLocation(n)
-		return symbol != nil && (symbol.Flags&ast.SymbolFlagsEnumMember != 0 || v.l.checker.IsReadonlySymbol(symbol))
+		if symbol == nil {
+			return false
+		}
+		if symbol.Flags&ast.SymbolFlagsEnumMember != 0 {
+			return true
+		}
+		if !v.l.checker.IsReadonlySymbol(symbol) || len(symbol.Declarations) == 0 {
+			return false
+		}
+		// Readonly is not a purity promise. Getters and externally declared fields
+		// may dispatch effects; only independently initialized literal data qualifies.
+		for _, declaration := range symbol.Declarations {
+			if declaration.Kind != ast.KindPropertyAssignment {
+				return false
+			}
+			initializer := ast.SkipParentheses(declaration.AsPropertyAssignment().Initializer)
+			if initializer == nil {
+				return false
+			}
+			switch initializer.Kind {
+			case ast.KindStringLiteral, ast.KindNumericLiteral, ast.KindTrueKeyword, ast.KindFalseKeyword:
+			default:
+				return false
+			}
+		}
+		return true
 	}
 	return false
 }
@@ -430,9 +466,12 @@ func (v *predicateVerifier) pure(n *ast.Node) bool {
 }
 
 func copyPredicatePath(path predicatePath) predicatePath {
-	copy := predicatePath{cell: path.cell, locals: map[*ast.Symbol]predicateTruth{}}
+	copy := predicatePath{cell: path.cell, locals: map[*ast.Symbol]predicateTruth{}, kinds: map[*ast.Symbol]bool{}}
 	for symbol, value := range path.locals {
 		copy.locals[symbol] = value
+	}
+	for symbol, value := range path.kinds {
+		copy.kinds[symbol] = value
 	}
 	return copy
 }
@@ -492,6 +531,16 @@ func (v *predicateVerifier) statements(nodes []*ast.Node, parameter *ast.Symbol,
 					variable := d.AsVariableDeclaration()
 					if !ast.IsIdentifier(d.Name()) || variable.Initializer == nil {
 						return nil, predicateFailure(v.l, n, "an unproven alias on this return path")
+					}
+					if v.field != "" && v.kindValue(variable.Initializer, parameter, path) {
+						if n.AsVariableStatement().DeclarationList.Flags&ast.NodeFlagsConst == 0 {
+							return nil, predicateFailure(v.l, n, "a mutable kind alias supplies no stable discriminant fact")
+						}
+						if path.kinds == nil {
+							path.kinds = map[*ast.Symbol]bool{}
+						}
+						path.kinds[v.l.checker.GetSymbolAtLocation(d.Name())] = true
+						continue
 					}
 					value, err := v.expression(variable.Initializer, parameter, path)
 					if err != nil {

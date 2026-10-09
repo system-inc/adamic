@@ -1,0 +1,8 @@
+enum SyntaxKind { Identifier = 80, StringLiteral = 11 }
+interface Identifier { readonly kind: SyntaxKind.Identifier; readonly escapedText: string }
+interface StringLiteral { readonly kind: SyntaxKind.StringLiteral; readonly text: string }
+type Node = Identifier | StringLiteral;
+function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }
+function visit(node: Node): void { if (isIdentifier(node)) console.log(`identifier:${node.escapedText}`); else console.log(`literal:${node.text}`); }
+visit({kind:SyntaxKind.Identifier,escapedText:"name"});
+visit({kind:SyntaxKind.StringLiteral,text:"literal"});

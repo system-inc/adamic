@@ -8,8 +8,8 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Only independent whole-type body proofs retire checks. A tag-only summary
-// does not prove an open interface's other fields.
+// Independent body proofs retire predicate checks. Tag summaries still hand
+// the complete target to the shared checked-view builder for remaining fields.
 func (l *lowering) checkedPredicateBodyProven(annotation *ast.Node) bool {
 	if annotation == nil || annotation.Kind != ast.KindTypePredicate {
 		return false
@@ -18,7 +18,13 @@ func (l *lowering) checkedPredicateBodyProven(annotation *ast.Node) bool {
 		return true
 	}
 	proof, err := l.provePredicate(annotation)
-	return err == nil && !proof.TaggedView
+	if err != nil {
+		return false
+	}
+	if proof.TaggedView {
+		return l.predicateRefusal(annotation) == nil
+	}
+	return true
 }
 
 // Callback producers may retain the shared field views required by a tag proof.

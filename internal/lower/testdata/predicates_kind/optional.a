@@ -1,0 +1,10 @@
+enum SyntaxKind { Identifier = 80, StringLiteral = 11 }
+interface Node { readonly kind: number }
+interface Identifier extends Node { readonly kind: SyntaxKind.Identifier; readonly escapedText: string; readonly text?: string }
+function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }
+function visit(node: Node): void { if (isIdentifier(node)) console.log(node.escapedText); else console.log("other"); }
+const absent: Identifier = {kind:SyntaxKind.Identifier,escapedText:"absent"};
+const present: Identifier = {kind:SyntaxKind.Identifier,escapedText:"present",text:"value"};
+visit(absent);
+visit(present);
+visit({kind:SyntaxKind.StringLiteral});

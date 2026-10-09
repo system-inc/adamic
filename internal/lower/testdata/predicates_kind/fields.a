@@ -1,0 +1,6 @@
+enum SyntaxKind { Identifier = 80 }
+interface Node { readonly kind: number }
+interface Identifier extends Node { readonly kind: SyntaxKind.Identifier; readonly escapedText: string }
+function isIdentifier(node: Node): node is Identifier { return node.kind === SyntaxKind.Identifier; }
+function visit(node: Node): void { if (isIdentifier(node)) console.log(node.escapedText); }
+visit({kind:SyntaxKind.Identifier});
