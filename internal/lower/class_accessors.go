@@ -383,9 +383,11 @@ func (l *lowering) checkAccessorSpreads() error {
 		return nil
 	}
 	spread := false
+	staticSpread := false
 	check := func(node any) bool {
 		if literal, ok := node.(ir.ObjectLiteral); ok && literal.Spread != nil {
 			spread = true
+			staticSpread = staticSpread || !plainDataSpreadSource(literal.Spread)
 		}
 		return true
 	}
@@ -393,13 +395,13 @@ func (l *lowering) checkAccessorSpreads() error {
 	for _, function := range l.result.Functions {
 		walk(function.Body, check)
 	}
-	if spread && len(l.staticGlobals) > 0 {
+	if staticSpread && len(l.staticGlobals) > 0 {
 		return &NotYet{Where: l.result.Source, What: "spreading in a program with static constructor objects"}
 	}
 	if spread && setterOnly {
 		return &NotYet{Where: l.result.Source, What: "spreading a setter-only property, whose read value is undefined"}
 	}
-	if spread {
+	if spread && throwing {
 		return &NotYet{Where: l.result.Source, What: "spreading an accessor literal whose getter may throw"}
 	}
 	return nil
@@ -428,4 +430,11 @@ func (l *lowering) validateAccessorSignature(member *ast.Node, function int) err
 		return l.notYet(member, "a setter whose input needs two native words")
 	}
 	return nil
+}
+
+// A fresh data literal owns exactly these enumerable slots; reading a class field
+// while building it does not put the class constructor descriptor in the copy.
+func plainDataSpreadSource(source ir.Expression) bool {
+	literal, ok := source.(ir.ObjectLiteral)
+	return ok && literal.Class == 0 && literal.Spread == nil && !literal.Record
 }
