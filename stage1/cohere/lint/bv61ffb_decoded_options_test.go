@@ -58,7 +58,7 @@ func TestDecodedOptionsAndMutantUnion(t *testing.T) {
 	t.Parallel()
 	// Read actual top-level registrations: a missing, repeated, or misnumbered
 	// wrapper must fail even if the slice helper itself still covers every case.
-	file, err := parser.ParseFile(token.NewFileSet(), "decoded_options_shards_test.go", nil, 0)
+	file, err := parser.ParseFile(token.NewFileSet(), "bv61ffb_decoded_options_test.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -177,7 +177,7 @@ func TestDecodedOptionsAndMutantPlantedFailure(t *testing.T) {
 func decodedOptionsInputs(t *testing.T, name string) buildcache.Inputs {
 	t.Helper()
 	prepareRegistry(t, ".")
-	files := []string{"go.mod", "go.work", "stage1/cohere/lint/decoded_options_shards_test.go", "stage1/cohere/lint/shared_test.go", "stage1/cohere/lint/registry", "oracle/adamic.mjs", "cohere/TypeScript/tsc", "cohere/TypeScript-shim"}
+	files := []string{"go.mod", "go.work", "stage1/cohere/lint/bv61ffb_decoded_options_test.go", "stage1/cohere/lint/shared_test.go", "stage1/cohere/lint/registry", "oracle/adamic.mjs", "cohere/TypeScript/tsc", "cohere/TypeScript-shim"}
 	for _, file := range portFiles(t) {
 		files = append(files, filepath.ToSlash(filepath.Join("stage1/cohere/lint", file)))
 	}
@@ -243,25 +243,22 @@ func decodedOptionsBeforeTests() error {
 	if err != nil {
 		return err
 	}
-	selected := false
+	selected := filter.MatchString("TestDecodedOptionsAndMutant_Setup")
 	for shard := range testDecodedOptionsAndMutantShards {
 		selected = selected || filter.MatchString(fmt.Sprintf("TestDecodedOptionsAndMutant_%03d", shard))
 	}
 	if !selected {
 		return nil
 	}
-	return decodedOptionsInitialize(time.Time{})
+	return decodedOptionsInitialize()
 }
 
-func decodedOptionsInitialize(testDeadline time.Time) error {
+func decodedOptionsInitialize() error {
 	path := filepath.Join(sharedDirectory, "decoded-options-setup.json")
 	deadline := time.Now().Add(90 * time.Second)
-	if !testDeadline.IsZero() && testDeadline.Before(deadline) {
-		deadline = testDeadline.Add(-250 * time.Millisecond)
-	}
 	ctx, cancel := context.WithDeadline(context.Background(), deadline)
 	defer cancel()
-	command := decodedOptionsCommand(ctx, "", os.Args[0], "-test.run=^TestDecodedOptionsAndMutant_Setup$", "-test.timeout=90s", "-test.v")
+	command := decodedOptionsCommand(ctx, "", os.Args[0], "-test.run=^TestDecodedOptionsAndMutant_Setup$", "-test.timeout=0", "-test.v")
 	command.Env = append(os.Environ(), decodedOptionsSetupPath+"="+path, "ADAMIC_DECODED_OPTIONS_SETUP_DEADLINE="+strconv.FormatInt(deadline.UnixNano(), 10))
 	var output bytes.Buffer
 	command.Stdout, command.Stderr = &output, &output
@@ -293,8 +290,7 @@ func decodedOptionsSetupTest(t *testing.T) {
 	path := os.Getenv(decodedOptionsSetupPath)
 	if path == "" {
 		if decodedOptionsReady == nil {
-			deadline, _ := t.Deadline()
-			if err := decodedOptionsInitialize(deadline); err != nil {
+			if err := decodedOptionsInitialize(); err != nil {
 				t.Fatal(err)
 			}
 		}
@@ -509,5 +505,15 @@ func decodedOptionsShard(t *testing.T, shard int) {
 			t.Logf("ignored decoded-option mutant caught on %s: %s", decodedOptionsCases()[index], difference(got, s.Want))
 		}
 	}
-	t.Logf("shard-%03d cases only: %s; cooked=false", shard, time.Since(started))
+	elapsed := time.Since(started)
+	t.Logf("shard-%03d cases only: %.6fs; cooked=%t", shard, elapsed.Seconds(), elapsed >= 60*time.Second)
+	if elapsed >= 60*time.Second {
+		t.Fatal("cooked: shard exceeded 60s budget")
+	}
+}
+
+// Setup runs in a separately bounded child before the parent starts m.Run.
+func TestDecodedOptionsAndMutant_Setup(t *testing.T) {
+	t.Parallel()
+	decodedOptionsSetupTest(t)
 }

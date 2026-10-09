@@ -197,9 +197,3 @@ console.log(written('copied'));
 	}
 	t.Log("root-only import rewrite mutant caught by Node and native module loading")
 }
-
-// The bounded setup child prepares all immutable products before m.Run starts shards.
-func TestDecodedOptionsAndMutant_Setup(t *testing.T) {
-	t.Parallel()
-	decodedOptionsSetupTest(t)
-}
