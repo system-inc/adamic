@@ -516,6 +516,9 @@ class Products(unittest.TestCase):
         self.assertEqual(result["stages_exit"]["products"], 0)
         self.assertIn("products", result["steps_seconds"])
         self.assertEqual(commands[0][commands[0].index("-test.run") + 1], "^TestProduct_A$")
+        # The binary's own timeout matches the product ceiling: a 90 s -test.timeout panicked products at 90 s anyway
+        # (Oct 9 07:36Z, typeaware TestProduct_corpus_record on gocacheprog 41ff2dbe).
+        self.assertIn("-test.timeout=%ds" % run.productKillSeconds, commands[0])
         self.assertEqual(commands[1][commands[1].index("-test.skip") + 1], "^TestProduct_")
         self.assertTrue(result["product_units"][0]["product"])
         unit = next(row for row in result["units"] if row["test"] == "TestProduct_A")

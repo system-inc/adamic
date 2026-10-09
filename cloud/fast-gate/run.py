@@ -1733,7 +1733,7 @@ class Gate:
             return
         package, name = row["package"], row["test"]
         command = ["go", "tool", "test2json", "-t", "-p", package, binary,
-                   "-test.v=test2json", "-test.paniconexit0", "-test.count=1", "-test.timeout=90s",
+                   "-test.v=test2json", "-test.paniconexit0", "-test.count=1", "-test.timeout=%ds" % productKillSeconds,
                    "-test.parallel=4", "-test.run", "^%s$" % re.escape(name)]
         before = time.monotonic()
         try:
