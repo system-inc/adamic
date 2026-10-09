@@ -1,0 +1,291 @@
+[
+  {
+    "Action": "pass",
+    "Test": "TestProductionMixedOwnershipRefused",
+    "Elapsed": 0.06
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionAdamicKeepsStrictOptions",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Test": "TestNodeLibraryRejectsDifferentVersion",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionProjectSitesRetainUnconvertedErrors",
+    "Elapsed": 0.84
+  },
+  {
+    "Action": "pass",
+    "Test": "TestNodeLibraryKeepsOfficialConsoleSignatures",
+    "Elapsed": 0.89
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderNodeImportsKeepReferenceRoots",
+    "Elapsed": 1.15
+  },
+  {
+    "Action": "pass",
+    "Test": "TestCollectionIteratorDoneDiscriminatesReturn",
+    "Elapsed": 0.4
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderOwnershipAndNoCheck/noCheck",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderOwnershipAndNoCheck/mixed",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderOwnershipAndNoCheck",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionProjectPreservesCatchTypeAndLib",
+    "Elapsed": 1.26
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionLiteralContractIsPending",
+    "Elapsed": 0.73
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionNullableCallbackContractStaysError",
+    "Elapsed": 1.25
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderReferenceSources",
+    "Elapsed": 2.54
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderOptionAuditSchedulesCheck",
+    "Elapsed": 2.46
+  },
+  {
+    "Action": "pass",
+    "Test": "TestNodeLibraryUsesPinnedDeclarations",
+    "Elapsed": 3.71
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesAudit",
+    "Elapsed": 1.7
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderHostConsoleAndCompositeEntries",
+    "Elapsed": 4.3
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesSharedPrelude",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesCycle",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesCompatibleOptions",
+    "Elapsed": 0.7
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionProjectOverlaySites",
+    "Elapsed": 0.99
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectOptionsReportConfigErrors",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/strictNullChecks",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/strictFunctionTypes",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/strictBindCallApply",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/strictPropertyInitialization",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/useUnknownInCatchVariables",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/noImplicitAny",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/noImplicitThis",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/target",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/module",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/lib",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/paths",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/deduplicatePackages",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesDiamond",
+    "Elapsed": 0.79
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesTransitiveTypes",
+    "Elapsed": 6.63
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesTransitive",
+    "Elapsed": 2.08
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectOptionAttribution",
+    "Elapsed": 0.57
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderStandaloneNodeKeepsPrelude",
+    "Elapsed": 1.24
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionCompositeKeepsProjectRoots",
+    "Elapsed": 0.83
+  },
+  {
+    "Action": "pass",
+    "Test": "TestCollectionIteratorElementInference/iterable",
+    "Elapsed": 0.06
+  },
+  {
+    "Action": "pass",
+    "Test": "TestCollectionIteratorElementInference/nested-entries",
+    "Elapsed": 0.09
+  },
+  {
+    "Action": "pass",
+    "Test": "TestCollectionIteratorElementInference/set-copy",
+    "Elapsed": 0.07
+  },
+  {
+    "Action": "pass",
+    "Test": "TestCollectionIteratorElementInference/entries",
+    "Elapsed": 0.11
+  },
+  {
+    "Action": "pass",
+    "Test": "TestCollectionIteratorElementInference/callback",
+    "Elapsed": 0.09
+  },
+  {
+    "Action": "pass",
+    "Test": "TestCollectionIteratorElementInference",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectOptionsPreserveInheritedLibAndStrictness",
+    "Elapsed": 4.77
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesTypesUnionDuplicate",
+    "Elapsed": 11.2
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesTypesUnionDuplicateSkipped",
+    "Elapsed": 11.83
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesTypesUnion",
+    "Elapsed": 10.62
+  },
+  {
+    "Action": "pass",
+    "Elapsed": 15.605
+  }
+]

@@ -1,0 +1,36 @@
+[
+  {
+    "Action": "pass",
+    "Test": "TestRecordMutants",
+    "Elapsed": 0.88
+  },
+  {
+    "Action": "pass",
+    "Test": "TestRecordMutantStoredKeyFreed",
+    "Elapsed": 0.89
+  },
+  {
+    "Action": "pass",
+    "Test": "TestRecordMutantOwnSlotNull",
+    "Elapsed": 0.99
+  },
+  {
+    "Action": "pass",
+    "Test": "TestRecordMutantDeletedKey",
+    "Elapsed": 0.99
+  },
+  {
+    "Action": "pass",
+    "Test": "TestRecordMutantOverwriteLeak",
+    "Elapsed": 1.18
+  },
+  {
+    "Action": "pass",
+    "Test": "TestRecordMutantUint32Max",
+    "Elapsed": 0.66
+  },
+  {
+    "Action": "pass",
+    "Elapsed": 1.617
+  }
+]

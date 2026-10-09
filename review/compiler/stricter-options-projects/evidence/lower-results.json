@@ -1,0 +1,111 @@
+[
+  {
+    "Action": "pass",
+    "Test": "TestUnclassifiedCaughtPrototypeMemberIsNotYet/length",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Test": "TestUnclassifiedCaughtPrototypeMemberIsNotYet/name",
+    "Elapsed": 0.26
+  },
+  {
+    "Action": "pass",
+    "Test": "TestUnclassifiedCaughtPrototypeMemberIsNotYet/stack",
+    "Elapsed": 0.34
+  },
+  {
+    "Action": "pass",
+    "Test": "TestUnclassifiedCaughtPrototypeMemberIsNotYet/toString",
+    "Elapsed": 0.23
+  },
+  {
+    "Action": "pass",
+    "Test": "TestUnclassifiedCaughtPrototypeMemberIsNotYet/message",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Test": "TestUnclassifiedCaughtPrototypeMemberIsNotYet/static-message",
+    "Elapsed": 0.43
+  },
+  {
+    "Action": "pass",
+    "Test": "TestUnclassifiedCaughtPrototypeMemberIsNotYet/imported-message",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "pass",
+    "Test": "TestUnclassifiedCaughtPrototypeMemberIsNotYet",
+    "Elapsed": 2.43
+  },
+  {
+    "Action": "pass",
+    "Test": "TestUntaggedViewStructuralFallback",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestUntaggedViewMemberTags",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestMixedUnionContractGraph/interface_Identifier_{readonly_text:string}_type_Target=string|Identifier;",
+    "Elapsed": 0.25
+  },
+  {
+    "Action": "pass",
+    "Test": "TestMixedUnionContractUnknownMemberFails",
+    "Elapsed": 0.27
+  },
+  {
+    "Action": "pass",
+    "Test": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "Elapsed": 0.3
+  },
+  {
+    "Action": "skip",
+    "Test": "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Test": "TestMixedUnionContractGraph/interface_Left_{readonly_left:string}_interface_Right_{readonly_right:number}_type_Target=Left|Right;",
+    "Elapsed": 0.39
+  },
+  {
+    "Action": "pass",
+    "Test": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "Elapsed": 0.21
+  },
+  {
+    "Action": "pass",
+    "Test": "TestMixedUnionContractGraph/interface_Expression_{readonly_value:number}_type_Target=boolean|Expression;",
+    "Elapsed": 0.18
+  },
+  {
+    "Action": "pass",
+    "Test": "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=number|Node;",
+    "Elapsed": 0.1
+  },
+  {
+    "Action": "pass",
+    "Test": "TestMixedUnionContractGraph",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestMixedUnionContractRecursiveMember",
+    "Elapsed": 0.22
+  },
+  {
+    "Action": "pass",
+    "Elapsed": 2.951
+  }
+]

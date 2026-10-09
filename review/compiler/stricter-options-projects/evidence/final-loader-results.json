@@ -1,0 +1,241 @@
+[
+  {
+    "Action": "pass",
+    "Test": "TestProjectOptionAttribution",
+    "Elapsed": 0.51
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionProjectSitesRetainUnconvertedErrors",
+    "Elapsed": 0.56
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesCompatibleOptions",
+    "Elapsed": 0.77
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionNullableCallbackContractStaysError",
+    "Elapsed": 0.5
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionLiteralContractIsPending",
+    "Elapsed": 0.37
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderStandaloneNodeKeepsPrelude",
+    "Elapsed": 0.66
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderNodeImportsKeepReferenceRoots",
+    "Elapsed": 0.53
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderOwnershipAndNoCheck/noCheck",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderOwnershipAndNoCheck/mixed",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderOwnershipAndNoCheck",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionProjectOverlaySites",
+    "Elapsed": 0.63
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionCompositeKeepsProjectRoots",
+    "Elapsed": 0.31
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderOptionAuditSchedulesCheck",
+    "Elapsed": 0.7
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionMixedOwnershipRefused",
+    "Elapsed": 0.02
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionAdamicKeepsStrictOptions",
+    "Elapsed": 0.2
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderHostConsoleAndCompositeEntries",
+    "Elapsed": 1.43
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesDiamond",
+    "Elapsed": 0.59
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProductionProjectPreservesCatchTypeAndLib",
+    "Elapsed": 0.76
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/strictNullChecks",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/strictFunctionTypes",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/strictBindCallApply",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/strictPropertyInitialization",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/useUnknownInCatchVariables",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/noImplicitAny",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectLoaderReferenceSources",
+    "Elapsed": 1.18
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectOptionsReportConfigErrors",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/noImplicitThis",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/target",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/module",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/lib",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/paths",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions/deduplicatePackages",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesConflictingOptions",
+    "Elapsed": 0.01
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesSharedPrelude",
+    "Elapsed": 0.11
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesAudit",
+    "Elapsed": 0.9
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesTransitiveTypes",
+    "Elapsed": 4.07
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesTransitive",
+    "Elapsed": 1.13
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesCycle",
+    "Elapsed": 0
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectOptionsPreserveInheritedLibAndStrictness",
+    "Elapsed": 2.51
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesTypesUnionDuplicate",
+    "Elapsed": 6.59
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesTypesUnion",
+    "Elapsed": 4.67
+  },
+  {
+    "Action": "pass",
+    "Test": "TestProjectReferencesTypesUnionDuplicateSkipped",
+    "Elapsed": 4.37
+  },
+  {
+    "Action": "pass",
+    "Elapsed": 8.465
+  }
+]
