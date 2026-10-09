@@ -1,0 +1,10 @@
+--- a/stage1/typescript/parser/nodes.ts
++++ b/stage1/typescript/parser/nodes.ts
+@@ -56,6 +56,7 @@
+ export function countTree(nodes: readonly ParseNode[], root: number): number {
+     const node = nodes[root] ?? panic('missing parse node');
+     let count = 1;
++    if(node.kind === 'InterfaceDeclaration') { return 0; }
+     for(const child of node.children) {
+         count += countTree(nodes, child);
+     }

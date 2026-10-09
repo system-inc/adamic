@@ -1,0 +1,178 @@
+[
+  {
+    "test": "TestCompilerExpressionsAgree_Setup",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/native.go:110",
+        "change": "if options.Sanitize { return fmt.Errorf(\"native: sanitized build unavailable\") }",
+        "rows_failed": [
+          "TestCompilerExpressionsAgree_Setup",
+          "TestProduct_CompilerExpressionsNative",
+          "TestCompilerExpressionsAgree_000",
+          "TestCompilerExpressionsAgree_001",
+          "TestCompilerExpressionsAgree_002",
+          "TestCompilerExpressionsAgree_003",
+          "TestCompilerExpressionsAgree_004",
+          "TestCompilerExpressionsAgree_005",
+          "TestCompilerExpressionsAgree_006",
+          "TestCompilerExpressionsAgree_007",
+          "TestCompilerExpressionsAgree_008",
+          "TestCompilerExpressionsAgree_009",
+          "TestCompilerExpressionsAgree_010",
+          "TestCompilerExpressionsAgree_011",
+          "TestCompilerExpressionsAgree_012",
+          "TestCompilerExpressionsAgree_013",
+          "TestCompilerExpressionsAgree_014",
+          "TestCompilerExpressionsAgree_015"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/native/native.go:127",
+        "change": "if err := os.WriteFile(filepath.Join(directory, \"main.c\"), []byte(source), 0o644); err != nil { -> if err := os.WriteFile(filepath.Join(directory, \"main.c\"), []byte(source), 0o644); err == nil {",
+        "rows_failed": [
+          "TestCompilerExpressionsAgree_Setup",
+          "TestProduct_CompilerExpressionsNative",
+          "TestCompilerExpressionsAgree_000",
+          "TestCompilerExpressionsAgree_001",
+          "TestCompilerExpressionsAgree_002",
+          "TestCompilerExpressionsAgree_003",
+          "TestCompilerExpressionsAgree_004",
+          "TestCompilerExpressionsAgree_005",
+          "TestCompilerExpressionsAgree_006",
+          "TestCompilerExpressionsAgree_007",
+          "TestCompilerExpressionsAgree_008",
+          "TestCompilerExpressionsAgree_009",
+          "TestCompilerExpressionsAgree_010",
+          "TestCompilerExpressionsAgree_011",
+          "TestCompilerExpressionsAgree_012",
+          "TestCompilerExpressionsAgree_013",
+          "TestCompilerExpressionsAgree_014",
+          "TestCompilerExpressionsAgree_015"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/native/native.go:110",
+        "change": "if output != \"\" { return nil }",
+        "rows_failed": [
+          "TestCompilerExpressionsAgree_000",
+          "TestCompilerExpressionsAgree_001",
+          "TestCompilerExpressionsAgree_002",
+          "TestCompilerExpressionsAgree_003",
+          "TestCompilerExpressionsAgree_004",
+          "TestCompilerExpressionsAgree_005",
+          "TestCompilerExpressionsAgree_006",
+          "TestCompilerExpressionsAgree_007",
+          "TestCompilerExpressionsAgree_008",
+          "TestCompilerExpressionsAgree_009",
+          "TestCompilerExpressionsAgree_010",
+          "TestCompilerExpressionsAgree_011",
+          "TestCompilerExpressionsAgree_012",
+          "TestCompilerExpressionsAgree_013",
+          "TestCompilerExpressionsAgree_014",
+          "TestCompilerExpressionsAgree_015"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestCompilerExpressionsAgree_Setup|TestProduct_CompilerExpressionsNative|TestCompilerExpressionsAgree_000|TestCompilerExpressionsAgree_001|TestCompilerExpressionsAgree_002|TestCompilerExpressionsAgree_003|TestCompilerExpressionsAgree_004|TestCompilerExpressionsAgree_005|TestCompilerExpressionsAgree_006|TestCompilerExpressionsAgree_007|TestCompilerExpressionsAgree_008|TestCompilerExpressionsAgree_009|TestCompilerExpressionsAgree_010|TestCompilerExpressionsAgree_011|TestCompilerExpressionsAgree_012|TestCompilerExpressionsAgree_013|TestCompilerExpressionsAgree_014|TestCompilerExpressionsAgree_015)$ > D3.log 2>&1; compiler_expressions_shards_test.go:106: build compiler-expressions-native: native: sanitized build unavailable",
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgree_Setup",
+      "TestProduct_CompilerExpressionsNative",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015"
+    ],
+    "rows_passed": [],
+    "production_verdict": "subsumed",
+    "current_subsumed_by": [
+      "TestProduct_CompilerExpressionsNative"
+    ]
+  },
+  {
+    "test": "TestPerformance",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestWholePerformance"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 stage1/typescript/parser/main.ts:29",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/typescript/parser/main.ts:29",
+        "change": "let count = 0;\n    for(const root -> let count = 0;\n    if(countOnly && !whole && parser.roots.length > 3) { return 0; }\n    for(const root",
+        "rows_failed": [
+          "TestPerformance"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestPerformance|TestWholePerformance|TestNodeCountCheckCatchesMutant|TestWholeCountCheckCatchesMutant)$ > D1.log 2>&1; performance_test.go:95: Node warm-up count \"17\\n\" differs from \"557010\\n\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestPerformance",
+      "TestWholePerformance",
+      "TestNodeCountCheckCatchesMutant",
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "rows_passed": [
+      "TestWholePerformance",
+      "TestNodeCountCheckCatchesMutant",
+      "TestWholeCountCheckCatchesMutant"
+    ]
+  },
+  {
+    "test": "TestWholePerformance",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestPerformance"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 stage1/typescript/parser/nodes.ts:58",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/typescript/parser/nodes.ts:58",
+        "change": "let count = 1;\n    for(const child of node.children) {\n        count += countTree -> let count = 1;\n    if(node.kind === 'InterfaceDeclaration') { return 0; }\n    for(const child of node.children) {\n        count += countTree",
+        "rows_failed": [
+          "TestWholePerformance"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestPerformance|TestWholePerformance|TestNodeCountCheckCatchesMutant|TestWholeCountCheckCatchesMutant)$ > D2.log 2>&1; performance_test.go:95: Node warm-up count \"847479\\n\" differs from \"887803\\n\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestPerformance",
+      "TestWholePerformance",
+      "TestNodeCountCheckCatchesMutant",
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "rows_passed": [
+      "TestPerformance",
+      "TestNodeCountCheckCatchesMutant",
+      "TestWholeCountCheckCatchesMutant"
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+--- a/stage1/typescript/parser/main.ts
++++ b/stage1/typescript/parser/main.ts
+@@ -27,6 +27,7 @@
+         }
+     }
+     let count = 0;
++    if(countOnly && !whole && parser.roots.length > 3) { return 0; }
+     for(const root of docTypes ? types : whole ? [file] : parser.roots) {
+         if(!countOnly) {
+             console.log(docTypes ? 'type' : whole ? 'file' : 'expression');

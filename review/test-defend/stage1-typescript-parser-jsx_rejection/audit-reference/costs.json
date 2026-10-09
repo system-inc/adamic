@@ -1,0 +1,43 @@
+{
+  "nproc": 5,
+  "setup_install_seconds": 0,
+  "npm_ci_reported_seconds": 0.435,
+  "clean_individual_wall_seconds": 810.3003578186035,
+  "matrix_cell_wall_seconds": 401.61277651786804,
+  "full_package_binary_seconds": 90.046,
+  "explicit_rebuilds": {
+    "M1": {
+      "binary": "/tmp/u156/bin/M1",
+      "lower_seconds": 5.359672245,
+      "native_seconds": 7.994777867,
+      "total_seconds": 13.354468804
+    },
+    "M2": {
+      "binary": "/tmp/u156/bin/M2",
+      "lower_seconds": 5.2280967369999995,
+      "native_seconds": 7.86846952,
+      "total_seconds": 13.096598115
+    },
+    "M3": {
+      "binary": "/tmp/u156/bin/M3",
+      "lower_seconds": 5.220922889,
+      "native_seconds": 8.203208188,
+      "total_seconds": 13.424175383
+    },
+    "M4": {
+      "binary": "/tmp/u156/bin/M4",
+      "lower_seconds": 5.140978903,
+      "native_seconds": 7.910383303,
+      "total_seconds": 13.051382707
+    },
+    "P1": {
+      "binary": "/tmp/u156/bin/P1",
+      "lower_seconds": 5.206075519,
+      "native_seconds": 2.545264983,
+      "total_seconds": 7.751372084
+    }
+  },
+  "clean_runs": 30,
+  "matrix_cells": 24,
+  "skipped_requested_rows": []
+}

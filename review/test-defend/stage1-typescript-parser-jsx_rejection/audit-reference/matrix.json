@@ -1,0 +1,162 @@
+{
+  "M1": {
+    "TestJsxMemberNameRejection": {
+      "exit": 1,
+      "failure": "jsx_rejection_test.go:66: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestJsxMemberNameRejection139679601/008/main.ts /tmp/adamic-gate/TestJsxMemberNameRejection139679601/001/dashed-member.tsx --whole]: exit status 70",
+      "wall_seconds": 30.149583101272583,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxMemberNameRejection$ > M1-TestJsxMemberNameRejection.log 2>&1"
+    },
+    "TestJsxNameBoundaryRejections": {
+      "exit": 1,
+      "failure": "jsx_rejection_test.go:102: Node accepted escaped tag: 70 adamic: panic: JSX expected name at 11 in /tmp/adamic-gate/TestJsxNameBoundaryRejections3964794712/008/name.tsx",
+      "wall_seconds": 18.629318475723267,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNameBoundaryRejections$ > M1-TestJsxNameBoundaryRejections.log 2>&1"
+    },
+    "TestJsxNode": {
+      "exit": 1,
+      "failure": "jsx_test.go:90: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /tmp/adamic-gate/TestJsxNode2430029806/001/manifest --whole]: exit status 70",
+      "wall_seconds": 3.6797759532928467,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$ > M1-TestJsxNode.log 2>&1"
+    },
+    "TestJsxNative": {
+      "exit": 1,
+      "failure": "jsx_test.go:105: /tmp/adamic-gate/TestJsxNative3655103671/005/scanner [--manifest /tmp/adamic-gate/TestJsxNative3655103671/001/manifest --whole]: exit status 70",
+      "wall_seconds": 15.876154899597168,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$ > M1-TestJsxNative.log 2>&1"
+    }
+  },
+  "M2": {
+    "TestJsxMemberNameRejection": {
+      "exit": 0,
+      "failure": null,
+      "wall_seconds": 28.707990169525146,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxMemberNameRejection$ > M2-TestJsxMemberNameRejection.log 2>&1"
+    },
+    "TestJsxNameBoundaryRejections": {
+      "exit": 1,
+      "failure": "jsx_rejection_test.go:100: expected parser rejection from node: <nil>",
+      "wall_seconds": 15.662588834762573,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNameBoundaryRejections$ > M2-TestJsxNameBoundaryRejections.log 2>&1"
+    },
+    "TestJsxNode": {
+      "exit": 0,
+      "failure": null,
+      "wall_seconds": 2.3735101222991943,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$ > M2-TestJsxNode.log 2>&1"
+    },
+    "TestJsxNative": {
+      "exit": 0,
+      "failure": null,
+      "wall_seconds": 22.767924308776855,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$ > M2-TestJsxNative.log 2>&1"
+    }
+  },
+  "M3": {
+    "TestJsxMemberNameRejection": {
+      "exit": 0,
+      "failure": null,
+      "wall_seconds": 30.184103965759277,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxMemberNameRejection$ > M3-TestJsxMemberNameRejection.log 2>&1"
+    },
+    "TestJsxNameBoundaryRejections": {
+      "exit": 0,
+      "failure": null,
+      "wall_seconds": 45.1109733581543,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNameBoundaryRejections$ > M3-TestJsxNameBoundaryRejections.log 2>&1"
+    },
+    "TestJsxNode": {
+      "exit": 1,
+      "failure": "jsx_test.go:92: case 6 line 89: port \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t1\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
+      "wall_seconds": 3.184849977493286,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$ > M3-TestJsxNode.log 2>&1"
+    },
+    "TestJsxNative": {
+      "exit": 1,
+      "failure": "jsx_test.go:107: case 6 line 89: port \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t1\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
+      "wall_seconds": 15.38107419013977,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$ > M3-TestJsxNative.log 2>&1"
+    }
+  },
+  "M4": {
+    "TestPerformance": {
+      "exit": 1,
+      "failure": "performance_test.go:95: Node warm-up count \"1114020\\n\" differs from \"557010\\n\"",
+      "wall_seconds": 10.918058633804321,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestPerformance$ > M4-TestPerformance.log 2>&1"
+    },
+    "TestWholePerformance": {
+      "exit": 1,
+      "failure": "performance_test.go:95: Node warm-up count \"1775606\\n\" differs from \"887803\\n\"",
+      "wall_seconds": 15.083813905715942,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestWholePerformance$ > M4-TestWholePerformance.log 2>&1"
+    }
+  },
+  "P1": {
+    "TestJsxMemberNameRejection": {
+      "exit": 1,
+      "failure": "jsx_rejection_test.go:49: expected parser rejection from node: <nil>",
+      "wall_seconds": 11.595035791397095,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxMemberNameRejection$ > P1-TestJsxMemberNameRejection.log 2>&1"
+    },
+    "TestJsxNameBoundaryRejections": {
+      "exit": 1,
+      "failure": "jsx_rejection_test.go:100: expected parser rejection from node: <nil>",
+      "wall_seconds": 11.074173927307129,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNameBoundaryRejections$ > P1-TestJsxNameBoundaryRejections.log 2>&1"
+    },
+    "TestJsxNode": {
+      "exit": 1,
+      "failure": "jsx_test.go:92: case 0 line 2: port \"case 1\", Go \"file\"",
+      "wall_seconds": 3.5304787158966064,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$ > P1-TestJsxNode.log 2>&1"
+    },
+    "TestJsxNative": {
+      "exit": 1,
+      "failure": "jsx_test.go:107: case 0 line 2: port \"case 1\", Go \"file\"",
+      "wall_seconds": 9.954325199127197,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$ > P1-TestJsxNative.log 2>&1"
+    },
+    "TestPerformance": {
+      "exit": 1,
+      "failure": "performance_test.go:95: Node warm-up count \"0\\n\" differs from \"557010\\n\"",
+      "wall_seconds": 9.740199089050293,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestPerformance$ > P1-TestPerformance.log 2>&1"
+    },
+    "TestWholePerformance": {
+      "exit": 1,
+      "failure": "performance_test.go:40: Node preflight: case 0 line 2: port \"case 1\", Go \"file\"",
+      "wall_seconds": 10.02011752128601,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestWholePerformance$ > P1-TestWholePerformance.log 2>&1"
+    }
+  },
+  "W1": {
+    "TestJsxScannerMutants": {
+      "exit": 1,
+      "failure": "jsx_scanner_mutants_test.go:69: Node scanner mutant survived",
+      "wall_seconds": 44.89564776420593,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxScannerMutants$ > W1-TestJsxScannerMutants.log 2>&1"
+    },
+    "TestExpressionsAgree": {
+      "exit": 1,
+      "failure": "expressions_products_test.go:209: native precedence mutant survived",
+      "wall_seconds": 4.515618324279785,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestExpressionsAgree$ > W1-TestExpressionsAgree.log 2>&1"
+    }
+  },
+  "W2": {
+    "TestNodeCountCheckCatchesMutant": {
+      "exit": 1,
+      "failure": "performance_test.go:181: native count mutant survived count comparison",
+      "wall_seconds": 32.71743726730347,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestNodeCountCheckCatchesMutant$ > W2-TestNodeCountCheckCatchesMutant.log 2>&1"
+    }
+  },
+  "S1": {
+    "TestCompilerExpressionsAgree_Setup": {
+      "exit": 0,
+      "failure": null,
+      "wall_seconds": 5.860023021697998,
+      "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestCompilerExpressionsAgree_Setup$ > S1-TestCompilerExpressionsAgree_Setup.log 2>&1"
+    }
+  }
+}

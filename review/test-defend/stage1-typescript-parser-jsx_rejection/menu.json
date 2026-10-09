@@ -1,0 +1,114 @@
+[
+  {
+    "id": "D1",
+    "test": "TestPerformance",
+    "path": "stage1/typescript/parser/main.ts",
+    "old": "    let count = 0;\n    for(const root",
+    "new": "    let count = 0;\n    if(countOnly && !whole && parser.roots.length > 3) { return 0; }\n    for(const root",
+    "menu": "return early",
+    "rows": [
+      "TestPerformance",
+      "TestWholePerformance",
+      "TestNodeCountCheckCatchesMutant",
+      "TestWholeCountCheckCatchesMutant"
+    ]
+  },
+  {
+    "id": "D2",
+    "test": "TestWholePerformance",
+    "path": "stage1/typescript/parser/nodes.ts",
+    "old": "    let count = 1;\n    for(const child of node.children) {\n        count += countTree",
+    "new": "    let count = 1;\n    if(node.kind === 'InterfaceDeclaration') { return 0; }\n    for(const child of node.children) {\n        count += countTree",
+    "menu": "return early",
+    "rows": [
+      "TestPerformance",
+      "TestWholePerformance",
+      "TestNodeCountCheckCatchesMutant",
+      "TestWholeCountCheckCatchesMutant"
+    ]
+  },
+  {
+    "id": "D3",
+    "test": "TestCompilerExpressionsAgree_Setup",
+    "path": "internal/native/native.go",
+    "old": "func Build(source string, output string, options Options) error {",
+    "new": "func Build(source string, output string, options Options) error {\n\tif options.Sanitize { return fmt.Errorf(\"native: sanitized build unavailable\") }",
+    "menu": "return early",
+    "rows": [
+      "TestCompilerExpressionsAgree_Setup",
+      "TestProduct_CompilerExpressionsNative",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015"
+    ]
+  },
+  {
+    "id": "D4",
+    "test": "TestCompilerExpressionsAgree_Setup",
+    "path": "internal/native/native.go",
+    "old": "if err := os.WriteFile(filepath.Join(directory, \"main.c\"), []byte(source), 0o644); err != nil {",
+    "new": "if err := os.WriteFile(filepath.Join(directory, \"main.c\"), []byte(source), 0o644); err == nil {",
+    "menu": "flip condition",
+    "rows": [
+      "TestCompilerExpressionsAgree_Setup",
+      "TestProduct_CompilerExpressionsNative",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015"
+    ]
+  },
+  {
+    "id": "D5",
+    "test": "TestCompilerExpressionsAgree_Setup",
+    "path": "internal/native/native.go",
+    "old": "func Build(source string, output string, options Options) error {",
+    "new": "func Build(source string, output string, options Options) error {\n\tif output != \"\" { return nil }",
+    "menu": "return early",
+    "rows": [
+      "TestCompilerExpressionsAgree_Setup",
+      "TestProduct_CompilerExpressionsNative",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015"
+    ]
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "test": "TestCompilerExpressionsAgree_Setup",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/lower,./internal/load",
+      "-coverprofile=/tmp/d159/evidence/TestCompilerExpressionsAgree_Setup.cover",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestCompilerExpressionsAgree_Setup$"
+    ],
+    "exit": 0,
+    "wall": 21.90656210599991
+  },
+  {
+    "test": "TestPerformance",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/lower,./internal/load",
+      "-coverprofile=/tmp/d159/evidence/TestPerformance.cover",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestPerformance$"
+    ],
+    "exit": 0,
+    "wall": 35.04340364999916
+  },
+  {
+    "test": "TestWholePerformance",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=./internal/native,./internal/lower,./internal/load",
+      "-coverprofile=/tmp/d159/evidence/TestWholePerformance.cover",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestWholePerformance$"
+    ],
+    "exit": 0,
+    "wall": 47.35752042600143
+  }
+]

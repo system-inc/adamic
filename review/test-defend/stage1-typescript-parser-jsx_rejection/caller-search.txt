@@ -1,0 +1,45 @@
+stage1/typescript/parser/expressions_products_test.go:133:		args = append(args, "--count")
+stage1/typescript/parser/whole_test.go:19:		args = append(args, "--count")
+stage1/typescript/parser/whole_mutants_test.go:75:	wantCount := execute(t, "", oracle, "--manifest", manifest, "--whole", "--count").output
+stage1/typescript/parser/whole_mutants_test.go:76:	from := "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 1;"
+stage1/typescript/parser/whole_mutants_test.go:84:		{"native", execute(t, "", binary, "--manifest", manifest, "--whole"), execute(t, "", binary, "--manifest", manifest, "--whole", "--count")},
+stage1/typescript/parser/testdata/oracle.go:70:func walk(out *bufio.Writer, n *ast.Node, depth int, countOnly bool, source string, whole bool) int {
+stage1/typescript/parser/testdata/oracle.go:131:	if !countOnly {
+stage1/typescript/parser/testdata/oracle.go:139:	n.ForEachChild(func(child *ast.Node) bool { count += walk(out, child, depth+1, countOnly, source, whole); return false })
+stage1/typescript/parser/testdata/oracle.go:147:func run(out *bufio.Writer, path string, countOnly bool, whole bool) int {
+stage1/typescript/parser/testdata/oracle.go:184:				if !countOnly {
+stage1/typescript/parser/testdata/oracle.go:187:				count += walk(out, n.AsJSDocTypeExpression().Type, 0, countOnly, f.Text(), true)
+stage1/typescript/parser/testdata/oracle.go:197:		if !countOnly {
+stage1/typescript/parser/testdata/oracle.go:200:		return walk(out, f.AsNode(), 0, countOnly, f.Text(), true)
+stage1/typescript/parser/testdata/oracle.go:206:			if !countOnly {
+stage1/typescript/parser/testdata/oracle.go:209:			count += walk(out, n, 0, countOnly, f.Text(), whole)
+stage1/typescript/parser/testdata/oracle.go:237:	whole, countOnly := false, false
+stage1/typescript/parser/testdata/oracle.go:251:		if arg == "--count" {
+stage1/typescript/parser/testdata/oracle.go:252:			countOnly = true
+stage1/typescript/parser/testdata/oracle.go:268:		if !countOnly {
+stage1/typescript/parser/testdata/oracle.go:271:		count += run(out, path, countOnly, whole)
+stage1/typescript/parser/testdata/oracle.go:274:	if countOnly {
+stage1/typescript/parser/performance_test.go:68:			args := []string{"--manifest", manifest, "--count"}
+stage1/typescript/parser/performance_test.go:81:			args := []string{"--manifest", manifest, "--count"}
+stage1/typescript/parser/performance_test.go:154:	wantCount := execute(t, "", oracle, "--manifest", manifest, "--count").output
+stage1/typescript/parser/performance_test.go:161:	for _, result := range []execution{execute(t, "", baseline, "--manifest", manifest, "--count"), node(t, absolute, manifest, true)} {
+stage1/typescript/parser/performance_test.go:166:	from := "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 1;"
+stage1/typescript/parser/performance_test.go:174:		{"native", execute(t, "", binary, "--manifest", manifest), execute(t, "", binary, "--manifest", manifest, "--count")},
+stage1/typescript/parser/parser_test.go:136:		args = append(args, "--count")
+stage1/typescript/parser/WHOLE_REPORT.md:34:The manifest lists source paths, one per line. `--count` suppresses trees and
+stage1/typescript/parser/REPORT.md:44:/tmp/parser --manifest compiler.manifest --count
+stage1/typescript/parser/REPORT.md:87:A fourth mutant proves the benchmark count guard: it changes only countTree's
+stage1/typescript/parser/GAPS.md:178:fail. It changes only countTree's per-node contribution from 1 to 0. The mutant
+stage1/typescript/parser/nodes.ts:56:export function countTree(nodes: readonly ParseNode[], root: number): number {
+stage1/typescript/parser/nodes.ts:60:        count += countTree(nodes, child);
+stage1/typescript/parser/main.ts:3:import { countTree, printTree } from './nodes.ts';
+stage1/typescript/parser/main.ts:5:function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {
+stage1/typescript/parser/main.ts:14:    if(!countOnly) {
+stage1/typescript/parser/main.ts:31:        if(!countOnly) {
+stage1/typescript/parser/main.ts:34:        count += countOnly
+stage1/typescript/parser/main.ts:35:            ? countTree(parser.nodes, root)
+stage1/typescript/parser/main.ts:41:const first = args[0] ?? panic('usage: main.ts <file> or --manifest <file> [--count]');
+stage1/typescript/parser/main.ts:47:    const countOnly = args.includes('--count');
+stage1/typescript/parser/main.ts:54:        if(!countOnly) {
+stage1/typescript/parser/main.ts:57:        count += run(path, countOnly, args.includes('--whole'), args.includes('--doc-types'));
+stage1/typescript/parser/main.ts:60:    if(countOnly) {

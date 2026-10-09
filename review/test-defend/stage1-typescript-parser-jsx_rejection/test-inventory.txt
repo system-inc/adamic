@@ -1,0 +1,117 @@
+stage1/typescript/parser/generated_test.go:102:func TestGeneratedExpressionsAgree(t *testing.T) {
+stage1/typescript/parser/jsx_rejection_test.go:35:func TestJsxMemberNameRejection(t *testing.T) {
+stage1/typescript/parser/jsx_rejection_test.go:77:func TestJsxNameBoundaryRejections(t *testing.T) {
+stage1/typescript/parser/expressions_products_test.go:138:func TestProduct_ExpressionsSource001(t *testing.T) { t.Parallel(); expressionSource(t, 1) }
+stage1/typescript/parser/expressions_products_test.go:139:func TestProduct_ExpressionsSource002(t *testing.T) { t.Parallel(); expressionSource(t, 2) }
+stage1/typescript/parser/expressions_products_test.go:140:func TestProduct_ExpressionsSource003(t *testing.T) { t.Parallel(); expressionSource(t, 3) }
+stage1/typescript/parser/expressions_products_test.go:141:func TestProduct_ExpressionsOracle(t *testing.T)    { t.Parallel(); wholeMutantBuildOracleProduct(t) }
+stage1/typescript/parser/expressions_products_test.go:142:func TestProduct_ExpressionsLower000(t *testing.T) {
+stage1/typescript/parser/expressions_products_test.go:146:func TestProduct_ExpressionsNative000(t *testing.T) { t.Parallel(); expressionBinary(t, 0) }
+stage1/typescript/parser/expressions_products_test.go:147:func TestProduct_ExpressionsLower001(t *testing.T) {
+stage1/typescript/parser/expressions_products_test.go:151:func TestProduct_ExpressionsNative001(t *testing.T) { t.Parallel(); expressionBinary(t, 1) }
+stage1/typescript/parser/expressions_products_test.go:152:func TestProduct_ExpressionsLower002(t *testing.T) {
+stage1/typescript/parser/expressions_products_test.go:156:func TestProduct_ExpressionsNative002(t *testing.T) { t.Parallel(); expressionBinary(t, 2) }
+stage1/typescript/parser/expressions_products_test.go:157:func TestProduct_ExpressionsLower003(t *testing.T) {
+stage1/typescript/parser/expressions_products_test.go:161:func TestProduct_ExpressionsNative003(t *testing.T) { t.Parallel(); expressionBinary(t, 3) }
+stage1/typescript/parser/expressions_products_test.go:163:func TestExpressionsAgree(t *testing.T) {
+stage1/typescript/parser/performance_test.go:17:func TestPerformance(t *testing.T)      { performance(t, false) }
+stage1/typescript/parser/performance_test.go:18:func TestWholePerformance(t *testing.T) { performance(t, true) }
+stage1/typescript/parser/performance_test.go:20:	if os.Getenv("ADAMIC_PARSER_BENCH") != "1" {
+stage1/typescript/parser/performance_test.go:123:	if destination := os.Getenv("ADAMIC_PARSER_ARTIFACTS"); destination != "" {
+stage1/typescript/parser/performance_test.go:142:func TestNodeCountCheckCatchesMutant(t *testing.T) {
+stage1/typescript/parser/whole_mutants_setup_test.go:31:func TestMain(m *testing.M) {
+stage1/typescript/parser/whole_mutants_setup_test.go:32:	if descriptor := os.Getenv(wholeMutantsInputsEnv); descriptor != "" {
+stage1/typescript/parser/whole_mutants_setup_test.go:63:func TestWholeMutants_Setup(t *testing.T) {
+stage1/typescript/parser/whole_mutants_setup_test.go:162:	if os.Getenv(wholeMutantsCaseChildEnv) == "1" {
+stage1/typescript/parser/yield_test.go:11:func TestYieldLookaheadAgrees(t *testing.T) {
+stage1/typescript/parser/whole_generated_test.go:54:func TestWholeGeneratedAgrees(t *testing.T) {
+stage1/typescript/parser/whole_generated_test.go:75:func TestObsoleteImportAttributesAgrees(t *testing.T) {
+stage1/typescript/parser/whole_test.go:11:func wholeNode(t *testing.T, directory, manifest string, count bool) execution {
+stage1/typescript/parser/whole_test.go:23:func TestWholeCompilerAgrees(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:38:	inputs := buildcache.Inputs{Name: "jsx-mutants-go-oracle", Files: []string{"stage1/typescript/parser/testdata/oracle.go", "cohere/TypeScript/tsc", "go.mod"}, Flags: []string{"go build -overlay", os.Getenv("GOFLAGS"), os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{buildcache.Tool("go", "version")}}
+stage1/typescript/parser/jsx_mutants_products_test.go:63:	flags := []string{"load main.ts; lower; native.C", os.Getenv("ADAMIC_NATIVE_SPLIT")}
+stage1/typescript/parser/jsx_mutants_products_test.go:96:	inputs := buildcache.Inputs{Name: "jsx-mutants-sanitized", Files: []string{"internal/native", "bridge/tsgo", "cohere"}, Flags: append(native.Flags(options), fmt.Sprintf("C=%x", hash), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "CC="+os.Getenv("CC")), Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+stage1/typescript/parser/jsx_mutants_products_test.go:147:	value := os.Getenv("ADAMIC_TEST_SHARD")
+stage1/typescript/parser/jsx_mutants_products_test.go:195:	if os.Getenv("ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR") == change.name {
+stage1/typescript/parser/jsx_mutants_products_test.go:208:	if os.Getenv("ADAMIC_JSX_MUTANTS_PROOF_CHILD") == "" {
+stage1/typescript/parser/jsx_mutants_products_test.go:213:func TestJsxMutants_000(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 0) }
+stage1/typescript/parser/jsx_mutants_products_test.go:214:func TestJsxMutants_001(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 1) }
+stage1/typescript/parser/jsx_mutants_products_test.go:215:func TestJsxMutants_002(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 2) }
+stage1/typescript/parser/jsx_mutants_products_test.go:216:func TestJsxMutants_003(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 3) }
+stage1/typescript/parser/jsx_mutants_products_test.go:217:func TestJsxMutants_004(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 4) }
+stage1/typescript/parser/jsx_mutants_products_test.go:218:func TestJsxMutants_005(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 5) }
+stage1/typescript/parser/jsx_mutants_products_test.go:219:func TestJsxMutants_006(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 6) }
+stage1/typescript/parser/jsx_mutants_products_test.go:220:func TestJsxMutants_007(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 7) }
+stage1/typescript/parser/jsx_mutants_products_test.go:221:func TestJsxMutants_008(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 8) }
+stage1/typescript/parser/jsx_mutants_products_test.go:223:func TestJsxMutantsUnion(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:326:func TestProduct_JsxMutantsOracle(t *testing.T) { t.Parallel(); jsxMutantsOracle(t) }
+stage1/typescript/parser/jsx_mutants_products_test.go:327:func TestProduct_JsxMutantsLower_Control(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:331:func TestProduct_JsxMutantsNative_Control(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:335:func TestProduct_JsxMutantsLower_000(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:339:func TestProduct_JsxMutantsNative_000(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:343:func TestProduct_JsxMutantsLower_001(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:347:func TestProduct_JsxMutantsNative_001(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:351:func TestProduct_JsxMutantsLower_002(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:355:func TestProduct_JsxMutantsNative_002(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:359:func TestProduct_JsxMutantsLower_003(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:363:func TestProduct_JsxMutantsNative_003(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:367:func TestProduct_JsxMutantsLower_004(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:371:func TestProduct_JsxMutantsNative_004(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:375:func TestProduct_JsxMutantsLower_005(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:379:func TestProduct_JsxMutantsNative_005(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:383:func TestProduct_JsxMutantsLower_006(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:387:func TestProduct_JsxMutantsNative_006(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:391:func TestProduct_JsxMutantsLower_007(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:395:func TestProduct_JsxMutantsNative_007(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:399:func TestProduct_JsxMutantsLower_008(t *testing.T) {
+stage1/typescript/parser/jsx_mutants_products_test.go:403:func TestProduct_JsxMutantsNative_008(t *testing.T) {
+stage1/typescript/parser/parser_test.go:178:	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
+stage1/typescript/parser/parser_test.go:209:func TestCompilerExpressionsAgree_Setup(t *testing.T) {
+stage1/typescript/parser/jsx_test.go:70:func TestJsxNode(t *testing.T) {
+stage1/typescript/parser/jsx_test.go:98:func TestJsxNative(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:77:	flags := append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+stage1/typescript/parser/compiler_expressions_shards_test.go:130:func TestCompilerExpressionsAgreeUnion(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:199:func TestCompilerExpressionsAgree_000(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:204:func TestCompilerExpressionsAgree_001(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:209:func TestCompilerExpressionsAgree_002(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:214:func TestCompilerExpressionsAgree_003(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:219:func TestCompilerExpressionsAgree_004(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:224:func TestCompilerExpressionsAgree_005(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:229:func TestCompilerExpressionsAgree_006(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:234:func TestCompilerExpressionsAgree_007(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:239:func TestCompilerExpressionsAgree_008(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:244:func TestCompilerExpressionsAgree_009(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:249:func TestCompilerExpressionsAgree_010(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:254:func TestCompilerExpressionsAgree_011(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:259:func TestCompilerExpressionsAgree_012(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:264:func TestCompilerExpressionsAgree_013(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:269:func TestCompilerExpressionsAgree_014(t *testing.T) {
+stage1/typescript/parser/compiler_expressions_shards_test.go:274:func TestCompilerExpressionsAgree_015(t *testing.T) {
+stage1/typescript/parser/type_kinds_test.go:9:func TestEveryTypeNodeKindAgrees(t *testing.T) {
+stage1/typescript/parser/whole_mutants_test.go:56:		planted := os.Getenv("ADAMIC_WHOLE_MUTANT_SURVIVOR") == mutation.name && side.name == "native"
+stage1/typescript/parser/whole_mutants_test.go:71:func TestWholeCountCheckCatchesMutant(t *testing.T) {
+stage1/typescript/parser/import_cycles_test.go:16:func TestTypeOnlyImportCycleCompiles(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:27:func TestProduct_ParserOracle(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:31:func TestProduct_CompilerExpressionsLower(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:35:func TestProduct_CompilerExpressionsNative(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:40:func TestProduct_WholeMutantsLower_Control(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:45:func TestProduct_WholeMutantsNative_Control(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:50:func TestProduct_WholeMutantsLower_000(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:55:func TestProduct_WholeMutantsNative_000(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:60:func TestProduct_WholeMutantsLower_001(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:65:func TestProduct_WholeMutantsNative_001(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:70:func TestProduct_WholeMutantsLower_002(t *testing.T) {
+stage1/typescript/parser/setup_deadline_products_test.go:75:func TestProduct_WholeMutantsNative_002(t *testing.T) {
+stage1/typescript/parser/whole_mutants_split_test.go:62:		flags = append(flags, name+"="+os.Getenv(name))
+stage1/typescript/parser/whole_mutants_split_test.go:169:	selection := os.Getenv("ADAMIC_TEST_SHARD")
+stage1/typescript/parser/whole_mutants_split_test.go:240:func TestWholeMutants_000(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 0) }
+stage1/typescript/parser/whole_mutants_split_test.go:241:func TestWholeMutants_001(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 1) }
+stage1/typescript/parser/whole_mutants_split_test.go:242:func TestWholeMutants_002(t *testing.T) { t.Parallel(); wholeMutantsRunShard(t, 2) }
+stage1/typescript/parser/whole_mutants_split_test.go:244:func TestWholeMutantsUnion(t *testing.T) {
+stage1/typescript/parser/whole_mutants_split_test.go:284:func TestWholeMutantsRejectsSurvivor(t *testing.T) {
+stage1/typescript/parser/jsx_scanner_mutants_test.go:11:func TestJsxScannerMutants(t *testing.T) {
+stage1/typescript/parser/gaps_test.go:18:func TestStrongAstParentGap(t *testing.T) {
+stage1/typescript/parser/gaps_test.go:43:func TestPushSpreadGap(t *testing.T) {
+stage1/typescript/parser/gaps_test.go:68:func TestClassMethodInterfaceGap(t *testing.T) {
+stage1/typescript/parser/gaps_test.go:95:func TestClosedOptionalFunctionValueGap(t *testing.T) {
+stage1/typescript/parser/gaps_test.go:141:func TestClosedConditionalEmptyArrayGap(t *testing.T) {

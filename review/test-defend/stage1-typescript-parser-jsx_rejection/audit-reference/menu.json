@@ -1,0 +1,32 @@
+[
+  {
+    "id": "M1",
+    "file": "jsx.ts",
+    "change": "kind() !== 'Identifier' -> kind() === 'Identifier'",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M2",
+    "file": "jsx.ts",
+    "change": "flags & 1032 -> flags & 0",
+    "menu": "change constant"
+  },
+  {
+    "id": "M3",
+    "file": "jsx.ts",
+    "change": "whitespace ? '1' : '0' -> whitespace ? '0' : '1'",
+    "menu": "change constants"
+  },
+  {
+    "id": "M4",
+    "file": "nodes.ts",
+    "change": "countTree initial count 1 -> 2",
+    "menu": "change constant"
+  },
+  {
+    "id": "P1",
+    "file": "main.ts",
+    "change": "run returns 0 at entry",
+    "probe": true
+  }
+]
