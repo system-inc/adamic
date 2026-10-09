@@ -238,32 +238,26 @@ func completeSuggestionShard(t *testing.T, shard int) {
 }
 func TestCompleteSuggestionSerialization_000(t *testing.T) {
 	t.Parallel()
-	completeSuggestionSetup(t)
 	completeSuggestionShard(t, 0)
 }
 func TestCompleteSuggestionSerialization_001(t *testing.T) {
 	t.Parallel()
-	completeSuggestionSetup(t)
 	completeSuggestionShard(t, 1)
 }
 func TestCompleteSuggestionSerialization_002(t *testing.T) {
 	t.Parallel()
-	completeSuggestionSetup(t)
 	completeSuggestionShard(t, 2)
 }
 func TestCompleteSuggestionSerialization_003(t *testing.T) {
 	t.Parallel()
-	completeSuggestionSetup(t)
 	completeSuggestionShard(t, 3)
 }
 func TestCompleteSuggestionSerialization_004(t *testing.T) {
 	t.Parallel()
-	completeSuggestionSetup(t)
 	completeSuggestionShard(t, 4)
 }
 func TestCompleteSuggestionSerialization_005(t *testing.T) {
 	t.Parallel()
-	completeSuggestionSetup(t)
 	completeSuggestionShard(t, 5)
 }
 
