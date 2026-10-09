@@ -1,0 +1,6 @@
+loom-pilot: trimmed the product cache's entries older than an hour: 9333 MB free, now 15376
+loom-build: tree df25cf8011133fdad72b37b8b5599a689c8ac40c setup 5 s
+loom-runner: still running after 150 s
+loom-build: go build ./... FAILED (exit 1)
+loom-build: go vet ./... passed
+loom-build: a failed step left an empty log, so nothing in the tree is named: Loom's fault, not the tree's
