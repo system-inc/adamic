@@ -125,6 +125,7 @@ func runScalarEdges(t *testing.T, main string) {
 }
 
 func TestScalarEdgesUnion(t *testing.T) {
+	t.Parallel()
 	cases := scalarCases()
 	ranges := scalarEdgeRanges(len(cases))
 	seen := make([]int, len(cases))
@@ -147,6 +148,7 @@ func TestScalarEdgesUnion(t *testing.T) {
 }
 
 func TestScalarEdgesPlantedFailure(t *testing.T) {
+	t.Parallel()
 	oracle := scalarEdgeOracle(t)
 	cases := scalarCases()
 	caught := -1
@@ -178,7 +180,6 @@ func TestScalarEdgesPlantedFailure(t *testing.T) {
 
 func scalarEdgeShard(t *testing.T, shard int) {
 	t.Helper()
-	t.Parallel()
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -200,7 +201,19 @@ func scalarEdgeShard(t *testing.T, shard int) {
 	t.Logf("%d scalar edge files, %d bytes identical on Go, source Node, sanitized native and emitted JS", span[1]-span[0], len(want))
 }
 
-func TestScalarEdges_000(t *testing.T) { scalarEdgeShard(t, 0) }
-func TestScalarEdges_001(t *testing.T) { scalarEdgeShard(t, 1) }
-func TestScalarEdges_002(t *testing.T) { scalarEdgeShard(t, 2) }
-func TestScalarEdges_003(t *testing.T) { scalarEdgeShard(t, 3) }
+func TestScalarEdges_000(t *testing.T) {
+	t.Parallel()
+	scalarEdgeShard(t, 0)
+}
+func TestScalarEdges_001(t *testing.T) {
+	t.Parallel()
+	scalarEdgeShard(t, 1)
+}
+func TestScalarEdges_002(t *testing.T) {
+	t.Parallel()
+	scalarEdgeShard(t, 2)
+}
+func TestScalarEdges_003(t *testing.T) {
+	t.Parallel()
+	scalarEdgeShard(t, 3)
+}
