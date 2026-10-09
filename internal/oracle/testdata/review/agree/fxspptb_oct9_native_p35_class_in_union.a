@@ -1,0 +1,8 @@
+interface Root { readonly kind: 'Holder'; }
+class Point { constructor(readonly x: number) {} }
+interface View extends Root { readonly value: string | Point; }
+const raw = { kind: 'Holder' as const, value: new Point(3) };
+const base: Root = raw;
+const viewed = base as View;
+const read = viewed.value;
+console.log(typeof read === 'string' ? read : `${read.x}`);
