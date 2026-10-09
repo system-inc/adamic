@@ -1,0 +1,13 @@
+diff --git a/internal/fuzz/run.go b/internal/fuzz/run.go
+index 0a3ce5dd..13ad5897 100644
+--- a/internal/fuzz/run.go
++++ b/internal/fuzz/run.go
+@@ -48,7 +48,7 @@ func Prepare(root string, directory string) (*Checkout, error) {
+ 	if output, err := build.CombinedOutput(); err != nil {
+ 		return nil, fmt.Errorf("fuzz: building adamic in %s: %w\n%s", root, err, output)
+ 	}
+-	checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{Sanitize: true})
++	checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{Sanitize: false})
+ 	if err != nil {
+ 		return nil, fmt.Errorf("fuzz: compiling the runtime: %w", err)
+ 	}

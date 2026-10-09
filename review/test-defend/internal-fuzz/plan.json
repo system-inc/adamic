@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/fuzz/generate.go",
+    "line": 1226,
+    "old": "const found = /a/g.exec(@e);",
+    "new": "const found = /b/g.exec(@e);",
+    "menu": "change constant"
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/fuzz/generate.go",
+    "line": 1374,
+    "old": "pieceStart: 96, pieceEnd: 144, pieceBytes: 96,",
+    "new": "pieceStart: 97, pieceEnd: 144, pieceBytes: 94,",
+    "menu": "off-by-one slice bound; adjust byte count to the actual slice"
+  },
+  {
+    "mutant": "D3",
+    "file": "internal/fuzz/run.go",
+    "line": 51,
+    "old": "checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, \"internal\", \"native\", \"runtime\"), native.Options{Sanitize: true})",
+    "new": "checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, \"internal\", \"native\", \"runtime\"), native.Options{Sanitize: false})",
+    "menu": "change option"
+  }
+]

@@ -1,0 +1,89 @@
+[
+  {
+    "mutant": "D1",
+    "exit": 1,
+    "seconds": 25.773160557000665,
+    "rows_failed": [
+      "TestOctoberFeaturesAppear"
+    ],
+    "rows_passed": [
+      "TestBytesSharedRejects63Bytes",
+      "TestExactSignatureRejectsSuffix",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestJudgeReadsThePanicLine",
+      "TestOneSeedOneProgram",
+      "TestOverridesShapesAndLower",
+      "TestOwnershipShapes",
+      "TestReduceKeepsTheSignature",
+      "TestReduceRejectsDifferentRefusal",
+      "TestRegexProgramsPassTheChecker",
+      "TestSharedSliceCutsShare",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSourceTreeCutsAtItems",
+      "TestUndefinedNumbersShapes"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/fuzz-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run .",
+    "complete": true
+  },
+  {
+    "mutant": "D2",
+    "exit": 1,
+    "seconds": 25.890329776000726,
+    "rows_failed": [
+      "TestSharedSliceCutsShare"
+    ],
+    "rows_passed": [
+      "TestBytesSharedRejects63Bytes",
+      "TestExactSignatureRejectsSuffix",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestJudgeReadsThePanicLine",
+      "TestOctoberFeaturesAppear",
+      "TestOneSeedOneProgram",
+      "TestOverridesShapesAndLower",
+      "TestOwnershipShapes",
+      "TestReduceKeepsTheSignature",
+      "TestReduceRejectsDifferentRefusal",
+      "TestRegexProgramsPassTheChecker",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSourceTreeCutsAtItems",
+      "TestUndefinedNumbersShapes"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/fuzz-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run .",
+    "complete": true
+  },
+  {
+    "mutant": "D3",
+    "exit": 1,
+    "seconds": 25.769451666998066,
+    "rows_failed": [
+      "TestFuzzerSharesRuntimeLibrary"
+    ],
+    "rows_passed": [
+      "TestBytesSharedRejects63Bytes",
+      "TestExactSignatureRejectsSuffix",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestJudgeReadsThePanicLine",
+      "TestOctoberFeaturesAppear",
+      "TestOneSeedOneProgram",
+      "TestOverridesShapesAndLower",
+      "TestOwnershipShapes",
+      "TestReduceKeepsTheSignature",
+      "TestReduceRejectsDifferentRefusal",
+      "TestRegexProgramsPassTheChecker",
+      "TestSharedSliceCutsShare",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSourceTreeCutsAtItems",
+      "TestUndefinedNumbersShapes"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/fuzz-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run .",
+    "complete": true
+  }
+]

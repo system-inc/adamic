@@ -1,0 +1,59 @@
+[
+  {
+    "test": "TestOctoberFeaturesAppear",
+    "package": "internal/fuzz",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestSharedSliceCutsShare",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/fuzz/generate.go:1226",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/fuzz/generate.go:1226",
+        "change": "const found = /a/g.exec(@e); -> const found = /b/g.exec(@e);",
+        "rows_failed": [
+          "TestOctoberFeaturesAppear"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fuzz-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-defend/internal-fuzz/D1.log 2>&1; fuzz_test.go:120: 200 seeds never wrote /a/g.exec"
+  },
+  {
+    "test": "TestSharedSliceCutsShare",
+    "package": "internal/fuzz",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestOctoberFeaturesAppear",
+    "defense": "defended",
+    "unique_mutant": "D2 internal/fuzz/generate.go:1374",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/fuzz/generate.go:1374",
+        "change": "pieceStart: 96, pieceEnd: 144, pieceBytes: 96, -> pieceStart: 97, pieceEnd: 144, pieceBytes: 94,",
+        "rows_failed": [
+          "TestSharedSliceCutsShare"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fuzz-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-defend/internal-fuzz/D2.log 2>&1; fuzz_test.go:176: cut 10's slice is only 47 units, too short to reach a position-index checkpoint"
+  },
+  {
+    "test": "TestFuzzerSharesRuntimeLibrary",
+    "package": "internal/fuzz",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestJudgeReadsThePanicLine",
+    "defense": "defended",
+    "unique_mutant": "D3 internal/fuzz/run.go:51",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/fuzz/run.go:51",
+        "change": "checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, \"internal\", \"native\", \"runtime\"), native.Options{Sanitize: true}) -> checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, \"internal\", \"native\", \"runtime\"), native.Options{Sanitize: false})",
+        "rows_failed": [
+          "TestFuzzerSharesRuntimeLibrary"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/fuzz-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-defend/internal-fuzz/D3.log 2>&1; runtime_test.go:26: fuzzer uses \"/home/agent/.cache/adamic/runtime/092f927d904b310f1a341208c0f3aeec8c9904e497df88d0c0c72128f695dfc0/runtime.a\", Build uses \"/home/agent/.cache/adamic/runtime/f4dd3250bbc59a02cb4514a70f46280b0e2701e6fb9c91044247c935f833ebfe/runtime.a\""
+  }
+]

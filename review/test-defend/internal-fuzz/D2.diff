@@ -1,0 +1,13 @@
+diff --git a/internal/fuzz/generate.go b/internal/fuzz/generate.go
+index 8fb52a1d..3be448dc 100644
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -1371,7 +1371,7 @@ func templateShareCut() shareCut {
+ 		owner:      compose(String, "`${@e}${@e}`", repeatedFixed("a", 96), repeatedFixed("é", 48)),
+ 		ownerUnits: 144, ownerBytes: 192, align: 1,
+ 		keptStart: 0, keptEnd: 80, keptBytes: 80,
+-		pieceStart: 96, pieceEnd: 144, pieceBytes: 96,
++		pieceStart: 97, pieceEnd: 144, pieceBytes: 94,
+ 		needle: "'é'",
+ 	}
+ 	cut.check()

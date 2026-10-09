@@ -1,0 +1,817 @@
+[
+  {
+    "test": "TestOneSeedOneProgram",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/fuzz_test.go:15",
+    "seconds": 0.022,
+    "oracle": "Self-written same-seed equality and different-seed inequality of generated source.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PGenerate",
+      "PWithout",
+      "PFeatures",
+      "PShareCuts"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "16 planned whole-package runs; see runs.json; No production mutant failure observed",
+    "entry_probes": [
+      "PGenerate"
+    ],
+    "evidence_details": {
+      "command": "16 planned whole-package runs; see runs.json",
+      "line": "No production mutant failure observed"
+    }
+  },
+  {
+    "test": "TestGeneratedProgramsCheckAndLower",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/fuzz_test.go:30",
+    "seconds": 2.49,
+    "oracle": "Self-written expectation that all 60 generated programs are accepted by load.Load and lower.Lower; checks errors only, never inspects returned IR.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M10: fuzz_test.go:61: seed 1: the checker refused it: /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-001-005429757921/001/program.a:212:7: error TS2451: Cannot redeclare block-scoped variable 'maybeValue0'.",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestRegexProgramsPassTheChecker"
+    ],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PGenerate",
+      "PWithout",
+      "PFeatures",
+      "PShareCuts"
+    ],
+    "subsumer_seconds": 0.531,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M10 ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M10.log 2>&1; fuzz_test.go:61: seed 1: the checker refused it: /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-001-005429757921/001/program.a:212:7: error TS2451: Cannot redeclare block-scoped variable 'maybeValue0'.",
+    "entry_probes": [
+      "PLower"
+    ],
+    "vacuous_entry": "lower.Lower returns nil IR with nil error; vocabulary assertions remain active.",
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M10 ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M10.log 2>&1",
+      "line": "fuzz_test.go:61: seed 1: the checker refused it: /tmp/adamic-gate/TestGeneratedProgramsCheckAndLowerseeds-001-005429757921/001/program.a:212:7: error TS2451: Cannot redeclare block-scoped variable 'maybeValue0'.",
+      "log": "review/test-audit/internal-fuzz/M10.log"
+    }
+  },
+  {
+    "test": "TestRegexProgramsPassTheChecker",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/fuzz_test.go:73",
+    "seconds": 0.531,
+    "oracle": "Self-written expectation of checker acceptance for 30 generated programs; uses the same full Generate source as the lowering row, not a regex-only corpus.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M10: fuzz_test.go:97: seed 1: the checker refused it: /tmp/adamic-gate/TestRegexProgramsPassTheCheckerseeds-001-005945517187/001/program.a:212:7: error TS2451: Cannot redeclare block-scoped variable 'maybeValue0'.",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestOverridesShapesAndLower"
+    ],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PGenerate",
+      "PWithout",
+      "PFeatures",
+      "PShareCuts"
+    ],
+    "subsumer_seconds": 0.834,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M10 ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M10.log 2>&1; fuzz_test.go:97: seed 1: the checker refused it: /tmp/adamic-gate/TestRegexProgramsPassTheCheckerseeds-001-005945517187/001/program.a:212:7: error TS2451: Cannot redeclare block-scoped variable 'maybeValue0'.",
+    "entry_probes": [
+      "PGenerate"
+    ],
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M10 ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M10.log 2>&1",
+      "line": "fuzz_test.go:97: seed 1: the checker refused it: /tmp/adamic-gate/TestRegexProgramsPassTheCheckerseeds-001-005945517187/001/program.a:212:7: error TS2451: Cannot redeclare block-scoped variable 'maybeValue0'.",
+      "log": "review/test-audit/internal-fuzz/M10.log"
+    }
+  },
+  {
+    "test": "TestOctoberFeaturesAppear",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/fuzz_test.go:106",
+    "seconds": 0.091,
+    "oracle": "Self-written substring vocabulary across 200 generated seeds; no generated program execution.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M02: fuzz_test.go:120: 200 seeds never wrote extends",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestSharedSliceCutsShare"
+    ],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PGenerate",
+      "PWithout",
+      "PFeatures",
+      "PShareCuts"
+    ],
+    "subsumer_seconds": 0.019,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M02 ADAMIC_MUTANT=M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M02.log 2>&1; fuzz_test.go:120: 200 seeds never wrote extends",
+    "entry_probes": [
+      "PGenerate"
+    ],
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M02 ADAMIC_MUTANT=M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M02.log 2>&1",
+      "line": "fuzz_test.go:120: 200 seeds never wrote extends",
+      "log": "review/test-audit/internal-fuzz/M02.log"
+    }
+  },
+  {
+    "test": "TestShrinkKeepsOnlyWhatFails",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/fuzz_test.go:127",
+    "seconds": 0.013,
+    "oracle": "Self-written table.delete marker predicate, three-line bound, and original-versus-copy source check. Tests shrinker, not compiler or agreement oracle.",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M15"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "M15: fuzz_test.go:148: shrunk to 540 lines after 1202 tries, want at most 3:",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PGenerate",
+      "PWithout",
+      "PFeatures",
+      "PShrink",
+      "PShareCuts"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M15 ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M15.log 2>&1; fuzz_test.go:148: shrunk to 540 lines after 1202 tries, want at most 3:",
+    "entry_probes": [
+      "PShrink"
+    ],
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M15 ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M15.log 2>&1",
+      "line": "fuzz_test.go:148: shrunk to 540 lines after 1202 tries, want at most 3:",
+      "log": "review/test-audit/internal-fuzz/M15.log"
+    }
+  },
+  {
+    "test": "TestSharedSliceCutsShare",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/fuzz_test.go:157",
+    "seconds": 0.019,
+    "oracle": "Self-written sharing geometry and vocabulary. bytesShared copies an older runtime rule (64-byte minimum, quarter-owner ratio); current runtime uses header/storage ratio 8 and no minimum. It never checks real runtime sharing.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M02: fuzz_test.go:196: vocabulary missing: probe false long string true sharing slice false",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestOctoberFeaturesAppear"
+    ],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PGenerate",
+      "PWithout",
+      "PFeatures",
+      "PShareCuts"
+    ],
+    "subsumer_seconds": 0.091,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M02 ADAMIC_MUTANT=M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M02.log 2>&1; fuzz_test.go:196: vocabulary missing: probe false long string true sharing slice false",
+    "entry_probes": [
+      "PGenerate",
+      "PShareCuts"
+    ],
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M02 ADAMIC_MUTANT=M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M02.log 2>&1",
+      "line": "fuzz_test.go:196: vocabulary missing: probe false long string true sharing slice false",
+      "log": "review/test-audit/internal-fuzz/M02.log"
+    }
+  },
+  {
+    "test": "TestOwnershipShapes",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/fuzz_test.go:207",
+    "seconds": 0.842,
+    "oracle": "Self-written vocabulary/cadence over eight seeds plus checker/lowering success; no runtime ownership observations and no returned IR assertion.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02",
+      "M10",
+      "M11"
+    ],
+    "unique_kills": [
+      "M11"
+    ],
+    "last_proven_fail": "M11: fuzz_test.go:251: seeds 1 to 8 never generated new OwnMarked(",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PGenerate",
+      "PWithout",
+      "PFeatures",
+      "PShareCuts"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M11 ADAMIC_MUTANT=M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M11.log 2>&1; fuzz_test.go:251: seeds 1 to 8 never generated new OwnMarked(",
+    "entry_probes": [
+      "PLower"
+    ],
+    "vacuous_entry": "lower.Lower returns nil IR with nil error; vocabulary assertions remain active.",
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M11 ADAMIC_MUTANT=M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M11.log 2>&1",
+      "line": "fuzz_test.go:251: seeds 1 to 8 never generated new OwnMarked(",
+      "log": "review/test-audit/internal-fuzz/M11.log"
+    }
+  },
+  {
+    "test": "TestJudgeReadsThePanicLine",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/judge_test.go:15",
+    "seconds": 0.007,
+    "oracle": "Self-written synthetic Run outcomes and expected Finding/Checked labels; does not run Node.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06",
+      "M08"
+    ],
+    "unique_kills": [
+      "M06"
+    ],
+    "last_proven_fail": "M08: judge_test.go:46: undefined put back after a narrowing: finding (javascript backend exit code differs, native exit code differs), want checked",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PJudge"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M08 ADAMIC_MUTANT=M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M08.log 2>&1; judge_test.go:46: undefined put back after a narrowing: finding (javascript backend exit code differs, native exit code differs), want checked",
+    "entry_probes": [
+      "PJudge"
+    ],
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M08 ADAMIC_MUTANT=M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M08.log 2>&1",
+      "line": "judge_test.go:46: undefined put back after a narrowing: finding (javascript backend exit code differs, native exit code differs), want checked",
+      "log": "review/test-audit/internal-fuzz/M08.log"
+    }
+  },
+  {
+    "test": "TestOverridesShapesAndLower",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/overrides_test.go:15",
+    "seconds": 0.834,
+    "oracle": "Self-written effect/argument vocabulary across 50 seeds plus checker/lowering success; no native override execution and no returned IR assertion.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02",
+      "M10",
+      "M13"
+    ],
+    "unique_kills": [
+      "M13"
+    ],
+    "last_proven_fail": "M13: overrides_test.go:49: 50 seeds never generated worker.run({ ...borrowed,",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PWithout",
+      "PFeatures",
+      "PShareCuts"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M13 ADAMIC_MUTANT=M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M13.log 2>&1; overrides_test.go:49: 50 seeds never generated worker.run({ ...borrowed,",
+    "entry_probes": [
+      "PLower"
+    ],
+    "vacuous_entry": "lower.Lower returns nil IR with nil error; vocabulary assertions remain active.",
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M13 ADAMIC_MUTANT=M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M13.log 2>&1",
+      "line": "overrides_test.go:49: 50 seeds never generated worker.run({ ...borrowed,",
+      "log": "review/test-audit/internal-fuzz/M13.log"
+    }
+  },
+  {
+    "test": "TestSourceTreeCutsAtItems",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/reduce_test.go:10",
+    "seconds": 0.007,
+    "oracle": "Self-written exact source strings for six parsed-list deletions; no external specification checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04",
+      "M09"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M09: reduce_test.go:37: without 1 [1, 3): \"f(a,);\\n[1, 2];\\n\", want \"f(a);\\n[1, 2];\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PSourceCut"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M09 ADAMIC_MUTANT=M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M09.log 2>&1; reduce_test.go:37: without 1 [1, 3): \"f(a,);\\n[1, 2];\\n\", want \"f(a);\\n[1, 2];\\n\"",
+    "entry_probes": [
+      "PSourceCut"
+    ],
+    "diagnostic_kills": [
+      "PSource: constructor preparation diagnostic, not a code-entry probe"
+    ],
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M09 ADAMIC_MUTANT=M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M09.log 2>&1",
+      "line": "reduce_test.go:37: without 1 [1, 3): \"f(a,);\\n[1, 2];\\n\", want \"f(a);\\n[1, 2];\\n\"",
+      "log": "review/test-audit/internal-fuzz/M09.log"
+    }
+  },
+  {
+    "test": "TestReduceKeepsTheSignature",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/reduce_test.go:69",
+    "seconds": 2.624,
+    "oracle": "Self-written exact non-null refusal prefix and reduced minimum, observed against own compiler; tests reducer preservation, not a witness whose sole purpose is proving the agreement checker can fail. Supplemental weakened keeps comparison survives.",
+    "oracle_kind": "self",
+    "kills": [
+      "M09",
+      "M15"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M15: reduce_test.go:96: reduced to",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSourceTreeCutsAtItems"
+    ],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PReduce",
+      "PExecute",
+      "PSourceCut",
+      "PPrepare",
+      "PLower"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M15 ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M15.log 2>&1; reduce_test.go:96: reduced to",
+    "entry_probes": [
+      "PReduce"
+    ],
+    "diagnostic_kills": [
+      "PSource: constructor preparation diagnostic, not a code-entry probe"
+    ],
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M15 ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M15.log 2>&1",
+      "line": "reduce_test.go:96: reduced to",
+      "log": "review/test-audit/internal-fuzz/M15.log"
+    }
+  },
+  {
+    "test": "TestExecuteCPUHelper",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/run_test.go:15",
+    "seconds": 0.007,
+    "oracle": "Only subprocess entry, returns immediately unless parent sets ADAMIC_FUZZ_CPU_HELPER; parent TestExecuteCPULimit.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "helper",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "16 planned whole-package runs; see runs.json; Parent: TestExecuteCPULimit",
+    "entry_probes": [],
+    "evidence_details": {
+      "command": "16 planned whole-package runs; see runs.json",
+      "line": "Parent: TestExecuteCPULimit"
+    }
+  },
+  {
+    "test": "TestExecuteCPULimit",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/run_test.go:36",
+    "seconds": 4.391,
+    "oracle": "Self-written TimedOut and exit expectations over Go CPU-helper and shell subprocesses; kernel CPU behavior exercised, no external copied authority. SIGXCPU check asserts timeout classification only.",
+    "oracle_kind": "self",
+    "kills": [
+      "M07"
+    ],
+    "unique_kills": [
+      "M07"
+    ],
+    "last_proven_fail": "M07: run_test.go:57: SIGXCPU death was not timed out: {Stdout:[] Stderr:[] ExitCode:-1 TimedOut:false}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PExecute"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M07 ADAMIC_MUTANT=M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M07.log 2>&1; run_test.go:57: SIGXCPU death was not timed out: {Stdout:[] Stderr:[] ExitCode:-1 TimedOut:false}",
+    "entry_probes": [
+      "PExecute"
+    ],
+    "vacuous_subcases": [
+      "saturated: PExecute returns Run{}; this positive subcase still passes"
+    ],
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M07 ADAMIC_MUTANT=M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M07.log 2>&1",
+      "line": "run_test.go:57: SIGXCPU death was not timed out: {Stdout:[] Stderr:[] ExitCode:-1 TimedOut:false}",
+      "log": "review/test-audit/internal-fuzz/M07.log"
+    }
+  },
+  {
+    "test": "TestFuzzerSharesRuntimeLibrary",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/runtime_test.go:10",
+    "seconds": 2.388,
+    "oracle": "Source Node versus native and JavaScript backend via Try, with byte/exit comparison and sanitizers; also self-written runtime path equality and shared runtime stdout.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08: runtime_test.go:32: finding: javascript backend stdout differs, native stdout differs",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestJudgeReadsThePanicLine"
+    ],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PJudge",
+      "PExecute",
+      "PTry",
+      "PPrepare",
+      "PLower"
+    ],
+    "subsumer_seconds": 0.007,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M08 ADAMIC_MUTANT=M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M08.log 2>&1; runtime_test.go:32: finding: javascript backend stdout differs, native stdout differs",
+    "entry_probes": [
+      "PTry",
+      "PPrepare"
+    ],
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M08 ADAMIC_MUTANT=M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M08.log 2>&1",
+      "line": "runtime_test.go:32: finding: javascript backend stdout differs, native stdout differs",
+      "log": "review/test-audit/internal-fuzz/M08.log"
+    }
+  },
+  {
+    "test": "TestUndefinedNumbersShapes",
+    "package": "internal/fuzz",
+    "file": "internal/fuzz/undefined_numbers_test.go:21",
+    "seconds": 1.613,
+    "oracle": "Self-written source/shape vocabulary and opt-in expectations across 40 seeds plus checker/lowering success; no execution or returned IR assertion. Vocabulary derives its shape list from same generator, so shared omissions can agree.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M10"
+    ],
+    "unique_kills": [
+      "M01"
+    ],
+    "last_proven_fail": "M10: undefined_numbers_test.go:58: seed 21: the checker refused it: /tmp/adamic-gate/TestUndefinedNumbersShapesseeds-021-0251459133209/001/program.a:100:49: error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "eligible_mutants": 15,
+    "probe_kills": [
+      "PGenerate",
+      "PWithout",
+      "PFeatures",
+      "PShareCuts"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestOneSeedOneProgram",
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOctoberFeaturesAppear",
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestJudgeReadsThePanicLine",
+      "TestOverridesShapesAndLower",
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature",
+      "TestExecuteCPUHelper",
+      "TestExecuteCPULimit",
+      "TestFuzzerSharesRuntimeLibrary",
+      "TestUndefinedNumbersShapes"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M10 ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M10.log 2>&1; undefined_numbers_test.go:58: seed 21: the checker refused it: /tmp/adamic-gate/TestUndefinedNumbersShapesseeds-021-0251459133209/001/program.a:100:49: error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.",
+    "entry_probes": [
+      "PLower"
+    ],
+    "vacuous_entry": "lower.Lower returns nil IR with nil error; vocabulary assertions remain active.",
+    "evidence_details": {
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u020/cache/M10 ADAMIC_MUTANT=M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/fuzz/ -run . > review/test-audit/internal-fuzz/M10.log 2>&1",
+      "line": "undefined_numbers_test.go:58: seed 21: the checker refused it: /tmp/adamic-gate/TestUndefinedNumbersShapesseeds-021-0251459133209/001/program.a:100:49: error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.",
+      "log": "review/test-audit/internal-fuzz/M10.log"
+    }
+  }
+]
