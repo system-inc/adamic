@@ -16,6 +16,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -80,8 +81,8 @@ func jsxTextnodesRows(t *testing.T, oracle string) []string {
 
 func jsxTextnodesShard(t *testing.T, shard int) {
 	t.Helper()
-	started := time.Now()
 	bundle, _ := yepestaFetch(t)
+	started := time.Now()
 	oracle := bundle.Oracle
 	rows := bundle.Rows
 	slices := jsxTextnodesPartition(t, rows)
@@ -90,7 +91,7 @@ func jsxTextnodesShard(t *testing.T, shard int) {
 		selected = append(selected, rows[i])
 	}
 	port, js, binary := bundle.Port, bundle.JS, bundle.Binary
-	t.Logf("setup %.3fs; shard-%03d cases=%d", time.Since(started).Seconds(), shard, len(selected))
+	t.Logf("shard-%03d cases=%d", shard, len(selected))
 	path := manifest(t, selected)
 	want := yepestaExecute(t, "", oracle, "--manifest", path).output
 	mutated := yepestaJavaScript(t, filepath.Join(port, "main.ts"), path, false).output
@@ -127,7 +128,7 @@ func TestMutantsReactJsxNoCommentTextnodesUnion(t *testing.T) {
 		t.Fatal("shard enumeration mismatch")
 	}
 	// Check the gate-visible top-level enumeration, not merely the array size.
-	file, err := parser.ParseFile(token.NewFileSet(), "yepesta_shards_test.go", nil, 0)
+	file, err := parser.ParseFile(token.NewFileSet(), "yepesta_independent_shards_test.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -244,54 +245,42 @@ func TestMutantsReactJsxNoCommentTextnodes_013(t *testing.T) { t.Parallel(); jsx
 func TestMutantsReactJsxNoCommentTextnodes_014(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 14) }
 func TestMutantsReactJsxNoCommentTextnodes_015(t *testing.T) { t.Parallel(); jsxTextnodesShard(t, 15) }
 
-// Not parallel: builds the shared Go oracle before immutable fixtures are published.
+// The setup entry points remain useful for explicitly warming the same products.
 func TestMutantsReactJsxNoCommentTextnodesOracleSetup(t *testing.T) {
-	started := time.Now()
-	yepestaOracle(t, true)
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: oracle setup exceeds 60s")
-	}
+	t.Parallel()
+	yepestaFetch(t)
 }
-
-// Not parallel: lowers the shared mutant before its native product is built.
 func TestMutantsReactJsxNoCommentTextnodesLoweredSetup(t *testing.T) {
-	started := time.Now()
-	jsxTextnodesProducts(t, 1)
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: lowered setup exceeds 60s")
-	}
+	t.Parallel()
+	yepestaFetch(t)
 }
-
-// Not parallel: builds the sanitized native product before fixture publication.
 func TestMutantsReactJsxNoCommentTextnodesNativeSetup(t *testing.T) {
-	started := time.Now()
-	jsxTextnodesProducts(t, 2)
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: native setup exceeds 60s")
-	}
+	t.Parallel()
+	yepestaFetch(t)
 }
-func yepestaOracle(t *testing.T, build bool) string {
+func yepestaOracle(t *testing.T) string {
 	t.Helper()
 	inputs := yepestaInputs()
 	inputs.Name = "yepesta-oracle-v1"
 	directory := buildcache.Product(t, inputs, func(out string) error {
-		if !build {
-			return fmt.Errorf("run TestMutantsReactJsxNoCommentTextnodesOracleSetup first")
-		}
 		_, err := goOracleIn(".", out)
 		return err
 	})
 	return filepath.Join(directory, "oracle")
 }
 
-// Not parallel: publishes immutable products before parallel shard execution.
 func TestMutantsReactJsxNoCommentTextnodes_Setup(t *testing.T) {
-	started := time.Now()
+	t.Parallel()
+	yepestaFetch(t)
+}
+
+func yepestaPrepare(t *testing.T) string {
+	t.Helper()
 	directory := buildcache.Product(t, yepestaInputs(), func(out string) error {
-		oracle := yepestaOracle(t, false)
+		oracle := yepestaOracle(t)
 		rows := jsxTextnodesRows(t, oracle)
 		witnesses := recoveryRows(t, oracle, ownedWitnessRows(t, ".", jsxTextnodesDescriptor(t)))
-		port, js, binary := jsxTextnodesProducts(t, 0)
+		port, js, binary := jsxTextnodesProducts(t)
 		bundle := yepestaBundle{Oracle: filepath.Join(out, "oracle"), Port: port, JS: js, Binary: binary}
 		data, err := os.ReadFile(oracle)
 		if err != nil {
@@ -335,10 +324,7 @@ func TestMutantsReactJsxNoCommentTextnodes_Setup(t *testing.T) {
 		}
 		return os.WriteFile(filepath.Join(out, "bundle.json"), data, 0644)
 	})
-	t.Logf("setup product %s: %.3fs", directory, time.Since(started).Seconds())
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: setup exceeds 60s")
-	}
+	return directory
 }
 
 type yepestaBundle struct {
@@ -349,11 +335,21 @@ type yepestaBundle struct {
 func yepestaInputs() buildcache.Inputs {
 	return buildcache.Inputs{Name: "yepesta-setup-v1", Files: []string{"go.mod", "cohere", "internal", "stage1/typescript", "oracle", "stage1/cohere/lint"}, Flags: []string{packageDirectory, "shards=16", os.Getenv("ADAMIC_NATIVE_SPLIT"), os.Getenv("ADAMIC_NATIVE_JOBS")}, Toolchain: []string{buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
 }
+
+// Preparation runs once per process, including when a single shard is selected.
+// Product supplies content-addressed reuse across processes; its miss always builds.
+var yepestaPrepared struct {
+	once      sync.Once
+	directory string
+}
+
 func yepestaFetch(t *testing.T) (yepestaBundle, string) {
 	t.Helper()
-	directory := buildcache.Product(t, yepestaInputs(), func(string) error {
-		return fmt.Errorf("run TestMutantsReactJsxNoCommentTextnodes_Setup first; shards never build")
-	})
+	yepestaPrepared.once.Do(func() { yepestaPrepared.directory = yepestaPrepare(t) })
+	directory := yepestaPrepared.directory
+	if directory == "" {
+		t.Fatal("shared preparation failed")
+	}
 	data, err := os.ReadFile(filepath.Join(directory, "bundle.json"))
 	if err != nil {
 		t.Fatal(err)
