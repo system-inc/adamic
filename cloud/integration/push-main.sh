@@ -127,7 +127,7 @@ if [ -n "$fastGate" ]; then
 		exit 1
 	fi
 	if ! verdict=$(GATE_KIND="$gateKind" python3 - "$sha" "$statusLine" "$fastGate" "$fastJSON" <<'VERDICT'
-import json, os, sys
+import json, os, subprocess, sys
 sha, status, log = sys.argv[1], sys.argv[2], sys.argv[3]
 with open(sys.argv[4]) as fastFile:
     fast = json.load(fastFile)
@@ -167,6 +167,35 @@ if unrecorded:
     problems.append("planned stages without a recorded exit of 0: %s" % " ".join(unrecorded))
 if fast.get("finished") is not True:
     problems.append("the gate didn't record that it finished")
+# Loom's pool as the landing gate (@system_adamic, Oct 9 02:33Z): a pool record lands once the parent rules the phase
+# units' parity proven (the switch ~/.adamic-full-gate/pool-promoted, the same file the whole-gate loops read). It must
+# cover every stage a box's whole gate runs, the same checks above apply to it, and a fifth of shas, chosen by the sha
+# so every reader agrees, also need a green box record of the same sha (the spot check).
+if kind == "full" and fast.get("runner") == "pool":
+    promoted = os.environ.get("PUSH_MAIN_POOL_PROMOTED", os.path.expanduser("~/.adamic-full-gate/pool-promoted"))
+    if not os.path.exists(promoted):
+        problems.append("it's a pool record, and the pool isn't promoted to land yet (%s)" % promoted)
+    whole = {"coverage", "tools", "build", "vet", "tests", "wasi", "stage3", "catalog", "determinism", "census"}
+    uncovered = sorted(whole - set(fast.get("planned_stages") or []))
+    if uncovered or fast.get("covers") not in (None, "all"):
+        problems.append("the pool record doesn't cover every stage of a whole gate (missing %s, covers %r)" % (" ".join(uncovered) or "none", fast.get("covers")))
+    if int(sha[:8], 16) % 5 == 0:
+        refs = subprocess.run(["git", "ls-remote", "origin", "refs/heads/gate-logs/%s/*" % sha[:12]], capture_output=True, text=True).stdout.split()
+        boxGreen = False
+        for ref in [ref for ref in refs if ref.endswith("/full-main")]:
+            if subprocess.run(["git", "fetch", "-q", "origin", ref], capture_output=True).returncode != 0:
+                continue
+            record = subprocess.run(["git", "show", "FETCH_HEAD:full.json"], capture_output=True, text=True).stdout
+            line = subprocess.run(["git", "show", "FETCH_HEAD:status.txt"], capture_output=True, text=True).stdout
+            try:
+                boxRecord = json.loads(record)
+            except ValueError:
+                continue
+            if boxRecord.get("runner", "box") != "pool" and boxRecord.get("finished") is True and line.startswith("green"):
+                boxGreen = True
+                break
+        if not boxGreen:
+            problems.append("its sha is one the boxes spot-check (a fifth, by the sha), and no green box whole gate of it is on origin yet")
 # A scoped run (ADAMIC_LINT_RULES, cohere's rule-only batches) skips lint's corpus-wide tests by name,
 # so it never lands anything (cohere, #60hxabf). Since developer tools' 796e9810 the gate refuses to
 # start with it set and records "scoped_env"; a log from before that records nothing, and no gate
