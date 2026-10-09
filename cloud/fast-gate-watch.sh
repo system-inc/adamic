@@ -151,7 +151,7 @@ promoteStaged() {
   rm -f "${state}/stage-green"
   if [ "${verdict}" = ok ]; then
     if [ "$(boxTools "${tested}")" != "$(boxTools "$(cat "${state}/tools-good")")" ]; then
-      echo "${tested}" > "${state}/tools-good"
+      python3 "${here}/cloud/tools-history.py" promote "${state}" "${tested}" > /dev/null || return 1
       placeGoodTree
       echo "$(date -u +%H:%M:%S) promoted tools ${tested:0:9} to every box after canary/main ${sha} green with them on ${box} and every gate-mutant read as declared$([ "${tested}" = "${toolsHead}" ] || echo "; ${toolsHead:0:9} stages beyond them")"
     fi
@@ -219,8 +219,10 @@ countVoid() {
 # even when a queued worker has main's sha, and carry the tools version they test. A seventh argument "staged" runs
 # the staged tools: only the stage canary passes it. "main" marks main's half-hourly canary, run with the good tools.
 dispatch() {
-  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 tools=${7:-} started whole="" script=${here}/cloud/fast-gate.sh token=${canaryToken}
+  local branch=$1 sha=$2 slot=$3 box=$4 class=$5 log=$6 tools=${7:-} started servedTools servedAt whole="" script=${here}/cloud/fast-gate.sh token=${canaryToken}
   started=$(date -u +%s)
+  read -r servedTools servedAt <<< "$(python3 "${here}/cloud/tools-history.py" serve "${state}")"
+  [ -n "${servedTools}" ] && [ -n "${servedAt}" ] || return 1
   lastDispatch=${started} stallAlarmed=""
   slotReserved "${branch}" "${box}" "${slot}" && whole=--whole-box
   # The stage canary runs on a whole box (@system_adamic, Oct 9 15:44Z): main~10 selects json and lint, about five
@@ -229,19 +231,21 @@ dispatch() {
   # Staged tools never gate a candidate (#9n4p27j, @system_adamic, Oct 9 10:21Z): while new tools are staged, every
   # box, the canary box included, gates with the last good tools, and the staged tools run main's canary only.
   if staging && [ "${tools}" != staged ]; then
-    script=${goodTree}/cloud/fast-gate.sh token="$(cat "${state}/tools-good"):good"
+    script=${goodTree}/cloud/fast-gate.sh token="${servedTools}:good"
   elif [ "${tools}" = staged ]; then
     token=${canaryToken}:staged
   fi
   [ "${tools}" = main ] && token=${token%%:*}:main
-  stopOlderRuns "${branch}" "${sha}" "${box}" "$([ "${box}" = pool ] && cat "${state}/tools-good" || echo "${token%%:*}")"
+  # Promotions never cancel an already served candidate. Capture its tools exactly once.
+  if ! isCanary "${branch}"; then token="${servedTools}:good"; fi
+  script=$(pinToolsScript "${token%%:*}" "${script}") || return 1
   if [ "${box}" = pool ]; then
     # Loom's side pool runs it with the good tools' selection (cloud/pool-job.sh): never a canary for new tools, so its
     # token names the good tools and a pool green promotes nothing.
-    token="$(cat "${state}/tools-good"):pool"
-    bash "${here}/cloud/pool-job.sh" "${sha}" --branch "${branch}" --tools "$(cat "${state}/tools-good")" --priority "$(poolTier "${branch}" "${sha}")" > "${log}" 2>&1 &
+    token="${servedTools}:pool"
+    ADAMIC_FAST_GATE_SERVED_AT=${servedAt} bash "${here}/cloud/pool-job.sh" "${sha}" --branch "${branch}" --tools "${servedTools}" --priority "$(poolTier "${branch}" "${sha}")" > "${log}" 2>&1 &
   else
-    ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
+    ADAMIC_FAST_GATE_SERVED_TOOLS=${token%%:*} ADAMIC_FAST_GATE_SERVED_AT=${servedAt} ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
   fi
   local pid=$!
   dispatchedPid=${pid}
@@ -294,26 +298,14 @@ poolTier() {
 taskOwner() {
   (cd "${ADAMIC_FAST_GATE_AHRA_DIR:-/Users/kirkouimet/Projects/ahra}" && ahra tasks show "$1" 2> /dev/null) | sed -nE 's/^owner +@([a-z0-9_]+).*/\1/p' | head -1 | grep . || echo system_adamic_developer_tools
 }
-# A newer run of a sha stops an older box run of it on other tools (@system_adamic, Oct 9 14:44Z, #z4emxxy): 14383e9d's
-# old merge ran three hours on Home's slot 1 with tools 0a1ccadc while the same candidate had newer jobs. By reap, not
-# cancel-to-move: the old run is stopped on purpose and its partial record is no verdict. A race of the same sha on the
-# same tools (a box beside its pool job) is two routes to one answer and is left alone, and so is a canary of main.
-stopOlderRuns() {
-  local branch=$1 sha=$2 box=$3 tools=$4 file pid runningBranch runningSha slot runningBox class token rest
-  isCanary "${branch}" && return 0
-  for file in "${state}"/running/*; do
-    [ -f "${file}" ] || continue
-    pid=$(basename "${file}")
-    [ -f "${state}/stopped-running/${pid}" ] && continue
-    kill -0 "${pid}" 2> /dev/null || continue
-    read -r runningBranch runningSha slot runningBox class token rest < "${file}"
-    [ "${runningSha}" = "${sha}" ] && [ "${runningBox:-threadripper}" != pool ] && ! isCanary "${runningBranch}" || continue
-    # By what the box runs, not the commit: a Mac-only tools commit changes no gate.
-    [ "$(boxTools "${token%%:*}")" != "$(boxTools "${tools}")" ] || continue
-    touch "${state}/race-lost/${pid}"
-    stopGate "${pid}" "${runningBranch}" "${sha}" "${runningBox:-threadripper}" "superseded by a newer run of the same sha (tools ${tools:0:9})" &&
-      echo "$(date -u +%H:%M:%S) stopped ${runningBranch} ${sha} on ${runningBox:-threadripper} (tools ${token:0:9}): a newer run of the same sha starts with tools ${tools:0:9}"
-  done
+# Immutable tools worktrees prevent an in-flight launcher from reading a checkout promotion moves.
+pinToolsScript() {
+  local sha=$1 fallback=$2 directory=${state}/tools-pinned/$1
+  if [ ! -d "${directory}" ]; then
+    mkdir -p "${state}/tools-pinned"
+    git -C "${here}" worktree add -q --detach "${directory}" "${sha}" || return 1
+  fi
+  echo "${directory}/cloud/fast-gate.sh"
 }
 # Staged rollout of the gate tools (@system_adamic, Oct 8, after three deploy incidents; gate the gate, Oct 9 10:21Z):
 # with a box named in ${state}/canary-box, new box tools run one gate only, a canary of main's tip on that box, while
@@ -337,11 +329,8 @@ placeGoodTree() {
   local good
   good=$(cat "${state}/tools-good")
   [ -n "${ADAMIC_FAST_GATE_GOOD_TREE:-}" ] && return 0
-  if [ -d "${goodTree}" ]; then
-    git -C "${goodTree}" switch -q --detach "${good}"
-  else
-    git -C "${here}" worktree add -q --detach "${goodTree}" "${good}"
-  fi
+  goodTree=${state}/tools-pinned/${good}
+  pinToolsScript "${good}" "${here}/cloud/fast-gate.sh" > /dev/null || return 1
 }
 freeSlots() {
   cat "${state}"/running/* 2>/dev/null > "${state}/running.tmp"
@@ -470,21 +459,8 @@ endRace() {
 # 10:55Z: two stars held their boxes whole and a race the third, so the stage canary waited on all three). One at a time;
 # the freed slot reaps before the canaries pick theirs, so the canary takes it ahead of the queue.
 yieldRaceForCanary() {
-  local file pid branch sha slot box rest
-  [ -s "${state}/canary-yield" ] && kill -0 "$(cat "${state}/canary-yield")" 2> /dev/null && return 0
-  for file in "${state}"/running/*; do
-    [ -f "${file}" ] || continue
-    pid=$(basename "${file}")
-    read -r branch sha slot box rest < "${file}"
-    [ "${box:-threadripper}" != pool ] && [ -f "${state}/racing/${sha}" ] && [ ! -f "${state}/stopped-running/${pid}" ] || continue
-    rm -f "${state}/racing/${sha}"
-    touch "${state}/race-lost/${pid}"
-    if stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "a canary of main takes the slot; the pool job answers alone"; then
-      echo "${pid}" > "${state}/canary-yield"
-      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}'s box race on ${box:-threadripper}: a canary takes its slot, and the pool job answers alone"
-    fi
-    return 0
-  done
+  # A promotion waits for a slot; it never costs a served candidate its run.
+  return 0
 }
 # Integration's skip list names tips that won't land (superseded candidates), and skip-globs whole families: one
 # still running there is stopped, so its slot goes to work that can (integration asked twice by hand, Oct 8; three
@@ -1115,6 +1091,7 @@ mainCanarySeconds=${ADAMIC_FAST_GATE_MAIN_CANARY_SECONDS:-1800}
 canaryMinPass=${ADAMIC_FAST_GATE_CANARY_MIN_PASS:-500}
 [ -s "${state}/main-canary-started" ] || date -u +%s > "${state}/main-canary-started"
 [ -s "${state}/tools-good" ] || echo "${toolsHead}" > "${state}/tools-good"
+python3 "${here}/cloud/tools-history.py" serve "${state}" > /dev/null || exit 2
 [ -s "${state}/canary-box" ] && placeGoodTree
 # Staged, the other boxes keep gating on the good tools: no fleet-wide deploy barrier to wait out. Nor when the
 # box side is the good tools' own, already proven by a real green.
@@ -1147,6 +1124,7 @@ while true; do
     cat "${state}/first-step-globs" > "${state}/first-step-globs.poll" 2>/dev/null || true
   fi
   cat "${state}/step-globs" > "${state}/step-globs.poll" 2>/dev/null || true
+  python3 "${here}/cloud/tools-history.py" serve "${state}" > /dev/null || exit 2
   currentHead=$(git -C "${here}" rev-parse HEAD)
   if [ "${currentHead}" != "${toolsHead}" ] && [ "$(boxTools "${currentHead}")" = "$(boxTools "${toolsHead}")" ]; then
     # Only the Mac side moved: nothing a box runs changed, so no canary and no restart of staging.
@@ -1310,6 +1288,9 @@ while true; do
         echo "$(date -u +%H:%M:%S) canary void: ${cause}"
       elif [ "${testedHead}" = "${canaryToken}" ] || [[ ${testedHead} == *:good ]]; then
         # While staging, a storm's probe runs the good tools: its real verdict ends the storm just the same.
+        if [ ! -s "${state}/canary-box" ]; then
+          python3 "${here}/cloud/tools-history.py" promote "${state}" "${testedHead%%:*}" > /dev/null || continue
+        fi
         canaryRequired=0
         echo "$(date -u +%H:%M:%S) done canary: $(grep -E '^(green|red):' "${gateLog}" | tail -1)"
         if [ -f "${state}/storm" ]; then

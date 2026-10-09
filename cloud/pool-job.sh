@@ -56,9 +56,13 @@ esac
 # cancel left from one, which would stop this job before it starts.
 rm -f "${jobs}/${sha}.verdict" "${jobs}/${sha}.cancel"
 python3 - "${jobs}/${sha}.json" "${branch}" "${sha}" "${base}" "${baseName}" "${tools}" "${priority}" "${gated}" <<'PY'
-import json, os, sys
+import json, os, sys, time
 path, branch, sha, base, baseName, tools, priority, gated = sys.argv[1:]
 job = {"branch": branch, "sha": sha, "base": base, "base_name": baseName, "tools": tools, "packages": "select", "env": {}}
+job["tools_sha"] = tools
+served = os.environ.get("ADAMIC_FAST_GATE_SERVED_AT") or str(time.time_ns())
+job["tools_served_at"] = int(served)
+job["env"].update(ADAMIC_FAST_GATE_SERVED_AT=served, ADAMIC_FAST_GATE_SERVED_TOOLS=tools)
 # Landings and areas run complete, as on the boxes: every phase past a Go red, and the stage 3 lane (Loom af3ce75).
 if branch.startswith(("cloud/land-", "area/")):
     job["complete"] = True

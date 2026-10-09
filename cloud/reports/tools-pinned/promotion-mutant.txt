@@ -1,0 +1,13 @@
+F
+======================================================================
+FAIL: test_promotion_keeps_served_candidates_and_their_tools (cloud.fast-gate.watch_test.WatchTests.test_promotion_keeps_served_candidates_and_their_tools)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/tools-pinned/cloud/fast-gate/watch_test.py", line 1079, in test_promotion_keeps_served_candidates_and_their_tools
+    self.assertNotIn(candidate, w.read('stops'))
+AssertionError: '0000000000010000000000000000000000000000' unexpectedly found in 'box0 bash -s -- 0000000000010000000000000000000000000000 promotion\\ requeues\\ running\\ candidate \n'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.790s
+
+FAILED (failures=1)

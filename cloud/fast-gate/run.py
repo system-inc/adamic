@@ -430,6 +430,11 @@ class Gate:
             "vet_ok": False,
             "box_load": {"start": boxLoad()},
         }
+        servedTools = os.environ.get("ADAMIC_FAST_GATE_SERVED_TOOLS")
+        if servedTools and servedTools != self.result["tools_sha"]:
+            raise ValueError("record tools mismatch: got %s, served %s" % (self.result["tools_sha"], servedTools))
+        if os.environ.get("ADAMIC_FAST_GATE_SERVED_AT"):
+            self.result["tools_served_at"] = int(os.environ["ADAMIC_FAST_GATE_SERVED_AT"])
         self.kind = "full" if arguments.full else "fast"
         self.status("running: %s gate of %s against %s" % (self.kind, arguments.sha, arguments.base))
 

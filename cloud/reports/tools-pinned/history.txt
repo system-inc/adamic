@@ -1,0 +1,10 @@
+test_corrupt_history_refuses (cloud.fast-gate.tools_history_test.ToolsHistory.test_corrupt_history_refuses) ... ok
+test_direct_pool_job_also_records_serve_time (cloud.fast-gate.tools_history_test.ToolsHistory.test_direct_pool_job_also_records_serve_time) ... ok
+test_no_fake_past_for_external_promotion (cloud.fast-gate.tools_history_test.ToolsHistory.test_no_fake_past_for_external_promotion) ... ok
+test_old_served_record_survives_promotion_but_unserved_tools_do_not (cloud.fast-gate.tools_history_test.ToolsHistory.test_old_served_record_survives_promotion_but_unserved_tools_do_not) ... ok
+test_pool_job_keeps_serve_metadata_in_its_record_environment (cloud.fast-gate.tools_history_test.ToolsHistory.test_pool_job_keeps_serve_metadata_in_its_record_environment) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.003s
+
+OK

@@ -1,0 +1,141 @@
+test_a_box_gate_past_the_ceiling_is_stopped (cloud.fast-gate.watch_test.WatchTests.test_a_box_gate_past_the_ceiling_is_stopped) ... ok
+test_a_box_held_whole_is_not_a_free_slot_to_the_stall_alarm (cloud.fast-gate.watch_test.WatchTests.test_a_box_held_whole_is_not_a_free_slot_to_the_stall_alarm) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 272261 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_a_box_running_the_star_takes_no_other_gate (cloud.fast-gate.watch_test.WatchTests.test_a_box_running_the_star_takes_no_other_gate) ... ok
+test_a_box_that_answers_the_race_first_stops_the_pool_job (cloud.fast-gate.watch_test.WatchTests.test_a_box_that_answers_the_race_first_stops_the_pool_job) ... ok
+test_a_canary_shaped_mutant_must_read_thin (cloud.fast-gate.watch_test.WatchTests.test_a_canary_shaped_mutant_must_read_thin) ... ok
+test_a_canary_with_no_box_slot_waits_for_the_served_race (cloud.fast-gate.watch_test.WatchTests.test_a_canary_with_no_box_slot_waits_for_the_served_race) ... ok
+test_a_complete_run_s_first_failure_publishes_once_and_a_worker_s_does_not (cloud.fast-gate.watch_test.WatchTests.test_a_complete_run_s_first_failure_publishes_once_and_a_worker_s_does_not) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 277499 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 277498 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_a_dead_holder_s_lock_is_taken_over_and_a_live_one_is_not (cloud.fast-gate.watch_test.WatchTests.test_a_dead_holder_s_lock_is_taken_over_and_a_live_one_is_not) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 277852 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_a_front_tip_bound_for_the_pool_reserves_and_preempts_no_box (cloud.fast-gate.watch_test.WatchTests.test_a_front_tip_bound_for_the_pool_reserves_and_preempts_no_box) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 278399 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_a_front_tip_outside_the_requests_takes_a_second_box_when_server_is_the_star_s (cloud.fast-gate.watch_test.WatchTests.test_a_front_tip_outside_the_requests_takes_a_second_box_when_server_is_the_star_s) ... ok
+test_a_front_tip_whose_reserved_boxes_are_held_takes_any_big_slot_after_ten_minutes (cloud.fast-gate.watch_test.WatchTests.test_a_front_tip_whose_reserved_boxes_are_held_takes_any_big_slot_after_ten_minutes) ... ok
+test_a_landing_borrows_a_small_slot_ahead_of_small_worker_tips (cloud.fast-gate.watch_test.WatchTests.test_a_landing_borrows_a_small_slot_ahead_of_small_worker_tips) ... ok
+test_a_lock_left_by_a_killed_watcher_is_cleared_at_start (cloud.fast-gate.watch_test.WatchTests.test_a_lock_left_by_a_killed_watcher_is_cleared_at_start) ... ok
+test_a_long_waiting_small_tip_takes_an_idle_area_slot (cloud.fast-gate.watch_test.WatchTests.test_a_long_waiting_small_tip_takes_an_idle_area_slot) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 282943 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_a_missing_suite_holds_promotion (cloud.fast-gate.watch_test.WatchTests.test_a_missing_suite_holds_promotion) ... ok
+test_a_mutant_that_reads_green_or_reds_at_the_wrong_step_holds_the_staged_tools (cloud.fast-gate.watch_test.WatchTests.test_a_mutant_that_reads_green_or_reds_at_the_wrong_step_holds_the_staged_tools) ... ok
+test_a_newer_tools_run_never_stops_the_older_served_candidate (cloud.fast-gate.watch_test.WatchTests.test_a_newer_tools_run_never_stops_the_older_served_candidate) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 284178 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_a_pool_green_reaches_its_owner_and_promotes_no_tools (cloud.fast-gate.watch_test.WatchTests.test_a_pool_green_reaches_its_owner_and_promotes_no_tools) ... ok
+test_a_pool_job_without_a_tier_is_refused_and_writes_no_job (cloud.fast-gate.watch_test.WatchTests.test_a_pool_job_without_a_tier_is_refused_and_writes_no_job) ... ok
+test_a_pool_that_answers_the_race_first_stops_the_box_run_and_its_partial_red_is_no_verdict (cloud.fast-gate.watch_test.WatchTests.test_a_pool_that_answers_the_race_first_stops_the_box_run_and_its_partial_red_is_no_verdict) ... ok
+test_a_realistic_queue_fills_and_refills_every_slot_in_seconds (cloud.fast-gate.watch_test.WatchTests.test_a_realistic_queue_fills_and_refills_every_slot_in_seconds) ... ok
+test_a_red_stage_canary_holds_the_tools_until_a_box_side_push (cloud.fast-gate.watch_test.WatchTests.test_a_red_stage_canary_holds_the_tools_until_a_box_side_push) ... ok
+test_a_red_that_misses_the_first_failure_pattern_is_a_misread (cloud.fast-gate.watch_test.WatchTests.test_a_red_that_misses_the_first_failure_pattern_is_a_misread) ... ok
+test_a_running_gate_a_skip_glob_covers_is_stopped_and_cancelled_on_the_pool (cloud.fast-gate.watch_test.WatchTests.test_a_running_gate_a_skip_glob_covers_is_stopped_and_cancelled_on_the_pool) ... ok
+test_a_running_gate_on_the_skip_list_is_stopped_once (cloud.fast-gate.watch_test.WatchTests.test_a_running_gate_on_the_skip_list_is_stopped_once) ... ok
+test_a_second_star_tip_takes_the_box_with_the_lowest_ranked_work_when_server_is_the_star_s (cloud.fast-gate.watch_test.WatchTests.test_a_second_star_tip_takes_the_box_with_the_lowest_ranked_work_when_server_is_the_star_s) ... ok
+test_a_side_gate_whose_branch_was_pushed_again_is_stopped_and_cancelled_on_the_pool (cloud.fast-gate.watch_test.WatchTests.test_a_side_gate_whose_branch_was_pushed_again_is_stopped_and_cancelled_on_the_pool) ... ok
+test_a_skip_listed_pool_job_is_cancelled_on_loom_s_server_too (cloud.fast-gate.watch_test.WatchTests.test_a_skip_listed_pool_job_is_cancelled_on_loom_s_server_too) ... ok
+test_a_slot_beside_a_front_run_is_not_free_to_the_stall_alarm (cloud.fast-gate.watch_test.WatchTests.test_a_slot_beside_a_front_run_is_not_free_to_the_stall_alarm) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 302220 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_a_small_tip_leaves_the_area_slot_while_young_or_a_big_tip_waits (cloud.fast-gate.watch_test.WatchTests.test_a_small_tip_leaves_the_area_slot_while_young_or_a_big_tip_waits) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 305174 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 303816 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_a_stage_canary_green_promotes_the_tools_it_ran_after_the_head_moved_on (cloud.fast-gate.watch_test.WatchTests.test_a_stage_canary_green_promotes_the_tools_it_ran_after_the_head_moved_on) ... ok
+test_a_stage_canary_never_takes_a_box_a_whole_gate_loop_lends (cloud.fast-gate.watch_test.WatchTests.test_a_stage_canary_never_takes_a_box_a_whole_gate_loop_lends) ... ok
+test_a_stage_canary_takes_an_empty_box_whole_never_a_slot_beside_a_running_gate (cloud.fast-gate.watch_test.WatchTests.test_a_stage_canary_takes_an_empty_box_whole_never_a_slot_beside_a_running_gate) ... ok
+test_a_stage_canary_takes_another_box_when_the_canary_box_has_no_slot (cloud.fast-gate.watch_test.WatchTests.test_a_stage_canary_takes_another_box_when_the_canary_box_has_no_slot) ... ok
+test_a_stage_canary_that_ran_too_few_tests_is_void_and_promotes_nothing (cloud.fast-gate.watch_test.WatchTests.test_a_stage_canary_that_ran_too_few_tests_is_void_and_promotes_nothing) ... ok
+test_a_stage_canary_whose_tools_were_promoted_meanwhile_is_stopped (cloud.fast-gate.watch_test.WatchTests.test_a_stage_canary_whose_tools_were_promoted_meanwhile_is_stopped) ... ok
+test_a_stage_canary_with_no_empty_box_drains_the_canary_box_and_takes_it_whole (cloud.fast-gate.watch_test.WatchTests.test_a_stage_canary_with_no_empty_box_drains_the_canary_box_and_takes_it_whole) ... ok
+test_a_stall_alarms_once (cloud.fast-gate.watch_test.WatchTests.test_a_stall_alarms_once) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 312464 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_a_stopped_gate_whose_waiter_hangs_is_reaped_after_two_minutes (cloud.fast-gate.watch_test.WatchTests.test_a_stopped_gate_whose_waiter_hangs_is_reaped_after_two_minutes) ... ok
+test_a_tools_commit_that_leaves_the_box_side_alone_neither_stages_nor_waits_on_a_canary (cloud.fast-gate.watch_test.WatchTests.test_a_tools_commit_that_leaves_the_box_side_alone_neither_stages_nor_waits_on_a_canary) ... ok
+test_a_void_mutant_is_gated_again_and_three_voids_hold_the_tools (cloud.fast-gate.watch_test.WatchTests.test_a_void_mutant_is_gated_again_and_three_voids_hold_the_tools) ... ok
+test_a_void_stage_canary_is_no_storm_and_tries_again_in_ten_minutes (cloud.fast-gate.watch_test.WatchTests.test_a_void_stage_canary_is_no_storm_and_tries_again_in_ten_minutes) ... ok
+test_an_ahead_tip_outranks_every_step_without_the_star_s_box (cloud.fast-gate.watch_test.WatchTests.test_an_ahead_tip_outranks_every_step_without_the_star_s_box) ... ok
+test_an_area_gate_whose_area_moved_is_stopped_and_cancelled_on_the_pool (cloud.fast-gate.watch_test.WatchTests.test_an_area_gate_whose_area_moved_is_stopped_and_cancelled_on_the_pool) ... ok
+test_big_borrowing_obeys_globs_and_limit (cloud.fast-gate.watch_test.WatchTests.test_big_borrowing_obeys_globs_and_limit) ... ok
+test_canary_takes_a_big_slot_when_no_small_one_is_free (cloud.fast-gate.watch_test.WatchTests.test_canary_takes_a_big_slot_when_no_small_one_is_free) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:1127: ResourceWarning: subprocess 317632 is still running
+  _warn("subprocess %s is still running" % self.pid,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_control_spread_voids_and_normal_retry_limit (cloud.fast-gate.watch_test.WatchTests.test_control_spread_voids_and_normal_retry_limit) ... ok
+test_control_without_globs (cloud.fast-gate.watch_test.WatchTests.test_control_without_globs) ... ok
+test_discards_leave_the_queue_in_one_pass_before_ranking (cloud.fast-gate.watch_test.WatchTests.test_discards_leave_the_queue_in_one_pass_before_ranking) ... ok
+test_every_pool_bound_tip_goes_to_the_pool_at_once_whatever_the_pool_lines (cloud.fast-gate.watch_test.WatchTests.test_every_pool_bound_tip_goes_to_the_pool_at_once_whatever_the_pool_lines) ... ok
+test_every_pool_job_carries_its_waterfall_tier (cloud.fast-gate.watch_test.WatchTests.test_every_pool_job_carries_its_waterfall_tier) ... ok
+test_front_outranks_every_step_and_skip_globs_take_a_family_out (cloud.fast-gate.watch_test.WatchTests.test_front_outranks_every_step_and_skip_globs_take_a_family_out) ... ok
+test_front_tips_tie_in_the_front_file_s_order_not_newest_first (cloud.fast-gate.watch_test.WatchTests.test_front_tips_tie_in_the_front_file_s_order_not_newest_first) ... ok
+test_landings_areas_side_tips_and_the_star_go_to_the_pool_and_a_second_pool_void_to_the_boxes (cloud.fast-gate.watch_test.WatchTests.test_landings_areas_side_tips_and_the_star_go_to_the_pool_and_a_second_pool_void_to_the_boxes) ... ok
+test_main_s_canary_runs_every_half_hour_with_the_good_tools_and_a_red_pages_once (cloud.fast-gate.watch_test.WatchTests.test_main_s_canary_runs_every_half_hour_with_the_good_tools_and_a_red_pages_once) ... ok
+test_main_s_canary_runs_the_good_tools_while_new_ones_are_staged (cloud.fast-gate.watch_test.WatchTests.test_main_s_canary_runs_the_good_tools_while_new_ones_are_staged) ... ok
+test_main_s_half_hourly_canary_gates_the_suite_with_the_good_tools_and_a_misread_pages_once (cloud.fast-gate.watch_test.WatchTests.test_main_s_half_hourly_canary_gates_the_suite_with_the_good_tools_and_a_misread_pages_once) ... ok
+test_main_s_half_hourly_canary_waits_while_a_stage_canary_waits_for_its_box (cloud.fast-gate.watch_test.WatchTests.test_main_s_half_hourly_canary_waits_while_a_stage_canary_waits_for_its_box) ... ok
+test_no_branch_line_clears_roadmap_reservation (cloud.fast-gate.watch_test.WatchTests.test_no_branch_line_clears_roadmap_reservation) ... ok
+test_non_reserved_red_gate_keeps_running (cloud.fast-gate.watch_test.WatchTests.test_non_reserved_red_gate_keeps_running) ... ok
+test_promotion_keeps_pool_jobs_on_their_served_tools (cloud.fast-gate.watch_test.WatchTests.test_promotion_keeps_pool_jobs_on_their_served_tools) ... ok
+test_promotion_keeps_served_candidates_and_their_tools (cloud.fast-gate.watch_test.WatchTests.test_promotion_keeps_served_candidates_and_their_tools) ... ok
+test_red_reserved_gate_stops_once_and_reaps_red (cloud.fast-gate.watch_test.WatchTests.test_red_reserved_gate_stops_once_and_reaps_red) ... ok
+test_reserved_gate_still_clean_is_stopped_too (cloud.fast-gate.watch_test.WatchTests.test_reserved_gate_still_clean_is_stopped_too) ... ok
+test_reserved_priority_and_whole_box (cloud.fast-gate.watch_test.WatchTests.test_reserved_priority_and_whole_box) ... ok
+test_reserved_slot_rejects_other_tip_but_box_serves_small (cloud.fast-gate.watch_test.WatchTests.test_reserved_slot_rejects_other_tip_but_box_serves_small) ... ok
+test_roadmap_refresh_and_file_reservation (cloud.fast-gate.watch_test.WatchTests.test_roadmap_refresh_and_file_reservation) ... FAIL
+test_running_reservation_survives_table_change (cloud.fast-gate.watch_test.WatchTests.test_running_reservation_survives_table_change) ... ok
+test_staged_tools_gate_no_candidate_and_only_main_s_canary_with_them_promotes (cloud.fast-gate.watch_test.WatchTests.test_staged_tools_gate_no_candidate_and_only_main_s_canary_with_them_promotes) ... ok
+test_staged_tools_promote_only_once_every_gate_mutant_reads_as_declared (cloud.fast-gate.watch_test.WatchTests.test_staged_tools_promote_only_once_every_gate_mutant_reads_as_declared) ... ok
+test_stop_gate_refuses_anything_but_a_whole_sha (cloud.fast-gate.watch_test.WatchTests.test_stop_gate_refuses_anything_but_a_whole_sha) ... ok
+test_storm_hold_recovery (cloud.fast-gate.watch_test.WatchTests.test_storm_hold_recovery) ... ok
+test_the_deploy_canary_may_use_a_draining_box (cloud.fast-gate.watch_test.WatchTests.test_the_deploy_canary_may_use_a_draining_box) ... ok
+test_the_queue_runs_in_roadmap_step_order (cloud.fast-gate.watch_test.WatchTests.test_the_queue_runs_in_roadmap_step_order) ... ok
+test_the_star_preempts_side_work_on_server_and_runs_there_whole (cloud.fast-gate.watch_test.WatchTests.test_the_star_preempts_side_work_on_server_and_runs_there_whole) ... ok
+test_the_train_runs_bottom_first_among_equal_keys (cloud.fast-gate.watch_test.WatchTests.test_the_train_runs_bottom_first_among_equal_keys) ... ok
+test_tools_head_change_blocks_queue (cloud.fast-gate.watch_test.WatchTests.test_tools_head_change_blocks_queue) ... ok
+test_void_deploy_canary_and_ten_minute_probes (cloud.fast-gate.watch_test.WatchTests.test_void_deploy_canary_and_ten_minute_probes) ... ok
+test_waiting_reservation_drains_its_box (cloud.fast-gate.watch_test.WatchTests.test_waiting_reservation_drains_its_box) ... ok
+
+======================================================================
+FAIL: test_roadmap_refresh_and_file_reservation (cloud.fast-gate.watch_test.WatchTests.test_roadmap_refresh_and_file_reservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/tools-pinned/cloud/fast-gate/watch_test.py", line 1474, in test_roadmap_refresh_and_file_reservation
+    self.assertEqual(w.read('task-calls'), calls)
+AssertionError: 'task[218 chars]6y\ntasks show bbbbbbb\ntasks waterfall system_adamic --json\n' != 'task[218 chars]6y\ntasks show bbbbbbb\n'
+  tasks ready system_adamic
+  tasks ready system_adamic
+  tasks waterfall system_adamic --json
+  tasks ready system_adamic
+  tasks show aaaaaaa
+  tasks show 2s8kq6y
+  tasks ready system_adamic
+  tasks show aaaaaaa
+  tasks show 2s8kq6y
+  tasks show bbbbbbb
+- tasks waterfall system_adamic --json
+
+
+----------------------------------------------------------------------
+Ran 79 tests in 97.836s
+
+FAILED (failures=1)
+fill 1.8 s, reap and refill 2.3 s

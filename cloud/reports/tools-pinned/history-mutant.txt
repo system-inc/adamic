@@ -1,0 +1,15 @@
+test_old_served_record_survives_promotion_but_unserved_tools_do_not (history_tests.ToolsHistory.test_old_served_record_survives_promotion_but_unserved_tools_do_not) ... FAIL
+
+======================================================================
+FAIL: test_old_served_record_survives_promotion_but_unserved_tools_do_not (history_tests.ToolsHistory.test_old_served_record_survives_promotion_but_unserved_tools_do_not)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/tools-pinned/cloud/fast-gate/tools_history_test.py", line 32, in test_old_served_record_survives_promotion_but_unserved_tools_do_not
+    self.assertFalse(history.was_live(log, dict(tools_sha=new, tools_served_at=served)))
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)
+EXPECTED MUTANT FAILURE: removing the promoted-at <= served-at check admits tools promoted after serve

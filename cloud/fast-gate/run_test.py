@@ -179,6 +179,14 @@ class FailClosed(unittest.TestCase):
             result = json.load(handle)
         return gate, status, result
 
+    def test_record_keeps_the_tools_sha_and_serve_time(self):
+        with mock.patch.dict(os.environ, ADAMIC_FAST_GATE_SERVED_TOOLS=self.sha,
+                             ADAMIC_FAST_GATE_SERVED_AT="123456789"):
+            gate, status, record = self.gate()
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(record["tools_sha"], self.sha)
+        self.assertEqual(record["tools_served_at"], 123456789)
+
     def test_an_undeclared_tool_is_red_at_tools_naming_it(self):
         with open(os.path.join(self.tree, "probe.go"), "w") as handle:
             handle.write('package probe\n\nimport "os/exec"\n\nvar a = exec.Command("go", "version")\nvar b, _ = exec.LookPath("wasmtime")\n')

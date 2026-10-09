@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Exercise the real watcher with isolated state and no external side effects."""
 import os
+import json
 from pathlib import Path
 import shutil
 import signal
@@ -20,8 +21,9 @@ class Watcher:
         self.repo = self.root / 'repo'
         cloud = self.repo / 'cloud'
         cloud.mkdir(parents=True)
-        for name in ('fast-gate-watch.sh', 'fast-gate-classify.sh', 'first-step-branches.sh', 'stop-gate.sh'):
-            shutil.copy(ROOT / 'cloud' / name, cloud / name)
+        for name in ('fast-gate-watch.sh', 'fast-gate-classify.sh', 'first-step-branches.sh', 'stop-gate.sh', 'tools-history.py'):
+            shutil.copy(os.environ.get('WATCH_TEST_SCRIPT', ROOT / 'cloud' / name)
+                        if name == 'fast-gate-watch.sh' else ROOT / 'cloud' / name, cloud / name)
         # The gate-mutant suite (cloud/gate-mutants.tsv): none unless a test declares some; a missing file holds promotion.
         if mutants is not None:
             (cloud / 'gate-mutants.tsv').write_text('# name, sha, step, pattern\n' + mutants)
@@ -53,6 +55,13 @@ class Watcher:
 *'branch -r --contains'*) echo origin/devtools/fast-gate ;;
 *'ls-remote'*refs/heads/main*) printf '%s\\trefs/heads/main\\n' aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ;;
 *'ls-remote'*refs/heads/codex*) cat "$TEST_ROOT/tips" ;;
+*'worktree add'*)
+  mkdir -p "$7/cloud"
+  cp -R "$TEST_ROOT/repo/cloud/." "$7/cloud/"
+  if [ "$8" = tools-zero ]; then
+    sed 's|"$TEST_ROOT/starts"|"$TEST_ROOT/good-starts"|g' "$TEST_ROOT/repo/cloud/fast-gate.sh" > "$7/cloud/fast-gate.sh"
+  fi
+  ;;
 *merge-base*) exit 1 ;;
 *trailers:key=Task*) cat "$TEST_ROOT/trailers-$5" 2>/dev/null ;;
 *trailers:key=Gate-tier*) cat "$TEST_ROOT/gate-tier-$5" 2>/dev/null ;;
@@ -79,10 +88,13 @@ touch "$TEST_ROOT/stopped-$sha"
 ''')
         self.script(self.bin / 'sleep', '/bin/sleep 0.03\n')
         # Loom's side pool (#xt96xyp): a local waiter, here answering from pool-mode (green, red or void).
-        self.script(cloud / 'pool-job.sh', '''sha=$1; branch=$3
+        self.script(cloud / 'pool-job.sh', '''sha=$1; branch=$3; servedTools=$5
+printf '%s %s %s\\n' "$branch" "$servedTools" "$ADAMIC_FAST_GATE_SERVED_AT" >> "$TEST_ROOT/pool-served"
 printf '%s %s\\n' "$branch" "$sha" >> "$TEST_ROOT/pool-starts"
 printf '%s\\n' "$*" >> "$TEST_ROOT/pool-args"
 while [ "$(cat "$TEST_ROOT/pool-mode" 2>/dev/null || echo hold)" = hold ]; do /bin/sleep 0.01; done
+mkdir -p "$TEST_ROOT/records"
+printf '{"tools_sha":"%s","tools_served_at":%s}\\n' "$servedTools" "$ADAMIC_FAST_GATE_SERVED_AT" > "$TEST_ROOT/records/$sha.json"
 case "$(cat "$TEST_ROOT/pool-mode")" in
   green) echo "green: $sha fast gate on Loom's side pool, go tests only" ;;
   void) echo "void: $sha the pool gave no verdict in 5400 s" ;;
@@ -92,6 +104,7 @@ esac
 ''')
         (self.state / 'auto-area-merge').touch()
         self.script(cloud / 'fast-gate.sh', '''sha=$1; branch=$3
+printf '%s %s %s\\n' "$branch" "$ADAMIC_FAST_GATE_SERVED_TOOLS" "$ADAMIC_FAST_GATE_SERVED_AT" >> "$TEST_ROOT/served"
 printf '%s %s %s %s\\n' "$branch" "$sha" "$5" "$ADAMIC_FAST_GATE_BOX" >> "$TEST_ROOT/starts"
 [ "${6:-}" = --whole-box ] && printf '%s\\n' "$branch" >> "$TEST_ROOT/whole"
 if [[ $branch == gate-mutant/* ]]; then
@@ -126,6 +139,8 @@ else
   done
   mode=$(cat "$TEST_ROOT/mode")
 fi
+mkdir -p "$TEST_ROOT/records"
+printf '{"tools_sha":"%s","tools_served_at":%s}\\n' "$ADAMIC_FAST_GATE_SERVED_TOOLS" "$ADAMIC_FAST_GATE_SERVED_AT" > "$TEST_ROOT/records/$sha.json"
 if [ "$mode" = pass ]; then echo "green: $sha passed, 3 packages, $(cat "$TEST_ROOT/passes" 2>/dev/null || echo 900) pass, 0 skip, smoke 1 fixtures"
 elif [ "$mode" = red ]; then echo "red: $sha failed"
 else
@@ -834,7 +849,7 @@ class WatchTests(unittest.TestCase):
         w = Watcher(1, mode='hold', slots='box0 S\n')
         self.addCleanup(w.close)
         w.put('initial', 'pass')
-        w.wait(lambda: 'codex/test0 ' in w.read('starts'))
+        w.wait(lambda: 'codex/test0 ' in w.read('starts') + w.read('good-starts'))
         w.put('clock', '2799')
         time.sleep(.3)
         self.assertNotIn('over the box ceiling', w.read('output'))
@@ -842,22 +857,23 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'stopped codex/test0 %s on box0: over the box ceiling of 1800 s' % w.tips[0][1] in w.read('output'))
         self.assertIn('box0 ', w.read('stops'))
 
-    def test_a_newer_run_of_a_sha_stops_its_older_box_run_on_other_tools(self):
-        # #z4emxxy: the old run is stopped on purpose and its partial record is no verdict; same tools would be a race.
-        w = self.reservation('box0 S\nbox1 S\n', [], release=False)
-        sha = '7' * 40
+    def test_a_newer_tools_run_never_stops_the_older_served_candidate(self):
+        w = self.reservation('box0 S\nbox1 S\n', [('codex/new', 'S')], release=False)
         holder = subprocess.Popen(['sleep', '30'])
-        self.addCleanup(holder.kill)
-        (w.state / 'running' / str(holder.pid)).write_text('codex/old %s S box1 S tools-old:1 %s\n' % (sha, w.state / 'logs/old.log'))
-        (w.state / 'running-started' / str(holder.pid)).write_text('1000\n')
-        w.tips = [('codex/old', sha)]
-        w.put('tips', '%s\trefs/heads/codex/old\n' % sha)
-        (w.state / 'seen').write_text('codex/old %s\n' % sha)
-        (w.state / 'queue').write_text('S 900 codex/old %s\n' % sha)
+        self.addCleanup(holder.terminate)
+        sha = w.tips[0][1]
+        (w.state / 'running' / str(holder.pid)).write_text(
+            'codex/old %s S box1 S tools-old:good %s\n' % (sha, w.state / 'logs/old.log'))
+        # Keep the old branch live so this exercises tools replacement alone, not branch supersession.
+        w.tips.append(('codex/old', sha))
+        (w.state / 'seen').write_text(''.join(f'{b} {s}\n' for b, s in w.tips))
+        w.put('tips', ''.join(f'{s}\trefs/heads/{b}\n' for b, s in w.tips))
         w.put('initial', 'pass')
-        w.wait(lambda: 'a newer run of the same sha starts' in w.read('output'))
-        self.assertIn('box1 ', w.read('stops'))
-        w.wait(lambda: 'codex/old %s' % sha in w.read('starts'))
+        w.wait(lambda: 'codex/new ' in w.read('starts'))
+        time.sleep(.2)
+        self.assertNotIn('a newer run of the same sha starts', w.read('output'))
+        self.assertFalse((w.state / 'race-lost' / str(holder.pid)).exists())
+        self.assertNotIn('box1 ', w.read('stops'))
 
     def test_every_pool_bound_tip_goes_to_the_pool_at_once_whatever_the_pool_lines(self):
         # #sp2wer3: Loom places the units; one "pool P" line no longer holds the second tip back for the boxes.
@@ -892,22 +908,19 @@ class WatchTests(unittest.TestCase):
         self.assertIn("the race's other route (box0) answered first", (w.root / 'loom-jobs' / (sha + '.cancel')).read_text())
         self.assertFalse((w.state / 'racing' / sha).exists())
 
-    def test_a_canary_with_no_box_slot_takes_a_race_s_and_the_pool_job_answers_alone(self):
+    def test_a_canary_with_no_box_slot_waits_for_the_served_race(self):
         w, sha = self.race(mainCanary=1800)
         w.put('canary', 'hold')
         # The half-hourly canary is half an hour on; the box race started well inside its ceiling of that (#89ma1vf).
         for started in (w.state / 'running-started').iterdir():
             started.write_text('2700\n')
         w.put('clock', '2800')
-        w.wait(lambda: "stopped codex/test0 %s's box race on box0: a canary takes its slot" % sha in w.read('output'))
-        w.wait(lambda: 'ended codex/test0 %s on box0: it lost the race' % sha in w.read('output'))
-        w.wait(lambda: w.read('starts').splitlines()[-1].startswith('canary/main '))
-        self.assertTrue(w.read('starts').splitlines()[-1].endswith(' box0'))
-        self.assertFalse((w.state / 'racing' / sha).exists())
-        self.assertEqual(w.read('stops').count(sha), 1)
-        # The pool job runs on, and its verdict is the tip's own.
-        w.put('pool-mode', 'green')
-        w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
+        time.sleep(.4)
+        self.assertNotIn('a canary takes its slot', w.read('output'))
+        self.assertNotIn(sha, w.read('stops'))
+        self.assertTrue((w.state / 'racing' / sha).exists())
+        w.put('mode', 'pass')
+        w.wait(lambda: 'done codex/test0:' in w.read('output'))
 
     def test_a_pool_that_answers_the_race_first_stops_the_box_run_and_its_partial_red_is_no_verdict(self):
         w, sha = self.race()
@@ -1056,6 +1069,46 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'codex/c ' in w.read('starts'))
         self.assertNotIn('codex/c ', w.read('good-starts'))
 
+    def test_promotion_keeps_served_candidates_and_their_tools(self):
+        w = self.staged(1)
+        candidate = w.tips[0][1]
+        before = (w.state / 'tools-good-history.tsv').read_bytes()
+        w.put('initial', 'pass')
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+        self.assertEqual(w.read('served').count('codex/test0 tools-zero '), 1)
+        self.assertNotIn(candidate, w.read('stops'))
+        self.assertTrue((w.state / 'tools-good-history.tsv').read_bytes().startswith(before))
+        self.assertTrue(any(candidate in p.read_text() and 'tools-zero:good' in p.read_text()
+                            for p in (w.state / 'running').iterdir()))
+        w.tips.append(('codex/after', 'c' * 40))
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
+        w.wait(lambda: 'codex/after tools-one ' in w.read('served'))
+        w.put('mode', 'pass')
+        w.wait(lambda: 'done codex/test0:' in w.read('output') and 'done codex/after:' in w.read('output'))
+        self.assertEqual(w.read('served').count('codex/test0 tools-zero '), 1)
+        self.assertNotIn('queued again', w.read('output'))
+        self.assertEqual(json.loads(w.read('records/' + candidate + '.json'))['tools_sha'], 'tools-zero')
+        self.assertEqual(json.loads(w.read('records/' + 'c' * 40 + '.json'))['tools_sha'], 'tools-one')
+
+    def test_promotion_keeps_pool_jobs_on_their_served_tools(self):
+        w = Watcher(1, canaryBox='box1', mode='hold', slots='pool P\nbox1 S\n')
+        self.addCleanup(w.close)
+        (w.state / 'pool-side').touch()
+        w.wait(lambda: 'codex/test0 tools-zero ' in w.read('pool-served'))
+        candidate = w.tips[0][1]
+        w.put('initial', 'pass')
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+        self.assertFalse((w.root / 'loom-jobs' / (candidate + '.cancel')).exists())
+        w.tips.append(('codex/after', 'c' * 40))
+        w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
+        w.wait(lambda: 'codex/after tools-one ' in w.read('pool-served'))
+        w.put('pool-mode', 'green')
+        w.wait(lambda: 'done codex/test0:' in w.read('output') and 'done codex/after:' in w.read('output'))
+        self.assertEqual(json.loads(w.read('records/' + candidate + '.json'))['tools_sha'], 'tools-zero')
+        self.assertEqual(json.loads(w.read('records/' + 'c' * 40 + '.json'))['tools_sha'], 'tools-one')
+        self.assertEqual(w.read('pool-served').count('codex/test0 tools-zero '), 1)
+        self.assertNotIn('queued again', w.read('output'))
+
     def test_a_red_stage_canary_holds_the_tools_until_a_box_side_push(self):
         w = self.staged(1)
         w.put('initial', 'red')
@@ -1123,7 +1176,7 @@ class WatchTests(unittest.TestCase):
         # 12-CPU slot, so no tools could promote. @system_adamic 15:44Z: the stage canary takes a whole box.
         w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', boxSides={'tools-one': 'tools-zero'})
         self.addCleanup(w.close)
-        w.wait(lambda: 'codex/test0 ' in w.read('starts'))
+        w.wait(lambda: 'codex/test0 ' in w.read('starts') + w.read('good-starts'))
         (w.state / 'slots').write_text('box0 S\nbox1 S\nbox1 S\n')
         w.put('head', 'tools-two')
         # box1 runs test0 with a slot free and box0 is empty: the canary takes box0 whole.
@@ -1147,7 +1200,7 @@ class WatchTests(unittest.TestCase):
     def test_a_stage_canary_with_no_empty_box_drains_the_canary_box_and_takes_it_whole(self):
         w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', boxSides={'tools-one': 'tools-zero'})
         self.addCleanup(w.close)
-        w.wait(lambda: 'codex/test0 ' in w.read('starts'))
+        w.wait(lambda: 'codex/test0 ' in w.read('starts') + w.read('good-starts'))
         w.put('head', 'tools-two')
         w.wait(lambda: 'staging tools tools-two' in w.read('output'))
         # A new tip arrives while box1 is busy: box1 drains for the canary, so it doesn't take box1's free slot.
@@ -1281,12 +1334,12 @@ class WatchTests(unittest.TestCase):
         w.put('head', 'tools-two')
         w.wait(lambda: 'staging tools tools-two' in w.read('output'))
         # tools-two is staged now, so the half-hourly suite runs the good tools (tools-one), on the good tree.
-        before = w.read('good-starts').count('gate-mutant/plain ')
+        before = w.read('served').count('gate-mutant/plain tools-one ')
         w.put('mutant-census', self.green)
         w.put('canary', 'pass')
         w.put('clock', '2800')
         w.wait(lambda: 'misread: wrong: census' in w.read('output'))
-        self.assertEqual(w.read('good-starts').count('gate-mutant/plain '), before + 1)
+        self.assertEqual(w.read('served').count('gate-mutant/plain tools-one '), before + 1)
         w.wait(lambda: w.read('messages').count('gate-mutant suite misread') == 2)
         for recipient in ('system_adamic_developer_tools', 'system_adamic_integration'):
             self.assertIn(recipient + '|', w.read('messages'))
@@ -1366,7 +1419,7 @@ class WatchTests(unittest.TestCase):
         # A short interval, not a clock jump: a jump past 1800 s also trips test0's box ceiling and empties the box.
         w = Watcher(1, canaryBox='box1', mode='hold', slots='box1 S\nbox1 S\n', boxSides={'tools-one': 'tools-zero'}, mainCanary=100)
         self.addCleanup(w.close)
-        w.wait(lambda: 'codex/test0 ' in w.read('starts'))
+        w.wait(lambda: 'codex/test0 ' in w.read('starts') + w.read('good-starts'))
         w.put('head', 'tools-two')
         w.wait(lambda: 'staging tools tools-two' in w.read('output'))
         w.put('clock', '1200')
@@ -1385,7 +1438,7 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: len(w.read('starts').splitlines()) + len(w.read('good-starts').splitlines()) >= 1)
         w.put('mode', 'pass')
         w.wait(lambda: w.read('output').count('done codex/') == 2)
-        self.assertEqual(w.read('good-starts'), '', 'no staging: every box runs the head tools')
+        self.assertEqual(w.read('served').count('tools-zero '), 2, 'every candidate keeps the served good tools')
         # A Mac-only commit while running: no deploy canary, and the queue keeps flowing.
         w.put('head', 'tools-two')
         w.put('box-tools-two', 'tools-zero')
@@ -1416,6 +1469,8 @@ class WatchTests(unittest.TestCase):
         # The same refresh then reads every ready step for the queue's step order.
         w.wait(lambda: (w.state / 'step-globs').exists() and (w.state / 'step-globs').read_text() ==
                '0 codex/first\n0 cloud/land-area-next*\n1 codex/later\n')
+        # --waves follows --all in the same background refresh; wait for it too.
+        w.wait(lambda: w.read('task-calls').count('tasks waterfall system_adamic --json') >= 2)
         calls = w.read('task-calls')
         time.sleep(.15)
         self.assertEqual(w.read('task-calls'), calls)

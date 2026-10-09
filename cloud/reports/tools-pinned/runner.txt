@@ -1,0 +1,238 @@
+test_a_new_unit_over_the_budget_is_red_naming_it_and_the_box (cloud.fast-gate.run_test.Budget.test_a_new_unit_over_the_budget_is_red_naming_it_and_the_box) ... ok
+test_a_product_over_budget_is_listed_never_red_and_never_burns_down (cloud.fast-gate.run_test.Budget.test_a_product_over_budget_is_listed_never_red_and_never_burns_down) ... ok
+test_a_test_main_renamed_after_the_fork_isnt_new_in_a_candidate_cut_before (cloud.fast-gate.run_test.Budget.test_a_test_main_renamed_after_the_fork_isnt_new_in_a_candidate_cut_before) ... ok
+test_a_whole_gate_of_main_never_finds_a_new_unit (cloud.fast-gate.run_test.Budget.test_a_whole_gate_of_main_never_finds_a_new_unit) ... ok
+test_an_existing_unit_over_is_drift_and_a_listed_one_is_neither (cloud.fast-gate.run_test.Budget.test_an_existing_unit_over_is_drift_and_a_listed_one_is_neither) ... ok
+test_old_product_over_budget_is_listed_too (cloud.fast-gate.run_test.Budget.test_old_product_over_budget_is_listed_too) ... ok
+test_dropped_audit_stage_is_caught (cloud.fast-gate.run_test.CacheDrainMutants.test_dropped_audit_stage_is_caught) ... ok
+test_shared_default_queues_are_caught (cloud.fast-gate.run_test.CacheDrainMutants.test_shared_default_queues_are_caught) ... ok
+test_drain_wall_deadlines_kill_processes (cloud.fast-gate.run_test.CacheDrains.test_drain_wall_deadlines_kill_processes) ... ok
+test_failed_upload_is_recorded_and_green (cloud.fast-gate.run_test.CacheDrains.test_failed_upload_is_recorded_and_green) ... ok
+test_poisoned_audit_is_red_naming_key (cloud.fast-gate.run_test.CacheDrains.test_poisoned_audit_is_red_naming_key) ... ok
+test_tree_without_publisher_plans_neither_drain (cloud.fast-gate.run_test.CacheDrains.test_tree_without_publisher_plans_neither_drain) ... ok
+test_two_runs_keep_test_and_drain_queues_isolated (cloud.fast-gate.run_test.CacheDrains.test_two_runs_keep_test_and_drain_queues_isolated) ... ok
+test_upload_spawn_failure_is_optional (cloud.fast-gate.run_test.CacheDrains.test_upload_spawn_failure_is_optional) ... ok
+test_a_gate_tool_crash_stops_even_a_complete_run (cloud.fast-gate.run_test.CompleteMode.test_a_gate_tool_crash_stops_even_a_complete_run) ... ok
+test_an_ordinary_fast_gate_still_stops_at_the_first_failure (cloud.fast-gate.run_test.CompleteMode.test_an_ordinary_fast_gate_still_stops_at_the_first_failure) ... ok
+test_complete_mode_keeps_running_after_the_first_failure (cloud.fast-gate.run_test.CompleteMode.test_complete_mode_keeps_running_after_the_first_failure) ... ok
+test_a_missing_smoke_or_red_vet_cannot_complete_the_pool_record (cloud.fast-gate.run_test.Coverage.test_a_missing_smoke_or_red_vet_cannot_complete_the_pool_record) ... ok
+test_a_package_gated_for_requested_tests_runs_their_family_and_reds_when_it_selects_none (cloud.fast-gate.run_test.Coverage.test_a_package_gated_for_requested_tests_runs_their_family_and_reds_when_it_selects_none) ... ok
+test_a_path_with_no_executor_is_red_and_named (cloud.fast-gate.run_test.Coverage.test_a_path_with_no_executor_is_red_and_named) ... ok
+test_a_paths_reader_fires_only_when_paths_come_or_go (cloud.fast-gate.run_test.Coverage.test_a_paths_reader_fires_only_when_paths_come_or_go) ... ok
+test_a_phase_of_the_whole_gate_runs_alone_as_a_pool_unit (cloud.fast-gate.run_test.Coverage.test_a_phase_of_the_whole_gate_runs_alone_as_a_pool_unit) ... ok
+test_a_ruled_corpus_is_exempt_from_a_check_and_named (cloud.fast-gate.run_test.Coverage.test_a_ruled_corpus_is_exempt_from_a_check_and_named) ... ok
+test_a_silent_fast_phase_is_red_even_in_a_combined_record (cloud.fast-gate.run_test.Coverage.test_a_silent_fast_phase_is_red_even_in_a_combined_record) ... ok
+test_a_stage_that_reports_nothing_is_red (cloud.fast-gate.run_test.Coverage.test_a_stage_that_reports_nothing_is_red) ... ok
+test_a_whole_gate_cancels_itself_at_its_first_failure (cloud.fast-gate.run_test.Coverage.test_a_whole_gate_cancels_itself_at_its_first_failure) ... ok
+test_a_whole_gate_never_runs_more_threads_than_the_box_has_cores (cloud.fast-gate.run_test.Coverage.test_a_whole_gate_never_runs_more_threads_than_the_box_has_cores) ... ok
+test_all_matching_reads_fire_and_name_their_paths (cloud.fast-gate.run_test.Coverage.test_all_matching_reads_fire_and_name_their_paths) ... ok
+test_all_pass_is_green (cloud.fast-gate.run_test.Coverage.test_all_pass_is_green) ... ok
+test_an_inert_path_is_covered (cloud.fast-gate.run_test.Coverage.test_an_inert_path_is_covered) ... ok
+test_an_undeclared_tool_is_red_at_tools_naming_it (cloud.fast-gate.run_test.Coverage.test_an_undeclared_tool_is_red_at_tools_naming_it) ... ok
+test_conditional_fast_phases_dispatch_only_their_selected_work (cloud.fast-gate.run_test.Coverage.test_conditional_fast_phases_dispatch_only_their_selected_work) ... ok
+test_emission_that_differs_between_two_runs_is_red_at_determinism (cloud.fast-gate.run_test.Coverage.test_emission_that_differs_between_two_runs_is_red_at_determinism) ... ok
+test_every_stage_raising_is_red (cloud.fast-gate.run_test.Coverage.test_every_stage_raising_is_red) ... ok
+test_fast_census_requires_a_log_and_checks_requested_tests (cloud.fast-gate.run_test.Coverage.test_fast_census_requires_a_log_and_checks_requested_tests) ... ok
+test_fast_inventory_uses_the_base_diff_for_conditional_phases (cloud.fast-gate.run_test.Coverage.test_fast_inventory_uses_the_base_diff_for_conditional_phases) ... ok
+test_fast_phases_plan_only_themselves (cloud.fast-gate.run_test.Coverage.test_fast_phases_plan_only_themselves) ... ok
+test_map_change_runs_every_reader (cloud.fast-gate.run_test.Coverage.test_map_change_runs_every_reader) ... ok
+test_reads_add_package_for_matching_changed_paths (cloud.fast-gate.run_test.Coverage.test_reads_add_package_for_matching_changed_paths) ... ok
+test_reads_do_not_cover_an_unowned_path (cloud.fast-gate.run_test.Coverage.test_reads_do_not_cover_an_unowned_path) ... ok
+test_record_keeps_the_tools_sha_and_serve_time (cloud.fast-gate.run_test.Coverage.test_record_keeps_the_tools_sha_and_serve_time) ... ok
+test_select_writes_the_fast_gate_s_selection_and_runs_nothing (cloud.fast-gate.run_test.Coverage.test_select_writes_the_fast_gate_s_selection_and_runs_nothing) ... ok
+test_several_fast_phases_complete_the_pool_landing_record (cloud.fast-gate.run_test.Coverage.test_several_fast_phases_complete_the_pool_landing_record) ... ok
+test_the_census_runs_over_a_merged_record (cloud.fast-gate.run_test.Coverage.test_the_census_runs_over_a_merged_record) ... ok
+test_the_record_keeps_the_box_load_and_a_red_above_its_cores_says_under_load (cloud.fast-gate.run_test.Coverage.test_the_record_keeps_the_box_load_and_a_red_above_its_cores_says_under_load) ... ok
+test_unknown_and_whole_only_fast_phases_are_red (cloud.fast-gate.run_test.Coverage.test_unknown_and_whole_only_fast_phases_are_red) ... ok
+test_a_split_family_is_judged_over_its_shards_even_after_the_run_was_cancelled (cloud.fast-gate.run_test.DeferredFamiliesInTheWholeGate.test_a_split_family_is_judged_over_its_shards_even_after_the_run_was_cancelled) ... ok
+test_a_deferred_test_the_whole_gate_never_runs_is_red_at_census (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_a_deferred_test_the_whole_gate_never_runs_is_red_at_census) ... ok
+test_a_missing_smoke_or_red_vet_cannot_complete_the_pool_record (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_a_missing_smoke_or_red_vet_cannot_complete_the_pool_record) ... ok
+test_a_package_gated_for_requested_tests_runs_their_family_and_reds_when_it_selects_none (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_a_package_gated_for_requested_tests_runs_their_family_and_reds_when_it_selects_none) ... ok
+test_a_phase_of_the_whole_gate_runs_alone_as_a_pool_unit (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_a_phase_of_the_whole_gate_runs_alone_as_a_pool_unit) ... ok
+test_a_silent_fast_phase_is_red_even_in_a_combined_record (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_a_silent_fast_phase_is_red_even_in_a_combined_record) ... ok
+test_a_stage_that_reports_nothing_is_red (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_a_stage_that_reports_nothing_is_red) ... ok
+test_a_whole_gate_cancels_itself_at_its_first_failure (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_a_whole_gate_cancels_itself_at_its_first_failure) ... ok
+test_a_whole_gate_never_runs_more_threads_than_the_box_has_cores (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_a_whole_gate_never_runs_more_threads_than_the_box_has_cores) ... ok
+test_all_pass_is_green (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_all_pass_is_green) ... ok
+test_an_undeclared_tool_is_red_at_tools_naming_it (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_an_undeclared_tool_is_red_at_tools_naming_it) ... ok
+test_conditional_fast_phases_dispatch_only_their_selected_work (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_conditional_fast_phases_dispatch_only_their_selected_work) ... ok
+test_emission_that_differs_between_two_runs_is_red_at_determinism (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_emission_that_differs_between_two_runs_is_red_at_determinism) ... ok
+test_every_stage_raising_is_red (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_every_stage_raising_is_red) ... ok
+test_fast_census_requires_a_log_and_checks_requested_tests (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_fast_census_requires_a_log_and_checks_requested_tests) ... ok
+test_fast_inventory_uses_the_base_diff_for_conditional_phases (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_fast_inventory_uses_the_base_diff_for_conditional_phases) ... ok
+test_fast_phases_plan_only_themselves (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_fast_phases_plan_only_themselves) ... ok
+test_record_keeps_the_tools_sha_and_serve_time (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_record_keeps_the_tools_sha_and_serve_time) ... ok
+test_select_writes_the_fast_gate_s_selection_and_runs_nothing (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_select_writes_the_fast_gate_s_selection_and_runs_nothing) ... ok
+test_several_fast_phases_complete_the_pool_landing_record (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_several_fast_phases_complete_the_pool_landing_record) ... ok
+test_the_census_runs_over_a_merged_record (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_the_census_runs_over_a_merged_record) ... ok
+test_the_record_keeps_the_box_load_and_a_red_above_its_cores_says_under_load (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_the_record_keeps_the_box_load_and_a_red_above_its_cores_says_under_load) ... ok
+test_the_tools_deferred_list_holds_no_measurement_or_opt_in_test (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_the_tools_deferred_list_holds_no_measurement_or_opt_in_test) ... ok
+test_unknown_and_whole_only_fast_phases_are_red (cloud.fast-gate.run_test.DeferredInTheWholeGate.test_unknown_and_whole_only_fast_phases_are_red) ... ok
+test_a_deleted_a_file_is_not_checked_and_does_not_crash_the_gate (cloud.fast-gate.run_test.DeletedAFiles.test_a_deleted_a_file_is_not_checked_and_does_not_crash_the_gate) ... ok
+test_a_missing_smoke_or_red_vet_cannot_complete_the_pool_record (cloud.fast-gate.run_test.FailClosed.test_a_missing_smoke_or_red_vet_cannot_complete_the_pool_record) ... ok
+test_a_package_gated_for_requested_tests_runs_their_family_and_reds_when_it_selects_none (cloud.fast-gate.run_test.FailClosed.test_a_package_gated_for_requested_tests_runs_their_family_and_reds_when_it_selects_none) ... ok
+test_a_phase_of_the_whole_gate_runs_alone_as_a_pool_unit (cloud.fast-gate.run_test.FailClosed.test_a_phase_of_the_whole_gate_runs_alone_as_a_pool_unit) ... ok
+test_a_silent_fast_phase_is_red_even_in_a_combined_record (cloud.fast-gate.run_test.FailClosed.test_a_silent_fast_phase_is_red_even_in_a_combined_record) ... ok
+test_a_stage_that_reports_nothing_is_red (cloud.fast-gate.run_test.FailClosed.test_a_stage_that_reports_nothing_is_red) ... ok
+test_a_whole_gate_cancels_itself_at_its_first_failure (cloud.fast-gate.run_test.FailClosed.test_a_whole_gate_cancels_itself_at_its_first_failure) ... ok
+test_a_whole_gate_never_runs_more_threads_than_the_box_has_cores (cloud.fast-gate.run_test.FailClosed.test_a_whole_gate_never_runs_more_threads_than_the_box_has_cores) ... ok
+test_all_pass_is_green (cloud.fast-gate.run_test.FailClosed.test_all_pass_is_green) ... ok
+test_an_undeclared_tool_is_red_at_tools_naming_it (cloud.fast-gate.run_test.FailClosed.test_an_undeclared_tool_is_red_at_tools_naming_it) ... ok
+test_conditional_fast_phases_dispatch_only_their_selected_work (cloud.fast-gate.run_test.FailClosed.test_conditional_fast_phases_dispatch_only_their_selected_work) ... ok
+test_emission_that_differs_between_two_runs_is_red_at_determinism (cloud.fast-gate.run_test.FailClosed.test_emission_that_differs_between_two_runs_is_red_at_determinism) ... ok
+test_every_stage_raising_is_red (cloud.fast-gate.run_test.FailClosed.test_every_stage_raising_is_red) ... ok
+test_fast_census_requires_a_log_and_checks_requested_tests (cloud.fast-gate.run_test.FailClosed.test_fast_census_requires_a_log_and_checks_requested_tests) ... ok
+test_fast_inventory_uses_the_base_diff_for_conditional_phases (cloud.fast-gate.run_test.FailClosed.test_fast_inventory_uses_the_base_diff_for_conditional_phases) ... ok
+test_fast_phases_plan_only_themselves (cloud.fast-gate.run_test.FailClosed.test_fast_phases_plan_only_themselves) ... ok
+test_record_keeps_the_tools_sha_and_serve_time (cloud.fast-gate.run_test.FailClosed.test_record_keeps_the_tools_sha_and_serve_time) ... ok
+test_select_writes_the_fast_gate_s_selection_and_runs_nothing (cloud.fast-gate.run_test.FailClosed.test_select_writes_the_fast_gate_s_selection_and_runs_nothing) ... ok
+test_several_fast_phases_complete_the_pool_landing_record (cloud.fast-gate.run_test.FailClosed.test_several_fast_phases_complete_the_pool_landing_record) ... ok
+test_the_census_runs_over_a_merged_record (cloud.fast-gate.run_test.FailClosed.test_the_census_runs_over_a_merged_record) ... ok
+test_the_record_keeps_the_box_load_and_a_red_above_its_cores_says_under_load (cloud.fast-gate.run_test.FailClosed.test_the_record_keeps_the_box_load_and_a_red_above_its_cores_says_under_load) ... ok
+test_unknown_and_whole_only_fast_phases_are_red (cloud.fast-gate.run_test.FailClosed.test_unknown_and_whole_only_fast_phases_are_red) ... ok
+test_a_trailer_runs_a_deferred_test_in_this_gate (cloud.fast-gate.run_test.GateRuns.test_a_trailer_runs_a_deferred_test_in_this_gate) ... ok
+test_a_requested_name_is_its_split_s_family_never_a_bare_prefix (cloud.fast-gate.run_test.GateRunsDeferred.test_a_requested_name_is_its_split_s_family_never_a_bare_prefix) ... ok
+test_deferred_runs_every_deferred_test_and_each_must_reach_a_verdict (cloud.fast-gate.run_test.GateRunsDeferred.test_deferred_runs_every_deferred_test_and_each_must_reach_a_verdict) ... ok
+test_every_requested_test_reaching_a_verdict_passes_the_check (cloud.fast-gate.run_test.GateRunsDeferred.test_every_requested_test_reaching_a_verdict_passes_the_check) ... ok
+test_control_sees_survivor (cloud.fast-gate.run_test.KillDescendants.test_control_sees_survivor) ... kill probe: action=control pid=306298 pgrp=306298 sid=306235 survived=True
+FIRST FAILURE (tests, at 0.1 s):
+example.com/kill ^TestGuard$ exited -9
+
+(box load 0.6 on 5 cores at first failure)
+ok
+test_fail_kills_separate_process_group (cloud.fast-gate.run_test.KillDescendants.test_fail_kills_separate_process_group) ... FIRST FAILURE (other, at 0.1 s):
+
+(box load 0.6 on 5 cores at first failure)
+ok
+test_finish_kills_separate_process_group (cloud.fast-gate.run_test.KillDescendants.test_finish_kills_separate_process_group) ... kill probe: action=fail pid=306744 pgrp=306744 sid=306662 survived=False
+FIRST FAILURE (tests, at 0.2 s):
+example.com/kill ^TestGuard$ exited -9
+
+(box load 0.6 on 5 cores at first failure)
+red: 559b08af8c60eec3ea20c872c8e79aca06b9383b fast gate, first failure at tests after 0.2 s (; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 0.6 on 5 cores at start, load 0.6 on 5 cores at first failure, load 0.6 on 5 cores at end; deferred to full gate: 0 tests; branch none, session none), 0 fail, 0 pass
+ok
+test_mutant_without_session_cleanup_is_caught (cloud.fast-gate.run_test.KillDescendants.test_mutant_without_session_cleanup_is_caught) ... kill probe: action=finish pid=307167 pgrp=307167 sid=307109 survived=False
+FIRST FAILURE (other, at 0.1 s):
+
+(box load 1.3 on 5 cores at first failure)
+ok
+test_the_ledger_holds_units_over_the_budget_longest_first (cloud.fast-gate.run_test.LongTests.test_the_ledger_holds_units_over_the_budget_longest_first) ... ok
+test_a_ready_long_test_starts_before_the_last_package_builds (cloud.fast-gate.run_test.LongestFirst.test_a_ready_long_test_starts_before_the_last_package_builds) ... ok
+test_boost_requires_four_free_slots (cloud.fast-gate.run_test.LongestFirst.test_boost_requires_four_free_slots) ... ok
+test_failfast_stops_new_starts_after_dead_process (cloud.fast-gate.run_test.LongestFirst.test_failfast_stops_new_starts_after_dead_process) ... ok
+test_permits_after_fail_dead_and_build_failure (cloud.fast-gate.run_test.LongestFirst.test_permits_after_fail_dead_and_build_failure) ... ok
+test_queue_priorities_and_boost_fallback (cloud.fast-gate.run_test.LongestFirst.test_queue_priorities_and_boost_fallback) ... ok
+test_record_decay_corrupt_and_concurrent_writers (cloud.fast-gate.run_test.LongestFirst.test_record_decay_corrupt_and_concurrent_writers) ... ok
+test_split_order_boost_and_event_record (cloud.fast-gate.run_test.LongestFirst.test_split_order_boost_and_event_record) ... ok
+test_a_fixture_a_table_names_runs_that_tables_test (cloud.fast-gate.run_test.OracleSelection.test_a_fixture_a_table_names_runs_that_tables_test) ... ok
+test_a_fixture_no_table_names_skips_that_tables_test (cloud.fast-gate.run_test.OracleSelection.test_a_fixture_no_table_names_skips_that_tables_test) ... ok
+test_a_table_filled_outside_its_literal_runs_whole (cloud.fast-gate.run_test.OracleSelection.test_a_table_filled_outside_its_literal_runs_whole) ... ok
+test_catalog_verdicts_are_per_entry (cloud.fast-gate.run_test.PhaseUnitTests.test_catalog_verdicts_are_per_entry) ... ok
+test_inventory_and_patterns (cloud.fast-gate.run_test.PhaseUnitTests.test_inventory_and_patterns) ... ok
+test_inventory_refuses_unknown_registration (cloud.fast-gate.run_test.PhaseUnitTests.test_inventory_refuses_unknown_registration) ... ok
+test_one_catalog_entry_runs_alone_by_its_number (cloud.fast-gate.run_test.PhaseUnitTests.test_one_catalog_entry_runs_alone_by_its_number) ... ok
+test_real_subprocess_planted_failures_are_named (cloud.fast-gate.run_test.PhaseUnitTests.test_real_subprocess_planted_failures_are_named) ... kill probe: action=fail pid=307478 pgrp=307478 sid=307419 survived=True
+FIRST FAILURE (catalog/02 planted, at 0.0 s):
+{"name": "02 planted", "command": ["bash", "verify/catalog/check.sh", "--entry", "2", "--jobs", "1", "probe"], "status": "failed", "scratch": "/tmp/adamic-gate/tmpqfik20ax/tmprszz7b7x/catalog-units/01-pff5e2rt", "exit": 1, "ok": false, "caught": false, "stale": false, "skipped": false, "verdicts": ["02 planted: applies-but-failure-not-as-recorded"], "log": "/tmp/adamic-gate/tmpqfik20ax/tmprszz7b7x/catalog-units/01-pff5e2rt/catalog.log", "wall_seconds": 0.001372, "over_budget": false}
+(box load 1.3 on 5 cores at first failure)
+red: probe fast gate, first failure at catalog/02 planted after 0.0 s, cancelled after first failure (catalog=0.0s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 1.3 on 5 cores at start, load 1.3 on 5 cores at first failure, load 1.3 on 5 cores at end), 0 fail, 0 pass
+FIRST FAILURE (wasi/planted, at 0.3 s):
+example.com/phase-probe/internal/native TestWASI/planted
+=== RUN   TestWASI/planted
+    wasm_test.go:7: planted unit failure
+--- FAIL: TestWASI/planted (0.00s)
+
+(box load 1.3 on 5 cores at first failure)
+red: probe fast gate, first failure at wasi/planted after 0.3 s, cancelled after first failure (wasi=0.3s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 1.3 on 5 cores at start, load 1.3 on 5 cores at first failure, load 1.3 on 5 cores at end), 2 fail, 2 pass
+ok
+test_slot_cpu_quota (cloud.fast-gate.run_test.PhaseUnitTests.test_slot_cpu_quota) ... ok
+test_the_pool_lists_fast_non_test_units_from_a_plain_checkout (cloud.fast-gate.run_test.PhaseUnitTests.test_the_pool_lists_fast_non_test_units_from_a_plain_checkout) ... ok
+test_the_pool_lists_the_whole_gate_s_units_from_a_plain_checkout (cloud.fast-gate.run_test.PhaseUnitTests.test_the_pool_lists_the_whole_gate_s_units_from_a_plain_checkout) ... ok
+test_units_coverage_failure_scratch_and_budget (cloud.fast-gate.run_test.PhaseUnitTests.test_units_coverage_failure_scratch_and_budget) ... ok
+test_wasi_requires_named_pass_and_exact_selection (cloud.fast-gate.run_test.PhaseUnitTests.test_wasi_requires_named_pass_and_exact_selection) ... ok
+test_order_and_skip_mutants_are_killed (cloud.fast-gate.run_test.ProductMutants.test_order_and_skip_mutants_are_killed) ... ok
+test_all_fast_stages_start_concurrently (cloud.fast-gate.run_test.Products.test_all_fast_stages_start_concurrently) ... ok
+test_failed_product_blocks_tests_even_in_complete_mode (cloud.fast-gate.run_test.Products.test_failed_product_blocks_tests_even_in_complete_mode) ... ok
+test_no_products_plan_no_stage (cloud.fast-gate.run_test.Products.test_no_products_plan_no_stage) ... ok
+test_other_packages_wait_for_products_while_builds_continue (cloud.fast-gate.run_test.Products.test_other_packages_wait_for_products_while_builds_continue) ... ok
+test_product_only_package_is_fine (cloud.fast-gate.run_test.Products.test_product_only_package_is_fine) ... ok
+test_product_pool_uses_four_cpu_slots (cloud.fast-gate.run_test.Products.test_product_pool_uses_four_cpu_slots) ... ok
+test_products_before_tests_and_skip (cloud.fast-gate.run_test.Products.test_products_before_tests_and_skip) ... ok
+test_scan_list_mismatch_is_red_at_products (cloud.fast-gate.run_test.Products.test_scan_list_mismatch_is_red_at_products) ... ok
+test_wall_deadline_kills_and_fails_in_complete_mode (cloud.fast-gate.run_test.Products.test_wall_deadline_kills_and_fails_in_complete_mode) ... ok
+test_whole_gate_failed_product_blocks_test_units (cloud.fast-gate.run_test.Products.test_whole_gate_failed_product_blocks_test_units) ... ok
+test_whole_gate_phases_build_products_only_in_the_products_phase (cloud.fast-gate.run_test.Products.test_whole_gate_phases_build_products_only_in_the_products_phase) ... ok
+test_whole_gate_products_before_tests_and_skip (cloud.fast-gate.run_test.Products.test_whole_gate_products_before_tests_and_skip) ... ok
+test_whole_gate_run_to_end_runs_tests_past_a_failed_product (cloud.fast-gate.run_test.Products.test_whole_gate_run_to_end_runs_tests_past_a_failed_product) ... ok
+test_a_branch_declares_its_own_consumer_over_the_tools_map (cloud.fast-gate.run_test.ReverseDependencies.test_a_branch_declares_its_own_consumer_over_the_tools_map) ... ok
+test_an_undeclared_consumer_on_the_base_is_named_not_red (cloud.fast-gate.run_test.ReverseDependencies.test_an_undeclared_consumer_on_the_base_is_named_not_red) ... ok
+test_census_rejects_a_new_compiler_runner (cloud.fast-gate.run_test.ReverseDependencies.test_census_rejects_a_new_compiler_runner) ... ok
+test_census_rejects_computed_compiler_outside_stage1 (cloud.fast-gate.run_test.ReverseDependencies.test_census_rejects_computed_compiler_outside_stage1) ... ok
+test_census_rejects_removed_declaration (cloud.fast-gate.run_test.ReverseDependencies.test_census_rejects_removed_declaration) ... ok
+test_census_rejects_undeclared_script_driver (cloud.fast-gate.run_test.ReverseDependencies.test_census_rejects_undeclared_script_driver) ... ok
+test_embedding_and_fixture_ownership_survive (cloud.fast-gate.run_test.ReverseDependencies.test_embedding_and_fixture_ownership_survive) ... ok
+test_explicit_test_reader (cloud.fast-gate.run_test.ReverseDependencies.test_explicit_test_reader) ... ok
+test_external_test_package_uses_its_real_owner (cloud.fast-gate.run_test.ReverseDependencies.test_external_test_package_uses_its_real_owner) ... ok
+test_invalid_driver_map_fails_closed (cloud.fast-gate.run_test.ReverseDependencies.test_invalid_driver_map_fails_closed) ... ok
+test_invalid_map_fails_closed (cloud.fast-gate.run_test.ReverseDependencies.test_invalid_map_fails_closed) ... ok
+test_opaque_gap_and_whole_oracle_are_selected (cloud.fast-gate.run_test.ReverseDependencies.test_opaque_gap_and_whole_oracle_are_selected) ... ok
+test_real_closure_then_one_test_edge (cloud.fast-gate.run_test.ReverseDependencies.test_real_closure_then_one_test_edge) ... ok
+test_stage3_driver_declaration_and_selection (cloud.fast-gate.run_test.ReverseDependencies.test_stage3_driver_declaration_and_selection) ... ok
+test_test_inputs_do_not_seed_closure (cloud.fast-gate.run_test.ReverseDependencies.test_test_inputs_do_not_seed_closure) ... ok
+test_test_source_does_not_seed_closure (cloud.fast-gate.run_test.ReverseDependencies.test_test_source_does_not_seed_closure) ... ok
+test_test_variants_normalize_to_real_packages (cloud.fast-gate.run_test.ReverseDependencies.test_test_variants_normalize_to_real_packages) ... ok
+test_testdata_the_real_package_embeds_seeds_the_closure (cloud.fast-gate.run_test.ReverseDependencies.test_testdata_the_real_package_embeds_seeds_the_closure) ... ok
+test_without_test_reads_testdata_still_seeds_the_closure (cloud.fast-gate.run_test.ReverseDependencies.test_without_test_reads_testdata_still_seeds_the_closure) ... ok
+test_each_check_kills_its_mutant (cloud.fast-gate.run_test.ReverseDependencyMutants.test_each_check_kills_its_mutant) ... ok
+test_a_scoped_gate_refuses_and_a_clean_one_records_it (cloud.fast-gate.run_test.ScopedEnvironment.test_a_scoped_gate_refuses_and_a_clean_one_records_it) ... FIRST FAILURE (environment, at 0.0 s):
+refused: a gate that can land on main never runs scoped, and ADAMIC_LINT_RULES is set
+(box load 1.3 on 5 cores at first failure)
+ok
+test_set_but_empty_still_refuses (cloud.fast-gate.run_test.ScopedEnvironment.test_set_but_empty_still_refuses) ... FIRST FAILURE (environment, at 0.0 s):
+refused: a gate that can land on main never runs scoped, and ADAMIC_LINT_RULES is set
+(box load 1.3 on 5 cores at first failure)
+ok
+test_explicit_reader_survives (cloud.fast-gate.run_test.SelectionModule.test_explicit_reader_survives) ... ok
+test_real_closure_and_one_test_edge (cloud.fast-gate.run_test.SelectionModule.test_real_closure_and_one_test_edge) ... ok
+test_selection_mutants (cloud.fast-gate.run_test.SelectionModule.test_selection_mutants) ... ok
+test_test_source_owner_only (cloud.fast-gate.run_test.SelectionModule.test_test_source_owner_only) ... ok
+test_a_build_before_parallel_shards_is_the_test_s_setup (cloud.fast-gate.run_test.SetupByTime.test_a_build_before_parallel_shards_is_the_test_s_setup) ... ok
+test_a_fixture_is_selected_directly_under_its_lane_or_under_a_shard (cloud.fast-gate.run_test.SmokeShards.test_a_fixture_is_selected_directly_under_its_lane_or_under_a_shard) ... ok
+test_a_sharded_fixture_s_pass_counts_as_its_entry (cloud.fast-gate.run_test.SmokeShards.test_a_sharded_fixture_s_pass_counts_as_its_entry) ... ok
+test_a_lane_red_names_the_lanes_verdict_and_last_lines (cloud.fast-gate.run_test.Stage3Red.test_a_lane_red_names_the_lanes_verdict_and_last_lines) ... FIRST FAILURE (stage3, at 0.0 s):
+stage 3 tier 1 failed: stage3-lane exit 1 (logs: stage3-lane.log)
+FAIL stage3 landing lane: test counts: expected 1 failing, observed 4
+stage3-lane, last lines:
+noise 15
+noise 16
+noise 17
+noise 18
+noise 19
+failed test names: observed ['unusedTypeParameters']
+(box load 1.5 on 5 cores at first failure)
+ok
+test_sigterm_before_failure_is_void (cloud.fast-gate.run_test.StopTests.test_sigterm_before_failure_is_void) ... void: stopped before a verdict: superseded by area/new bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+ok
+test_sigterm_mid_tests_preserves_red_and_marks_killed_not_run (cloud.fast-gate.run_test.StopTests.test_sigterm_mid_tests_preserves_red_and_marks_killed_not_run) ... FIRST FAILURE (tests, at 0.0 s):
+p TestFailed
+
+(box load 1.5 on 5 cores at first failure)
+red: 5f835585f93fcefb65038c29571cc6ac3436b28b fast gate, first failure at tests after 0.0 s (; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 1.5 on 5 cores at start, load 1.5 on 5 cores at first failure, load 1.5 on 5 cores at end; deferred to full gate: 0 tests; branch area/test, session none), 1 fail, 1 pass
+stopped: superseded by area/new bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+ok
+test_stopped_remote_run_still_publishes (cloud.fast-gate.run_test.StoppedPublish.test_stopped_remote_run_still_publishes) ... ok
+test_a_unit_runs_by_its_own_name (cloud.fast-gate.run_test.WASIUnits.test_a_unit_runs_by_its_own_name) ... ok
+test_a_unit_s_own_fixture_subtests_are_expected_and_another_unit_is_not (cloud.fast-gate.run_test.WASIUnits.test_a_unit_s_own_fixture_subtests_are_expected_and_another_unit_is_not) ... ok
+test_neither_shape_refuses (cloud.fast-gate.run_test.WASIUnits.test_neither_shape_refuses) ... ok
+test_the_old_shape_still_enumerates_its_fixtures (cloud.fast-gate.run_test.WASIUnits.test_the_old_shape_still_enumerates_its_fixtures) ... ok
+test_top_level_units_are_the_phase_s_units (cloud.fast-gate.run_test.WASIUnits.test_top_level_units_are_the_phase_s_units) ... ok
+test_whole_gate_dropped_barrier_is_killed (cloud.fast-gate.run_test.WholeProductMutants.test_whole_gate_dropped_barrier_is_killed) ... ok
+test_corrupt_history_refuses (cloud.fast-gate.tools_history_test.ToolsHistory.test_corrupt_history_refuses) ... ok
+test_no_fake_past_for_external_promotion (cloud.fast-gate.tools_history_test.ToolsHistory.test_no_fake_past_for_external_promotion) ... ok
+test_old_served_record_survives_promotion_but_unserved_tools_do_not (cloud.fast-gate.tools_history_test.ToolsHistory.test_old_served_record_survives_promotion_but_unserved_tools_do_not) ... ok
+test_pool_job_keeps_serve_metadata_in_its_record_environment (cloud.fast-gate.tools_history_test.ToolsHistory.test_pool_job_keeps_serve_metadata_in_its_record_environment) ... ok
+
+----------------------------------------------------------------------
+Ran 178 tests in 13.432s
+
+OK

@@ -35,6 +35,7 @@ done
 box=${ADAMIC_FAST_GATE_BOX:-threadripper}
 here=$(cd "$(dirname "$0")/.." && pwd)
 tools=$(git -C "${here}" rev-parse HEAD)
+[ -z "${ADAMIC_FAST_GATE_SERVED_TOOLS:-}" ] || [ "$tools" = "$ADAMIC_FAST_GATE_SERVED_TOOLS" ] || { echo "served tools mismatch: got $tools, want $ADAMIC_FAST_GATE_SERVED_TOOLS" >&2; exit 2; }
 # The watcher checks this once for all its gates, so two gates at once don't race one fetch.
 if [ -z "${ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN:-}" ]; then
   git -C "${here}" fetch -q origin
@@ -353,6 +354,18 @@ json.dump(result, open(path, "w"), indent=2)
 MERGED
 fi
 fi
+# A finished record keeps the tools and serve time of this job, never the current promoted tools.
+python3 - "${local}/fast/fast.json" "${tools}" "${ADAMIC_FAST_GATE_SERVED_AT:-}" <<'SERVED'
+import json, pathlib, sys
+path, tools, served = pathlib.Path(sys.argv[1]), sys.argv[2], sys.argv[3]
+result = json.loads(path.read_text()) if path.exists() else {}
+if result.get("tools_sha", tools) != tools:
+    raise SystemExit("record tools mismatch with served tools")
+result["tools_sha"] = tools
+if served:
+    result["tools_served_at"] = int(served)
+path.write_text(json.dumps(result, indent=2) + "\n")
+SERVED
 # A log over 5 MB (test.jsonl on a whole run) is published gzipped; anything else that size (a binary
 # that strayed in) never is. The record itself stays up to 50 MB, fast.json under its own name and the gzipped logs:
 # the star's complete run (Oct 9 11:07Z, 28,177 tests) wrote a 15.8 MB fast.json, and both it and test.jsonl.gz were
