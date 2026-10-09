@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:18:37.088996922Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:18:37.10199Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumIdentityAcrossModules"}
+{"Time":"2026-10-09T10:18:37.102058006Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumIdentityAcrossModules","Output":"=== RUN   TestEnumIdentityAcrossModules\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:37.102086068Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumIdentityAcrossModules","Output":"=== PAUSE TestEnumIdentityAcrossModules\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:37.10208921Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumIdentityAcrossModules"}
+{"Time":"2026-10-09T10:18:37.102096138Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumIdentityAcrossModules"}
+{"Time":"2026-10-09T10:18:37.102098303Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumIdentityAcrossModules","Output":"=== CONT  TestEnumIdentityAcrossModules\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:37.153754307Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumIdentityAcrossModules","Output":"    enums_test.go:160: got \u003cnil\u003e, want closed enum identity refusal\n","OutputType":"error"}
+{"Time":"2026-10-09T10:18:37.153920752Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumIdentityAcrossModules","Output":"--- FAIL: TestEnumIdentityAcrossModules (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:37.153929009Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumIdentityAcrossModules","Elapsed":0.05}
+{"Time":"2026-10-09T10:18:37.154036161Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:37.155711221Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.066s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:37.155746543Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.067}

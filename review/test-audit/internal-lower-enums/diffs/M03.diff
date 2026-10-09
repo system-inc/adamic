@@ -1,0 +1,41 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -434,38 +434,6 @@
+ // Compare runtime values, not spellings: numeric aliases denote the same union member. A default
+ // handles all remaining values. A void switch still needs coverage, even when tsc accepts it.
+ func (l *lowering) enumSwitch(node *ast.Node) error {
+-	statement := node.AsSwitchStatement()
+-	proven := l.checker.GetTypeAtLocation(statement.Expression)
+-	if proven.Flags()&checker.TypeFlagsEnumLike == 0 || l.numericEnum(l.enumIdentity(proven)) {
+-		return nil
+-	}
+-	covered := map[any]bool{}
+-	for _, clause := range statement.CaseBlock.AsCaseBlock().Clauses.Nodes {
+-		if clause.Kind == ast.KindDefaultClause {
+-			return nil
+-		}
+-		test := clause.AsCaseOrDefaultClause().Expression
+-		if member := l.enumMember(test); member != nil {
+-			covered[l.checker.GetConstantValue(member)] = true
+-		} else if value := l.checker.GetTypeAtLocation(test); value.Flags()&checker.TypeFlagsLiteral != 0 {
+-			covered[value.AsLiteralType().Value()] = true
+-		}
+-	}
+-	if l.flagEnum(l.enumIdentity(proven)) {
+-		return &Refused{Where: l.program.Where(node), What: "a flag-enum switch without a default", Fix: "add a default for combinations and zero (adamic/enum-flags)"}
+-	}
+-	members := []*checker.Type{proven}
+-	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+-		members = proven.Types()
+-	}
+-	for _, member := range members {
+-		if member.Flags()&checker.TypeFlagsLiteral == 0 {
+-			return l.notYet(node, "a switch on a computed enum member")
+-		}
+-		if !covered[member.AsLiteralType().Value()] {
+-			return &Refused{Where: l.program.Where(node), What: "a non-exhaustive enum switch; missing " + l.checker.TypeToString(member), Fix: "add the missing member's case or a default"}
+-		}
+-	}
+ 	return nil
+ }
+ 

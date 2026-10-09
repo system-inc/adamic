@@ -1,0 +1,11 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -36,7 +36,7 @@
+ 		}
+ 		return from.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsNever) != 0
+ 	}
+-	return from.Flags()&checker.TypeFlagsEnumLike != 0 && l.enumIdentity(from) == l.enumIdentity(to) && l.checker.IsTypeAssignableTo(from, to)
++	return from.Flags()&checker.TypeFlagsEnumLike != 0 && l.enumIdentity(from) != l.enumIdentity(to) && l.checker.IsTypeAssignableTo(from, to)
+ }
+ 
+ // The whole declaration is open; a member-specific literal is a smaller promise.

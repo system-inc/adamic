@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:18:47.798221181Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:18:47.810477018Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericJSONUnionArrayIsNotYet"}
+{"Time":"2026-10-09T10:18:47.810577689Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericJSONUnionArrayIsNotYet","Output":"=== RUN   TestGenericJSONUnionArrayIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:47.810602333Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericJSONUnionArrayIsNotYet","Output":"=== PAUSE TestGenericJSONUnionArrayIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:47.810605019Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericJSONUnionArrayIsNotYet"}
+{"Time":"2026-10-09T10:18:47.81061017Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericJSONUnionArrayIsNotYet"}
+{"Time":"2026-10-09T10:18:47.810612155Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericJSONUnionArrayIsNotYet","Output":"=== CONT  TestGenericJSONUnionArrayIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:47.852137357Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericJSONUnionArrayIsNotYet","Output":"    generic_instance_key_test.go:56: want the named JSON union array NotYet, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:18:47.852199956Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericJSONUnionArrayIsNotYet","Output":"--- FAIL: TestGenericJSONUnionArrayIsNotYet (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:47.852206314Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericJSONUnionArrayIsNotYet","Elapsed":0.04}
+{"Time":"2026-10-09T10:18:47.85226316Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:47.853450822Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.055s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:47.853541369Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.055}

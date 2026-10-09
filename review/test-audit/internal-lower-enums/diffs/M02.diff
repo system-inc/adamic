@@ -1,0 +1,25 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -93,22 +93,6 @@
+ }
+ 
+ func (l *lowering) enumObjectView(node *ast.Node) error {
+-	if !l.isExpression(node) || node.Kind == ast.KindParenthesizedExpression {
+-		return nil
+-	}
+-	target := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+-	source := l.checker.GetTypeAtLocation(node)
+-	if node.Kind == ast.KindAsExpression {
+-		target = l.checker.GetTypeAtLocation(node)
+-		source = l.checker.GetTypeAtLocation(node.AsAsExpression().Expression)
+-	}
+-	if target == nil {
+-		return nil
+-	}
+-	target = l.checker.GetNonNullableType(target)
+-	if enumObjectSymbol(target) != nil && !l.enumAssignable(source, target) {
+-		return &Refused{Where: l.program.Where(node), What: "a structural object used as " + l.checker.TypeToString(target) + "; reverse properties and the complete enum shape are unproven", Fix: "use the enum's runtime object or its typeof alias; give an ordinary object an explicit interface"}
+-	}
+ 	return nil
+ }
+ 

@@ -1,0 +1,11 @@
+--- a/internal/lower/modules.go
++++ b/internal/lower/modules.go
+@@ -32,7 +32,7 @@
+ 	visit = func(module *ast.SourceFile) {
+ 		switch state[module] {
+ 		case 1:
+-			cyclic = true
++			cyclic = false
+ 			return
+ 		case 2:
+ 			return

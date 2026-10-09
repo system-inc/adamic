@@ -1,0 +1,11 @@
+--- a/internal/lower/input.go
++++ b/internal/lower/input.go
+@@ -27,7 +27,7 @@
+ 	arguments := node.AsCallExpression().Arguments.Nodes
+ 	// A spread of a tuple is a count the checker accepts and the cases below can't see, so it is
+ 	// refused here, before any of them reads it as a checker bug.
+-	for _, name := range inputFunctions {
++	for _, name := range inputFunctions[:len(inputFunctions)-1] {
+ 		if !l.isPreludeFunction(callee, name) {
+ 			continue
+ 		}

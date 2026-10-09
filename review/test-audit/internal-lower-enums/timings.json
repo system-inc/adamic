@@ -1,0 +1,116 @@
+{
+  "nproc": 5,
+  "rounds": {
+    "TestEnumSlotViews": [
+      0.534,
+      0.603,
+      0.71
+    ],
+    "TestEnumSwitchExhaustiveness": [
+      0.232,
+      0.192,
+      0.189
+    ],
+    "TestEnumLimitsStayLoud": [
+      0.533,
+      0.545,
+      0.541
+    ],
+    "TestConstEnumErasesRuntimeObject": [
+      0.059,
+      0.053,
+      0.054
+    ],
+    "TestEnumIdentityAcrossModules": [
+      0.061,
+      0.058,
+      0.054
+    ],
+    "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites": [
+      0.122,
+      0.136,
+      0.134
+    ],
+    "TestFunctionValueUnionViewsStayNotYet": [
+      0.426,
+      0.171,
+      0.294
+    ],
+    "TestGenericFunctionPolymorphicRecursionIsRefused": [
+      0.079,
+      0.06,
+      0.058
+    ],
+    "TestGenericUnionFixtureHasSeparateInstances": [
+      0.054,
+      0.068,
+      0.059
+    ],
+    "TestGenericJSONUnionArrayIsNotYet": [
+      0.056,
+      0.06,
+      0.069
+    ],
+    "TestOriginalCycleLedger": [
+      2.658,
+      2.458,
+      2.524
+    ],
+    "TestUndecidedCycleReadsUseReadyChecks": [
+      2.972,
+      2.742,
+      2.805
+    ],
+    "TestInputSpreadArgumentsAreNotYet": [
+      0.262,
+      0.319,
+      0.282
+    ],
+    "TestInputSpreadCoverage": [
+      0.95,
+      0.959,
+      0.989
+    ]
+  },
+  "medians": {
+    "TestEnumSlotViews": 0.603,
+    "TestEnumSwitchExhaustiveness": 0.192,
+    "TestEnumLimitsStayLoud": 0.541,
+    "TestConstEnumErasesRuntimeObject": 0.054,
+    "TestEnumIdentityAcrossModules": 0.058,
+    "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites": 0.134,
+    "TestFunctionValueUnionViewsStayNotYet": 0.294,
+    "TestGenericFunctionPolymorphicRecursionIsRefused": 0.06,
+    "TestGenericUnionFixtureHasSeparateInstances": 0.059,
+    "TestGenericJSONUnionArrayIsNotYet": 0.06,
+    "TestOriginalCycleLedger": 2.524,
+    "TestUndecidedCycleReadsUseReadyChecks": 2.805,
+    "TestInputSpreadArgumentsAreNotYet": 0.282,
+    "TestInputSpreadCoverage": 0.959
+  },
+  "matrix_binary_elapsed": {
+    "M01": 8.665,
+    "M02": 7.3870000000000005,
+    "M03": 7.905,
+    "M04": 7.54,
+    "M05": 8.893,
+    "M06": 8.699,
+    "M07": 8.239,
+    "M08": 7.938,
+    "M09": 7.438,
+    "M10": 7.632,
+    "M11": 7.283,
+    "M12": 7.835,
+    "M13": 7.696,
+    "M14": 7.399,
+    "M15": 7.545,
+    "M16": 7.904,
+    "M17": 7.207,
+    "M18": 5.577,
+    "M19": 5.185,
+    "M20": 8.024,
+    "PLower": 2.681,
+    "POrder": 4.876,
+    "PProve": 7.868
+  }
+}

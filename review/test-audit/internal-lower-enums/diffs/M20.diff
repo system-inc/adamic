@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -302,7 +302,7 @@
+ 		sameCallable := func(inside, viewed *checker.Type) bool {
+ 			fromKept, _ := l.kept(inside)
+ 			toKept, _ := l.kept(viewed)
+-			return !(fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference()) && same(inside, viewed)
++			return (fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference()) && same(inside, viewed)
+ 		}
+ 		// Intrinsic callback adapters call the source signature, not the library's wider view.
+ 		if declaration := toSignatures[0].Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {

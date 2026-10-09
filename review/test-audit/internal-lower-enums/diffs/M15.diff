@@ -1,0 +1,11 @@
+--- a/internal/lower/fresh.go
++++ b/internal/lower/fresh.go
+@@ -40,7 +40,7 @@
+ 	}
+ 	for index := range f.writes {
+ 		write := &f.writes[index]
+-		if write.Proven {
++		if !write.Proven {
+ 			continue
+ 		}
+ 		if write.Kind == fresh.WriteUnknown {

@@ -1,0 +1,11 @@
+--- a/internal/lower/modules.go
++++ b/internal/lower/modules.go
+@@ -117,7 +117,7 @@
+ 				}
+ 			}
+ 		case ast.KindEnumDeclaration:
+-			if !ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst) {
++			if ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst) {
+ 				local, err := l.enumLocal(statement)
+ 				if err != nil {
+ 					return err

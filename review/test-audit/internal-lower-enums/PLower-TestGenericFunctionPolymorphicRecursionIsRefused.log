@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:18:43.628150675Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:18:43.637733521Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionPolymorphicRecursionIsRefused"}
+{"Time":"2026-10-09T10:18:43.637802866Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionPolymorphicRecursionIsRefused","Output":"=== RUN   TestGenericFunctionPolymorphicRecursionIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:43.637832978Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionPolymorphicRecursionIsRefused","Output":"=== PAUSE TestGenericFunctionPolymorphicRecursionIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:43.637835955Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionPolymorphicRecursionIsRefused"}
+{"Time":"2026-10-09T10:18:43.637838855Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionPolymorphicRecursionIsRefused"}
+{"Time":"2026-10-09T10:18:43.637840994Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionPolymorphicRecursionIsRefused","Output":"=== CONT  TestGenericFunctionPolymorphicRecursionIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:43.682767137Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionPolymorphicRecursionIsRefused","Output":"    generic_instance_key_test.go:20: want a polymorphic recursion refusal, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:18:43.68284345Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionPolymorphicRecursionIsRefused","Output":"--- FAIL: TestGenericFunctionPolymorphicRecursionIsRefused (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:43.68285021Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGenericFunctionPolymorphicRecursionIsRefused","Elapsed":0.05}
+{"Time":"2026-10-09T10:18:43.682869368Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:43.684176611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.056s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:43.684210086Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.056}

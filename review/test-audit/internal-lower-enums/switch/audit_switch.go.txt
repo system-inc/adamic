@@ -1,0 +1,12 @@
+package lower
+
+import "os"
+
+// Scratch-only audit switch scaffolding, excluded from standalone diffs.
+func auditMutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
+func auditChoice[T any](id string, normal, mutant T) T {
+	if auditMutant(id) {
+		return mutant
+	}
+	return normal
+}

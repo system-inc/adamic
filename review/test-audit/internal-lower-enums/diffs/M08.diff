@@ -1,0 +1,10 @@
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -169,7 +169,6 @@
+ 		}
+ 	}
+ 	index := len(l.instantiated)
+-	l.instantiated = append(l.instantiated, proven)
+ 	return typeName(held) + ":" + strconv.Itoa(index)
+ }
+ 

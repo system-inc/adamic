@@ -1,0 +1,11 @@
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -346,7 +346,7 @@
+ 		if known && held == ir.Union {
+ 			for _, member := range concrete.Types() {
+ 				if l.checker.IsArrayType(member) {
+-					return l.notYet(node, "JSON.stringify unions containing arrays (adamic/json-union-array)")
++					return l.notYet(node, "JSON.stringify array-containing unions (adamic/json-union-array)")
+ 				}
+ 			}
+ 		}

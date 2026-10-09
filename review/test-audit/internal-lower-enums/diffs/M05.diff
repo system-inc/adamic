@@ -1,0 +1,11 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -180,7 +180,7 @@
+ 		fields = append(fields, ir.Field{Name: name, Value: value})
+ 	}
+ 	for _, member := range node.AsEnumDeclaration().Members.Nodes {
+-		if member.Name().Text() == "__proto__" || strings.ContainsRune(member.Name().Text(), 0) {
++		if member.Name().Text() == "__proto_disabled__" || strings.ContainsRune(member.Name().Text(), 0) {
+ 			return nil, &Refused{Where: l.program.Where(member), What: "an enum member name that changes the prototype or contains NUL", Fix: "rename the member; enum properties must be ordinary fixed slots"}
+ 		}
+ 		value, err := l.enumConstant(member)

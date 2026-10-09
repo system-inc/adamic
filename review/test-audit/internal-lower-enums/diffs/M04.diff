@@ -1,0 +1,11 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -154,7 +154,7 @@
+ 	constant := l.checker.GetConstantValue(member)
+ 	if constant != nil && reflect.TypeOf(constant).Kind() == reflect.Float64 {
+ 		value := reflect.ValueOf(constant).Float()
+-		if math.IsNaN(value) || math.IsInf(value, 0) {
++		if !(math.IsNaN(value) || math.IsInf(value, 0)) {
+ 			return nil, l.notYet(member, "a non-finite enum member")
+ 		}
+ 		return ir.NumberConstant{Value: value}, nil

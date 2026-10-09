@@ -1,0 +1,11 @@
+--- a/internal/lower/load_time_reads.go
++++ b/internal/lower/load_time_reads.go
+@@ -85,7 +85,7 @@
+ 						declaration := symbol.ValueDeclaration
+ 						provider := ast.GetSourceFileOfNode(declaration)
+ 						index, present := positions[provider]
+-						if (declaration.Kind == ast.KindFunctionDeclaration && declaration.Parent != nil && declaration.Parent.Kind == ast.KindSourceFile) || (present && provider != file && index < positions[file]) {
++						if (declaration.Kind == ast.KindFunctionDeclaration && declaration.Parent != nil && declaration.Parent.Kind == ast.KindSourceFile) || (present && provider != file && index > positions[file]) {
+ 							l.provenModuleReads[node] = true
+ 						}
+ 					}

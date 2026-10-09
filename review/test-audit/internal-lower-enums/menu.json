@@ -1,0 +1,182 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/enums.go",
+    "line": 39,
+    "old": "l.enumIdentity(from) == l.enumIdentity(to)",
+    "new": "l.enumIdentity(from) != l.enumIdentity(to)",
+    "menu": "flip closed enum identity comparison",
+    "entry_return": false
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/enums.go",
+    "line": 95,
+    "old": "func (l *lowering) enumObjectView(node *ast.Node) error {",
+    "new": "return nil",
+    "menu": "early return enum object relation check",
+    "entry_return": true
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/enums.go",
+    "line": 436,
+    "old": "func (l *lowering) enumSwitch(node *ast.Node) error {",
+    "new": "return nil",
+    "menu": "early return enum exhaustiveness check",
+    "entry_return": true
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/enums.go",
+    "line": 157,
+    "old": "math.IsNaN(value) || math.IsInf(value, 0)",
+    "new": "!(math.IsNaN(value) || math.IsInf(value, 0))",
+    "menu": "flip non-finite rejection condition",
+    "entry_return": false
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/enums.go",
+    "line": 183,
+    "old": "\"__proto__\"",
+    "new": "\"__proto_disabled__\"",
+    "menu": "change forbidden member name constant",
+    "entry_return": false
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/enums.go",
+    "line": 400,
+    "old": "ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient)",
+    "new": "ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync)",
+    "menu": "change ambient modifier option",
+    "entry_return": false
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/modules.go",
+    "line": 120,
+    "old": "!ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst)",
+    "new": "ast.HasSyntacticModifier(statement, ast.ModifierFlagsConst)",
+    "menu": "flip const-enum registration condition",
+    "entry_return": false
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/generic.go",
+    "line": 172,
+    "old": "l.instantiated = append(l.instantiated, proven)",
+    "new": "",
+    "menu": "drop representative registration statement",
+    "entry_return": false
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/generic.go",
+    "line": 14,
+    "old": "const maximumGenericDepth = 32",
+    "new": "const maximumGenericDepth = 0",
+    "menu": "change generic depth constant",
+    "entry_return": false
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/generic.go",
+    "line": 100,
+    "old": "\"a generic function instantiated without end (polymorphic recursion)\"",
+    "new": "\"a generic function instantiated without end (recursive instantiation)\"",
+    "menu": "change recursion diagnostic constant",
+    "entry_return": false
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/generic.go",
+    "line": 349,
+    "old": "\"JSON.stringify unions containing arrays (adamic/json-union-array)\"",
+    "new": "\"JSON.stringify array-containing unions (adamic/json-union-array)\"",
+    "menu": "change JSON union diagnostic constant",
+    "entry_return": false
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/input.go",
+    "line": 36,
+    "old": "\"a spread argument to \"",
+    "new": "\"a spread into \"",
+    "menu": "change spread diagnostic constant",
+    "entry_return": false
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/input.go",
+    "line": 30,
+    "old": "range inputFunctions {",
+    "new": "range inputFunctions[:len(inputFunctions)-1] {",
+    "menu": "off-by-one input function bound",
+    "entry_return": false
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/cycles.go",
+    "line": 338,
+    "old": "\"a readonly field, which its constructor writes,\"",
+    "new": "\"a readonly slot, which its constructor writes,\"",
+    "menu": "change cycle diagnostic constant",
+    "entry_return": false
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/fresh.go",
+    "line": 43,
+    "old": "if write.Proven {",
+    "new": "if !write.Proven {",
+    "menu": "flip fresh-write proof condition",
+    "entry_return": false
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/load_time_reads.go",
+    "line": 102,
+    "old": "!l.provenModuleReads[node] && l.checked(local)",
+    "new": "l.provenModuleReads[node] && l.checked(local)",
+    "menu": "flip module read readiness condition",
+    "entry_return": false
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/load_time_reads.go",
+    "line": 88,
+    "old": "index < positions[file]",
+    "new": "index > positions[file]",
+    "menu": "flip provider completion order comparison",
+    "entry_return": false
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/modules.go",
+    "line": 35,
+    "old": "cyclic = true",
+    "new": "cyclic = false",
+    "menu": "change back-edge cycle flag constant",
+    "entry_return": false
+  },
+  {
+    "id": "M19",
+    "file": "internal/lower/modules.go",
+    "line": 194,
+    "old": "return !statement.AsExportDeclaration().IsTypeOnly",
+    "new": "return statement.AsExportDeclaration().IsTypeOnly",
+    "menu": "flip export runtime-edge condition",
+    "entry_return": false
+  },
+  {
+    "id": "M20",
+    "file": "internal/lower/expression.go",
+    "line": 305,
+    "old": "return !(fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference()) && same(inside, viewed)",
+    "new": "return (fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference()) && same(inside, viewed)",
+    "menu": "flip callable union ABI guard",
+    "entry_return": false
+  }
+]

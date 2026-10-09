@@ -1,0 +1,9 @@
+--- a/internal/lower/modules.go
++++ b/internal/lower/modules.go
+@@ -191,5 +191,5 @@
+ 		clause := statement.AsImportDeclaration().ImportClause
+ 		return clause == nil || !clause.IsTypeOnly()
+ 	}
+-	return !statement.AsExportDeclaration().IsTypeOnly
++	return statement.AsExportDeclaration().IsTypeOnly
+ }

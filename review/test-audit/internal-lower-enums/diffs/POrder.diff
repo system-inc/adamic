@@ -1,0 +1,59 @@
+--- a/internal/lower/modules.go
++++ b/internal/lower/modules.go
+@@ -5,7 +5,7 @@
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+ 	"github.com/system-inc/adamic/internal/ir"
+-	"github.com/system-inc/adamic/internal/load"
++
+ )
+ 
+ // moduleOrder is the order the program's modules run in, ECMAScript's: each module's imports first,
+@@ -25,46 +25,7 @@
+ // esmModuleOrder is shared with the source-ledger audit so it measures the
+ // compiler's actual scheduling proof, rather than replaying observed Node order.
+ func esmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast.SourceFile, bool) {
+-	order := []*ast.SourceFile{}
+-	state := map[*ast.SourceFile]int{} // 1 while its imports are being visited, 2 once placed
+-	cyclic := false
+-	var visit func(module *ast.SourceFile)
+-	visit = func(module *ast.SourceFile) {
+-		switch state[module] {
+-		case 1:
+-			cyclic = true
+-			return
+-		case 2:
+-			return
+-		}
+-		state[module] = 1
+-		for _, statement := range module.Statements.Nodes {
+-			if statement.Kind != ast.KindImportDeclaration && statement.Kind != ast.KindExportDeclaration {
+-				continue
+-			}
+-			if !runtimeModuleStatement(statement) {
+-				continue
+-			}
+-			specifier := statement.ModuleSpecifier()
+-			if specifier == nil {
+-				continue
+-			}
+-			target := typeChecker.GetSymbolAtLocation(specifier)
+-			if target == nil || len(target.Declarations) == 0 || target.Declarations[0].Kind != ast.KindSourceFile {
+-				// 'adamic' is an ambient module in the prelude: nothing to run.
+-				continue
+-			}
+-			imported := target.Declarations[0].AsSourceFile()
+-			if load.IsPrelude(imported) || load.IsLibrary(imported) {
+-				continue
+-			}
+-			visit(imported)
+-		}
+-		state[module] = 2
+-		order = append(order, module)
+-	}
+-	visit(entry)
+-	return order, cyclic
++	return nil, false
+ }
+ 
+ // declareModule registers the module's globals and functions before anything is lowered, so a

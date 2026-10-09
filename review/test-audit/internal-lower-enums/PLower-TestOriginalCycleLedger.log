@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T10:18:49.898724571Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:18:49.911650469Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger"}
+{"Time":"2026-10-09T10:18:49.911782952Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Output":"=== RUN   TestOriginalCycleLedger\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:52.393995103Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Output":"    import_cycle_ledger_test.go:217: statements=map[checked:3 proven:55 refused:0] reads=map[checked:9 proven:905 refused:0] findings=10\n"}
+{"Time":"2026-10-09T10:18:52.394214156Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Output":"--- PASS: TestOriginalCycleLedger (2.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:52.39422207Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Elapsed":2.48}
+{"Time":"2026-10-09T10:18:52.394244113Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:52.424260256Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t2.525s\n"}
+{"Time":"2026-10-09T10:18:52.424339203Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":2.526}

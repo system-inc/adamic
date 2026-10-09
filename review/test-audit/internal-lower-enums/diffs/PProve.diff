@@ -1,0 +1,64 @@
+--- a/internal/lower/load_time_reads.go
++++ b/internal/lower/load_time_reads.go
+@@ -42,60 +42,7 @@
+ }
+ 
+ func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
+-	l.provenModuleReads = map[*ast.Node]bool{}
+-	positions := map[*ast.SourceFile]int{}
+-	for index, file := range files {
+-		positions[file] = index
+-	}
+-	for _, file := range files {
+-		var visit func(*ast.Node) bool
+-		visit = func(node *ast.Node) bool {
+-			if node == nil || ast.IsFunctionLike(node) {
+-				return false
+-			}
+-			switch node.Kind {
+-			case ast.KindImportDeclaration, ast.KindExportDeclaration:
+-				return false
+-			case ast.KindHeritageClause:
+-				if node.AsHeritageClause().Token == ast.KindExtendsKeyword && ast.IsClassLike(node.Parent) {
+-					for _, element := range node.AsHeritageClause().Types.Nodes {
+-						visit(element.AsExpressionWithTypeArguments().Expression)
+-					}
+-				}
+-				return false
+-			case ast.KindExpressionWithTypeArguments:
+-				visit(node.AsExpressionWithTypeArguments().Expression)
+-				return false
+-			case ast.KindPropertyDeclaration:
+-				if !ast.HasStaticModifier(node) {
+-					return false
+-				}
+-			}
+-			if ast.IsTypeNode(node) {
+-				return false
+-			}
+-			if ast.IsIdentifier(node) || ast.IsPropertyAccessExpression(node) {
+-				symbol := l.checker.GetSymbolAtLocation(node)
+-				if ast.IsIdentifier(node) && node.Parent != nil && ast.IsShorthandPropertyAssignment(node.Parent) {
+-					symbol = l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
+-				}
+-				if symbol != nil {
+-					symbol = l.checker.SkipAlias(symbol)
+-					if symbol != nil && symbol.ValueDeclaration != nil {
+-						declaration := symbol.ValueDeclaration
+-						provider := ast.GetSourceFileOfNode(declaration)
+-						index, present := positions[provider]
+-						if (declaration.Kind == ast.KindFunctionDeclaration && declaration.Parent != nil && declaration.Parent.Kind == ast.KindSourceFile) || (present && provider != file && index < positions[file]) {
+-							l.provenModuleReads[node] = true
+-						}
+-					}
+-				}
+-			}
+-			node.ForEachChild(visit)
+-			return false
+-		}
+-		visit(file.AsNode())
+-	}
++	return
+ }
+ 
+ func (l *lowering) checkedModuleRead(node *ast.Node, local int) bool {

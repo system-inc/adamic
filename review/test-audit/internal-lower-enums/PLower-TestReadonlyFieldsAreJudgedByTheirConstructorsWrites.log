@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:18:39.26045449Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:18:39.272239133Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadonlyFieldsAreJudgedByTheirConstructorsWrites"}
+{"Time":"2026-10-09T10:18:39.272318219Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadonlyFieldsAreJudgedByTheirConstructorsWrites","Output":"=== RUN   TestReadonlyFieldsAreJudgedByTheirConstructorsWrites\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:39.272348805Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadonlyFieldsAreJudgedByTheirConstructorsWrites","Output":"=== PAUSE TestReadonlyFieldsAreJudgedByTheirConstructorsWrites\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:39.27235288Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadonlyFieldsAreJudgedByTheirConstructorsWrites"}
+{"Time":"2026-10-09T10:18:39.272357183Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadonlyFieldsAreJudgedByTheirConstructorsWrites"}
+{"Time":"2026-10-09T10:18:39.27236004Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadonlyFieldsAreJudgedByTheirConstructorsWrites","Output":"=== CONT  TestReadonlyFieldsAreJudgedByTheirConstructorsWrites\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:39.31768174Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadonlyFieldsAreJudgedByTheirConstructorsWrites","Output":"    fresh_test.go:18: want the readonly parent pointer refused, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:18:39.317937369Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadonlyFieldsAreJudgedByTheirConstructorsWrites","Output":"--- FAIL: TestReadonlyFieldsAreJudgedByTheirConstructorsWrites (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:39.317948982Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadonlyFieldsAreJudgedByTheirConstructorsWrites","Elapsed":0.05}
+{"Time":"2026-10-09T10:18:39.317968374Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:39.319101454Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.058s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:39.319126905Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.059}

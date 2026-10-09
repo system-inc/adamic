@@ -1,0 +1,11 @@
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -11,7 +11,7 @@
+ // maximumGenericDepth is how many instantiations of generic functions may be lowered inside one
+ // another. Ordinary programs nest a few; a function that calls itself with an ever larger type
+ // (polymorphic recursion) would instantiate without end, and 0.1 refuses it (docs/0.1.md).
+-const maximumGenericDepth = 32
++const maximumGenericDepth = 0
+ 
+ // instantiateFunction lowers a generic module function for the type arguments of one call, once per
+ // distinct set of checker type identities, as a generic class is (instantiate). Within it,

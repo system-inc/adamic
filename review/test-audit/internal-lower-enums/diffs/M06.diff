@@ -1,0 +1,11 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -397,7 +397,7 @@
+ 		if symbol != nil && len(symbol.Declarations) != 1 {
+ 			return l.notYet(node, "merged enum declarations; put the members in one declaration")
+ 		}
+-		if ast.HasSyntacticModifier(node, ast.ModifierFlagsAmbient) {
++		if ast.HasSyntacticModifier(node, ast.ModifierFlagsAsync) {
+ 			return l.notYet(node, "an ambient enum without a runtime definition")
+ 		}
+ 		// Signed masks, including 1 << 31, are ordinary numeric enum constants.

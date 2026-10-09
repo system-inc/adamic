@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:18:32.61673291Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:18:32.626910982Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud"}
+{"Time":"2026-10-09T10:18:32.626997644Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Output":"=== RUN   TestEnumLimitsStayLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:32.627030997Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Output":"=== PAUSE TestEnumLimitsStayLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:32.627033875Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud"}
+{"Time":"2026-10-09T10:18:32.627037668Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud"}
+{"Time":"2026-10-09T10:18:32.62703975Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Output":"=== CONT  TestEnumLimitsStayLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:32.672977635Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Output":"    enums_test.go:109: got \u003cnil\u003e, want NotYet\n","OutputType":"error"}
+{"Time":"2026-10-09T10:18:32.673036571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Output":"--- FAIL: TestEnumLimitsStayLoud (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:32.673044773Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumLimitsStayLoud","Elapsed":0.05}
+{"Time":"2026-10-09T10:18:32.673066814Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:32.674309242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.057s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:18:32.674334947Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.058}
