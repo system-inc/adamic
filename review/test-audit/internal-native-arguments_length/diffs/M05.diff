@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -37,7 +37,7 @@
+ 				declare, declaration := list[position].(ir.Declare)
+ 				element := declaration && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:])
+ 				chain := declaration && borrowableChain(program, index, declare, assigned)
+-				if element || chain {
++				if element && chain {
+ 					borrows[&list[position]] = true
+ 					program.Locals[declare.Local].Borrowed = true
+ 					lending[borrowedArray(declare)] = true

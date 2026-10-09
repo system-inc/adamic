@@ -1,0 +1,248 @@
+[
+  {
+    "id": "M01-vet",
+    "seconds": 0.34361259800061816,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M02-vet",
+    "seconds": 0.3161207259981893,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M03-vet",
+    "seconds": 0.3305667220047326,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M04-vet",
+    "seconds": 0.296124068001518,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M05-vet",
+    "seconds": 0.28730402899964247,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M06-vet",
+    "seconds": 0.31072985700302524,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M07-vet",
+    "seconds": 0.3184290860008332,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M08-vet",
+    "seconds": 0.2892873300006613,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M09-vet",
+    "seconds": 0.3181709039999987,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M10-vet",
+    "seconds": 0.29989446500258055,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M11-vet",
+    "seconds": 0.2872318359950441,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M12-vet",
+    "seconds": 0.3049972009976045,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M13-vet",
+    "seconds": 0.3117248280032072,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M17-vet",
+    "seconds": 0.3174106809965451,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "switched-vet",
+    "seconds": 0.3188487270017504,
+    "exit": 0,
+    "command": "timeout 120 go vet ./internal/native/"
+  },
+  {
+    "id": "M01",
+    "seconds": 21.470709398003237,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M02",
+    "seconds": 15.03144631699979,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M03",
+    "seconds": 15.587805511000624,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M04",
+    "seconds": 15.1589785210017,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M05",
+    "seconds": 15.364740710996557,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M06",
+    "seconds": 16.094508501002565,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M07",
+    "seconds": 15.903258432001167,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M08",
+    "seconds": 16.113790480994794,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M09",
+    "seconds": 17.121698353999818,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M10",
+    "seconds": 17.683410386001924,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M11",
+    "seconds": 17.21868898899993,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M12",
+    "seconds": 16.924142019997817,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M13",
+    "seconds": 22.626827799998864,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M14",
+    "seconds": 29.770160542000667,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M15",
+    "seconds": 29.913022080007067,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M16",
+    "seconds": 28.262097379003535,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "M17",
+    "seconds": 24.569533152003714,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "P_C",
+    "seconds": 15.60905697799899,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "P_CHAIN",
+    "seconds": 16.910851237000315,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "P_CONSUMES",
+    "seconds": 15.856585522000387,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "P_ELEMENTS",
+    "seconds": 16.452433170001314,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "P_REGIONS",
+    "seconds": 16.325883484998485,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "P_BUILD",
+    "seconds": 8.608280457003275,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "P_LIBRARY",
+    "seconds": 8.200149336997129,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "W_BUILD",
+    "seconds": 17.04054688999895,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  },
+  {
+    "id": "P_REUSE",
+    "seconds": 22.209884809002688,
+    "exit": 1,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$"
+  }
+]

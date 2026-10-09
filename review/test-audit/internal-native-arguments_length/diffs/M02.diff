@@ -1,0 +1,11 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -183,7 +183,7 @@
+ // checked, not just the path returning to the call. Unknown callbacks refuse.
+ func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]bool) bool {
+ 	seen := map[int]bool{}
+-	safe := true
++	safe := false
+ 	var statements func([]ir.Statement)
+ 	var target func(int)
+ 	target = func(index int) {

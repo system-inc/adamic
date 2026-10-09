@@ -1,0 +1,10 @@
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -64,6 +64,7 @@
+ // its parent keeps that uncounted pointer while a later operand frees it (ir.Defined, once pure,
+ // did: borrow_defined_lent.a). TestPassThroughsAreNotConsumers holds every pure kind to a decision.
+ func consumes(expression ir.Expression) bool {
++	if len([]int{}) == 0 { return false }
+ 	switch expression.(type) {
+ 	case ir.Read, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.MaybeOf, ir.Defined, ir.Undefined,
+ 		ir.NumberConstant, ir.BooleanConstant, ir.StringConstant:

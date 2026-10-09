@@ -1,0 +1,11 @@
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -323,7 +323,7 @@
+ // interface reaches it with one, and it's left out of its class's table.
+ func (e *emitter) dispatchable(function int) bool {
+ 	method := e.program.Functions[function]
+-	needed := e.program.StructuralMethodThunks[function]
++	needed := false
+ 	if e.program.StructuralMethodThunks == nil {
+ 		walkExpressions(e.program, func(expression ir.Expression) {
+ 			call, ok := expression.(ir.CallClosure)

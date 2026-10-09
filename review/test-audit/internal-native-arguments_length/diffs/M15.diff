@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/case.c
++++ b/internal/native/runtime/case.c
+@@ -39,7 +39,7 @@
+ 	size_t low = 0, high = count;
+ 	while (low < high) {
+ 		size_t middle = low + (high - low) / 2;
+-		if (runs[middle].start <= point) {
++		if (runs[middle].start < point) {
+ 			low = middle + 1;
+ 		} else {
+ 			high = middle;

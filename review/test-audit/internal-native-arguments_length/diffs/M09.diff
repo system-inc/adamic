@@ -1,0 +1,11 @@
+--- a/internal/native/region.go
++++ b/internal/native/region.go
+@@ -132,7 +132,7 @@
+ 			return false
+ 		}
+ 		plan.classObjects[function] = declaration.Local
+-		return true
++		return false
+ 	}
+ 	fresh := true
+ 	var statements func([]ir.Statement)

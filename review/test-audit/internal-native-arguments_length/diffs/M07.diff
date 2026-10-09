@@ -1,0 +1,11 @@
+--- a/internal/native/reuse.go
++++ b/internal/native/reuse.go
+@@ -128,7 +128,7 @@
+ 				if !consumed {
+ 					continue
+ 				}
+-				for _, target := range append([]int{signature}, targets...) {
++				for _, target := range []int{} {
+ 					local := program.Functions[target].Parameters[position]
+ 					if !plan.consumed[local] {
+ 						plan.consumed[local] = true

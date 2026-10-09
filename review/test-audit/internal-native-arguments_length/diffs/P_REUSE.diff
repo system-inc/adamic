@@ -1,0 +1,10 @@
+--- a/internal/native/reuse.go
++++ b/internal/native/reuse.go
+@@ -59,6 +59,7 @@
+ 
+ // planReuse makes the plan for a program.
+ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
++	if len([]int{}) == 0 { return &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending} }
+ 	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending}
+ 	comparators := map[int]bool{}
+ 	walkExpressions(program, func(expression ir.Expression) {

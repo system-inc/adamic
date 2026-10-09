@@ -1,0 +1,118 @@
+{
+  "production": {
+    "M01": [
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "M02": [
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets"
+    ],
+    "M03": [
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets"
+    ],
+    "M04": [
+      "TestBorrowChainTargets"
+    ],
+    "M05": [
+      "TestBorrowChainDeclarations"
+    ],
+    "M06": [],
+    "M07": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "M08": [],
+    "M09": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "M10": [
+      "TestClosureConventionDropCount",
+      "TestClosureConventionWrongOrder",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "M11": [],
+    "M12": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "M13": [
+      "TestArithmeticIsNeverFused"
+    ],
+    "M14": [
+      "TestCaseTablesMatchNodesUnicode"
+    ],
+    "M15": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "M16": [
+      "TestCaseMappingMatchesNode"
+    ],
+    "M17": [
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestOptionalMethodThunksMatchNode"
+    ]
+  },
+  "probes": {
+    "P_C": [
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionWrongOrder",
+      "TestNoReaderCallingConvention",
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "P_CHAIN": [
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets"
+    ],
+    "P_CONSUMES": [
+      "TestPassThroughsAreNotConsumers"
+    ],
+    "P_ELEMENTS": [
+      "TestBorrowChainDeclarations"
+    ],
+    "P_REGIONS": [
+      "TestInheritanceMemoryPlans"
+    ],
+    "P_BUILD": [
+      "TestArithmeticIsNeverFused",
+      "TestCaseMappingMatchesNode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionWrongOrder",
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "P_LIBRARY": [
+      "TestCaseMappingMatchesNode",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "P_REUSE": [
+      "TestInheritanceMemoryPlans"
+    ]
+  },
+  "witness_check": [
+    "TestClosureConventionDropCount",
+    "TestClosureConventionRuntimeDropCount",
+    "TestClosureConventionWrongOrder"
+  ],
+  "rows": [
+    "TestNoReaderCallingConvention",
+    "TestBorrowChainDeclarations",
+    "TestBorrowChainTargets",
+    "TestPassThroughsAreNotConsumers",
+    "TestCaseMappingMatchesNode",
+    "TestCaseTablesMatchNodesUnicode",
+    "TestInheritanceMemoryPlans",
+    "TestClosureConventionDropCount",
+    "TestClosureConventionRuntimeDropCount",
+    "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+    "TestClosureConventionWrongOrder",
+    "TestParserHasNoUnusedOptionalMethodThunks",
+    "TestOptionalMethodThunksMatchNode",
+    "TestArithmeticIsNeverFused"
+  ]
+}

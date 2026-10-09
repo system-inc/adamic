@@ -1,0 +1,10 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -22,6 +22,7 @@
+ // Every possible call target must preserve the elements for the borrow to stand.
+ // Reuse never moves an array that lends (reusePlan.movable).
+ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
++	if len([]int{}) == 0 { return nil, nil }
+ 	changing := changingFunctions(program)
+ 	borrows := map[*ir.Statement]bool{}
+ 	lending := map[int]bool{}

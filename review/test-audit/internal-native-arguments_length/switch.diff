@@ -1,0 +1,220 @@
+diff --git a/internal/native/arguments_length.go b/internal/native/arguments_length.go
+index 07d078e8..35100082 100644
+--- a/internal/native/arguments_length.go
++++ b/internal/native/arguments_length.go
+@@ -176,7 +176,7 @@ func missingArgument(of ir.Type) string {
+ 
+ func (e *emitter) packedClosureCall(call ir.CallClosure, closure, packed, count string) string {
+ 	if e.program.PackedCountNeededFromCall(call) {
+-		return fmt.Sprintf("adamic_closure_call(%s, %s, %s)", closure, packed, count)
++		return fmt.Sprintf("adamic_closure_call(%s, %s, %s)", closure, packed, auditChoice("M11", count, count+" + 1"))
+ 	}
+ 	return fmt.Sprintf("%s->code(%s, %s)", closure, closure, packed)
+ }
+diff --git a/internal/native/borrow.go b/internal/native/borrow.go
+index 9f3854b8..f4b3dd97 100644
+--- a/internal/native/borrow.go
++++ b/internal/native/borrow.go
+@@ -64,10 +64,11 @@ func lendable(valueType ir.Type) bool {
+ // its parent keeps that uncounted pointer while a later operand frees it (ir.Defined, once pure,
+ // did: borrow_defined_lent.a). TestPassThroughsAreNotConsumers holds every pure kind to a decision.
+ func consumes(expression ir.Expression) bool {
++	if auditChoice("P_CONSUMES", false, true) { return false }
+ 	switch expression.(type) {
+ 	case ir.Read, ir.Conditional, ir.Coalesce, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.MaybeOf, ir.Defined, ir.Undefined,
+ 		ir.NumberConstant, ir.BooleanConstant, ir.StringConstant:
+-		return false
++		return auditChoice("M01", false, true)
+ 	}
+ 	return pure(expression)
+ }
+@@ -182,8 +183,9 @@ func chainRoot(expression ir.Expression, names map[string]bool) (int, bool) {
+ // can make. Visiting a recursive target once suffices: all its statements are
+ // checked, not just the path returning to the call. Unknown callbacks refuse.
+ func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]bool) bool {
++	if auditChoice("P_CHAIN", false, true) { return false }
+ 	seen := map[int]bool{}
+-	safe := true
++	safe := auditChoice("M02", true, false)
+ 	var statements func([]ir.Statement)
+ 	var target func(int)
+ 	target = func(index int) {
+@@ -197,7 +199,7 @@ func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]b
+ 			if !safe {
+ 				return
+ 			}
+-			if write, ok := statement.(ir.SetProperty); ok && names[write.Name] {
++			if write, ok := statement.(ir.SetProperty); ok && auditChoice("M03", names[write.Name], !names[write.Name]) {
+ 				safe = false
+ 			}
+ 			walkStatement(statement, func(expression ir.Expression) {
+@@ -211,7 +213,7 @@ func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]b
+ 					}
+ 				case ir.CallClosure, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach, ir.ArraySort:
+ 					targets := program.ClosureTargets(expression)
+-					if targets.Unknown {
++					if auditChoice("M04", targets.Unknown, !targets.Unknown) {
+ 						safe = false
+ 					}
+ 					for _, index := range targets.Functions {
+diff --git a/internal/native/element_borrow.go b/internal/native/element_borrow.go
+index c390852d..49eeb6a9 100644
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -22,6 +22,7 @@ import (
+ // Every possible call target must preserve the elements for the borrow to stand.
+ // Reuse never moves an array that lends (reusePlan.movable).
+ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {
++	if auditChoice("P_ELEMENTS", false, true) { return nil, nil }
+ 	changing := changingFunctions(program)
+ 	borrows := map[*ir.Statement]bool{}
+ 	lending := map[int]bool{}
+@@ -37,7 +38,7 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
+ 				declare, declaration := list[position].(ir.Declare)
+ 				element := declaration && borrowable(program, index, declare, assigned) && !changes(program, changing, list[position+1:])
+ 				chain := declaration && borrowableChain(program, index, declare, assigned)
+-				if element || chain {
++				if auditChoice("M05", element || chain, element && chain) {
+ 					borrows[&list[position]] = true
+ 					program.Locals[declare.Local].Borrowed = true
+ 					lending[borrowedArray(declare)] = true
+@@ -273,7 +274,7 @@ func borrowableChain(program *ir.Program, function int, declare ir.Declare, assi
+ 		return false
+ 	}
+ 	held := program.Locals[root]
+-	if held.Global || held.Captured || held.Function != function || assigned[root] {
++	if auditChoice("M06", held.Global || held.Captured || held.Function != function || assigned[root], held.Global || held.Function != function || assigned[root]) {
+ 		return false
+ 	}
+ 	return chainUnchanged(program, program.Functions[function].Body, names)
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..1ddf0ea1 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -20,6 +20,7 @@ import (
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
++	if auditChoice("P_C", false, true) { return "" }
+ 	return cProgram(program, -1)
+ }
+ 
+@@ -49,7 +50,7 @@ func cProgram(program *ir.Program, handler int) string {
+ 	if program.CanonicalClosuresNeeded() {
+ 		builder.WriteString("#define ADAMIC_CANONICAL_CLOSURES 1\n")
+ 	}
+-	if program.ClosureConventionNeeded() {
++	if auditChoice("M10", program.ClosureConventionNeeded(), !program.ClosureConventionNeeded()) {
+ 		builder.WriteString("#define ADAMIC_CLOSURE_CONVENTION 1\n")
+ 	}
+ 	fmt.Fprintf(&builder, "// Generated by adamic from %s. Do not edit.\n\n#include \"adamic.h\"\n\n#include <math.h>\n#include <stdbool.h>\n\n", program.Source)
+diff --git a/internal/native/emit_objects.go b/internal/native/emit_objects.go
+index 9b114e20..8ca2f065 100644
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -323,7 +323,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
+ // interface reaches it with one, and it's left out of its class's table.
+ func (e *emitter) dispatchable(function int) bool {
+ 	method := e.program.Functions[function]
+-	needed := e.program.StructuralMethodThunks[function]
++	needed := auditChoice("M12", e.program.StructuralMethodThunks[function], false)
+ 	if e.program.StructuralMethodThunks == nil {
+ 		walkExpressions(e.program, func(expression ir.Expression) {
+ 			call, ok := expression.(ir.CallClosure)
+diff --git a/internal/native/library.go b/internal/native/library.go
+index 23e259b3..e5947d04 100644
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -30,6 +30,7 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
+ }
+ 
+ func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {
++	if auditChoice("P_LIBRARY", false, true) { return "", nil }
+ 	return runtimeLibrary(directory, options, featureFlags(source))
+ }
+ 
+@@ -46,7 +47,7 @@ func sourceFlags(source string, options Options) []string {
+ func featureFlags(source string) []string {
+ 	var flags []string
+ 	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+-		if strings.Contains(source, "#define "+feature+" 1\n") {
++		if auditChoice("M17", strings.Contains(source, "#define "+feature+" 1\n"), !strings.Contains(source, "#define "+feature+" 1\n")) {
+ 			flags = append(flags, "-D"+feature+"=1")
+ 		}
+ 	}
+diff --git a/internal/native/native.go b/internal/native/native.go
+index fd266740..0cfd1f44 100644
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -83,7 +83,7 @@ func Flags(options Options) []string {
+ 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
+ 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
+ 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
+-	flags = append(flags, "-ffp-contract=off")
++	flags = append(flags, auditChoice("M13", "-ffp-contract=off", "-ffp-contract=fast"))
+ 	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
+ 	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
+ 	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
+@@ -108,6 +108,7 @@ func Flags(options Options) []string {
+ 
+ // Build compiles C source and the runtime into a native binary at output.
+ func Build(source string, output string, options Options) error {
++	if auditChoice("P_BUILD", false, true) { return nil }
+ 	if err := ValidateOptions(options); err != nil {
+ 		return err
+ 	}
+@@ -148,7 +149,7 @@ func Build(source string, output string, options Options) error {
+ 	}
+ 	command := exec.Command(compilerName(options), arguments...)
+ 	if combined, err := command.CombinedOutput(); err != nil {
+-		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
++		if auditChoice("W_BUILD", false, true) { return nil }; return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
+ 	}
+ 	return nil
+ }
+diff --git a/internal/native/region.go b/internal/native/region.go
+index f56dad77..6a5fa78d 100644
+--- a/internal/native/region.go
++++ b/internal/native/region.go
+@@ -41,6 +41,7 @@ type regionPlan struct {
+ }
+ 
+ func planRegions(program *ir.Program) *regionPlan {
++	if auditChoice("P_REGIONS", false, true) { return &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}} }
+ 	plan := &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}}
+ 	// Escape: start from every object parameter of a named function flowing nowhere, and mark any
+ 	// that escapes, until none changes.
+@@ -83,7 +84,7 @@ func planRegions(program *ir.Program) *regionPlan {
+ 		for index := range list {
+ 			switch statement := list[index].(type) {
+ 			case ir.Assign, ir.Declare, ir.Evaluate, ir.WriteLine:
+-				if plan.feedsRegion(statement) {
++				if auditChoice("M08", plan.feedsRegion(statement), !plan.feedsRegion(statement)) {
+ 					plan.statements[&list[index]] = true
+ 				}
+ 			}
+@@ -132,7 +133,7 @@ func (plan *regionPlan) returnsFresh(program *ir.Program, function int) bool {
+ 			return false
+ 		}
+ 		plan.classObjects[function] = declaration.Local
+-		return true
++		return auditChoice("M09", true, false)
+ 	}
+ 	fresh := true
+ 	var statements func([]ir.Statement)
+diff --git a/internal/native/reuse.go b/internal/native/reuse.go
+index 13d3416a..ad5798dd 100644
+--- a/internal/native/reuse.go
++++ b/internal/native/reuse.go
+@@ -128,7 +128,7 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
+ 				if !consumed {
+ 					continue
+ 				}
+-				for _, target := range append([]int{signature}, targets...) {
++				for _, target := range auditChoice("M07", append([]int{signature}, targets...), []int{}) {
+ 					local := program.Functions[target].Parameters[position]
+ 					if !plan.consumed[local] {
+ 						plan.consumed[local] = true
+package native
+import "os"
+func auditChoice[T any](id string, original, changed T) T { if os.Getenv("ADAMIC_MUTANT") == id { return changed }; return original }

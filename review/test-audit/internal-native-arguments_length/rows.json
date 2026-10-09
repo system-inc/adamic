@@ -1,0 +1,624 @@
+[
+  {
+    "test": "TestNoReaderCallingConvention",
+    "package": "internal/native",
+    "file": "internal/native/arguments_length_test.go:13",
+    "seconds": 0.072,
+    "oracle": "Hand-written IR, emitted-C or memory-plan assertions; no outside authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M10: arguments_length_test.go:38: counted convention: got true, want false",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_C"
+    ],
+    "subsumer_seconds": 0.419,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > M10.log 2>&1; arguments_length_test.go:38: counted convention: got true, want false",
+    "probe_entries": [
+      "P_C"
+    ],
+    "vacuous_subcases": [
+      "closure_convention_plain.a: absence checks pass empty C; counted fixtures fail it"
+    ]
+  },
+  {
+    "test": "TestBorrowChainDeclarations",
+    "package": "internal/native",
+    "file": "internal/native/borrow_chain_test.go:12",
+    "seconds": 0.134,
+    "oracle": "Hand-written IR, emitted-C or memory-plan assertions; no outside authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02",
+      "M03",
+      "M05"
+    ],
+    "unique_kills": [
+      "M05"
+    ],
+    "last_proven_fail": "M05: borrow_chain_test.go:39: walk: parent did not borrow",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_ELEMENTS"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > M05.log 2>&1; borrow_chain_test.go:39: walk: parent did not borrow",
+    "probe_entries": [
+      "P_ELEMENTS"
+    ]
+  },
+  {
+    "test": "TestBorrowChainTargets",
+    "package": "internal/native",
+    "file": "internal/native/borrow_chain_test.go:48",
+    "seconds": 0.01,
+    "oracle": "Hand-written IR, emitted-C or memory-plan assertions; no outside authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02",
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04: borrow_chain_test.go:62: unknown callback considered read-only",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_CHAIN"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > M04.log 2>&1; borrow_chain_test.go:62: unknown callback considered read-only",
+    "probe_entries": [
+      "P_CHAIN"
+    ]
+  },
+  {
+    "test": "TestPassThroughsAreNotConsumers",
+    "package": "internal/native",
+    "file": "internal/native/borrow_consumes_test.go:19",
+    "seconds": 0.011,
+    "oracle": "Hand-written IR, emitted-C or memory-plan assertions; no outside authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01"
+    ],
+    "unique_kills": [
+      "M01"
+    ],
+    "last_proven_fail": "M01: borrow_consumes_test.go:39: ir.Read hands an operand on as its own value, but consumes says it may lend it",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_CONSUMES"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > M01.log 2>&1; borrow_consumes_test.go:39: ir.Read hands an operand on as its own value, but consumes says it may lend it",
+    "probe_entries": [
+      "P_CONSUMES"
+    ]
+  },
+  {
+    "test": "TestCaseMappingMatchesNode",
+    "package": "internal/native",
+    "file": "internal/native/case_test.go:217",
+    "seconds": 13.276,
+    "oracle": "Node String.toLowerCase/toUpperCase executed and compared byte-for-byte over every code point and context sweep; line counts and exits also checked.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M15",
+      "M16"
+    ],
+    "unique_kills": [
+      "M15",
+      "M16"
+    ],
+    "last_proven_fail": "M16: case_test.go:234: native \"c39f c39f 53\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_BUILD"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > M16.log 2>&1; case_test.go:234: native \"c39f c39f 53\"",
+    "probe_entries": [
+      "P_BUILD"
+    ]
+  },
+  {
+    "test": "TestCaseTablesMatchNodesUnicode",
+    "package": "internal/native",
+    "file": "internal/native/case_test.go:314",
+    "seconds": 0.035,
+    "oracle": "Node process.versions.unicode executed; compares version labels in two headers only, not table contents.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M14"
+    ],
+    "unique_kills": [
+      "M14"
+    ],
+    "last_proven_fail": "M14: case_test.go:335: case_tables.h is Unicode 16.0.0 and Node is Unicode 17.0: update case_generate.go and run go generate",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > M14.log 2>&1; case_test.go:335: case_tables.h is Unicode 16.0.0 and Node is Unicode 17.0: update case_generate.go and run go generate",
+    "probe_entries": []
+  },
+  {
+    "test": "TestInheritanceMemoryPlans",
+    "package": "internal/native",
+    "file": "internal/native/class_inheritance_test.go:27",
+    "seconds": 0.046,
+    "oracle": "Hand-written IR, emitted-C or memory-plan assertions; no outside authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M07",
+      "M09"
+    ],
+    "unique_kills": [
+      "M07",
+      "M09"
+    ],
+    "last_proven_fail": "M09: class_inheritance_test.go:41: class allocator lost its region variant",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_REGIONS",
+      "P_REUSE"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > M09.log 2>&1; class_inheritance_test.go:41: class allocator lost its region variant",
+    "probe_entries": [
+      "P_REGIONS",
+      "P_REUSE"
+    ]
+  },
+  {
+    "test": "TestClosureConventionDropCount",
+    "package": "internal/native",
+    "file": "internal/native/closure_convention_test.go:18",
+    "seconds": 0.196,
+    "oracle": "Actual clang rejection of built-in invalid C; hand-written required diagnostic substrings. W_BUILD discards Build rejection after clang runs and makes this witness fail.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W_BUILD: closure_convention_test.go:52: drop-count mutant was not rejected for typed arity: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_BUILD"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=W_BUILD ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/W_BUILD timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > W_BUILD.log 2>&1; closure_convention_test.go:52: drop-count mutant was not rejected for typed arity: <nil>",
+    "probe_entries": [
+      "P_BUILD"
+    ]
+  },
+  {
+    "test": "TestClosureConventionRuntimeDropCount",
+    "package": "internal/native",
+    "file": "internal/native/closure_convention_test.go:58",
+    "seconds": 0.09,
+    "oracle": "Actual clang rejection of built-in invalid C; hand-written required diagnostic substrings. W_BUILD discards Build rejection after clang runs and makes this witness fail.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W_BUILD: closure_convention_test.go:81: runtime drop-count mutant escaped the typed convention: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_BUILD"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=W_BUILD ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/W_BUILD timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > W_BUILD.log 2>&1; closure_convention_test.go:81: runtime drop-count mutant escaped the typed convention: <nil>",
+    "probe_entries": [
+      "P_BUILD"
+    ]
+  },
+  {
+    "test": "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+    "package": "internal/native",
+    "file": "internal/native/closure_convention_test.go:86",
+    "seconds": 0.027,
+    "oracle": "Hand-written IR, emitted-C or memory-plan assertions; no outside authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: closure_convention_test.go:99: a source literal selected unused runtime support: #define ADAMIC_REGEXP_REPLACE_CALLBACK 1",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_LIBRARY"
+    ],
+    "subsumer_seconds": 0.419,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M17 ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > M17.log 2>&1; closure_convention_test.go:99: a source literal selected unused runtime support: #define ADAMIC_REGEXP_REPLACE_CALLBACK 1",
+    "probe_entries": [
+      "P_C",
+      "P_LIBRARY"
+    ]
+  },
+  {
+    "test": "TestClosureConventionWrongOrder",
+    "package": "internal/native",
+    "file": "internal/native/closure_convention_test.go:106",
+    "seconds": 0.109,
+    "oracle": "Actual clang rejection of built-in invalid C; hand-written required diagnostic substrings. W_BUILD discards Build rejection after clang runs and makes this witness fail.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W_BUILD: closure_convention_test.go:126: swapped definition escaped the header-derived declaration: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_BUILD"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=W_BUILD ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/W_BUILD timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > W_BUILD.log 2>&1; closure_convention_test.go:126: swapped definition escaped the header-derived declaration: <nil>",
+    "probe_entries": [
+      "P_BUILD"
+    ]
+  },
+  {
+    "test": "TestParserHasNoUnusedOptionalMethodThunks",
+    "package": "internal/native",
+    "file": "internal/native/closure_convention_test.go:173",
+    "seconds": 6.296,
+    "oracle": "Hand-written IR, emitted-C or memory-plan assertions; no outside authority checked.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "All M01-M17 bounded runs passed this row; see matrix.json and logs. P_C also passed it.",
+    "probe_entries": [
+      "P_C"
+    ]
+  },
+  {
+    "test": "TestOptionalMethodThunksMatchNode",
+    "package": "internal/native",
+    "file": "internal/native/closure_convention_test.go:204",
+    "seconds": 0.419,
+    "oracle": "Executed Node output versus sanitized and unsanitized native output; hand-written closure-convention and omitted-table-entry assertions; includes built-in missing-thunk witness.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M10",
+      "M12",
+      "M17"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "M12: closure_convention_test.go:239: /tmp/adamic-gate/TestOptionalMethodThunksMatchNodesanitize=false963834493/001/valid: exit status 70",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_C"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > M12.log 2>&1; closure_convention_test.go:239: /tmp/adamic-gate/TestOptionalMethodThunksMatchNodesanitize=false963834493/001/valid: exit status 70",
+    "probe_entries": [
+      "P_C"
+    ]
+  },
+  {
+    "test": "TestArithmeticIsNeverFused",
+    "package": "internal/native",
+    "file": "internal/native/contract_test.go:58",
+    "seconds": 0.287,
+    "oracle": "Hand-written IR, emitted-C or memory-plan assertions; no outside authority checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13"
+    ],
+    "unique_kills": [
+      "M13"
+    ],
+    "last_proven_fail": "M13: contract_test.go:86: sanitize false: got \"5.5511151231257827e-17 -5.5511151231257827e-17 0\\n\", want \"0 0 0\\n\", as JavaScript computes it",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P_BUILD"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNoReaderCallingConvention",
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestPassThroughsAreNotConsumers",
+      "TestCaseMappingMatchesNode",
+      "TestCaseTablesMatchNodesUnicode",
+      "TestInheritanceMemoryPlans",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestOptionalMethodThunksMatchNode",
+      "TestArithmeticIsNeverFused"
+    ],
+    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u045/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestNoReaderCallingConvention|TestBorrowChainDeclarations|TestBorrowChainTargets|TestPassThroughsAreNotConsumers|TestCaseMappingMatchesNode|TestCaseTablesMatchNodesUnicode|TestInheritanceMemoryPlans|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount|TestClosureConventionRuntimeFeaturesIgnoreLiterals|TestClosureConventionWrongOrder|TestParserHasNoUnusedOptionalMethodThunks|TestOptionalMethodThunksMatchNode|TestArithmeticIsNeverFused)$ > M13.log 2>&1; contract_test.go:86: sanitize false: got \"5.5511151231257827e-17 -5.5511151231257827e-17 0\\n\", want \"0 0 0\\n\", as JavaScript computes it",
+    "probe_entries": [
+      "P_BUILD"
+    ]
+  }
+]

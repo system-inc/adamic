@@ -1,0 +1,50 @@
+[
+  {
+    "id": "P_C",
+    "file": "internal/native/emit.go",
+    "entry": "func C(program *ir.Program) string {",
+    "change": "return \"\""
+  },
+  {
+    "id": "P_CHAIN",
+    "file": "internal/native/borrow.go",
+    "entry": "func chainUnchanged(program *ir.Program, body []ir.Statement, names map[string]bool) bool {",
+    "change": "return false"
+  },
+  {
+    "id": "P_CONSUMES",
+    "file": "internal/native/borrow.go",
+    "entry": "func consumes(expression ir.Expression) bool {",
+    "change": "return false"
+  },
+  {
+    "id": "P_ELEMENTS",
+    "file": "internal/native/element_borrow.go",
+    "entry": "func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {",
+    "change": "return nil, nil"
+  },
+  {
+    "id": "P_REGIONS",
+    "file": "internal/native/region.go",
+    "entry": "func planRegions(program *ir.Program) *regionPlan {",
+    "change": "return &regionPlan{fresh: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}}"
+  },
+  {
+    "id": "P_BUILD",
+    "file": "internal/native/native.go",
+    "entry": "func Build(source string, output string, options Options) error {",
+    "change": "return nil"
+  },
+  {
+    "id": "P_LIBRARY",
+    "file": "internal/native/library.go",
+    "entry": "func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {",
+    "change": "return \"\", nil"
+  },
+  {
+    "id": "P_REUSE",
+    "file": "internal/native/reuse.go",
+    "entry": "func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {",
+    "change": "return &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending}"
+  }
+]

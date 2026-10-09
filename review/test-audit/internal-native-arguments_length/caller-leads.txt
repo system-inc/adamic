@@ -1,0 +1,82 @@
+internal/native/arguments_length_test.go:33:			code := C(program)
+internal/native/borrow_chain_test.go:23:		plan, _ := planElementBorrows(program)
+internal/native/borrow_chain_test.go:55:	if !chainUnchanged(program, program.Functions[0].Body, names) {
+internal/native/borrow_chain_test.go:58:	if chainUnchanged(program, []ir.Statement{ir.Return{Value: ir.Call{Function: 0, Virtual: 1}}}, names) {
+internal/native/borrow_chain_test.go:61:	if chainUnchanged(program, []ir.Statement{ir.Return{Value: ir.CallClosure{Closure: ir.Read{Of: ir.Closure}}}}, names) {
+internal/native/borrow_consumes_test.go:38:		if consumes(expression) {
+internal/native/borrow_consumes_test.go:43:		if !consumes(expression) {
+internal/native/case_test.go:221:	if err := Build(strings.Replace(caseHarness, "ALPHABET", alphabet, 1), binary, Options{Sanitize: true}); err != nil {
+internal/native/class_inheritance_test.go:30:	regions := planRegions(program)
+internal/native/class_inheritance_test.go:31:	_, lending := planElementBorrows(program)
+internal/native/class_inheritance_test.go:32:	reuse := planReuse(program, lending)
+internal/native/closure_convention_test.go:28:	source := C(program)
+internal/native/closure_convention_test.go:29:	if err := Build(source, filepath.Join(t.TempDir(), "valid"), Options{}); err != nil {
+internal/native/closure_convention_test.go:50:	err = Build(strings.Join(lines, "\n"), filepath.Join(t.TempDir(), "mutant"), Options{})
+internal/native/closure_convention_test.go:78:	source := changed + "\n" + strings.ReplaceAll(C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
+internal/native/closure_convention_test.go:79:	err = Build(source, filepath.Join(t.TempDir(), "mutant"), Options{})
+internal/native/closure_convention_test.go:89:	library, err := RuntimeLibraryForSource("", C(program), Options{})
+internal/native/closure_convention_test.go:116:	source := C(program)
+internal/native/closure_convention_test.go:124:		err := Build(swapped, filepath.Join(t.TempDir(), "mutant"), Options{})
+internal/native/closure_convention_test.go:152:		err := Build(strings.Join(lines, "\n"), filepath.Join(t.TempDir(), "mutant"), Options{})
+internal/native/closure_convention_test.go:164:			err := Build(strings.Replace(source, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+probe.code, 1), filepath.Join(t.TempDir(), "mutant"), Options{})
+internal/native/closure_convention_test.go:183:	code := C(program)
+internal/native/closure_convention_test.go:226:	code := C(program)
+internal/native/closure_convention_test.go:236:			if err := Build(code, binary, Options{Sanitize: sanitize}); err != nil {
+internal/native/closure_convention_test.go:250:	if err := Build(C(program), binary, Options{}); err != nil {
+internal/native/contract_test.go:82:		if err := Build(fusedHarness, binary, Options{Sanitize: sanitize, cpu: cpu}); err != nil {
+internal/native/devirtualize_test.go:58:	code := C(program)
+internal/native/dtoa_test.go:132:	if err := Build(dtoaHarness, binary, Options{Sanitize: true}); err != nil {
+internal/native/dtoa_test.go:183:	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
+internal/native/element_borrow_test.go:30:	borrows, _ := planElementBorrows(program)
+internal/native/element_borrow_test.go:40:	generated := C(program)
+internal/native/element_borrow_test.go:72:	borrows, _ := planElementBorrows(program)
+internal/native/element_borrow_test.go:106:	borrows, _ := planElementBorrows(program)
+internal/native/element_borrow_test.go:132:	borrows, _ := planElementBorrows(program)
+internal/native/fields_test.go:81:	generated := C(program)
+internal/native/fields_test.go:108:		if err := Build(generated, binary, Options{Sanitize: sanitize}); err != nil {
+internal/native/fields_test.go:197:	generated := C(program)
+internal/native/fields_test.go:204:		if err := Build(generated, binary, Options{Sanitize: sanitize}); err != nil {
+internal/native/heap_test.go:46:		if err := Build(harness, binary, Options{Sanitize: true, slabs: build.slabs}); err != nil {
+internal/native/heap_test.go:120:	if err := Build(harness, binary, Options{}); err != nil {
+internal/native/ieee754_test.go:230:	if err := Build(ieee754Harness, binary, Options{Sanitize: true}); err != nil {
+internal/native/library_array_test.go:18:		source := C(program)
+internal/native/library_map_set_iterator_test.go:67:	if err := Build(harness, binary, Options{}); err != nil {
+internal/native/library_test.go:75:		if err := Build(source, binary, Options{Count: count}); err != nil {
+internal/native/limit_test.go:27:	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
+internal/native/loop_borrow_test.go:30:	plan, lending := planElementBorrows(program)
+internal/native/loop_borrow_test.go:67:	generated := C(program)
+internal/native/loop_borrow_test.go:92:	emitter := emitter{program: program, reuse: planReuse(program, nil)}
+internal/native/loop_borrow_test.go:126:		generated := C(program)
+internal/native/loop_borrow_test.go:181:	plan, lending := planElementBorrows(program)
+internal/native/loop_borrow_test.go:194:	generated := C(program)
+internal/native/loop_borrow_test.go:195:	reuse := planReuse(program, lending)
+internal/native/math_test.go:126:	if err := Build(mathHarness, binary, Options{Sanitize: true}); err != nil {
+internal/native/maybe_test.go:75:	if err := Build(maybeHarness, binary, Options{Sanitize: true}); err != nil {
+internal/native/node_buffer_test.go:91:		if err := Build(C(program), binary, Options{Sanitize: sanitize}); err != nil {
+internal/native/normalize_benchmark_test.go:27:	if err := Build(normalizeLongProbe, binary, Options{}); err != nil {
+internal/native/normalize_random_test.go:100:	if err := Build(strings.Replace(harness, "ALPHABET", alphabet, 1), binary, Options{Sanitize: true}); err != nil {
+internal/native/normalize_test.go:227:		return Build(source, filepath.Join(destination, "harness"), Options{Sanitize: true})
+internal/native/number_test.go:97:	if err := Build(numberHarness, binary, Options{Sanitize: true}); err != nil {
+internal/native/parse_test.go:171:	if err := Build(parseHarness, binary, Options{Sanitize: true}); err != nil {
+internal/native/power_of_two_test.go:34:	if err := Build(numberHarness, binary, Options{Sanitize: true}); err != nil {
+internal/native/radix_test.go:79:	if err := Build(radixHarness, binary, Options{Sanitize: true}); err != nil {
+internal/native/radix_test.go:122:	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
+internal/native/record_test.go:66:	if err := Build(recordHarness(t), binary, Options{Sanitize: true, Count: true}); err != nil {
+internal/native/record_test.go:299:	if err := Build(recordHarness(t), binary, Options{}); err != nil {
+internal/native/regexp_test.go:158:	if err := Build(source.String(), binary, Options{Sanitize: true}); err != nil {
+internal/native/regexp_test.go:263:	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+internal/native/regexp_test.go:298:	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+internal/native/regexp_test.go:347:	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+internal/native/runtime_profile_test.go:48:		if err := Build(source, binary, Options{Sanitize: sanitize, Count: true}); err != nil {
+internal/native/runtime_profile_test.go:77:		if err := Build(source, binary, Options{Sanitize: sanitize}); err != nil {
+internal/native/string_build_test.go:106:	if err := Build(replace(harness), binary, Options{Sanitize: true}); err != nil {
+internal/native/string_index_test.go:294:	if err := Build(replacer.Replace(indexHarness), binary, Options{Sanitize: true}); err != nil {
+internal/native/string_index_test.go:398:	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
+internal/native/string_index_test.go:437:	if err := Build(strings.ReplaceAll(source, "@TEXT@", cString(text))+"\n", binary, Options{Sanitize: true}); err != nil {
+internal/native/string_test.go:186:	if err := Build(stringHarness, binary, Options{Sanitize: true}); err != nil {
+internal/native/string_views_test.go:72:		if err := Build(source, binary, Options{Sanitize: sanitize, Count: true}); err != nil {
+internal/native/tsgo_features_test.go:27:	source := C(program)
+internal/native/typed_array_test.go:29:			if err := Build(string(source), binary, Options{Sanitize: sanitized, Count: true}); err != nil {
+internal/native/units_measure_test.go:89:				err = Build(source, binary, options)
+internal/native/units_test.go:37:		if err := Build(source, binary, Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
+internal/native/view_unions_mixed_test.go:33:			if err := Build(source+"\n", binary, Options{Sanitize: sanitized}); err != nil {

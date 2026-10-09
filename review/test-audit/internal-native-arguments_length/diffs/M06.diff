@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -273,7 +273,7 @@
+ 		return false
+ 	}
+ 	held := program.Locals[root]
+-	if held.Global || held.Captured || held.Function != function || assigned[root] {
++	if held.Global || held.Function != function || assigned[root] {
+ 		return false
+ 	}
+ 	return chainUnchanged(program, program.Functions[function].Body, names)

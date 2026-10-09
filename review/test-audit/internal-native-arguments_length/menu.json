@@ -1,0 +1,138 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/borrow.go",
+    "old": "\t\treturn false\n\t}\n\treturn pure(expression)",
+    "new": "\t\treturn true\n\t}\n\treturn pure(expression)",
+    "change": "flip pass-through consumer decision",
+    "line": 70
+  },
+  {
+    "id": "M02",
+    "file": "internal/native/borrow.go",
+    "old": "\tsafe := true",
+    "new": "\tsafe := false",
+    "change": "change initial chain safety constant",
+    "line": 186
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/borrow.go",
+    "old": "ok && names[write.Name]",
+    "new": "ok && !names[write.Name]",
+    "change": "flip field-name mutation guard",
+    "line": 200
+  },
+  {
+    "id": "M04",
+    "file": "internal/native/borrow.go",
+    "old": "if targets.Unknown {",
+    "new": "if !targets.Unknown {",
+    "change": "flip unknown callback guard",
+    "line": 214
+  },
+  {
+    "id": "M05",
+    "file": "internal/native/element_borrow.go",
+    "old": "if element || chain {",
+    "new": "if element && chain {",
+    "change": "change borrow acceptance condition",
+    "line": 40
+  },
+  {
+    "id": "M06",
+    "file": "internal/native/element_borrow.go",
+    "old": "held.Global || held.Captured || held.Function != function || assigned[root]",
+    "new": "held.Global || held.Function != function || assigned[root]",
+    "change": "drop captured-root refusal",
+    "line": 276
+  },
+  {
+    "id": "M07",
+    "file": "internal/native/reuse.go",
+    "old": "for _, target := range append([]int{signature}, targets...) {",
+    "new": "for _, target := range []int{} {",
+    "change": "drop virtual ownership propagation loop by empty iteration list",
+    "line": 131
+  },
+  {
+    "id": "M08",
+    "file": "internal/native/region.go",
+    "old": "if plan.feedsRegion(statement) {",
+    "new": "if !plan.feedsRegion(statement) {",
+    "change": "flip region eligibility",
+    "line": 86
+  },
+  {
+    "id": "M09",
+    "file": "internal/native/region.go",
+    "old": "plan.classObjects[function] = declaration.Local\n\t\treturn true",
+    "new": "plan.classObjects[function] = declaration.Local\n\t\treturn false",
+    "change": "change class freshness result",
+    "line": 134
+  },
+  {
+    "id": "M10",
+    "file": "internal/native/emit.go",
+    "old": "if program.ClosureConventionNeeded() {",
+    "new": "if !program.ClosureConventionNeeded() {",
+    "change": "flip counted convention feature emission",
+    "line": 52
+  },
+  {
+    "id": "M11",
+    "file": "internal/native/arguments_length.go",
+    "old": "closure, packed, count)\n\t}",
+    "new": "closure, packed, count+\" + 1\")\n\t}",
+    "change": "off-by-one packed actual count",
+    "line": 179
+  },
+  {
+    "id": "M12",
+    "file": "internal/native/emit_objects.go",
+    "old": "needed := e.program.StructuralMethodThunks[function]",
+    "new": "needed := false",
+    "change": "drop proven structural thunk requirement",
+    "line": 326
+  },
+  {
+    "id": "M13",
+    "file": "internal/native/native.go",
+    "old": "\"-ffp-contract=off\"",
+    "new": "\"-ffp-contract=fast\"",
+    "change": "change floating point contraction option",
+    "line": 86
+  },
+  {
+    "id": "M14",
+    "file": "internal/native/runtime/case_tables.h",
+    "old": "#define CASE_UNICODE_VERSION \"17.0.0\"",
+    "new": "#define CASE_UNICODE_VERSION \"16.0.0\"",
+    "change": "change Unicode version constant",
+    "line": 8
+  },
+  {
+    "id": "M15",
+    "file": "internal/native/runtime/case.c",
+    "old": "runs[middle].start <= point",
+    "new": "runs[middle].start < point",
+    "change": "off-by-one simple table start bound",
+    "line": 42
+  },
+  {
+    "id": "M16",
+    "file": "internal/native/runtime/case.c",
+    "old": "index < mapping->count",
+    "new": "index + 1 < mapping->count",
+    "change": "off-by-one full mapping iteration bound",
+    "line": 177
+  },
+  {
+    "id": "M17",
+    "file": "internal/native/library.go",
+    "old": "if strings.Contains(source, \"#define \"+feature+\" 1\\n\") {",
+    "new": "if !strings.Contains(source, \"#define \"+feature+\" 1\\n\") {",
+    "change": "flip feature marker selection",
+    "line": 49
+  }
+]

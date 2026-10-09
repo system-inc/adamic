@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/case.c
++++ b/internal/native/runtime/case.c
+@@ -174,7 +174,7 @@
+ 	const case_full *mapping = upper ? full(case_full_upper, COUNT(case_full_upper), point) : full(case_full_lower, COUNT(case_full_lower), point);
+ 	if (mapping != NULL) {
+ 		size_t written = 0;
+-		for (size_t index = 0; index < mapping->count; index++) {
++		for (size_t index = 0; index + 1 < mapping->count; index++) {
+ 			written += encode(mapping->mapped[index], out + written);
+ 		}
+ 		return written;

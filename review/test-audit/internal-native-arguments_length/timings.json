@@ -1,0 +1,30 @@
+{
+  "nproc": 5,
+  "setup_seconds": 0,
+  "npm_reported_seconds": 0.627,
+  "whole_baseline_binary_seconds": 90.047,
+  "bounded_baseline_binary_seconds": 15.855,
+  "solo_medians": {
+    "TestNoReaderCallingConvention": 0.072,
+    "TestBorrowChainDeclarations": 0.134,
+    "TestBorrowChainTargets": 0.01,
+    "TestPassThroughsAreNotConsumers": 0.011,
+    "TestCaseMappingMatchesNode": 13.276,
+    "TestCaseTablesMatchNodesUnicode": 0.035,
+    "TestInheritanceMemoryPlans": 0.046,
+    "TestClosureConventionDropCount": 0.196,
+    "TestClosureConventionRuntimeDropCount": 0.09,
+    "TestClosureConventionRuntimeFeaturesIgnoreLiterals": 0.027,
+    "TestClosureConventionWrongOrder": 0.109,
+    "TestParserHasNoUnusedOptionalMethodThunks": 6.296,
+    "TestOptionalMethodThunksMatchNode": 0.419,
+    "TestArithmeticIsNeverFused": 0.287
+  },
+  "solo_binary_seconds": 63.299,
+  "matrix_and_validation_wall_seconds": 476.67894351702125,
+  "C_rebuild_sections_seconds": {
+    "M14": 7.929667,
+    "M15": 8.374022,
+    "M16": 7.828094
+  }
+}
