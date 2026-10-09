@@ -47,8 +47,9 @@ Commands write test output directly to /tmp/storage-stack-*.jsonl or .log:
 - The incoming optional-after-call overlay runner uses a scratch evidence directory: all five caught, without modifying its committed evidence.
 - The ten moved existing oracle rows pass an uncached explicit Node fixture filter in 1.383 s.
 
-The instance has a four-CPU quota and nproc=5. An incoming JavaScript test helper received gofmt only (a trailing blank line); no new top-level Go test function is
-added or edited for this merge. Focused top-level times are recorded in
+The instance has a four-CPU quota and nproc=5. An incoming JavaScript test helper received gofmt only (a trailing blank line); the lane analyzer also required t.Parallel as the first statement of the existing
+TestStep18OptionalMethodPaths. That test is rerun below; no new top-level Go test
+function is added. Focused top-level times are recorded in
 lowering-stack-test-durations.json; the longest batch leaf is TestCallSpreadArray
 at 25.89 s. The existing complete counts sweep is unchanged. Full packages,
 the full gate, WASI and the entire inherited checked-view acceptance suite are
@@ -57,3 +58,16 @@ not claimed run. No stage-3 status record or Node observation is regenerated.
 After committing the merge, run the requested repository-root lane command:
 `git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -`.
 Its exact output accompanies the delivery report before the single push.
+
+Evidence is stored under review/compiler/optional-calls-main. The first lane run
+identified the missing t.Parallel statement in TestStep18OptionalMethodPaths;
+that statement is added and the analyzer is rerun before pushing.
+The parallel leaf rerun passes in 0.53 s on the four-CPU instance.
+
+Lane replay after the parallel fix, before the evidence commit:
+
+```
+lane checks 1.4 s: gofmt and tools on 42 Go files, t.Parallel on 7 test packages; vet 7 packages
+```
+
+The exact command is run again on the committed delivery tip before pushing.
