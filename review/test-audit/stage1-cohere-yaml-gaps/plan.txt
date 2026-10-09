@@ -1,0 +1,8 @@
+Fixed production mutation plan, before outcomes. Menu: flip condition, change constant, drop statement.
+M1 internal/lower/object.go:1265: flip push arity len(arguments) != 1 to == 1.
+M2 internal/native/runtime/string_build_impl.h:131: change true text constant from "true" to "TRUE".
+M3 internal/native/runtime/string_append.c:86: drop result->length = written statement.
+M4 stage1/cohere/yaml/lexer.ts:21: flow indicator comma code 44 to 45.
+Probes: P1 Lower returns nil,nil at entry; P2 lex_main.ts empty main; P3 props_main.ts empty main.
+Witnesses: W1/W2/W3 replace witness equality comparison with unconditional agreement, separately, so the witnesses must reject a comparison that accepts all answers.
+No mutations to Go cohere, Node, or YAML library oracle.

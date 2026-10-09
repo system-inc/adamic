@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_build_impl.h
++++ b/internal/native/runtime/string_build_impl.h
+@@ -128,6 +128,6 @@
+ }
+ 
+ adamic_string adamic_string_empty = ADAMIC_STRING("");
+-adamic_string adamic_string_true = ADAMIC_STRING("true");
++adamic_string adamic_string_true = ADAMIC_STRING("TRUE");
+ adamic_string adamic_string_false = ADAMIC_STRING("false");
+ 

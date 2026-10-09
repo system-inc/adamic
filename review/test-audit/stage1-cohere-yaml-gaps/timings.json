@@ -1,0 +1,245 @@
+[
+  {
+    "test": "TestLexerGaps",
+    "iteration": 1,
+    "seconds": 0.13,
+    "wall": 2.2125821049994556,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps)$",
+    "log": "TestLexerGaps-time1.log"
+  },
+  {
+    "test": "TestLexerGaps",
+    "iteration": 2,
+    "seconds": 0.112,
+    "wall": 1.9791616080001404,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps)$",
+    "log": "TestLexerGaps-time2.log"
+  },
+  {
+    "test": "TestLexerGaps",
+    "iteration": 3,
+    "seconds": 0.114,
+    "wall": 2.0844304089987418,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps)$",
+    "log": "TestLexerGaps-time3.log"
+  },
+  {
+    "test": "TestStructuralPositionRefusal",
+    "iteration": 1,
+    "seconds": 0.114,
+    "wall": 2.0415570879995357,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestStructuralPositionRefusal)$",
+    "log": "TestStructuralPositionRefusal-time1.log"
+  },
+  {
+    "test": "TestStructuralPositionRefusal",
+    "iteration": 2,
+    "seconds": 0.109,
+    "wall": 2.0635364600002504,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestStructuralPositionRefusal)$",
+    "log": "TestStructuralPositionRefusal-time2.log"
+  },
+  {
+    "test": "TestStructuralPositionRefusal",
+    "iteration": 3,
+    "seconds": 0.112,
+    "wall": 1.9856508890006808,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestStructuralPositionRefusal)$",
+    "log": "TestStructuralPositionRefusal-time3.log"
+  },
+  {
+    "test": "TestClosed gaps family",
+    "iteration": 1,
+    "seconds": 2.851,
+    "wall": 4.693789189001109,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap)$",
+    "log": "TestClosed_gaps_family-time1.log"
+  },
+  {
+    "test": "TestClosed gaps family",
+    "iteration": 2,
+    "seconds": 3.128,
+    "wall": 5.23066444899996,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap)$",
+    "log": "TestClosed_gaps_family-time2.log"
+  },
+  {
+    "test": "TestClosed gaps family",
+    "iteration": 3,
+    "seconds": 2.814,
+    "wall": 4.948155002999556,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap)$",
+    "log": "TestClosed_gaps_family-time3.log"
+  },
+  {
+    "test": "TestLexerMatchesGo",
+    "iteration": 1,
+    "seconds": 5.636,
+    "wall": 7.599782466999386,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerMatchesGo)$",
+    "log": "TestLexerMatchesGo-time1.log"
+  },
+  {
+    "test": "TestLexerMatchesGo",
+    "iteration": 2,
+    "seconds": 5.961,
+    "wall": 7.7166532470000675,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerMatchesGo)$",
+    "log": "TestLexerMatchesGo-time2.log"
+  },
+  {
+    "test": "TestLexerMatchesGo",
+    "iteration": 3,
+    "seconds": 5.877,
+    "wall": 7.655248480999944,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerMatchesGo)$",
+    "log": "TestLexerMatchesGo-time3.log"
+  },
+  {
+    "test": "TestLexerMutants",
+    "iteration": 1,
+    "seconds": 11.591,
+    "wall": 13.429208864999964,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerMutants)$",
+    "log": "TestLexerMutants-time1.log"
+  },
+  {
+    "test": "TestLexerMutants",
+    "iteration": 2,
+    "seconds": 12.211,
+    "wall": 14.235085645999789,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerMutants)$",
+    "log": "TestLexerMutants-time2.log"
+  },
+  {
+    "test": "TestLexerMutants",
+    "iteration": 3,
+    "seconds": 11.774000000000001,
+    "wall": 13.900405508999029,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerMutants)$",
+    "log": "TestLexerMutants-time3.log"
+  },
+  {
+    "test": "TestPropsMatchGo",
+    "iteration": 1,
+    "seconds": 9.754,
+    "wall": 11.754555296000035,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestPropsMatchGo)$",
+    "log": "TestPropsMatchGo-time1.log"
+  },
+  {
+    "test": "TestPropsMatchGo",
+    "iteration": 2,
+    "seconds": 9.977,
+    "wall": 11.987549769999532,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestPropsMatchGo)$",
+    "log": "TestPropsMatchGo-time2.log"
+  },
+  {
+    "test": "TestPropsMatchGo",
+    "iteration": 3,
+    "seconds": 9.671,
+    "wall": 11.728256311000223,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestPropsMatchGo)$",
+    "log": "TestPropsMatchGo-time3.log"
+  },
+  {
+    "test": "TestPropsMutants",
+    "iteration": 1,
+    "seconds": 10.448,
+    "wall": 12.444799003000298,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestPropsMutants)$",
+    "log": "TestPropsMutants-time1.log"
+  },
+  {
+    "test": "TestPropsMutants",
+    "iteration": 2,
+    "seconds": 10.007,
+    "wall": 11.993108088001463,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestPropsMutants)$",
+    "log": "TestPropsMutants-time2.log"
+  },
+  {
+    "test": "TestPropsMutants",
+    "iteration": 3,
+    "seconds": 10.774000000000001,
+    "wall": 12.721020204000524,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestPropsMutants)$",
+    "log": "TestPropsMutants-time3.log"
+  },
+  {
+    "test": "TestSharedSliceAppendMatchesNode",
+    "iteration": 1,
+    "seconds": 0.449,
+    "wall": 2.4666416619984375,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestSharedSliceAppendMatchesNode)$",
+    "log": "TestSharedSliceAppendMatchesNode-time1.log"
+  },
+  {
+    "test": "TestSharedSliceAppendMatchesNode",
+    "iteration": 2,
+    "seconds": 0.475,
+    "wall": 2.625533751999683,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestSharedSliceAppendMatchesNode)$",
+    "log": "TestSharedSliceAppendMatchesNode-time2.log"
+  },
+  {
+    "test": "TestSharedSliceAppendMatchesNode",
+    "iteration": 3,
+    "seconds": 0.471,
+    "wall": 2.4085992609998357,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestSharedSliceAppendMatchesNode)$",
+    "log": "TestSharedSliceAppendMatchesNode-time3.log"
+  },
+  {
+    "test": "TestScalarMutants",
+    "iteration": 1,
+    "seconds": 13.085,
+    "wall": 14.878234578000047,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestScalarMutants)$",
+    "log": "TestScalarMutants-time1.log"
+  },
+  {
+    "test": "TestScalarMutants",
+    "iteration": 2,
+    "seconds": 13.43,
+    "wall": 15.376177641999675,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestScalarMutants)$",
+    "log": "TestScalarMutants-time2.log"
+  },
+  {
+    "test": "TestScalarMutants",
+    "iteration": 3,
+    "seconds": 13.725999999999999,
+    "wall": 15.612488521999694,
+    "exit": 0,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestScalarMutants)$",
+    "log": "TestScalarMutants-time3.log"
+  }
+]

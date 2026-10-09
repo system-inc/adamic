@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/lexer.ts
++++ b/stage1/cohere/yaml/lexer.ts
+@@ -18,7 +18,7 @@
+ }
+ 
+ function isFlowIndicatorCode(unit: number): boolean {
+-    return unit === 44 || unit === 91 || unit === 93 || unit === 123 || unit === 125;
++    return unit === 45 || unit === 91 || unit === 93 || unit === 123 || unit === 125;
+ }
+ function member(set: string, unit: string): boolean {
+     return unit !== '' && set.includes(unit);

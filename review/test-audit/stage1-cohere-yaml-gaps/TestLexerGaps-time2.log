@@ -1,0 +1,21 @@
+{"Time":"2026-10-09T13:20:18.506926471Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:20:18.51472291Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps"}
+{"Time":"2026-10-09T13:20:18.514811271Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps","Output":"=== RUN   TestLexerGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:18.51483765Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps","Output":"=== PAUSE TestLexerGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:18.514839773Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps"}
+{"Time":"2026-10-09T13:20:18.514841716Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps"}
+{"Time":"2026-10-09T13:20:18.514843248Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps","Output":"=== CONT  TestLexerGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:18.514850759Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps/multiplePush.ts"}
+{"Time":"2026-10-09T13:20:18.514856057Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps/multiplePush.ts","Output":"=== RUN   TestLexerGaps/multiplePush.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:18.514859031Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps/multiplePush.ts","Output":"=== PAUSE TestLexerGaps/multiplePush.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:18.514860664Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps/multiplePush.ts"}
+{"Time":"2026-10-09T13:20:18.514862777Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps/multiplePush.ts"}
+{"Time":"2026-10-09T13:20:18.514864109Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps/multiplePush.ts","Output":"=== CONT  TestLexerGaps/multiplePush.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:18.617886528Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps/multiplePush.ts","Output":"    gaps_test.go:46: /workspace/adamic/stage1/cohere/yaml/gaps/multiplePush.ts:2:1: stage 0 can't lower push with other than one value yet\n"}
+{"Time":"2026-10-09T13:20:18.617957293Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps/multiplePush.ts","Output":"--- PASS: TestLexerGaps/multiplePush.ts (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:18.617967638Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps/multiplePush.ts","Elapsed":0.1}
+{"Time":"2026-10-09T13:20:18.617988179Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps","Output":"--- PASS: TestLexerGaps (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:18.617991824Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestLexerGaps","Elapsed":0}
+{"Time":"2026-10-09T13:20:18.617993887Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:20:18.618934249Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/yaml\t0.112s\n"}
+{"Time":"2026-10-09T13:20:18.618987788Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":0.112}

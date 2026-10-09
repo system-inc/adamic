@@ -1,0 +1,47 @@
+{
+  "base": "3bf0a5d9e74d197a38f61982e43b2d791f17b563",
+  "rows": [
+    "TestLexerGaps",
+    "TestStructuralPositionRefusal",
+    "TestClosed family",
+    "TestLexerMatchesGo",
+    "TestPropsMatchGo",
+    "TestSharedSliceAppendMatchesNode"
+  ],
+  "statuses": {
+    "M1": {
+      "TestLexerGaps": "fail",
+      "TestStructuralPositionRefusal": "fail",
+      "TestClosed family": "pass",
+      "TestLexerMatchesGo": "fail",
+      "TestPropsMatchGo": "fail",
+      "TestSharedSliceAppendMatchesNode": "pass"
+    },
+    "M2": {
+      "TestLexerGaps": "pass",
+      "TestStructuralPositionRefusal": "pass",
+      "TestClosed family": "fail",
+      "TestLexerMatchesGo": "pass",
+      "TestPropsMatchGo": "pass",
+      "TestSharedSliceAppendMatchesNode": "pass"
+    },
+    "M3": {
+      "TestLexerGaps": "pass",
+      "TestStructuralPositionRefusal": "pass",
+      "TestClosed family": "pass",
+      "TestLexerMatchesGo": "pass",
+      "TestPropsMatchGo": "fail",
+      "TestSharedSliceAppendMatchesNode": "fail"
+    },
+    "M4": {
+      "TestLexerGaps": "pass",
+      "TestStructuralPositionRefusal": "pass",
+      "TestClosed family": "pass",
+      "TestLexerMatchesGo": "over-budget",
+      "TestPropsMatchGo": "over-budget",
+      "TestSharedSliceAppendMatchesNode": "pass"
+    }
+  },
+  "outside_slice": "unknown",
+  "timeouts_are_kills": false
+}

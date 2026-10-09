@@ -1,0 +1,325 @@
+[
+  {
+    "test": "TestLexerGaps",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/gaps_test.go:18",
+    "seconds": 0.114,
+    "oracle": "Node output is pinned to 2\\n; NotYet type and diagnostic substring are self-written compiler-limit pins.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1 gaps_test.go:44: gap changed or closed: <nil>; update GAPS.md and remove its workaround",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestStructuralPositionRefusal"
+    ],
+    "mutants_in_matrix": 4,
+    "completed_production_mutants": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.112,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLexerGaps",
+      "TestStructuralPositionRefusal",
+      "TestClosed family",
+      "TestLexerMatchesGo",
+      "TestPropsMatchGo",
+      "TestSharedSliceAppendMatchesNode"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M1.log 2>&1; gaps_test.go:44: gap changed or closed: <nil>; update GAPS.md and remove its workaround",
+    "nproc": 5,
+    "unknown_mutants": []
+  },
+  {
+    "test": "TestStructuralPositionRefusal",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/gaps_test.go:51",
+    "seconds": 0.112,
+    "oracle": "Node output is pinned to 1\\n; Refused type and Span[] diagnostic substring are self-written refusal pins. M1 is rejected for returning a different diagnostic class.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1 gaps_test.go:71: refusal changed or closed: /workspace/adamic/stage1/cohere/yaml/gaps/structuralPosition.ts:11:37: stage 0 can't lower push with other than one value yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestLexerGaps"
+    ],
+    "mutants_in_matrix": 4,
+    "completed_production_mutants": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.114,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLexerGaps",
+      "TestStructuralPositionRefusal",
+      "TestClosed family",
+      "TestLexerMatchesGo",
+      "TestPropsMatchGo",
+      "TestSharedSliceAppendMatchesNode"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M1.log 2>&1; gaps_test.go:71: refusal changed or closed: /workspace/adamic/stage1/cohere/yaml/gaps/structuralPosition.ts:11:37: stage 0 can't lower push with other than one value yet",
+    "nproc": 5,
+    "unknown_mutants": []
+  },
+  {
+    "test": "TestClosed family",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/gaps_test.go:77",
+    "seconds": 2.851,
+    "oracle": "Live Node stdout, checked against hand-written fixture pins, is compared byte-for-byte with sanitized native and emitted JavaScript stdout. M2 fails valueConjunction.ts.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [
+      "M2"
+    ],
+    "last_proven_fail": "M2 gaps_test.go:97: native ASan/UBSan/LSan: \"TRUE\\n\", Node \"true\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "completed_production_mutants": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLexerGaps",
+      "TestStructuralPositionRefusal",
+      "TestClosed family",
+      "TestLexerMatchesGo",
+      "TestPropsMatchGo",
+      "TestSharedSliceAppendMatchesNode"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M2.log 2>&1; gaps_test.go:97: native ASan/UBSan/LSan: \"TRUE\\n\", Node \"true\\n\"",
+    "nproc": 5,
+    "unknown_mutants": [],
+    "members": [
+      "TestClosedStringPresenceGap",
+      "TestClosedLexerGaps",
+      "TestClosedValuePresenceGap"
+    ]
+  },
+  {
+    "test": "TestLexerMatchesGo",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/lexer_test.go:180",
+    "seconds": 5.877,
+    "oracle": "Live Go cohere lexer, Node port source, emitted JavaScript and yaml@2.9.0 exact-byte agreement. The completed M1 kill is a lowering precondition failure; the port mutant M4 times out before comparison.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1 lexer_test.go:203: /workspace/adamic/stage1/cohere/yaml/lexer.ts:4:43: stage 0 can't lower push with other than one value yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPropsMatchGo"
+    ],
+    "mutants_in_matrix": 4,
+    "completed_production_mutants": 3,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": 9.754,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLexerGaps",
+      "TestStructuralPositionRefusal",
+      "TestClosed family",
+      "TestLexerMatchesGo",
+      "TestPropsMatchGo",
+      "TestSharedSliceAppendMatchesNode"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M1.log 2>&1; lexer_test.go:203: /workspace/adamic/stage1/cohere/yaml/lexer.ts:4:43: stage 0 can't lower push with other than one value yet",
+    "nproc": 5,
+    "unknown_mutants": [
+      "M4"
+    ]
+  },
+  {
+    "test": "TestLexerMutants",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/lexer_test.go:225",
+    "seconds": 11.774,
+    "oracle": "Witness compares built-in port-mutant native and Node bytes against live Go cohere lexer output; W1 makes the comparison always agree and all five subcases fail.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1 lexer_test.go:264: native missed mutant",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "completed_production_mutants": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLexerMutants"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/W1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestLexerMutants$ > W1.log 2>&1; lexer_test.go:264: native missed mutant",
+    "nproc": 5,
+    "unknown_mutants": [],
+    "witness_kills": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestPropsMatchGo",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/props_test.go:78",
+    "seconds": 9.754,
+    "oracle": "Live Go cohere private resolver through an export overlay, Node port source, emitted JavaScript and yaml@2.9.0 exact-byte agreement. M1 fails lowering; M3 triggers a sanitized native exit before byte comparison.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 props_test.go:101: /tmp/adamic-gate/TestPropsMatchGo1332184536/005/props: exit status 1; ERROR: AddressSanitizer: heap-buffer-overflow",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestStructuralPositionRefusal",
+      "TestSharedSliceAppendMatchesNode"
+    ],
+    "mutants_in_matrix": 4,
+    "completed_production_mutants": 3,
+    "probe_kills": [
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLexerGaps",
+      "TestStructuralPositionRefusal",
+      "TestClosed family",
+      "TestLexerMatchesGo",
+      "TestPropsMatchGo",
+      "TestSharedSliceAppendMatchesNode"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M3.log 2>&1; props_test.go:101: /tmp/adamic-gate/TestPropsMatchGo1332184536/005/props: exit status 1; ERROR: AddressSanitizer: heap-buffer-overflow",
+    "nproc": 5,
+    "unknown_mutants": [
+      "M4"
+    ]
+  },
+  {
+    "test": "TestPropsMutants",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/props_test.go:128",
+    "seconds": 10.448,
+    "oracle": "Witness compares built-in port-mutant native and Node bytes against live Go cohere resolver output; W2 makes the comparison always agree and all three subcases fail.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2 props_test.go:178: native missed mutant",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "completed_production_mutants": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPropsMutants"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/W2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestPropsMutants$ > W2.log 2>&1; props_test.go:178: native missed mutant",
+    "nproc": 5,
+    "unknown_mutants": [],
+    "witness_kills": [
+      "W2"
+    ]
+  },
+  {
+    "test": "TestSharedSliceAppendMatchesNode",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/scalar_runtime_gap_test.go:15",
+    "seconds": 0.471,
+    "oracle": "Live Node stdout pinned to a\\nx\\n, compared byte-for-byte against native and sanitized native at offsets 0 and 48. M3 changes native stdout to a\\n\\n.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 scalar_runtime_gap_test.go:54: /tmp/adamic-gate/TestSharedSliceAppendMatchesNode2423637761/001/shared: native \"a\\n\\n\" Node \"a\\nx\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestPropsMatchGo"
+    ],
+    "mutants_in_matrix": 4,
+    "completed_production_mutants": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 9.754,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestLexerGaps",
+      "TestStructuralPositionRefusal",
+      "TestClosed family",
+      "TestLexerMatchesGo",
+      "TestPropsMatchGo",
+      "TestSharedSliceAppendMatchesNode"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$ > M3.log 2>&1; scalar_runtime_gap_test.go:54: /tmp/adamic-gate/TestSharedSliceAppendMatchesNode2423637761/001/shared: native \"a\\n\\n\" Node \"a\\nx\\n\"",
+    "nproc": 5,
+    "unknown_mutants": []
+  },
+  {
+    "test": "TestScalarMutants",
+    "package": "stage1/cohere/yaml",
+    "file": "stage1/cohere/yaml/scalar_test.go:104",
+    "seconds": 13.43,
+    "oracle": "Witness compares built-in port-mutant native and Node bytes against live Go cohere scalar output; W3 makes the comparison always agree and all three subcases fail.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W3 scalar_test.go:154 (origin; log line 153): native missed mutant",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "completed_production_mutants": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestScalarMutants"
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/u152/library ADAMIC_BUILD_CACHE_DIR=/tmp/u152/cache/W3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestScalarMutants$ > W3.log 2>&1; scalar_test.go:154 (origin; log line 153): native missed mutant",
+    "nproc": 5,
+    "unknown_mutants": [],
+    "witness_kills": [
+      "W3"
+    ]
+  }
+]

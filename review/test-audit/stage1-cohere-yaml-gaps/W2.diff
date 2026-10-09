@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/props_test.go
++++ b/stage1/cohere/yaml/props_test.go
+@@ -174,7 +174,7 @@
+ 				name string
+ 				out  []byte
+ 			}{{"native", nativeOut}, {"Node", node}} {
+-				if bytes.Equal(side.out, expected) {
++				if true {
+ 					t.Fatalf("%s missed mutant", side.name)
+ 				}
+ 				t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.out, expected))

@@ -1,0 +1,29 @@
+{'id': 'M1-apply-check', 'command': 'git apply --check /tmp/u152/M1.diff', 'wall': 0.004, 'exit': 0}
+{'id': 'M1-vet', 'command': 'timeout 90 go vet ./internal/lower/', 'wall': 0.607, 'exit': 0}
+{'id': 'M1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$', 'wall': 16.334, 'exit': 1}
+{'id': 'M2-apply-check', 'command': 'git apply --check /tmp/u152/M2.diff', 'wall': 0.002, 'exit': 0}
+{'id': 'M2-clang', 'command': 'clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -I internal/native/runtime -c internal/native/runtime/string.c -o /tmp/u152/M2.o', 'wall': 0.175, 'exit': 0}
+{'id': 'M2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$', 'wall': 37.295, 'exit': 1}
+{'id': 'M3-apply-check', 'command': 'git apply --check /tmp/u152/M3.diff', 'wall': 0.002, 'exit': 0}
+{'id': 'M3-clang', 'command': 'clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O2 -I internal/native/runtime -c internal/native/runtime/string_append.c -o /tmp/u152/M3.o', 'wall': 0.034, 'exit': 0}
+{'id': 'M3', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$', 'wall': 32.341, 'exit': 1}
+{'id': 'M4-apply-check', 'command': 'git apply --check /tmp/u152/M4.diff', 'wall': 0.002, 'exit': 0}
+{'id': 'M4', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap|TestLexerMatchesGo|TestPropsMatchGo|TestSharedSliceAppendMatchesNode)$', 'wall': 92.252, 'exit': 1}
+{'id': 'W1-apply-check', 'command': 'git apply --check /tmp/u152/W1.diff', 'wall': 0.003, 'exit': 0}
+{'id': 'W1-vet', 'command': 'timeout 90 go vet ./stage1/cohere/yaml/', 'wall': 0.435, 'exit': 0}
+{'id': 'W1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestLexerMutants$', 'wall': 19.089, 'exit': 1}
+{'id': 'W2-apply-check', 'command': 'git apply --check /tmp/u152/W2.diff', 'wall': 0.002, 'exit': 0}
+{'id': 'W2-vet', 'command': 'timeout 90 go vet ./stage1/cohere/yaml/', 'wall': 0.236, 'exit': 0}
+{'id': 'W2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestPropsMutants$', 'wall': 18.286, 'exit': 1}
+{'id': 'W3-apply-check', 'command': 'git apply --check /tmp/u152/W3.diff', 'wall': 0.002, 'exit': 0}
+{'id': 'W3-vet', 'command': 'timeout 90 go vet ./stage1/cohere/yaml/', 'wall': 0.21, 'exit': 0}
+{'id': 'W3', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestScalarMutants$', 'wall': 20.883, 'exit': 1}
+{'id': 'P1-apply-check', 'command': 'git apply --check /tmp/u152/P1.diff', 'wall': 0.002, 'exit': 0}
+{'id': 'P1-vet', 'command': 'timeout 90 go vet ./internal/lower/', 'wall': 0.704, 'exit': 0}
+{'id': 'P1', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps|TestStructuralPositionRefusal|TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap)$', 'wall': 13.832, 'exit': 1}
+{'id': 'P1-shared', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestSharedSliceAppendMatchesNode$', 'wall': 2.194, 'exit': 1}
+{'id': 'P2-apply-check', 'command': 'git apply --check /tmp/u152/P2.diff', 'wall': 0.002, 'exit': 0}
+{'id': 'P2', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestLexerMatchesGo$', 'wall': 3.218, 'exit': 1}
+{'id': 'P3-apply-check', 'command': 'git apply --check /tmp/u152/P3.diff', 'wall': 0.002, 'exit': 0}
+{'id': 'P3', 'command': 'timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^TestPropsMatchGo$', 'wall': 4.183, 'exit': 1}
+AUDIT COMPLETE

@@ -1,0 +1,28 @@
+--- a/stage1/cohere/yaml/lex_main.ts
++++ b/stage1/cohere/yaml/lex_main.ts
+@@ -22,25 +22,3 @@
+     }
+     return parts.join('');
+ }
+-const path = programArguments()[0] ?? panic('usage: lex_main.ts <cases>');
+-const read = readTextFile(path);
+-if(read.kind === 'Error') panic(read.message);
+-let number = 0;
+-for(const line of read.text.split('\n')) {
+-    if(line === '') continue;
+-    const tab = line.indexOf('\t');
+-    const chunkSize = Number(line.slice(0, tab));
+-    const text = unescaped(line.slice(tab + 1));
+-    const lexer = new Lexer();
+-    console.log(`case ${number}`);
+-    number++;
+-    if(chunkSize === 0) {
+-        for(const token of lexer.lex(text)) console.log(tokenText(token));
+-    }
+-    else {
+-        for(let start = 0; start < text.length; start += chunkSize) {
+-            for(const token of lexer.lex(text.slice(start, start + chunkSize), true)) console.log(tokenText(token));
+-        }
+-        for(const token of lexer.lex('', false)) console.log(tokenText(token));
+-    }
+-}

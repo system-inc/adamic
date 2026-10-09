@@ -1,0 +1,30 @@
+[
+  {
+    "id": "M4-other-TestLexerGaps",
+    "test": "TestLexerGaps",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestLexerGaps)$",
+    "wall": 2.071,
+    "exit": 0
+  },
+  {
+    "id": "M4-other-TestStructuralPositionRefusal",
+    "test": "TestStructuralPositionRefusal",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestStructuralPositionRefusal)$",
+    "wall": 2.206,
+    "exit": 0
+  },
+  {
+    "id": "M4-other-TestClosed_family",
+    "test": "TestClosed family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestClosedStringPresenceGap|TestClosedLexerGaps|TestClosedValuePresenceGap)$",
+    "wall": 4.757,
+    "exit": 0
+  },
+  {
+    "id": "M4-other-TestSharedSliceAppendMatchesNode",
+    "test": "TestSharedSliceAppendMatchesNode",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run ^(TestSharedSliceAppendMatchesNode)$",
+    "wall": 2.408,
+    "exit": 0
+  }
+]

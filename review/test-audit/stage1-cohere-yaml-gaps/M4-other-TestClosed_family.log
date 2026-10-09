@@ -1,0 +1,44 @@
+{"Time":"2026-10-09T13:34:59.860569626Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:34:59.870007655Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedStringPresenceGap"}
+{"Time":"2026-10-09T13:34:59.870113942Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedStringPresenceGap","Output":"=== RUN   TestClosedStringPresenceGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:00.187435786Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedStringPresenceGap","Output":"--- PASS: TestClosedStringPresenceGap (0.32s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:00.187489155Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedStringPresenceGap","Elapsed":0.32}
+{"Time":"2026-10-09T13:35:00.187522294Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps"}
+{"Time":"2026-10-09T13:35:00.187525989Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps","Output":"=== RUN   TestClosedLexerGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:00.187529855Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/assignmentValue.ts"}
+{"Time":"2026-10-09T13:35:00.187532429Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/assignmentValue.ts","Output":"=== RUN   TestClosedLexerGaps/assignmentValue.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:00.497194078Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/assignmentValue.ts","Output":"--- PASS: TestClosedLexerGaps/assignmentValue.ts (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:00.497234508Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/assignmentValue.ts","Elapsed":0.31}
+{"Time":"2026-10-09T13:35:00.497243992Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/dynamicCase.ts"}
+{"Time":"2026-10-09T13:35:00.497251453Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/dynamicCase.ts","Output":"=== RUN   TestClosedLexerGaps/dynamicCase.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:00.782005764Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/dynamicCase.ts","Output":"--- PASS: TestClosedLexerGaps/dynamicCase.ts (0.28s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:00.782040926Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/dynamicCase.ts","Elapsed":0.28}
+{"Time":"2026-10-09T13:35:00.782050811Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/negativeCase.ts"}
+{"Time":"2026-10-09T13:35:00.782052713Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/negativeCase.ts","Output":"=== RUN   TestClosedLexerGaps/negativeCase.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:01.081084589Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/negativeCase.ts","Output":"--- PASS: TestClosedLexerGaps/negativeCase.ts (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:01.081123326Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/negativeCase.ts","Elapsed":0.3}
+{"Time":"2026-10-09T13:35:01.081132079Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/stringFallback.ts"}
+{"Time":"2026-10-09T13:35:01.081134553Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/stringFallback.ts","Output":"=== RUN   TestClosedLexerGaps/stringFallback.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:01.370184136Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/stringFallback.ts","Output":"--- PASS: TestClosedLexerGaps/stringFallback.ts (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:01.370221832Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/stringFallback.ts","Elapsed":0.29}
+{"Time":"2026-10-09T13:35:01.370230866Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/valueConjunction.ts"}
+{"Time":"2026-10-09T13:35:01.37023375Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/valueConjunction.ts","Output":"=== RUN   TestClosedLexerGaps/valueConjunction.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:01.705156679Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/valueConjunction.ts","Output":"--- PASS: TestClosedLexerGaps/valueConjunction.ts (0.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:01.705197269Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/valueConjunction.ts","Elapsed":0.33}
+{"Time":"2026-10-09T13:35:01.705233983Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/prefixIncrement.ts"}
+{"Time":"2026-10-09T13:35:01.705236727Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/prefixIncrement.ts","Output":"=== RUN   TestClosedLexerGaps/prefixIncrement.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:01.995378046Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/prefixIncrement.ts","Output":"--- PASS: TestClosedLexerGaps/prefixIncrement.ts (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:01.99542811Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/prefixIncrement.ts","Elapsed":0.29}
+{"Time":"2026-10-09T13:35:01.995438786Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/emptyAlternative.ts"}
+{"Time":"2026-10-09T13:35:01.995442231Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/emptyAlternative.ts","Output":"=== RUN   TestClosedLexerGaps/emptyAlternative.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:02.283114585Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/emptyAlternative.ts","Output":"--- PASS: TestClosedLexerGaps/emptyAlternative.ts (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:02.283195074Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps/emptyAlternative.ts","Elapsed":0.29}
+{"Time":"2026-10-09T13:35:02.283211789Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps","Output":"--- PASS: TestClosedLexerGaps (2.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:02.283249615Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedLexerGaps","Elapsed":2.1}
+{"Time":"2026-10-09T13:35:02.283288342Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedValuePresenceGap"}
+{"Time":"2026-10-09T13:35:02.283290114Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedValuePresenceGap","Output":"=== RUN   TestClosedValuePresenceGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:02.653566583Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedValuePresenceGap","Output":"--- PASS: TestClosedValuePresenceGap (0.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:02.65360481Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestClosedValuePresenceGap","Elapsed":0.37}
+{"Time":"2026-10-09T13:35:02.6536114Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:35:02.655057005Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/yaml\t2.794s\n"}
+{"Time":"2026-10-09T13:35:02.655124745Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":2.795}

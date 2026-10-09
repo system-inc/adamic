@@ -1,0 +1,24 @@
+{"Time":"2026-10-09T13:23:03.45516997Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:23:03.466713473Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode"}
+{"Time":"2026-10-09T13:23:03.466795735Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode","Output":"=== RUN   TestSharedSliceAppendMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.843208282Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/0"}
+{"Time":"2026-10-09T13:23:03.843248792Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/0","Output":"=== RUN   TestSharedSliceAppendMatchesNode/0\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.843256062Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/0","Output":"=== PAUSE TestSharedSliceAppendMatchesNode/0\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.843257845Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/0"}
+{"Time":"2026-10-09T13:23:03.843260269Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/48"}
+{"Time":"2026-10-09T13:23:03.843261721Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/48","Output":"=== RUN   TestSharedSliceAppendMatchesNode/48\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.843263624Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/48","Output":"=== PAUSE TestSharedSliceAppendMatchesNode/48\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.843264976Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/48"}
+{"Time":"2026-10-09T13:23:03.843266598Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/0"}
+{"Time":"2026-10-09T13:23:03.84326806Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/0","Output":"=== CONT  TestSharedSliceAppendMatchesNode/0\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.84327442Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/48"}
+{"Time":"2026-10-09T13:23:03.843275752Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/48","Output":"=== CONT  TestSharedSliceAppendMatchesNode/48\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.927553273Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/0","Output":"--- PASS: TestSharedSliceAppendMatchesNode/0 (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.927977881Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/0","Elapsed":0.08}
+{"Time":"2026-10-09T13:23:03.928005292Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/48","Output":"--- PASS: TestSharedSliceAppendMatchesNode/48 (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.928425664Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode/48","Elapsed":0.08}
+{"Time":"2026-10-09T13:23:03.928437441Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode","Output":"--- PASS: TestSharedSliceAppendMatchesNode (0.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.928441407Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSharedSliceAppendMatchesNode","Elapsed":0.38}
+{"Time":"2026-10-09T13:23:03.928448378Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:23:03.93052746Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/yaml\t0.475s\n"}
+{"Time":"2026-10-09T13:23:03.930551115Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":0.475}
