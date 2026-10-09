@@ -1,8 +1,9 @@
 # cloud/go-pin.sh names the one Go every gate machine builds with, sourced by setup.sh and gocacheprog.sh.
 # Go hashes its own version into every action ID, so two toolchains share no cache entry, and a verdict's toolchain
-# would depend on the day a machine was set up (Oct 9: setup installed go.dev's newest, go1.27.2, while the boxes and
-# older instances ran go1.27.1). Move the pin on purpose, every machine at once.
-goPin=go1.27.1
+# would depend on the day a machine was set up (Oct 9: setup installed go.dev's newest, go1.27.2, on every Codex
+# instance, while the gate boxes ran go1.27.1). The pin is the pool's go1.27.2, so the boxes move rather than the pool's
+# 190 instances and their warm caches. Move the pin on purpose, every machine at once.
+goPin=go1.27.2
 
 # pinnedGo <go>: true when that binary is the pinned toolchain. GOTOOLCHAIN=local asks the binary itself, never a
 # toolchain a go.mod would switch to.
