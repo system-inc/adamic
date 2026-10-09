@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -63,7 +64,7 @@ func portMatchesPartition(t *testing.T) [][]textCase {
 		t.Fatalf("union %d of %d", count, len(cases))
 	}
 	// Check the actual top-level enumeration, including wrapper ordinals.
-	file, err := parser.ParseFile(token.NewFileSet(), "port_matches_split_test.go", nil, 0)
+	file, err := parser.ParseFile(token.NewFileSet(), "port_matches_prepared_split_test.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -90,19 +91,37 @@ func portMatchesPartition(t *testing.T) [][]textCase {
 }
 
 var portMatchesShared struct {
+	once                                      sync.Once
 	ready                                     bool
 	shards                                    [][]textCase
 	oracle, entry, script, release, sanitized string
 }
 
-// Not parallel: prepares shared immutable products before any parallel leaf resumes.
 func TestPortMatchesGoCohereSplit_Setup(t *testing.T) {
-	deadline := portMatchesDeadline(t.Name())
-	defer deadline.Stop()
+	t.Parallel()
+	portMatchesPrepare(t)
+}
 
+// Shared builds have no test deadline; the process timeout covers preparation.
+func portMatchesPrepare(t *testing.T) {
+	t.Helper()
+	portMatchesShared.once.Do(func() { portMatchesPrepareProducts(t) })
+	if !portMatchesShared.ready {
+		t.Fatal("shared preparation failed")
+	}
+}
+
+func portMatchesPrepareProducts(t *testing.T) {
 	started := time.Now()
 	defer func() { t.Logf("TestPortMatchesGoCohere (setup): %.3fs", time.Since(started).Seconds()) }()
 	portMatchesShared.shards = portMatchesPartition(t)
+	oracleDir := portMatchesProduct(t, "oracle")
+	loweredDir := portMatchesProduct(t, "lowered")
+	portMatchesShared.oracle = filepath.Join(oracleDir, "go-cohere")
+	portMatchesShared.entry = filepath.Join(loweredDir, "main.ts")
+	portMatchesShared.script = filepath.Join(loweredDir, "program.mjs")
+	portMatchesShared.release = filepath.Join(portMatchesProduct(t, "release"), "port")
+	portMatchesShared.sanitized = filepath.Join(portMatchesProduct(t, "sanitized"), "port")
 	goTools, err := portMatchesJsonGoToolchain()
 	if err != nil {
 		t.Fatal(err)
@@ -111,26 +130,8 @@ func TestPortMatchesGoCohereSplit_Setup(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	oracleDir := buildcache.Product(t, buildcache.Inputs{
-		Name:      "json split Go oracle",
-		Files:     []string{"go.mod", "go.work", "cohere", "stage1/cohere/json/testdata/cohere_driver.go", "stage1/cohere/json/port_matches_split_test.go"},
-		Flags:     append([]string{"go build -overlay=<product>/overlay.json -o=<product>/go-cohere ./command/formatter_comparison"}, portMatchesJsonBuildEnvironment("PATH", "GOFLAGS", "GOTOOLCHAIN")...),
-		Toolchain: goTools,
-	}, portMatchesBuildJSONGoOracle)
-
-	portMatchesShared.oracle = filepath.Join(oracleDir, "go-cohere")
-	loweredDir := buildcache.Product(t, portMatchesJsonLoweredPortInputs(goTools), portMatchesBuildJSONLoweredPort)
-	cBytes, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	c := string(cBytes)
-	portMatchesShared.entry = filepath.Join(loweredDir, "main.ts")
-	portMatchesShared.script = filepath.Join(loweredDir, "program.mjs")
-	portMatchesShared.release = filepath.Join(buildcache.Product(t, portMatchesJsonNativePortInputs(c, false, clangTools), portMatchesBuildJSONReleasePort(c)), "port")
-	portMatchesShared.sanitized = filepath.Join(buildcache.Product(t, portMatchesJsonNativePortInputs(c, true, clangTools), portMatchesBuildJSONSanitizedPort(c)), "port")
 	// The four-digit port/upstream wrappers use the same immutable products.
-	// Complete their once guards here; no leaf is allowed to become a builder.
+	// Publish the same products for either independently selected shard family.
 	jsonTopCorpus(t)
 	jsonTopState.goOnce.Do(func() { jsonTopState.goTools = goTools })
 	jsonTopState.clangOnce.Do(func() { jsonTopState.clangTools = clangTools })
@@ -152,9 +153,7 @@ func TestPortMatchesGoCohereSplit_Setup(t *testing.T) {
 
 func portMatchesRun(t *testing.T, ordinal int) {
 	t.Helper()
-	if !portMatchesShared.ready {
-		t.Fatal("shared setup was not selected")
-	}
+	portMatchesPrepare(t)
 	deadline := portMatchesDeadline(t.Name())
 	defer deadline.Stop()
 	items := portMatchesShared.shards[ordinal]
@@ -364,8 +363,7 @@ func portMatchesBuildJSONGoOracle(dir string) error {
 	if err := os.WriteFile(overlay, encoded, 0644); err != nil {
 		return err
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
+	ctx := context.Background()
 	command := exec.CommandContext(ctx, "go", "build", "-overlay="+overlay, "-o", filepath.Join(dir, "go-cohere"), "./command/formatter_comparison")
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -384,7 +382,7 @@ func portMatchesBuildJSONGoOracle(dir string) error {
 }
 
 func portMatchesJsonLoweredPortInputs(toolchain []string) portMatchesJsonBuildInputs {
-	files := []string{"go.mod", "go.work", "internal", "cohere/TypeScript", "cohere/TypeScript-shim", "cohere/rule_runner", "cohere/static_single_assignment", "cohere/mutation_aliasing", "stage1/cohere/json/port_matches_split_test.go"}
+	files := []string{"go.mod", "go.work", "internal", "cohere/TypeScript", "cohere/TypeScript-shim", "cohere/rule_runner", "cohere/static_single_assignment", "cohere/mutation_aliasing", "stage1/cohere/json/port_matches_prepared_split_test.go"}
 	for _, name := range portFiles {
 		files = append(files, "stage1/cohere/json/"+name)
 	}
@@ -429,7 +427,7 @@ func portMatchesJsonNativePortInputs(source string, sanitize bool, toolchain []s
 	// emitted feature defines; internal/ also covers runtime sources/link policy.
 	flags = append(flags, fmt.Sprintf("generated-C-sha256=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("options=%+v", options), "-I=<runtime product>", "-o=<dir>/port", "-lm")
 	flags = append(flags, portMatchesJsonBuildEnvironment("PATH", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED", "XDG_CACHE_HOME", "HOME", "TMPDIR", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET")...)
-	return portMatchesJsonBuildInputs{Name: name, Files: []string{"internal", "stage1/cohere/json/port_matches_split_test.go"}, Flags: flags, Toolchain: toolchain}
+	return portMatchesJsonBuildInputs{Name: name, Files: []string{"internal", "stage1/cohere/json/port_matches_prepared_split_test.go"}, Flags: flags, Toolchain: toolchain}
 }
 
 // Each factory returns the exact func(dir string) error accepted by buildcache.
@@ -579,3 +577,55 @@ func portMatchesDeadline(name string) *time.Timer {
 		os.Exit(124)
 	})
 }
+
+// The build phase and isolated shards use these exact recipes and keys.
+var portMatchesProducts sync.Map
+
+func portMatchesProduct(t *testing.T, name string) string {
+	t.Helper()
+	value, _ := portMatchesProducts.LoadOrStore(name, &jsonTopBuild{})
+	product := value.(*jsonTopBuild)
+	product.once.Do(func() {
+		goTools, err := portMatchesJsonGoToolchain()
+		if err != nil {
+			t.Fatal(err)
+		}
+		switch name {
+		case "oracle":
+			product.dir = buildcache.Product(t, buildcache.Inputs{
+				Name:      "json split Go oracle",
+				Files:     []string{"go.mod", "go.work", "cohere", "stage1/cohere/json/testdata/cohere_driver.go", "stage1/cohere/json/port_matches_prepared_split_test.go"},
+				Flags:     append([]string{"go build -overlay=<product>/overlay.json -o=<product>/go-cohere ./command/formatter_comparison"}, portMatchesJsonBuildEnvironment("PATH", "GOFLAGS", "GOTOOLCHAIN")...),
+				Toolchain: goTools,
+			}, portMatchesBuildJSONGoOracle)
+		case "lowered":
+			product.dir = buildcache.Product(t, portMatchesJsonLoweredPortInputs(goTools), portMatchesBuildJSONLoweredPort)
+		case "release", "sanitized":
+			lowered := portMatchesProduct(t, "lowered")
+			source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			clangTools, err := portMatchesJsonClangToolchain()
+			if err != nil {
+				t.Fatal(err)
+			}
+			build := portMatchesBuildJSONReleasePort(string(source))
+			if name == "sanitized" {
+				build = portMatchesBuildJSONSanitizedPort(string(source))
+			}
+			product.dir = buildcache.Product(t, portMatchesJsonNativePortInputs(string(source), name == "sanitized", clangTools), build)
+		default:
+			t.Fatalf("unknown product %q", name)
+		}
+	})
+	if product.dir == "" {
+		t.Fatalf("product %s preparation failed", name)
+	}
+	return product.dir
+}
+
+func TestProduct_JSONGoOracle(t *testing.T)        { t.Parallel(); portMatchesProduct(t, "oracle") }
+func TestProduct_JSONLoweredPort(t *testing.T)     { t.Parallel(); portMatchesProduct(t, "lowered") }
+func TestProduct_JSONNativeRelease(t *testing.T)   { t.Parallel(); portMatchesProduct(t, "release") }
+func TestProduct_JSONNativeSanitized(t *testing.T) { t.Parallel(); portMatchesProduct(t, "sanitized") }
