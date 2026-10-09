@@ -6,6 +6,9 @@ import "testing"
 // Repository corpus growth does not change these units.
 func TestMutantsUnion(t *testing.T) {
 	t.Parallel()
+	if len(mutations) != testMutantsShards {
+		t.Fatalf("%d mutants, want %d declared product pairs and leaves", len(mutations), testMutantsShards)
+	}
 	if len(mutantShardFunctions) != testMutantsShards {
 		t.Fatalf("%d top-level shards, want %d", len(mutantShardFunctions), testMutantsShards)
 	}
