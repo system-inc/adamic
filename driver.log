@@ -1,0 +1,12 @@
+idle preemption: 0 marked, 0 survivors in their sessions, 4 ms
+fatal: Unable to create '/home/ahra/full-gate/tree/.git/index.lock': File exists.
+
+Another git process seems to be running in this repository, e.g.
+an editor opened by 'git commit'. Please make sure all processes
+are terminated then try again. If it still fails, a git process
+may have crashed in this repository earlier:
+remove the file manually to continue.
+FIRST FAILURE (setup, at 0.0 s):
+the tree is at 0cf557e27755dede15dd3a6130faceacba587a25, not the candidate f0e9a629ac3fd30abab4dcbc313fb9a06592331d
+(box load 0.3 on 64 cores at first failure)
+red: f0e9a629ac3fd30abab4dcbc313fb9a06592331d full gate, first failure at setup after 0.0 s, cancelled after first failure (; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 0.3 on 64 cores at start, load 0.3 on 64 cores at first failure, load 0.3 on 64 cores at end), 0 fail, 0 pass
