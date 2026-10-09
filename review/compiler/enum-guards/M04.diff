@@ -1,0 +1,13 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -172,10 +172,6 @@
+ 	fields := []ir.Field{}
+ 	positions := map[string]int{}
+ 	set := func(name string, value ir.Expression) {
+-		if position, exists := positions[name]; exists {
+-			fields[position].Value = value
+-			return
+-		}
+ 		positions[name] = len(fields)
+ 		fields = append(fields, ir.Field{Name: name, Value: value})
+ 	}

@@ -350,3 +350,24 @@ func TestCompilerCacheAcrossScratchDirectories(t *testing.T) {
 		t.Fatalf("worker C cache missed when only scratch compiler path changed: %+v", result)
 	}
 }
+
+// Not parallel: changes the process-wide ADAMIC_GATE_UNCACHED environment.
+func TestCacheBypassPreservesIdentity(t *testing.T) {
+	t.Setenv("ADAMIC_GATE_UNCACHED", "0")
+	before, versionBefore, contextBefore, err := prepareCache()
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ADAMIC_GATE_UNCACHED", "1")
+	after, versionAfter, contextAfter, err := prepareCache()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if contextBefore != contextAfter || before.nodeContext != after.nodeContext {
+		t.Fatalf("cache bypass changed identity: context_equal=%t node_equal=%t",
+			contextBefore == contextAfter, before.nodeContext == after.nodeContext)
+	}
+	if before.directory != after.directory || versionBefore != versionAfter {
+		t.Fatal("cache bypass changed directory or Node version")
+	}
+}

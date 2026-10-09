@@ -1,6 +1,7 @@
 package main
 
 import (
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -76,4 +77,26 @@ int main(int argc, char **argv) {
 		// decided the verdict, which holds either way.
 		t.Logf("1 CPU second completed in %s with a %s CPU budget (wall past the budget: %t)", elapsed, budget, elapsed > budget)
 	})
+}
+
+func TestRunFilterAttemptLimit(t *testing.T) {
+	t.Parallel()
+	e, err := prepareMode("../..", "testdata/mini", t.TempDir(), nil, true)
+	if err != nil {
+		t.Fatal(err)
+	}
+	e.cache = &resultCache{directory: t.TempDir()}
+	e.log = io.Discard
+	for _, jobs := range []int{1, 4} {
+		e.jobs = jobs
+		report, err := e.runFilter("", 1, false)
+		if err != nil {
+			t.Fatal(err)
+		}
+		attempted := report.Pass + report.Fail + report.Refused + report.Crashed
+		if report.Total != 5 || report.Skipped != 1 || report.Unrun != 3 || attempted != 1 {
+			t.Fatalf("jobs=%d: total=%d skipped=%d unrun=%d attempted=%d; want 5, 1, 3, 1",
+				jobs, report.Total, report.Skipped, report.Unrun, attempted)
+		}
+	}
 }

@@ -116,6 +116,7 @@ func enumerateNumbers(t *testing.T) numbersCorpus {
 	for _, unit := range strings.Split("em|rem|ex|rex|cap|rcap|ch|rch|ic|ric|lh|rlh|vw|svw|lvw|dvw|vh|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax|cm|mm|Q|in|pt|pc|px|deg|grad|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx|x|cqw|cqh|cqi|cqb|cqmin|cqmax|fr", "|") {
 		texts = append(texts, ".1000E+002"+strings.ToUpper(unit))
 	}
+	texts = append(texts, cssAuditNumberInputs...)
 	texts = append(texts, "'1.000px'", "1.000unknown", "a1.000px", "😀1.000px", strings.Repeat(".000100E-002KHZ ", 10000))
 	raw := append(append([]string{}, texts[:files]...), "", "a", "a\n", "a\r\n\n", "'😀'", "\"\\'\"")
 	return numbersCorpus{texts: texts, paths: paths, raw: raw}

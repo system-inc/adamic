@@ -47,9 +47,7 @@ func TestParameterPropertyCheckerContracts(t *testing.T) {
 			t.Fatalf("got %v, want checker rejection", err)
 		}
 	}
-	if _, err := lowerSource(t, "class C {constructor(public value:number){}} const c=new C(1); c.value=2; console.log(`${c.value}`);"); err != nil {
-		t.Fatal(err)
-	}
+	lowersAndAgreesWithNode(t, "class C {constructor(public value:number){}} const c=new C(1); console.log(`${c.value}`); c.value=2; console.log(`${c.value}`);")
 }
 
 func TestParameterPropertyCallbackReceiver(t *testing.T) {

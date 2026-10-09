@@ -1,0 +1,11 @@
+import { mkdtempSync, rmSync } from 'node:fs';
+const prefix = '/tmp/oct9-views-native-force-';
+const d = mkdtempSync(prefix, { encoding: 'utf8' });
+console.log(`${d.startsWith(prefix)}`);
+try {
+	rmSync(d, { recursive: true, force: undefined });
+	console.log('removed');
+} catch {
+	console.log('threw');
+	rmSync(d, { recursive: true });
+}

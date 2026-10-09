@@ -1,0 +1,6 @@
+type Holder = { cursor: Iterator<string> | undefined };
+const map = new Map<string, Holder>();
+const holder: Holder = { cursor: undefined };
+map.set('a'.repeat(2), holder);
+holder.cursor = map.keys();
+console.log(`${map.size}`);

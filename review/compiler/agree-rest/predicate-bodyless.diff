@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -44,7 +44,7 @@
+ 	annotation := node.AsTypePredicateNode()
+ 	function := node.Parent
+ 	if !ast.IsFunctionLike(function) || function.Body() == nil || annotation.ParameterName.Kind != ast.KindIdentifier {
+-		return (&predicateFlowProof{l: l}).refused(node, "there is no body proving this parameter")
++		return nil
+ 	}
+ 	var parameter *ast.Node
+ 	for _, candidate := range function.Parameters() {

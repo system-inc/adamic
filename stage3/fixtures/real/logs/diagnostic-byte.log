@@ -1,0 +1,20 @@
+=== RUN   TestFixtures
+=== PAUSE TestFixtures
+=== CONT  TestFixtures
+=== RUN   TestFixtures/real
+=== PAUSE TestFixtures/real
+=== CONT  TestFixtures/real
+=== RUN   TestFixtures/real/type-predicate/main.a
+=== PAUSE TestFixtures/real/type-predicate/main.a
+=== CONT  TestFixtures/real/type-predicate/main.a
+=== RUN   TestFixtures/real/type-predicate/main.a/node
+=== RUN   TestFixtures/real/type-predicate/main.a/stage0
+    fixtures_test.go:348: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/real/type-predicate/main.a:8:5: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)}; recorded {Outcome:Refused What:stage3/fixtures/real/type-predicate/main.a:8:5: Adamic 0.1 refuses a type Xredicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)}
+--- FAIL: TestFixtures (2.28s)
+    --- FAIL: TestFixtures/real (0.00s)
+        --- FAIL: TestFixtures/real/type-predicate/main.a (0.12s)
+            --- PASS: TestFixtures/real/type-predicate/main.a/node (0.00s)
+            --- FAIL: TestFixtures/real/type-predicate/main.a/stage0 (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	2.410s
+FAIL

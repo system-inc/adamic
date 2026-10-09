@@ -1,0 +1,14 @@
+function isText(x: string | number): x is string;
+function isText(x: string | number): boolean {
+  x = "rebound";
+  return typeof x === "string";
+}
+function f(v: string | number): void {
+  if (isText(v)) {
+    console.log("text " + v);
+  } else {
+    console.log("number " + String(v + 1));
+  }
+}
+f("a");
+f(41);

@@ -1,0 +1,12 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./cmd/adamic-meter/",
+    "-count=1",
+    "-timeout",
+    "90s"
+  ],
+  "exit": 0,
+  "wall_seconds": 3.978
+}

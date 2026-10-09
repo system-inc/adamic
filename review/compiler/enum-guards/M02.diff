@@ -1,0 +1,11 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -199,7 +199,7 @@
+ 			if number.Value == 0 {
+ 				key = "0"
+ 			}
+-			set(key, ir.StringConstant{Index: l.constant(member.Name().Text())})
++			set(key, ir.StringConstant{Index: l.constant("")})
+ 		}
+ 	}
+ 	return fields, nil

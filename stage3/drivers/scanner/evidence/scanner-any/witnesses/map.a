@@ -1,0 +1,3 @@
+enum Keyword { Return = 1 }
+const values = new Map<string, Keyword>();
+console.log('ok');

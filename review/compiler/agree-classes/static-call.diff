@@ -1,0 +1,11 @@
+--- a/internal/lower/class_static.go
++++ b/internal/lower/class_static.go
+@@ -328,7 +328,7 @@
+ 			return nil, err
+ 		}
+ 		l.result.Functions[index] = function
+-		statements = append(statements, ir.Evaluate{Value: ir.Call{Function: index, Arguments: []ir.Expression{object}}})
++		statements = append(statements, ir.Evaluate{Value: object})
+ 	}
+ 	statements = append(statements, ir.Declare{Local: l.locals[l.symbol(declaration.Name())], Value: object})
+ 	return statements, nil

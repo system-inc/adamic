@@ -1,0 +1,9 @@
+const map = new Map<number, number>();
+const keys = map.keys();
+const done = keys.next();
+console.log(`${done.done}`);
+for (let index = 0; index < 4000000; index += 1) {
+	map.set(index, index);
+	map.delete(index);
+}
+console.log(`${map.size} ${keys.next().done}`);

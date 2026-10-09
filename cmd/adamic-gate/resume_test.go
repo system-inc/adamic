@@ -136,16 +136,38 @@ func TestPackageCheckpointRequiresIntactCompleteEvidence(t *testing.T) {
 	}
 }
 
-func TestTypeAwareChildrenAndParentCost(t *testing.T) {
+func TestLiteralChildrenAndParentCost(t *testing.T) {
 	t.Parallel()
-	names, err := literalChildren("../../stage1/cohere/typeaware/volume_test.go", "TestVolumeAgreementAndMutants", "changes")
+	// A table of the test's own, not another package's: typeaware split TestVolumeAgreementAndMutants into
+	// independent units (113707a8, Oct 9), and reading its file made this test red on main for every gate after.
+	file := filepath.Join(t.TempDir(), "volume_test.go")
+	source := `package p
+
+func TestVolume(t *testing.T) {
+	changes := []struct {
+		name string
+		edit func(string) string
+	}{
+		{"assignable-types", nil},
+		{"base shapes", nil},
+	}
+	for _, change := range changes {
+		_ = change
+	}
+}
+`
+	if err := os.WriteFile(file, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	names, err := literalChildren(file, "TestVolume", "changes")
 	if err != nil {
 		t.Fatal(err)
 	}
-	// The rows come from typeaware's own table, which its owner splits and reorders (Oct 9: 15 rows became 14), so
-	// this pins the enumeration, not the count: the table's rows in order, its first one first, base-shapes among them.
-	if len(names) < 2 || names[0] != "assignable-types" || !slices.Contains(names, "base-shapes") {
-		t.Fatalf("wrong audited volume rows: %v", names)
+	if !slices.Equal(names, []string{"assignable-types", "base_shapes"}) {
+		t.Fatalf("wrong rows from a named table: %v", names)
+	}
+	if _, err := literalChildren(file, "TestAbsent", "changes"); err == nil {
+		t.Fatal("an absent parent enumerated")
 	}
 	p := plan{Count: 2, Units: []unit{{Package: "p", Test: "TestParent/one", Shard: 0, Seconds: 3}, {Package: "p", Test: "TestParent/two", Shard: 1, Seconds: 5}}}
 	w := map[string]float64{"p::TestParent": 10, "p::TestParent/one": 3, "p::TestParent/two": 5}

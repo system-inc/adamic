@@ -1,0 +1,13 @@
+function check(x: string | undefined, strict: boolean): asserts x is string {
+  if (typeof x !== "string") {
+    if (strict) {
+      throw new Error("not a string");
+    }
+  }
+}
+function f(v: string | undefined): void {
+  check(v, false);
+  console.log("value " + v);
+}
+f("abc");
+f(undefined);

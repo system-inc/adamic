@@ -21,7 +21,7 @@ stage3/drivers/scanner/run.sh /tmp/scanner-proof > /tmp/scanner-proof.log 2>&1
 ```
 
 The output directory must be new. The runner builds a scratch copy of the apply
-pipeline with adaptations 00, 10, 50 and 51. Adaptation 20 is deliberately excluded
+pipeline with adaptations 00, 10, 42, 50 and 51. Adaptation 20 is deliberately excluded
 per the October 7 instruction. apply.sh still constructs the tree and measures
 the patch set. The runner regenerates diagnostics after adaptation 10 changes
 the generator's type import. `--tree <already-applied-tree>` reuses an existing
@@ -62,7 +62,7 @@ bash stage3/drivers/scanner/run.sh OUTPUT --tree SLICE --inputs FIXED_CORPUS \
   --compiler INTEGRATED_COMPILER > scanner.log 2>&1
 ```
 
-The helper selects 52-57, 59, 81, 82 and 85. Current readiness bc9f5d7 closes
+The helper applies permanent 42, then selects 52-57, 59, 81, 82 and 85. Current readiness bc9f5d7 closes
 58's literal-initializer workaround; numeric enums ec67b02 close 80, 83, 84 and
 the proposed 86. Those legacy plans and results remain historical evidence.
 56 remains selected: eef541e admits proven assertion syntax but the original
@@ -118,7 +118,7 @@ binaries on the same files.json corpus before using their timings as a proof.
 
 The coverage dump scans every corpus file twice, first with `skipTrivia: true`,
 then with `skipTrivia: false`. Every token includes `getTokenValue()` serialized
-with JSON.stringify, alongside kind, full start, start, end, flags and raw text.
+with the driver's JSON string escaper, alongside kind, full start, start, end, flags and raw text.
 The value is exactly the scanner's current value, including stale values on
 punctuation. Inline error rows include code, category, the callback's scanner
 position (the error start), length, message text and substitution argument.
@@ -139,3 +139,69 @@ All three source mutants exit zero on Node and produce unequal dumps. The
 error mutant removes exactly one row. Native execution remains blocked by the
 previously recorded typed captureStackTrace marker refusal; this expanded
 coverage result is a Node reference proof, not a native proof.
+
+
+## Driver JSON escaping
+
+The driver quotes strings directly instead of calling JSON.stringify on a
+string/number/null union. escapeJsonString emits JSON's quote/backslash and
+short control escapes, lowercase four-digit escapes for remaining controls
+and lone surrogates, and preserves valid surrogate pairs. Optional strings
+emit null when absent; diagnostic payloads narrow to strings or numbers before
+formatting, with non-finite numbers represented as null.
+
+The fixture harness extracts the exact three function bodies from main.a.
+It runs every code unit 0 through 0x7F separately and together, valid surrogate
+pairs, lone/reversed surrogates and U+2028/U+2029, plus diagnostic payloads.
+Node's JSON.stringify independently supplies expected bytes. Dropping the
+newline escape must still build/run and fail the byte comparison, on Node
+and on the native control compiler.
+
+```sh
+source /workspace/adamic-tools/env.sh
+SCANNER_TYPESCRIPT=/workspace/scratch/native3-cache/api/node_modules/typescript/lib/typescript.js \
+  node stage3/drivers/scanner/escape-proof.cjs NEW_RESULTS \
+  /workspace/scratch/scanner-any-next-adamic /workspace/scanner-native3-next > escape-proof.log 2>&1
+```
+
+Omit the two compiler arguments for a Node-only proof. See
+[evidence/json-escape/REPORT.md](evidence/json-escape/REPORT.md) for the measured
+fixture, mutant, complete token-stream comparison and discovery checkpoint.
+
+## One-command scratch measurement
+
+```sh
+stage3/drivers/scanner/scratch-run.sh NEW_OUTPUT REF... > scratch-run.log 2>&1
+```
+
+The command fetches all origin heads, starts a uniquely named scratch branch
+from fetched origin/main, and merges each ref in argument order. It never
+pushes. A conflicting merge records exact paths, aborts that merge and stops
+before setup or compilation. Refs may be branch names or commit IDs.
+NEW_OUTPUT must not exist. summary.json records resolved SHAs, merge outcomes,
+setup timing lines, nproc, compiler identity, both scanner modes and ordered
+witnessed stops. Separate phase stdout/stderr logs stay in the output directory.
+Exit 0 means both native comparisons and their byte mutants passed; exit 2
+means a merge conflicted; exit 1 means compilation or another prerequisite
+failed. scratch-summary.py independently validates the final summary.
+
+After successful integration the command runs cloud/setup.sh with the required
+GOPROXY and sources its reported environment. Dependency checkouts have isolated
+Git metadata pinned to the scratch revision. The scanner's documented adaptation
+profile and source slice run in private copies. A fixed corpus retains the
+509,014-token skip-trivia pass and 860,418-token retain-trivia pass. A full-tree
+Node reference must compare equal to each slice Node run before native builds.
+Each successful native run immediately compares bytes and plants its one-byte
+output mutant; measure.py then records runtime samples.
+
+If compilation is blocked, discovery walks at most fifteen stops in a separate,
+uncommitted source copy. Every listed diagnostic attempts a fresh Node/native
+witness from the existing measured catalogue. Continuation requires Node success
+and a matching compiler refusal. Removed bodies and throwing placeholders are
+recorded; dependent locations are labeled. An uncatalogued diagnostic or an
+unsupported placeholder stops discovery explicitly. Building after placeholders
+never counts as a native scanner pass. No compiler or adaptation sources change.
+
+The scratch worktree, branch and logs remain for inspection. STAGE3_CACHE may
+select an existing pinned stage3 cache. The replay results and false-pass summary
+mutant are in [evidence/scratch-run/REPORT.md](evidence/scratch-run/REPORT.md).

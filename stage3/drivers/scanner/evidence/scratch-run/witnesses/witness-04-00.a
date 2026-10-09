@@ -1,0 +1,4 @@
+// a-check: checked
+let x = 0;
+const value = (x++, x);
+console.log(`${value}`);

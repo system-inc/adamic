@@ -1,0 +1,9 @@
+// Annex B: inside a class without u or v, \1 to \7 start a legacy octal escape, not an identity escape.
+// TypeScript refuses these in a literal, so they reach the compiler only through a constant RegExp string.
+const one = new RegExp('[\\1]');
+console.log(`${one.test('1')} ${one.test('\x01')}`);
+const ten = new RegExp('[\\12]');
+console.log(`${ten.test('\n')} ${ten.test('2')}`);
+const low = new RegExp('[\\0-\\37]');
+console.log(`${low.test('5')} ${low.test('\x1e')}`);
+console.log('a1\x01'.replace(new RegExp('[\\1]', 'g'), '#'));

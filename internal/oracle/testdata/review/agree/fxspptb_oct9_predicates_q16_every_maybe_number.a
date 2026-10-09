@@ -1,0 +1,6 @@
+const items: (number | undefined)[] = [1, 2, 3];
+if (items.every((x) => x !== undefined)) {
+  let total = 0;
+  for (const v of items) total += v;
+  console.log("total " + String(total));
+}

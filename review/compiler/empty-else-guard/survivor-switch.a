@@ -1,0 +1,14 @@
+function stop(): boolean { return false; }
+function describe(value: number): string {
+    let text = '';
+    switch (value) {
+        case 1:
+            text += 'A';
+            if (stop()) { break; }
+        case 2:
+            text += 'B';
+            break;
+    }
+    return text;
+}
+console.log(describe(1));

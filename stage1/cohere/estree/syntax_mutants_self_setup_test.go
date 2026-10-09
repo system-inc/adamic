@@ -1,7 +1,6 @@
 package estree
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -16,8 +15,6 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -35,30 +32,47 @@ func syntaxMutantEnumeration() []syntaxMutant {
 
 func syntaxMutantProductInputs(t *testing.T, item syntaxMutant) buildcache.Inputs {
 	t.Helper()
-	return buildcache.Inputs{
+	inputs := buildcache.Inputs{
 		Name:  "estree-syntax-mutant-lowered-" + item.name,
-		Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod"},
+		Files: estreeFamilyDependencyFiles(t),
 		Flags: []string{item.file, item.from, item.to, "repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
+	inputs.Flags = append(inputs.Flags, estreeFamilyDependencyFlags(t)...)
+	return inputs
 }
 
+func syntaxMutantIRProduct(t *testing.T, item syntaxMutant) string {
+	t.Helper()
+	inputs := syntaxMutantProductInputs(t, item)
+	inputs.Name = "estree-syntax-mutant-ir-" + item.name
+	return buildcache.Product(t, inputs, func(dir string) error {
+		main := mutantPort(t, item.file, item.from, item.to)
+		files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
+		if err != nil {
+			return err
+		}
+		snapshot := map[string][]byte{}
+		for _, file := range files {
+			data, err := os.ReadFile(file)
+			if err != nil {
+				return err
+			}
+			snapshot[filepath.Base(file)] = data
+		}
+		return estreeFamilyLowerCheckpoint(dir, snapshot)
+	})
+}
 func syntaxMutantLoweredProduct(t *testing.T, item syntaxMutant) string {
 	t.Helper()
-	return buildcache.Product(t, syntaxMutantProductInputs(t, item), func(dir string) error {
-		main := mutantPort(t, item.file, item.from, item.to)
-		program, err := load.Load([]string{main})
+	checkpoint := syntaxMutantIRProduct(t, item)
+	inputs := syntaxMutantProductInputs(t, item)
+	inputs.Name = "estree-syntax-mutant-emitted-" + item.name
+	return buildcache.Product(t, inputs, func(dir string) error {
+		program, err := estreeFamilyReadCheckpoint(checkpoint)
 		if err != nil {
 			return err
 		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			return err
-		}
-		if err := os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(lowered)), 0644); err != nil {
-			return err
-		}
-		// Source remains usable after the building test's temporary directories disappear.
-		files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
+		files, err := filepath.Glob(filepath.Join(checkpoint, "source", "*.ts"))
 		if err != nil {
 			return err
 		}
@@ -71,7 +85,7 @@ func syntaxMutantLoweredProduct(t *testing.T, item syntaxMutant) string {
 				return err
 			}
 		}
-		return nil
+		return os.WriteFile(filepath.Join(dir, "port.c"), []byte(native.C(program)), 0644)
 	})
 }
 
@@ -80,14 +94,14 @@ func syntaxMutantNativeProduct(t *testing.T, item syntaxMutant) string {
 	lowered := syntaxMutantLoweredProduct(t, item)
 	inputs := syntaxMutantProductInputs(t, item)
 	inputs.Name = "estree-syntax-mutant-native-" + item.name
-	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
+	inputs.Flags = append(inputs.Flags, native.Flags(estreeFamilyNativeOptions())...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	return buildcache.Product(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 		if err != nil {
 			return err
 		}
-		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
+		return native.Build(string(data), filepath.Join(dir, "port"), estreeFamilyNativeOptions())
 	})
 }
 
@@ -109,21 +123,9 @@ var syntaxMutantsPrepareOnce sync.Once
 var syntaxMutantsPrepared []syntaxMutantPrepared
 
 func syntaxMutantSetupInputs(t *testing.T) buildcache.Inputs {
-	return buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod", "go.work"}, Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
-}
-func syntaxMutantRead(t *testing.T, dir string) []syntaxMutantPrepared {
-	data, err := os.ReadFile(filepath.Join(dir, "ready.json"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	var result []syntaxMutantPrepared
-	if err := json.Unmarshal(data, &result); err != nil {
-		t.Fatal(err)
-	}
-	if len(result) != len(syntaxMutantEnumeration()) {
-		t.Fatal("incomplete setup")
-	}
-	return result
+	inputs := buildcache.Inputs{Name: "syntax-mutants-setup-v1", Files: estreeFamilyDependencyFiles(t), Flags: []string{"root=" + root(t), "sanitize=true", "split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED"), "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	inputs.Flags = append(inputs.Flags, estreeFamilyDependencyFlags(t)...)
+	return inputs
 }
 
 // Both the build-phase unit and shard preparation use this exact oracle recipe.
@@ -140,49 +142,46 @@ func syntaxMutantOracleProduct(t *testing.T) string {
 	})
 }
 
-func prepareSyntaxMutants(t *testing.T) {
+func syntaxMutantPreparedProduct(t *testing.T, index int) string {
 	t.Helper()
-	dir := buildcache.Product(t, syntaxMutantSetupInputs(t), func(dir string) error {
-		items := syntaxMutantEnumeration()
-		prepared := make([]syntaxMutantPrepared, len(items))
-		// GoBuild is absent on this base: retain the original overlay Go build.
-		var oracle string
-		oracleReady := make(chan struct{})
-		go func() {
-			defer close(oracleReady)
-			oracle = filepath.Join(syntaxMutantOracleProduct(t), "oracle")
-		}()
-		var workers sync.WaitGroup
-		for i, item := range items {
-			workers.Add(1)
-			go func(i int, item syntaxMutant) {
-				defer workers.Done()
-				main, binary := syntaxMutantProducts(t, item)
-				sources := []string{item.source}
-				if i == 0 {
-					sources = syntaxGrammar()
-				}
-				list := manifest(t, sources)
-				args := []string{"--manifest", list}
-				if i != 0 {
-					args = []string{"--audit", list, t.TempDir()}
-				}
-				<-oracleReady
-				want := execute(t, "", oracle, args...)
-				prepared[i] = syntaxMutantPrepared{Main: main, Binary: binary, Sources: sources, Want: want}
-			}(i, item)
+	item := syntaxMutantEnumeration()[index]
+	inputs := syntaxMutantSetupInputs(t)
+	inputs.Name = "syntax-mutant-ready-v2-" + item.name
+	return buildcache.Product(t, inputs, func(dir string) error {
+		main, binary := syntaxMutantProducts(t, item)
+		oracle := filepath.Join(syntaxMutantOracleProduct(t), "oracle")
+		sources := []string{item.source}
+		if index == 0 {
+			sources = syntaxGrammar()
 		}
-		workers.Wait()
-		if t.Failed() {
-			return fmt.Errorf("setup failed")
+		list := manifest(t, sources)
+		args := []string{"--manifest", list}
+		if index != 0 {
+			args = []string{"--audit", list, t.TempDir()}
 		}
-		data, err := json.Marshal(prepared)
+		want := execute(t, "", oracle, args...)
+		data, err := json.Marshal(syntaxMutantPrepared{Main: main, Binary: binary, Sources: sources, Want: want})
 		if err != nil {
 			return err
 		}
 		return os.WriteFile(filepath.Join(dir, "ready.json"), data, 0644)
 	})
-	syntaxMutantsPrepared = syntaxMutantRead(t, dir)
+}
+
+func prepareSyntaxMutants(t *testing.T) {
+	t.Helper()
+	for index := range syntaxMutantEnumeration() {
+		dir := syntaxMutantPreparedProduct(t, index)
+		data, err := os.ReadFile(filepath.Join(dir, "ready.json"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var prepared syntaxMutantPrepared
+		if err := json.Unmarshal(data, &prepared); err != nil {
+			t.Fatal(err)
+		}
+		syntaxMutantsPrepared = append(syntaxMutantsPrepared, prepared)
+	}
 }
 func syntaxMutantReady(t *testing.T) []syntaxMutantPrepared {
 	t.Helper()
@@ -191,12 +190,6 @@ func syntaxMutantReady(t *testing.T) []syntaxMutantPrepared {
 		t.Fatal("syntax mutant preparation failed")
 	}
 	return syntaxMutantsPrepared
-}
-
-// The setup manifest is itself a product; shards still prepare it independently.
-func TestProduct_SyntaxMutantsSetup(t *testing.T) {
-	t.Parallel()
-	syntaxMutantReady(t)
 }
 
 func TestProduct_SyntaxMutantsGoOracle(t *testing.T) {
@@ -230,7 +223,9 @@ func TestProduct_SyntaxMutantNative_002(t *testing.T) {
 }
 
 func runSyntaxMutantShard(t *testing.T, shard int) {
+	setup := time.Now()
 	prepared := syntaxMutantReady(t)[shard]
+	t.Logf("setup: %.3fs", time.Since(setup).Seconds())
 	started := time.Now()
 	defer func() { t.Logf("shard work: %.3fs", time.Since(started).Seconds()) }()
 	cpu := syntaxMutantCPU()
@@ -285,7 +280,11 @@ var syntaxMutantRunners = [...]func(*testing.T){TestSyntaxMutants_000, TestSynta
 
 func TestSyntaxMutantsUnion(t *testing.T) {
 	t.Parallel()
+	setup := time.Now()
 	syntaxMutantReady(t)
+	t.Logf("setup: %.3fs", time.Since(setup).Seconds())
+	work := time.Now()
+	defer func() { t.Logf("own work: %.3fs", time.Since(work).Seconds()) }()
 	items := syntaxMutantEnumeration()
 	if len(syntaxMutantRunners) != testSyntaxMutantsShards || len(items) != testSyntaxMutantsShards {
 		t.Fatal("shard count mismatch")
@@ -325,15 +324,9 @@ func TestSyntaxMutantsUnion(t *testing.T) {
 	caught := []int{}
 	for i := range syntaxMutantRunners {
 		name := fmt.Sprintf("TestSyntaxMutants_%03d", i)
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		command := exec.CommandContext(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+		command := exec.Command(executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_SYNTAX_MUTANTS_PLANT=1")
 		output, err := command.CombinedOutput()
-		contextErr := ctx.Err()
-		cancel()
-		if contextErr != nil {
-			t.Fatalf("cooked: %s exceeded 90s", name)
-		}
 		if err != nil {
 			if !strings.Contains(string(output), "mutant survived") || !strings.Contains(string(output), "--- FAIL: "+name) {
 				t.Fatalf("unexpected failure: %v\n%s", err, output)

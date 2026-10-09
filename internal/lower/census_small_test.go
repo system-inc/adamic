@@ -49,13 +49,10 @@ function ensureTrailingDirectorySeparator(path: string) { return path + '/'; }
 
 func TestCensusSmallFiniteKeyRead(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `const wildcardMatchers = { files: 'file', directories: 'directory', exclude: 'excluded' };
+	lowersAndAgreesWithNode(t, `const wildcardMatchers = { files: 'file', directories: 'directory', exclude: 'excluded' };
 function pick(usage: 'files' | 'directories' | 'exclude'): string { return wildcardMatchers[usage]; }
 console.log(pick('files'));
 `)
-	if err != nil {
-		t.Fatalf("finite-key read did not lower: %v", err)
-	}
 }
 
 func TestCensusRestMutableElements(t *testing.T) {
@@ -84,7 +81,5 @@ func TestCensusBooleanDeadBranch(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := lowerSource(t, string(source)); err != nil {
-		t.Fatal(err)
-	}
+	lowersAndAgreesWithNode(t, string(source))
 }

@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -74,7 +74,7 @@
+ 		fs.source[name] = source
+ 	}
+ 	options := &core.CompilerOptions{
+-		Strict: core.TSTrue, NoUncheckedIndexedAccess: core.TSTrue, ExactOptionalPropertyTypes: core.TSTrue,
++		Strict: core.TSTrue, NoUncheckedIndexedAccess: core.TSFalse, ExactOptionalPropertyTypes: core.TSTrue,
+ 		NoImplicitReturns: core.TSTrue, NoFallthroughCasesInSwitch: core.TSTrue, ErasableSyntaxOnly: core.TSTrue,
+ 		VerbatimModuleSyntax: core.TSTrue, AllowImportingTsExtensions: core.TSTrue, NoEmit: core.TSTrue,
+ 		Module: core.ModuleKindESNext, ModuleDetection: core.ModuleDetectionKindForce,

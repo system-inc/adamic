@@ -1,0 +1,15 @@
+interface Pair {
+    readonly second: number;
+    readonly first: string;
+}
+function maybe(present: boolean): Pair | undefined {
+    if(present) {
+        return { second: 2, first: `one${1}` };
+    }
+    return undefined;
+}
+const filled = { ...maybe(false), second: 5 };
+console.log(`${filled.second}`);
+console.log(`${filled.first ?? 'absent'}`);
+const kept = { ...maybe(true), second: 6 };
+console.log(`${kept.second} ${kept.first ?? 'absent'}`);

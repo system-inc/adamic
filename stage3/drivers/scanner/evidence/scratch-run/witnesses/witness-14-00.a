@@ -1,0 +1,3 @@
+// a-check: checked
+const match = /ok/.exec("ok");
+if (match) console.log("ok");

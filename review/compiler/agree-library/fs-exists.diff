@@ -1,0 +1,13 @@
+diff --git a/internal/lower/library_node_fs_file.go b/internal/lower/library_node_fs_file.go
+index f9c6cde2..c5e19744 100644
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -78,7 +78,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 	case "writeFileSync":
+ 		operation = "write_file"
+ 	case "existsSync":
+-		operation, of = "exists", ir.Boolean
++		operation, of = "stat", ir.Boolean
+ 	case "statSync":
+ 		operation, of = "stat", ir.Object
+ 	case "mkdirSync":

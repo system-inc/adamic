@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T10:58:33.884025722Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:58:33.8913382Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestModuleNamespaceInitializedReadProof"}
+{"Time":"2026-10-09T10:58:33.891430998Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestModuleNamespaceInitializedReadProof","Output":"=== RUN   TestModuleNamespaceInitializedReadProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:33.924984366Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestModuleNamespaceInitializedReadProof","Output":"    module_namespace_test.go:63: lowering returned no executable output\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:33.925087859Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestModuleNamespaceInitializedReadProof","Output":"--- FAIL: TestModuleNamespaceInitializedReadProof (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:33.925091745Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestModuleNamespaceInitializedReadProof","Elapsed":0.03}
+{"Time":"2026-10-09T10:58:33.925118305Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:33.925236439Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.041s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:33.925246023Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.041}

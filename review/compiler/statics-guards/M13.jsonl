@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:58:03.558362618Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:58:03.565833456Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadinessErrorIncludesReceiverExpression"}
+{"Time":"2026-10-09T10:58:03.565915397Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadinessErrorIncludesReceiverExpression","Output":"=== RUN   TestReadinessErrorIncludesReceiverExpression\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:03.565941555Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadinessErrorIncludesReceiverExpression","Output":"=== PAUSE TestReadinessErrorIncludesReceiverExpression\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:03.565944109Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadinessErrorIncludesReceiverExpression"}
+{"Time":"2026-10-09T10:58:03.565946643Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadinessErrorIncludesReceiverExpression"}
+{"Time":"2026-10-09T10:58:03.565948305Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadinessErrorIncludesReceiverExpression","Output":"=== CONT  TestReadinessErrorIncludesReceiverExpression\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:03.630696939Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadinessErrorIncludesReceiverExpression","Output":"    statics_guards_test.go:124: read-before-assignment: exit=70 stdout=\"\" stderr=\"adamic: panic: read before assignment: field 'n' in n\\n\", want panic naming new Box().n\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:03.630779701Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadinessErrorIncludesReceiverExpression","Output":"--- FAIL: TestReadinessErrorIncludesReceiverExpression (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:03.630784017Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestReadinessErrorIncludesReceiverExpression","Elapsed":0.06}
+{"Time":"2026-10-09T10:58:03.630802114Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:03.63208361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.073s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:03.632100165Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.074}

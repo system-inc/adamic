@@ -1,0 +1,5 @@
+--- main/src/compiler/builder.ts
++++ trial-2/src/compiler/builder.ts
+@@ -563 +563 @@
+-): DiagnosticMessageChain[] | undefined {
++): (DiagnosticMessageChain | T)[] | undefined {
