@@ -1,0 +1,54 @@
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== RUN   TestFX6P70
+=== PAUSE TestFX6P70
+=== RUN   TestFX6P49
+=== PAUSE TestFX6P49
+=== CONT  TestFX6P35
+=== CONT  TestFX6P51
+=== CONT  TestFX6P49
+=== CONT  TestFX6P70
+=== CONT  TestFX6P53
+=== NAME  TestFX6P49
+    fx6_valid_test.go:172: /workspace/adamic/internal/lower/testdata/fx6/p49.a:6:8: stage 0 can't lower a destructured name held otherwise than its field yet
+--- FAIL: TestFX6P49 (0.10s)
+=== CONT  TestFX6P36
+=== NAME  TestFX6P70
+    fx6_valid_test.go:155: /workspace/adamic/internal/lower/testdata/fx6/p70.a:2:14: stage 0 can't lower a readonly [number, number] seen as a { readonly length: number; } (a tuple is held as an object, not an array, so far; write it as an array where it's made, or copy it into one: [pair[0], pair[1]]) yet
+--- FAIL: TestFX6P70 (0.10s)
+=== CONT  TestFX6P38
+=== NAME  TestFX6P53
+    fx6_valid_test.go:138: /workspace/adamic/internal/lower/testdata/fx6/p53.a:6:8: stage 0 can't lower a destructured name held otherwise than its field yet
+--- FAIL: TestFX6P53 (0.11s)
+=== CONT  TestFX6P37
+=== NAME  TestFX6P35
+    cache_test.go:284: Rel: can't make /workspace/adamic/internal/lower/testdata/fx6/p35.a relative to ../../internal/lower/testdata/fx6
+=== NAME  TestFX6P36
+    cache_test.go:284: Rel: can't make /workspace/adamic/internal/lower/testdata/fx6/p36.a relative to ../../internal/lower/testdata/fx6
+--- FAIL: TestFX6P35 (46.44s)
+--- FAIL: TestFX6P36 (46.34s)
+=== NAME  TestFX6P51
+    cache_test.go:284: Rel: can't make /workspace/adamic/internal/lower/testdata/fx6/p51.a relative to ../../internal/lower/testdata/fx6
+--- FAIL: TestFX6P51 (46.44s)
+=== NAME  TestFX6P38
+    cache_test.go:284: Rel: can't make /workspace/adamic/internal/lower/testdata/fx6/p38.a relative to ../../internal/lower/testdata/fx6
+--- FAIL: TestFX6P38 (46.34s)
+=== NAME  TestFX6P37
+    cache_test.go:284: Rel: can't make /workspace/adamic/internal/lower/testdata/fx6/p37.a relative to ../../internal/lower/testdata/fx6
+--- FAIL: TestFX6P37 (46.33s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	46.454s
+FAIL
