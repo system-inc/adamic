@@ -1,0 +1,13 @@
+diff --git a/stage1/typescript/parser/statements.ts b/stage1/typescript/parser/statements.ts
+index 519d9dac..3cfe78ca 100644
+--- a/stage1/typescript/parser/statements.ts
++++ b/stage1/typescript/parser/statements.ts
+@@ -382,7 +382,7 @@ export class Statements {
+         }
+         this.semicolon();
+         const id = this.parser.make('ExportDeclaration', pos, children);
+-        this.parser.node(id).semantic = typeOnly ? '1' : '0';
++        this.parser.node(id).semantic = typeOnly ? '0' : '1';
+         this.parser.setAwait(oldAwait);
+         return id;
+     }

@@ -1,0 +1,11 @@
+--- a/stage1/typescript/scanner/scanner.ts
++++ b/stage1/typescript/scanner/scanner.ts
+@@ -938,7 +938,7 @@
+             return;
+         }
+         const start = this.pos;
+-        while(this.code() === 45 || isIdentifierPart(this.code())) {
++        while(this.code() === 46 || isIdentifierPart(this.code())) {
+             this.advance(this.code());
+         }
+         this.value += this.text.slice(start, this.pos);

@@ -1,0 +1,13 @@
+diff --git a/stage1/typescript/parser/statements.ts b/stage1/typescript/parser/statements.ts
+index 519d9dac..34290b86 100644
+--- a/stage1/typescript/parser/statements.ts
++++ b/stage1/typescript/parser/statements.ts
+@@ -77,7 +77,7 @@ export class Statements {
+         const pos = this.parser.scanner.fullStart;
+         const flags =
+             this.parser.kind() === 'ConstKeyword'
+-                ? 2
++                ? 1
+                 : this.parser.kind() === 'LetKeyword'
+                   ? 1
+                   : this.parser.kind() === 'UsingKeyword'

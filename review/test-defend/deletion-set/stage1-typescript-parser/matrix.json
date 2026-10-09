@@ -1,0 +1,497 @@
+[
+  {
+    "mutant": "audit-jsx_rejection-M1",
+    "original_mutant": "M1",
+    "file_line": "stage1/typescript/parser/jsx.ts:33",
+    "branch": "test-audit/stage1-typescript-parser-jsx_rejection",
+    "diff": "audit-jsx_rejection-M1.diff",
+    "candidates_failed": [
+      "TestJsxMemberNameRejection"
+    ],
+    "other_rows_failed": [
+      "TestJsxNameBoundaryRejections",
+      "TestJsxNative",
+      "TestJsxNode"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "still_caught_by": [
+      "TestJsxNameBoundaryRejections"
+    ],
+    "attempts": [
+      {
+        "command": "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-parser/cache/audit-jsx_rejection-M1-0 go test -json -count=1 -timeout 30m ./stage1/typescript/parser/ -skip '^(TestJsxMemberNameRejection|TestWholeCompilerAgrees)($|_|/)'",
+        "log": "audit-jsx_rejection-M1-0.log",
+        "wall_seconds": 17.02315149700007,
+        "returncode": -15,
+        "stopped_after_catch": true,
+        "failed": [
+          "TestJsxNameBoundaryRejections",
+          "TestJsxScannerMutants"
+        ],
+        "witness_failures": [
+          "TestJsxScannerMutants"
+        ],
+        "panicking_tests": [],
+        "still_caught_by": [
+          "TestJsxNameBoundaryRejections"
+        ],
+        "passed": [
+          "TestClosedOptionalFunctionValueGap",
+          "TestClosedConditionalEmptyArrayGap"
+        ],
+        "failing_lines": [
+          "childguard_test.go:85: build typescript-parser-oracle 86477597f66f miss 0.70",
+          "jsx_rejection_test.go:108: private member: Go diagnoses; Node/native refuse identically",
+          "jsx_rejection_test.go:102: Node accepted escaped tag: 70 adamic: panic: JSX expected name at 11 in /tmp/adamic-gate/TestJsxNameBoundaryRejections3186434546/006/name.tsx",
+          "jsx_scanner_mutants_test.go:16: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /tmp/adamic-gate/TestJsxScannerMutants1909436379/001/manifest --whole]: exit status 70"
+        ]
+      }
+    ],
+    "panicking_tests": [],
+    "complete_pass": false,
+    "broken": false
+  },
+  {
+    "mutant": "audit-whole_mutants_split-M1",
+    "original_mutant": "M1",
+    "file_line": "stage1/typescript/parser/nodes.ts:47",
+    "branch": "test-audit/stage1-typescript-parser-whole_mutants_split",
+    "diff": "audit-whole_mutants_split-M1.diff",
+    "candidates_failed": [
+      "TestWholeCompilerAgrees"
+    ],
+    "other_rows_failed": [
+      "TestYieldLookaheadAgrees"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "still_caught_by": [
+      "TestJsxNative"
+    ],
+    "attempts": [
+      {
+        "command": "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-parser/cache/audit-whole_mutants_split-M1-0 go test -json -count=1 -timeout 30m ./stage1/typescript/parser/ -skip '^(TestJsxMemberNameRejection|TestWholeCompilerAgrees)($|_|/)'",
+        "log": "audit-whole_mutants_split-M1-0.log",
+        "wall_seconds": 70.54977654400136,
+        "returncode": -15,
+        "stopped_after_catch": true,
+        "failed": [
+          "TestJsxScannerMutants",
+          "TestJsxNative"
+        ],
+        "witness_failures": [
+          "TestJsxScannerMutants"
+        ],
+        "panicking_tests": [],
+        "still_caught_by": [
+          "TestJsxNative"
+        ],
+        "passed": [
+          "TestClosedOptionalFunctionValueGap",
+          "TestClosedConditionalEmptyArrayGap",
+          "TestJsxNameBoundaryRejections"
+        ],
+        "failing_lines": [
+          "jsx_scanner_mutants_test.go:18: case 0 line 3: port \"1 SourceFile 0 17 0 0 -1 0 0\\t\\t\\t\\t\", Go \"0 SourceFile 0 17 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "jsx_test.go:107: case 0 line 3: port \"1 SourceFile 0 17 0 0 -1 0 0\\t\\t\\t\\t\", Go \"0 SourceFile 0 17 0 0 -1 0 0\\t\\t\\t\\t\""
+        ]
+      }
+    ],
+    "panicking_tests": [],
+    "complete_pass": false,
+    "broken": false
+  },
+  {
+    "mutant": "audit-whole_mutants_split-M4",
+    "original_mutant": "M4",
+    "file_line": "stage1/typescript/parser/parser.ts:37",
+    "branch": "test-audit/stage1-typescript-parser-whole_mutants_split",
+    "diff": "audit-whole_mutants_split-M4.diff",
+    "candidates_failed": [
+      "TestWholeCompilerAgrees"
+    ],
+    "other_rows_failed": [
+      "TestYieldLookaheadAgrees"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "still_caught_by": [
+      "TestJsxNative"
+    ],
+    "attempts": [
+      {
+        "command": "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-parser/cache/audit-whole_mutants_split-M4-0 go test -json -count=1 -timeout 30m ./stage1/typescript/parser/ -skip '^(TestJsxMemberNameRejection|TestWholeCompilerAgrees)($|_|/)'",
+        "log": "audit-whole_mutants_split-M4-0.log",
+        "wall_seconds": 71.54928660600126,
+        "returncode": -15,
+        "stopped_after_catch": true,
+        "failed": [
+          "TestJsxScannerMutants",
+          "TestJsxNative"
+        ],
+        "witness_failures": [
+          "TestJsxScannerMutants"
+        ],
+        "panicking_tests": [],
+        "still_caught_by": [
+          "TestJsxNative"
+        ],
+        "passed": [
+          "TestClosedOptionalFunctionValueGap",
+          "TestClosedConditionalEmptyArrayGap",
+          "TestJsxNameBoundaryRejections"
+        ],
+        "failing_lines": [
+          "jsx_scanner_mutants_test.go:18: case 0 line 7: port \"4 Identifier 5 8 0 0 -1 0 0\\t\\tx\\t\\t\", Go \"4 Identifier 5 7 0 0 -1 0 0\\t\\tx\\t\\t\"",
+          "jsx_test.go:107: case 0 line 7: port \"4 Identifier 5 8 0 0 -1 0 0\\t\\tx\\t\\t\", Go \"4 Identifier 5 7 0 0 -1 0 0\\t\\tx\\t\\t\""
+        ]
+      }
+    ],
+    "panicking_tests": [],
+    "complete_pass": false,
+    "broken": false
+  },
+  {
+    "mutant": "defend-jsx_rejection-D1",
+    "original_mutant": "D1",
+    "file_line": "stage1/typescript/parser/jsx.ts:34",
+    "branch": "test-defend/stage1-typescript-parser-jsx_rejection",
+    "diff": "defend-jsx_rejection-D1.diff",
+    "candidates_failed": [
+      "TestJsxMemberNameRejection"
+    ],
+    "other_rows_failed": [
+      "TestJsxNameBoundaryRejections"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "still_caught_by": [
+      "TestJsxNameBoundaryRejections"
+    ],
+    "attempts": [
+      {
+        "command": "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-parser/cache/defend-jsx_rejection-D1-0 go test -json -count=1 -timeout 30m ./stage1/typescript/parser/ -skip '^(TestJsxMemberNameRejection|TestWholeCompilerAgrees)($|_|/)'",
+        "log": "defend-jsx_rejection-D1-0.log",
+        "wall_seconds": 16.02739151499918,
+        "returncode": -15,
+        "stopped_after_catch": true,
+        "failed": [
+          "TestJsxNameBoundaryRejections"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "still_caught_by": [
+          "TestJsxNameBoundaryRejections"
+        ],
+        "passed": [
+          "TestClosedOptionalFunctionValueGap",
+          "TestClosedConditionalEmptyArrayGap"
+        ],
+        "failing_lines": [
+          "childguard_test.go:85: build typescript-parser-oracle 86477597f66f miss 0.61",
+          "jsx_rejection_test.go:102: Node accepted private member: 70 adamic: panic: JSX invalid name at 15 in /tmp/adamic-gate/TestJsxNameBoundaryRejections1894732458/002/name.tsx"
+        ]
+      }
+    ],
+    "panicking_tests": [],
+    "complete_pass": false,
+    "broken": false
+  },
+  {
+    "mutant": "defend-jsx_rejection-D2",
+    "original_mutant": "D2",
+    "file_line": "stage1/typescript/scanner/scanner.ts:941",
+    "branch": "test-defend/stage1-typescript-parser-jsx_rejection",
+    "diff": "defend-jsx_rejection-D2.diff",
+    "candidates_failed": [
+      "TestJsxMemberNameRejection"
+    ],
+    "other_rows_failed": [
+      "TestJsxNameBoundaryRejections",
+      "TestJsxNative",
+      "TestJsxNode",
+      "TestJsxScannerMutants"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "still_caught_by": [
+      "TestJsxNameBoundaryRejections"
+    ],
+    "attempts": [
+      {
+        "command": "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-parser/cache/defend-jsx_rejection-D2-0 go test -json -count=1 -timeout 30m ./stage1/typescript/parser/ -skip '^(TestJsxMemberNameRejection|TestWholeCompilerAgrees)($|_|/)'",
+        "log": "defend-jsx_rejection-D2-0.log",
+        "wall_seconds": 16.514307649998955,
+        "returncode": -15,
+        "stopped_after_catch": true,
+        "failed": [
+          "TestJsxNameBoundaryRejections",
+          "TestJsxScannerMutants"
+        ],
+        "witness_failures": [
+          "TestJsxScannerMutants"
+        ],
+        "panicking_tests": [],
+        "still_caught_by": [
+          "TestJsxNameBoundaryRejections"
+        ],
+        "passed": [
+          "TestClosedOptionalFunctionValueGap",
+          "TestClosedConditionalEmptyArrayGap"
+        ],
+        "failing_lines": [
+          "childguard_test.go:85: build typescript-parser-oracle 86477597f66f miss 0.60",
+          "jsx_rejection_test.go:100: expected parser rejection from node: <nil>",
+          "jsx_scanner_mutants_test.go:16: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /tmp/adamic-gate/TestJsxScannerMutants2059297980/001/manifest --whole]: exit status 70"
+        ]
+      }
+    ],
+    "panicking_tests": [],
+    "complete_pass": false,
+    "broken": false
+  },
+  {
+    "mutant": "defend-jsx_rejection-D3",
+    "original_mutant": "D3",
+    "file_line": "stage1/typescript/parser/jsx.ts:55",
+    "branch": "test-defend/stage1-typescript-parser-jsx_rejection",
+    "diff": "defend-jsx_rejection-D3.diff",
+    "candidates_failed": [
+      "TestJsxMemberNameRejection"
+    ],
+    "other_rows_failed": [
+      "TestJsxNameBoundaryRejections",
+      "TestJsxNative",
+      "TestJsxNode",
+      "TestJsxScannerMutants"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "still_caught_by": [
+      "TestJsxNameBoundaryRejections"
+    ],
+    "attempts": [
+      {
+        "command": "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-parser/cache/defend-jsx_rejection-D3-0 go test -json -count=1 -timeout 30m ./stage1/typescript/parser/ -skip '^(TestJsxMemberNameRejection|TestWholeCompilerAgrees)($|_|/)'",
+        "log": "defend-jsx_rejection-D3-0.log",
+        "wall_seconds": 16.516712840002583,
+        "returncode": -15,
+        "stopped_after_catch": true,
+        "failed": [
+          "TestJsxNameBoundaryRejections",
+          "TestJsxScannerMutants"
+        ],
+        "witness_failures": [
+          "TestJsxScannerMutants"
+        ],
+        "panicking_tests": [],
+        "still_caught_by": [
+          "TestJsxNameBoundaryRejections"
+        ],
+        "passed": [
+          "TestClosedOptionalFunctionValueGap",
+          "TestClosedConditionalEmptyArrayGap"
+        ],
+        "failing_lines": [
+          "childguard_test.go:85: build typescript-parser-oracle 86477597f66f miss 0.61",
+          "jsx_rejection_test.go:108: private member: Go diagnoses; Node/native refuse identically",
+          "jsx_rejection_test.go:108: escaped tag: Go diagnoses; Node/native refuse identically",
+          "jsx_rejection_test.go:102: Node accepted escaped member: 70 adamic: panic: JSX expected name at 14 in /tmp/adamic-gate/TestJsxNameBoundaryRejections1805550327/010/name.tsx",
+          "jsx_scanner_mutants_test.go:16: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/typescript/parser/main.ts --manifest /tmp/adamic-gate/TestJsxScannerMutants3106735344/001/manifest --whole]: exit status 70"
+        ]
+      }
+    ],
+    "panicking_tests": [],
+    "complete_pass": false,
+    "broken": false
+  },
+  {
+    "mutant": "defend-whole_mutants_split-D1",
+    "original_mutant": "D1",
+    "file_line": "stage1/typescript/parser/statements.ts:80",
+    "branch": "test-defend/stage1-typescript-parser-whole_mutants_split",
+    "diff": "defend-whole_mutants_split-D1.diff",
+    "candidates_failed": [
+      "TestWholeCompilerAgrees"
+    ],
+    "other_rows_failed": [
+      "TestJsxNative",
+      "TestJsxNode",
+      "TestWholeGeneratedAgrees",
+      "TestWholePerformance"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "still_caught_by": [
+      "TestJsxNative"
+    ],
+    "attempts": [
+      {
+        "command": "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-parser/cache/defend-whole_mutants_split-D1-0 go test -json -count=1 -timeout 30m ./stage1/typescript/parser/ -skip '^(TestJsxMemberNameRejection|TestWholeCompilerAgrees)($|_|/)'",
+        "log": "defend-whole_mutants_split-D1-0.log",
+        "wall_seconds": 70.04616331199941,
+        "returncode": -15,
+        "stopped_after_catch": true,
+        "failed": [
+          "TestJsxScannerMutants",
+          "TestJsxNative"
+        ],
+        "witness_failures": [
+          "TestJsxScannerMutants"
+        ],
+        "panicking_tests": [],
+        "still_caught_by": [
+          "TestJsxNative"
+        ],
+        "passed": [
+          "TestClosedOptionalFunctionValueGap",
+          "TestClosedConditionalEmptyArrayGap",
+          "TestJsxNameBoundaryRejections"
+        ],
+        "failing_lines": [
+          "jsx_scanner_mutants_test.go:18: case 0 line 5: port \"2 VariableDeclarationList 0 16 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"2 VariableDeclarationList 0 16 0 0 -1 0 0\\t\\t\\t\\t2\"",
+          "jsx_test.go:107: case 0 line 5: port \"2 VariableDeclarationList 0 16 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"2 VariableDeclarationList 0 16 0 0 -1 0 0\\t\\t\\t\\t2\""
+        ]
+      }
+    ],
+    "panicking_tests": [],
+    "complete_pass": false,
+    "broken": false
+  },
+  {
+    "mutant": "defend-whole_mutants_split-D2",
+    "original_mutant": "D2",
+    "file_line": "stage1/typescript/parser/statements.ts:324",
+    "branch": "test-defend/stage1-typescript-parser-whole_mutants_split",
+    "diff": "defend-whole_mutants_split-D2.diff",
+    "candidates_failed": [
+      "TestWholeCompilerAgrees"
+    ],
+    "other_rows_failed": [
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestWholePerformance"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "still_caught_by": [
+      "TestWholeGeneratedAgrees"
+    ],
+    "attempts": [
+      {
+        "command": "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-parser/cache/defend-whole_mutants_split-D2-0 go test -json -count=1 -timeout 30m ./stage1/typescript/parser/ -skip '^(TestJsxMemberNameRejection|TestWholeCompilerAgrees)($|_|/)'",
+        "log": "defend-whole_mutants_split-D2-0.log",
+        "wall_seconds": 134.5932937159996,
+        "returncode": -15,
+        "stopped_after_catch": true,
+        "failed": [
+          "TestWholeMutantsRejectsSurvivor",
+          "TestWholeMutants_002",
+          "TestWholeMutants_001",
+          "TestWholeMutants_000",
+          "TestWholeMutants_Setup",
+          "TestWholeGeneratedAgrees"
+        ],
+        "witness_failures": [
+          "TestWholeMutantsRejectsSurvivor",
+          "TestWholeMutants_002",
+          "TestWholeMutants_001",
+          "TestWholeMutants_000",
+          "TestWholeMutants_Setup"
+        ],
+        "panicking_tests": [],
+        "still_caught_by": [
+          "TestWholeGeneratedAgrees"
+        ],
+        "passed": [
+          "TestClosedOptionalFunctionValueGap",
+          "TestClosedConditionalEmptyArrayGap",
+          "TestJsxNameBoundaryRejections",
+          "TestJsxScannerMutants",
+          "TestJsxNative",
+          "TestWholeCountCheckCatchesMutant",
+          "TestProduct_ExpressionsLower001",
+          "TestProduct_JsxMutantsLower_Control",
+          "TestWholeMutantsUnion",
+          "TestProduct_ExpressionsNative000",
+          "TestWholeNodeCountAgrees_000"
+        ],
+        "failing_lines": [
+          "whole_mutants_setup_test.go:75: build typescript-parser-oracle 86477597f66f hit 0.20",
+          "whole_mutants_setup_test.go:75: mutant must change exactly one site in statements.ts: \"this.parser.node(clause).semantic = phase;\"",
+          "whole_mutants_split_test.go:242: shared setup must finish before a whole-mutant leaf runs",
+          "whole_mutants_split_test.go:241: shared setup must finish before a whole-mutant leaf runs",
+          "whole_mutants_split_test.go:240: shared setup must finish before a whole-mutant leaf runs",
+          "whole_mutants_setup_test.go:65: shared setup must finish before a whole-mutant leaf runs",
+          "whole_generated_test.go:66: Node: case 19 line 689: port \"2 ImportClause 18 20 0 0 -1 0 0\\t\\t\\t\\t\", Go \"2 ImportClause 18 20 0 0 -1 0 0\\t\\t\\t\\tUnknown\""
+        ]
+      }
+    ],
+    "panicking_tests": [],
+    "complete_pass": false,
+    "broken": false
+  },
+  {
+    "mutant": "defend-whole_mutants_split-D3",
+    "original_mutant": "D3",
+    "file_line": "stage1/typescript/parser/statements.ts:385",
+    "branch": "test-defend/stage1-typescript-parser-whole_mutants_split",
+    "diff": "defend-whole_mutants_split-D3.diff",
+    "candidates_failed": [
+      "TestWholeCompilerAgrees"
+    ],
+    "other_rows_failed": [
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestWholePerformance"
+    ],
+    "stale": false,
+    "apply_error": "",
+    "still_caught_by": [
+      "TestWholeGeneratedAgrees"
+    ],
+    "attempts": [
+      {
+        "command": "source /workspace/adamic-tools/env.sh; ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-parser/cache/defend-whole_mutants_split-D3-0 go test -json -count=1 -timeout 30m ./stage1/typescript/parser/ -skip '^(TestJsxMemberNameRejection|TestWholeCompilerAgrees)($|_|/)'",
+        "log": "defend-whole_mutants_split-D3-0.log",
+        "wall_seconds": 149.61036484699798,
+        "returncode": -15,
+        "stopped_after_catch": true,
+        "failed": [
+          "TestWholeGeneratedAgrees"
+        ],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "still_caught_by": [
+          "TestWholeGeneratedAgrees"
+        ],
+        "passed": [
+          "TestClosedOptionalFunctionValueGap",
+          "TestClosedConditionalEmptyArrayGap",
+          "TestJsxNameBoundaryRejections",
+          "TestJsxScannerMutants",
+          "TestJsxNative",
+          "TestWholeCountCheckCatchesMutant",
+          "TestProduct_JsxMutantsOracle",
+          "TestProduct_ExpressionsLower001",
+          "TestWholeMutantsUnion",
+          "TestProduct_JsxMutantsLower_Control",
+          "TestYieldLookaheadAgrees",
+          "TestParserChildGuard_000",
+          "TestWholeMutants_Setup",
+          "TestWholeMutants_000",
+          "TestWholeMutants_001",
+          "TestWholeMutants_002",
+          "TestWholeMutantsRejectsSurvivor"
+        ],
+        "failing_lines": [
+          "whole_generated_test.go:66: Node: case 22 line 790: port \"1 ExportDeclaration 0 10 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"1 ExportDeclaration 0 10 0 0 -1 0 0\\t\\t\\t\\t0\""
+        ]
+      }
+    ],
+    "panicking_tests": [],
+    "complete_pass": false,
+    "broken": false
+  }
+]

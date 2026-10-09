@@ -1,0 +1,159 @@
+[
+  {
+    "mutant": "D1",
+    "rows_failed": [
+      "TestJsxNative",
+      "TestJsxNode",
+      "TestWholeCompilerAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestWholePerformance"
+    ],
+    "rows_passed": [
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestCompilerExpressionsAgree_Setup",
+      "TestEveryTypeNodeKindAgrees",
+      "TestExpressionsAgree",
+      "TestGeneratedExpressionsAgree",
+      "TestObsoleteImportAttributesAgrees",
+      "TestTypeOnlyImportCycleCompiles",
+      "TestYieldLookaheadAgrees"
+    ],
+    "failing_lines": {
+      "TestJsxNative": [
+        "jsx_test.go:107: case 0 line 5: port \"2 VariableDeclarationList 0 16 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"2 VariableDeclarationList 0 16 0 0 -1 0 0\\t\\t\\t\\t2\""
+      ],
+      "TestJsxNode": [
+        "jsx_test.go:89: all 13 Go JSX AST kinds covered",
+        "jsx_test.go:92: case 0 line 5: port \"2 VariableDeclarationList 0 16 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"2 VariableDeclarationList 0 16 0 0 -1 0 0\\t\\t\\t\\t2\""
+      ],
+      "TestWholePerformance": [
+        "performance_test.go:40: Node preflight: case 3 line 929: port \"4 VariableDeclarationList 9052 9088 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"4 VariableDeclarationList 9052 9088 0 0 -1 0 0\\t\\t\\t\\t2\""
+      ],
+      "TestWholeGeneratedAgrees": [
+        "whole_generated_test.go:66: Node: case 7 line 206: port \"2 VariableDeclarationList 17 29 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"2 VariableDeclarationList 17 29 0 0 -1 0 0\\t\\t\\t\\t2\""
+      ],
+      "TestWholeCompilerAgrees": [
+        "whole_test.go:34: Node: case 3 line 929: port \"4 VariableDeclarationList 9052 9088 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"4 VariableDeclarationList 9052 9088 0 0 -1 0 0\\t\\t\\t\\t2\""
+      ]
+    },
+    "unique": false
+  },
+  {
+    "mutant": "D2",
+    "rows_failed": [
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeCompilerAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestWholePerformance"
+    ],
+    "rows_passed": [
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestCompilerExpressionsAgree_Setup",
+      "TestEveryTypeNodeKindAgrees",
+      "TestExpressionsAgree",
+      "TestGeneratedExpressionsAgree",
+      "TestJsxNative",
+      "TestJsxNode",
+      "TestTypeOnlyImportCycleCompiles",
+      "TestYieldLookaheadAgrees"
+    ],
+    "failing_lines": {
+      "TestObsoleteImportAttributesAgrees": [
+        "whole_generated_test.go:89: Node: case 0 line 5: port \"2 ImportClause 6 8 0 0 -1 0 0\\t\\t\\t\\t\", Go \"2 ImportClause 6 8 0 0 -1 0 0\\t\\t\\t\\tUnknown\""
+      ],
+      "TestWholePerformance": [
+        "performance_test.go:40: Node preflight: case 2 line 163: port \"2 ImportClause 3123 3145 0 0 -1 0 0\\t\\t\\t\\t\", Go \"2 ImportClause 3123 3145 0 0 -1 0 0\\t\\t\\t\\tUnknown\""
+      ],
+      "TestWholeGeneratedAgrees": [
+        "whole_generated_test.go:66: Node: case 19 line 689: port \"2 ImportClause 18 20 0 0 -1 0 0\\t\\t\\t\\t\", Go \"2 ImportClause 18 20 0 0 -1 0 0\\t\\t\\t\\tUnknown\""
+      ],
+      "TestWholeCompilerAgrees": [
+        "whole_test.go:34: Node: case 2 line 163: port \"2 ImportClause 3123 3145 0 0 -1 0 0\\t\\t\\t\\t\", Go \"2 ImportClause 3123 3145 0 0 -1 0 0\\t\\t\\t\\tUnknown\""
+      ]
+    },
+    "unique": false
+  },
+  {
+    "mutant": "D3",
+    "rows_failed": [
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeCompilerAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestWholePerformance"
+    ],
+    "rows_passed": [
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestCompilerExpressionsAgree_Setup",
+      "TestEveryTypeNodeKindAgrees",
+      "TestExpressionsAgree",
+      "TestGeneratedExpressionsAgree",
+      "TestJsxNative",
+      "TestJsxNode",
+      "TestTypeOnlyImportCycleCompiles",
+      "TestYieldLookaheadAgrees"
+    ],
+    "failing_lines": {
+      "TestObsoleteImportAttributesAgrees": [
+        "whole_generated_test.go:89: Node: case 0 line 12: port \"1 ExportDeclaration 40 81 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"1 ExportDeclaration 40 81 0 0 -1 0 0\\t\\t\\t\\t0\""
+      ],
+      "TestWholePerformance": [
+        "performance_test.go:40: Node preflight: case 0 line 4: port \"1 ExportDeclaration 0 109 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"1 ExportDeclaration 0 109 0 0 -1 0 0\\t\\t\\t\\t0\""
+      ],
+      "TestWholeGeneratedAgrees": [
+        "whole_generated_test.go:66: Node: case 22 line 790: port \"1 ExportDeclaration 0 10 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"1 ExportDeclaration 0 10 0 0 -1 0 0\\t\\t\\t\\t0\""
+      ],
+      "TestWholeCompilerAgrees": [
+        "whole_test.go:34: Node: case 0 line 4: port \"1 ExportDeclaration 0 109 0 0 -1 0 0\\t\\t\\t\\t1\", Go \"1 ExportDeclaration 0 109 0 0 -1 0 0\\t\\t\\t\\t0\""
+      ]
+    },
+    "unique": false
+  }
+]

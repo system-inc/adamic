@@ -1,0 +1,10 @@
+GREEN BASELINE {'Time': '2026-10-09T17:57:57.165769073Z', 'Action': 'pass', 'Package': 'github.com/system-inc/adamic/stage1/typescript/parser', 'Elapsed': 250.69}
+audit-jsx_rejection-M1 17.02315149700007 ['TestJsxNameBoundaryRejections']
+audit-whole_mutants_split-M1 70.54977654400136 ['TestJsxNative']
+audit-whole_mutants_split-M4 71.54928660600126 ['TestJsxNative']
+defend-jsx_rejection-D1 16.02739151499918 ['TestJsxNameBoundaryRejections']
+defend-jsx_rejection-D2 16.514307649998955 ['TestJsxNameBoundaryRejections']
+defend-jsx_rejection-D3 16.516712840002583 ['TestJsxNameBoundaryRejections']
+defend-whole_mutants_split-D1 70.04616331199941 ['TestJsxNative']
+defend-whole_mutants_split-D2 134.5932937159996 ['TestWholeGeneratedAgrees']
+defend-whole_mutants_split-D3 149.61036484699798 ['TestWholeGeneratedAgrees']
