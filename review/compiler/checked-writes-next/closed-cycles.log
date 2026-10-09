@@ -1,0 +1,27 @@
+=== RUN   TestFixturesCycles
+=== PAUSE TestFixturesCycles
+=== CONT  TestFixturesCycles
+    fixtures_test.go:165: build stage3-fixture-oracle-hook 04cfd7ddbf78 miss 17.36
+=== RUN   TestFixturesCycles/cycles
+=== PAUSE TestFixturesCycles/cycles
+=== CONT  TestFixturesCycles/cycles
+=== RUN   TestFixturesCycles/cycles/05_safe_load_read/main.a
+=== PAUSE TestFixturesCycles/cycles/05_safe_load_read/main.a
+=== RUN   TestFixturesCycles/cycles/06_import_order_mutant/main.a
+=== PAUSE TestFixturesCycles/cycles/06_import_order_mutant/main.a
+=== CONT  TestFixturesCycles/cycles/05_safe_load_read/main.a
+=== CONT  TestFixturesCycles/cycles/06_import_order_mutant/main.a
+=== RUN   TestFixturesCycles/cycles/05_safe_load_read/main.a/node
+=== RUN   TestFixturesCycles/cycles/06_import_order_mutant/main.a/node
+=== RUN   TestFixturesCycles/cycles/06_import_order_mutant/main.a/native
+=== RUN   TestFixturesCycles/cycles/05_safe_load_read/main.a/native
+--- PASS: TestFixturesCycles (24.23s)
+    --- PASS: TestFixturesCycles/cycles (0.00s)
+        --- PASS: TestFixturesCycles/cycles/05_safe_load_read/main.a (0.36s)
+            --- PASS: TestFixturesCycles/cycles/05_safe_load_read/main.a/node (0.00s)
+            --- PASS: TestFixturesCycles/cycles/05_safe_load_read/main.a/native (0.23s)
+        --- PASS: TestFixturesCycles/cycles/06_import_order_mutant/main.a (0.36s)
+            --- PASS: TestFixturesCycles/cycles/06_import_order_mutant/main.a/node (0.00s)
+            --- PASS: TestFixturesCycles/cycles/06_import_order_mutant/main.a/native (0.24s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/fixtures	24.598s

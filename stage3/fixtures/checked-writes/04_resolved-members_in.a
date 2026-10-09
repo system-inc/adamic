@@ -1,0 +1,16 @@
+// a-check: refused a value of type ResolvedType seen as ObjectType, which can write SymbolTable | undefined where SymbolTable is read
+// Survey ResolvedType: 17 class-d sites; representative ID 123, src/compiler/checker.ts:17507:148.
+// TypeScript 6.0.3: checker.ts:5555, checker.ts:5648-5659, types.ts:6805.
+// SymbolTable values are reduced to numbers; resetMembers parameterizes the real members assignment.
+type SymbolTable = Map<string, number>;
+interface ObjectType { members: SymbolTable | undefined; }
+interface ResolvedType { members: SymbolTable; }
+function resetMembers(type: ObjectType, members: SymbolTable | undefined): void {
+    type.members = members;
+}
+
+const members: SymbolTable = new Map<string, number>([["x", 1]]);
+const type: ResolvedType = { members };
+console.log("before write");
+resetMembers(type, members);
+console.log(`stored ${type.members === undefined ? "undefined" : "members"}`);

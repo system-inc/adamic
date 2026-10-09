@@ -1,0 +1,76 @@
+{
+  "measurement": "Node stock TypeScript 6.0.3 with explicit pre-store contracts; no native stock compiler execution",
+  "witness_pin": "3255eb1e",
+  "changes": [
+    {
+      "file": "typescript.js",
+      "original_sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+      "checked_sha256": "845ce970182eddbd1683cb9dfd7a3054e631eb65a54e36bc45de65419414084b"
+    },
+    {
+      "file": "_tsc.js",
+      "original_sha256": "1c59e77a54b186ec43fa7f3e0d3c4bb15ca5eb5ba43e96b1d3a267139eddd3e3",
+      "checked_sha256": "433d7ea76cf31b2b6899df7a53a8c8d296f57baa66d17758a2f2a0cb7c0e8531"
+    }
+  ],
+  "runs": [
+    {
+      "name": "flags",
+      "exit": 70,
+      "totals": {
+        "flags": {
+          "assignments": 0,
+          "violations": 0
+        },
+        "parent": {
+          "assignments": 0,
+          "violations": 0
+        }
+      },
+      "command": [
+        "node",
+        "/tmp/emit-latent/witnesses/flags.cjs",
+        "/tmp/emit-latent/typescript/lib/typescript.js"
+      ]
+    },
+    {
+      "name": "parent",
+      "exit": 70,
+      "totals": {
+        "flags": {
+          "assignments": 0,
+          "violations": 0
+        },
+        "parent": {
+          "assignments": 0,
+          "violations": 0
+        }
+      },
+      "command": [
+        "node",
+        "/tmp/emit-latent/witnesses/parent.cjs",
+        "/tmp/emit-latent/typescript/lib/typescript.js"
+      ]
+    },
+    {
+      "name": "acceptance",
+      "exit": 0,
+      "totals": {
+        "flags": {
+          "assignments": 61,
+          "violations": 0
+        },
+        "parent": {
+          "assignments": 0,
+          "violations": 0
+        }
+      },
+      "command": [
+        "bash",
+        "/workspace/adamic/stage3/drivers/tsc/run.sh",
+        "node",
+        "/tmp/emit-latent/typescript/lib/tsc.js"
+      ]
+    }
+  ]
+}

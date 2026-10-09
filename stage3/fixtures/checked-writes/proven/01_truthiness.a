@@ -1,0 +1,16 @@
+// From TypeScript 6.0.3, src/compiler/checker.ts:12692
+// Census reason: a value of type TypeNode | undefined seen as Type | undefined, whose readonly field flags becomes writable: a readonly field may hold something narrower than NodeFlags, which a write of TypeFlags would replace
+
+interface TypeNode { readonly pos: number; readonly kind: number; }
+interface Type { readonly flags: number; }
+interface AccessorDeclaration { readonly annotation: TypeNode | undefined; }
+interface PropertyDeclaration { readonly annotation: TypeNode | undefined; }
+function getAnnotatedAccessorTypeNode(accessor: AccessorDeclaration | PropertyDeclaration | undefined): TypeNode | undefined { return accessor?.annotation; }
+function getTypeFromTypeNode(node: TypeNode): Type { return { flags: node.kind }; }
+    function getAnnotatedAccessorType(accessor: AccessorDeclaration | PropertyDeclaration | undefined): Type | undefined {
+        const node = getAnnotatedAccessorTypeNode(accessor);
+        return node && getTypeFromTypeNode(node);
+    }
+
+const annotation = { pos: 0 as const, kind: 8 };
+console.log(`${getAnnotatedAccessorType({ annotation })?.flags} ${getAnnotatedAccessorType(undefined)?.flags} ${annotation.pos}`);

@@ -1,0 +1,329 @@
+=== RUN   TestCheckedCountsWarmShard
+=== PAUSE TestCheckedCountsWarmShard
+=== CONT  TestCheckedCountsWarmShard
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_const.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_const.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_weak.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_weak.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_local.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_local.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_field.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_field.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_initialized.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_initialized.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_uninitialized.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_uninitialized.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_optional.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_optional.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_spread.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_spread.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_return.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_return.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_assignment.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_assignment.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_statement.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_statement.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_iteration.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_iteration.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_catch.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_catch.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_interface.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_interface.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_append.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_append.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_map_entry.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_map_entry.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_initialized.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_initialized.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_read.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_read.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_field.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_field.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_static.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_static.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_default.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_default.ts
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/02_scanner_digits.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/02_scanner_digits.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/03_scanner_hoisting.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/03_scanner_hoisting.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/04_scanner_escaped_text.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/04_scanner_escaped_text.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/05_scanner_reassigned_text.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/05_scanner_reassigned_text.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/06_parser_token_state.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/06_parser_token_state.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/07_binder_symbol_count.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/07_binder_symbol_count.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/10_checker_arrow_cleanup.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/10_checker_arrow_cleanup.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/11_scanner_method_wrapper.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/11_scanner_method_wrapper.a
+=== RUN   TestCheckedCountsWarmShard/internal/fresh/testdata/regexp_tree.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/fresh/testdata/regexp_tree.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_fields.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_fields.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_collections.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_collections.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_closures.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_closures.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_weak.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_weak.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/argument_guard.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/argument_guard.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/group_guard.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/group_guard.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/callback.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/callback.a
+=== NAME  TestCheckedCountsWarmShard
+    counts_test.go:238: fixture census 932
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_const.ts
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/callback.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/group_guard.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/argument_guard.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_weak.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_const.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/argument_guard.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_weak.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/group_guard.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/callback.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/argument_guard.a
+    counts_test.go:233: | internal/oracle/testdata/regexp_replace/argument_guard.a | 6 | 0 | 5 | 0 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_closures.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_const.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_uninitialized_const.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_collections.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_weak.a
+    counts_test.go:233: | internal/oracle/testdata/regexp_cycle_weak.a | 4 | 4 | 12 | 14 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_fields.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/group_guard.a
+    counts_test.go:233: | internal/oracle/testdata/regexp_replace/group_guard.a | 7 | 0 | 7 | 0 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/fresh/testdata/regexp_tree.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_fields.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_collections.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/fresh/testdata/regexp_tree.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_closures.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/callback.a
+    counts_test.go:233: | internal/oracle/testdata/regexp_replace/callback.a | 290 | 290 | 244 | 291 | 37 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/11_scanner_method_wrapper.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_closures.a
+    counts_test.go:233: | internal/oracle/testdata/regexp_cycle_closures.a | 11 | 11 | 25 | 26 | 10 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/10_checker_arrow_cleanup.a
+=== NAME  TestCheckedCountsWarmShard/internal/fresh/testdata/regexp_tree.ts
+    counts_test.go:233: | internal/fresh/testdata/regexp_tree.ts | 91 | 91 | 81 | 85 | 35 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_collections.a
+    counts_test.go:233: | internal/oracle/testdata/regexp_cycle_collections.a | 31 | 31 | 85 | 89 | 23 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_fields.a
+    counts_test.go:233: | internal/oracle/testdata/regexp_cycle_fields.a | 61 | 61 | 132 | 130 | 44 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/07_binder_symbol_count.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/10_checker_arrow_cleanup.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/11_scanner_method_wrapper.a
+    counts_test.go:233: | stage3/fixtures/nested-functions/11_scanner_method_wrapper.a | 5 | 5 | 9 | 13 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/06_parser_token_state.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/07_binder_symbol_count.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/06_parser_token_state.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/10_checker_arrow_cleanup.a
+    counts_test.go:233: | stage3/fixtures/nested-functions/10_checker_arrow_cleanup.a | 5 | 5 | 11 | 17 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/05_scanner_reassigned_text.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts
+    counts_test.go:233: | stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts | 36 | 36 | 99 | 128 | 17 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/04_scanner_escaped_text.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a
+    counts_test.go:233: | stage3/fixtures/nested-functions/08_checker_symbol_recursion.a | 6 | 6 | 26 | 31 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/03_scanner_hoisting.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/06_parser_token_state.a
+    counts_test.go:233: | stage3/fixtures/nested-functions/06_parser_token_state.a | 21 | 21 | 46 | 62 | 9 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/02_scanner_digits.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/07_binder_symbol_count.a
+    counts_test.go:233: | stage3/fixtures/nested-functions/07_binder_symbol_count.a | 14 | 14 | 28 | 33 | 11 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_default.ts
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/04_scanner_escaped_text.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/03_scanner_hoisting.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_default.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/02_scanner_digits.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/05_scanner_reassigned_text.a
+    counts_test.go:233: | stage3/fixtures/nested-functions/05_scanner_reassigned_text.a | 2 | 2 | 6 | 7 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_static.ts
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/03_scanner_hoisting.a
+    counts_test.go:233: | stage3/fixtures/nested-functions/03_scanner_hoisting.a | 2 | 2 | 4 | 5 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_field.ts
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/04_scanner_escaped_text.a
+    counts_test.go:233: | stage3/fixtures/nested-functions/04_scanner_escaped_text.a | 4 | 4 | 14 | 18 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_read.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_static.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_default.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_lazy_default.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_initialized.ts
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/02_scanner_digits.a
+    counts_test.go:233: | stage3/fixtures/nested-functions/02_scanner_digits.a | 21 | 21 | 92 | 70 | 15 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_map_entry.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_field.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_initialized.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_read.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_static.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_lazy_static.ts | 1 | 0 | 0 | 1 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_append.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_map_entry.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_append.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_read.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_lazy_read.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_interface.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_field.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_lazy_field.ts | 1 | 0 | 0 | 0 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_catch.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_map_entry.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_uninitialized_map_entry.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_iteration.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_initialized.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_lazy_initialized.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_statement.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_interface.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_append.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_uninitialized_append.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_assignment.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_catch.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_statement.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_iteration.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_assignment.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_interface.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_uninitialized_interface.ts | 1 | 0 | 1 | 0 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_return.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_assignment.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_literal_assignment.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_spread.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_iteration.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_uninitialized_iteration.ts | 1 | 0 | 0 | 1 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_optional.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_catch.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_uninitialized_catch.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_uninitialized.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_statement.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_literal_statement.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_initialized.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_spread.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_return.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_initialized.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_uninitialized.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_optional.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_spread.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_uninitialized_spread.ts | 1 | 0 | 0 | 0 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_field.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_return.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_literal_return.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_local.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_initialized.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_static_initialized.ts | 1 | 0 | 0 | 1 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_field.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_optional.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_uninitialized_optional.ts | 1 | 0 | 0 | 0 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_weak.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_uninitialized.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_static_uninitialized.ts | 1 | 0 | 0 | 1 | 1 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_local.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_weak.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_field.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_definite_field.ts | 1 | 0 | 1 | 2 | 1 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_local.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_definite_local.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_weak.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_weak.ts | 4 | 1 | 5 | 6 | 4 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_definite.ts | 7 | 7 | 4 | 11 | 4 | 0 |
+--- PASS: TestCheckedCountsWarmShard (0.00s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/argument_guard.a (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_const.ts (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_weak.a (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/group_guard.a (0.27s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/callback.a (0.39s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_closures.a (0.28s)
+    --- PASS: TestCheckedCountsWarmShard/internal/fresh/testdata/regexp_tree.ts (0.26s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_collections.a (0.28s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_cycle_fields.a (0.31s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/11_scanner_method_wrapper.a (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/10_checker_arrow_cleanup.a (0.16s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/06_parser_token_state.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/07_binder_symbol_count.a (0.27s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/05_scanner_reassigned_text.a (0.19s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/03_scanner_hoisting.a (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/04_scanner_escaped_text.a (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_default.ts (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/nested-functions/02_scanner_digits.a (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_static.ts (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_read.ts (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_field.ts (0.33s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_map_entry.ts (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_lazy_initialized.ts (0.32s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_append.ts (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_interface.ts (0.31s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_assignment.ts (0.23s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_iteration.ts (0.33s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_catch.ts (0.39s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_statement.ts (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_spread.ts (0.31s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_literal_return.ts (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_initialized.ts (0.34s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_uninitialized_optional.ts (0.37s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_static_uninitialized.ts (0.40s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_field.ts (0.24s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite_local.ts (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_weak.ts (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_definite.ts (0.31s)
+PASS
+gate cache: native hits=0 misses=40
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.349s

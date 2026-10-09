@@ -103,6 +103,9 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 				if field != nil && accessorSymbol(field) {
 					return nil, l.notYet(target, "a logical assignment to an accessor")
 				}
+				if l.result.CheckedWrites[text] {
+					return nil, l.notYet(target, "a checked write through a computed logical-assignment key")
+				}
 				assignment.KeyNames = append(assignment.KeyNames, text)
 			}
 			assignment.Key = key

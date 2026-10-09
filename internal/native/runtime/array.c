@@ -13,6 +13,9 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	array->length = 0;
 	array->capacity = capacity;
 	array->references = references;
+	array->never_elements = false;
+	array->element_contract = NULL;
+	array->allocation_type = 0;
 	array->elements = NULL;
 	array->properties = NULL;
 	if (capacity > 0) {
@@ -25,7 +28,16 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	return array;
 }
 
+void adamic_array_check_never(const adamic_array *array, unsigned char kind, adamic_value value, const char *expression) {
+	if (array->element_contract != NULL) { adamic_check_contract(array->element_contract, kind==0 ? array->element_contract->kind : kind, value, 0, expression); }
+	if (array->never_elements) {
+		static const adamic_field_contract contract = {.declared = "never"};
+		adamic_check_contract(&contract, kind, value, 0, expression);
+	}
+}
+
 void adamic_array_push(adamic_array *array, adamic_value value) {
+	if (array->element_contract != NULL || array->never_elements) { adamic_array_check_never(array, 0, value, "array[]"); }
 	if (array->length == array->capacity) {
 		size_t capacity = array->capacity == 0 ? 4 : array->capacity * 2;
 		adamic_value *grown = realloc(array->elements, capacity * sizeof *grown);
@@ -278,13 +290,14 @@ adamic_array *adamic_array_filled(double length, adamic_value value, bool refere
 	return array;
 }
 
-adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end) {
+adamic_array *adamic_array_fill_checked(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end, unsigned char kind, const char *expression) {
 	// ECMAScript's relative indexes, as slice reads them.
 	double length = (double)array->length;
 	start = has_start ? (isnan(start) ? 0 : trunc(start)) : 0;
 	start = start < 0 ? (length + start < 0 ? 0 : length + start) : (start > length ? length : start);
 	end = has_end ? (isnan(end) ? 0 : trunc(end)) : length;
 	end = end < 0 ? (length + end < 0 ? 0 : length + end) : (end > length ? length : end);
+	if (start < end && (array->element_contract != NULL || array->never_elements)) { adamic_array_check_never(array, kind, value, expression); }
 	for (size_t index = (size_t)start; (double)index < end; index++) {
 		if (array->references) {
 			// The new reference first: the value may be the one already there.
@@ -296,9 +309,16 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 	return array;
 }
 
+adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double start, double end, bool has_start, bool has_end) {
+ return adamic_array_fill_checked(array, value, start, end, has_start, has_end, 0, "array[]");
+}
+
 // splice_into is splice, the removed elements moving to removed, or let go when removed is NULL:
 // a splice whose result nothing uses (adamic_array_remove) allocates no array to hold them.
 static void splice_into(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, adamic_array **removed) {
+	if (array->element_contract != NULL || array->never_elements) {
+		for (size_t item = 0; item < item_count; item++) { adamic_array_check_never(array, 0, items[item], "array[]"); }
+	}
 	// ECMAScript's relative start, clamped to the array; a count left out is everything after it, and
 	// a count given is clamped to what's there.
 	double length = (double)array->length;
@@ -397,6 +417,7 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
 }
 
 void adamic_array_set(adamic_array *array, double index, adamic_value value) {
+	if (array->element_contract != NULL || array->never_elements) { adamic_array_check_never(array, 0, value, "array[]"); }
 	// 0.1 writes only at an index the array has: JavaScript would grow the array, or leave a hole, and
 	// a hole is something 0.1 can't hold. push is how to append.
 	adamic_value *slot = adamic_array_at(array, index);

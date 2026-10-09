@@ -1,0 +1,397 @@
+{
+  "compiler_revision": "781766edccfd21ed4f2e9f9106dd488d28751e96",
+  "results": [
+    {
+      "family": "DiagnosticWithLocation",
+      "file": "01_located-diagnostic_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "never[]",
+      "file": "02_shared-empty_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 3 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nlength 1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nlength 1\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "FlowNode",
+      "file": "03_flow-node_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored BindingElement\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored BindingElement\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "ResolvedType",
+      "file": "04_resolved-members_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "T",
+      "file": "05_generic-range_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored 1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored 1\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "NodeBuilderContext",
+      "file": "06_builder-tracker_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored fallback\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored fallback\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "DiagnosticWithLocation[]",
+      "file": "07_diagnostic-array_out.a",
+      "status": "blocked",
+      "reason": "unmutated native/JS exit-70 write stop unavailable"
+    },
+    {
+      "family": "GeneratedIdentifier",
+      "file": "08_generated-identifier_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "Identifier",
+      "file": "09_identifier-flags_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored 1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored 1\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "Expression",
+      "file": "10_expression-range_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored 1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored 1\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "Node",
+      "file": "11_node-flags_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored 0\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored 0\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "CapturedThis",
+      "file": "12_captured-this_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "Declaration[]",
+      "file": "13_declaration-array_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 2 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored Expression\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored Expression\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "NodeArray<Statement>",
+      "file": "14_statement-array-range_out.a",
+      "status": "blocked",
+      "reason": "unmutated native/JS exit-70 write stop unavailable"
+    },
+    {
+      "family": "DiagnosticWithDetachedLocation",
+      "file": "15_detached-diagnostic_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored main.a\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored main.a\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "FlowArrayMutation | FlowAssignment",
+      "file": "16_flow-assignment-union_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored BindingElement\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored BindingElement\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "GeneratedIdentifier | GeneratedPrivateIdentifier | Node",
+      "file": "17_generated-node-union_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "SyntheticSuper",
+      "file": "18_synthetic-super_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "Mutable<GeneratedIdentifier>",
+      "file": "19_mutable-generated_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      }
+    },
+    {
+      "family": "Diagnostic",
+      "file": "20_diagnostic-union_out.a",
+      "status": "caught",
+      "caught_by": "exit-70 checked-write expectation in both backends",
+      "build": {
+        "exit": 0,
+        "stdout": "removed 1 actual IR store checks\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before write\nstored undefined\n",
+        "stderr": ""
+      }
+    }
+  ],
+  "caught": 18,
+  "blocked": 2
+}

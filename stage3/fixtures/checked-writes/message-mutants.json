@@ -1,0 +1,18 @@
+{
+  "compiler_revision": "29275d4ee7c8269a10f12fa0b4aa5732f0d94f9d",
+  "compiler_sha256": "9cc13ef186926e47feb115348464f25323173838dd03c5c5b03664153bb5fd39",
+  "fixture": "03_flow-node_out.a",
+  "mutation": "swap allocated-shape and incoming sides in emitted JS panic formatter",
+  "original": {
+    "exit": 70,
+    "stdout": "before write\n",
+    "stderr": "adamic: panic: write failed: flow.node expects BinaryExpression, got BindingElement\n"
+  },
+  "mutant": {
+    "exit": 70,
+    "stdout": "before write\n",
+    "stderr": "adamic: panic: write failed: flow.node expects BindingElement, got BinaryExpression\n"
+  },
+  "caught": true,
+  "caught_by": "verify.checked_write_accepts exact stderr"
+}
