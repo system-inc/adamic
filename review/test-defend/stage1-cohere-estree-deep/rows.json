@@ -1,0 +1,42 @@
+[
+  {
+    "test": "TestUnattachedDecoratorControl",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "untrue",
+    "subsumed_by": [
+      "TestRecoveredExpressions"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/estree/sourceParser.ts:1189",
+        "change": "Decorator node kind -> UnusedDecoratorControl",
+        "rows_failed": [
+          "TestRecoveredExpressions",
+          "TestUnattachedDecorator",
+          "TestUnattachedDecoratorControl"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/estree/pipeline.ts:95",
+        "change": "Drop the stripped-source parts.push statement",
+        "rows_failed": [
+          "TestRecoveredExpressions"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/estree/protocol.ts:36",
+        "change": "dump default root depth 0 -> 1",
+        "rows_failed": [
+          "TestRecoveredExpressions",
+          "TestUnattachedDecoratorControl"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defend/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestUnattachedDecoratorControl$'; loom_family_products_test.go:105: Node decorator control did not finish with two incorrect acceptances"
+  }
+]

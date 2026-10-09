@@ -1,0 +1,122 @@
+[
+  {
+    "log": "D3-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:68: build estree-syntax-mutant-ir-unattached-decorator 2f9c35221a46 miss 1.60"
+  },
+  {
+    "log": "D3-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:68: build estree-syntax-mutant-emitted-unattached-decorator 62b3b970b0d0 miss 21.95"
+  },
+  {
+    "log": "D3-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:68: build estree-syntax-mutant-native-unattached-decorator 5be5810497ae miss 1.41"
+  },
+  {
+    "log": "D3-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:69: build syntax-mutants-go-oracle-v1 264f8b1a2a2e miss 0.77"
+  },
+  {
+    "log": "D1-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:68: build estree-syntax-mutant-ir-unattached-decorator ea8498be9a36 miss 1.76"
+  },
+  {
+    "log": "D1-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:68: build estree-syntax-mutant-emitted-unattached-decorator 8d5ab8382192 miss 25.01"
+  },
+  {
+    "log": "D1-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:68: build estree-syntax-mutant-native-unattached-decorator 89c9b7a5a106 miss 5.34"
+  },
+  {
+    "log": "D1-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:69: build syntax-mutants-go-oracle-v1 a61d747ba447 miss 0.94"
+  },
+  {
+    "log": "D2-TestRecoveredExpressions.log",
+    "output": "recovery_cache_test.go:231: BUILD estree-oracle-answer cold wall=0.003889s"
+  },
+  {
+    "log": "D2-TestRecoveredExpressions.log",
+    "output": "expressions_test.go:16: build estree-oracle-answer 94398d7890ac miss 0.00"
+  },
+  {
+    "log": "D2-TestRecoveredExpressions.log",
+    "output": "recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=31.094926s"
+  },
+  {
+    "log": "D2-TestRecoveredExpressions.log",
+    "output": "expressions_test.go:18: build estree-lowered-program c5f36a30bf8a miss 31.14"
+  },
+  {
+    "log": "D2-TestRecoveredExpressions.log",
+    "output": "recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=32.051564s"
+  },
+  {
+    "log": "D2-TestRecoveredExpressions.log",
+    "output": "expressions_test.go:18: build estree-sanitized-native 18ca1beafc35 miss 32.05"
+  },
+  {
+    "log": "D2-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:68: build estree-syntax-mutant-ir-unattached-decorator a35cd212e271 miss 1.78"
+  },
+  {
+    "log": "D2-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:68: build estree-syntax-mutant-emitted-unattached-decorator 3eed4a231025 miss 21.32"
+  },
+  {
+    "log": "D2-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:68: build estree-syntax-mutant-native-unattached-decorator 1dba663197be miss 10.13"
+  },
+  {
+    "log": "D2-TestUnattachedDecoratorControl.log",
+    "output": "loom_family_products_test.go:69: build syntax-mutants-go-oracle-v1 a77809182ac9 miss 0.80"
+  },
+  {
+    "log": "D1-TestRecoveredExpressions.log",
+    "output": "recovery_cache_test.go:231: BUILD estree-oracle-answer cold wall=0.008671s"
+  },
+  {
+    "log": "D1-TestRecoveredExpressions.log",
+    "output": "expressions_test.go:16: build estree-oracle-answer 94398d7890ac miss 0.01"
+  },
+  {
+    "log": "D1-TestRecoveredExpressions.log",
+    "output": "recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=23.471492s"
+  },
+  {
+    "log": "D1-TestRecoveredExpressions.log",
+    "output": "expressions_test.go:18: build estree-lowered-program 01fa0de209a8 miss 23.51"
+  },
+  {
+    "log": "D1-TestRecoveredExpressions.log",
+    "output": "recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=29.712929s"
+  },
+  {
+    "log": "D1-TestRecoveredExpressions.log",
+    "output": "expressions_test.go:18: build estree-sanitized-native d52d3f09507e miss 29.72"
+  },
+  {
+    "log": "D3-TestRecoveredExpressions.log",
+    "output": "recovery_cache_test.go:231: BUILD estree-oracle-answer cold wall=0.006634s"
+  },
+  {
+    "log": "D3-TestRecoveredExpressions.log",
+    "output": "expressions_test.go:16: build estree-oracle-answer 94398d7890ac miss 0.01"
+  },
+  {
+    "log": "D3-TestRecoveredExpressions.log",
+    "output": "recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=28.586737s"
+  },
+  {
+    "log": "D3-TestRecoveredExpressions.log",
+    "output": "expressions_test.go:18: build estree-lowered-program 80f691da24e9 miss 28.64"
+  },
+  {
+    "log": "D3-TestRecoveredExpressions.log",
+    "output": "recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=30.447239s"
+  },
+  {
+    "log": "D3-TestRecoveredExpressions.log",
+    "output": "expressions_test.go:18: build estree-sanitized-native 35ffda87412b miss 30.45"
+  }
+]
