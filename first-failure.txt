@@ -1,0 +1,33 @@
+FIRST FAILURE (tests, at 223.3 s):
+github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownListLayout
+l::PassModel<llvm::Function, llvm::InstCombinePass, llvm::AnalysisManager<llvm::Function>>::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) BackendUtil.cpp:0:0
+        #12 0x000060ff1ee2252a llvm::PassManager<llvm::Function, llvm::AnalysisManager<llvm::Function>>::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) (/home/ahra/adamic-tools/llvm/bin/clang-20+0xaa2252a)
+        #13 0x000060ff1ee221cd llvm::detail::PassModel<llvm::Function, llvm::PassManager<llvm::Function, llvm::AnalysisManager<llvm::Function>>, llvm::AnalysisManager<llvm::Function>>::run(llvm::Function&, llvm::AnalysisManager<llvm::Function>&) AMDGPUTargetMachine.cpp:0:0
+        #14 0x000060ff1f5c0b39 llvm::ModuleToFunctionPassAdaptor::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb1c0b39)
+        #15 0x000060ff1f5c050d llvm::detail::PassModel<llvm::Module, llvm::ModuleToFunctionPassAdaptor, llvm::AnalysisManager<llvm::Module>>::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) AMDGPUTargetMachine.cpp:0:0
+        #16 0x000060ff1f5cf831 llvm::PassManager<llvm::Module, llvm::AnalysisManager<llvm::Module>>::run(llvm::Module&, llvm::AnalysisManager<llvm::Module>&) (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb1cf831)
+        #17 0x000060ff1fb450f0 (anonymous namespace)::EmitAssemblyHelper::RunOptimizationPipeline(clang::BackendAction, std::__1::unique_ptr<llvm::raw_pwrite_stream, std::__1::default_delete<llvm::raw_pwrite_stream>>&, std::__1::unique_ptr<llvm::ToolOutputFile, std::__1::default_delete<llvm::ToolOutputFile>>&, clang::BackendConsumer*) BackendUtil.cpp:0:0
+        #18 0x000060ff1fc6e5d1 clang::emitBackendOutput(clang::CompilerInstance&, clang::CodeGenOptions&, llvm::StringRef, llvm::Module*, clang::BackendAction, llvm::IntrusiveRefCntPtr<llvm::vfs::FileSystem>, std::__1::unique_ptr<llvm::raw_pwrite_stream, std::__1::default_delete<llvm::raw_pwrite_stream>>, clang::BackendConsumer*) (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb86e5d1)
+        #19 0x000060ff19e1cb9d clang::BackendConsumer::HandleTranslationUnit(clang::ASTContext&) (/home/ahra/adamic-tools/llvm/bin/clang-20+0x5a1cb9d)
+        #20 0x000060ff1f51573f clang::ParseAST(clang::Sema&, bool, bool) (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb11573f)
+        #21 0x000060ff1fd5d99d clang::FrontendAction::Execute() (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb95d99d)
+        #22 0x000060ff1fc96c5d clang::CompilerInstance::ExecuteAction(clang::FrontendAction&) (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb896c5d)
+        #23 0x000060ff1fc96a94 clang::ExecuteCompilerInvocation(clang::CompilerInstance*) (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb896a94)
+        #24 0x000060ff1fc96263 cc1_main(llvm::ArrayRef<char const*>, char const*, void*) (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb896263)
+        #25 0x000060ff1fc92c03 ExecuteCC1Tool(llvm::SmallVectorImpl<char const*>&, llvm::ToolContext const&) driver.cpp:0:0
+        #26 0x000060ff1fc946c6 clang_main(int, char**, llvm::ToolContext const&) (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb8946c6)
+        #27 0x000060ff1fc93912 main (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb893912)
+        #28 0x00007110f042a1ca (/lib/x86_64-linux-gnu/libc.so.6+0x2a1ca)
+        #29 0x00007110f042a28b __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x2a28b)
+        #30 0x000060ff1fb1a6ab _start (/home/ahra/adamic-tools/llvm/bin/clang-20+0xb71a6ab)
+        clang: error: unable to execute command: Segmentation fault (core dumped)
+        clang: error: clang frontend command failed due to signal (use -v to see invocation)
+        clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+        Target: x86_64-unknown-linux-gnu
+        Thread model: posix
+        InstalledDir: /home/ahra/adamic-tools/llvm/bin
+        clang: note: diagnostic msg: Error generating preprocessed source(s).
+        
+--- FAIL: TestMarkdownListLayout (116.38s)
+
+(box load 49.8 on 64 cores at first failure)
