@@ -71,3 +71,13 @@ Mutation evidence maps each member obligation to its intended catcher. Every mut
 The native registry mutant is caught by an explicit emitted-C assertion; a compiler/clang build failure is not counted as its kill. Syntax misfit mutants must report runtime exit-code disagreement, with no sanitizer failure. p72-input is an input control substitution, not a missing-check mutation. Original masked evidence is distinguished from successful adapted checks.
 
 Remaining limitations inherited from members: native callable-union numeric-result boxing for the separate compatible p19 invocation probe; checked method enumeration without an own-slot certificate; tuple/destructuring consumers outside the completed object bindings; existing optional-read NotYet boundaries; general callable adapters beyond supported scalar ABI conventions. Full repository gate was not run. No new test leaves were added by this rebuild. One inherited p135 native leaf took 79.12s while cold concurrent baselines were running; a final isolated check records its warm duration.
+
+Final delivery validation after main 38c09330 merged in bd2f5c32:
+- Four constructor fixtures plus p135 tagged unread: PASS, 2.198s. Individual leaves: field_write_paths 1.49s, nbody_static_collision 1.59s, class_features_static_private 1.79s, class_features_static 2.14s, p135_tagged_unread 0.55s. All constructor sources agree with source Node, JavaScript, release native and sanitized native and are leak-clean.
+- TestCountsAreRecorded: PASS, 36.777s; no further table changes.
+- TestCallTargetReaders: PASS, 1.774s.
+- Integration lane checks: PASS, 21.4s: gofmt and tools on 31 Go files, t.Parallel on 2 test packages; a-check 2 .a files; vet 2 packages.
+- Supplemental constructor-revert: remove the static-storage exclusion in view_member_read.go. The original four constructor fixtures fail Node/native runtime exit comparisons (test exit 1, 2.056s). This proves the one original recipe fix separately from the 29 member obligations. Source restored byte for byte afterward.
+- git diff --check: PASS. No test file edits beyond the specified member/main merges.
+
+Counts commit c9d78370 updates exactly four rows; evidence commit 473add81 records the baseline and member proofs. The final evidence commit and push SHA are supplied in the delivery response. The lane check is rerun on that committed delivery tree before the sole finished-unit push. No PR is opened.

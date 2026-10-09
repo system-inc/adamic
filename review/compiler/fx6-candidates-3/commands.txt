@@ -11,3 +11,7 @@ Reader guard: timeout 120 go test ./internal/ir -run TestCallTargetReaders -coun
 Stage3 assertions: timeout 180 go test ./stage3/fixtures -run TestFixturesAssertions -count=1 -timeout 150s
 Counts: timeout 420 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 360s
 Mutants: timeout 900 python3 review/compiler/fx6-candidates-3/run-mutants.py (each child go test has -timeout 90s and a subprocess hard limit)
+Final constructor controls: timeout 180 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(nbody_static_collision|field_write_paths|class_features_static|class_features_static_private).a|TestNativeAgreesWithNode/internal/lower/testdata/callable_producers/p135_tagged_unread.a' -count=1 -v -timeout 150s
+Final counts: timeout 240 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 210s
+Supplemental constructor revert: apply constructor-revert.patch; go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(nbody_static_collision|field_write_paths|class_features_static|class_features_static_private).a' -count=1 -v -timeout 90s (subprocess timeout 120s); restore original source in finally.
+Lane: git fetch -q origin main devtools/fast-gate cloud/merge-tree; timeout 180 bash -c 'git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'
