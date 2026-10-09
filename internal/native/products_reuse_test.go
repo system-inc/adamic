@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+// Not parallel: changes the build cache process environment.
 func TestArtifactInputsAndReuse(t *testing.T) {
 	cache, err := newTestBuildCache("../..")
 	if err != nil {

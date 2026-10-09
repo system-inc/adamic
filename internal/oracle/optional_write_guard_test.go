@@ -14,6 +14,7 @@ import (
 )
 
 func TestOptionalWriteGuard(t *testing.T) {
+	t.Parallel()
 	fixture, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/optional_write_guard.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -91,6 +92,7 @@ static adamic_value *mutant_absent_write(adamic_object *object, const char *name
 }
 
 func TestOptionalImplementsRepresentation(t *testing.T) {
+	t.Parallel()
 	fixture, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/optional_implements_guard.a"))
 	if err != nil {
 		t.Fatal(err)

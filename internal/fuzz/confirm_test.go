@@ -61,6 +61,7 @@ case "$last" in
 	return &Checkout{Root: root, adamic: adamic, runtime: filepath.Join(root, "runtime.a")}, calls
 }
 
+// Not parallel: flakyCheckout changes the process environment for fixture tools.
 func TestFindingReproducesAlone(t *testing.T) {
 	for _, test := range []struct {
 		name, stage    string
@@ -101,6 +102,7 @@ func TestFindingReproducesAlone(t *testing.T) {
 	}
 }
 
+// Not parallel: flakyCheckout changes the process environment for fixture tools.
 func TestConfirmationWaitsForOtherPrograms(t *testing.T) {
 	started, release, otherDone := make(chan struct{}), make(chan struct{}), make(chan struct{})
 	go func() {
@@ -140,6 +142,7 @@ func TestConfirmationWaitsForOtherPrograms(t *testing.T) {
 	}
 }
 
+// Not parallel: flakyCheckout changes the process environment for fixture tools.
 func TestObserveConfirmsCompilerCrash(t *testing.T) {
 	checkout, _ := flakyCheckout(t, "c", false, false)
 	outcome := checkout.Observe("fixture", "program.a", filepath.Join(checkout.Root, "program"), "crash")

@@ -27,6 +27,7 @@ func TestDeadlineKillsGrandchild(t *testing.T) {
 	testfixture.AssertStopped(t, start, heartbeat, err.Error(), child)
 }
 
+// Not parallel: changes the shared WithTimeout hook or process environment.
 func TestExitedLeaderClosesDescendantPipes(t *testing.T) {
 	child, heartbeat := testfixture.Tree(t, "fake-clang")
 	factory, ready := testfixture.ReadyContext(t, heartbeat)
@@ -51,6 +52,7 @@ func (writer blockedWriter) Write(data []byte) (int, error) {
 	return len(data), nil
 }
 
+// Not parallel: changes the shared WithTimeout hook or process environment.
 func TestWaitCannotHangInOutputWriter(t *testing.T) {
 	writer := blockedWriter{make(chan struct{}), make(chan struct{})}
 	factory, ready := testfixture.ContextWhenReady(t, func() bool {
@@ -98,6 +100,7 @@ func waitReadyResult(t *testing.T, done <-chan error) error {
 	}
 }
 
+// Not parallel: changes the shared WithTimeout hook or process environment.
 func TestReadyDeadlineStartsAfterGrandchild(t *testing.T) {
 	child, heartbeat := testfixture.Tree(t, "delayed-grandchild", 650*time.Millisecond)
 	factory, ready := testfixture.ReadyContext(t, heartbeat)
@@ -131,6 +134,7 @@ func TestReadyDeadlineStartsAfterGrandchild(t *testing.T) {
 	testfixture.AssertStopped(t, armed, heartbeat, err.Error(), child)
 }
 
+// Not parallel: changes the shared WithTimeout hook or process environment.
 func TestCommandDefaultDeadlineIncludesStartup(t *testing.T) {
 	t.Setenv("ADAMIC_CHILD_DEADLINE", "")
 	before := time.Now()

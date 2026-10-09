@@ -35,6 +35,7 @@ func init() {
 // The project permits the expression, but a definite string use must not silently
 // trust a missing message. Pin the named check independently of counts.
 func TestCaughtMessageDefiniteStringCheck(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ fixture, stdout string }{{"caught_string_check", "[undefined]\nafter\n"}, {"caught_string_field", "undefined\nafter\n"}, {"caught_string_return", "undefined\nafter\n"}} {
 		t.Run(probe.fixture, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", probe.fixture, "main.ts"))
@@ -65,6 +66,7 @@ func TestCaughtMessageDefiniteStringCheck(t *testing.T) {
 }
 
 func TestCaughtValuesMutants(t *testing.T) {
+	t.Parallel()
 	for _, kind := range []string{"every-error", "definite-read", "unchecked-string-use"} {
 		t.Run(kind, func(t *testing.T) {
 			fixture := "caught_members"
@@ -123,6 +125,7 @@ func TestCaughtValuesMutants(t *testing.T) {
 }
 
 func TestCaughtMemberMayThrowMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/caught_sites/main.ts"))
 	if err != nil {
 		t.Fatal(err)
@@ -153,6 +156,7 @@ func TestCaughtMemberMayThrowMutant(t *testing.T) {
 }
 
 func TestCaughtNullTagMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/caught_members/main.ts"))
 	if err != nil {
 		t.Fatal(err)

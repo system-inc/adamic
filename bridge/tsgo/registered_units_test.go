@@ -81,39 +81,110 @@ var bridgeBindings = []func(*testing.T){
 	TestBridgeWrongPositionUtilities,
 }
 
-func TestBridgeABI(t *testing.T)                    { runBridgeCase(t, 0) }
-func TestBridgeInputLength(t *testing.T)            { runBridgeCase(t, 1) }
-func TestBridgeUnlinkedBuild(t *testing.T)          { runBridgeCase(t, 2) }
-func TestBridgeUnlinkedC(t *testing.T)              { runBridgeCase(t, 3) }
-func TestBridgeUnlinkedJavaScript(t *testing.T)     { runBridgeCase(t, 4) }
-func TestBridgeOutputLength(t *testing.T)           { runBridgeCase(t, 5) }
-func TestBridgeStaleHandle(t *testing.T)            { runBridgeCase(t, 6) }
-func TestBridgeLinkage(t *testing.T)                { runBridgeCase(t, 7) }
-func TestBridgeOutputFree(t *testing.T)             { runBridgeCase(t, 8) }
-func TestBridgeRegion(t *testing.T)                 { runBridgeCase(t, 9) }
-func TestBridgeRegionOwnership(t *testing.T)        { runBridgeCase(t, 10) }
-func TestBridgeOracleSample(t *testing.T)           { runBridgeCase(t, 11) }
-func TestBridgeTimingRound1Sample(t *testing.T)     { runBridgeCase(t, 12) }
-func TestBridgeTimingRound2Sample(t *testing.T)     { runBridgeCase(t, 13) }
-func TestBridgeTimingRound3Sample(t *testing.T)     { runBridgeCase(t, 14) }
-func TestBridgeWrongPositionSample(t *testing.T)    { runBridgeCase(t, 15) }
-func TestBridgeOracleChecker(t *testing.T)          { runBridgeCase(t, 16) }
-func TestBridgeTimingRound1Checker(t *testing.T)    { runBridgeCase(t, 17) }
-func TestBridgeTimingRound2Checker(t *testing.T)    { runBridgeCase(t, 18) }
-func TestBridgeTimingRound3Checker(t *testing.T)    { runBridgeCase(t, 19) }
-func TestBridgeWrongPositionChecker(t *testing.T)   { runBridgeCase(t, 20) }
-func TestBridgeOracleParser(t *testing.T)           { runBridgeCase(t, 21) }
-func TestBridgeTimingRound1Parser(t *testing.T)     { runBridgeCase(t, 22) }
-func TestBridgeTimingRound2Parser(t *testing.T)     { runBridgeCase(t, 23) }
-func TestBridgeTimingRound3Parser(t *testing.T)     { runBridgeCase(t, 24) }
-func TestBridgeWrongPositionParser(t *testing.T)    { runBridgeCase(t, 25) }
-func TestBridgeOracleTypes(t *testing.T)            { runBridgeCase(t, 26) }
-func TestBridgeTimingRound1Types(t *testing.T)      { runBridgeCase(t, 27) }
-func TestBridgeTimingRound2Types(t *testing.T)      { runBridgeCase(t, 28) }
-func TestBridgeTimingRound3Types(t *testing.T)      { runBridgeCase(t, 29) }
-func TestBridgeWrongPositionTypes(t *testing.T)     { runBridgeCase(t, 30) }
-func TestBridgeOracleUtilities(t *testing.T)        { runBridgeCase(t, 31) }
-func TestBridgeTimingRound1Utilities(t *testing.T)  { runBridgeCase(t, 32) }
-func TestBridgeTimingRound2Utilities(t *testing.T)  { runBridgeCase(t, 33) }
-func TestBridgeTimingRound3Utilities(t *testing.T)  { runBridgeCase(t, 34) }
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeABI(t *testing.T) { runBridgeCase(t, 0) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeInputLength(t *testing.T) { runBridgeCase(t, 1) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeUnlinkedBuild(t *testing.T) { runBridgeCase(t, 2) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeUnlinkedC(t *testing.T) { runBridgeCase(t, 3) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeUnlinkedJavaScript(t *testing.T) { runBridgeCase(t, 4) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeOutputLength(t *testing.T) { runBridgeCase(t, 5) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeStaleHandle(t *testing.T) { runBridgeCase(t, 6) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeLinkage(t *testing.T) { runBridgeCase(t, 7) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeOutputFree(t *testing.T) { runBridgeCase(t, 8) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeRegion(t *testing.T) { runBridgeCase(t, 9) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeRegionOwnership(t *testing.T) { runBridgeCase(t, 10) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeOracleSample(t *testing.T) { runBridgeCase(t, 11) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound1Sample(t *testing.T) { runBridgeCase(t, 12) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound2Sample(t *testing.T) { runBridgeCase(t, 13) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound3Sample(t *testing.T) { runBridgeCase(t, 14) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeWrongPositionSample(t *testing.T) { runBridgeCase(t, 15) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeOracleChecker(t *testing.T) { runBridgeCase(t, 16) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound1Checker(t *testing.T) { runBridgeCase(t, 17) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound2Checker(t *testing.T) { runBridgeCase(t, 18) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound3Checker(t *testing.T) { runBridgeCase(t, 19) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeWrongPositionChecker(t *testing.T) { runBridgeCase(t, 20) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeOracleParser(t *testing.T) { runBridgeCase(t, 21) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound1Parser(t *testing.T) { runBridgeCase(t, 22) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound2Parser(t *testing.T) { runBridgeCase(t, 23) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound3Parser(t *testing.T) { runBridgeCase(t, 24) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeWrongPositionParser(t *testing.T) { runBridgeCase(t, 25) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeOracleTypes(t *testing.T) { runBridgeCase(t, 26) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound1Types(t *testing.T) { runBridgeCase(t, 27) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound2Types(t *testing.T) { runBridgeCase(t, 28) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound3Types(t *testing.T) { runBridgeCase(t, 29) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeWrongPositionTypes(t *testing.T) { runBridgeCase(t, 30) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeOracleUtilities(t *testing.T) { runBridgeCase(t, 31) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound1Utilities(t *testing.T) { runBridgeCase(t, 32) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound2Utilities(t *testing.T) { runBridgeCase(t, 33) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
+func TestBridgeTimingRound3Utilities(t *testing.T) { runBridgeCase(t, 34) }
+
+// Not parallel: bridge sanitizer and timing probes share the machine, as required by runBridgeCase.
 func TestBridgeWrongPositionUtilities(t *testing.T) { runBridgeCase(t, 35) }

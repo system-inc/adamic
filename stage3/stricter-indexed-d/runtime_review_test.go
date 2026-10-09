@@ -11,6 +11,7 @@ import (
 )
 
 func TestNullableRuntimeReview(t *testing.T) {
+	t.Parallel()
 	fixtures := []struct{ name, source string }{
 		{"map-set", `function keys(): void {
  const map = new Map<string | null | undefined, string>();
@@ -79,6 +80,7 @@ observe(null); observe("null"); console.log(String(null));
 }
 
 func TestNullableSentinelHeader(t *testing.T) {
+	t.Parallel()
 	_, _, node := nullableProgram(t, "console.log(String(null));\n", true)
 	const c = `#include "adamic.h"
 int main(void) {

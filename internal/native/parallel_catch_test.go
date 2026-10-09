@@ -10,6 +10,7 @@ import (
 // A null payload still represents a pending throw. The first throwing index
 // decides the parallel result, including when a later index throws an Error.
 func TestParallelUndefinedThrowAndPendingMutant(t *testing.T) {
+	t.Parallel()
 	const source = `#include "adamic.h"
 #include <stdio.h>
 static adamic_value work(adamic_closure *self, adamic_value *arguments) {

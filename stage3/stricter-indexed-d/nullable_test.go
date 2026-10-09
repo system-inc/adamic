@@ -66,6 +66,7 @@ func nullableBackends(t *testing.T, program *ir.Program, want result) string {
 // Source Node decides the three-state observations, including a runtime-built string,
 // the real empty string and the real text "null", which must never be the sentinel.
 func TestNullableStringRepresentation(t *testing.T) {
+	t.Parallel()
 	const source = `function observe(value: string | null | undefined): void {
  console.log(String(value === null));
  console.log(String(value === undefined));
@@ -104,6 +105,7 @@ observe(values[3]);
 }
 
 func TestNullableStringPresenceGuard(t *testing.T) {
+	t.Parallel()
 	for _, values := range []string{`[null]`, `["ma" + "de"]`, `[]`} {
 		t.Run(values, func(t *testing.T) {
 			source := `const values: (string | null)[] = ` + values + `; const index = 0;

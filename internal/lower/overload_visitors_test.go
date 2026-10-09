@@ -12,6 +12,7 @@ import (
 )
 
 func TestOverloadVisitorPaths(t *testing.T) {
+	t.Parallel()
 	base := `interface Base {readonly kind:number;}
 interface Named extends Base {readonly text:string;}
 function visit<T extends Base>(nodes:readonly T[],visitor:(node:T)=>void):void;
@@ -35,6 +36,7 @@ visit(nodes,node=>console.log(node.text));`
 }
 
 func TestOverloadVisitorResultIndependent(t *testing.T) {
+	t.Parallel()
 	source := `interface Base {readonly kind:number;}
 interface Named extends Base {readonly text:string;}
 function visit<T extends Base,U extends Base>(nodes:readonly T[],visitor:(node:T)=>void):readonly U[];
@@ -59,6 +61,7 @@ console.log(visit<Named,Named>(nodes,node=>console.log(node.text))[0]?.text??'mi
 }
 
 func TestOverloadVisitorResultStorage(t *testing.T) {
+	t.Parallel()
 	source := `interface Base {readonly kind:number;}
 interface Named extends Base {readonly text:string;}
 interface Wide {readonly value:string|number;}

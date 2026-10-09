@@ -14,36 +14,47 @@ import (
 )
 
 func TestOptionalLiteralGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_literal_guard.a", false)
 }
 func TestOptionalConditionalGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_conditional_guard.a", false)
 }
 func TestOptionalDefinedGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_defined_guard.a", false)
 }
 func TestOptionalArrayGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_array_guard.a", false)
 }
 func TestOptionalCallbackGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_callback_guard.a", false)
 }
 func TestOptionalNestedNullableGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_nested_nullable_guard.a", false)
 }
 func TestOptionalNestedAssignmentGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_nested_assignment_guard.a", false)
 }
 func TestOptionalNestedGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_nested_guard.a", false)
 }
 func TestOptionalNullableViewGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_nullable_view_guard.a", false)
 }
 func TestOptionalRequiredViewGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_required_view_guard.a", false)
 }
 func TestOptionalSpreadGuard(t *testing.T) {
+	t.Parallel()
 	testOptionalConstruction(t, "optional_spread_guard.a", true)
 }
 

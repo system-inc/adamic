@@ -11,6 +11,7 @@ import (
 // The area host producers keep their code-bearing shapes while changing the
 // exception carrier. Node supplies the Error identity, message type and code.
 func TestCaughtHostErrorsAndBrandMutant(t *testing.T) {
+	t.Parallel()
 	const source = `#define ADAMIC_NODE_HOST 1
 #include "adamic.h"
 #include <stdio.h>

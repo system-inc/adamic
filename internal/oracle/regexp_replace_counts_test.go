@@ -7,6 +7,7 @@ import (
 )
 
 // Measure only this slice's restored fixtures, avoiding unrelated oracle work.
+// Not parallel: can update the shared counts.md file when ADAMIC_UPDATE_COUNTS is set.
 func TestRegExpReplacementRestoredCounts(t *testing.T) {
 	for _, name := range []string{"effects", "move_effect"} {
 		path := "internal/oracle/testdata/regexp_replace/" + name + ".a"

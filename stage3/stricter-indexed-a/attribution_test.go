@@ -14,6 +14,7 @@ import (
 )
 
 func TestOptionalReturnAttribution(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile("D037.json")
 	if err != nil {
 		t.Fatal(err)
@@ -60,6 +61,7 @@ func TestOptionalReturnAttribution(t *testing.T) {
 }
 
 func TestDifferentOverloadStorageUsesAreaAdapter(t *testing.T) {
+	t.Parallel()
 	directory := t.TempDir()
 	path := filepath.Join(directory, "main.ts")
 	write(t, filepath.Join(directory, "tsconfig.json"), `{"compilerOptions":{"strict":true,"noUncheckedIndexedAccess":false,"lib":["es2024"],"module":"esnext","noEmit":true},"files":["main.ts"]}`)

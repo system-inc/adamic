@@ -23,6 +23,7 @@ func init() {
 }
 
 func TestOverloadValues(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"returned", "narrow", "order", "module"} {
 		for _, variant := range []string{"valid", "liar"} {
 			t.Run(name+"/"+variant, func(t *testing.T) {
@@ -75,6 +76,7 @@ func TestOverloadValues(t *testing.T) {
 }
 
 func TestOverloadValueProof(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/overload_values/proven.a"))
 	if err != nil {
 		t.Fatal(err)

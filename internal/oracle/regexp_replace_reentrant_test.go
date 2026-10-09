@@ -12,6 +12,7 @@ import (
 const reentrantRegexFixture = "internal/oracle/testdata/regexp_replace/reentrant.a"
 
 func TestRegExpReplacementReentrant(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, reentrantRegexFixture))
 	program, err := lowered(t, path)
 	if err != nil {
@@ -40,6 +41,7 @@ func TestRegExpReplacementReentrant(t *testing.T) {
 }
 
 func TestRegExpReplacementReentrantNodeMutant(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, reentrantRegexFixture))
 	program, err := lowered(t, path)
 	if err != nil {
@@ -80,6 +82,7 @@ static bool reentrant_test_mutant(adamic_object *regex,adamic_string *input) { (
 	t.Log("nested regex test returning false: clean sanitizer exit, caught only by Node stdout")
 }
 
+// Not parallel: can update the shared counts.md file when ADAMIC_UPDATE_COUNTS is set.
 func TestRegExpReplacementReentrantCounts(t *testing.T) {
 	row := counted(t, reentrantRegexFixture, false, nil, false, false)
 	data, err := os.ReadFile(countsPath)

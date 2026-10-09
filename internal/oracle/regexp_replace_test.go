@@ -146,6 +146,7 @@ func TestRegExpReplacementTypeGuardMutants(t *testing.T) {
 // The closure-convention ruling requires this mutant to fail in clang, rather
 // than relying on a later observation of corrupted callback arguments.
 func TestRegExpReplacementDropCount(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/closure_convention_regexp_count.a"))
 	program, err := lowered(t, path)
 	if err != nil {
@@ -182,6 +183,7 @@ func TestRegExpReplacementDropCount(t *testing.T) {
 }
 
 func TestRegExpReplacementCountNodeMutant(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/closure_convention_regexp_count.a"))
 	program, err := lowered(t, path)
 	if err != nil {
@@ -232,6 +234,7 @@ func TestRegExpReplacementCountNodeMutant(t *testing.T) {
 // its exact fixture ready, and report the missing dependency rather than use a
 // static pattern as a substitute for the dynamic constructor.
 func TestRegExpReplacementDynamicCandidate(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/regexp_replace/dynamic.a"))
 	program, err := lowered(t, path)
 	if err != nil {

@@ -7,6 +7,7 @@ import (
 )
 
 func TestOverloadCallbackServed(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/overload_callback_served.a")
 	if err != nil {
 		t.Fatal(err)
@@ -17,6 +18,7 @@ func TestOverloadCallbackServed(t *testing.T) {
 }
 
 func TestOverloadCallbackUnserved(t *testing.T) {
+	t.Parallel()
 	base := `interface Node {readonly kind:string;readonly text:string;}
 interface BindingElement extends Node {readonly kind:'binding';}
 interface OmittedExpression extends Node {readonly kind:'omitted';}
@@ -42,6 +44,7 @@ function visit(node:ArrayBindingElement):ArrayBindingElement{return {kind:'omitt
 }
 
 func TestOverloadCallbackFieldStorage(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `interface Node {readonly kind:string;readonly metric:number|undefined;}
 interface Binding extends Node {readonly kind:'binding';}
 interface NumericBinding extends Binding {readonly metric:number;}

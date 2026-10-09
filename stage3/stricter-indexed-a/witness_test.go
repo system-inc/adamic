@@ -60,6 +60,7 @@ func write(t *testing.T, path, content string) {
 // Each manifest preserves the ledger receiver and index form. Project .ts files
 // are generated inputs, rather than new Adamic programs claiming proven types.
 func TestCheckerIndexedWitnesses(t *testing.T) {
+	t.Parallel()
 	cli := filepath.Join(t.TempDir(), "adamic")
 	if got := run("go", "build", "-o", cli, "../../cmd/adamic"); got.code != 0 {
 		t.Fatalf("CLI build: %+v", got)

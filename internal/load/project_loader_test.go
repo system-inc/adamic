@@ -284,12 +284,18 @@ func TestProjectLoaderNodeImportsKeepReferenceRoots(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	found := false
 	for _, file := range program.CompilerProgram().GetSourceFiles() {
+		if IsNodeLibrary(file) {
+			t.Fatal("standalone Node declarations replaced project-owned declarations")
+		}
 		if program.FileName(file) == filepath.Join(dir, "dependency/unused.ts") {
-			return
+			found = true
 		}
 	}
-	t.Fatal("node import discarded referenced source roots")
+	if !found {
+		t.Fatal("node import discarded referenced source roots")
+	}
 }
 
 func TestProjectLoaderStandaloneNodeKeepsPrelude(t *testing.T) {

@@ -11,6 +11,7 @@ import (
 )
 
 func TestUnclassifiedCaughtPrototypeMemberIsNotYet(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"length", "name", "stack", "toString", "message", "static-message", "imported-message"} {
 		t.Run(name, func(t *testing.T) {
 			dir := t.TempDir()

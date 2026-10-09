@@ -220,31 +220,33 @@ var recordMutationCases = []struct {
 	{"own-slot-null-read", "record.c", "return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "adamic_value *missing = NULL;\n\tvolatile double observed = missing->number;\n\t(void)observed;\n\treturn adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "prototypes", "runtime error: member access within null pointer"},
 }
 
-func TestRecordMutants(t *testing.T) {
-	t.Parallel()
-	shard := currentTestShard(t)
-	for index, mutant := range recordMutationCases {
-		if !shard.owns(index) {
-			continue
-		}
-		t.Run(mutant.name, func(t *testing.T) {
-			binary := recordMutant(t, mutant.file, mutant.before, mutant.after)
-			stdout, stderr, err := recordRun(binary, mutant.mode)
-			if mutant.caught == "Node" {
-				if err != nil {
-					t.Fatalf("order mutant must finish without sanitizer failure: %v\n%s", err, stderr)
-				}
-				recordCheckCounts(t, stderr)
-				if want := recordNode(t, mutant.mode); stdout == want {
-					t.Fatal("Node comparison did not catch mutant")
-				}
-			} else if err == nil || !strings.Contains(stderr, mutant.caught) {
-				t.Fatalf("want %s to catch mutant: %v\n%s", mutant.caught, err, stderr)
-			}
-			t.Logf("caught by %s", mutant.caught)
-		})
+func checkRecordMutant(t *testing.T, index int) {
+	t.Helper()
+	if !currentTestShard(t).owns(index) {
+		t.Skip("piece belongs to another shard")
 	}
+	mutant := recordMutationCases[index]
+	binary := recordMutant(t, mutant.file, mutant.before, mutant.after)
+	stdout, stderr, err := recordRun(binary, mutant.mode)
+	if mutant.caught == "Node" {
+		if err != nil {
+			t.Fatalf("order mutant must finish without sanitizer failure: %v\n%s", err, stderr)
+		}
+		recordCheckCounts(t, stderr)
+		if want := recordNode(t, mutant.mode); stdout == want {
+			t.Fatal("Node comparison did not catch mutant")
+		}
+	} else if err == nil || !strings.Contains(stderr, mutant.caught) {
+		t.Fatalf("want %s to catch mutant: %v\n%s", mutant.caught, err, stderr)
+	}
+	t.Logf("caught by %s", mutant.caught)
 }
+func TestRecordMutants(t *testing.T)              { t.Parallel(); checkRecordMutant(t, 0) }
+func TestRecordMutantUint32Max(t *testing.T)      { t.Parallel(); checkRecordMutant(t, 1) }
+func TestRecordMutantDeletedKey(t *testing.T)     { t.Parallel(); checkRecordMutant(t, 2) }
+func TestRecordMutantOverwriteLeak(t *testing.T)  { t.Parallel(); checkRecordMutant(t, 3) }
+func TestRecordMutantStoredKeyFreed(t *testing.T) { t.Parallel(); checkRecordMutant(t, 4) }
+func TestRecordMutantOwnSlotNull(t *testing.T)    { t.Parallel(); checkRecordMutant(t, 5) }
 
 func TestRecordReadMutants(t *testing.T) {
 	t.Parallel()

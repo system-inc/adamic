@@ -13,6 +13,7 @@ import (
 )
 
 func TestHiddenTNodeConstraintRepresentation(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct {
 		name, constraint string
 		want             ir.Type
@@ -71,6 +72,7 @@ func TestHiddenTNodeConstraintRepresentation(t *testing.T) {
 }
 
 func TestHiddenTNodeGenericValueRemainsNotYet(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a")
 	if err != nil {
 		t.Fatal(err)
@@ -83,6 +85,7 @@ func TestHiddenTNodeGenericValueRemainsNotYet(t *testing.T) {
 }
 
 func TestHiddenTNodeConstraintMutationRemainsNotYet(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("../oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a")
 	if err != nil {
 		t.Fatal(err)

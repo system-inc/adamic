@@ -21,6 +21,7 @@ func init() {
 // The c2 runtime provides Uint16 storage and conversion. Keep the original
 // conversion witness in the Node oracle as an admitted program.
 func TestNewExpressionUint16IsAdmitted(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/new_expression_uint16_notyet.a"))
 	if err != nil {
 		t.Fatal(err)

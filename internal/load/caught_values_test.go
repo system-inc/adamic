@@ -7,6 +7,7 @@ import (
 )
 
 func TestAdamicCaughtMessageRequiresProof(t *testing.T) {
+	t.Parallel()
 	paths := writeProgram(t, [2]string{"main.a", "function accepts(message: string): void { console.log(message); }\ntry { throw 'x'; } catch (e) { accepts(e.message); }\n"})
 	diagnostics := checkErrors(t, paths)
 	if len(diagnostics) != 1 {

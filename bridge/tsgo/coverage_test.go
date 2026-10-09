@@ -12,6 +12,7 @@ import (
 	"testing"
 )
 
+// Not parallel: changes bridge process environment variables.
 func TestBridgeUnitsCoverEveryPiece(t *testing.T) {
 	if len(bridgeCases) != 36 || len(bridgeBindings) != 36 {
 		t.Fatalf("bridge coverage count: %d cases, %d bindings, want 36", len(bridgeCases), len(bridgeBindings))
@@ -111,6 +112,7 @@ func TestBridgeUnitsCoverEveryPiece(t *testing.T) {
 	t.Logf("coverage: %d active pieces, %d query positions, 5 query analyses; each piece has one owner for 1..40 shards", active, queries)
 }
 
+// Not parallel: changes bridge process environment variables.
 func TestBridgeProductCacheIsVerified(t *testing.T) {
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
 	t.Setenv("ADAMIC_BUILD_CACHE", "")

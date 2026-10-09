@@ -58,6 +58,7 @@ func write(t *testing.T, path, contents string) {
 }
 
 func TestLedgerWitnesses(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile("sites.json")
 	if err != nil {
 		t.Fatal(err)

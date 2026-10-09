@@ -44,6 +44,7 @@ var wasiFixtures = []string{
 }
 
 func TestWASI(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		t.Skip("WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH")
 	}

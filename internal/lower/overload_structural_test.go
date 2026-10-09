@@ -9,6 +9,7 @@ import (
 )
 
 func TestOverloadStructuralResults(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"block", "evaluator", "fields", "factory"} {
 		source, err := os.ReadFile("../oracle/testdata/overload_structural_" + name + ".a")
 		if err != nil {
@@ -20,6 +21,7 @@ func TestOverloadStructuralResults(t *testing.T) {
 	}
 }
 func TestOverloadStructuralRefuses(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, file, path, nodeOutput string }{
 		{"Block factory covariance", "block-factory-liar", "readonly covariance requires string to fit", "Expression\n"},
 		{"factory literal covariance", "factory-literal-liar", "readonly covariance requires string | number | undefined to fit", "bad\n"},

@@ -11,6 +11,7 @@ import (
 )
 
 func TestRegExpReplacementScoutNotLinked(t *testing.T) {
+	t.Parallel()
 	library, err := RuntimeLibraryForSource("", "int main(void) { return 0; }", Options{Sanitize: true})
 	if err != nil {
 		t.Fatal(err)
@@ -25,6 +26,7 @@ func TestRegExpReplacementScoutNotLinked(t *testing.T) {
 }
 
 func TestRegExpReplacementScoutOptInMutant(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("library.go")
 	if err != nil {
 		t.Fatal(err)

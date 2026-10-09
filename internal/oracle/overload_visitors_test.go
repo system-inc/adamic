@@ -25,6 +25,7 @@ func init() {
 }
 
 func TestOverloadVisitors(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"original", "helper", "overloaded-helper", "default"} {
 		variants := []string{"valid", "liar"}
 		if name == "default" {
@@ -105,6 +106,7 @@ func TestOverloadVisitors(t *testing.T) {
 }
 
 func TestOverloadVisitorInstantiations(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/overload_visitors/instantiations.ts"))
 	if err != nil {
 		t.Fatal(err)

@@ -17,6 +17,7 @@ func init() {
 	}
 }
 func TestOverloadFieldHatch(t *testing.T) {
+	t.Parallel()
 	for _, field := range []string{"kind", "value"} {
 		variants := []string{"valid", "liar"}
 		if field == "value" {

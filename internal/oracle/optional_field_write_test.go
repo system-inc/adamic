@@ -193,6 +193,7 @@ static adamic_array *mutant_static_keys(const adamic_object *object) {
 
 // This is pending admission, not a passing backend parity fixture.
 func TestOptionalFieldCheckedViewPending(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/optional_field_checked_view_pending.a"))
 	if err != nil {
 		t.Fatal(err)

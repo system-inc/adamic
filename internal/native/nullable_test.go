@@ -8,6 +8,7 @@ import (
 )
 
 func TestNullReferenceUsesOnlyMigratedKinds(t *testing.T) {
+	t.Parallel()
 	for _, kind := range []ir.Type{ir.String, ir.Object, ir.Array, ir.Record, ir.Map, ir.Closure, ir.Union, ir.Weak} {
 		emitted := nullReference(kind)
 		if kind.UsesNullSentinel() {

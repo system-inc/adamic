@@ -46,6 +46,7 @@ func currentTestShard(t *testing.T) testShard {
 func (s testShard) owns(piece int) bool { return piece%s.count == s.index }
 
 func TestShardSelection(t *testing.T) {
+	t.Parallel()
 	for _, value := range []string{"-1/2", "0/0", "2/2", "one/2", "0/2/3", "/2"} {
 		if _, err := parseTestShard(value); err == nil {
 			t.Errorf("invalid shard accepted: %q", value)
@@ -85,6 +86,7 @@ func runRegexPartitions(t *testing.T, cases []regexCase) {
 // Frozen counts describe the old workloads. A missing, duplicated or overlapping
 // piece fails independently of whether all the remaining observations agree.
 func TestSplitUnitCoverage(t *testing.T) {
+	t.Parallel()
 	for _, plan := range []struct {
 		name                string
 		total, width, units int

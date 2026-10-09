@@ -11,6 +11,7 @@ import (
 )
 
 func TestOverloadValueStops(t *testing.T) {
+	t.Parallel()
 	base := `interface Result<T>{readonly value:T;}
 function make(value:string|number) {
  function evaluate(input:string):Result<string>;
