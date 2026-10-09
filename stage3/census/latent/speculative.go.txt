@@ -101,6 +101,7 @@ func (l *lowering) latentSpecExpression(node *ast.Node) (value ir.Expression, fa
 		return l.latentExpressionRaw(node)
 	}
 	latentSpec.attempted[node] = true
+	latentProgressVisit(node, true)
 	defer func() {
 		if crash := recover(); crash != nil {
 			failure = fmt.Errorf("expression panic: %v", crash)
@@ -120,6 +121,7 @@ func (l *lowering) latentSpecExpression(node *ast.Node) (value ir.Expression, fa
 
 func (l *lowering) latentSpecStatement(node *ast.Node) (result []ir.Statement, failure error) {
 	latentSpec.attempted[node] = true
+	latentProgressVisit(node, true)
 	var checkpoint *lowering
 	defer func() {
 		if crash := recover(); crash != nil {
@@ -147,6 +149,7 @@ func (l *lowering) latentSpecSignatureReturn(index int, node *ast.Node, this int
 		return l.latentSignatureReturnRaw(index, node, this, returns)
 	}
 	latentSpec.attempted[node] = true
+	latentProgressVisit(node, true)
 	checkpoint := l.latentSnapshot()
 	defer func() {
 		if crash := recover(); crash != nil {
@@ -246,6 +249,7 @@ func (l *lowering) latentSpecWalk(node *ast.Node) {
 		return
 	}
 	latentSpec.visited[node] = true
+	latentProgressVisit(node, false)
 	if node.Kind == ast.KindParameter || node.Kind == ast.KindVariableDeclaration {
 		if name := node.Name(); name != nil && ast.IsIdentifier(name) && !latentSpec.attempted[name] {
 			_, _ = l.declareLocal(name)
@@ -292,6 +296,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 	nodes := map[string]*ast.Node{}
 	for _, file := range program.Files() {
 		if selected := os.Getenv("LATENT_ONLY_FILE"); selected != "" && program.FileName(file) != selected { continue }
+		latentProgressStart(program, file)
 		latentFindings = nil
 		latentSpec = &latentSpeculation{attempted: map[*ast.Node]bool{}, failed: failed, nodes: nodes, active: map[*ast.Node]bool{}, visited: map[*ast.Node]bool{}, bodies: map[*ast.Node]bool{}, boundaries: boundaries, sites: sites}
 		var catalogue ast.Visitor
@@ -314,10 +319,12 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			latentRecord(l.latentRefuse(file))
 		}()
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
+		latentProgressPhase("registration")
 		l.noteInheritance(program.Files())
 		l.noteAccessorNames(program.Files())
 		l.latentRegister(program.Files())
 		l.latentRegisterNested(program.Files())
+		latentProgressPhase("walk")
 		for _, node := range file.Statements.Nodes {
 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
 			unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "speculative", CheckerDiagnostics: []string{}}
@@ -327,6 +334,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			copy := l.latentSnapshot()
 			copy.latentSpecWalk(node)
 			record.Units = append(record.Units, unit)
+			latentProgressUnitDone()
 		}
 		l.latentSpecWalk(file.AsNode())
 		record.Findings = append([]LatentFinding{}, latentFindings...)
@@ -341,6 +349,7 @@ func latentSpeculative(ctx context.Context, program *load.Program, emit func(Lat
 			return false
 		}
 		verify(file.AsNode())
+		latentProgressPhase("completed")
 		release()
 		fmt.Fprintf(os.Stderr, "speculative walk: %s nodes=%d findings=%d unvisited=%d\n", record.File, record.SpeculativeCoverage.TotalNodes, len(record.Findings), record.SpeculativeCoverage.UnvisitedNodes)
 		records = append(records, record)
@@ -462,6 +471,7 @@ func (l *lowering) latentSpecDeclareLocal(name *ast.Node) (local int, failure er
 		return l.latentDeclareLocalRaw(name)
 	}
 	latentSpec.attempted[name] = true
+	latentProgressVisit(name, true)
 	defer func() {
 		if crash := recover(); crash != nil {
 			failure = fmt.Errorf("local panic: %v", crash)

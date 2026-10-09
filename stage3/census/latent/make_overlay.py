@@ -47,6 +47,10 @@ for binding in ('found', 'contractError'):
     new = '\t\t\tlatentRecordNode(' + binding + ', node)\n'
     assert refusal_source.count(old) == 1, ('refusal visitor identity', binding)
     refusal_source = refusal_source.replace(old, new)
+for visitor, phase in [('contracts', 'contract_scan'), ('visit', 'refusal_scan')]:
+    entry = visitor + ' = func(node *ast.Node) (latentStop bool) {'
+    assert refusal_source.count(entry) == 1
+    refusal_source = refusal_source.replace(entry, entry + '\n latentProgressScan(node, "' + phase + '")')
 refusal_output.write_text(refusal_source)
 replace[str(repository / 'internal/lower/refusals.go')] = str(refusal_output)
 # Keep all checker diagnostics and populated roots, but expose them only to measurement.
@@ -125,6 +129,7 @@ for name, signature, renamed in [
     else:
         source += '\nfunc (l *lowering) signatureReturn(index int, declaration *ast.Node, this int, returns *checker.Type) error { return l.latentSpecSignatureReturn(index,declaration,this,returns) }\n'
     output.write_text(source)
+overlay('internal/lower/latent_progress.go', (territory / 'progress.go.txt').read_text())
 overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt').read_text())
 
 (scratch / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')

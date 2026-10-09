@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import subprocess
 import sys
+import time
 
 binary, root, output = (Path(x).resolve() for x in sys.argv[1:4])
 seconds = float(sys.argv[4]) if len(sys.argv) > 4 else 45
@@ -33,6 +34,9 @@ else:
     manifest.write_text(json.dumps(identity, indent=2) + '\n')
 # Measure the largest sources first, then keep the inventory ordering stable.
 for item in sorted(inventory, key=lambda x: (-x['bytes'], x['file'])):
+    selected = os.environ.get('LATENT_RUN_ONLY')
+    if selected and item['file'] != selected:
+        continue
     name = item['file'].replace('/', '__')
     record = records / (name + '.jsonl')
     checksum = records / (name + '.sha256')
@@ -47,15 +51,24 @@ for item in sorted(inventory, key=lambda x: (-x['bytes'], x['file'])):
     log = output / (name + '.log')
     env = dict(os.environ, LATENT_ONLY_FILE=str(root / item['file']),
                LATENT_SPECULATIVE='1', LATENT_FULL='1', LATENT_ASSERT_NO_OUTPUT='1',
-               GOMEMLIMIT='4GiB', GOGC='200', GOMAXPROCS='4')
+               GOMEMLIMIT=os.environ.get('LATENT_FILE_MEMORY', '1GiB'), GOGC='200', GOMAXPROCS=os.environ.get('LATENT_FILE_CPUS', '4'))
     env.pop('LATENT_MUTANT_NO_STUBS', None)
     if mode == 'full': env.pop('LATENT_SPECULATIVE', None)
     if mode == 'no-stubs': env['LATENT_MUTANT_NO_STUBS'] = '1'
+    deadline = float(os.environ.get('LATENT_FILE_DEADLINE', 'inf'))
+    allowance = min(seconds, deadline - time.time() - 2)
+    if allowance <= 0:
+        print('unit deadline skip ' + item['file'], flush=True)
+        continue
     print('start ' + item['file'], flush=True)
     process = subprocess.run([sys.executable, str(Path(__file__).with_name('timed_run.py')),
-                              str(seconds), str(rss_mib), str(metrics), str(log),
+                              str(allowance), str(rss_mib), str(metrics), str(log),
                               str(binary), str(root), str(pending)], env=env,
                              timeout=seconds + 10)
+    measurement = json.loads(metrics.read_text())
+    measurement['unit_deadline_limited'] = allowance < seconds
+    measurement['go_env'] = {key: env[key] for key in ('GOMEMLIMIT','GOGC','GOMAXPROCS')}
+    metrics.write_text(json.dumps(measurement, indent=2) + '\n')
     if process.returncode == 0:
         rows = [json.loads(line) for line in pending.read_text().splitlines()]
         assert len(rows) == 2 and rows[1]['file'] == str(root / item['file'])
