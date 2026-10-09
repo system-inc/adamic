@@ -1,0 +1,13 @@
+diff --git a/cmd/adamic-meter/optional.go b/cmd/adamic-meter/optional.go
+index 79c22378..8da97100 100644
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -293,7 +293,7 @@ func selectOptional(c *checker.Checker, symbol *ast.Symbol, value *checker.Type,
+ 	// Resolve every declaration of a merged symbol. Never rewrite external libraries,
+ 	// required properties, live methods/accessors, inferred slots, or a narrower generic contract.
+ 	for _, declaration := range symbol.Declarations {
+-		if declaration.Kind != ast.KindPropertySignature && declaration.Kind != ast.KindPropertyDeclaration && declaration.Kind != ast.KindMethodSignature {
++		if declaration.Kind != ast.KindPropertySignature && declaration.Kind != ast.KindPropertyDeclaration && declaration.Kind != ast.KindMethodSignature && declaration.Kind != ast.KindMethodDeclaration {
+ 			return
+ 		}
+ 		if !ast.HasQuestionToken(declaration) || declaration.Type() == nil || !owned[ast.GetSourceFileOfNode(declaration).FileName().AsString()] {
