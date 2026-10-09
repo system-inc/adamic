@@ -1,0 +1,70 @@
+=== RUN   TestDefaultTaggedSourceViews
+=== PAUSE TestDefaultTaggedSourceViews
+=== CONT  TestDefaultTaggedSourceViews
+=== RUN   TestDefaultTaggedSourceViews/default-staged
+=== PAUSE TestDefaultTaggedSourceViews/default-staged
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-string
+=== PAUSE TestDefaultTaggedSourceViews/default-boxed-string
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-write
+=== PAUSE TestDefaultTaggedSourceViews/default-boxed-write
+=== RUN   TestDefaultTaggedSourceViews/default-destructure
+=== PAUSE TestDefaultTaggedSourceViews/default-destructure
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-type
+=== PAUSE TestDefaultTaggedSourceViews/default-wrong-type
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-boolean
+=== PAUSE TestDefaultTaggedSourceViews/default-wrong-boolean
+=== RUN   TestDefaultTaggedSourceViews/default-literal
+=== PAUSE TestDefaultTaggedSourceViews/default-literal
+=== RUN   TestDefaultTaggedSourceViews/default-read-before-set
+=== PAUSE TestDefaultTaggedSourceViews/default-read-before-set
+=== CONT  TestDefaultTaggedSourceViews/default-staged
+=== CONT  TestDefaultTaggedSourceViews/default-wrong-type
+=== CONT  TestDefaultTaggedSourceViews/default-literal
+=== CONT  TestDefaultTaggedSourceViews/default-wrong-boolean
+=== CONT  TestDefaultTaggedSourceViews/default-read-before-set
+=== NAME  TestDefaultTaggedSourceViews/default-staged
+    view_fields_test.go:180: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-read-before-set
+    view_fields_test.go:180: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-literal
+    view_fields_test.go:194: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-wrong-boolean
+    view_fields_test.go:194: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-wrong-type
+    view_fields_test.go:194: gate cache node miss
+=== CONT  TestDefaultTaggedSourceViews/default-boxed-write
+=== CONT  TestDefaultTaggedSourceViews/default-destructure
+=== NAME  TestDefaultTaggedSourceViews/default-literal
+    view_fields_test.go:196: exit codes differ; got oracle.run{stdout:[]uint8{0x6f, 0x74, 0x68, 0x65, 0x72, 0xa}, stderr:[]uint8{}, exitCode:0}
+=== CONT  TestDefaultTaggedSourceViews/default-boxed-string
+=== NAME  TestDefaultTaggedSourceViews/default-destructure
+    view_fields_test.go:186: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-boxed-write
+    view_fields_test.go:180: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-boxed-string
+    view_fields_test.go:186: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-read-before-set
+    view_fields_test.go:180: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-staged
+    view_fields_test.go:180: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-destructure
+    view_fields_test.go:194: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-boxed-string
+    view_fields_test.go:194: gate cache node miss
+=== NAME  TestDefaultTaggedSourceViews/default-boxed-write
+    view_fields_test.go:180: gate cache node miss
+--- FAIL: TestDefaultTaggedSourceViews (0.00s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-boolean (19.37s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-type (19.45s)
+    --- FAIL: TestDefaultTaggedSourceViews/default-literal (19.46s)
+    --- PASS: TestDefaultTaggedSourceViews/default-read-before-set (20.53s)
+    --- PASS: TestDefaultTaggedSourceViews/default-staged (20.68s)
+    --- PASS: TestDefaultTaggedSourceViews/default-destructure (1.30s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-string (1.33s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-write (1.53s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=13
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	20.916s
+FAIL
