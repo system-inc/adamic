@@ -26,6 +26,7 @@ func init() {
 
 // The native callable ABI carries each union in the reference word. A raw scalar
 // in that word is not an alternate representation of the same value.
+// Not parallel: lowered writes the package-level sourceImports map.
 func TestFunctionValueBoundaryBoxing(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/function_values_boundary.a"))
 	if err != nil {

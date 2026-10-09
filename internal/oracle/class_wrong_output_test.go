@@ -8,12 +8,14 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestClassWrongOutput103(t *testing.T) {
 	for _, probe := range []struct{ name, output, path string }{
 		{"init_super_number", "score NaN\n", "Base.describe -> Derived.score -> Derived.count"},
 		{"init_super_getter", "score NaN\n", "Base.summary -> Derived.score -> Derived.count"},
 		{"init_super", "caught TypeError\n", "Base.describe -> Derived.name -> Derived.label"},
 	} {
+		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(probe.name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_wrong_output_refused/classfeat_"+probe.name+".a"))
 			if err != nil {
@@ -32,11 +34,13 @@ func TestClassWrongOutput103(t *testing.T) {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestClassWrongOutput107(t *testing.T) {
 	for _, probe := range []struct{ name, output string }{
 		{"iterators_override_this", "0\n100\nscaled:return\n0,100,200\n0,100,200\nscaled:return\n0\n"},
 		{"iterators_hidden_return", "0\nclosing:return\nclosing:return\n0\n"},
 	} {
+		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(probe.name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_wrong_output_refused/"+probe.name+".a"))
 			if err != nil {
@@ -55,6 +59,7 @@ func TestClassWrongOutput107(t *testing.T) {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestClassWrongOutput108(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a"))
 	if err != nil {
@@ -71,11 +76,13 @@ func TestClassWrongOutput108(t *testing.T) {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestClassWrongOutput106(t *testing.T) {
 	for _, probe := range []struct{ name, output, member string }{
 		{"classfeat_static_private_instance", "s1\nt2\nhidden t2\n", "#secret"},
 		{"classfeat_static_private_method", "first function\nhidden s1\n", "#hidden"},
 	} {
+		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(probe.name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_wrong_output_refused/"+probe.name+".a"))
 			if err != nil {

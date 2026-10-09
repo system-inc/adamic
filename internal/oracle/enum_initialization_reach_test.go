@@ -18,8 +18,10 @@ func init() {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestEnumInitializationNode(t *testing.T) {
 	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after"} {
+		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
 			if err != nil {
@@ -45,6 +47,7 @@ func TestEnumInitializationNode(t *testing.T) {
 		})
 	}
 	for _, name := range []string{"reaching-direct", "reaching-helper", "reaching-cycle", "reaching-constructor", "reaching-derived"} {
+		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
 			if err != nil {
@@ -63,8 +66,10 @@ func TestEnumInitializationNode(t *testing.T) {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestEnumInitializationUnknownPinned(t *testing.T) {
 	for _, name := range []string{"unknown-before", "unknown-callback", "unknown-property"} {
+		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
 			if err != nil {

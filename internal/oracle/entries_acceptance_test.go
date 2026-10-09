@@ -26,6 +26,7 @@ type entriesAcceptanceContract struct {
 
 // The acceptance bucket is a separate worker's dependency. Do not merge or
 // rewrite it: run its pinned source and Node observations when supplied.
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestEntriesAcceptance(t *testing.T) {
 	directory := os.Getenv("ADAMIC_ENTRIES_ACCEPTANCE")
 	if directory == "" {
@@ -65,6 +66,7 @@ func TestEntriesAcceptance(t *testing.T) {
 			{"baseline", string(source), contract.Expected},
 			{"mutant", strings.Replace(string(source), contract.Mutant.Find, contract.Mutant.Replace, 1), contract.Mutant.Expected},
 		} {
+			// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 			t.Run(contract.File+"/"+variant.name, func(t *testing.T) {
 				path := filepath.Join(t.TempDir(), contract.File)
 				if err := os.WriteFile(path, []byte(variant.source), 0600); err != nil {
