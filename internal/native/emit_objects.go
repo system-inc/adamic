@@ -290,7 +290,13 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 		if !e.dispatchable(method.Function) {
 			// Presence does not need a callable thunk. Keep the name even when
 			// this signature cannot be called through an adamic_value slot.
-			thunks = append(thunks, "NULL")
+			// Under the closure convention an entry is a struct, and a bare
+			// NULL would fill its counted flag and shift every later entry.
+			absent := "NULL"
+			if e.program.ClosureConventionNeeded() {
+				absent = "{.counted = false, .code = NULL}"
+			}
+			thunks = append(thunks, absent)
 			continue
 		}
 		thunk := e.methodThunk(method.Function)
