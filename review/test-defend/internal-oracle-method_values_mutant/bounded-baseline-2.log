@@ -1,0 +1,28 @@
+{"Time":"2026-10-09T16:30:27.639961133Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T16:30:27.64857446Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode"}
+{"Time":"2026-10-09T16:30:27.648682909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"=== RUN   TestNativeAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:30:27.648721106Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"=== PAUSE TestNativeAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:30:27.64872439Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode"}
+{"Time":"2026-10-09T16:30:27.648731Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode"}
+{"Time":"2026-10-09T16:30:27.648734175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"=== CONT  TestNativeAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:30:27.658959234Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a"}
+{"Time":"2026-10-09T16:30:27.658999554Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a","Output":"=== RUN   TestNativeAgreesWithNode/stage3/namespace-live-export/live.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:30:27.659017921Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a","Output":"=== PAUSE TestNativeAgreesWithNode/stage3/namespace-live-export/live.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:30:27.659021215Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a"}
+{"Time":"2026-10-09T16:30:27.667321612Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a"}
+{"Time":"2026-10-09T16:30:27.667418094Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a","Output":"=== CONT  TestNativeAgreesWithNode/stage3/namespace-live-export/live.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:30:27.756121694Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a","Output":"    oracle_test.go:753: gate cache node hit\n"}
+{"Time":"2026-10-09T16:30:27.756497588Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a","Output":"    oracle_test.go:753: gate cache node hit\n"}
+{"Time":"2026-10-09T16:30:27.757043211Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a","Output":"    oracle_test.go:596: gate cache native hit\n"}
+{"Time":"2026-10-09T16:30:27.757437351Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a","Output":"    oracle_test.go:589: gate cache native miss\n"}
+{"Time":"2026-10-09T16:30:27.842998235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a","Output":"    oracle_test.go:603: gate cache native hit\n"}
+{"Time":"2026-10-09T16:30:27.843131611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a","Output":"--- PASS: TestNativeAgreesWithNode/stage3/namespace-live-export/live.a (0.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:30:27.843146293Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/stage3/namespace-live-export/live.a","Elapsed":0.18}
+{"Time":"2026-10-09T16:30:27.843230367Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"--- PASS: TestNativeAgreesWithNode (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:30:27.843267732Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Elapsed":0.02}
+{"Time":"2026-10-09T16:30:27.843271297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:30:27.843274802Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=2 misses=1\n"}
+{"Time":"2026-10-09T16:30:27.843277646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=2 misses=0\n"}
+{"Time":"2026-10-09T16:30:27.84328007Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T16:30:27.845716677Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.205s\n"}
+{"Time":"2026-10-09T16:30:27.845744858Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.206}
