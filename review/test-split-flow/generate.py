@@ -6,6 +6,7 @@ import json
 import os
 from pathlib import Path
 import re
+import subprocess
 
 root = Path(__file__).resolve().parents[2]
 patterns = ['dedication/dedication.a', 'internal/load/testdata/0.1/compile/*.ts',
@@ -65,6 +66,8 @@ for package in ['flow', 'fresh']:
                     continue
                 helper = "checkAllFlowProgram"
             text += 'func ' + name + '(t *testing.T) {\n\tt.Parallel()\n\tbegin' + package.title() + 'Unit(t)\n\t' + helper + '(t, ' + package + 'CorpusPaths[' + str(index) + '])\n}\n\n'
-    (root / 'internal' / package / 'corpus_units_test.go').write_text(text)
+    # Written through gofmt, so the generated file is as gofmt -l expects it.
+    formatted = subprocess.run(['gofmt'], input=text, capture_output=True, text=True, check=True).stdout
+    (root / 'internal' / package / 'corpus_units_test.go').write_text(formatted)
 (root/'review/test-split-flow/units.json').write_text(json.dumps(manifest,indent=2)+'\n')
 print('Generated', len(manifest), 'program units')
