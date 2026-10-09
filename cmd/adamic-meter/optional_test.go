@@ -199,12 +199,12 @@ func TestOptionalAdaptationOwnsOnlyNamedRoots(t *testing.T) {
 func TestOptionalAdaptationPreservesLiveMethodPlacement(t *testing.T) {
 	t.Parallel()
 	path := filepath.Join(t.TempDir(), "main.ts")
-	source := "class Action { optional?(): string { return 'x'; } }; const action = new Action(); console.log(`${Object.hasOwn(action, 'optional')} ${Object.hasOwn(Action.prototype, 'optional')}`); action.optional = undefined;"
+	source := "class Action { optional?(): string { return 'x'; } }; const action = new Action(); console.log(`${Object.hasOwn(action, 'optional')} ${Object.hasOwn(Action.prototype, 'optional')}`); action.optional = undefined; interface Settings { value?: string }; const settings: Settings = {}; settings.value = undefined;"
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
 	_, before := load.Load([]string{path})
-	if diagnosticCount(before, "2412") != 1 {
+	if diagnosticCount(before, "2412") != 2 {
 		t.Fatalf("initial diagnostic: %v", before)
 	}
 	overlay, rewrites, err := adaptations([]string{path}, before)
@@ -221,8 +221,13 @@ func TestOptionalAdaptationPreservesLiveMethodPlacement(t *testing.T) {
 	if !bytes.Equal(actual, []byte("false true\n")) {
 		t.Fatalf("adapted live method runtime output = %q, want false true", actual)
 	}
-	if len(rewrites) != 0 {
-		t.Fatalf("live method contract rewritten: %#v", rewrites)
+	want := strings.Replace(source, "value?: string", "value?: (string) | undefined", 1)
+	if adapted != want || len(rewrites) != 1 || rewrites[0].Rewrite != optionalRewrite || rewrites[0].Removed != 1 || rewrites[0].DeclarationsChanged != 1 {
+		t.Fatalf("only the optional property may change, not the live method: %#v %q", rewrites, adapted)
+	}
+	_, after := load.LoadOverlay([]string{path}, overlay)
+	if diagnosticCount(after, "2412") != 1 {
+		t.Fatalf("the live-method assignment must remain rejected: %v", after)
 	}
 }
 
