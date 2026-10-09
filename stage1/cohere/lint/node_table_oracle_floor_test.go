@@ -32,6 +32,7 @@ var nodeTableLowerDirectory, nodeTableEmitDirectory, nodeTableNativePath string
 
 var nodeTableOnce sync.Once
 var nodeTableRows []string
+var nodeTableOracle string
 var nodeTableAssignments [][]int
 
 func nodeTableSourceInputs(t *testing.T) []string {
@@ -154,11 +155,44 @@ func nodeTableNative(t *testing.T) string {
 	return nodeTableNativePath
 }
 
-// TestNodeTableIsLinkOnly requires identical output with every node-table row
-// copied and attached to nothing. The live corpus and all original options and
-// recovery classifications are retained; only manifest batching changes.
-// Not parallel: prepares process-lived corpus and build products before parallel shards.
-func TestNodeTableIsLinkOnly(t *testing.T) { nodeTableSetup(t) }
+func nodeTableOracleProduct(t *testing.T) string {
+	t.Helper()
+	// GoBuild is absent on this main: retain the original overlay builder.
+	oracleInputs := buildcache.Inputs{Name: "lint-node-table-oracle", Files: append(nodeTableSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"), Flags: []string{"go build overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")}, Toolchain: []string{runtime.Version()}}
+	oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error { _, err := goOracleIn(packageDirectory, out); return err })
+	return filepath.Join(oracleProduct, "oracle")
+}
+
+func nodeTableCaptured(t *testing.T) string {
+	t.Helper()
+	captureInputs := buildcache.Inputs{Name: "lint-node-table-capture", Files: []string{"cohere", "stage1/cohere/lint/testdata", "go.mod", "go.work"}, Flags: []string{"captureUpstream all asserted cases", "three workers", "go test -p=1 -count=1 -timeout=90s"}, Toolchain: []string{runtime.Version()}}
+	// Registry descriptors decide which upstream assertions are in the live corpus.
+	for _, file := range portFiles(t) {
+		if strings.HasSuffix(file, "rule.json") {
+			captureInputs.Files = append(captureInputs.Files, "stage1/cohere/lint/"+file)
+		}
+	}
+	captured := buildcache.Product(t, captureInputs, func(out string) error {
+		rows, err := nodeTableCaptureUpstream(packageDirectory, out)
+		if err != nil {
+			return err
+		}
+		for i, row := range rows {
+			fields := strings.SplitN(row, "\t", 2)
+			relative, err := filepath.Rel(out, fields[0])
+			if err != nil {
+				return err
+			}
+			rows[i] = relative + "\t" + fields[1]
+		}
+		data, err := json.Marshal(rows)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(out, "rows.json"), data, 0644)
+	})
+	return captured
+}
 
 func nodeTableSetup(t *testing.T) {
 	t.Helper()
@@ -168,12 +202,8 @@ func nodeTableSetup(t *testing.T) {
 			t.Logf("TestNodeTableIsLinkOnly (setup corpus): %.3fs", time.Since(started).Seconds())
 		}()
 		prepareRegistry(t, packageDirectory)
-		// GoBuild is absent on this main: retain the original overlay builder.
-		oracleInputs := buildcache.Inputs{Name: "lint-node-table-oracle", Files: append(nodeTableSourceInputs(t), "stage1/cohere/lint/testdata/oracle.go"), Flags: []string{"go build overlay registry and rule adapters", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")}, Toolchain: []string{runtime.Version()}}
-		oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error { _, err := goOracleIn(packageDirectory, out); return err })
-		oracle := filepath.Join(oracleProduct, "oracle")
-		// Copy generated cases out of the setup test's TempDir: top-level parallel
-		// shards outlive that test. Captured products already have cache lifetime.
+		nodeTableOracle = nodeTableOracleProduct(t)
+		// Keep generated cases in process-lived storage shared by parallel shards.
 		corpus, err := os.MkdirTemp(sharedDirectory, "node-table-")
 		if err != nil {
 			t.Fatal(err)
@@ -196,32 +226,7 @@ func nodeTableSetup(t *testing.T) {
 			}
 			nodeTableRows = append(nodeTableRows, path)
 		}
-		captureInputs := buildcache.Inputs{Name: "lint-node-table-capture", Files: []string{"cohere", "stage1/cohere/lint/testdata", "go.mod", "go.work"}, Flags: []string{"captureUpstream all asserted cases", "three workers", "go test -p=1 -count=1 -timeout=90s"}, Toolchain: []string{runtime.Version()}}
-		// Registry descriptors decide which upstream assertions are in the live corpus.
-		for _, file := range portFiles(t) {
-			if strings.HasSuffix(file, "rule.json") {
-				captureInputs.Files = append(captureInputs.Files, "stage1/cohere/lint/"+file)
-			}
-		}
-		captured := buildcache.Product(t, captureInputs, func(out string) error {
-			rows, err := nodeTableCaptureUpstream(packageDirectory, out)
-			if err != nil {
-				return err
-			}
-			for i, row := range rows {
-				fields := strings.SplitN(row, "\t", 2)
-				relative, err := filepath.Rel(out, fields[0])
-				if err != nil {
-					return err
-				}
-				rows[i] = relative + "\t" + fields[1]
-			}
-			data, err := json.Marshal(rows)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(out, "rows.json"), data, 0644)
-		})
+		captured := nodeTableCaptured(t)
 		data, err := os.ReadFile(filepath.Join(captured, "rows.json"))
 		if err != nil {
 			t.Fatal(err)
@@ -237,7 +242,7 @@ func nodeTableSetup(t *testing.T) {
 			fields := strings.SplitN(row, "\t", 2)
 			nodeTableRows = append(nodeTableRows, filepath.Join(captured, fields[0])+"\t"+fields[1])
 		}
-		nodeTableRows = recoveryRows(t, oracle, nodeTableRows)
+		nodeTableRows = recoveryRows(t, nodeTableOracle, nodeTableRows)
 		nodeTableAssignments = make([][]int, testNodeTableIsLinkOnlyShards)
 		for index, row := range nodeTableRows {
 			fields := strings.SplitN(row, "\t", 2)
@@ -296,6 +301,8 @@ func nodeTableEqual(got, want []byte) error {
 	return nil
 }
 
+// Each shard agrees with a non-empty Go oracle and remains byte-identical
+// when every node-table row is copied and attached to nothing.
 func nodeTableRunShard(t *testing.T, shard int) {
 	t.Helper()
 	if os.Getenv("ADAMIC_NODE_TABLE_PROBE") == "1" {
@@ -330,6 +337,13 @@ func nodeTableRunShard(t *testing.T, shard int) {
 	}
 	path := manifest(t, rows)
 	plain := execute(t, "", binary, "--manifest", path)
+	want := execute(t, "", nodeTableOracle, "--manifest", path)
+	if len(want.output) == 0 {
+		t.Fatal("oracle output is empty: shard corpus has no findings")
+	}
+	if diff := difference(plain.output, want.output); diff != "" {
+		t.Fatalf("port output differs from Go oracle: %s", diff)
+	}
 	junk := execute(t, "", binary, "--manifest", path, "--junk-rows")
 	if err := nodeTableEqual(junk.output, plain.output); err != nil {
 		t.Fatal(err)
@@ -353,8 +367,10 @@ func TestNodeTableIsLinkOnly_007(t *testing.T) { t.Parallel(); nodeTableRunShard
 // One changed case must be caught by exactly one owner; union corruption fails.
 func TestNodeTableIsLinkOnlyUnionAndPlantedFailure(t *testing.T) {
 	t.Parallel()
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
 	listed := []string{"TestNodeTableIsLinkOnly_000", "TestNodeTableIsLinkOnly_001", "TestNodeTableIsLinkOnly_002", "TestNodeTableIsLinkOnly_003", "TestNodeTableIsLinkOnly_004", "TestNodeTableIsLinkOnly_005", "TestNodeTableIsLinkOnly_006", "TestNodeTableIsLinkOnly_007"}
-	command := exec.Command(os.Args[0], "-test.list=^TestNodeTableIsLinkOnly_[0-9]+$")
+	command := exec.CommandContext(ctx, os.Args[0], "-test.list=^TestNodeTableIsLinkOnly_[0-9]+$")
 	output, err := command.Output()
 	if err != nil {
 		t.Fatal(err)
@@ -371,7 +387,7 @@ func TestNodeTableIsLinkOnlyUnionAndPlantedFailure(t *testing.T) {
 	}
 	caught := 0
 	for shard, name := range listed {
-		command := exec.Command(os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+		command := exec.CommandContext(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_NODE_TABLE_PROBE=1")
 		output, err := command.CombinedOutput()
 		if err != nil {
@@ -542,4 +558,26 @@ func nodeTableCaptureUpstream(sourceRoot, directory string) ([]string, error) {
 		return nil, fmt.Errorf("capture unexpectedly small: %d cases", len(rows))
 	}
 	return rows, nil
+}
+
+// Build-phase units share the independent shards' product recipes.
+func TestProduct_NodeTableLowered(t *testing.T) {
+	t.Parallel()
+	nodeTableLowered(t)
+}
+func TestProduct_NodeTableEmitted(t *testing.T) {
+	t.Parallel()
+	nodeTableEmitted(t)
+}
+func TestProduct_NodeTableNative(t *testing.T) {
+	t.Parallel()
+	nodeTableNative(t)
+}
+func TestProduct_NodeTableOracle(t *testing.T) {
+	t.Parallel()
+	nodeTableOracleProduct(t)
+}
+func TestProduct_NodeTableCapture(t *testing.T) {
+	t.Parallel()
+	nodeTableCaptured(t)
 }
