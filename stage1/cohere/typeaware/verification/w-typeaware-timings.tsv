@@ -5,3 +5,4 @@
 # Initial TestProduct_profile_missing_binding invocation could not load missing cohere/TypeScript/tsc/go.mod; no leaf timing.
 # Leaves use -count=1 -timeout 90s -test.skip ^TestProduct_; products use -timeout 10m.
 kind	unit	loom_s	alone_before_s	setup_s	own_work_s	status
+bootstrap-product	TestProduct_profile_missing_binding	-	175.09	135.789954-checker	36.24-native	PASS; cold Go cache, excludes about 176s package compilation; warm repetition pending
