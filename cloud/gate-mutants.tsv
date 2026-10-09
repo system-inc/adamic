@@ -8,7 +8,9 @@
 # match the first failure's block of the gate's log. An empty file is no suite; a missing one holds every promotion.
 # The control, a plain wrong answer in a package nothing imports, so the fast gate selects it alone and names it (@system_adamic_tests,
 # Oct 9 14:16Z; it replaces plain-wrong-answer, whose buildcache change selected 96 units and stopped first on another package).
-plain-wrong-answer-leaf	2df63b7390d02b3b70b9751369aa17069a30b640	tests	stage3/census/latent/statecopy TestUnknown(MutableContainer|ForeignPointer)FailsLoudly
+# Any statecopy test is a correct first failure: the flipped argument check breaks every test that runs the tool, and
+# main added TestPublishedCopyModeIsPrivate (publication_unix_test.go), which now fails first (Oct 9 16:29Z misread).
+plain-wrong-answer-leaf	2df63b7390d02b3b70b9751369aa17069a30b640	tests	stage3/census/latent/statecopy Test[A-Za-z]+
 binary-dies-partway	a840ec0723dee3a596055f76146a36a44cc60b10	tests	internal/corpusfiles
 deferred-red-reaches-census	0096078f544f90bb5d48febbc5099a906699e734	census
 wasi-family-must-run	15e7f9faa8733da808570aa6b63777161d1402c0	tests	internal/native TestWASIUnit[0-9]+
