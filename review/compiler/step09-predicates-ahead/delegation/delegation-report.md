@@ -100,3 +100,13 @@ Final oracle and regression selector: `go test ./internal/oracle -run '^TestDele
 | TestDelegatedPredicateSwitchOracle | 0.73 |
 | TestDelegatedPredicateLiteralOracle | 0.69 |
 | TestDelegatedPredicatePrimitiveOracle | 0.64 |
+
+## Committed integration lane checks
+
+Implementation commit: `28f26bb3d`. The first check named an inherited gofmt error in `internal/javascript/view_test_runtime_test.go`. Commit `1cf272d55` removes its extra blank line; this helper-only file declares no Test functions. The required repository-root command then passed:
+
+```text
+lane checks 8.4 s: gofmt and tools on 92 Go files, t.Parallel on 9 test packages; no t.Parallel analyzer on this tree; vet 9 packages
+```
+
+Command: `git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -`. The missing analyzer notice is retained verbatim; the independent unchanged integration analyzer run described above verifies all added or touched test leaves. No main or area branch was pushed or merged.
