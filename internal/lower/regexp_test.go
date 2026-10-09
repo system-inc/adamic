@@ -2,10 +2,17 @@ package lower
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
+	"os"
 	"os/exec"
+	"path/filepath"
 	"testing"
+	"time"
+
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestRegExpNativeRefusals(t *testing.T) {
@@ -51,5 +58,54 @@ func TestRegExpSourceNode(t *testing.T) {
 	lone := string([]byte{0xed, 0xa0, 0x80})
 	if escapeRegexSource(lone, "") != lone {
 		t.Error("source differs: lone surrogate bytes changed")
+	}
+}
+
+func TestRegExpUnicodeClassSourceAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	source := "const regex = new RegExp('[[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"
+	program := lowersAndAgreesWithNode(t, source)
+	regexNativeAgreesWithNode(t, program, source)
+}
+
+func TestRegExpSlashClassSourceAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	source := "const regex = new RegExp('[/]/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('//')}`);"
+	program := lowersAndAgreesWithNode(t, source)
+	regexNativeAgreesWithNode(t, program, source)
+}
+
+func TestRegExpEscapedSlashSourceAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	source := "const regex = new RegExp('\\\\/', 'u'); console.log(`${regex.source}|${regex.flags}|${regex.test('/')}`);"
+	program := lowersAndAgreesWithNode(t, source)
+	regexNativeAgreesWithNode(t, program, source)
+}
+
+// JavaScript's RegExp recomputes source and flags from the original constructor
+// arguments, so it cannot observe corrupted lowering metadata. Native consumes
+// that metadata; hold its printed behavior to the same source Node observation.
+func regexNativeAgreesWithNode(t *testing.T, program *ir.Program, source string) {
+	t.Helper()
+	directory := t.TempDir()
+	path := filepath.Join(directory, "source.a")
+	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	want := runAgreementNode(t, path)
+	binary := filepath.Join(directory, "native")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, binary)
+	var stdout, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	if err := command.Run(); err != nil {
+		t.Fatalf("native regex: %v; stdout %q; stderr %q", err, stdout.Bytes(), stderr.Bytes())
+	}
+	if !bytes.Equal(stdout.Bytes(), want.stdout) || stderr.Len() != 0 {
+		t.Fatalf("native regex stdout = %q, source Node = %q; stderr %q", stdout.Bytes(), want.stdout, stderr.Bytes())
 	}
 }
