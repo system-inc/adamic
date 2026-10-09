@@ -3,12 +3,12 @@ package yaml
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"hash/fnv"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -55,7 +55,7 @@ func fileDriverCheckUnion(t *testing.T, shards [][]int, count int) {
 
 func fileDriverBuildFiles(t *testing.T) []string {
 	t.Helper()
-	files := []string{"go.mod", "go.sum", "cohere/go.mod", "cohere/TypeScript/tsc/go.mod"}
+	files := []string{"go.mod", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum"}
 	// Include the transitive implementation inputs without hashing test evidence.
 	for _, directory := range []string{"stage1/cohere/yaml", "internal", "cohere"} {
 		err := filepath.WalkDir(filepath.Join(repository, directory), func(path string, entry os.DirEntry, err error) error {
@@ -86,7 +86,7 @@ func fileDriverBuildFiles(t *testing.T) []string {
 	return files
 }
 
-func testFileDriver(t *testing.T) {
+func fileDriverSetup(t *testing.T) *fileDriverState {
 	started := time.Now()
 	cases, files, _ := formatCases(t)
 	data, err := os.ReadFile(cases)
@@ -146,55 +146,101 @@ func testFileDriver(t *testing.T) {
 	if len(expected) != len(inputs) {
 		t.Fatalf("oracle returned %d answers for %d inputs", len(expected), len(inputs))
 	}
-	shards := fileDriverPartition(inputs)
-	fileDriverCheckUnion(t, shards, len(inputs))
-	plantedCaught := make(chan int, testFileDriverShards)
-	t.Cleanup(func() {
-		close(plantedCaught)
-		var caught []int
-		for shard := range plantedCaught {
-			caught = append(caught, shard)
-		}
-		if len(caught) != 1 {
-			t.Fatalf("planted disagreement caught by %v", caught)
-		}
-		t.Logf("union %d cases exactly once; planted native stdout case 0 caught by shard-%03d", len(inputs), caught[0])
-	})
 	t.Logf("TestFileDriver (setup): %.3fs", time.Since(started).Seconds())
-	for shard, indices := range shards {
-		t.Run(fmt.Sprintf("shard-%03d", shard), func(t *testing.T) {
-			t.Parallel()
-			started := time.Now()
-			defer func() { t.Logf("shard time %.3fs", time.Since(started).Seconds()) }()
-			for _, index := range indices {
-				input := inputs[index]
-				answer := string(expected[index])
-				if !strings.HasPrefix(answer, "ok\t") {
-					t.Fatalf("driver control %d invalid: %s", index, answer)
-				}
-				wanted := []byte(unescapeCase("0\t" + strings.TrimPrefix(answer, "ok\t")))
-				file := filepath.Join(t.TempDir(), "input.yaml")
-				if err := os.WriteFile(file, []byte(unescapeCase(input)), 0644); err != nil {
-					t.Fatal(err)
-				}
-				for _, side := range []struct {
-					name string
-					out  []byte
-				}{{"native", run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, file)}, {"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, file)}, {"emitted JavaScript", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, emitted, file)}} {
-					// Prove the real byte oracle rejects a planted stdout disagreement.
-					if index == 0 && side.name == "native" {
-						planted := append(append([]byte(nil), side.out...), '!')
-						if bytes.Equal(planted, wanted) {
-							t.Fatal("missed planted native stdout disagreement")
-						}
-						plantedCaught <- shard
-					}
-					if !bytes.Equal(side.out, wanted) {
-						t.Fatalf("%s file %d: %s", side.name, index, firstDifference(side.out, wanted))
-					}
-				}
-			}
-		})
-	}
-	t.Logf("%d repository files and %d direct stdout controls byte-identical to Go on all three port executions", files, len(inputs)-files)
+	return &fileDriverState{inputs: inputs, expected: expected, binary: binary, emitted: emitted, runner: runner, entry: entry}
 }
+
+type fileDriverState struct {
+	inputs                         []string
+	expected                       [][]byte
+	binary, emitted, runner, entry string
+}
+
+var fileDriverOnce sync.Once
+var fileDriverShared *fileDriverState
+
+func fileDriverGet(t *testing.T) *fileDriverState {
+	t.Helper()
+	fileDriverOnce.Do(func() { fileDriverShared = fileDriverSetup(t) })
+	if fileDriverShared == nil {
+		t.Fatal("file driver setup failed")
+	}
+	return fileDriverShared
+}
+
+func TestFileDriverUnion(t *testing.T) {
+	t.Parallel()
+	state := fileDriverGet(t)
+	shards := fileDriverPartition(state.inputs)
+	fileDriverCheckUnion(t, shards, len(state.inputs))
+	// Plant one disagreement in the actual native stdout and exercise the byte oracle
+	// over every enumerated slice; precisely one owning shard must detect it.
+	file := filepath.Join(t.TempDir(), "input.yaml")
+	if err := os.WriteFile(file, []byte(unescapeCase(state.inputs[0])), 0644); err != nil {
+		t.Fatal(err)
+	}
+	actual := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, state.binary, file)
+	wanted := []byte(unescapeCase("0\t" + strings.TrimPrefix(string(state.expected[0]), "ok\t")))
+	if !bytes.Equal(actual, wanted) {
+		t.Fatal("native control disagrees before planting failure")
+	}
+	planted := append(append([]byte(nil), actual...), '!')
+	var caught []int
+	for shard, indices := range shards {
+		for _, index := range indices {
+			output := wanted
+			if index == 0 {
+				output = planted
+			}
+			if !bytes.Equal(output, wanted) {
+				caught = append(caught, shard)
+			}
+		}
+	}
+	if len(caught) != 1 {
+		t.Fatalf("planted disagreement caught by %v", caught)
+	}
+	t.Logf("union %d cases exactly once; planted native stdout case 0 caught by TestFileDriver_%03d", len(state.inputs), caught[0])
+}
+
+func fileDriverRunShard(t *testing.T, shard int) {
+	t.Helper()
+	t.Parallel()
+	started := time.Now()
+	state := fileDriverGet(t)
+	shards := fileDriverPartition(state.inputs)
+	fileDriverCheckUnion(t, shards, len(state.inputs))
+	for _, index := range shards[shard] {
+		answer := string(state.expected[index])
+		if !strings.HasPrefix(answer, "ok\t") {
+			t.Fatalf("driver control %d invalid: %s", index, answer)
+		}
+		wanted := []byte(unescapeCase("0\t" + strings.TrimPrefix(answer, "ok\t")))
+		file := filepath.Join(t.TempDir(), "input.yaml")
+		if err := os.WriteFile(file, []byte(unescapeCase(state.inputs[index])), 0644); err != nil {
+			t.Fatal(err)
+		}
+		for _, side := range []struct {
+			name string
+			out  []byte
+		}{
+			{"native", run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1"}, state.binary, file)},
+			{"Node", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", state.runner, state.entry, file)},
+			{"emitted JavaScript", run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", state.runner, state.emitted, file)},
+		} {
+			if !bytes.Equal(side.out, wanted) {
+				t.Fatalf("%s file %d: %s", side.name, index, firstDifference(side.out, wanted))
+			}
+		}
+	}
+	t.Logf("%d cases; shard time including setup %.3fs", len(shards[shard]), time.Since(started).Seconds())
+}
+
+func TestFileDriver_000(t *testing.T) { fileDriverRunShard(t, 0) }
+func TestFileDriver_001(t *testing.T) { fileDriverRunShard(t, 1) }
+func TestFileDriver_002(t *testing.T) { fileDriverRunShard(t, 2) }
+func TestFileDriver_003(t *testing.T) { fileDriverRunShard(t, 3) }
+func TestFileDriver_004(t *testing.T) { fileDriverRunShard(t, 4) }
+func TestFileDriver_005(t *testing.T) { fileDriverRunShard(t, 5) }
+func TestFileDriver_006(t *testing.T) { fileDriverRunShard(t, 6) }
+func TestFileDriver_007(t *testing.T) { fileDriverRunShard(t, 7) }

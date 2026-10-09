@@ -207,7 +207,7 @@ func TestBundledParserDifference(t *testing.T) {
 }
 
 func TestFileDriver(t *testing.T) {
-	testFileDriver(t)
+	fileDriverGet(t)
 }
 
 func TestFormatterMutants(t *testing.T) {
