@@ -1,0 +1,7 @@
+Starting commit: 7b18d0576930caca4e22ce2eef92fcf563af52d0.
+Scope: all nine tests in scope.json. No family wrappers, helpers, or witnesses.
+Code under test: Adamic IR function-target queries, argument-slot planning, primitive view member expansion, and discriminant certification. The integration descendant row additionally checks lowering's MethodTargets and ConstantClosure construction.
+Oracle: handwritten IR expectations (self). The reader guard checks Go-resolved field readers against its handwritten targetReaders allowlist (self). No row compares execution against Node or a copied external standard.
+Reached IR functions identified from the test bodies and call graph before mutations: PrepareArgumentSlots, FunctionRestArguments, ClosureArgumentLayout, argumentFactsOf, PackedCountNeeded, packedCountNeeded, absentRepresentation, Type.IsMaybe, Type.IsReference, Type.IsTypedArray, CallTargets, CallMayThrow, ClosureTargets, ClosureMayThrow, ClosureReadsArgumentsCount, PrimitiveViewMembers (including visit), ViewUnionHasDiscriminant. The integration test calls lower.Lower; the mutation surface here is the subsequent IR queries, not Load or Lower.
+The reader guard is a suite construction check. S01 breaks its allowlist construction in a scratch copy, under the brief's setup-check exception.
+Fixed menu: menu.json was written before checking mutant failures. M01-M18 use only condition flips, changed constants/options, off-by-one bounds, or dropped behavior. P01-P07 are separate empty-answer probes and do not establish uniqueness or subsumption.

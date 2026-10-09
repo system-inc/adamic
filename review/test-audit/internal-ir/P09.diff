@@ -1,0 +1,16 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -1,4 +1,5 @@
+ package ir
++import "os"
+ 
+ // CallTargets answers which functions a call can run. A direct call has exactly
+ // its Function as target. A virtual call (Virtual != 0) has every implementation
+@@ -99,6 +100,7 @@
+ // call's function type. Missing type evidence uses bounded closure targets,
+ // falling back to the entire program only when those targets are unknown.
+ func (p *Program) ClosureReadsArgumentsCount(call CallClosure) bool {
++ if os.Getenv("ADAMIC_MUTANT") == "P09" { return false }
+ 	return p.ClosureArgumentLayout(call).Count
+ }
+ 

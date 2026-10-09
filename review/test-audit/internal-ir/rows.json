@@ -1,0 +1,357 @@
+[
+  {
+    "test": "TestArgumentLayouts",
+    "package": "internal/ir",
+    "file": "internal/ir/argument_slots_test.go",
+    "seconds": 0.029,
+    "oracle": "Handwritten IR expectations; no external value checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06",
+      "M08",
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [
+      "M08"
+    ],
+    "last_proven_fail": "M12: argument_slots_test.go:24: mixed fixed/rest layout: {Fixed:[1] Rest:[{Start:0 Element:1}] Count:false}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P03",
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestPrimitiveViewMembers",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestCallTargetReaders",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .; argument_slots_test.go:24: mixed fixed/rest layout: {Fixed:[1] Rest:[{Start:0 Element:1}] Count:false}",
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestClosureArgumentsCountTargets",
+    "package": "internal/ir",
+    "file": "internal/ir/arguments_length_test.go",
+    "seconds": 0.062,
+    "oracle": "Handwritten IR expectations; no external value checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06",
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12: arguments_length_test.go:13: type 11: false, want true",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestArgumentLayouts"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P03",
+      "P05",
+      "P09"
+    ],
+    "subsumer_seconds": 0.029,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestPrimitiveViewMembers",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestCallTargetReaders",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .; arguments_length_test.go:13: type 11: false, want true",
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestPrimitiveViewMembers",
+    "package": "internal/ir",
+    "file": "internal/ir/view_primitives_test.go",
+    "seconds": 0.011,
+    "oracle": "Handwritten IR expectations; no external value checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13",
+      "M14",
+      "M15"
+    ],
+    "unique_kills": [
+      "M13",
+      "M14",
+      "M15"
+    ],
+    "last_proven_fail": "M15: view_primitives_test.go:27: lost packed optional contract",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P06"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestPrimitiveViewMembers",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestCallTargetReaders",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "evidence": "ADAMIC_MUTANT=M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .; view_primitives_test.go:27: lost packed optional contract (full output in M15.log)",
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestViewUnionDiscriminantOverlaps",
+    "package": "internal/ir",
+    "file": "internal/ir/view_unions_untagged_test.go",
+    "seconds": 0.008,
+    "oracle": "Handwritten IR expectations; no external value checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M16",
+      "M17",
+      "M18"
+    ],
+    "unique_kills": [
+      "M16",
+      "M17",
+      "M18"
+    ],
+    "last_proven_fail": "M18: view_unions_untagged_test.go:15: overlapping tags selected a member",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P07"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestPrimitiveViewMembers",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestCallTargetReaders",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "evidence": "ADAMIC_MUTANT=M18 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .; view_unions_untagged_test.go:15: overlapping tags selected a member",
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestCallMayThrowUsesReachableTargets",
+    "package": "internal/ir",
+    "file": "internal/ir/call_targets_effects_test.go",
+    "seconds": 0.009,
+    "oracle": "Handwritten IR expectations; no external value checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "M03: call_targets_effects_test.go:34: static throw outside target set: CallMayThrow = true, want false",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01",
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestPrimitiveViewMembers",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestCallTargetReaders",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "evidence": "ADAMIC_MUTANT=M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .; call_targets_effects_test.go:34: static throw outside target set: CallMayThrow = true, want false",
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestDirectClosureTargetsUseEncodedIndex",
+    "package": "internal/ir",
+    "file": "internal/ir/call_targets_effects_test.go",
+    "seconds": 0.01,
+    "oracle": "Handwritten IR expectations; no external value checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04: call_targets_effects_test.go:62: later function: ClosureMayThrow = true, want target 3's effect",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P03",
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestPrimitiveViewMembers",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestCallTargetReaders",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "evidence": "ADAMIC_MUTANT=M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .; call_targets_effects_test.go:62: later function: ClosureMayThrow = true, want target 3's effect",
+    "vacuous_subcases": [
+      "P04: first function and later function retain passing nonthrowing assertions"
+    ]
+  },
+  {
+    "test": "TestCallTargetReaders",
+    "package": "internal/ir",
+    "file": "internal/ir/call_targets_guard_test.go",
+    "seconds": 0.894,
+    "oracle": "Go-resolved source field reads compared with handwritten targetReaders allowlist.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S01: call_targets_guard_test.go:169: unapproved call-target read internal/native/arguments_length.go:spreadArguments:Call.Function at /workspace/adamic/internal/native/arguments_length.go:136:34; use CallTargets or ClosureTargets",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestPrimitiveViewMembers",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestCallTargetReaders",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "evidence": "S01: timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetReaders$'; call_targets_guard_test.go:169: unapproved call-target read internal/native/arguments_length.go:spreadArguments:Call.Function at /workspace/adamic/internal/native/arguments_length.go:136:34; use CallTargets or ClosureTargets",
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "package": "internal/ir",
+    "file": "internal/ir/call_targets_test.go",
+    "seconds": 0.045,
+    "oracle": "Handwritten IR expectations; no external value checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M02: call_targets_test.go:40: want four implementations, got [3]",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCallMayThrowUsesReachableTargets"
+    ],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P01",
+      "P08"
+    ],
+    "subsumer_seconds": 0.009,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestPrimitiveViewMembers",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestCallTargetReaders",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "evidence": "ADAMIC_MUTANT=M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .; call_targets_test.go:40: want four implementations, got [3]",
+    "vacuous_subcases": []
+  },
+  {
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "package": "internal/ir",
+    "file": "internal/ir/call_targets_test.go",
+    "seconds": 0.012,
+    "oracle": "Handwritten IR expectations; no external value checked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M05",
+      "M06"
+    ],
+    "unique_kills": [
+      "M05"
+    ],
+    "last_proven_fail": "M06: call_targets_test.go:78: ir.Conditional: Unknown failed to include throwing function",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 17,
+    "probe_kills": [
+      "P03",
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestPrimitiveViewMembers",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestCallTargetReaders",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "evidence": "ADAMIC_MUTANT=M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .; call_targets_test.go:78: ir.Conditional: Unknown failed to include throwing function",
+    "vacuous_subcases": [
+      "P04: all nine bounded callback/comparator/constant cases pass; unknown throwing cases fail"
+    ]
+  }
+]

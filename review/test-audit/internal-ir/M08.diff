@@ -1,0 +1,11 @@
+--- a/internal/ir/argument_slots.go
++++ b/internal/ir/argument_slots.go
+@@ -8,7 +8,7 @@
+ }
+ 
+ func FunctionRestArguments(function Function) RestArguments {
+-	start := len(function.Parameters) - 1
++	start := len(function.Parameters)
+ 	if function.Receiver {
+ 		start--
+ 	}

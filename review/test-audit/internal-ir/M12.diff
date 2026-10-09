@@ -1,0 +1,11 @@
+--- a/internal/ir/argument_slots.go
++++ b/internal/ir/argument_slots.go
+@@ -147,7 +147,7 @@
+ 
+ func (p *Program) packedCountNeeded(function int, containing [][]int) bool {
+ 	f := p.Functions[function]
+-	if f.ReadsArguments || f.RestElement != 0 && (f.Closure || f.Receiver) {
++	if f.ReadsArguments && f.RestElement != 0 && (f.Closure || f.Receiver) {
+ 		return true
+ 	}
+ 

@@ -1,0 +1,11 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -72,7 +72,7 @@
+ 			return FunctionTargets{Functions: []int{target - 1}}
+ 		}
+ 	}
+-	return FunctionTargets{Unknown: true}
++	return FunctionTargets{Unknown: false}
+ }
+ 
+ // ClosureMayThrow treats Unknown as anything in the program, including methods

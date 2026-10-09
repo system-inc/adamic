@@ -1,0 +1,11 @@
+--- a/internal/ir/argument_slots.go
++++ b/internal/ir/argument_slots.go
+@@ -27,7 +27,7 @@
+ 		if function.Receiver {
+ 			n--
+ 		}
+-		fixed = max(fixed, n)
++		fixed = min(fixed, n)
+ 	}
+ 	p.RestArgumentSlots = map[RestArguments]int{}
+ 	for _, function := range p.Functions {

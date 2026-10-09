@@ -1,0 +1,11 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -19,7 +19,7 @@
+ 
+ func (p *Program) CallMayThrow(call Call) bool {
+ 	for _, target := range p.CallTargets(call) {
+-		if p.Functions[target].MayThrow {
++		if !p.Functions[target].MayThrow {
+ 			return true
+ 		}
+ 	}

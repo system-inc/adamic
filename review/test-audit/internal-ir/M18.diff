@@ -1,0 +1,11 @@
+--- a/internal/ir/view_unions_untagged.go
++++ b/internal/ir/view_unions_untagged.go
+@@ -45,7 +45,7 @@
+ 				break
+ 			}
+ 		}
+-		if valid {
++		if !valid {
+ 			return true
+ 		}
+ 	}

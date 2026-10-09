@@ -1,0 +1,11 @@
+--- a/internal/ir/view_unions_untagged.go
++++ b/internal/ir/view_unions_untagged.go
+@@ -21,7 +21,7 @@
+ 			member := contracts[id-1]
+ 			found := false
+ 			for _, own := range member.Fields {
+-				if own.Name != field.Name || own.Optional || own.Contract <= 0 || int(own.Contract) > len(contracts) {
++				if own.Name != field.Name || !own.Optional || own.Contract <= 0 || int(own.Contract) > len(contracts) {
+ 					continue
+ 				}
+ 				tag := contracts[own.Contract-1]

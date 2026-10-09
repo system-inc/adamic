@@ -1,0 +1,11 @@
+--- a/internal/ir/view_unions_untagged.go
++++ b/internal/ir/view_unions_untagged.go
+@@ -30,7 +30,7 @@
+ 				}
+ 				found = true
+ 				for _, literal := range tag.Allowed {
+-					if (literal.Of != Number && literal.Of != String && literal.Of != Boolean) || seen[literal] {
++					if (literal.Of != Number && literal.Of != String && literal.Of != Boolean) || !seen[literal] {
+ 						valid = false
+ 						break
+ 					}

@@ -1,0 +1,11 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -12,7 +12,7 @@
+ 		if len(targets) == 0 {
+ 			panic("ir: virtual call has no target set")
+ 		}
+-		return targets
++		return targets[:1]
+ 	}
+ 	return []int{call.Function}
+ }

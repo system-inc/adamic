@@ -1,0 +1,11 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -7,7 +7,7 @@
+ // structural accessor dispatch (Virtual == -1). A missing virtual target set is
+ // malformed IR and must fail loudly rather than imply the call has no effects.
+ func (p *Program) CallTargets(call Call) []int {
+-	if call.Virtual != 0 {
++	if call.Virtual == 0 {
+ 		targets := p.MethodTargets[call.Function]
+ 		if len(targets) == 0 {
+ 			panic("ir: virtual call has no target set")

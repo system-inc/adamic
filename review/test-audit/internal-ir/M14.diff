@@ -1,0 +1,11 @@
+--- a/internal/ir/view_primitives.go
++++ b/internal/ir/view_primitives.go
+@@ -47,7 +47,7 @@
+ 				}
+ 			}
+ 			members = append(members, contract)
+-			if contract.Undefined {
++			if !contract.Undefined {
+ 				members = append(members, ViewContract{Kind: ViewUndefined, Undefined: true})
+ 			}
+ 			return true

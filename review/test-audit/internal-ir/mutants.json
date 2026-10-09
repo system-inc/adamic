@@ -1,0 +1,359 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/ir/call_targets.go",
+    "line": 10,
+    "before": "if call.Virtual != 0 {",
+    "after": "if call.Virtual == 0 {",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestCallMayThrowUsesReachableTargets",
+      "TestCallTargetsIncludeEveryDescendant"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M02",
+    "file": "internal/ir/call_targets.go",
+    "line": 15,
+    "before": "return targets",
+    "after": "return targets[:1]",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestCallMayThrowUsesReachableTargets",
+      "TestCallTargetsIncludeEveryDescendant"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M03",
+    "file": "internal/ir/call_targets.go",
+    "line": 22,
+    "before": "if p.Functions[target].MayThrow {",
+    "after": "if !p.Functions[target].MayThrow {",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestCallMayThrowUsesReachableTargets"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M04",
+    "file": "internal/ir/call_targets.go",
+    "line": 46,
+    "before": "[]int{call.Direct - 1}",
+    "after": "[]int{call.Direct}",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestDirectClosureTargetsUseEncodedIndex"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M05",
+    "file": "internal/ir/call_targets.go",
+    "line": 72,
+    "before": "[]int{target - 1}",
+    "after": "[]int{target}",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M06",
+    "file": "internal/ir/call_targets.go",
+    "line": 75,
+    "before": "return FunctionTargets{Unknown: true}",
+    "after": "return FunctionTargets{Unknown: false}",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M07",
+    "file": "internal/ir/call_targets.go",
+    "line": 84,
+    "before": "if function.MayThrow {",
+    "after": "if !function.MayThrow {",
+    "kind": "mutant",
+    "failed_rows": [],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M08",
+    "file": "internal/ir/argument_slots.go",
+    "line": 11,
+    "before": "start := len(function.Parameters) - 1",
+    "after": "start := len(function.Parameters)",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestArgumentLayouts"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M09",
+    "file": "internal/ir/argument_slots.go",
+    "line": 30,
+    "before": "fixed = max(fixed, n)",
+    "after": "fixed = min(fixed, n)",
+    "kind": "supplemental",
+    "failed_rows": [],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M10",
+    "file": "internal/ir/argument_slots.go",
+    "line": 100,
+    "before": "} else if of.IsMaybe() {",
+    "after": "} else if !of.IsMaybe() {",
+    "kind": "mutant",
+    "failed_rows": [],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M11",
+    "file": "internal/ir/argument_slots.go",
+    "line": 69,
+    "before": "layout.Count = layout.Count || p.PackedCountNeeded(target)",
+    "after": "layout.Count = layout.Count && p.PackedCountNeeded(target)",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M12",
+    "file": "internal/ir/argument_slots.go",
+    "line": 150,
+    "before": "if f.ReadsArguments || f.RestElement != 0 && (f.Closure || f.Receiver) {",
+    "after": "if f.ReadsArguments && f.RestElement != 0 && (f.Closure || f.Receiver) {",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M13",
+    "file": "internal/ir/view_primitives.go",
+    "line": 15,
+    "before": "if contract.Unsupported != \"\" {",
+    "after": "if contract.Unsupported == \"\" {",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestPrimitiveViewMembers"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M14",
+    "file": "internal/ir/view_primitives.go",
+    "line": 50,
+    "before": "if contract.Undefined {",
+    "after": "if !contract.Undefined {",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestPrimitiveViewMembers"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M15",
+    "file": "internal/ir/view_primitives.go",
+    "line": 36,
+    "before": "contract.Of = Number",
+    "after": "contract.Of = Boolean",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestPrimitiveViewMembers"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M16",
+    "file": "internal/ir/view_unions_untagged.go",
+    "line": 33,
+    "before": "|| seen[literal]",
+    "after": "|| !seen[literal]",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestViewUnionDiscriminantOverlaps"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M17",
+    "file": "internal/ir/view_unions_untagged.go",
+    "line": 24,
+    "before": "own.Name != field.Name || own.Optional ||",
+    "after": "own.Name != field.Name || !own.Optional ||",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestViewUnionDiscriminantOverlaps"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "M18",
+    "file": "internal/ir/view_unions_untagged.go",
+    "line": 48,
+    "before": "if valid {",
+    "after": "if !valid {",
+    "kind": "mutant",
+    "failed_rows": [
+      "TestViewUnionDiscriminantOverlaps"
+    ],
+    "unknown_rows": [],
+    "vet_passed": true
+  },
+  {
+    "id": "P01",
+    "file": "internal/ir/call_targets.go",
+    "line": 9,
+    "before": "func (p *Program) CallTargets(call Call) []int {",
+    "after": "return nil",
+    "kind": "probe",
+    "failed_rows": [
+      "TestCallMayThrowUsesReachableTargets",
+      "TestCallTargetsIncludeEveryDescendant"
+    ],
+    "unknown_rows": [],
+    "vet_passed": null
+  },
+  {
+    "id": "P02",
+    "file": "internal/ir/call_targets.go",
+    "line": 20,
+    "before": "func (p *Program) CallMayThrow(call Call) bool {",
+    "after": "return false",
+    "kind": "probe",
+    "failed_rows": [
+      "TestCallMayThrowUsesReachableTargets"
+    ],
+    "unknown_rows": [],
+    "vet_passed": null
+  },
+  {
+    "id": "P03",
+    "file": "internal/ir/call_targets.go",
+    "line": 41,
+    "before": "func (p *Program) ClosureTargets(call Expression) FunctionTargets {",
+    "after": "return FunctionTargets{}",
+    "kind": "probe",
+    "failed_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "unknown_rows": [],
+    "vet_passed": null
+  },
+  {
+    "id": "P04",
+    "file": "internal/ir/call_targets.go",
+    "line": 80,
+    "before": "func (p *Program) ClosureMayThrow(call Expression) bool {",
+    "after": "return false",
+    "kind": "probe",
+    "failed_rows": [
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ],
+    "unknown_rows": [],
+    "vet_passed": null
+  },
+  {
+    "id": "P05",
+    "file": "internal/ir/argument_slots.go",
+    "line": 52,
+    "before": "func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {",
+    "after": "return ArgumentLayout{}",
+    "kind": "probe",
+    "failed_rows": [
+      "TestArgumentLayouts",
+      "TestClosureArgumentsCountTargets"
+    ],
+    "unknown_rows": [],
+    "vet_passed": null
+  },
+  {
+    "id": "P06",
+    "file": "internal/ir/view_primitives.go",
+    "line": 6,
+    "before": "func PrimitiveViewMembers(program *Program, id ViewContractID) ([]ViewContract, bool) {",
+    "after": "return nil, false",
+    "kind": "probe",
+    "failed_rows": [
+      "TestPrimitiveViewMembers"
+    ],
+    "unknown_rows": [],
+    "vet_passed": null
+  },
+  {
+    "id": "P07",
+    "file": "internal/ir/view_unions_untagged.go",
+    "line": 6,
+    "before": "func ViewUnionHasDiscriminant(contracts []ViewContract, root ViewContract) bool {",
+    "after": "return false",
+    "kind": "probe",
+    "failed_rows": [
+      "TestViewUnionDiscriminantOverlaps"
+    ],
+    "unknown_rows": [],
+    "vet_passed": null
+  },
+  {
+    "id": "P08",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "before": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "after": "return &ir.Program{}, nil",
+    "kind": "probe",
+    "failed_rows": [
+      "TestCallTargetsIncludeEveryDescendant"
+    ],
+    "unknown_rows": [],
+    "vet_passed": null
+  },
+  {
+    "id": "P09",
+    "file": "internal/ir/call_targets.go",
+    "line": 101,
+    "before": "func (p *Program) ClosureReadsArgumentsCount(call CallClosure) bool {",
+    "after": "return false",
+    "kind": "probe",
+    "failed_rows": [
+      "TestClosureArgumentsCountTargets"
+    ],
+    "unknown_rows": [],
+    "vet_passed": null
+  }
+]

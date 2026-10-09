@@ -1,0 +1,11 @@
+--- a/internal/ir/argument_slots.go
++++ b/internal/ir/argument_slots.go
+@@ -66,7 +66,7 @@
+ 	layout := ArgumentLayout{}
+ 	for _, target := range targets {
+ 		function := p.Functions[target]
+-		layout.Count = layout.Count || p.PackedCountNeeded(target)
++		layout.Count = layout.Count && p.PackedCountNeeded(target)
+ 		// Ordinary named functions bind their direct arguments elsewhere. Their
+ 		// value adapters, when the program makes one, are separate closure records.
+ 		if !function.Closure && !function.Receiver {

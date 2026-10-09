@@ -1,0 +1,372 @@
+{
+  "timing-TestArgumentLayouts-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestArgumentLayouts$'",
+    "status": 0,
+    "wall": 6.199544274000004
+  },
+  "timing-TestArgumentLayouts-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestArgumentLayouts$'",
+    "status": 0,
+    "wall": 2.2350542469999937
+  },
+  "timing-TestArgumentLayouts-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestArgumentLayouts$'",
+    "status": 0,
+    "wall": 2.366578854000011
+  },
+  "timing-TestClosureArgumentsCountTargets-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestClosureArgumentsCountTargets$'",
+    "status": 0,
+    "wall": 3.805160559000001
+  },
+  "timing-TestClosureArgumentsCountTargets-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestClosureArgumentsCountTargets$'",
+    "status": 0,
+    "wall": 2.8171626660000015
+  },
+  "timing-TestClosureArgumentsCountTargets-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestClosureArgumentsCountTargets$'",
+    "status": 0,
+    "wall": 2.357375606000005
+  },
+  "timing-TestPrimitiveViewMembers-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestPrimitiveViewMembers$'",
+    "status": 0,
+    "wall": 2.238653492000026
+  },
+  "timing-TestPrimitiveViewMembers-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestPrimitiveViewMembers$'",
+    "status": 0,
+    "wall": 2.539838883000016
+  },
+  "timing-TestPrimitiveViewMembers-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestPrimitiveViewMembers$'",
+    "status": 0,
+    "wall": 2.4563014150000413
+  },
+  "timing-TestViewUnionDiscriminantOverlaps-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestViewUnionDiscriminantOverlaps$'",
+    "status": 0,
+    "wall": 2.8990288809999925
+  },
+  "timing-TestViewUnionDiscriminantOverlaps-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestViewUnionDiscriminantOverlaps$'",
+    "status": 0,
+    "wall": 1.9842013080000243
+  },
+  "timing-TestViewUnionDiscriminantOverlaps-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestViewUnionDiscriminantOverlaps$'",
+    "status": 0,
+    "wall": 1.7786169400000063
+  },
+  "timing-TestCallMayThrowUsesReachableTargets-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestCallMayThrowUsesReachableTargets$'",
+    "status": 0,
+    "wall": 2.35765092500003
+  },
+  "timing-TestCallMayThrowUsesReachableTargets-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestCallMayThrowUsesReachableTargets$'",
+    "status": 0,
+    "wall": 2.313947709000047
+  },
+  "timing-TestCallMayThrowUsesReachableTargets-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestCallMayThrowUsesReachableTargets$'",
+    "status": 0,
+    "wall": 2.364095123000027
+  },
+  "timing-TestDirectClosureTargetsUseEncodedIndex-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestDirectClosureTargetsUseEncodedIndex$'",
+    "status": 0,
+    "wall": 2.116467316000012
+  },
+  "timing-TestDirectClosureTargetsUseEncodedIndex-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestDirectClosureTargetsUseEncodedIndex$'",
+    "status": 0,
+    "wall": 1.6134573790000104
+  },
+  "timing-TestDirectClosureTargetsUseEncodedIndex-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestDirectClosureTargetsUseEncodedIndex$'",
+    "status": 0,
+    "wall": 1.8699474299999679
+  },
+  "timing-TestCallTargetReaders-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetReaders$'",
+    "status": 0,
+    "wall": 3.202435500999968
+  },
+  "timing-TestCallTargetReaders-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetReaders$'",
+    "status": 0,
+    "wall": 2.7128358779999644
+  },
+  "timing-TestCallTargetReaders-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetReaders$'",
+    "status": 0,
+    "wall": 2.6610384489999888
+  },
+  "timing-TestCallTargetsIncludeEveryDescendant-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetsIncludeEveryDescendant$'",
+    "status": 0,
+    "wall": 1.8630506939999805
+  },
+  "timing-TestCallTargetsIncludeEveryDescendant-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetsIncludeEveryDescendant$'",
+    "status": 0,
+    "wall": 2.0559859790000132
+  },
+  "timing-TestCallTargetsIncludeEveryDescendant-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetsIncludeEveryDescendant$'",
+    "status": 0,
+    "wall": 2.112189891000014
+  },
+  "timing-TestClosureTargetsBoundOnlyProvenValues-0": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestClosureTargetsBoundOnlyProvenValues$'",
+    "status": 0,
+    "wall": 2.5273601750000125
+  },
+  "timing-TestClosureTargetsBoundOnlyProvenValues-1": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestClosureTargetsBoundOnlyProvenValues$'",
+    "status": 0,
+    "wall": 2.067953442999965
+  },
+  "timing-TestClosureTargetsBoundOnlyProvenValues-2": {
+    "command": "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run '^TestClosureTargetsBoundOnlyProvenValues$'",
+    "status": 0,
+    "wall": 1.817523413999993
+  },
+  "switch-vet": {
+    "command": "gofmt -w internal/ir/argument_slots.go internal/ir/call_targets.go internal/ir/view_primitives.go internal/ir/view_unions_untagged.go && timeout 120 go vet ./internal/ir/",
+    "status": 0,
+    "wall": 6.333919592000029
+  },
+  "M01": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 7.757319626000026
+  },
+  "M01-TestArgumentLayouts": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestArgumentLayouts$'",
+    "status": 0,
+    "wall": 3.4462406070000497
+  },
+  "M01-TestClosureArgumentsCountTargets": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestClosureArgumentsCountTargets$'",
+    "status": 0,
+    "wall": 8.296038002000046
+  },
+  "M01-TestPrimitiveViewMembers": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestPrimitiveViewMembers$'",
+    "status": 0,
+    "wall": 3.866363399000079
+  },
+  "M01-TestViewUnionDiscriminantOverlaps": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestViewUnionDiscriminantOverlaps$'",
+    "status": 0,
+    "wall": 6.498354715000005
+  },
+  "M01-TestCallMayThrowUsesReachableTargets": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestCallMayThrowUsesReachableTargets$'",
+    "status": 1,
+    "wall": 3.863276652999957
+  },
+  "M01-TestDirectClosureTargetsUseEncodedIndex": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestDirectClosureTargetsUseEncodedIndex$'",
+    "status": 0,
+    "wall": 1.6673283079999237
+  },
+  "M01-TestCallTargetReaders": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetReaders$'",
+    "status": 0,
+    "wall": 2.1636753760000147
+  },
+  "M01-TestCallTargetsIncludeEveryDescendant": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetsIncludeEveryDescendant$'",
+    "status": 1,
+    "wall": 1.6042759829999795
+  },
+  "M01-TestClosureTargetsBoundOnlyProvenValues": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestClosureTargetsBoundOnlyProvenValues$'",
+    "status": 0,
+    "wall": 1.5981487630000402
+  },
+  "M02": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.1736632230000623
+  },
+  "M03": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.177739824000014
+  },
+  "M04": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.1842327079999677
+  },
+  "M05": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 1.6269303909999735
+  },
+  "M05-TestArgumentLayouts": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestArgumentLayouts$'",
+    "status": 0,
+    "wall": 1.5733010270000705
+  },
+  "M05-TestClosureArgumentsCountTargets": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestClosureArgumentsCountTargets$'",
+    "status": 0,
+    "wall": 1.5900110159999485
+  },
+  "M05-TestPrimitiveViewMembers": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestPrimitiveViewMembers$'",
+    "status": 0,
+    "wall": 1.614191314999971
+  },
+  "M05-TestViewUnionDiscriminantOverlaps": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestViewUnionDiscriminantOverlaps$'",
+    "status": 0,
+    "wall": 1.6087258339999835
+  },
+  "M05-TestCallMayThrowUsesReachableTargets": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestCallMayThrowUsesReachableTargets$'",
+    "status": 0,
+    "wall": 1.565684874999988
+  },
+  "M05-TestDirectClosureTargetsUseEncodedIndex": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestDirectClosureTargetsUseEncodedIndex$'",
+    "status": 0,
+    "wall": 1.5573967080000557
+  },
+  "M05-TestCallTargetReaders": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetReaders$'",
+    "status": 0,
+    "wall": 2.2135605099999793
+  },
+  "M05-TestCallTargetsIncludeEveryDescendant": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetsIncludeEveryDescendant$'",
+    "status": 0,
+    "wall": 1.6242580430000544
+  },
+  "M05-TestClosureTargetsBoundOnlyProvenValues": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestClosureTargetsBoundOnlyProvenValues$'",
+    "status": 1,
+    "wall": 1.5947666140000365
+  },
+  "M06": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.1774837340000204
+  },
+  "M07": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 0,
+    "wall": 2.194468090999976
+  },
+  "M08": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.205833744000074
+  },
+  "M09": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 0,
+    "wall": 2.1904058819999364
+  },
+  "M10": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 0,
+    "wall": 2.1674898390000408
+  },
+  "M11": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.1967102309999973
+  },
+  "M12": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.199871162000022
+  },
+  "M13": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.161497168999972
+  },
+  "M14": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.1843552119999003
+  },
+  "M15": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.1832254360000434
+  },
+  "M16": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.2836193200000707
+  },
+  "M17": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.2726605520000476
+  },
+  "M18": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.1869125590000067
+  },
+  "P01": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.213157576999947
+  },
+  "P02": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.182506596000053
+  },
+  "P03": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.213657180000041
+  },
+  "P04": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.189038517999961
+  },
+  "P05": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.1875776829999722
+  },
+  "P06": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.1771273570000176
+  },
+  "P07": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 2.1863421759999255
+  },
+  "S01": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run '^TestCallTargetReaders$'",
+    "status": 1,
+    "wall": 5.262426792000042
+  },
+  "P08": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 36.64482894299999
+  },
+  "P09": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run .",
+    "status": 1,
+    "wall": 3.040040331
+  }
+}

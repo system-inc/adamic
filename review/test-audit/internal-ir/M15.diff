@@ -1,0 +1,11 @@
+--- a/internal/ir/view_primitives.go
++++ b/internal/ir/view_primitives.go
+@@ -33,7 +33,7 @@
+ 			return true
+ 		case ViewScalar:
+ 			if contract.Of == MaybeNumber {
+-				contract.Of = Number
++				contract.Of = Boolean
+ 			}
+ 			if contract.Of == MaybeBoolean {
+ 				contract.Of = Boolean

@@ -1,0 +1,273 @@
+diff --git a/internal/ir/argument_slots.go b/internal/ir/argument_slots.go
+index 9a995030..697c61d6 100644
+--- a/internal/ir/argument_slots.go
++++ b/internal/ir/argument_slots.go
+@@ -1,5 +1,7 @@
+ package ir
+ 
++import "os"
++
+ // RestArguments names a collected tail separately from fixed parameter slots.
+ // A fixed-arity function and a rest function can inhabit the same function type.
+ type RestArguments struct {
+@@ -9,6 +11,9 @@ type RestArguments struct {
+ 
+ func FunctionRestArguments(function Function) RestArguments {
+ 	start := len(function.Parameters) - 1
++	if os.Getenv("ADAMIC_MUTANT") == "M08" {
++		start = len(function.Parameters)
++	}
+ 	if function.Receiver {
+ 		start--
+ 	}
+@@ -27,7 +32,11 @@ func (p *Program) PrepareArgumentSlots() {
+ 		if function.Receiver {
+ 			n--
+ 		}
+-		fixed = max(fixed, n)
++		if os.Getenv("ADAMIC_MUTANT") == "M09" {
++			fixed = min(fixed, n)
++		} else {
++			fixed = max(fixed, n)
++		}
+ 	}
+ 	p.RestArgumentSlots = map[RestArguments]int{}
+ 	for _, function := range p.Functions {
+@@ -50,6 +59,9 @@ type ArgumentLayout struct {
+ // ClosureArgumentLayout pads optional slots and collects rest tails at the
+ // caller. A hidden count is selected only by an actual reader candidate.
+ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
++	if os.Getenv("ADAMIC_MUTANT") == "P05" {
++		return ArgumentLayout{}
++	}
+ 	targets, resolved := p.FunctionTypeTargets[call.FunctionType]
+ 	if !resolved {
+ 		bounded := p.ClosureTargets(call)
+@@ -66,7 +78,11 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
+ 	layout := ArgumentLayout{}
+ 	for _, target := range targets {
+ 		function := p.Functions[target]
+-		layout.Count = layout.Count || p.PackedCountNeeded(target)
++		if os.Getenv("ADAMIC_MUTANT") == "M11" {
++			layout.Count = layout.Count && p.PackedCountNeeded(target)
++		} else {
++			layout.Count = layout.Count || p.PackedCountNeeded(target)
++		}
+ 		// Ordinary named functions bind their direct arguments elsewhere. Their
+ 		// value adapters, when the program makes one, are separate closure records.
+ 		if !function.Closure && !function.Receiver {
+@@ -97,7 +113,7 @@ func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
+ 			of := p.Locals[parameter].Type
+ 			if index == len(layout.Fixed) {
+ 				layout.Fixed = append(layout.Fixed, of)
+-			} else if of.IsMaybe() {
++			} else if (os.Getenv("ADAMIC_MUTANT") == "M10" && (!of.IsMaybe())) || (os.Getenv("ADAMIC_MUTANT") != "M10" && (of.IsMaybe())) {
+ 				layout.Fixed[index] = of
+ 			}
+ 		}
+@@ -147,7 +163,7 @@ func (p *Program) PackedCountNeeded(function int) bool {
+ 
+ func (p *Program) packedCountNeeded(function int, containing [][]int) bool {
+ 	f := p.Functions[function]
+-	if f.ReadsArguments || f.RestElement != 0 && (f.Closure || f.Receiver) {
++	if (os.Getenv("ADAMIC_MUTANT") == "M12" && (f.ReadsArguments && f.RestElement != 0 && (f.Closure || f.Receiver))) || (os.Getenv("ADAMIC_MUTANT") != "M12" && (f.ReadsArguments || f.RestElement != 0 && (f.Closure || f.Receiver))) {
+ 		return true
+ 	}
+ 
+diff --git a/internal/ir/call_targets.go b/internal/ir/call_targets.go
+index 34669f73..64dc132c 100644
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -1,5 +1,7 @@
+ package ir
+ 
++import "os"
++
+ // CallTargets answers which functions a call can run. A direct call has exactly
+ // its Function as target. A virtual call (Virtual != 0) has every implementation
+ // that can run, including overrides in every instantiated subclass, recorded by
+@@ -7,19 +9,29 @@ package ir
+ // structural accessor dispatch (Virtual == -1). A missing virtual target set is
+ // malformed IR and must fail loudly rather than imply the call has no effects.
+ func (p *Program) CallTargets(call Call) []int {
+-	if call.Virtual != 0 {
++	if os.Getenv("ADAMIC_MUTANT") == "P01" {
++		return nil
++	}
++	if (os.Getenv("ADAMIC_MUTANT") == "M01" && (call.Virtual == 0)) || (os.Getenv("ADAMIC_MUTANT") != "M01" && (call.Virtual != 0)) {
+ 		targets := p.MethodTargets[call.Function]
+ 		if len(targets) == 0 {
+ 			panic("ir: virtual call has no target set")
+ 		}
+-		return targets
++		if os.Getenv("ADAMIC_MUTANT") == "M02" {
++			return targets[:1]
++		} else {
++			return targets
++		}
+ 	}
+ 	return []int{call.Function}
+ }
+ 
+ func (p *Program) CallMayThrow(call Call) bool {
++	if os.Getenv("ADAMIC_MUTANT") == "P02" {
++		return false
++	}
+ 	for _, target := range p.CallTargets(call) {
+-		if p.Functions[target].MayThrow {
++		if (os.Getenv("ADAMIC_MUTANT") == "M03" && (!p.Functions[target].MayThrow)) || (os.Getenv("ADAMIC_MUTANT") != "M03" && (p.Functions[target].MayThrow)) {
+ 			return true
+ 		}
+ 	}
+@@ -39,11 +51,19 @@ type FunctionTargets struct {
+ // covers forEach, filter, find, some and every; MapForEach covers Map and Set.
+ // A sort's named comparator is a direct function, rather than a function value.
+ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
++	if os.Getenv("ADAMIC_MUTANT") == "P03" {
++		return FunctionTargets{}
++	}
+ 	var value Expression
+ 	switch call := call.(type) {
+ 	case CallClosure:
+ 		if call.Direct > 0 {
+-			return FunctionTargets{Functions: []int{call.Direct - 1}}
++			return FunctionTargets{Functions: []int{func() int {
++				if os.Getenv("ADAMIC_MUTANT") == "M04" {
++					return call.Direct
++				}
++				return call.Direct - 1
++			}()}}
+ 		}
+ 		value = call.Closure
+ 	case ArrayMap:
+@@ -69,19 +89,31 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
+ 		return FunctionTargets{Functions: []int{value.Function}}
+ 	case Read:
+ 		if target := p.Locals[value.Local].ConstantClosure; target != 0 {
+-			return FunctionTargets{Functions: []int{target - 1}}
++			return FunctionTargets{Functions: []int{func() int {
++				if os.Getenv("ADAMIC_MUTANT") == "M05" {
++					return target
++				}
++				return target - 1
++			}()}}
+ 		}
+ 	}
+-	return FunctionTargets{Unknown: true}
++	if os.Getenv("ADAMIC_MUTANT") == "M06" {
++		return FunctionTargets{Unknown: false}
++	} else {
++		return FunctionTargets{Unknown: true}
++	}
+ }
+ 
+ // ClosureMayThrow treats Unknown as anything in the program, including methods
+ // callable through structural interfaces, rather than trusting a static signature.
+ func (p *Program) ClosureMayThrow(call Expression) bool {
++	if os.Getenv("ADAMIC_MUTANT") == "P04" {
++		return false
++	}
+ 	targets := p.ClosureTargets(call)
+ 	if targets.Unknown {
+ 		for _, function := range p.Functions {
+-			if function.MayThrow {
++			if (os.Getenv("ADAMIC_MUTANT") == "M07" && (!function.MayThrow)) || (os.Getenv("ADAMIC_MUTANT") != "M07" && (function.MayThrow)) {
+ 				return true
+ 			}
+ 		}
+diff --git a/internal/ir/view_primitives.go b/internal/ir/view_primitives.go
+index ae545e2f..2806741b 100644
+--- a/internal/ir/view_primitives.go
++++ b/internal/ir/view_primitives.go
+@@ -1,9 +1,14 @@
+ package ir
+ 
++import "os"
++
+ // PrimitiveViewMembers returns only complete, nonrecursive primitive alternatives.
+ // A mixed object, unsupported or missing child prevents primitive-only dispatch.
+ // The payload's storage kind never supplies a missing declared contract.
+ func PrimitiveViewMembers(program *Program, id ViewContractID) ([]ViewContract, bool) {
++	if os.Getenv("ADAMIC_MUTANT") == "P06" {
++		return nil, false
++	}
+ 	var members []ViewContract
+ 	active := map[ViewContractID]bool{}
+ 	var visit func(ViewContractID) bool
+@@ -12,7 +17,7 @@ func PrimitiveViewMembers(program *Program, id ViewContractID) ([]ViewContract,
+ 			return false
+ 		}
+ 		contract := program.ViewContracts[id-1]
+-		if contract.Unsupported != "" {
++		if (os.Getenv("ADAMIC_MUTANT") == "M13" && (contract.Unsupported == "")) || (os.Getenv("ADAMIC_MUTANT") != "M13" && (contract.Unsupported != "")) {
+ 			return false
+ 		}
+ 		active[id] = true
+@@ -33,7 +38,11 @@ func PrimitiveViewMembers(program *Program, id ViewContractID) ([]ViewContract,
+ 			return true
+ 		case ViewScalar:
+ 			if contract.Of == MaybeNumber {
+-				contract.Of = Number
++				if os.Getenv("ADAMIC_MUTANT") == "M15" {
++					contract.Of = Boolean
++				} else {
++					contract.Of = Number
++				}
+ 			}
+ 			if contract.Of == MaybeBoolean {
+ 				contract.Of = Boolean
+@@ -47,7 +56,7 @@ func PrimitiveViewMembers(program *Program, id ViewContractID) ([]ViewContract,
+ 				}
+ 			}
+ 			members = append(members, contract)
+-			if contract.Undefined {
++			if (os.Getenv("ADAMIC_MUTANT") == "M14" && (!contract.Undefined)) || (os.Getenv("ADAMIC_MUTANT") != "M14" && (contract.Undefined)) {
+ 				members = append(members, ViewContract{Kind: ViewUndefined, Undefined: true})
+ 			}
+ 			return true
+diff --git a/internal/ir/view_unions_untagged.go b/internal/ir/view_unions_untagged.go
+index aa264050..a75b18a7 100644
+--- a/internal/ir/view_unions_untagged.go
++++ b/internal/ir/view_unions_untagged.go
+@@ -1,9 +1,14 @@
+ package ir
+ 
++import "os"
++
+ // ViewUnionHasDiscriminant requires a shared required field whose finite literal
+ // sets select exactly one member. A common enum field with overlapping values
+ // does not provide a member certificate.
+ func ViewUnionHasDiscriminant(contracts []ViewContract, root ViewContract) bool {
++	if os.Getenv("ADAMIC_MUTANT") == "P07" {
++		return false
++	}
+ 	if root.Kind != ViewUnion || len(root.Members) == 0 {
+ 		return false
+ 	}
+@@ -21,7 +26,7 @@ func ViewUnionHasDiscriminant(contracts []ViewContract, root ViewContract) bool
+ 			member := contracts[id-1]
+ 			found := false
+ 			for _, own := range member.Fields {
+-				if own.Name != field.Name || own.Optional || own.Contract <= 0 || int(own.Contract) > len(contracts) {
++				if own.Name != field.Name || ((os.Getenv("ADAMIC_MUTANT") == "M17" && !own.Optional) || (os.Getenv("ADAMIC_MUTANT") != "M17" && own.Optional)) || own.Contract <= 0 || int(own.Contract) > len(contracts) {
+ 					continue
+ 				}
+ 				tag := contracts[own.Contract-1]
+@@ -30,7 +35,7 @@ func ViewUnionHasDiscriminant(contracts []ViewContract, root ViewContract) bool
+ 				}
+ 				found = true
+ 				for _, literal := range tag.Allowed {
+-					if (literal.Of != Number && literal.Of != String && literal.Of != Boolean) || seen[literal] {
++					if (literal.Of != Number && literal.Of != String && literal.Of != Boolean) || ((os.Getenv("ADAMIC_MUTANT") == "M16" && !seen[literal]) || (os.Getenv("ADAMIC_MUTANT") != "M16" && seen[literal])) {
+ 						valid = false
+ 						break
+ 					}
+@@ -45,7 +50,7 @@ func ViewUnionHasDiscriminant(contracts []ViewContract, root ViewContract) bool
+ 				break
+ 			}
+ 		}
+-		if valid {
++		if (os.Getenv("ADAMIC_MUTANT") == "M18" && (!valid)) || (os.Getenv("ADAMIC_MUTANT") != "M18" && (valid)) {
+ 			return true
+ 		}
+ 	}

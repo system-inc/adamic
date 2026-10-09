@@ -1,0 +1,11 @@
+--- a/internal/ir/view_primitives.go
++++ b/internal/ir/view_primitives.go
+@@ -12,7 +12,7 @@
+ 			return false
+ 		}
+ 		contract := program.ViewContracts[id-1]
+-		if contract.Unsupported != "" {
++		if contract.Unsupported == "" {
+ 			return false
+ 		}
+ 		active[id] = true
