@@ -9,10 +9,7 @@ import (
 )
 
 func init() {
-	fixtures = append(fixtures, struct {
-		path            string
-		lowers, checked bool
-	}{"internal/oracle/testdata/records_named_invalidated.a", false, false})
+	// Invalidated reads are pinned by TestRecordRefusalNamedInvalidated.
 	for _, name := range []string{"options", "operations", "union", "intrinsics", "alias_unready"} {
 		fixtures = append(fixtures, struct {
 			path            string
