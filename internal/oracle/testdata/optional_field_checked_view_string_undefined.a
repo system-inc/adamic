@@ -9,3 +9,7 @@ console.log(String('s' in source));
 console.log(Object.keys(source).join(','));
 view.s = 'again'.repeat(2);
 console.log(read(view));
+const copy: Source = { ...source };
+const copied = copy as View;
+copied.s = undefined;
+console.log(read(copied) + ':' + String('s' in copy));

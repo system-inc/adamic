@@ -279,7 +279,7 @@ adamic_object *adamic_object_copy_reserving_checked(const adamic_object *source,
 	for (size_t index = 0; index < count; index++) {
 		names[index] = base->names[index];
 		references[index] = base->references[index];
-		types[index] = source->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)base)->types[index] : adamic_shape_type(base, index);
+		types[index] = source->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)base)->types[index] : adamic_shape_storage(base, index);
 	}
 	for (size_t index = 0; index < extra; index++) {
 		bool found = false;
@@ -289,7 +289,7 @@ adamic_object *adamic_object_copy_reserving_checked(const adamic_object *source,
 		if (!found) {
 			names[count] = reserved->names[index];
 			references[count] = reserved->references[index];
-		types[count++] = adamic_shape_type(reserved, index);
+		types[count++] = adamic_shape_storage(reserved, index);
 		}
 	}
 	*shape = (adamic_shape){count, names, references, base == NULL ? NULL : base->methods};
@@ -438,7 +438,7 @@ void adamic_object_view_store(adamic_object *object, const char *name, adamic_sl
         incoming = boolean.present ? 2 : 13;
         value.boolean = boolean.boolean;
     } else if (wanted == 3 && value.reference == NULL) incoming = 13;
-    bool fits = (actual == 3 && incoming == 13) || (actual == incoming && actual >= 1 && actual <= 3) || (actual == 7 && (incoming == 1 || incoming == 13)) || (actual == 9 && (incoming == 2 || incoming == 13)) || (actual == 10 && (incoming == 1 || incoming == 2 || incoming == 3 || incoming == 13));
+    bool fits = (actual == 3 && incoming == 13 && adamic_object_optional_storage(object, cache->index)) || (actual == incoming && actual >= 1 && actual <= 3) || (actual == 7 && (incoming == 1 || incoming == 13)) || (actual == 9 && (incoming == 2 || incoming == 13)) || (actual == 10 && (incoming == 1 || incoming == 2 || incoming == 3 || incoming == 13));
     if (!fits) {
         const char *expected = slot == NULL ? "missing storage" : view_storage_name(actual);
         const char *found = view_storage_name(incoming);

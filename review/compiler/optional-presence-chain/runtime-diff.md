@@ -67,3 +67,11 @@ Exact hunks: step2-runtime.patch.
 - object.c accepts incoming undefined (13) in string storage (3). NULL is already the optional string representation, and the existing store still publishes property presence independently. Both-backend Node fixtures and a restoring-rejection mutant cover this hunk.
 
 See ownership-runtime.patch for exact hunks. The frozen-write objection was withdrawn: emit_statements.go already calls adamic_object_check_data_write for every SetProperty.
+
+## Destination optionality correction
+
+- adamic.h declares raw shape storage lookup and the actual-object optional-storage query. Bit 8 of the existing shape type integers carries the construction optional declaration; the object size and descriptor size are unchanged.
+- union.c separates raw storage metadata from masked ir.Type lookup, checks the optional bit on static or dynamic descriptors, and masks that bit before dynamic scalar enumeration.
+- object.c carries raw metadata, including optionality, into reserving copies and accepts undefined against string storage only when the actual destination descriptor marks the slot optional.
+
+Exact hunks: destination-runtime.patch. Runtime review of these additional metadata hunks is pending. Required string rejection and the guard-dropping mutant run in native release, ASan/UBSan and JavaScript; the optional source fixture agrees with Node.

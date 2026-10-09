@@ -1,0 +1,9 @@
+interface Source { readonly kind: string }
+interface View { readonly kind: 'record'; s?: string | undefined }
+const raw: { readonly kind: string; s: string } = { kind: 'record', s: 'owned'.repeat(2) };
+const source: Source = raw;
+const view = source as View;
+console.log('writing');
+view.s = undefined;
+console.log('stored');
+console.log(String(view.s));

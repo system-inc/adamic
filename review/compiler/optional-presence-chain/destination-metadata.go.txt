@@ -28,7 +28,7 @@ func (l *lowering) optionalLiteralSlots(node *ast.Node, own []ir.Field) ([]ir.Fi
 	// Preserve the construction declaration even when an optional field is initially present.
 	for index := range own {
 		field := l.checker.GetPropertyOfType(contextual, own[index].Name)
-		own[index].Optional = field != nil && field.Flags&ast.SymbolFlagsOptional != 0
+		own[index].Optional = false && field != nil && field.Flags&ast.SymbolFlagsOptional != 0
 	}
 	members := []*checker.Type{contextual}
 	if contextual.Flags()&checker.TypeFlagsUnion != 0 {

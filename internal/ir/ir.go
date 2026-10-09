@@ -985,6 +985,8 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
+	// Optional belongs to the constructed storage, independently of alias contracts and presence.
+	Optional bool
 	// Absent reserves a typed slot without an observable own property.
 	Absent bool
 	// Uninitialized reserves storage without making its typed value readable.

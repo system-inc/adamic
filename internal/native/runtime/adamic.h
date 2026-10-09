@@ -413,7 +413,10 @@ typedef struct adamic_shape_types {
 	const int *types;
 	struct adamic_shape_types *next;
 } adamic_shape_types;
+// Shape metadata reserves bit 8 for declared optional storage; low bytes are ir.Type.
+int adamic_shape_storage(const adamic_shape *shape, size_t index);
 int adamic_shape_type(const adamic_shape *shape, size_t index);
+bool adamic_object_optional_storage(const adamic_object *object, size_t index);
 extern adamic_heap adamic_null;
 void adamic_register_shape_types(adamic_shape_types *metadata);
 bool adamic_has_property(const adamic_heap *object, const char *name);

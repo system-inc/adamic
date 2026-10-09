@@ -926,6 +926,19 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		if len(e.program.CheckedFields) != 0 || jsConstructionFields(expression.Fields) {
 			types := []string{}
+			optionals := []string{}
+			for _, field := range append(append([]ir.Field{}, expression.Fields...), expression.Missing...) {
+				optional := fmt.Sprint(field.Optional)
+				if spreadValue != "" {
+					optional = "(adamicFieldOptionals.get(adamicSpreadSource)?.[" + quote(field.Name) + "] ?? " + optional + ")"
+				}
+				optionals = append(optionals, quote(field.Name)+": "+optional)
+			}
+			parentOptionals := ""
+			if spreadValue != "" {
+				parentOptionals = "...adamicFieldOptionals.get(adamicSpreadSource), "
+			}
+			object = "adamicRecordFieldOptionals(" + object + ", {" + parentOptionals + strings.Join(optionals, ", ") + "})"
 			for _, field := range expression.Fields {
 				representation := viewFieldRepresentation(field.Value)
 				if field.Uninitialized && field.Value.Type() == ir.Union {

@@ -219,12 +219,13 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 
 // shape declares an object literal's layout once, at file scope, and names it.
 func (e *emitter) shape(fields []ir.Field) string {
-	names, types := []string{}, []ir.Type{}
+	names, types, optional := []string{}, []ir.Type{}, []bool{}
 	for _, field := range fields {
 		names = append(names, field.Name)
 		types = append(types, field.Value.Type())
+		optional = append(optional, field.Optional)
 	}
-	return e.shapeOf(names, types)
+	return e.shapeWithOptional(names, types, nil, optional)
 }
 
 // literalShape is the layout an object literal makes: a class's constructor's has the class's methods
@@ -249,10 +250,18 @@ func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string {
 // shapeWith declares a layout by its field names and types, and a class's methods, each called
 // through a thunk that takes what a call through an interface gives (adamic_method).
 func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string {
+	return e.shapeWithOptional(fieldNames, fieldTypes, methods, nil)
+}
+
+func (e *emitter) shapeWithOptional(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method, optional []bool) string {
 	names, references, kinds := []string{}, []string{}, []string{}
 	for index, name := range fieldNames {
 		names = append(names, cString(name))
-		kinds = append(kinds, strconv.Itoa(int(fieldTypes[index])))
+		kind := int(fieldTypes[index])
+		if index < len(optional) && optional[index] {
+			kind |= 256
+		}
+		kinds = append(kinds, strconv.Itoa(kind))
 		references = append(references, strconv.FormatBool(fieldTypes[index].IsReference()))
 	}
 	fields := fieldNames
@@ -420,6 +429,9 @@ func (e *emitter) cache() string {
 
 // Programs without reflection keep their original layouts and allocation code.
 func (e *emitter) dynamicProperties() bool {
+	if len(e.program.CheckedFields) != 0 {
+		return true
+	}
 	if len(e.program.JSONCheckedFields) != 0 || e.program.JSONCheckedArrays || e.program.JSONCheckedDictionaries {
 		return true
 	}

@@ -10,13 +10,15 @@ const adamicNamespaceCheckWrite = (object, name) => { if (adamicNamespaces.get(o
 const adamicNamespaceRead = (object, name, type) => { const value = object[name]; if (type === 10 || (type === 7 || type === 9 || type >= 3 && type <= 6 || type === 8) && value === undefined || (type === 1 || type === 7) && typeof value === "number" || (type === 2 || type === 9) && typeof value === "boolean" || type === 3 && typeof value === "string" || type === 4 && value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) || type === 5 && Array.isArray(value) || type === 6 && value instanceof Map || type === 8 && value instanceof AdamicClosure) return value; panic("namespace read failed: " + name + " has an unexpected runtime type"); };
 const adamicFieldReadiness = new WeakMap();
 const adamicFieldRepresentations = new WeakMap();
+const adamicFieldOptionals = new WeakMap();
+const adamicRecordFieldOptionals = (object, fields) => { adamicFieldOptionals.set(object, fields); return object; };
 const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };
 const adamicLegacyViewWrite = (object, name, value, type) => { if (adamicFieldRepresentations.get(object)?.[name] !== type && !(adamicFieldRepresentations.get(object)?.[name] === 13 && ([3,4,5,6,8,10].includes(type))) && !(adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2) && !(adamicFieldRepresentations.get(object)?.[name] === 7 && type === 1)) adamicViewField(object, name, "<write>." + name, type); adamicWriteField(object, name, value); adamicRecordFieldTypes(object, {[name]: adamicFieldRepresentations.get(object)?.[name] === 10 && type <= 2 ? 10 : type}); };
 const adamicViewWrite = (object, name, value, type) => {
     if (![1,2,3,7,9,13].includes(type)) return adamicLegacyViewWrite(object, name, value, type);
     const actual = adamicFieldRepresentations.get(object)?.[name] ?? 0;
     const incoming = value === undefined ? 13 : typeof value === 'number' ? 1 : typeof value === 'boolean' ? 2 : 3;
-    const fits = actual === 3 && incoming === 13 || actual === incoming && actual >= 1 && actual <= 3 || actual === 7 && [1,13].includes(incoming) || actual === 9 && [2,13].includes(incoming) || actual === 10 && [1,2,3,13].includes(incoming);
+    const fits = actual === 3 && incoming === 13 && adamicFieldOptionals.get(object)?.[name] === true || actual === incoming && actual >= 1 && actual <= 3 || actual === 7 && [1,13].includes(incoming) || actual === 9 && [2,13].includes(incoming) || actual === 10 && [1,2,3,13].includes(incoming);
     if (!fits) {
         const names = {1:'number',2:'boolean',3:'string',7:'number | undefined',9:'boolean | undefined',10:'union',13:'undefined'};
         panic('field write failed: ' + name + ' expected ' + (names[actual] || (actual === 0 ? 'missing storage' : 'unsupported representation')) + ', found ' + names[incoming]);
@@ -62,7 +64,7 @@ const adamicPlaceholderViewField = (object, name, expression, type, expected, al
 };
 const adamicCheckedViewCast = (object, field, type, allowed, message) => allowed.includes(adamicViewField(object, field, field, type)) ? object : panic(message);
 const adamicDefineField = (object, name, value, enumerable, ready, type) => { if (type !== undefined) adamicRecordFieldTypes(object, {[name]: type}); Object.defineProperty(object, name, {value, writable: true, enumerable, configurable: true}); if (ready) adamicFieldReadiness.get(object)?.delete(name); else { let fields = adamicFieldReadiness.get(object); if (!fields) adamicFieldReadiness.set(object, fields = new Set()); fields.add(name); } };
-const adamicSpreadFields = (object, expression) => { const result = {}; if (object !== undefined && object !== null) for (const name of Object.keys(object)) Object.defineProperty(result, name, {value: adamicReadField(object, name, expression), enumerable: true, writable: true, configurable: true}); return adamicRecordFieldTypes(result, adamicFieldRepresentations.get(object) || {}); };
+const adamicSpreadFields = (object, expression) => { const result = {}; if (object !== undefined && object !== null) for (const name of Object.keys(object)) Object.defineProperty(result, name, {value: adamicReadField(object, name, expression), enumerable: true, writable: true, configurable: true}); adamicRecordFieldOptionals(result, adamicFieldOptionals.get(object) || {}); return adamicRecordFieldTypes(result, adamicFieldRepresentations.get(object) || {}); };
 const adamicWriteField = (object, name, value) => { adamicNamespaceCheckWrite(object, name); object[name] = value; adamicFieldReadiness.get(object)?.delete(name); };
 `
 

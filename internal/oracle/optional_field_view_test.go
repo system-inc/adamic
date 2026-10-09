@@ -18,6 +18,7 @@ func init() {
 		path            string
 		lowers, checked bool
 	}{
+		{"internal/oracle/testdata/optional_field_checked_view_required_string.a", true, true},
 		{"internal/oracle/testdata/optional_field_checked_view_string_self.a", true, false},
 		{"internal/oracle/testdata/optional_field_checked_view_string_undefined.a", true, false},
 		{"internal/oracle/testdata/optional_field_checked_view_pending.a", true, false},
@@ -120,7 +121,9 @@ func optionalViewRuntimeMutant(t *testing.T, fixture, nativeFrom, nativeTo, jsFr
 		t.Fatal(err)
 	}
 	want := onNode(t, path)
-	if check {
+	if fixture == "optional_field_checked_view_required_string" {
+		want = run{exitCode: 70, stdout: []byte("writing\n"), stderr: []byte("adamic: panic: field write failed: s expected string, found undefined\n")}
+	} else if check {
 		want = run{exitCode: 70, stdout: []byte("writing\n"), stderr: []byte("adamic: panic: field write failed: slot expected string, found number\n")}
 	}
 	bytes, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/object.c"))
@@ -275,8 +278,8 @@ func TestOptionalFieldCheckedViewCatchesMissingBoxing(t *testing.T) {
 func TestOptionalFieldCheckedViewStringUndefinedMutant(t *testing.T) {
 	t.Parallel()
 	optionalViewRuntimeMutant(t, "optional_field_checked_view_string_undefined",
-		"(actual == 3 && incoming == 13) || ", "",
-		"actual === 3 && incoming === 13 || ", "", false)
+		"(actual == 3 && incoming == 13 && adamic_object_optional_storage(object, cache->index)) || ", "",
+		"actual === 3 && incoming === 13 && adamicFieldOptionals.get(object)?.[name] === true || ", "", false)
 }
 
 func TestOptionalFieldCheckedViewStringSelf(t *testing.T) {
@@ -338,4 +341,32 @@ static adamic_value ownership_optional_view(const adamic_object *object, const c
 		t.Fatalf("ownership mutant escaped: exit %d stderr %s", failure.exitCode, failure.stderr)
 	}
 	t.Logf("ASan catches borrowed string stored without an owned count: %s", failure.stderr)
+}
+
+func TestOptionalFieldCheckedViewRequiredString(t *testing.T) {
+	t.Parallel()
+	path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/optional_field_checked_view_required_string.a"))
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if truth.exitCode != 0 || string(truth.stdout) != "writing\nstored\nundefined\n" {
+		t.Fatalf("Node: %+v", truth)
+	}
+	want := run{exitCode: 70, stdout: []byte("writing\n"), stderr: []byte("adamic: panic: field write failed: s expected string, found undefined\n")}
+	sanitized, _ := nativelyUncached(t, program)
+	for name, result := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "JavaScript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, result); difference != "" {
+			t.Fatalf("%s %s: exit %d stdout %q stderr %s", name, difference, result.exitCode, result.stdout, result.stderr)
+		}
+	}
+	t.Log("Node stores undefined; both backends stop before storing into required string storage with the pinned exit-70 diagnostic")
+}
+
+func TestOptionalFieldCheckedViewRequiredStringMutant(t *testing.T) {
+	t.Parallel()
+	optionalViewRuntimeMutant(t, "optional_field_checked_view_required_string",
+		" && adamic_object_optional_storage(object, cache->index)", "",
+		" && adamicFieldOptionals.get(object)?.[name] === true", "", true)
 }
