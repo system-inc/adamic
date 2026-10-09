@@ -80,7 +80,7 @@ func buildNative(t *testing.T, entry string, sanitize bool) string {
 	return binary
 }
 
-// Not parallel: fresh-process throughput is measured after correctness on the same sources.
+// Not parallel: throughput measurements share CPU capacity and the same source corpus.
 func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	if os.Getenv("ADAMIC_LINT_BENCH") != "1" {
 		t.Skip("set ADAMIC_LINT_BENCH=1 for JSX throughput")
@@ -135,31 +135,24 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	}
 }
 
-// Not parallel: this replays all JSX fixture trees before native throughput.
-func TestJsxLintTrees(t *testing.T) {
-	paths := jsxSources(t)
-	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
-	virtual := filepath.Join(root, "adamic_jsx_oracle.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	oracle := filepath.Join(t.TempDir(), "parser-oracle")
-	execute(t, root, "go", "build", "-overlay="+overlayPath, "-o", oracle, virtual)
-	path := manifest(t, paths)
-	want := execute(t, "", oracle, "--manifest", path, "--whole", "--jsx-recovery")
-	directory, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser"))
-	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	node := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--whole")
-	if diff := difference(node.output, want.output); diff != "" {
-		t.Fatal(diff)
-	}
-	binary := buildNative(t, filepath.Join(directory, "main.ts"), true)
-	got := execute(t, "", binary, "--manifest", path, "--whole")
-	if diff := difference(got.output, want.output); diff != "" {
-		t.Fatal(diff)
-	}
-	t.Logf("%d captured cohere JSX sources: %d identical whole-tree bytes", len(paths), len(want.output))
-}
+// Fixed top-level shards are visible to go test -list. ADAMIC_TEST_SHARD=i/n
+// selects indices congruent to i modulo n; unset runs all. Each shard retains
+// Go, Node, sanitized native, and leak checks on its entire assigned slice.
+const testJsxLintTreesShards = 16
+
+func TestJsxLintTrees_000(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 0) }
+func TestJsxLintTrees_001(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 1) }
+func TestJsxLintTrees_002(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 2) }
+func TestJsxLintTrees_003(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 3) }
+func TestJsxLintTrees_004(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 4) }
+func TestJsxLintTrees_005(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 5) }
+func TestJsxLintTrees_006(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 6) }
+func TestJsxLintTrees_007(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 7) }
+func TestJsxLintTrees_008(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 8) }
+func TestJsxLintTrees_009(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 9) }
+func TestJsxLintTrees_010(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 10) }
+func TestJsxLintTrees_011(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 11) }
+func TestJsxLintTrees_012(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 12) }
+func TestJsxLintTrees_013(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 13) }
+func TestJsxLintTrees_014(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 14) }
+func TestJsxLintTrees_015(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 15) }

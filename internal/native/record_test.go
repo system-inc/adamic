@@ -220,10 +220,9 @@ var recordMutationCases = []struct {
 	{"own-slot-null-read", "record.c", "return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "adamic_value *missing = NULL;\n\tvolatile double observed = missing->number;\n\t(void)observed;\n\treturn adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "prototypes", "runtime error: member access within null pointer"},
 }
 
-func TestRecordMutants(t *testing.T) {
-	requireNativeShard(t, len(recordMutationCases))
-	t.Parallel()
-	shard := currentTestShard(t)
+func runRecordMutantUnit(t *testing.T, unit int) {
+	t.Helper()
+	shard := testShard{unit, 6}
 	for index, mutant := range recordMutationCases {
 		if !shard.owns(index) {
 			continue
@@ -291,6 +290,7 @@ func TestRecordReadMutants(t *testing.T) {
 
 // Opt in to observations: timing has no pass threshold on a shared worker. Each of five fresh
 // process pairs executes identical operations and consumes the result; best per operation is logged.
+// Not parallel: measures native and Node process timings, requiring exclusive execution.
 func TestRecordBenchmark(t *testing.T) {
 	if os.Getenv("ADAMIC_RECORD_BENCH") != "1" {
 		t.Skip("set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons")
@@ -345,4 +345,34 @@ func TestRecordBenchmark(t *testing.T) {
 			t.Log(fmt.Sprintf("best-of-five size=%d %s native=%.6fs Node=%.6fs ratio=%.3f", size, name, best[0][operation], best[1][operation], best[0][operation]/best[1][operation]))
 		}
 	}
+}
+
+func TestRecordMutantsUnit00(t *testing.T) {
+	t.Parallel()
+	runRecordMutantUnit(t, 0)
+}
+
+func TestRecordMutantsUnit01(t *testing.T) {
+	t.Parallel()
+	runRecordMutantUnit(t, 1)
+}
+
+func TestRecordMutantsUnit02(t *testing.T) {
+	t.Parallel()
+	runRecordMutantUnit(t, 2)
+}
+
+func TestRecordMutantsUnit03(t *testing.T) {
+	t.Parallel()
+	runRecordMutantUnit(t, 3)
+}
+
+func TestRecordMutantsUnit04(t *testing.T) {
+	t.Parallel()
+	runRecordMutantUnit(t, 4)
+}
+
+func TestRecordMutantsUnit05(t *testing.T) {
+	t.Parallel()
+	runRecordMutantUnit(t, 5)
 }

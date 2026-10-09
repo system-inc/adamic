@@ -16,6 +16,7 @@ import (
 
 // The ruling explicitly requires this mutant to die in the C compiler.
 func TestClosureConventionDropCount(t *testing.T) {
+	t.Parallel()
 	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_value_count.a")})
 	if err != nil {
 		t.Fatal(err)
@@ -55,6 +56,7 @@ func TestClosureConventionDropCount(t *testing.T) {
 
 // The runtime callback site must obey the same compiler-enforced arity.
 func TestClosureConventionRuntimeDropCount(t *testing.T) {
+	t.Parallel()
 	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "closure_convention_regexp_count.a")})
 	if err != nil {
 		t.Fatal(err)
@@ -82,6 +84,7 @@ func TestClosureConventionRuntimeDropCount(t *testing.T) {
 }
 
 func TestClosureConventionRuntimeFeaturesIgnoreLiterals(t *testing.T) {
+	t.Parallel()
 	program := &ir.Program{Strings: []string{"adamic_regex_replace_callback", "adamic_fs_file_host_cwd"}}
 	library, err := RuntimeLibraryForSource("", C(program), Options{})
 	if err != nil {
@@ -101,6 +104,7 @@ func TestClosureConventionRuntimeFeaturesIgnoreLiterals(t *testing.T) {
 // Definition order, call order and explicit signature-erasing casts each fail
 // independently. A constructor check alone misses a never-stored definition.
 func TestClosureConventionWrongOrder(t *testing.T) {
+	t.Parallel()
 	checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", "arguments_length_value_count.a")})
 	if err != nil {
 		t.Fatal(err)
@@ -116,6 +120,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 	}
 	swapped := strings.Replace(source, old, "size_t argument_count, adamic_value *arguments", 1)
 	t.Run("definition", func(t *testing.T) {
+		t.Parallel()
 		err := Build(swapped, filepath.Join(t.TempDir(), "mutant"), Options{})
 		if err == nil || !strings.Contains(err.Error(), "conflicting types") {
 			t.Fatalf("swapped definition escaped the header-derived declaration: %v", err)
@@ -123,6 +128,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 		t.Log(err)
 	})
 	t.Run("call", func(t *testing.T) {
+		t.Parallel()
 		lines := strings.Split(source, "\n")
 		changed := false
 		for i, line := range lines {
@@ -154,6 +160,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 		{"void-pointer-cast", "static adamic_value wrong(adamic_closure *self, size_t count, adamic_value *arguments) { return (adamic_value){.number = (double)count}; }\nstatic adamic_closure *erased(void) { return adamic_counted_closure_new((void *)wrong, 0); }\n", "generic association"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			err := Build(strings.Replace(source, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+probe.code, 1), filepath.Join(t.TempDir(), "mutant"), Options{})
 			if err == nil || !strings.Contains(err.Error(), probe.diagnostic) {
 				t.Fatalf("signature-erasing cast escaped compiler enforcement: %v", err)
@@ -164,6 +171,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 }
 
 func TestParserHasNoUnusedOptionalMethodThunks(t *testing.T) {
+	t.Parallel()
 	checked, err := load.Load([]string{filepath.Join("..", "..", "stage1", "typescript", "parser", "main.ts")})
 	if err != nil {
 		t.Fatal(err)
@@ -194,6 +202,7 @@ func TestParserHasNoUnusedOptionalMethodThunks(t *testing.T) {
 // Required optional methods keep their thunks; same-signature classes which
 // cannot inhabit the receiver view do not acquire a table entry from its closure.
 func TestOptionalMethodThunksMatchNode(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join("testdata", "optional_method_thunks.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -221,13 +230,16 @@ func TestOptionalMethodThunksMatchNode(t *testing.T) {
 		}
 	}
 	for _, sanitize := range []bool{false, true} {
-		binary := filepath.Join(t.TempDir(), "valid")
-		if err := Build(code, binary, Options{Sanitize: sanitize}); err != nil {
-			t.Fatal(err)
-		}
-		if got := runWithInput(t, "", binary); got != want {
-			t.Fatalf("sanitize %v: native %q; Node %q", sanitize, got, want)
-		}
+		t.Run("sanitize="+strconv.FormatBool(sanitize), func(t *testing.T) {
+			t.Parallel()
+			binary := filepath.Join(t.TempDir(), "valid")
+			if err := Build(code, binary, Options{Sanitize: sanitize}); err != nil {
+				t.Fatal(err)
+			}
+			if got := runWithInput(t, "", binary); got != want {
+				t.Fatalf("sanitize %v: native %q; Node %q", sanitize, got, want)
+			}
+		})
 	}
 	// Real input mutation: omit every required optional method's table thunk.
 	// Compilation still succeeds; only comparison with Node catches the failure.

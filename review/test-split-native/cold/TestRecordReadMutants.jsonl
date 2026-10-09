@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T05:57:18.132142391Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T05:57:18.16348365Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants"}
+{"Time":"2026-10-09T05:57:18.163597571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"=== RUN   TestRecordReadMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:18.163636579Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"=== PAUSE TestRecordReadMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:18.163640104Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants"}
+{"Time":"2026-10-09T05:57:18.163653264Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants"}
+{"Time":"2026-10-09T05:57:18.16365749Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants","Output":"=== CONT  TestRecordReadMutants\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:57:18.163661797Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/prototype-membership-restored"}
+{"Time":"2026-10-09T05:57:18.163665362Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordReadMutants/prototype-membership-restored","Output":"=== RUN   TestRecordReadMutants/prototype-membership-restored\n","OutputType":"frame"}

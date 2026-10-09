@@ -326,6 +326,7 @@ func askedCorpus(t *testing.T) corpus {
 }
 
 func TestScannerAgreesWithTypescriptGo(t *testing.T) {
+	t.Parallel()
 	asked := askedCorpus(t)
 	oracle := goOracle(t)
 	directory := copyPort(t, "", "", "")
@@ -354,6 +355,7 @@ func TestScannerAgreesWithTypescriptGo(t *testing.T) {
 	}
 	for _, mutant := range mutants {
 		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
 			mutated := copyPort(t, mutant.file, mutant.from, mutant.to)
 			nativeMutant := buildPort(t, mutated, true)
 			for _, side := range []struct {
@@ -374,6 +376,7 @@ func TestScannerAgreesWithTypescriptGo(t *testing.T) {
 	}
 }
 
+// Not parallel: best-of-five scanner throughput timing requires exclusive CPU use.
 func TestPerformance(t *testing.T) {
 	if os.Getenv("ADAMIC_SCANNER_BENCH") == "" {
 		t.Skip("set ADAMIC_SCANNER_BENCH=1 for best-of-five throughput")

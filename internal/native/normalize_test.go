@@ -210,9 +210,9 @@ var normalizeAlphabet = []string{
 	"0xd800", "0xdc00", "0xc5",
 }
 
-func TestNormalizeMatchesNode(t *testing.T) {
-	requireNativeShard(t, len(unitRanges(0x110000, normalizePointUnitSize))+1)
-	t.Parallel()
+func runNormalizeUnit(t *testing.T, index int) {
+	t.Helper()
+	defer checkGrainBudget(t)()
 	alphabet := strings.Join(normalizeAlphabet, ", ")
 	repository, err := filepath.Abs("../..")
 	if err != nil {
@@ -231,25 +231,104 @@ func TestNormalizeMatchesNode(t *testing.T) {
 	}
 	binary := filepath.Join(built, "harness")
 	oracle := strings.Replace(normalizeOracle, "ALPHABET", alphabet, 1)
-	shard := currentTestShard(t)
 	pieces := unitRanges(0x110000, normalizePointUnitSize)
-	for index, piece := range pieces {
-		if !shard.owns(index) {
-			continue
-		}
-		t.Run("points/"+piece.name(), func(t *testing.T) {
-			t.Parallel()
-			first, last := strconv.Itoa(piece.first), strconv.Itoa(piece.last)
-			compareStreams(t, piece.last-piece.first, []string{binary, "points", first, last}, []string{"node", "--eval", oracle, "points", first, last})
-		})
-	}
-	letters := len(normalizeAlphabet)
-	if !shard.owns(len(pieces)) {
+	if index < len(pieces) {
+		piece := pieces[index]
+		first, last := strconv.Itoa(piece.first), strconv.Itoa(piece.last)
+		compareStreams(t, piece.last-piece.first, []string{binary, "points", first, last}, []string{"node", "--eval", oracle, "points", first, last})
 		return
 	}
-	t.Run("contexts", func(t *testing.T) {
-		t.Parallel()
-		compareStreams(t, letters+letters*letters+letters*letters*letters+letters*letters*letters*letters,
-			[]string{binary, "contexts"}, []string{"node", "--eval", oracle, "contexts"})
-	})
+	letters := len(normalizeAlphabet)
+	compareStreams(t, letters+letters*letters+letters*letters*letters+letters*letters*letters*letters,
+		[]string{binary, "contexts"}, []string{"node", "--eval", oracle, "contexts"})
+}
+
+func TestNormalizeMatchesNodePoints00(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 0)
+}
+
+func TestNormalizeMatchesNodePoints01(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 1)
+}
+
+func TestNormalizeMatchesNodePoints02(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 2)
+}
+
+func TestNormalizeMatchesNodePoints03(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 3)
+}
+
+func TestNormalizeMatchesNodePoints04(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 4)
+}
+
+func TestNormalizeMatchesNodePoints05(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 5)
+}
+
+func TestNormalizeMatchesNodePoints06(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 6)
+}
+
+func TestNormalizeMatchesNodePoints07(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 7)
+}
+
+func TestNormalizeMatchesNodePoints08(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 8)
+}
+
+func TestNormalizeMatchesNodePoints09(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 9)
+}
+
+func TestNormalizeMatchesNodePoints10(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 10)
+}
+
+func TestNormalizeMatchesNodePoints11(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 11)
+}
+
+func TestNormalizeMatchesNodePoints12(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 12)
+}
+
+func TestNormalizeMatchesNodePoints13(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 13)
+}
+
+func TestNormalizeMatchesNodePoints14(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 14)
+}
+
+func TestNormalizeMatchesNodePoints15(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 15)
+}
+
+func TestNormalizeMatchesNodePoints16(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 16)
+}
+
+func TestNormalizeMatchesNodeContexts(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 17)
 }

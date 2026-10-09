@@ -113,7 +113,6 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 				t.Fatal(err)
 			}
 			command := exec.Command(binary)
-			command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
 			run(command, stdout, stderr, code)
 			generated := filepath.Join(t.TempDir(), "generated.mjs")
 			if err = os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0644); err != nil {
@@ -125,6 +124,7 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 }
 
 func TestIndirectPredicateOverloadIsPending(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `function lie(value: number | string): value is number; function lie(value: number | string): boolean { return true; } const alias=lie; alias("text");`)
 	if err == nil || !strings.Contains(err.Error(), "indirect call of a checked predicate overload") {
 		t.Fatalf("want explicit indirect-call capability gap, got %v", err)

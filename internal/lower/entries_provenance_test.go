@@ -50,12 +50,14 @@ func TestEntriesAllocationProof(t *testing.T) {
 
 // Index annotations do not establish an allocation or a named field slot.
 func TestEntriesRecordBoundaries(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ source, reason string }{
 		{`const base={visible:1}; const source:{[key:string]:number;visible:number}={...base}; source['late']=2; Object.entries(source);`, "spread into record storage"},
 		{`function write(value:{[key:string]:number}):void {value['late']=2;} const source={visible:1}; Object.entries(source);`, "closed const literal origin"},
 		{`const source:{[key:string]:number;visible:number}={visible:1}; source['late']=2; console.log(source.late.toString()); Object.entries(source);`, "indexed record field read"},
 	} {
 		t.Run(probe.reason, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, probe.source)
 			var stopped *NotYet
 			if !errors.As(err, &stopped) || !strings.Contains(stopped.What, probe.reason) {

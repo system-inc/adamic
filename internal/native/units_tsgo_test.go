@@ -14,8 +14,8 @@ import (
 )
 
 // Not parallel: this test explicitly compares the object cache with its bypass on the same input.
-func TestSplitTSGoAgrees(t *testing.T) {
-	requireNativeShard(t, len(splitCacheModes))
+func runSplitTSGoAgreesUnit(t *testing.T, unit int) {
+	t.Helper()
 	archive := os.Getenv("ADAMIC_CLANG_TSGO_ARCHIVE")
 	if archive == "" {
 		t.Skip("set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive")
@@ -78,7 +78,7 @@ func TestSplitTSGoAgrees(t *testing.T) {
 	if err != nil {
 		t.Fatalf("whole checker: %v\n%s", err, want)
 	}
-	shard := currentTestShard(t)
+	shard := testShard{unit, 2}
 	for index, uncached := range splitCacheModes {
 		if !shard.owns(index) {
 			continue
@@ -96,4 +96,14 @@ func TestSplitTSGoAgrees(t *testing.T) {
 			t.Logf("checker uncached=%s: %d identical bytes: %s", uncached, len(got), got)
 		})
 	}
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestSplitTSGoAgreesUnit00(t *testing.T) {
+	runSplitTSGoAgreesUnit(t, 0)
+}
+
+// Not parallel: this unit changes process environment or uses the WASI toolchain.
+func TestSplitTSGoAgreesUnit01(t *testing.T) {
+	runSplitTSGoAgreesUnit(t, 1)
 }

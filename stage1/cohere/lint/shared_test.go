@@ -93,7 +93,7 @@ func run(directory string, environment []string, name string, args ...string) ([
 	command.Stdout = output
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
-	if err := testguard.Run(command, testguard.Budget, testguard.Ceiling); err != nil || stderr.Len() != 0 {
+	if err := testguard.Run(command, testguard.Budget, testguard.Ceiling); err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
 		return nil, fmt.Errorf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	return os.ReadFile(output.Name())

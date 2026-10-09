@@ -13,6 +13,7 @@ import (
 )
 
 func TestModuleNamespaceLimitsStayLoud(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ source, provider, reason string }{
 		{"const escaped = performance;", "export const value = 7;", "ESM namespace object"},
 		{"console.log(Object.keys(performance).join(','));", "export const value = 7;", "ESM namespace object"},
@@ -21,6 +22,7 @@ func TestModuleNamespaceLimitsStayLoud(t *testing.T) {
 		{"console.log(`${performance.read()}`);", "export function read(this: { value: number }): number { return this.value; } export const value = 7;", "observing its receiver"},
 	} {
 		t.Run(probe.source, func(t *testing.T) {
+			t.Parallel()
 			directory := t.TempDir()
 			entry := filepath.Join(directory, "main.a")
 			for name, source := range map[string]string{"main.a": "import * as performance from './provider.a';\n" + probe.source, "provider.a": probe.provider} {

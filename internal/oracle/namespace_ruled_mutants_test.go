@@ -7,8 +7,10 @@ import (
 )
 
 func TestNamespaceRuledMutants(t *testing.T) {
+	t.Parallel()
 	for _, family := range []string{"live-write", "repeat-initializer", "primitive-tag"} {
 		t.Run(family, func(t *testing.T) {
+			t.Parallel()
 			fixture := "stage3/namespace-live-export/live.a"
 			if family == "repeat-initializer" {
 				fixture = "internal/oracle/testdata/namespaces_repeated_var.a"

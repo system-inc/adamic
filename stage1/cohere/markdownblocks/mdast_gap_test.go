@@ -8,6 +8,7 @@ import (
 	"testing"
 )
 
+// Not parallel: fixed gaps/identifier_case_{go,fork}.txt witness files and shared markdownMemory budget; existing helper controls parallel execution.
 func TestMdastIdentifierWitnesses(t *testing.T) {
 	parallelMarkdownMemory(t, 1)
 	root, e := filepath.Abs(repository)

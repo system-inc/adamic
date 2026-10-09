@@ -143,6 +143,7 @@ func compareExecutionCases(t *testing.T, cases []executionCase, external bool) {
 	t.Logf("execution totals: %d cases, %d compared, %d property stand-in unavailable", len(cases), compared, unavailable)
 }
 func TestMatcherNodeControls(t *testing.T) {
+	t.Parallel()
 	tests := [][3]string{
 		{"[^[\\q{ab|a}]&&[a]]", "v", "abc"},
 		{"\\u{D83C}\\u{DF0D}", "u", "🌍"}, {"\\uD83C\\u{DF0D}", "u", "🌍"}, {"\\u{D83C}\\uDF0D", "u", "🌍"},
@@ -180,6 +181,7 @@ func TestMatcherNodeControls(t *testing.T) {
 	compareExecutionCases(t, cases, true)
 }
 func TestMatcherRandomNode(t *testing.T) {
+	t.Parallel()
 	random := rand.New(rand.NewSource(0x8_7_5))
 	atoms := []string{"a", "b", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", "\\d", "\\p{Letter}"}
 	extra := []string{"(a|(b))", "(a?b)", "(?!b)", "(?<!b)", "[ab]", "[^a]", "\\w", "\\b", "^", "$", "k", "s", "(a)\\1", "\\1(a)", "(?<x>a)\\k<x>", "(?<=([ab]+)([bc]+))", "[\\q{ab|a|}]", "[[a-z]&&[^aeiou]]"}
@@ -217,6 +219,7 @@ func TestMatcherRandomNode(t *testing.T) {
 	compareExecutionCases(t, cases, true)
 }
 func TestMatcherTest262Executions(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile("testdata/matches.json.gz")
 	if err != nil {
 		t.Fatal(err)
@@ -237,6 +240,7 @@ func TestMatcherTest262Executions(t *testing.T) {
 	compareExecutionCases(t, cases, false)
 }
 func TestMatcherStepLimit(t *testing.T) {
+	t.Parallel()
 	p, err := Compile("(a+)+$", "")
 	if err != nil {
 		t.Fatal(err)
@@ -252,6 +256,7 @@ func TestMatcherStepLimit(t *testing.T) {
 // Probe every generated mapping against the external oracle, including legacy
 // mode on Unicode folds that the spec explicitly keeps separate.
 func TestMatcherCanonicalizeNode(t *testing.T) {
+	t.Parallel()
 	var cases []executionCase
 	for _, pair := range simpleCaseFold {
 		for _, flags := range []string{"i", "iu", "iv"} {
@@ -283,6 +288,7 @@ func (emojiTestProvider) Lookup(property string) (PropertySet, error) {
 	return PropertySet{Strings: [][]rune{[]rune("🌍"), []rune("👩‍💻"), []rune("🏳️‍🌈")}}, nil
 }
 func TestMatcherPropertyProviderStrings(t *testing.T) {
+	t.Parallel()
 	cases := []executionCase{
 		{Pattern: "[[\\p{RGI_Emoji}]&&[\\q{🌍|aa}]]", Flags: "v", Input: utf16.Encode([]rune("🌍"))},
 		{Pattern: "[[\\p{RGI_Emoji}]--[\\q{🌍}]]", Flags: "v", Input: utf16.Encode([]rune("🌍👩‍💻"))},
@@ -310,6 +316,7 @@ func TestMatcherPropertyProviderStrings(t *testing.T) {
 }
 
 func TestMatcherUTF16PatternsNode(t *testing.T) {
+	t.Parallel()
 	var cases []executionCase
 	for _, flags := range []string{"", "u", "v"} {
 		for _, pattern := range [][]uint16{{0xd800}, {0xdc00}, {0xd83c, 0xdf0d}, {'[', 0xd800, ']'}} {
@@ -332,6 +339,7 @@ type storedPropertyProvider struct{ data PropertySet }
 
 func (p storedPropertyProvider) Lookup(string) (PropertySet, error) { return p.data, nil }
 func TestMatcherProviderSnapshot(t *testing.T) {
+	t.Parallel()
 	c := executionCase{Pattern: "\\p{RGI_Emoji}", Flags: "v", Input: utf16.Encode([]rune("👩‍💻")), Source: "provider snapshot"}
 	expected := nodeResults(t, []executionCase{c})[0]
 	data := PropertySet{Strings: [][]rune{[]rune("👩‍💻")}}

@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T04:50:15.733896695Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T04:50:15.74313643Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified"}
+{"Time":"2026-10-09T04:50:15.74323733Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"=== RUN   TestBridgeProductCacheIsVerified\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:15.74402338Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"    coverage_test.go:142: product was rebuilt: 3 builds, /tmp/adamic-gate/TestBridgeProductCacheIsVerified1536913192/001/070d4a812102a9cbc8ff144b180003450c8758bff5dc435ac77fa50a292f2ae6, /tmp/adamic-gate/TestBridgeProductCacheIsVerified1536913192/001/070d4a812102a9cbc8ff144b180003450c8758bff5dc435ac77fa50a292f2ae6, \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T04:50:15.744115857Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Output":"--- FAIL: TestBridgeProductCacheIsVerified (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:15.744130218Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeProductCacheIsVerified","Elapsed":0}
+{"Time":"2026-10-09T04:50:15.744143708Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:15.744485052Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t0.010s\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:50:15.744498602Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.011}

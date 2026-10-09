@@ -10,6 +10,7 @@ import (
 
 // The optimized artifact must match the full Go oracle too; sanitizer builds
 // use a different optimizer setting and the timing checksum alone is weaker.
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled). askedCases writes the shared ADAMIC_CSS_KEEP and ADAMIC_CSS_KEEP_RAW paths when configured.
 func TestCSSPrinterOptimizedMatchesGo(t *testing.T) {
 	cases, _ := askedCases(t)
 	path, _ := filepath.Abs("print_main.ts")
@@ -31,6 +32,7 @@ func TestCSSPrinterOptimizedMatchesGo(t *testing.T) {
 	}
 }
 
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled). askedCases writes the shared ADAMIC_CSS_KEEP and ADAMIC_CSS_KEEP_RAW paths when configured.
 func TestCSSParserOptimizedMatchesNode(t *testing.T) {
 	cases, _ := askedCases(t)
 	path, _ := filepath.Abs("compose_main.ts")
