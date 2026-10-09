@@ -46,6 +46,42 @@ class RedSort(unittest.TestCase):
                 self.assertEqual(len(result['infra']), 1)
                 self.assertEqual(result['candidate_reds'], 0)
 
+    def test_missing_selection_artifact_supplied_pool_signature(self):
+        # Signature supplied for the 6b11cbda382e 09:50Z pool failure (Loom
+        # ff519d3). That finished record is not present in the published refs.
+        detail = ('ADAMIC_GATE_CHANGED: open /tmp/loom-select/6b11cbda382e/'
+                  'changed-paths.txt: no such file or directory')
+        result = sort.sort_reds(record(unit(detail=detail)), record())
+        self.assertEqual(len(result['infra']), 1)
+        self.assertEqual(result['candidate_reds'], 0)
+
+    def test_missing_selection_artifacts_override_assertion_and_cold_timing(self):
+        for filename in ('changed-paths.txt', 'select.json'):
+            for prefix in ('assertion diff: got missing want file; ',
+                           'setup exceeded budget on cold miss; '):
+                with self.subTest(filename=filename, prefix=prefix):
+                    detail = prefix + 'open /tmp/loom-select/abc/' + filename + ': no such file or directory'
+                    result = sort.sort_reds(record(unit(detail=detail, cold_miss=True)),
+                                           record(unit()), {'candidate_changed': []})
+                    self.assertEqual(len(result['infra']), 1)
+                    self.assertEqual(result['mains'], [])
+                    self.assertEqual(result['candidate_reds'], 0)
+
+    def test_missing_selection_artifact_without_main_record(self):
+        result = sort.sort_reds(record(unit(detail=
+            "FileNotFoundError: [Errno 2] No such file or directory: '/tmp/loom-select/abc/select.json'")))
+        self.assertEqual(len(result['infra']), 1)
+        self.assertEqual(result['candidate_reds'], 0)
+
+    def test_repository_files_and_present_selection_artifacts_are_not_infra(self):
+        for detail in ('open /repo/testdata/select.json: no such file or directory',
+                       'open /repo/changed-paths.txt: no such file or directory',
+                       'assertion diff reading /tmp/loom-select/abc/select.json: got 2 want 1'):
+            with self.subTest(detail=detail):
+                result = sort.sort_reds(record(unit(detail=detail)), record())
+                self.assertEqual(result['infra'], [])
+                self.assertEqual(result['candidate_reds'], 1)
+
     def test_unreported_unit_is_infra(self):
         result = sort.sort_reds(record(unit(action=None, status='not run')), record())
         self.assertEqual(len(result['infra']), 1)
