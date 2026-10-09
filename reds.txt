@@ -1,0 +1,4 @@
+run adamic-verify-20261009T014647-3799726f: red, 72 tests in 6 units, 1 failed, 0 units broken
+FAIL github.com/system-inc/adamic/internal/buildcache TestGoBuildKeysWhatTheBuildCompilesAndRuns (tests-00)
+    gobuild_test.go:32: build go_build_./internal/buildcache/testdata/withc_withc ff6f47771962 miss 5.24
+    gobuild_test.go:35: the product's build ID is "\x14+\xc0\xbb6\\\x02\xcf\xc5\xfb\x94\xf4\x14\xcfU\xf1w\xb89)\n", <nil>
