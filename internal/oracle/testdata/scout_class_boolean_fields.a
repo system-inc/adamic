@@ -1,0 +1,31 @@
+class Flags {
+    flag: boolean | undefined;
+    initialized: boolean | undefined = false;
+    readonly quoted: boolean | undefined;
+    #privateFlag: boolean | undefined = undefined;
+    constructor(quoted: boolean | undefined) { this.quoted = quoted; }
+    set(value: boolean | undefined): void { this.flag = value; this.#privateFlag = value; }
+    privateValue(): boolean | undefined { return this.#privateFlag; }
+}
+class Derived extends Flags {
+    other: boolean | undefined = true;
+}
+function exercise(value: boolean | undefined): void {
+    const derived = new Derived(value);
+    const base: Flags = derived;
+    console.log(`${base.flag}|${base.initialized}|${base.quoted}|${base.privateValue()}|${derived.other}`);
+    base.set(true);
+    console.log(`${derived.flag}|${derived.privateValue()}`);
+    base.set(false);
+    console.log(`${derived.flag}|${derived.privateValue()}`);
+    base.set(undefined);
+    console.log(`${derived.flag}|${derived.privateValue()}`);
+    console.log(`${typeof derived.flag}|${derived.flag ?? false}`);
+}
+exercise(true);
+exercise(false);
+exercise(undefined);
+class Parameter {
+    constructor(public flag: boolean | undefined) {}
+}
+console.log(`${new Parameter(undefined).flag}|${new Parameter(false).flag}|${new Parameter(true).flag}`);
