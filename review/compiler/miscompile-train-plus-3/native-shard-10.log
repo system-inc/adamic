@@ -1,0 +1,536 @@
+=== RUN   TestClosureConventionRuntimeDropCount
+=== PAUSE TestClosureConventionRuntimeDropCount
+=== RUN   TestDecodeASCIIUnit09
+=== PAUSE TestDecodeASCIIUnit09
+=== RUN   TestDecodeASCIIUnit25
+=== PAUSE TestDecodeASCIIUnit25
+=== RUN   TestDecodeASCIIUnit41
+=== PAUSE TestDecodeASCIIUnit41
+=== RUN   TestDecodeASCIIWASIUnit12
+=== PAUSE TestDecodeASCIIWASIUnit12
+=== RUN   TestDecodeASCIIWASIUnit28
+=== PAUSE TestDecodeASCIIWASIUnit28
+=== RUN   TestDecodeASCIIWASIUnit44
+=== PAUSE TestDecodeASCIIWASIUnit44
+=== RUN   TestResidentSetUnits
+=== PAUSE TestResidentSetUnits
+=== RUN   TestMapHashProbeBound
+=== PAUSE TestMapHashProbeBound
+=== RUN   TestNormalizeMatchesNodePoints09
+=== PAUSE TestNormalizeMatchesNodePoints09
+=== RUN   TestRecordReadMutants
+=== PAUSE TestRecordReadMutants
+=== RUN   TestRegExpBytecodeRandomNodeUnit01
+=== PAUSE TestRegExpBytecodeRandomNodeUnit01
+=== RUN   TestRegExpBytecodeRandomNodeUnit17
+=== PAUSE TestRegExpBytecodeRandomNodeUnit17
+=== RUN   TestRegExpBytecodeRandomNodeUnit33
+=== PAUSE TestRegExpBytecodeRandomNodeUnit33
+=== RUN   TestStringIndexCacheStatesMatchNode
+=== PAUSE TestStringIndexCacheStatesMatchNode
+=== RUN   TestWASIUnit00
+    wasm_test.go:301: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit00 (0.00s)
+=== RUN   TestWASIUnit16
+    wasm_test.go:381: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit16 (0.00s)
+=== RUN   TestWASIUnit32
+    wasm_test.go:461: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit32 (0.00s)
+=== CONT  TestClosureConventionRuntimeDropCount
+=== CONT  TestMapHashProbeBound
+=== RUN   TestMapHashProbeBound/malloc
+=== CONT  TestRegExpBytecodeRandomNodeUnit01
+=== CONT  TestRecordReadMutants
+=== RUN   TestRecordReadMutants/prototype-membership-restored
+=== CONT  TestRegExpBytecodeRandomNodeUnit17
+    regexp_test.go:456: compiling 249 patterns, 250 executions, 687686 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit01
+    regexp_test.go:376: compiling 250 patterns, 250 executions, 705194 C bytes
+    regexp_test.go:376: mode=[] native execution totals: 250 cases, 0 disagreements
+=== NAME  TestRegExpBytecodeRandomNodeUnit17
+    regexp_test.go:456: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:456: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit17 (1.96s)
+=== NAME  TestRegExpBytecodeRandomNodeUnit01
+    regexp_test.go:376: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+=== CONT  TestNormalizeMatchesNodePoints09
+--- PASS: TestRegExpBytecodeRandomNodeUnit01 (1.96s)
+=== CONT  TestDecodeASCIIWASIUnit12
+    decode_ascii_test.go:422: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit12 (0.00s)
+=== CONT  TestResidentSetUnits
+--- PASS: TestResidentSetUnits (0.00s)
+=== CONT  TestDecodeASCIIWASIUnit44
+    decode_ascii_test.go:582: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit44 (0.00s)
+=== CONT  TestDecodeASCIIWASIUnit28
+    decode_ascii_test.go:502: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit28 (0.00s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit33
+    regexp_test.go:536: compiling 245 patterns, 250 executions, 658291 C bytes
+    regexp_test.go:536: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:536: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit33 (2.30s)
+=== CONT  TestDecodeASCIIUnit25
+    decode_ascii_test.go:262: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:262: compile phase 0.002s (including cache wait)
+=== NAME  TestClosureConventionRuntimeDropCount
+    closure_convention_test.go:83: runtime callback drop-count mutant rejected by clang under -Werror: expected 3, have 2
+--- PASS: TestClosureConventionRuntimeDropCount (5.76s)
+=== CONT  TestDecodeASCIIUnit41
+    decode_ascii_test.go:342: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:342: compile phase 0.002s (including cache wait)
+=== NAME  TestNormalizeMatchesNodePoints09
+    normalize_test.go:293: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 5.231s
+--- PASS: TestNormalizeMatchesNodePoints09 (5.23s)
+=== CONT  TestDecodeASCIIUnit09
+    decode_ascii_test.go:182: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:182: compile phase 0.001s (including cache wait)
+=== NAME  TestDecodeASCIIUnit25
+    decode_ascii_test.go:262: run phase 5.571s
+    decode_ascii_test.go:262: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 5.575s
+--- PASS: TestDecodeASCIIUnit25 (5.58s)
+=== CONT  TestStringIndexCacheStatesMatchNode
+--- PASS: TestStringIndexCacheStatesMatchNode (0.35s)
+=== NAME  TestMapHashProbeBound/malloc
+    map_hash_test.go:91: integers entries=8 buckets=16 homes=6 max_home=3 hit=5 miss=8
+        integers? entries=8 buckets=16 homes=6 max_home=3 hit=5 miss=8
+        stride1024 entries=8 buckets=16 homes=6 max_home=2 hit=3 miss=6
+        stride1024? entries=8 buckets=16 homes=6 max_home=2 hit=3 miss=6
+        negative entries=8 buckets=16 homes=7 max_home=2 hit=2 miss=4
+        negative? entries=8 buckets=16 homes=7 max_home=2 hit=2 miss=4
+        eighths entries=8 buckets=16 homes=6 max_home=2 hit=2 miss=5
+        eighths? entries=8 buckets=16 homes=6 max_home=2 hit=2 miss=5
+        halves entries=8 buckets=16 homes=4 max_home=4 hit=4 miss=5
+        halves? entries=8 buckets=16 homes=4 max_home=4 hit=4 miss=5
+        tenths entries=8 buckets=16 homes=6 max_home=2 hit=3 miss=5
+        tenths? entries=8 buckets=16 homes=6 max_home=2 hit=3 miss=5
+        below2^53 entries=8 buckets=16 homes=6 max_home=2 hit=5 miss=7
+        below2^53? entries=8 buckets=16 homes=6 max_home=2 hit=5 miss=7
+        above2^53 entries=8 buckets=16 homes=7 max_home=2 hit=3 miss=6
+        above2^53? entries=8 buckets=16 homes=7 max_home=2 hit=3 miss=6
+        signed entries=8 buckets=16 homes=6 max_home=3 hit=4 miss=8
+        signed? entries=8 buckets=16 homes=6 max_home=3 hit=4 miss=8
+        strings entries=8 buckets=16 homes=5 max_home=2 hit=2 miss=6
+        objects entries=8 buckets=16 homes=4 max_home=2 hit=2 miss=3
+        integers entries=16 buckets=32 homes=14 max_home=2 hit=3 miss=10
+        integers? entries=16 buckets=32 homes=14 max_home=2 hit=3 miss=10
+        stride1024 entries=16 buckets=32 homes=11 max_home=3 hit=6 miss=8
+        stride1024? entries=16 buckets=32 homes=11 max_home=3 hit=6 miss=8
+        negative entries=16 buckets=32 homes=13 max_home=2 hit=2 miss=5
+        negative? entries=16 buckets=32 homes=13 max_home=2 hit=2 miss=5
+        eighths entries=16 buckets=32 homes=14 max_home=2 hit=2 miss=4
+        eighths? entries=16 buckets=32 homes=14 max_home=2 hit=2 miss=4
+        halves entries=16 buckets=32 homes=5 max_home=5 hit=5 miss=7
+        halves? entries=16 buckets=32 homes=5 max_home=5 hit=5 miss=7
+        tenths entries=16 buckets=32 homes=12 max_home=3 hit=3 miss=8
+        tenths? entries=16 buckets=32 homes=12 max_home=3 hit=3 miss=8
+        below2^53 entries=16 buckets=32 homes=10 max_home=3 hit=11 miss=15
+        below2^53? entries=16 buckets=32 homes=10 max_home=3 hit=11 miss=15
+        above2^53 entries=16 buckets=32 homes=13 max_home=2 hit=4 miss=12
+        above2^53? entries=16 buckets=32 homes=13 max_home=2 hit=4 miss=12
+        signed entries=16 buckets=32 homes=12 max_home=3 hit=5 miss=7
+        signed? entries=16 buckets=32 homes=12 max_home=3 hit=5 miss=7
+        strings entries=16 buckets=32 homes=10 max_home=3 hit=3 miss=6
+        objects entries=16 buckets=32 homes=8 max_home=2 hit=2 miss=3
+        integers entries=32 buckets=64 homes=28 max_home=2 hit=2 miss=4
+        integers? entries=32 buckets=64 homes=28 max_home=2 hit=2 miss=4
+        stride1024 entries=32 buckets=64 homes=24 max_home=4 hit=5 miss=11
+        stride1024? entries=32 buckets=64 homes=24 max_home=4 hit=5 miss=11
+        negative entries=32 buckets=64 homes=25 max_home=3 hit=3 miss=7
+        negative? entries=32 buckets=64 homes=25 max_home=3 hit=3 miss=7
+        eighths entries=32 buckets=64 homes=20 max_home=5 hit=9 miss=10
+        eighths? entries=32 buckets=64 homes=20 max_home=5 hit=9 miss=10
+        halves entries=32 buckets=64 homes=11 max_home=5 hit=8 miss=9
+        halves? entries=32 buckets=64 homes=11 max_home=5 hit=8 miss=9
+        tenths entries=32 buckets=64 homes=25 max_home=4 hit=4 miss=8
+        tenths? entries=32 buckets=64 homes=25 max_home=4 hit=4 miss=8
+        below2^53 entries=32 buckets=64 homes=28 max_home=2 hit=4 miss=13
+        below2^53? entries=32 buckets=64 homes=28 max_home=2 hit=4 miss=13
+        above2^53 entries=32 buckets=64 homes=20 max_home=4 hit=16 miss=20
+        above2^53? entries=32 buckets=64 homes=20 max_home=4 hit=16 miss=20
+        signed entries=32 buckets=64 homes=26 max_home=4 hit=4 miss=8
+        signed? entries=32 buckets=64 homes=26 max_home=4 hit=4 miss=8
+        strings entries=32 buckets=64 homes=24 max_home=2 hit=3 miss=6
+        objects entries=32 buckets=64 homes=16 max_home=2 hit=2 miss=3
+        integers entries=64 buckets=128 homes=49 max_home=3 hit=6 miss=8
+        integers? entries=64 buckets=128 homes=49 max_home=3 hit=6 miss=8
+        stride1024 entries=64 buckets=128 homes=51 max_home=3 hit=8 miss=15
+        stride1024? entries=64 buckets=128 homes=51 max_home=3 hit=8 miss=15
+        negative entries=64 buckets=128 homes=52 max_home=3 hit=7 miss=13
+        negative? entries=64 buckets=128 homes=52 max_home=3 hit=7 miss=13
+        eighths entries=64 buckets=128 homes=34 max_home=5 hit=6 miss=8
+        eighths? entries=64 buckets=128 homes=34 max_home=5 hit=6 miss=8
+        halves entries=64 buckets=128 homes=41 max_home=3 hit=4 miss=7
+        halves? entries=64 buckets=128 homes=41 max_home=3 hit=4 miss=7
+        tenths entries=64 buckets=128 homes=50 max_home=4 hit=4 miss=8
+        tenths? entries=64 buckets=128 homes=50 max_home=4 hit=4 miss=8
+        below2^53 entries=64 buckets=128 homes=48 max_home=3 hit=17 miss=21
+        below2^53? entries=64 buckets=128 homes=48 max_home=3 hit=17 miss=21
+        above2^53 entries=64 buckets=128 homes=51 max_home=4 hit=12 miss=16
+        above2^53? entries=64 buckets=128 homes=51 max_home=4 hit=12 miss=16
+        signed entries=64 buckets=128 homes=51 max_home=3 hit=8 miss=12
+        signed? entries=64 buckets=128 homes=51 max_home=3 hit=8 miss=12
+        strings entries=64 buckets=128 homes=52 max_home=4 hit=8 miss=13
+        objects entries=64 buckets=128 homes=32 max_home=2 hit=2 miss=3
+        integers entries=128 buckets=256 homes=102 max_home=3 hit=7 miss=12
+        integers? entries=128 buckets=256 homes=102 max_home=3 hit=7 miss=12
+        stride1024 entries=128 buckets=256 homes=98 max_home=3 hit=7 miss=10
+        stride1024? entries=128 buckets=256 homes=98 max_home=3 hit=7 miss=10
+        negative entries=128 buckets=256 homes=97 max_home=4 hit=21 miss=25
+        negative? entries=128 buckets=256 homes=97 max_home=4 hit=21 miss=25
+        eighths entries=128 buckets=256 homes=82 max_home=4 hit=7 miss=8
+        eighths? entries=128 buckets=256 homes=82 max_home=4 hit=7 miss=8
+        halves entries=128 buckets=256 homes=108 max_home=3 hit=7 miss=11
+        halves? entries=128 buckets=256 homes=108 max_home=3 hit=7 miss=11
+        tenths entries=128 buckets=256 homes=99 max_home=5 hit=16 miss=18
+        tenths? entries=128 buckets=256 homes=99 max_home=5 hit=16 miss=18
+        below2^53 entries=128 buckets=256 homes=101 max_home=4 hit=13 miss=19
+        below2^53? entries=128 buckets=256 homes=101 max_home=4 hit=13 miss=19
+        above2^53 entries=128 buckets=256 homes=97 max_home=3 hit=9 miss=13
+        above2^53? entries=128 buckets=256 homes=97 max_home=3 hit=9 miss=13
+        signed entries=128 buckets=256 homes=100 max_home=3 hit=13 miss=17
+        signed? entries=128 buckets=256 homes=100 max_home=3 hit=13 miss=17
+        strings entries=128 buckets=256 homes=104 max_home=3 hit=15 miss=22
+        objects entries=128 buckets=256 homes=64 max_home=2 hit=2 miss=3
+        integers entries=256 buckets=512 homes=203 max_home=3 hit=8 miss=11
+        integers? entries=256 buckets=512 homes=203 max_home=3 hit=8 miss=11
+        stride1024 entries=256 buckets=512 homes=198 max_home=4 hit=11 miss=24
+        stride1024? entries=256 buckets=512 homes=198 max_home=4 hit=11 miss=24
+        negative entries=256 buckets=512 homes=203 max_home=3 hit=11 miss=14
+        negative? entries=256 buckets=512 homes=203 max_home=3 hit=11 miss=14
+        eighths entries=256 buckets=512 homes=211 max_home=3 hit=6 miss=11
+        eighths? entries=256 buckets=512 homes=211 max_home=3 hit=6 miss=11
+        halves entries=256 buckets=512 homes=206 max_home=4 hit=10 miss=12
+        halves? entries=256 buckets=512 homes=206 max_home=4 hit=10 miss=12
+        tenths entries=256 buckets=512 homes=206 max_home=4 hit=9 miss=11
+        tenths? entries=256 buckets=512 homes=206 max_home=4 hit=9 miss=11
+        below2^53 entries=256 buckets=512 homes=198 max_home=4 hit=23 miss=37
+        below2^53? entries=256 buckets=512 homes=198 max_home=4 hit=23 miss=37
+        above2^53 entries=256 buckets=512 homes=195 max_home=4 hit=14 miss=18
+        above2^53? entries=256 buckets=512 homes=195 max_home=4 hit=14 miss=18
+        signed entries=256 buckets=512 homes=192 max_home=3 hit=13 miss=16
+        signed? entries=256 buckets=512 homes=192 max_home=3 hit=13 miss=16
+        strings entries=256 buckets=512 homes=205 max_home=3 hit=10 miss=13
+        objects entries=256 buckets=512 homes=128 max_home=2 hit=2 miss=3
+        integers entries=512 buckets=1024 homes=392 max_home=5 hit=13 miss=19
+        integers? entries=512 buckets=1024 homes=392 max_home=5 hit=13 miss=19
+        stride1024 entries=512 buckets=1024 homes=395 max_home=4 hit=14 miss=26
+        stride1024? entries=512 buckets=1024 homes=395 max_home=4 hit=14 miss=26
+        negative entries=512 buckets=1024 homes=414 max_home=4 hit=9 miss=23
+        negative? entries=512 buckets=1024 homes=414 max_home=4 hit=9 miss=23
+        eighths entries=512 buckets=1024 homes=411 max_home=4 hit=10 miss=12
+        eighths? entries=512 buckets=1024 homes=411 max_home=4 hit=10 miss=12
+        halves entries=512 buckets=1024 homes=413 max_home=4 hit=13 miss=16
+        halves? entries=512 buckets=1024 homes=413 max_home=4 hit=13 miss=16
+        tenths entries=512 buckets=1024 homes=420 max_home=5 hit=10 miss=13
+        tenths? entries=512 buckets=1024 homes=420 max_home=5 hit=10 miss=13
+        below2^53 entries=512 buckets=1024 homes=394 max_home=4 hit=38 miss=46
+        below2^53? entries=512 buckets=1024 homes=394 max_home=4 hit=38 miss=46
+        above2^53 entries=512 buckets=1024 homes=416 max_home=4 hit=21 miss=22
+        above2^53? entries=512 buckets=1024 homes=416 max_home=4 hit=21 miss=22
+        signed entries=512 buckets=1024 homes=411 max_home=4 hit=10 miss=16
+        signed? entries=512 buckets=1024 homes=411 max_home=4 hit=10 miss=16
+        strings entries=512 buckets=1024 homes=411 max_home=3 hit=7 miss=16
+        objects entries=512 buckets=1024 homes=256 max_home=2 hit=2 miss=3
+        integers entries=1024 buckets=2048 homes=790 max_home=4 hit=9 miss=18
+        integers? entries=1024 buckets=2048 homes=790 max_home=4 hit=9 miss=18
+        stride1024 entries=1024 buckets=2048 homes=791 max_home=4 hit=11 miss=21
+        stride1024? entries=1024 buckets=2048 homes=791 max_home=4 hit=11 miss=21
+        negative entries=1024 buckets=2048 homes=812 max_home=5 hit=12 miss=19
+        negative? entries=1024 buckets=2048 homes=812 max_home=5 hit=12 miss=19
+        eighths entries=1024 buckets=2048 homes=808 max_home=4 hit=11 miss=14
+        eighths? entries=1024 buckets=2048 homes=808 max_home=4 hit=11 miss=14
+        halves entries=1024 buckets=2048 homes=795 max_home=4 hit=14 miss=21
+        halves? entries=1024 buckets=2048 homes=795 max_home=4 hit=14 miss=21
+        tenths entries=1024 buckets=2048 homes=829 max_home=5 hit=8 miss=20
+        tenths? entries=1024 buckets=2048 homes=829 max_home=5 hit=8 miss=20
+        below2^53 entries=1024 buckets=2048 homes=788 max_home=5 hit=12 miss=20
+        below2^53? entries=1024 buckets=2048 homes=788 max_home=5 hit=12 miss=20
+        above2^53 entries=1024 buckets=2048 homes=816 max_home=4 hit=16 miss=31
+        above2^53? entries=1024 buckets=2048 homes=816 max_home=4 hit=16 miss=31
+        signed entries=1024 buckets=2048 homes=809 max_home=4 hit=12 miss=18
+        signed? entries=1024 buckets=2048 homes=809 max_home=4 hit=12 miss=18
+        strings entries=1024 buckets=2048 homes=819 max_home=4 hit=12 miss=15
+        objects entries=1024 buckets=2048 homes=512 max_home=2 hit=2 miss=3
+        integers entries=2048 buckets=4096 homes=1605 max_home=6 hit=23 miss=24
+        integers? entries=2048 buckets=4096 homes=1605 max_home=6 hit=23 miss=24
+        stride1024 entries=2048 buckets=4096 homes=1586 max_home=5 hit=18 miss=24
+        stride1024? entries=2048 buckets=4096 homes=1586 max_home=5 hit=18 miss=24
+        negative entries=2048 buckets=4096 homes=1606 max_home=4 hit=19 miss=28
+        negative? entries=2048 buckets=4096 homes=1606 max_home=4 hit=19 miss=28
+        eighths entries=2048 buckets=4096 homes=1601 max_home=4 hit=17 miss=24
+        eighths? entries=2048 buckets=4096 homes=1601 max_home=4 hit=17 miss=24
+        halves entries=2048 buckets=4096 homes=1607 max_home=4 hit=25 miss=31
+        halves? entries=2048 buckets=4096 homes=1607 max_home=4 hit=25 miss=31
+        tenths entries=2048 buckets=4096 homes=1613 max_home=5 hit=17 miss=29
+        tenths? entries=2048 buckets=4096 homes=1613 max_home=5 hit=17 miss=29
+        below2^53 entries=2048 buckets=4096 homes=1598 max_home=4 hit=17 miss=28
+        below2^53? entries=2048 buckets=4096 homes=1598 max_home=4 hit=17 miss=28
+        above2^53 entries=2048 buckets=4096 homes=1624 max_home=4 hit=18 miss=23
+        above2^53? entries=2048 buckets=4096 homes=1624 max_home=4 hit=18 miss=23
+        signed entries=2048 buckets=4096 homes=1596 max_home=5 hit=14 miss=22
+        signed? entries=2048 buckets=4096 homes=1596 max_home=5 hit=14 miss=22
+        strings entries=2048 buckets=4096 homes=1612 max_home=4 hit=20 miss=22
+        objects entries=2048 buckets=4096 homes=1024 max_home=2 hit=2 miss=3
+        integers entries=4096 buckets=8192 homes=3190 max_home=5 hit=21 miss=28
+        integers? entries=4096 buckets=8192 homes=3190 max_home=5 hit=21 miss=28
+        stride1024 entries=4096 buckets=8192 homes=3222 max_home=5 hit=16 miss=25
+        stride1024? entries=4096 buckets=8192 homes=3222 max_home=5 hit=16 miss=25
+        negative entries=4096 buckets=8192 homes=3232 max_home=4 hit=20 miss=34
+        negative? entries=4096 buckets=8192 homes=3232 max_home=4 hit=20 miss=34
+        eighths entries=4096 buckets=8192 homes=3225 max_home=4 hit=25 miss=42
+        eighths? entries=4096 buckets=8192 homes=3225 max_home=4 hit=25 miss=42
+        halves entries=4096 buckets=8192 homes=3226 max_home=5 hit=14 miss=21
+        halves? entries=4096 buckets=8192 homes=3226 max_home=5 hit=14 miss=21
+        tenths entries=4096 buckets=8192 homes=3263 max_home=4 hit=17 miss=23
+        tenths? entries=4096 buckets=8192 homes=3263 max_home=4 hit=17 miss=23
+        below2^53 entries=4096 buckets=8192 homes=3246 max_home=5 hit=17 miss=24
+        below2^53? entries=4096 buckets=8192 homes=3246 max_home=5 hit=17 miss=24
+        above2^53 entries=4096 buckets=8192 homes=3205 max_home=5 hit=18 miss=26
+        above2^53? entries=4096 buckets=8192 homes=3205 max_home=5 hit=18 miss=26
+        signed entries=4096 buckets=8192 homes=3218 max_home=5 hit=23 miss=26
+        signed? entries=4096 buckets=8192 homes=3218 max_home=5 hit=23 miss=26
+        strings entries=4096 buckets=8192 homes=3191 max_home=4 hit=17 miss=26
+        objects entries=4096 buckets=8192 homes=2048 max_home=2 hit=2 miss=3
+        
+=== RUN   TestMapHashProbeBound/slabs
+=== NAME  TestRecordReadMutants/prototype-membership-restored
+    record_test.go:275: adamic: counts: allocations 3 frees 3 retains 0 releases 2 peak 3 regions 0
+    record_test.go:286: caught by exact diagnostic and exit check; forbidden result "1\n"
+=== RUN   TestRecordReadMutants/missing-read-silent
+=== NAME  TestDecodeASCIIUnit09
+    decode_ascii_test.go:182: run phase 4.766s
+    decode_ascii_test.go:182: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.774s
+--- PASS: TestDecodeASCIIUnit09 (4.77s)
+=== NAME  TestDecodeASCIIUnit41
+    decode_ascii_test.go:342: run phase 7.633s
+    decode_ascii_test.go:342: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 7.637s
+--- PASS: TestDecodeASCIIUnit41 (7.64s)
+=== NAME  TestMapHashProbeBound/slabs
+    map_hash_test.go:91: integers entries=8 buckets=16 homes=6 max_home=3 hit=5 miss=8
+        integers? entries=8 buckets=16 homes=6 max_home=3 hit=5 miss=8
+        stride1024 entries=8 buckets=16 homes=6 max_home=2 hit=3 miss=6
+        stride1024? entries=8 buckets=16 homes=6 max_home=2 hit=3 miss=6
+        negative entries=8 buckets=16 homes=7 max_home=2 hit=2 miss=4
+        negative? entries=8 buckets=16 homes=7 max_home=2 hit=2 miss=4
+        eighths entries=8 buckets=16 homes=6 max_home=2 hit=2 miss=5
+        eighths? entries=8 buckets=16 homes=6 max_home=2 hit=2 miss=5
+        halves entries=8 buckets=16 homes=4 max_home=4 hit=4 miss=5
+        halves? entries=8 buckets=16 homes=4 max_home=4 hit=4 miss=5
+        tenths entries=8 buckets=16 homes=6 max_home=2 hit=3 miss=5
+        tenths? entries=8 buckets=16 homes=6 max_home=2 hit=3 miss=5
+        below2^53 entries=8 buckets=16 homes=6 max_home=2 hit=5 miss=7
+        below2^53? entries=8 buckets=16 homes=6 max_home=2 hit=5 miss=7
+        above2^53 entries=8 buckets=16 homes=7 max_home=2 hit=3 miss=6
+        above2^53? entries=8 buckets=16 homes=7 max_home=2 hit=3 miss=6
+        signed entries=8 buckets=16 homes=6 max_home=3 hit=4 miss=8
+        signed? entries=8 buckets=16 homes=6 max_home=3 hit=4 miss=8
+        strings entries=8 buckets=16 homes=5 max_home=2 hit=2 miss=6
+        objects entries=8 buckets=16 homes=8 max_home=1 hit=1 miss=5
+        integers entries=16 buckets=32 homes=14 max_home=2 hit=3 miss=10
+        integers? entries=16 buckets=32 homes=14 max_home=2 hit=3 miss=10
+        stride1024 entries=16 buckets=32 homes=11 max_home=3 hit=6 miss=8
+        stride1024? entries=16 buckets=32 homes=11 max_home=3 hit=6 miss=8
+        negative entries=16 buckets=32 homes=13 max_home=2 hit=2 miss=5
+        negative? entries=16 buckets=32 homes=13 max_home=2 hit=2 miss=5
+        eighths entries=16 buckets=32 homes=14 max_home=2 hit=2 miss=4
+        eighths? entries=16 buckets=32 homes=14 max_home=2 hit=2 miss=4
+        halves entries=16 buckets=32 homes=5 max_home=5 hit=5 miss=7
+        halves? entries=16 buckets=32 homes=5 max_home=5 hit=5 miss=7
+        tenths entries=16 buckets=32 homes=12 max_home=3 hit=3 miss=8
+        tenths? entries=16 buckets=32 homes=12 max_home=3 hit=3 miss=8
+        below2^53 entries=16 buckets=32 homes=10 max_home=3 hit=11 miss=15
+        below2^53? entries=16 buckets=32 homes=10 max_home=3 hit=11 miss=15
+        above2^53 entries=16 buckets=32 homes=13 max_home=2 hit=4 miss=12
+        above2^53? entries=16 buckets=32 homes=13 max_home=2 hit=4 miss=12
+        signed entries=16 buckets=32 homes=12 max_home=3 hit=5 miss=7
+        signed? entries=16 buckets=32 homes=12 max_home=3 hit=5 miss=7
+        strings entries=16 buckets=32 homes=10 max_home=3 hit=3 miss=6
+        objects entries=16 buckets=32 homes=16 max_home=1 hit=1 miss=3
+        integers entries=32 buckets=64 homes=28 max_home=2 hit=2 miss=4
+        integers? entries=32 buckets=64 homes=28 max_home=2 hit=2 miss=4
+        stride1024 entries=32 buckets=64 homes=24 max_home=4 hit=5 miss=11
+        stride1024? entries=32 buckets=64 homes=24 max_home=4 hit=5 miss=11
+        negative entries=32 buckets=64 homes=25 max_home=3 hit=3 miss=7
+        negative? entries=32 buckets=64 homes=25 max_home=3 hit=3 miss=7
+        eighths entries=32 buckets=64 homes=20 max_home=5 hit=9 miss=10
+        eighths? entries=32 buckets=64 homes=20 max_home=5 hit=9 miss=10
+        halves entries=32 buckets=64 homes=11 max_home=5 hit=8 miss=9
+        halves? entries=32 buckets=64 homes=11 max_home=5 hit=8 miss=9
+        tenths entries=32 buckets=64 homes=25 max_home=4 hit=4 miss=8
+        tenths? entries=32 buckets=64 homes=25 max_home=4 hit=4 miss=8
+        below2^53 entries=32 buckets=64 homes=28 max_home=2 hit=4 miss=13
+        below2^53? entries=32 buckets=64 homes=28 max_home=2 hit=4 miss=13
+        above2^53 entries=32 buckets=64 homes=20 max_home=4 hit=16 miss=20
+        above2^53? entries=32 buckets=64 homes=20 max_home=4 hit=16 miss=20
+        signed entries=32 buckets=64 homes=26 max_home=4 hit=4 miss=8
+        signed? entries=32 buckets=64 homes=26 max_home=4 hit=4 miss=8
+        strings entries=32 buckets=64 homes=24 max_home=2 hit=3 miss=6
+        objects entries=32 buckets=64 homes=32 max_home=1 hit=1 miss=6
+        integers entries=64 buckets=128 homes=49 max_home=3 hit=6 miss=8
+        integers? entries=64 buckets=128 homes=49 max_home=3 hit=6 miss=8
+        stride1024 entries=64 buckets=128 homes=51 max_home=3 hit=8 miss=15
+        stride1024? entries=64 buckets=128 homes=51 max_home=3 hit=8 miss=15
+        negative entries=64 buckets=128 homes=52 max_home=3 hit=7 miss=13
+        negative? entries=64 buckets=128 homes=52 max_home=3 hit=7 miss=13
+        eighths entries=64 buckets=128 homes=34 max_home=5 hit=6 miss=8
+        eighths? entries=64 buckets=128 homes=34 max_home=5 hit=6 miss=8
+        halves entries=64 buckets=128 homes=41 max_home=3 hit=4 miss=7
+        halves? entries=64 buckets=128 homes=41 max_home=3 hit=4 miss=7
+        tenths entries=64 buckets=128 homes=50 max_home=4 hit=4 miss=8
+        tenths? entries=64 buckets=128 homes=50 max_home=4 hit=4 miss=8
+        below2^53 entries=64 buckets=128 homes=48 max_home=3 hit=17 miss=21
+        below2^53? entries=64 buckets=128 homes=48 max_home=3 hit=17 miss=21
+        above2^53 entries=64 buckets=128 homes=51 max_home=4 hit=12 miss=16
+        above2^53? entries=64 buckets=128 homes=51 max_home=4 hit=12 miss=16
+        signed entries=64 buckets=128 homes=51 max_home=3 hit=8 miss=12
+        signed? entries=64 buckets=128 homes=51 max_home=3 hit=8 miss=12
+        strings entries=64 buckets=128 homes=52 max_home=4 hit=8 miss=13
+        objects entries=64 buckets=128 homes=64 max_home=1 hit=1 miss=7
+        integers entries=128 buckets=256 homes=102 max_home=3 hit=7 miss=12
+        integers? entries=128 buckets=256 homes=102 max_home=3 hit=7 miss=12
+        stride1024 entries=128 buckets=256 homes=98 max_home=3 hit=7 miss=10
+        stride1024? entries=128 buckets=256 homes=98 max_home=3 hit=7 miss=10
+        negative entries=128 buckets=256 homes=97 max_home=4 hit=21 miss=25
+        negative? entries=128 buckets=256 homes=97 max_home=4 hit=21 miss=25
+        eighths entries=128 buckets=256 homes=82 max_home=4 hit=7 miss=8
+        eighths? entries=128 buckets=256 homes=82 max_home=4 hit=7 miss=8
+        halves entries=128 buckets=256 homes=108 max_home=3 hit=7 miss=11
+        halves? entries=128 buckets=256 homes=108 max_home=3 hit=7 miss=11
+        tenths entries=128 buckets=256 homes=99 max_home=5 hit=16 miss=18
+        tenths? entries=128 buckets=256 homes=99 max_home=5 hit=16 miss=18
+        below2^53 entries=128 buckets=256 homes=101 max_home=4 hit=13 miss=19
+        below2^53? entries=128 buckets=256 homes=101 max_home=4 hit=13 miss=19
+        above2^53 entries=128 buckets=256 homes=97 max_home=3 hit=9 miss=13
+        above2^53? entries=128 buckets=256 homes=97 max_home=3 hit=9 miss=13
+        signed entries=128 buckets=256 homes=100 max_home=3 hit=13 miss=17
+        signed? entries=128 buckets=256 homes=100 max_home=3 hit=13 miss=17
+        strings entries=128 buckets=256 homes=104 max_home=3 hit=15 miss=22
+        objects entries=128 buckets=256 homes=128 max_home=1 hit=1 miss=9
+        integers entries=256 buckets=512 homes=203 max_home=3 hit=8 miss=11
+        integers? entries=256 buckets=512 homes=203 max_home=3 hit=8 miss=11
+        stride1024 entries=256 buckets=512 homes=198 max_home=4 hit=11 miss=24
+        stride1024? entries=256 buckets=512 homes=198 max_home=4 hit=11 miss=24
+        negative entries=256 buckets=512 homes=203 max_home=3 hit=11 miss=14
+        negative? entries=256 buckets=512 homes=203 max_home=3 hit=11 miss=14
+        eighths entries=256 buckets=512 homes=211 max_home=3 hit=6 miss=11
+        eighths? entries=256 buckets=512 homes=211 max_home=3 hit=6 miss=11
+        halves entries=256 buckets=512 homes=206 max_home=4 hit=10 miss=12
+        halves? entries=256 buckets=512 homes=206 max_home=4 hit=10 miss=12
+        tenths entries=256 buckets=512 homes=206 max_home=4 hit=9 miss=11
+        tenths? entries=256 buckets=512 homes=206 max_home=4 hit=9 miss=11
+        below2^53 entries=256 buckets=512 homes=198 max_home=4 hit=23 miss=37
+        below2^53? entries=256 buckets=512 homes=198 max_home=4 hit=23 miss=37
+        above2^53 entries=256 buckets=512 homes=195 max_home=4 hit=14 miss=18
+        above2^53? entries=256 buckets=512 homes=195 max_home=4 hit=14 miss=18
+        signed entries=256 buckets=512 homes=192 max_home=3 hit=13 miss=16
+        signed? entries=256 buckets=512 homes=192 max_home=3 hit=13 miss=16
+        strings entries=256 buckets=512 homes=205 max_home=3 hit=10 miss=13
+        objects entries=256 buckets=512 homes=256 max_home=1 hit=1 miss=9
+        integers entries=512 buckets=1024 homes=392 max_home=5 hit=13 miss=19
+        integers? entries=512 buckets=1024 homes=392 max_home=5 hit=13 miss=19
+        stride1024 entries=512 buckets=1024 homes=395 max_home=4 hit=14 miss=26
+        stride1024? entries=512 buckets=1024 homes=395 max_home=4 hit=14 miss=26
+        negative entries=512 buckets=1024 homes=414 max_home=4 hit=9 miss=23
+        negative? entries=512 buckets=1024 homes=414 max_home=4 hit=9 miss=23
+        eighths entries=512 buckets=1024 homes=411 max_home=4 hit=10 miss=12
+        eighths? entries=512 buckets=1024 homes=411 max_home=4 hit=10 miss=12
+        halves entries=512 buckets=1024 homes=413 max_home=4 hit=13 miss=16
+        halves? entries=512 buckets=1024 homes=413 max_home=4 hit=13 miss=16
+        tenths entries=512 buckets=1024 homes=420 max_home=5 hit=10 miss=13
+        tenths? entries=512 buckets=1024 homes=420 max_home=5 hit=10 miss=13
+        below2^53 entries=512 buckets=1024 homes=394 max_home=4 hit=38 miss=46
+        below2^53? entries=512 buckets=1024 homes=394 max_home=4 hit=38 miss=46
+        above2^53 entries=512 buckets=1024 homes=416 max_home=4 hit=21 miss=22
+        above2^53? entries=512 buckets=1024 homes=416 max_home=4 hit=21 miss=22
+        signed entries=512 buckets=1024 homes=411 max_home=4 hit=10 miss=16
+        signed? entries=512 buckets=1024 homes=411 max_home=4 hit=10 miss=16
+        strings entries=512 buckets=1024 homes=411 max_home=3 hit=7 miss=16
+        objects entries=512 buckets=1024 homes=512 max_home=1 hit=1 miss=15
+        integers entries=1024 buckets=2048 homes=790 max_home=4 hit=9 miss=18
+        integers? entries=1024 buckets=2048 homes=790 max_home=4 hit=9 miss=18
+        stride1024 entries=1024 buckets=2048 homes=791 max_home=4 hit=11 miss=21
+        stride1024? entries=1024 buckets=2048 homes=791 max_home=4 hit=11 miss=21
+        negative entries=1024 buckets=2048 homes=812 max_home=5 hit=12 miss=19
+        negative? entries=1024 buckets=2048 homes=812 max_home=5 hit=12 miss=19
+        eighths entries=1024 buckets=2048 homes=808 max_home=4 hit=11 miss=14
+        eighths? entries=1024 buckets=2048 homes=808 max_home=4 hit=11 miss=14
+        halves entries=1024 buckets=2048 homes=795 max_home=4 hit=14 miss=21
+        halves? entries=1024 buckets=2048 homes=795 max_home=4 hit=14 miss=21
+        tenths entries=1024 buckets=2048 homes=829 max_home=5 hit=8 miss=20
+        tenths? entries=1024 buckets=2048 homes=829 max_home=5 hit=8 miss=20
+        below2^53 entries=1024 buckets=2048 homes=788 max_home=5 hit=12 miss=20
+        below2^53? entries=1024 buckets=2048 homes=788 max_home=5 hit=12 miss=20
+        above2^53 entries=1024 buckets=2048 homes=816 max_home=4 hit=16 miss=31
+        above2^53? entries=1024 buckets=2048 homes=816 max_home=4 hit=16 miss=31
+        signed entries=1024 buckets=2048 homes=809 max_home=4 hit=12 miss=18
+        signed? entries=1024 buckets=2048 homes=809 max_home=4 hit=12 miss=18
+        strings entries=1024 buckets=2048 homes=819 max_home=4 hit=12 miss=15
+        objects entries=1024 buckets=2048 homes=1024 max_home=1 hit=1 miss=13
+        integers entries=2048 buckets=4096 homes=1605 max_home=6 hit=23 miss=24
+        integers? entries=2048 buckets=4096 homes=1605 max_home=6 hit=23 miss=24
+        stride1024 entries=2048 buckets=4096 homes=1586 max_home=5 hit=18 miss=24
+        stride1024? entries=2048 buckets=4096 homes=1586 max_home=5 hit=18 miss=24
+        negative entries=2048 buckets=4096 homes=1606 max_home=4 hit=19 miss=28
+        negative? entries=2048 buckets=4096 homes=1606 max_home=4 hit=19 miss=28
+        eighths entries=2048 buckets=4096 homes=1601 max_home=4 hit=17 miss=24
+        eighths? entries=2048 buckets=4096 homes=1601 max_home=4 hit=17 miss=24
+        halves entries=2048 buckets=4096 homes=1607 max_home=4 hit=25 miss=31
+        halves? entries=2048 buckets=4096 homes=1607 max_home=4 hit=25 miss=31
+        tenths entries=2048 buckets=4096 homes=1613 max_home=5 hit=17 miss=29
+        tenths? entries=2048 buckets=4096 homes=1613 max_home=5 hit=17 miss=29
+        below2^53 entries=2048 buckets=4096 homes=1598 max_home=4 hit=17 miss=28
+        below2^53? entries=2048 buckets=4096 homes=1598 max_home=4 hit=17 miss=28
+        above2^53 entries=2048 buckets=4096 homes=1624 max_home=4 hit=18 miss=23
+        above2^53? entries=2048 buckets=4096 homes=1624 max_home=4 hit=18 miss=23
+        signed entries=2048 buckets=4096 homes=1596 max_home=5 hit=14 miss=22
+        signed? entries=2048 buckets=4096 homes=1596 max_home=5 hit=14 miss=22
+        strings entries=2048 buckets=4096 homes=1612 max_home=4 hit=20 miss=22
+        objects entries=2048 buckets=4096 homes=2048 max_home=1 hit=1 miss=11
+        integers entries=4096 buckets=8192 homes=3190 max_home=5 hit=21 miss=28
+        integers? entries=4096 buckets=8192 homes=3190 max_home=5 hit=21 miss=28
+        stride1024 entries=4096 buckets=8192 homes=3222 max_home=5 hit=16 miss=25
+        stride1024? entries=4096 buckets=8192 homes=3222 max_home=5 hit=16 miss=25
+        negative entries=4096 buckets=8192 homes=3232 max_home=4 hit=20 miss=34
+        negative? entries=4096 buckets=8192 homes=3232 max_home=4 hit=20 miss=34
+        eighths entries=4096 buckets=8192 homes=3225 max_home=4 hit=25 miss=42
+        eighths? entries=4096 buckets=8192 homes=3225 max_home=4 hit=25 miss=42
+        halves entries=4096 buckets=8192 homes=3226 max_home=5 hit=14 miss=21
+        halves? entries=4096 buckets=8192 homes=3226 max_home=5 hit=14 miss=21
+        tenths entries=4096 buckets=8192 homes=3263 max_home=4 hit=17 miss=23
+        tenths? entries=4096 buckets=8192 homes=3263 max_home=4 hit=17 miss=23
+        below2^53 entries=4096 buckets=8192 homes=3246 max_home=5 hit=17 miss=24
+        below2^53? entries=4096 buckets=8192 homes=3246 max_home=5 hit=17 miss=24
+        above2^53 entries=4096 buckets=8192 homes=3205 max_home=5 hit=18 miss=26
+        above2^53? entries=4096 buckets=8192 homes=3205 max_home=5 hit=18 miss=26
+        signed entries=4096 buckets=8192 homes=3218 max_home=5 hit=23 miss=26
+        signed? entries=4096 buckets=8192 homes=3218 max_home=5 hit=23 miss=26
+        strings entries=4096 buckets=8192 homes=3191 max_home=4 hit=17 miss=26
+        objects entries=4096 buckets=8192 homes=3750 max_home=2 hit=10 miss=13
+        
+--- PASS: TestMapHashProbeBound (17.20s)
+    --- PASS: TestMapHashProbeBound/malloc (10.20s)
+    --- PASS: TestMapHashProbeBound/slabs (7.00s)
+=== NAME  TestRecordReadMutants/missing-read-silent
+    record_test.go:275: adamic: counts: allocations 3 frees 3 retains 0 releases 2 peak 3 regions 0
+    record_test.go:286: caught by exact diagnostic and exit check; forbidden result "0\n"
+=== RUN   TestRecordReadMutants/own-read-checked-as-missing
+    record_test.go:268: caught by the own-hit fixture
+--- PASS: TestRecordReadMutants (24.53s)
+    --- PASS: TestRecordReadMutants/prototype-membership-restored (10.41s)
+    --- PASS: TestRecordReadMutants/missing-read-silent (7.32s)
+    --- PASS: TestRecordReadMutants/own-read-checked-as-missing (6.80s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	24.576s

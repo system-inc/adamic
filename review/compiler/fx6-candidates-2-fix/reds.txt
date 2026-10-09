@@ -1,0 +1,29 @@
+run adamic-verify-20261009T135106-5c8a5cc8: void, 20319 tests in 88 units, 5 failed, 1 units broken, 0 killed over budget
+AGAIN tests-09: from run adamic-verify-again-20261009T142107-d46553ac
+AGAIN tests-21: from run adamic-verify-again-20261009T142107-d46553ac
+AGAIN tests-28-r10: from run adamic-verify-again-20261009T145443-f5a62519
+BROKEN tests-28-r10: no results (exited false, last output "loom-runner: still running after 150 s")
+FAIL github.com/system-inc/adamic/internal/oracle TestCheckedViewOptionalReadBoundary/JavaScript (tests-09)
+    checked_views_optional_read_test.go:57: optional checked read escaped the V1 NotYet boundary
+FAIL github.com/system-inc/adamic/internal/oracle TestCheckedViewOptionalReadBoundary/native (tests-09)
+    checked_views_optional_read_test.go:57: optional checked read escaped the V1 NotYet boundary
+FAIL github.com/system-inc/adamic/internal/oracle TestCheckedViewObjectPrimitiveSource/optional-receiver (tests-21)
+    checked_views_v2_object_primitive_test.go:56: base optional boundary changed: <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestCheckedViewUntaggedSourceFlows/generic/wrong (tests-25)
+    checked_views_v2_source_test.go:141: native: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:143: native: exit codes differ
+    checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:143: native-sanitized: exit codes differ
+    checked_views_v2_source_test.go:141: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_v2_source_test.go:143: javascript: exit codes differ
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixturesAssertions/assertions/19_identifier_kind.a/stage0 (tests-11-r11)
+    fixtures_test.go:359: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/assertions/19_identifier_kind.a:25:13: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet}
+BROKEN tests-28-r10 on 3 placements, workers: a8f3a3854fe4, b43331a6f868, 5849598db9ce
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 2 of: TestOwnedWitnesses (tests-01)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 3 of: TestDecodedOptionsAndMutant, TestDotARename (tests-05)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestProfileCompilation (tests-17)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestJsxLintTrees (tests-18)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestRulesAgree (tests-19)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 2 of: TestFactoryHooks (tests-22)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 3 of: TestNodeTableIsLinkOnly, TestShardsAgree (tests-24)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0, requested 1 of: TestCompilerAndStage1Agree (tests-32)

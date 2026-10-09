@@ -1,0 +1,142 @@
+=== RUN   TestInheritanceMemoryPlans
+=== PAUSE TestInheritanceMemoryPlans
+=== RUN   TestDecodeASCIIUnit07
+=== PAUSE TestDecodeASCIIUnit07
+=== RUN   TestDecodeASCIIUnit23
+=== PAUSE TestDecodeASCIIUnit23
+=== RUN   TestDecodeASCIIUnit39
+=== PAUSE TestDecodeASCIIUnit39
+=== RUN   TestDecodeASCIIWASIUnit10
+=== PAUSE TestDecodeASCIIWASIUnit10
+=== RUN   TestDecodeASCIIWASIUnit26
+=== PAUSE TestDecodeASCIIWASIUnit26
+=== RUN   TestDecodeASCIIWASIUnit42
+=== PAUSE TestDecodeASCIIWASIUnit42
+=== RUN   TestFreedValuesAreCaughtWithSlabs
+=== PAUSE TestFreedValuesAreCaughtWithSlabs
+=== RUN   TestLoopArrayHoldC
+=== PAUSE TestLoopArrayHoldC
+=== RUN   TestNormalizeMatchesNodePoints07
+=== PAUSE TestNormalizeMatchesNodePoints07
+=== RUN   TestToStringWithARadixOutOfRangePanics
+=== PAUSE TestToStringWithARadixOutOfRangePanics
+=== RUN   TestRegExpBytecodePatternUnits
+=== PAUSE TestRegExpBytecodePatternUnits
+=== RUN   TestRegExpBytecodeRandomNodeUnit15
+=== PAUSE TestRegExpBytecodeRandomNodeUnit15
+=== RUN   TestRegExpBytecodeRandomNodeUnit31
+=== PAUSE TestRegExpBytecodeRandomNodeUnit31
+=== RUN   TestStringIndexMatchesNode
+=== PAUSE TestStringIndexMatchesNode
+=== RUN   TestViewSnapshotPayloadOwnership
+=== PAUSE TestViewSnapshotPayloadOwnership
+=== RUN   TestWASIUnit14
+    wasm_test.go:371: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit14 (0.00s)
+=== RUN   TestWASIUnit30
+    wasm_test.go:451: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit30 (0.00s)
+=== CONT  TestInheritanceMemoryPlans
+=== CONT  TestRegExpBytecodePatternUnits
+=== CONT  TestToStringWithARadixOutOfRangePanics
+=== CONT  TestViewSnapshotPayloadOwnership
+=== NAME  TestRegExpBytecodePatternUnits
+    regexp_test.go:366: compiling 2 patterns, 2 executions, 4340 C bytes
+=== CONT  TestStringIndexMatchesNode
+=== RUN   TestStringIndexMatchesNode/mixed
+=== PAUSE TestStringIndexMatchesNode/mixed
+=== RUN   TestStringIndexMatchesNode/BMP
+=== PAUSE TestStringIndexMatchesNode/BMP
+=== RUN   TestStringIndexMatchesNode/BMP_low_halves
+=== PAUSE TestStringIndexMatchesNode/BMP_low_halves
+=== RUN   TestStringIndexMatchesNode/ASCII
+=== PAUSE TestStringIndexMatchesNode/ASCII
+=== CONT  TestRegExpBytecodeRandomNodeUnit15
+=== NAME  TestInheritanceMemoryPlans
+    class_inheritance_test.go:48: Reader.replace reuses its ordinary Item parameter; no checked-view member boundary applies
+--- PASS: TestInheritanceMemoryPlans (0.12s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit31
+--- PASS: TestViewSnapshotPayloadOwnership (0.36s)
+=== CONT  TestDecodeASCIIWASIUnit26
+    decode_ascii_test.go:492: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit26 (0.00s)
+=== CONT  TestNormalizeMatchesNodePoints07
+=== NAME  TestRegExpBytecodePatternUnits
+    regexp_test.go:366: mode=[] native execution totals: 2 cases, 0 disagreements
+    regexp_test.go:366: mode=[unlimited] native execution totals: 2 cases, 0 disagreements
+--- PASS: TestRegExpBytecodePatternUnits (0.49s)
+=== CONT  TestLoopArrayHoldC
+=== CONT  TestFreedValuesAreCaughtWithSlabs
+--- PASS: TestLoopArrayHoldC (0.37s)
+=== NAME  TestRegExpBytecodeRandomNodeUnit31
+    regexp_test.go:526: compiling 249 patterns, 250 executions, 631343 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit15
+    regexp_test.go:446: compiling 247 patterns, 250 executions, 612639 C bytes
+--- PASS: TestToStringWithARadixOutOfRangePanics (1.83s)
+=== CONT  TestDecodeASCIIWASIUnit42
+    decode_ascii_test.go:572: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit42 (0.00s)
+=== CONT  TestDecodeASCIIUnit39
+    decode_ascii_test.go:332: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:332: compile phase 0.002s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit31
+    regexp_test.go:526: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:526: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit31 (1.94s)
+=== CONT  TestDecodeASCIIWASIUnit10
+    decode_ascii_test.go:412: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit10 (0.00s)
+=== CONT  TestDecodeASCIIUnit23
+    decode_ascii_test.go:252: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:252: compile phase 0.001s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit15
+    regexp_test.go:446: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:446: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit15 (2.23s)
+=== CONT  TestDecodeASCIIUnit07
+    decode_ascii_test.go:172: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:172: compile phase 0.002s (including cache wait)
+=== NAME  TestNormalizeMatchesNodePoints07
+    normalize_test.go:283: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 5.394s
+--- PASS: TestNormalizeMatchesNodePoints07 (5.39s)
+=== CONT  TestStringIndexMatchesNode/mixed
+=== NAME  TestDecodeASCIIUnit07
+    decode_ascii_test.go:172: run phase 4.684s
+    decode_ascii_test.go:172: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.688s
+--- PASS: TestDecodeASCIIUnit07 (4.69s)
+=== CONT  TestStringIndexMatchesNode/BMP_low_halves
+=== NAME  TestDecodeASCIIUnit23
+    decode_ascii_test.go:252: run phase 4.868s
+    decode_ascii_test.go:252: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.871s
+--- PASS: TestDecodeASCIIUnit23 (4.87s)
+=== CONT  TestStringIndexMatchesNode/BMP
+=== NAME  TestDecodeASCIIUnit39
+    decode_ascii_test.go:332: run phase 7.385s
+    decode_ascii_test.go:332: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 7.390s
+--- PASS: TestDecodeASCIIUnit39 (7.39s)
+=== CONT  TestStringIndexMatchesNode/ASCII
+    string_index_test.go:278: 7296 lines, 0 mismatches
+=== NAME  TestStringIndexMatchesNode/BMP
+    string_index_test.go:278: 7296 lines, 0 mismatches
+=== NAME  TestStringIndexMatchesNode/BMP_low_halves
+    string_index_test.go:278: 7296 lines, 0 mismatches
+--- PASS: TestFreedValuesAreCaughtWithSlabs (13.47s)
+=== NAME  TestStringIndexMatchesNode/mixed
+    string_index_test.go:278: 8940 lines, 0 mismatches
+--- PASS: TestStringIndexMatchesNode (0.00s)
+    --- PASS: TestStringIndexMatchesNode/ASCII (3.34s)
+    --- PASS: TestStringIndexMatchesNode/BMP (6.65s)
+    --- PASS: TestStringIndexMatchesNode/BMP_low_halves (7.04s)
+    --- PASS: TestStringIndexMatchesNode/mixed (9.46s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	15.250s

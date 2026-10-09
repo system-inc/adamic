@@ -1,0 +1,8 @@
+=== RUN   TestFX7ViewCycle
+=== PAUSE TestFX7ViewCycle
+=== CONT  TestFX7ViewCycle
+    fx7_view_runtime_test.go:13: exit 70, stdout "", stderr "adamic: panic: field read failed: view.value matches no member of Link | undefined; expected Link | undefined, found object\n"; want 0, "1\n", ""
+--- FAIL: TestFX7ViewCycle (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/javascript	0.031s
+FAIL

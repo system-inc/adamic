@@ -1,0 +1,71 @@
+=== RUN   TestFX7Depth65
+=== PAUSE TestFX7Depth65
+=== RUN   TestFX7Depth200
+=== PAUSE TestFX7Depth200
+=== RUN   TestFX7Depth2000
+=== PAUSE TestFX7Depth2000
+=== RUN   TestFX7TextP09
+=== PAUSE TestFX7TextP09
+=== RUN   TestFX7TextP32
+=== PAUSE TestFX7TextP32
+=== RUN   TestFX7TextP33
+=== PAUSE TestFX7TextP33
+=== RUN   TestFX7TextP67
+=== PAUSE TestFX7TextP67
+=== RUN   TestFX7TextP72
+=== PAUSE TestFX7TextP72
+=== CONT  TestFX7Depth65
+=== CONT  TestFX7TextP32
+=== CONT  TestFX7TextP67
+=== CONT  TestFX7TextP72
+=== CONT  TestFX7TextP33
+=== NAME  TestFX7TextP32
+    fx7_depth_texts_test.go:52: gate cache node miss
+=== NAME  TestFX7TextP67
+    fx7_depth_texts_test.go:54: gate cache node miss
+=== NAME  TestFX7Depth65
+    fx7_depth_texts_test.go:22: gate cache node hit
+=== NAME  TestFX7TextP72
+    fx7_depth_texts_test.go:55: gate cache node miss
+=== NAME  TestFX7TextP33
+    fx7_depth_texts_test.go:53: gate cache node miss
+=== NAME  TestFX7TextP67
+    fx7_depth_texts_test.go:54: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n"
+=== NAME  TestFX7TextP72
+    fx7_depth_texts_test.go:55: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"
+=== NAME  TestFX7TextP32
+    fx7_depth_texts_test.go:52: JavaScript: exit 70 stdout "3\n" stderr "adamic: panic: field read failed: <write>.name is not a string | number; expected string | number, found string\n"
+=== NAME  TestFX7TextP33
+    fx7_depth_texts_test.go:53: JavaScript: exit 70 stdout "3\n" stderr "adamic: panic: field read failed: <write>.name is not a string | number; expected string | number, found string\n"
+--- PASS: TestFX7TextP67 (0.45s)
+=== CONT  TestFX7Depth2000
+=== NAME  TestFX7Depth65
+    fx7_depth_texts_test.go:22: gate cache node miss
+--- PASS: TestFX7TextP32 (0.46s)
+=== CONT  TestFX7TextP09
+--- PASS: TestFX7TextP33 (0.49s)
+=== CONT  TestFX7Depth200
+=== NAME  TestFX7TextP09
+    fx7_depth_texts_test.go:51: gate cache node miss
+--- PASS: TestFX7TextP72 (0.51s)
+=== NAME  TestFX7Depth2000
+    fx7_depth_texts_test.go:24: gate cache node hit
+--- PASS: TestFX7Depth65 (0.52s)
+=== NAME  TestFX7Depth200
+    fx7_depth_texts_test.go:23: gate cache node hit
+=== NAME  TestFX7TextP09
+    fx7_depth_texts_test.go:51: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of readonly [string, number]; expected readonly [string, number], found array\n"
+=== NAME  TestFX7Depth200
+    fx7_depth_texts_test.go:23: gate cache node miss
+--- PASS: TestFX7TextP09 (0.32s)
+--- PASS: TestFX7Depth200 (0.32s)
+=== NAME  TestFX7Depth2000
+    fx7_depth_texts_test.go:24: gate cache node miss
+    fx7_depth_texts_test.go:24: javascript: exit codes differ; stderr "adamic: panic: RangeError: Maximum call stack size exceeded\n"
+--- FAIL: TestFX7Depth2000 (0.48s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.938s
+FAIL

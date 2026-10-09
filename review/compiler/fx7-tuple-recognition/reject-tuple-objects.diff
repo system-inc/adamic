@@ -1,0 +1,11 @@
+--- a/internal/javascript/readiness.go
++++ b/internal/javascript/readiness.go
+@@ -5,7 +5,7 @@
+ // Hidden readiness state leaves own keys and object spread unchanged.
+ const fieldReadinessRuntime = `const adamicTupleObjects = new WeakSet();
+ const adamicTuple = (values) => { adamicTupleObjects.add(values); return values; };
+-const adamicViewObject = (value) => value !== null && typeof value === "object" && (!Array.isArray(value) || adamicTupleObjects.has(value)) && !(value instanceof Map);
++const adamicViewObject = (value) => value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map);
+ const adamicFieldReadiness = new WeakMap();
+ const adamicFieldRepresentations = new WeakMap();
+ const adamicRecordFieldTypes = (object, types) => { adamicFieldRepresentations.set(object, {...adamicFieldRepresentations.get(object), ...types}); return object; };

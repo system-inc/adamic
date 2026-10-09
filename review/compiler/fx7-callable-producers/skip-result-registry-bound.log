@@ -1,0 +1,8 @@
+=== RUN   TestCallableProducerDiscardedObjectResultRefused
+=== PAUSE TestCallableProducerDiscardedObjectResultRefused
+=== CONT  TestCallableProducerDiscardedObjectResultRefused
+    callable_producers_assignable_test.go:62: want located producer adapter refusal, got <nil>
+--- FAIL: TestCallableProducerDiscardedObjectResultRefused (0.12s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.133s
+FAIL

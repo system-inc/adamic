@@ -1,0 +1,39 @@
+=== RUN   TestViewSnapshotMaybeBoolean
+=== PAUSE TestViewSnapshotMaybeBoolean
+=== RUN   TestViewSnapshotMaybeNumber
+=== PAUSE TestViewSnapshotMaybeNumber
+=== CONT  TestViewSnapshotMaybeBoolean
+=== CONT  TestViewSnapshotMaybeNumber
+--- PASS: TestViewSnapshotMaybeBoolean (0.25s)
+--- PASS: TestViewSnapshotMaybeNumber (0.25s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.274s
+=== RUN   TestViewSnapshotMaybeBoolean
+=== PAUSE TestViewSnapshotMaybeBoolean
+=== RUN   TestViewSnapshotMaybeNumber
+=== PAUSE TestViewSnapshotMaybeNumber
+=== CONT  TestViewSnapshotMaybeBoolean
+=== CONT  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:37: gate cache node hit
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:32: gate cache node hit
+    view_snapshot_test.go:32: Node: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:37: Node: exit=0 stdout="7\n0\nundefined\n" stderr=""
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:32: gate cache node hit
+    view_snapshot_test.go:32: javascript: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:32: native: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:32: native-sanitized: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:37: gate cache node hit
+    view_snapshot_test.go:37: native: exit=0 stdout="7\n0\nundefined\n" stderr=""
+    view_snapshot_test.go:37: native-sanitized: exit=0 stdout="7\n0\nundefined\n" stderr=""
+    view_snapshot_test.go:37: javascript: exit=0 stdout="7\n0\nundefined\n" stderr=""
+--- PASS: TestViewSnapshotMaybeNumber (0.45s)
+--- PASS: TestViewSnapshotMaybeBoolean (0.45s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.465s

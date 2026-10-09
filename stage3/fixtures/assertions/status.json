@@ -138,7 +138,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/assertions/09_interface_kind.a:15:9: stage 0 can't lower checked view union arm awaits views-v3: array element kind yet"}
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses view type has an unsupported member: properties; use a supported, checked type for properties (currently readonly number[]) before creating this view"}
   },
   {
     "file": "10_union_kind.a",

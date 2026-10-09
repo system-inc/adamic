@@ -1,0 +1,8 @@
+=== RUN   TestCallableProducerTaggedUnreadMethod
+=== PAUSE TestCallableProducerTaggedUnreadMethod
+=== CONT  TestCallableProducerTaggedUnreadMethod
+    callable_producers_assignable_test.go:68: Lower refused acceptance row: /tmp/adamic-gate/TestCallableProducerTaggedUnreadMethod2490069638/001/main.a:7:15: stage 0 can't lower a checked callable producer with a different scalar storage, arity, or receiver convention; wrap the producer in an arrow with the view member's exact parameters and result yet
+--- FAIL: TestCallableProducerTaggedUnreadMethod (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.050s
+FAIL

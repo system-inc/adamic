@@ -1,0 +1,20 @@
+=== RUN   TestViewDiagnosticP17
+=== PAUSE TestViewDiagnosticP17
+=== RUN   TestViewDiagnosticP48
+=== PAUSE TestViewDiagnosticP48
+=== RUN   TestViewDiagnosticP64
+=== PAUSE TestViewDiagnosticP64
+=== CONT  TestViewDiagnosticP17
+=== CONT  TestViewDiagnosticP64
+=== CONT  TestViewDiagnosticP48
+    view_diagnostics_test.go:54: want collection read source location 6:9, got ""
+--- FAIL: TestViewDiagnosticP48 (0.05s)
+=== NAME  TestViewDiagnosticP64
+    view_diagnostics_test.go:59: want collection read source location 7:16, got ""
+--- FAIL: TestViewDiagnosticP64 (0.06s)
+=== NAME  TestViewDiagnosticP17
+    view_diagnostics_test.go:49: want collection read source location 6:16, got ""
+--- FAIL: TestViewDiagnosticP17 (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.070s
+FAIL

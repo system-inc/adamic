@@ -1,0 +1,32 @@
+origin/compiler/views-v4:internal/lower/interface_cast.go:112:func (l *lowering) interfaceScalarShape(proven *checker.Type) bool {
+origin/compiler/views-v4:internal/lower/interface_cast.go:125:func interfaceLiteralFields(node *ast.Node) (map[string]*ast.Node, bool) {
+origin/compiler/views-v4:internal/lower/interface_cast.go:144:func (l *lowering) interfaceConstructions(cast *ast.Node, target *checker.Type, field string, literal *checker.Type) error {
+origin/compiler/views-v4:internal/lower/interface_cast.go:194:				l.interfaceWrite(binary.Left, checked, fail)
+origin/compiler/views-v4:internal/lower/interface_cast.go:199:				l.interfaceWrite(unary.Operand, checked, fail)
+origin/compiler/views-v4:internal/lower/interface_cast.go:202:			l.interfaceWrite(node.AsPostfixUnaryExpression().Operand, checked, fail)
+origin/compiler/views-v4:internal/lower/interface_cast.go:210:			baseCast := l.interfaceScalarShape(from) && l.interfaceScalarShape(to) && l.fieldLiteral(to, field) != nil && l.checker.IsTypeAssignableTo(to, from)
+origin/compiler/views-v4:internal/lower/interface_cast.go:212:			objectUpcast := l.interfaceScalarShape(to) && l.checker.IsTypeAssignableTo(from, to) && l.widened(from, to, map[[2]*checker.Type]bool{}) == nil
+origin/compiler/views-v4:internal/lower/interface_cast.go:217:			fields, complete := interfaceLiteralFields(node)
+origin/compiler/views-v4:internal/lower/interface_cast.go:264:func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Type, fail func(*ast.Node, string)) {
+origin/compiler/views-v4:internal/lower/view_adapters.go:23:func (l *lowering) viewObjectFields(node *ast.Node, target *checker.Type, fields map[string]bool, _ map[*checker.Type]bool, _ bool) error {
+origin/compiler/views-v4:internal/lower/view_array_adapter.go:9:func init() { viewArrayContractHook = buildViewArrayContract }
+origin/compiler/views-v4:internal/lower/view_array_types.go:26:	} else if viewInterfaceType(target) {
+origin/compiler/views-v4:internal/lower/view_callables.go:27:func init() { viewCallableContractHook = buildViewCallableContract }
+origin/compiler/views-v4:internal/lower/view_contracts.go:15:var viewArrayContractHook viewContractHook
+origin/compiler/views-v4:internal/lower/view_contracts.go:16:var viewCallableContractHook viewContractHook
+origin/compiler/views-v4:internal/lower/view_contracts.go:39:		if viewArrayContractHook == nil {
+origin/compiler/views-v4:internal/lower/view_contracts.go:42:		return viewArrayContractHook(l, node, target, build)
+origin/compiler/views-v4:internal/lower/view_contracts.go:45:		if viewCallableContractHook == nil {
+origin/compiler/views-v4:internal/lower/view_contracts.go:48:		return viewCallableContractHook(l, node, target, build)
+origin/compiler/views-v4:internal/lower/view_interfaces.go:11:func (l *lowering) viewInterfaceFields(node *ast.Node, target *checker.Type, fields map[string]bool, seen map[*checker.Type]bool) error {
+origin/compiler/views-v4:internal/lower/view_interfaces.go:12:	return l.viewObjectFields(node, target, fields, seen, false)
+origin/compiler/views-v4:internal/lower/view_lazy.go:25:	if l.checker.IsArrayType(target) && viewArrayContractHook != nil {
+origin/compiler/views-v4:internal/lower/view_lazy.go:26:		return viewArrayContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+origin/compiler/views-v4:internal/lower/view_lazy.go:32:		if viewCallableContractHook != nil {
+origin/compiler/views-v4:internal/lower/view_lazy.go:33:			return viewCallableContractHook(l, node, target, nil)
+origin/compiler/views-v4:internal/lower/view_lazy.go:37:	if l.checker.IsArrayType(target) && viewArrayContractHook == nil {
+origin/compiler/views-v4:internal/lower/view_lazy.go:280:func (l *lowering) lazyReadRefusal(node *ast.Node, field, family string) error {
+origin/compiler/views-v4:internal/lower/view_objects.go:13:func viewDataType(target *checker.Type) bool {
+origin/compiler/views-v4:internal/lower/view_objects.go:16:			if !viewDataType(member) {
+origin/compiler/views-v4:internal/lower/view_objects.go:25:func viewInterfaceType(target *checker.Type) bool {
+origin/compiler/views-v4:internal/lower/view_unions_mixed.go:10:var viewMixedUnionContractHook viewContractHook = internMixedUnionViewContract

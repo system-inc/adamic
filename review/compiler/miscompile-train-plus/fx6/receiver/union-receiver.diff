@@ -1,0 +1,11 @@
+--- a/internal/lower/view_member_read.go
++++ b/internal/lower/view_member_read.go
+@@ -66,7 +66,7 @@
+ 		return true
+ 	}
+ 	receiver = l.checker.GetNonNullableType(l.concrete(receiver))
+-	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
++	if false {
+ 		for _, member := range receiver.Types() {
+ 			if l.checkedViewReceiverField(member, name) {
+ 				l.result.CheckedFields[checkedViewFieldKey(id, name)] = true

@@ -1,0 +1,10 @@
+--- a/internal/lower/view_member_read.go
++++ b/internal/lower/view_member_read.go
+@@ -82,6 +82,7 @@
+ // checkedViewMembers holds the source once and checks declared own slots before
+ // exposing their presence or copying values. Copies retain hidden fields and tags.
+ func (l *lowering) checkedViewMembers(node, source *ast.Node, value ir.Expression, member *ast.Node) (ir.Expression, error) {
++	return value, nil
+ 	receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(source))
+ 	b := l.libraryArrayBuilder([]ir.Expression{value})
+ 	held := b.read(b.parameters[0])

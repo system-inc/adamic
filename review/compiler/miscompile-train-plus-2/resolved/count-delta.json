@@ -1,0 +1,51 @@
+{
+  "relative_to_base": {
+    "added": [
+      "| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a | 7 | 7 | 6 | 14 | 5 | 0 |",
+      "| internal/lower/testdata/fx7_tuple_recognition/p69.a | 4 | 4 | 9 | 15 | 4 | 0 |",
+      "| internal/lower/testdata/fx7_wrong_aborts/wide.a | 5 | 5 | 6 | 11 | 5 | 0 |",
+      "| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a | 11 | 11 | 14 | 19 | 9 | 0 |",
+      "| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a | 4 | 4 | 5 | 9 | 4 | 0 |",
+      "| internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a | 4 | 4 | 8 | 14 | 4 | 0 |",
+      "| internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a | 3 | 3 | 8 | 13 | 3 | 0 |"
+    ],
+    "removed": [],
+    "changed": []
+  },
+  "relative_to_member": {
+    "removed": [
+      "| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a | 4 | 4 | 12 | 18 | 4 | 0 |",
+      "| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a | 4 | 4 | 10 | 16 | 4 | 0 |",
+      "| stage3/interface-downcasts/untagged/fixtures/class-data-good.a | 4 | 4 | 8 | 12 | 4 | 0 |",
+      "| stage3/interface-downcasts/untagged/fixtures/class-data-wrong.a | 3 | 0 | 7 | 5 | 3 | 0 |",
+      "| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a | 4 | 4 | 9 | 15 | 4 | 0 |",
+      "| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a | 5 | 5 | 8 | 16 | 4 | 0 |"
+    ],
+    "changed": [
+      [
+        "| stage3/interface-downcasts/v2/undefined-read-write.a | 2 | 2 | 5 | 9 | 2 | 0 |",
+        "| stage3/interface-downcasts/v2/undefined-read-write.a | 2 | 2 | 4 | 9 | 2 | 0 |"
+      ],
+      [
+        "| internal/lower/testdata/scalar_union_views/p54_n.a | 5 | 5 | 6 | 14 | 4 | 0 |",
+        "| internal/lower/testdata/scalar_union_views/p54_n.a | 5 | 5 | 5 | 14 | 4 | 0 |"
+      ],
+      [
+        "| internal/lower/testdata/scalar_union_views/p54_s.a | 4 | 4 | 9 | 14 | 3 | 0 |",
+        "| internal/lower/testdata/scalar_union_views/p54_s.a | 4 | 4 | 8 | 14 | 3 | 0 |"
+      ],
+      [
+        "| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a | 5 | 5 | 10 | 17 | 3 | 0 |",
+        "| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a | 5 | 5 | 8 | 17 | 3 | 0 |"
+      ],
+      [
+        "| stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a | 5 | 5 | 15 | 22 | 4 | 0 |",
+        "| stage3/interface-downcasts/lane4b/fixtures/node-indicator-good.a | 5 | 5 | 14 | 22 | 4 | 0 |"
+      ],
+      [
+        "| internal/lower/testdata/scalar_union_views/p54_b.a | 3 | 3 | 6 | 12 | 2 | 0 |",
+        "| internal/lower/testdata/scalar_union_views/p54_b.a | 3 | 3 | 5 | 12 | 2 | 0 |"
+      ]
+    ]
+  }
+}

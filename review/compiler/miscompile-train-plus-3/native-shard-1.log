@@ -1,0 +1,200 @@
+=== RUN   TestNoReaderCallingConvention
+=== PAUSE TestNoReaderCallingConvention
+=== RUN   TestDecodeASCIIUnit00
+=== PAUSE TestDecodeASCIIUnit00
+=== RUN   TestDecodeASCIIUnit16
+=== PAUSE TestDecodeASCIIUnit16
+=== RUN   TestDecodeASCIIUnit32
+=== PAUSE TestDecodeASCIIUnit32
+=== RUN   TestDecodeASCIIWASIUnit03
+=== PAUSE TestDecodeASCIIWASIUnit03
+=== RUN   TestDecodeASCIIWASIUnit19
+=== PAUSE TestDecodeASCIIWASIUnit19
+=== RUN   TestDecodeASCIIWASIUnit35
+=== PAUSE TestDecodeASCIIWASIUnit35
+=== RUN   TestCallTargetsElementBorrowPlan
+=== PAUSE TestCallTargetsElementBorrowPlan
+=== RUN   TestRuntimeCacheRebuildsChangedSources
+=== PAUSE TestRuntimeCacheRebuildsChangedSources
+=== RUN   TestNormalizeMatchesNodePoints00
+=== PAUSE TestNormalizeMatchesNodePoints00
+=== RUN   TestNormalizeMatchesNodePoints16
+=== PAUSE TestNormalizeMatchesNodePoints16
+=== RUN   TestRecordMutantsUnit05
+=== PAUSE TestRecordMutantsUnit05
+=== RUN   TestRegExpBytecodeRandomNodeUnit08
+=== PAUSE TestRegExpBytecodeRandomNodeUnit08
+=== RUN   TestRegExpBytecodeRandomNodeUnit24
+=== PAUSE TestRegExpBytecodeRandomNodeUnit24
+=== RUN   TestRuntimeReleasePaths
+=== PAUSE TestRuntimeReleasePaths
+=== RUN   TestMeasureClangUnits
+    units_measure_test.go:17: set ADAMIC_CLANG_MEASURE to emitted C evidence directory
+--- SKIP: TestMeasureClangUnits (0.00s)
+=== RUN   TestWASIUnit07
+    wasm_test.go:336: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit07 (0.00s)
+=== RUN   TestWASIUnit23
+    wasm_test.go:416: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit23 (0.00s)
+=== CONT  TestNoReaderCallingConvention
+=== RUN   TestNoReaderCallingConvention/closure_convention_plain.a
+=== PAUSE TestNoReaderCallingConvention/closure_convention_plain.a
+=== RUN   TestNoReaderCallingConvention/arguments_length_no_reader.a
+=== CONT  TestRuntimeCacheRebuildsChangedSources
+=== PAUSE TestNoReaderCallingConvention/arguments_length_no_reader.a
+=== RUN   TestNoReaderCallingConvention/arguments_length_unrelated_type.a
+=== PAUSE TestNoReaderCallingConvention/arguments_length_unrelated_type.a
+=== CONT  TestCallTargetsElementBorrowPlan
+=== CONT  TestDecodeASCIIWASIUnit03
+    decode_ascii_test.go:377: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit03 (0.00s)
+=== CONT  TestDecodeASCIIUnit32
+=== CONT  TestDecodeASCIIWASIUnit35
+=== CONT  TestDecodeASCIIWASIUnit19
+    decode_ascii_test.go:457: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit19 (0.00s)
+=== CONT  TestDecodeASCIIUnit16
+=== NAME  TestDecodeASCIIWASIUnit35
+    decode_ascii_test.go:537: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit35 (0.00s)
+=== CONT  TestDecodeASCIIUnit00
+=== NAME  TestDecodeASCIIUnit16
+    decode_ascii_cache_test.go:74: cache lock decode-node-corpus wait 0.000s
+--- PASS: TestCallTargetsElementBorrowPlan (0.10s)
+=== CONT  TestRuntimeReleasePaths
+--- PASS: TestRuntimeCacheRebuildsChangedSources (0.27s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit24
+    regexp_test.go:491: compiling 247 patterns, 250 executions, 713214 C bytes
+    regexp_test.go:491: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:491: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit24 (2.56s)
+=== CONT  TestNormalizeMatchesNodePoints16
+    normalize_test.go:328: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 8.790s
+--- PASS: TestNormalizeMatchesNodePoints16 (8.79s)
+=== CONT  TestRecordMutantsUnit05
+=== RUN   TestRecordMutantsUnit05/own-slot-null-read
+--- PASS: TestRuntimeReleasePaths (19.06s)
+=== CONT  TestNormalizeMatchesNodePoints00
+    normalize_test.go:248: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 9.869s
+--- PASS: TestNormalizeMatchesNodePoints00 (9.87s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit08
+    regexp_test.go:411: compiling 245 patterns, 250 executions, 696977 C bytes
+    regexp_test.go:411: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:411: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit08 (3.04s)
+=== CONT  TestNoReaderCallingConvention/closure_convention_plain.a
+=== CONT  TestNoReaderCallingConvention/arguments_length_unrelated_type.a
+=== CONT  TestNoReaderCallingConvention/arguments_length_no_reader.a
+--- PASS: TestNoReaderCallingConvention (0.00s)
+    --- PASS: TestNoReaderCallingConvention/closure_convention_plain.a (0.13s)
+    --- PASS: TestNoReaderCallingConvention/arguments_length_unrelated_type.a (0.04s)
+    --- PASS: TestNoReaderCallingConvention/arguments_length_no_reader.a (0.10s)
+=== NAME  TestDecodeASCIIUnit16
+    decode_ascii_test.go:46: {"prefixes":92014,"expandedCases":95694560,"seed":"0xdec0de"}
+        
+    decode_ascii_test.go:217: corpus phase 32.660s (including cache wait)
+=== NAME  TestDecodeASCIIUnit00
+    decode_ascii_cache_test.go:74: cache lock decode-node-corpus wait 32.659s
+    decode_ascii_test.go:137: corpus phase 32.659s (including cache wait)
+=== NAME  TestDecodeASCIIUnit32
+    decode_ascii_cache_test.go:74: cache lock decode-node-corpus wait 32.661s
+    decode_ascii_test.go:297: corpus phase 32.662s (including cache wait)
+    decode_ascii_cache_test.go:74: cache lock decode-parallel-native wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock bitwise.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock array.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock adamic.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock array_from.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock case.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock census_small.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock class_features.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock class_inheritance.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock class_static.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock closure.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock count.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock directory.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock dtoa.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock exceptions.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock from_codes.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock heap.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock hypot.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock ieee754.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock input.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock json_stringify.c.o wait 0.000s
+=== NAME  TestRecordMutantsUnit05/own-slot-null-read
+    record_test.go:244: caught by runtime error: member access within null pointer
+--- PASS: TestRecordMutantsUnit05 (22.22s)
+    --- PASS: TestRecordMutantsUnit05/own-slot-null-read (22.22s)
+=== NAME  TestDecodeASCIIUnit32
+    decode_ascii_cache_test.go:74: cache lock library_array.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock library_language.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock library_math_number.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock library_object.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock map.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock map_set.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock math.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock maybe.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock node_buffer.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock node_crypto.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock node_fs_file.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock node_host.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock normalize.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock number.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock object.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock parse.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock radix.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock record.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock regexp.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock regexp_replace.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock region.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock set.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock sort.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock sort_undefined.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock spread.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock stack.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock string.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock string_append.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock string_from.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock string_index.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock string_share.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock tsgo.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock typed_array.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock union.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock utf8.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock view_unions_mixed.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock view_unions_untagged.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock weak.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock probe.c.o wait 0.000s
+    decode_ascii_cache_test.go:74: cache lock baseline.c.o wait 0.000s
+    decode_ascii_test.go:297: compile phase 4.880s (including cache wait)
+=== NAME  TestDecodeASCIIUnit00
+    decode_ascii_cache_test.go:74: cache lock decode-parallel-native wait 4.873s
+    decode_ascii_test.go:137: compile phase 4.887s (including cache wait)
+=== NAME  TestDecodeASCIIUnit16
+    decode_ascii_cache_test.go:74: cache lock decode-parallel-native wait 4.880s
+    decode_ascii_test.go:217: compile phase 4.885s (including cache wait)
+=== NAME  TestDecodeASCIIUnit00
+    decode_ascii_test.go:137: run phase 5.283s
+    decode_ascii_test.go:137: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 42.900s
+--- PASS: TestDecodeASCIIUnit00 (42.90s)
+=== NAME  TestDecodeASCIIUnit32
+    decode_ascii_test.go:297: run phase 6.132s
+    decode_ascii_test.go:297: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 43.751s
+--- PASS: TestDecodeASCIIUnit32 (43.75s)
+=== NAME  TestDecodeASCIIUnit16
+    decode_ascii_test.go:217: run phase 6.177s
+    decode_ascii_test.go:217: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 43.794s
+--- PASS: TestDecodeASCIIUnit16 (43.79s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	43.836s

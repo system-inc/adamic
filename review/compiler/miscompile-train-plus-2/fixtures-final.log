@@ -1,0 +1,130 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/fx7_wrong_aborts/wide.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/fx7_wrong_aborts/wide.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/fx7_tuple_recognition/p69.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/fx7_tuple_recognition/p69.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/fx7_tuple_recognition/p69.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a
+    oracle_test.go:751: Lower: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a:5:16: Adamic 0.1 refuses view type has an unsupported member: value; use a supported, checked type for value (currently string | Uint8Array<ArrayBufferLike>) before creating this view
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a
+    oracle_test.go:751: Lower: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a:6:16: Adamic 0.1 refuses view type has an unsupported member: value; use a supported, checked type for value (currently string | Point) before creating this view
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/fx7_tuple_recognition/p69.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/fx7_tuple_recognition/p69.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/fx7_tuple_recognition/p69.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/fx7_tuple_recognition/p69.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+    oracle_test.go:589: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/fx7_tuple_recognition/p69.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/fx7_wrong_aborts/wide.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a
+    oracle_test.go:751: Lower: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a:7:16: Adamic 0.1 refuses view type has an unsupported member: value; use a supported, checked type for value (currently string | Map<string, number>) before creating this view
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a
+    oracle_test.go:751: Lower: /workspace/adamic/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a:7:14: Adamic 0.1 refuses view type has an unsupported member: value; use a supported, checked type for value (currently Target) before creating this view
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/fx7_wrong_aborts/wide.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/fx7_wrong_aborts/wide.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/fx7_wrong_aborts/wide.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/fx7_wrong_aborts/wide.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/lower/testdata/fx7_wrong_aborts/wide.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a
+    oracle_test.go:603: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p34_typed_array_in_union.a (0.09s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p35_class_in_union.a (0.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p68_object_view_over_tuple.a (0.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_views_p69_tuple_view_over_tuple_union.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/fx7_tuple_recognition/p69.a (0.69s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p33_map_in_union.a (0.08s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p26_callable_or_undefined.a (0.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p18_cast_kind_no_field_types.a (0.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p17_callable_call_first_half.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/fx7_wrong_aborts/wide.a (0.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p20_callable_member_call_good.a (0.49s)
+FAIL
+gate cache: native hits=7 misses=14
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.246s
+FAIL

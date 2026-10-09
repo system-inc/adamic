@@ -1,0 +1,304 @@
+--- 51aa3a96
++++ 6a056842
+@@ -54,7 +54,7 @@
+ static adamic_method_function adamic_method_4;
+ static adamic_value adamic_method_4(adamic_object *self, adamic_value *arguments) {
+ 	(void)arguments;
+-	return (adamic_value){.reference = adamic_function_4_Reader_replace(self, (adamic_object *)arguments[0].reference)};
++	return (adamic_value){.reference = adamic_function_4_Reader_replace(self, adamic_retain((adamic_object *)arguments[0].reference))};
+ }
+ static const char *const adamic_shape_1_method_names[] = {"observe", "replace"};
+ static const adamic_method adamic_shape_1_method_code[] = {adamic_method_5, adamic_method_4};
+@@ -68,13 +68,14 @@
+ static adamic_method_function adamic_method_8;
+ static adamic_value adamic_method_8(adamic_object *self, adamic_value *arguments) {
+ 	(void)arguments;
+-	return (adamic_value){.reference = adamic_function_8_Consumer_replace(self, (adamic_object *)arguments[0].reference)};
++	return (adamic_value){.reference = adamic_function_8_Consumer_replace(self, adamic_retain((adamic_object *)arguments[0].reference))};
+ }
+ static const char *const adamic_shape_2_method_names[] = {"observe", "replace"};
+ static const adamic_method adamic_shape_2_method_code[] = {adamic_method_9, adamic_method_8};
+ static const adamic_methods adamic_shape_2_methods = {2, adamic_shape_2_method_names, adamic_shape_2_method_code};
+ static const adamic_shape adamic_shape_2 = {0, NULL, NULL, &adamic_shape_2_methods};
+-static adamic_slot_cache adamic_cache_32;
++static adamic_slot_cache adamic_cache_31;
++static adamic_slot_cache adamic_cache_35;
+ static const adamic_shape adamic_shape_3 = {0, NULL, NULL, NULL};
+ 
+ static const adamic_class adamic_class_1;
+@@ -111,11 +112,13 @@
+ 	ADAMIC_CHECK_STACK();
+ 	adamic_object * adamic_temporary_9 = adamic_function_0_make((0x1p+01));
+ 	adamic_object * adamic_local_4_value = adamic_temporary_9;
+-	adamic_object * adamic_temporary_10 = adamic_virtual_dispatch_4(adamic_local_2_reader, adamic_local_4_value);
+-	adamic_string * adamic_temporary_11 = adamic_retain(((adamic_string *)(&adamic_temporary_10->slots[0])->reference));
+-	adamic_write_line(adamic_stdout, adamic_temporary_11);
++	adamic_object * adamic_temporary_10 = adamic_local_4_value;
++	adamic_local_4_value = NULL;
++	adamic_object * adamic_temporary_11 = adamic_virtual_dispatch_4(adamic_local_2_reader, adamic_temporary_10);
++	adamic_string * adamic_temporary_12 = adamic_retain(((adamic_string *)(&adamic_temporary_11->slots[0])->reference));
++	adamic_write_line(adamic_stdout, adamic_temporary_12);
++	adamic_release(adamic_temporary_12);
+ 	adamic_release(adamic_temporary_11);
+-	adamic_release(adamic_temporary_10);
+ 	adamic_release(adamic_local_4_value);
+ 	return;
+ 	adamic_release(adamic_local_4_value);
+@@ -127,62 +130,63 @@
+ 		static const char message[] = "ReferenceError: Cannot access 'active' before initialization";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+-	adamic_object * adamic_temporary_12 = adamic_retain(adamic_global_0_active);
+-	adamic_object * adamic_temporary_13 = adamic_virtual_dispatch_5(adamic_local_3_reader, adamic_temporary_12);
+-	if (!adamic_ready_0) {
+-		static const char message[] = "ReferenceError: Cannot access 'active' before initialization";
+-		adamic_panic(message, sizeof message - 1);
+-	}
+-	adamic_object * adamic_temporary_14 = adamic_global_0_active;
+-	adamic_global_0_active = adamic_temporary_13;
+-	adamic_release(adamic_temporary_14);
+-	adamic_release(adamic_temporary_12);
++	adamic_object * adamic_temporary_13 = adamic_retain(adamic_global_0_active);
++	adamic_object * adamic_temporary_14 = adamic_virtual_dispatch_5(adamic_local_3_reader, adamic_temporary_13);
+ 	if (!adamic_ready_0) {
+ 		static const char message[] = "ReferenceError: Cannot access 'active' before initialization";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+ 	adamic_object * adamic_temporary_15 = adamic_global_0_active;
+-	adamic_string * adamic_temporary_16 = adamic_retain(((adamic_string *)(&adamic_temporary_15->slots[0])->reference));
+-	adamic_write_line(adamic_stdout, adamic_temporary_16);
+-	adamic_release(adamic_temporary_16);
++	adamic_global_0_active = adamic_temporary_14;
++	adamic_release(adamic_temporary_15);
++	adamic_release(adamic_temporary_13);
++	if (!adamic_ready_0) {
++		static const char message[] = "ReferenceError: Cannot access 'active' before initialization";
++		adamic_panic(message, sizeof message - 1);
++	}
++	adamic_object * adamic_temporary_16 = adamic_global_0_active;
++	adamic_string * adamic_temporary_17 = adamic_retain(((adamic_string *)(&adamic_temporary_16->slots[0])->reference));
++	adamic_write_line(adamic_stdout, adamic_temporary_17);
++	adamic_release(adamic_temporary_17);
+ 	return;
+ }
+ 
+ static adamic_object * adamic_function_3_Reader_new(void) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_object * adamic_temporary_17 = adamic_object_new(&adamic_shape_1);
+-	adamic_temporary_17->class = &adamic_class_1;
+-	adamic_object * adamic_local_10_this = adamic_temporary_17;
++	adamic_object * adamic_temporary_18 = adamic_object_new(&adamic_shape_1);
++	adamic_temporary_18->class = &adamic_class_1;
++	adamic_object * adamic_local_10_this = adamic_temporary_18;
+ 	adamic_function_6_Reader_new_initialize(adamic_local_10_this);
+-	adamic_object * adamic_temporary_18 = adamic_retain(adamic_local_10_this);
++	adamic_object * adamic_temporary_19 = adamic_retain(adamic_local_10_this);
+ 	adamic_release(adamic_local_10_this);
+-	return adamic_temporary_18;
++	return adamic_temporary_19;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_object * adamic_function_3_Reader_new_in(adamic_region *region) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_object *adamic_temporary_19 = adamic_object_new_in(region, &adamic_shape_1);
+-	adamic_temporary_19->class = &adamic_class_1;
+-	adamic_object * adamic_local_10_this = adamic_retain(adamic_temporary_19);
++	adamic_object *adamic_temporary_20 = adamic_object_new_in(region, &adamic_shape_1);
++	adamic_temporary_20->class = &adamic_class_1;
++	adamic_object * adamic_local_10_this = adamic_retain(adamic_temporary_20);
+ 	adamic_function_6_Reader_new_initialize(adamic_local_10_this);
+-	adamic_object * adamic_temporary_20 = adamic_local_10_this;
++	adamic_object * adamic_temporary_21 = adamic_local_10_this;
+ 	adamic_release(adamic_local_10_this);
+-	return adamic_temporary_20;
++	return adamic_temporary_21;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_object * adamic_function_4_Reader_replace(adamic_object * adamic_local_5_this, adamic_object * adamic_local_6_value) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_object * adamic_temporary_21 = adamic_retain(adamic_local_6_value);
+-	return adamic_temporary_21;
++	adamic_object * adamic_temporary_22 = adamic_retain(adamic_local_6_value);
++	adamic_release(adamic_local_6_value);
++	return adamic_temporary_22;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_object * adamic_function_5_Reader_observe(adamic_object * adamic_local_7_this, adamic_object * adamic_local_8_value) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_object * adamic_temporary_22 = adamic_retain(adamic_local_8_value);
+-	return adamic_temporary_22;
++	adamic_object * adamic_temporary_23 = adamic_retain(adamic_local_8_value);
++	return adamic_temporary_23;
+ 	adamic_unreachable();
+ }
+ 
+@@ -192,40 +196,47 @@
+ 
+ static adamic_object * adamic_function_7_Consumer_new(void) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_object * adamic_temporary_23 = adamic_object_new(&adamic_shape_2);
+-	adamic_temporary_23->class = &adamic_class_2;
+-	adamic_object * adamic_local_16_this = adamic_temporary_23;
++	adamic_object * adamic_temporary_24 = adamic_object_new(&adamic_shape_2);
++	adamic_temporary_24->class = &adamic_class_2;
++	adamic_object * adamic_local_16_this = adamic_temporary_24;
+ 	adamic_function_10_Consumer_new_initialize(adamic_local_16_this);
+-	adamic_object * adamic_temporary_24 = adamic_retain(adamic_local_16_this);
++	adamic_object * adamic_temporary_25 = adamic_retain(adamic_local_16_this);
+ 	adamic_release(adamic_local_16_this);
+-	return adamic_temporary_24;
++	return adamic_temporary_25;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_object * adamic_function_7_Consumer_new_in(adamic_region *region) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_object *adamic_temporary_25 = adamic_object_new_in(region, &adamic_shape_2);
+-	adamic_temporary_25->class = &adamic_class_2;
+-	adamic_object * adamic_local_16_this = adamic_retain(adamic_temporary_25);
++	adamic_object *adamic_temporary_26 = adamic_object_new_in(region, &adamic_shape_2);
++	adamic_temporary_26->class = &adamic_class_2;
++	adamic_object * adamic_local_16_this = adamic_retain(adamic_temporary_26);
+ 	adamic_function_10_Consumer_new_initialize(adamic_local_16_this);
+-	adamic_object * adamic_temporary_26 = adamic_local_16_this;
++	adamic_object * adamic_temporary_27 = adamic_local_16_this;
+ 	adamic_release(adamic_local_16_this);
+-	return adamic_temporary_26;
++	return adamic_temporary_27;
+ 	adamic_unreachable();
+ }
+ 
+ static adamic_object * adamic_function_8_Consumer_replace(adamic_object * adamic_local_11_this, adamic_object * adamic_local_12_value) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_object * adamic_temporary_27 = adamic_function_11_checked_view_members(adamic_local_12_value);
+-	adamic_object * adamic_temporary_28 = adamic_object_copy(adamic_temporary_27);
+-	adamic_string * adamic_temporary_29 = ((adamic_string *)(&adamic_local_12_value->slots[0])->reference);
+-	adamic_string * adamic_temporary_30 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_29, &adamic_string_1});
+-	adamic_value *adamic_temporary_31 = adamic_object_field(adamic_temporary_28, "label", &adamic_cache_32);
+-	adamic_release(adamic_temporary_31->reference);
+-	adamic_temporary_31->reference = adamic_temporary_30;
+-	adamic_object * adamic_temporary_33 = adamic_temporary_28;
+-	adamic_release(adamic_temporary_27);
+-	return adamic_temporary_33;
++	bool adamic_temporary_28 = ((adamic_local_12_value->heap.references == 1 && !adamic_weak_held(adamic_local_12_value)) && !adamic_local_12_value->frozen);
++	adamic_object * adamic_temporary_29 = (adamic_temporary_28 ? adamic_retain(adamic_local_12_value) : adamic_object_copy(adamic_local_12_value));
++	adamic_value *adamic_temporary_30 = adamic_object_field(adamic_local_12_value, "label", &adamic_cache_31);
++	adamic_string * adamic_temporary_32 = (adamic_string *)(adamic_temporary_28 ? adamic_temporary_30->reference : adamic_retain(adamic_temporary_30->reference));
++	if (adamic_temporary_28) {
++		adamic_temporary_30->reference = NULL;
++	}
++	adamic_string * adamic_temporary_33 = adamic_string_concat(2, (adamic_string *const[]){adamic_temporary_32, &adamic_string_1});
++	adamic_value *adamic_temporary_34 = adamic_object_field(adamic_temporary_29, "label", &adamic_cache_35);
++	adamic_release(adamic_temporary_34->reference);
++	adamic_temporary_34->reference = adamic_temporary_33;
++	adamic_temporary_29->class = NULL;
++	adamic_temporary_29->tuple = false;
++	adamic_object * adamic_temporary_36 = adamic_temporary_29;
++	adamic_release(adamic_temporary_32);
++	adamic_release(adamic_local_12_value);
++	return adamic_temporary_36;
+ 	adamic_unreachable();
+ }
+ 
+@@ -235,14 +246,14 @@
+ 		static const char message[] = "ReferenceError: Cannot access 'active' before initialization";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+-	adamic_object * adamic_temporary_34 = adamic_global_0_active;
+-	adamic_string * adamic_temporary_35 = ((adamic_string *)(&adamic_temporary_34->slots[0])->reference);
+-	adamic_string * adamic_temporary_36 = ((adamic_string *)(&adamic_local_14_value->slots[0])->reference);
+-	adamic_string * adamic_temporary_37 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_35, &adamic_string_2, adamic_temporary_36});
+-	adamic_object * adamic_temporary_38 = adamic_object_new(&adamic_shape_0);
+-	adamic_temporary_38->slots[0].reference = adamic_temporary_37;
+-	adamic_object * adamic_temporary_39 = adamic_temporary_38;
+-	return adamic_temporary_39;
++	adamic_object * adamic_temporary_37 = adamic_global_0_active;
++	adamic_string * adamic_temporary_38 = ((adamic_string *)(&adamic_temporary_37->slots[0])->reference);
++	adamic_string * adamic_temporary_39 = ((adamic_string *)(&adamic_local_14_value->slots[0])->reference);
++	adamic_string * adamic_temporary_40 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_38, &adamic_string_2, adamic_temporary_39});
++	adamic_object * adamic_temporary_41 = adamic_object_new(&adamic_shape_0);
++	adamic_temporary_41->slots[0].reference = adamic_temporary_40;
++	adamic_object * adamic_temporary_42 = adamic_temporary_41;
++	return adamic_temporary_42;
+ 	adamic_unreachable();
+ }
+ 
+@@ -252,14 +263,14 @@
+ 		static const char message[] = "ReferenceError: Cannot access 'active' before initialization";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+-	adamic_object * adamic_temporary_40 = adamic_global_0_active;
+-	adamic_string * adamic_temporary_41 = ((adamic_string *)(&adamic_temporary_40->slots[0])->reference);
+-	adamic_string * adamic_temporary_42 = ((adamic_string *)(&adamic_local_14_value->slots[0])->reference);
+-	adamic_string * adamic_temporary_43 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_41, &adamic_string_2, adamic_temporary_42});
+-	adamic_object *adamic_temporary_44 = adamic_object_new_in(region, &adamic_shape_0);
+-	adamic_temporary_44->slots[0].reference = adamic_temporary_43;
+-	adamic_object * adamic_temporary_45 = adamic_temporary_44;
+-	return adamic_temporary_45;
++	adamic_object * adamic_temporary_43 = adamic_global_0_active;
++	adamic_string * adamic_temporary_44 = ((adamic_string *)(&adamic_temporary_43->slots[0])->reference);
++	adamic_string * adamic_temporary_45 = ((adamic_string *)(&adamic_local_14_value->slots[0])->reference);
++	adamic_string * adamic_temporary_46 = adamic_string_concat(3, (adamic_string *const[]){adamic_temporary_44, &adamic_string_2, adamic_temporary_45});
++	adamic_object *adamic_temporary_47 = adamic_object_new_in(region, &adamic_shape_0);
++	adamic_temporary_47->slots[0].reference = adamic_temporary_46;
++	adamic_object * adamic_temporary_48 = adamic_temporary_47;
++	return adamic_temporary_48;
+ 	adamic_unreachable();
+ }
+ 
+@@ -270,32 +281,32 @@
+ 
+ static adamic_object * adamic_function_11_checked_view_members(adamic_object * adamic_local_17_argument) {
+ 	ADAMIC_CHECK_STACK();
+-	adamic_string * adamic_temporary_46 = ((adamic_string *)(&adamic_local_17_argument->slots[0])->reference);
+-	(void)adamic_temporary_46;
+-	adamic_object * adamic_temporary_47 = adamic_retain(adamic_local_17_argument);
+-	return adamic_temporary_47;
++	adamic_string * adamic_temporary_49 = ((adamic_string *)(&adamic_local_17_argument->slots[0])->reference);
++	(void)adamic_temporary_49;
++	adamic_object * adamic_temporary_50 = adamic_retain(adamic_local_17_argument);
++	return adamic_temporary_50;
+ 	adamic_unreachable();
+ }
+ 
+ int main(int argc, char **argv) {
+ 	adamic_start(argc, argv);
+-	adamic_object * adamic_temporary_48 = adamic_function_0_make((0x1p+00));
+-	adamic_object * adamic_temporary_49 = adamic_global_0_active;
+-	adamic_global_0_active = adamic_temporary_48;
+-	adamic_release(adamic_temporary_49);
++	adamic_object * adamic_temporary_51 = adamic_function_0_make((0x1p+00));
++	adamic_object * adamic_temporary_52 = adamic_global_0_active;
++	adamic_global_0_active = adamic_temporary_51;
++	adamic_release(adamic_temporary_52);
+ 	adamic_ready_0 = true;
+-	adamic_region adamic_temporary_50 = ADAMIC_REGION;
+-	adamic_object *adamic_temporary_51 = adamic_function_3_Reader_new_in(&adamic_temporary_50);
+-	adamic_function_1_replace(adamic_temporary_51);
+-	adamic_region_end(&adamic_temporary_50);
+-	adamic_region adamic_temporary_52 = ADAMIC_REGION;
+-	adamic_object *adamic_temporary_53 = adamic_function_7_Consumer_new_in(&adamic_temporary_52);
+-	adamic_function_1_replace(adamic_temporary_53);
+-	adamic_region_end(&adamic_temporary_52);
+-	adamic_region adamic_temporary_54 = ADAMIC_REGION;
+-	adamic_object *adamic_temporary_55 = adamic_function_7_Consumer_new_in(&adamic_temporary_54);
+-	adamic_function_2_observe(adamic_temporary_55);
+-	adamic_region_end(&adamic_temporary_54);
++	adamic_region adamic_temporary_53 = ADAMIC_REGION;
++	adamic_object *adamic_temporary_54 = adamic_function_3_Reader_new_in(&adamic_temporary_53);
++	adamic_function_1_replace(adamic_temporary_54);
++	adamic_region_end(&adamic_temporary_53);
++	adamic_region adamic_temporary_55 = ADAMIC_REGION;
++	adamic_object *adamic_temporary_56 = adamic_function_7_Consumer_new_in(&adamic_temporary_55);
++	adamic_function_1_replace(adamic_temporary_56);
++	adamic_region_end(&adamic_temporary_55);
++	adamic_region adamic_temporary_57 = ADAMIC_REGION;
++	adamic_object *adamic_temporary_58 = adamic_function_7_Consumer_new_in(&adamic_temporary_57);
++	adamic_function_2_observe(adamic_temporary_58);
++	adamic_region_end(&adamic_temporary_57);
+ 	adamic_release(adamic_global_0_active);
+ 	adamic_global_0_active = NULL;
+ 	return 0;

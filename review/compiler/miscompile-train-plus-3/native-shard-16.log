@@ -1,0 +1,117 @@
+=== RUN   TestDecodeCacheLockDeadline
+=== PAUSE TestDecodeCacheLockDeadline
+=== RUN   TestDecodeASCIIUnit15
+=== PAUSE TestDecodeASCIIUnit15
+=== RUN   TestDecodeASCIIUnit31
+=== PAUSE TestDecodeASCIIUnit31
+=== RUN   TestDecodeASCIIWASIUnit02
+=== PAUSE TestDecodeASCIIWASIUnit02
+=== RUN   TestDecodeASCIIWASIUnit18
+=== PAUSE TestDecodeASCIIWASIUnit18
+=== RUN   TestDecodeASCIIWASIUnit34
+=== PAUSE TestDecodeASCIIWASIUnit34
+=== RUN   TestThrowElementBorrowPlan
+=== PAUSE TestThrowElementBorrowPlan
+=== RUN   TestRuntimeCacheKeepsCountFlags
+=== PAUSE TestRuntimeCacheKeepsCountFlags
+=== RUN   TestNormalizeRandomMatchesNode
+=== PAUSE TestNormalizeRandomMatchesNode
+=== RUN   TestNormalizeMatchesNodePoints15
+=== PAUSE TestNormalizeMatchesNodePoints15
+=== RUN   TestRecordMutantsUnit04
+=== PAUSE TestRecordMutantsUnit04
+=== RUN   TestRegExpBytecodeRandomNodeUnit07
+=== PAUSE TestRegExpBytecodeRandomNodeUnit07
+=== RUN   TestRegExpBytecodeRandomNodeUnit23
+=== PAUSE TestRegExpBytecodeRandomNodeUnit23
+=== RUN   TestRegExpBytecodeRandomNodeUnit39
+=== PAUSE TestRegExpBytecodeRandomNodeUnit39
+=== RUN   TestTypedArrayRuntime
+=== PAUSE TestTypedArrayRuntime
+=== RUN   TestWASIUnit06
+    wasm_test.go:331: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit06 (0.00s)
+=== RUN   TestWASIUnit22
+    wasm_test.go:411: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit22 (0.02s)
+=== CONT  TestDecodeCacheLockDeadline
+=== CONT  TestDecodeASCIIWASIUnit18
+    decode_ascii_test.go:452: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit18 (0.00s)
+=== CONT  TestDecodeASCIIWASIUnit34
+    decode_ascii_test.go:532: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit34 (0.00s)
+=== CONT  TestDecodeASCIIUnit31
+=== CONT  TestDecodeASCIIWASIUnit02
+=== CONT  TestRuntimeCacheKeepsCountFlags
+=== CONT  TestThrowElementBorrowPlan
+=== NAME  TestDecodeASCIIWASIUnit02
+    decode_ascii_test.go:372: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+=== CONT  TestRegExpBytecodeRandomNodeUnit23
+--- SKIP: TestDecodeASCIIWASIUnit02 (0.01s)
+--- PASS: TestDecodeCacheLockDeadline (0.04s)
+=== CONT  TestTypedArrayRuntime
+=== NAME  TestDecodeASCIIUnit31
+    decode_ascii_test.go:292: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:292: compile phase 0.001s (including cache wait)
+=== RUN   TestTypedArrayRuntime/release
+=== CONT  TestRegExpBytecodeRandomNodeUnit39
+--- PASS: TestThrowElementBorrowPlan (0.24s)
+--- PASS: TestRuntimeCacheKeepsCountFlags (0.53s)
+=== CONT  TestRecordMutantsUnit04
+=== RUN   TestRecordMutantsUnit04/stored-key-freed
+=== RUN   TestTypedArrayRuntime/sanitized
+=== NAME  TestRegExpBytecodeRandomNodeUnit23
+    regexp_test.go:486: compiling 249 patterns, 250 executions, 728046 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit39
+    regexp_test.go:566: compiling 248 patterns, 250 executions, 632510 C bytes
+--- PASS: TestTypedArrayRuntime (2.54s)
+    --- PASS: TestTypedArrayRuntime/release (0.96s)
+    --- PASS: TestTypedArrayRuntime/sanitized (1.46s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit07
+=== NAME  TestRegExpBytecodeRandomNodeUnit23
+    regexp_test.go:486: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:486: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit23 (3.35s)
+=== CONT  TestNormalizeMatchesNodePoints15
+=== NAME  TestRegExpBytecodeRandomNodeUnit39
+    regexp_test.go:566: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:566: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit39 (3.72s)
+=== CONT  TestDecodeASCIIUnit15
+    decode_ascii_test.go:212: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:212: compile phase 0.001s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit07
+    regexp_test.go:406: compiling 249 patterns, 250 executions, 616717 C bytes
+    regexp_test.go:406: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:406: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit07 (4.25s)
+=== CONT  TestNormalizeRandomMatchesNode
+=== NAME  TestDecodeASCIIUnit31
+    decode_ascii_test.go:292: run phase 7.201s
+    decode_ascii_test.go:292: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 7.331s
+--- PASS: TestDecodeASCIIUnit31 (7.33s)
+=== NAME  TestNormalizeMatchesNodePoints15
+    normalize_test.go:323: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 9.174s
+--- PASS: TestNormalizeMatchesNodePoints15 (9.17s)
+=== NAME  TestDecodeASCIIUnit15
+    decode_ascii_test.go:212: run phase 8.789s
+    decode_ascii_test.go:212: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 8.792s
+--- PASS: TestDecodeASCIIUnit15 (8.79s)
+=== NAME  TestRecordMutantsUnit04/stored-key-freed
+    record_test.go:244: caught by AddressSanitizer: heap-use-after-free
+--- PASS: TestRecordMutantsUnit04 (15.28s)
+    --- PASS: TestRecordMutantsUnit04/stored-key-freed (15.28s)
+=== NAME  TestNormalizeRandomMatchesNode
+    normalize_random_test.go:103: 100000 lines, 0 mismatches
+--- PASS: TestNormalizeRandomMatchesNode (37.87s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	44.758s

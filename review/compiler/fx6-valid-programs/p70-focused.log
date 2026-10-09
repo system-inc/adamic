@@ -1,0 +1,16 @@
+=== RUN   TestTupleObjectViewRefused
+=== PAUSE TestTupleObjectViewRefused
+=== RUN   TestTupleObjectViewCopiedLength
+=== PAUSE TestTupleObjectViewCopiedLength
+=== RUN   TestTupleObjectViewOrdinaryTuple
+=== PAUSE TestTupleObjectViewOrdinaryTuple
+=== CONT  TestTupleObjectViewRefused
+=== CONT  TestTupleObjectViewOrdinaryTuple
+=== CONT  TestTupleObjectViewCopiedLength
+=== NAME  TestTupleObjectViewRefused
+    view_tuple_objects_test.go:38: /tmp/adamic-gate/TestTupleObjectViewRefused2950351749/001/main.a:9:15: stage 0 can't lower a tuple through an object view with a length field; expose a scalar length field on the view and copy pair.length into that field yet
+--- PASS: TestTupleObjectViewRefused (0.09s)
+--- PASS: TestTupleObjectViewOrdinaryTuple (0.16s)
+--- PASS: TestTupleObjectViewCopiedLength (0.33s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.338s

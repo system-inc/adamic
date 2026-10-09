@@ -1,0 +1,180 @@
+=== RUN   TestClosureConventionWrongOrder
+=== PAUSE TestClosureConventionWrongOrder
+=== RUN   TestDecodeASCIIUnit11
+=== PAUSE TestDecodeASCIIUnit11
+=== RUN   TestDecodeASCIIUnit27
+=== PAUSE TestDecodeASCIIUnit27
+=== RUN   TestDecodeASCIIUnit43
+=== PAUSE TestDecodeASCIIUnit43
+=== RUN   TestDecodeASCIIWASIUnit14
+=== PAUSE TestDecodeASCIIWASIUnit14
+=== RUN   TestDecodeASCIIWASIUnit30
+=== PAUSE TestDecodeASCIIWASIUnit30
+=== RUN   TestExactReceiverRejectsAssignments
+=== PAUSE TestExactReceiverRejectsAssignments
+=== RUN   TestCEndsInNewline
+=== PAUSE TestCEndsInNewline
+=== RUN   TestMathAndToFixedMatchJavaScript
+=== PAUSE TestMathAndToFixedMatchJavaScript
+=== RUN   TestNormalizeMatchesNodePoints11
+=== PAUSE TestNormalizeMatchesNodePoints11
+=== RUN   TestRecordMutantsUnit00
+=== PAUSE TestRecordMutantsUnit00
+=== RUN   TestRegExpBytecodeRandomNodeUnit03
+=== PAUSE TestRegExpBytecodeRandomNodeUnit03
+=== RUN   TestRegExpBytecodeRandomNodeUnit19
+=== PAUSE TestRegExpBytecodeRandomNodeUnit19
+=== RUN   TestRegExpBytecodeRandomNodeUnit35
+=== PAUSE TestRegExpBytecodeRandomNodeUnit35
+=== RUN   TestRuntimeStringViews
+=== PAUSE TestRuntimeStringViews
+=== RUN   TestWASIUnit02
+    wasm_test.go:311: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit02 (0.00s)
+=== RUN   TestWASIUnit18
+    wasm_test.go:391: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit18 (0.00s)
+=== RUN   TestWASIUnit34
+    wasm_test.go:471: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit34 (0.00s)
+=== CONT  TestClosureConventionWrongOrder
+=== CONT  TestDecodeASCIIWASIUnit14
+=== CONT  TestRegExpBytecodeRandomNodeUnit19
+=== CONT  TestMathAndToFixedMatchJavaScript
+=== CONT  TestCEndsInNewline
+=== NAME  TestDecodeASCIIWASIUnit14
+    decode_ascii_test.go:432: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit14 (0.00s)
+=== CONT  TestDecodeASCIIUnit43
+--- PASS: TestCEndsInNewline (0.07s)
+=== CONT  TestDecodeASCIIUnit27
+    decode_ascii_test.go:272: corpus phase 0.001s (including cache wait)
+=== NAME  TestDecodeASCIIUnit43
+    decode_ascii_test.go:352: corpus phase 0.001s (including cache wait)
+=== NAME  TestDecodeASCIIUnit27
+    decode_ascii_test.go:272: compile phase 0.001s (including cache wait)
+=== NAME  TestDecodeASCIIUnit43
+    decode_ascii_test.go:352: compile phase 0.001s (including cache wait)
+=== RUN   TestClosureConventionWrongOrder/definition
+=== PAUSE TestClosureConventionWrongOrder/definition
+=== RUN   TestClosureConventionWrongOrder/call
+=== PAUSE TestClosureConventionWrongOrder/call
+=== RUN   TestClosureConventionWrongOrder/function-pointer-cast
+=== PAUSE TestClosureConventionWrongOrder/function-pointer-cast
+=== RUN   TestClosureConventionWrongOrder/void-pointer-cast
+=== PAUSE TestClosureConventionWrongOrder/void-pointer-cast
+=== CONT  TestDecodeASCIIUnit11
+    decode_ascii_test.go:192: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:192: compile phase 0.001s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit19
+    regexp_test.go:466: compiling 247 patterns, 250 executions, 758634 C bytes
+=== NAME  TestMathAndToFixedMatchJavaScript
+    math_test.go:147: 69132 answers, 0 mismatches
+--- PASS: TestMathAndToFixedMatchJavaScript (1.24s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit03
+=== NAME  TestRegExpBytecodeRandomNodeUnit19
+    regexp_test.go:466: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:466: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit19 (1.71s)
+=== CONT  TestRecordMutantsUnit00
+=== RUN   TestRecordMutantsUnit00/indices-in-insertion-order
+=== NAME  TestRegExpBytecodeRandomNodeUnit03
+    regexp_test.go:386: compiling 248 patterns, 250 executions, 598948 C bytes
+    regexp_test.go:386: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:386: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit03 (1.50s)
+=== CONT  TestNormalizeMatchesNodePoints11
+=== NAME  TestDecodeASCIIUnit11
+    decode_ascii_test.go:192: run phase 4.250s
+    decode_ascii_test.go:192: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.256s
+--- PASS: TestDecodeASCIIUnit11 (4.26s)
+=== CONT  TestExactReceiverRejectsAssignments
+--- PASS: TestExactReceiverRejectsAssignments (0.00s)
+=== CONT  TestDecodeASCIIWASIUnit30
+    decode_ascii_test.go:512: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit30 (0.00s)
+=== CONT  TestRuntimeStringViews
+=== NAME  TestDecodeASCIIUnit27
+    decode_ascii_test.go:272: run phase 4.565s
+    decode_ascii_test.go:272: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.573s
+=== CONT  TestRegExpBytecodeRandomNodeUnit35
+--- PASS: TestDecodeASCIIUnit27 (4.57s)
+=== CONT  TestClosureConventionWrongOrder/definition
+--- PASS: TestRuntimeStringViews (0.50s)
+=== NAME  TestClosureConventionWrongOrder/definition
+    closure_convention_test.go:128: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-2115490743/main.c:60:21: error: conflicting types for 'adamic_function_4_reader_value'
+           60 | static adamic_value adamic_function_4_reader_value(adamic_closure *self, size_t argument_count, adamic_value *arguments) {
+              |                     ^
+        /tmp/adamic-gate/adamic-build-2115490743/main.c:24:37: note: previous declaration is here
+           24 | static adamic_counted_code_function adamic_function_4_reader_value;
+              |                                     ^
+        1 error generated.
+        
+=== CONT  TestClosureConventionWrongOrder/function-pointer-cast
+    closure_convention_test.go:168: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3635184044/main.c:6:37: error: cast from 'adamic_value (*)(adamic_closure *, size_t, adamic_value *)' (aka 'union adamic_value (*)(struct adamic_closure *, unsigned long, union adamic_value *)') to 'adamic_counted_code' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *, unsigned long)') converts to incompatible function type [-Werror,-Wcast-function-type-strict]
+            6 | static adamic_counted_code erased = (adamic_counted_code)wrong;
+              |                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~
+        1 error generated.
+        
+=== CONT  TestClosureConventionWrongOrder/void-pointer-cast
+    closure_convention_test.go:168: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1331219646/main.c:6:73: error: controlling expression type 'void *' not compatible with any generic association type
+            6 | static adamic_closure *erased(void) { return adamic_counted_closure_new((void *)wrong, 0); }
+              |                                                                         ^~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/6a6dd57e56c914e58ae842bb1a262e3c89e69648b5f6d3f984a589b294e1401c/adamic.h:1078:86: note: expanded from macro 'adamic_counted_closure_new'
+         1078 | #define adamic_counted_closure_new(code, ...) (adamic_counted_closure_new)(_Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+              |                                                                                      ^~~~
+        1 error generated.
+        
+=== CONT  TestClosureConventionWrongOrder/call
+    closure_convention_test.go:156: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1447635146/main.c:43:76: error: incompatible integer to pointer conversion passing 'int' to parameter of type 'adamic_value *' (aka 'union adamic_value *') [-Wint-conversion]
+           43 |         adamic_value adamic_temporary_3 = adamic_closure_call(adamic_local_3_run, 2, (adamic_value[]){{.number = (0x1p+00)}, {.number = (0x1p+01)}});
+              |                                                                                   ^
+        /home/agent/.cache/adamic/runtime/6a6dd57e56c914e58ae842bb1a262e3c89e69648b5f6d3f984a589b294e1401c/adamic.h:140:87: note: passing argument to parameter 'arguments' here
+          140 | static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_value *arguments, size_t argument_count) {
+              |                                                                                       ^
+        /tmp/adamic-gate/adamic-build-1447635146/main.c:43:79: error: incompatible pointer to integer conversion passing 'adamic_value[2]' (aka 'union adamic_value[2]') to parameter of type 'size_t' (aka 'unsigned long') [-Wint-conversion]
+           43 |         adamic_value adamic_temporary_3 = adamic_closure_call(adamic_local_3_run, 2, (adamic_value[]){{.number = (0x1p+00)}, {.number = (0x1p+01)}});
+              |                                                                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/6a6dd57e56c914e58ae842bb1a262e3c89e69648b5f6d3f984a589b294e1401c/adamic.h:140:105: note: passing argument to parameter 'argument_count' here
+          140 | static inline adamic_value adamic_closure_call(adamic_closure *closure, adamic_value *arguments, size_t argument_count) {
+              |                                                                                                         ^
+        2 errors generated.
+        
+--- PASS: TestClosureConventionWrongOrder (0.09s)
+    --- PASS: TestClosureConventionWrongOrder/definition (0.06s)
+    --- PASS: TestClosureConventionWrongOrder/function-pointer-cast (0.05s)
+    --- PASS: TestClosureConventionWrongOrder/void-pointer-cast (0.08s)
+    --- PASS: TestClosureConventionWrongOrder/call (0.07s)
+=== NAME  TestRegExpBytecodeRandomNodeUnit35
+    regexp_test.go:546: compiling 250 patterns, 250 executions, 670034 C bytes
+=== NAME  TestDecodeASCIIUnit43
+    decode_ascii_test.go:352: run phase 5.744s
+    decode_ascii_test.go:352: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 5.822s
+--- PASS: TestDecodeASCIIUnit43 (5.82s)
+=== NAME  TestRegExpBytecodeRandomNodeUnit35
+    regexp_test.go:546: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:546: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit35 (1.38s)
+=== NAME  TestNormalizeMatchesNodePoints11
+    normalize_test.go:303: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 3.549s
+--- PASS: TestNormalizeMatchesNodePoints11 (3.55s)
+=== NAME  TestRecordMutantsUnit00/indices-in-insertion-order
+    record_test.go:237: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+    record_test.go:244: caught by Node
+--- PASS: TestRecordMutantsUnit00 (7.46s)
+    --- PASS: TestRecordMutantsUnit00/indices-in-insertion-order (7.46s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	9.202s

@@ -1,0 +1,77 @@
+=== RUN   TestUnsupportedViewMapMember
+=== PAUSE TestUnsupportedViewMapMember
+=== RUN   TestUnsupportedViewCallableMember
+=== PAUSE TestUnsupportedViewCallableMember
+=== RUN   TestUnsupportedViewUnreadMember
+=== PAUSE TestUnsupportedViewUnreadMember
+=== CONT  TestUnsupportedViewMapMember
+=== CONT  TestUnsupportedViewUnreadMember
+=== CONT  TestUnsupportedViewCallableMember
+    view_unsupported_test.go:38: want creation-site refusal, got program true, error <nil>
+--- FAIL: TestUnsupportedViewCallableMember (0.13s)
+=== NAME  TestUnsupportedViewUnreadMember
+    view_unsupported_test.go:44: want creation-site refusal, got program true, error <nil>
+--- FAIL: TestUnsupportedViewUnreadMember (0.15s)
+=== NAME  TestUnsupportedViewMapMember
+    view_unsupported_test.go:33: want creation-site refusal, got program true, error <nil>
+--- FAIL: TestUnsupportedViewMapMember (0.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.268s
+=== RUN   TestCheckedViewV2ArrayArmBoundary
+=== PAUSE TestCheckedViewV2ArrayArmBoundary
+=== RUN   TestCheckedViewUntaggedOwnClassDataGoodRefused
+=== PAUSE TestCheckedViewUntaggedOwnClassDataGoodRefused
+=== RUN   TestCheckedViewUntaggedOwnClassDataWrongRefused
+=== PAUSE TestCheckedViewUntaggedOwnClassDataWrongRefused
+=== RUN   TestCheckedViewUntaggedArrayGoodRefused
+=== PAUSE TestCheckedViewUntaggedArrayGoodRefused
+=== RUN   TestCheckedViewUntaggedArrayWrongRefused
+=== PAUSE TestCheckedViewUntaggedArrayWrongRefused
+=== RUN   TestCheckedViewUntaggedArrayNestedRefused
+=== PAUSE TestCheckedViewUntaggedArrayNestedRefused
+=== RUN   TestCheckedViewUntaggedArrayEmptyRefused
+=== PAUSE TestCheckedViewUntaggedArrayEmptyRefused
+=== RUN   TestCheckedViewUntaggedArrayMixedRefused
+=== PAUSE TestCheckedViewUntaggedArrayMixedRefused
+=== CONT  TestCheckedViewV2ArrayArmBoundary
+=== CONT  TestCheckedViewUntaggedArrayWrongRefused
+=== CONT  TestCheckedViewUntaggedOwnClassDataWrongRefused
+=== CONT  TestCheckedViewUntaggedArrayGoodRefused
+=== CONT  TestCheckedViewUntaggedOwnClassDataGoodRefused
+=== NAME  TestCheckedViewV2ArrayArmBoundary
+    checked_views_v2_migration_test.go:45: expected creation refusal for unsupported V3 arm, got /workspace/adamic/stage3/interface-downcasts/v2/array-arm.a:8:16: stage 0 can't lower checked view union arm awaits views-v3: array element kind: readonly Node[] yet
+--- FAIL: TestCheckedViewV2ArrayArmBoundary (0.06s)
+=== CONT  TestCheckedViewUntaggedArrayEmptyRefused
+=== NAME  TestCheckedViewUntaggedArrayGoodRefused
+    checked_views_v2_source_test.go:210: want creation-site refusal for unsupported array member: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/array-union-good.a:9:14: stage 0 can't lower checked view union arm awaits views-v3: array element kind: readonly ElementB[] yet
+--- FAIL: TestCheckedViewUntaggedArrayGoodRefused (0.07s)
+=== CONT  TestCheckedViewUntaggedArrayMixedRefused
+=== NAME  TestCheckedViewUntaggedArrayWrongRefused
+    checked_views_v2_source_test.go:214: want creation-site refusal for unsupported array member: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/array-union-wrong.a:9:14: stage 0 can't lower checked view union arm awaits views-v3: array element kind: readonly ElementB[] yet
+--- FAIL: TestCheckedViewUntaggedArrayWrongRefused (0.07s)
+=== CONT  TestCheckedViewUntaggedArrayNestedRefused
+=== NAME  TestCheckedViewUntaggedOwnClassDataGoodRefused
+    checked_views_v2_source_test.go:155: gate cache node miss
+=== NAME  TestCheckedViewUntaggedOwnClassDataWrongRefused
+    checked_views_v2_source_test.go:160: gate cache node miss
+=== NAME  TestCheckedViewUntaggedArrayEmptyRefused
+    checked_views_v2_source_test.go:222: want creation-site refusal for unsupported array member: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/array-union-empty.a:6:46: stage 0 can't lower an array of never yet
+--- FAIL: TestCheckedViewUntaggedArrayEmptyRefused (0.05s)
+=== NAME  TestCheckedViewUntaggedArrayNestedRefused
+    checked_views_v2_source_test.go:218: want creation-site refusal for unsupported array member: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/array-union-nested.a:9:14: stage 0 can't lower checked view union arm awaits views-v3: array element kind: readonly ElementB[] yet
+--- FAIL: TestCheckedViewUntaggedArrayNestedRefused (0.05s)
+=== NAME  TestCheckedViewUntaggedArrayMixedRefused
+    checked_views_v2_source_test.go:226: want creation-site refusal for unsupported array member: /workspace/adamic/stage3/interface-downcasts/untagged/fixtures/array-union-mixed.a:9:14: stage 0 can't lower checked view union arm awaits views-v3: array element kind: readonly ElementB[] yet
+--- FAIL: TestCheckedViewUntaggedArrayMixedRefused (0.06s)
+=== NAME  TestCheckedViewUntaggedOwnClassDataGoodRefused
+    checked_views_v2_source_test.go:155: want whole-view refusal at creation for unread any descendants: <nil>
+--- FAIL: TestCheckedViewUntaggedOwnClassDataGoodRefused (0.21s)
+=== NAME  TestCheckedViewUntaggedOwnClassDataWrongRefused
+    checked_views_v2_source_test.go:160: want whole-view refusal at creation for unread any descendants: <nil>
+--- FAIL: TestCheckedViewUntaggedOwnClassDataWrongRefused (0.21s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.232s
+FAIL

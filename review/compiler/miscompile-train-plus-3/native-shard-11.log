@@ -1,0 +1,163 @@
+=== RUN   TestClosureConventionRuntimeFeaturesIgnoreLiterals
+=== PAUSE TestClosureConventionRuntimeFeaturesIgnoreLiterals
+=== RUN   TestDecodeASCIIUnit10
+=== PAUSE TestDecodeASCIIUnit10
+=== RUN   TestDecodeASCIIUnit26
+=== PAUSE TestDecodeASCIIUnit26
+=== RUN   TestDecodeASCIIUnit42
+=== PAUSE TestDecodeASCIIUnit42
+=== RUN   TestDecodeASCIIWASIUnit13
+=== PAUSE TestDecodeASCIIWASIUnit13
+=== RUN   TestDecodeASCIIWASIUnit29
+=== PAUSE TestDecodeASCIIWASIUnit29
+=== RUN   TestDevirtualizedCalls
+=== PAUSE TestDevirtualizedCalls
+=== RUN   TestIeee754MatchesNodeBitForBit
+=== PAUSE TestIeee754MatchesNodeBitForBit
+=== RUN   TestMapHashProbeCatchesMutants
+=== PAUSE TestMapHashProbeCatchesMutants
+=== RUN   TestNormalizeMatchesNodePoints10
+=== PAUSE TestNormalizeMatchesNodePoints10
+=== RUN   TestRecordBenchmark
+    record_test.go:296: set ADAMIC_RECORD_BENCH=1 for five-round Node comparisons
+--- SKIP: TestRecordBenchmark (0.00s)
+=== RUN   TestRegExpBytecodeRandomNodeUnit02
+=== PAUSE TestRegExpBytecodeRandomNodeUnit02
+=== RUN   TestRegExpBytecodeRandomNodeUnit18
+=== PAUSE TestRegExpBytecodeRandomNodeUnit18
+=== RUN   TestRegExpBytecodeRandomNodeUnit34
+=== PAUSE TestRegExpBytecodeRandomNodeUnit34
+=== RUN   TestStringsMatchJavaScript
+=== PAUSE TestStringsMatchJavaScript
+=== RUN   TestWASIUnit01
+    wasm_test.go:306: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit01 (0.00s)
+=== RUN   TestWASIUnit17
+    wasm_test.go:386: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit17 (0.00s)
+=== RUN   TestWASIUnit33
+    wasm_test.go:466: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit33 (0.00s)
+=== CONT  TestClosureConventionRuntimeFeaturesIgnoreLiterals
+=== CONT  TestIeee754MatchesNodeBitForBit
+=== CONT  TestDecodeASCIIUnit42
+=== CONT  TestDecodeASCIIUnit26
+=== CONT  TestDecodeASCIIWASIUnit13
+    decode_ascii_test.go:427: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit13 (0.00s)
+=== CONT  TestDevirtualizedCalls
+--- PASS: TestClosureConventionRuntimeFeaturesIgnoreLiterals (0.01s)
+=== CONT  TestDecodeASCIIWASIUnit29
+    decode_ascii_test.go:507: set ADAMIC_TEST_WASI=1
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit29 (0.00s)
+=== CONT  TestDecodeASCIIUnit10
+    decode_ascii_test.go:187: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:187: compile phase 0.002s (including cache wait)
+=== NAME  TestDecodeASCIIUnit42
+    decode_ascii_test.go:347: corpus phase 0.001s (including cache wait)
+=== NAME  TestDecodeASCIIUnit26
+    decode_ascii_test.go:267: corpus phase 0.001s (including cache wait)
+=== NAME  TestDecodeASCIIUnit42
+    decode_ascii_test.go:347: compile phase 0.001s (including cache wait)
+=== NAME  TestDecodeASCIIUnit26
+    decode_ascii_test.go:267: compile phase 0.001s (including cache wait)
+=== CONT  TestRegExpBytecodeRandomNodeUnit02
+--- PASS: TestDevirtualizedCalls (0.07s)
+=== NAME  TestRegExpBytecodeRandomNodeUnit02
+    regexp_test.go:381: compiling 250 patterns, 250 executions, 667560 C bytes
+    regexp_test.go:381: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:381: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit02 (1.58s)
+=== CONT  TestStringsMatchJavaScript
+    string_test.go:207: 11460 answers, 0 mismatches
+--- PASS: TestStringsMatchJavaScript (0.54s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit34
+    regexp_test.go:541: compiling 249 patterns, 250 executions, 614688 C bytes
+    regexp_test.go:541: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:541: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit34 (1.68s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit18
+=== NAME  TestDecodeASCIIUnit26
+    decode_ascii_test.go:267: run phase 4.334s
+    decode_ascii_test.go:267: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.409s
+--- PASS: TestDecodeASCIIUnit26 (4.41s)
+=== CONT  TestMapHashProbeCatchesMutants
+=== RUN   TestMapHashProbeCatchesMutants/old_hash
+=== NAME  TestRegExpBytecodeRandomNodeUnit18
+    regexp_test.go:461: compiling 250 patterns, 250 executions, 654697 C bytes
+=== NAME  TestDecodeASCIIUnit10
+    decode_ascii_test.go:187: run phase 4.478s
+    decode_ascii_test.go:187: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.531s
+--- PASS: TestDecodeASCIIUnit10 (4.53s)
+=== CONT  TestNormalizeMatchesNodePoints10
+=== NAME  TestIeee754MatchesNodeBitForBit
+    ieee754_test.go:261: 1281787 answers (61802 values through each of 19 functions, and atan2 and hypot), 0 mismatches
+--- PASS: TestIeee754MatchesNodeBitForBit (5.00s)
+=== NAME  TestRegExpBytecodeRandomNodeUnit18
+    regexp_test.go:461: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:461: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit18 (1.40s)
+=== NAME  TestDecodeASCIIUnit42
+    decode_ascii_test.go:347: run phase 6.459s
+    decode_ascii_test.go:347: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 6.528s
+--- PASS: TestDecodeASCIIUnit42 (6.53s)
+=== NAME  TestNormalizeMatchesNodePoints10
+    normalize_test.go:298: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 2.735s
+--- PASS: TestNormalizeMatchesNodePoints10 (2.74s)
+=== NAME  TestMapHashProbeCatchesMutants/old_hash
+    map_hash_test.go:138: probe bound 64 exceeded: integers entries=64 hit=64 miss=65
+    map_hash_test.go:138: probe bound 64 exceeded: integers? entries=64 hit=64 miss=65
+    map_hash_test.go:138: probe bound 64 exceeded: integers entries=128 hit=128 miss=129
+    map_hash_test.go:138: probe bound 64 exceeded: integers? entries=128 hit=128 miss=129
+    map_hash_test.go:138: probe bound 64 exceeded: integers entries=256 hit=256 miss=257
+    map_hash_test.go:138: probe bound 64 exceeded: integers? entries=256 hit=256 miss=257
+    map_hash_test.go:138: probe bound 64 exceeded: integers entries=512 hit=512 miss=513
+    map_hash_test.go:138: probe bound 64 exceeded: integers? entries=512 hit=512 miss=513
+    map_hash_test.go:138: probe bound 64 exceeded: integers entries=1024 hit=1024 miss=1025
+    map_hash_test.go:138: probe bound 64 exceeded: integers? entries=1024 hit=1024 miss=1025
+    map_hash_test.go:138: probe bound 64 exceeded: integers entries=2048 hit=2048 miss=2049
+    map_hash_test.go:138: probe bound 64 exceeded: integers? entries=2048 hit=2048 miss=2049
+    map_hash_test.go:138: probe bound 64 exceeded: integers entries=4096 hit=3072 miss=3073
+    map_hash_test.go:138: probe bound 64 exceeded: integers? entries=4096 hit=3072 miss=3073
+    map_hash_test.go:135: integers entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: integers? entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: stride1024 entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: stride1024? entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: negative entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: negative? entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: eighths entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: eighths? entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: halves entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: halves? entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: tenths entries=2048 buckets=4096 homes=5 max_home=411 hit=2047 miss=2049
+    map_hash_test.go:135: tenths? entries=2048 buckets=4096 homes=5 max_home=411 hit=2047 miss=2049
+    map_hash_test.go:135: below2^53 entries=2048 buckets=4096 homes=2047 max_home=2 hit=2 miss=6
+    map_hash_test.go:135: below2^53? entries=2048 buckets=4096 homes=2047 max_home=2 hit=2 miss=6
+    map_hash_test.go:135: above2^53 entries=2048 buckets=4096 homes=2048 max_home=1 hit=1 miss=3
+    map_hash_test.go:135: above2^53? entries=2048 buckets=4096 homes=2048 max_home=1 hit=1 miss=3
+    map_hash_test.go:135: signed entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: signed? entries=2048 buckets=4096 homes=1 max_home=2048 hit=2048 miss=2049
+    map_hash_test.go:135: strings entries=2048 buckets=4096 homes=1612 max_home=4 hit=20 miss=22
+    map_hash_test.go:135: objects entries=2048 buckets=4096 homes=1024 max_home=2 hit=2 miss=3
+=== RUN   TestMapHashProbeCatchesMutants/zero_normalization
+    map_hash_test.go:138: zero hashes differ
+    map_hash_test.go:138: zero hashes differ
+=== RUN   TestMapHashProbeCatchesMutants/NaN_normalization
+    map_hash_test.go:138: NaN hashes differ
+    map_hash_test.go:138: NaN hashes differ
+    map_hash_test.go:138: NaN hashes differ
+--- PASS: TestMapHashProbeCatchesMutants (20.58s)
+    --- PASS: TestMapHashProbeCatchesMutants/old_hash (8.12s)
+    --- PASS: TestMapHashProbeCatchesMutants/zero_normalization (6.11s)
+    --- PASS: TestMapHashProbeCatchesMutants/NaN_normalization (6.35s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	25.010s

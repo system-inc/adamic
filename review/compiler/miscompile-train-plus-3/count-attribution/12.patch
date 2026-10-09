@@ -1,0 +1,23 @@
+--- 51aa3a96
++++ 6a056842
+@@ -51,16 +51,17 @@
+ 	adamic_temporary_6->reference = adamic_temporary_5;
+ 	if (adamic_temporary_9 != NULL) adamic_release(adamic_temporary_9);
+ 	adamic_release(adamic_temporary_4);
+-	adamic_object * adamic_temporary_10 = adamic_function_1_checked_view_members(adamic_local_1_item);
+-	adamic_object * adamic_temporary_11 = adamic_object_copy(adamic_temporary_10);
++	bool adamic_temporary_10 = ((adamic_local_1_item->heap.references == 1 && !adamic_weak_held(adamic_local_1_item)) && !adamic_local_1_item->frozen);
++	adamic_object * adamic_temporary_11 = (adamic_temporary_10 ? adamic_retain(adamic_local_1_item) : adamic_object_copy(adamic_local_1_item));
+ 	adamic_string * adamic_temporary_12 = adamic_string_from_number((0x1p+01));
+ 	adamic_string * adamic_temporary_13 = adamic_string_concat(2, (adamic_string *const[]){&adamic_string_1, adamic_temporary_12});
+ 	adamic_value *adamic_temporary_14 = adamic_object_field(adamic_temporary_11, "label", &adamic_cache_15);
+ 	adamic_release(adamic_temporary_14->reference);
+ 	adamic_temporary_14->reference = adamic_temporary_13;
++	adamic_temporary_11->class = NULL;
++	adamic_temporary_11->tuple = false;
+ 	adamic_object * adamic_local_2_next = adamic_temporary_11;
+ 	adamic_release(adamic_temporary_12);
+-	adamic_release(adamic_temporary_10);
+ 	if (!adamic_ready_0) {
+ 		static const char message[] = "ReferenceError: Cannot access 'holder' before initialization";
+ 		adamic_panic(message, sizeof message - 1);

@@ -1,0 +1,129 @@
+=== RUN   TestParserHasNoUnusedOptionalMethodThunks
+=== PAUSE TestParserHasNoUnusedOptionalMethodThunks
+=== RUN   TestDecodeASCIIUnit12
+=== PAUSE TestDecodeASCIIUnit12
+=== RUN   TestDecodeASCIIUnit28
+=== PAUSE TestDecodeASCIIUnit28
+=== RUN   TestDecodeASCIIUnit44
+=== PAUSE TestDecodeASCIIUnit44
+=== RUN   TestDecodeASCIIWASIUnit15
+=== PAUSE TestDecodeASCIIWASIUnit15
+=== RUN   TestDecodeASCIIWASIUnit31
+=== PAUSE TestDecodeASCIIWASIUnit31
+=== RUN   TestToExponentialAndToPrecisionMatchNode
+=== PAUSE TestToExponentialAndToPrecisionMatchNode
+=== RUN   TestLibraryMapSetIteratorResources
+=== RUN   TestLibraryMapSetIteratorResources/peak
+    library_map_set_iterator_test.go:92: held exhausted iterator 780 KiB, control 672 KiB
+=== RUN   TestLibraryMapSetIteratorResources/count
+=== RUN   TestLibraryMapSetIteratorResources/speed
+    library_map_set_iterator_test.go:105: 2 million numeric lookups 0.022181 CPU seconds, bound 0.35
+--- PASS: TestLibraryMapSetIteratorResources (0.53s)
+    --- PASS: TestLibraryMapSetIteratorResources/peak (0.28s)
+    --- PASS: TestLibraryMapSetIteratorResources/count (0.14s)
+    --- PASS: TestLibraryMapSetIteratorResources/speed (0.03s)
+=== RUN   TestMaybeNumbersPackIntoOneDouble
+=== PAUSE TestMaybeNumbersPackIntoOneDouble
+=== RUN   TestNormalizeMatchesNodePoints12
+=== PAUSE TestNormalizeMatchesNodePoints12
+=== RUN   TestRecordMutantsUnit01
+=== PAUSE TestRecordMutantsUnit01
+=== RUN   TestRegExpBytecodeRandomNodeUnit04
+=== PAUSE TestRegExpBytecodeRandomNodeUnit04
+=== RUN   TestRegExpBytecodeRandomNodeUnit20
+=== PAUSE TestRegExpBytecodeRandomNodeUnit20
+=== RUN   TestRegExpBytecodeRandomNodeUnit36
+=== PAUSE TestRegExpBytecodeRandomNodeUnit36
+=== RUN   TestWASITargetFlags
+--- PASS: TestWASITargetFlags (0.00s)
+=== RUN   TestWASIUnit03
+    wasm_test.go:316: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit03 (0.00s)
+=== RUN   TestWASIUnit19
+    wasm_test.go:396: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit19 (0.00s)
+=== RUN   TestWASIUnit35
+    wasm_test.go:476: WASI integration is opt-in: set ADAMIC_TEST_WASI=1 and WASI_SYSROOT, with WASI clang and Node 24 on PATH
+--- SKIP: TestWASIUnit35 (0.00s)
+=== CONT  TestParserHasNoUnusedOptionalMethodThunks
+=== CONT  TestMaybeNumbersPackIntoOneDouble
+=== CONT  TestDecodeASCIIWASIUnit15
+=== CONT  TestToExponentialAndToPrecisionMatchNode
+=== CONT  TestDecodeASCIIWASIUnit31
+=== NAME  TestDecodeASCIIWASIUnit15
+    decode_ascii_test.go:437: set ADAMIC_TEST_WASI=1
+=== NAME  TestDecodeASCIIWASIUnit31
+    decode_ascii_test.go:517: set ADAMIC_TEST_WASI=1
+=== NAME  TestDecodeASCIIWASIUnit15
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit15 (0.00s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit04
+=== NAME  TestDecodeASCIIWASIUnit31
+    split_units_test.go:293: unit elapsed 0.000s
+--- SKIP: TestDecodeASCIIWASIUnit31 (0.00s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit36
+--- PASS: TestMaybeNumbersPackIntoOneDouble (0.26s)
+=== CONT  TestDecodeASCIIUnit28
+    decode_ascii_test.go:277: corpus phase 0.000s (including cache wait)
+    decode_ascii_test.go:277: compile phase 0.001s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit04
+    regexp_test.go:391: compiling 249 patterns, 250 executions, 633032 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit36
+    regexp_test.go:551: compiling 248 patterns, 250 executions, 594921 C bytes
+=== NAME  TestRegExpBytecodeRandomNodeUnit04
+    regexp_test.go:391: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:391: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit04 (1.34s)
+=== CONT  TestDecodeASCIIUnit44
+    decode_ascii_test.go:357: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:357: compile phase 0.001s (including cache wait)
+=== NAME  TestRegExpBytecodeRandomNodeUnit36
+    regexp_test.go:551: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:551: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit36 (1.60s)
+=== CONT  TestDecodeASCIIUnit12
+    decode_ascii_test.go:197: corpus phase 0.001s (including cache wait)
+    decode_ascii_test.go:197: compile phase 0.003s (including cache wait)
+=== NAME  TestDecodeASCIIUnit28
+    decode_ascii_test.go:277: run phase 4.384s
+    decode_ascii_test.go:277: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.463s
+--- PASS: TestDecodeASCIIUnit28 (4.46s)
+=== CONT  TestNormalizeMatchesNodePoints12
+=== NAME  TestDecodeASCIIUnit12
+    decode_ascii_test.go:197: run phase 4.119s
+    decode_ascii_test.go:197: prefixes=2048 cases=2129920 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 4.125s
+--- PASS: TestDecodeASCIIUnit12 (4.12s)
+=== CONT  TestRecordMutantsUnit01
+=== RUN   TestRecordMutantsUnit01/uint32-max-as-index
+=== NAME  TestDecodeASCIIUnit44
+    decode_ascii_test.go:357: run phase 5.999s
+    decode_ascii_test.go:357: prefixes=1902 cases=1978080 Node and baseline identical
+        
+    split_units_test.go:293: unit elapsed 6.003s
+--- PASS: TestDecodeASCIIUnit44 (6.00s)
+=== CONT  TestRegExpBytecodeRandomNodeUnit20
+=== NAME  TestToExponentialAndToPrecisionMatchNode
+    dtoa_test.go:156: 778686 answers (3690 values, every argument), 0 mismatches
+--- PASS: TestToExponentialAndToPrecisionMatchNode (7.66s)
+=== NAME  TestRegExpBytecodeRandomNodeUnit20
+    regexp_test.go:471: compiling 250 patterns, 250 executions, 712928 C bytes
+=== NAME  TestNormalizeMatchesNodePoints12
+    normalize_test.go:308: 65536 lines, 0 mismatches
+    split_units_test.go:293: unit elapsed 3.661s
+--- PASS: TestNormalizeMatchesNodePoints12 (3.66s)
+=== NAME  TestRegExpBytecodeRandomNodeUnit20
+    regexp_test.go:471: mode=[] native execution totals: 250 cases, 0 disagreements
+    regexp_test.go:471: mode=[unlimited] native execution totals: 250 cases, 0 disagreements
+--- PASS: TestRegExpBytecodeRandomNodeUnit20 (1.27s)
+--- PASS: TestParserHasNoUnusedOptionalMethodThunks (9.02s)
+=== NAME  TestRecordMutantsUnit01/uint32-max-as-index
+    record_test.go:237: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+    record_test.go:244: caught by Node
+--- PASS: TestRecordMutantsUnit01 (7.08s)
+    --- PASS: TestRecordMutantsUnit01/uint32-max-as-index (7.08s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	13.372s
