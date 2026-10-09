@@ -1,0 +1,110 @@
+[
+  {
+    "group": "compose",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestComposeMatchGo|TestComposeMutants)$"
+    ],
+    "exit": 0,
+    "wall": 67.13373689199943
+  },
+  {
+    "group": "parser",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestCSTMatchesGo|TestCSTMutants|TestSchemaMatchesGo|TestSchemaMutants)$"
+    ],
+    "exit": 0,
+    "wall": 30.965673590002552
+  },
+  {
+    "group": "views",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestUnistMatchesGo|TestUnistMutants|TestWidthsMatchGo|TestSpeedCostProbes)$"
+    ],
+    "exit": 1,
+    "wall": 92.05169883900089
+  },
+  {
+    "group": "scalar-shards",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestScalarsMatchGo_000|TestScalarsMatchGo_001|TestScalarsMatchGo_002|TestScalarsMatchGo_003|TestScalarsMatchGo_004|TestScalarsMatchGo_005|TestScalarsMatchGo_006|TestScalarsMatchGo_007|TestScalarsMatchGoPlantedFailure|TestProduct_YamlScalarsLowered|TestProduct_YamlScalarsNative|TestProduct_YamlScalarsGo)$"
+    ],
+    "exit": 0,
+    "wall": 12.69152632999976
+  },
+  {
+    "group": "file-shards",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFileDriver_000|TestFileDriver_001|TestFileDriver_002|TestFileDriver_003|TestFileDriver_004|TestFileDriver_005|TestFileDriver_006|TestFileDriver_007)$"
+    ],
+    "exit": 0,
+    "wall": 10.178567699000268
+  },
+  {
+    "group": "formatter-witnesses",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "exit": 1,
+    "wall": 92.04627300499851
+  }
+]
