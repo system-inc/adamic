@@ -1,0 +1,7 @@
+package lower
+import("fmt"; "github.com/system-inc/adamic/internal/ir")
+func U057DemandObservation() string {
+ receiver:=ir.Read{Local:0,Of:ir.Object}
+ p:=&ir.Program{Locals:[]ir.Local{{Name:"receiver",Type:ir.Object}},ViewOrigins:[]ir.Expression{receiver},CheckedFields:map[string]bool{"field":true},ViewContractTypes:map[int]ir.ViewContractID{1:1},ViewContracts:[]ir.ViewContract{{Kind:ir.ViewUnknown,Unsupported:"dictionary",Name:"dictionary"}},Main:[]ir.Statement{ir.Evaluate{Value:ir.Property{Object:receiver,Name:"field",Of:ir.Object,ViewTypeID:1,ViewWhere:"probe:1"}}}}
+ return fmt.Sprint((&lowering{result:p}).checkLazyViewReads())
+}
