@@ -839,7 +839,9 @@ class Gate:
                     "skipped": skipped, "verdicts": verdicts, "log": path}
         self.phaseUnits("catalog", names, commands, execute)
         rows = self.result["catalog_units"]
-        if not any(row.get("caught") and row.get("ok") for row in rows):
+        # At least one entry must catch its bug, over the whole catalog: a single unit (--unit) is judged by its own
+        # verdict alone, since one entry may rightly be skipped or stale (Loom, Oct 9: entry 10 green alone, its phase red).
+        if not vars(self.arguments).get("unit") and not any(row.get("caught") and row.get("ok") for row in rows):
             self.exits["catalog"] = 1
             self.fail("catalog", "no catalog entry caught its mutation (see catalog_units)")
         self.result["catalog"] = {"exit": self.exits["catalog"],

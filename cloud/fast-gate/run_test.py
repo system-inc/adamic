@@ -1422,6 +1422,17 @@ class PhaseUnitTests(unittest.TestCase):
             gate.catalogFull()
             self.assertEqual(entries, [2])
             self.assertEqual([row["name"] for row in gate.result["catalog_units"]], ["02 two"])
+            # One entry alone, rightly skipped, is green: the at-least-one-caught rule is over the whole catalog.
+            gate.arguments.unit = "1"
+
+            def skipping(command, output, environment):
+                output.write("01 one: skipped (fix not on main)\n")
+                return types.SimpleNamespace(wait=lambda: 0)
+            gate.spawn = skipping
+            gate.failures.clear()
+            gate.catalogFull()
+            self.assertEqual(gate.failures, [])
+            self.assertEqual(gate.exits["catalog"], 0)
             gate.arguments.unit = "9"
             with self.assertRaises(ValueError):
                 gate.catalogFull()
