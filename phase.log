@@ -1,0 +1,18 @@
+FIRST FAILURE (deferred, at 58.6 s):
+requested deferred tests that didn't run to a verdict:
+github.com/system-inc/adamic/internal/native TestCaseMappingMatchesNode: missing
+github.com/system-inc/adamic/internal/native TestMapHashProbeCatchesMutants: missing
+github.com/system-inc/adamic/internal/native TestNormalizeMatchesNode: missing
+github.com/system-inc/adamic/internal/native TestNormalizeRandomMatchesNode: missing
+github.com/system-inc/adamic/internal/native TestRecordMutants: missing
+github.com/system-inc/adamic/internal/native TestRecordReadMutants: missing
+github.com/system-inc/adamic/internal/native TestRegExpBytecodeRandomNode: missing
+github.com/system-inc/adamic/internal/native TestRegExpBytecodeTest262: missing
+github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees: missing
+github.com/system-inc/adamic/internal/native TestWASI: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestCompilerAndStage1Agree: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestJsxLintTrees: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestNodeTableIsLinkOnly: missing
+github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree: missing
+(box load 4.8 on 5 cores at first failure)
+red: 1e8eff515cc303499875cf79fbbf9ad40d2cebc9 fast gate, first failure at deferred after 58.6 s (build=42.0s vet=2.8s smoke=13.4s; 24 units over 30 s (1504 s, 3 on the burn-down, 21 drifted over); box load 0.5 on 5 cores at start, load 4.8 on 5 cores at first failure, load 4.8 on 5 cores at end; deferred to full gate: 0 tests; branch none, session none), 0 fail, 46 pass
