@@ -1,0 +1,60 @@
+[
+  {
+    "test": "TestProduct_profile_controls_lowered",
+    "package": "stage1/cohere/typeaware",
+    "prior_verdict": "untrue",
+    "subsumed_by": [
+      "TestProduct_corpus_lowered"
+    ],
+    "defense": "not defended",
+    "observed_verdict": "subsumed",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/tsgo.go:27",
+        "change": "flip condition: if !l.program.TSGoEnabled() { -> if l.program.TSGoEnabled() {",
+        "rows_failed": [
+          "TestProduct_corpus_lowered",
+          "TestProduct_facts_cost_lowered",
+          "TestProduct_typeaware_lowered",
+          "TestProduct_six_lowered",
+          "TestProduct_volume_lowered",
+          "TestProduct_query_cost_lowered",
+          "TestProduct_profile_controls_lowered"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/tsgo.go:40",
+        "change": "flip condition: if strings.Count(source, signature) != 1 { -> if strings.Count(source, signature) == 1 {",
+        "rows_failed": [
+          "TestProduct_facts_cost_lowered",
+          "TestProduct_query_cost_lowered",
+          "TestProduct_typeaware_lowered",
+          "TestProduct_six_lowered",
+          "TestProduct_corpus_lowered",
+          "TestProduct_volume_lowered",
+          "TestProduct_profile_controls_lowered"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/tsgo.go:70",
+        "change": "drop statement: source = source[:start] + body + source[start+end:] -> (deleted)",
+        "rows_failed": []
+      }
+    ],
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_facts_cost_lowered",
+      "TestProduct_typeaware_lowered",
+      "TestProduct_query_cost_lowered",
+      "TestProduct_six_lowered",
+      "TestProduct_profile_controls_lowered",
+      "TestProduct_corpus_lowered",
+      "TestProduct_volume_lowered"
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend144/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run '^TestProduct_.*_lowered$'; volume_profile_Controls_test.go:185: build typeaware volume lowered: native: missing unique tsgoProgram library body"
+  }
+]

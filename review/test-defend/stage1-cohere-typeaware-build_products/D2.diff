@@ -1,0 +1,13 @@
+diff --git a/internal/native/tsgo.go b/internal/native/tsgo.go
+index 61f484b0..99d57c43 100644
+--- a/internal/native/tsgo.go
++++ b/internal/native/tsgo.go
+@@ -37,7 +37,7 @@ func TSGoC(program *ir.Program) (string, error) {
+ 		for _, inRegion := range emitter.regionVariants(index) {
+ 			emitter.inRegion = inRegion
+ 			signature := "static " + emitter.signature(index) + " {\n"
+-			if strings.Count(source, signature) != 1 {
++			if strings.Count(source, signature) == 1 {
+ 				return "", fmt.Errorf("native: missing unique %s library body", name)
+ 			}
+ 			start := strings.Index(source, signature) + len(signature)

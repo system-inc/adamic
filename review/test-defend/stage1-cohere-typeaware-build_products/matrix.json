@@ -1,0 +1,41 @@
+{
+  "D1": {
+    "pass": [],
+    "fail": [
+      "TestProduct_corpus_lowered",
+      "TestProduct_facts_cost_lowered",
+      "TestProduct_typeaware_lowered",
+      "TestProduct_six_lowered",
+      "TestProduct_volume_lowered",
+      "TestProduct_query_cost_lowered",
+      "TestProduct_profile_controls_lowered"
+    ],
+    "binary_seconds": 5.568
+  },
+  "D2": {
+    "pass": [],
+    "fail": [
+      "TestProduct_facts_cost_lowered",
+      "TestProduct_query_cost_lowered",
+      "TestProduct_typeaware_lowered",
+      "TestProduct_six_lowered",
+      "TestProduct_corpus_lowered",
+      "TestProduct_volume_lowered",
+      "TestProduct_profile_controls_lowered"
+    ],
+    "binary_seconds": 78.076
+  },
+  "D3": {
+    "pass": [
+      "TestProduct_facts_cost_lowered",
+      "TestProduct_typeaware_lowered",
+      "TestProduct_query_cost_lowered",
+      "TestProduct_six_lowered",
+      "TestProduct_profile_controls_lowered",
+      "TestProduct_corpus_lowered",
+      "TestProduct_volume_lowered"
+    ],
+    "fail": [],
+    "binary_seconds": 43.555
+  }
+}

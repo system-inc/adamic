@@ -1,0 +1,18 @@
+{
+  "bounded-clean": {
+    "path": "/tmp/defend144/cache/bounded-clean/f3a6e9a8c3c3f7486a3578c08abf86c13bf20d9fb693d09986a17f9218dba4dc/volume.c",
+    "sha256": "fe1f16544fd97a8b990565947c043cfa7bbb809805f10ff821847665a9a304d3",
+    "bridge_return_lines": [
+      "return adamic_tsgo_program(adamic_local_333_argument0, adamic_local_334_argument1);",
+      "return adamic_tsgo_type_parts(adamic_local_976_argument0, adamic_local_977_argument1, adamic_local_978_argument2, adamic_local_979_argument3, adamic_local_980_argument4);",
+      "return adamic_tsgo_inspect(adamic_local_1060_argument0, adamic_local_1061_argument1, adamic_local_1062_argument2, adamic_local_1063_argument3, adamic_local_1064_argument4, adamic_local_1065_argument5);"
+    ],
+    "tsgo_program_body": "static double adamic_function_68_tsgotsgoProgram(adamic_string * adamic_local_333_argument0, adamic_array * adamic_local_334_argument1) {\n\tADAMIC_CHECK_STACK();\n\treturn adamic_tsgo_program(adamic_local_333_argument0, adamic_local_334_argument1);\n}\n"
+  },
+  "D3": {
+    "path": "/tmp/defend144/cache/D3/bba7f323123c3858c32510ae65caa80f696cad39df44e1307031f0f96abeff71/volume.c",
+    "sha256": "8641fbf874a8ee743f4a6a8b6cd8eba2a35829ec31f9e97c4213eda957b05224",
+    "bridge_return_lines": [],
+    "tsgo_program_body": "static double adamic_function_68_tsgotsgoProgram(adamic_string * adamic_local_333_argument0, adamic_array * adamic_local_334_argument1) {\n\tADAMIC_CHECK_STACK();\n\tadamic_panic((&adamic_string_503)->bytes, (&adamic_string_503)->length);\n\tdouble adamic_temporary_2813 = (0x0p+00);\n\treturn adamic_temporary_2813;\n\tadamic_unreachable();\n}\n"
+  }
+}

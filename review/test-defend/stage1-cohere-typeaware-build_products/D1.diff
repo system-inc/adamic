@@ -1,0 +1,13 @@
+diff --git a/internal/lower/tsgo.go b/internal/lower/tsgo.go
+index 36de4505..2aa54ffe 100644
+--- a/internal/lower/tsgo.go
++++ b/internal/lower/tsgo.go
+@@ -24,7 +24,7 @@ func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error) {
+ 	if name == "" {
+ 		return nil, false, nil
+ 	}
+-	if !l.program.TSGoEnabled() {
++	if l.program.TSGoEnabled() {
+ 		return nil, true, &Refused{Where: l.program.Where(node), What: "an unlinked typescript-go library call", Fix: "build with --tsgo <checker archive>"}
+ 	}
+ 	arguments := []ir.Expression{}

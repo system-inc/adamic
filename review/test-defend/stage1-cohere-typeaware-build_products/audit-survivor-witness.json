@@ -1,0 +1,14 @@
+{
+  "mutant": "M3",
+  "surviving_rows": [
+    "TestProduct_profile_controls_lowered",
+    "TestProduct_profile_controls_native"
+  ],
+  "changed_return": "/home/agent/.cache/adamic-build/f3a6e9a8c3c3f7486a3578c08abf86c13bf20d9fb693d09986a17f9218dba4dc/missing.c",
+  "expected_artifact": "/home/agent/.cache/adamic-build/f3a6e9a8c3c3f7486a3578c08abf86c13bf20d9fb693d09986a17f9218dba4dc/volume.c",
+  "missing_exists": false,
+  "volume_c_exists": true,
+  "volume_c_bytes": 3719831,
+  "failing_read_witness": "volume_profile_Corpora_test.go:169: open /home/agent/.cache/adamic-build/f3a6e9a8c3c3f7486a3578c08abf86c13bf20d9fb693d09986a17f9218dba4dc/missing.c: no such file or directory",
+  "cache_note": "ControlsNative passed using cached native product; changed lowered return path was not consumed by its cached callback."
+}

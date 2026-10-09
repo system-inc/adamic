@@ -1,0 +1,29 @@
+[
+  {
+    "id": "D1",
+    "file": "internal/lower/tsgo.go",
+    "line": 27,
+    "old": "if !l.program.TSGoEnabled() {",
+    "new": "if l.program.TSGoEnabled() {",
+    "kind": "flip condition",
+    "aim": "Reject enabled checker calls used in volume_suite.ts"
+  },
+  {
+    "id": "D2",
+    "file": "internal/native/tsgo.go",
+    "line": 40,
+    "old": "if strings.Count(source, signature) != 1 {",
+    "new": "if strings.Count(source, signature) == 1 {",
+    "kind": "flip condition",
+    "aim": "Reject valid unique library bodies during C emission"
+  },
+  {
+    "id": "D3",
+    "file": "internal/native/tsgo.go",
+    "line": 70,
+    "old": "\t\t\tsource = source[:start] + body + source[start+end:]\n",
+    "new": "",
+    "kind": "drop statement",
+    "aim": "Leave placeholder library bodies instead of runtime bridge calls; emission success cannot establish executable behavior"
+  }
+]

@@ -1,0 +1,17 @@
+stage1/cohere/typeaware/build_products_test.go:60:	return volumeProfileControlsBinary(h, "", h.archive("checker", "", sanitize), sanitize)
+stage1/cohere/typeaware/build_products_test.go:72:	inputs := volumeProfileCorporaNativeInputs(ctx, h, sanitize)
+stage1/cohere/typeaware/build_products_test.go:73:	return volumeProfileCorporaNative(ctx, h, stage0, archive, inputs, sanitize)
+stage1/cohere/typeaware/build_products_test.go:165:	volumeProfileControlsLowered(typeAwareProductHarness(t), "")
+stage1/cohere/typeaware/split_volume_products_test.go:11:	volumeProfileControlsLowered(typeAwareProductHarness(t), "")
+stage1/cohere/typeaware/volume_profile_Controls_test.go:183:func volumeProfileControlsLowered(h *harness, stage0 string) string {
+stage1/cohere/typeaware/volume_profile_Controls_test.go:207:	volumeProfileControlsLowered(h, volumeProfileStage0(h))
+stage1/cohere/typeaware/volume_profile_Controls_test.go:246:func volumeProfileControlsBinary(h *harness, stage0, archive string, sanitize bool) string {
+stage1/cohere/typeaware/volume_profile_Controls_test.go:252:	lowered := volumeProfileControlsLowered(h, stage0)
+stage1/cohere/typeaware/volume_profile_Controls_test.go:296:	binary := volumeProfileControlsBinary(h, stage0, archive, c.sanitize)
+stage1/cohere/typeaware/volume_profile_Corpora_test.go:51:func volumeProfileCorporaNativeInputs(ctx context.Context, h *harness, sanitize bool) buildcache.Inputs {
+stage1/cohere/typeaware/volume_profile_Corpora_test.go:165:func volumeProfileCorporaNative(ctx context.Context, h *harness, stage0, archive string, inputs buildcache.Inputs, sanitize bool) string {
+stage1/cohere/typeaware/volume_profile_Corpora_test.go:166:	lowered := volumeProfileControlsLowered(h, stage0)
+stage1/cohere/typeaware/volume_profile_Corpora_test.go:299:	plain := volumeProfileCorporaNativeInputs(ctx, h, false)
+stage1/cohere/typeaware/volume_profile_Corpora_test.go:300:	sanitized := volumeProfileCorporaNativeInputs(ctx, h, true)
+stage1/cohere/typeaware/volume_profile_Corpora_test.go:443:		products.Binary = volumeProfileCorporaNative(deadline, h, stage0, archive, plain, false)
+stage1/cohere/typeaware/volume_profile_Corpora_test.go:447:		products.Asan = volumeProfileCorporaNative(deadline, h, stage0, asanArchive, sanitized, true)

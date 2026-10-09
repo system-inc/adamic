@@ -1,0 +1,619 @@
+[
+  {
+    "id": "M1",
+    "members": [
+      "TestProduct_six_oracle",
+      "TestProduct_typeaware_oracle",
+      "TestProduct_facts_cost_go",
+      "TestProduct_volume_oracle",
+      "TestProduct_type_symbol_archive",
+      "TestProduct_type_symbol_oracle",
+      "TestProduct_type_symbol_native",
+      "TestProduct_type_symbol_truth"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_six_oracle|TestProduct_typeaware_oracle|TestProduct_facts_cost_go|TestProduct_volume_oracle|TestProduct_type_symbol_archive|TestProduct_type_symbol_oracle|TestProduct_type_symbol_native|TestProduct_type_symbol_truth)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 25.692811883000104,
+    "standalone": true,
+    "test_binary_seconds": 13.591,
+    "fails": [
+      "TestProduct_type_symbol_truth",
+      "TestProduct_six_oracle",
+      "TestProduct_type_symbol_archive",
+      "TestProduct_volume_oracle",
+      "TestProduct_facts_cost_go",
+      "TestProduct_typeaware_oracle",
+      "TestProduct_type_symbol_oracle",
+      "TestProduct_type_symbol_native"
+    ],
+    "passes": [],
+    "failing_lines": {
+      "TestProduct_type_symbol_truth": "volume_type_symbol_test.go:62: missing product /home/agent/.cache/adamic-build/85cade732e53b5081e2f3ed2298c3a0582868e6114428c1d32e1e46a9de113d3/type-symbol-oracle.missing: stat /home/agent/.cache/adamic-build/85cade732e53b5081e2f3ed2298c3a0582868e6114428c1d32e1e46a9de113d3/type-symbol-oracle.missing: no such file or directory",
+      "TestProduct_six_oracle": "build_products_test.go:43: missing product /home/agent/.cache/adamic-build/5019b6c5cbbef43ab7811ec0858918983a6180d70f4957bd6de599bd94901b8a/oracle.missing: stat /home/agent/.cache/adamic-build/5019b6c5cbbef43ab7811ec0858918983a6180d70f4957bd6de599bd94901b8a/oracle.missing: no such file or directory",
+      "TestProduct_type_symbol_archive": "volume_type_symbol_test.go:192: missing product /home/agent/.cache/adamic-build/d4ebfed40a4115a901cac2c4d93e651302ee30b9eac4f228491adea41bca48cb/type-symbol-checker.a.missing: stat /home/agent/.cache/adamic-build/d4ebfed40a4115a901cac2c4d93e651302ee30b9eac4f228491adea41bca48cb/type-symbol-checker.a.missing: no such file or directory",
+      "TestProduct_volume_oracle": "volume_test.go:8: missing product /home/agent/.cache/adamic-build/b919ccfb6da32237c2948a0e2cb5ed2bad5e930ab25e855851d69c05bb5a5173/volume-oracle.missing: stat /home/agent/.cache/adamic-build/b919ccfb6da32237c2948a0e2cb5ed2bad5e930ab25e855851d69c05bb5a5173/volume-oracle.missing: no such file or directory",
+      "TestProduct_facts_cost_go": "build_products_test.go:47: missing product /home/agent/.cache/adamic-build/c99e1cb20c27fcf2e368079837b1c365312ba601a51930537784f42f4b7dd68a/direct-cost.missing: stat /home/agent/.cache/adamic-build/c99e1cb20c27fcf2e368079837b1c365312ba601a51930537784f42f4b7dd68a/direct-cost.missing: no such file or directory",
+      "TestProduct_typeaware_oracle": "build_products_test.go:43: missing product /home/agent/.cache/adamic-build/38c1776c6b84cf71635ad93ade59231cb05a2856679130defe8578388fe61d23/oracle.missing: stat /home/agent/.cache/adamic-build/38c1776c6b84cf71635ad93ade59231cb05a2856679130defe8578388fe61d23/oracle.missing: no such file or directory",
+      "TestProduct_type_symbol_oracle": "volume_type_symbol_test.go:62: missing product /home/agent/.cache/adamic-build/85cade732e53b5081e2f3ed2298c3a0582868e6114428c1d32e1e46a9de113d3/type-symbol-oracle.missing: stat /home/agent/.cache/adamic-build/85cade732e53b5081e2f3ed2298c3a0582868e6114428c1d32e1e46a9de113d3/type-symbol-oracle.missing: no such file or directory",
+      "TestProduct_type_symbol_native": "volume_type_symbol_test.go:192: missing product /home/agent/.cache/adamic-build/d4ebfed40a4115a901cac2c4d93e651302ee30b9eac4f228491adea41bca48cb/type-symbol-checker.a.missing: stat /home/agent/.cache/adamic-build/d4ebfed40a4115a901cac2c4d93e651302ee30b9eac4f228491adea41bca48cb/type-symbol-checker.a.missing: no such file or directory"
+    },
+    "supplemental": true
+  },
+  {
+    "id": "M2",
+    "members": [
+      "TestProduct_suite",
+      "TestProduct_suite_asan",
+      "TestProduct_typeaware_native",
+      "TestProduct_typeaware_native_asan",
+      "TestProduct_facts_cost_native",
+      "TestProduct_query_cost_native",
+      "TestProduct_volume_native",
+      "TestProduct_profile_missing_binding"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_suite|TestProduct_suite_asan|TestProduct_typeaware_native|TestProduct_typeaware_native_asan|TestProduct_facts_cost_native|TestProduct_query_cost_native|TestProduct_volume_native|TestProduct_profile_missing_binding)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 80.51170125099998,
+    "test_binary_seconds": 76.419,
+    "fails": [
+      "TestProduct_facts_cost_native",
+      "TestProduct_typeaware_native",
+      "TestProduct_suite",
+      "TestProduct_query_cost_native",
+      "TestProduct_typeaware_native_asan",
+      "TestProduct_suite_asan",
+      "TestProduct_volume_native"
+    ],
+    "passes": [
+      "TestProduct_profile_missing_binding"
+    ],
+    "failing_lines": {
+      "TestProduct_facts_cost_native": "build_products_test.go:56: open /home/agent/.cache/adamic-build/e79e584ae0277617405c9712f2bad2fc5e702d9eb56ec5030331531ce8633eea/native.missing: no such file or directory",
+      "TestProduct_typeaware_native": "build_products_test.go:56: open /home/agent/.cache/adamic-build/bb8670518b3183e5a75bbcd6ea7c49146294c9a37ebce8a213bc1ecf824df484/native.missing: no such file or directory",
+      "TestProduct_suite": "build_products_test.go:56: open /home/agent/.cache/adamic-build/9a9fdde9445e0b372ecc72c88d55d216e97397b2d699f34692b6cd6729c1d118/native.missing: no such file or directory",
+      "TestProduct_query_cost_native": "build_products_test.go:56: open /home/agent/.cache/adamic-build/66e78ce2793d742b81032adb5c6e9666177694c7224176b629e4214db9ed92c3/native.missing: no such file or directory",
+      "TestProduct_typeaware_native_asan": "build_products_test.go:56: open /home/agent/.cache/adamic-build/f3dcc021e4c1dd5da5f329e864c7c8ca44d2427d6963a600f34ed85575699188/native.missing: no such file or directory",
+      "TestProduct_suite_asan": "build_products_test.go:56: open /home/agent/.cache/adamic-build/912cd46f54bd0b77604307905a44d9cb1c6daf5ee3c9fa53bf46d3f24a99d786/native.missing: no such file or directory",
+      "TestProduct_volume_native": "build_products_test.go:56: open /home/agent/.cache/adamic-build/1862f996d51631b264e1b81d5de9d927883674aa9727f7421d25b274c56db280/native.missing: no such file or directory"
+    }
+  },
+  {
+    "id": "M3",
+    "members": [
+      "TestProduct_profile_controls_lowered",
+      "TestProduct_profile_controls_native",
+      "TestProduct_corpus_native"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_controls_lowered|TestProduct_profile_controls_native|TestProduct_corpus_native)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 7.285786890999589,
+    "test_binary_seconds": 4.864,
+    "fails": [
+      "TestProduct_corpus_native"
+    ],
+    "passes": [
+      "TestProduct_profile_controls_lowered",
+      "TestProduct_profile_controls_native"
+    ],
+    "failing_lines": {
+      "TestProduct_corpus_native": "volume_profile_Corpora_test.go:169: open /home/agent/.cache/adamic-build/f3a6e9a8c3c3f7486a3578c08abf86c13bf20d9fb693d09986a17f9218dba4dc/missing.c: no such file or directory"
+    }
+  },
+  {
+    "id": "M4",
+    "members": [
+      "TestProduct_type_symbol_fixtures",
+      "TestProduct_type_symbol_truth"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_fixtures|TestProduct_type_symbol_truth)$"
+    ],
+    "exit": 1,
+    "wall_seconds": 5.184887961999266,
+    "test_binary_seconds": 1.259,
+    "fails": [
+      "TestProduct_type_symbol_fixtures",
+      "TestProduct_type_symbol_truth"
+    ],
+    "passes": [],
+    "failing_lines": {
+      "TestProduct_type_symbol_fixtures": "volume_type_symbol_test.go:247: open /home/agent/.cache/adamic-build/646951ff62aa11e5d2a3ff5db8a93d0444d22b5b9839d5f4a88001acad5a37d3/missing.manifest: no such file or directory",
+      "TestProduct_type_symbol_truth": "volume_type_symbol_test.go:247: open /home/agent/.cache/adamic-build/646951ff62aa11e5d2a3ff5db8a93d0444d22b5b9839d5f4a88001acad5a37d3/missing.manifest: no such file or directory"
+    }
+  },
+  {
+    "id": "P01",
+    "members": [
+      "TestProduct_stage0"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_stage0)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.121937211999466,
+    "test_binary_seconds": 0.015,
+    "fails": [],
+    "passes": [
+      "TestProduct_stage0"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P02",
+    "members": [
+      "TestProduct_checker",
+      "TestProduct_checker_asan"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_checker|TestProduct_checker_asan)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.1548507309998968,
+    "test_binary_seconds": 0.014,
+    "fails": [],
+    "passes": [
+      "TestProduct_checker",
+      "TestProduct_checker_asan"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P03",
+    "members": [
+      "TestProduct_six_lowered",
+      "TestProduct_typeaware_lowered",
+      "TestProduct_facts_cost_lowered",
+      "TestProduct_query_cost_lowered",
+      "TestProduct_volume_lowered"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_six_lowered|TestProduct_typeaware_lowered|TestProduct_facts_cost_lowered|TestProduct_query_cost_lowered|TestProduct_volume_lowered)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.1676776189997327,
+    "test_binary_seconds": 0.021,
+    "fails": [],
+    "passes": [
+      "TestProduct_six_lowered",
+      "TestProduct_typeaware_lowered",
+      "TestProduct_query_cost_lowered",
+      "TestProduct_volume_lowered",
+      "TestProduct_facts_cost_lowered"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P04",
+    "members": [
+      "TestProduct_suite",
+      "TestProduct_suite_asan",
+      "TestProduct_typeaware_native",
+      "TestProduct_typeaware_native_asan",
+      "TestProduct_facts_cost_native",
+      "TestProduct_query_cost_native",
+      "TestProduct_volume_native"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_suite|TestProduct_suite_asan|TestProduct_typeaware_native|TestProduct_typeaware_native_asan|TestProduct_facts_cost_native|TestProduct_query_cost_native|TestProduct_volume_native)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 7.233532132000619,
+    "test_binary_seconds": 4.146,
+    "fails": [],
+    "passes": [
+      "TestProduct_suite",
+      "TestProduct_facts_cost_native",
+      "TestProduct_volume_native",
+      "TestProduct_query_cost_native",
+      "TestProduct_typeaware_native",
+      "TestProduct_typeaware_native_asan",
+      "TestProduct_suite_asan"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P05",
+    "members": [
+      "TestProduct_six_oracle",
+      "TestProduct_typeaware_oracle",
+      "TestProduct_facts_cost_go",
+      "TestProduct_volume_oracle",
+      "TestProduct_type_symbol_archive",
+      "TestProduct_type_symbol_oracle"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_six_oracle|TestProduct_typeaware_oracle|TestProduct_facts_cost_go|TestProduct_volume_oracle|TestProduct_type_symbol_archive|TestProduct_type_symbol_oracle)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.3721271449994674,
+    "test_binary_seconds": 0.015,
+    "fails": [],
+    "passes": [
+      "TestProduct_six_oracle",
+      "TestProduct_volume_oracle",
+      "TestProduct_typeaware_oracle",
+      "TestProduct_type_symbol_oracle",
+      "TestProduct_facts_cost_go",
+      "TestProduct_type_symbol_archive"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P06",
+    "members": [
+      "TestProduct_profile_controls_lowered"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_controls_lowered)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.9404026929987594,
+    "test_binary_seconds": 0.012,
+    "fails": [],
+    "passes": [
+      "TestProduct_profile_controls_lowered"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P07",
+    "members": [
+      "TestProduct_profile_controls_native"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_controls_native)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.1719921019994217,
+    "test_binary_seconds": 0.017,
+    "fails": [],
+    "passes": [
+      "TestProduct_profile_controls_native"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P08",
+    "members": [
+      "TestProduct_profile_missing_binding"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_missing_binding)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 4.8704133730007015,
+    "test_binary_seconds": 1.6680000000000001,
+    "fails": [],
+    "passes": [
+      "TestProduct_profile_missing_binding"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P09",
+    "members": [
+      "TestProduct_profile_mutant_binding_slot",
+      "TestProduct_profile_mutant_scope_containment",
+      "TestProduct_profile_mutant_first_binding"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_profile_mutant_binding_slot|TestProduct_profile_mutant_scope_containment|TestProduct_profile_mutant_first_binding)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.124821264000275,
+    "test_binary_seconds": 0.033,
+    "fails": [],
+    "passes": [
+      "TestProduct_profile_mutant_first_binding",
+      "TestProduct_profile_mutant_binding_slot",
+      "TestProduct_profile_mutant_scope_containment"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P10",
+    "members": [
+      "TestProduct_corpus_stage0",
+      "TestProduct_corpus_checker",
+      "TestProduct_corpus_checker_asan",
+      "TestProduct_corpus_oracle"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_corpus_stage0|TestProduct_corpus_checker|TestProduct_corpus_checker_asan|TestProduct_corpus_oracle)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 4.215744920000361,
+    "test_binary_seconds": 0.054,
+    "fails": [],
+    "passes": [
+      "TestProduct_corpus_stage0",
+      "TestProduct_corpus_oracle",
+      "TestProduct_corpus_checker_asan",
+      "TestProduct_corpus_checker"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P11",
+    "members": [
+      "TestProduct_corpus_native"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_corpus_native)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 4.123055868998563,
+    "test_binary_seconds": 0.013,
+    "fails": [],
+    "passes": [
+      "TestProduct_corpus_native"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P12",
+    "members": [
+      "TestProduct_type_symbol_native"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_native)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.148946083998453,
+    "test_binary_seconds": 0.014,
+    "fails": [],
+    "passes": [
+      "TestProduct_type_symbol_native"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P13",
+    "members": [
+      "TestProduct_type_symbol_fixtures"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_fixtures)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.90480294200097,
+    "test_binary_seconds": 0.017,
+    "fails": [],
+    "passes": [
+      "TestProduct_type_symbol_fixtures"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "P14",
+    "members": [
+      "TestProduct_type_symbol_truth"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^(TestProduct_type_symbol_truth)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 4.043784474999484,
+    "test_binary_seconds": 1.218,
+    "fails": [],
+    "passes": [
+      "TestProduct_type_symbol_truth"
+    ],
+    "failing_lines": {}
+  },
+  {
+    "id": "M3",
+    "variant": "isolated-cache",
+    "members": [
+      "TestProduct_profile_controls_native"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/typeaware/",
+      "-run",
+      "^TestProduct_profile_controls_native$"
+    ],
+    "cache": "/tmp/u144/cache/M3-cold",
+    "test_binary_seconds": 44.621,
+    "fails": [
+      "TestProduct_profile_controls_native"
+    ],
+    "passes": [],
+    "failing_lines": {
+      "TestProduct_profile_controls_native": "volume_profile_Controls_test.go:264: open /tmp/u144/cache/M3-cold/f3a6e9a8c3c3f7486a3578c08abf86c13bf20d9fb693d09986a17f9218dba4dc/missing.c: no such file or directory"
+    }
+  }
+]

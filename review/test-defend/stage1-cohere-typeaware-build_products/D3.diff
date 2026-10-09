@@ -1,0 +1,12 @@
+diff --git a/internal/native/tsgo.go b/internal/native/tsgo.go
+index 61f484b0..62b3a752 100644
+--- a/internal/native/tsgo.go
++++ b/internal/native/tsgo.go
+@@ -67,7 +67,6 @@ func TSGoC(program *ir.Program) (string, error) {
+ 				body += "return "
+ 			}
+ 			body += "adamic_tsgo_" + runtimeName + "(" + strings.Join(arguments, ", ") + ");"
+-			source = source[:start] + body + source[start+end:]
+ 		}
+ 	}
+ 	return "#include \"tsgo_runtime.h\"\n" + source, nil
