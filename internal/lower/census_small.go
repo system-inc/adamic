@@ -160,21 +160,43 @@ func (l *lowering) censusOverloads(implementation *ast.Node) error {
 func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal int) error {
 	label := fmt.Sprintf("overload %d of %s", ordinal, implementation.Name().Text())
 	declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters()
-	if len(servedTypes) > len(declaredTypes) {
-		return l.notYet(overload, label+" with additional implementation type parameters")
-	}
 	outerMapper := l.typeMapper
 	defer func() { l.typeMapper = outerMapper }()
 	if len(servedTypes) > 0 {
 		sources, targets := []*checker.Type{}, []*checker.Type{}
+		inferred := map[*checker.Type]*checker.Type{}
+		if len(servedTypes) > len(declaredTypes) {
+			// Extra binders need a witness from the entire signature, not positional
+			// alpha-renaming: implementations may insert a binder before an old one.
+			for index, parameter := range implementation.Parameters() {
+				if index < len(overload.Parameters()) {
+					l.inferTypes(l.checker.GetTypeAtLocation(parameter), l.checker.GetTypeAtLocation(overload.Parameters()[index]), inferred)
+				}
+			}
+			l.inferTypes(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)), l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)), inferred)
+		}
 		for index, parameter := range servedTypes {
-			sources = append(sources, l.checker.GetTypeAtLocation(parameter.Name()))
-			targets = append(targets, l.checker.GetTypeAtLocation(declaredTypes[index].Name()))
+			source := l.checker.GetTypeAtLocation(parameter.Name())
+			target := inferred[source]
+			if len(servedTypes) <= len(declaredTypes) {
+				target = l.checker.GetTypeAtLocation(declaredTypes[index].Name())
+			} else if target == nil {
+				// A binder with no evidence can use bottom as a candidate witness.
+				// This is not permission to erase it: every constraint, incoming
+				// parameter and outgoing result below must still hold for that witness.
+				target = l.checker.GetNonNullableType(l.checker.GetUndefinedType())
+			}
+			sources = append(sources, source)
+			targets = append(targets, target)
 		}
 		l.typeMapper = newTypeMapper(sources, targets)
 		for index, parameter := range servedTypes {
 			if constraint := l.checker.GetBaseConstraintOfType(sources[index]); constraint != nil && !l.censusRelated(targets[index], constraint) {
-				return &Refused{Where: l.program.Where(declaredTypes[index]), What: label + " type parameter " + declaredTypes[index].Name().Text() + " cannot satisfy implementation parameter " + parameter.Name().Text(), Fix: "make implementation constraints accept every type admitted by the overload"}
+				where, name := overload, "type "+l.checker.TypeToString(targets[index])
+				if len(servedTypes) <= len(declaredTypes) {
+					where, name = declaredTypes[index], "type parameter "+declaredTypes[index].Name().Text()
+				}
+				return &Refused{Where: l.program.Where(where), What: label + " " + name + " cannot satisfy implementation parameter " + parameter.Name().Text(), Fix: "make implementation constraints accept every type admitted by the overload"}
 			}
 		}
 	}
