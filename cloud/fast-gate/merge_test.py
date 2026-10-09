@@ -120,8 +120,9 @@ echo '{"sha": "'"$(cat "$TEST_ROOT/gated")"'"}' > "$destination/fast.json"
     def pool(self, sha, branch):
         shutil.copy(ROOT / 'cloud' / 'pool-job.sh', self.here / 'cloud' / 'pool-job.sh')
         jobs = self.root / 'jobs'
-        # Not taken at once, so the waiter returns as soon as it has written the job.
-        env = dict(os.environ, LOOM_FAST_JOBS=str(jobs), ADAMIC_POOL_TAKE_SECONDS='0')
+        # Not taken at once and no time to wait, so the waiter asks for its box race and returns.
+        env = dict(os.environ, LOOM_FAST_JOBS=str(jobs), ADAMIC_POOL_TAKE_SECONDS='0', ADAMIC_POOL_JOB_SECONDS='0',
+                   ADAMIC_FAST_GATE_WATCH_STATE=str(self.root / 'watch'))
         result = subprocess.run(['bash', str(self.here / 'cloud' / 'pool-job.sh'), sha, '--branch', branch, '--tools', 'tools'],
                                 env=env, capture_output=True, text=True, timeout=60)
         job = jobs / (sha + '.json')
@@ -133,6 +134,9 @@ echo '{"sha": "'"$(cat "$TEST_ROOT/gated")"'"}' > "$destination/fast.json"
         self.assertEqual(git(self.here, 'rev-list', '--parents', '-n', '1', job['gate']).split()[1:], [self.main, sha], result.stdout)
         self.assertEqual(job['sha'], sha)
         self.assertEqual(git(self.origin, 'rev-parse', 'refs/gate-merges/' + job['gate']), job['gate'])
+        # Not started in time, it asks the watcher for a box race and leaves its job queued at Loom (#04gypqe).
+        self.assertEqual((self.root / 'watch' / 'race-wanted' / sha).read_text().strip(), 'codex/feature')
+        self.assertFalse((self.root / 'jobs' / (sha + '.cancel')).exists())
         conflict = self.candidate('codex/conflict', {'setup.go': 'package setup // budget 120 s\n'})
         result, job = self.pool(conflict, 'codex/conflict')
         self.assertIsNone(job, 'a conflict spent pool time')

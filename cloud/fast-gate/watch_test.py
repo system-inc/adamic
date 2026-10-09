@@ -760,6 +760,37 @@ class WatchTests(unittest.TestCase):
         (w.state / 'pool-void').write_text(w.tips[0][1] + '\n')
         w.wait(lambda: 'preempted codex/side' in w.read('output'))
 
+    def race(self):
+        """A side tip on the pool whose job Loom hasn't started asks for a box race, as cloud/pool-job.sh does at 600 s."""
+        w = Watcher(1, mode='hold', slots='box0 S\npool P\n')
+        self.addCleanup(w.close)
+        (w.state / 'pool-side').touch()
+        w.put('initial', 'pass')
+        w.wait(lambda: 'codex/test0 ' in w.read('pool-starts'))
+        sha = w.tips[0][1]
+        (w.state / 'race-wanted' / sha).write_text('codex/test0\n')
+        w.wait(lambda: 'racing codex/test0 %s' % sha in w.read('output'))
+        w.wait(lambda: 'codex/test0 %s' % sha in w.read('starts'))
+        self.assertEqual(w.read('pool-starts').count('codex/test0 '), 1, 'the pool job was moved, not raced')
+        return w, sha
+
+    def test_a_box_that_answers_the_race_first_stops_the_pool_job(self):
+        # #04gypqe (@system_adamic, Oct 9: never cancel a run to move it; race it).
+        w, sha = self.race()
+        w.put('mode', 'pass')
+        w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
+        w.wait(lambda: 'lost the race' in w.read('output'))
+        self.assertIn("the race's other route (box0) answered first", (w.root / 'loom-jobs' / (sha + '.cancel')).read_text())
+        self.assertFalse((w.state / 'racing' / sha).exists())
+
+    def test_a_pool_that_answers_the_race_first_stops_the_box_run_and_its_partial_red_is_no_verdict(self):
+        w, sha = self.race()
+        w.put('pool-mode', 'green')
+        w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
+        w.wait(lambda: 'ended codex/test0 %s on box0: it lost the race' % sha in w.read('output'))
+        self.assertNotIn('done codex/test0: red', w.read('output'))
+        self.assertTrue(w.read('stops').startswith('box0 '))
+
     def test_a_pool_green_reaches_its_owner_and_promotes_no_tools(self):
         w = Watcher(1, canaryBox='box1', mode='hold', slots='pool P\n')
         self.addCleanup(w.close)

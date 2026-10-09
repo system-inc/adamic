@@ -254,6 +254,36 @@ reapStopped() {
     echo "$(date -u +%H:%M:%S) reaped a stopped gate's waiter ${pid} ($(cut -d' ' -f1,2 "${state}/running/${pid}" 2> /dev/null)): alive $((now - since)) s after its stop"
   done
 }
+# A pool job Loom hasn't started in ten minutes asks for a box to race it (cloud/pool-job.sh writes race-wanted/<sha>, the
+# branch inside; #04gypqe): the tip is queued for the boxes beside its pool job, and racing/<sha> keeps it off the pool
+# and past the gated check until one route answers green or red. That answer ends the race (endRace).
+startRaces() {
+  local request sha branch
+  for request in "${state}"/race-wanted/*; do
+    [ -f "${request}" ] || continue
+    sha=$(basename "${request}")
+    branch=$(cat "${request}")
+    mv "${request}" "${state}/racing/${sha}"
+    echo "$(classify "${branch}" "${sha}") $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
+    echo "$(date -u +%H:%M:%S) racing ${branch} ${sha}: the pool hasn't started it, so a box races its pool job"
+  done
+}
+# The first green or red of a raced tip ends its race: the other route is stopped (marked lost, so its partial record is
+# no verdict of its own) and a box run still queued leaves the queue.
+endRace() {
+  local sha=$1 winner=$2 file pid runningBranch runningSha runningSlot runningBox rest
+  rm -f "${state}/racing/${sha}"
+  grep -v " ${sha}\$" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    read -r runningBranch runningSha runningSlot runningBox rest < "${file}"
+    [ "${runningSha}" = "${sha}" ] || continue
+    touch "${state}/race-lost/${pid}"
+    stopGate "${pid}" "${runningBranch}" "${sha}" "${runningBox:-threadripper}" "the race's other route (${winner}) answered first" &&
+      echo "$(date -u +%H:%M:%S) stopped ${runningBranch} ${sha} on ${runningBox:-threadripper}: ${winner} answered the race first"
+  done
+}
 # Integration's skip list names tips that won't land (superseded candidates), and skip-globs whole families: one
 # still running there is stopped, so its slot goes to work that can (integration asked twice by hand, Oct 8; three
 # codex/coverage-* gates held pool slots for 75 minutes after their glob went in, Oct 9 05:54Z).
@@ -367,6 +397,9 @@ pruneQueue() {
   [ -s "${state}/queue" ] || return 0
   touch "${state}/seen" "${state}/gated" "${state}/skip"
   local verdict line class queued branch sha glob kept=${state}/queue.pruned skipped
+  # A raced tip is gated (its pool job runs) and queued for its box run at once.
+  ls "${state}/racing" > "${state}/racing.list"
+  grep -vxF -f "${state}/racing.list" "${state}/gated" > "${state}/gated.prune"
   awk 'FILENAME == ARGV[1] { seen[$1 " " $2] = 1; next }
        FILENAME == ARGV[2] { gated[$1] = 1; next }
        FILENAME == ARGV[3] { skip[$0] = 1; next }
@@ -374,7 +407,7 @@ pruneQueue() {
          if ($4 in gated) print "gated\t" $0
          else if (key in skip) print "skip\t" $0
          else if (!(key in seen)) print "superseded\t" $0
-         else print "keep\t" $0 }' "${state}/seen" "${state}/gated" "${state}/skip" "${state}/queue" > "${state}/queue.verdicts"
+         else print "keep\t" $0 }' "${state}/seen" "${state}/gated.prune" "${state}/skip" "${state}/queue" > "${state}/queue.verdicts"
   : > "${kept}"
   while IFS=$'\t' read -r verdict line; do
     read -r class queued branch sha <<< "${line}"
@@ -628,7 +661,7 @@ poolTip() {
   # A landing's pool job runs the fast gate's whole plan: Go tests, then run.py --phases build,vet,smoke,census as a
   # second record (Loom 77bca09, Oct 9 05:05Z), which push-main takes beside the first (--fast-gate, --also-gate).
   [[ ${branch} == codex/* || ${branch} == devtools/* || ${branch} == cloud/land-* ]] || isFront "${branch}" || return 1
-  ! grep -qx "${sha}" "${state}/pool-void" 2> /dev/null
+  ! grep -qx "${sha}" "${state}/pool-void" 2> /dev/null && [ ! -f "${state}/racing/${sha}" ]
 }
 # A queued front tip bound for the pool reserves and drains no box (#7bjfzte, @system_adamic Oct 9 09:21Z): Server and a
 # second star box were held, their work preempted, while the star itself then ran on the pool.
@@ -794,7 +827,7 @@ clearStaleSlotLock start
 watchStart=$(date -u +%s)
 touch "${state}/gated" "${state}/queue"
 # Running gates are pid files (macOS bash 3.2 has no associative arrays).
-mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red" "${state}/preempted"
+mkdir -p "${state}/running" "${state}/logs" "${state}/reserved-running" "${state}/running-started" "${state}/stopped-running" "${state}/early-red" "${state}/preempted" "${state}/race-wanted" "${state}/racing" "${state}/race-lost"
 echo "$(date -u +%H:%M:%S) watching codex/*, area/*, devtools/*, cloud/land-* (tools $(git -C "${here}" rev-parse --short HEAD))"
 toolsHead=$(git -C "${here}" rev-parse HEAD)
 canaryToken=${toolsHead}:$$
@@ -856,6 +889,7 @@ while true; do
   stopSkipped
   stopSuperseded
   reapStopped
+  startRaces
   publishEarlyRed
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
@@ -865,6 +899,11 @@ while true; do
     [ -f "${state}/preempted/$(basename "${file}")" ] && preempted=yes
     rm -f "${state}/reserved-running/$(basename "${file}")" "${state}/running-started/$(basename "${file}")" "${state}/stopped-running/$(basename "${file}")" "${state}/early-red/$(basename "${file}")" "${state}/preempted/$(basename "${file}")"
     read -r branch sha class box original testedHead gateLog < "${file}"
+    if [ -f "${state}/race-lost/$(basename "${file}")" ]; then
+      rm -f "${state}/race-lost/$(basename "${file}")" "${file}"
+      echo "$(date -u +%H:%M:%S) ended ${branch} ${sha} on ${box:-threadripper}: it lost the race, so its record is no verdict"
+      continue
+    fi
     # Merge claims are not gate verdicts: a crashed dispatcher/SSH must never queue area-merge/*.
     if [[ ${branch} == area-merge/* ]]; then rm "${file}"; continue; fi
     entry=$(cat "${file}")
@@ -880,6 +919,14 @@ while true; do
       continue
     fi
     cause=$(voidCause "${gateLog}")
+    if [ -f "${state}/racing/${sha}" ] && [ "${stoppedOnPurpose}" = no ]; then
+      if [ -z "${cause}" ]; then
+        endRace "${sha}" "${box:-threadripper}"
+      elif [ "${box}" = pool ]; then
+        echo "$(date -u +%H:%M:%S) pool void ${branch} ${sha}: ${cause}; its box race goes on"
+        continue
+      fi
+    fi
     if [ "${box}" = pool ] && [ -n "${cause}" ] && [ "${stoppedOnPurpose}" = no ]; then
       # A first void goes back to the pool (#7bjfzte: tonight's voids were Loom's faults, each fixed within minutes); a
       # second sends the tip to the boxes.
@@ -1017,7 +1064,7 @@ while true; do
     grep -vF " ${queued} ${branch} ${sha}" "${state}/queue" > "${state}/queue.tmp"; mv "${state}/queue.tmp" "${state}/queue"
     awk -v q="${queued}" -v b="${branch}" -v s="${sha}" '!($2 == q && $4 == b && $5 == s)' "${state}/queue.ranked" > "${state}/queue.ranked.tmp"
     mv "${state}/queue.ranked.tmp" "${state}/queue.ranked"
-    grep -qx "${sha}" "${state}/gated" && continue
+    grep -qx "${sha}" "${state}/gated" && [ ! -f "${state}/racing/${sha}" ] && continue
     # The skip file ("branch sha" per line) takes a tip out by hand: a stale landing candidate, say.
     grep -qxF "${branch} ${sha}" "${state}/skip" 2>/dev/null && { echo "$(date -u +%H:%M:%S) skipped by hand ${branch} ${sha}"; continue; }
     # ${state}/skip-globs takes a whole family out (a glob per line, then why): codex/views-* while every tip
