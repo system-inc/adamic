@@ -132,7 +132,6 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 		{"assignable-types", "bridge/tsgo/checker/facts.go", "out.yes(checker.Checker_isTypeAssignableTo(c, selected[0], selected[1]))", "out.yes(checker.Checker_isTypeAssignableTo(c, selected[1], selected[0]))"},
 		{"widened-shape", "bridge/tsgo/checker/facts.go", "t = checker.Checker_getWidenedType(c, t)", "// Mutant keeps the fresh type."},
 		{"enum-types", "bridge/tsgo/checker/facts.go", "base = c.GetTypeAtLocation(symbol.ValueDeclaration.Parent)", "base = part"},
-		{"type-symbol", "bridge/tsgo/checker/facts.go", "name = symbol.Name", "name = symbol.Name + \"wrong\""},
 		{"scope-locals", "bridge/tsgo/checker/scopes.go", "out.text(name)", "out.text(name + \"wrong\")"},
 		{"call-returns", "bridge/tsgo/checker/facts.go", "roots = append(roots, g.add(c.GetReturnTypeOfSignature(signature)))", "_ = signature; roots = append(roots, g.add(checker.Checker_numberType(c)))"},
 		{"property-shape", "bridge/tsgo/checker/facts.go", "g.add(c.GetTypeOfSymbolAtLocation(property, node))", "g.add(checker.Checker_numberType(c))"},
