@@ -49,6 +49,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return kind, true
 	}
 	flags := proven.Flags()
+	if flags == checker.TypeFlagsNull && l.result.JSONTaggedNull {
+		return ir.Union, true
+	}
 	if flags&checker.TypeFlagsObject != 0 && (l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 		for _, element := range l.typeArguments(proven) {
 			if element.Flags()&checker.TypeFlagsAny != 0 {
@@ -509,6 +512,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	}
 	switch node.Kind {
 	case ast.KindNullKeyword:
+		if l.result.JSONTaggedNull {
+			return ir.Box{Value: ir.Null{}}, nil
+		}
 		return ir.Null{}, nil
 	case ast.KindRegularExpressionLiteral:
 		return l.regexConstant(node)
@@ -569,6 +575,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)
+		if operand.Type() == ir.Union {
+			null = false
+		} // Tagged NULL is undefined; null has its own tag.
 		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
 			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:

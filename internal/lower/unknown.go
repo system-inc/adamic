@@ -88,10 +88,11 @@ func (l *lowering) dynamicProperty(node *ast.Node, object ir.Expression, name st
 	case "constructor", "__proto__", "toString", "valueOf", "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable", "toLocaleString", "__defineGetter__", "__defineSetter__", "__lookupGetter__", "__lookupSetter__", "map", "filter", "push", "pop", "slice", "join", "entries", "values", "keys", "at", "concat", "copyWithin", "fill", "find", "findIndex", "findLast", "findLastIndex", "lastIndexOf", "reverse", "shift", "unshift", "sort", "splice", "includes", "indexOf", "forEach", "flat", "flatMap", "every", "some", "reduce", "reduceRight", "toReversed", "toSorted", "toSpliced", "with":
 		return nil, l.notYet(node, "a dynamic prototype property value (intrinsic identity and ToPrimitive)")
 	}
-	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Flags()&checker.TypeFlagsAny != 0 {
+	optional := node.Kind == ast.KindPropertyAccessExpression && node.AsPropertyAccessExpression().QuestionDotToken != nil
+	if !optional && node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Flags()&checker.TypeFlagsAny != 0 {
 		object = l.checkedAnyPropertyReceiver(node.AsPropertyAccessExpression().Expression, object)
 	}
-	value := ir.Expression(ir.DynamicProperty{Object: object, Name: name})
+	value := ir.Expression(ir.DynamicProperty{Object: object, Name: name, Optional: optional})
 	of, err := l.typeOf(node)
 	if err != nil {
 		return nil, err
@@ -184,7 +185,7 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 		}
 	}
 	for _, field := range l.checker.GetPropertiesOfType(present) {
-		if l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+		if l.includesNull(l.checker.GetTypeOfSymbol(field)) && !l.result.JSONTaggedNull {
 			return l.notYet(node, "an object with a nullable field viewed as unknown or object (null and undefined slot tags)")
 		}
 	}
@@ -199,6 +200,10 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 
 // A key that could denote a getter or a prototype method cannot yet be read dynamically.
 func (l *lowering) dynamicReadHazard(name string) bool {
+	return l.propertyReadHazard(name, false)
+}
+
+func (l *lowering) propertyReadHazard(name string, taggedNull bool) bool {
 	if l.accessorNames[name] {
 		return true
 	}
@@ -220,7 +225,7 @@ func (l *lowering) dynamicReadHazard(name string) bool {
 			nullable = true
 		}
 		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindNewExpression {
-			if field := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(node), name); field != nil && l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+			if field := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(node), name); field != nil && l.includesNull(l.checker.GetTypeOfSymbol(field)) && !l.result.JSONTaggedNull && !taggedNull {
 				nullable = true
 			}
 		}

@@ -9,8 +9,15 @@ const checkedJSONRuntime = `
 const adamicCheckJSON = (value, contract, path, terminal = true, depth = 0) => {
  const found = value === null ? 'null' : Array.isArray(value) ? 'array' : adamicTypeOf(value);
  const fail = (actual = found) => { if (terminal) panic('checked any: ' + path + ' needs ' + contract.Name + ', found ' + actual); return false; };
+ if (depth > 64) return fail('non-JSON recursion');
+ if (contract.Kind === 'ref') return adamicCheckJSON(value,contract.Element,path,terminal,depth);
  if (contract.Kind === 'union') {
   for (const alternative of contract.Alternatives) if (adamicCheckJSON(value, alternative, path, false, depth)) return true;
+  if(terminal) {
+   const matches=(c,d=0)=>d<=64 && (c.Kind==='ref'?matches(c.Element,d+1):c.Kind==='union'?c.Alternatives.some(a=>matches(a,d+1)):c.Kind.replace('_literal','')===found);
+   const candidates=contract.Alternatives.filter(c=>matches(c));
+   if(candidates.length===1) return adamicCheckJSON(value,candidates[0],path,true,depth);
+  }
   return fail();
  }
  const domain = contract.Kind === 'json';
@@ -19,7 +26,7 @@ const adamicCheckJSON = (value, contract, path, terminal = true, depth = 0) => {
  if (found === 'number' && !Number.isFinite(value)) return fail('non-JSON number');
  if (found === 'object') {
   if (Object.getPrototypeOf(value) !== Object.prototype && Object.getPrototypeOf(value) !== null) return fail('class object');
-  if(domain) for(const key of Object.keys(value)) if(!adamicCheckJSON(value[key],contract,path+'.'+key,terminal,depth+1)) return false;
+  if(domain || contract.Element) for(const key of Object.keys(value)) if(!adamicCheckJSON(value[key],domain ? contract : contract.Element,path+'.'+key,terminal,depth+1)) return false;
   for (const field of contract.Fields ?? []) {
    const child = value[field.Name];
    if (field.Optional && child === undefined) continue;
@@ -34,12 +41,44 @@ const adamicCheckJSON = (value, contract, path, terminal = true, depth = 0) => {
 const adamicCheckedJSON = (value, contract, path) => { adamicCheckJSON(value, {Kind:'json',Name:'JSON value | undefined'}, path); adamicCheckJSON(value, contract, path); return value; };
 `
 
-func checkedJSONSchema(c *ir.JSONContract) string {
-	data, err := json.Marshal(c)
+func checkedJSONSchema(root *ir.JSONContract) string {
+	nodes := ir.JSONContractGraph(root)
+	definitions := map[int]*ir.JSONContract{}
+	for _, c := range nodes {
+		if c.Kind != "ref" {
+			definitions[c.ID] = c
+		}
+	}
+	ids := map[*ir.JSONContract]int{}
+	for i, c := range nodes {
+		ids[c] = i
+	}
+	var wire []map[string]any
+	for _, c := range nodes {
+		item := map[string]any{"Kind": c.Kind, "Name": c.Name, "LiteralText": c.LiteralText, "LiteralNumber": c.LiteralNumber, "LiteralBoolean": c.LiteralBoolean}
+		if c.Kind == "ref" {
+			item["ElementID"] = ids[definitions[c.Reference]]
+		}
+		if c.Element != nil {
+			item["ElementID"] = ids[c.Element]
+		}
+		var fields []map[string]any
+		for _, f := range c.Fields {
+			fields = append(fields, map[string]any{"Name": f.Name, "Optional": f.Optional, "ContractID": ids[f.Contract]})
+		}
+		item["Fields"] = fields
+		var alternatives []int
+		for _, a := range c.Alternatives {
+			alternatives = append(alternatives, ids[a])
+		}
+		item["AlternativeIDs"] = alternatives
+		wire = append(wire, item)
+	}
+	data, err := json.Marshal(wire)
 	if err != nil {
 		panic(err)
 	}
-	return string(data)
+	return "(()=>{const nodes=" + string(data) + ";for(const node of nodes){if(node.ElementID!==undefined)node.Element=nodes[node.ElementID];for(const field of node.Fields??[])field.Contract=nodes[field.ContractID];node.Alternatives=(node.AlternativeIDs??[]).map(id=>nodes[id]);}return nodes[0];})()"
 }
 func (e *emitter) checkedJSON(v ir.CheckedJSON) string {
 	return "adamicCheckedJSON(" + e.value(v.Value) + ", " + checkedJSONSchema(v.Contract) + ", " + quote(v.Path) + ")"

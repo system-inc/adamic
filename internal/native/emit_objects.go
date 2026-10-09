@@ -422,7 +422,7 @@ func (e *emitter) cache() string {
 
 // Programs without reflection keep their original layouts and allocation code.
 func (e *emitter) dynamicProperties() bool {
-	if len(e.program.JSONCheckedFields) != 0 || e.program.JSONCheckedArrays {
+	if len(e.program.JSONCheckedFields) != 0 || e.program.JSONCheckedArrays || e.program.JSONCheckedDictionaries {
 		return true
 	}
 	found := false

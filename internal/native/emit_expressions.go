@@ -20,8 +20,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		value := e.value(expression.Object)
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_has_property(%s, %s)", value, cString(expression.Name)))
 	case ir.DynamicProperty:
-		value := e.value(expression.Object)
-		return e.own(ir.Union, fmt.Sprintf("adamic_dynamic_property(%s, %s)", value, cString(expression.Name)))
+		return e.dynamicProperty(expression)
 	case ir.NodeFSFile:
 		return e.nodeFSFile(expression)
 	case ir.NodeBufferCall:

@@ -132,7 +132,7 @@ func checkedAnyProgram(t *testing.T, name string) (*ir.Program, string) {
 func checkedAnyCounts(t *testing.T) []string {
 	t.Helper()
 	var rows []string
-	for _, name := range append(append([]string{}, checkedAnyFixtures...), checkedJSONFixtures...) {
+	for _, name := range append(append([]string{}, checkedAnyFixtures...), append(append([]string{}, checkedJSONFixtures...), checkedJSONNextFixtures...)...) {
 		program, _ := checkedAnyProgram(t, name)
 		binary := filepath.Join(t.TempDir(), "counted")
 		if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {

@@ -1,0 +1,7 @@
+Each manifest entry names an independently run source mutant, its focused selector and its assertion-failure log. All 13 patches apply to the delivered source with git apply --check. Apply one patch at a time in an isolated checkout of compiler/checked-any, source /workspace/adamic-tools/env.sh, and run:
+
+    go test ./<package> -run '<selector>' -count=1 -v > /tmp/checked-any-mutant.log 2>&1
+
+The expected result is a failed behavioral or precise-refusal assertion, never a compiler build failure. Restore that checkout before applying the next patch. Runtime C patches must change the actual embedded source; a Go overlay does not replace the embedded C file. The other mutants were run with independent Go overlays whose contents are equivalent to their retained patches.
+
+Six additional point-of-use mutants run inside TestCheckedJSONNext, one at a time after each production misfit passes. Each removes exactly one CheckedJSON return guard and checks that JavaScript and sanitized native both match source Node's passed output and exit 0. Production observations instead require the original exact exit 70 boundary. These witnesses have no later typed read. The finite depth witness is used for depth-removal mutants so a missing bound can finish normally instead of overflowing the stack. Actual cyclic data is separately pinned by TestCheckedJSONCycleStopsAtDepth in internal/native and internal/javascript.

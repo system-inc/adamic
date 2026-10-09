@@ -733,6 +733,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.CheckedJSON:
 		return e.checkedJSON(expression)
 	case ir.DynamicProperty:
+		if expression.Optional {
+			return "(" + e.value(expression.Object) + ")?.[" + quote(expression.Name) + "]"
+		}
 		return "(" + e.value(expression.Object) + ")[" + quote(expression.Name) + "]"
 	case ir.Null:
 		return "null"

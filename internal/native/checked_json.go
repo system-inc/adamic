@@ -6,35 +6,63 @@ import (
 	"strings"
 )
 
-func (e *emitter) jsonContract(c *ir.JSONContract) string {
-	if c == nil {
+func (e *emitter) jsonContract(root *ir.JSONContract) string {
+	if root == nil {
 		return "NULL"
 	}
 	e.declarations = append(e.declarations, `#include "checked_json.h"`)
-	element := e.jsonContract(c.Element)
-	var fields, alternatives []string
-	for _, field := range c.Fields {
-		fields = append(fields, fmt.Sprintf("{%s, %t, %s}", cString(field.Name), field.Optional, e.jsonContract(field.Contract)))
-	}
-	for _, part := range c.Alternatives {
-		alternatives = append(alternatives, e.jsonContract(part))
+	nodes := ir.JSONContractGraph(root)
+	definitions := map[int]*ir.JSONContract{}
+	for _, c := range nodes {
+		if c.Kind != "ref" {
+			definitions[c.ID] = c
+		}
 	}
 	name := e.temporary() + "_json_contract"
-	list, choices := "NULL", "NULL"
-	if len(fields) != 0 {
-		list = name + "_fields"
-		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_contract_field %s[] = {%s};", list, strings.Join(fields, ", ")))
+	ids := map[*ir.JSONContract]int{}
+	for i, c := range nodes {
+		ids[c] = i
 	}
-	if len(alternatives) != 0 {
-		choices = name + "_alternatives"
-		e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_contract *const %s[] = {%s};", choices, strings.Join(alternatives, ", ")))
+	pointer := func(c *ir.JSONContract) string {
+		if c == nil {
+			return "NULL"
+		}
+		return fmt.Sprintf("&%s[%d]", name, ids[c])
 	}
-	count := len(fields)
-	if len(alternatives) != 0 {
-		count = len(alternatives)
+	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_contract %s[%d];", name, len(nodes)))
+	var entries []string
+	for i, c := range nodes {
+		var fields, alternatives []string
+		for _, f := range c.Fields {
+			fields = append(fields, fmt.Sprintf("{%s, %t, %s}", cString(f.Name), f.Optional, pointer(f.Contract)))
+		}
+		for _, a := range c.Alternatives {
+			alternatives = append(alternatives, pointer(a))
+		}
+		list, choices := "NULL", "NULL"
+		if len(fields) != 0 {
+			list = fmt.Sprintf("%s_%d_fields", name, i)
+			e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_contract_field %s[] = {%s};", list, strings.Join(fields, ", ")))
+		}
+		if len(alternatives) != 0 {
+			choices = fmt.Sprintf("%s_%d_alternatives", name, i)
+			e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_contract *const %s[] = {%s};", choices, strings.Join(alternatives, ", ")))
+		}
+		count := len(fields)
+		if len(alternatives) != 0 {
+			count = len(alternatives)
+		}
+		element := c.Element
+		if c.Kind == "ref" {
+			element = definitions[c.Reference]
+			if element == nil {
+				panic("missing JSON contract reference")
+			}
+		}
+		entries = append(entries, fmt.Sprintf("{%s, %s, %s, %d, %s, %s, %s, %d, %s, %t}", cString(c.Kind), cString(c.Name), pointer(element), count, list, choices, cString(c.LiteralText), len(c.LiteralText), cNumber(c.LiteralNumber), c.LiteralBoolean))
 	}
-	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_contract %s = {%s, %s, %s, %d, %s, %s, %s, %d, %s, %t};", name, cString(c.Kind), cString(c.Name), element, count, list, choices, cString(c.LiteralText), len(c.LiteralText), cNumber(c.LiteralNumber), c.LiteralBoolean))
-	return "&" + name
+	e.declarations = append(e.declarations, fmt.Sprintf("static const adamic_json_contract %s[%d] = {%s};", name, len(nodes), strings.Join(entries, ", ")))
+	return pointer(root)
 }
 func (e *emitter) checkedJSON(v ir.CheckedJSON) string {
 	value := e.value(v.Value)
@@ -92,4 +120,14 @@ func (e *emitter) checkedJSONArrayIndex(v ir.ArrayIndex) string {
 	schema := e.jsonContract(runtimeJSONType(v.Type()))
 	e.line("adamic_check_json(%s, %s, \"array element\");", value, schema)
 	return e.jsonCheckedValue(value, v.Type())
+}
+
+// Optional tagged receivers preserve both nullish tags and evaluate once.
+func (e *emitter) dynamicProperty(v ir.DynamicProperty) string {
+	value := e.value(v.Object)
+	read := fmt.Sprintf("adamic_dynamic_property(%s, %s)", value, cString(v.Name))
+	if v.Optional {
+		read = fmt.Sprintf("(%s==NULL || %s==&adamic_null ? NULL : %s)", value, value, read)
+	}
+	return e.own(ir.Union, read)
 }

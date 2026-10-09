@@ -45,17 +45,32 @@ static _Noreturn void mismatch(const char *path, const char *needed, const char 
  adamic_panic(message, (size_t)length);
 }
 
+// Select a unique representation alternative to report its failing child path.
+static bool matches_tag(const adamic_json_contract *c, const char *kind, size_t depth) {
+ if (depth > 64) return false;
+ if (strcmp(c->kind,"ref")==0) return matches_tag(c->element,kind,depth+1);
+ if (strcmp(c->kind,"union")==0) { for(size_t i=0;i<c->count;i++) if(matches_tag(c->alternatives[i],kind,depth+1)) return true; return false; }
+ return strcmp(c->kind,kind)==0 || (strstr(c->kind,"_literal")!=NULL && strncmp(c->kind,kind,strlen(kind))==0);
+}
+
 // A dry pass selects union alternatives without changing source diagnostics.
 static bool inspect(adamic_heap *value, const adamic_json_contract *contract, const char *path, size_t depth, bool terminal) {
  const char *kind = actual(value);
  bool domain = strcmp(contract->kind, "json") == 0;
  bool literal = strstr(contract->kind, "_literal") != NULL;
  bool same = literal ? strncmp(contract->kind, kind, strlen(kind)) == 0 : domain ? (strcmp(kind,"non-JSON value") != 0 && strcmp(kind,"function") != 0) : strcmp(kind, contract->kind) == 0;
+ if (depth > 64) { if (terminal) mismatch(path, contract->name, "non-JSON recursion"); return false; }
+ if (strcmp(contract->kind, "ref") == 0) return inspect(value,contract->element,path,depth,terminal);
  if (strcmp(contract->kind, "union") == 0) {
   for (size_t i = 0; i < contract->count; i++) {
    if (inspect(value, contract->alternatives[i], path, depth, false)) return true;
   }
-  if (terminal) mismatch(path, contract->name, kind);
+  if (terminal) {
+   const adamic_json_contract *candidate=NULL; size_t matches=0;
+   for(size_t i=0;i<contract->count;i++) if(matches_tag(contract->alternatives[i],kind,0)) {candidate=contract->alternatives[i];matches++;}
+   if(matches==1) return inspect(value,candidate,path,depth,true);
+   mismatch(path,contract->name,kind);
+  }
   return false;
  }
  if (!same || depth > 64) {
@@ -75,18 +90,35 @@ static bool inspect(adamic_heap *value, const adamic_json_contract *contract, co
  }
  if (strcmp(kind, "object") == 0) {
   const adamic_object *object = (const adamic_object *)value;
+  if (adamic_record_is(object)) {
+   if (terminal) mismatch(path, contract->name, "record object (awaits compiler/records-maplike)");
+   return false;
+  }
   if (object->class != NULL) {
    if (terminal) mismatch(path, contract->name, "class object");
    return false;
   }
-  if (domain) {
-   for (size_t i = 0; i < object->shape->count; i++) {
-    const char *name = object->shape->names[i];
+  if (domain || contract->element != NULL) {
+   // Object.keys sorts array-index keys before ordinary strings. Ordinary
+   // fixed shapes already have insertion order; only numeric names need a snapshot.
+   bool numeric=false;
+   for(size_t i=0;i<object->shape->count;i++) if(object->shape->names[i][0]>='0' && object->shape->names[i][0]<='9') numeric=true;
+   adamic_array *keys=numeric ? adamic_object_keys(object) : NULL;
+   size_t count=keys==NULL ? object->shape->count : keys->length;
+   for (size_t at = 0; at < count; at++) {
+    size_t i=at;
+    if(keys!=NULL) {
+     const adamic_string *key=keys->elements[at].reference;
+     i=0;while(i<object->shape->count && (strlen(object->shape->names[i])!=key->length || memcmp(object->shape->names[i],key->bytes,key->length)!=0))i++;
+    }
+    if(i==object->shape->count || !adamic_object_initialized(object)[i]) continue; // Absent slots are not own values.
+    const char *name=object->shape->names[i];
     char *dot=joined(".", name), *child_path=joined(path,dot); free(dot);
     adamic_heap *child = adamic_object_initialized(object)[i] ? adamic_dynamic_property(value,name) : NULL;
-    bool valid=inspect(child, contract, child_path, depth+1, terminal);
-    adamic_release(child);free(child_path);if(!valid)return false;
+    bool valid=inspect(child, domain ? contract : contract->element, child_path, depth+1, terminal);
+    adamic_release(child);free(child_path);if(!valid){if(keys!=NULL)adamic_release(keys);return false;}
    }
+   if(keys!=NULL)adamic_release(keys);
   }
   for (size_t i = 0; i < contract->count; i++) {
    const adamic_json_contract_field *field = &contract->fields[i];

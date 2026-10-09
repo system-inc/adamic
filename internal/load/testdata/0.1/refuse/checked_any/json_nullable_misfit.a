@@ -1,0 +1,5 @@
+interface Config { option: string | null | undefined; }
+function convert(raw: any): Config { return raw; }
+const raw: any = { option: 14 };
+convert(raw);
+console.log("passed");
