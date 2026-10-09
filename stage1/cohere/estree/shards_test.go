@@ -2,6 +2,7 @@ package estree
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
@@ -11,6 +12,7 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 )
@@ -292,7 +294,18 @@ func proveMutantShards(t *testing.T, mutations []portMutation, shards []mutantSh
 					}
 				}
 			}
-			command := exec.Command(executable, "-test.run=^"+parent+"_[0-9]{3}$", "-test.v", "-test.count=1", "-test.timeout=75s")
+			ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+			defer cancel()
+			command := exec.CommandContext(ctx, executable, "-test.run=^"+parent+"_[0-9]{3}$", "-test.v", "-test.count=1", "-test.timeout=75s")
+			command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+			command.Cancel = func() error {
+				if err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL); err == syscall.ESRCH {
+					return os.ErrProcessDone
+				} else {
+					return err
+				}
+			}
+			command.WaitDelay = time.Second
 			command.Env = append(os.Environ(), fmt.Sprintf("ADAMIC_ESTREE_PLANTED_MUTANT=%d", m))
 			output, err := command.CombinedOutput()
 			exit, ok := err.(*exec.ExitError)
