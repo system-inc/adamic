@@ -1,0 +1,30 @@
+{
+  "starting_commit": "bfe0553300773c0b37db2c10df97adeb909705f8",
+  "D1": {
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/typeaware-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run '^(TestFactsDecoderGuards|TestSixRuleAgreementAndMutants_0(0[0-9]|1[0-5]|33))$'",
+    "failed": [
+      "TestFactsDecoderGuards"
+    ],
+    "passed": [
+      "TestSixRuleAgreementAndMutants_000",
+      "TestSixRuleAgreementAndMutants_001",
+      "TestSixRuleAgreementAndMutants_002",
+      "TestSixRuleAgreementAndMutants_003",
+      "TestSixRuleAgreementAndMutants_004",
+      "TestSixRuleAgreementAndMutants_005",
+      "TestSixRuleAgreementAndMutants_006",
+      "TestSixRuleAgreementAndMutants_007",
+      "TestSixRuleAgreementAndMutants_008",
+      "TestSixRuleAgreementAndMutants_009",
+      "TestSixRuleAgreementAndMutants_010",
+      "TestSixRuleAgreementAndMutants_011",
+      "TestSixRuleAgreementAndMutants_012",
+      "TestSixRuleAgreementAndMutants_013",
+      "TestSixRuleAgreementAndMutants_014",
+      "TestSixRuleAgreementAndMutants_015",
+      "TestSixRuleAgreementAndMutants_033"
+    ],
+    "outside_matrix": "unknown",
+    "elapsed": 77.127
+  }
+}

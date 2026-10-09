@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/typeaware/frames.ts b/stage1/cohere/typeaware/frames.ts
+index dd89eb71..0c278bb8 100644
+--- a/stage1/cohere/typeaware/frames.ts
++++ b/stage1/cohere/typeaware/frames.ts
+@@ -3,7 +3,7 @@ import { panic } from 'adamic';
+ function decimal(text: string, first: number, last: number, message: string): number {
+     const negative = text.charCodeAt(first) === 45;
+     const start = first + (negative ? 1 : 0);
+-    if(start >= last || (text.charCodeAt(start) === 48 && (negative || start + 1 < last))) {
++    if(start >= last || (text.charCodeAt(start) === 48 && negative)) {
+         panic(message);
+     }
+     let value = 0;
