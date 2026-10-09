@@ -1,0 +1,50 @@
+[
+  {
+    "id": "M1",
+    "file": "stage3/census/latent/statecopy/main.go",
+    "line": 39,
+    "old": "panic(\"state copy: mutable named container \" + t.Name + \" requires an explicit copier\")",
+    "change": "return value",
+    "menu": "return early in named-container rejection"
+  },
+  {
+    "id": "M2",
+    "file": "stage3/census/latent/statecopy/main.go",
+    "line": 64,
+    "old": "panic(\"state copy: foreign or unrecognized pointer \" + printed(t) + \" requires an explicit copier\")",
+    "change": "return value",
+    "menu": "return early in foreign-pointer rejection"
+  },
+  {
+    "id": "M3",
+    "file": "stage3/census/latent/statecopy/main.go",
+    "line": 90,
+    "old": "if strings.HasSuffix(path, \"_test.go\") {",
+    "change": "if !strings.HasSuffix(path, \"_test.go\") {",
+    "menu": "flip input-file exclusion condition"
+  },
+  {
+    "id": "M4",
+    "file": "stage3/census/latent/statecopy/main.go",
+    "line": 159,
+    "old": "os.WriteFile(os.Args[3], text, 0600)",
+    "change": "os.WriteFile(os.Args[3], text, 0644)",
+    "menu": "change output permission constant"
+  },
+  {
+    "id": "M5",
+    "file": "stage3/census/latent/statecopy/main.go",
+    "line": 27,
+    "old": "return b.String()",
+    "change": "return \"\"",
+    "menu": "change printed type result to empty string"
+  },
+  {
+    "id": "M6",
+    "file": "stage3/census/latent/statecopy/main.go",
+    "line": 81,
+    "old": "if len(os.Args) != 4 {",
+    "change": "if len(os.Args) == 4 {",
+    "menu": "flip argument-count condition"
+  }
+]

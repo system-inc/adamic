@@ -1,0 +1,68 @@
+[
+  {
+    "test": "TestUnknownMutableContainerFailsLoudly",
+    "package": "stage3/census/latent/statecopy",
+    "file": "stage3/census/latent/statecopy/main_test.go:11",
+    "seconds": 0.151,
+    "oracle": "Self-written diagnostic substring, nonzero generator status and no published output. M3 and M6 demonstrate rejection of a different failure with the same nonzero status.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M3",
+      "M6"
+    ],
+    "unique_kills": [
+      "M1"
+    ],
+    "last_proven_fail": "M1: main_test.go:34: unknown state shape survived: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M1 timeout 120 go test -json -count=1 -timeout 90s ./stage3/census/latent/statecopy/ -run . > M1.log 2>&1; main_test.go:34: unknown state shape survived: <nil>",
+    "timing_samples": [
+      0.148,
+      0.151,
+      0.215
+    ]
+  },
+  {
+    "test": "TestUnknownForeignPointerFailsLoudly",
+    "package": "stage3/census/latent/statecopy",
+    "file": "stage3/census/latent/statecopy/main_test.go:41",
+    "seconds": 0.165,
+    "oracle": "Self-written diagnostic substring, nonzero generator status and no published output. M3 and M6 demonstrate rejection of a different failure with the same nonzero status.",
+    "oracle_kind": "self",
+    "kills": [
+      "M2",
+      "M3",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [
+      "M2",
+      "M5"
+    ],
+    "last_proven_fail": "M5: main_test.go:66: foreign mutable state survived: exit status 1 panic: state copy: foreign or unrecognized pointer  requires an explicit copier",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_MUTANT=M5 timeout 120 go test -json -count=1 -timeout 90s ./stage3/census/latent/statecopy/ -run . > M5.log 2>&1; main_test.go:66: foreign mutable state survived: exit status 1 panic: state copy: foreign or unrecognized pointer  requires an explicit copier",
+    "timing_samples": [
+      0.234,
+      0.165,
+      0.126
+    ]
+  }
+]

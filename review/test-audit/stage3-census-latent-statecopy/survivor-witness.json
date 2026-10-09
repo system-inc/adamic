@@ -1,0 +1,30 @@
+[
+  {
+    "id": "baseline",
+    "command": [
+      "go",
+      "run",
+      "main.go",
+      "/tmp/u161/witness",
+      "/tmp/u161/witness/internal/lower/lower.go",
+      "/tmp/u161/witness-baseline.go"
+    ],
+    "exit": 0,
+    "mode": "0o600",
+    "output": "package lower\n\nimport ()\n\nfunc latentCopy_lowering(value lowering, seen map[any]any) lowering { result := value; return result }\nfunc latentCopyPointer_lowering(value *lowering, seen map[any]any) *lowering {\n\tif value == nil {\n\t\treturn nil\n\t}\n\tif prior, ok := seen[value]; ok {\n\t\treturn prior.(*lowering)\n\t}\n\tresult := new(lowering)\n\tseen[value] = result\n\t*result = latentCopy_lowering(*value, seen)\n\treturn result\n}\n"
+  },
+  {
+    "id": "M4",
+    "command": [
+      "go",
+      "run",
+      "main.go",
+      "/tmp/u161/witness",
+      "/tmp/u161/witness/internal/lower/lower.go",
+      "/tmp/u161/witness-M4.go"
+    ],
+    "exit": 0,
+    "mode": "0o600",
+    "output": "package lower\n\nimport ()\n\nfunc latentCopy_lowering(value lowering, seen map[any]any) lowering { result := value; return result }\nfunc latentCopyPointer_lowering(value *lowering, seen map[any]any) *lowering {\n\tif value == nil {\n\t\treturn nil\n\t}\n\tif prior, ok := seen[value]; ok {\n\t\treturn prior.(*lowering)\n\t}\n\tresult := new(lowering)\n\tseen[value] = result\n\t*result = latentCopy_lowering(*value, seen)\n\treturn result\n}\n"
+  }
+]

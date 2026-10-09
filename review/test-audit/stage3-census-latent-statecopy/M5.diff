@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/statecopy/main.go
++++ b/stage3/census/latent/statecopy/main.go
+@@ -24,7 +24,7 @@
+ 	if err := format.Node(&b, token.NewFileSet(), n); err != nil {
+ 		panic(err)
+ 	}
+-	return b.String()
++	return ""
+ }
+ func (g *generator) copy(t ast.Expr, value string) string {
+ 	switch t := t.(type) {

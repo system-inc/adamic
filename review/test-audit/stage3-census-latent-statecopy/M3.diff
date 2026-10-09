@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/statecopy/main.go
++++ b/stage3/census/latent/statecopy/main.go
+@@ -87,7 +87,7 @@
+ 		panic(err)
+ 	}
+ 	for _, path := range paths {
+-		if strings.HasSuffix(path, "_test.go") {
++		if !strings.HasSuffix(path, "_test.go") {
+ 			continue
+ 		}
+ 		input := path

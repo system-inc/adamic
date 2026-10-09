@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/statecopy/main.go
++++ b/stage3/census/latent/statecopy/main.go
+@@ -61,7 +61,7 @@
+ 		if name, ok := t.X.(*ast.SelectorExpr); ok && (printed(name.X) == "ast" || printed(name.X) == "checker" || printed(name) == "load.Program") {
+ 			return value
+ 		}
+-		panic("state copy: foreign or unrecognized pointer " + printed(t) + " requires an explicit copier")
++		return value
+ 	case *ast.ArrayType:
+ 		if t.Len != nil {
+ 			panic("state copy: fixed array " + printed(t) + " requires an explicit copier")

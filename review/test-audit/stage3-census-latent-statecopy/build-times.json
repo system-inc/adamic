@@ -1,0 +1,75 @@
+[
+  {
+    "id": "M1",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statecopy/"
+    ],
+    "seconds": 0.20901957800015225,
+    "exit": 0
+  },
+  {
+    "id": "M2",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statecopy/"
+    ],
+    "seconds": 0.12282444499942358,
+    "exit": 0
+  },
+  {
+    "id": "M3",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statecopy/"
+    ],
+    "seconds": 0.13790033199984464,
+    "exit": 0
+  },
+  {
+    "id": "M4",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statecopy/"
+    ],
+    "seconds": 0.14015267099966877,
+    "exit": 0
+  },
+  {
+    "id": "M5",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statecopy/"
+    ],
+    "seconds": 0.17185961899849644,
+    "exit": 0
+  },
+  {
+    "id": "M6",
+    "command": [
+      "go",
+      "vet",
+      "./stage3/census/latent/statecopy/"
+    ],
+    "seconds": 0.13589049999973213,
+    "exit": 0
+  },
+  {
+    "id": "switch-test-binary",
+    "command": [
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u161/statecopy.test",
+      "./stage3/census/latent/statecopy/"
+    ],
+    "seconds": 0.4624177810001129,
+    "exit": 0
+  }
+]

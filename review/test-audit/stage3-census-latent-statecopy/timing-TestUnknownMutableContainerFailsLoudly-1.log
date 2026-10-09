@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:43:45.413096675Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy"}
+{"Time":"2026-10-09T13:43:45.416228271Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Test":"TestUnknownMutableContainerFailsLoudly"}
+{"Time":"2026-10-09T13:43:45.416366049Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Test":"TestUnknownMutableContainerFailsLoudly","Output":"=== RUN   TestUnknownMutableContainerFailsLoudly\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:45.41643983Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Test":"TestUnknownMutableContainerFailsLoudly","Output":"=== PAUSE TestUnknownMutableContainerFailsLoudly\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:45.416444189Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Test":"TestUnknownMutableContainerFailsLoudly"}
+{"Time":"2026-10-09T13:43:45.416450683Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Test":"TestUnknownMutableContainerFailsLoudly"}
+{"Time":"2026-10-09T13:43:45.41645351Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Test":"TestUnknownMutableContainerFailsLoudly","Output":"=== CONT  TestUnknownMutableContainerFailsLoudly\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:45.561732084Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Test":"TestUnknownMutableContainerFailsLoudly","Output":"--- PASS: TestUnknownMutableContainerFailsLoudly (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:45.561807615Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Test":"TestUnknownMutableContainerFailsLoudly","Elapsed":0.15}
+{"Time":"2026-10-09T13:43:45.561838025Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:43:45.564851949Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Output":"ok  \tgithub.com/system-inc/adamic/stage3/census/latent/statecopy\t0.151s\n"}
+{"Time":"2026-10-09T13:43:45.564901649Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/census/latent/statecopy","Elapsed":0.152}

@@ -1,0 +1,30 @@
+{
+  "M1": {
+    "TestUnknownMutableContainerFailsLoudly": "fail",
+    "TestUnknownForeignPointerFailsLoudly": "pass"
+  },
+  "M2": {
+    "TestUnknownForeignPointerFailsLoudly": "fail",
+    "TestUnknownMutableContainerFailsLoudly": "pass"
+  },
+  "M3": {
+    "TestUnknownMutableContainerFailsLoudly": "fail",
+    "TestUnknownForeignPointerFailsLoudly": "fail"
+  },
+  "M4": {
+    "TestUnknownForeignPointerFailsLoudly": "pass",
+    "TestUnknownMutableContainerFailsLoudly": "pass"
+  },
+  "M5": {
+    "TestUnknownForeignPointerFailsLoudly": "fail",
+    "TestUnknownMutableContainerFailsLoudly": "pass"
+  },
+  "M6": {
+    "TestUnknownForeignPointerFailsLoudly": "fail",
+    "TestUnknownMutableContainerFailsLoudly": "fail"
+  },
+  "P1": {
+    "TestUnknownForeignPointerFailsLoudly": "fail",
+    "TestUnknownMutableContainerFailsLoudly": "fail"
+  }
+}

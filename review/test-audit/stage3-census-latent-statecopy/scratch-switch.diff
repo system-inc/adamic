@@ -1,0 +1,59 @@
+diff --git a/stage3/census/latent/statecopy/main.go b/stage3/census/latent/statecopy/main.go
+index d848d1b1..021ceb79 100644
+--- a/stage3/census/latent/statecopy/main.go
++++ b/stage3/census/latent/statecopy/main.go
+@@ -24,7 +24,7 @@ func printed(n ast.Node) string {
+ 	if err := format.Node(&b, token.NewFileSet(), n); err != nil {
+ 		panic(err)
+ 	}
+-	return b.String()
++	if os.Getenv("ADAMIC_MUTANT") == "M5" { return "" }; return b.String()
+ }
+ func (g *generator) copy(t ast.Expr, value string) string {
+ 	switch t := t.(type) {
+@@ -36,7 +36,7 @@ func (g *generator) copy(t ast.Expr, value string) string {
+ 		if underlying, ok := g.types[t.Name]; ok {
+ 			switch underlying.(type) {
+ 			case *ast.ArrayType, *ast.MapType:
+-				panic("state copy: mutable named container " + t.Name + " requires an explicit copier")
++				if os.Getenv("ADAMIC_MUTANT") == "M1" { return value }; panic("state copy: mutable named container " + t.Name + " requires an explicit copier")
+ 			}
+ 		}
+ 		return value
+@@ -61,7 +61,7 @@ func (g *generator) copy(t ast.Expr, value string) string {
+ 		if name, ok := t.X.(*ast.SelectorExpr); ok && (printed(name.X) == "ast" || printed(name.X) == "checker" || printed(name) == "load.Program") {
+ 			return value
+ 		}
+-		panic("state copy: foreign or unrecognized pointer " + printed(t) + " requires an explicit copier")
++		if os.Getenv("ADAMIC_MUTANT") == "M2" { return value }; panic("state copy: foreign or unrecognized pointer " + printed(t) + " requires an explicit copier")
+ 	case *ast.ArrayType:
+ 		if t.Len != nil {
+ 			panic("state copy: fixed array " + printed(t) + " requires an explicit copier")
+@@ -78,7 +78,8 @@ func (g *generator) copy(t ast.Expr, value string) string {
+ 	}
+ }
+ func main() {
+-	if len(os.Args) != 4 {
++ if os.Getenv("ADAMIC_MUTANT") == "P1" { return }
++	if (len(os.Args) != 4) != (os.Getenv("ADAMIC_MUTANT") == "M6") {
+ 		panic("usage: statecopy repository overlaid-lower.go output.go")
+ 	}
+ 	g := generator{types: map[string]ast.Expr{}, needed: map[string]bool{"lowering": true}}
+@@ -87,7 +88,7 @@ func main() {
+ 		panic(err)
+ 	}
+ 	for _, path := range paths {
+-		if strings.HasSuffix(path, "_test.go") {
++		if strings.HasSuffix(path, "_test.go") != (os.Getenv("ADAMIC_MUTANT") == "M3") {
+ 			continue
+ 		}
+ 		input := path
+@@ -156,7 +157,7 @@ func main() {
+ 	if err != nil {
+ 		panic(err)
+ 	}
+-	if err := os.WriteFile(os.Args[3], text, 0600); err != nil {
++	if err := os.WriteFile(os.Args[3], text, func() os.FileMode { if os.Getenv("ADAMIC_MUTANT") == "M4" { return 0644 }; return 0600 }()); err != nil {
+ 		panic(err)
+ 	}
+ }

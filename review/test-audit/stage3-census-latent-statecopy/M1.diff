@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/statecopy/main.go
++++ b/stage3/census/latent/statecopy/main.go
+@@ -36,7 +36,7 @@
+ 		if underlying, ok := g.types[t.Name]; ok {
+ 			switch underlying.(type) {
+ 			case *ast.ArrayType, *ast.MapType:
+-				panic("state copy: mutable named container " + t.Name + " requires an explicit copier")
++				return value
+ 			}
+ 		}
+ 		return value

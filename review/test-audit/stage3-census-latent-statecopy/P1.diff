@@ -1,0 +1,10 @@
+--- a/stage3/census/latent/statecopy/main.go
++++ b/stage3/census/latent/statecopy/main.go
+@@ -78,6 +78,7 @@
+ 	}
+ }
+ func main() {
++ if len(os.Args) >= 0 { return }
+ 	if len(os.Args) != 4 {
+ 		panic("usage: statecopy repository overlaid-lower.go output.go")
+ 	}

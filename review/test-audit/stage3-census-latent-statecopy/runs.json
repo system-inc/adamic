@@ -1,0 +1,149 @@
+[
+  {
+    "id": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statecopy/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M1"
+    },
+    "seconds": 0.5756200889991305,
+    "exit": 1
+  },
+  {
+    "id": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statecopy/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M2"
+    },
+    "seconds": 0.3901113730007637,
+    "exit": 1
+  },
+  {
+    "id": "M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statecopy/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M3"
+    },
+    "seconds": 0.3947756070010655,
+    "exit": 1
+  },
+  {
+    "id": "M4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statecopy/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M4"
+    },
+    "seconds": 0.4837620489997789,
+    "exit": 0
+  },
+  {
+    "id": "M5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statecopy/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M5"
+    },
+    "seconds": 0.3211257900002238,
+    "exit": 1
+  },
+  {
+    "id": "M6",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statecopy/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M6"
+    },
+    "seconds": 0.3885052280002128,
+    "exit": 1
+  },
+  {
+    "id": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage3/census/latent/statecopy/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "P1"
+    },
+    "seconds": 0.3576089799989859,
+    "exit": 1
+  }
+]
