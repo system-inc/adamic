@@ -1,4 +1,4 @@
-import pathlib,json,subprocess
+import pathlib,json,subprocess,shlex
 p=pathlib.Path('/workspace/adamic/review/test-defend/stage1-typescript-parser-jsx_rejection');runs=json.loads((p/'runs.json').read_text());plan=json.loads((p/'plan.json').read_text());subjects=['TestJsxMemberNameRejection','TestJsxNode','TestJsxNative'];allrows=json.loads((p/'matrix-rows.json').read_text());matrix=[]
 for r in runs:
  events=[]
@@ -21,7 +21,7 @@ for name,ids,subs in [(subjects[0],['D1','D2','D3'],['TestJsxNode']),(subjects[1
   a=dict(mutant=id,file_line=m['file']+':'+str(m['line']),change=m['old']+' -> '+m['new'],rows_failed=failed,rows_passed=passed,aim=m['aim']);attempts.append(a)
   for x in cells:
    if name in x['failed'] and name not in x['anchor_failures']+x['possible_build_failures']:
-    proof.append(dict(mutant=id,command=' '.join(x['command'])+' > '+x['log']+' 2>&1',line=x['errors_by_row'].get(name,['--- FAIL: '+name])[0],log=x['log']));break
+    proof.append(dict(mutant=id,command=shlex.join(x['command'])+' > '+x['log']+' 2>&1',line=x['errors_by_row'].get(name,['--- FAIL: '+name])[0],log=x['log']));break
  unique=[a for a in attempts if a['rows_failed']==[name] and not any(x['unknown'] for x in matrix if x['id']==a['mutant'])]
  valid_attempts=all(name in a['rows_failed'] and any(t!=name for t in a['rows_failed']) for a in attempts)
  defense='defended' if unique else 'not defended' if valid_attempts else 'cannot-judge'

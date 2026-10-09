@@ -1,7 +1,7 @@
 import json,pathlib,subprocess,datetime
 p=pathlib.Path('/workspace/adamic/review/test-defend/stage1-typescript-parser-jsx_rejection');r=json.loads((p/'results.json').read_text());runs=json.loads((p/'runs.json').read_text());plan=json.loads((p/'plan.json').read_text());matrix=json.loads((p/'matrix.json').read_text())
 assert len([x for x in runs if x['id']=='D6'])>0
-assert subprocess.check_output(['git','diff','--name-only']).decode()==''
+assert subprocess.check_output(['git','diff','--name-only','--','stage1/typescript/parser','stage1/typescript/scanner','internal']).decode()==''
 for m in plan:subprocess.run(['git','apply','--check',str(p/'diffs'/(m['id']+'.diff'))],check=True)
 # Native direct row has built and executed every production variant.
 for m in plan:

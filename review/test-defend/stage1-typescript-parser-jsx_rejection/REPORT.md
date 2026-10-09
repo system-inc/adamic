@@ -75,19 +75,19 @@ Tests remain unchanged; source restored; all diffs apply to origin/main 76c59c81
     "evidence": [
       {
         "mutant": "D1",
-        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$ > D1-matrix.log 2>&1",
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$' > D1-matrix.log 2>&1",
         "line": "jsx_rejection_test.go:51: Node failed to reject: 70 adamic: panic: JSX invalid name at 21 in /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection762463858/001/dashed-member.tsx",
         "log": "D1-matrix.log"
       },
       {
         "mutant": "D2",
-        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$ > D2-matrix.log 2>&1",
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$' > D2-matrix.log 2>&1",
         "line": "jsx_rejection_test.go:66: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection4204156728/008/main.ts /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection4204156728/001/dashed-member.tsx --whole]: exit status 70",
         "log": "D2-matrix.log"
       },
       {
         "mutant": "D3",
-        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$ > D3-matrix.log 2>&1",
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008|TestJsxMemberNameRejection|TestJsxNameBoundaryRejections|TestJsxScannerMutants|TestJsxNode|TestJsxNative)$' > D3-matrix.log 2>&1",
         "line": "jsx_rejection_test.go:66: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection3519992172/008/main.ts /workspace/scratch/defend-jsx/tmp/TestJsxMemberNameRejection3519992172/001/dashed-member.tsx --whole]: exit status 70",
         "log": "D3-matrix.log"
       }
@@ -153,19 +153,19 @@ Tests remain unchanged; source restored; all diffs apply to origin/main 76c59c81
     "evidence": [
       {
         "mutant": "D4",
-        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$ > D4-TestJsxNode.log 2>&1",
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestJsxNode$' > D4-TestJsxNode.log 2>&1",
         "line": "jsx_test.go:92: case 12 line 223: port \"7 ThisKeyword 12 15 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 ThisKeyword 11 15 0 0 -1 0 0\\t\\t\\t\\t\"",
         "log": "D4-TestJsxNode.log"
       },
       {
         "mutant": "D5",
-        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$ > D5-TestJsxNode.log 2>&1",
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestJsxNode$' > D5-TestJsxNode.log 2>&1",
         "line": "jsx_test.go:92: case 6 line 89: port \"6 JsxText 19 24 0 0 -1 0 0\\t\\ttext\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
         "log": "D5-TestJsxNode.log"
       },
       {
         "mutant": "D6",
-        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNode$ > D6-TestJsxNode.log 2>&1",
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestJsxNode$' > D6-TestJsxNode.log 2>&1",
         "line": "jsx_test.go:92: case 8 line 134: port \"8 Identifier 45 49 0 0 -1 0 0\\t\\tlang\\t\\t\", Go \"8 Identifier 40 44 0 0 -1 0 0\\t\\txml\\t\\t\"",
         "log": "D6-TestJsxNode.log"
       }
@@ -231,19 +231,19 @@ Tests remain unchanged; source restored; all diffs apply to origin/main 76c59c81
     "evidence": [
       {
         "mutant": "D4",
-        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$ > D4-TestJsxNative.log 2>&1",
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestJsxNative$' > D4-TestJsxNative.log 2>&1",
         "line": "jsx_test.go:107: case 12 line 223: port \"7 ThisKeyword 12 15 0 0 -1 0 0\\t\\t\\t\\t\", Go \"7 ThisKeyword 11 15 0 0 -1 0 0\\t\\t\\t\\t\"",
         "log": "D4-TestJsxNative.log"
       },
       {
         "mutant": "D5",
-        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$ > D5-TestJsxNative.log 2>&1",
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestJsxNative$' > D5-TestJsxNative.log 2>&1",
         "line": "jsx_test.go:107: case 6 line 89: port \"6 JsxText 19 24 0 0 -1 0 0\\t\\ttext\\t\\t0\", Go \"6 JsxText 19 23 0 0 -1 0 0\\t\\ttext\\t\\t0\"",
         "log": "D5-TestJsxNative.log"
       },
       {
         "mutant": "D6",
-        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestJsxNative$ > D6-TestJsxNative.log 2>&1",
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestJsxNative$' > D6-TestJsxNative.log 2>&1",
         "line": "jsx_test.go:107: case 8 line 134: port \"8 Identifier 45 49 0 0 -1 0 0\\t\\tlang\\t\\t\", Go \"8 Identifier 40 44 0 0 -1 0 0\\t\\txml\\t\\t\"",
         "log": "D6-TestJsxNative.log"
       }
