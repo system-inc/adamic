@@ -73,14 +73,6 @@ func TestSyntaxMutants(t *testing.T) {
 	selected := estreeShardPlan(t, testSyntaxMutantsShards, cases, groups)
 	oracle := estreeTimedOracle(t)
 	mutants := syntaxMutants()
-	for i := range mutants {
-		if !selected[syntaxMutantShard(mutants[i])] {
-			continue
-		}
-		m := &mutants[i]
-		m.main = mutantPort(t, m.file, m.from, m.to)
-		m.binary, _ = estreeTimedBuild(t, m.main, true)
-	}
 	t.Logf("setup including builds: %.3fs; union: %d cases", time.Since(started).Seconds(), cases)
 	for shard := range groups {
 		if !selected[shard] {
@@ -92,6 +84,8 @@ func TestSyntaxMutants(t *testing.T) {
 				if syntaxMutantShard(m) != shard {
 					continue
 				}
+				m.main = mutantPort(t, m.file, m.from, m.to)
+				m.binary, _ = estreeTimedBuild(t, m.main, true)
 				list := manifest(t, m.sources)
 				if m.name == "mapped-constraint" {
 					want := estreeOracleOutput(t, oracle, "--manifest", list)
