@@ -38,26 +38,7 @@ func (l *lowering) factoryFieldOrigin(name string) string {
 		for _, file := range l.program.Files() {
 			file.AsNode().ForEachChild(visit)
 		}
-		// The rehearsal has no observable null-placeholder implementation. A
-		// field-name collision must fail closed, never turn its null! into undefined.
-		var nulls ast.Visitor
-		nulls = func(node *ast.Node) bool {
-			if (node.Kind == ast.KindPropertyDeclaration || node.Kind == ast.KindPropertyAssignment) && node.Name() != nil && l.uninitializedInitializer(node.Initializer()) {
-				value := ast.SkipParentheses(node.Initializer())
-				for value.Kind == ast.KindAsExpression {
-					value = ast.SkipParentheses(value.AsAsExpression().Expression)
-				}
-				if value.Kind == ast.KindNonNullExpression && ast.SkipParentheses(value.AsNonNullExpression().Expression).Kind == ast.KindNullKeyword {
-					if name, known := l.methodName(node); known && l.result.FactoryFields[name] != "" {
-						l.result.FactoryFields[name] = "pending null placeholder"
-					}
-				}
-			}
-			return node.ForEachChild(nulls)
-		}
-		for _, file := range l.program.Files() {
-			file.AsNode().ForEachChild(nulls)
-		}
+
 	}
 	return l.result.FactoryFields[name]
 }
@@ -161,9 +142,7 @@ func (l *lowering) factoryFieldRead(node *ast.Node, object ir.Expression, name s
 	if origin == "" {
 		return nil, false, nil
 	}
-	if origin == "pending null placeholder" {
-		return nil, true, l.notYet(node, "observable null placeholder awaiting codex/placeholder-nonnull")
-	}
+
 	field := l.checker.GetSymbolAtLocation(node.Name())
 	if field == nil || accessorSymbol(field) || field.Flags&ast.SymbolFlagsMethod != 0 {
 		return nil, false, nil

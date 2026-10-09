@@ -3,43 +3,43 @@
     "name": "factory-unset.a",
     "stdout": "true\ntrue\ntrue\nREADY\n",
     "exit": 0,
-    "native": "TestParserConstructionSource; rehearsal pending codex/placeholder-nonnull"
+    "native": "TestParserConstructionSource and TestParserConstructionNullPlaceholderDelivered; placeholder pending cleared"
   },
   {
     "name": "own-key-order.a",
     "stdout": "kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"beta\":21,\"alpha\":3}\n",
     "exit": 0,
-    "native": "TestParserConstructionSource; rehearsal pending codex/placeholder-nonnull"
+    "native": "TestParserConstructionSource and TestParserConstructionNullPlaceholderDelivered; placeholder pending cleared"
   },
   {
     "name": "node-array-keys.a",
     "stdout": "0,1\nfalse\n0,1,end,pos,transformFlags,hasTrailingComma\ntrue\n",
     "exit": 0,
-    "native": "TestParserConstructionSource; rehearsal pending codex/placeholder-nonnull"
+    "native": "TestParserConstructionSource and TestParserConstructionNullPlaceholderDelivered; placeholder pending cleared"
   },
   {
     "name": "node-array-unset.a",
     "stdout": "true\ntrue\ntrue\ntrue\nfalse\nready\ntrue\nundefined\ntrue\n-1\n",
     "exit": 0,
-    "native": "TestParserConstructionSource; rehearsal pending codex/placeholder-nonnull"
+    "native": "TestParserConstructionSource and TestParserConstructionNullPlaceholderDelivered; placeholder pending cleared"
   },
   {
     "name": "null-placeholder-pending.a",
-    "stdout": "null\nundefined\n",
+    "stdout": "true\ntrue\n",
     "exit": 0,
-    "native": "pending codex/placeholder-nonnull observable null"
+    "native": "TestParserConstructionSource and TestParserConstructionNullPlaceholderDelivered; placeholder pending cleared"
   },
   {
     "name": "node-array-json.a",
     "stdout": "[1,2]\n",
     "exit": 0,
-    "native": "TestParserConstructionSource; rehearsal pending codex/placeholder-nonnull"
+    "native": "TestParserConstructionSource and TestParserConstructionNullPlaceholderDelivered; placeholder pending cleared"
   },
   {
     "name": "node-array-length.a",
     "stdout": "2\n2\n2\n",
     "exit": 0,
-    "native": "TestParserConstructionSource; rehearsal pending codex/placeholder-nonnull"
+    "native": "TestParserConstructionSource and TestParserConstructionNullPlaceholderDelivered; placeholder pending cleared"
   },
   {
     "name": "factory-use.a",

@@ -6,11 +6,11 @@ const expected={
  'own-key-order.a':'kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{"2":2,"10":10,"kind":1,"beta":21,"alpha":3}\n',
  'node-array-keys.a':'0,1\nfalse\n0,1,end,pos,transformFlags,hasTrailingComma\ntrue\n',
  'node-array-unset.a':'true\ntrue\ntrue\ntrue\nfalse\nready\ntrue\nundefined\ntrue\n-1\n',
- 'null-placeholder-pending.a':'null\nundefined\n',
+ 'null-placeholder-pending.a':'true\ntrue\n',
  'node-array-json.a':'[1,2]\n','node-array-length.a':'2\n2\n2\n'
 };
 function run(text){const module=require('node:module');const code=module.stripTypeScriptTypes(text,{mode:'transform'});return cp.spawnSync(process.execPath,['--input-type=module','-e',code],{encoding:'utf8'});}
-for(const name of Object.keys(expected)){const actual=run(fs.readFileSync(path.join(directory,name),'utf8'));if(actual.status!==0||actual.stdout!==expected[name]||actual.stderr)throw Error(JSON.stringify({name,...actual}));rows.push({name,stdout:actual.stdout,exit:actual.status,native:name==='null-placeholder-pending.a'?'pending codex/placeholder-nonnull observable null':'TestParserConstructionSource; rehearsal pending codex/placeholder-nonnull'});}
+for(const name of Object.keys(expected)){const actual=run(fs.readFileSync(path.join(directory,name),'utf8'));if(actual.status!==0||actual.stdout!==expected[name]||actual.stderr)throw Error(JSON.stringify({name,...actual}));rows.push({name,stdout:actual.stdout,exit:actual.status,native:'TestParserConstructionSource and TestParserConstructionNullPlaceholderDelivered; placeholder pending cleared'});}
 const use=run(fs.readFileSync(path.join(directory,'factory-use.a'),'utf8'));if(use.status!==1||use.stdout!=='true\n'||!use.stderr.includes('TypeError'))throw Error('unsafe declared-T source use changed');rows.push({name:'factory-use.a',stdout:use.stdout,exit:use.status,stderr:'TypeError observed; Adamic must check the declared-T use at exit 70',native:'pending'});
 // Source prediction mutants, deliberately not native runtime mutants.
 const mutants=[

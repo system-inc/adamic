@@ -13,7 +13,7 @@ class Harness:
   return code==0
  def spawn(self,cmd,stdout,stderr):return subprocess.Popen(cmd,cwd=root,stdout=stdout,stderr=stderr,text=True)
  def fail(self,name,detail):self.failure=detail
-paths=sorted(str(p.relative_to(root)) for p in (root/'stage3/parser-ahead').rglob('*.a'))
+paths=sorted(str(p.relative_to(root)) for directory in ['stage3/parser-ahead','stage3/parser-next'] for p in (root/directory).rglob('*.a'))
 h=Harness();mod.Gate.aCheck(h,paths)
 record={'head':subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),
  'a_check':h.result.get('a_check'), 'exits':h.exits,'failure':h.failure,

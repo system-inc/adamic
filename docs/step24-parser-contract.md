@@ -1,10 +1,10 @@
 # Step 24 parser compiler contract
 
 This contract serves #ktz9fek under #6z35tzs. The authorized build-ahead base is
-compiler/rehearsal-placeholders 3d0620c6, comprising train 9f16421c and
-codex/placeholder-nonnull 19193932. Scout evidence is codex/step24-scout 7e6ed35b.
+compiler/rehearsal-placeholders 678d94f9, including delivered
+codex/placeholder-nonnull c8f858b9. Scout evidence is codex/step24-scout 7e6ed35b.
 TypeScript source is 050880ce59e30b356b686bd3144efe24f875ebc8.
-Rehearsal-dependent results remain pending codex/placeholder-nonnull integration.
+The construction source fixtures have been rechecked with the delivered placeholder machinery. Their placeholder pending marks are cleared.
 Program-region lifetime remains pending step 06 #7g4qv2b.
 
 ## 1. Factory completion
@@ -57,9 +57,9 @@ while keeping the property absent. The actual write publishes its value, presenc
 and initialization; it does not publish an invented initial property. No source
 builder rewrite or invented zero/empty string is permitted. An unwritten factory field observes as undefined without claiming T is initialized.
 A literal null! placeholder must observe null, and undefined! must observe undefined.
-The rehearsal has not implemented observable null placeholders; field-name collisions
-with null! return NotYet rather than treating null as undefined. This part is pending
-codex/placeholder-nonnull, pinned by null-placeholder-pending.a.
+The refreshed rehearsal transports both values faithfully. The historically named
+null-placeholder-pending.a now checks null! as null and an unwritten factory field
+as undefined, in Node and both real backends; its pending mark is cleared.
 
 FieldReadPlan distinguishes observation/save from declared-T consumption, with
 field, factory, expected contract and use location. An unset observation returns
@@ -138,7 +138,7 @@ The source fixtures read all four declared extras and exercise absent observatio
 optional slots, saved locals, write order, JSON, length and array identity. Focused
 source oracles execute real native and JavaScript code. Independent hand-built IR
 fixtures additionally isolate the three runtime mutants. These are not stub passes;
-rehearsal integration and Program-region lifetime still have no acceptance credit.
+placeholder-dependent fixture marks are cleared on the delivered machinery. Program-region lifetime still has no acceptance credit.
 
 ## 3. Speculation and checked specialization
 
@@ -146,15 +146,20 @@ rehearsal integration and Program-region lifetime still have no acceptance credi
 LowerSpeculativeResult(value ir.Expression, actual, wanted *checker.Type) (ir.Expression, error)
 ```
 
-cast.go and concrete generic result lowering ask for this plan; control.go uses
-the existing ToBoolean lowering for success/rewind branches. Planned IR is
-CheckedSpecialization{Value, Contract, Message}, preserving the wanted result
-representation with a runtime certificate. No unresolved checker type reaches C.
+cast.go asks checkedSpeculativeResult for a direct declared lookAhead, tryParse or
+speculationHelper call whose checker result is unknown. Its callable parameter
+is resolved before admitting this specialization. Proven generic results use the
+ordinary lowering. The implemented IR reuses Union, checked Narrow and Property
+views, with a generated helper taking the completed result once. Required fixed
+scalar object fields and finite scalar literal contracts are checked in the helper.
+No unresolved checker type reaches C. Arbitrary nested, callable, optional-field
+and class result contracts remain NotYet. A contextual adaptation other than a
+direct unknown-result assertion is not yet implemented.
 
 The proven direction is an ordinary value conversion. Otherwise emit a runtime
 contract check at the consuming specialization, evaluate the result once and keep
 its ownership. Failure is exit 70: `adamic: panic: speculative result failed:
-<expression> expected <type>, found <runtime type>`. Unsupported reification is
+callback <expression> at <call site>; expected <type>`. Unsupported reification is
 NotYet, naming the result type. Never erase a cast to an unresolved type parameter.
 
 Keep tsc's closures, saved token, diagnostic length, pending error and context bits.
