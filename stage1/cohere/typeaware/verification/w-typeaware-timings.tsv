@@ -12,3 +12,39 @@ product	TestProduct_profile_missing_binding	-	3.81	-	-	pass; command_wall_s=5.93
 leaf	TestShadowIndexMissingBindingUnion	-	0.00	-	-	pass; command_wall_s=2.462
 leaf	TestShadowIndexMissingBinding_000	113	10.87	10.326	-	pass; command_wall_s=13.548
 product	TestProduct_volume_guard_stage0	-	4.16	-	-	pass; command_wall_s=6.313
+product	TestProduct_stage0	-	5.38	-	-	pass; command_wall_s=8.344
+product	TestProduct_checker	-	5.77	-	-	pass; command_wall_s=8.125
+product	TestProduct_profile_missing_binding	-	2.48	-	-	pass; command_wall_s=4.988
+leaf	TestShadowIndexMissingBindingUnion	-	0.00	-	-	pass; command_wall_s=2.052
+leaf	TestShadowIndexMissingBinding_000	113	5.09	4.092	-	pass; command_wall_s=7.922
+product	TestProduct_volume_guard_stage0	-	11.99	-	-	pass; command_wall_s=14.640
+product	TestProduct_volume_guard_oracle	-	2.53	-	-	pass; command_wall_s=5.455
+product	TestProduct_volume_guard_archive_checker	-	10.29	-	-	pass; command_wall_s=13.680
+product	TestProduct_volume_guard_archive_checker_asan	-	13.64	-	-	pass; command_wall_s=17.883
+product	TestProduct_volume_guard_archive_strict_this_checker	-	18.16	-	-	pass; command_wall_s=22.006
+product	TestProduct_volume_guard_volume	-	50.87	-	-	pass; command_wall_s=53.048
+product	TestProduct_volume_guard_volume_asan	-	77.84	-	-	pass; command_wall_s=80.944
+product	TestProduct_volume_guard_strict_this_native	-	44.15	-	-	pass; command_wall_s=47.525
+leaf	TestVolumeConfigGuardAndMutantUnion	-	0.00	-	-	pass; command_wall_s=2.152
+leaf	TestVolumeConfigGuardAndMutant_000	90-kill/106-family	15.51	-	0.212176	pass; command_wall_s=18.825
+leaf	TestVolumeConfigGuardAndMutant_001	90-kill/106-family	6.03	-	0.060130	pass; command_wall_s=8.010
+leaf	TestVolumeConfigGuardAndMutant_002	90-kill/106-family	6.07	-	0.066745	pass; command_wall_s=8.061
+leaf	TestVolumeConfigGuardAndMutant_003	90-kill/106-family	6.09	-	0.065836	pass; command_wall_s=8.129
+leaf	TestVolumeConfigGuardAndMutant_004	90-kill/106-family	6.01	-	0.068145	pass; command_wall_s=8.383
+leaf	TestVolumeConfigGuardAndMutant_005	90-kill/106-family	6.20	-	0.067347	pass; command_wall_s=8.312
+leaf	TestVolumeConfigGuardAndMutant_006	90-kill/106-family	6.26	-	0.086189	pass; command_wall_s=8.990
+leaf	TestVolumeConfigGuardAndMutant_007	90-kill/106-family	6.22	-	0.065892	pass; command_wall_s=8.932
+leaf	TestVolumeConfigGuardAndMutant_008	90-kill/106-family	5.95	-	0.073257	pass; command_wall_s=8.627
+leaf	TestVolumeConfigGuardAndMutant_009	90-kill/106-family	5.97	-	0.062994	pass; command_wall_s=8.570
+leaf	TestVolumeConfigGuardAndMutant_010	90-kill/106-family	5.94	-	0.065019	pass; command_wall_s=8.495
+leaf	TestVolumeConfigGuardAndMutant_011	90-kill/106-family	6.02	-	0.101521	pass; command_wall_s=8.467
+leaf	TestVolumeConfigGuardAndMutant_012	90-kill/106-family	6.52	-	0.075020	pass; command_wall_s=9.655
+leaf	TestVolumeConfigGuardAndMutant_013	90-kill/106-family	5.87	-	0.066498	pass; command_wall_s=8.858
+leaf	TestVolumeConfigGuardAndMutant_014	90-kill/106-family	6.01	-	0.078984	pass; command_wall_s=8.127
+leaf	TestVolumeConfigGuardAndMutant_015	90-kill/106-family	5.83	-	0.000096	pass; command_wall_s=8.056
+leaf	TestVolumeConfigGuardAndMutantPlantedFailure	-	6.14	-	0.070082	pass; command_wall_s=8.684
+product	TestProduct_type_symbol_archive	-	12.87	-	-	pass; command_wall_s=14.976
+# Stable-input batch: live timings written outside repository to avoid broad recipe invalidation.
+# #pgw1y41: _000 passed twice (10.87s, 5.09s); setup 10.326s, 4.092s; no fix needed.
+# #ctmvfdy/#xtesg75: all 16 current guard shards passed 5.83–15.51s; own work 0.000096–0.212176s; union and planted failure passed.
+# Product finding (not leaf failure): volume_guard_volume_asan 77.84s with warm Go cache, under 10-minute product ceiling.
