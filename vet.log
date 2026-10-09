@@ -1,0 +1,6 @@
+# github.com/system-inc/adamic/stage1/cohere/lint
+# [github.com/system-inc/adamic/stage1/cohere/lint]
+vet: stage1/cohere/lint/harness_test.go:4:2: "bytes" imported and not used
+# github.com/system-inc/adamic/stage1/cohere/json
+# [github.com/system-inc/adamic/stage1/cohere/json]
+vet: stage1/cohere/json/port_test.go:305:17: undefined: sync
