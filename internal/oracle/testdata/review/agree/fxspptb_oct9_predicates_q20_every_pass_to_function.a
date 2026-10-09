@@ -1,0 +1,21 @@
+function isNumber(x: string | number): x is number {
+  return typeof x === "number";
+}
+function total(xs: number[]): number {
+  let sum = 0;
+  for (const x of xs) sum += x;
+  return sum;
+}
+function build(): (string | number)[] {
+  const items: (string | number)[] = ["x"];
+  items.pop();
+  items.push(10);
+  items.push(20);
+  return items;
+}
+const items = build();
+if (items.every(isNumber)) {
+  console.log("total " + String(total(items)));
+  console.log("first " + String(items[0]));
+  console.log("joined " + items.join(","));
+}
