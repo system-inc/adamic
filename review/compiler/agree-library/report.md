@@ -1,6 +1,6 @@
 Converted all 26 acceptance rows for task #41bkfdw wave 3 onto the shared Node agreement helper.
-Branch compiler/agree-library; commit recorded in the delivery report.
-Territory tests: PASS, 7.422s; TestCallTargetReaders: PASS; lane output recorded separately.
+Branch compiler/agree-library; implementation a6372f51; current-main merge 680dbc63 on 3a1c8b57; evidence commit recorded in delivery.
+Territory tests: PASS, 7.200s; TestCallTargetReaders: PASS; lane checks: PASS, 5.6s.
 Mutants: parseInt radix fixed at 10 and existsSync lowered as stat both fail converted tests and pass original tests.
 Not covered: native backend execution; 108 refusal and five checker metadata rows retained, no new oracle fixtures.
 
@@ -15,3 +15,5 @@ Setup: exported GOPROXY='https://proxy.golang.org|direct', ran timeout 240 bash 
 Mutants were temporary compiler changes only, restored before commit. Each .diff is one line. parse-int-radix-converted.log records output 10,10 versus Node 10,NaN; parse-int-radix-old.log passes the original acceptance-only table. fs-exists-converted.log records the output/exit disagreement for TestNodeFSFileNamespaceImport; fs-exists-old.log passes its original lower-only assertion. No production changes are delivered.
 
 No fixture added, so counts.md refresh is unnecessary. No full packages or full gate run. Conservative classification: checker ownership and negative regex producer proof are IR-only rather than acceptance, since neither executes a lowered program.
+
+After current main advanced, merged origin/main without conflicts and reran all territory tests and TestCallTargetReaders, both PASS. Lane checks passed: gofmt and tools on four Go files, t.Parallel on one test package, vet one package. Narrow fetch configuration required explicit remote tracking refspecs for cloud/merge-tree and devtools/fast-gate.

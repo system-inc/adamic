@@ -1,0 +1,8 @@
+=== RUN   TestNodeFSFileNamespaceImport
+=== PAUSE TestNodeFSFileNamespaceImport
+=== CONT  TestNodeFSFileNamespaceImport
+    library_node_fs_file_test.go:71: JavaScript backend stdout = "", source Node = "absent\n"
+--- FAIL: TestNodeFSFileNamespaceImport (0.41s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.421s
+FAIL

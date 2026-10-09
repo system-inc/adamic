@@ -1,0 +1,643 @@
+=== RUN   TestParseIntMapUsesIndexRadix
+=== PAUSE TestParseIntMapUsesIndexRadix
+=== RUN   TestFSOpenStringFlagsLower
+=== PAUSE TestFSOpenStringFlagsLower
+=== RUN   TestFSRemoveDefaultRetryDelayLowers
+=== PAUSE TestFSRemoveDefaultRetryDelayLowers
+=== RUN   TestFSExistsOperation
+=== PAUSE TestFSExistsOperation
+=== RUN   TestFSStatThrowsByDefault
+=== PAUSE TestFSStatThrowsByDefault
+=== RUN   TestLibraryLanguageBoundaries
+=== PAUSE TestLibraryLanguageBoundaries
+=== RUN   TestLibraryMapSetGapsStayRefused
+=== PAUSE TestLibraryMapSetGapsStayRefused
+=== RUN   TestLibraryMapSetIteratorCopyTypesRefused
+=== PAUSE TestLibraryMapSetIteratorCopyTypesRefused
+=== RUN   TestLibraryMethodValues
+=== PAUSE TestLibraryMethodValues
+=== RUN   TestLibraryMethodValueBoundaries
+=== PAUSE TestLibraryMethodValueBoundaries
+=== RUN   TestLibraryMethodValueSafety
+=== PAUSE TestLibraryMethodValueSafety
+=== RUN   TestNodeBufferRefusals
+=== PAUSE TestNodeBufferRefusals
+=== RUN   TestNodeFSFileOptionsBorrow
+=== PAUSE TestNodeFSFileOptionsBorrow
+=== RUN   TestNodeFSFileDoesNotAuthorizeMutableWidening
+=== PAUSE TestNodeFSFileDoesNotAuthorizeMutableWidening
+=== RUN   TestNodeFSFileRefusesOptionEffects
+=== PAUSE TestNodeFSFileRefusesOptionEffects
+=== RUN   TestNodeFSFileRefusesVoidValues
+=== PAUSE TestNodeFSFileRefusesVoidValues
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== RUN   TestNodeFSFileNamespaceImport
+=== PAUSE TestNodeFSFileNamespaceImport
+=== RUN   TestNodeFSFileQualifiedErrorType
+=== PAUSE TestNodeFSFileQualifiedErrorType
+=== RUN   TestNodeFSFileKeepsDetachedMethodRefusal
+=== PAUSE TestNodeFSFileKeepsDetachedMethodRefusal
+=== RUN   TestNodeFSFileBufferBorrow
+=== PAUSE TestNodeFSFileBufferBorrow
+=== RUN   TestNodeFSFileScratchOptionsBorrow
+=== PAUSE TestNodeFSFileScratchOptionsBorrow
+=== RUN   TestNodeFSFileScratchOverloadsAreNamed
+=== PAUSE TestNodeFSFileScratchOverloadsAreNamed
+=== RUN   TestNodeLibraryNamesUnimplementedMembers
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers
+=== RUN   TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+=== PAUSE TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+=== RUN   TestNodeLibraryDistinguishesReceiverOwners
+=== PAUSE TestNodeLibraryDistinguishesReceiverOwners
+=== RUN   TestNodeLibraryQualifiedTypeAssertion
+=== PAUSE TestNodeLibraryQualifiedTypeAssertion
+=== RUN   TestObjectRefusalsExplainSoundness
+=== PAUSE TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectUnprovenShapesStayNotYet
+=== PAUSE TestObjectUnprovenShapesStayNotYet
+=== RUN   TestLibraryRegexOffsetRequiresNoCaptures
+=== PAUSE TestLibraryRegexOffsetRequiresNoCaptures
+=== RUN   TestLibraryStringRefusals
+=== PAUSE TestLibraryStringRefusals
+=== CONT  TestParseIntMapUsesIndexRadix
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== RUN   TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== PAUSE TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+=== CONT  TestLibraryMethodValues
+=== RUN   TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== RUN   TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== CONT  TestLibraryStringRefusals
+=== CONT  TestLibraryRegexOffsetRequiresNoCaptures
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== RUN   TestLibraryStringRefusals/detached
+=== PAUSE TestLibraryStringRefusals/detached
+=== RUN   TestLibraryStringRefusals/null_receiver
+=== PAUSE TestLibraryStringRefusals/null_receiver
+=== RUN   TestLibraryStringRefusals/undefined_receiver
+=== PAUSE TestLibraryStringRefusals/undefined_receiver
+=== RUN   TestLibraryStringRefusals/String_internal_slot
+=== PAUSE TestLibraryStringRefusals/String_internal_slot
+=== RUN   TestLibraryStringRefusals/object_conversion
+=== PAUSE TestLibraryStringRefusals/object_conversion
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== RUN   TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== RUN   TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== PAUSE TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== RUN   TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== RUN   TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== PAUSE TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== RUN   TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== PAUSE TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== RUN   TestLibraryMethodValues/console.log([].map(String).join(','));
+=== PAUSE TestLibraryMethodValues/console.log([].map(String).join(','));
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== RUN   TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== PAUSE TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== RUN   TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== PAUSE TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== RUN   TestLibraryStringRefusals/collation
+=== CONT  TestObjectUnprovenShapesStayNotYet
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== PAUSE TestLibraryStringRefusals/collation
+=== RUN   TestLibraryStringRefusals/loose_inequality
+=== PAUSE TestLibraryStringRefusals/loose_inequality
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== RUN   TestLibraryStringRefusals/first_class_constructor
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== PAUSE TestLibraryStringRefusals/first_class_constructor
+=== RUN   TestLibraryStringRefusals/raw_wider_view
+=== PAUSE TestLibraryStringRefusals/raw_wider_view
+=== CONT  TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== RUN   TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== PAUSE TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== RUN   TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== PAUSE TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== PAUSE TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== CONT  TestNodeLibraryQualifiedTypeAssertion
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestNodeLibraryDistinguishesReceiverOwners
+=== NAME  TestNodeLibraryQualifiedTypeAssertion
+    library_node_test.go:81: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeLibraryQualifiedTypeAssertion (0.02s)
+=== CONT  TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+=== NAME  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync
+    library_node_fs_file_test.go:60: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeLibraryNamesUnimplementedMembers
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+=== RUN   TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+=== PAUSE TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+=== CONT  TestNodeFSFileScratchOverloadsAreNamed
+=== NAME  TestNodeLibraryDistinguishesReceiverOwners
+    library_node_test.go:57: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeLibraryDistinguishesReceiverOwners (0.06s)
+=== CONT  TestNodeFSFileScratchOptionsBorrow
+=== NAME  TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames
+    library_node_test.go:43: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames (0.05s)
+=== CONT  TestNodeFSFileBufferBorrow
+=== NAME  TestNodeFSFileScratchOverloadsAreNamed
+    library_node_fs_file_test.go:115: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileScratchOverloadsAreNamed (0.03s)
+=== CONT  TestNodeFSFileKeepsDetachedMethodRefusal
+=== NAME  TestNodeFSFileBufferBorrow
+    library_node_fs_file_test.go:94: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== NAME  TestNodeFSFileScratchOptionsBorrow
+    library_node_fs_file_test.go:104: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileBufferBorrow (0.03s)
+=== CONT  TestNodeFSFileQualifiedErrorType
+--- FAIL: TestNodeFSFileScratchOptionsBorrow (0.04s)
+=== CONT  TestNodeFSFileNamespaceImport
+=== NAME  TestNodeFSFileKeepsDetachedMethodRefusal
+    library_node_fs_file_test.go:85: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileKeepsDetachedMethodRefusal (0.07s)
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+=== NAME  TestNodeFSFileQualifiedErrorType
+    library_node_fs_file_test.go:76: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileQualifiedErrorType (0.05s)
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+=== NAME  TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync
+    library_node_fs_file_test.go:60: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+=== NAME  TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync
+    library_node_fs_file_test.go:60: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+=== NAME  TestNodeFSFileNamespaceImport
+    library_node_fs_file_test.go:71: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileNamespaceImport (0.07s)
+=== CONT  TestNodeFSFileOptionsBorrow
+=== NAME  TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync
+    library_node_fs_file_test.go:60: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeFSFileRefusesVoidValues
+    library_node_fs_file_test.go:43: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileRefusesVoidValues (0.06s)
+=== CONT  TestNodeFSFileRefusesOptionEffects
+=== NAME  TestNodeFSFileOptionsBorrow
+    library_node_fs_file_test.go:21: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileOptionsBorrow (0.07s)
+=== CONT  TestNodeFSFileDoesNotAuthorizeMutableWidening
+=== NAME  TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync
+    library_node_fs_file_test.go:60: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestLibraryMethodValueSafety
+=== RUN   TestLibraryMethodValueSafety/opaque_return
+=== PAUSE TestLibraryMethodValueSafety/opaque_return
+=== RUN   TestLibraryMethodValueSafety/absent_array
+=== PAUSE TestLibraryMethodValueSafety/absent_array
+=== RUN   TestLibraryMethodValueSafety/array_element_erasure
+=== PAUSE TestLibraryMethodValueSafety/array_element_erasure
+=== RUN   TestLibraryMethodValueSafety/call_spread
+=== PAUSE TestLibraryMethodValueSafety/call_spread
+=== RUN   TestLibraryMethodValueSafety/bind_absent_receiver
+=== PAUSE TestLibraryMethodValueSafety/bind_absent_receiver
+=== RUN   TestLibraryMethodValueSafety/mutable_alias
+=== PAUSE TestLibraryMethodValueSafety/mutable_alias
+=== RUN   TestLibraryMethodValueSafety/opaque_shorthand
+=== PAUSE TestLibraryMethodValueSafety/opaque_shorthand
+=== RUN   TestLibraryMethodValueSafety/apply_spread
+=== PAUSE TestLibraryMethodValueSafety/apply_spread
+=== RUN   TestLibraryMethodValueSafety/string_receiver
+--- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads (0.00s)
+    --- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readFileSync (0.07s)
+    --- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads/writeFileSync (0.01s)
+    --- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads/readSync (0.01s)
+    --- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads/statSync (0.02s)
+    --- FAIL: TestNodeFSFileRefusesPinnedUnsupportedOverloads/openSync (0.08s)
+=== PAUSE TestLibraryMethodValueSafety/string_receiver
+=== RUN   TestLibraryMethodValueSafety/number_receiver
+=== PAUSE TestLibraryMethodValueSafety/number_receiver
+=== RUN   TestLibraryMethodValueSafety/bind_arity
+=== PAUSE TestLibraryMethodValueSafety/bind_arity
+=== RUN   TestLibraryMethodValueSafety/opaque_identity
+=== PAUSE TestLibraryMethodValueSafety/opaque_identity
+=== RUN   TestLibraryMethodValueSafety/unsupported_callback
+=== PAUSE TestLibraryMethodValueSafety/unsupported_callback
+=== RUN   TestLibraryMethodValueSafety/opaque_field
+=== PAUSE TestLibraryMethodValueSafety/opaque_field
+=== CONT  TestNodeBufferRefusals
+=== RUN   TestNodeBufferRefusals/buffer_alloc
+=== PAUSE TestNodeBufferRefusals/buffer_alloc
+=== RUN   TestNodeBufferRefusals/buffer_read
+=== PAUSE TestNodeBufferRefusals/buffer_read
+=== RUN   TestNodeBufferRefusals/hash_inherited_read
+=== PAUSE TestNodeBufferRefusals/hash_inherited_read
+=== RUN   TestNodeBufferRefusals/hash_copy
+=== PAUSE TestNodeBufferRefusals/hash_copy
+=== RUN   TestNodeBufferRefusals/crypto_random
+=== PAUSE TestNodeBufferRefusals/crypto_random
+=== RUN   TestNodeBufferRefusals/crypto_constructor
+=== PAUSE TestNodeBufferRefusals/crypto_constructor
+=== RUN   TestNodeBufferRefusals/buffer_isUtf8
+=== PAUSE TestNodeBufferRefusals/buffer_isUtf8
+=== RUN   TestNodeBufferRefusals/encoding
+=== PAUSE TestNodeBufferRefusals/encoding
+=== RUN   TestNodeBufferRefusals/algorithm
+=== PAUSE TestNodeBufferRefusals/algorithm
+=== RUN   TestNodeBufferRefusals/digest
+=== PAUSE TestNodeBufferRefusals/digest
+=== RUN   TestNodeBufferRefusals/catch
+=== PAUSE TestNodeBufferRefusals/catch
+=== RUN   TestNodeBufferRefusals/detached
+=== PAUSE TestNodeBufferRefusals/detached
+=== RUN   TestNodeBufferRefusals/typed_array_view
+=== PAUSE TestNodeBufferRefusals/typed_array_view
+=== RUN   TestNodeBufferRefusals/structural_hash_view
+=== PAUSE TestNodeBufferRefusals/structural_hash_view
+=== CONT  TestLibraryMethodValueBoundaries
+=== RUN   TestLibraryMethodValueBoundaries/unbound_Array
+=== PAUSE TestLibraryMethodValueBoundaries/unbound_Array
+=== RUN   TestLibraryMethodValueBoundaries/different_element_type
+=== PAUSE TestLibraryMethodValueBoundaries/different_element_type
+=== RUN   TestLibraryMethodValueBoundaries/primitive_string
+=== PAUSE TestLibraryMethodValueBoundaries/primitive_string
+=== RUN   TestLibraryMethodValueBoundaries/dense_array
+=== PAUSE TestLibraryMethodValueBoundaries/dense_array
+=== RUN   TestLibraryMethodValueBoundaries/dense_argument_literal
+=== PAUSE TestLibraryMethodValueBoundaries/dense_argument_literal
+=== RUN   TestLibraryMethodValueBoundaries/holes_or_spread
+=== PAUSE TestLibraryMethodValueBoundaries/holes_or_spread
+=== RUN   TestLibraryMethodValueBoundaries/outside_a_const_alias
+=== PAUSE TestLibraryMethodValueBoundaries/outside_a_const_alias
+=== RUN   TestLibraryMethodValueBoundaries/outside_a_const_alias#01
+=== PAUSE TestLibraryMethodValueBoundaries/outside_a_const_alias#01
+=== RUN   TestLibraryMethodValueBoundaries/captured_receiver
+=== PAUSE TestLibraryMethodValueBoundaries/captured_receiver
+=== RUN   TestLibraryMethodValueBoundaries/primitive_adapter
+=== PAUSE TestLibraryMethodValueBoundaries/primitive_adapter
+=== RUN   TestLibraryMethodValueBoundaries/primitive_adapter#01
+=== PAUSE TestLibraryMethodValueBoundaries/primitive_adapter#01
+=== CONT  TestFSStatThrowsByDefault
+=== NAME  TestNodeFSFileDoesNotAuthorizeMutableWidening
+    library_node_fs_file_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileDoesNotAuthorizeMutableWidening (0.02s)
+=== CONT  TestLibraryMapSetIteratorCopyTypesRefused
+=== NAME  TestNodeFSFileRefusesOptionEffects
+    library_node_fs_file_test.go:35: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeFSFileRefusesOptionEffects (0.02s)
+=== CONT  TestLibraryMapSetGapsStayRefused
+=== RUN   TestLibraryMapSetGapsStayRefused/set-like_object
+=== PAUSE TestLibraryMapSetGapsStayRefused/set-like_object
+=== RUN   TestLibraryMapSetGapsStayRefused/different_representations
+=== PAUSE TestLibraryMapSetGapsStayRefused/different_representations
+=== RUN   TestLibraryMapSetGapsStayRefused/dynamic_thisArg
+=== PAUSE TestLibraryMapSetGapsStayRefused/dynamic_thisArg
+=== RUN   TestLibraryMapSetGapsStayRefused/groupBy_optional_widening
+=== PAUSE TestLibraryMapSetGapsStayRefused/groupBy_optional_widening
+=== CONT  TestLibraryLanguageBoundaries
+=== RUN   TestLibraryLanguageBoundaries/array
+=== PAUSE TestLibraryLanguageBoundaries/array
+=== RUN   TestLibraryLanguageBoundaries/hidden_array
+=== PAUSE TestLibraryLanguageBoundaries/hidden_array
+=== RUN   TestLibraryLanguageBoundaries/parameter
+=== PAUSE TestLibraryLanguageBoundaries/parameter
+=== RUN   TestLibraryLanguageBoundaries/prototype
+=== PAUSE TestLibraryLanguageBoundaries/prototype
+=== RUN   TestLibraryLanguageBoundaries/optional_object
+=== PAUSE TestLibraryLanguageBoundaries/optional_object
+=== RUN   TestLibraryLanguageBoundaries/optional_spread
+=== PAUSE TestLibraryLanguageBoundaries/optional_spread
+=== RUN   TestLibraryLanguageBoundaries/destructured_write
+=== PAUSE TestLibraryLanguageBoundaries/destructured_write
+=== RUN   TestLibraryLanguageBoundaries/dynamic_receiver
+=== PAUSE TestLibraryLanguageBoundaries/dynamic_receiver
+=== RUN   TestLibraryLanguageBoundaries/constructor_alias
+=== PAUSE TestLibraryLanguageBoundaries/constructor_alias
+=== RUN   TestLibraryLanguageBoundaries/constructor_passed
+=== PAUSE TestLibraryLanguageBoundaries/constructor_passed
+=== RUN   TestLibraryLanguageBoundaries/inherited_field
+=== PAUSE TestLibraryLanguageBoundaries/inherited_field
+=== CONT  TestFSRemoveDefaultRetryDelayLowers
+=== NAME  TestFSStatThrowsByDefault
+    fs_method_guards_test.go:51: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSStatThrowsByDefault (0.02s)
+=== CONT  TestFSExistsOperation
+=== NAME  TestFSRemoveDefaultRetryDelayLowers
+    fs_method_guards_test.go:34: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSRemoveDefaultRetryDelayLowers (0.03s)
+=== CONT  TestFSOpenStringFlagsLower
+=== NAME  TestFSExistsOperation
+    fs_method_guards_test.go:41: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSExistsOperation (0.03s)
+=== CONT  TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== NAME  TestFSOpenStringFlagsLower
+    fs_method_guards_test.go:27: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSOpenStringFlagsLower (0.04s)
+=== CONT  TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+--- PASS: TestParseIntMapUsesIndexRadix (0.49s)
+=== CONT  TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+--- PASS: TestLibraryRegexOffsetRequiresNoCaptures (0.67s)
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== CONT  TestLibraryMethodValues/console.log([].map(String).join(','));
+=== CONT  TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+--- PASS: TestLibraryMapSetIteratorCopyTypesRefused (0.54s)
+=== CONT  TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== CONT  TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== CONT  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== CONT  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== CONT  TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== CONT  TestLibraryStringRefusals/detached
+=== CONT  TestLibraryStringRefusals/collation
+=== CONT  TestLibraryStringRefusals/raw_wider_view
+=== CONT  TestLibraryStringRefusals/first_class_constructor
+=== CONT  TestLibraryStringRefusals/loose_inequality
+--- PASS: TestLibraryMethodValues (0.00s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`); (0.41s)
+    --- PASS: TestLibraryMethodValues/console.log([1,_2].map(String).join(',')); (0.41s)
+    --- PASS: TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(',')); (0.33s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f()); (0.34s)
+    --- PASS: TestLibraryMethodValues/console.log([].map(String).join(',')); (0.33s)
+    --- PASS: TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1])); (0.29s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1])); (0.27s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`); (0.29s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4])); (0.29s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(',')); (0.30s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`); (0.30s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_')); (0.29s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`); (0.35s)
+=== CONT  TestLibraryStringRefusals/String_internal_slot
+=== CONT  TestLibraryStringRefusals/object_conversion
+=== CONT  TestLibraryStringRefusals/undefined_receiver
+=== CONT  TestLibraryStringRefusals/null_receiver
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+--- PASS: TestLibraryStringRefusals (0.01s)
+    --- PASS: TestLibraryStringRefusals/detached (0.06s)
+    --- PASS: TestLibraryStringRefusals/collation (0.07s)
+    --- PASS: TestLibraryStringRefusals/raw_wider_view (0.07s)
+    --- PASS: TestLibraryStringRefusals/first_class_constructor (0.09s)
+    --- PASS: TestLibraryStringRefusals/loose_inequality (0.08s)
+    --- PASS: TestLibraryStringRefusals/String_internal_slot (0.08s)
+    --- PASS: TestLibraryStringRefusals/object_conversion (0.07s)
+    --- PASS: TestLibraryStringRefusals/undefined_receiver (0.12s)
+    --- PASS: TestLibraryStringRefusals/null_receiver (0.11s)
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+--- PASS: TestObjectRefusalsExplainSoundness (0.00s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'}); (0.09s)
+    --- PASS: TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'}); (0.08s)
+    --- PASS: TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared'); (0.10s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'}); (0.06s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1}); (0.05s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'}); (0.07s)
+    --- PASS: TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view); (0.08s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1}); (0.07s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{}); (0.06s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5}); (0.10s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value'); (0.07s)
+    --- PASS: TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]); (0.10s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1}); (0.05s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}}); (0.06s)
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync
+    library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01
+    library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:path.sep
+    library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+=== NAME  TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength
+    library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+=== NAME  TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo
+    library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+=== NAME  TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID
+    library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestLibraryMethodValueSafety/opaque_return
+=== CONT  TestLibraryMethodValueSafety/apply_spread
+--- PASS: TestObjectUnprovenShapesStayNotYet (0.02s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2}); (0.06s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_} (0.05s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_} (0.08s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_} (0.06s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other'); (0.10s)
+=== CONT  TestLibraryMethodValueSafety/opaque_field
+=== NAME  TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath
+    library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestLibraryMethodValueSafety/unsupported_callback
+=== NAME  TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile
+    library_node_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeLibraryNamesUnimplementedMembers (0.00s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:fs.copyFileSync (0.01s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile#01 (0.01s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:path.sep (0.01s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:buffer.BufferConstructor.byteLength (0.01s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:os.userInfo (0.02s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:crypto.randomUUID (0.02s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:path.toNamespacedPath (0.02s)
+    --- FAIL: TestNodeLibraryNamesUnimplementedMembers/node:fs.readFile (0.01s)
+=== CONT  TestLibraryMethodValueSafety/opaque_identity
+=== CONT  TestLibraryMethodValueSafety/bind_arity
+=== CONT  TestLibraryMethodValueSafety/number_receiver
+=== CONT  TestLibraryMethodValueSafety/string_receiver
+=== CONT  TestLibraryMethodValueSafety/bind_absent_receiver
+=== CONT  TestLibraryMethodValueSafety/opaque_shorthand
+=== CONT  TestLibraryMethodValueSafety/mutable_alias
+=== CONT  TestLibraryMethodValueSafety/array_element_erasure
+=== CONT  TestLibraryMethodValueSafety/call_spread
+=== CONT  TestLibraryMethodValueSafety/absent_array
+=== CONT  TestNodeBufferRefusals/buffer_alloc
+=== CONT  TestNodeBufferRefusals/encoding
+=== CONT  TestNodeBufferRefusals/structural_hash_view
+=== CONT  TestNodeBufferRefusals/typed_array_view
+=== NAME  TestNodeBufferRefusals/structural_hash_view
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/detached
+--- PASS: TestLibraryMethodValueSafety (0.00s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_return (0.05s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_field (0.05s)
+    --- PASS: TestLibraryMethodValueSafety/apply_spread (0.08s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_identity (0.08s)
+    --- PASS: TestLibraryMethodValueSafety/unsupported_callback (0.10s)
+    --- PASS: TestLibraryMethodValueSafety/string_receiver (0.03s)
+    --- PASS: TestLibraryMethodValueSafety/number_receiver (0.05s)
+    --- PASS: TestLibraryMethodValueSafety/bind_arity (0.10s)
+    --- PASS: TestLibraryMethodValueSafety/bind_absent_receiver (0.07s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_shorthand (0.09s)
+    --- PASS: TestLibraryMethodValueSafety/array_element_erasure (0.09s)
+    --- PASS: TestLibraryMethodValueSafety/mutable_alias (0.09s)
+    --- PASS: TestLibraryMethodValueSafety/absent_array (0.05s)
+    --- PASS: TestLibraryMethodValueSafety/call_spread (0.07s)
+=== CONT  TestNodeBufferRefusals/catch
+=== NAME  TestNodeBufferRefusals/buffer_alloc
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/digest
+=== NAME  TestNodeBufferRefusals/encoding
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/algorithm
+=== NAME  TestNodeBufferRefusals/catch
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/crypto_random
+=== NAME  TestNodeBufferRefusals/typed_array_view
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/buffer_isUtf8
+=== NAME  TestNodeBufferRefusals/detached
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/crypto_constructor
+=== NAME  TestNodeBufferRefusals/digest
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/hash_inherited_read
+=== NAME  TestNodeBufferRefusals/crypto_random
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/hash_copy
+=== NAME  TestNodeBufferRefusals/algorithm
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestNodeBufferRefusals/buffer_read
+=== NAME  TestNodeBufferRefusals/buffer_isUtf8
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestLibraryMethodValueBoundaries/unbound_Array
+=== NAME  TestNodeBufferRefusals/crypto_constructor
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestLibraryMethodValueBoundaries/outside_a_const_alias
+=== NAME  TestNodeBufferRefusals/buffer_read
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestLibraryMethodValueBoundaries/primitive_adapter#01
+=== NAME  TestNodeBufferRefusals/hash_copy
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== CONT  TestLibraryMethodValueBoundaries/primitive_adapter
+=== NAME  TestNodeBufferRefusals/hash_inherited_read
+    library_node_buffer_test.go:28: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestNodeBufferRefusals (0.00s)
+    --- FAIL: TestNodeBufferRefusals/structural_hash_view (0.01s)
+    --- FAIL: TestNodeBufferRefusals/buffer_alloc (0.02s)
+    --- FAIL: TestNodeBufferRefusals/encoding (0.02s)
+    --- FAIL: TestNodeBufferRefusals/catch (0.01s)
+    --- FAIL: TestNodeBufferRefusals/typed_array_view (0.02s)
+    --- FAIL: TestNodeBufferRefusals/detached (0.01s)
+    --- FAIL: TestNodeBufferRefusals/digest (0.02s)
+    --- FAIL: TestNodeBufferRefusals/crypto_random (0.01s)
+    --- FAIL: TestNodeBufferRefusals/algorithm (0.02s)
+    --- FAIL: TestNodeBufferRefusals/buffer_isUtf8 (0.01s)
+    --- FAIL: TestNodeBufferRefusals/crypto_constructor (0.02s)
+    --- FAIL: TestNodeBufferRefusals/buffer_read (0.01s)
+    --- FAIL: TestNodeBufferRefusals/hash_copy (0.02s)
+    --- FAIL: TestNodeBufferRefusals/hash_inherited_read (0.02s)
+=== CONT  TestLibraryMethodValueBoundaries/captured_receiver
+=== CONT  TestLibraryMethodValueBoundaries/outside_a_const_alias#01
+=== CONT  TestLibraryMethodValueBoundaries/dense_array
+=== CONT  TestLibraryMethodValueBoundaries/holes_or_spread
+=== CONT  TestLibraryMethodValueBoundaries/dense_argument_literal
+=== CONT  TestLibraryMethodValueBoundaries/primitive_string
+=== CONT  TestLibraryMethodValueBoundaries/different_element_type
+=== CONT  TestLibraryMapSetGapsStayRefused/set-like_object
+=== CONT  TestLibraryLanguageBoundaries/array
+=== CONT  TestLibraryMapSetGapsStayRefused/groupBy_optional_widening
+=== CONT  TestLibraryMapSetGapsStayRefused/dynamic_thisArg
+=== CONT  TestLibraryMapSetGapsStayRefused/different_representations
+--- PASS: TestLibraryMethodValueBoundaries (0.00s)
+    --- PASS: TestLibraryMethodValueBoundaries/unbound_Array (0.07s)
+    --- PASS: TestLibraryMethodValueBoundaries/outside_a_const_alias (0.08s)
+    --- PASS: TestLibraryMethodValueBoundaries/primitive_adapter (0.10s)
+    --- PASS: TestLibraryMethodValueBoundaries/captured_receiver (0.10s)
+    --- PASS: TestLibraryMethodValueBoundaries/primitive_adapter#01 (0.10s)
+    --- PASS: TestLibraryMethodValueBoundaries/outside_a_const_alias#01 (0.08s)
+    --- PASS: TestLibraryMethodValueBoundaries/dense_array (0.07s)
+    --- PASS: TestLibraryMethodValueBoundaries/primitive_string (0.08s)
+    --- PASS: TestLibraryMethodValueBoundaries/dense_argument_literal (0.18s)
+    --- PASS: TestLibraryMethodValueBoundaries/holes_or_spread (0.19s)
+    --- PASS: TestLibraryMethodValueBoundaries/different_element_type (0.16s)
+=== CONT  TestLibraryLanguageBoundaries/destructured_write
+=== CONT  TestLibraryLanguageBoundaries/inherited_field
+=== CONT  TestLibraryLanguageBoundaries/constructor_passed
+=== CONT  TestLibraryLanguageBoundaries/constructor_alias
+=== CONT  TestLibraryLanguageBoundaries/dynamic_receiver
+--- PASS: TestLibraryMapSetGapsStayRefused (0.00s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/set-like_object (0.17s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/dynamic_thisArg (0.07s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/different_representations (0.11s)
+    --- PASS: TestLibraryMapSetGapsStayRefused/groupBy_optional_widening (0.15s)
+=== CONT  TestLibraryLanguageBoundaries/prototype
+=== CONT  TestLibraryLanguageBoundaries/optional_spread
+=== CONT  TestLibraryLanguageBoundaries/optional_object
+=== CONT  TestLibraryLanguageBoundaries/parameter
+=== CONT  TestLibraryLanguageBoundaries/hidden_array
+--- PASS: TestLibraryLanguageBoundaries (0.00s)
+    --- PASS: TestLibraryLanguageBoundaries/array (0.12s)
+    --- PASS: TestLibraryLanguageBoundaries/inherited_field (0.11s)
+    --- PASS: TestLibraryLanguageBoundaries/destructured_write (0.14s)
+    --- PASS: TestLibraryLanguageBoundaries/constructor_passed (0.10s)
+    --- PASS: TestLibraryLanguageBoundaries/dynamic_receiver (0.08s)
+    --- PASS: TestLibraryLanguageBoundaries/constructor_alias (0.12s)
+    --- PASS: TestLibraryLanguageBoundaries/prototype (0.11s)
+    --- PASS: TestLibraryLanguageBoundaries/optional_object (0.13s)
+    --- PASS: TestLibraryLanguageBoundaries/parameter (0.09s)
+    --- PASS: TestLibraryLanguageBoundaries/optional_spread (0.15s)
+    --- PASS: TestLibraryLanguageBoundaries/hidden_array (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	2.712s
+FAIL

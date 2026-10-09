@@ -1,0 +1,63 @@
+=== RUN   TestLibraryMethodValues
+=== PAUSE TestLibraryMethodValues
+=== CONT  TestLibraryMethodValues
+=== RUN   TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== RUN   TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== RUN   TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== RUN   TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== PAUSE TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== RUN   TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== PAUSE TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== RUN   TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== PAUSE TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== RUN   TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== PAUSE TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== RUN   TestLibraryMethodValues/console.log([].map(String).join(','));
+=== PAUSE TestLibraryMethodValues/console.log([].map(String).join(','));
+=== RUN   TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== PAUSE TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== RUN   TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== PAUSE TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== RUN   TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== PAUSE TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== CONT  TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`);
+=== CONT  TestLibraryMethodValues/console.log([1,_2].map(String).join(','));
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f());
+=== CONT  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`);
+=== CONT  TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`);
+=== CONT  TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4]));
+=== CONT  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+=== CONT  TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1]));
+=== CONT  TestLibraryMethodValues/console.log([].map(String).join(','));
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_'));
+=== CONT  TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+=== CONT  TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1]));
+=== CONT  TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`);
+=== NAME  TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(','));
+    library_method_values_test.go:28: JavaScript backend stdout = "10,10\n", source Node = "10,NaN\n"
+=== NAME  TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(','));
+    library_method_values_test.go:28: JavaScript backend stdout = "10,10,10\n", source Node = "10,NaN,2\n"
+--- FAIL: TestLibraryMethodValues (0.00s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(`${f('12',_10)}`); (0.23s)
+    --- PASS: TestLibraryMethodValues/console.log([1,_2].map(String).join(',')); (0.24s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Object.prototype.hasOwnProperty;_console.log(`${f.call({x:_1},_'x')}`); (0.25s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.trim.bind('_x_');_console.log(f()); (0.25s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_console.log(`${f.call([4,_5],_5)}`); (0.26s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Object.prototype.toString;_console.log(f.call([4])); (0.19s)
+    --- PASS: TestLibraryMethodValues/function_show(value:_string_|_number):_void_{_console.log(`${value}`);_}_const_f_=_Object.prototype.toString;_show(f.call([1])); (0.18s)
+    --- PASS: TestLibraryMethodValues/console.log([].map(String).join(',')); (0.18s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.trim;_console.log(f.call('_x_')); (0.19s)
+    --- FAIL: TestLibraryMethodValues/const_f_=_Number.parseInt;_console.log(['10',_'10'].map(f).join(',')); (0.23s)
+    --- PASS: TestLibraryMethodValues/const_f_=_String.prototype.substring;_console.log(f.apply('abcdef',_[4,_1])); (0.16s)
+    --- PASS: TestLibraryMethodValues/const_f_=_Array.prototype.indexOf;_const_g_=_f;_console.log(`${g.apply([4,_5],_[5])}`); (0.16s)
+    --- FAIL: TestLibraryMethodValues/console.log(['10',_'10',_'10'].map(Number.parseInt).join(',')); (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.610s
+FAIL
