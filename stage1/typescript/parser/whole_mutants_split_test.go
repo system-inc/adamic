@@ -86,7 +86,7 @@ func wholeMutantBuildOracleProduct(t *testing.T) string {
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		ctx, cancel := context.WithCancel(context.Background())
 		defer cancel()
 		command := wholeMutantCommandContext(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
 		command.Dir = root
@@ -99,7 +99,7 @@ func wholeMutantBuildOracleProduct(t *testing.T) string {
 	return filepath.Join(directory, "oracle")
 }
 
-func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) string {
+func wholeMutantPortInputs(t *testing.T, directory string) ([]string, []string) {
 	t.Helper()
 	files := wholeMutantBuildFiles(t)
 	for _, name := range portFiles {
@@ -125,6 +125,12 @@ func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) 
 	}
 	sourceHash := fmt.Sprintf("source=%x", sha256.Sum256([]byte(sources.String())))
 	flags := append(wholeMutantBuildFlags(), sourceHash)
+	return files, flags
+}
+
+func wholeMutantLowerProduct(t *testing.T, directory string) string {
+	t.Helper()
+	files, flags := wholeMutantPortInputs(t, directory)
 	inputs := buildcache.Inputs{Name: "typescript-parser-lowered", Files: files, Flags: flags, Toolchain: []string{runtime.Version()}}
 	lowered := buildcache.Product(t, inputs, func(dir string) error {
 		program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
@@ -137,6 +143,13 @@ func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) 
 		}
 		return os.WriteFile(filepath.Join(dir, "main.c"), []byte(native.C(lowered)), 0644)
 	})
+	return lowered
+}
+
+func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) string {
+	t.Helper()
+	lowered := wholeMutantLowerProduct(t, directory)
+	files, flags := wholeMutantPortInputs(t, directory)
 	source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
 	if err != nil {
 		t.Fatal(err)
@@ -255,17 +268,10 @@ func TestWholeMutantsUnion(t *testing.T) {
 // external timeout utility, and also cancels their compiler descendants.
 func wholeMutantCommandContext(ctx context.Context, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
-	// Kill the whole group, including any compiler descendants, on deadline.
-	inSetupGroup := os.Getenv(wholeMutantsSetupChildEnv) == "1"
-	if !inSetupGroup {
-		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	}
+	// Cancellation cleans up the whole process group, including descendants.
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
-		group := command.Process.Pid
-		if inSetupGroup {
-			group = syscall.Getpgrp()
-		}
-		err := syscall.Kill(-group, syscall.SIGKILL)
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 		if err == syscall.ESRCH {
 			return os.ErrProcessDone
 		}
@@ -277,10 +283,11 @@ func wholeMutantCommandContext(ctx context.Context, name string, args ...string)
 
 func TestWholeMutantsRejectsSurvivor(t *testing.T) {
 	t.Parallel()
+	environment := wholeMutantsChildEnvironment(t)
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^TestWholeMutants_[0-9]{3}$", "-test.v", "-test.timeout=90s", "-test.parallel=4")
-	for _, variable := range os.Environ() {
+	for _, variable := range environment {
 		if strings.HasPrefix(variable, "ADAMIC_TEST_SHARD=") || strings.HasPrefix(variable, "ADAMIC_WHOLE_MUTANT_SURVIVOR=") || strings.HasPrefix(variable, wholeMutantsCaseChildEnv+"=") {
 			continue
 		}
