@@ -1,0 +1,10 @@
+--- a/internal/native/view_unions_read.go
++++ b/internal/native/view_unions_read.go
+@@ -49,7 +49,6 @@
+ 		return fmt.Sprintf("((adamic_closure *)%s)", value), true
+ 	}
+ 	if property.Of.IsMaybe() {
+-		e.checkMaybeUnionView(property, value, snapshot)
+ 		kind, payload := "adamic_view_union_number", "number"
+ 		if property.Of == ir.MaybeBoolean {
+ 			kind, payload = "adamic_view_union_boolean", "boolean"
