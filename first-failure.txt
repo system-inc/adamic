@@ -1,0 +1,4 @@
+FIRST FAILURE (census, at 1.1 s):
+compiler dependency census: undeclared compiler consumers: internal/buildcache/buildcache.go, internal/native/testbuildcache/cache.go. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, then the compiler packages it exercises (entries there add to the gate tools' map).
+(box load 27.1 on 64 cores at first failure)
+red: eee0460a53e1d3ddd9f709a65f63054b2759f738 fast gate, first failure at census after 1.1 s (; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 27.1 on 64 cores at start, load 27.1 on 64 cores at first failure, load 27.1 on 64 cores at end; deferred to full gate: 0 tests; branch cloud/land-stack-b-eee0460a, session none), 0 fail, 0 pass
