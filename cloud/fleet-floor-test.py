@@ -253,6 +253,19 @@ class DispatchTests(unittest.TestCase):
         self.assertEqual(len(self.calls(['ai', 'start'])), 2)
         self.assertEqual(len([c for c in self.calls(['os', 'send']) if 'start again' in c[3]]), 1)
 
+    def test_box_races_of_tips_already_on_the_pool_are_not_backlog(self):
+        # Oct 9 10:05Z: all 53 queued tips were box races of pool jobs Loom hadn't placed, and the floor held new units.
+        self.briefs(2)
+        (self.watch / 'slots').write_text('box B\nbox S\n')
+        (self.watch / 'racing').mkdir()
+        lines = ''.join('S 1 codex/a %040d\n' % i for i in range(7))
+        for i in range(7):
+            (self.watch / 'racing' / ('%040d' % i)).touch()
+        (self.watch / 'queue').write_text(lines)
+        self.step()
+        self.assertEqual(len(self.calls(['ai', 'start'])), 2)
+        self.assertFalse(any(r[-1].startswith('gate_backpressure') for r in self.rows()))
+
     def test_backpressure_holds_side_work_but_a_critical_path_brief_starts(self):
         # @system_adamic, Oct 8 23:53Z: runtime's brief 12 (#8p84qna, on the critical path) waited on backpressure.
         (self.queue / '01.md').write_text('Label: side\nPolish a side tool for #zzzzzz1.\n')

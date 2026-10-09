@@ -239,7 +239,10 @@ def gate_backpressure(state, configured, dry, records):
     hears once when it starts and once when it ends. A queue the floor can't read holds nothing back."""
     watch = Path(os.environ.get('ADAMIC_FAST_GATE_WATCH_STATE', str(Path.home() / '.adamic-fast-gate-watch')))
     try:
-        depth = sum(1 for line in (watch / 'queue').read_text().splitlines() if line.strip())
+        # A tip racing its own pool job (racing/<sha>, #04gypqe) is already gating there; its box run is a race, not
+        # backlog. Since the pool became the default route (Oct 9 09:37Z) every unplaced pool job queues one.
+        depth = sum(1 for line in (watch / 'queue').read_text().splitlines()
+                    if line.strip() and not (watch / 'racing' / line.split()[-1]).exists())
         slots = sum(1 for line in (watch / 'slots').read_text().splitlines() if line.strip())
     except OSError:
         return ''
