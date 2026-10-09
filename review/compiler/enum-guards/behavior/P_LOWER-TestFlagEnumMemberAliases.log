@@ -1,0 +1,8 @@
+=== RUN   TestFlagEnumMemberAliases
+=== PAUSE TestFlagEnumMemberAliases
+=== CONT  TestFlagEnumMemberAliases
+    enum_flags_test.go:87: lowering returned empty IR
+--- FAIL: TestFlagEnumMemberAliases (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.111s
+FAIL

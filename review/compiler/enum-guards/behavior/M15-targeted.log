@@ -1,0 +1,8 @@
+=== RUN   TestEnumFlagProofsWithoutObservableLoweringEffect
+=== PAUSE TestEnumFlagProofsWithoutObservableLoweringEffect
+=== CONT  TestEnumFlagProofsWithoutObservableLoweringEffect
+    enum_guards_test.go:133: flag domain not recognized, including its literal initializers and bit 30
+--- FAIL: TestEnumFlagProofsWithoutObservableLoweringEffect (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.038s
+FAIL

@@ -1,0 +1,102 @@
+=== RUN   TestFlagEnumsDomain
+=== PAUSE TestFlagEnumsDomain
+=== RUN   TestEnumNeverDefault
+=== PAUSE TestEnumNeverDefault
+=== RUN   TestFlagEnumLiteralSpellings
+=== PAUSE TestFlagEnumLiteralSpellings
+=== RUN   TestFlagEnumMemberAliases
+=== PAUSE TestFlagEnumMemberAliases
+=== RUN   TestEnumNameEnumeration
+=== PAUSE TestEnumNameEnumeration
+=== RUN   TestFlagEnumInlineIteration
+=== PAUSE TestFlagEnumInlineIteration
+=== RUN   TestNumericEnumsAreOpen
+=== PAUSE TestNumericEnumsAreOpen
+=== CONT  TestFlagEnumsDomain
+    enum_flags_test.go:70: bitwise_updates
+=== CONT  TestEnumNameEnumeration
+=== CONT  TestFlagEnumLiteralSpellings
+=== CONT  TestEnumNeverDefault
+=== CONT  TestFlagEnumMemberAliases
+=== NAME  TestEnumNeverDefault
+    enum_flags_test.go:77: JavaScript backend: exit 0, stdout "rgb\n1/2/3/Red\n", stderr ""; source Node: exit 0, stdout "rgb\n0/1/2/Red\n", stderr ""
+--- FAIL: TestEnumNeverDefault (0.17s)
+=== CONT  TestNumericEnumsAreOpen
+    enums_open_test.go:23: singleton
+=== NAME  TestFlagEnumMemberAliases
+    enum_flags_test.go:87: JavaScript backend: exit 0, stdout "2/3/3/Alias/Qualified\n0,1,2,None,A,B,Alias,Qualified\n", stderr ""; source Node: exit 0, stdout "1/2/3/Alias/Qualified\n0,1,2,None,A,B,Alias,Qualified\n", stderr ""
+--- FAIL: TestFlagEnumMemberAliases (0.22s)
+=== CONT  TestFlagEnumInlineIteration
+=== NAME  TestFlagEnumLiteralSpellings
+    enum_flags_test.go:82: JavaScript backend: exit 0, stdout "1/2/1073741825/1073741827/undefined\n", stderr ""; source Node: exit 0, stdout "0/1/1073741824/1073741825/High\n", stderr ""
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "1073741824\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "1073741826\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: alias
+--- FAIL: TestFlagEnumLiteralSpellings (0.23s)
+=== NAME  TestEnumNameEnumeration
+    enum_flags_test.go:92: JavaScript backend: exit 0, stdout "0\n1\nA\nB\nAlias\n1/2/2/Alias\n", stderr ""; source Node: exit 0, stdout "0\n1\nA\nB\nAlias\n0/1/1/Alias\n", stderr ""
+--- FAIL: TestEnumNameEnumeration (0.24s)
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:41: JavaScript backend: exit 0, stdout "42\n1/A\n", stderr ""; source Node: exit 0, stdout "42\n0/A\n", stderr ""
+    enums_open_test.go:23: member_tags
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "3\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "3\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: or
+=== NAME  TestFlagEnumInlineIteration
+    enum_flags_test.go:97: JavaScript backend: exit 0, stdout "1\n3\nundefined\n", stderr ""; source Node: exit 0, stdout "0\n3\nHigh\n", stderr ""
+--- FAIL: TestFlagEnumInlineIteration (0.16s)
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:41: JavaScript backend: exit 0, stdout "1/text/A\n", stderr ""; source Node: exit 0, stdout "0/text/A\n", stderr ""
+    enums_open_test.go:23: coalesce
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "1073741827\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "1073741825\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: xor
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:41: JavaScript backend: exit 0, stdout "1\n1/4/Pair\n", stderr ""; source Node: exit 0, stdout "0\n0/3/Pair\n", stderr ""
+    enums_open_test.go:23: arithmetic
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "6\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "2\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: and_left
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:41: JavaScript backend: exit 0, stdout "1/A\n98\n", stderr ""; source Node: exit 0, stdout "0/A\n98\n", stderr ""
+    enums_open_test.go:23: signed_flags
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "0\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "2\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: and_right
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:41: JavaScript backend: exit 0, stdout "-2147483647/2147483646/B\n", stderr ""; source Node: exit 0, stdout "-2147483648/2147483647/B\n", stderr ""
+    enums_open_test.go:23: cast
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "0\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "2\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: and_complement
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:41: JavaScript backend: exit 0, stdout "77/1/First\n", stderr ""; source Node: exit 0, stdout "77/0/First\n", stderr ""
+    enums_open_test.go:23: containers
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "4\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "2\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: nested
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:41: JavaScript backend: exit 0, stdout "1/A\n1,77/99\n", stderr ""; source Node: exit 0, stdout "0/A\n0,77/99\n", stderr ""
+    enums_open_test.go:23: optional_object
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "1\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "2\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: field
+=== NAME  TestNumericEnumsAreOpen
+    enums_open_test.go:41: JavaScript backend: exit 0, stdout "1/A\n1/3\n", stderr ""; source Node: exit 0, stdout "0/A\n0/1\n", stderr ""
+--- FAIL: TestNumericEnumsAreOpen (1.17s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "1073741826\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "1073741827\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: array
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "3,1073741827\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "3,1073741825\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: map
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "3/1073741827\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "3/1073741826\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: parameter
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "3\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "3\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: optional
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "3\nundefined\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "3\nundefined\n0/1073741824/A\n", stderr ""
+    enum_flags_test.go:70: switch
+    enum_flags_test.go:71: JavaScript backend: exit 0, stdout "a\ncombination\n1/1073741825/B\n", stderr ""; source Node: exit 0, stdout "a\ncombination\n0/1073741824/A\n", stderr ""
+--- FAIL: TestFlagEnumsDomain (2.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	2.031s
+FAIL

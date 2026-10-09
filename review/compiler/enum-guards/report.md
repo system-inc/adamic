@@ -1,8 +1,10 @@
-Built: result assertions in all seven enum acceptance tests, plus a Node comparison of member values and the last reverse alias, task #5w441z8.
-Commits: tests bbf1476dfacddb5e3b0750e04ada0425378d12ce; evidence f3ad4fbbcc73e777773eee22b959cc83f9149921; current main merged in 60fa8bb3672956d097be66f3c81e4cab6eb43b54.
-Commands and outputs: eight focused lowering leaves and the existing enums.a oracle pass after restoration; lane checks, including go vet, pass.
-Mutants: M01, M02, M04, M14, M15, M16 and each of the seven individual empty-answer probes fail named assertions.
-Not covered: other audit mutants, stage1 ports, whole packages, or the full gate.
+Built: all seven enum tests now compare each row's generated JavaScript with source Node, task #5w441z8.
+Commit: behavior replacement e80dcea028d9166e1ea6716935f2c340bc6a9aaa, following current-main merge cc992c34761411c757fce275beaa36d954d6a66c.
+Commands and outputs: ten focused leaves pass after restoration; lane checks and go vet pass.
+Mutants: M01 and M02 fail behavior comparisons; M04 and M14-M16 need narrowly documented invariant/proof checks; seven empty-answer probes fail.
+Limit: the four latter mutants pass all seven JavaScript behavior tests; six behavioral kills cannot be claimed.
+
+The current delivery report is [behavior/report.md](behavior/report.md), with new replay logs and results in that directory. The record below describes the superseded snapshot-based commit bbf1476d and its original evidence; those assertions have been removed from the seven tests by e80dcea0.
 
 This is test-only work toward the named enum-lowering guard task. The seven formerly acceptance-only tests now require exact forward member constants and reverse names in the emitted enum object. Alias cases require one reverse slot containing the last declared alias, preserving the field's original position. The never-default test requires its runtime panic guard. Enum name iteration requires ObjectKeys IR and Node's numeric-key-first order; inline iteration requires the ordered numeric array and its bitwise-OR operands. Both iteration tests compare source Node, generated JavaScript and native output.
 

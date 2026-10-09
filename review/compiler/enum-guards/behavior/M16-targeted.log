@@ -1,0 +1,9 @@
+=== RUN   TestEnumFlagProofsWithoutObservableLoweringEffect
+=== PAUSE TestEnumFlagProofsWithoutObservableLoweringEffect
+=== CONT  TestEnumFlagProofsWithoutObservableLoweringEffect
+    enum_guards_test.go:134: left flag domain = false, want true
+    enum_guards_test.go:134: right flag domain = false, want true
+--- FAIL: TestEnumFlagProofsWithoutObservableLoweringEffect (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.073s
+FAIL

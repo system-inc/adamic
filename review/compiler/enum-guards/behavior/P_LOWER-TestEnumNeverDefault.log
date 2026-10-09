@@ -1,0 +1,8 @@
+=== RUN   TestEnumNeverDefault
+=== PAUSE TestEnumNeverDefault
+=== CONT  TestEnumNeverDefault
+    enum_flags_test.go:77: lowering returned empty IR
+--- FAIL: TestEnumNeverDefault (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.107s
+FAIL

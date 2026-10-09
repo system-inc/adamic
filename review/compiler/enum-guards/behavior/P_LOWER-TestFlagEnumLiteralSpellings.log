@@ -1,0 +1,8 @@
+=== RUN   TestFlagEnumLiteralSpellings
+=== PAUSE TestFlagEnumLiteralSpellings
+=== CONT  TestFlagEnumLiteralSpellings
+    enum_flags_test.go:82: lowering returned empty IR
+--- FAIL: TestFlagEnumLiteralSpellings (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.103s
+FAIL

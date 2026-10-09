@@ -1,0 +1,8 @@
+=== RUN   TestFlagEnumInlineIteration
+=== PAUSE TestFlagEnumInlineIteration
+=== CONT  TestFlagEnumInlineIteration
+    enum_flags_test.go:97: lowering returned empty IR
+--- FAIL: TestFlagEnumInlineIteration (0.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.104s
+FAIL
