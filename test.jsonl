@@ -1,0 +1,598 @@
+{"Time":"2026-10-09T12:58:09.711717671Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:09.722868356Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLargeCompilerOutputIsComplete"}
+{"Time":"2026-10-09T12:58:09.72293089Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLargeCompilerOutputIsComplete","Output":"=== RUN   TestLargeCompilerOutputIsComplete\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:09.722952553Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLargeCompilerOutputIsComplete","Output":"=== PAUSE TestLargeCompilerOutputIsComplete\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:09.722957921Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLargeCompilerOutputIsComplete"}
+{"Time":"2026-10-09T12:58:09.722965933Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLargeCompilerOutputIsComplete"}
+{"Time":"2026-10-09T12:58:09.722969599Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLargeCompilerOutputIsComplete","Output":"=== CONT  TestLargeCompilerOutputIsComplete\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:24.369326684Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLargeCompilerOutputIsComplete","Output":"large.js 1/1 pass=1 fail=0 refused=0 crashed=0 skipped=0\n"}
+{"Time":"2026-10-09T12:58:24.387544705Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLargeCompilerOutputIsComplete","Output":"--- PASS: TestLargeCompilerOutputIsComplete (14.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:24.387610524Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLargeCompilerOutputIsComplete","Elapsed":14.66}
+{"Time":"2026-10-09T12:58:24.387657796Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:24.446735816Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t14.735s\n"}
+{"Time":"2026-10-09T12:58:24.44680482Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":14.735}
+{"Time":"2026-10-09T12:58:09.321315381Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:09.328270337Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial"}
+{"Time":"2026-10-09T12:58:09.328323726Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial","Output":"=== RUN   TestParallelCachedMatchesSerial\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:17.241589424Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial","Output":"--- PASS: TestParallelCachedMatchesSerial (7.91s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:17.241664575Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestParallelCachedMatchesSerial","Elapsed":7.91}
+{"Time":"2026-10-09T12:58:17.241695931Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:17.265318432Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t7.944s\n"}
+{"Time":"2026-10-09T12:58:17.26537163Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":7.944}
+{"Time":"2026-10-09T12:58:14.816368496Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:14.828505118Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-09T12:58:14.828564535Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== RUN   TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:14.828587689Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== PAUSE TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:14.828590385Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-09T12:58:14.828593169Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh"}
+{"Time":"2026-10-09T12:58:14.828595301Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"=== CONT  TestImportedInputsRunFresh\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:25.844929484Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Output":"--- PASS: TestImportedInputsRunFresh (11.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:25.845099525Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestImportedInputsRunFresh","Elapsed":11.02}
+{"Time":"2026-10-09T12:58:25.84515443Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:25.907575628Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t11.091s\n"}
+{"Time":"2026-10-09T12:58:25.907714725Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":11.091}
+{"Time":"2026-10-09T12:58:14.844997237Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:14.855141119Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories"}
+{"Time":"2026-10-09T12:58:14.855217325Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories","Output":"=== RUN   TestCompilerCacheAcrossScratchDirectories\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:23.316035614Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories","Output":"--- PASS: TestCompilerCacheAcrossScratchDirectories (8.46s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:23.316089025Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheAcrossScratchDirectories","Elapsed":8.46}
+{"Time":"2026-10-09T12:58:23.316111618Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:23.362806371Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t8.517s\n"}
+{"Time":"2026-10-09T12:58:23.362846436Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":8.518}
+{"Time":"2026-10-09T12:58:31.342805383Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:31.3502478Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess"}
+{"Time":"2026-10-09T12:58:31.350298967Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"=== RUN   TestCompilerWorkerMatchesSubprocess\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:31.350325857Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"=== PAUSE TestCompilerWorkerMatchesSubprocess\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:31.350328411Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess"}
+{"Time":"2026-10-09T12:58:31.350332667Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess"}
+{"Time":"2026-10-09T12:58:31.35033432Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"=== CONT  TestCompilerWorkerMatchesSubprocess\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:38.75440939Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Output":"--- PASS: TestCompilerWorkerMatchesSubprocess (7.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:38.754480397Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerMatchesSubprocess","Elapsed":7.4}
+{"Time":"2026-10-09T12:58:38.755891943Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:38.804209637Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t7.461s\n"}
+{"Time":"2026-10-09T12:58:38.804274975Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":7.461}
+{"Time":"2026-10-09T12:58:30.384256853Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:30.391462127Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress"}
+{"Time":"2026-10-09T12:58:30.391514446Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress","Output":"=== RUN   TestOrderedProgress\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:30.391534516Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress","Output":"=== PAUSE TestOrderedProgress\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:30.39153701Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress"}
+{"Time":"2026-10-09T12:58:30.391539073Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress"}
+{"Time":"2026-10-09T12:58:30.391540695Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress","Output":"=== CONT  TestOrderedProgress\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:34.099112235Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress","Output":"--- PASS: TestOrderedProgress (3.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:34.099163582Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOrderedProgress","Elapsed":3.71}
+{"Time":"2026-10-09T12:58:34.099183372Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:34.166490045Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t3.782s\n"}
+{"Time":"2026-10-09T12:58:34.166533911Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":3.782}
+{"Time":"2026-10-09T12:58:32.887485602Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:32.89625701Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback"}
+{"Time":"2026-10-09T12:58:32.896319856Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Output":"=== RUN   TestWorkerLazyFallback\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:32.896342405Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Output":"=== PAUSE TestWorkerLazyFallback\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:32.896344817Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback"}
+{"Time":"2026-10-09T12:58:32.896347199Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback"}
+{"Time":"2026-10-09T12:58:32.896348906Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Output":"=== CONT  TestWorkerLazyFallback\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:37.420929431Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Output":"--- PASS: TestWorkerLazyFallback (4.52s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:37.42097879Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestWorkerLazyFallback","Elapsed":4.52}
+{"Time":"2026-10-09T12:58:37.42099844Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:37.461432957Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t4.574s\n"}
+{"Time":"2026-10-09T12:58:37.461475306Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":4.574}
+{"Time":"2026-10-09T12:58:33.493233081Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:33.506399565Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner"}
+{"Time":"2026-10-09T12:58:33.506523628Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"=== RUN   TestMiniRunner\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:33.507098116Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"=== PAUSE TestMiniRunner\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:33.507112217Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner"}
+{"Time":"2026-10-09T12:58:33.507116802Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner"}
+{"Time":"2026-10-09T12:58:33.507119213Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"=== CONT  TestMiniRunner\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:38.661134611Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"pass 1/1 pass=1 fail=0 refused=0 crashed=0 skipped=0\n"}
+{"Time":"2026-10-09T12:58:38.661309642Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"skip 1/1 pass=0 fail=0 refused=0 crashed=0 skipped=1\n"}
+{"Time":"2026-10-09T12:58:38.727974871Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"refuse 1/1 pass=0 fail=0 refused=1 crashed=0 skipped=0\n"}
+{"Time":"2026-10-09T12:58:38.73192974Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Output":"--- PASS: TestMiniRunner (5.23s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:38.731975111Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestMiniRunner","Elapsed":5.23}
+{"Time":"2026-10-09T12:58:38.732033196Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:38.784950877Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t5.291s\n"}
+{"Time":"2026-10-09T12:58:38.785008418Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":5.292}
+{"Time":"2026-10-09T12:58:46.738139721Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:46.749653144Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns"}
+{"Time":"2026-10-09T12:58:46.749727055Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"=== RUN   TestUnavailableCacheStillRuns\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.749751999Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"=== PAUSE TestUnavailableCacheStillRuns\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.749754782Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns"}
+{"Time":"2026-10-09T12:58:46.749757567Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns"}
+{"Time":"2026-10-09T12:58:46.749759547Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"=== CONT  TestUnavailableCacheStillRuns\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:52.155852644Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Output":"--- PASS: TestUnavailableCacheStillRuns (5.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:52.156104627Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestUnavailableCacheStillRuns","Elapsed":5.41}
+{"Time":"2026-10-09T12:58:52.156217354Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:52.205283654Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t5.467s\n"}
+{"Time":"2026-10-09T12:58:52.205370279Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":5.467}
+{"Time":"2026-10-09T12:58:46.427237271Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:46.43571731Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet"}
+{"Time":"2026-10-09T12:58:46.4357638Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet","Output":"=== RUN   TestAdaptVarToLet\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435806004Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet","Output":"=== PAUSE TestAdaptVarToLet\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.43581002Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet"}
+{"Time":"2026-10-09T12:58:46.435817932Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptCallbackParam"}
+{"Time":"2026-10-09T12:58:46.435820596Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptCallbackParam","Output":"=== RUN   TestAdaptCallbackParam\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435824842Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptCallbackParam","Output":"=== PAUSE TestAdaptCallbackParam\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435826204Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptCallbackParam"}
+{"Time":"2026-10-09T12:58:46.435828508Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptStrictEq"}
+{"Time":"2026-10-09T12:58:46.43583018Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptStrictEq","Output":"=== RUN   TestAdaptStrictEq\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435832474Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptStrictEq","Output":"=== PAUSE TestAdaptStrictEq\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435833976Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptStrictEq"}
+{"Time":"2026-10-09T12:58:46.43583645Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptThrowError"}
+{"Time":"2026-10-09T12:58:46.435838032Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptThrowError","Output":"=== RUN   TestAdaptThrowError\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435839744Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptThrowError","Output":"=== PAUSE TestAdaptThrowError\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435841167Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptThrowError"}
+{"Time":"2026-10-09T12:58:46.435843971Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptLeavesCheckoutText"}
+{"Time":"2026-10-09T12:58:46.435845583Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptLeavesCheckoutText","Output":"=== RUN   TestAdaptLeavesCheckoutText\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435848317Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptLeavesCheckoutText","Output":"=== PAUSE TestAdaptLeavesCheckoutText\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435849569Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptLeavesCheckoutText"}
+{"Time":"2026-10-09T12:58:46.435851031Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyAdapt"}
+{"Time":"2026-10-09T12:58:46.435852804Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyAdapt","Output":"=== RUN   TestClassifyAdapt\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435859184Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyAdapt","Output":"=== PAUSE TestClassifyAdapt\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435860816Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyAdapt"}
+{"Time":"2026-10-09T12:58:46.43586345Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCrashPath"}
+{"Time":"2026-10-09T12:58:46.435864752Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCrashPath","Output":"=== RUN   TestCrashPath\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435867246Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCrashPath","Output":"=== PAUSE TestCrashPath\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435868598Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCrashPath"}
+{"Time":"2026-10-09T12:58:46.43587022Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeCacheProgram"}
+{"Time":"2026-10-09T12:58:46.435871713Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeCacheProgram","Output":"=== RUN   TestNodeCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435874567Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeCacheProgram","Output":"=== PAUSE TestNodeCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435875979Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeCacheProgram"}
+{"Time":"2026-10-09T12:58:46.435877752Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions"}
+{"Time":"2026-10-09T12:58:46.435879224Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"=== RUN   TestCacheKeyDimensions\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.43588309Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"=== PAUSE TestCacheKeyDimensions\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435884312Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions"}
+{"Time":"2026-10-09T12:58:46.435886605Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes"}
+{"Time":"2026-10-09T12:58:46.435887977Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes","Output":"=== RUN   TestCacheAtomicBytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435919785Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes","Output":"=== PAUSE TestCacheAtomicBytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.435921417Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes"}
+{"Time":"2026-10-09T12:58:46.43592308Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypass"}
+{"Time":"2026-10-09T12:58:46.435924452Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypass","Output":"=== RUN   TestCacheBypass\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436265065Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypass","Output":"--- PASS: TestCacheBypass (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436268931Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypass","Elapsed":0}
+{"Time":"2026-10-09T12:58:46.436275521Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-09T12:58:46.436279457Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== RUN   TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436282721Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== PAUSE TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436284454Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-09T12:58:46.436288951Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerHangHelper"}
+{"Time":"2026-10-09T12:58:46.436290533Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerHangHelper","Output":"=== RUN   TestCompilerHangHelper\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436317203Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerHangHelper","Output":"=== PAUSE TestCompilerHangHelper\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436319136Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerHangHelper"}
+{"Time":"2026-10-09T12:58:46.436320809Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerTimeout"}
+{"Time":"2026-10-09T12:58:46.436322071Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerTimeout","Output":"=== RUN   TestCompilerWorkerTimeout\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436326698Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerTimeout","Output":"=== PAUSE TestCompilerWorkerTimeout\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.43632808Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerTimeout"}
+{"Time":"2026-10-09T12:58:46.436343132Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus"}
+{"Time":"2026-10-09T12:58:46.436344905Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus","Output":"=== RUN   TestClassifyCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436365787Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus","Output":"=== PAUSE TestClassifyCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436367429Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus"}
+{"Time":"2026-10-09T12:58:46.436375261Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus"}
+{"Time":"2026-10-09T12:58:46.436377714Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus","Output":"=== RUN   TestVerdictCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436381971Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus","Output":"=== PAUSE TestVerdictCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436384234Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus"}
+{"Time":"2026-10-09T12:58:46.436439167Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason"}
+{"Time":"2026-10-09T12:58:46.436443484Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason","Output":"=== RUN   TestNormalizeReason\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436446148Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason","Output":"=== PAUSE TestNormalizeReason\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.43644748Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason"}
+{"Time":"2026-10-09T12:58:46.436451045Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRewriteHarnessCalls"}
+{"Time":"2026-10-09T12:58:46.436452727Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRewriteHarnessCalls","Output":"=== RUN   TestRewriteHarnessCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436455792Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRewriteHarnessCalls","Output":"=== PAUSE TestRewriteHarnessCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436457204Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRewriteHarnessCalls"}
+{"Time":"2026-10-09T12:58:46.436458937Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes"}
+{"Time":"2026-10-09T12:58:46.436460219Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes","Output":"=== RUN   TestFrontmatterShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436462021Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes","Output":"=== PAUSE TestFrontmatterShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436463404Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes"}
+{"Time":"2026-10-09T12:58:46.436465036Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported"}
+{"Time":"2026-10-09T12:58:46.436466378Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Output":"=== RUN   TestOutputOverflowIsReported\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436468421Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Output":"=== PAUSE TestOutputOverflowIsReported\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436469873Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported"}
+{"Time":"2026-10-09T12:58:46.436471275Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeHarnessIdentity"}
+{"Time":"2026-10-09T12:58:46.436472457Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeHarnessIdentity","Output":"=== RUN   TestNodeHarnessIdentity\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436476233Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeHarnessIdentity","Output":"=== PAUSE TestNodeHarnessIdentity\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:46.436477705Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeHarnessIdentity"}
+{"Time":"2026-10-09T12:58:46.436479508Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLoweringSourceEdit"}
+{"Time":"2026-10-09T12:58:46.43648077Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLoweringSourceEdit","Output":"=== RUN   TestLoweringSourceEdit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734365437Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLoweringSourceEdit","Output":"--- PASS: TestLoweringSourceEdit (2.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734419939Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestLoweringSourceEdit","Elapsed":2.3}
+{"Time":"2026-10-09T12:58:48.73444087Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationHelper"}
+{"Time":"2026-10-09T12:58:48.734444917Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationHelper","Output":"=== RUN   TestRunnerLocationHelper\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73445392Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationHelper","Output":"=== PAUSE TestRunnerLocationHelper\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734457405Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationHelper"}
+{"Time":"2026-10-09T12:58:48.7344608Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement"}
+{"Time":"2026-10-09T12:58:48.734463905Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Output":"=== RUN   TestCompilerStartupMeasurement\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73446689Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Output":"    performance_test.go:20: measurement only\n"}
+{"Time":"2026-10-09T12:58:48.73452692Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Output":"--- SKIP: TestCompilerStartupMeasurement (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734535132Z","Action":"skip","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerStartupMeasurement","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.73454026Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet"}
+{"Time":"2026-10-09T12:58:48.734543445Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet","Output":"=== CONT  TestAdaptVarToLet\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734549294Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/plain"}
+{"Time":"2026-10-09T12:58:48.734552198Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/plain","Output":"=== RUN   TestAdaptVarToLet/plain\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734595864Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerHangHelper"}
+{"Time":"2026-10-09T12:58:48.734599129Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerHangHelper","Output":"=== CONT  TestCompilerHangHelper\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734602944Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerHangHelper","Output":"--- PASS: TestCompilerHangHelper (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734605448Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerHangHelper","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.734607591Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationHelper"}
+{"Time":"2026-10-09T12:58:48.734609364Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationHelper","Output":"=== CONT  TestRunnerLocationHelper\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734612539Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationHelper","Output":"--- PASS: TestRunnerLocationHelper (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734615934Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationHelper","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.734618077Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeHarnessIdentity"}
+{"Time":"2026-10-09T12:58:48.73462015Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeHarnessIdentity","Output":"=== CONT  TestNodeHarnessIdentity\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734657547Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason"}
+{"Time":"2026-10-09T12:58:48.734660201Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason","Output":"=== CONT  TestNormalizeReason\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734663305Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_"}
+{"Time":"2026-10-09T12:58:48.734665859Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_","Output":"=== RUN   TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734736015Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_","Output":"=== PAUSE TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734740482Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_"}
+{"Time":"2026-10-09T12:58:48.734744317Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_"}
+{"Time":"2026-10-09T12:58:48.734747202Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_","Output":"=== RUN   TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734755414Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_","Output":"=== PAUSE TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734757958Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_"}
+{"Time":"2026-10-09T12:58:48.734760572Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._"}
+{"Time":"2026-10-09T12:58:48.734763546Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._","Output":"=== RUN   TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734766801Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._","Output":"=== PAUSE TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734769395Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._"}
+{"Time":"2026-10-09T12:58:48.73477896Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_"}
+{"Time":"2026-10-09T12:58:48.734782385Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_","Output":"=== CONT  TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734808955Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_","Output":"--- PASS: TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_ (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734815034Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_prog.ts:1:14:_stage_0_can't_lower_a_rest_parameter_yet_","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.734817327Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported"}
+{"Time":"2026-10-09T12:58:48.73481915Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Output":"=== CONT  TestOutputOverflowIsReported\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734823366Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Output":"--- PASS: TestOutputOverflowIsReported (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73482607Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestOutputOverflowIsReported","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.734827713Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes"}
+{"Time":"2026-10-09T12:58:48.734829395Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes","Output":"=== CONT  TestFrontmatterShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734898129Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes","Output":"--- PASS: TestFrontmatterShapes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734904719Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestFrontmatterShapes","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.734908775Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRewriteHarnessCalls"}
+{"Time":"2026-10-09T12:58:48.734910768Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRewriteHarnessCalls","Output":"=== CONT  TestRewriteHarnessCalls\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734914824Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeHarnessIdentity","Output":"--- PASS: TestNodeHarnessIdentity (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734917959Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeHarnessIdentity","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.734920513Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus"}
+{"Time":"2026-10-09T12:58:48.734924108Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus","Output":"=== CONT  TestVerdictCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734946962Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRewriteHarnessCalls","Output":"--- PASS: TestRewriteHarnessCalls (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734950658Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRewriteHarnessCalls","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.734953052Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._"}
+{"Time":"2026-10-09T12:58:48.734956998Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._","Output":"=== CONT  TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734962546Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._","Output":"--- PASS: TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._ (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734965941Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/program.ts:1:12:_error_TS7006:_Parameter_'x'_implicitly_has_an_'any'_type._","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.734968154Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_"}
+{"Time":"2026-10-09T12:58:48.734970638Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_","Output":"=== CONT  TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734973573Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/both_pass.json"}
+{"Time":"2026-10-09T12:58:48.734975706Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/both_pass.json","Output":"=== RUN   TestVerdictCorpus/both_pass.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734980183Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_","Output":"--- PASS: TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_ (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734983387Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason/adamic:_/tmp/work/program.ts:1:1:_Adamic_0.1_refuses_var;_use_const_or_let_","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.734986172Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason","Output":"--- PASS: TestNormalizeReason (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734989406Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNormalizeReason","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.73499156Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus"}
+{"Time":"2026-10-09T12:58:48.734993923Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus","Output":"=== CONT  TestClassifyCorpus\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.734997208Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/both_pass.json","Output":"=== PAUSE TestVerdictCorpus/both_pass.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735000173Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/both_pass.json"}
+{"Time":"2026-10-09T12:58:48.735003778Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_fails.json"}
+{"Time":"2026-10-09T12:58:48.735006382Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_fails.json","Output":"=== RUN   TestVerdictCorpus/native_fails.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735014344Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_fails.json","Output":"=== PAUSE TestVerdictCorpus/native_fails.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735017178Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_fails.json"}
+{"Time":"2026-10-09T12:58:48.735020093Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js"}
+{"Time":"2026-10-09T12:58:48.735022176Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js","Output":"=== RUN   TestClassifyCorpus/feature_proxy.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73502488Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerTimeout"}
+{"Time":"2026-10-09T12:58:48.735027143Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerTimeout","Output":"=== CONT  TestCompilerWorkerTimeout\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735030699Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js","Output":"=== PAUSE TestClassifyCorpus/feature_proxy.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735033162Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js"}
+{"Time":"2026-10-09T12:58:48.735035886Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js"}
+{"Time":"2026-10-09T12:58:48.7350385Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js","Output":"=== RUN   TestClassifyCorpus/harness_include.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735042847Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js","Output":"=== PAUSE TestClassifyCorpus/harness_include.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73505841Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js"}
+{"Time":"2026-10-09T12:58:48.735063127Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js"}
+{"Time":"2026-10-09T12:58:48.73506517Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js","Output":"=== RUN   TestClassifyCorpus/negative_early.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735068966Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js","Output":"=== PAUSE TestClassifyCorpus/negative_early.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735071099Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js"}
+{"Time":"2026-10-09T12:58:48.735073483Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js"}
+{"Time":"2026-10-09T12:58:48.735075666Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js","Output":"=== RUN   TestClassifyCorpus/negative_parse.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735078661Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js","Output":"=== PAUSE TestClassifyCorpus/negative_parse.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735080894Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js"}
+{"Time":"2026-10-09T12:58:48.73508477Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js"}
+{"Time":"2026-10-09T12:58:48.735087294Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js","Output":"=== RUN   TestClassifyCorpus/negative_runtime.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735090098Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js","Output":"=== PAUSE TestClassifyCorpus/negative_runtime.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735092381Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js"}
+{"Time":"2026-10-09T12:58:48.735095065Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js"}
+{"Time":"2026-10-09T12:58:48.735097379Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js","Output":"=== RUN   TestClassifyCorpus/plain.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735101355Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js","Output":"=== PAUSE TestClassifyCorpus/plain.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735103548Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js"}
+{"Time":"2026-10-09T12:58:48.735106202Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js"}
+{"Time":"2026-10-09T12:58:48.735108406Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js","Output":"=== CONT  TestClassifyCorpus/feature_proxy.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735112201Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/plain","Output":"=== PAUSE TestAdaptVarToLet/plain\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735114545Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/plain"}
+{"Time":"2026-10-09T12:58:48.735118481Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js"}
+{"Time":"2026-10-09T12:58:48.735120814Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js","Output":"=== CONT  TestClassifyCorpus/plain.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735124169Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/two_names"}
+{"Time":"2026-10-09T12:58:48.735126543Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/two_names","Output":"=== RUN   TestAdaptVarToLet/two_names\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735130018Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/two_names","Output":"=== PAUSE TestAdaptVarToLet/two_names\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735132292Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/two_names"}
+{"Time":"2026-10-09T12:58:48.735135446Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/redeclaration"}
+{"Time":"2026-10-09T12:58:48.73513787Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/redeclaration","Output":"=== RUN   TestAdaptVarToLet/redeclaration\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735141475Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/redeclaration","Output":"=== PAUSE TestAdaptVarToLet/redeclaration\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735145271Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/redeclaration"}
+{"Time":"2026-10-09T12:58:48.735148656Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js"}
+{"Time":"2026-10-09T12:58:48.73515127Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js","Output":"=== CONT  TestClassifyCorpus/negative_runtime.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735183839Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/read_before"}
+{"Time":"2026-10-09T12:58:48.735187024Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/read_before","Output":"=== RUN   TestAdaptVarToLet/read_before\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735190529Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/read_before","Output":"=== PAUSE TestAdaptVarToLet/read_before\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735192963Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/read_before"}
+{"Time":"2026-10-09T12:58:48.735196779Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/initializer_reads_itself"}
+{"Time":"2026-10-09T12:58:48.735199152Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/initializer_reads_itself","Output":"=== RUN   TestAdaptVarToLet/initializer_reads_itself\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735202748Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/initializer_reads_itself","Output":"=== PAUSE TestAdaptVarToLet/initializer_reads_itself\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735205031Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/initializer_reads_itself"}
+{"Time":"2026-10-09T12:58:48.735208727Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js"}
+{"Time":"2026-10-09T12:58:48.73521097Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js","Output":"=== CONT  TestClassifyCorpus/negative_early.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735214756Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/closure_above_the_declarator"}
+{"Time":"2026-10-09T12:58:48.735216919Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/closure_above_the_declarator","Output":"=== RUN   TestAdaptVarToLet/closure_above_the_declarator\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735220344Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/closure_above_the_declarator","Output":"=== PAUSE TestAdaptVarToLet/closure_above_the_declarator\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735222998Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/closure_above_the_declarator"}
+{"Time":"2026-10-09T12:58:48.735225522Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js"}
+{"Time":"2026-10-09T12:58:48.735227685Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js","Output":"=== CONT  TestClassifyCorpus/harness_include.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735230209Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_captured"}
+{"Time":"2026-10-09T12:58:48.73523752Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_captured","Output":"=== RUN   TestAdaptVarToLet/loop_variable_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735241776Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_captured","Output":"=== PAUSE TestAdaptVarToLet/loop_variable_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73524404Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_captured"}
+{"Time":"2026-10-09T12:58:48.735246784Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_not_captured"}
+{"Time":"2026-10-09T12:58:48.735249037Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_not_captured","Output":"=== RUN   TestAdaptVarToLet/loop_variable_not_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735252573Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_not_captured","Output":"=== PAUSE TestAdaptVarToLet/loop_variable_not_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735254926Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_not_captured"}
+{"Time":"2026-10-09T12:58:48.73525752Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_sanitizer.json"}
+{"Time":"2026-10-09T12:58:48.735259834Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_sanitizer.json","Output":"=== RUN   TestVerdictCorpus/native_sanitizer.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735267175Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_captured"}
+{"Time":"2026-10-09T12:58:48.735269348Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_captured","Output":"=== RUN   TestAdaptVarToLet/var_in_loop_body_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735273094Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_sanitizer.json","Output":"=== PAUSE TestVerdictCorpus/native_sanitizer.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735275317Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_sanitizer.json"}
+{"Time":"2026-10-09T12:58:48.735278311Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_native_succeeded.json"}
+{"Time":"2026-10-09T12:58:48.735280735Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_native_succeeded.json","Output":"=== RUN   TestVerdictCorpus/negative_native_succeeded.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735284421Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js","Output":"--- PASS: TestClassifyCorpus/feature_proxy.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735287225Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/feature_proxy.js","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.735289558Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptLeavesCheckoutText"}
+{"Time":"2026-10-09T12:58:48.735291782Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptLeavesCheckoutText","Output":"=== CONT  TestAdaptLeavesCheckoutText\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735296078Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_native_succeeded.json","Output":"=== PAUSE TestVerdictCorpus/negative_native_succeeded.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735298382Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_native_succeeded.json"}
+{"Time":"2026-10-09T12:58:48.735301176Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_observed.json"}
+{"Time":"2026-10-09T12:58:48.735303389Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_observed.json","Output":"=== RUN   TestVerdictCorpus/negative_observed.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735307325Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_observed.json","Output":"=== PAUSE TestVerdictCorpus/negative_observed.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735309919Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_observed.json"}
+{"Time":"2026-10-09T12:58:48.735312743Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/stdout_disagrees.json"}
+{"Time":"2026-10-09T12:58:48.735314836Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/stdout_disagrees.json","Output":"=== RUN   TestVerdictCorpus/stdout_disagrees.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735317701Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/stdout_disagrees.json","Output":"=== PAUSE TestVerdictCorpus/stdout_disagrees.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735319664Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/stdout_disagrees.json"}
+{"Time":"2026-10-09T12:58:48.735322318Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptLeavesCheckoutText","Output":"--- PASS: TestAdaptLeavesCheckoutText (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735325252Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptLeavesCheckoutText","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.735327746Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js","Output":"--- PASS: TestClassifyCorpus/plain.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.735331792Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/plain.js","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.735336279Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram"}
+{"Time":"2026-10-09T12:58:48.735338412Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"=== CONT  TestCompilerCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738868046Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js"}
+{"Time":"2026-10-09T12:58:48.738906695Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js","Output":"=== CONT  TestClassifyCorpus/negative_parse.js\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738912764Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes"}
+{"Time":"2026-10-09T12:58:48.738915658Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes","Output":"=== CONT  TestCacheAtomicBytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738922148Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_captured","Output":"=== PAUSE TestAdaptVarToLet/var_in_loop_body_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738925213Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_captured"}
+{"Time":"2026-10-09T12:58:48.738928548Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_not_captured"}
+{"Time":"2026-10-09T12:58:48.738930761Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_not_captured","Output":"=== RUN   TestAdaptVarToLet/var_in_loop_body_not_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738934046Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_not_captured","Output":"=== PAUSE TestAdaptVarToLet/var_in_loop_body_not_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73893656Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_not_captured"}
+{"Time":"2026-10-09T12:58:48.738939023Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/used_after_the_loop"}
+{"Time":"2026-10-09T12:58:48.738941387Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/used_after_the_loop","Output":"=== RUN   TestAdaptVarToLet/used_after_the_loop\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738944442Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/used_after_the_loop","Output":"=== PAUSE TestAdaptVarToLet/used_after_the_loop\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738947045Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/used_after_the_loop"}
+{"Time":"2026-10-09T12:58:48.73894996Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_leaks"}
+{"Time":"2026-10-09T12:58:48.738952293Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_leaks","Output":"=== RUN   TestAdaptVarToLet/block_leaks\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738955718Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_leaks","Output":"=== PAUSE TestAdaptVarToLet/block_leaks\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738958503Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_leaks"}
+{"Time":"2026-10-09T12:58:48.738961828Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_does_not_leak"}
+{"Time":"2026-10-09T12:58:48.738964291Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_does_not_leak","Output":"=== RUN   TestAdaptVarToLet/block_does_not_leak\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738967316Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_does_not_leak","Output":"=== PAUSE TestAdaptVarToLet/block_does_not_leak\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73897685Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_does_not_leak"}
+{"Time":"2026-10-09T12:58:48.738979855Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/switch_case"}
+{"Time":"2026-10-09T12:58:48.738982299Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/switch_case","Output":"=== RUN   TestAdaptVarToLet/switch_case\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738989479Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/switch_case","Output":"=== PAUSE TestAdaptVarToLet/switch_case\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.738991903Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/switch_case"}
+{"Time":"2026-10-09T12:58:48.738994677Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_inside_a_string"}
+{"Time":"2026-10-09T12:58:48.738996991Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_inside_a_string","Output":"=== RUN   TestAdaptVarToLet/var_inside_a_string\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739000256Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_inside_a_string","Output":"=== PAUSE TestAdaptVarToLet/var_inside_a_string\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739002849Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_inside_a_string"}
+{"Time":"2026-10-09T12:58:48.739005724Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/parameter_shadow"}
+{"Time":"2026-10-09T12:58:48.739008208Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/parameter_shadow","Output":"=== RUN   TestAdaptVarToLet/parameter_shadow\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739011733Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/parameter_shadow","Output":"=== PAUSE TestAdaptVarToLet/parameter_shadow\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739014567Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/parameter_shadow"}
+{"Time":"2026-10-09T12:58:48.739018483Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes","Output":"--- PASS: TestCacheAtomicBytes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739021427Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheAtomicBytes","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739024482Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeCacheProgram"}
+{"Time":"2026-10-09T12:58:48.739027036Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeCacheProgram","Output":"=== CONT  TestNodeCacheProgram\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739032104Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions"}
+{"Time":"2026-10-09T12:58:48.739035118Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"=== CONT  TestCacheKeyDimensions\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739039074Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Output":"--- PASS: TestCacheKeyDimensions (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739042399Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheKeyDimensions","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739044432Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyAdapt"}
+{"Time":"2026-10-09T12:58:48.739047807Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyAdapt","Output":"=== CONT  TestClassifyAdapt\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739051823Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyAdapt","Output":"--- PASS: TestClassifyAdapt (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73905649Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyAdapt","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739058984Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptCallbackParam"}
+{"Time":"2026-10-09T12:58:48.739061227Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptCallbackParam","Output":"=== CONT  TestAdaptCallbackParam\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739064733Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptCallbackParam","Output":"--- PASS: TestAdaptCallbackParam (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739067817Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptCallbackParam","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739070111Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptThrowError"}
+{"Time":"2026-10-09T12:58:48.739072264Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptThrowError","Output":"=== CONT  TestAdaptThrowError\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739075429Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptThrowError","Output":"--- PASS: TestAdaptThrowError (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739078193Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptThrowError","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739080046Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptStrictEq"}
+{"Time":"2026-10-09T12:58:48.73908263Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptStrictEq","Output":"=== CONT  TestAdaptStrictEq\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739086535Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptStrictEq","Output":"--- PASS: TestAdaptStrictEq (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73908971Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptStrictEq","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739091253Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/plain"}
+{"Time":"2026-10-09T12:58:48.739093015Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/plain","Output":"=== CONT  TestAdaptVarToLet/plain\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739095789Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/plain","Output":"--- PASS: TestAdaptVarToLet/plain (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739098794Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/plain","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739101448Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js","Output":"--- PASS: TestClassifyCorpus/negative_runtime.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739104483Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_runtime.js","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739107237Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js","Output":"--- PASS: TestClassifyCorpus/negative_early.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739110742Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_early.js","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739115109Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js","Output":"--- PASS: TestClassifyCorpus/harness_include.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739118664Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/harness_include.js","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739121939Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCrashPath"}
+{"Time":"2026-10-09T12:58:48.739124342Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCrashPath","Output":"=== CONT  TestCrashPath\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739128068Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCrashPath","Output":"--- PASS: TestCrashPath (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739131824Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCrashPath","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739134157Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/both_pass.json"}
+{"Time":"2026-10-09T12:58:48.739136581Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/both_pass.json","Output":"=== CONT  TestVerdictCorpus/both_pass.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739140096Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/both_pass.json","Output":"--- PASS: TestVerdictCorpus/both_pass.json (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739143902Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/both_pass.json","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739146175Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_not_captured"}
+{"Time":"2026-10-09T12:58:48.73914959Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_not_captured","Output":"=== CONT  TestAdaptVarToLet/var_in_loop_body_not_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739175219Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_not_captured","Output":"--- PASS: TestAdaptVarToLet/var_in_loop_body_not_captured (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739179015Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_not_captured","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739181529Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_inside_a_string"}
+{"Time":"2026-10-09T12:58:48.739183742Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_inside_a_string","Output":"=== CONT  TestAdaptVarToLet/var_inside_a_string\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739187648Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_inside_a_string","Output":"--- PASS: TestAdaptVarToLet/var_inside_a_string (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739191223Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_inside_a_string","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739193577Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/switch_case"}
+{"Time":"2026-10-09T12:58:48.73919575Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/switch_case","Output":"=== CONT  TestAdaptVarToLet/switch_case\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739201759Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/switch_case","Output":"--- PASS: TestAdaptVarToLet/switch_case (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739211163Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/switch_case","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739213467Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_does_not_leak"}
+{"Time":"2026-10-09T12:58:48.73921585Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_does_not_leak","Output":"=== CONT  TestAdaptVarToLet/block_does_not_leak\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739219335Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_does_not_leak","Output":"--- PASS: TestAdaptVarToLet/block_does_not_leak (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.73922263Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_does_not_leak","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739224814Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_leaks"}
+{"Time":"2026-10-09T12:58:48.739227097Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_leaks","Output":"=== CONT  TestAdaptVarToLet/block_leaks\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739230402Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_leaks","Output":"--- PASS: TestAdaptVarToLet/block_leaks (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739233317Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/block_leaks","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.73923546Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/used_after_the_loop"}
+{"Time":"2026-10-09T12:58:48.739237773Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/used_after_the_loop","Output":"=== CONT  TestAdaptVarToLet/used_after_the_loop\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739241028Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/used_after_the_loop","Output":"--- PASS: TestAdaptVarToLet/used_after_the_loop (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739244363Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/used_after_the_loop","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739246807Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/stdout_disagrees.json"}
+{"Time":"2026-10-09T12:58:48.739249561Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/stdout_disagrees.json","Output":"=== CONT  TestVerdictCorpus/stdout_disagrees.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739253337Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/stdout_disagrees.json","Output":"--- PASS: TestVerdictCorpus/stdout_disagrees.json (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739256602Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/stdout_disagrees.json","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739258765Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_observed.json"}
+{"Time":"2026-10-09T12:58:48.739261118Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_observed.json","Output":"=== CONT  TestVerdictCorpus/negative_observed.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739266547Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_observed.json","Output":"--- PASS: TestVerdictCorpus/negative_observed.json (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739273277Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_observed.json","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.73927538Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_native_succeeded.json"}
+{"Time":"2026-10-09T12:58:48.739277463Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_native_succeeded.json","Output":"=== CONT  TestVerdictCorpus/negative_native_succeeded.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739281008Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_native_succeeded.json","Output":"--- PASS: TestVerdictCorpus/negative_native_succeeded.json (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739284063Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/negative_native_succeeded.json","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739286216Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_sanitizer.json"}
+{"Time":"2026-10-09T12:58:48.73928859Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_sanitizer.json","Output":"=== CONT  TestVerdictCorpus/native_sanitizer.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739292085Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_sanitizer.json","Output":"--- PASS: TestVerdictCorpus/native_sanitizer.json (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739294999Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_sanitizer.json","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739296722Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_fails.json"}
+{"Time":"2026-10-09T12:58:48.739298905Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_fails.json","Output":"=== CONT  TestVerdictCorpus/native_fails.json\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739302611Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_fails.json","Output":"--- PASS: TestVerdictCorpus/native_fails.json (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739305896Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus/native_fails.json","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.73930845Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus","Output":"--- PASS: TestVerdictCorpus (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739313467Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestVerdictCorpus","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739315791Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js","Output":"--- PASS: TestClassifyCorpus/negative_parse.js (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739319256Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus/negative_parse.js","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.7393222Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus","Output":"--- PASS: TestClassifyCorpus (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739325776Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestClassifyCorpus","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739328139Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/parameter_shadow"}
+{"Time":"2026-10-09T12:58:48.739330423Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/parameter_shadow","Output":"=== CONT  TestAdaptVarToLet/parameter_shadow\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739333838Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/parameter_shadow","Output":"--- PASS: TestAdaptVarToLet/parameter_shadow (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739338164Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/parameter_shadow","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739340328Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/closure_above_the_declarator"}
+{"Time":"2026-10-09T12:58:48.739342871Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/closure_above_the_declarator","Output":"=== CONT  TestAdaptVarToLet/closure_above_the_declarator\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739346777Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/closure_above_the_declarator","Output":"--- PASS: TestAdaptVarToLet/closure_above_the_declarator (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739350703Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/closure_above_the_declarator","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739352997Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_captured"}
+{"Time":"2026-10-09T12:58:48.739355671Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_captured","Output":"=== CONT  TestAdaptVarToLet/var_in_loop_body_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739361059Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_captured","Output":"--- PASS: TestAdaptVarToLet/var_in_loop_body_captured (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739364394Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/var_in_loop_body_captured","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739366487Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_not_captured"}
+{"Time":"2026-10-09T12:58:48.739369682Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_not_captured","Output":"=== CONT  TestAdaptVarToLet/loop_variable_not_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739376722Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_not_captured","Output":"--- PASS: TestAdaptVarToLet/loop_variable_not_captured (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739379417Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_not_captured","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.73938154Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_captured"}
+{"Time":"2026-10-09T12:58:48.739384124Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_captured","Output":"=== CONT  TestAdaptVarToLet/loop_variable_captured\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739388791Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_captured","Output":"--- PASS: TestAdaptVarToLet/loop_variable_captured (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739391825Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/loop_variable_captured","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739394069Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/read_before"}
+{"Time":"2026-10-09T12:58:48.739396122Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/read_before","Output":"=== CONT  TestAdaptVarToLet/read_before\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739399337Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/read_before","Output":"--- PASS: TestAdaptVarToLet/read_before (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739402471Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/read_before","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739404735Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/initializer_reads_itself"}
+{"Time":"2026-10-09T12:58:48.739406868Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/initializer_reads_itself","Output":"=== CONT  TestAdaptVarToLet/initializer_reads_itself\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739410223Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/initializer_reads_itself","Output":"--- PASS: TestAdaptVarToLet/initializer_reads_itself (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739413087Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/initializer_reads_itself","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.73941522Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/redeclaration"}
+{"Time":"2026-10-09T12:58:48.739419136Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/redeclaration","Output":"=== CONT  TestAdaptVarToLet/redeclaration\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739424825Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/redeclaration","Output":"--- PASS: TestAdaptVarToLet/redeclaration (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.7394283Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/redeclaration","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739430804Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/two_names"}
+{"Time":"2026-10-09T12:58:48.739433278Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/two_names","Output":"=== CONT  TestAdaptVarToLet/two_names\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739437063Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/two_names","Output":"--- PASS: TestAdaptVarToLet/two_names (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.739440569Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet/two_names","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.739443163Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet","Output":"--- PASS: TestAdaptVarToLet (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.760035169Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestAdaptVarToLet","Elapsed":0}
+{"Time":"2026-10-09T12:58:48.760079616Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerTimeout","Output":"--- PASS: TestCompilerWorkerTimeout (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.854188379Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerWorkerTimeout","Elapsed":0.02}
+{"Time":"2026-10-09T12:58:48.854224303Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeCacheProgram","Output":"--- PASS: TestNodeCacheProgram (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.93294794Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNodeCacheProgram","Elapsed":0.12}
+{"Time":"2026-10-09T12:58:48.932988581Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Output":"--- PASS: TestCompilerCacheProgram (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.932997515Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCompilerCacheProgram","Elapsed":0.2}
+{"Time":"2026-10-09T12:58:48.933000339Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:49.031852799Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t2.604s\n"}
+{"Time":"2026-10-09T12:58:49.031897106Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":2.605}
+{"Time":"2026-10-09T12:58:46.467378093Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:46.481680208Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypassPreservesIdentity"}
+{"Time":"2026-10-09T12:58:46.48176102Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypassPreservesIdentity","Output":"=== RUN   TestCacheBypassPreservesIdentity\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.596952404Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypassPreservesIdentity","Output":"--- PASS: TestCacheBypassPreservesIdentity (2.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.596996621Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestCacheBypassPreservesIdentity","Elapsed":2.12}
+{"Time":"2026-10-09T12:58:48.60001782Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunFilterAttemptLimit"}
+{"Time":"2026-10-09T12:58:48.600034255Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunFilterAttemptLimit","Output":"=== RUN   TestRunFilterAttemptLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.600046022Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunFilterAttemptLimit","Output":"=== PAUSE TestRunFilterAttemptLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:48.600047895Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunFilterAttemptLimit"}
+{"Time":"2026-10-09T12:58:48.600050689Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunFilterAttemptLimit"}
+{"Time":"2026-10-09T12:58:48.600052843Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunFilterAttemptLimit","Output":"=== CONT  TestRunFilterAttemptLimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:49.998908264Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunFilterAttemptLimit","Output":"--- PASS: TestRunFilterAttemptLimit (1.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:49.99923783Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunFilterAttemptLimit","Elapsed":1.4}
+{"Time":"2026-10-09T12:58:49.999251621Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:50.048407873Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t3.581s\n"}
+{"Time":"2026-10-09T12:58:50.048457918Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":3.581}
+{"Time":"2026-10-09T12:58:40.637203295Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:40.65790551Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestEditCacheSeparation"}
+{"Time":"2026-10-09T12:58:40.657984699Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestEditCacheSeparation","Output":"=== RUN   TestEditCacheSeparation\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:42.633776751Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestEditCacheSeparation","Output":"--- PASS: TestEditCacheSeparation (1.98s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:42.633841449Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestEditCacheSeparation","Elapsed":1.98}
+{"Time":"2026-10-09T12:58:42.633867919Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationIdentity"}
+{"Time":"2026-10-09T12:58:42.633871474Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationIdentity","Output":"=== RUN   TestRunnerLocationIdentity\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:42.633879316Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationIdentity","Output":"=== PAUSE TestRunnerLocationIdentity\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:42.63388196Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationIdentity"}
+{"Time":"2026-10-09T12:58:42.633884975Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationIdentity"}
+{"Time":"2026-10-09T12:58:42.633886988Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationIdentity","Output":"=== CONT  TestRunnerLocationIdentity\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:44.90404234Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationIdentity","Output":"--- PASS: TestRunnerLocationIdentity (2.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:44.904082651Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestRunnerLocationIdentity","Elapsed":2.27}
+{"Time":"2026-10-09T12:58:44.904088921Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:44.96583267Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t4.328s\n"}
+{"Time":"2026-10-09T12:58:44.965899902Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":4.329}
+{"Time":"2026-10-09T12:58:47.500596098Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-test262"}
+{"Time":"2026-10-09T12:58:47.509782609Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC"}
+{"Time":"2026-10-09T12:58:47.509830098Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Output":"=== RUN   TestNativeCacheGeneratedC\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:47.509850899Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Output":"=== PAUSE TestNativeCacheGeneratedC\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:47.509853192Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC"}
+{"Time":"2026-10-09T12:58:47.50985835Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline"}
+{"Time":"2026-10-09T12:58:47.509860183Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline","Output":"=== RUN   TestProgramCPUDeadline\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:47.796722703Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/spin"}
+{"Time":"2026-10-09T12:58:47.796755051Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/spin","Output":"=== RUN   TestProgramCPUDeadline/spin\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:47.796776603Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/spin","Output":"=== PAUSE TestProgramCPUDeadline/spin\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:47.796778956Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/spin"}
+{"Time":"2026-10-09T12:58:47.796782241Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/saturated"}
+{"Time":"2026-10-09T12:58:47.796790853Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/saturated","Output":"=== RUN   TestProgramCPUDeadline/saturated\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:50.364495738Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/saturated","Output":"    run_test.go:78: 1 CPU second completed in 2.524016917s with a 2s CPU budget (wall past the budget: true)\n"}
+{"Time":"2026-10-09T12:58:50.364706698Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/saturated","Output":"--- PASS: TestProgramCPUDeadline/saturated (2.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:50.364734218Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/saturated","Elapsed":2.57}
+{"Time":"2026-10-09T12:58:50.364769881Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/spin"}
+{"Time":"2026-10-09T12:58:50.364772825Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/spin","Output":"=== CONT  TestProgramCPUDeadline/spin\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:51.392724977Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/spin","Output":"--- PASS: TestProgramCPUDeadline/spin (1.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:51.392796011Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline/spin","Elapsed":1.03}
+{"Time":"2026-10-09T12:58:51.392805125Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline","Output":"--- PASS: TestProgramCPUDeadline (2.86s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:51.392813407Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestProgramCPUDeadline","Elapsed":2.86}
+{"Time":"2026-10-09T12:58:51.392818414Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC"}
+{"Time":"2026-10-09T12:58:51.392821338Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Output":"=== CONT  TestNativeCacheGeneratedC\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:51.514677475Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Output":"--- PASS: TestNativeCacheGeneratedC (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:51.514715601Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Test":"TestNativeCacheGeneratedC","Elapsed":0.12}
+{"Time":"2026-10-09T12:58:51.514722881Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:58:51.515743461Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic-test262\t4.014s\n"}
+{"Time":"2026-10-09T12:58:51.515760826Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-test262","Elapsed":4.015}

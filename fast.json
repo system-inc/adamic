@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "green",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T125758-94cfc9e8",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "c9ec46501e52612d7c7837a9dd56508774d2bc6d",
+  "branch": "codex/test262-runner-guards",
+  "base": "83f3940ec77b8ba779da05ded113e9d9e7e710b6",
+  "candidate": "c9ec46501e52612d7c7837a9dd56508774d2bc6d",
+  "gated": "bbd50ef7dbe0091391a9e53c19265a161eede096",
+  "unplanned_packages_not_run": 59
+}
