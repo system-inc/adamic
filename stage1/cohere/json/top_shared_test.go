@@ -129,14 +129,15 @@ func TestMain(m *testing.M) {
 }
 func TestPortMatchesGoCohereUnion(t *testing.T) {
 	t.Parallel()
-	cases, shards := jsonTopCorpus(t)
+	allCases, _ := jsonTopCorpus(t)
+	cases, shards, dedicated := jsonPortClassOrderPartition(allCases)
 	if len(shards)*4 != testPortMatchesGoCohereShards {
 		t.Fatal("static port count differs from enumeration")
 	}
-	if e := jsonPortUnion(cases, shards); e != nil {
+	if e := jsonPortClassOrderUnion(allCases, cases, shards, dedicated); e != nil {
 		t.Fatal(e)
 	}
-	t.Logf("exact live union: %d cases", len(cases))
+	t.Logf("exact live union: %d cases", len(allCases))
 }
 func TestUpstreamRepositoryCorpusParityUnion(t *testing.T) {
 	t.Parallel()
