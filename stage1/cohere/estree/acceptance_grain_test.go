@@ -239,39 +239,44 @@ func TestAcceptanceMutantsUnion(t *testing.T) {
 			t.Fatalf("mutation %d covered %d times", index, seen[index])
 		}
 	}
-	for _, index := range runners {
-		acceptanceMutantsPrepareShard(t, index)
-	}
-	// Plant one surviving mutant and exercise each real top-level shard separately.
+	t.Logf("union: %d mutations x %d corpus cases = %d pairs, each exactly once", len(items), len(acceptanceGrammar()), len(items)*len(acceptanceGrammar()))
+}
+
+// Each proof runs one real shard in its own process, retaining all corpus bytes.
+// Separate proof units avoid aggregating two cold mutant builds into one grain.
+// The two assertions together require exactly shard 000 to catch the planted
+// surviving native witness, and shard 001 to retain its original passing verdict.
+func proveAcceptanceMutantShard(t *testing.T, index int) {
+	t.Helper()
 	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
 	}
-	caught := []int{}
-	for _, index := range runners {
-		name := fmt.Sprintf("TestAcceptanceMutants_%03d", index)
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		command := acceptanceMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
-		command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1")
-		output, err := command.CombinedOutput()
-		contextErr := ctx.Err()
-		cancel()
-		if contextErr != nil {
-			t.Fatalf("%s exceeded child deadline: %v\n%s", name, contextErr, output)
-		}
-		if err != nil {
-			exit, ok := err.(*exec.ExitError)
-			if !ok || exit.ExitCode() != 1 || !strings.Contains(string(output), "mutant survived") || !strings.Contains(string(output), "--- FAIL: "+name) {
-				t.Fatalf("unexpected planted failure: %v\n%s", err, output)
-			}
-			caught = append(caught, index)
-		}
+	name := fmt.Sprintf("TestAcceptanceMutants_%03d", index)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := acceptanceMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+	command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1")
+	output, err := command.CombinedOutput()
+	t.Logf("isolated planted proof:\n%s", output)
+	if ctx.Err() != nil {
+		t.Fatalf("%s exceeded child deadline: %v", name, ctx.Err())
 	}
-	if len(caught) != 1 || caught[0] != 0 {
-		t.Fatalf("planted failure caught by %v", caught)
+	if index == 0 {
+		exit, ok := err.(*exec.ExitError)
+		if !ok || exit.ExitCode() != 1 || !strings.Contains(string(output), "native mutant survived") || !strings.Contains(string(output), "--- FAIL: "+name) {
+			t.Fatalf("planted surviving mutant must fail only %s: %v\n%s", name, err, output)
+		}
+		t.Log("planted native witness caught by " + name)
+	} else if err != nil {
+		t.Fatalf("unplanted shard %s must pass: %v\n%s", name, err, output)
+	} else {
+		t.Log("planted witness has no ownership in " + name)
 	}
-	t.Logf("union: %d mutations x %d corpus cases = %d pairs, each exactly once; planted surviving mutant caught only by TestAcceptanceMutants_000", len(items), len(acceptanceGrammar()), len(items)*len(acceptanceGrammar()))
 }
+
+func TestAcceptanceMutantsPlanted_000(t *testing.T) { t.Parallel(); proveAcceptanceMutantShard(t, 0) }
+func TestAcceptanceMutantsPlanted_001(t *testing.T) { t.Parallel(); proveAcceptanceMutantShard(t, 1) }
 
 // Each canonical dump terminates with a stripped-source line, whose source
 // newlines are escaped. Preserve every byte while identifying corpus cases.
