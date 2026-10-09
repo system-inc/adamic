@@ -166,8 +166,12 @@ adamic_array *adamic_object_values_checked(adamic_object *object, int expected, 
  static const char *const checked_names[] = {"0", "1"};
  static const bool scalar_references[] = {true, false};
  static const bool string_references[] = {true, true};
- static const adamic_shape scalar_pair = {2, checked_names, scalar_references, NULL};
- static const adamic_shape string_pair = {2, checked_names, string_references, NULL};
+ static const adamic_field_kind number_kinds[] = {adamic_field_reference, adamic_field_number};
+ static const adamic_field_kind boolean_kinds[] = {adamic_field_reference, adamic_field_boolean};
+ static const adamic_field_kind string_kinds[] = {adamic_field_reference, adamic_field_reference};
+ static const adamic_shape number_pair = {2, checked_names, scalar_references, NULL, number_kinds};
+ static const adamic_shape boolean_pair = {2, checked_names, scalar_references, NULL, boolean_kinds};
+ static const adamic_shape string_pair = {2, checked_names, string_references, NULL, string_kinds};
  for (size_t at = 0; at < keys->length; at++) {
   adamic_string *key = (adamic_string *)keys->elements[at].reference;
   char *name = malloc(key->length + 1);
@@ -208,7 +212,7 @@ adamic_array *adamic_object_values_checked(adamic_object *object, int expected, 
   free(name);
   if (!references) adamic_release(observed);
   if (entries) {
-   adamic_object *pair = adamic_object_new(references ? &string_pair : &scalar_pair);
+   adamic_object *pair = adamic_object_new(references ? &string_pair : expected == 2 ? &boolean_pair : &number_pair);
    pair->slots[0].reference = adamic_retain(key);
    pair->slots[1] = value;
    value.reference = pair;

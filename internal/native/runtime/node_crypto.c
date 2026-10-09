@@ -60,7 +60,8 @@ static void compress(uint32_t state[8], const unsigned char bytes[64])
 }
 static const char *const names[] = {"bytes", "finalized"};
 static const bool references[] = {true, false};
-static const adamic_shape shape = {2, names, references, NULL};
+static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_number};
+static const adamic_shape shape = {2, names, references, NULL, kinds};
 adamic_object *adamic_node_hash_new(void)
 {
 	adamic_object *hash = adamic_object_new(&shape);

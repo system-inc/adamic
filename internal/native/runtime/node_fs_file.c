@@ -16,7 +16,8 @@
 
 static const char *const error_fields[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
-static const adamic_shape error_shape = {3, error_fields, error_refs, NULL};
+static const adamic_field_kind error_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
+static const adamic_shape error_shape = {3, error_fields, error_refs, NULL, error_kinds};
 
 static adamic_string *text(const char *bytes) {
     return adamic_decode_utf8((const unsigned char *)bytes, strlen(bytes));
@@ -396,7 +397,8 @@ bool adamic_fs_file_exists(const adamic_string *path) {
 
 static const char *const date_fields[] = {"_fsFileTime"};
 static const bool date_refs[] = {false};
-static const adamic_shape date_shape = {1, date_fields, date_refs, NULL};
+static const adamic_field_kind date_kinds[] = {adamic_field_number};
+static const adamic_shape date_shape = {1, date_fields, date_refs, NULL, date_kinds};
 
 adamic_object *adamic_fs_file_date_new(double milliseconds) {
     adamic_object *date = adamic_object_new(&date_shape);
@@ -412,7 +414,8 @@ double adamic_fs_file_date_time(const adamic_object *date) {
 
 static const char *const stat_fields[] = {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"};
 static const bool stat_refs[] = {false, false, true, false, true};
-static const adamic_shape stat_shape = {5, stat_fields, stat_refs, NULL};
+static const adamic_field_kind stat_kinds[] = {adamic_field_number, adamic_field_number, adamic_field_reference, adamic_field_number, adamic_field_reference};
+static const adamic_shape stat_shape = {5, stat_fields, stat_refs, NULL, stat_kinds};
 
 adamic_object *adamic_fs_file_stat(const adamic_string *path, bool throw_if_missing) {
     adamic_output_flush();

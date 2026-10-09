@@ -129,7 +129,8 @@ static void host_directory_error(int error, const char *operation, const adamic_
     }
     static const char *const directory_error_names[] = {"name", "message", "code"};
     static const bool references[] = {true, true, true};
-    static const adamic_shape shape = {3, directory_error_names, references, NULL};
+    static const adamic_field_kind kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
+static const adamic_shape shape = {3, directory_error_names, references, NULL, kinds};
     static adamic_string error_name = ADAMIC_STRING("Error");
     adamic_string *prefix = adamic_decode_utf8((const unsigned char *)code, strlen(code));
     adamic_string *reason = adamic_decode_utf8((const unsigned char *)description, strlen(description));

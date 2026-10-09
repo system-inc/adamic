@@ -140,7 +140,8 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 
 static const char *const string_state_names[] = {"string", "offset"};
 static const bool string_state_references[] = {true, false};
-static const adamic_shape string_state_shape = {2, string_state_names, string_state_references, NULL};
+static const adamic_field_kind string_state_kinds[] = {adamic_field_reference, adamic_field_number};
+static const adamic_shape string_state_shape = {2, string_state_names, string_state_references, NULL, string_state_kinds};
 
 static adamic_value string_next(adamic_closure *self, adamic_value *arguments) {
 	(void)arguments;
