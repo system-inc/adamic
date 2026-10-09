@@ -327,17 +327,21 @@
   "du-fresh.1",
   "ds:internal~fresh",
   "ds:cmd~adamic-test262",
-  "ds:internal~lower"
+  "ds:internal~lower",
+  "rp:M11c",
+  "ds:stage1~cohere~css",
+  "replay-M11",
+  "ds:stage1~cohere~markdownblocks",
+  "rp:M06c",
+  "rp:M06i",
+  "rp:M08c",
+  "ds:stage1~cohere~estree",
+  "rp:M06p",
+  "ds:internal~oracle",
+  "rp:M08k"
  ],
  "running": {
-  "01a11ede-20c4-7753-809f-21882b1f503b": "replay-M11",
-  "01a11ef9-5acd-7186-bfb1-6182ccfbb010": "ds:internal~oracle",
-  "01a11eeb-6255-77df-a73a-dc6317b9c017": "ds:stage1~cohere~markdownblocks",
-  "01a12011-5ee6-762e-9858-1010219a3020": "ds:stage1~cohere~css",
-  "01a12011-7db7-7251-9307-99d9cfae601a": "ds:stage1~cohere~estree",
-  "01a11ef9-3d63-770b-a1c3-83c92a3ed016": "rp:M11c",
-  "01a12011-9cc0-76db-a431-31ba9cf26031": "rp:M08c",
-  "01a12011-ba80-726e-9f0e-4f3c06241015": "rp:M06c"
+  "01a11ef9-5acd-7186-bfb1-6182ccfbb010": "rp:oracle-full"
  },
  "dropped": [
   "u093",
