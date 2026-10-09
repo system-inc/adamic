@@ -271,11 +271,12 @@ Do not decode each callback separately if UTF-8 may span iovecs.
 | Other imports | Throw `AdamicUnsupportedWASI` naming the import; no success stub. |
 
 No inventoried file-free fixture requires an import that the shim cannot
-satisfy. File fixtures cannot run honestly without file access. The test skips
-modules importing any `path_*`, `fd_read`, `fd_readdir` or `fd_filestat_get`.
-That conservative artifact rule skips exactly these three fixtures:
+satisfy. File fixtures cannot run honestly without file access, so the test
+leaves these three out by name (`shimFileFixtures`), without a skip. It still
+asserts their imports: a listed fixture that stops importing `path_*`, `fd_read`,
+`fd_readdir` or `fd_filestat_get` fails, and so does an unlisted one that starts.
 
-| Skipped fixture | Exact imports |
+| Excluded fixture | Exact imports |
 | --- | --- |
 | `internal/oracle/testdata/write_stdout_order.a` | `args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
 | `internal/oracle/testdata/write_stderr_order.a` | `args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit` |
