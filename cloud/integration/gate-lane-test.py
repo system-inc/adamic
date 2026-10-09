@@ -34,11 +34,13 @@ class GateLaneTests(unittest.TestCase):
         self.posts = self.root / 'posts'
         self.candidates = self.root / 'candidates'
 
-    def record(self, stamp, kind, status, sha=None):
+    def record(self, stamp, kind, status, sha=None, gated=None):
         sha = sha or self.sha
         tree = self.root / ('record-%s-%s-%s' % (sha[:8], stamp, kind))
         tree.mkdir()
         (tree / 'status.txt').write_text(status + '\n')
+        if gated:
+            (tree / 'fast.json').write_text('{"sha": "%s"}\n' % gated)
         index = str(tree) + '.index'
         environment = dict(os.environ, GIT_INDEX_FILE=index)
         gitDirectory = git(self.repository, 'rev-parse', '--absolute-git-dir')
@@ -102,6 +104,16 @@ class GateLaneTests(unittest.TestCase):
         self.assertNotIn(other[:12], call)
         self.assertIn('Gate lane landed %s (gate merge of %s)' % (merge[:8], self.sha[:8]), self.posts.read_text())
         self.assertNotIn(self.sha, self.candidates.read_text())
+
+    def test_a_set_under_the_candidates_prefix_lands_the_gate_merge_it_names(self):
+        merge, _ = self.gateMerge()
+        self.record('20261009T143534Z', 'fast', 'green: the merged Go set', gated=merge)
+        self.record('20261009T143534Z', 'fast-phases', 'green: phases', gated=merge)
+        self.candidates.write_text('cloud/land-s\t%s\ttask5\t\n' % self.sha)
+        self.run_lane(0)
+        call = self.calls.read_text()
+        self.assertIn('--fast-gate gate-logs/%s/20261009T143534Z/fast --also-gate gate-logs/%s/20261009T143534Z/fast-phases %s' % (self.sha[:12], self.sha[:12], merge), call)
+        self.assertIn('(gate merge of %s)' % self.sha[:8], self.posts.read_text())
 
     def test_the_candidates_own_newer_record_beats_an_older_gate_merge(self):
         merge, _ = self.gateMerge()

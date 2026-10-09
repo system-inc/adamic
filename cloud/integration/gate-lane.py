@@ -13,7 +13,7 @@ The candidates file, one line per landing (integration's to edit: a cut adds its
 
 usage (launchd com.adamic.gate-lane runs it every minute, from the merge tree): cloud/integration/gate-lane.py
 """
-import datetime, os, subprocess, sys
+import datetime, json, os, subprocess, sys
 
 directory = os.path.dirname(os.path.abspath(__file__))
 candidates = os.environ.get("GATE_LANE_CANDIDATES", os.path.expanduser("~/.adamic-integration/candidates"))
@@ -104,6 +104,16 @@ def main():
         if not newestSet:
             continue
         gated, found = newestSet
+        # The record says which tree it gated; a set published under the candidate's prefix may have gated a gate
+        # merge of it (the star, Oct 9 14:43Z: phases under f9fc14c1478f/ gated c310d512). Land what the record names,
+        # when it's the candidate or one of its gate merges; push-main still refuses a set whose records disagree.
+        named = git("show", "origin/%s:%s" % (found[1], "full.json" if found[0] == "full" else "fast.json"))
+        try:
+            named = json.loads(named).get("sha", "") if named else ""
+        except ValueError:
+            named = ""
+        if named and named != gated and named in [sha] + gateMerges(sha):
+            gated = named
         arguments = ["--full-gate", found[1]] if found[0] == "full" else ["--fast-gate", found[1]] + (["--also-gate", found[2]] if found[2] else [])
         for name in infra:
             arguments += ["--infra-red", name.strip()]
