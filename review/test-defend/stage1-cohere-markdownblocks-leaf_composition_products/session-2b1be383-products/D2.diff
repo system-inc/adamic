@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/markdownblocks/leaves.ts b/stage1/cohere/markdownblocks/leaves.ts
+index 2479d520..ac40ffb1 100644
+--- a/stage1/cohere/markdownblocks/leaves.ts
++++ b/stage1/cohere/markdownblocks/leaves.ts
+@@ -132,7 +132,7 @@ export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): numb
+             ]),
+         );
+     }
+-    if(frame.kind === 'footnoteReference') return arena.text(`[^${frame.label}]`);
++    if(frame.kind === 'footnoteReference') return arena.text(`[${frame.label}]`);
+     if(frame.kind === 'footnoteDefinition') {
+         const first = frame.children[0];
+         const prefix = arena.concat([arena.text(`[^${frame.label}]`), arena.text(': ')]);

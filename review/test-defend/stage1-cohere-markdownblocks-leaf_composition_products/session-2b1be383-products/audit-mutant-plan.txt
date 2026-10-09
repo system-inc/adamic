@@ -1,0 +1,7 @@
+Frozen before any mutation or matrix. CUT: the markdown block layout TypeScript port and MdastCompiler, compiled natively. ORACLE: independently executed Go cohere Markdown/list and doc-layout code plus retained fork Node printer and mdast diagnostic. Product preparation rows use successful build/cache construction as a self oracle.
+M1 codeblocks.ts fenceStyle: constant Math.max(3, longest + 1) to Math.max(4, longest + 1).
+M2 htmlblocks.ts space: constant code === 32 to code === 33.
+M3 root.ts printRoot: drop final parts.push(arena.hardline()) statement.
+M4 mdastCompile.ts exit: flip previous.type !== token.type to previous.type === token.type.
+P1 list_probe.ts entry: empty program answer. P2 mdast_probe.ts entry: empty program answer. Probes separate from mutants.
+Probe clarification before mutation: use production entries printDocument (P1 returns empty string) and MdastCompiler.compile (P2 returns empty MdastArena), preserving the testdata protocol drivers. Preparation helpers do not get production empty-answer probes. Group code/HTML/root wrappers as TestMarkdownLayout family. Construction edits S1-S8 and weakened comparisons W1-W3 are separate from the four production mutants. Matrix excludes construction-only rows and runs list-layout, block-layout and malformed-event comparison families over source-reached entries. Outside rows unknown.

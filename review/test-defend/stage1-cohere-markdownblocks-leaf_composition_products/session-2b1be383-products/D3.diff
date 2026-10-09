@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/markdownblocks/leaves.ts b/stage1/cohere/markdownblocks/leaves.ts
+index 2479d520..85f23d72 100644
+--- a/stage1/cohere/markdownblocks/leaves.ts
++++ b/stage1/cohere/markdownblocks/leaves.ts
+@@ -154,7 +154,7 @@ export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): numb
+         }));
+         return arena.concat([prefix, group(arena, arena.align('    ', printBlockChildren(arena, children)))]);
+     }
+-    if(frame.kind === 'thematicBreak') return arena.text(frame.sibling >= 0 && frame.sibling % 2 === 0 ? '***' : '---');
++    if(frame.kind === 'thematicBreak') return arena.text(frame.sibling >= 0 && frame.sibling % 2 === 0 ? '**' : '---');
+     if(frame.kind === 'break') {
+         if(frame.source !== '' && frame.source.slice(0, 1).trim() === '') {
+             const literal = arena.concat([arena.add('h', '', 0, [], 6), arena.add('p', '', 0, [])]);

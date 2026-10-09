@@ -1,0 +1,23 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "stage1/cohere/markdownblocks/leaves.ts:90",
+    "from": "arena.text('!['),\n            arena.text(frame.originalAlt !== '' ? frame.originalAlt : frame.alt),\n            arena.text(']('),",
+    "to": "arena.text('['),\n            arena.text(frame.originalAlt !== '' ? frame.originalAlt : frame.alt),\n            arena.text(']('),",
+    "change": "image opener '![' becomes '['"
+  },
+  {
+    "mutant": "D2",
+    "file_line": "stage1/cohere/markdownblocks/leaves.ts:135",
+    "from": "if(frame.kind === 'footnoteReference') return arena.text(`[^${frame.label}]`);",
+    "to": "if(frame.kind === 'footnoteReference') return arena.text(`[${frame.label}]`);",
+    "change": "footnote reference drops caret constant"
+  },
+  {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/markdownblocks/leaves.ts:157",
+    "from": "? '***' : '---'",
+    "to": "? '**' : '---'",
+    "change": "thematic-break marker has two rather than three stars"
+  }
+]

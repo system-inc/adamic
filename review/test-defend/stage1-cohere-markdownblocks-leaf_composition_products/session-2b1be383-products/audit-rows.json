@@ -1,0 +1,422 @@
+[
+  {
+    "test": "TestProduct_MarkdownLeafGo family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/leaf_composition_products_test.go:28",
+    "members": [
+      "TestProduct_MarkdownLeafGoLists",
+      "TestProduct_MarkdownLeafGoDocLayout"
+    ],
+    "seconds": 1.222,
+    "oracle": "Successful preparation is a self expectation; no independent semantic answer is compared. S1 changed construction passed; this verdict rests on one construction edit and is not a claim that every failure is impossible.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownLeafGo family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestProduct_MarkdownLeafGo(Lists|DocLayout)$'; S1.log: --- PASS: TestProduct_MarkdownLeafGoDocLayout (1.33s)",
+    "construction_mutants": [
+      "S1"
+    ],
+    "construction_kills": []
+  },
+  {
+    "test": "TestProduct_MarkdownLeafLowered",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/leaf_composition_products_test.go:38",
+    "members": [
+      "TestProduct_MarkdownLeafLowered"
+    ],
+    "seconds": 1.007,
+    "oracle": "Successful preparation is a self expectation; no independent semantic answer is compared. S2 changed construction passed; this verdict rests on one construction edit and is not a claim that every failure is impossible.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownLeafLowered"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestProduct_MarkdownLeafLowered$'; S2.log: --- PASS: TestProduct_MarkdownLeafLowered (0.00s)",
+    "construction_mutants": [
+      "S2"
+    ],
+    "construction_kills": []
+  },
+  {
+    "test": "TestProduct_MarkdownLeafNative family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/leaf_composition_products_test.go:43",
+    "members": [
+      "TestProduct_MarkdownLeafNativeSanitized",
+      "TestProduct_MarkdownLeafNativeRelease"
+    ],
+    "seconds": 1.108,
+    "oracle": "Successful preparation is a self expectation; no independent semantic answer is compared. S3 changed construction passed; this verdict rests on one construction edit and is not a claim that every failure is impossible.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownLeafNative family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestProduct_MarkdownLeafNative(Sanitized|Release)$'; S3.log: --- PASS: TestProduct_MarkdownLeafNativeSanitized (1.24s)",
+    "construction_mutants": [
+      "S3"
+    ],
+    "construction_kills": []
+  },
+  {
+    "test": "TestMarkdownListLayout_Setup",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/list_layout_shards_test.go:127",
+    "members": [
+      "TestMarkdownListLayout_Setup"
+    ],
+    "seconds": 0.228,
+    "oracle": "Successful preparation is a self expectation; no independent semantic answer is compared. S4 changed construction passed; this verdict rests on one construction edit and is not a claim that every failure is impossible.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownListLayout_Setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMarkdownListLayout_Setup|TestMarkdownListLayout)$'; S4.log: --- PASS: TestMarkdownListLayout_Setup (0.22s)",
+    "construction_mutants": [
+      "S4"
+    ],
+    "construction_kills": []
+  },
+  {
+    "test": "TestMarkdownListLayout family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/list_layout_shards_test.go:155",
+    "members": [
+      "TestMarkdownListLayoutUnion",
+      "TestMarkdownListLayout_000",
+      "TestMarkdownListLayout_001",
+      "TestMarkdownListLayout_002",
+      "TestMarkdownListLayout_003",
+      "TestMarkdownListLayout_004",
+      "TestMarkdownListLayout_005",
+      "TestMarkdownListLayout_006",
+      "TestMarkdownListLayout_007",
+      "TestMarkdownListLayout_008",
+      "TestMarkdownListLayout_009",
+      "TestMarkdownListLayout_010",
+      "TestMarkdownListLayout_011",
+      "TestMarkdownListLayout_012",
+      "TestMarkdownListLayout_013",
+      "TestMarkdownListLayout_014",
+      "TestMarkdownListLayout_015"
+    ],
+    "seconds": 14.603,
+    "oracle": "Independent Go cohere bytes and retained fork Node results; self requirements for build success, exit status, framing, and built-in mutant difference. Full semantic bytes are checked; leak checks use status only.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 list_layout_shards_test.go:698: source Node lists output byte 80 in generated/list/10./nnnn",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMarkdownLayout family"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 66.328,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownListLayout family",
+      "TestMarkdownLayout family",
+      "TestMdastMalformedEvents family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMarkdownListLayout(Union|_00[0-9]|_01[0-5]))$'; M3-list-family.log: list_layout_shards_test.go:698: source Node lists output byte 80 in generated/list/10./nnnn",
+    "probe_passing_members": [
+      "TestMarkdownListLayoutUnion"
+    ],
+    "vacuous_subcases": [],
+    "witness_experiment": "W2",
+    "subsumption_basis": 3
+  },
+  {
+    "test": "TestMarkdownListLayout",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/lists_test.go:24",
+    "members": [
+      "TestMarkdownListLayout"
+    ],
+    "seconds": 0.214,
+    "oracle": "Successful preparation is a self expectation; no independent semantic answer is compared. S4 changed construction passed; this verdict rests on one construction edit and is not a claim that every failure is impossible.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownListLayout"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMarkdownListLayout_Setup|TestMarkdownListLayout)$'; S4.log: --- PASS: TestMarkdownListLayout (0.00s)",
+    "construction_mutants": [
+      "S4"
+    ],
+    "construction_kills": []
+  },
+  {
+    "test": "TestMarkdownQuoteLayout",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/lists_test.go:32",
+    "members": [
+      "TestMarkdownQuoteLayout"
+    ],
+    "seconds": 3.117,
+    "oracle": "Successful preparation is a self expectation; no independent semantic answer is compared. S5 broken construction was rejected.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S5 quote_layout_shards_test.go:55: quote layout setup failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownQuoteLayout"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestMarkdownQuoteLayout$'; S5.log: quote_layout_shards_test.go:55: quote layout setup failed",
+    "construction_mutants": [
+      "S5"
+    ],
+    "construction_kills": [
+      "S5"
+    ]
+  },
+  {
+    "test": "TestMarkdownTableLayout",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/lists_test.go:38",
+    "members": [
+      "TestMarkdownTableLayout"
+    ],
+    "seconds": 3.847,
+    "oracle": "Successful preparation is a self expectation; no independent semantic answer is compared. S6 changed construction passed; this verdict rests on one construction edit and is not a claim that every failure is impossible.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownTableLayout"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestMarkdownTableLayout$'; S6.log: --- PASS: TestMarkdownTableLayout (3.69s)",
+    "construction_mutants": [
+      "S6"
+    ],
+    "construction_kills": []
+  },
+  {
+    "test": "TestMarkdownLayout family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/lists_test.go:46",
+    "members": [
+      "TestMarkdownCodeBlockLayout",
+      "TestMarkdownHTMLBlockLayout",
+      "TestMarkdownRootLayout"
+    ],
+    "seconds": 66.328,
+    "oracle": "Independent Go cohere bytes and retained fork Node results; self requirements for build success, exit status, framing, and built-in mutant difference. Full semantic bytes are checked; leak checks use status only.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 lists_test.go:342: source Node lists output byte 64841 in stage1/cohere/markdownblocks/GAPS.md",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMarkdownListLayout family"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 14.603,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownListLayout family",
+      "TestMarkdownLayout family",
+      "TestMdastMalformedEvents family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMarkdownCodeBlockLayout|TestMarkdownHTMLBlockLayout|TestMarkdownRootLayout)$'; M3-block-layouts.log: lists_test.go:342: source Node lists output byte 64841 in stage1/cohere/markdownblocks/GAPS.md",
+    "probe_passing_members": [],
+    "vacuous_subcases": [
+      "generated/root/edge/",
+      "generated/root/edge/ \n"
+    ],
+    "witness_experiment": "W1",
+    "subsumption_basis": 3
+  },
+  {
+    "test": "TestMarkdownLeafComposition",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/lists_test.go:89",
+    "members": [
+      "TestMarkdownLeafComposition"
+    ],
+    "seconds": 5.732,
+    "oracle": "Successful preparation is a self expectation; no independent semantic answer is compared. S7 broken construction was rejected.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S7 leaf_composition_independent_test.go:50: leaf composition preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownLeafComposition"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestMarkdownLeafComposition$'; S7.log: leaf_composition_independent_test.go:50: leaf composition preparation failed",
+    "construction_mutants": [
+      "S7"
+    ],
+    "construction_kills": [
+      "S7"
+    ]
+  },
+  {
+    "test": "TestMarkdownStructureLayout_Setup",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/lists_test.go:106",
+    "members": [
+      "TestMarkdownStructureLayout_Setup"
+    ],
+    "seconds": 5.15,
+    "oracle": "Successful preparation is a self expectation; no independent semantic answer is compared. S8 broken construction was rejected.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S8 structure_layout_shards_test.go:121 (origin; raw scratch line 120): structure layout setup failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownStructureLayout_Setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^TestMarkdownStructureLayout_Setup$'; S8.log: structure_layout_shards_test.go:121 (origin; raw scratch line 120): structure layout setup failed",
+    "construction_mutants": [
+      "S8"
+    ],
+    "construction_kills": [
+      "S8"
+    ]
+  },
+  {
+    "test": "TestMdastMalformedEvents family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/malformed_events_independent_test.go:126",
+    "members": [
+      "TestMdastMalformedEvents_000",
+      "TestMdastMalformedEvents_001",
+      "TestMdastMalformedEvents_002",
+      "TestMdastMalformedEventsUnion"
+    ],
+    "seconds": 6.596,
+    "oracle": "Go cohere error messages plus retained fork Node diagnostics; self exit70, panic prefix and empty stdout. Full diagnostic comparison rejects a different error with the same exit status.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4 malformed_events_independent_test.go:193: mismatch expected error exit70 got0",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownListLayout family",
+      "TestMarkdownLayout family",
+      "TestMdastMalformedEvents family"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run '^(TestMdastMalformedEvents(_00[0-2]|Union))$'; M4-malformed-family.log: malformed_events_independent_test.go:193: mismatch expected error exit70 got0",
+    "probe_passing_members": [
+      "TestMdastMalformedEventsUnion"
+    ],
+    "vacuous_subcases": [],
+    "witness_experiment": "W3"
+  }
+]
