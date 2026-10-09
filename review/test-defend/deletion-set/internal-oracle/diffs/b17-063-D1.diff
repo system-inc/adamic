@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/input.c
++++ b/internal/native/runtime/input.c
+@@ -364,7 +364,6 @@
+ // the file made if it isn't there, emptied if it is, and then the text written whole.
+ adamic_object *adamic_write_text_file(const adamic_string *path, const adamic_string *text) {
+ 	// What was printed comes first, as on Node: the file may be stdout or stderr themselves.
+-	adamic_output_flush();
+ #ifdef ADAMIC_TARGET_WASI
+ 	if (path->length == 0) {
+ 		return failure(path, ENOENT, true);

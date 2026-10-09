@@ -1,0 +1,11 @@
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -432,7 +432,7 @@
+ 		}
+ 		tests := []string{}
+ 		for _, allowed := range expression.Allowed {
+-			tests = append(tests, e.binary(ir.Equal, expression.FieldType, field, e.value(allowed)))
++			tests = append(tests, e.binary(ir.NotEqual, expression.FieldType, field, e.value(allowed)))
+ 		}
+ 		e.line("if (!(%s)) {", strings.Join(tests, " || "))
+ 		e.line("\tstatic const char message[] = %s;", cString(expression.Message))

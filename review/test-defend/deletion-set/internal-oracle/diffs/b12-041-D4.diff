@@ -1,0 +1,11 @@
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -685,7 +685,7 @@
+ 	ir.Add: "+", ir.Subtract: "-", ir.Multiply: "*", ir.Divide: "/", ir.Remainder: "%", ir.Power: "**",
+ 	ir.Less: "<", ir.LessOrEqual: "<=", ir.Greater: ">", ir.GreaterOrEqual: ">=",
+ 	ir.Equal: "===", ir.NotEqual: "!==", ir.And: "&&", ir.Or: "||",
+-	ir.BitAnd: "&", ir.BitOr: "|", ir.BitXor: "^", ir.ShiftLeft: "<<", ir.ShiftRight: ">>", ir.ShiftRightUnsigned: ">>>",
++	ir.BitAnd: "|", ir.BitOr: "|", ir.BitXor: "^", ir.ShiftLeft: "<<", ir.ShiftRight: ">>", ir.ShiftRightUnsigned: ">>>",
+ }
+ 
+ // value is a JavaScript expression for a value. JavaScript evaluates left to right and short-circuits

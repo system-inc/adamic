@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/typed_array.c b/internal/native/runtime/typed_array.c
+index 5f9846e6..b877475c 100644
+--- a/internal/native/runtime/typed_array.c
++++ b/internal/native/runtime/typed_array.c
+@@ -99,7 +99,7 @@ void adamic_typed_array_check_write(const adamic_typed_array *array, double inde
+ 		size_t number_size = adamic_number_format(index, number);
+ 		size_t length_size = adamic_number_format((double)array->length, length);
+ 		int written = snprintf(message, sizeof message, "index %.*s is outside an array of length %.*s", (int)number_size, number, (int)length_size, length);
+-		adamic_panic(message, (size_t)written);
++		adamic_panic(message, (size_t)written - 1);
+ 	}
+ }
+ 

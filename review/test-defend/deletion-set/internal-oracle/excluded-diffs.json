@@ -1,0 +1,1199 @@
+[
+  {
+    "branch": "test-audit/internal-oracle-arguments_length",
+    "diff": "review/test-audit/internal-oracle-arguments_length/diffs/M01.diff",
+    "mutant": "M01",
+    "recorded_failed": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthTypeScriptSource/arguments_length.a",
+      "TestArgumentsLengthTypeScriptSource/arguments_length_callbacks.a",
+      "TestArgumentsLengthTypeScriptSource/arguments_length_extended.a",
+      "TestArgumentsLengthTypeScriptSource/arguments_length_reduce_left.a",
+      "TestArgumentsLengthTypeScriptSource/arguments_length_spread.a",
+      "TestArgumentsLengthTypeScriptSource/arguments_length_unrelated_type.a",
+      "TestArgumentsLengthTypeScriptSource/arguments_length_value.a",
+      "TestArgumentsLengthTypeScriptSource/arguments_length_value_count.a",
+      "TestArgumentsLengthTypeScriptSource/native-arguments-length-value.a",
+      "TestArgumentsLengthWrongSlotMutant"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-arguments_length",
+    "diff": "review/test-audit/internal-oracle-arguments_length/diffs/M03.diff",
+    "mutant": "M03",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-audit/internal-oracle-checked_views_flag_downcast/M1.diff",
+    "mutant": "M1",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-audit/internal-oracle-checked_views_flag_downcast/M2.diff",
+    "mutant": "M2",
+    "recorded_failed": [
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewObjectPrimitiveSource/optional-absent",
+      "TestCheckedViewObjectPrimitiveSource/optional-receiver",
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewOptionalReadBoundary/JavaScript",
+      "TestCheckedViewOptionalReadBoundary/native"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-audit/internal-oracle-checked_views_flag_downcast/M4.diff",
+    "mutant": "M4",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M1.diff",
+    "mutant": "M1",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M10.diff",
+    "mutant": "M10",
+    "recorded_failed": [
+      "TestClassWrongOutput103"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M11.diff",
+    "mutant": "M11",
+    "recorded_failed": [
+      "TestClassWrongOutput107"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M12.diff",
+    "mutant": "M12",
+    "recorded_failed": [
+      "TestClassWrongOutput106"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M13.diff",
+    "mutant": "M13",
+    "recorded_failed": [
+      "TestClassWrongOutput108"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M15.diff",
+    "mutant": "M15",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M2.diff",
+    "mutant": "M2",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M3.diff",
+    "mutant": "M3",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M4.diff",
+    "mutant": "M4",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M5.diff",
+    "mutant": "M5",
+    "recorded_failed": [
+      "TestCheckedViewUntaggedRecursive"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-audit/internal-oracle-checked_views_v2_source/diffs/M7.diff",
+    "mutant": "M7",
+    "recorded_failed": [
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-enums_open",
+    "diff": "review/test-audit/internal-oracle-enums_open/M2.diff",
+    "mutant": "M2",
+    "recorded_failed": [
+      "TestFunctionValueBoundaryBoxing"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-enums_open",
+    "diff": "review/test-audit/internal-oracle-enums_open/M3.diff",
+    "mutant": "M3",
+    "recorded_failed": [
+      "TestFreshWriteProbesStayRefused",
+      "TestFreshWriteProbesStayRefused/another_view.a",
+      "TestFreshWriteProbesStayRefused/array_from.a",
+      "TestFreshWriteProbesStayRefused/call_clobbers.a",
+      "TestFreshWriteProbesStayRefused/call_comparator.a",
+      "TestFreshWriteProbesStayRefused/call_escaped_parent.a",
+      "TestFreshWriteProbesStayRefused/call_grandchild.a",
+      "TestFreshWriteProbesStayRefused/call_leaks_parent.a",
+      "TestFreshWriteProbesStayRefused/call_one_bad_site.a",
+      "TestFreshWriteProbesStayRefused/call_owner.a",
+      "TestFreshWriteProbesStayRefused/call_returns_argument.a",
+      "TestFreshWriteProbesStayRefused/call_same.a",
+      "TestFreshWriteProbesStayRefused/call_targets_virtual.a",
+      "TestFreshWriteProbesStayRefused/call_then_throws.a",
+      "TestFreshWriteProbesStayRefused/call_twice_deferred.a",
+      "TestFreshWriteProbesStayRefused/call_wrapper.a",
+      "TestFreshWriteProbesStayRefused/captured_before.a",
+      "TestFreshWriteProbesStayRefused/caught.a",
+      "TestFreshWriteProbesStayRefused/closure_captures.a",
+      "TestFreshWriteProbesStayRefused/concat.a",
+      "TestFreshWriteProbesStayRefused/constructor_tie.a",
+      "TestFreshWriteProbesStayRefused/ctor_readonly.a",
+      "TestFreshWriteProbesStayRefused/ctor_set.a",
+      "TestFreshWriteProbesStayRefused/ctor_wrapped.a",
+      "TestFreshWriteProbesStayRefused/devirt_fresh_method_keeps_argument.a",
+      "TestFreshWriteProbesStayRefused/escapes_after_return.a",
+      "TestFreshWriteProbesStayRefused/fill.a",
+      "TestFreshWriteProbesStayRefused/global_then_function.a",
+      "TestFreshWriteProbesStayRefused/index_write.a",
+      "TestFreshWriteProbesStayRefused/map_callback.a",
+      "TestFreshWriteProbesStayRefused/map_iterator.a",
+      "TestFreshWriteProbesStayRefused/map_iterator_parenthesized.a",
+      "TestFreshWriteProbesStayRefused/map_key.a",
+      "TestFreshWriteProbesStayRefused/map_set.a",
+      "TestFreshWriteProbesStayRefused/next_iteration.a",
+      "TestFreshWriteProbesStayRefused/older_instance.a",
+      "TestFreshWriteProbesStayRefused/one_call.a",
+      "TestFreshWriteProbesStayRefused/returns_argument.a",
+      "TestFreshWriteProbesStayRefused/returns_global.a",
+      "TestFreshWriteProbesStayRefused/set_add.a",
+      "TestFreshWriteProbesStayRefused/set_iterator.a",
+      "TestFreshWriteProbesStayRefused/splice.a",
+      "TestFreshWriteProbesStayRefused/spread_array.a",
+      "TestFreshWriteProbesStayRefused/spread_old.a",
+      "TestFreshWriteProbesStayRefused/wraps_argument.a",
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumBoundaries/06_set_node_flags.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-enums_open",
+    "diff": "review/test-audit/internal-oracle-enums_open/M4.diff",
+    "mutant": "M4",
+    "recorded_failed": [
+      "TestImportedNonliteralConstCaseIsNotYet"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-interface_cast",
+    "diff": "review/test-audit/internal-oracle-interface_cast/M03.diff",
+    "mutant": "M03",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-interface_cast",
+    "diff": "review/test-audit/internal-oracle-interface_cast/M04.diff",
+    "mutant": "M04",
+    "recorded_failed": [
+      "TestInterfaceCastChecksMalformedRead"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-interface_cast",
+    "diff": "review/test-audit/internal-oracle-interface_cast/M05.diff",
+    "mutant": "M05",
+    "recorded_failed": [
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyRefusals/parse"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-interface_cast",
+    "diff": "review/test-audit/internal-oracle-interface_cast/M06.diff",
+    "mutant": "M06",
+    "recorded_failed": [
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyRefusals/array_of_objects",
+      "TestJSONStringifyRefusals/hidden_fields",
+      "TestJSONStringifyRefusals/replacer_function"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-interface_cast",
+    "diff": "review/test-audit/internal-oracle-interface_cast/M07.diff",
+    "mutant": "M07",
+    "recorded_failed": [
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyRefusals/prototype",
+      "TestJSONStringifyRefusals/toJSON"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-interface_cast",
+    "diff": "review/test-audit/internal-oracle-interface_cast/M08.diff",
+    "mutant": "M08",
+    "recorded_failed": [
+      "TestLibraryMapSetIteratorCopiesRefused",
+      "TestLibraryMapSetIteratorCopiesRefused/map_entries_assign",
+      "TestLibraryMapSetIteratorCopiesRefused/map_keys_assign",
+      "TestLibraryMapSetIteratorCopiesRefused/map_values_assign",
+      "TestLibraryMapSetIteratorCopiesRefused/set_entries_assign",
+      "TestLibraryMapSetIteratorCopiesRefused/set_keys_assign",
+      "TestLibraryMapSetIteratorCopiesRefused/set_values_assign"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-interface_cast",
+    "diff": "review/test-audit/internal-oracle-interface_cast/M09.diff",
+    "mutant": "M09",
+    "recorded_failed": [
+      "TestLibraryMapSetIteratorCopiesRefused",
+      "TestLibraryMapSetIteratorCopiesRefused/map_entries_spread",
+      "TestLibraryMapSetIteratorCopiesRefused/map_keys_spread",
+      "TestLibraryMapSetIteratorCopiesRefused/map_values_spread",
+      "TestLibraryMapSetIteratorCopiesRefused/set_entries_spread",
+      "TestLibraryMapSetIteratorCopiesRefused/set_keys_spread",
+      "TestLibraryMapSetIteratorCopiesRefused/set_values_spread"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-interface_cast",
+    "diff": "review/test-audit/internal-oracle-interface_cast/M10.diff",
+    "mutant": "M10",
+    "recorded_failed": [
+      "TestJSONStringifyResultMayBeUndefined"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-interface_cast",
+    "diff": "review/test-audit/internal-oracle-interface_cast/M11.diff",
+    "mutant": "M11",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-interface_cast",
+    "diff": "review/test-audit/internal-oracle-interface_cast/M12.diff",
+    "mutant": "M12",
+    "recorded_failed": [
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyRefusals/replacer_function"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-method_values_mutant",
+    "diff": "review/test-audit/internal-oracle-method_values_mutant/diffs/M03.diff",
+    "mutant": "M03",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-method_values_mutant",
+    "diff": "review/test-audit/internal-oracle-method_values_mutant/diffs/M05.diff",
+    "mutant": "M05",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-method_values_mutant",
+    "diff": "review/test-audit/internal-oracle-method_values_mutant/diffs/M06.diff",
+    "mutant": "M06",
+    "recorded_failed": [
+      "TestNarrowedUnionObjectTagRefusal"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-method_values_mutant",
+    "diff": "review/test-audit/internal-oracle-method_values_mutant/diffs/M07.diff",
+    "mutant": "M07",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-method_values_mutant",
+    "diff": "review/test-audit/internal-oracle-method_values_mutant/diffs/M08.diff",
+    "mutant": "M08",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-method_values_mutant",
+    "diff": "review/test-audit/internal-oracle-method_values_mutant/diffs/M09.diff",
+    "mutant": "M09",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-oct6_mutant",
+    "diff": "review/test-audit/internal-oracle-oct6_mutant/M1.diff",
+    "mutant": "M1",
+    "recorded_failed": [
+      "TestClosedStdoutEndsAsOnNode",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/interleaved.a",
+      "TestClosedStdoutEndsAsOnNode/internal/oracle/testdata/large_output.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-oct6_mutant",
+    "diff": "review/test-audit/internal-oracle-oct6_mutant/M2.diff",
+    "mutant": "M2",
+    "recorded_failed": [
+      "TestOneFileHoldsNodesOrder",
+      "TestOneFileHoldsNodesOrder/internal/oracle/testdata/interleaved.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-oct6_mutant",
+    "diff": "review/test-audit/internal-oracle-oct6_mutant/M3.diff",
+    "mutant": "M3",
+    "recorded_failed": [
+      "TestASignalLeavesWhatWasPrinted",
+      "TestASignalLeavesWhatWasPrinted/hangup",
+      "TestASignalLeavesWhatWasPrinted/hangup_inherited_ignored",
+      "TestASignalLeavesWhatWasPrinted/interrupt",
+      "TestASignalLeavesWhatWasPrinted/interrupt_inherited_ignored",
+      "TestASignalLeavesWhatWasPrinted/terminated",
+      "TestASignalLeavesWhatWasPrinted/terminated_inherited_ignored"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/M02.independent.diff",
+    "mutant": "M02",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/M02.namespace_callable_properties.witness.diff",
+    "mutant": "M02",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/M02.namespace_class_registration.witness.diff",
+    "mutant": "M02",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/M02.namespace_method_receiver.witness.diff",
+    "mutant": "M02",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/M06.independent.diff",
+    "mutant": "M06",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/M06.namespace_callable_properties.witness.diff",
+    "mutant": "M06",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/M06.namespace_class_registration.witness.diff",
+    "mutant": "M06",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/M06.namespace_method_receiver.witness.diff",
+    "mutant": "M06",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/diffs/M02.diff",
+    "mutant": "M02",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/diffs/M06.diff",
+    "mutant": "M06",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/diffs/M07.diff",
+    "mutant": "M07",
+    "recorded_failed": [
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/diffs/M08.diff",
+    "mutant": "M08",
+    "recorded_failed": [
+      "TestPredicateDirectionCountsAreRecorded"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/diffs/M09.diff",
+    "mutant": "M09",
+    "recorded_failed": [
+      "TestPredicateDirectionCountsAreRecorded"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/diffs/M10.diff",
+    "mutant": "M10",
+    "recorded_failed": [
+      "TestPredicateDirectionCountsAreRecorded",
+      "TestPredicateMiscompileRefusals"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/diffs/M11.diff",
+    "mutant": "M11",
+    "recorded_failed": [
+      "TestInUnionNarrowingIsRefused"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/diffs/M12.diff",
+    "mutant": "M12",
+    "recorded_failed": [
+      "TestInUnionNarrowingIsRefused"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/diffs/M13.diff",
+    "mutant": "M13",
+    "recorded_failed": [
+      "TestPredicateMiscompileRefusals"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-parser_namespaces",
+    "diff": "review/test-audit/internal-oracle-parser_namespaces/diffs/M14.diff",
+    "mutant": "M14",
+    "recorded_failed": [
+      "TestPredicateMiscompileRefusals"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-private_generic_mutant",
+    "diff": "review/test-audit/internal-oracle-private_generic_mutant/M01.diff",
+    "mutant": "M01",
+    "recorded_failed": [
+      "TestRuntimeLastIndexOfMatchesNode"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-private_generic_mutant",
+    "diff": "review/test-audit/internal-oracle-private_generic_mutant/M02.diff",
+    "mutant": "M02",
+    "recorded_failed": [
+      "TestRuntimeLastIndexOfMatchesNode"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-private_generic_mutant",
+    "diff": "review/test-audit/internal-oracle-private_generic_mutant/M03.diff",
+    "mutant": "M03",
+    "recorded_failed": [
+      "TestScannerNestedReferences",
+      "TestScannerNestedReferences/nested_reference_identity.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-private_generic_mutant",
+    "diff": "review/test-audit/internal-oracle-private_generic_mutant/M04.diff",
+    "mutant": "M04",
+    "recorded_failed": [
+      "TestScannerNestedReferences",
+      "TestScannerNestedReferences/nested-ancestor-call.a",
+      "TestScannerNestedReferences/nested-sibling-callback.a",
+      "TestScannerNestedReferences/nested_reference_identity.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M01.diff",
+    "mutant": "M01",
+    "recorded_failed": [
+      "TestNativeAgreesWithNode",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/fallthrough.a",
+      "TestStage3EnumFallthrough",
+      "TestStage3EnumFallthrough/matched",
+      "TestStage3EnumFallthrough/unmatched",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseDeclarationMutants/no_fallthrough"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M02.diff",
+    "mutant": "M02",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M03.diff",
+    "mutant": "M03",
+    "recorded_failed": [
+      "TestStage3EnumFallthrough",
+      "TestStage3EnumFallthrough/unmatched"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M04.diff",
+    "mutant": "M04",
+    "recorded_failed": [
+      "TestSwitchCaseOverloadIsNotYet"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M05.diff",
+    "mutant": "M05",
+    "recorded_failed": [
+      "TestStatementsSmallRulings",
+      "TestStatementsSmallRulings/nonnull"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M06.diff",
+    "mutant": "M06",
+    "recorded_failed": [
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestStatementsSmallTypeScriptIncrement/absent.a",
+      "TestStatementsSmallTypeScriptIncrement/missing.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M07.diff",
+    "mutant": "M07",
+    "recorded_failed": [
+      "TestStatementsSmallTypeScriptIncrement",
+      "TestStatementsSmallTypeScriptIncrement/nonnull.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M09.diff",
+    "mutant": "M09",
+    "recorded_failed": [
+      "TestTypedArrayWorkersStatsMatchesPlatforms"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M10.diff",
+    "mutant": "M10",
+    "recorded_failed": [
+      "TestTypedArrayWorkersStatsMatchesPlatforms"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M11.diff",
+    "mutant": "M11",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-stage3_front",
+    "diff": "review/test-audit/internal-oracle-stage3_front/M13.diff",
+    "mutant": "M13",
+    "recorded_failed": [
+      "TestNativeAgreesWithNode",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a",
+      "TestSwitchCaseDeclarationMutants",
+      "TestSwitchCaseDeclarationMutants/function_not_hoisted"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-wasi",
+    "diff": "review/test-audit/internal-oracle-wasi/M01.diff",
+    "mutant": "M01",
+    "recorded_failed": [
+      "TestWASIAgreesWithNode",
+      "TestWASIAgreesWithNode/shard-001",
+      "TestWASIAgreesWithNode/shard-001/dedication/dedication.a",
+      "TestWASIAgreesWithNode/shard-003",
+      "TestWASIAgreesWithNode/shard-003/internal/oracle/testdata/reuse.a",
+      "TestWASIAgreesWithNode/shard-006",
+      "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/weak_narrowed.a",
+      "TestWASIAgreesWithNode/shard-007",
+      "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/numbers.a",
+      "TestWeakReadsUndefinedOnceFreed",
+      "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/freed.a",
+      "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/narrowed.a",
+      "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/reuse.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-wasi",
+    "diff": "review/test-audit/internal-oracle-wasi/M02.diff",
+    "mutant": "M02",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-wasi",
+    "diff": "review/test-audit/internal-oracle-wasi/M03.diff",
+    "mutant": "M03",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-wasi",
+    "diff": "review/test-audit/internal-oracle-wasi/M04.diff",
+    "mutant": "M04",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-wasi",
+    "diff": "review/test-audit/internal-oracle-wasi/M05.diff",
+    "mutant": "M05",
+    "recorded_failed": [
+      "TestWASIAgreesWithNode",
+      "TestWASIAgreesWithNode/shard-006",
+      "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/weak_narrowed.a",
+      "TestWeakReadsUndefinedOnceFreed",
+      "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/freed.a",
+      "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/narrowed.a",
+      "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/probe_chain.a",
+      "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/reuse.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-audit/internal-oracle-wasi",
+    "diff": "review/test-audit/internal-oracle-wasi/M07.diff",
+    "mutant": "M07",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-wasi",
+    "diff": "review/test-audit/internal-oracle-wasi/M08.diff",
+    "mutant": "M08",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-audit/internal-oracle-wasi",
+    "diff": "review/test-audit/internal-oracle-wasi/M09.diff",
+    "mutant": "M09",
+    "recorded_failed": [
+      "TestWASIAgreesWithNode",
+      "TestWASIAgreesWithNode/shard-001",
+      "TestWASIAgreesWithNode/shard-001/dedication/dedication.a",
+      "TestWASIAgreesWithNode/shard-003",
+      "TestWASIAgreesWithNode/shard-003/internal/oracle/testdata/reuse.a",
+      "TestWASIAgreesWithNode/shard-006",
+      "TestWASIAgreesWithNode/shard-006/internal/oracle/testdata/weak_narrowed.a",
+      "TestWASIAgreesWithNode/shard-007",
+      "TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/numbers.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-arguments_length",
+    "diff": "review/test-defend/internal-oracle-arguments_length/D04.diff",
+    "mutant": "D04",
+    "recorded_failed": [
+      "TestUncheckableCastAdmission"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-arguments_length",
+    "diff": "review/test-defend/internal-oracle-arguments_length/D1.diff",
+    "mutant": "D1",
+    "recorded_failed": [
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFailureContract/cast_class_fails",
+      "TestCheckedCastFailureContract/cast_class_generic_fails",
+      "TestCheckedCastFailureContract/cast_class_union_fails"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-arguments_length",
+    "diff": "review/test-defend/internal-oracle-arguments_length/session-619e7a4c/D04.diff",
+    "mutant": "D04",
+    "recorded_failed": [
+      "TestUncheckableCastAdmission"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-defend/internal-oracle-checked_views_flag_downcast/D1.diff",
+    "mutant": "D1",
+    "recorded_failed": [
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewOptionalReadBoundary/JavaScript",
+      "TestCheckedViewOptionalReadBoundary/native",
+      "TestCheckedViewV2TupleIdentityMutant"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-defend/internal-oracle-checked_views_flag_downcast/D2.diff",
+    "mutant": "D2",
+    "recorded_failed": [
+      "TestCheckedViewV2CallableProducerMutant",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewV2ReadsAfterWrites/null-read-write",
+      "TestCountsAreRecorded"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-defend/internal-oracle-checked_views_flag_downcast/D6.diff",
+    "mutant": "D6",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-defend/internal-oracle-checked_views_flag_downcast/D7.diff",
+    "mutant": "D7",
+    "recorded_failed": [
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewV2ReadsAfterWrites/null-read-write"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-defend/internal-oracle-checked_views_flag_downcast/prior-e9eddb52/D1.diff",
+    "mutant": "D1",
+    "recorded_failed": [
+      "TestCheckedViewV2TupleIdentityMutant"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-defend/internal-oracle-checked_views_flag_downcast/prior-e9eddb52/D2.diff",
+    "mutant": "D2",
+    "recorded_failed": [
+      "TestCheckedViewV2CallableProducerMutant"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-defend/internal-oracle-checked_views_flag_downcast/session-f978be38/D1.diff",
+    "mutant": "D1",
+    "recorded_failed": [
+      "TestCheckedViewV2TupleIdentityMutant"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-defend/internal-oracle-checked_views_flag_downcast/session-f978be38/D2.diff",
+    "mutant": "D2",
+    "recorded_failed": [
+      "TestCheckedViewV2CallableProducerMutant"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-defend/internal-oracle-checked_views_flag_downcast/session-f978be38/D3b.diff",
+    "mutant": "D3",
+    "recorded_failed": [
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewObjectPrimitiveSource/literal-text-wrong"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+    "diff": "review/test-defend/internal-oracle-checked_views_flag_downcast/session-f978be38/D5.diff",
+    "mutant": "D5",
+    "recorded_failed": [
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedOwnClassData/good"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-defend/internal-oracle-checked_views_v2_source/closure-merge/D1.diff",
+    "mutant": "D1",
+    "recorded_failed": [
+      "TestClosureMergeRefusals",
+      "TestClosureMergeRefusals/stage3/fixtures/nested-functions/refused/01_scanner_frame.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-defend/internal-oracle-checked_views_v2_source/diffs/D1.diff",
+    "mutant": "D1",
+    "recorded_failed": [
+      "TestCheckedViewUntaggedOptionalCallableControl"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-defend/internal-oracle-checked_views_v2_source/diffs/D2.diff",
+    "mutant": "D2",
+    "recorded_failed": [
+      "TestCheckedViewUntaggedCallableUnion"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-checked_views_v2_source",
+    "diff": "review/test-defend/internal-oracle-checked_views_v2_source/diffs/D3.diff",
+    "mutant": "D3",
+    "recorded_failed": [
+      "TestCheckedViewUntaggedSourceDispatch"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-enums_open",
+    "diff": "review/test-defend/internal-oracle-enums_open/D1.diff",
+    "mutant": "D1",
+    "recorded_failed": [
+      "TestInputAgreesWithNode",
+      "TestInputAgreesWithNode/internal/oracle/testdata/write_files.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-enums_open",
+    "diff": "review/test-defend/internal-oracle-enums_open/D2.diff",
+    "mutant": "D2",
+    "recorded_failed": [
+      "TestImportCycleLoadTimeReads",
+      "TestImportCycleLoadTimeReads/classes/c.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-enums_open",
+    "diff": "review/test-defend/internal-oracle-enums_open/run-e77a4ae4-fa42a84c/D2.diff",
+    "mutant": "D2",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-defend/internal-oracle-enums_open",
+    "diff": "review/test-defend/internal-oracle-enums_open/run-e77a4ae4-fa42a84c/D7.diff",
+    "mutant": "D7",
+    "recorded_failed": [
+      "TestStage3EnumBoundaries",
+      "TestStage3EnumBoundaries/06_set_node_flags.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-enums_open",
+    "diff": "review/test-defend/internal-oracle-enums_open/sessions/e77a4ae4/D1.diff",
+    "mutant": "D1",
+    "recorded_failed": [
+      "TestFreshWriteProbesStayRefused",
+      "TestFreshWriteProbesStayRefused/another_view.a",
+      "TestFreshWriteProbesStayRefused/array_from.a",
+      "TestFreshWriteProbesStayRefused/call_clobbers.a",
+      "TestFreshWriteProbesStayRefused/call_comparator.a",
+      "TestFreshWriteProbesStayRefused/call_escaped_parent.a",
+      "TestFreshWriteProbesStayRefused/call_grandchild.a",
+      "TestFreshWriteProbesStayRefused/call_leaks_parent.a",
+      "TestFreshWriteProbesStayRefused/call_one_bad_site.a",
+      "TestFreshWriteProbesStayRefused/call_owner.a",
+      "TestFreshWriteProbesStayRefused/call_returns_argument.a",
+      "TestFreshWriteProbesStayRefused/call_same.a",
+      "TestFreshWriteProbesStayRefused/call_targets_virtual.a",
+      "TestFreshWriteProbesStayRefused/call_then_throws.a",
+      "TestFreshWriteProbesStayRefused/call_twice_deferred.a",
+      "TestFreshWriteProbesStayRefused/call_wrapper.a",
+      "TestFreshWriteProbesStayRefused/captured_before.a",
+      "TestFreshWriteProbesStayRefused/caught.a",
+      "TestFreshWriteProbesStayRefused/closure_captures.a",
+      "TestFreshWriteProbesStayRefused/concat.a",
+      "TestFreshWriteProbesStayRefused/constructor_tie.a",
+      "TestFreshWriteProbesStayRefused/ctor_readonly.a",
+      "TestFreshWriteProbesStayRefused/ctor_set.a",
+      "TestFreshWriteProbesStayRefused/ctor_wrapped.a",
+      "TestFreshWriteProbesStayRefused/devirt_fresh_method_keeps_argument.a",
+      "TestFreshWriteProbesStayRefused/escapes_after_return.a",
+      "TestFreshWriteProbesStayRefused/fill.a",
+      "TestFreshWriteProbesStayRefused/global_then_function.a",
+      "TestFreshWriteProbesStayRefused/index_write.a",
+      "TestFreshWriteProbesStayRefused/map_callback.a",
+      "TestFreshWriteProbesStayRefused/map_iterator.a",
+      "TestFreshWriteProbesStayRefused/map_iterator_parenthesized.a",
+      "TestFreshWriteProbesStayRefused/map_key.a",
+      "TestFreshWriteProbesStayRefused/map_set.a",
+      "TestFreshWriteProbesStayRefused/next_iteration.a",
+      "TestFreshWriteProbesStayRefused/older_instance.a",
+      "TestFreshWriteProbesStayRefused/one_call.a",
+      "TestFreshWriteProbesStayRefused/returns_argument.a",
+      "TestFreshWriteProbesStayRefused/returns_global.a",
+      "TestFreshWriteProbesStayRefused/set_add.a",
+      "TestFreshWriteProbesStayRefused/set_iterator.a",
+      "TestFreshWriteProbesStayRefused/splice.a",
+      "TestFreshWriteProbesStayRefused/spread_array.a",
+      "TestFreshWriteProbesStayRefused/spread_old.a",
+      "TestFreshWriteProbesStayRefused/wraps_argument.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-interface_cast",
+    "diff": "review/test-defend/internal-oracle-interface_cast/session/D2.diff",
+    "mutant": "D2",
+    "recorded_failed": [
+      "TestInterfaceCastScalarTags",
+      "TestInterfaceCastScalarTags/boolean_fails",
+      "TestInterfaceCastScalarTags/boolean_passes"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-interface_cast",
+    "diff": "review/test-defend/internal-oracle-interface_cast/session/D3.diff",
+    "mutant": "D3",
+    "recorded_failed": [
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFailureContract/cast_class_generic_fails",
+      "TestCheckedCastFailureContract/cast_class_union_fails",
+      "TestCheckedCastMutants",
+      "TestCheckedCastMutants/skip_class_union",
+      "TestCheckedCastMutants/skip_generic_class"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-interface_cast",
+    "diff": "review/test-defend/internal-oracle-interface_cast/session/D7.diff",
+    "mutant": "D7",
+    "recorded_failed": [],
+    "reason": "No failure mapping found"
+  },
+  {
+    "branch": "test-defend/internal-oracle-interface_cast",
+    "diff": "review/test-defend/internal-oracle-interface_cast/session/D8.diff",
+    "mutant": "D8",
+    "recorded_failed": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastOracle/visitor"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-oct6_mutant",
+    "diff": "review/test-defend/internal-oracle-oct6_mutant/D01.diff",
+    "mutant": "D01",
+    "recorded_failed": [
+      "TestAPromptComesBeforeTheRead"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-oct6_mutant",
+    "diff": "review/test-defend/internal-oracle-oct6_mutant/D02.diff",
+    "mutant": "D02",
+    "recorded_failed": [
+      "TestOverloadContractRulings",
+      "TestOverloadContractRulings/token",
+      "TestOverloadContractRulings/trampoline"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-oct6_mutant",
+    "diff": "review/test-defend/internal-oracle-oct6_mutant/D03.diff",
+    "mutant": "D03",
+    "recorded_failed": [
+      "TestOverloadContractRulings",
+      "TestOverloadContractRulings/serializer",
+      "TestOverloadContractRulings/token",
+      "TestOverloadContractRulings/trampoline"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-oct6_mutant",
+    "diff": "review/test-defend/internal-oracle-oct6_mutant/D04.diff",
+    "mutant": "D04",
+    "recorded_failed": [
+      "TestOverloadContractRulings",
+      "TestOverloadContractRulings/serializer"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-oct6_mutant",
+    "diff": "review/test-defend/internal-oracle-oct6_mutant/D2.diff",
+    "mutant": "D2",
+    "recorded_failed": [
+      "TestInputAgreesWithNode",
+      "TestInputAgreesWithNode/internal/oracle/testdata/write_files.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-oct6_mutant",
+    "diff": "review/test-defend/internal-oracle-oct6_mutant/D7.diff",
+    "mutant": "D7",
+    "recorded_failed": [
+      "TestCountsAreRecorded",
+      "TestNativeAgreesWithNode",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/navigation.a"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-oct6_mutant",
+    "diff": "review/test-defend/internal-oracle-oct6_mutant/prior-e76d0e29/D01.diff",
+    "mutant": "D01",
+    "recorded_failed": [
+      "TestAPromptComesBeforeTheRead"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-oct6_mutant",
+    "diff": "review/test-defend/internal-oracle-oct6_mutant/prior-e76d0e29/D02.diff",
+    "mutant": "D02",
+    "recorded_failed": [
+      "TestOverloadContractRulings",
+      "TestOverloadContractRulings/token",
+      "TestOverloadContractRulings/trampoline"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-oct6_mutant",
+    "diff": "review/test-defend/internal-oracle-oct6_mutant/prior-e76d0e29/D03.diff",
+    "mutant": "D03",
+    "recorded_failed": [
+      "TestOverloadContractRulings",
+      "TestOverloadContractRulings/serializer",
+      "TestOverloadContractRulings/token",
+      "TestOverloadContractRulings/trampoline"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-oct6_mutant",
+    "diff": "review/test-defend/internal-oracle-oct6_mutant/prior-e76d0e29/D04.diff",
+    "mutant": "D04",
+    "recorded_failed": [
+      "TestOverloadContractRulings",
+      "TestOverloadContractRulings/serializer"
+    ],
+    "reason": "No candidate recorded failing"
+  },
+  {
+    "branch": "test-defend/internal-oracle-wasi",
+    "diff": "review/test-defend/internal-oracle-wasi/diffs/D1.diff",
+    "mutant": "D1",
+    "recorded_failed": [
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "reason": "No candidate recorded failing"
+  }
+]

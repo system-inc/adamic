@@ -1,0 +1,11 @@
+--- a/internal/lower/enum_never.go
++++ b/internal/lower/enum_never.go
+@@ -14,7 +14,7 @@
+ 	}
+ 	if node.Kind == ast.KindElementAccessExpression {
+ 		stored := l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression)
+-		if l.checker.IsArrayType(stored) {
++		if !l.checker.IsArrayType(stored) {
+ 			if arguments := l.checker.GetTypeArguments(stored); len(arguments) == 1 {
+ 				return arguments[0]
+ 			}

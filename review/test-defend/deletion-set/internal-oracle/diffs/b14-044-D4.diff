@@ -1,0 +1,11 @@
+--- a/internal/lower/enum_never.go
++++ b/internal/lower/enum_never.go
+@@ -102,7 +102,7 @@
+ 		printed = ir.UnionToString{Value: read}
+ 	}
+ 	message := ir.Concat{Parts: []ir.Expression{
+-		ir.StringConstant{Index: l.constant("unreachable value ")},
++		ir.StringConstant{Index: l.constant("unreachable enum value ")},
+ 		printed,
+ 		ir.StringConstant{Index: l.constant(" for numeric enum " + identity.Name)},
+ 	}}

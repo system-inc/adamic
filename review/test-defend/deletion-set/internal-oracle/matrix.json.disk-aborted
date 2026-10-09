@@ -1,0 +1,100 @@
+[
+  {
+    "mutant": "M04",
+    "canonical_id": "M04",
+    "branch": "test-audit/internal-oracle-arguments_length",
+    "source_diff": "review/test-audit/internal-oracle-arguments_length/diffs/M04.diff",
+    "saved_diff": "diffs/b00-001-M04.diff",
+    "file_line": "internal/javascript/readiness.go:24",
+    "candidates_failed": [
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastRunsNoCatchOrFinally"
+    ],
+    "other_rows_failed": [
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFailureContract/cast_enum_const_numeric_fails",
+      "TestCheckedCastFailureContract/cast_enum_const_string_fails",
+      "TestCheckedCastFailureContract/cast_enum_numeric_fails",
+      "TestCheckedCastFailureContract/cast_enum_string_fails",
+      "TestCheckedCastFailureContract/cast_subunion_const_numeric_fails",
+      "TestCheckedCastFailureContract/cast_subunion_const_string_fails",
+      "TestCheckedCastFailureContract/cast_subunion_fails",
+      "TestCheckedCastFailureContract/cast_subunion_string_fails",
+      "TestCheckedCastMutants",
+      "TestCheckedCastMutants/skip_const_numeric",
+      "TestCheckedCastMutants/skip_const_numeric_sub-union",
+      "TestCheckedCastMutants/skip_const_string",
+      "TestCheckedCastMutants/skip_const_string_sub-union",
+      "TestCheckedCastMutants/skip_numeric",
+      "TestCheckedCastMutants/skip_string",
+      "TestCheckedCastMutants/skip_string_sub-union",
+      "TestCheckedCastMutants/skip_sub-union"
+    ],
+    "recorded_failed": [
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastFailureContract/cast_enum_const_numeric_fails",
+      "TestCheckedCastFailureContract/cast_enum_const_string_fails",
+      "TestCheckedCastFailureContract/cast_enum_numeric_fails",
+      "TestCheckedCastFailureContract/cast_enum_string_fails",
+      "TestCheckedCastFailureContract/cast_subunion_const_numeric_fails",
+      "TestCheckedCastFailureContract/cast_subunion_const_string_fails",
+      "TestCheckedCastFailureContract/cast_subunion_fails",
+      "TestCheckedCastFailureContract/cast_subunion_string_fails",
+      "TestCheckedCastFlushesOutput",
+      "TestCheckedCastMutants",
+      "TestCheckedCastMutants/skip_const_numeric",
+      "TestCheckedCastMutants/skip_const_numeric_sub-union",
+      "TestCheckedCastMutants/skip_const_string",
+      "TestCheckedCastMutants/skip_const_string_sub-union",
+      "TestCheckedCastMutants/skip_numeric",
+      "TestCheckedCastMutants/skip_string",
+      "TestCheckedCastMutants/skip_string_sub-union",
+      "TestCheckedCastMutants/skip_sub-union",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastRunsNoCatchOrFinally/cast_enum_numeric_fails"
+    ],
+    "failure_mapping_source": [
+      "nearest matrix/results/rows JSON"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "sha256": "9ada3deddcc57d5efc4b7afb00e77be7062dfd3b01d3430c40e8d01e0ceaf6f7",
+    "replay_index": 1,
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./internal/oracle/",
+          "-skip",
+          "^(TestCallTarget|TestCheckedCastFlushesOutput|TestCheckedCastRunsNoCatchOrFinally|TestCheckedViewUntaggedSourceFlows|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2MovedStage3Results|TestFileWritesLandInNodesOrder|TestImportCycleRuntimeCalls|TestInterfaceCastImportedConstruction|TestModuleNamespaceReadsMatchNode|TestNamespaceLiveExportBoundary|TestNumericEnumNeverPathsPinned|TestNumericEnumNeverPinned|TestOmittedOriginalProbePolicy|TestParserNamespace|TestRegexCycleFixtureHasItsNativeDependency|TestStage3EnumSparseArrayBoundary|TestTypedArrayWriteStopIsPinned|TestWASIEmission|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestParserNamespaceReceiver|TestParserNamespaceClass|TestParserCallableNamespace)($|_|/)"
+        ],
+        "environment": {
+          "ADAMIC_GATE_UNCACHED": "1",
+          "ADAMIC_BUILD_CACHE_DIR": "/workspace/deletion-replay/cache/001-M04-r0"
+        },
+        "log": "logs/001-M04-r0.log",
+        "wall_seconds": 162.505,
+        "exit": 1,
+        "stopped_early": false,
+        "package_completed": true,
+        "still_caught_by": [],
+        "witness_failures": [],
+        "panicking_tests": [],
+        "observed_passes": [],
+        "evidence": [],
+        "broken": "build/process failure without a failing test"
+      }
+    ],
+    "still_caught_by": [],
+    "panicking_tests": [],
+    "witness_failures": [],
+    "wall_seconds": 162.505,
+    "completed_without_catcher": false,
+    "broken": "build/process failure without a failing test"
+  }
+]

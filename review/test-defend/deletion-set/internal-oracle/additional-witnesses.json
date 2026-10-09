@@ -1,0 +1,10 @@
+[
+  {
+    "test": "TestInterfaceCastScalarTags",
+    "file_line": "internal/oracle/interface_cast_test.go:181",
+    "reason": "Negative subcases rewrite ir.CheckedCast to cast.Value and expect disagreement(want, mutant) to reject it. Exclude the mixed control/witness row conservatively.",
+    "requires_replay_indices": [
+      55
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/adamic.c
++++ b/internal/native/runtime/adamic.c
+@@ -90,7 +90,7 @@
+ 	if (length > sizeof output - output_used) {
+ 		flush();
+ 		if (length > sizeof output) {
+-			if (!broken[adamic_stdout] && write_all(adamic_stdout, bytes, length) != 0) {
++			if (!broken[adamic_stdout] && write_all(adamic_stdout, bytes, length - 1) != 0) {
+ 				output_failed(adamic_stdout);
+ 			}
+ 			return;

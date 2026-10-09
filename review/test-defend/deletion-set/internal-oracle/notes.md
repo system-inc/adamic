@@ -1,0 +1,24 @@
+# Deletion-set replay notes
+
+- Initial disk check: /tmp 2.6 GB free on an 8.8 GB filesystem; /workspace 11 GB free. Removed the identified earlier-unit /tmp/fsfile-defend scratch/cache directory. A 15 GB free target cannot fit on the /tmp filesystem. Subsequent disk checks remained stable and the baseline passed.
+- Warm toolchain sourced from /workspace/adamic-tools/env.sh; nproc 5. npm ci completed in stage3/api before baseline. Current main and pinned cohere submodule were verified.
+- The supplied skip regex did not match the actual CallTarget and ParserNamespace family member names. expanded-skipped.json and skip.regex include all five actual members as well as the supplied names. All candidates exist on current main.
+- The file-shaped test-defend/internal-oracle-private_generic_mutant/row.cover entry is not a branch. Its parent evidence branch was fetched. This entry did not supply an additional mutant branch.
+- The inventory was written before baseline/replay: 77 applicable records, 66 distinct patches. Every occurrence is replayed separately with its own fresh cache, including duplicate patches. IDs recur across branches and session directories; saved_diff and source_diff distinguish them.
+- The original mutant-list.json file_line values are hunk anchors. changed-lines.json gives the precise first changed line on current main. No diff was rebased or edited.
+- Replay uses two detached scratch worktrees of exactly current main, with the pinned cohere checkout and installed node_modules linked from the main tree. Production files in the main tree remain unchanged. Each scratch patch is reversed after its run.
+- Early stopping is triggered only by a non-witness failing test/subtest, normalized to its top-level name. Built-in-mutant witnesses are excluded conservatively, including mixed control/witness tests classified as witnesses by prior reports. Passing runs must reach the final package result. Test-binary panics trigger a rerun with the panicking top-level test skipped; process/build failures are marked broken, never catches.
+- Go test output is written directly to log files; monitoring reads those files. A stopped run records only observed passes and failures, not hypothetical results for tests that never ran.
+
+- The first scratch-path builds nearly exhausted /tmp. They were stopped, their source patches restored, and their logs retained as disk-aborted diagnostics. Both records were rerun from restored source, and only those valid replays enter matrix.json. Build temporaries then moved to /workspace/deletion-replay/tmp. Inactive Go build temporaries are cleaned automatically.
+- Additional inactive earlier Go build scratch directories under /tmp were removed. To prevent later workspace exhaustion, 3.04 GiB of generated Go build-cache objects under /home/agent/.cache/go-build, last used before 17:45 UTC, were evicted. No repository, tool-installation, or current replay file was evicted; older-cache-eviction.json records exact cache files.
+- git apply --check --verbose found no hunk offsets for any inventoried patch on current main. The changed-lines.json locations therefore refer directly to current main.
+
+- Environment interruption stopped the workers. A cleanup error let a premature resume start from the beginning and replace the incremental matrix. The matrix was rebuilt from the first 46 runner completion records, with every recovered catch verified against Go JSON. Two overwritten incomplete logs were rerun, and the new completed duplicate results for indices 0/1 were retained. Recovered process exit codes are null rather than guessed; matrix-recovery.json records the recovery.
+- Further deletion from /home/agent/.cache/go-build was rejected by automatic approval review as outside the user-authorized /tmp cleanup scope. That deletion was not performed.
+
+- D4 from the enums-open defender and D2 from the stage3-front defender both completed green after the deletion set was skipped. Both had caught TestStage3EnumSparseArrayBoundary and TestTypedArrayWriteStopIsPinned previously. These rows jointly guard pinned bounds diagnostics; keeping both in the report is conservative, not a claim that each is individually unique.
+- TestInterfaceCastScalarTags plants its own IR mutants in negative cases. Its initial sole-catcher result is excluded and replayed to completion or an ordinary failure; witness-only-attempts.json preserves the rejected proof.
+
+- Final D5 qualification completed after 25 panic exclusions with only TestInterfaceCastScalarTags failing. This is not a clean last-catcher proof; its two candidates are conservatively kept. All other replay records are settled, including two clean losses.
+- Main production sources and scratch production sources were restored. Previous untracked unit evidence was restored without staging it. Logs are gzip-compressed, with metadata paths updated.

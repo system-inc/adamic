@@ -1,0 +1,11 @@
+--- a/internal/native/emit_branches.go
++++ b/internal/native/emit_branches.go
+@@ -101,7 +101,7 @@
+ 		}
+ 		e.indent--
+ 	}
+-	e.line("if (%s) {", unwrap(condition))
++	e.line("if (!(%s)) {", unwrap(condition))
+ 	branch(trueText, whenTrue, trueOwned)
+ 	e.line("} else {")
+ 	branch(notText, whenNot, notOwned)

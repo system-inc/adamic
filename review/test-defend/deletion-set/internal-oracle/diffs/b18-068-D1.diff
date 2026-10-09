@@ -1,0 +1,13 @@
+diff --git a/internal/lower/namespace_callable.go b/internal/lower/namespace_callable.go
+index ec6e8bf6..02f02d5a 100644
+--- a/internal/lower/namespace_callable.go
++++ b/internal/lower/namespace_callable.go
+@@ -30,7 +30,7 @@ func (l *lowering) callableNamespaceUse(node *ast.Node) bool {
+ 		return false
+ 	}
+ 	if parent.Kind == ast.KindTypeOfExpression {
+-		return true
++		return false
+ 	}
+ 	if parent.Kind == ast.KindPropertyAccessExpression && parent.Expression() == use && l.namespaceMember(parent) {
+ 		return true

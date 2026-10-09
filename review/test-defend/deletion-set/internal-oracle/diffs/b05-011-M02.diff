@@ -1,0 +1,11 @@
+--- a/internal/lower/module_namespace.go
++++ b/internal/lower/module_namespace.go
+@@ -14,7 +14,7 @@
+ 	}
+ 	for _, declaration := range symbol.Declarations {
+ 		if declaration.Kind == ast.KindSourceFile && !load.IsLibrary(declaration.AsSourceFile()) && !load.IsPrelude(declaration.AsSourceFile()) {
+-			return true
++			return false
+ 		}
+ 	}
+ 	return false

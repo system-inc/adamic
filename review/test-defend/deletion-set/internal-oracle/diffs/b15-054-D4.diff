@@ -1,0 +1,13 @@
+diff --git a/internal/lower/cast_proof.go b/internal/lower/cast_proof.go
+index 3b82dbe8..571d6ee2 100644
+--- a/internal/lower/cast_proof.go
++++ b/internal/lower/cast_proof.go
+@@ -118,7 +118,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
+ 	var upcastFailure error
+ 	// A structural assignability result is only an upcast candidate. Nominal
+ 	// downcasts may also look assignable, but still need their runtime identity check.
+-	if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
++	if l.checker.IsTypeAssignableTo(target, source) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+ 		err := l.provenRelation(node, as.Expression, l.checker.GetTypeAtLocation(node))
+ 		if err == nil {
+ 			return castProof{}, nil

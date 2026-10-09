@@ -1,0 +1,11 @@
+--- a/internal/native/view_unions_untagged.go
++++ b/internal/native/view_unions_untagged.go
+@@ -56,7 +56,7 @@
+ 		if len(contract.Fields) != 0 {
+ 			values := []string{}
+ 			for _, field := range contract.Fields {
+-				values = append(values, fmt.Sprintf("{%s,%d,%t}", cString(field.Name), field.Contract, field.Optional))
++				values = append(values, fmt.Sprintf("{%s,%d,%t}", cString(field.Name), field.Contract, !field.Optional))
+ 			}
+ 			fields = prefix + "_fields"
+ 			fmt.Fprintf(&declarations, "static const adamic_view_untagged_field %s[] = {%s};\n", fields, strings.Join(values, ","))

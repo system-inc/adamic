@@ -1,0 +1,11 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -474,7 +474,7 @@
+ func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {
+ 	statement := node.AsSwitchStatement()
+ 	proven := l.checker.GetTypeAtLocation(statement.Expression)
+-	return l.enumSwitchCovered(node) && (!l.numericEnum(l.enumIdentity(proven)) || l.enumMemberOrigin(statement.Expression, l.enumIdentity(proven), map[*ast.Node]bool{}))
++	return l.enumSwitchCovered(node) && (l.numericEnum(l.enumIdentity(proven)) || l.enumMemberOrigin(statement.Expression, l.enumIdentity(proven), map[*ast.Node]bool{}))
+ }
+ 
+ func (l *lowering) enumSwitchCovered(node *ast.Node) bool {

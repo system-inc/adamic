@@ -1,0 +1,11 @@
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -62,7 +62,7 @@
+   if(seen?.has(id)) return true;
+   if(reference){if(seen===undefined){seen=new Set();active.set(value,seen);}seen.add(id);}
+   try {
+-  if(depth>128) return false;
++  if(depth>0) return false;
+   const contract=contracts[id-1];
+   if(contract===undefined || (contract.Unsupported && contract.Unsupported!=='untagged object union') || contract.Nominal) return false;
+   if(value===undefined && (contract.Undefined || contract.Kind===7)) return true;

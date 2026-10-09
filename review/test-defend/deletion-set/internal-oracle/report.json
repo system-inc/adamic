@@ -1,0 +1,1338 @@
+{
+  "package": "internal/oracle",
+  "main": "7b9d4272c28f59530ab13daa5c49067e47933b06",
+  "skipped": [
+    "TestCallTarget family",
+    "TestCheckedCastFlushesOutput",
+    "TestCheckedCastRunsNoCatchOrFinally",
+    "TestCheckedViewUntaggedSourceFlows",
+    "TestCheckedViewV2ArrayArmBoundary",
+    "TestCheckedViewV2MovedStage3Results",
+    "TestFileWritesLandInNodesOrder",
+    "TestImportCycleRuntimeCalls",
+    "TestInterfaceCastImportedConstruction",
+    "TestModuleNamespaceReadsMatchNode",
+    "TestNamespaceLiveExportBoundary",
+    "TestNumericEnumNeverPathsPinned",
+    "TestNumericEnumNeverPinned",
+    "TestOmittedOriginalProbePolicy",
+    "TestParserNamespace family",
+    "TestRegexCycleFixtureHasItsNativeDependency",
+    "TestStage3EnumSparseArrayBoundary",
+    "TestTypedArrayWriteStopIsPinned",
+    "TestWASIEmission"
+  ],
+  "mutants": [
+    {
+      "mutant": "M02",
+      "diff": "diffs/b00-000-M02.diff",
+      "file_line": "internal/lower/cast_proof.go:215",
+      "branch": "test-audit/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCheckedCastFlushesOutput",
+        "TestCheckedCastRunsNoCatchOrFinally"
+      ],
+      "still_caught_by": [
+        "TestUncheckableCastAdmission"
+      ],
+      "stale": false,
+      "wall_seconds": 51.384
+    },
+    {
+      "mutant": "M04",
+      "diff": "diffs/b00-001-M04.diff",
+      "file_line": "internal/javascript/readiness.go:27",
+      "branch": "test-audit/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCheckedCastFlushesOutput",
+        "TestCheckedCastRunsNoCatchOrFinally"
+      ],
+      "still_caught_by": [
+        "TestInterfaceCastChecksMalformedRead"
+      ],
+      "stale": false,
+      "wall_seconds": 46.481
+    },
+    {
+      "mutant": "M3",
+      "diff": "diffs/b01-002-M3.diff",
+      "file_line": "internal/native/view_fields.go:31",
+      "branch": "test-audit/internal-oracle-checked_views_flag_downcast",
+      "candidates_failed": [
+        "TestCheckedViewV2MovedStage3Results"
+      ],
+      "still_caught_by": [
+        "TestRequiredViewFieldOperandOnce"
+      ],
+      "stale": false,
+      "wall_seconds": 25.322
+    },
+    {
+      "mutant": "M14",
+      "diff": "diffs/b02-003-M14.diff",
+      "file_line": "internal/lower/locals.go:13",
+      "branch": "test-audit/internal-oracle-checked_views_v2_source",
+      "candidates_failed": [
+        "TestCheckedViewUntaggedSourceFlows"
+      ],
+      "still_caught_by": [
+        "TestImportCycleLoadTimeReads"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestEnumSemanticMutants"
+      ],
+      "wall_seconds": 6.522
+    },
+    {
+      "mutant": "M6",
+      "diff": "diffs/b02-004-M6.diff",
+      "file_line": "internal/lower/view_unions_dispatch.go:25",
+      "branch": "test-audit/internal-oracle-checked_views_v2_source",
+      "candidates_failed": [
+        "TestCheckedViewUntaggedSourceFlows"
+      ],
+      "still_caught_by": [
+        "TestCheckedViewUntaggedSourceDispatch"
+      ],
+      "stale": false,
+      "wall_seconds": 42.339
+    },
+    {
+      "mutant": "M8",
+      "diff": "diffs/b02-005-M8.diff",
+      "file_line": "internal/native/view_unions_untagged.go:59",
+      "branch": "test-audit/internal-oracle-checked_views_v2_source",
+      "candidates_failed": [
+        "TestCheckedViewUntaggedSourceFlows"
+      ],
+      "still_caught_by": [
+        "TestReviewProgramsAgreeWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 299.419
+    },
+    {
+      "mutant": "M9",
+      "diff": "diffs/b02-006-M9.diff",
+      "file_line": "internal/javascript/view_unions_untagged.go:65",
+      "branch": "test-audit/internal-oracle-checked_views_v2_source",
+      "candidates_failed": [
+        "TestCheckedViewUntaggedSourceFlows"
+      ],
+      "still_caught_by": [
+        "TestCheckedViewUntaggedRecursive"
+      ],
+      "stale": false,
+      "wall_seconds": 106.703
+    },
+    {
+      "mutant": "M1",
+      "diff": "diffs/b03-007-M1.diff",
+      "file_line": "internal/native/emit.go:106",
+      "branch": "test-audit/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestImportCycleRuntimeCalls",
+        "TestNumericEnumNeverPathsPinned",
+        "TestNumericEnumNeverPinned",
+        "TestStage3EnumSparseArrayBoundary"
+      ],
+      "still_caught_by": [
+        "TestImportCycleLoadTimeReads"
+      ],
+      "stale": false,
+      "wall_seconds": 15.024
+    },
+    {
+      "mutant": "M01",
+      "diff": "diffs/b04-008-M01.diff",
+      "file_line": "internal/native/view_fields.go:31",
+      "branch": "test-audit/internal-oracle-interface_cast",
+      "candidates_failed": [
+        "TestInterfaceCastImportedConstruction"
+      ],
+      "still_caught_by": [
+        "TestInterfaceCastChecksMalformedRead"
+      ],
+      "stale": false,
+      "wall_seconds": 29.493
+    },
+    {
+      "mutant": "M02",
+      "diff": "diffs/b04-009-M02.diff",
+      "file_line": "internal/native/emit_expressions.go:435",
+      "branch": "test-audit/internal-oracle-interface_cast",
+      "candidates_failed": [
+        "TestInterfaceCastImportedConstruction"
+      ],
+      "still_caught_by": [
+        "TestInterfaceCastChecksMalformedRead"
+      ],
+      "stale": false,
+      "wall_seconds": 32.775
+    },
+    {
+      "mutant": "M01",
+      "diff": "diffs/b05-010-M01.diff",
+      "file_line": "internal/lower/load_time_reads.go:102",
+      "branch": "test-audit/internal-oracle-method_values_mutant",
+      "candidates_failed": [
+        "TestModuleNamespaceReadsMatchNode"
+      ],
+      "still_caught_by": [
+        "TestImportCycleLoadTimeReads"
+      ],
+      "stale": false,
+      "wall_seconds": 25.636
+    },
+    {
+      "mutant": "M02",
+      "diff": "diffs/b05-011-M02.diff",
+      "file_line": "internal/lower/module_namespace.go:17",
+      "branch": "test-audit/internal-oracle-method_values_mutant",
+      "candidates_failed": [
+        "TestModuleNamespaceReadsMatchNode"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestModuleNamespaceLiveBindingMutant",
+        "TestModuleNamespaceReadinessMutants"
+      ],
+      "wall_seconds": 80.065
+    },
+    {
+      "mutant": "M04",
+      "diff": "diffs/b05-012-M04.diff",
+      "file_line": "internal/lower/namespaces.go:502",
+      "branch": "test-audit/internal-oracle-method_values_mutant",
+      "candidates_failed": [
+        "TestNamespaceLiveExportBoundary"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestNamespaceSemanticMutants",
+        "TestParserCallableNamespaceMutant",
+        "TestParserNamespaceReceiverMutant",
+        "TestSyntaxModuleDeclarationMutants"
+      ],
+      "wall_seconds": 244.814
+    },
+    {
+      "mutant": "M10",
+      "diff": "diffs/b05-013-M10.diff",
+      "file_line": "internal/lower/namespaces.go:432",
+      "branch": "test-audit/internal-oracle-method_values_mutant",
+      "candidates_failed": [
+        "TestNamespaceLiveExportBoundary"
+      ],
+      "still_caught_by": [
+        "TestCountsAreRecorded"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestNamespaceRuledMutants",
+        "TestNamespaceSemanticMutants",
+        "TestParserCallableNamespaceMutant"
+      ],
+      "wall_seconds": 178.079
+    },
+    {
+      "mutant": "M4",
+      "diff": "diffs/b06-014-M4.diff",
+      "file_line": "internal/lower/lower.go:22",
+      "branch": "test-audit/internal-oracle-oct6_mutant",
+      "candidates_failed": [
+        "TestFileWritesLandInNodesOrder",
+        "TestOmittedOriginalProbePolicy"
+      ],
+      "still_caught_by": [
+        "TestImportCycleLoadTimeReads"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestEnumSemanticMutants"
+      ],
+      "wall_seconds": 23.019
+    },
+    {
+      "mutant": "M01",
+      "diff": "diffs/b07-015-M01.diff",
+      "file_line": "internal/lower/namespace_receiver_scope.go:13",
+      "branch": "test-audit/internal-oracle-parser_namespaces",
+      "candidates_failed": [
+        "TestParserNamespace family"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestParserNamespaceReceiverMutant"
+      ],
+      "wall_seconds": 203.992
+    },
+    {
+      "mutant": "M03",
+      "diff": "diffs/b07-016-M03.diff",
+      "file_line": "internal/lower/namespaces.go:502",
+      "branch": "test-audit/internal-oracle-parser_namespaces",
+      "candidates_failed": [
+        "TestParserNamespace family"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestNamespaceSemanticMutants",
+        "TestParserCallableNamespaceMutant",
+        "TestParserNamespaceReceiverMutant"
+      ],
+      "wall_seconds": 216.441
+    },
+    {
+      "mutant": "M04",
+      "diff": "diffs/b07-017-M04.diff",
+      "file_line": "internal/lower/namespaces.go:94",
+      "branch": "test-audit/internal-oracle-parser_namespaces",
+      "candidates_failed": [
+        "TestParserNamespace family"
+      ],
+      "still_caught_by": [
+        "TestCountsAreRecorded"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestModuleNamespaceLiveBindingMutant",
+        "TestModuleNamespaceReadinessMutants",
+        "TestNamespaceSemanticMutants",
+        "TestParserCallableNamespaceMutant",
+        "TestParserNamespaceReceiverMutant"
+      ],
+      "wall_seconds": 92.142
+    },
+    {
+      "mutant": "M05",
+      "diff": "diffs/b07-018-M05.diff",
+      "file_line": "internal/lower/namespace_callable.go:21",
+      "branch": "test-audit/internal-oracle-parser_namespaces",
+      "candidates_failed": [
+        "TestParserNamespace family"
+      ],
+      "still_caught_by": [
+        "TestCountsAreRecorded"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestParserCallableNamespaceMutant"
+      ],
+      "wall_seconds": 164.91
+    },
+    {
+      "mutant": "M08",
+      "diff": "diffs/b09-019-M08.diff",
+      "file_line": "internal/native/runtime/typed_array.c:101",
+      "branch": "test-audit/internal-oracle-stage3_front",
+      "candidates_failed": [
+        "TestTypedArrayWriteStopIsPinned"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 373.257
+    },
+    {
+      "mutant": "M12",
+      "diff": "diffs/b09-020-M12.diff",
+      "file_line": "internal/native/runtime/typed_array.c:111",
+      "branch": "test-audit/internal-oracle-stage3_front",
+      "candidates_failed": [
+        "TestTypedArrayWriteStopIsPinned"
+      ],
+      "still_caught_by": [
+        "TestTypedArrayWorkersStatsMatchesPlatforms"
+      ],
+      "stale": false,
+      "wall_seconds": 67.944
+    },
+    {
+      "mutant": "M06",
+      "diff": "diffs/b10-021-M06.diff",
+      "file_line": "internal/native/emit_values.go:79",
+      "branch": "test-audit/internal-oracle-wasi",
+      "candidates_failed": [
+        "TestWASIEmission"
+      ],
+      "still_caught_by": [
+        "TestArgumentsLengthTypeScriptSource"
+      ],
+      "stale": false,
+      "wall_seconds": 22.783
+    },
+    {
+      "mutant": "D01",
+      "diff": "diffs/b11-022-D01.diff",
+      "file_line": "internal/native/runtime/adamic.c:93",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCheckedCastFlushesOutput"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 346.275
+    },
+    {
+      "mutant": "D02",
+      "diff": "diffs/b11-023-D02.diff",
+      "file_line": "internal/native/runtime/adamic.c:195",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCheckedCastFlushesOutput"
+      ],
+      "still_caught_by": [
+        "TestPredicateMiscompileRefusals"
+      ],
+      "stale": false,
+      "wall_seconds": 31.033
+    },
+    {
+      "mutant": "D03",
+      "diff": "diffs/b11-024-D03.diff",
+      "file_line": "internal/native/runtime/adamic.c:93",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCheckedCastFlushesOutput"
+      ],
+      "still_caught_by": [
+        "TestCountsAreRecorded"
+      ],
+      "stale": false,
+      "wall_seconds": 175.899
+    },
+    {
+      "mutant": "D05",
+      "diff": "diffs/b11-025-D05.diff",
+      "file_line": "internal/native/emit_statements.go:173",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCallTarget family"
+      ],
+      "still_caught_by": [
+        "TestCountsAreRecorded"
+      ],
+      "stale": false,
+      "wall_seconds": 130.352
+    },
+    {
+      "mutant": "D06",
+      "diff": "diffs/b11-026-D06.diff",
+      "file_line": "internal/native/exceptions.go:154",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCallTarget family"
+      ],
+      "still_caught_by": [
+        "TestReviewProgramsAgreeWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 53.857
+    },
+    {
+      "mutant": "D07",
+      "diff": "diffs/b11-027-D07.diff",
+      "file_line": "internal/native/emit_functions.go:314",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCallTarget family"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestNestedCallbackCarrierMutantIsCaught",
+        "TestNestedReferenceIdentityMutant"
+      ],
+      "wall_seconds": 269.534
+    },
+    {
+      "mutant": "D2",
+      "diff": "diffs/b11-028-D2.diff",
+      "file_line": "internal/javascript/javascript.go:575",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCallTarget family",
+        "TestCheckedCastRunsNoCatchOrFinally"
+      ],
+      "still_caught_by": [
+        "TestReviewProgramsAgreeWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 46.957
+    },
+    {
+      "mutant": "D3",
+      "diff": "diffs/b11-029-D3.diff",
+      "file_line": "internal/javascript/javascript.go:580",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCallTarget family",
+        "TestCheckedCastRunsNoCatchOrFinally"
+      ],
+      "still_caught_by": [
+        "TestReviewProgramsAgreeWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 59.173
+    },
+    {
+      "mutant": "D4",
+      "diff": "diffs/b11-030-D4.diff",
+      "file_line": "internal/javascript/javascript.go:575",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCallTarget family"
+      ],
+      "still_caught_by": [
+        "TestReviewProgramsAgreeWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 51.832
+    },
+    {
+      "mutant": "D01",
+      "diff": "diffs/b11-031-D01.diff",
+      "file_line": "internal/native/runtime/adamic.c:93",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCheckedCastFlushesOutput"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 243.986
+    },
+    {
+      "mutant": "D02",
+      "diff": "diffs/b11-032-D02.diff",
+      "file_line": "internal/native/runtime/adamic.c:195",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCheckedCastFlushesOutput"
+      ],
+      "still_caught_by": [
+        "TestPredicateMiscompileRefusals"
+      ],
+      "stale": false,
+      "wall_seconds": 20.785
+    },
+    {
+      "mutant": "D03",
+      "diff": "diffs/b11-033-D03.diff",
+      "file_line": "internal/native/runtime/adamic.c:93",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCheckedCastFlushesOutput"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 301.858
+    },
+    {
+      "mutant": "D05",
+      "diff": "diffs/b11-034-D05.diff",
+      "file_line": "internal/native/emit_statements.go:173",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCallTarget family"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 94.106
+    },
+    {
+      "mutant": "D06",
+      "diff": "diffs/b11-035-D06.diff",
+      "file_line": "internal/native/exceptions.go:154",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCallTarget family"
+      ],
+      "still_caught_by": [
+        "TestReviewProgramsAgreeWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 53.591
+    },
+    {
+      "mutant": "D07",
+      "diff": "diffs/b11-036-D07.diff",
+      "file_line": "internal/native/emit_functions.go:314",
+      "branch": "test-defend/internal-oracle-arguments_length",
+      "candidates_failed": [
+        "TestCallTarget family"
+      ],
+      "still_caught_by": [
+        "TestCountsAreRecorded"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestNestedCallbackCarrierMutantIsCaught",
+        "TestNestedReferenceIdentityMutant"
+      ],
+      "wall_seconds": 114.55
+    },
+    {
+      "mutant": "D3",
+      "diff": "diffs/b12-037-D3.diff",
+      "file_line": "internal/lower/view_unions_dispatch.go:25",
+      "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+      "candidates_failed": [
+        "TestCheckedViewUntaggedSourceFlows",
+        "TestCheckedViewV2MovedStage3Results"
+      ],
+      "still_caught_by": [
+        "TestCheckedViewUntaggedSourceDispatch"
+      ],
+      "stale": false,
+      "wall_seconds": 16.923
+    },
+    {
+      "mutant": "D4",
+      "diff": "diffs/b12-038-D4.diff",
+      "file_line": "internal/lower/view_unions_dispatch.go:26",
+      "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+      "candidates_failed": [
+        "TestCheckedViewV2ArrayArmBoundary"
+      ],
+      "still_caught_by": [
+        "TestReviewProgramsRefuse"
+      ],
+      "stale": false,
+      "wall_seconds": 53.199
+    },
+    {
+      "mutant": "D5",
+      "diff": "diffs/b12-039-D5.diff",
+      "file_line": "internal/lower/view_unions_dispatch.go:73",
+      "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+      "candidates_failed": [
+        "TestCheckedViewV2ArrayArmBoundary"
+      ],
+      "still_caught_by": [
+        "TestReviewProgramsRefuse"
+      ],
+      "stale": false,
+      "wall_seconds": 41.381
+    },
+    {
+      "mutant": "D3",
+      "diff": "diffs/b12-040-D3.diff",
+      "file_line": "internal/javascript/javascript.go:625",
+      "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+      "candidates_failed": [
+        "TestCheckedViewV2MovedStage3Results"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 153.34
+    },
+    {
+      "mutant": "D4",
+      "diff": "diffs/b12-041-D4.diff",
+      "file_line": "internal/javascript/javascript.go:688",
+      "branch": "test-defend/internal-oracle-checked_views_flag_downcast",
+      "candidates_failed": [
+        "TestCheckedViewV2MovedStage3Results"
+      ],
+      "still_caught_by": [
+        "TestTypeScriptConditionsAgreeWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 49.145
+    },
+    {
+      "mutant": "D1",
+      "diff": "diffs/b14-042-D1.diff",
+      "file_line": "internal/lower/enum_never.go:17",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestNumericEnumNeverPathsPinned"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 101.198
+    },
+    {
+      "mutant": "D3",
+      "diff": "diffs/b14-043-D3.diff",
+      "file_line": "internal/lower/enum_never.go:100",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestNumericEnumNeverPathsPinned"
+      ],
+      "still_caught_by": [
+        "TestCountsAreRecorded"
+      ],
+      "stale": false,
+      "wall_seconds": 185.669
+    },
+    {
+      "mutant": "D4",
+      "diff": "diffs/b14-044-D4.diff",
+      "file_line": "internal/lower/enum_never.go:105",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestNumericEnumNeverPathsPinned",
+        "TestNumericEnumNeverPinned"
+      ],
+      "still_caught_by": [
+        "TestStage3EnumFallthrough"
+      ],
+      "stale": false,
+      "wall_seconds": 219.524
+    },
+    {
+      "mutant": "D5",
+      "diff": "diffs/b14-045-D5.diff",
+      "file_line": "internal/lower/enum_never.go:107",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestNumericEnumNeverPathsPinned",
+        "TestNumericEnumNeverPinned"
+      ],
+      "still_caught_by": [
+        "TestStage3EnumFallthrough"
+      ],
+      "stale": false,
+      "wall_seconds": 560.126
+    },
+    {
+      "mutant": "D6",
+      "diff": "diffs/b14-046-D6.diff",
+      "file_line": "internal/lower/enums.go:477",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestNumericEnumNeverPathsPinned",
+        "TestNumericEnumNeverPinned"
+      ],
+      "still_caught_by": [
+        "TestStage3EnumFallthrough"
+      ],
+      "stale": false,
+      "wall_seconds": 224.126
+    },
+    {
+      "mutant": "D2",
+      "diff": "diffs/b14-047-D2.diff",
+      "file_line": "internal/native/runtime/array.c:407",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestStage3EnumSparseArrayBoundary"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 91.88
+    },
+    {
+      "mutant": "D3",
+      "diff": "diffs/b14-048-D3.diff",
+      "file_line": "internal/javascript/javascript.go:91",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestStage3EnumSparseArrayBoundary",
+        "TestTypedArrayWriteStopIsPinned"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 189.962
+    },
+    {
+      "mutant": "D4",
+      "diff": "diffs/b14-049-D4.diff",
+      "file_line": "internal/native/runtime/typed_array.c:101",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestStage3EnumSparseArrayBoundary",
+        "TestTypedArrayWriteStopIsPinned"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "wall_seconds": 606.44
+    },
+    {
+      "mutant": "D5",
+      "diff": "diffs/b14-050-D5.diff",
+      "file_line": "internal/lower/expression.go:784",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestImportCycleRuntimeCalls"
+      ],
+      "still_caught_by": [
+        "TestTypedArrayWorkersStatsMatchesPlatforms"
+      ],
+      "stale": false,
+      "wall_seconds": 50.263
+    },
+    {
+      "mutant": "D6",
+      "diff": "diffs/b14-051-D6.diff",
+      "file_line": "internal/native/emit_expressions.go:754",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestImportCycleRuntimeCalls"
+      ],
+      "still_caught_by": [
+        "TestPredicateMiscompileRefusals"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestNestedSiblingCycleMutantIsCaught",
+        "TestParameterPropertyOwnershipMutant",
+        "TestUninitializedIsNotNullishMutant"
+      ],
+      "wall_seconds": 34.165
+    },
+    {
+      "mutant": "D7",
+      "diff": "diffs/b14-052-D7.diff",
+      "file_line": "internal/native/emit_branches.go:104",
+      "branch": "test-defend/internal-oracle-enums_open",
+      "candidates_failed": [
+        "TestImportCycleRuntimeCalls"
+      ],
+      "still_caught_by": [
+        "TestTypedArrayWorkersStatsMatchesPlatforms"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestLibraryMapSetMutants"
+      ],
+      "wall_seconds": 33.063
+    },
+    {
+      "mutant": "D1",
+      "diff": "diffs/b15-053-D1.diff",
+      "file_line": "internal/lower/interface_cast.go:281",
+      "branch": "test-defend/internal-oracle-interface_cast",
+      "candidates_failed": [
+        "TestCheckedViewV2MovedStage3Results"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 77.114
+    },
+    {
+      "mutant": "D4",
+      "diff": "diffs/b15-054-D4.diff",
+      "file_line": "internal/lower/cast_proof.go:121",
+      "branch": "test-defend/internal-oracle-interface_cast",
+      "candidates_failed": [
+        "TestCheckedCastFlushesOutput",
+        "TestCheckedCastRunsNoCatchOrFinally",
+        "TestCheckedViewUntaggedSourceFlows",
+        "TestCheckedViewV2ArrayArmBoundary",
+        "TestCheckedViewV2MovedStage3Results",
+        "TestInterfaceCastImportedConstruction"
+      ],
+      "still_caught_by": [
+        "TestInterfaceCastChecksMalformedRead"
+      ],
+      "stale": false,
+      "wall_seconds": 60.503
+    },
+    {
+      "mutant": "D5",
+      "diff": "diffs/b15-055-D5.diff",
+      "file_line": "internal/lower/cast.go:33",
+      "branch": "test-defend/internal-oracle-interface_cast",
+      "candidates_failed": [
+        "TestCheckedViewV2ArrayArmBoundary",
+        "TestInterfaceCastImportedConstruction"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "witness_failures": [
+        "TestCheckedCastMutants",
+        "TestCheckedViewInterfaces",
+        "TestCheckedViewObjects",
+        "TestCheckedViewV2CallableProducerMutant",
+        "TestCheckedViewV2MembershipMutant",
+        "TestCheckedViewV2TupleIdentityMutant",
+        "TestCheckedViewV2WrongFamilyMutant",
+        "TestClosedNestedConstituentMutant",
+        "TestInterfaceCastRuntimeMutants",
+        "TestInterfaceCastScalarTags",
+        "TestNotYetLibraryObjectEntriesConstMutant"
+      ],
+      "panicking_tests": [
+        "TestCheckedCastFailureContract",
+        "TestCheckedCastMutants",
+        "TestCheckedViewInterfaces",
+        "TestCheckedViewObjects",
+        "TestCheckedViewUntaggedArrayPending",
+        "TestCheckedViewUntaggedCallableUnion",
+        "TestCheckedViewUntaggedOptionalCallableControl",
+        "TestCheckedViewUntaggedOwnClassData",
+        "TestCheckedViewUntaggedRecursive",
+        "TestCheckedViewUntaggedSourceDispatch",
+        "TestCheckedViewV2CallableProducerMutant",
+        "TestCheckedViewV2MembershipMutant",
+        "TestCheckedViewV2ReadsAfterWrites",
+        "TestCheckedViewV2TupleIdentityMutant",
+        "TestCheckedViewV2WrongFamilyMutant",
+        "TestClosedNestedConstituentMutant",
+        "TestCountsAreRecorded",
+        "TestDefaultTaggedSourceViews",
+        "TestInterfaceCastChecksMalformedRead",
+        "TestInterfaceCastOracle",
+        "TestInterfaceCastRuntimeMutants",
+        "TestNativeAgreesWithNode",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestReviewProgramsAgreeWithNode",
+        "TestReviewProgramsRefuse"
+      ],
+      "wall_seconds": 1648.97,
+      "qualification": "Completed with only a witness failure after 25 panic exclusions; ordinary panics are listed separately"
+    },
+    {
+      "mutant": "D6",
+      "diff": "diffs/b15-056-D6.diff",
+      "file_line": "internal/native/view_fields.go:33",
+      "branch": "test-defend/internal-oracle-interface_cast",
+      "candidates_failed": [
+        "TestCheckedCastFlushesOutput",
+        "TestCheckedViewV2MovedStage3Results",
+        "TestInterfaceCastImportedConstruction"
+      ],
+      "still_caught_by": [
+        "TestRequiredViewFieldOperandOnce"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestCheckedViewV2TupleIdentityMutant"
+      ],
+      "wall_seconds": 25.571
+    },
+    {
+      "mutant": "D01",
+      "diff": "diffs/b16-057-D01.diff",
+      "file_line": "internal/lower/load_time_reads.go:88",
+      "branch": "test-defend/internal-oracle-method_values_mutant",
+      "candidates_failed": [
+        "TestModuleNamespaceReadsMatchNode"
+      ],
+      "still_caught_by": [
+        "TestImportCycleLoadTimeReads"
+      ],
+      "stale": false,
+      "wall_seconds": 22.362
+    },
+    {
+      "mutant": "D02",
+      "diff": "diffs/b16-058-D02.diff",
+      "file_line": "internal/lower/module_namespace.go:16",
+      "branch": "test-defend/internal-oracle-method_values_mutant",
+      "candidates_failed": [
+        "TestModuleNamespaceReadsMatchNode"
+      ],
+      "still_caught_by": [
+        "TestCountsAreRecorded"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestModuleNamespaceLiveBindingMutant",
+        "TestModuleNamespaceReadinessMutants"
+      ],
+      "wall_seconds": 80.517
+    },
+    {
+      "mutant": "D03",
+      "diff": "diffs/b16-059-D03.diff",
+      "file_line": "internal/lower/load_time_reads.go:102",
+      "branch": "test-defend/internal-oracle-method_values_mutant",
+      "candidates_failed": [
+        "TestModuleNamespaceReadsMatchNode"
+      ],
+      "still_caught_by": [
+        "TestImportCycleLoadTimeReads"
+      ],
+      "stale": false,
+      "wall_seconds": 18.953
+    },
+    {
+      "mutant": "D04",
+      "diff": "diffs/b16-060-D04.diff",
+      "file_line": "internal/lower/namespaces.go:502",
+      "branch": "test-defend/internal-oracle-method_values_mutant",
+      "candidates_failed": [
+        "TestNamespaceLiveExportBoundary",
+        "TestParserNamespace family"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestNamespaceSemanticMutants",
+        "TestNamespaceStateMutants",
+        "TestParserCallableNamespaceMutant",
+        "TestParserNamespaceReceiverMutant",
+        "TestSyntaxModuleDeclarationMutants"
+      ],
+      "wall_seconds": 252.946
+    },
+    {
+      "mutant": "D05",
+      "diff": "diffs/b16-061-D05.diff",
+      "file_line": "internal/lower/namespaces.go:432",
+      "branch": "test-defend/internal-oracle-method_values_mutant",
+      "candidates_failed": [
+        "TestNamespaceLiveExportBoundary",
+        "TestParserNamespace family"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestNamespaceSemanticMutants",
+        "TestParserCallableNamespaceMutant"
+      ],
+      "wall_seconds": 115.388
+    },
+    {
+      "mutant": "D06",
+      "diff": "diffs/b16-062-D06.diff",
+      "file_line": "internal/lower/namespaces.go:83",
+      "branch": "test-defend/internal-oracle-method_values_mutant",
+      "candidates_failed": [
+        "TestNamespaceLiveExportBoundary",
+        "TestParserNamespace family"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestNamespaceRuledMutants",
+        "TestNamespaceSemanticMutants",
+        "TestParserCallableNamespaceMutant",
+        "TestParserNamespaceReceiverMutant",
+        "TestSyntaxModuleDeclarationMutants"
+      ],
+      "wall_seconds": 140.381
+    },
+    {
+      "mutant": "D1",
+      "diff": "diffs/b17-063-D1.diff",
+      "file_line": "internal/native/runtime/input.c:367",
+      "branch": "test-defend/internal-oracle-oct6_mutant",
+      "candidates_failed": [
+        "TestFileWritesLandInNodesOrder"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 325.63
+    },
+    {
+      "mutant": "D3",
+      "diff": "diffs/b17-064-D3.diff",
+      "file_line": "internal/native/runtime/input.c:403",
+      "branch": "test-defend/internal-oracle-oct6_mutant",
+      "candidates_failed": [
+        "TestFileWritesLandInNodesOrder"
+      ],
+      "still_caught_by": [
+        "TestInputAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 180.772
+    },
+    {
+      "mutant": "D4",
+      "diff": "diffs/b17-065-D4.diff",
+      "file_line": "internal/lower/non_null.go:106",
+      "branch": "test-defend/internal-oracle-oct6_mutant",
+      "candidates_failed": [
+        "TestOmittedOriginalProbePolicy"
+      ],
+      "still_caught_by": [
+        "TestViewFieldInheritedStaticReadiness"
+      ],
+      "stale": false,
+      "wall_seconds": 38.932
+    },
+    {
+      "mutant": "D5",
+      "diff": "diffs/b17-066-D5.diff",
+      "file_line": "internal/native/emit_values.go:61",
+      "branch": "test-defend/internal-oracle-oct6_mutant",
+      "candidates_failed": [
+        "TestOmittedOriginalProbePolicy"
+      ],
+      "still_caught_by": [
+        "TestViewFieldInheritedStaticReadiness"
+      ],
+      "stale": false,
+      "wall_seconds": 30.958
+    },
+    {
+      "mutant": "D6",
+      "diff": "diffs/b17-067-D6.diff",
+      "file_line": "internal/lower/expression.go:1024",
+      "branch": "test-defend/internal-oracle-oct6_mutant",
+      "candidates_failed": [
+        "TestFileWritesLandInNodesOrder",
+        "TestOmittedOriginalProbePolicy"
+      ],
+      "still_caught_by": [
+        "TestTypedArrayWorkersStatsMatchesPlatforms"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestLibraryMapSetMutants",
+        "TestNestedSiblingCycleMutantIsCaught"
+      ],
+      "wall_seconds": 41.932
+    },
+    {
+      "mutant": "D1",
+      "diff": "diffs/b18-068-D1.diff",
+      "file_line": "internal/lower/namespace_callable.go:33",
+      "branch": "test-defend/internal-oracle-parser_namespaces",
+      "candidates_failed": [
+        "TestParserNamespace family"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestParserCallableNamespaceMutant"
+      ],
+      "wall_seconds": 188.896
+    },
+    {
+      "mutant": "D2",
+      "diff": "diffs/b18-069-D2.diff",
+      "file_line": "internal/lower/namespace_receiver_scope.go:13",
+      "branch": "test-defend/internal-oracle-parser_namespaces",
+      "candidates_failed": [
+        "TestParserNamespace family"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestParserNamespaceReceiverMutant"
+      ],
+      "wall_seconds": 136.493
+    },
+    {
+      "mutant": "D3",
+      "diff": "diffs/b18-070-D3.diff",
+      "file_line": "internal/lower/namespaces.go:418",
+      "branch": "test-defend/internal-oracle-parser_namespaces",
+      "candidates_failed": [
+        "TestNamespaceLiveExportBoundary",
+        "TestParserNamespace family"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestNamespaceSemanticMutants",
+        "TestParserCallableNamespaceMutant",
+        "TestParserNamespaceReceiverMutant",
+        "TestSyntaxModuleDeclarationMutants"
+      ],
+      "wall_seconds": 169.216
+    },
+    {
+      "mutant": "D1",
+      "diff": "diffs/b20-071-D1.diff",
+      "file_line": "internal/native/runtime/typed_array.c:101",
+      "branch": "test-defend/internal-oracle-stage3_front",
+      "candidates_failed": [
+        "TestTypedArrayWriteStopIsPinned"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 85.963
+    },
+    {
+      "mutant": "D2",
+      "diff": "diffs/b20-072-D2.diff",
+      "file_line": "internal/javascript/javascript.go:91",
+      "branch": "test-defend/internal-oracle-stage3_front",
+      "candidates_failed": [
+        "TestStage3EnumSparseArrayBoundary",
+        "TestTypedArrayWriteStopIsPinned"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "wall_seconds": 525.341
+    },
+    {
+      "mutant": "D3",
+      "diff": "diffs/b20-073-D3.diff",
+      "file_line": "internal/native/runtime/typed_array.c:102",
+      "branch": "test-defend/internal-oracle-stage3_front",
+      "candidates_failed": [
+        "TestTypedArrayWriteStopIsPinned"
+      ],
+      "still_caught_by": [
+        "TestNativeAgreesWithNode"
+      ],
+      "stale": false,
+      "wall_seconds": 415.079
+    },
+    {
+      "mutant": "D2",
+      "diff": "diffs/b21-074-D2.diff",
+      "file_line": "internal/native/emit_values.go:22",
+      "branch": "test-defend/internal-oracle-wasi",
+      "candidates_failed": [
+        "TestWASIEmission"
+      ],
+      "still_caught_by": [
+        "TestArgumentsLengthTypeScriptSource"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestLibraryMapSetMutants",
+        "TestNotYetLibraryObjectEntriesConstMutant",
+        "TestTypeOfNullSlotPresenceMutant"
+      ],
+      "wall_seconds": 48.797
+    },
+    {
+      "mutant": "D3",
+      "diff": "diffs/b21-075-D3.diff",
+      "file_line": "internal/native/emit_values.go:28",
+      "branch": "test-defend/internal-oracle-wasi",
+      "candidates_failed": [
+        "TestWASIEmission"
+      ],
+      "still_caught_by": [
+        "TestReviewProgramsAgreeWithNode"
+      ],
+      "stale": false,
+      "witness_failures": [
+        "TestLazyInitializerIsNotEagerMutant",
+        "TestTypeOfConstructorMutant",
+        "TestUninitializedIsNotNullishMutant"
+      ],
+      "wall_seconds": 31.219
+    },
+    {
+      "mutant": "D4",
+      "diff": "diffs/b21-076-D4.diff",
+      "file_line": "internal/native/emit.go:150",
+      "branch": "test-defend/internal-oracle-wasi",
+      "candidates_failed": [
+        "TestWASIEmission"
+      ],
+      "still_caught_by": [
+        "TestCountsAreRecorded"
+      ],
+      "stale": false,
+      "wall_seconds": 97.319
+    }
+  ],
+  "keep": [
+    {
+      "test": "TestCheckedViewV2ArrayArmBoundary",
+      "because": "D5 (diffs/b15-055-D5.diff) has no clean ordinary catcher after 25 panic exclusions; retain conservatively, not a clean last-catcher proof"
+    },
+    {
+      "test": "TestInterfaceCastImportedConstruction",
+      "because": "D5 (diffs/b15-055-D5.diff) has no clean ordinary catcher after 25 panic exclusions; retain conservatively, not a clean last-catcher proof"
+    },
+    {
+      "test": "TestStage3EnumSparseArrayBoundary",
+      "because": "diffs/b14-049-D4.diff, diffs/b20-072-D2.diff loses its last non-witness catcher without the set"
+    },
+    {
+      "test": "TestTypedArrayWriteStopIsPinned",
+      "because": "diffs/b14-049-D4.diff, diffs/b20-072-D2.diff loses its last non-witness catcher without the set"
+    }
+  ],
+  "deletable": [
+    "TestCallTarget family",
+    "TestCheckedCastFlushesOutput",
+    "TestCheckedCastRunsNoCatchOrFinally",
+    "TestCheckedViewUntaggedSourceFlows",
+    "TestCheckedViewV2MovedStage3Results",
+    "TestFileWritesLandInNodesOrder",
+    "TestImportCycleRuntimeCalls",
+    "TestModuleNamespaceReadsMatchNode",
+    "TestNamespaceLiveExportBoundary",
+    "TestNumericEnumNeverPathsPinned",
+    "TestNumericEnumNeverPinned",
+    "TestOmittedOriginalProbePolicy",
+    "TestParserNamespace family",
+    "TestRegexCycleFixtureHasItsNativeDependency",
+    "TestWASIEmission"
+  ],
+  "notes": {
+    "baseline_default_skips": [
+      "TestWASIShardPlantedFixture",
+      "TestWASIAgreesWithNode",
+      "TestWASIOracleCatchesMutants",
+      "TestWASIRunnerCatchesMutants",
+      "TestStage3FixtureHook",
+      "TestEntriesAcceptance"
+    ],
+    "no_gathered_mutant": [
+      "TestRegexCycleFixtureHasItsNativeDependency"
+    ],
+    "no_gathered_mutant_reason": "No M*.diff or D*.diff was recorded as failing these candidates; they guard nothing demonstrated by this inventory.",
+    "scope": "Deletable is limited to these gathered mutants on this main commit.",
+    "evidence_branch": "test-defend/deletion-set/internal-oracle",
+    "evidence_path": "review/test-defend/deletion-set/internal-oracle/",
+    "family_skip_correction": "Supplied prefixes did not match five actual family members; expanded-skipped.json records the exact 22 skipped top-level tests.",
+    "retention": "The two bounds-diagnostic guards jointly catch both lost diffs. At least one must remain; listing both keep rows does not claim individual uniqueness.",
+    "invalid_ref": "test-defend/internal-oracle-private_generic_mutant/row.cover is a file-shaped non-existent ref; parent branch fetched.",
+    "interruption": "Environment interruption and a premature resume required matrix recovery. Every recovered catch was verified against retained JSON logs; overwritten incomplete runs were repeated.",
+    "cleanup_rejection": "Automatic approval review rejected further deletion from /home/agent/.cache/go-build as outside authorized /tmp cleanup scope. That deletion was not performed.",
+    "timing": {
+      "baseline_wall_seconds": 277.272,
+      "replay_elapsed_seconds_including_interruption": 7249.502,
+      "replay_sum_wall_seconds": 11711.988,
+      "replay_concurrency": 2,
+      "ended_utc": "2026-10-09T20:04:10.249214+00:00"
+    }
+  }
+}

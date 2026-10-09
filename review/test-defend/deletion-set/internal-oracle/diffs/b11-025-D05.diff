@@ -1,0 +1,11 @@
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -170,7 +170,7 @@
+ 			} else {
+ 				e.line("%s;", e.callCode(call, e.arguments(call)))
+ 			}
+-			if e.program.CallMayThrow(call) {
++			if !e.program.CallMayThrow(call) {
+ 				e.checkThrown()
+ 			}
+ 		} else {
