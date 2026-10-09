@@ -1,0 +1,5 @@
+{
+  "command": "timeout 90 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run .",
+  "wall_seconds": 90.00301494199994,
+  "exit": 124
+}

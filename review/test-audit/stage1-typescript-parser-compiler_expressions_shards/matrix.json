@@ -1,0 +1,945 @@
+[
+  {
+    "mutant": "M1",
+    "label": "rebuild",
+    "command": "ADAMIC_MUTANT=M1 ADAMIC_NATIVE_SPLIT=u154-M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestProduct_CompilerExpressionsNative$'",
+    "seconds": 20.512162815999545,
+    "exit": 0,
+    "cooked": false,
+    "failed": [],
+    "observed": [
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M1",
+      "ADAMIC_NATIVE_SPLIT": "u154-M1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/M1"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestProduct_CompilerExpressionsNative$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "M1"
+    }
+  },
+  {
+    "mutant": "M1",
+    "label": "matrix",
+    "command": "ADAMIC_MUTANT=M1 ADAMIC_NATIVE_SPLIT=u154-M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$'",
+    "seconds": 28.334202133000872,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestClassMethodInterfaceGap",
+      "TestPushSpreadGap"
+    ],
+    "observed": [
+      "TestClassMethodInterfaceGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestGeneratedExpressionsAgree",
+      "TestPushSpreadGap",
+      "TestStrongAstParentGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M1",
+      "ADAMIC_NATIVE_SPLIT": "u154-M1",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/M1"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "M1"
+    }
+  },
+  {
+    "mutant": "M2",
+    "label": "rebuild",
+    "command": "ADAMIC_MUTANT=M2 ADAMIC_NATIVE_SPLIT=u154-M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestProduct_CompilerExpressionsNative$'",
+    "seconds": 20.097977520999848,
+    "exit": 0,
+    "cooked": false,
+    "failed": [],
+    "observed": [
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M2",
+      "ADAMIC_NATIVE_SPLIT": "u154-M2",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/M2"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestProduct_CompilerExpressionsNative$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "M2"
+    }
+  },
+  {
+    "mutant": "M2",
+    "label": "matrix",
+    "command": "ADAMIC_MUTANT=M2 ADAMIC_NATIVE_SPLIT=u154-M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$'",
+    "seconds": 23.08671104500172,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestStrongAstParentGap"
+    ],
+    "observed": [
+      "TestClassMethodInterfaceGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestGeneratedExpressionsAgree",
+      "TestPushSpreadGap",
+      "TestStrongAstParentGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M2",
+      "ADAMIC_NATIVE_SPLIT": "u154-M2",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/M2"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "M2"
+    }
+  },
+  {
+    "mutant": "M3",
+    "label": "rebuild",
+    "command": "ADAMIC_MUTANT=M3 ADAMIC_NATIVE_SPLIT=u154-M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestProduct_CompilerExpressionsNative$'",
+    "seconds": 21.315266917999907,
+    "exit": 0,
+    "cooked": false,
+    "failed": [],
+    "observed": [
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M3",
+      "ADAMIC_NATIVE_SPLIT": "u154-M3",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/M3"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestProduct_CompilerExpressionsNative$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "M3"
+    }
+  },
+  {
+    "mutant": "M3",
+    "label": "matrix",
+    "command": "ADAMIC_MUTANT=M3 ADAMIC_NATIVE_SPLIT=u154-M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$'",
+    "seconds": 21.72233831399899,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestClosedOptionalFunctionValueGap",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestGeneratedExpressionsAgree",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "observed": [
+      "TestClassMethodInterfaceGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestGeneratedExpressionsAgree",
+      "TestPushSpreadGap",
+      "TestStrongAstParentGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M3",
+      "ADAMIC_NATIVE_SPLIT": "u154-M3",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/M3"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "M3"
+    }
+  },
+  {
+    "mutant": "M4",
+    "label": "rebuild",
+    "command": "ADAMIC_MUTANT=M4 ADAMIC_NATIVE_SPLIT=u154-M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestProduct_CompilerExpressionsNative$'",
+    "seconds": 19.344741438999336,
+    "exit": 0,
+    "cooked": false,
+    "failed": [],
+    "observed": [
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M4",
+      "ADAMIC_NATIVE_SPLIT": "u154-M4",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/M4"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestProduct_CompilerExpressionsNative$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "M4"
+    }
+  },
+  {
+    "mutant": "M4",
+    "label": "matrix",
+    "command": "ADAMIC_MUTANT=M4 ADAMIC_NATIVE_SPLIT=u154-M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$'",
+    "seconds": 12.214218888000687,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_010",
+      "TestGeneratedExpressionsAgree"
+    ],
+    "observed": [
+      "TestClassMethodInterfaceGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestGeneratedExpressionsAgree",
+      "TestPushSpreadGap",
+      "TestStrongAstParentGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "M4",
+      "ADAMIC_NATIVE_SPLIT": "u154-M4",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/M4"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "M4"
+    }
+  },
+  {
+    "mutant": "E_LOWER",
+    "label": "rebuild",
+    "command": "ADAMIC_MUTANT=E_LOWER ADAMIC_NATIVE_SPLIT=u154-E_LOWER ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOWER timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestProduct_CompilerExpressionsNative$'",
+    "seconds": 4.4488167649997195,
+    "exit": 0,
+    "cooked": false,
+    "failed": [],
+    "observed": [
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOWER",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOWER",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOWER"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestProduct_CompilerExpressionsNative$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOWER"
+    }
+  },
+  {
+    "mutant": "E_LOWER",
+    "label": "matrix",
+    "command": "ADAMIC_MUTANT=E_LOWER ADAMIC_NATIVE_SPLIT=u154-E_LOWER ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOWER timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$'",
+    "seconds": 9.644749809000132,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestClassMethodInterfaceGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestGeneratedExpressionsAgree",
+      "TestPushSpreadGap",
+      "TestStrongAstParentGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "observed": [
+      "TestClassMethodInterfaceGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestGeneratedExpressionsAgree",
+      "TestPushSpreadGap",
+      "TestStrongAstParentGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOWER",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOWER",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOWER"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOWER"
+    }
+  },
+  {
+    "mutant": "E_PORT",
+    "label": "rebuild",
+    "command": "ADAMIC_MUTANT=E_PORT ADAMIC_NATIVE_SPLIT=u154-E_PORT ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_PORT timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestProduct_CompilerExpressionsNative$'",
+    "seconds": 19.606710192998435,
+    "exit": 0,
+    "cooked": false,
+    "failed": [],
+    "observed": [
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_PORT",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_PORT",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_PORT"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestProduct_CompilerExpressionsNative$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_PORT"
+    }
+  },
+  {
+    "mutant": "E_PORT",
+    "label": "matrix",
+    "command": "ADAMIC_MUTANT=E_PORT ADAMIC_NATIVE_SPLIT=u154-E_PORT ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_PORT timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$'",
+    "seconds": 7.75792157000069,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestGeneratedExpressionsAgree"
+    ],
+    "observed": [
+      "TestClassMethodInterfaceGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010",
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestGeneratedExpressionsAgree",
+      "TestPushSpreadGap",
+      "TestStrongAstParentGap",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_PORT",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_PORT",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_PORT"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_PORT"
+    }
+  },
+  {
+    "mutant": "E_LOAD",
+    "label": "matrix",
+    "command": "ADAMIC_MUTANT=E_LOAD ADAMIC_NATIVE_SPLIT=u154-E_LOAD ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOAD timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$'",
+    "seconds": 2.1251729790001264,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestClosedOptionalFunctionValueGap"
+    ],
+    "observed": [
+      "TestClosedOptionalFunctionValueGap"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOAD",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOAD",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOAD"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOAD"
+    }
+  },
+  {
+    "mutant": "E_LOAD",
+    "label": "alone-TestCompilerExpressionsAgree",
+    "command": "ADAMIC_MUTANT=E_LOAD ADAMIC_NATIVE_SPLIT=u154-E_LOAD ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOAD timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestCompilerExpressionsAgree(Union|_[0-9]+)$'",
+    "seconds": 3.9315799920004793,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestCompilerExpressionsAgree_008"
+    ],
+    "observed": [
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_008"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOAD",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOAD",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOAD"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestCompilerExpressionsAgree(Union|_[0-9]+)$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOAD"
+    }
+  },
+  {
+    "mutant": "E_LOAD",
+    "label": "alone-TestStrongAstParentGap",
+    "command": "ADAMIC_MUTANT=E_LOAD ADAMIC_NATIVE_SPLIT=u154-E_LOAD ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOAD timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestStrongAstParentGap$'",
+    "seconds": 2.278571445000125,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestStrongAstParentGap"
+    ],
+    "observed": [
+      "TestStrongAstParentGap"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOAD",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOAD",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOAD"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestStrongAstParentGap$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOAD"
+    }
+  },
+  {
+    "mutant": "E_LOAD",
+    "label": "alone-TestPushSpreadGap",
+    "command": "ADAMIC_MUTANT=E_LOAD ADAMIC_NATIVE_SPLIT=u154-E_LOAD ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOAD timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestPushSpreadGap$'",
+    "seconds": 2.4836442030009493,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestPushSpreadGap"
+    ],
+    "observed": [
+      "TestPushSpreadGap"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOAD",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOAD",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOAD"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestPushSpreadGap$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOAD"
+    }
+  },
+  {
+    "mutant": "E_LOAD",
+    "label": "alone-TestClassMethodInterfaceGap",
+    "command": "ADAMIC_MUTANT=E_LOAD ADAMIC_NATIVE_SPLIT=u154-E_LOAD ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOAD timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestClassMethodInterfaceGap$'",
+    "seconds": 2.277117999999973,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestClassMethodInterfaceGap"
+    ],
+    "observed": [
+      "TestClassMethodInterfaceGap"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOAD",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOAD",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOAD"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestClassMethodInterfaceGap$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOAD"
+    }
+  },
+  {
+    "mutant": "E_LOAD",
+    "label": "alone-TestClosedOptionalFunctionValueGap",
+    "command": "ADAMIC_MUTANT=E_LOAD ADAMIC_NATIVE_SPLIT=u154-E_LOAD ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOAD timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestClosedOptionalFunctionValueGap$'",
+    "seconds": 2.1778840819988545,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestClosedOptionalFunctionValueGap"
+    ],
+    "observed": [
+      "TestClosedOptionalFunctionValueGap"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOAD",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOAD",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOAD"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestClosedOptionalFunctionValueGap$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOAD"
+    }
+  },
+  {
+    "mutant": "E_LOAD",
+    "label": "alone-TestClosedConditionalEmptyArrayGap",
+    "command": "ADAMIC_MUTANT=E_LOAD ADAMIC_NATIVE_SPLIT=u154-E_LOAD ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOAD timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestClosedConditionalEmptyArrayGap$'",
+    "seconds": 2.2801997830010805,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestClosedConditionalEmptyArrayGap"
+    ],
+    "observed": [
+      "TestClosedConditionalEmptyArrayGap"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOAD",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOAD",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOAD"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestClosedConditionalEmptyArrayGap$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOAD"
+    }
+  },
+  {
+    "mutant": "E_LOAD",
+    "label": "alone-TestGeneratedExpressionsAgree",
+    "command": "ADAMIC_MUTANT=E_LOAD ADAMIC_NATIVE_SPLIT=u154-E_LOAD ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOAD timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestGeneratedExpressionsAgree$'",
+    "seconds": 3.084319759000209,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestGeneratedExpressionsAgree"
+    ],
+    "observed": [
+      "TestGeneratedExpressionsAgree"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOAD",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOAD",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOAD"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestGeneratedExpressionsAgree$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOAD"
+    }
+  },
+  {
+    "mutant": "E_LOAD",
+    "label": "alone-TestTypeOnlyImportCycleCompiles",
+    "command": "ADAMIC_MUTANT=E_LOAD ADAMIC_NATIVE_SPLIT=u154-E_LOAD ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOAD timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^TestTypeOnlyImportCycleCompiles$'",
+    "seconds": 2.0707543619992066,
+    "exit": 1,
+    "cooked": false,
+    "failed": [
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "observed": [
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "environment": {
+      "ADAMIC_MUTANT": "E_LOAD",
+      "ADAMIC_NATIVE_SPLIT": "u154-E_LOAD",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u154/cache/E_LOAD"
+    },
+    "argv": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestTypeOnlyImportCycleCompiles$"
+    ],
+    "selector_file": {
+      "path": "/tmp/u154-mutant",
+      "contents": "E_LOAD"
+    }
+  }
+]

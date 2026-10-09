@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:42:40.589872519Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T08:42:40.604403316Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgreeUnion"}
+{"Time":"2026-10-09T08:42:40.604535379Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgreeUnion","Output":"=== RUN   TestCompilerExpressionsAgreeUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:42:40.604575338Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgreeUnion","Output":"=== PAUSE TestCompilerExpressionsAgreeUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:42:40.604577731Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgreeUnion"}
+{"Time":"2026-10-09T08:42:40.604582588Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgreeUnion"}
+{"Time":"2026-10-09T08:42:40.604584361Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgreeUnion","Output":"=== CONT  TestCompilerExpressionsAgreeUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:42:40.607880312Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgreeUnion","Output":"    compiler_expressions_shards_test.go:153: union=77/77 planted catches=0\n","OutputType":"error"}
+{"Time":"2026-10-09T08:42:40.607931346Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgreeUnion","Output":"--- FAIL: TestCompilerExpressionsAgreeUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:42:40.607944616Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestCompilerExpressionsAgreeUnion","Elapsed":0}
+{"Time":"2026-10-09T08:42:40.607965006Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:42:40.608046775Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.018s\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:42:40.608063339Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.018}

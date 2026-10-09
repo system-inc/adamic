@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -718,7 +718,7 @@
+ 	if value.Kind() != reflect.Float64 {
+ 		return nil, errors.New("lower: " + l.program.Where(node) + ": a numeric literal's value isn't a float64")
+ 	}
+-	return ir.NumberConstant{Value: value.Float()}, nil
++	return ir.NumberConstant{Value: value.Float() + 1}, nil
+ }
+ 
+ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {

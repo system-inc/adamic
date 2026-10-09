@@ -1,0 +1,45 @@
+--- a/stage1/typescript/parser/main.ts
++++ b/stage1/typescript/parser/main.ts
+@@ -3,40 +3,9 @@
+ import { countTree, printTree } from './nodes.ts';
+ 
+ function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {
+-    const source = readTextFile(path);
+-    if(source.kind === 'Error') {
+-        panic(source.message);
+-    }
+-    const parser = new Parser(source.text, path);
+-    const types: number[] = docTypes ? parser.docTypes() : [];
+-    const file = docTypes ? -1 : parser.file();
+-    const offsets: number[] = [0];
+-    if(!countOnly) {
+-        let bytes = 0;
+-        for(let index = 0; index < source.text.length; index++) {
+-            const code = source.text.codePointAt(index) ?? 0;
+-            if(code > 65535) {
+-                offsets.push(bytes);
+-                index++;
+-            }
+-            bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;
+-            offsets.push(bytes);
+-        }
+-        if(bytes !== utf8Length(source.text)) {
+-            panic('source byte mapping differs');
+-        }
+-    }
+-    let count = 0;
+-    for(const root of docTypes ? types : whole ? [file] : parser.roots) {
+-        if(!countOnly) {
+-            console.log(docTypes ? 'type' : whole ? 'file' : 'expression');
+-        }
+-        count += countOnly
+-            ? countTree(parser.nodes, root)
+-            : printTree(parser.nodes, root, offsets, 0, whole || docTypes);
+-    }
+-    return count;
++    return 0;
+ }
++
+ const args = programArguments();
+ const first = args[0] ?? panic('usage: main.ts <file> or --manifest <file> [--count]');
+ if(first === '--manifest') {

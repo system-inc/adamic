@@ -1,0 +1,38 @@
+[
+  {
+    "mutant": "M4",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestProduct_CompilerExpressionsNative$"
+    ],
+    "seconds": 19.801922393000496,
+    "exit": 0
+  },
+  {
+    "mutant": "E_PORT",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^TestProduct_CompilerExpressionsNative$"
+    ],
+    "seconds": 3.1665514150008676,
+    "exit": 1
+  }
+]

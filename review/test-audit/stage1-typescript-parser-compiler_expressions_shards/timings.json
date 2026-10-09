@@ -1,0 +1,194 @@
+[
+  {
+    "test": "TestCompilerExpressionsAgree",
+    "run": 1,
+    "seconds": 10.195,
+    "wall_seconds": 12.04195469700062,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestCompilerExpressionsAgree(Union|_[0-9]+)$"
+  },
+  {
+    "test": "TestCompilerExpressionsAgree",
+    "run": 2,
+    "seconds": 9.658,
+    "wall_seconds": 11.560281992000455,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestCompilerExpressionsAgree(Union|_[0-9]+)$"
+  },
+  {
+    "test": "TestCompilerExpressionsAgree",
+    "run": 3,
+    "seconds": 9.444,
+    "wall_seconds": 11.503743871000552,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestCompilerExpressionsAgree(Union|_[0-9]+)$"
+  },
+  {
+    "test": "TestStrongAstParentGap",
+    "run": 1,
+    "seconds": 0.11,
+    "wall_seconds": 2.025556755999787,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestStrongAstParentGap$"
+  },
+  {
+    "test": "TestStrongAstParentGap",
+    "run": 2,
+    "seconds": 0.112,
+    "wall_seconds": 2.005242487999567,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestStrongAstParentGap$"
+  },
+  {
+    "test": "TestStrongAstParentGap",
+    "run": 3,
+    "seconds": 0.112,
+    "wall_seconds": 2.0567945189995953,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestStrongAstParentGap$"
+  },
+  {
+    "test": "TestPushSpreadGap",
+    "run": 1,
+    "seconds": 0.108,
+    "wall_seconds": 1.9649777459999314,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestPushSpreadGap$"
+  },
+  {
+    "test": "TestPushSpreadGap",
+    "run": 2,
+    "seconds": 0.109,
+    "wall_seconds": 1.9530974220015196,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestPushSpreadGap$"
+  },
+  {
+    "test": "TestPushSpreadGap",
+    "run": 3,
+    "seconds": 0.109,
+    "wall_seconds": 1.9699035300000105,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestPushSpreadGap$"
+  },
+  {
+    "test": "TestClassMethodInterfaceGap",
+    "run": 1,
+    "seconds": 0.119,
+    "wall_seconds": 1.9769319999995787,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClassMethodInterfaceGap$"
+  },
+  {
+    "test": "TestClassMethodInterfaceGap",
+    "run": 2,
+    "seconds": 0.123,
+    "wall_seconds": 2.14878616399983,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClassMethodInterfaceGap$"
+  },
+  {
+    "test": "TestClassMethodInterfaceGap",
+    "run": 3,
+    "seconds": 0.109,
+    "wall_seconds": 2.0817462729992258,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClassMethodInterfaceGap$"
+  },
+  {
+    "test": "TestClosedOptionalFunctionValueGap",
+    "run": 1,
+    "seconds": 0.312,
+    "wall_seconds": 2.1160360390003916,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClosedOptionalFunctionValueGap$"
+  },
+  {
+    "test": "TestClosedOptionalFunctionValueGap",
+    "run": 2,
+    "seconds": 0.312,
+    "wall_seconds": 2.1386931470005948,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClosedOptionalFunctionValueGap$"
+  },
+  {
+    "test": "TestClosedOptionalFunctionValueGap",
+    "run": 3,
+    "seconds": 0.33,
+    "wall_seconds": 2.2689046249997773,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClosedOptionalFunctionValueGap$"
+  },
+  {
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "run": 1,
+    "seconds": 0.308,
+    "wall_seconds": 2.1045688849990256,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClosedConditionalEmptyArrayGap$"
+  },
+  {
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "run": 2,
+    "seconds": 0.311,
+    "wall_seconds": 2.3846687389996077,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClosedConditionalEmptyArrayGap$"
+  },
+  {
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "run": 3,
+    "seconds": 0.342,
+    "wall_seconds": 2.327839143001256,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestClosedConditionalEmptyArrayGap$"
+  },
+  {
+    "test": "TestGeneratedExpressionsAgree",
+    "run": 1,
+    "seconds": 16.101,
+    "wall_seconds": 18.13558926299993,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestGeneratedExpressionsAgree$"
+  },
+  {
+    "test": "TestGeneratedExpressionsAgree",
+    "run": 2,
+    "seconds": 17.555,
+    "wall_seconds": 19.533058242999687,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestGeneratedExpressionsAgree$"
+  },
+  {
+    "test": "TestGeneratedExpressionsAgree",
+    "run": 3,
+    "seconds": 17.793,
+    "wall_seconds": 19.79310734399951,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestGeneratedExpressionsAgree$"
+  },
+  {
+    "test": "TestTypeOnlyImportCycleCompiles",
+    "run": 1,
+    "seconds": 0.304,
+    "wall_seconds": 12.372138749999067,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestTypeOnlyImportCycleCompiles$"
+  },
+  {
+    "test": "TestTypeOnlyImportCycleCompiles",
+    "run": 2,
+    "seconds": 0.306,
+    "wall_seconds": 2.3465427739993174,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestTypeOnlyImportCycleCompiles$"
+  },
+  {
+    "test": "TestTypeOnlyImportCycleCompiles",
+    "run": 3,
+    "seconds": 0.32,
+    "wall_seconds": 2.3915000749984756,
+    "exit": 0,
+    "command": "timeout 90 go test -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestTypeOnlyImportCycleCompiles$"
+  }
+]

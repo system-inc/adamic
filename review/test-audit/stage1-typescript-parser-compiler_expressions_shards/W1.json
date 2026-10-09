@@ -1,0 +1,9 @@
+{
+  "command": "timeout 90 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^TestCompilerExpressionsAgreeUnion$",
+  "seconds": 5.369664933999957,
+  "exit": 1,
+  "vet": {
+    "seconds": 0.6303435070003616,
+    "exit": 0
+  }
+}

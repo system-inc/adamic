@@ -1,0 +1,44 @@
+[
+  {
+    "id": "M1",
+    "command": "go vet ./internal/lower/",
+    "seconds": 5.003750165000383,
+    "exit": 0
+  },
+  {
+    "id": "M2",
+    "command": "go vet ./internal/lower/",
+    "seconds": 0.5969086139994033,
+    "exit": 0
+  },
+  {
+    "id": "M3",
+    "command": "go vet ./internal/lower/",
+    "seconds": 0.6409741709994705,
+    "exit": 0
+  },
+  {
+    "id": "M4",
+    "command": "go vet ./stage1/typescript/parser/",
+    "seconds": 0.6122501859990734,
+    "exit": 0
+  },
+  {
+    "id": "E_LOAD",
+    "command": "go vet ./internal/load/",
+    "seconds": 0.18344955300017318,
+    "exit": 0
+  },
+  {
+    "id": "E_LOWER",
+    "command": "go vet ./internal/lower/",
+    "seconds": 0.6089041969989921,
+    "exit": 0
+  },
+  {
+    "id": "E_PORT",
+    "command": "go vet ./stage1/typescript/parser/",
+    "seconds": 0.15084157199999026,
+    "exit": 0
+  }
+]

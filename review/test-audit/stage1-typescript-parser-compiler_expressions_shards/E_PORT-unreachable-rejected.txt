@@ -1,0 +1,10 @@
+--- a/stage1/typescript/parser/main.ts
++++ b/stage1/typescript/parser/main.ts
+@@ -3,6 +3,7 @@
+ import { countTree, printTree } from './nodes.ts';
+ 
+ function run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {
++    if(true) { return 0; }
+     const source = readTextFile(path);
+     if(source.kind === 'Error') {
+         panic(source.message);

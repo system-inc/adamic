@@ -1,0 +1,5 @@
+{
+  "command": "timeout 90 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run ^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$",
+  "wall_seconds": 33.7623297229984,
+  "exit": 0
+}

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/typescript/parser/",
+    "-run",
+    "^TestProduct_CompilerExpressionsNative$"
+  ],
+  "seconds": 6.646772685000542,
+  "exit": 0
+}
