@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -89,7 +89,7 @@
+ }
+ 
+ func load(paths []string, overlay map[string]string) (*Program, error) {
+-	if len(paths) == 0 {
++	if len(paths) < 0 {
+ 		return nil, errors.New("load: no files given")
+ 	}
+ 	workingDirectory, err := os.Getwd()

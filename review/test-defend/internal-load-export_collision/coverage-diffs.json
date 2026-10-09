@@ -1,0 +1,64 @@
+[
+  {
+    "test": "TestExplicitExportResolvesStarCollision",
+    "subsumer": "TestStarExportCollisionNamesBothModules",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/load/load.go:152.2,153.54",
+      "github.com/system-inc/adamic/internal/load/load.go:154.3,155.1",
+      "github.com/system-inc/adamic/internal/load/load.go:156.2,156.42",
+      "github.com/system-inc/adamic/internal/load/load.go:157.3,158.16",
+      "github.com/system-inc/adamic/internal/load/load.go:161.3,161.50",
+      "github.com/system-inc/adamic/internal/load/load.go:163.2,163.20"
+    ]
+  },
+  {
+    "test": "TestATypeErrorFailsTheLoad",
+    "subsumer": "TestStarExportCollisionNamesBothModules",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/load/export_collision.go:14.3,15.1",
+      "github.com/system-inc/adamic/internal/load/load.go:206.3,206.34",
+      "github.com/system-inc/adamic/internal/load/load.go:209.3,209.23",
+      "github.com/system-inc/adamic/internal/load/load.go:253.3,254.1",
+      "github.com/system-inc/adamic/internal/load/source_fs.go:52.2,52.24",
+      "github.com/system-inc/adamic/internal/load/source_fs.go:84.2,84.28"
+    ]
+  },
+  {
+    "test": "TestLoadRefusesWhatIsNotAdamic",
+    "subsumer": "TestStarExportCollisionNamesBothModules",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/load/load.go:93.3,94.1",
+      "github.com/system-inc/adamic/internal/load/load.go:110.4,111.1",
+      "github.com/system-inc/adamic/internal/load/load.go:212.4,213.1",
+      "github.com/system-inc/adamic/internal/load/load.go:215.4,216.1",
+      "github.com/system-inc/adamic/internal/load/load.go:219.2,219.88"
+    ]
+  },
+  {
+    "test": "TestTheProgramsInTheSpecLoad",
+    "subsumer": "TestStarExportCollisionNamesBothModules",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/load/load.go:152.2,153.54",
+      "github.com/system-inc/adamic/internal/load/load.go:154.3,155.1",
+      "github.com/system-inc/adamic/internal/load/load.go:156.2,156.42",
+      "github.com/system-inc/adamic/internal/load/load.go:157.3,158.16",
+      "github.com/system-inc/adamic/internal/load/load.go:161.3,161.50",
+      "github.com/system-inc/adamic/internal/load/load.go:163.2,163.20",
+      "github.com/system-inc/adamic/internal/load/load.go:206.3,206.34",
+      "github.com/system-inc/adamic/internal/load/load.go:209.3,209.23",
+      "github.com/system-inc/adamic/internal/load/source_fs.go:84.2,84.28"
+    ]
+  },
+  {
+    "test": "TestNodeLibraryRejectsDifferentVersion",
+    "subsumer": "TestNodeLibraryKeepsOfficialConsoleSignatures",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/load/node_library.go:32.5,33.1"
+    ]
+  },
+  {
+    "test": "TestNodeLibraryKeepsOfficialConsoleSignatures",
+    "subsumer": "TestNodeLibraryUsesPinnedDeclarations",
+    "exclusive_blocks": []
+  }
+]

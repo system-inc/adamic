@@ -1,0 +1,179 @@
+[
+  {
+    "test": "TestExplicitExportResolvesStarCollision",
+    "package": "internal/load",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D06",
+        "file_line": "internal/load/load.go:64",
+        "change": "disable explicit TypeScript-extension imports",
+        "rows_failed": [
+          "TestTheProgramsInTheSpecLoad"
+        ]
+      },
+      {
+        "mutant": "D07",
+        "file_line": "internal/load/load.go:70",
+        "change": "change module resolution to Classic",
+        "rows_failed": [
+          "TestATypeErrorFailsTheLoad",
+          "TestAdamicFilesImportEachOther",
+          "TestDeclarationsCarryTheirProvenTypes",
+          "TestEveryFileIsAModule",
+          "TestExplicitExportResolvesStarCollision",
+          "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+          "TestNodeLibraryKeepsOfficialConsoleSignatures",
+          "TestNodeLibraryUsesPinnedDeclarations",
+          "TestOverlayPrecedesDiskForAdamicAliases",
+          "TestStarExportCollisionNamesBothModules",
+          "TestThePreludeDeclaresConsoleAndPanic",
+          "TestTheProgramsInTheSpecLoad"
+        ]
+      },
+      {
+        "mutant": "D08",
+        "file_line": "internal/load/load.go:66",
+        "change": "change module kind to CommonJS",
+        "rows_failed": [
+          "TestAdamicFilesImportEachOther",
+          "TestExplicitExportResolvesStarCollision",
+          "TestNodeLibraryUsesPinnedDeclarations",
+          "TestStarExportCollisionNamesBothModules",
+          "TestThePreludeDeclaresConsoleAndPanic",
+          "TestTheProgramsInTheSpecLoad"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D08.log 2>&1; export_collision_test.go:30: /workspace/load-defend-tmp/TestExplicitExportResolvesStarCollision3411884458/001/left.a:1:1: error TS1287: A top-level 'export' modifier cannot be used on value declarations in a CommonJS module when 'verbatimModuleSyntax' is enabled."
+  },
+  {
+    "test": "TestATypeErrorFailsTheLoad",
+    "package": "internal/load",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D01 internal/load/load.go:253",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/load/load.go:253",
+        "change": "drop localized diagnostic message assignment",
+        "rows_failed": [
+          "TestATypeErrorFailsTheLoad"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D01.log 2>&1; load_test.go:94: got [\"/workspace/load-defend-tmp/TestATypeErrorFailsTheLoad3569823114/001/main.ts:1:7: error TS2322: \"], want one TS2322 at main.ts:1:7 with its message"
+  },
+  {
+    "test": "TestLoadRefusesWhatIsNotAdamic",
+    "package": "internal/load",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D02 internal/load/load.go:92",
+    "attempts": [
+      {
+        "mutant": "D02",
+        "file_line": "internal/load/load.go:92",
+        "change": "off-by-one empty root bound",
+        "rows_failed": [
+          "TestLoadRefusesWhatIsNotAdamic"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D02.log 2>&1; load_test.go:198: Load(nil): want an error, got none"
+  },
+  {
+    "test": "TestTheProgramsInTheSpecLoad",
+    "package": "internal/load",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestStarExportCollisionNamesBothModules"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D06 internal/load/load.go:64",
+    "attempts": [
+      {
+        "mutant": "D04",
+        "file_line": "internal/load/load.go:71",
+        "change": "change target option to ES5",
+        "rows_failed": [
+          "TestATypeErrorFailsTheLoad",
+          "TestAdamicFilesImportEachOther",
+          "TestDeclarationsCarryTheirProvenTypes",
+          "TestEveryFileIsAModule",
+          "TestExplicitExportResolvesStarCollision",
+          "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+          "TestNodeLibraryKeepsOfficialConsoleSignatures",
+          "TestNodeLibraryUsesPinnedDeclarations",
+          "TestOverlayPrecedesDiskForAdamicAliases",
+          "TestStarExportCollisionNamesBothModules",
+          "TestThePreludeDeclaresConsoleAndPanic",
+          "TestTheProgramsInTheSpecLoad"
+        ]
+      },
+      {
+        "mutant": "D06",
+        "file_line": "internal/load/load.go:64",
+        "change": "disable explicit TypeScript-extension imports",
+        "rows_failed": [
+          "TestTheProgramsInTheSpecLoad"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D06 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D06.log 2>&1; load_test.go:226: Load: /workspace/adamic/internal/load/testdata/0.1/compile/07_modules/main.ts:1:50: error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled."
+  },
+  {
+    "test": "TestNodeLibraryRejectsDifferentVersion",
+    "package": "internal/load",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNodeLibraryKeepsOfficialConsoleSignatures"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D03 internal/load/node_library.go:31",
+    "attempts": [
+      {
+        "mutant": "D03",
+        "file_line": "internal/load/node_library.go:31",
+        "change": "drop version comparison from refusal condition",
+        "rows_failed": [
+          "TestNodeLibraryRejectsDifferentVersion"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D03.log 2>&1; node_library_test.go:55: want pinned version refusal, got <nil>"
+  },
+  {
+    "test": "TestNodeLibraryKeepsOfficialConsoleSignatures",
+    "package": "internal/load",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNodeLibraryUsesPinnedDeclarations"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D05 internal/load/node_library.go:63",
+    "attempts": [
+      {
+        "mutant": "D05",
+        "file_line": "internal/load/node_library.go:63",
+        "change": "change Node import recognition condition to exclude type-only imports",
+        "rows_failed": [
+          "TestNodeLibraryKeepsOfficialConsoleSignatures"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D05.log 2>&1; node_library_test.go:62: /workspace/load-defend-tmp/TestNodeLibraryKeepsOfficialConsoleSignatures2858157944/001/main.a:1:26: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+  }
+]

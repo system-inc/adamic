@@ -1,0 +1,11 @@
+--- a/internal/load/node_library.go
++++ b/internal/load/node_library.go
+@@ -60,7 +60,7 @@
+ 				continue
+ 			}
+ 			specifier := statement.ModuleSpecifier()
+-			if specifier != nil && strings.HasPrefix(specifier.Text(), "node:") {
++			if specifier != nil && strings.HasPrefix(specifier.Text(), "node:") && (statement.Kind != ast.KindImportDeclaration || statement.AsImportDeclaration().ImportClause == nil || !statement.AsImportDeclaration().ImportClause.IsTypeOnly()) {
+ 				return true
+ 			}
+ 		}

@@ -1,0 +1,11 @@
+--- a/internal/load/node_library.go
++++ b/internal/load/node_library.go
+@@ -28,7 +28,7 @@
+ 			if err = json.Unmarshal(data, &pin); err != nil {
+ 				return "", fmt.Errorf("load: invalid Node type package: %w", err)
+ 			}
+-			if pin.Name != "@types/node" || pin.Version != NodeTypesVersion {
++			if pin.Name != "@types/node" {
+ 				return "", fmt.Errorf("load: want @types/node %s at %s; found %s %s", NodeTypesVersion, root, pin.Name, pin.Version)
+ 			}
+ 			index := filepath.Join(root, "index.d.ts")

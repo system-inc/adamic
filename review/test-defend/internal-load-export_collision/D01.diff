@@ -1,0 +1,10 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -250,7 +250,6 @@
+ 	}
+ 	message := starCollision(diagnostic)
+ 	if message == "" {
+-		message = diagnostic.Localize(english)
+ 	}
+ 	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), message)
+ 	writeChain(&builder, diagnostic.MessageChain(), 1)

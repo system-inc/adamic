@@ -1,0 +1,310 @@
+[
+  {
+    "mutant": "D01",
+    "target": "TestATypeErrorFailsTheLoad",
+    "file_line": "internal/load/load.go:253",
+    "change": "drop localized diagnostic message assignment",
+    "old": "\t\tmessage = diagnostic.Localize(english)\n",
+    "new": "",
+    "vet_exit": 0,
+    "vet_seconds": 0.1693231699973694,
+    "exit": 1,
+    "wall_seconds": 6.831567379005719,
+    "rows_failed": [
+      "TestATypeErrorFailsTheLoad"
+    ],
+    "rows_passed": [
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad",
+      "TestTypeScriptIsThePinnedCommit"
+    ],
+    "failures": [
+      "load_test.go:94: got [\"/workspace/load-defend-tmp/TestATypeErrorFailsTheLoad3569823114/001/main.ts:1:7: error TS2322: \"], want one TS2322 at main.ts:1:7 with its message"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D01.log 2>&1"
+  },
+  {
+    "mutant": "D02",
+    "target": "TestLoadRefusesWhatIsNotAdamic",
+    "file_line": "internal/load/load.go:92",
+    "change": "off-by-one empty root bound",
+    "old": "if len(paths) == 0 {",
+    "new": "if len(paths) < 0 {",
+    "vet_exit": 0,
+    "vet_seconds": 0.1930502469986095,
+    "exit": 1,
+    "wall_seconds": 7.468946627996047,
+    "rows_failed": [
+      "TestLoadRefusesWhatIsNotAdamic"
+    ],
+    "rows_passed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad",
+      "TestTypeScriptIsThePinnedCommit"
+    ],
+    "failures": [
+      "load_test.go:198: Load(nil): want an error, got none"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D02.log 2>&1"
+  },
+  {
+    "mutant": "D03",
+    "target": "TestNodeLibraryRejectsDifferentVersion",
+    "file_line": "internal/load/node_library.go:31",
+    "change": "drop version comparison from refusal condition",
+    "old": "pin.Name != \"@types/node\" || pin.Version != NodeTypesVersion",
+    "new": "pin.Name != \"@types/node\"",
+    "vet_exit": 0,
+    "vet_seconds": 0.15364153999689734,
+    "exit": 1,
+    "wall_seconds": 5.820534504993702,
+    "rows_failed": [
+      "TestNodeLibraryRejectsDifferentVersion"
+    ],
+    "rows_passed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad",
+      "TestTypeScriptIsThePinnedCommit"
+    ],
+    "failures": [
+      "node_library_test.go:55: want pinned version refusal, got <nil>"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D03.log 2>&1"
+  },
+  {
+    "mutant": "D04",
+    "target": "TestTheProgramsInTheSpecLoad",
+    "file_line": "internal/load/load.go:71",
+    "change": "change target option to ES5",
+    "old": "core.ScriptTargetES2024",
+    "new": "core.ScriptTargetES5",
+    "vet_exit": 0,
+    "vet_seconds": 0.15332087600108935,
+    "exit": 1,
+    "wall_seconds": 5.62465471100586,
+    "rows_failed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "rows_passed": [
+      "TestAdamicOptionsAreOn",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestRegExpCaptureTypes",
+      "TestTypeScriptIsThePinnedCommit"
+    ],
+    "failures": [
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.",
+      "load_test.go:226: Load: error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration."
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D04.log 2>&1"
+  },
+  {
+    "mutant": "D05",
+    "target": "TestNodeLibraryKeepsOfficialConsoleSignatures",
+    "file_line": "internal/load/node_library.go:63",
+    "change": "change Node import recognition condition to exclude type-only imports",
+    "old": "specifier != nil && strings.HasPrefix(specifier.Text(), \"node:\")",
+    "new": "specifier != nil && strings.HasPrefix(specifier.Text(), \"node:\") && (statement.Kind != ast.KindImportDeclaration || statement.AsImportDeclaration().ImportClause == nil || !statement.AsImportDeclaration().ImportClause.IsTypeOnly())",
+    "vet_exit": 0,
+    "vet_seconds": 0.15665055200224742,
+    "exit": 1,
+    "wall_seconds": 6.256057860999135,
+    "rows_failed": [
+      "TestNodeLibraryKeepsOfficialConsoleSignatures"
+    ],
+    "rows_passed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad",
+      "TestTypeScriptIsThePinnedCommit"
+    ],
+    "failures": [
+      "node_library_test.go:62: /workspace/load-defend-tmp/TestNodeLibraryKeepsOfficialConsoleSignatures2858157944/001/main.a:1:26: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D05.log 2>&1"
+  },
+  {
+    "mutant": "D06",
+    "target": "TestExplicitExportResolvesStarCollision",
+    "file_line": "internal/load/load.go:64",
+    "change": "disable explicit TypeScript-extension imports",
+    "old": "AllowImportingTsExtensions: core.TSTrue",
+    "new": "AllowImportingTsExtensions: core.TSFalse",
+    "vet_exit": 0,
+    "vet_seconds": 0.1816505269962363,
+    "exit": 1,
+    "wall_seconds": 6.296099770996079,
+    "rows_failed": [
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "rows_passed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTypeScriptIsThePinnedCommit"
+    ],
+    "failures": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D06 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D06.log 2>&1"
+  },
+  {
+    "mutant": "D07",
+    "target": "TestExplicitExportResolvesStarCollision",
+    "file_line": "internal/load/load.go:70",
+    "change": "change module resolution to Classic",
+    "old": "core.ModuleResolutionKindBundler",
+    "new": "core.ModuleResolutionKindClassic",
+    "vet_exit": 0,
+    "vet_seconds": 0.15207656999700703,
+    "exit": 1,
+    "wall_seconds": 6.014740393002285,
+    "rows_failed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicFilesImportEachOther",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestExplicitExportResolvesStarCollision",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "rows_passed": [
+      "TestAdamicOptionsAreOn",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestRegExpCaptureTypes",
+      "TestTypeScriptIsThePinnedCommit"
+    ],
+    "failures": [
+      "export_collision_test.go:30: error TS5108: Option 'moduleResolution=Classic' has been removed. Please remove it from your configuration."
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D07 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D07.log 2>&1"
+  },
+  {
+    "mutant": "D08",
+    "target": "TestExplicitExportResolvesStarCollision",
+    "file_line": "internal/load/load.go:66",
+    "change": "change module kind to CommonJS",
+    "old": "core.ModuleKindESNext",
+    "new": "core.ModuleKindCommonJS",
+    "vet_exit": 0,
+    "vet_seconds": 0.15366977399389725,
+    "exit": 1,
+    "wall_seconds": 5.574654331001511,
+    "rows_failed": [
+      "TestAdamicFilesImportEachOther",
+      "TestExplicitExportResolvesStarCollision",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestStarExportCollisionNamesBothModules",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestTheProgramsInTheSpecLoad"
+    ],
+    "rows_passed": [
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicOptionsAreOn",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestEveryFileIsAModule",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestRegExpCaptureTypes",
+      "TestTypeScriptIsThePinnedCommit"
+    ],
+    "failures": [
+      "export_collision_test.go:30: /workspace/load-defend-tmp/TestExplicitExportResolvesStarCollision3411884458/001/left.a:1:1: error TS1287: A top-level 'export' modifier cannot be used on value declarations in a CommonJS module when 'verbatimModuleSyntax' is enabled."
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D08.log 2>&1"
+  }
+]
