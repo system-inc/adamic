@@ -1,0 +1,46 @@
+{
+  "nproc": 5,
+  "setup_seconds": 0,
+  "library_install_seconds": 3.989,
+  "whole_package_binary_seconds": 90.022,
+  "scoped_package_binary_seconds": 90.023,
+  "isolated_baseline_command_wall_seconds": 905.7241439489999,
+  "isolated_baseline_binary_seconds": 794.01,
+  "matrix_probe_witness_command_wall_seconds": 717.2305782750018,
+  "standalone_native_builds": [
+    {
+      "id": "M1",
+      "exit": 0,
+      "wall": 68.55736592700032,
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/M1 timeout 90 go run ./cmd/adamic build stage1/cohere/estree/main.ts -o /tmp/u085/standalone-M1 --sanitize"
+    },
+    {
+      "id": "M2",
+      "exit": 0,
+      "wall": 59.2336069160001,
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/M2 timeout 90 go run ./cmd/adamic build stage1/cohere/estree/main.ts -o /tmp/u085/standalone-M2 --sanitize"
+    },
+    {
+      "id": "M3",
+      "exit": 0,
+      "wall": 58.5212518190001,
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/M3 timeout 90 go run ./cmd/adamic build stage1/cohere/estree/main.ts -o /tmp/u085/standalone-M3 --sanitize"
+    },
+    {
+      "id": "M4",
+      "exit": 0,
+      "wall": 57.839299956000104,
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/M4 timeout 90 go run ./cmd/adamic build stage1/cohere/estree/main.ts -o /tmp/u085/standalone-M4 --sanitize"
+    },
+    {
+      "id": "P1",
+      "exit": 0,
+      "wall": 27.573368993998884,
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u085/cache/P1 timeout 90 go run ./cmd/adamic build stage1/cohere/estree/main.ts -o /tmp/u085/standalone-P1 --sanitize"
+    }
+  ],
+  "library_family_binary_seconds": 7.004,
+  "npm_ci_seconds": 0.751,
+  "restored_clean_subset_binary_seconds": 6.911,
+  "approximate_session_minutes": 39
+}

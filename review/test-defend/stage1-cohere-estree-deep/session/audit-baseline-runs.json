@@ -1,0 +1,254 @@
+[
+  {
+    "row": "TestDeepGrammar",
+    "rep": 1,
+    "exit": 0,
+    "wall": 78.88823449900065,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDeepGrammar$"
+  },
+  {
+    "row": "TestDeepGrammar",
+    "rep": 2,
+    "exit": 0,
+    "wall": 72.58017957999982,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDeepGrammar$"
+  },
+  {
+    "row": "TestDeepGrammar",
+    "rep": 3,
+    "exit": 0,
+    "wall": 72.1812843889993,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDeepGrammar$"
+  },
+  {
+    "row": "TestGeneratedAgreement",
+    "rep": 1,
+    "exit": 0,
+    "wall": 67.03407092999987,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestGeneratedAgreement$"
+  },
+  {
+    "row": "TestGeneratedAgreement",
+    "rep": 2,
+    "exit": 0,
+    "wall": 69.25680716400075,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestGeneratedAgreement$"
+  },
+  {
+    "row": "TestGeneratedAgreement",
+    "rep": 3,
+    "exit": 0,
+    "wall": 65.7979811920004,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestGeneratedAgreement$"
+  },
+  {
+    "row": "TestOriginalLibraries",
+    "rep": 1,
+    "exit": 0,
+    "wall": 4.355696378000175,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestOriginalLibraries$"
+  },
+  {
+    "row": "TestOriginalLibraries",
+    "rep": 2,
+    "exit": 0,
+    "wall": 4.835553023000102,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestOriginalLibraries$"
+  },
+  {
+    "row": "TestOriginalLibraries",
+    "rep": 3,
+    "exit": 0,
+    "wall": 4.551430411999718,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestOriginalLibraries$"
+  },
+  {
+    "row": "TestDecoratedExports",
+    "rep": 1,
+    "exit": 0,
+    "wall": 78.62290806700003,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExports$"
+  },
+  {
+    "row": "TestDecoratedExports",
+    "rep": 2,
+    "exit": 0,
+    "wall": 9.407558153000537,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExports$"
+  },
+  {
+    "row": "TestDecoratedExports",
+    "rep": 3,
+    "exit": 0,
+    "wall": 5.092037160000473,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExports$"
+  },
+  {
+    "row": "TestDecoratedExportsPlantedDisagreement",
+    "rep": 1,
+    "exit": 0,
+    "wall": 2.5086496919993806,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportsPlantedDisagreement$"
+  },
+  {
+    "row": "TestDecoratedExportsPlantedDisagreement",
+    "rep": 2,
+    "exit": 0,
+    "wall": 2.78797576100078,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportsPlantedDisagreement$"
+  },
+  {
+    "row": "TestDecoratedExportsPlantedDisagreement",
+    "rep": 3,
+    "exit": 0,
+    "wall": 2.647461502000624,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportsPlantedDisagreement$"
+  },
+  {
+    "row": "TestDecoratedExportMutant",
+    "rep": 1,
+    "exit": 0,
+    "wall": 67.07978712299973,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportMutant$"
+  },
+  {
+    "row": "TestDecoratedExportMutant",
+    "rep": 2,
+    "exit": 0,
+    "wall": 4.736566565999965,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportMutant$"
+  },
+  {
+    "row": "TestDecoratedExportMutant",
+    "rep": 3,
+    "exit": 0,
+    "wall": 4.5573563669995565,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportMutant$"
+  },
+  {
+    "row": "TestDecoratedExportMutantPlantedSurvivor",
+    "rep": 1,
+    "exit": 0,
+    "wall": 2.474623266999515,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportMutantPlantedSurvivor$"
+  },
+  {
+    "row": "TestDecoratedExportMutantPlantedSurvivor",
+    "rep": 2,
+    "exit": 0,
+    "wall": 2.341439363000063,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportMutantPlantedSurvivor$"
+  },
+  {
+    "row": "TestDecoratedExportMutantPlantedSurvivor",
+    "rep": 3,
+    "exit": 0,
+    "wall": 2.2378134219998174,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportMutantPlantedSurvivor$"
+  },
+  {
+    "row": "TestDecoratedExportLibraries",
+    "rep": 1,
+    "exit": 0,
+    "wall": 3.998638671999288,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportLibraries$"
+  },
+  {
+    "row": "TestDecoratedExportLibraries",
+    "rep": 2,
+    "exit": 0,
+    "wall": 6.40693988700059,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportLibraries$"
+  },
+  {
+    "row": "TestDecoratedExportLibraries",
+    "rep": 3,
+    "exit": 0,
+    "wall": 4.886620778999713,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestDecoratedExportLibraries$"
+  },
+  {
+    "row": "TestRecoveredExpressions",
+    "rep": 1,
+    "exit": 0,
+    "wall": 77.82169421100025,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$"
+  },
+  {
+    "row": "TestRecoveredExpressions",
+    "rep": 2,
+    "exit": 0,
+    "wall": 5.015933843999846,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$"
+  },
+  {
+    "row": "TestRecoveredExpressions",
+    "rep": 3,
+    "exit": 0,
+    "wall": 4.60939543799941,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressions$"
+  },
+  {
+    "row": "TestRecoveredExpressionMutant",
+    "rep": 1,
+    "exit": 0,
+    "wall": 75.61076993700044,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressionMutant$"
+  },
+  {
+    "row": "TestRecoveredExpressionMutant",
+    "rep": 2,
+    "exit": 0,
+    "wall": 8.42051513899969,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressionMutant$"
+  },
+  {
+    "row": "TestRecoveredExpressionMutant",
+    "rep": 3,
+    "exit": 0,
+    "wall": 4.289283971000259,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestRecoveredExpressionMutant$"
+  },
+  {
+    "row": "TestUnattachedDecorator",
+    "rep": 1,
+    "exit": 0,
+    "wall": 3.4797352699997646,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecorator$"
+  },
+  {
+    "row": "TestUnattachedDecorator",
+    "rep": 2,
+    "exit": 0,
+    "wall": 3.4953704110002946,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecorator$"
+  },
+  {
+    "row": "TestUnattachedDecorator",
+    "rep": 3,
+    "exit": 0,
+    "wall": 3.437217378999776,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecorator$"
+  },
+  {
+    "row": "TestUnattachedDecoratorControl",
+    "rep": 1,
+    "exit": 0,
+    "wall": 72.62989707399993,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecoratorControl$"
+  },
+  {
+    "row": "TestUnattachedDecoratorControl",
+    "rep": 2,
+    "exit": 0,
+    "wall": 3.907939881999482,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecoratorControl$"
+  },
+  {
+    "row": "TestUnattachedDecoratorControl",
+    "rep": 3,
+    "exit": 0,
+    "wall": 3.73877804499989,
+    "command": "ADAMIC_ESTREE_LIBRARY=/tmp/u085/library timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run ^TestUnattachedDecoratorControl$"
+  }
+]

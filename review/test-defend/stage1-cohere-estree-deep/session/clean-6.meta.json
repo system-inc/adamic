@@ -1,0 +1,32 @@
+{
+  "id": "clean",
+  "group": 6,
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^(TestScalarEdges_[0-9]+|TestCookedSurrogates|TestOriginalLibraries|TestDecoratedExportLibraries)$"
+  ],
+  "cache": "default",
+  "exit": 0,
+  "wall": 27.854105577000155,
+  "cooked": false,
+  "statuses": {
+    "TestCookedSurrogates": "pass",
+    "TestOriginalLibraries": "pass",
+    "TestDecoratedExportLibraries": "pass",
+    "TestScalarEdges_002": "pass",
+    "TestScalarEdges_003": "pass",
+    "TestScalarEdges_001": "pass",
+    "TestScalarEdges_000": "pass"
+  },
+  "errors": [],
+  "log": "clean-6.log"
+}

@@ -1,0 +1,52 @@
+stage1/cohere/estree/expressions_test.go:18:	binary, script := recoveryBuild(t, main, true)
+stage1/cohere/estree/expressions_test.go:19:	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+stage1/cohere/estree/expressions_test.go:32:	binary, _ := recoveryBuild(t, path, true)
+stage1/cohere/estree/expressions_test.go:33:	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+stage1/cohere/estree/expressions_test.go:45:	binary, script := recoveryBuild(t, main, true)
+stage1/cohere/estree/exports_test.go:26:	binary, script := miscBuild(t, main)
+stage1/cohere/estree/exports_test.go:32:		for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+stage1/cohere/estree/exports_test.go:62:	binary, _ := miscBuild(t, path)
+stage1/cohere/estree/exports_test.go:71:		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+stage1/cohere/estree/jsx_test.go:118:	binary, _ := miscBuild(t, path)
+stage1/cohere/estree/jsx_test.go:124:		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+stage1/cohere/estree/misc_shards_test.go:165:func miscBuild(t *testing.T, path string) (string, string) {
+stage1/cohere/estree/corpus_test.go:45:	binary, script := build(t, main, true)
+stage1/cohere/estree/corpus_test.go:71:		for name, got := range map[string][]byte{"source Node": onNode(t, main, "--manifest", manifest), "sanitized native": execute(t, "", binary, "--manifest", manifest), "emitted JS": onNode(t, script, "--manifest", manifest)} {
+stage1/cohere/estree/corpus_test.go:91:	binary, _ := build(t, main, true)
+stage1/cohere/estree/throughput_test.go:32:	binary, _ := build(t, path, false)
+stage1/cohere/estree/estree_test.go:69:func build(t *testing.T, path string, sanitize bool) (string, string) {
+stage1/cohere/estree/estree_test.go:90:func onNode(t *testing.T, path string, args ...string) []byte {
+stage1/cohere/estree/estree_test.go:185:	if diff := firstDifference(want, onNode(t, path, "--manifest", list)); diff != "" {
+stage1/cohere/estree/estree_test.go:188:	binary, script := build(t, path, true)
+stage1/cohere/estree/estree_test.go:192:	if diff := firstDifference(want, onNode(t, script, "--manifest", list)); diff != "" {
+stage1/cohere/estree/syntax_mutants_self_setup_test.go:238:	for name, got := range map[string][]byte{"Node": onNode(t, prepared.Main, "--manifest", list), "native": execute(t, "", prepared.Binary, "--manifest", list)} {
+stage1/cohere/estree/interface_type_test.go:20:	if got := string(onNode(t, main)); got != "1\n" {
+stage1/cohere/estree/interface_type_test.go:51:	controlBinary, controlScript := build(t, control, true)
+stage1/cohere/estree/interface_type_test.go:52:	for name, got := range map[string][]byte{"Node": onNode(t, control), "emitted": onNode(t, controlScript), "native": execute(t, "", controlBinary)} {
+stage1/cohere/estree/utf8_test.go:19:	binary, script := build(t, main, true)
+stage1/cohere/estree/utf8_test.go:20:	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+stage1/cohere/estree/utf8_test.go:33:	binary, _ := build(t, path, true)
+stage1/cohere/estree/utf8_test.go:34:	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+stage1/cohere/estree/utf8_test.go:64:	binary, script := build(t, main, true)
+stage1/cohere/estree/recovery_test.go:35:	binary, script := recoveryBuild(t, main, true)
+stage1/cohere/estree/recovery_test.go:36:	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+stage1/cohere/estree/stalls_test.go:81:	binary, script := miscBuild(t, main)
+stage1/cohere/estree/stalls_test.go:142:	binary, _ := miscBuild(t, main)
+stage1/cohere/estree/gaps_test.go:23:	got := onNode(t, path)
+stage1/cohere/estree/gaps_test.go:44:	if got := string(onNode(t, path)); got != "replacement\noriginal\n" {
+stage1/cohere/estree/gaps_test.go:81:	binary, script := build(t, path, true)
+stage1/cohere/estree/gaps_test.go:82:	want := onNode(t, path, first)
+stage1/cohere/estree/gaps_test.go:84:		for _, got := range [][]byte{onNode(t, path, input), execute(t, "", binary, input), onNode(t, script, input)} {
+stage1/cohere/estree/gaps_test.go:99:	binary, _ := build(t, path, true)
+stage1/cohere/estree/gaps_test.go:125:	if got := string(onNode(t, path)); got != "5\n" {
+stage1/cohere/estree/syntax_test.go:29:	binary, script := build(t, main, true)
+stage1/cohere/estree/syntax_test.go:30:	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+stage1/cohere/estree/syntax_test.go:47:	binary, script := build(t, main, true)
+stage1/cohere/estree/recovery_shards_test.go:68:func recoveryBuild(t *testing.T, path string, sanitize bool) (string, string) {
+stage1/cohere/estree/deep_test.go:35:	binary, script := build(t, main, true)
+stage1/cohere/estree/deep_test.go:36:	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+stage1/cohere/estree/acceptance_test.go:21:	binary, script := build(t, main, true)
+stage1/cohere/estree/acceptance_test.go:22:	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
+stage1/cohere/estree/acceptance_test.go:39:	binary, script := build(t, main, true)
+stage1/cohere/estree/acceptance_test.go:60:	binary, _ := build(t, main, true)
+stage1/cohere/estree/acceptance_test.go:61:	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {

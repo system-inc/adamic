@@ -1,0 +1,27 @@
+{
+  "id": "D2",
+  "group": 0,
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^(TestDeepGrammar|TestGeneratedAgreement)$"
+  ],
+  "cache": "/tmp/estree-deep-defense/cache/D2",
+  "exit": 0,
+  "wall": 66.17269517500245,
+  "cooked": false,
+  "statuses": {
+    "TestDeepGrammar": "pass",
+    "TestGeneratedAgreement": "pass"
+  },
+  "errors": [],
+  "log": "D2-0.log"
+}

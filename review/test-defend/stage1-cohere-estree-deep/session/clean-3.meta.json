@@ -1,0 +1,27 @@
+{
+  "id": "clean",
+  "group": 3,
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^(TestAcceptanceGrammar|TestSyntaxGrammar)$"
+  ],
+  "cache": "default",
+  "exit": 0,
+  "wall": 44.9546319459987,
+  "cooked": false,
+  "statuses": {
+    "TestAcceptanceGrammar": "pass",
+    "TestSyntaxGrammar": "pass"
+  },
+  "errors": [],
+  "log": "clean-3.log"
+}

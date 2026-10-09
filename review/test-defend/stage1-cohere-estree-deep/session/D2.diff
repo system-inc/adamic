@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/convert.ts
++++ b/stage1/cohere/estree/convert.ts
+@@ -213,7 +213,7 @@
+     exports(id: number, result: number): number {
+         const children: number[] = [];
+         for(const child of this.ts(id).children) {
+-            if(this.kind(child) !== 'Decorator') {
++            if(true) {
+                 children.push(child);
+             }
+         }

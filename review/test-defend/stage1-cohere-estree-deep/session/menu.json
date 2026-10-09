@@ -1,0 +1,17 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "stage1/cohere/estree/convert.ts:1341",
+    "change": "Disable iterative binary conversion, retaining recursive conversion for short inputs"
+  },
+  {
+    "mutant": "D2",
+    "file_line": "stage1/cohere/estree/convert.ts:216",
+    "change": "Stop filtering decorators when locating the export keyword"
+  },
+  {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/estree/convert.ts:580",
+    "change": "Change recovered class-expression node-kind constant to ClassDeclaration"
+  }
+]

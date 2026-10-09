@@ -1,0 +1,2263 @@
+[
+  {
+    "file": "main.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 720,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "main.ts",
+    "function": "run",
+    "v8_start_offset": 104,
+    "v8_end_offset": 286,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "pipeline.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 3963,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "pipeline.ts",
+    "function": "answer",
+    "v8_start_offset": 448,
+    "v8_end_offset": 3962,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "pipeline.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 1265,
+    "v8_end_offset": 1296,
+    "observed_entry_count": 21
+  },
+  {
+    "file": "sourceReferences.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 2747,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceReferences.ts",
+    "function": "referenceError",
+    "v8_start_offset": 581,
+    "v8_end_offset": 2746,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceValidation.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 4979,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceValidation.ts",
+    "function": "syntaxError",
+    "v8_start_offset": 112,
+    "v8_end_offset": 4978,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 25868,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "kind",
+    "v8_start_offset": 79,
+    "v8_end_offset": 130,
+    "observed_entry_count": 548
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 155,
+    "v8_end_offset": 296,
+    "observed_entry_count": 53
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "Speculation",
+    "v8_start_offset": 302,
+    "v8_end_offset": 624,
+    "observed_entry_count": 53
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "prepare",
+    "v8_start_offset": 629,
+    "v8_end_offset": 1632,
+    "observed_entry_count": 52
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "next",
+    "v8_start_offset": 1637,
+    "v8_end_offset": 1748,
+    "observed_entry_count": 52
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "restore",
+    "v8_start_offset": 1753,
+    "v8_end_offset": 2067,
+    "observed_entry_count": 53
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "declarationAhead",
+    "v8_start_offset": 8507,
+    "v8_end_offset": 11738,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "statementAhead",
+    "v8_start_offset": 11746,
+    "v8_end_offset": 14214,
+    "observed_entry_count": 19
+  },
+  {
+    "file": "sourceGrammar.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 4190,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceGrammar.ts",
+    "function": "precedence",
+    "v8_start_offset": 39,
+    "v8_end_offset": 1320,
+    "observed_entry_count": 31
+  },
+  {
+    "file": "sourceModules.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 1080,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceModules.ts",
+    "function": "externalModule",
+    "v8_start_offset": 7,
+    "v8_end_offset": 1079,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 76649,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 859,
+    "v8_end_offset": 53167,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "Parser",
+    "v8_start_offset": 1381,
+    "v8_end_offset": 1511,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "kind",
+    "v8_start_offset": 1516,
+    "v8_end_offset": 1564,
+    "observed_entry_count": 1504
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "scannerErrors",
+    "v8_start_offset": 1569,
+    "v8_end_offset": 1777,
+    "observed_entry_count": 106
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "next",
+    "v8_start_offset": 1817,
+    "v8_end_offset": 2469,
+    "observed_entry_count": 106
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "beginList",
+    "v8_start_offset": 2497,
+    "v8_end_offset": 2564,
+    "observed_entry_count": 19
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "endList",
+    "v8_start_offset": 2569,
+    "v8_end_offset": 2705,
+    "observed_entry_count": 19
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "expressionStart",
+    "v8_start_offset": 2710,
+    "v8_end_offset": 3111,
+    "observed_entry_count": 6
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "listTerminator",
+    "v8_start_offset": 4440,
+    "v8_end_offset": 4556,
+    "observed_entry_count": 20
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "listElement",
+    "v8_start_offset": 4561,
+    "v8_end_offset": 7330,
+    "observed_entry_count": 17
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "delimitedList",
+    "v8_start_offset": 7777,
+    "v8_end_offset": 8993,
+    "observed_entry_count": 6
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "node",
+    "v8_start_offset": 8998,
+    "v8_end_offset": 9076,
+    "observed_entry_count": 1271
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "make",
+    "v8_start_offset": 9081,
+    "v8_end_offset": 9242,
+    "observed_entry_count": 93
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "token",
+    "v8_start_offset": 9247,
+    "v8_end_offset": 9421,
+    "observed_entry_count": 4
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "expect",
+    "v8_start_offset": 9426,
+    "v8_end_offset": 9825,
+    "observed_entry_count": 34
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "identifier",
+    "v8_start_offset": 11187,
+    "v8_end_offset": 12203,
+    "observed_entry_count": 20
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "primary",
+    "v8_start_offset": 12208,
+    "v8_end_offset": 17156,
+    "observed_entry_count": 27
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "bindingIdentifier",
+    "v8_start_offset": 17161,
+    "v8_end_offset": 17308,
+    "observed_entry_count": 24
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "typeParameters",
+    "v8_start_offset": 19011,
+    "v8_end_offset": 20650,
+    "observed_entry_count": 6
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "decorator",
+    "v8_start_offset": 45062,
+    "v8_end_offset": 45421,
+    "observed_entry_count": 4
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "statements",
+    "v8_start_offset": 50121,
+    "v8_end_offset": 52817,
+    "observed_entry_count": 11
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "kind",
+    "v8_start_offset": 50281,
+    "v8_end_offset": 50296,
+    "observed_entry_count": 719
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "expect",
+    "v8_start_offset": 50635,
+    "v8_end_offset": 50660,
+    "observed_entry_count": 17
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "make",
+    "v8_start_offset": 51100,
+    "v8_end_offset": 51153,
+    "observed_entry_count": 32
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "identifier",
+    "v8_start_offset": 51226,
+    "v8_end_offset": 51247,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "token",
+    "v8_start_offset": 51327,
+    "v8_end_offset": 51343,
+    "observed_entry_count": 29
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "typeParameters",
+    "v8_start_offset": 51501,
+    "v8_end_offset": 51526,
+    "observed_entry_count": 5
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "decorator",
+    "v8_start_offset": 52336,
+    "v8_end_offset": 52356,
+    "observed_entry_count": 14
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "optionalChain",
+    "v8_start_offset": 53932,
+    "v8_end_offset": 54366,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "arguments",
+    "v8_start_offset": 54587,
+    "v8_end_offset": 54950,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "suffix",
+    "v8_start_offset": 54955,
+    "v8_end_offset": 61113,
+    "observed_entry_count": 27
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "file",
+    "v8_start_offset": 75779,
+    "v8_end_offset": 76646,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceBinary.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 490,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "jsxParser.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 8344,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 48486,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 365,
+    "v8_end_offset": 371,
+    "observed_entry_count": 11
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "Statements",
+    "v8_start_offset": 377,
+    "v8_end_offset": 433,
+    "observed_entry_count": 11
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "make",
+    "v8_start_offset": 438,
+    "v8_end_offset": 530,
+    "observed_entry_count": 32
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "lookahead",
+    "v8_start_offset": 6910,
+    "v8_end_offset": 7824,
+    "observed_entry_count": 52
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "decorator",
+    "v8_start_offset": 7829,
+    "v8_end_offset": 7888,
+    "observed_entry_count": 14
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "exportedClauseAhead",
+    "v8_start_offset": 20430,
+    "v8_end_offset": 21103,
+    "observed_entry_count": 34
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "classDeclaration",
+    "v8_start_offset": 26039,
+    "v8_end_offset": 31150,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "statement",
+    "v8_start_offset": 38524,
+    "v8_end_offset": 48483,
+    "observed_entry_count": 19
+  },
+  {
+    "file": "sourceSpelling.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 2941,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceRecovery.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 5888,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceRecovery.ts",
+    "function": "listTerminator",
+    "v8_start_offset": 91,
+    "v8_end_offset": 1905,
+    "observed_entry_count": 20
+  },
+  {
+    "file": "sourceLexical.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 2011,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "convert.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 84367,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "convert.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 846,
+    "v8_end_offset": 1000,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "convert.ts",
+    "function": "Converter",
+    "v8_start_offset": 1006,
+    "v8_end_offset": 1713,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "convert.ts",
+    "function": "ts",
+    "v8_start_offset": 1718,
+    "v8_end_offset": 1769,
+    "observed_entry_count": 1098
+  },
+  {
+    "file": "convert.ts",
+    "function": "kind",
+    "v8_start_offset": 1774,
+    "v8_end_offset": 1837,
+    "observed_entry_count": 277
+  },
+  {
+    "file": "convert.ts",
+    "function": "child",
+    "v8_start_offset": 1842,
+    "v8_end_offset": 1916,
+    "observed_entry_count": 255
+  },
+  {
+    "file": "convert.ts",
+    "function": "startUnit",
+    "v8_start_offset": 1921,
+    "v8_end_offset": 2077,
+    "observed_entry_count": 118
+  },
+  {
+    "file": "convert.ts",
+    "function": "byte",
+    "v8_start_offset": 2082,
+    "v8_end_offset": 2172,
+    "observed_entry_count": 172
+  },
+  {
+    "file": "convert.ts",
+    "function": "start",
+    "v8_start_offset": 2177,
+    "v8_end_offset": 2240,
+    "observed_entry_count": 82
+  },
+  {
+    "file": "convert.ts",
+    "function": "create",
+    "v8_start_offset": 2334,
+    "v8_end_offset": 2443,
+    "observed_entry_count": 80
+  },
+  {
+    "file": "convert.ts",
+    "function": "set",
+    "v8_start_offset": 2448,
+    "v8_end_offset": 2520,
+    "observed_entry_count": 276
+  },
+  {
+    "file": "convert.ts",
+    "function": "converted",
+    "v8_start_offset": 2525,
+    "v8_end_offset": 2638,
+    "observed_entry_count": 42
+  },
+  {
+    "file": "convert.ts",
+    "function": "list",
+    "v8_start_offset": 2643,
+    "v8_end_offset": 2852,
+    "observed_entry_count": 8
+  },
+  {
+    "file": "convert.ts",
+    "function": "identifier",
+    "v8_start_offset": 2857,
+    "v8_end_offset": 3536,
+    "observed_entry_count": 20
+  },
+  {
+    "file": "convert.ts",
+    "function": "body",
+    "v8_start_offset": 5818,
+    "v8_end_offset": 6653,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "convert.ts",
+    "function": "chain",
+    "v8_start_offset": 6658,
+    "v8_end_offset": 7417,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "convert.ts",
+    "function": "hasModifier",
+    "v8_start_offset": 7422,
+    "v8_end_offset": 7792,
+    "observed_entry_count": 26
+  },
+  {
+    "file": "convert.ts",
+    "function": "exports",
+    "v8_start_offset": 7797,
+    "v8_end_offset": 9298,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "convert.ts",
+    "function": "isTypeParameter",
+    "v8_start_offset": 9303,
+    "v8_end_offset": 9445,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "convert.ts",
+    "function": "wrapper",
+    "v8_start_offset": 9450,
+    "v8_end_offset": 9604,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "convert.ts",
+    "function": "bodyStart",
+    "v8_start_offset": 18627,
+    "v8_end_offset": 18989,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "convert.ts",
+    "function": "classNode",
+    "v8_start_offset": 20359,
+    "v8_end_offset": 23942,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "convert.ts",
+    "function": "convert",
+    "v8_start_offset": 46415,
+    "v8_end_offset": 84063,
+    "observed_entry_count": 85
+  },
+  {
+    "file": "binaryConvert.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 2245,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "values.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 2881,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "values.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 25,
+    "v8_end_offset": 107,
+    "observed_entry_count": 619
+  },
+  {
+    "file": "values.ts",
+    "function": "Value",
+    "v8_start_offset": 113,
+    "v8_end_offset": 163,
+    "observed_entry_count": 619
+  },
+  {
+    "file": "values.ts",
+    "function": "absent",
+    "v8_start_offset": 173,
+    "v8_end_offset": 224,
+    "observed_entry_count": 367
+  },
+  {
+    "file": "values.ts",
+    "function": "stringValue",
+    "v8_start_offset": 232,
+    "v8_end_offset": 342,
+    "observed_entry_count": 41
+  },
+  {
+    "file": "values.ts",
+    "function": "boolValue",
+    "v8_start_offset": 350,
+    "v8_end_offset": 466,
+    "observed_entry_count": 63
+  },
+  {
+    "file": "values.ts",
+    "function": "childValue",
+    "v8_start_offset": 598,
+    "v8_end_offset": 756,
+    "observed_entry_count": 112
+  },
+  {
+    "file": "values.ts",
+    "function": "listValue",
+    "v8_start_offset": 764,
+    "v8_end_offset": 870,
+    "observed_entry_count": 49
+  },
+  {
+    "file": "modifiers.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 1807,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "modifiers.ts",
+    "function": "dataChildren",
+    "v8_start_offset": 977,
+    "v8_end_offset": 1806,
+    "observed_entry_count": 9
+  },
+  {
+    "file": "typeLists.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 1690,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "typeLists.ts",
+    "function": "typeList",
+    "v8_start_offset": 143,
+    "v8_end_offset": 1689,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "jsxConvert.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 3996,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "jsxEntities.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 1141,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "xhtmlEntities.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 10571,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "simpleTypes.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 2182,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "templateValidation.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 1124,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "literal.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 1181,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "property.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 133,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "property.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 28,
+    "v8_end_offset": 42,
+    "observed_entry_count": 309
+  },
+  {
+    "file": "property.ts",
+    "function": "Property",
+    "v8_start_offset": 48,
+    "v8_end_offset": 130,
+    "observed_entry_count": 309
+  },
+  {
+    "file": "arena.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 1014,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "arena.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 140,
+    "v8_end_offset": 150,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "arena.ts",
+    "function": "newNode",
+    "v8_start_offset": 156,
+    "v8_end_offset": 280,
+    "observed_entry_count": 84
+  },
+  {
+    "file": "arena.ts",
+    "function": "node",
+    "v8_start_offset": 285,
+    "v8_end_offset": 364,
+    "observed_entry_count": 1293
+  },
+  {
+    "file": "arena.ts",
+    "function": "type",
+    "v8_start_offset": 369,
+    "v8_end_offset": 434,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "nodes.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 2178,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "nodes.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 104,
+    "v8_end_offset": 223,
+    "observed_entry_count": 84
+  },
+  {
+    "file": "nodes.ts",
+    "function": "Node",
+    "v8_start_offset": 229,
+    "v8_end_offset": 343,
+    "observed_entry_count": 84
+  },
+  {
+    "file": "nodes.ts",
+    "function": "get",
+    "v8_start_offset": 348,
+    "v8_end_offset": 541,
+    "observed_entry_count": 619
+  },
+  {
+    "file": "nodes.ts",
+    "function": "has",
+    "v8_start_offset": 546,
+    "v8_end_offset": 726,
+    "observed_entry_count": 58
+  },
+  {
+    "file": "nodes.ts",
+    "function": "set",
+    "v8_start_offset": 731,
+    "v8_end_offset": 987,
+    "observed_entry_count": 340
+  },
+  {
+    "file": "nodes.ts",
+    "function": "child",
+    "v8_start_offset": 1238,
+    "v8_end_offset": 1349,
+    "observed_entry_count": 206
+  },
+  {
+    "file": "nodes.ts",
+    "function": "list",
+    "v8_start_offset": 1354,
+    "v8_end_offset": 1493,
+    "observed_entry_count": 102
+  },
+  {
+    "file": "nodes.ts",
+    "function": "string",
+    "v8_start_offset": 1498,
+    "v8_end_offset": 1612,
+    "observed_entry_count": 33
+  },
+  {
+    "file": "nodes.ts",
+    "function": "bool",
+    "v8_start_offset": 1617,
+    "v8_end_offset": 1731,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "visitorKeys.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 33942,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "strippedText.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 2507,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "strippedText.ts",
+    "function": "unitOffsets",
+    "v8_start_offset": 51,
+    "v8_end_offset": 581,
+    "observed_entry_count": 14
+  },
+  {
+    "file": "strippedText.ts",
+    "function": "byteUnit",
+    "v8_start_offset": 589,
+    "v8_end_offset": 1014,
+    "observed_entry_count": 41
+  },
+  {
+    "file": "strippedText.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 1047,
+    "v8_end_offset": 1154,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "strippedText.ts",
+    "function": "StrippedText",
+    "v8_start_offset": 1160,
+    "v8_end_offset": 1336,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "strippedText.ts",
+    "function": "text",
+    "v8_start_offset": 1341,
+    "v8_end_offset": 2239,
+    "observed_entry_count": 20
+  },
+  {
+    "file": "comments.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 2194,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "comments.ts",
+    "function": "collectComments",
+    "v8_start_offset": 82,
+    "v8_end_offset": 2193,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 6692,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "mergeComments",
+    "v8_start_offset": 780,
+    "v8_end_offset": 1465,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 1499,
+    "v8_end_offset": 1541,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "Postprocessor",
+    "v8_start_offset": 1547,
+    "v8_end_offset": 1757,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "contentEnd",
+    "v8_start_offset": 1762,
+    "v8_end_offset": 2419,
+    "observed_entry_count": 84
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "unbalanced",
+    "v8_start_offset": 2424,
+    "v8_end_offset": 2704,
+    "observed_entry_count": 84
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "rebalance",
+    "v8_start_offset": 3040,
+    "v8_end_offset": 3580,
+    "observed_entry_count": 84
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "visit",
+    "v8_start_offset": 3585,
+    "v8_end_offset": 6526,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "program",
+    "v8_start_offset": 6531,
+    "v8_end_offset": 6689,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "location.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 2843,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "location.ts",
+    "function": "locStart",
+    "v8_start_offset": 7,
+    "v8_end_offset": 402,
+    "observed_entry_count": 100
+  },
+  {
+    "file": "location.ts",
+    "function": "shouldAddContentEnd",
+    "v8_start_offset": 410,
+    "v8_end_offset": 746,
+    "observed_entry_count": 252
+  },
+  {
+    "file": "location.ts",
+    "function": "bodyOverride",
+    "v8_start_offset": 754,
+    "v8_end_offset": 974,
+    "observed_entry_count": 155
+  },
+  {
+    "file": "location.ts",
+    "function": "locEnd",
+    "v8_start_offset": 982,
+    "v8_end_offset": 1929,
+    "observed_entry_count": 86
+  },
+  {
+    "file": "location.ts",
+    "function": "ignoredSemicolon",
+    "v8_start_offset": 1937,
+    "v8_end_offset": 2587,
+    "observed_entry_count": 84
+  },
+  {
+    "file": "protocol.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 0,
+    "v8_end_offset": 3018,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "protocol.ts",
+    "function": "written",
+    "v8_start_offset": 75,
+    "v8_end_offset": 711,
+    "observed_entry_count": 48
+  },
+  {
+    "file": "protocol.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 734,
+    "v8_end_offset": 761,
+    "observed_entry_count": 375
+  },
+  {
+    "file": "protocol.ts",
+    "function": "DumpFrame",
+    "v8_start_offset": 767,
+    "v8_end_offset": 890,
+    "observed_entry_count": 375
+  },
+  {
+    "file": "protocol.ts",
+    "function": "dump",
+    "v8_start_offset": 900,
+    "v8_end_offset": 3017,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "arrowAhead",
+    "v8_start_offset": 2357,
+    "v8_end_offset": 5691,
+    "observed_entry_count": 25
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "leftHandSide",
+    "v8_start_offset": 23098,
+    "v8_end_offset": 24066,
+    "observed_entry_count": 25
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "functionTypeAhead",
+    "v8_start_offset": 24074,
+    "v8_end_offset": 25429,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "literal",
+    "v8_start_offset": 10061,
+    "v8_end_offset": 10677,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "nextIdentifierSameLine",
+    "v8_start_offset": 17313,
+    "v8_end_offset": 17535,
+    "observed_entry_count": 20
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "mark",
+    "v8_start_offset": 17540,
+    "v8_end_offset": 17985,
+    "observed_entry_count": 25
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "rewind",
+    "v8_start_offset": 17990,
+    "v8_end_offset": 18447,
+    "observed_entry_count": 25
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "entityName",
+    "v8_start_offset": 20655,
+    "v8_end_offset": 21014,
+    "observed_entry_count": 66
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "functionTypeAhead",
+    "v8_start_offset": 22484,
+    "v8_end_offset": 22771,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 22596,
+    "v8_end_offset": 22624,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 22685,
+    "v8_end_offset": 22712,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "type",
+    "v8_start_offset": 22776,
+    "v8_end_offset": 35009,
+    "observed_entry_count": 127
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "rootExpression",
+    "v8_start_offset": 45750,
+    "v8_end_offset": 45992,
+    "observed_entry_count": 15
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "next",
+    "v8_start_offset": 50316,
+    "v8_end_offset": 50364,
+    "observed_entry_count": 23
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "node",
+    "v8_start_offset": 51055,
+    "v8_end_offset": 51080,
+    "observed_entry_count": 33
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "type",
+    "v8_start_offset": 51363,
+    "v8_end_offset": 51418,
+    "observed_entry_count": 39
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "rootExpression",
+    "v8_start_offset": 51845,
+    "v8_end_offset": 51870,
+    "observed_entry_count": 15
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "nextIdentifierSameLine",
+    "v8_start_offset": 51943,
+    "v8_end_offset": 51976,
+    "observed_entry_count": 20
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "unary",
+    "v8_start_offset": 68213,
+    "v8_end_offset": 70958,
+    "observed_entry_count": 29
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "binary",
+    "v8_start_offset": 70963,
+    "v8_end_offset": 72399,
+    "observed_entry_count": 25
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "assignment",
+    "v8_start_offset": 72404,
+    "v8_end_offset": 74672,
+    "observed_entry_count": 25
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "allowInExpression",
+    "v8_start_offset": 75039,
+    "v8_end_offset": 75367,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "expression",
+    "v8_start_offset": 75372,
+    "v8_end_offset": 75774,
+    "observed_entry_count": 16
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "type",
+    "v8_start_offset": 535,
+    "v8_end_offset": 635,
+    "observed_entry_count": 39
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "semicolon",
+    "v8_start_offset": 1621,
+    "v8_end_offset": 1929,
+    "observed_entry_count": 18
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "expressionSemicolon",
+    "v8_start_offset": 1934,
+    "v8_end_offset": 3488,
+    "observed_entry_count": 14
+  },
+  {
+    "file": "convert.ts",
+    "function": "raw",
+    "v8_start_offset": 2245,
+    "v8_end_offset": 2329,
+    "observed_entry_count": 9
+  },
+  {
+    "file": "convert.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 55162,
+    "v8_end_offset": 55211,
+    "observed_entry_count": 20
+  },
+  {
+    "file": "binaryConvert.ts",
+    "function": "<instance_members_initializer>",
+    "v8_start_offset": 175,
+    "v8_end_offset": 216,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "binaryConvert.ts",
+    "function": "BinarySource",
+    "v8_start_offset": 222,
+    "v8_end_offset": 390,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "binaryConvert.ts",
+    "function": "child",
+    "v8_start_offset": 395,
+    "v8_end_offset": 525,
+    "observed_entry_count": 40
+  },
+  {
+    "file": "binaryConvert.ts",
+    "function": "start",
+    "v8_start_offset": 530,
+    "v8_end_offset": 664,
+    "observed_entry_count": 30
+  },
+  {
+    "file": "binaryConvert.ts",
+    "function": "raw",
+    "v8_start_offset": 669,
+    "v8_end_offset": 758,
+    "observed_entry_count": 20
+  },
+  {
+    "file": "binaryConvert.ts",
+    "function": "create",
+    "v8_start_offset": 763,
+    "v8_end_offset": 979,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "binaryConvert.ts",
+    "function": "ordinaryBinary",
+    "v8_start_offset": 989,
+    "v8_end_offset": 2244,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "values.ts",
+    "function": "numberValue",
+    "v8_start_offset": 474,
+    "v8_end_offset": 590,
+    "observed_entry_count": 5
+  },
+  {
+    "file": "values.ts",
+    "function": "goNumber",
+    "v8_start_offset": 1116,
+    "v8_end_offset": 1867,
+    "observed_entry_count": 5
+  },
+  {
+    "file": "literal.ts",
+    "function": "literalFields",
+    "v8_start_offset": 342,
+    "v8_end_offset": 1180,
+    "observed_entry_count": 9
+  },
+  {
+    "file": "strippedText.ts",
+    "function": "trimEndGo",
+    "v8_start_offset": 2249,
+    "v8_end_offset": 2506,
+    "observed_entry_count": 13
+  },
+  {
+    "file": "sourceValidation.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 1109,
+    "v8_end_offset": 1228,
+    "observed_entry_count": 11
+  },
+  {
+    "file": "sourceValidation.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 1748,
+    "v8_end_offset": 1802,
+    "observed_entry_count": 108
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "typeArgumentsAhead",
+    "v8_start_offset": 5699,
+    "v8_end_offset": 8499,
+    "observed_entry_count": 8
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "typeMemberAhead",
+    "v8_start_offset": 14222,
+    "v8_end_offset": 15315,
+    "observed_entry_count": 6
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "typeTokenStart",
+    "v8_start_offset": 15323,
+    "v8_end_offset": 16439,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "modifierAhead",
+    "v8_start_offset": 16447,
+    "v8_end_offset": 18243,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "sameLineAfter",
+    "v8_start_offset": 18251,
+    "v8_end_offset": 18500,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "indexSignatureAhead",
+    "v8_start_offset": 18508,
+    "v8_end_offset": 19436,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "heritageElementAhead",
+    "v8_start_offset": 19830,
+    "v8_end_offset": 21910,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "accessorAhead",
+    "v8_start_offset": 21918,
+    "v8_end_offset": 22318,
+    "observed_entry_count": 5
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "usingDeclarationAhead",
+    "v8_start_offset": 22326,
+    "v8_end_offset": 23090,
+    "observed_entry_count": 12
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "tupleNameAhead",
+    "v8_start_offset": 25437,
+    "v8_end_offset": 25867,
+    "observed_entry_count": 9
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "literalPropertyName",
+    "v8_start_offset": 3116,
+    "v8_end_offset": 3388,
+    "observed_entry_count": 15
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "parameterStart",
+    "v8_start_offset": 3393,
+    "v8_end_offset": 3732,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "typeStart",
+    "v8_start_offset": 3737,
+    "v8_end_offset": 4435,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "expectedToken",
+    "v8_start_offset": 9830,
+    "v8_end_offset": 10056,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "typeArguments",
+    "v8_start_offset": 18452,
+    "v8_end_offset": 19006,
+    "observed_entry_count": 12
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "importType",
+    "v8_start_offset": 21019,
+    "v8_end_offset": 22479,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "mappedAhead",
+    "v8_start_offset": 35014,
+    "v8_end_offset": 35524,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "mappedType",
+    "v8_start_offset": 35529,
+    "v8_end_offset": 37130,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "typeLiteral",
+    "v8_start_offset": 37135,
+    "v8_end_offset": 37445,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "typeMembers",
+    "v8_start_offset": 37450,
+    "v8_end_offset": 41005,
+    "observed_entry_count": 5
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 38811,
+    "v8_end_offset": 38831,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "parameters",
+    "v8_start_offset": 41010,
+    "v8_end_offset": 41251,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 41160,
+    "v8_end_offset": 41180,
+    "observed_entry_count": 17
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "modifiers",
+    "v8_start_offset": 41256,
+    "v8_end_offset": 42390,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "parameter",
+    "v8_start_offset": 42395,
+    "v8_end_offset": 43487,
+    "observed_entry_count": 18
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "bindingElement",
+    "v8_start_offset": 43492,
+    "v8_end_offset": 44345,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "bindingName",
+    "v8_start_offset": 44350,
+    "v8_end_offset": 45027,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 44786,
+    "v8_end_offset": 44817,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "rootAssignment",
+    "v8_start_offset": 45503,
+    "v8_end_offset": 45745,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "arrow",
+    "v8_start_offset": 45997,
+    "v8_end_offset": 47583,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "returnType",
+    "v8_start_offset": 47588,
+    "v8_end_offset": 48754,
+    "observed_entry_count": 16
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "modifiers",
+    "v8_start_offset": 50389,
+    "v8_end_offset": 50489,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "beginList",
+    "v8_start_offset": 50685,
+    "v8_end_offset": 50752,
+    "observed_entry_count": 6
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "endList",
+    "v8_start_offset": 50775,
+    "v8_end_offset": 50840,
+    "observed_entry_count": 6
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "listElement",
+    "v8_start_offset": 50867,
+    "v8_end_offset": 50903,
+    "observed_entry_count": 11
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "listTerminator",
+    "v8_start_offset": 50933,
+    "v8_end_offset": 50972,
+    "observed_entry_count": 14
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "bindingIdentifier",
+    "v8_start_offset": 51280,
+    "v8_end_offset": 51306,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "typeArguments",
+    "v8_start_offset": 51447,
+    "v8_end_offset": 51471,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "parameters",
+    "v8_start_offset": 51552,
+    "v8_end_offset": 51573,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "returnType",
+    "v8_start_offset": 51690,
+    "v8_end_offset": 51711,
+    "observed_entry_count": 5
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "bindingName",
+    "v8_start_offset": 51738,
+    "v8_end_offset": 51760,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "rootAssignment",
+    "v8_start_offset": 51790,
+    "v8_end_offset": 51815,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "peek",
+    "v8_start_offset": 51890,
+    "v8_end_offset": 51905,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "propertyName",
+    "v8_start_offset": 52004,
+    "v8_end_offset": 52027,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "methodBody",
+    "v8_start_offset": 52053,
+    "v8_end_offset": 52150,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "primary",
+    "v8_start_offset": 52173,
+    "v8_end_offset": 52191,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "suffix",
+    "v8_start_offset": 52213,
+    "v8_end_offset": 52262,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "typeLiteral",
+    "v8_start_offset": 52289,
+    "v8_end_offset": 52311,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "getAwait",
+    "v8_start_offset": 52380,
+    "v8_end_offset": 52401,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "setAwait",
+    "v8_start_offset": 52425,
+    "v8_end_offset": 52492,
+    "observed_entry_count": 6
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "getYield",
+    "v8_start_offset": 52516,
+    "v8_end_offset": 52537,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "setYield",
+    "v8_start_offset": 52561,
+    "v8_end_offset": 52628,
+    "observed_entry_count": 6
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "getIn",
+    "v8_start_offset": 52649,
+    "v8_end_offset": 52668,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "setIn",
+    "v8_start_offset": 52689,
+    "v8_end_offset": 52754,
+    "observed_entry_count": 4
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "depth",
+    "v8_start_offset": 52775,
+    "v8_end_offset": 52799,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "block",
+    "v8_start_offset": 52822,
+    "v8_end_offset": 52879,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "semicolon",
+    "v8_start_offset": 52954,
+    "v8_end_offset": 53012,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "peek",
+    "v8_start_offset": 53173,
+    "v8_end_offset": 53927,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "spread",
+    "v8_start_offset": 54371,
+    "v8_end_offset": 54582,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 54767,
+    "v8_end_offset": 54846,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "templatePart",
+    "v8_start_offset": 61118,
+    "v8_end_offset": 61587,
+    "observed_entry_count": 9
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "templateSpanLiteral",
+    "v8_start_offset": 61592,
+    "v8_end_offset": 61964,
+    "observed_entry_count": 5
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "template",
+    "v8_start_offset": 62614,
+    "v8_end_offset": 63267,
+    "observed_entry_count": 4
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "array",
+    "v8_start_offset": 63272,
+    "v8_end_offset": 63936,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 63458,
+    "v8_end_offset": 63618,
+    "observed_entry_count": 6
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "propertyName",
+    "v8_start_offset": 63941,
+    "v8_end_offset": 64592,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "methodBody",
+    "v8_start_offset": 64597,
+    "v8_end_offset": 65918,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "objectProperty",
+    "v8_start_offset": 65923,
+    "v8_end_offset": 67667,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "object",
+    "v8_start_offset": 67672,
+    "v8_end_offset": 68208,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 67862,
+    "v8_end_offset": 67887,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "allowInAssignment",
+    "v8_start_offset": 74677,
+    "v8_end_offset": 75034,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceBinary.ts",
+    "function": "assertionRank",
+    "v8_start_offset": 56,
+    "v8_end_offset": 244,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceBinary.ts",
+    "function": "bindsBeforeAssertion",
+    "v8_start_offset": 252,
+    "v8_end_offset": 489,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "statementList",
+    "v8_start_offset": 640,
+    "v8_end_offset": 1287,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "block",
+    "v8_start_offset": 1292,
+    "v8_end_offset": 1616,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "variableList",
+    "v8_start_offset": 4829,
+    "v8_end_offset": 6277,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "variableDeclaration",
+    "v8_start_offset": 6282,
+    "v8_end_offset": 6905,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "canExportName",
+    "v8_start_offset": 7893,
+    "v8_end_offset": 8052,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "specifiers",
+    "v8_start_offset": 8057,
+    "v8_end_offset": 11205,
+    "observed_entry_count": 6
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "attributes",
+    "v8_start_offset": 11210,
+    "v8_end_offset": 11639,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "attributeBody",
+    "v8_start_offset": 11644,
+    "v8_end_offset": 12765,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "moduleSpecifier",
+    "v8_start_offset": 12770,
+    "v8_end_offset": 12910,
+    "observed_entry_count": 14
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "importDeclaration",
+    "v8_start_offset": 12915,
+    "v8_end_offset": 16537,
+    "observed_entry_count": 12
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "exportDeclaration",
+    "v8_start_offset": 16542,
+    "v8_end_offset": 18833,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "moduleDeclaration",
+    "v8_start_offset": 18838,
+    "v8_end_offset": 20425,
+    "observed_entry_count": 4
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "functionDeclaration",
+    "v8_start_offset": 21108,
+    "v8_end_offset": 23133,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "heritageName",
+    "v8_start_offset": 23138,
+    "v8_end_offset": 23709,
+    "observed_entry_count": 4
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "heritageElement",
+    "v8_start_offset": 23714,
+    "v8_end_offset": 24709,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "heritageClause",
+    "v8_start_offset": 24714,
+    "v8_end_offset": 26034,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "forStatement",
+    "v8_start_offset": 31155,
+    "v8_end_offset": 33146,
+    "observed_entry_count": 8
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "switchStatement",
+    "v8_start_offset": 33151,
+    "v8_end_offset": 34664,
+    "observed_entry_count": 1
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "tryStatement",
+    "v8_start_offset": 34669,
+    "v8_end_offset": 36329,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "enumDeclaration",
+    "v8_start_offset": 36334,
+    "v8_end_offset": 38290,
+    "observed_entry_count": 4
+  },
+  {
+    "file": "sourceStatements.ts",
+    "function": "letDeclaration",
+    "v8_start_offset": 38295,
+    "v8_end_offset": 38519,
+    "observed_entry_count": 21
+  },
+  {
+    "file": "convert.ts",
+    "function": "patternFields",
+    "v8_start_offset": 3541,
+    "v8_end_offset": 3719,
+    "observed_entry_count": 4
+  },
+  {
+    "file": "convert.ts",
+    "function": "annotation",
+    "v8_start_offset": 3724,
+    "v8_end_offset": 3956,
+    "observed_entry_count": 56
+  },
+  {
+    "file": "convert.ts",
+    "function": "bind",
+    "v8_start_offset": 3961,
+    "v8_end_offset": 4322,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "convert.ts",
+    "function": "property",
+    "v8_start_offset": 4327,
+    "v8_end_offset": 5813,
+    "observed_entry_count": 5
+  },
+  {
+    "file": "convert.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 5031,
+    "v8_end_offset": 5074,
+    "observed_entry_count": 8
+  },
+  {
+    "file": "convert.ts",
+    "function": "<anonymous>",
+    "v8_start_offset": 9574,
+    "v8_end_offset": 9596,
+    "observed_entry_count": 23
+  },
+  {
+    "file": "convert.ts",
+    "function": "parameters",
+    "v8_start_offset": 9609,
+    "v8_end_offset": 10124,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "convert.ts",
+    "function": "separated",
+    "v8_start_offset": 10129,
+    "v8_end_offset": 10404,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "convert.ts",
+    "function": "parameter",
+    "v8_start_offset": 10409,
+    "v8_end_offset": 13421,
+    "observed_entry_count": 18
+  },
+  {
+    "file": "convert.ts",
+    "function": "functionNode",
+    "v8_start_offset": 13426,
+    "v8_end_offset": 15697,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "convert.ts",
+    "function": "bindingElement",
+    "v8_start_offset": 15702,
+    "v8_end_offset": 18622,
+    "observed_entry_count": 7
+  },
+  {
+    "file": "convert.ts",
+    "function": "entityExpression",
+    "v8_start_offset": 18994,
+    "v8_end_offset": 19476,
+    "observed_entry_count": 4
+  },
+  {
+    "file": "convert.ts",
+    "function": "heritage",
+    "v8_start_offset": 19481,
+    "v8_end_offset": 20354,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "convert.ts",
+    "function": "member",
+    "v8_start_offset": 23947,
+    "v8_end_offset": 33762,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "convert.ts",
+    "function": "importDeclaration",
+    "v8_start_offset": 33767,
+    "v8_end_offset": 35623,
+    "observed_entry_count": 5
+  },
+  {
+    "file": "convert.ts",
+    "function": "exportDeclaration",
+    "v8_start_offset": 35628,
+    "v8_end_offset": 36746,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "convert.ts",
+    "function": "moduleNode",
+    "v8_start_offset": 36751,
+    "v8_end_offset": 39342,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "convert.ts",
+    "function": "mapped",
+    "v8_start_offset": 39347,
+    "v8_end_offset": 41037,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "convert.ts",
+    "function": "forNode",
+    "v8_start_offset": 41042,
+    "v8_end_offset": 42222,
+    "observed_entry_count": 5
+  },
+  {
+    "file": "convert.ts",
+    "function": "importType",
+    "v8_start_offset": 42295,
+    "v8_end_offset": 46410,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "convert.ts",
+    "function": "template",
+    "v8_start_offset": 84068,
+    "v8_end_offset": 84364,
+    "observed_entry_count": 12
+  },
+  {
+    "file": "values.ts",
+    "function": "templateValue",
+    "v8_start_offset": 878,
+    "v8_end_offset": 1108,
+    "observed_entry_count": 12
+  },
+  {
+    "file": "values.ts",
+    "function": "bigintDecimal",
+    "v8_start_offset": 1875,
+    "v8_end_offset": 2880,
+    "observed_entry_count": 3
+  },
+  {
+    "file": "modifiers.ts",
+    "function": "accessibility",
+    "v8_start_offset": 80,
+    "v8_end_offset": 624,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "templateValidation.ts",
+    "function": "validTemplate",
+    "v8_start_offset": 7,
+    "v8_end_offset": 1123,
+    "observed_entry_count": 12
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "indentableLines",
+    "v8_start_offset": 304,
+    "v8_end_offset": 772,
+    "observed_entry_count": 2
+  },
+  {
+    "file": "postprocess.ts",
+    "function": "logical",
+    "v8_start_offset": 2709,
+    "v8_end_offset": 3035,
+    "observed_entry_count": 10
+  },
+  {
+    "file": "sourceLookahead.ts",
+    "function": "nextAwaitOperand",
+    "v8_start_offset": 19444,
+    "v8_end_offset": 19822,
+    "observed_entry_count": 11
+  },
+  {
+    "file": "sourceParser.ts",
+    "function": "classDeclaration",
+    "v8_start_offset": 53017,
+    "v8_end_offset": 53142,
+    "observed_entry_count": 3
+  }
+]

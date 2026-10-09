@@ -1,0 +1,4 @@
+Before any defense work: df -h /tmp /workspace showed /tmp 8.8G total, 1004M available, and /workspace 32G total, 5.9G available.
+Removed earlier unit scratch and per-mutant directories under /tmp, including stale go-build, lint and typeaware product directories and the earlier artificial disk-fill scratch.
+After cleanup: /tmp 8.8G available, /workspace 5.9G available. The /tmp filesystem cannot hold 15G because total size is 8.8G. No repository or tools directory was deleted.
+Tiny stale permission-test directories owned by another uid remained because chmod/removal was denied and sudo is absent. Their residual storage was negligible (244K observed after cleanup). Current test/build scratch was retained while running.

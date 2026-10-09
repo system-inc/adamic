@@ -1,0 +1,69 @@
+[
+  {
+    "id": "M1",
+    "valid_standalone_native_build": true,
+    "results": {
+      "TestDeepGrammar": "fail",
+      "TestGeneratedAgreement": "fail",
+      "TestDecoratedExports": "fail",
+      "TestRecoveredExpressions": "fail",
+      "TestUnattachedDecorator": "not-reached"
+    },
+    "kills": [
+      "TestDeepGrammar",
+      "TestGeneratedAgreement",
+      "TestDecoratedExports",
+      "TestRecoveredExpressions"
+    ],
+    "unique": []
+  },
+  {
+    "id": "M2",
+    "valid_standalone_native_build": true,
+    "results": {
+      "TestDeepGrammar": "fail",
+      "TestGeneratedAgreement": "fail",
+      "TestDecoratedExports": "not-reached",
+      "TestRecoveredExpressions": "not-reached",
+      "TestUnattachedDecorator": "not-reached"
+    },
+    "kills": [
+      "TestDeepGrammar",
+      "TestGeneratedAgreement"
+    ],
+    "unique": []
+  },
+  {
+    "id": "M3",
+    "valid_standalone_native_build": true,
+    "results": {
+      "TestDeepGrammar": "pass",
+      "TestGeneratedAgreement": "fail",
+      "TestDecoratedExports": "fail",
+      "TestRecoveredExpressions": "pass",
+      "TestUnattachedDecorator": "not-reached"
+    },
+    "kills": [
+      "TestGeneratedAgreement",
+      "TestDecoratedExports"
+    ],
+    "unique": []
+  },
+  {
+    "id": "M4",
+    "valid_standalone_native_build": true,
+    "results": {
+      "TestDeepGrammar": "pass",
+      "TestGeneratedAgreement": "pass",
+      "TestDecoratedExports": "pass",
+      "TestRecoveredExpressions": "pass",
+      "TestUnattachedDecorator": "fail"
+    },
+    "kills": [
+      "TestUnattachedDecorator"
+    ],
+    "unique": [
+      "TestUnattachedDecorator"
+    ]
+  }
+]

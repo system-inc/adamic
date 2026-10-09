@@ -1,0 +1,62 @@
+[
+  {
+    "test": "TestDeepGrammar",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestGeneratedAgreement",
+    "defense": "defended",
+    "bounded": true,
+    "unique_mutant": "D1 stage1/cohere/estree/convert.ts:1341",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/estree/convert.ts:1341",
+        "change": "Disable iterative binary conversion, retaining recursive conversion for short inputs",
+        "rows_failed": [
+          "TestDeepGrammar"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/estree-deep-defense/library ADAMIC_NATIVE_SPLIT=1 ADAMIC_ESTREE_BENCHMARK=1 ADAMIC_BUILD_CACHE_DIR=/tmp/estree-deep-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestDeepGrammar|TestGeneratedAgreement)$' > D1-0.log 2>&1; deep_test.go:36: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts --manifest /tmp/adamic-gate/TestDeepGrammar2649751525/001/manifest]: exit status 70"
+  },
+  {
+    "test": "TestDecoratedExports",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestGeneratedAgreement",
+    "defense": "defended",
+    "bounded": true,
+    "unique_mutant": "D2 stage1/cohere/estree/convert.ts:216",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/estree/convert.ts:216",
+        "change": "Stop filtering decorators when locating the export keyword",
+        "rows_failed": [
+          "TestDecoratedExports"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/estree-deep-defense/library ADAMIC_NATIVE_SPLIT=1 ADAMIC_ESTREE_BENCHMARK=1 ADAMIC_BUILD_CACHE_DIR=/tmp/estree-deep-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestDecoratedExports|TestRecoveredExpressions)$' > D2-1.log 2>&1; exports_test.go:34: stage1/cohere/estree/exports_test.go:export:source-b35de26707cb335e6d989630545f8f259014c762119ec65fa152254e430cac3e Node: line 3: Go \"1 ExportNamedDeclaration 3 20 0 0 0 0 20 0\", port \"1 ClassDeclaration 0 20 0 0 0 0 20 0\""
+  },
+  {
+    "test": "TestRecoveredExpressions",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestDecoratedExports",
+    "defense": "defended",
+    "bounded": true,
+    "unique_mutant": "D3 stage1/cohere/estree/convert.ts:580",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/estree/convert.ts:580",
+        "change": "Change recovered class-expression node-kind constant to ClassDeclaration",
+        "rows_failed": [
+          "TestRecoveredExpressions"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_ESTREE_LIBRARY=/tmp/estree-deep-defense/library ADAMIC_NATIVE_SPLIT=1 ADAMIC_ESTREE_BENCHMARK=1 ADAMIC_BUILD_CACHE_DIR=/tmp/estree-deep-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^(TestDecoratedExports|TestRecoveredExpressions)$' > D3-1.log 2>&1; expressions_test.go:21: Node: line 14: Go \"3 ClassExpression 10 21 0 0 0 10 21 0\", port \"3 ClassDeclaration 10 21 0 0 0 10 21 0\""
+  }
+]

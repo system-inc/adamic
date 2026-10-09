@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T15:53:24.55356426Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T15:53:24.561936859Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement"}
+{"Time":"2026-10-09T15:53:24.561997035Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"=== RUN   TestGeneratedAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:53:47.211387924Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"    estree_test.go:195: 78 generated files: 120355 identical bytes on Go, source Node, sanitized native, emitted JS\n"}
+{"Time":"2026-10-09T15:53:47.213646062Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"--- PASS: TestGeneratedAgreement (22.65s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:53:47.213656098Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Elapsed":22.65}
+{"Time":"2026-10-09T15:53:47.213832513Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:53:47.222071635Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"coverage: 30.0% of statements in github.com/system-inc/adamic/internal/lower, github.com/system-inc/adamic/internal/native\n"}
+{"Time":"2026-10-09T15:53:47.243598184Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t22.687s\tcoverage: 30.0% of statements in github.com/system-inc/adamic/internal/lower, github.com/system-inc/adamic/internal/native\n"}
+{"Time":"2026-10-09T15:53:47.243633125Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":22.69}

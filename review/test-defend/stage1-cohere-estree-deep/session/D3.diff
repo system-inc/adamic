@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/convert.ts
++++ b/stage1/cohere/estree/convert.ts
+@@ -577,7 +577,7 @@
+                 ? 'TSInterfaceDeclaration'
+                 : this.kind(id) === 'ClassDeclaration'
+                   ? 'ClassDeclaration'
+-                  : 'ClassExpression',
++                  : 'ClassDeclaration',
+         );
+         if(!interface_) {
+             this.set(result, 'abstract', boolValue(this.hasModifier(id, 'AbstractKeyword')));

@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T16:08:10.398514382Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T16:08:10.406888979Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar"}
+{"Time":"2026-10-09T16:08:10.406962875Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"=== RUN   TestDeepGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:08:53.142057068Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"    deep_test.go:41: three 4096-operand cases, 2551820 identical bytes in all builds\n"}
+{"Time":"2026-10-09T16:08:53.143949799Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"--- PASS: TestDeepGrammar (42.74s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:08:53.143998287Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Elapsed":42.74}
+{"Time":"2026-10-09T16:08:53.144023521Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement"}
+{"Time":"2026-10-09T16:08:53.144025605Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"=== RUN   TestGeneratedAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:09:14.874741985Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"    estree_test.go:195: 78 generated files: 120355 identical bytes on Go, source Node, sanitized native, emitted JS\n"}
+{"Time":"2026-10-09T16:09:14.87693551Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"--- PASS: TestGeneratedAgreement (21.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:09:14.876976527Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Elapsed":21.73}
+{"Time":"2026-10-09T16:09:14.876985899Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:09:14.880038169Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t64.481s\n"}
+{"Time":"2026-10-09T16:09:14.880081604Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":64.482}

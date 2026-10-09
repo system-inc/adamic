@@ -1,0 +1,122 @@
+[
+  {
+    "log": "M3-TestDecoratedExports.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:26: build lowered/sanitized/emitted products: 0.249922s"
+  },
+  {
+    "log": "P1-TestDecoratedExports.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:26: build lowered/sanitized/emitted products: 0.301628s"
+  },
+  {
+    "log": "W1-TestDecoratedExportMutant.log",
+    "test": "TestDecoratedExportMutant",
+    "output": "exports_test.go:62: build lowered/sanitized/emitted products: 67.932941s"
+  },
+  {
+    "log": "timing-TestDecoratedExportMutant-1.log",
+    "test": "TestDecoratedExportMutant",
+    "output": "exports_test.go:62: build lowered/sanitized/emitted products: 62.635061s"
+  },
+  {
+    "log": "timing-TestDecoratedExports-2.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:26: build lowered/sanitized/emitted products: 0.169335s"
+  },
+  {
+    "log": "selector-control.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:26: build lowered/sanitized/emitted products: 64.285297s"
+  },
+  {
+    "log": "M4-TestDecoratedExports.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:26: build lowered/sanitized/emitted products: 0.196104s"
+  },
+  {
+    "log": "timing-TestDecoratedExports-3.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:26: build lowered/sanitized/emitted products: 0.167305s"
+  },
+  {
+    "log": "timing-TestUnattachedDecoratorControl-1.log",
+    "test": "TestUnattachedDecoratorControl",
+    "output": "recovery_cache_test.go:231: BUILD estree-oracle-answer cold wall=0.006104s"
+  },
+  {
+    "log": "timing-TestUnattachedDecoratorControl-1.log",
+    "test": "TestUnattachedDecoratorControl",
+    "output": "recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=28.507171s"
+  },
+  {
+    "log": "timing-TestUnattachedDecoratorControl-1.log",
+    "test": "TestUnattachedDecoratorControl",
+    "output": "recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=40.004967s"
+  },
+  {
+    "log": "timing-TestDecoratedExportMutant-2.log",
+    "test": "TestDecoratedExportMutant",
+    "output": "exports_test.go:62: build lowered/sanitized/emitted products: 0.176991s"
+  },
+  {
+    "log": "timing-TestDecoratedExportMutant-3.log",
+    "test": "TestDecoratedExportMutant",
+    "output": "exports_test.go:62: build lowered/sanitized/emitted products: 0.159494s"
+  },
+  {
+    "log": "W2-TestUnattachedDecoratorControl.log",
+    "test": "TestUnattachedDecoratorControl",
+    "output": "recovery_cache_test.go:231: BUILD estree-oracle-answer cold wall=0.004430s"
+  },
+  {
+    "log": "timing-TestDecoratedExports-1.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:26: build lowered/sanitized/emitted products: 73.373930s"
+  },
+  {
+    "log": "timing-TestRecoveredExpressionMutant-1.log",
+    "test": "TestRecoveredExpressionMutant",
+    "output": "recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=29.881253s"
+  },
+  {
+    "log": "timing-TestRecoveredExpressionMutant-1.log",
+    "test": "TestRecoveredExpressionMutant",
+    "output": "recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=41.067462s"
+  },
+  {
+    "log": "M1-TestDecoratedExports.log",
+    "test": "TestDecoratedExports",
+    "output": "exports_test.go:26: build lowered/sanitized/emitted products: 0.247169s"
+  },
+  {
+    "log": "M1-TestRecoveredExpressions.log",
+    "test": "TestRecoveredExpressions",
+    "output": "recovery_cache_test.go:231: BUILD estree-oracle-answer cold wall=0.007024s"
+  },
+  {
+    "log": "M1-TestRecoveredExpressions.log",
+    "test": "TestRecoveredExpressions",
+    "output": "recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=31.248987s"
+  },
+  {
+    "log": "M1-TestRecoveredExpressions.log",
+    "test": "TestRecoveredExpressions",
+    "output": "recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=42.929547s"
+  },
+  {
+    "log": "timing-TestRecoveredExpressions-1.log",
+    "test": "TestRecoveredExpressions",
+    "output": "recovery_cache_test.go:231: BUILD estree-oracle-answer cold wall=0.006713s"
+  },
+  {
+    "log": "timing-TestRecoveredExpressions-1.log",
+    "test": "TestRecoveredExpressions",
+    "output": "recovery_shards_test.go:46: BUILD estree-lowered-program cold wall=29.611147s"
+  },
+  {
+    "log": "timing-TestRecoveredExpressions-1.log",
+    "test": "TestRecoveredExpressions",
+    "output": "recovery_shards_test.go:46: BUILD estree-sanitized-native cold wall=43.054331s"
+  }
+]

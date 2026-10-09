@@ -1,0 +1,26 @@
+{
+  "id": "D3",
+  "group": 5,
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^(TestThroughput)$"
+  ],
+  "cache": "/tmp/estree-deep-defense/cache/D3",
+  "exit": 0,
+  "wall": 27.433252660001017,
+  "cooked": false,
+  "statuses": {
+    "TestThroughput": "pass"
+  },
+  "errors": [],
+  "log": "D3-5.log"
+}

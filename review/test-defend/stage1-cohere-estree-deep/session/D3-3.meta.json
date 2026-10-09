@@ -1,0 +1,27 @@
+{
+  "id": "D3",
+  "group": 3,
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^(TestAcceptanceGrammar|TestSyntaxGrammar)$"
+  ],
+  "cache": "/tmp/estree-deep-defense/cache/D3",
+  "exit": 0,
+  "wall": 44.87588780400256,
+  "cooked": false,
+  "statuses": {
+    "TestAcceptanceGrammar": "pass",
+    "TestSyntaxGrammar": "pass"
+  },
+  "errors": [],
+  "log": "D3-3.log"
+}

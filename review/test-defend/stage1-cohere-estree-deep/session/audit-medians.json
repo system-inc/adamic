@@ -1,0 +1,84 @@
+{
+  "medians": {
+    "TestDeepGrammar": 69.442,
+    "TestGeneratedAgreement": 63.504,
+    "TestOriginalLibraries": 1.843,
+    "TestDecoratedExports": 2.64,
+    "TestDecoratedExportsPlantedDisagreement": 0.03,
+    "TestDecoratedExportMutant": 2.191,
+    "TestDecoratedExportMutantPlantedSurvivor": 0.026,
+    "TestDecoratedExportLibraries": 1.927,
+    "TestRecoveredExpressions": 1.926,
+    "TestRecoveredExpressionMutant": 1.674,
+    "TestUnattachedDecorator": 1.1,
+    "TestUnattachedDecoratorControl": 1.42,
+    "TestOriginalLibraries family": 2.072
+  },
+  "three_samples": {
+    "TestDeepGrammar": [
+      71.534,
+      69.442,
+      69.247
+    ],
+    "TestGeneratedAgreement": [
+      63.504,
+      65.425,
+      63.228
+    ],
+    "TestOriginalLibraries": [
+      1.843,
+      1.798,
+      1.854
+    ],
+    "TestDecoratedExports": [
+      75.829,
+      2.64,
+      2.319
+    ],
+    "TestDecoratedExportsPlantedDisagreement": [
+      0.024,
+      0.044,
+      0.03
+    ],
+    "TestDecoratedExportMutant": [
+      64.838,
+      2.181,
+      2.191
+    ],
+    "TestDecoratedExportMutantPlantedSurvivor": [
+      0.037,
+      0.024,
+      0.026
+    ],
+    "TestDecoratedExportLibraries": [
+      1.606,
+      1.927,
+      1.959
+    ],
+    "TestRecoveredExpressions": [
+      74.9,
+      1.618,
+      1.926
+    ],
+    "TestRecoveredExpressionMutant": [
+      72.75,
+      1.674,
+      1.516
+    ],
+    "TestUnattachedDecorator": [
+      1.126,
+      1.087,
+      1.1
+    ],
+    "TestUnattachedDecoratorControl": [
+      69.957,
+      1.386,
+      1.42
+    ],
+    "TestOriginalLibraries family": [
+      2.049,
+      2.883,
+      2.072
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "D2",
+  "group": 1,
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^(TestDecoratedExports|TestRecoveredExpressions)$"
+  ],
+  "cache": "/tmp/estree-deep-defense/cache/D2",
+  "exit": 1,
+  "wall": 68.69883678500264,
+  "cooked": false,
+  "statuses": {
+    "TestDecoratedExports": "fail",
+    "TestRecoveredExpressions": "pass"
+  },
+  "errors": [
+    {
+      "test": "TestDecoratedExports/shard-020",
+      "line": "exports_test.go:34: stage1/cohere/estree/exports_test.go:export:source-b35de26707cb335e6d989630545f8f259014c762119ec65fa152254e430cac3e Node: line 3: Go \"1 ExportNamedDeclaration 3 20 0 0 0 0 20 0\", port \"1 ClassDeclaration 0 20 0 0 0 0 20 0\""
+    },
+    {
+      "test": "TestDecoratedExports/shard-009",
+      "line": "exports_test.go:34: stage1/cohere/estree/exports_test.go:export:source-077658c3c7c53cf94a025164758bd4b02ac60dca27b566c0ba2ca2a7d0db9189 Node: line 3: Go \"1 ExportDefaultDeclaration 12 35 0 0 0 9 35 0\", port \"1 ClassDeclaration 9 35 0 0 0 9 35 0\""
+    },
+    {
+      "test": "TestDecoratedExports/shard-002",
+      "line": "exports_test.go:34: stage1/cohere/estree/exports_test.go:export:source-76710bcbab44ce4b799cae210ad896f1086115ab253caea159c7c662325372fb Node: line 3: Go \"1 ExportDefaultDeclaration 3 28 0 0 0 0 28 0\", port \"1 ClassDeclaration 0 28 0 0 0 0 28 0\""
+    }
+  ],
+  "log": "D2-1.log"
+}

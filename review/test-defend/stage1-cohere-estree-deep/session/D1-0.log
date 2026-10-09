@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T16:02:50.996794328Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T16:02:51.004887164Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar"}
+{"Time":"2026-10-09T16:02:51.004950479Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"=== RUN   TestDeepGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:03:14.571573345Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"    deep_test.go:36: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts --manifest /tmp/adamic-gate/TestDeepGrammar2649751525/001/manifest]: exit status 70\n","OutputType":"error"}
+{"Time":"2026-10-09T16:03:14.57163567Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"        adamic: panic: RangeError: Maximum call stack size exceeded\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T16:03:14.573232031Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Output":"--- FAIL: TestDeepGrammar (23.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:03:14.57323845Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepGrammar","Elapsed":23.57}
+{"Time":"2026-10-09T16:03:14.573262652Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement"}
+{"Time":"2026-10-09T16:03:14.573265523Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"=== RUN   TestGeneratedAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:03:36.427461373Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"    estree_test.go:195: 78 generated files: 120355 identical bytes on Go, source Node, sanitized native, emitted JS\n"}
+{"Time":"2026-10-09T16:03:36.42975148Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"--- PASS: TestGeneratedAgreement (21.86s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:03:36.42977881Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Elapsed":21.86}
+{"Time":"2026-10-09T16:03:36.429790156Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:03:36.432836081Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t45.436s\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:03:36.432867013Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":45.436}

@@ -1,0 +1,32 @@
+{
+  "id": "D1",
+  "group": 0,
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^(TestDeepGrammar|TestGeneratedAgreement)$"
+  ],
+  "cache": "/tmp/estree-deep-defense/cache/D1",
+  "exit": 1,
+  "wall": 47.08896020999964,
+  "cooked": false,
+  "statuses": {
+    "TestDeepGrammar": "fail",
+    "TestGeneratedAgreement": "pass"
+  },
+  "errors": [
+    {
+      "test": "TestDeepGrammar",
+      "line": "deep_test.go:36: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts --manifest /tmp/adamic-gate/TestDeepGrammar2649751525/001/manifest]: exit status 70"
+    }
+  ],
+  "log": "D1-0.log"
+}

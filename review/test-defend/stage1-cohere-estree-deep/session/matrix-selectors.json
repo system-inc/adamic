@@ -1,0 +1,34 @@
+[
+  [
+    "TestDeepGrammar",
+    "TestGeneratedAgreement"
+  ],
+  [
+    "TestDecoratedExports",
+    "TestRecoveredExpressions"
+  ],
+  [
+    "TestRecoveredGrammar",
+    "TestUnattachedDecorator",
+    "TestDecoratedExportMutant",
+    "TestRecoveredExpressionMutant"
+  ],
+  [
+    "TestAcceptanceGrammar",
+    "TestSyntaxGrammar"
+  ],
+  [
+    "TestJSXAgreement",
+    "TestJSXAgreement_[0-9]+",
+    "TestBoundedPortParser_[0-9]+"
+  ],
+  [
+    "TestThroughput"
+  ],
+  [
+    "TestScalarEdges_[0-9]+",
+    "TestCookedSurrogates",
+    "TestOriginalLibraries",
+    "TestDecoratedExportLibraries"
+  ]
+]

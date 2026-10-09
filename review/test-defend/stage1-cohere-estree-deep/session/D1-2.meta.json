@@ -1,0 +1,29 @@
+{
+  "id": "D1",
+  "group": 2,
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^(TestRecoveredGrammar|TestUnattachedDecorator|TestDecoratedExportMutant|TestRecoveredExpressionMutant)$"
+  ],
+  "cache": "/tmp/estree-deep-defense/cache/D1",
+  "exit": 0,
+  "wall": 70.92784137200215,
+  "cooked": false,
+  "statuses": {
+    "TestDecoratedExportMutant": "pass",
+    "TestRecoveredExpressionMutant": "pass",
+    "TestUnattachedDecorator": "pass",
+    "TestRecoveredGrammar": "pass"
+  },
+  "errors": [],
+  "log": "D1-2.log"
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "test": "TestDeepGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=/workspace/adamic/review/test-defend/stage1-cohere-estree-deep/session/TestDeepGrammar.cover",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestDeepGrammar$"
+    ],
+    "wall": 31.018443128999934,
+    "exit": 0
+  },
+  {
+    "test": "TestGeneratedAgreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=/workspace/adamic/review/test-defend/stage1-cohere-estree-deep/session/TestGeneratedAgreement.cover",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestGeneratedAgreement$"
+    ],
+    "wall": 24.39351478000026,
+    "exit": 0
+  },
+  {
+    "test": "TestDecoratedExports",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=/workspace/adamic/review/test-defend/stage1-cohere-estree-deep/session/TestDecoratedExports.cover",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestDecoratedExports$"
+    ],
+    "wall": 26.731014380999113,
+    "exit": 0
+  },
+  {
+    "test": "TestRecoveredExpressions",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native",
+      "-coverprofile=/workspace/adamic/review/test-defend/stage1-cohere-estree-deep/session/TestRecoveredExpressions.cover",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredExpressions$"
+    ],
+    "wall": 48.924681669002894,
+    "exit": 0
+  }
+]

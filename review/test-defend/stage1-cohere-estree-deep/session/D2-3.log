@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T16:11:36.80395518Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T16:11:36.812694725Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar"}
+{"Time":"2026-10-09T16:11:36.812760209Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"=== RUN   TestAcceptanceGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:11:58.936257367Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"    acceptance_test.go:27: 11 acceptance grammar cases, 8800 identical canonical bytes\n"}
+{"Time":"2026-10-09T16:11:58.937922978Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"--- PASS: TestAcceptanceGrammar (22.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:11:58.937933604Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Elapsed":22.13}
+{"Time":"2026-10-09T16:11:58.938028023Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar"}
+{"Time":"2026-10-09T16:11:58.938032855Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"=== RUN   TestSyntaxGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:12:21.058542612Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"    syntax_test.go:35: 9 syntax cases, 15547 identical canonical bytes\n"}
+{"Time":"2026-10-09T16:12:21.059849724Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"--- PASS: TestSyntaxGrammar (22.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:12:21.059877664Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Elapsed":22.12}
+{"Time":"2026-10-09T16:12:21.059985368Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:12:21.062882897Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t44.258s\n"}
+{"Time":"2026-10-09T16:12:21.062924856Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":44.259}
