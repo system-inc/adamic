@@ -24,7 +24,7 @@ globals. Source Node supplies the observations independently of lowered IR.
 | a7bb84640d1e7eaac0ea18bceeffce8f2baba228 | 56ee1ddc3e209b9323dd208ebd7957c6c1a4533c | emit_values.go retains main's absent helper and adds zeroInitializer. counts.md is regenerated on Linux, preserving every main row. Emitter and header merge automatically. |
 | 949090876a7a953261c1d45f001f92c64c6c27d0 | 230a996db7b1bd5ee31f6b882e1b6c57e32d0d6d | Applied without conflicts; retains the complete UTF-8 fixture. |
 
-Main advanced to 66fdf48082957d6bb1688393118f28bf5a8335a8 during this work. That range changes
+Main advanced to 333fbf339ec75406f0c17bd79ca10b2d28e4d28b during this work. That range changes
 stage1 tests only, with no portability-file overlap. The branch merges it without rebasing and
 reruns its focused proofs. No other worker topic branch is merged. The numbered roadmap step was
 not supplied for this unit; it lands the portable-C work tracked by the two named tasks.
@@ -45,13 +45,13 @@ No leaf approaches the 60-second limit.
 | Leaf | First successful run, seconds | Final focused run, seconds |
 |---|---:|---:|
 | TestConstantPortabilityClang | 0.05 | 0.04 |
-| TestConstantPortabilityGCC | 0.03 | 0.04 |
-| TestLongStringBytesMutant | 0.29 | 0.42 |
+| TestConstantPortabilityGCC | 0.03 | 0.03 |
+| TestLongStringBytesMutant | 0.29 | 0.29 |
 | TestStaticNumberInitializerMutant | 0.02 | 0.04 |
-| TestStaticBooleanInitializerMutant | 0.03 | 0.04 |
-| TestLongUnicodeLiteralByteCoverage | 0.07 | 0.07 |
-| TestLongUnicodePortabilityClang | 2.98 | 0.43 |
-| TestLongUnicodePortabilityGCC | 4.16 | 0.46 |
+| TestStaticBooleanInitializerMutant | 0.03 | 0.03 |
+| TestLongUnicodeLiteralByteCoverage | 0.07 | 0.11 |
+| TestLongUnicodePortabilityClang | 2.98 | 0.58 |
+| TestLongUnicodePortabilityGCC | 4.16 | 0.49 |
 | Standard oracle leaf: long_unicode_literals.a | 0.54 | 0.54 |
 
 Two mutant families have three checks. Restoring plain char in the emitted 4,200-byte Unicode
@@ -70,9 +70,9 @@ export GOPROXY='https://proxy.golang.org|direct'
 bash cloud/setup.sh
 source /workspace/adamic-tools/env.sh
 go test ./internal/native -run 'TestConstantPortability|TestLongStringBytesMutant|TestStatic.*InitializerMutant|TestLongUnicode' -count=1 -v -timeout 5m
-  pass, 0.514s
+  pass on the merged tip, 0.591s
 ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/long_unicode_literals.a$' -count=1 -v -timeout 5m
-  pass, 0.575s; native misses=3, Node misses=2
+  pass on the merged tip, 0.589s; native misses=3, Node misses=2
 go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 15m -args -update-counts
   pass, 48.925s
 go vet ./internal/native ./internal/oracle
@@ -102,7 +102,7 @@ After committing, run from the repository root:
 git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
 ```
 
-The resulting output is recorded in the final integration reply and evidence archive. GCC is
+The committed merge passed: `lane checks 1.6 s: gofmt and tools on 5 Go files, t.Parallel on 2 test packages; vet 2 packages`. The final committed tip is checked again before pushing. GCC is
 installed on this box and both GCC leaves actually ran. The upstream tools manifest does not yet
 declare GCC; the lane's literal-command scan accepts the original branch's parameterized compiler
 harness. GCC provisioning on other gate boxes remains the devtools owner's responsibility.
