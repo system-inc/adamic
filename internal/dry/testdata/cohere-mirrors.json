@@ -1,0 +1,211 @@
+[
+  {
+    "path": "internal/flow/effects.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/effects.go",
+    "decision": "delete",
+    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
+    "retiring_task": "#2kb2kje"
+  },
+  {
+    "path": "internal/flow/flow.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/high_level_intermediate_representation.go",
+    "decision": "delete",
+    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
+    "retiring_task": "#2kb2kje"
+  },
+  {
+    "path": "internal/flow/graph.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/graph.go",
+    "decision": "delete",
+    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
+    "retiring_task": "#2kb2kje"
+  },
+  {
+    "path": "internal/flow/ranges.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/ranges.go",
+    "decision": "delete",
+    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
+    "retiring_task": "#2kb2kje"
+  },
+  {
+    "path": "internal/flow/ssa.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/ssa.go",
+    "decision": "delete",
+    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
+    "retiring_task": "#2kb2kje"
+  },
+  {
+    "path": "internal/flow/ssa_eliminate.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/ssa_eliminate.go",
+    "decision": "delete",
+    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
+    "retiring_task": "#2kb2kje"
+  },
+  {
+    "path": "internal/flow/ssa_verify.go",
+    "kind": "lift",
+    "counterpart": "cohere/internal/lint/ecmascript/high_level_intermediate_representation/ssa_verify.go",
+    "decision": "delete",
+    "reason": "Existing lift remains pending until flow consumes the ported IR by reference; no new copying is authorized.",
+    "retiring_task": "#2kb2kje"
+  },
+  {
+    "path": "internal/lower/cast_proof.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-unchecked-cast",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_unchecked_cast.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#xjdce2d"
+  },
+  {
+    "path": "internal/lower/class_generic_calls.go",
+    "kind": "rule",
+    "rule_id": "adamic/nominal-class",
+    "counterpart": "cohere/internal/lint/rules/adamic/nominal_class.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
+    "path": "internal/lower/class_inheritance.go",
+    "kind": "rule",
+    "rule_id": "adamic/invariant-mutable",
+    "counterpart": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
+    "path": "internal/lower/class_inheritance.go",
+    "kind": "rule",
+    "rule_id": "adamic/nominal-class",
+    "counterpart": "cohere/internal/lint/rules/adamic/nominal_class.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
+    "path": "internal/lower/generic.go",
+    "kind": "rule",
+    "rule_id": "adamic/invariant-mutable",
+    "counterpart": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
+    "path": "internal/lower/invariance.go",
+    "kind": "rule",
+    "rule_id": "adamic/invariant-mutable",
+    "counterpart": "cohere/internal/lint/rules/adamic/invariant_mutable.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
+    "path": "internal/lower/object.go",
+    "kind": "rule",
+    "rule_id": "adamic/single-spread",
+    "counterpart": "cohere/internal/lint/rules/adamic/single_spread.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#xjdce2d"
+  },
+  {
+    "path": "internal/lower/optional_widening.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-optional-widening",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_optional_widening.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
+    "path": "internal/lower/predicates.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-type-predicate",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_type_predicate.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#xjdce2d"
+  },
+  {
+    "path": "internal/lower/predicates_proof.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-type-predicate",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_type_predicate.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#xjdce2d"
+  },
+  {
+    "path": "internal/lower/proven_relations.go",
+    "kind": "rule",
+    "rule_id": "adamic/no-optional-widening",
+    "counterpart": "cohere/internal/lint/rules/adamic/no_optional_widening.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
+    "path": "internal/lower/proven_relations.go",
+    "kind": "rule",
+    "rule_id": "adamic/nominal-class",
+    "counterpart": "cohere/internal/lint/rules/adamic/nominal_class.go",
+    "decision": "delete",
+    "reason": "Local soundness judgment duplicates cohere ownership. Replace the judgment by reference while preserving compiler lowering and runtime checks.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
+    "path": "internal/lower/refusals.go",
+    "kind": "rule",
+    "rule_id": "@typescript-eslint/unbound-method",
+    "counterpart": "cohere/internal/lint/rules/typescript/unbound_method.go",
+    "decision": "delete",
+    "reason": "Local detached-method refusal duplicates the upstream judgment; consume its finding by reference.",
+    "retiring_task": "#xjdce2d"
+  },
+  {
+    "path": "internal/lower/load_time_reads.go",
+    "kind": "rule",
+    "rule_id": "nexus/correctness-no-import-cycle-load-time-read",
+    "counterpart": "cohere/internal/lint/rules/nexus/correctness_no_import_cycle_load_time_read.go",
+    "decision": "keep",
+    "reason": "This is a by-reference rule_runner consumer, recorded to distinguish the rule ID from a local implementation. Adamic separately proves ESM execution order and emits runtime dead-zone checks.",
+    "retiring_task": "#xjdce2d"
+  },
+  {
+    "path": "internal/lower/invariance.go",
+    "kind": "rule",
+    "rule_id": "@typescript-eslint/method-signature-style",
+    "counterpart": "cohere/internal/lint/rules/typescript/method_signature_style.go",
+    "decision": "delete",
+    "reason": "Existing compiler refusal uses the upstream rule judgment; replace it by reference while retaining lowering obligations.",
+    "retiring_task": "#brf7xmj"
+  },
+  {
+    "path": "internal/lower/object.go",
+    "kind": "rule",
+    "rule_id": "@typescript-eslint/unbound-method",
+    "counterpart": "cohere/internal/lint/rules/typescript/unbound_method.go",
+    "decision": "delete",
+    "reason": "Existing compiler refusal uses the upstream rule judgment; replace it by reference while retaining lowering obligations.",
+    "retiring_task": "#xjdce2d"
+  },
+  {
+    "path": "internal/lower/prototype.go",
+    "kind": "rule",
+    "rule_id": "@typescript-eslint/unbound-method",
+    "counterpart": "cohere/internal/lint/rules/typescript/unbound_method.go",
+    "decision": "delete",
+    "reason": "Existing compiler refusal uses the upstream rule judgment; replace it by reference while retaining lowering obligations.",
+    "retiring_task": "#xjdce2d"
+  }
+]
