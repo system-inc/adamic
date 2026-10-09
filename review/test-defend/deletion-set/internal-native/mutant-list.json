@@ -1,0 +1,658 @@
+[
+  {
+    "replay": "R001",
+    "mutant": "M15",
+    "file_line": "internal/native/emit_objects.go:344",
+    "file_lines": [
+      "internal/native/emit_objects.go:344"
+    ],
+    "branch": "test-audit/internal-native-arguments_length",
+    "branch_sha": "9c3768f3671be68359aa528427cf42fbac44b4f4",
+    "source_diff": "review/test-audit/internal-native-arguments_length/prior-b5832385/M15.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R001-M15.diff",
+    "sha256": "9bf684bf4f774b738618a3c35e91e91bca135f7089d4bde6311821b87b596485",
+    "evidence_files": [
+      "review/test-audit/internal-native-arguments_length/prior-b5832385/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestParserHasNoUnusedOptionalMethodThunks"
+    ],
+    "other_rows_failed": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R002",
+    "mutant": "M01",
+    "file_line": "internal/native/runtime/number.c:20",
+    "file_lines": [
+      "internal/native/runtime/number.c:20"
+    ],
+    "branch": "test-audit/internal-native-number",
+    "branch_sha": "dc010e2f9548916afe914ec4b6d7ea7eefad8d1f",
+    "source_diff": "review/test-audit/internal-native-number/diffs/M01.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R002-M01.diff",
+    "sha256": "d8804f34503b762413fe98fccd7550ba1a7f9aecec16cc3f1724a84a9b7a04a6",
+    "evidence_files": [
+      "review/test-audit/internal-native-number/matrix.json",
+      "review/test-audit/internal-native-number/results.json"
+    ],
+    "candidates_failed": [
+      "TestNumbersFormatExactlyAsJavaScriptDoes"
+    ],
+    "other_rows_failed": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R003",
+    "mutant": "M02",
+    "file_line": "internal/native/runtime/number.c:75",
+    "file_lines": [
+      "internal/native/runtime/number.c:75"
+    ],
+    "branch": "test-audit/internal-native-number",
+    "branch_sha": "dc010e2f9548916afe914ec4b6d7ea7eefad8d1f",
+    "source_diff": "review/test-audit/internal-native-number/diffs/M02.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R003-M02.diff",
+    "sha256": "67c592673ea8aeff520115612b21893e0e1ff12e387bf9d9eb471d8b139a127a",
+    "evidence_files": [
+      "review/test-audit/internal-native-number/matrix.json",
+      "review/test-audit/internal-native-number/results.json"
+    ],
+    "candidates_failed": [
+      "TestNumbersFormatExactlyAsJavaScriptDoes"
+    ],
+    "other_rows_failed": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestPowersOfTwoFormatAsJavaScriptDoes"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R004",
+    "mutant": "M03",
+    "file_line": "internal/native/runtime/number.c:93",
+    "file_lines": [
+      "internal/native/runtime/number.c:93"
+    ],
+    "branch": "test-audit/internal-native-number",
+    "branch_sha": "dc010e2f9548916afe914ec4b6d7ea7eefad8d1f",
+    "source_diff": "review/test-audit/internal-native-number/diffs/M03.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R004-M03.diff",
+    "sha256": "34fa28d40318e64f01619b3c02e7e3f8f34526541fe83ff462417b1378f64359",
+    "evidence_files": [
+      "review/test-audit/internal-native-number/matrix.json",
+      "review/test-audit/internal-native-number/results.json"
+    ],
+    "candidates_failed": [
+      "TestNumbersFormatExactlyAsJavaScriptDoes"
+    ],
+    "other_rows_failed": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestPowersOfTwoFormatAsJavaScriptDoes"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R005",
+    "mutant": "M07",
+    "file_line": "internal/native/runtime/regexp.c:9",
+    "file_lines": [
+      "internal/native/runtime/regexp.c:9"
+    ],
+    "branch": "test-audit/internal-native-radix",
+    "branch_sha": "70d7d6fcadc17e7646b35737cde8e2d7798371af",
+    "source_diff": "review/test-audit/internal-native-radix/M07.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R005-M07.diff",
+    "sha256": "b9d80b1f280315533c943cc1ca6ca0f15a14e56689c7b995a2f87fd8aa28b9e2",
+    "evidence_files": [
+      "review/test-audit/internal-native-radix/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpLintPatternsNode",
+      "TestRegExpSearchNode"
+    ],
+    "other_rows_failed": [
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNode family",
+      "TestRegExpBytecodeTest262"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R006",
+    "mutant": "M08",
+    "file_line": "internal/native/runtime/regexp.c:82",
+    "file_lines": [
+      "internal/native/runtime/regexp.c:82"
+    ],
+    "branch": "test-audit/internal-native-radix",
+    "branch_sha": "70d7d6fcadc17e7646b35737cde8e2d7798371af",
+    "source_diff": "review/test-audit/internal-native-radix/M08.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R006-M08.diff",
+    "sha256": "2db6d5ad156172182a9105e4af65486e6ac73f67d80b3c860d3e220eeb37ed06",
+    "evidence_files": [
+      "review/test-audit/internal-native-radix/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpLintPatternsNode",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpSearchNode"
+    ],
+    "other_rows_failed": [
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNode family",
+      "TestRegExpBytecodeTest262"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R007",
+    "mutant": "M10",
+    "file_line": "internal/native/runtime/string_build_impl.h:127",
+    "file_lines": [
+      "internal/native/runtime/string_build_impl.h:127"
+    ],
+    "branch": "test-audit/internal-native-radix",
+    "branch_sha": "70d7d6fcadc17e7646b35737cde8e2d7798371af",
+    "source_diff": "review/test-audit/internal-native-radix/M10.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R007-M10.diff",
+    "sha256": "88ea28f12e9b76d24ca589a5f7b39a299d3c419d91c55a6d96f1fa3f248dedea",
+    "evidence_files": [
+      "review/test-audit/internal-native-radix/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRecordBenchmark",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpSearchNode"
+    ],
+    "other_rows_failed": [
+      "TestRecordMutants family",
+      "TestRecordReadMutants",
+      "TestRecordsAgainstNode",
+      "TestRegExpBytecodeRandomNode family",
+      "TestRegExpBytecodeTest262",
+      "TestRuntimeStringEquality"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R008",
+    "mutant": "M11",
+    "file_line": "internal/native/runtime/heap.c:375",
+    "file_lines": [
+      "internal/native/runtime/heap.c:375",
+      "internal/native/runtime/heap.c:376"
+    ],
+    "branch": "test-audit/internal-native-radix",
+    "branch_sha": "70d7d6fcadc17e7646b35737cde8e2d7798371af",
+    "source_diff": "review/test-audit/internal-native-radix/M11.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R008-M11.diff",
+    "sha256": "e4da24556ef6d011867bec47ddba15b753d2d14e946f20024f81bd7c697c2da4",
+    "evidence_files": [
+      "review/test-audit/internal-native-radix/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpLintPatternsNode",
+      "TestRegExpSearchNode",
+      "TestRuntimeReleasePaths"
+    ],
+    "other_rows_failed": [
+      "TestRecordMutants family",
+      "TestRecordReadMutants",
+      "TestRecordsAgainstNode",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNode family",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpIteratorResultShape",
+      "TestRuntimeStringEquality",
+      "TestToStringWithARadixMatchesNode"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R009",
+    "mutant": "D3",
+    "file_line": "internal/native/emit_objects.go:345",
+    "file_lines": [
+      "internal/native/emit_objects.go:345",
+      "internal/native/emit_objects.go:346",
+      "internal/native/emit_objects.go:347",
+      "internal/native/emit_objects.go:348",
+      "internal/native/emit_objects.go:349"
+    ],
+    "branch": "test-defend/internal-native-arguments_length",
+    "branch_sha": "cfa3f8615a8d83fe1cda8483630a613803d2d1b7",
+    "source_diff": "review/test-defend/internal-native-arguments_length/sessions/157a4355/D3.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R009-D3.diff",
+    "sha256": "17c93f4e0569d6697852913f963af020337ba4e3837d1094e6ae2f564906577a",
+    "evidence_files": [
+      "review/test-defend/internal-native-arguments_length/sessions/157a4355/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestParserHasNoUnusedOptionalMethodThunks"
+    ],
+    "other_rows_failed": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R010",
+    "mutant": "D4",
+    "file_line": "internal/native/emit_objects.go:327",
+    "file_lines": [
+      "internal/native/emit_objects.go:327"
+    ],
+    "branch": "test-defend/internal-native-arguments_length",
+    "branch_sha": "cfa3f8615a8d83fe1cda8483630a613803d2d1b7",
+    "source_diff": "review/test-defend/internal-native-arguments_length/sessions/157a4355/D4.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R010-D4.diff",
+    "sha256": "f33a3f5a3921d538feb627f9d60f295816b9450c24d65b7591cff001ef62c1ed",
+    "evidence_files": [
+      "review/test-defend/internal-native-arguments_length/sessions/157a4355/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestParserHasNoUnusedOptionalMethodThunks"
+    ],
+    "other_rows_failed": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R011",
+    "mutant": "D5",
+    "file_line": "internal/native/emit_objects.go:344",
+    "file_lines": [
+      "internal/native/emit_objects.go:344"
+    ],
+    "branch": "test-defend/internal-native-arguments_length",
+    "branch_sha": "cfa3f8615a8d83fe1cda8483630a613803d2d1b7",
+    "source_diff": "review/test-defend/internal-native-arguments_length/sessions/157a4355/D5.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R011-D5.diff",
+    "sha256": "74d747dd0091d285a05e6ab6d161477f3bdd84b00d61025e7555ac86355e9c45",
+    "evidence_files": [
+      "review/test-defend/internal-native-arguments_length/sessions/157a4355/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestParserHasNoUnusedOptionalMethodThunks"
+    ],
+    "other_rows_failed": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R012",
+    "mutant": "D1",
+    "file_line": "internal/native/runtime/dtoa.c:619",
+    "file_lines": [
+      "internal/native/runtime/dtoa.c:619"
+    ],
+    "branch": "test-defend/internal-native-number",
+    "branch_sha": "77a2859d2416569bef98ea05cb2624220bb0337b",
+    "source_diff": "review/test-defend/internal-native-number/D1.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R012-D1.diff",
+    "sha256": "3569d5a8bb0bbacaaecdad1d68bfdf626177d2d6a5ab37b75e8b5b7b45047c0b",
+    "evidence_files": [
+      "review/test-defend/internal-native-number/results.json"
+    ],
+    "candidates_failed": [
+      "TestNumbersFormatExactlyAsJavaScriptDoes"
+    ],
+    "other_rows_failed": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestPowersOfTwoFormatAsJavaScriptDoes",
+      "TestToExponentialAndToPrecisionMatchNode",
+      "TestToStringWithARadixMatchesNode"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R013",
+    "mutant": "D2",
+    "file_line": "internal/native/runtime/dtoa.c:591",
+    "file_lines": [
+      "internal/native/runtime/dtoa.c:591"
+    ],
+    "branch": "test-defend/internal-native-number",
+    "branch_sha": "77a2859d2416569bef98ea05cb2624220bb0337b",
+    "source_diff": "review/test-defend/internal-native-number/D2.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R013-D2.diff",
+    "sha256": "8f15ab7cf2a43a429900a7c4143f4f431a60ac1bab116aef1bd2519503bb955f",
+    "evidence_files": [
+      "review/test-defend/internal-native-number/results.json"
+    ],
+    "candidates_failed": [
+      "TestNumbersFormatExactlyAsJavaScriptDoes"
+    ],
+    "other_rows_failed": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestToExponentialAndToPrecisionMatchNode",
+      "TestToStringWithARadixMatchesNode"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R014",
+    "mutant": "D3",
+    "file_line": "internal/native/runtime/dtoa.c:596",
+    "file_lines": [
+      "internal/native/runtime/dtoa.c:596"
+    ],
+    "branch": "test-defend/internal-native-number",
+    "branch_sha": "77a2859d2416569bef98ea05cb2624220bb0337b",
+    "source_diff": "review/test-defend/internal-native-number/D3.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R014-D3.diff",
+    "sha256": "f12486924ccde5c016b2b44602b3eaa06abd160461ae3045582db47d06d594dc",
+    "evidence_files": [
+      "review/test-defend/internal-native-number/results.json"
+    ],
+    "candidates_failed": [
+      "TestNumbersFormatExactlyAsJavaScriptDoes"
+    ],
+    "other_rows_failed": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestPowersOfTwoFormatAsJavaScriptDoes"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R015",
+    "mutant": "D3",
+    "file_line": "internal/native/runtime/regexp.c:188",
+    "file_lines": [
+      "internal/native/runtime/regexp.c:188"
+    ],
+    "branch": "test-defend/internal-native-radix",
+    "branch_sha": "eb7dee54f29c566ad7bde5f1251f73fd0e9a5646",
+    "source_diff": "review/test-defend/internal-native-radix/D3.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R015-D3.diff",
+    "sha256": "5da16f2e5026c8159aa6b562fbecb566446fa75d831e58df6512e1a7734a3286",
+    "evidence_files": [
+      "review/test-defend/internal-native-radix/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpNativeStepLimit"
+    ],
+    "other_rows_failed": [
+      "TestRegExpNativeStepLimitBoundary"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R016",
+    "mutant": "D5",
+    "file_line": "internal/native/runtime/regexp.c:9",
+    "file_lines": [
+      "internal/native/runtime/regexp.c:9"
+    ],
+    "branch": "test-defend/internal-native-radix",
+    "branch_sha": "eb7dee54f29c566ad7bde5f1251f73fd0e9a5646",
+    "source_diff": "review/test-defend/internal-native-radix/D5.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R016-D5.diff",
+    "sha256": "c8686922317102f45d2f3a835cadfe3d12e63649eb4e27fd0b2c396e7cc86080",
+    "evidence_files": [
+      "review/test-defend/internal-native-radix/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpNativeStepLimit"
+    ],
+    "other_rows_failed": [
+      "TestRegExpNativeStepLimitBoundary"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R017",
+    "mutant": "D7",
+    "file_line": "internal/native/runtime/regexp.c:464",
+    "file_lines": [
+      "internal/native/runtime/regexp.c:464"
+    ],
+    "branch": "test-defend/internal-native-radix",
+    "branch_sha": "eb7dee54f29c566ad7bde5f1251f73fd0e9a5646",
+    "source_diff": "review/test-defend/internal-native-radix/D7.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R017-D7.diff",
+    "sha256": "c7122b04cba64f613571750b5197276fa5965b7374c028810855afaf75632aeb",
+    "evidence_files": [
+      "review/test-defend/internal-native-radix/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpSearchNode"
+    ],
+    "other_rows_failed": [
+      "TestRegExpBytecodeRandomNode family"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R018",
+    "mutant": "D1",
+    "file_line": "internal/native/runtime/regexp.c:115",
+    "file_lines": [
+      "internal/native/runtime/regexp.c:115"
+    ],
+    "branch": "test-defend/internal-native-radix",
+    "branch_sha": "eb7dee54f29c566ad7bde5f1251f73fd0e9a5646",
+    "source_diff": "review/test-defend/internal-native-radix/session-bfe05533/D1.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R018-D1.diff",
+    "sha256": "f3c8adf6cf547535c2a7f0ad6c783a249ea31c9c7003495d328490f67ac4f1b3",
+    "evidence_files": [
+      "review/test-defend/internal-native-radix/session-bfe05533/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpLintPatternsNode",
+      "TestRegExpSearchNode"
+    ],
+    "other_rows_failed": [
+      "TestRegExpBytecodeTest262"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R019",
+    "mutant": "D2",
+    "file_line": "internal/native/runtime/regexp.c:464",
+    "file_lines": [
+      "internal/native/runtime/regexp.c:464"
+    ],
+    "branch": "test-defend/internal-native-radix",
+    "branch_sha": "eb7dee54f29c566ad7bde5f1251f73fd0e9a5646",
+    "source_diff": "review/test-defend/internal-native-radix/session-bfe05533/D2.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R019-D2.diff",
+    "sha256": "df2a280ef335cffcbde7176cac4a8577845573efac57073adb74568d97279069",
+    "evidence_files": [
+      "review/test-defend/internal-native-radix/session-bfe05533/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpSearchNode"
+    ],
+    "other_rows_failed": [
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit37"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R020",
+    "mutant": "D3",
+    "file_line": "internal/regexp/native_search.go:42",
+    "file_lines": [
+      "internal/regexp/native_search.go:42"
+    ],
+    "branch": "test-defend/internal-native-radix",
+    "branch_sha": "eb7dee54f29c566ad7bde5f1251f73fd0e9a5646",
+    "source_diff": "review/test-defend/internal-native-radix/session-bfe05533/D3.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R020-D3.diff",
+    "sha256": "c5b71de27c87f8b29b6223e64cca3619460f6263897eb8a848da110151136ec9",
+    "evidence_files": [
+      "review/test-defend/internal-native-radix/session-bfe05533/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpSearchNode"
+    ],
+    "other_rows_failed": [
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit37"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R021",
+    "mutant": "D5",
+    "file_line": "internal/regexp/native_search.go:75",
+    "file_lines": [
+      "internal/regexp/native_search.go:75"
+    ],
+    "branch": "test-defend/internal-native-radix",
+    "branch_sha": "eb7dee54f29c566ad7bde5f1251f73fd0e9a5646",
+    "source_diff": "review/test-defend/internal-native-radix/session-bfe05533/D5.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R021-D5.diff",
+    "sha256": "f03411b12646a23cf848d6622267659242a360f2048bdc1816239c300a522caa",
+    "evidence_files": [
+      "review/test-defend/internal-native-radix/session-bfe05533/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpLintPatternsNode",
+      "TestRegExpSearchNode"
+    ],
+    "other_rows_failed": [
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeTest262"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R022",
+    "mutant": "D6",
+    "file_line": "internal/native/runtime/regexp.c:291",
+    "file_lines": [
+      "internal/native/runtime/regexp.c:291"
+    ],
+    "branch": "test-defend/internal-native-radix",
+    "branch_sha": "eb7dee54f29c566ad7bde5f1251f73fd0e9a5646",
+    "source_diff": "review/test-defend/internal-native-radix/session-bfe05533/D6.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R022-D6.diff",
+    "sha256": "64ff8ce02a807f3c896fa2920eff7d24c1125e5b360730110420d95ff23a017c",
+    "evidence_files": [
+      "review/test-defend/internal-native-radix/session-bfe05533/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRegExpLintPatternsNode"
+    ],
+    "other_rows_failed": [
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeTest262"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R023",
+    "mutant": "D02",
+    "file_line": "internal/native/runtime/record.c:207",
+    "file_lines": [
+      "internal/native/runtime/record.c:207"
+    ],
+    "branch": "test-defend/internal-native-radix",
+    "branch_sha": "eb7dee54f29c566ad7bde5f1251f73fd0e9a5646",
+    "source_diff": "review/test-defend/internal-native-radix/session-record-37cf2e83/D02.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R023-D02.diff",
+    "sha256": "8f70272ed587aeb0e77019fabb563f650e8c13b87836f5f35c5b5176d0f09c3c",
+    "evidence_files": [
+      "review/test-defend/internal-native-radix/session-record-37cf2e83/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRecordBenchmark"
+    ],
+    "other_rows_failed": [
+      "TestRecordsAgainstNode"
+    ],
+    "stale": false
+  },
+  {
+    "replay": "R024",
+    "mutant": "D03",
+    "file_line": "internal/native/runtime/map.c:222",
+    "file_lines": [
+      "internal/native/runtime/map.c:222"
+    ],
+    "branch": "test-defend/internal-native-radix",
+    "branch_sha": "eb7dee54f29c566ad7bde5f1251f73fd0e9a5646",
+    "source_diff": "review/test-defend/internal-native-radix/session-record-37cf2e83/D03.diff",
+    "diff": "review/test-defend/deletion-set/internal-native/diffs/R024-D03.diff",
+    "sha256": "91822430cd4c8e5333e6786bcd22b2677a7a5822b23bdcdee78d6e8dee952072",
+    "evidence_files": [
+      "review/test-defend/internal-native-radix/session-record-37cf2e83/matrix.json"
+    ],
+    "candidates_failed": [
+      "TestRecordBenchmark"
+    ],
+    "other_rows_failed": [
+      "TestRecordsAgainstNode"
+    ],
+    "stale": false
+  }
+]

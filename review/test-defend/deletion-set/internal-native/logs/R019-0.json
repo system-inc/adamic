@@ -1,0 +1,13 @@
+{
+  "name": "R019-0",
+  "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R019-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+  "seconds": 5.229,
+  "exit": -15,
+  "failed": [
+    "TestRegExpBytecodeRandomNodeUnit11"
+  ],
+  "witness_failures": [],
+  "panic": null,
+  "stopped_after_catch": true,
+  "log": "review/test-defend/deletion-set/internal-native/logs/R019-0.log"
+}

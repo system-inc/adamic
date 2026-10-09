@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/record.c b/internal/native/runtime/record.c
+index 8ce40637..214975cc 100644
+--- a/internal/native/runtime/record.c
++++ b/internal/native/runtime/record.c
+@@ -204,7 +204,7 @@ bool adamic_record_iterator_next(adamic_record_iterator *iterator, adamic_string
+ 	const adamic_record *record = iterator->slots[0].reference;
+ 	const adamic_array *keys = iterator->slots[1].reference;
+ 	size_t next = (size_t)iterator->slots[2].number;
+-	while (next < keys->length) {
++	while (next + 1 < keys->length) {
+ 		adamic_string *candidate = keys->elements[next++].reference;
+ 		iterator->slots[2].number = (double)next;
+ 		const adamic_value *slot = adamic_record_get_own(record, candidate);

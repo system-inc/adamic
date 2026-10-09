@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -79,7 +79,7 @@
+ 		else
+ 			end = mid;
+ 	}
+-	return first < i->range_count && i->ranges[first].first <= c;
++	return first < i->range_count && i->ranges[first].first < c;
+ }
+ typedef struct {
+ 	uint64_t count;

@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/map.c b/internal/native/runtime/map.c
+index 715141f2..f7232d67 100644
+--- a/internal/native/runtime/map.c
++++ b/internal/native/runtime/map.c
+@@ -219,7 +219,7 @@ bool adamic_map_delete(adamic_map *map, adamic_value key) {
+ 	if (map->reference_values) {
+ 		adamic_release(entry->value.reference);
+ 	}
+-	map->count--;
++
+ 	return true;
+ }
+ 

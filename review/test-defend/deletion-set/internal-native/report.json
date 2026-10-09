@@ -1,0 +1,437 @@
+{
+  "package": "internal/native",
+  "main": "7b9d4272c28f59530ab13daa5c49067e47933b06",
+  "skipped": [
+    "TestNumbersFormatExactlyAsJavaScriptDoes",
+    "TestParserHasNoUnusedOptionalMethodThunks",
+    "TestRecordBenchmark",
+    "TestRegExpLintPatternsNode",
+    "TestRegExpNativeStepLimit",
+    "TestRegExpSearchNode",
+    "TestRuntimeReleasePaths"
+  ],
+  "mutants": [
+    {
+      "replay": "R001",
+      "mutant": "M15",
+      "file_line": "internal/native/emit_objects.go:344",
+      "branch": "test-audit/internal-native-arguments_length",
+      "source_diff": "review/test-audit/internal-native-arguments_length/prior-b5832385/M15.diff",
+      "candidates_failed": [
+        "TestParserHasNoUnusedOptionalMethodThunks"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "witness_failures": [
+        "TestOptionalMethodThunksMatchNode"
+      ],
+      "panicking_tests": [],
+      "completed_without_valid_catch": true
+    },
+    {
+      "replay": "R002",
+      "mutant": "M01",
+      "file_line": "internal/native/runtime/number.c:20",
+      "branch": "test-audit/internal-native-number",
+      "source_diff": "review/test-audit/internal-native-number/diffs/M01.diff",
+      "candidates_failed": [
+        "TestNumbersFormatExactlyAsJavaScriptDoes"
+      ],
+      "still_caught_by": [
+        "TestToExponentialAndToPrecisionMatchNode"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R003",
+      "mutant": "M02",
+      "file_line": "internal/native/runtime/number.c:75",
+      "branch": "test-audit/internal-native-number",
+      "source_diff": "review/test-audit/internal-native-number/diffs/M02.diff",
+      "candidates_failed": [
+        "TestNumbersFormatExactlyAsJavaScriptDoes"
+      ],
+      "still_caught_by": [
+        "TestToExponentialAndToPrecisionMatchNode"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R004",
+      "mutant": "M03",
+      "file_line": "internal/native/runtime/number.c:93",
+      "branch": "test-audit/internal-native-number",
+      "source_diff": "review/test-audit/internal-native-number/diffs/M03.diff",
+      "candidates_failed": [
+        "TestNumbersFormatExactlyAsJavaScriptDoes"
+      ],
+      "still_caught_by": [
+        "TestTypedArrayRuntime"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R005",
+      "mutant": "M07",
+      "file_line": "internal/native/runtime/regexp.c:9",
+      "branch": "test-audit/internal-native-radix",
+      "source_diff": "review/test-audit/internal-native-radix/M07.diff",
+      "candidates_failed": [
+        "TestRegExpLintPatternsNode",
+        "TestRegExpSearchNode"
+      ],
+      "still_caught_by": [
+        "TestRegExpBytecodeRandomNodeUnit39"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R006",
+      "mutant": "M08",
+      "file_line": "internal/native/runtime/regexp.c:82",
+      "branch": "test-audit/internal-native-radix",
+      "source_diff": "review/test-audit/internal-native-radix/M08.diff",
+      "candidates_failed": [
+        "TestRegExpLintPatternsNode",
+        "TestRegExpNativeStepLimit",
+        "TestRegExpSearchNode"
+      ],
+      "still_caught_by": [
+        "TestRegExpBytecodeRandomNodeUnit32"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R007",
+      "mutant": "M10",
+      "file_line": "internal/native/runtime/string_build_impl.h:127",
+      "branch": "test-audit/internal-native-radix",
+      "source_diff": "review/test-audit/internal-native-radix/M10.diff",
+      "candidates_failed": [
+        "TestRecordBenchmark",
+        "TestRegExpLintPatternsNode",
+        "TestRegExpSearchNode"
+      ],
+      "still_caught_by": [
+        "TestRegExpBytecodeRandomNodeUnit28",
+        "TestRegExpBytecodeRandomNodeUnit27",
+        "TestRegExpBytecodeRandomNodeUnit26"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R008",
+      "mutant": "M11",
+      "file_line": "internal/native/runtime/heap.c:375",
+      "branch": "test-audit/internal-native-radix",
+      "source_diff": "review/test-audit/internal-native-radix/M11.diff",
+      "candidates_failed": [
+        "TestRegExpLintPatternsNode",
+        "TestRegExpSearchNode",
+        "TestRuntimeReleasePaths"
+      ],
+      "still_caught_by": [
+        "TestSizeClassesShareTheirChunks"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R009",
+      "mutant": "D3",
+      "file_line": "internal/native/emit_objects.go:345",
+      "branch": "test-defend/internal-native-arguments_length",
+      "source_diff": "review/test-defend/internal-native-arguments_length/sessions/157a4355/D3.diff",
+      "candidates_failed": [
+        "TestParserHasNoUnusedOptionalMethodThunks"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "witness_failures": [
+        "TestOptionalMethodThunksMatchNode"
+      ],
+      "panicking_tests": [],
+      "completed_without_valid_catch": true
+    },
+    {
+      "replay": "R010",
+      "mutant": "D4",
+      "file_line": "internal/native/emit_objects.go:327",
+      "branch": "test-defend/internal-native-arguments_length",
+      "source_diff": "review/test-defend/internal-native-arguments_length/sessions/157a4355/D4.diff",
+      "candidates_failed": [
+        "TestParserHasNoUnusedOptionalMethodThunks"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "witness_failures": [
+        "TestOptionalMethodThunksMatchNode"
+      ],
+      "panicking_tests": [],
+      "completed_without_valid_catch": true
+    },
+    {
+      "replay": "R011",
+      "mutant": "D5",
+      "file_line": "internal/native/emit_objects.go:344",
+      "branch": "test-defend/internal-native-arguments_length",
+      "source_diff": "review/test-defend/internal-native-arguments_length/sessions/157a4355/D5.diff",
+      "candidates_failed": [
+        "TestParserHasNoUnusedOptionalMethodThunks"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "witness_failures": [
+        "TestOptionalMethodThunksMatchNode"
+      ],
+      "panicking_tests": [],
+      "completed_without_valid_catch": true
+    },
+    {
+      "replay": "R012",
+      "mutant": "D1",
+      "file_line": "internal/native/runtime/dtoa.c:619",
+      "branch": "test-defend/internal-native-number",
+      "source_diff": "review/test-defend/internal-native-number/D1.diff",
+      "candidates_failed": [
+        "TestNumbersFormatExactlyAsJavaScriptDoes"
+      ],
+      "still_caught_by": [
+        "TestToExponentialAndToPrecisionMatchNode"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R013",
+      "mutant": "D2",
+      "file_line": "internal/native/runtime/dtoa.c:591",
+      "branch": "test-defend/internal-native-number",
+      "source_diff": "review/test-defend/internal-native-number/D2.diff",
+      "candidates_failed": [
+        "TestNumbersFormatExactlyAsJavaScriptDoes"
+      ],
+      "still_caught_by": [],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": [],
+      "broken": "C compilation fails: dtoa.c:427:13: unused function 'bignum_less' [-Werror,-Wunused-function]",
+      "build_failure_rows": [
+        "TestDecodeASCIIUnit42",
+        "TestDecodeASCIIUnit41"
+      ]
+    },
+    {
+      "replay": "R014",
+      "mutant": "D3",
+      "file_line": "internal/native/runtime/dtoa.c:596",
+      "branch": "test-defend/internal-native-number",
+      "source_diff": "review/test-defend/internal-native-number/D3.diff",
+      "candidates_failed": [
+        "TestNumbersFormatExactlyAsJavaScriptDoes"
+      ],
+      "still_caught_by": [
+        "TestPowersOfTwoFormatAsJavaScriptDoes"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R015",
+      "mutant": "D3",
+      "file_line": "internal/native/runtime/regexp.c:188",
+      "branch": "test-defend/internal-native-radix",
+      "source_diff": "review/test-defend/internal-native-radix/D3.diff",
+      "candidates_failed": [
+        "TestRegExpNativeStepLimit"
+      ],
+      "still_caught_by": [
+        "TestRegExpNativeStepLimitBoundary"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R016",
+      "mutant": "D5",
+      "file_line": "internal/native/runtime/regexp.c:9",
+      "branch": "test-defend/internal-native-radix",
+      "source_diff": "review/test-defend/internal-native-radix/D5.diff",
+      "candidates_failed": [
+        "TestRegExpNativeStepLimit"
+      ],
+      "still_caught_by": [
+        "TestRegExpNativeStepLimitBoundary"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R017",
+      "mutant": "D7",
+      "file_line": "internal/native/runtime/regexp.c:464",
+      "branch": "test-defend/internal-native-radix",
+      "source_diff": "review/test-defend/internal-native-radix/D7.diff",
+      "candidates_failed": [
+        "TestRegExpSearchNode"
+      ],
+      "still_caught_by": [
+        "TestRegExpBytecodeRandomNodeUnit26"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R018",
+      "mutant": "D1",
+      "file_line": "internal/native/runtime/regexp.c:115",
+      "branch": "test-defend/internal-native-radix",
+      "source_diff": "review/test-defend/internal-native-radix/session-bfe05533/D1.diff",
+      "candidates_failed": [
+        "TestRegExpLintPatternsNode",
+        "TestRegExpSearchNode"
+      ],
+      "still_caught_by": [
+        "TestRegExpBytecodeTest262"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R019",
+      "mutant": "D2",
+      "file_line": "internal/native/runtime/regexp.c:464",
+      "branch": "test-defend/internal-native-radix",
+      "source_diff": "review/test-defend/internal-native-radix/session-bfe05533/D2.diff",
+      "candidates_failed": [
+        "TestRegExpSearchNode"
+      ],
+      "still_caught_by": [
+        "TestRegExpBytecodeRandomNodeUnit11"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R020",
+      "mutant": "D3",
+      "file_line": "internal/regexp/native_search.go:42",
+      "branch": "test-defend/internal-native-radix",
+      "source_diff": "review/test-defend/internal-native-radix/session-bfe05533/D3.diff",
+      "candidates_failed": [
+        "TestRegExpSearchNode"
+      ],
+      "still_caught_by": [
+        "TestRegExpBytecodeRandomNodeUnit18",
+        "TestRegExpBytecodeRandomNodeUnit17",
+        "TestRegExpBytecodeRandomNodeUnit21"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R021",
+      "mutant": "D5",
+      "file_line": "internal/regexp/native_search.go:75",
+      "branch": "test-defend/internal-native-radix",
+      "source_diff": "review/test-defend/internal-native-radix/session-bfe05533/D5.diff",
+      "candidates_failed": [
+        "TestRegExpLintPatternsNode",
+        "TestRegExpSearchNode"
+      ],
+      "still_caught_by": [
+        "TestRegExpBytecodeRandomNodeUnit31"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R022",
+      "mutant": "D6",
+      "file_line": "internal/native/runtime/regexp.c:291",
+      "branch": "test-defend/internal-native-radix",
+      "source_diff": "review/test-defend/internal-native-radix/session-bfe05533/D6.diff",
+      "candidates_failed": [
+        "TestRegExpLintPatternsNode"
+      ],
+      "still_caught_by": [
+        "TestRegExpBytecodeRandomNodeUnit39"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R023",
+      "mutant": "D02",
+      "file_line": "internal/native/runtime/record.c:207",
+      "branch": "test-defend/internal-native-radix",
+      "source_diff": "review/test-defend/internal-native-radix/session-record-37cf2e83/D02.diff",
+      "candidates_failed": [
+        "TestRecordBenchmark"
+      ],
+      "still_caught_by": [
+        "TestRecordsAgainstNode"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "replay": "R024",
+      "mutant": "D03",
+      "file_line": "internal/native/runtime/map.c:222",
+      "branch": "test-defend/internal-native-radix",
+      "source_diff": "review/test-defend/internal-native-radix/session-record-37cf2e83/D03.diff",
+      "candidates_failed": [
+        "TestRecordBenchmark"
+      ],
+      "still_caught_by": [
+        "TestRecordsAgainstNode"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "panicking_tests": []
+    }
+  ],
+  "keep": [
+    {
+      "test": "TestNumbersFormatExactlyAsJavaScriptDoes",
+      "because": "Replay unresolved for R013; deletion is not established"
+    },
+    {
+      "test": "TestParserHasNoUnusedOptionalMethodThunks",
+      "because": "R001/M15, R009/D3, R010/D4, R011/D5 lose their last non-witness catcher without it"
+    }
+  ],
+  "deletable": [
+    "TestRecordBenchmark",
+    "TestRegExpLintPatternsNode",
+    "TestRegExpNativeStepLimit",
+    "TestRegExpSearchNode",
+    "TestRuntimeReleasePaths"
+  ],
+  "notes": []
+}

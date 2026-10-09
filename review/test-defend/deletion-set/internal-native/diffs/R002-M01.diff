@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/number.c
++++ b/internal/native/runtime/number.c
+@@ -17,7 +17,7 @@
+ 
+ size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX]) {
+ 	if (isnan(value)) {
+-		return append(buffer, 0, "NaN");
++		return append(buffer, 0, "nan");
+ 	}
+ 	if (value == 0) {
+ 		// Both zeros: String(-0) is "0".

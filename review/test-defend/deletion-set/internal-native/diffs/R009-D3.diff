@@ -1,0 +1,17 @@
+diff --git a/internal/native/emit_objects.go b/internal/native/emit_objects.go
+index 9b114e20..5c348287 100644
+--- a/internal/native/emit_objects.go
++++ b/internal/native/emit_objects.go
+@@ -342,11 +342,7 @@ func (e *emitter) dispatchable(function int) bool {
+ 		})
+ 	}
+ 	slotless := func(valueType ir.Type) bool { return valueType == ir.Union || valueType == ir.MaybeBoolean && !needed }
+-	for index, parameter := range method.Parameters {
+-		if index > 0 && slotless(e.program.Locals[parameter].Type) {
+-			return false
+-		}
+-	}
++
+ 	return !slotless(method.Returns)
+ }
+ 

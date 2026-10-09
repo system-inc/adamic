@@ -1,0 +1,444 @@
+[
+  {
+    "replay": "R001",
+    "mutant": "M15",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R001-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "failure_lines": [
+      "    closure_convention_test.go:229: same-signature class cannot inhabit the facade receiver",
+      "--- FAIL: TestOptionalMethodThunksMatchNode (0.24s)"
+    ]
+  },
+  {
+    "replay": "R002",
+    "mutant": "M01",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R002-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestToExponentialAndToPrecisionMatchNode"
+    ],
+    "failure_lines": [
+      "    dtoa_test.go:149: precision 0 0000000000000000 7ff8000000000001: native \"nan\", Node \"NaN\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 fff8000000000001: native \"nan\", Node \"NaN\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 7ffecaa3a593a788: native \"nan\", Node \"NaN\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 fffecaa3a593a788: native \"nan\", Node \"NaN\"",
+      "    dtoa_test.go:154: 4 of 778686 answers differ, by method: map[precision:4]",
+      "    dtoa_test.go:156: 778686 answers (3690 values, every argument), 4 mismatches",
+      "--- FAIL: TestToExponentialAndToPrecisionMatchNode (6.01s)"
+    ]
+  },
+  {
+    "replay": "R003",
+    "mutant": "M02",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R003-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestToExponentialAndToPrecisionMatchNode"
+    ],
+    "failure_lines": [
+      "    dtoa_test.go:149: precision 0 0000000000000000 3eb0c6f7a0b5ed8d: native \"1e-6\", Node \"0.000001\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 beb0c6f7a0b5ed8d: native \"-1e-6\", Node \"-0.000001\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 3eb4b3fd5942cd96: native \"1.234e-6\", Node \"0.000001234\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 beb4b3fd5942cd96: native \"-1.234e-6\", Node \"-0.000001234\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 3eb0c6f7a0b5ed8d: native \"1e-6\", Node \"0.000001\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 beb0c6f7a0b5ed8d: native \"-1e-6\", Node \"-0.000001\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 3ed4f8b588e368f0: native \"4.9999999999999996e-6\", Node \"0.0000049999999999999996\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 bed4f8b588e368f0: native \"-4.9999999999999996e-6\", Node \"-0.0000049999999999999996\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 3ee3ec460ed80a17: native \"9.499999999999999e-6\", Node \"0.000009499999999999999\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 bee3ec460ed80a17: native \"-9.499999999999999e-6\", Node \"-0.000009499999999999999\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 bec2a904ba8205b7: native \"-2.2244725706450176e-6\", Node \"-0.0000022244725706450176\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 3ec2a904ba8205b7: native \"2.2244725706450176e-6\", Node \"0.0000022244725706450176\"",
+      "    dtoa_test.go:154: 12 of 778686 answers differ, by method: map[precision:12]",
+      "    dtoa_test.go:156: 778686 answers (3690 values, every argument), 12 mismatches",
+      "--- FAIL: TestToExponentialAndToPrecisionMatchNode (6.90s)"
+    ]
+  },
+  {
+    "replay": "R004",
+    "mutant": "M03",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R004-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "failure_lines": [
+      "    typed_array_test.go:44: runtime differs from Node at line 2715: got \"1e+101\" want \"1e+100\"",
+      "--- FAIL: TestTypedArrayRuntime/release (4.08s)"
+    ]
+  },
+  {
+    "replay": "R005",
+    "mutant": "M07",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R005-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpBytecodeRandomNodeUnit39"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:566: compiling 248 patterns, 250 executions, 632510 C bytes",
+      "    regexp_test.go:566: native regex oracle ([]): exit status 70",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit39 (1.16s)"
+    ]
+  },
+  {
+    "replay": "R006",
+    "mutant": "M08",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R006-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpBytecodeRandomNodeUnit32"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:531: compiling 249 patterns, 250 executions, 707557 C bytes",
+      "    regexp_test.go:531: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit32 (1.38s)"
+    ]
+  },
+  {
+    "replay": "R007",
+    "mutant": "M10",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R007-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit26"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:511: compiling 249 patterns, 250 executions, 697109 C bytes",
+      "    regexp_test.go:501: compiling 248 patterns, 250 executions, 739000 C bytes",
+      "    regexp_test.go:506: compiling 249 patterns, 250 executions, 601181 C bytes",
+      "    regexp_test.go:511: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit28 (1.33s)",
+      "    regexp_test.go:506: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit27 (1.34s)",
+      "    regexp_test.go:501: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit26 (1.39s)"
+    ]
+  },
+  {
+    "replay": "R008",
+    "mutant": "M11",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R008-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestSizeClassesShareTheirChunks"
+    ],
+    "failure_lines": [
+      "    heap_test.go:139: control: peak 76180 KiB, acquired 1177 chunks, largest generation 80 chunks",
+      "    heap_test.go:141: control: acquired 1177 chunks exceeds largest generation 80 + 16 retained class chunks (peak 76180 KiB): spare chunks were not reused",
+      "    heap_test.go:139: churn: peak 50180 KiB, acquired 773 chunks, largest generation 79 chunks",
+      "    heap_test.go:141: churn: acquired 773 chunks exceeds largest generation 79 + 16 retained class chunks (peak 50180 KiB): spare chunks were not reused",
+      "    heap_test.go:150: peak 50180 KiB through every class, 76180 KiB at one size",
+      "--- FAIL: TestSizeClassesShareTheirChunks (3.41s)"
+    ]
+  },
+  {
+    "replay": "R009",
+    "mutant": "D3",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R009-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "failure_lines": [
+      "    closure_convention_test.go:229: same-signature class cannot inhabit the facade receiver",
+      "--- FAIL: TestOptionalMethodThunksMatchNode (0.16s)"
+    ]
+  },
+  {
+    "replay": "R010",
+    "mutant": "D4",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R010-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "failure_lines": [
+      "    closure_convention_test.go:229: same-signature class cannot inhabit the facade receiver",
+      "--- FAIL: TestOptionalMethodThunksMatchNode (0.15s)"
+    ]
+  },
+  {
+    "replay": "R011",
+    "mutant": "D5",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R011-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestOptionalMethodThunksMatchNode"
+    ],
+    "failure_lines": [
+      "    closure_convention_test.go:229: same-signature class cannot inhabit the facade receiver",
+      "--- FAIL: TestOptionalMethodThunksMatchNode (0.20s)"
+    ]
+  },
+  {
+    "replay": "R012",
+    "mutant": "D1",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R012-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestToExponentialAndToPrecisionMatchNode"
+    ],
+    "failure_lines": [
+      "    dtoa_test.go:149: exponential 0 0000000000000000 3e60000000000000: native \"2.9802322387695313e-8\", Node \"2.9802322387695312e-8\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 3e60000000000000: native \"2.9802322387695313e-8\", Node \"2.9802322387695312e-8\"",
+      "    dtoa_test.go:149: exponential 0 0000000000000000 be60000000000000: native \"-2.9802322387695313e-8\", Node \"-2.9802322387695312e-8\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 be60000000000000: native \"-2.9802322387695313e-8\", Node \"-2.9802322387695312e-8\"",
+      "    dtoa_test.go:149: exponential 0 0000000000000000 3e88000000000000: native \"1.7881393432617187e-7\", Node \"1.7881393432617188e-7\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 3e88000000000000: native \"1.7881393432617187e-7\", Node \"1.7881393432617188e-7\"",
+      "    dtoa_test.go:149: exponential 0 0000000000000000 be88000000000000: native \"-1.7881393432617187e-7\", Node \"-1.7881393432617188e-7\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 be88000000000000: native \"-1.7881393432617187e-7\", Node \"-1.7881393432617188e-7\"",
+      "    dtoa_test.go:149: exponential 0 0000000000000000 3ea4000000000000: native \"5.960464477539063e-7\", Node \"5.960464477539062e-7\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 3ea4000000000000: native \"5.960464477539063e-7\", Node \"5.960464477539062e-7\"",
+      "    dtoa_test.go:149: exponential 0 0000000000000000 bea4000000000000: native \"-5.960464477539063e-7\", Node \"-5.960464477539062e-7\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 bea4000000000000: native \"-5.960464477539063e-7\", Node \"-5.960464477539062e-7\"",
+      "    dtoa_test.go:149: exponential 0 0000000000000000 3eac000000000000: native \"8.344650268554687e-7\", Node \"8.344650268554688e-7\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 3eac000000000000: native \"8.344650268554687e-7\", Node \"8.344650268554688e-7\"",
+      "    dtoa_test.go:149: exponential 0 0000000000000000 beac000000000000: native \"-8.344650268554687e-7\", Node \"-8.344650268554688e-7\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 beac000000000000: native \"-8.344650268554687e-7\", Node \"-8.344650268554688e-7\"",
+      "    dtoa_test.go:149: exponential 0 0000000000000000 4319619baec8771b: native \"1.7860489244912067e+15\", Node \"1.7860489244912068e+15\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 4319619baec8771b: native \"1786048924491206.7\", Node \"1786048924491206.8\"",
+      "    dtoa_test.go:149: exponential 0 0000000000000000 c319619baec8771b: native \"-1.7860489244912067e+15\", Node \"-1.7860489244912068e+15\"",
+      "    dtoa_test.go:149: precision 0 0000000000000000 c319619baec8771b: native \"-1786048924491206.7\", Node \"-1786048924491206.8\"",
+      "    dtoa_test.go:154: 24 of 778686 answers differ, by method: map[exponential:12 precision:12]",
+      "    dtoa_test.go:156: 778686 answers (3690 values, every argument), 24 mismatches",
+      "--- FAIL: TestToExponentialAndToPrecisionMatchNode (7.89s)"
+    ]
+  },
+  {
+    "replay": "R013",
+    "mutant": "D2",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R013-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestDecodeASCIIUnit42",
+      "TestDecodeASCIIUnit41"
+    ],
+    "failure_lines": [
+      "    decode_ascii_cache_test.go:74: cache lock decode-node-corpus wait 0.000s",
+      "    decode_ascii_test.go:46: {\"prefixes\":92014,\"expandedCases\":95694560,\"seed\":\"0xdec0de\"}",
+      "    decode_ascii_test.go:347: corpus phase 13.296s (including cache wait)",
+      "    decode_ascii_cache_test.go:74: cache lock decode-parallel-native wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock decode-node-corpus wait 13.104s",
+      "    decode_ascii_test.go:342: corpus phase 13.105s (including cache wait)",
+      "    decode_ascii_cache_test.go:74: cache lock bitwise.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock array.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock adamic.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock array_from.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock case.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock census_small.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock class_features.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock class_inheritance.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock class_static.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock closure.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock count.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock directory.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock dtoa.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock exceptions.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock from_codes.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock heap.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock hypot.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock ieee754.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock input.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock json_stringify.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock library_array.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock library_language.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock library_math_number.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock library_object.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock map.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock map_set.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock math.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock maybe.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock node_buffer.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock node_crypto.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock node_fs_file.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock node_host.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock normalize.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock number.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock object.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock parse.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock radix.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock record.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock regexp.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock regexp_replace.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock region.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock set.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock sort.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock sort_undefined.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock spread.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock stack.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock string.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock string_append.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock string_from.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock string_index.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock string_share.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock tsgo.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock union.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock typed_array.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock utf8.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock view_unions_mixed.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock view_unions_untagged.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock weak.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock probe.c.o wait 0.000s",
+      "    decode_ascii_cache_test.go:74: cache lock baseline.c.o wait 0.000s",
+      "    decode_ascii_test.go:347: compile /workspace/adamic/internal/native/runtime/dtoa.c: [clang -std=c11 -Wall -Wextra -Werror -pedantic -O2 -ffp-contract=off -fno-optimize-sibling-calls -I /workspace/adamic/internal/native/runtime -g -fsanitize=address,undefined -fno-sanitize-recover=all -c /workspace/adamic/internal/native/runtime/dtoa.c -o /tmp/deletion-native/cache/R013-0/.decode-building-915014281/dtoa.c.o]: exit status 1",
+      "    split_units_test.go:293: unit elapsed 15.730s",
+      "--- FAIL: TestDecodeASCIIUnit42 (15.73s)",
+      "    decode_ascii_cache_test.go:74: cache lock decode-parallel-native wait 2.432s",
+      "    decode_ascii_cache_test.go:74: cache lock dtoa.c.o wait 0.000s",
+      "    decode_ascii_test.go:342: compile /workspace/adamic/internal/native/runtime/dtoa.c: [clang -std=c11 -Wall -Wextra -Werror -pedantic -O2 -ffp-contract=off -fno-optimize-sibling-calls -I /workspace/adamic/internal/native/runtime -g -fsanitize=address,undefined -fno-sanitize-recover=all -c /workspace/adamic/internal/native/runtime/dtoa.c -o /tmp/deletion-native/cache/R013-0/.decode-building-873836959/dtoa.c.o]: exit status 1",
+      "    split_units_test.go:293: unit elapsed 15.588s",
+      "--- FAIL: TestDecodeASCIIUnit41 (15.59s)"
+    ]
+  },
+  {
+    "replay": "R014",
+    "mutant": "D3",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R014-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestPowersOfTwoFormatAsJavaScriptDoes"
+    ],
+    "failure_lines": [
+      "    power_of_two_test.go:52: 4350000000000001: native \"18014398509481990\", Node \"18014398509481988\"",
+      "    power_of_two_test.go:52: 4360000000000001: native \"36028797018963980\", Node \"36028797018963976\"",
+      "    power_of_two_test.go:52: c350000000000001: native \"-18014398509481990\", Node \"-18014398509481988\"",
+      "    power_of_two_test.go:52: c360000000000001: native \"-36028797018963980\", Node \"-36028797018963976\"",
+      "    power_of_two_test.go:56: 4 of 20980 values format differently (0 of them powers of two)",
+      "    power_of_two_test.go:58: 20980 values (2,098 powers of two, two neighbors each side, and their negatives), 4 mismatches",
+      "--- FAIL: TestPowersOfTwoFormatAsJavaScriptDoes (0.47s)"
+    ]
+  },
+  {
+    "replay": "R015",
+    "mutant": "D3",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R015-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpNativeStepLimitBoundary"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:318: 2 instructions at limit 1: want exit 70 and step-limit diagnostic, got exit=exit status 70 output=\"adamic: panic: regexp: instruction budget exceeded\\n\"",
+      "    regexp_test.go:318: 4 instructions at limit 3: want exit 70 and step-limit diagnostic, got exit=exit status 70 output=\"adamic: panic: regexp: instruction budget exceeded\\n\"",
+      "--- FAIL: TestRegExpNativeStepLimitBoundary (0.31s)"
+    ]
+  },
+  {
+    "replay": "R016",
+    "mutant": "D5",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R016-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpNativeStepLimitBoundary"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:318: 2 instructions at limit 1: want exit 70 and step-limit diagnostic, got exit=<nil> output=\"matched 1\\n\"",
+      "    regexp_test.go:318: 4 instructions at limit 3: want exit 70 and step-limit diagnostic, got exit=<nil> output=\"matched 1\\n\"",
+      "--- FAIL: TestRegExpNativeStepLimitBoundary (0.30s)"
+    ]
+  },
+  {
+    "replay": "R017",
+    "mutant": "D7",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R017-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpBytecodeRandomNodeUnit26"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:501: compiling 248 patterns, 250 executions, 739000 C bytes",
+      "    regexp_test.go:501: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit26 (1.89s)"
+    ]
+  },
+  {
+    "replay": "R018",
+    "mutant": "D1",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R018-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpBytecodeTest262"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:53: compiling 2776 patterns, 127369 executions, 15748093 C bytes",
+      "    regexp_test.go:53: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeTest262 (18.78s)"
+    ]
+  },
+  {
+    "replay": "R019",
+    "mutant": "D2",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R019-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpBytecodeRandomNodeUnit11"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:426: compiling 249 patterns, 250 executions, 632932 C bytes",
+      "    regexp_test.go:426: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit11 (1.35s)"
+    ]
+  },
+  {
+    "replay": "R020",
+    "mutant": "D3",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R020-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit21"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:461: compiling 250 patterns, 250 executions, 654695 C bytes",
+      "    regexp_test.go:476: compiling 250 patterns, 250 executions, 705281 C bytes",
+      "    regexp_test.go:456: compiling 249 patterns, 250 executions, 687683 C bytes",
+      "    regexp_test.go:461: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit18 (1.58s)",
+      "    regexp_test.go:456: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit17 (1.67s)",
+      "    regexp_test.go:476: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit21 (1.82s)"
+    ]
+  },
+  {
+    "replay": "R021",
+    "mutant": "D5",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R021-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpBytecodeRandomNodeUnit31"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:526: compiling 249 patterns, 250 executions, 633056 C bytes",
+      "    regexp_test.go:526: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit31 (1.32s)"
+    ]
+  },
+  {
+    "replay": "R022",
+    "mutant": "D6",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R022-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRegExpBytecodeRandomNodeUnit39"
+    ],
+    "failure_lines": [
+      "    regexp_test.go:566: compiling 248 patterns, 250 executions, 632510 C bytes",
+      "    regexp_test.go:566: native regex oracle ([]): exit status 1",
+      "--- FAIL: TestRegExpBytecodeRandomNodeUnit39 (1.44s)"
+    ]
+  },
+  {
+    "replay": "R023",
+    "mutant": "D02",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R023-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRecordsAgainstNode"
+    ],
+    "failure_lines": [
+      "    record_test.go:75: adamic: counts: allocations 88 frees 88 retains 126 releases 110 peak 25 regions 0",
+      "    record_test.go:83: Node comparison differs: native 30209 bytes, Node 34347 bytes; first difference at 21456",
+      "--- FAIL: TestRecordsAgainstNode/semantics (0.08s)",
+      "    record_test.go:75: adamic: counts: allocations 22 frees 22 retains 15 releases 39 peak 5 regions 0",
+      "    record_test.go:75: adamic: counts: allocations 27 frees 27 retains 3 releases 28 peak 5 regions 0"
+    ]
+  },
+  {
+    "replay": "R024",
+    "mutant": "D03",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-native/cache/R024-0 go test -json -count=1 -timeout 30m ./internal/native/ -skip ^(TestNumbersFormatExactlyAsJavaScriptDoes|TestParserHasNoUnusedOptionalMethodThunks|TestRecordBenchmark|TestRegExpLintPatternsNode|TestRegExpNativeStepLimit|TestRegExpSearchNode|TestRuntimeReleasePaths)($|_|/)",
+    "failed": [
+      "TestRecordsAgainstNode"
+    ],
+    "failure_lines": [
+      "    record_test.go:75: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0",
+      "    record_test.go:83: Node comparison differs: native 34347 bytes, Node 34347 bytes; first difference at 30051",
+      "--- FAIL: TestRecordsAgainstNode/semantics (0.05s)",
+      "    record_test.go:75: adamic: counts: allocations 22 frees 22 retains 15 releases 39 peak 5 regions 0",
+      "    record_test.go:75: adamic: counts: allocations 27 frees 27 retains 3 releases 28 peak 5 regions 0"
+    ]
+  }
+]
