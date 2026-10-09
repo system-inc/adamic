@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T14:11:23.790277539Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T14:11:23.810639107Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixOutOfRangePanics"}
+{"Time":"2026-10-09T14:11:23.810879693Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixOutOfRangePanics","Output":"=== RUN   TestToStringWithARadixOutOfRangePanics\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:23.811204916Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixOutOfRangePanics","Output":"=== PAUSE TestToStringWithARadixOutOfRangePanics\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:23.811232734Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixOutOfRangePanics"}
+{"Time":"2026-10-09T14:11:23.811242024Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixOutOfRangePanics"}
+{"Time":"2026-10-09T14:11:23.811244136Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixOutOfRangePanics","Output":"=== CONT  TestToStringWithARadixOutOfRangePanics\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:24.568851665Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixOutOfRangePanics","Output":"--- PASS: TestToStringWithARadixOutOfRangePanics (0.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:24.568901667Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestToStringWithARadixOutOfRangePanics","Elapsed":0.76}
+{"Time":"2026-10-09T14:11:24.568928884Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:24.571229952Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"coverage: 1.9% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:24.579306157Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.788s\tcoverage: 1.9% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:24.579372183Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.792}

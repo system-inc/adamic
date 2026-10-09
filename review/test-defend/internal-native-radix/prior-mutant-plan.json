@@ -1,0 +1,98 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/runtime/radix.c",
+    "line": 69,
+    "before": "0.5 * (radix_next_double(value) - value)",
+    "after": "1.0 * (radix_next_double(value) - value)",
+    "menu": "change constant"
+  },
+  {
+    "id": "M02",
+    "file": "internal/native/runtime/radix.c",
+    "line": 151,
+    "before": "radix_result(\"0\", 1)",
+    "after": "radix_result(\"1\", 1)",
+    "menu": "change constant"
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/runtime/radix.c",
+    "line": 143,
+    "before": "radix > 36",
+    "after": "radix > 35",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M04",
+    "file": "internal/native/runtime/record.c",
+    "line": 111,
+    "before": "return true;\n}\n\nsize_t adamic_record_size",
+    "after": "return false;\n}\n\nsize_t adamic_record_size",
+    "menu": "change constant"
+  },
+  {
+    "id": "M05",
+    "file": "internal/native/runtime/record.c",
+    "line": 132,
+    "before": "number >= UINT32_MAX",
+    "after": "number > UINT32_MAX",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M06",
+    "file": "internal/native/runtime/record.c",
+    "line": 147,
+    "before": "return a < b ? -1 : a > b ? 1 : 0;",
+    "after": "return a < b ? 1 : a > b ? -1 : 0;",
+    "menu": "swap comparator outcomes"
+  },
+  {
+    "id": "M07",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 9,
+    "before": "regex_step_limit = limit;",
+    "after": "regex_step_limit = 1;",
+    "menu": "change option"
+  },
+  {
+    "id": "M08",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 82,
+    "before": "i->ranges[first].first <= c",
+    "after": "i->ranges[first].first < c",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M09",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 581,
+    "before": "strcmp(object->shape->names[k], \"done\")",
+    "after": "strcmp(object->shape->names[k], \"value\")",
+    "menu": "change constant"
+  },
+  {
+    "id": "M10",
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 127,
+    "before": "memcmp(left->bytes, right->bytes, left->length) == 0",
+    "after": "memcmp(left->bytes, right->bytes, left->length) != 0",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M11",
+    "file": "internal/native/runtime/heap.c",
+    "line": 375,
+    "before": "release_last(value);",
+    "after": "(void)value;",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M12",
+    "file": "internal/native/runtime/regexp.c",
+    "line": 187,
+    "before": "*steps >= regex_step_limit",
+    "after": "*steps > regex_step_limit",
+    "menu": "off-by-one bound"
+  }
+]
