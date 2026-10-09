@@ -71,8 +71,13 @@ void adamic_heap_end(void);
 void *adamic_retain_slow(void *value);
 void adamic_release_slow(void *value);
 
+// Outlining these helpers in ASan builds avoids duplicating instrumented heap accesses at every
+// retain and release in a large program. The helper bodies remain instrumented.
 // Sharing is published before any other worker can reach a value and never cleared. Test that
 // separate bit first: a plain read of a shared count would race with its atomic updates.
+#if __has_feature(address_sanitizer)
+__attribute__((noinline))
+#endif
 static inline void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
@@ -87,6 +92,9 @@ static inline void *adamic_retain(void *value) {
 	return adamic_retain_slow(value);
 }
 
+#if __has_feature(address_sanitizer)
+__attribute__((noinline))
+#endif
 static inline void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
