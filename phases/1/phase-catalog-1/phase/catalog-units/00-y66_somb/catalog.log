@@ -1,0 +1,8 @@
+target 2ac796ea6cfa80069fb143af1dd2ef591f4fc953
+logs /tmp/loom-units/loom-unit-913441007/workspace/loom-out/phase/catalog-units/00-y66_somb/adamic-catalog-logs-ckfwlya9
+build flags: commit=2ac796ea6cfa80069fb143af1dd2ef591f4fc953; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+01 shared-slice-append: applies-and-fails-as-recorded
+01 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c
+01 wall=66.745s setup=39.287s check=25.548s cleanup=0.304s load=0.00 0.25 0.90 1/210 88920 -> 0.39 0.30 0.87 1/217 89456
+total wall=66.763s load=0.00 0.25 0.90 1/209 88911 -> 0.39 0.30 0.87 1/216 89456

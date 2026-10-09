@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-trimpath",
+    "-count=1",
+    "./internal/oracle",
+    "-run",
+    "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^shared_slice_append[.]a$"
+  ],
+  "seconds": 8.592928592001044,
+  "exit_code": 0,
+  "go_reported_test_seconds": 0.37,
+  "load_before": "0.08 0.24 0.87 1/219 89077",
+  "load_after": "0.22 0.26 0.87 1/214 89148"
+}

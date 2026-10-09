@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-trimpath",
+    "-count=1",
+    "./internal/lower",
+    "-run",
+    "^TestSuppressionDirectivesAreRefused$"
+  ],
+  "seconds": 15.591626549001376,
+  "exit_code": 1,
+  "go_reported_test_seconds": 0.852,
+  "load_before": "0.65 0.28 0.98 1/497 256173",
+  "load_after": "0.73 0.31 0.98 1/497 256214"
+}

@@ -1,0 +1,28 @@
+run adamic-gate-pilot-20261009T040206-eea8b737: void, 11440 tests in 200 units, 5 failed, 4 units broken, 0 killed over budget
+BROKEN tests-49: no results (exited false, last output "loom-pilot: github.com/system-inc/adamic/stage3/ledger/checker-259/rerun-2026-10-08 is new since the reference; running it whole")
+BROKEN tests-60: no results (exited true, last output "loom-pilot: checkout of 2ac796ea6cfa80069fb143af1dd2ef591f4fc953 failed")
+BROKEN tests-77: no results (exited true, last output "loom-pilot: checkout of 2ac796ea6cfa80069fb143af1dd2ef591f4fc953 failed")
+BROKEN tests-199: no results (exited true, last output "loom-pilot: checkout of 2ac796ea6cfa80069fb143af1dd2ef591f4fc953 failed")
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-02)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json	353.816s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestRulesAgree (tests-10)
+    rules_agree_shards_test.go:56: build lint-rules-agree-lowered d49f4aa24489 miss 67.07
+    lint_test.go:328: TestRulesAgree (setup lowered): 67.086s
+    lint_test.go:330: cooked: setup over 60s budget
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestEmittedJavaScriptMismatch (tests-20)
+    emitted_javascript_shards_test.go:102: build emitted-mismatch-lowered 5d280cc14a58 miss 66.69
+    emitted_javascript_shards_test.go:121: build emitted-mismatch-native d863f5778c82 miss 16.17
+    harness_test.go:18: union: 1 live cases, each exactly once
+    harness_test.go:20: TestEmittedJavaScriptMismatch (setup): 82.883s cooked=false
+    harness_test.go:22: setup exceeds 60s budget
+FAIL github.com/system-inc/adamic/cmd/adamic-gate TestEveryTestIsParallelOrSaysWhy (tests-194)
+    parallel_test.go:88: checked 5542 top-level tests; 2875 fail the parallel rule
+    parallel_test.go:119: stale serial baseline entry (now passes or no longer exists): bridge/tsgo/bridge_test.go	TestTSGoRequiresLink
+    parallel_test.go:119: stale serial baseline entry (now passes or no longer exists): cmd/adamic-gate/main_test.go	TestAnchoredSelectors
+    parallel_test.go:119: stale serial baseline entry (now passes or no longer exists): cmd/adamic-gate/main_test.go	TestCoverageRejectsOverlapAndUnplannedTests
+    parallel_test.go:119: stale serial baseline entry (now passes or no longer exists): cmd/adamic-gate/main_test.go	TestRawEvidenceKeepsSkipReasonsAndFailures
+    parallel_test.go:119: stale serial baseline entry (now passes or no longer exists): cmd/adamic-gate/resume_test.go	TestCheckpointKeysIncludeAllExecutionInputs
+    parallel_test.go:119: stale serial baseline entry (now passes or no longer exists): cmd/adamic-gate/resume_test.go	TestPackageCheckpointRequiresIntactCompleteEvidence
+    parallel_test.go:119: stale serial baseline entry (now passes or no longer exists): cmd/adamic-gate/resume_test.go	TestResumeCleanupPreservesForeignPaths
+FAIL github.com/system-inc/adamic/cmd/adamic-gate TestTypeAwareChildrenAndParentCost (tests-194)
+    resume_test.go:145: wrong audited volume rows: [assignable-types widened-shape enum-types scope-locals call-returns property-shape contextual-shape symbol-origin type-origin property-info call-count call-parameters apparent-shape base-shapes]

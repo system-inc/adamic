@@ -1,0 +1,83 @@
+{
+  "sha": "2ac796ea6cfa80069fb143af1dd2ef591f4fc953",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "2ac796ea6cfa80069fb143af1dd2ef591f4fc953",
+  "base_name": "main",
+  "tools_sha": "1390bad1ffba92c9b15ccc6aac9a6b838ddab04a",
+  "machine": {
+    "hostname": "ed3ab4d06bde",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 2.8,
+      "cores": 5
+    },
+    "end": {
+      "load_1m": 2.7,
+      "cores": 5
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "unit": "stage3-lane-tests",
+  "stage3_exits": {
+    "stage3-lane-tests": 0
+  },
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "ed3ab4d06bde",
+    "cpus": 5,
+    "load": [
+      2.7,
+      1.2,
+      1.4
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "wall_seconds": 8.1,
+  "steps_seconds": {
+    "stage3": 8.1
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "stage3"
+  ],
+  "stages_exit": {
+    "stage3": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "full"
+}

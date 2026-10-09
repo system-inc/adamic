@@ -1,0 +1,17 @@
+{
+  "number": 13,
+  "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+  "target": "2ac796ea6cfa80069fb143af1dd2ef591f4fc953",
+  "ok": true,
+  "setup_seconds": 0,
+  "check_seconds": 0,
+  "cleanup_seconds": 0,
+  "wall_seconds": 0.00021646799723384902,
+  "load_before": "1.42 0.60 1.17 1/294 302452",
+  "load_after": "1.42 0.60 1.17 1/294 302452",
+  "messages": [
+    "13 typeof-null: skipped (Fix and its oracle fixtures are not on target main. Main already has the pre-fix typeOf implementation; there is no fix to undo on this target.)",
+    "13 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+    "13 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=1.42 0.60 1.17 1/294 302452 -> 1.42 0.60 1.17 1/294 302452"
+  ]
+}
