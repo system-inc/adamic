@@ -24,7 +24,7 @@ Uniqueness is for the observed current package with the recorded opt-in skips, n
 
 The current condition-admission row gained runtime agreement since the audit. The prior evidence is stale in that material respect. The indirect oracle checks only a diagnostic substring, so its unique defense has that limited strength. The callback-effects row requires a refusal for an effectful array callback; any other refusal with the same generic substring can pass for the wrong reason. This is a specificity limitation, not a promise of performance that lacks a threshold. Its name promises callback-effect protection, but its assertions do not independently distinguish the precise cause of refusal.
 
-Tool and publication issues: the 15GB /tmp instruction exceeds filesystem capacity; read-only default sandbox requires approved write executions; shell Git publication needs credentials not present in the runtime. Earlier unit's oversized connector upload stalled, so publication will use compact evidence rather than a large binary payload. Full execution timings are in runs.json. All per-test coverage and native runtime logs go to files.
+Tool and publication issues: the 15GB /tmp instruction exceeds filesystem capacity; read-only default sandbox requires approved write executions; the requested remote branch already held other defenders' evidence. This session was placed in condition-indirect-every and merged with that branch so earlier results remain intact. Full execution timings are in runs.json. All per-test coverage and native runtime logs go to files.
 
 Finished 2026-10-09T17:40:27.600224+00:00. Results: TestIndirectPredicateOverloadIsPending defended, TestConditionAssertionAdmission defended, TestEveryNeedsCallbackEffects not defended.
 
