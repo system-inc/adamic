@@ -1,0 +1,3 @@
+loom-build: tree a5c22df2c0ca74d6771d72bb2ecc0c28772a922f setup 13 s
+loom-build: go build ./... passed
+loom-build: go vet ./... passed

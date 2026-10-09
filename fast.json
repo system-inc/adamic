@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "red",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T115050-9f710f8a",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "cb102ac1d17dcfc1a9e51784c43687fcea40591e",
+  "branch": "codex/stage3-adapt66-explicit-iterators",
+  "base": "2209e870f628fcba18834b49c6754b31bab0e95c",
+  "candidate": "cb102ac1d17dcfc1a9e51784c43687fcea40591e",
+  "gated": "a5c22df2c0ca74d6771d72bb2ecc0c28772a922f",
+  "unplanned_packages_not_run": 53
+}
