@@ -138,3 +138,12 @@ func TestGitSnapshotAndEvidenceBoundary(t *testing.T) {
 	}
 
 }
+
+func TestFirstParagraphJoinsTwoLinesWithSpace(t *testing.T) {
+	t.Parallel()
+	text := "# Gaps\n\n  First line of evidence.  \nSecond line of evidence.\n\nAnother paragraph.\n"
+	want := "First line of evidence. Second line of evidence."
+	if got := firstParagraph(text); got != want {
+		t.Fatalf("firstParagraph = %q, want %q", got, want)
+	}
+}
