@@ -1,0 +1,87 @@
+[
+  {
+    "package": "internal/load",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "subsumer_seconds": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestStarExportCollisionNamesBothModules",
+      "TestExplicitExportResolvesStarCollision",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicOptionsAreOn",
+      "TestEveryFileIsAModule",
+      "TestAdamicFilesImportEachOther",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestTheProgramsInTheSpecLoad",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestTypeScriptIsThePinnedCommit",
+      "TestRegExpCaptureTypes"
+    ],
+    "test": "TestTypeScriptIsThePinnedCommit",
+    "file": "internal/load/pin_test.go:17",
+    "seconds": 0.005,
+    "oracle": "Git rev-parse HEAD versus self-recorded verified commit d92d9bfee114c80be2c375d72edae966176e3a4f. Git is run; the historical claim that the suite verified this pin was not independently checked.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1 pin_test.go:24: TypeScript is at f901d0af4d5b5a9c445b2634aa4fe34ebff51ffd, and stage 0 was verified against d92d9bfee114c80be2c375d72edae966176e3a4f.",
+    "verdict": "setup-check",
+    "probe_kills": [],
+    "vacuous": null,
+    "evidence": "python3 review/test-audit/internal-load-pin/setup-probe.py; timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run ^TestTypeScriptIsThePinnedCommit$; S1.log pin_test.go:24: TypeScript is at f901d0af4d5b5a9c445b2634aa4fe34ebff51ffd"
+  },
+  {
+    "package": "internal/load",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "subsumer_seconds": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestStarExportCollisionNamesBothModules",
+      "TestExplicitExportResolvesStarCollision",
+      "TestDeclarationsCarryTheirProvenTypes",
+      "TestATypeErrorFailsTheLoad",
+      "TestAdamicOptionsAreOn",
+      "TestEveryFileIsAModule",
+      "TestAdamicFilesImportEachOther",
+      "TestThePreludeDeclaresConsoleAndPanic",
+      "TestLoadRefusesWhatIsNotAdamic",
+      "TestTheProgramsInTheSpecLoad",
+      "TestOverlayPrecedesDiskForAdamicAliases",
+      "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+      "TestNodeLibraryUsesPinnedDeclarations",
+      "TestNodeLibraryRejectsDifferentVersion",
+      "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "TestTypeScriptIsThePinnedCommit",
+      "TestRegExpCaptureTypes"
+    ],
+    "test": "TestRegExpCaptureTypes",
+    "file": "internal/load/regexp_test.go:5",
+    "seconds": 0.073,
+    "oracle": "Self-written nonempty CheckError expectation. No outside authority is invoked or cited. M4 passes all four subcases despite a configuration error: observation of the split input changes TS18048 (value possibly undefined) into TS5052 (exactOptionalPropertyTypes requires strictNullChecks). Diagnostic identity is unchecked.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2"
+    ],
+    "last_proven_fail": "M2 regexp_test.go:11: Load: want a CheckError, got <nil>",
+    "verdict": "sacred",
+    "probe_kills": [
+      "P1"
+    ],
+    "vacuous": false,
+    "vacuous_subcases": [],
+    "evidence": "ADAMIC_MUTANT=M2 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > M2.log 2>&1; regexp_test.go:11: Load: want a CheckError, got <nil>; isolated P1 also fails all four subcases."
+  }
+]

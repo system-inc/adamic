@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:55:22.560091887Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T09:55:22.563921249Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit"}
+{"Time":"2026-10-09T09:55:22.563979976Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Output":"=== RUN   TestTypeScriptIsThePinnedCommit\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:22.564007326Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Output":"=== PAUSE TestTypeScriptIsThePinnedCommit\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:22.564009459Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit"}
+{"Time":"2026-10-09T09:55:22.564012464Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit"}
+{"Time":"2026-10-09T09:55:22.564014086Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Output":"=== CONT  TestTypeScriptIsThePinnedCommit\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:22.56578506Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Output":"    pin_test.go:24: TypeScript is at f901d0af4d5b5a9c445b2634aa4fe34ebff51ffd, and stage 0 was verified against d92d9bfee114c80be2c375d72edae966176e3a4f. Run the suite against it, then update typeScriptCommit\n","OutputType":"error"}
+{"Time":"2026-10-09T09:55:22.565806782Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Output":"--- FAIL: TestTypeScriptIsThePinnedCommit (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:22.565809316Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Elapsed":0}
+{"Time":"2026-10-09T09:55:22.565821644Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:22.565894447Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"FAIL\tgithub.com/system-inc/adamic/internal/load\t0.005s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:22.565911011Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.006}

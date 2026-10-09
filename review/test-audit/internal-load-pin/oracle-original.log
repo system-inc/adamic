@@ -1,0 +1,5 @@
+=== RUN   TestAuditU025OracleObservation
+    audit_u025_oracle_test.go:3: diagnostics: /tmp/adamic-gate/TestAuditU025OracleObservation2058720810/001/main.a:1:36: error TS18048: 'value' is possibly 'undefined'.
+--- PASS: TestAuditU025OracleObservation (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/load	0.031s

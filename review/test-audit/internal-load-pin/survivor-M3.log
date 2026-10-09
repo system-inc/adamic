@@ -1,0 +1,5 @@
+=== RUN   TestAuditU025DeclarationWitness
+    audit_u025_witness_test.go:6: read=true explicit RegExp split returns undefined union=false
+--- PASS: TestAuditU025DeclarationWitness (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/load	0.005s

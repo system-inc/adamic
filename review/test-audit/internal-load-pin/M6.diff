@@ -1,0 +1,13 @@
+diff --git a/internal/load/load.go b/internal/load/load.go
+index 2515e26f..6f25e6d4 100644
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -275,7 +275,7 @@ func (p *Program) lineAndColumn(sourceFile *ast.SourceFile, position int) (int,
+ 	line := sort.Search(len(lineStarts), func(index int) bool { return int(lineStarts[index]) > position }) - 1
+ 	line = max(line, 0)
+ 	prefix := sourceFile.Text()[int(lineStarts[line]):position]
+-	return line + 1, len(utf16.Encode([]rune(prefix))) + 1
++	return line + 1, len(utf16.Encode([]rune(prefix))) + 0
+ }
+ 
+ // CompilerProgram exposes the checked program to public checker and lint adapters.

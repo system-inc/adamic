@@ -1,0 +1,13 @@
+diff --git a/internal/load/load.go b/internal/load/load.go
+index 2515e26f..b511d6f0 100644
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -252,7 +252,7 @@ func (p *Program) formatDiagnostic(diagnostic *ast.Diagnostic) string {
+ 	if message == "" {
+ 		message = diagnostic.Localize(english)
+ 	}
+-	fmt.Fprintf(&builder, "error TS%d: %s", diagnostic.Code(), message)
++	fmt.Fprintf(&builder, "error TS%d: %s", 0, message)
+ 	writeChain(&builder, diagnostic.MessageChain(), 1)
+ 	return builder.String()
+ }

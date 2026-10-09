@@ -1,0 +1,5 @@
+=== RUN   TestAuditU025OracleObservation
+    audit_u025_oracle_test.go:3: diagnostics: error TS5052: Option 'exactOptionalPropertyTypes' cannot be specified without specifying option 'strictNullChecks'.
+--- PASS: TestAuditU025OracleObservation (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/load	0.039s
