@@ -1,0 +1,7 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -405,4 +405,1 @@
+ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+-	if err := l.eepPropertyPresence(node); err != nil {
+-		return nil, err
+-	}
