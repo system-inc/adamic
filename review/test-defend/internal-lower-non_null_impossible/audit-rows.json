@@ -1,0 +1,337 @@
+[
+  {
+    "test": "TestAdamicNullishAssertionsAreRefused",
+    "package": "internal/lower",
+    "file": "internal/lower/non_null_impossible_test.go:12",
+    "seconds": 1.245,
+    "oracle": "Handwritten Refused class, exact non-null What and Fix for nullish .a assertions.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M01 non_null_impossible_test.go:53: want exactly-nullish Refused, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNonNullAssertionOnPresentTypeIsErased"
+    ],
+    "mutants_in_matrix": 16,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.07,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; non_null_impossible_test.go:53: want exactly-nullish Refused, got <nil>",
+    "subsumption_mutants": 1,
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestNonNullAssertionLowersToNullishPanic",
+    "package": "internal/lower",
+    "file": "internal/lower/non_null_test.go:14",
+    "seconds": 0.074,
+    "oracle": "Handwritten IR Coalesce/Panic presence, Number/MaybeNumber types and panic-message prefix/suffix.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02",
+      "M03"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "M03 non_null_test.go:35: unexpected panic text \"/tmp/adamic-gate/TestNonNullAssertionLowersToNullishPanic2853542428/001/main.ts:2:16: map.get('a')! is null or undefined\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; non_null_test.go:35: unexpected panic text \"/tmp/adamic-gate/TestNonNullAssertionLowersToNullishPanic2853542428/001/main.ts:2:16: map.get('a')! is null or undefined\"",
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestNonNullAssertionOnPresentTypeIsErased",
+    "package": "internal/lower",
+    "file": "internal/lower/non_null_test.go:39",
+    "seconds": 0.07,
+    "oracle": "Handwritten NumberConstant type and zero panic strings; does not check the numeric value. M04 changes 0 to 1 and passes.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M01 non_null_test.go:43: /tmp/adamic-gate/TestNonNullAssertionOnPresentTypeIsErased1913261029/001/main.ts:1:15: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNonNullAssertionLowersToNullishPanic"
+    ],
+    "mutants_in_matrix": 16,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.074,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; non_null_test.go:43: /tmp/adamic-gate/TestNonNullAssertionOnPresentTypeIsErased1913261029/001/main.ts:1:15: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case",
+    "subsumption_mutants": 1,
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestOptionalIndexingMapShapeRefused",
+    "package": "internal/lower",
+    "file": "internal/lower/optional_indexing_boundary_test.go:9",
+    "seconds": 0.068,
+    "oracle": "Handwritten NotYet class and exact structural-Map diagnostic.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06"
+    ],
+    "unique_kills": [
+      "M06"
+    ],
+    "last_proven_fail": "M06 optional_indexing_boundary_test.go:18: got <nil>, want structural Map receiver boundary",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; optional_indexing_boundary_test.go:18: got <nil>, want structural Map receiver boundary",
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestOptionalIndexingKeepsIndexSignaturesRefused",
+    "package": "internal/lower",
+    "file": "internal/lower/optional_indexing_test.go:9",
+    "seconds": 0.067,
+    "oracle": "Handwritten Refused class, exact index-signature What and Fix.",
+    "oracle_kind": "self",
+    "kills": [
+      "M05"
+    ],
+    "unique_kills": [
+      "M05"
+    ],
+    "last_proven_fail": "M05 optional_indexing_test.go:14: got /tmp/adamic-gate/TestOptionalIndexingKeepsIndexSignaturesRefused3460425717/001/main.a:1:21: Adamic 0.1 refuses an index signature; use a Map, want the existing index-signature refusal and fix",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; optional_indexing_test.go:14: got /tmp/adamic-gate/TestOptionalIndexingKeepsIndexSignaturesRefused3460425717/001/main.a:1:21: Adamic 0.1 refuses an index signature; use a Map, want the existing index-signature refusal and fix",
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "package": "internal/lower",
+    "file": "internal/lower/optional_indexing_test.go:18",
+    "seconds": 0.23,
+    "oracle": "Handwritten diagnostic classes/text for four negative cases; last continuation case checks only err == nil.",
+    "oracle_kind": "self",
+    "kills": [
+      "M07"
+    ],
+    "unique_kills": [
+      "M07"
+    ],
+    "last_proven_fail": "M07 optional_indexing_test.go:37: got <nil>, want NotYet containing \"an optional index that isn't a number\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; optional_indexing_test.go:37: got <nil>, want NotYet containing \"an optional index that isn't a number\"",
+    "vacuous_subcases": [
+      "index_after_ordinary_continuation"
+    ],
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestOptionalWideningCensus",
+    "package": "internal/lower",
+    "file": "internal/lower/optional_widening_census_test.go:26",
+    "seconds": 0.088,
+    "oracle": "Only successful census construction/encoding; no expected site count or contents. Fixture-derived project: baseline one site; empty-answer probe zero sites still passes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=P03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestOptionalWideningCensus$; PASS with summary files=1 sites=0 (baseline sites=1)",
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestOptionalWideningRefused",
+    "package": "internal/lower",
+    "file": "internal/lower/optional_widening_test.go:14",
+    "seconds": 0.639,
+    "oracle": "Handwritten Refused diagnostics and own .refused snapshots; incompatible subcase checks a preparation-time TypeScript checker error.",
+    "oracle_kind": "self",
+    "kills": [
+      "M08",
+      "M11"
+    ],
+    "unique_kills": [
+      "M11"
+    ],
+    "last_proven_fail": "M11 optional_widening_test.go:45: want optional-property refusal, got /workspace/adamic/internal/lower/testdata/optional_widening/argument.a:4:6: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source { x: number; }, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-view)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; optional_widening_test.go:45: want optional-property refusal, got /workspace/adamic/internal/lower/testdata/optional_widening/argument.a:4:6: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source { x: number; }, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-view)",
+    "preparation_only_subcases": [
+      "incompatible"
+    ],
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestOptionalWideningAllowed",
+    "package": "internal/lower",
+    "file": "internal/lower/optional_widening_test.go:71",
+    "seconds": 0.133,
+    "oracle": "Only err == nil for class/fresh/declared cases; no IR values or execution assertion.",
+    "oracle_kind": "self",
+    "kills": [
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08 optional_widening_test.go:81: /tmp/adamic-gate/TestOptionalWideningAllowedclass1934236940/001/main.a:3:42: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source Point, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestOptionalWideningRefused"
+    ],
+    "mutants_in_matrix": 16,
+    "probe_kills": [],
+    "subsumer_seconds": 0.639,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; optional_widening_test.go:81: /tmp/adamic-gate/TestOptionalWideningAllowedclass1934236940/001/main.a:3:42: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source Point, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "subsumption_mutants": 1,
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestOptionalWideningSpreadOverwrite",
+    "package": "internal/lower",
+    "file": "internal/lower/optional_widening_test.go:89",
+    "seconds": 0.062,
+    "oracle": "Only refuse returns nil for overwritten spread; no positive refusal case.",
+    "oracle_kind": "self",
+    "kills": [
+      "M09"
+    ],
+    "unique_kills": [
+      "M09"
+    ],
+    "last_proven_fail": "M09 optional_widening_test.go:105: /tmp/adamic-gate/TestOptionalWideningSpreadOverwrite1970651270/001/main.a:1:133: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source { x: number; }, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; optional_widening_test.go:105: /tmp/adamic-gate/TestOptionalWideningSpreadOverwrite1970651270/001/main.a:1:133: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source { x: number; }, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestOverloadInferenceWitnesses",
+    "package": "internal/lower",
+    "file": "internal/lower/overload_inference_test.go:12",
+    "seconds": 0.063,
+    "oracle": "Handwritten inferred type-map entries/absence for four binder cases; ordinary production test despite Witnesses name.",
+    "oracle_kind": "self",
+    "kills": [
+      "M12",
+      "M13",
+      "M14"
+    ],
+    "unique_kills": [
+      "M12",
+      "M13"
+    ],
+    "last_proven_fail": "M14 overload_inference_test.go:59: lost the rigid binder behind undefined",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 16,
+    "probe_kills": [
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; overload_inference_test.go:59: lost the rigid binder behind undefined",
+    "eligible_mutants_in_matrix": 15
+  },
+  {
+    "test": "TestOverrideNativeSignature family",
+    "package": "internal/lower",
+    "file": "internal/lower/override_representation_test.go:11",
+    "seconds": 0.117,
+    "oracle": "Handwritten NotYet class and parameter/fix substrings, one checker over three fixtures.",
+    "oracle_kind": "self",
+    "kills": [
+      "M15"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M15 override_representation_test.go:23: override_optional.a: want NotYet naming parameter \"factor\" and its repair, got /tmp/adamic-gate/TestOverrideOptionalRefusesNativeSignature646077512/001/main.a:6:5: stage 0 can't lower an override with a different native representation for parameter \"value\"; keep the base method's parameter form yet",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInheritanceNativeSignatureLimits"
+    ],
+    "mutants_in_matrix": 16,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.307,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "OPTIONAL_WIDENING_CONFIG=/workspace/adamic/review/test-audit/internal-lower-non_null_impossible/census-project/tsconfig.json OPTIONAL_WIDENING_OUTPUT=/tmp/u040-census.json ADAMIC_MUTANT=M15 ADAMIC_BUILD_CACHE_DIR=/tmp/u040/cache/M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; override_representation_test.go:23: override_optional.a: want NotYet naming parameter \"factor\" and its repair, got /tmp/adamic-gate/TestOverrideOptionalRefusesNativeSignature646077512/001/main.a:6:5: stage 0 can't lower an override with a different native representation for parameter \"value\"; keep the base method's parameter form yet",
+    "members": [
+      "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+      "TestOverrideOptionalNumberRefusesNativeSignature",
+      "TestOverrideOptionalRefusesNativeSignature"
+    ],
+    "subsumption_mutants": 1,
+    "eligible_mutants_in_matrix": 15
+  }
+]

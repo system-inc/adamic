@@ -1,0 +1,74 @@
+[
+  {
+    "test": "TestOptionalWideningAllowed",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestOptionalWideningRefused",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/optional_widening.go:86",
+        "change": "Drop class-instance exemption condition",
+        "rows_failed": [
+          "TestClassWrongOutputIteratorReceiver",
+          "TestIteratorMapperIndexHasNumberRepresentation",
+          "TestOptionalWideningAllowed"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/optional_widening.go:114",
+        "change": "Change fresh-object syntax constant to constructor syntax",
+        "rows_failed": [
+          "TestIteratorDescriptorReasons",
+          "TestIteratorGapsAreExplicit",
+          "TestLibraryLanguageBoundaries",
+          "TestNumericEnumsAreOpen",
+          "TestObjectRefusalsExplainSoundness",
+          "TestOptionalWideningAllowed",
+          "TestOptionalWideningRefused",
+          "TestProvenRelationsRefuse"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/optional_widening.go:114",
+        "change": "Change fresh-object syntax constant to identifier syntax",
+        "rows_failed": [
+          "TestIteratorDescriptorReasons",
+          "TestIteratorGapsAreExplicit",
+          "TestLibraryLanguageBoundaries",
+          "TestNumericEnumsAreOpen",
+          "TestObjectRefusalsExplainSoundness",
+          "TestOptionalWideningAllowed",
+          "TestOptionalWideningRefused",
+          "TestProvenRelationsRefuse"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-non-null/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; optional_widening_test.go:81: /tmp/adamic-gate/TestOptionalWideningAllowedclass816504398/001/main.a:3:42: Adamic 0.1 refuses optional property y in { x: number; y?: number; } absent from structural source Point, which can hide fields; declare y on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+  },
+  {
+    "test": "TestOverrideNativeSignature family",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInheritanceNativeSignatureLimits",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/class_inheritance.go:141",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/class_inheritance.go:141",
+        "change": "Change diagnostic parameter-index option to the first parameter",
+        "rows_failed": [
+          "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+          "TestOverrideOptionalNumberRefusesNativeSignature",
+          "TestOverrideOptionalRefusesNativeSignature"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-non-null/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .; override_representation_test.go:13: abfe962_override_default_added.a: want NotYet naming parameter \"factor\" and its repair, got /tmp/adamic-gate/TestAbfe962OverrideDefaultAddedRefusesNativeSignature1732275334/001/main.a:5:5: stage 0 can't lower an override with a different native representation for parameter \"value\"; keep the base method's parameter form yet"
+  }
+]
