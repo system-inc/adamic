@@ -22,7 +22,7 @@
     "vacuous": null,
     "bounded": false,
     "matrix_rows": [],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutants_[0-9]+$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W1.log 2>&1; comment_mutants_test.go:38: compiled semantic mutant survived",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutants_[0-9]+$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W1.log 2>&1; comment_mutants_test.go:38: compiled semantic mutant survived",
     "members": [
       "TestCommentMutants_000",
       "TestCommentMutants_001",
@@ -57,7 +57,7 @@
     "vacuous": false,
     "bounded": false,
     "matrix_rows": [],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsUnion$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/S1.log 2>&1; comment_mutants_test.go:180: union count 188, unsplit 235",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsUnion$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/S1.log 2>&1; comment_mutants_test.go:180: union count 188, unsplit 235",
     "members": [
       "TestCommentMutantsUnion"
     ],
@@ -86,7 +86,7 @@
     "vacuous": null,
     "bounded": false,
     "matrix_rows": [],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsPlantedFailure$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W2.log 2>&1; comment_mutants_test.go:219: TestCommentMutants_002 did not catch planted survivor: <nil>",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsPlantedFailure$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W2.log 2>&1; comment_mutants_test.go:219: TestCommentMutants_002 did not catch planted survivor: <nil>",
     "members": [
       "TestCommentMutantsPlantedFailure"
     ],
@@ -128,7 +128,7 @@
       "TestConsumerCommentHelpers",
       "TestJsxParserGapIsExplicit"
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M3.log 2>&1; comments_test.go:96: output line 67: got \"sorted 6,47,27\", Go \"sorted 6,27,47\"",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M3.log 2>&1; comments_test.go:96: output line 67: got \"sorted 6,47,27\", Go \"sorted 6,27,47\"",
     "members": [
       "TestCommentsMatchCohere"
     ],
@@ -167,7 +167,7 @@
       "TestConsumerCommentHelpers",
       "TestJsxParserGapIsExplicit"
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M3.log 2>&1; comments_test.go:115: output line 123: got \"sorted 0,70,28\", Go \"sorted 0,28,70\"",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M3.log 2>&1; comments_test.go:115: output line 123: got \"sorted 0,70,28\", Go \"sorted 0,28,70\"",
     "members": [
       "TestConsumerCommentHelpers"
     ],
@@ -209,7 +209,7 @@
       "TestConsumerCommentHelpers",
       "TestJsxParserGapIsExplicit"
     ],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M4.log 2>&1; comments_test.go:152: gap silently accepted or failed differently: <nil>",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M4.log 2>&1; comments_test.go:152: gap silently accepted or failed differently: <nil>",
     "members": [
       "TestJsxParserGapIsExplicit"
     ],
@@ -238,7 +238,7 @@
     "vacuous": null,
     "bounded": false,
     "matrix_rows": [],
-    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestJsxAdapterGuardMutant$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W3.log 2>&1; comments_test.go:207: compiled adapter-guard mutant survived the actual refusal check",
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestJsxAdapterGuardMutant$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W3.log 2>&1; comments_test.go:207: compiled adapter-guard mutant survived the actual refusal check",
     "members": [
       "TestJsxAdapterGuardMutant"
     ],

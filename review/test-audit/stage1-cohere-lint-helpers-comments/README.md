@@ -61,3 +61,5 @@ The standalone rebuild commands include Go CLI startup and compilation. The test
 Evidence files: rows.json, matrix.json, mutants.json, scope.json, functions.json, plan.json, runs.json, validation.json, all command logs, standalone M1..M4 diffs, P1/P2 probes, W1/W2/W3 weakening diffs and S1 construction diff. The Python files record this session workflow; central replay should use the standalone diffs.
 
 Not covered: other packages; production effects outside the three-row matrix; exhaustive mutations; internal native build versus runtime separation; later native assertions after a Node mismatch. No test skipped. Source restored before commit.
+
+The repository ignores *.log by default; raw evidence logs were explicitly added and pushed in the following commit. P2 was simplified to a clean nil-return body before its standalone vet and final probe rerun. Its validation timing includes that final probe rerun.

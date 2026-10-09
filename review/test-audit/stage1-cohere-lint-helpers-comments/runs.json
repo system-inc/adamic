@@ -1,187 +1,187 @@
 [
   {
     "id": "timing-TestCommentMutants_[0-9]+-1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutants_[0-9]+$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutants_[0-9]+-1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutants_[0-9]+$' > '/workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutants_[0-9]+-1.log' 2>&1",
     "exit": 0,
     "wall_seconds": 29.663983599999483
   },
   {
     "id": "timing-TestCommentMutants_[0-9]+-2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutants_[0-9]+$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutants_[0-9]+-2.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutants_[0-9]+$' > '/workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutants_[0-9]+-2.log' 2>&1",
     "exit": 0,
     "wall_seconds": 29.140169051999692
   },
   {
     "id": "timing-TestCommentMutants_[0-9]+-3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutants_[0-9]+$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutants_[0-9]+-3.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutants_[0-9]+$' > '/workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutants_[0-9]+-3.log' 2>&1",
     "exit": 0,
     "wall_seconds": 28.871868008998717
   },
   {
     "id": "timing-TestCommentMutantsUnion-1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsUnion$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsUnion-1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsUnion$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsUnion-1.log 2>&1",
     "exit": 0,
     "wall_seconds": 1.8267755120014044
   },
   {
     "id": "timing-TestCommentMutantsUnion-2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsUnion$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsUnion-2.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsUnion$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsUnion-2.log 2>&1",
     "exit": 0,
     "wall_seconds": 1.9424130079987663
   },
   {
     "id": "timing-TestCommentMutantsUnion-3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsUnion$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsUnion-3.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsUnion$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsUnion-3.log 2>&1",
     "exit": 0,
     "wall_seconds": 1.8311196140002721
   },
   {
     "id": "timing-TestCommentMutantsPlantedFailure-1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsPlantedFailure$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsPlantedFailure-1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsPlantedFailure$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsPlantedFailure-1.log 2>&1",
     "exit": 0,
     "wall_seconds": 1.7701410129993747
   },
   {
     "id": "timing-TestCommentMutantsPlantedFailure-2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsPlantedFailure$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsPlantedFailure-2.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsPlantedFailure$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsPlantedFailure-2.log 2>&1",
     "exit": 0,
     "wall_seconds": 1.852079660999152
   },
   {
     "id": "timing-TestCommentMutantsPlantedFailure-3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsPlantedFailure$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsPlantedFailure-3.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsPlantedFailure$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentMutantsPlantedFailure-3.log 2>&1",
     "exit": 0,
     "wall_seconds": 1.8797287689994846
   },
   {
     "id": "timing-TestCommentsMatchCohere-1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentsMatchCohere$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentsMatchCohere-1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentsMatchCohere$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentsMatchCohere-1.log 2>&1",
     "exit": 0,
     "wall_seconds": 20.924428024000008
   },
   {
     "id": "timing-TestCommentsMatchCohere-2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentsMatchCohere$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentsMatchCohere-2.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentsMatchCohere$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentsMatchCohere-2.log 2>&1",
     "exit": 0,
     "wall_seconds": 20.888878036999813
   },
   {
     "id": "timing-TestCommentsMatchCohere-3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentsMatchCohere$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentsMatchCohere-3.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentsMatchCohere$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestCommentsMatchCohere-3.log 2>&1",
     "exit": 0,
     "wall_seconds": 21.08336129700001
   },
   {
     "id": "timing-TestConsumerCommentHelpers-1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestConsumerCommentHelpers$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestConsumerCommentHelpers-1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestConsumerCommentHelpers$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestConsumerCommentHelpers-1.log 2>&1",
     "exit": 0,
     "wall_seconds": 37.866100322999046
   },
   {
     "id": "timing-TestConsumerCommentHelpers-2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestConsumerCommentHelpers$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestConsumerCommentHelpers-2.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestConsumerCommentHelpers$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestConsumerCommentHelpers-2.log 2>&1",
     "exit": 0,
     "wall_seconds": 38.87833615599993
   },
   {
     "id": "timing-TestConsumerCommentHelpers-3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestConsumerCommentHelpers$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestConsumerCommentHelpers-3.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestConsumerCommentHelpers$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestConsumerCommentHelpers-3.log 2>&1",
     "exit": 0,
     "wall_seconds": 40.01492067199979
   },
   {
     "id": "timing-TestJsxParserGapIsExplicit-1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestJsxParserGapIsExplicit$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxParserGapIsExplicit-1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestJsxParserGapIsExplicit$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxParserGapIsExplicit-1.log 2>&1",
     "exit": 0,
     "wall_seconds": 25.542119722998905
   },
   {
     "id": "timing-TestJsxParserGapIsExplicit-2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestJsxParserGapIsExplicit$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxParserGapIsExplicit-2.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestJsxParserGapIsExplicit$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxParserGapIsExplicit-2.log 2>&1",
     "exit": 0,
     "wall_seconds": 22.993554798998957
   },
   {
     "id": "timing-TestJsxParserGapIsExplicit-3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestJsxParserGapIsExplicit$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxParserGapIsExplicit-3.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestJsxParserGapIsExplicit$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxParserGapIsExplicit-3.log 2>&1",
     "exit": 0,
     "wall_seconds": 23.77919298099914
   },
   {
     "id": "timing-TestJsxAdapterGuardMutant-1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestJsxAdapterGuardMutant$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxAdapterGuardMutant-1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestJsxAdapterGuardMutant$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxAdapterGuardMutant-1.log 2>&1",
     "exit": 0,
     "wall_seconds": 20.983740702999057
   },
   {
     "id": "timing-TestJsxAdapterGuardMutant-2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestJsxAdapterGuardMutant$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxAdapterGuardMutant-2.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestJsxAdapterGuardMutant$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxAdapterGuardMutant-2.log 2>&1",
     "exit": 0,
     "wall_seconds": 21.05529177199969
   },
   {
     "id": "timing-TestJsxAdapterGuardMutant-3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestJsxAdapterGuardMutant$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxAdapterGuardMutant-3.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestJsxAdapterGuardMutant$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/timing-TestJsxAdapterGuardMutant-3.log 2>&1",
     "exit": 0,
     "wall_seconds": 21.38050532499983
   },
   {
     "id": "M1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M1.log 2>&1",
     "exit": 1,
     "wall_seconds": 57.099571808999826
   },
   {
     "id": "M2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M2.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M2.log 2>&1",
     "exit": 1,
     "wall_seconds": 57.707374415998856
   },
   {
     "id": "M3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M3.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M3.log 2>&1",
     "exit": 1,
     "wall_seconds": 27.184172934001253
   },
   {
     "id": "M4",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M4.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/M4.log 2>&1",
     "exit": 1,
     "wall_seconds": 77.10012715199991
   },
   {
     "id": "P1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/P1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^(TestCommentsMatchCohere|TestConsumerCommentHelpers|TestJsxParserGapIsExplicit)$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/P1.log 2>&1",
     "exit": 1,
     "wall_seconds": 14.037288417999662
   },
   {
     "id": "W1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutants_[0-9]+$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutants_[0-9]+$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W1.log 2>&1",
     "exit": 1,
     "wall_seconds": 32.07563337699867
   },
   {
     "id": "W2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsPlantedFailure$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W2.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsPlantedFailure$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W2.log 2>&1",
     "exit": 1,
     "wall_seconds": 5.151247636000335
   },
   {
     "id": "W3",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestJsxAdapterGuardMutant$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W3.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestJsxAdapterGuardMutant$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/W3.log 2>&1",
     "exit": 1,
     "wall_seconds": 24.00204754400147
   },
   {
     "id": "S1",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsUnion$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/S1.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsUnion$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/S1.log 2>&1",
     "exit": 1,
     "wall_seconds": 5.260001943999669
   },
   {
     "id": "P2",
-    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run ^TestCommentMutantsUnion$ > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/P2.log 2>&1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/helpers/comments/ -run '^TestCommentMutantsUnion$' > /workspace/adamic/review/test-audit/stage1-cohere-lint-helpers-comments/P2.log 2>&1",
     "exit": 1,
     "wall_seconds": 5.070406015000117
   }
