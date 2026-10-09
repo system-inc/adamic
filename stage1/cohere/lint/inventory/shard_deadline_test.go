@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"os/exec"
 	"regexp"
 	"testing"
 	"time"
@@ -14,18 +13,25 @@ import (
 func inventoryEngineDeadline(t *testing.T, binary, directory string, cases []string) {
 	t.Helper()
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 75*time.Second)
+	parent := context.Background()
+	cancelParent := func() {}
+	if deadline, ok := t.Deadline(); ok {
+		parent, cancelParent = context.WithDeadline(parent, deadline.Add(-time.Second))
+	}
+	defer cancelParent()
+	ctx, cancel := context.WithTimeout(parent, 75*time.Second)
 	defer cancel()
 	defer func() {
 		t.Logf("shard time %.6fs cooked=%t", time.Since(started).Seconds(), ctx.Err() == context.DeadlineExceeded)
 	}()
 	for _, name := range cases {
-		command := exec.CommandContext(ctx, binary, "-test.run=^"+regexp.QuoteMeta(name)+"$", "-test.count=1", "-test.v", "-test.timeout=75s")
+		command, cancelCommand := inventoryEngineCommand(ctx, binary, "-test.run=^"+regexp.QuoteMeta(name)+"$", "-test.count=1", "-test.v", "-test.timeout=75s")
 		command.Dir = directory
 		output, err := command.CombinedOutput()
+		cancelCommand()
 		t.Logf("%s", output)
 		if ctx.Err() == context.DeadlineExceeded {
-			t.Fatalf("COOKED: shard killed at 75s while running %s; split smaller before rerunning", name)
+			t.Fatalf("COOKED: shard/test deadline reached (75s shard limit) while running %s; split smaller before rerunning", name)
 		}
 		if err != nil {
 			t.Fatalf("case %s: %v", name, err)
