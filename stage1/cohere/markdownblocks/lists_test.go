@@ -31,9 +31,9 @@ func TestMarkdownQuoteLayout(t *testing.T) {
 	quoteLayoutSetup(t)
 }
 
-// Not parallel: table-layout fixture initialized by testMarkdownTableLayout.
-// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
+// Legacy entry point reports shared preparation completed before m.Run.
 func TestMarkdownTableLayout(t *testing.T) {
+	t.Parallel()
 	testMarkdownTableLayout(t)
 }
 
