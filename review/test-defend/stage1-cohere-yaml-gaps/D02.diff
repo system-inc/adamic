@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/string_share.c b/internal/native/runtime/string_share.c
+index 313fe64a..da181c3c 100644
+--- a/internal/native/runtime/string_share.c
++++ b/internal/native/runtime/string_share.c
+@@ -56,7 +56,7 @@ adamic_string *adamic_string_share(const adamic_string *string, size_t offset, s
+ 	shared->bytes = string->bytes + offset;
+ 	shared->units = string->units == string->length + 1 ? size + 1 : 0;
+ 	shared->index = NULL;
+-	shared->capacity = 0;
++	shared->capacity = string->bytes + offset + size == owner->bytes + owner->length ? size + 1 : 0;
+ 	// A constant's bytes last as long as the program, and need no one held for them.
+ 	shared->owner = owner->heap.references == 0 ? NULL : adamic_retain((adamic_string *)owner);
+ 	return shared;

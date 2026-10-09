@@ -1,0 +1,7 @@
+{
+  "mutant": "D01",
+  "file_line": "internal/native/runtime/string_share.c:59",
+  "change": "shared->capacity = size + 1;",
+  "menu": "change constant",
+  "difference": "A shared slice is given one byte of append room in its owner, violating immutable alias ownership."
+}

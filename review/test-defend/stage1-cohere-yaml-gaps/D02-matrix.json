@@ -1,0 +1,563 @@
+{
+  "top_level": {
+    "TestComposeMatchGo": [
+      "pass"
+    ],
+    "TestComposeMutants": [
+      "pass"
+    ],
+    "TestClosedStringPresenceGap": [
+      "pass"
+    ],
+    "TestClosedLexerGaps": [
+      "pass"
+    ],
+    "TestClosedValuePresenceGap": [
+      "pass"
+    ],
+    "TestLexerMatchesGo": [
+      "pass"
+    ],
+    "TestLexerMutants": [
+      "pass"
+    ],
+    "TestPropsMatchGo": [
+      "pass"
+    ],
+    "TestPropsMutants": [
+      "pass"
+    ],
+    "TestSharedSliceAppendMatchesNode": [
+      "fail"
+    ],
+    "TestScalarMutants": [
+      "pass"
+    ],
+    "TestLexerGaps": [
+      "pass"
+    ],
+    "TestStructuralPositionRefusal": [
+      "pass"
+    ],
+    "TestFileDriver_Setup": [
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "TestFileDriver_006": [
+      "pass"
+    ],
+    "TestFileDriver_000": [
+      "pass"
+    ],
+    "TestFileDriver_002": [
+      "pass"
+    ],
+    "TestFileDriver_004": [
+      "pass"
+    ],
+    "TestFileDriver_007": [
+      "pass"
+    ],
+    "TestFileDriver_001": [
+      "pass"
+    ],
+    "TestFileDriver_003": [
+      "pass"
+    ],
+    "TestFileDriver_005": [
+      "pass"
+    ],
+    "TestFileDriverUnion": [
+      "pass"
+    ],
+    "TestFormatterMatchesGo": [
+      "pass"
+    ],
+    "TestBundledParserDifference": [
+      "pass"
+    ],
+    "TestCSTMatchesGo": [
+      "pass"
+    ],
+    "TestCSTMutants": [
+      "pass"
+    ],
+    "TestSchemaMatchesGo": [
+      "pass"
+    ],
+    "TestSchemaMutants": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant003Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant002Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutantsOracle": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant001Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant002Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant005Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant004Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant004Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant005Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant002Native": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant001Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant004Native": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant005Native": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant001Native": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant000Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant003Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant000Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant003Native": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant000Native": [
+      "pass"
+    ],
+    "TestProduct_YamlScalarsLowered": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_000": [
+      "pass"
+    ],
+    "TestProduct_YamlScalarsGo": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_004": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_002": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_003": [
+      "pass"
+    ],
+    "TestProduct_YamlScalarsNative": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_001": [
+      "pass"
+    ],
+    "TestScalarsMatchGoPlantedFailure": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_006": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_007": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_005": [
+      "pass"
+    ],
+    "TestScalarsMatchGoUnion": [
+      "pass"
+    ],
+    "TestSpeedCostProbes": [
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "TestUnistMutants": [
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "TestUnistMatchesGo": [
+      "pass"
+    ],
+    "TestWidthsMatchGo": [
+      "pass"
+    ],
+    "TestFormatterMutantsPlantedFailure": [
+      "pass"
+    ],
+    "TestFormatterMutants_000": [
+      "pass"
+    ],
+    "TestFormatterMutants_001": [
+      "pass"
+    ],
+    "TestFormatterMutants_002": [
+      "pass"
+    ],
+    "TestFormatterMutants_003": [
+      "pass"
+    ],
+    "TestFormatterMutants_004": [
+      "pass"
+    ],
+    "TestFormatterMutants_005": [
+      "pass"
+    ]
+  },
+  "subcases": {
+    "TestComposeMatchGo": [
+      "pass"
+    ],
+    "TestComposeMutants/document_start_marker_lost": [
+      "pass"
+    ],
+    "TestComposeMutants/block_mapping_pair_lost": [
+      "pass"
+    ],
+    "TestComposeMutants/implicit_key_limit_skipped": [
+      "pass"
+    ],
+    "TestComposeMutants": [
+      "pass"
+    ],
+    "TestClosedStringPresenceGap": [
+      "pass"
+    ],
+    "TestClosedLexerGaps/assignmentValue.ts": [
+      "pass"
+    ],
+    "TestClosedLexerGaps/dynamicCase.ts": [
+      "pass"
+    ],
+    "TestClosedLexerGaps/negativeCase.ts": [
+      "pass"
+    ],
+    "TestClosedLexerGaps/stringFallback.ts": [
+      "pass"
+    ],
+    "TestClosedLexerGaps/valueConjunction.ts": [
+      "pass"
+    ],
+    "TestClosedLexerGaps/prefixIncrement.ts": [
+      "pass"
+    ],
+    "TestClosedLexerGaps/emptyAlternative.ts": [
+      "pass"
+    ],
+    "TestClosedLexerGaps": [
+      "pass"
+    ],
+    "TestClosedValuePresenceGap": [
+      "pass"
+    ],
+    "TestLexerMatchesGo": [
+      "pass"
+    ],
+    "TestLexerMutants/keep_chomping_lost": [
+      "pass"
+    ],
+    "TestLexerMutants/tab_not_whitespace": [
+      "pass"
+    ],
+    "TestLexerMutants/BOM_not_split": [
+      "pass"
+    ],
+    "TestLexerMutants/cached_NUL_becomes_space": [
+      "pass"
+    ],
+    "TestLexerMutants/numeric_whitespace_excludes_space": [
+      "pass"
+    ],
+    "TestLexerMutants": [
+      "pass"
+    ],
+    "TestPropsMatchGo": [
+      "pass"
+    ],
+    "TestPropsMutants/indicator_presence_lost": [
+      "pass"
+    ],
+    "TestPropsMutants/anchor_separation_unchecked": [
+      "pass"
+    ],
+    "TestPropsMutants/tab_indentation_accepted": [
+      "pass"
+    ],
+    "TestPropsMutants": [
+      "pass"
+    ],
+    "TestSharedSliceAppendMatchesNode/0": [
+      "pass"
+    ],
+    "TestSharedSliceAppendMatchesNode/48": [
+      "fail"
+    ],
+    "TestSharedSliceAppendMatchesNode": [
+      "fail"
+    ],
+    "TestScalarMutants/escaped_line_feed_becomes_carriage_return": [
+      "pass"
+    ],
+    "TestScalarMutants/strip_becomes_clip": [
+      "pass"
+    ],
+    "TestScalarMutants/flow_line_break_stops_folding": [
+      "pass"
+    ],
+    "TestScalarMutants": [
+      "pass"
+    ],
+    "TestLexerGaps/multiplePush.ts": [
+      "pass"
+    ],
+    "TestLexerGaps": [
+      "pass"
+    ],
+    "TestStructuralPositionRefusal": [
+      "pass"
+    ],
+    "TestFileDriver_Setup": [
+      "pass",
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "TestFileDriver_006": [
+      "pass"
+    ],
+    "TestFileDriver_000": [
+      "pass"
+    ],
+    "TestFileDriver_002": [
+      "pass"
+    ],
+    "TestFileDriver_004": [
+      "pass"
+    ],
+    "TestFileDriver_007": [
+      "pass"
+    ],
+    "TestFileDriver_001": [
+      "pass"
+    ],
+    "TestFileDriver_003": [
+      "pass"
+    ],
+    "TestFileDriver_005": [
+      "pass"
+    ],
+    "TestFileDriverUnion": [
+      "pass"
+    ],
+    "TestFormatterMatchesGo": [
+      "pass"
+    ],
+    "TestBundledParserDifference": [
+      "pass"
+    ],
+    "TestCSTMatchesGo": [
+      "pass"
+    ],
+    "TestCSTMutants/null_key_absent": [
+      "pass"
+    ],
+    "TestCSTMutants/source_offset_advanced": [
+      "pass"
+    ],
+    "TestCSTMutants/line_start_shifted": [
+      "pass"
+    ],
+    "TestCSTMutants": [
+      "pass"
+    ],
+    "TestSchemaMatchesGo": [
+      "pass"
+    ],
+    "TestSchemaMutants/class_range_loses_last_character": [
+      "pass"
+    ],
+    "TestSchemaMutants/plus_accepts_empty": [
+      "pass"
+    ],
+    "TestSchemaMutants/optional_accepts_twice": [
+      "pass"
+    ],
+    "TestSchemaMutants/nullable_prefix_loses_successors": [
+      "pass"
+    ],
+    "TestSchemaMutants": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant003Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant002Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutantsOracle": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant001Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant002Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant005Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant004Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant004Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant005Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant002Native": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant001Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant004Native": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant005Native": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant001Native": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant000Sources": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant003Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant000Lowered": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant003Native": [
+      "pass"
+    ],
+    "TestProduct_YAMLFormatterMutant000Native": [
+      "pass"
+    ],
+    "TestProduct_YamlScalarsLowered": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_000": [
+      "pass"
+    ],
+    "TestProduct_YamlScalarsGo": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_004": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_002": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_003": [
+      "pass"
+    ],
+    "TestProduct_YamlScalarsNative": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_001": [
+      "pass"
+    ],
+    "TestScalarsMatchGoPlantedFailure": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_006": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_007": [
+      "pass"
+    ],
+    "TestScalarsMatchGo_005": [
+      "pass"
+    ],
+    "TestScalarsMatchGoUnion": [
+      "pass"
+    ],
+    "TestSpeedCostProbes/arenaNodeRead.ts": [
+      "pass"
+    ],
+    "TestSpeedCostProbes": [
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "TestSpeedCostProbes/numericMapLookup.ts": [
+      "pass"
+    ],
+    "TestSpeedCostProbes/stringUnitScan.ts": [
+      "pass"
+    ],
+    "TestUnistMutants/comment_prefix_lost": [
+      "pass"
+    ],
+    "TestUnistMutants": [
+      "pass",
+      "pass",
+      "pass"
+    ],
+    "TestUnistMatchesGo": [
+      "pass"
+    ],
+    "TestUnistMutants/document_end_marker_lost": [
+      "pass"
+    ],
+    "TestUnistMutants/point_column_shifted": [
+      "pass"
+    ],
+    "TestWidthsMatchGo": [
+      "pass"
+    ],
+    "TestFormatterMutantsPlantedFailure": [
+      "pass"
+    ],
+    "TestFormatterMutants_000": [
+      "pass"
+    ],
+    "TestFormatterMutants_001": [
+      "pass"
+    ],
+    "TestFormatterMutants_002": [
+      "pass"
+    ],
+    "TestFormatterMutants_003": [
+      "pass"
+    ],
+    "TestFormatterMutants_004": [
+      "pass"
+    ],
+    "TestFormatterMutants_005": [
+      "pass"
+    ]
+  }
+}

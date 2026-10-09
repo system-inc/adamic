@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T14:45:53.424331886Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T14:45:53.432079709Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSpeedCostProbes"}
+{"Time":"2026-10-09T14:45:53.43219572Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSpeedCostProbes","Output":"=== RUN   TestSpeedCostProbes\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:45:53.432263911Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSpeedCostProbes/stringUnitScan.ts"}
+{"Time":"2026-10-09T14:45:53.432270161Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSpeedCostProbes/stringUnitScan.ts","Output":"=== RUN   TestSpeedCostProbes/stringUnitScan.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:45:54.877572448Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSpeedCostProbes/stringUnitScan.ts","Output":"    speed_gap_test.go:73: both modes match Node's checksum 52998400000\n"}
+{"Time":"2026-10-09T14:45:54.877825463Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSpeedCostProbes/stringUnitScan.ts","Output":"--- PASS: TestSpeedCostProbes/stringUnitScan.ts (1.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:45:54.877866123Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSpeedCostProbes/stringUnitScan.ts","Elapsed":1.45}
+{"Time":"2026-10-09T14:45:54.878007312Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSpeedCostProbes","Output":"--- PASS: TestSpeedCostProbes (1.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:45:54.878027151Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestSpeedCostProbes","Elapsed":1.45}
+{"Time":"2026-10-09T14:45:54.878031618Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:45:54.880083179Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/yaml\t1.455s\n"}
+{"Time":"2026-10-09T14:45:54.880105532Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":1.456}

@@ -1,0 +1,47 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/lower/object.go",
+    "line": 1266,
+    "change": "change diagnostic constant",
+    "from_text": "\"push with other than one value\"",
+    "to_text": "\"push with unsupported arity\"",
+    "target": "TestLexerGaps"
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/lower/cycles.go",
+    "line": 277,
+    "change": "drop mutable-array Refused return and its now-unused target declaration",
+    "from_text": "\t\t\ttarget := f.present(element)\n\t\t\treturn &Refused{\n\t\t\t\tWhere: l.program.Where(f.where[holder]),\n\t\t\t\tWhat:  name + \", an array whose elements can reach back to an array like it: a cycle reference counting can't free, and \" + f.writtenAt(write) + \" may close one (\" + write.Why + \")\",\n\t\t\t\tFix:   \"declare the elements weak, Weak<\" + target + \">[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly \" + target + \"[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)\",\n\t\t\t}",
+    "to_text": "",
+    "target": "TestStructuralPositionRefusal"
+  },
+  {
+    "mutant": "D3",
+    "file": "stage1/cohere/yaml/lexer.ts",
+    "line": 286,
+    "change": "drop empty-token emission statement",
+    "from_text": "        if(allowEmpty) this.tokens.push('');\n",
+    "to_text": "",
+    "target": "TestLexerMatchesGo"
+  },
+  {
+    "mutant": "D4",
+    "file": "stage1/cohere/yaml/lexer.ts",
+    "line": 365,
+    "change": "off-by-one explicit block indentation",
+    "from_text": "this.blockScalarIndent = unit - 49;",
+    "to_text": "this.blockScalarIndent = unit - 48;",
+    "target": "TestLexerMatchesGo"
+  },
+  {
+    "mutant": "D5",
+    "file": "stage1/cohere/yaml/lexer.ts",
+    "line": 160,
+    "change": "drop CRLF line-bound adjustment",
+    "from_text": "        if(character(this.buffer, end - 1) === '\\r') end -= 1;\n",
+    "to_text": "",
+    "target": "TestLexerMatchesGo"
+  }
+]
