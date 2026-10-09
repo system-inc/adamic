@@ -370,3 +370,5 @@ func TestExternalComparisonCatchesThreePrinterMutants(t *testing.T) {
 		})
 	}
 }
+
+// The narrow canary of tools 26226fda selects this package (developer tools, Oct 9).

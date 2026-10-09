@@ -450,3 +450,5 @@ func TestDecodedOptionsAndMutant_Setup(t *testing.T) {
 	t.Parallel()
 	decodedOptionsPrepare(t)
 }
+
+// The narrow canary of tools 26226fda selects this package (developer tools, Oct 9).

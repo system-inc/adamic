@@ -769,3 +769,5 @@ func portGitCheckIgnore(t *testing.T, tree tree) []string {
 	}
 	return answers
 }
+
+// The narrow canary of tools 26226fda selects this package (developer tools, Oct 9).
