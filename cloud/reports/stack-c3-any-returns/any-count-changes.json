@@ -1,0 +1,57 @@
+{
+  "regeneration": {
+    "added": [],
+    "removed": [],
+    "numeric_changes": [
+      {
+        "path": "internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+        "before": [
+          8,
+          8,
+          6,
+          14,
+          5,
+          0
+        ],
+        "after": [
+          8,
+          8,
+          4,
+          12,
+          5,
+          0
+        ]
+      }
+    ],
+    "reordered": []
+  },
+  "against_base": {
+    "added": [
+      "internal/oracle/testdata/any_returns_concrete.a",
+      "internal/oracle/testdata/node_namespace_timeout.a"
+    ],
+    "removed": [],
+    "numeric_changes": [
+      {
+        "path": "internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a",
+        "before": [
+          8,
+          8,
+          6,
+          14,
+          5,
+          0
+        ],
+        "after": [
+          8,
+          8,
+          4,
+          12,
+          5,
+          0
+        ]
+      }
+    ],
+    "reordered": []
+  }
+}

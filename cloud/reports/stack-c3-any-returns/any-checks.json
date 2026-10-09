@@ -1,0 +1,79 @@
+[
+  {
+    "name": "build",
+    "command": [
+      "go",
+      "build",
+      "./..."
+    ],
+    "exit": 0
+  },
+  {
+    "name": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/..."
+    ],
+    "exit": 0
+  },
+  {
+    "name": "fixtures",
+    "command": [
+      "go",
+      "test",
+      "./stage3/fixtures",
+      "-count=1"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "lower",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "TestGeneric|TestClassGeneric|TestNominal|TestCensusOverload|TestOverload",
+      "-count=1"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "load",
+    "command": [
+      "go",
+      "test",
+      "./internal/load",
+      "-run",
+      "TestNodeLibrary|TestNodeNamespace",
+      "-count=1"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "statecopy",
+    "command": [
+      "go",
+      "test",
+      "./stage3/census/latent/statecopy",
+      "-run",
+      "TestCheckerMapperAliasKeepsIdentity",
+      "-count=1"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "oracle",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/(any_returns_concrete|node_namespace_timeout|census_overload_contracts|census_append_overload|class_inheritance_generic|generic_instance_key_)",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 0
+  }
+]
