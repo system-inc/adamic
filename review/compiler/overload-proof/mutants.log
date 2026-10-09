@@ -1,0 +1,4 @@
+throw-falls-through: caught, exit 1, proof=false, want true
+hidden-accessor-is-data: caught, exit 1, proof=true, want false
+full-implementation-types: caught, exit 1, FAIL: TestOverloadBodyProof
+trust-overload-annotation: caught, exit 1, numeric return must be refused, got program=true error=<nil>

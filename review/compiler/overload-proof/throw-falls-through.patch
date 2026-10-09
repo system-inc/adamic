@@ -1,0 +1,11 @@
+--- internal/lower/overload_body_proof.go
++++ internal/lower/overload_body_proof.go
+@@ -536,7 +536,7 @@
+ 	case ast.KindThrowStatement:
+ 		// Without a supported catch/finally here, evaluating or throwing the
+ 		// operand can only leave abruptly. Neither outcome returns a value.
+-		return nil, true
++		return states, true
+ 	case ast.KindEmptyStatement:
+ 		return states, true
+ 	}

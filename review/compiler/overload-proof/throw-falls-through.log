@@ -1,0 +1,8 @@
+=== RUN   TestOverloadBodyObligationEarlyThrow
+=== PAUSE TestOverloadBodyObligationEarlyThrow
+=== CONT  TestOverloadBodyObligationEarlyThrow
+    overload_body_proof_test.go:126: proof=false, want true; ; reachable return { value: 1 } at /tmp/adamic-gate/TestOverloadBodyObligationEarlyThrow2850234217/001/proof.a:11:1 cannot prove result.value
+--- FAIL: TestOverloadBodyObligationEarlyThrow (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.045s
+FAIL

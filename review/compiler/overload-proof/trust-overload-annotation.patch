@@ -1,0 +1,32 @@
+--- internal/lower/census_overload_proof.go
++++ internal/lower/census_overload_proof.go
+@@ -40,14 +40,21 @@
+ // discriminants. The older scalar proof retains its bare-parameter rules.
+ // Unsupported control flow supplies no proof of a narrower promise.
+ func (l *lowering) censusProveOverloadResult(implementation, overload *ast.Node) bool {
+-	if proven, _ := l.overloadBodyResult(implementation, overload); proven {
+-		return true
+-	}
+-	promised := l.concrete(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)))
+-	if len(implementation.TypeParameters()) == 0 && len(overload.TypeParameters()) == 0 && promised.Flags()&checker.TypeFlagsObject != 0 {
+-		return false
+-	}
+-	return l.censusReturnProof(implementation, overload, nil, nil)
++    promised := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))
++    accepted := false
++    var scan ast.Visitor
++    scan = func(node *ast.Node) bool {
++        if ast.IsFunctionLike(node) { return false }
++        if node.Kind == ast.KindReturnStatement {
++            expression := node.AsReturnStatement().Expression
++            if expression != nil && l.censusRelated(l.checker.GetTypeAtLocation(expression), promised) { accepted = true }
++            return false
++        }
++        node.ForEachChild(scan)
++        return false
++    }
++    implementation.Body().ForEachChild(scan)
++    return accepted
+ }
+ 
+ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitted []*checker.Type, target *checker.Type) bool {

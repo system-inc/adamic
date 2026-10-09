@@ -1,0 +1,12 @@
+=== RUN   TestOverloadBodyProofRefusesNumericReturn
+=== PAUSE TestOverloadBodyProofRefusesNumericReturn
+=== CONT  TestOverloadBodyProofRefusesNumericReturn
+    overload_body_proof_test.go:70: gate cache node hit
+    overload_body_proof_test.go:77: numeric return must be refused, got program=true error=<nil>
+--- FAIL: TestOverloadBodyProofRefusesNumericReturn (0.10s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.111s
+FAIL

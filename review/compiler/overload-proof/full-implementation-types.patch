@@ -1,0 +1,11 @@
+--- internal/lower/overload_body_proof.go
++++ internal/lower/overload_body_proof.go
+@@ -54,7 +54,7 @@
+ 		}
+ 		symbol := l.symbol(parameter.Name())
+ 		p.parameters[symbol] = true
+-		state[symbol] = given
++		state[symbol] = l.checker.GetTypeAtLocation(parameter.Name())
+ 	}
+ 	// Parameter writes and captured writes invalidate the entry assumptions. A
+ 	// local assignment in this body is instead interpreted at its reaching path.

@@ -1,0 +1,8 @@
+=== RUN   TestOverloadBodyObligationHiddenAccessor
+=== PAUSE TestOverloadBodyObligationHiddenAccessor
+=== CONT  TestOverloadBodyObligationHiddenAccessor
+    overload_body_proof_test.go:120: proof=true, want false; 
+--- FAIL: TestOverloadBodyObligationHiddenAccessor (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.044s
+FAIL

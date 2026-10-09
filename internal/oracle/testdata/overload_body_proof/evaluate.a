@@ -1,0 +1,39 @@
+// Reduction of utilities.ts:11320: template inputs never evaluate to a number.
+interface TemplateExpression { readonly kind: 'TemplateExpression'; readonly text: string; }
+interface NumericLiteral { readonly kind: 'NumericLiteral'; readonly value: number; }
+type Expression = TemplateExpression | NumericLiteral;
+interface Declaration { readonly name: string; }
+interface EvaluatorResult<T> {
+    readonly value: T;
+    isSyntacticallyString: boolean;
+    resolvedOtherFiles: boolean;
+    hasExternalReferences: boolean;
+}
+function createEvaluator() {
+    function evaluateTemplateExpression(expr: TemplateExpression, location?: Declaration): EvaluatorResult<string | undefined> {
+        if (expr.text === '') {
+            return { value: undefined, isSyntacticallyString: true, resolvedOtherFiles: false, hasExternalReferences: false };
+        }
+        return { value: expr.text, isSyntacticallyString: true, resolvedOtherFiles: location !== undefined, hasExternalReferences: false };
+    }
+    function evaluate(expr: TemplateExpression, location?: Declaration): EvaluatorResult<string | undefined>;
+    function evaluate(expr: Expression, location?: Declaration): EvaluatorResult<string | number | undefined>;
+    function evaluate(expr: Expression, location?: Declaration): EvaluatorResult<string | number | undefined> {
+        switch (expr.kind) {
+            case 'TemplateExpression':
+                return evaluateTemplateExpression(expr, location);
+            case 'NumericLiteral':
+                return { value: expr.value, isSyntacticallyString: false, resolvedOtherFiles: false, hasExternalReferences: false };
+        }
+        return { value: undefined, isSyntacticallyString: false, resolvedOtherFiles: false, hasExternalReferences: false };
+    }
+    return evaluate;
+}
+const evaluate = createEvaluator();
+const text = evaluate({ kind: 'TemplateExpression', text: 'word' }, { name: 'decl' });
+console.log(text.value ?? 'missing');
+console.log(`${text.isSyntacticallyString}:${text.resolvedOtherFiles}:${text.hasExternalReferences}`);
+text.isSyntacticallyString = false;
+console.log(`${text.isSyntacticallyString}`);
+console.log(evaluate({ kind: 'TemplateExpression', text: '' }).value ?? 'missing');
+console.log(`${evaluate({ kind: 'NumericLiteral', value: 7 }).value ?? 'missing'}`);

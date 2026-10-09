@@ -2,6 +2,7 @@ package lower
 
 import (
 	"fmt"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -250,10 +251,11 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			}
 			return nil
 		}
-		if l.overloadFieldHatch(overload, produced, promised) != "" || l.overloadCheckableResult(implementation, produced, promised) || promised.Flags()&checker.TypeFlagsTypeParameter != 0 && len(overload.TypeParameters()) > 0 {
+		if l.overloadFieldHatch(overload, produced, promised) != "" || l.overloadCheckableResult(implementation, produced, promised) && !l.overloadBodyRequired(overload, produced, promised) || promised.Flags()&checker.TypeFlagsTypeParameter != 0 && len(overload.TypeParameters()) > 0 {
 			return l.overloadDirectUses(implementation) // Every use must resolve its checked boundary.
 		}
-		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced) + " at " + l.overloadResultPath(produced, promised, "result", map[[2]*checker.Type]bool{}) + "; " + l.overloadResultRelation(produced, promised), Fix: "prove every return for this overload's admitted arguments, preserving result variance"}
+		_, bodyFailure := l.overloadBodyResult(implementation, overload)
+		return &Refused{Where: l.program.Where(overload), What: label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced) + " at " + l.overloadResultPath(produced, promised, "result", map[[2]*checker.Type]bool{}) + "; " + l.overloadResultRelation(produced, promised) + bodyFailure, Fix: "prove every return for this overload's admitted arguments, preserving result variance"}
 	}
 	if l.overloadHasDeferredParameters(implementation, overload) {
 		return l.overloadDirectUses(implementation)

@@ -1,0 +1,37 @@
+=== RUN   TestOverloadBodyProofBlock
+=== PAUSE TestOverloadBodyProofBlock
+=== RUN   TestOverloadBodyProofEvaluate
+=== PAUSE TestOverloadBodyProofEvaluate
+=== RUN   TestOverloadBodyProofRefusesNumericReturn
+=== PAUSE TestOverloadBodyProofRefusesNumericReturn
+=== RUN   TestOverloadFieldHatchKindValid
+=== PAUSE TestOverloadFieldHatchKindValid
+=== RUN   TestOverloadFieldHatchKindLiar
+=== PAUSE TestOverloadFieldHatchKindLiar
+=== RUN   TestOverloadFieldHatchValueValid
+=== PAUSE TestOverloadFieldHatchValueValid
+=== RUN   TestOverloadFieldHatchValueLiar
+=== PAUSE TestOverloadFieldHatchValueLiar
+=== RUN   TestOverloadFieldHatchValueUndefined
+=== PAUSE TestOverloadFieldHatchValueUndefined
+=== CONT  TestOverloadBodyProofBlock
+=== CONT  TestOverloadFieldHatchKindLiar
+=== CONT  TestOverloadBodyProofRefusesNumericReturn
+=== CONT  TestOverloadFieldHatchKindValid
+=== CONT  TestOverloadBodyProofEvaluate
+--- PASS: TestOverloadBodyProofRefusesNumericReturn (0.41s)
+=== CONT  TestOverloadFieldHatchValueLiar
+--- PASS: TestOverloadBodyProofEvaluate (1.19s)
+=== CONT  TestOverloadFieldHatchValueUndefined
+--- PASS: TestOverloadFieldHatchKindLiar (1.23s)
+=== CONT  TestOverloadFieldHatchValueValid
+--- PASS: TestOverloadBodyProofBlock (1.27s)
+--- PASS: TestOverloadFieldHatchKindValid (1.31s)
+--- PASS: TestOverloadFieldHatchValueLiar (1.26s)
+--- PASS: TestOverloadFieldHatchValueValid (1.08s)
+--- PASS: TestOverloadFieldHatchValueUndefined (1.13s)
+PASS
+gate cache: native hits=0 misses=19
+gate cache: node hits=0 misses=15
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.336s

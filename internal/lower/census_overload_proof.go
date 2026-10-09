@@ -36,10 +36,17 @@ func (l *lowering) censusNullableOverloadResult(produced, promised *checker.Type
 }
 
 // Prove every reachable return under the overload's admitted parameter types.
-// Only bare parameter tests supply flow facts. A write anywhere, including a
-// captured write in a nested function, disables the proof. Unknown control flow
-// keeps the call-site check rather than guessing that the annotation is true.
+// Structural bodies use per-path local bindings and independently checked
+// discriminants. The older scalar proof retains its bare-parameter rules.
+// Unsupported control flow supplies no proof of a narrower promise.
 func (l *lowering) censusProveOverloadResult(implementation, overload *ast.Node) bool {
+	if proven, _ := l.overloadBodyResult(implementation, overload); proven {
+		return true
+	}
+	promised := l.concrete(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)))
+	if len(implementation.TypeParameters()) == 0 && len(overload.TypeParameters()) == 0 && promised.Flags()&checker.TypeFlagsObject != 0 {
+		return false
+	}
 	return l.censusReturnProof(implementation, overload, nil, nil)
 }
 

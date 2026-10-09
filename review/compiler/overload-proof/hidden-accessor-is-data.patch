@@ -1,0 +1,20 @@
+--- internal/lower/overload_body_proof.go
++++ internal/lower/overload_body_proof.go
+@@ -125,7 +125,7 @@
+ 			return nil, false
+ 		}
+ 		property := p.l.checker.GetPropertyOfType(held, access.Name().Text())
+-		if property == nil || accessorSymbol(property) || p.possibleAccessor(access.Name().Text()) || node.Flags&ast.NodeFlagsOptionalChain != 0 {
++		if property == nil || accessorSymbol(property) || node.Flags&ast.NodeFlagsOptionalChain != 0 {
+ 			return nil, false
+ 		}
+ 		return p.l.concrete(p.l.checker.GetTypeOfSymbol(property)), true
+@@ -223,7 +223,7 @@
+ 		}
+ 		if current.Kind == ast.KindPropertyAccessExpression {
+ 			property := p.l.checker.GetSymbolAtLocation(current)
+-			if property == nil || accessorSymbol(property) || p.possibleAccessor(current.Name().Text()) {
++			if property == nil || accessorSymbol(property) {
+ 				safe = false
+ 			}
+ 		}

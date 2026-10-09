@@ -1,0 +1,21 @@
+=== RUN   TestOverloadBodyProofBlock
+=== PAUSE TestOverloadBodyProofBlock
+=== RUN   TestOverloadBodyProofEvaluate
+=== PAUSE TestOverloadBodyProofEvaluate
+=== CONT  TestOverloadBodyProofBlock
+=== CONT  TestOverloadBodyProofEvaluate
+    overload_body_proof_test.go:61: gate cache node hit
+=== NAME  TestOverloadBodyProofBlock
+    overload_body_proof_test.go:56: gate cache node hit
+=== NAME  TestOverloadBodyProofEvaluate
+    overload_body_proof_test.go:61: /workspace/adamic/internal/oracle/testdata/overload_body_proof/evaluate.a:19:5: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit string | undefined; reachable return { value: expr.value, isSyntacticallyString: false, resolvedOtherFiles: false, hasExternalReferences: false } at /workspace/adamic/internal/oracle/testdata/overload_body_proof/evaluate.a:26:17 cannot prove result.value; prove every return for this overload's admitted arguments, preserving result variance
+--- FAIL: TestOverloadBodyProofEvaluate (0.12s)
+=== NAME  TestOverloadBodyProofBlock
+    overload_body_proof_test.go:56: /workspace/adamic/internal/oracle/testdata/overload_body_proof/block.a:14:1: Adamic 0.1 refuses overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody at result.kind; readonly covariance requires "Expression" to fit "Block"; reachable return result at /workspace/adamic/internal/oracle/testdata/overload_body_proof/block.a:25:5 cannot prove result.kind; prove every return for this overload's admitted arguments, preserving result variance
+--- FAIL: TestOverloadBodyProofBlock (0.12s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.135s
+FAIL

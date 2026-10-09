@@ -1,0 +1,35 @@
+// Reduction of es2017.ts:736: the non-arrow overload promises a complete Block.
+interface Block { readonly kind: 'Block'; readonly statements: readonly number[]; }
+interface BodyExpression { readonly kind: 'Expression'; readonly text: string; }
+type ConciseBody = Block | BodyExpression;
+interface NonArrow { readonly kind: 'Method' | 'Accessor' | 'FunctionDeclaration' | 'FunctionExpression'; }
+interface ArrowFunction { readonly kind: 'ArrowFunction'; }
+type FunctionLikeDeclaration = NonArrow | ArrowFunction;
+function createBlock(statements: readonly number[]): Block {
+    return { kind: 'Block', statements };
+}
+function createAwaiterHelper(): BodyExpression {
+    return { kind: 'Expression', text: 'awaiter' };
+}
+function transformAsyncFunctionBody(node: NonArrow, outerParameters: readonly number[]): Block;
+function transformAsyncFunctionBody(node: ArrowFunction, outerParameters: readonly number[]): ConciseBody;
+function transformAsyncFunctionBody(node: FunctionLikeDeclaration, outerParameters: readonly number[]): ConciseBody {
+    const isArrowFunction = node.kind === 'ArrowFunction';
+    let result: ConciseBody;
+    if (!isArrowFunction) {
+        const block = createBlock(outerParameters);
+        result = block;
+    } else {
+        result = createAwaiterHelper();
+    }
+    return result;
+}
+const statements = [1, 2, 3];
+const block = transformAsyncFunctionBody({ kind: 'Method' }, statements);
+console.log(block.kind);
+console.log(`${block.statements === statements}`);
+console.log(`${block.statements.length}`);
+console.log(transformAsyncFunctionBody({ kind: 'FunctionDeclaration' }, statements).kind);
+console.log(transformAsyncFunctionBody({ kind: 'Accessor' }, statements).kind);
+console.log(transformAsyncFunctionBody({ kind: 'FunctionExpression' }, statements).kind);
+console.log(transformAsyncFunctionBody({ kind: 'ArrowFunction' }, statements).kind);
