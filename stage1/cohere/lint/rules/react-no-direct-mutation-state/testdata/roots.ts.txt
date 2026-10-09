@@ -1,0 +1,20 @@
+class H extends Component {
+  m() {
+    this.state.a.b = 1;
+    this.state["x"] += 2;
+    this["state"].x = 3;
+    that.state.x = 4;
+    this.props.state.x = 5;
+    (this.state).x = 6;
+    (this).state.x = 7;
+    (this.state.x) = 8;
+    (this.state.x)++;
+    --this.state.x;
+    !this.state.x;
+    delete this.state.x;
+    [this.state.x] = [1];
+    ({ y: this.state.x } = {});
+    this.state.list.push(1);
+    const s = this.state; s.x = 1;
+  }
+}

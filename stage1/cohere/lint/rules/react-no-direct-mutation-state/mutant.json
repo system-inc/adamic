@@ -1,0 +1,5 @@
+{
+  "name": "direct-state-constructor-call-lost",
+  "from": "(isConstructor && !isCallExpression) || !isComponent",
+  "to": "isConstructor || !isComponent"
+}

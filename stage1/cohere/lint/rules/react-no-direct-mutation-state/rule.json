@@ -1,0 +1,15 @@
+{
+  "name": "react/no-direct-mutation-state",
+  "kinds": [
+    "BinaryExpression",
+    "PostfixUnaryExpression",
+    "PrefixUnaryExpression"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleReactNoDirectMutationState",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoDirectMutationState"
+}

@@ -1,0 +1,4 @@
+createReactClass({ m() { this.state.x = 1; } });
+React.createReactClass({ m() { this.state.x++; } });
+createClass({ m() { this.state.x = 1; } });
+React.createClass({ m() { this.state.x = 1; } });

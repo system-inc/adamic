@@ -1,0 +1,46 @@
+=== RUN   TestReactNoDirectMutationStateSelected
+=== PAUSE TestReactNoDirectMutationStateSelected
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== CONT  TestReactNoDirectMutationStateSelected
+=== CONT  TestMutants
+=== RUN   TestMutants/direct-state-constructor-call-lost
+=== PAUSE TestMutants/direct-state-constructor-call-lost
+=== CONT  TestMutants/direct-state-constructor-call-lost
+    lint_test.go:1127: checker compilation phases: load=258.196353ms lower=20.33725521s C=2.662272586s JavaScript=206.746845ms
+    lint_test.go:1133: direct-state-constructor-call-lost caught on Node: case 89 line 4902: port "fixed\tclass H extends React.Component {\\u000a  constructor() {\\u000a    this.state = {};\\u000a    this.state.x = 1;\\u000a    consume(this.state.y = 2);\\u000a    later(() => { this.state.z++; });\\u000a  }\\u000a}\\u000a", Go "/tmp/adamic-gate/TestMutantsdirect-state-constructor-call-lost2536493702/020/react-no-direct-mutation-state-1.ts:5:13"
+        Go context:
+          react/no-direct-mutation-state  `this.state` is written to directly. React does not see the write, so nothing re-renders, and the next `setState` merges into the state object React still believes is current and silently discards what was written here. The bug surfaces later and somewhere else, as a value that was set and then was not. Call `setState` with the new value instead, and treat `this.state` as read-only everywhere but the constructor.
+
+        range 219 231 noDirectMutationState 			219 231
+        fixed	class Outer extends React.PureComponent {\u000a  m() {\u000a    this.state.x = 1;\u000a    class Plain { m() { this.state.x = 2; } }\u000a    createReactClass({ m() { this.state.x = 3; } });\u000a  }\u000a}\u000aconst H = class extends Component { m() { this.state.x = 4; } };\u000aclass Plain { m() { this.state.x = 5; } }\u000a
+        case 89
+        /tmp/adamic-gate/TestMutantsdirect-state-constructor-call-lost2536493702/020/react-no-direct-mutation-state-1.ts:5:13
+          react/no-direct-mutation-state  `this.state` is written to directly. React does not see the write, so nothing re-renders, and the next `setState` merges into the state object React still believes is current and silently discards what was written here. The bug surfaces later and somewhere else, as a value that was set and then was not. Call `setState` with the new value instead, and treat `this.state` as read-only everywhere but the constructor.
+
+        range 107 119 noDirectMutationState 			107 119
+        /tmp/adamic-gate/TestMutantsdirect-state-constructor-call-lost2536493702/020/react-no-direct-mutation-state-1.ts:6:19
+    lint_test.go:1133: direct-state-constructor-call-lost caught on emitted JavaScript: case 89 line 4902: port "fixed\tclass H extends React.Component {\\u000a  constructor() {\\u000a    this.state = {};\\u000a    this.state.x = 1;\\u000a    consume(this.state.y = 2);\\u000a    later(() => { this.state.z++; });\\u000a  }\\u000a}\\u000a", Go "/tmp/adamic-gate/TestMutantsdirect-state-constructor-call-lost2536493702/020/react-no-direct-mutation-state-1.ts:5:13"
+        Go context:
+          react/no-direct-mutation-state  `this.state` is written to directly. React does not see the write, so nothing re-renders, and the next `setState` merges into the state object React still believes is current and silently discards what was written here. The bug surfaces later and somewhere else, as a value that was set and then was not. Call `setState` with the new value instead, and treat `this.state` as read-only everywhere but the constructor.
+
+        range 219 231 noDirectMutationState 			219 231
+        fixed	class Outer extends React.PureComponent {\u000a  m() {\u000a    this.state.x = 1;\u000a    class Plain { m() { this.state.x = 2; } }\u000a    createReactClass({ m() { this.state.x = 3; } });\u000a  }\u000a}\u000aconst H = class extends Component { m() { this.state.x = 4; } };\u000aclass Plain { m() { this.state.x = 5; } }\u000a
+        case 89
+        /tmp/adamic-gate/TestMutantsdirect-state-constructor-call-lost2536493702/020/react-no-direct-mutation-state-1.ts:5:13
+          react/no-direct-mutation-state  `this.state` is written to directly. React does not see the write, so nothing re-renders, and the next `setState` merges into the state object React still believes is current and silently discards what was written here. The bug surfaces later and somewhere else, as a value that was set and then was not. Call `setState` with the new value instead, and treat `this.state` as read-only everywhere but the constructor.
+
+        range 107 119 noDirectMutationState 			107 119
+        /tmp/adamic-gate/TestMutantsdirect-state-constructor-call-lost2536493702/020/react-no-direct-mutation-state-1.ts:6:19
+--- PASS: TestMutants (6.48s)
+    --- PASS: TestMutants/direct-state-constructor-call-lost (26.20s)
+=== NAME  TestReactNoDirectMutationStateSelected
+    lint_test.go:296: cohere cases: 5786 unique source/rule/options combinations
+    direct_state_selected_test.go:18: captured upstream cases: 56
+    direct_state_selected_test.go:38: comparison rows: 154
+    direct_state_selected_test.go:39: checker compilation phases: load=195.86455ms lower=5.962193467s C=699.53268ms JavaScript=33.703632ms
+    direct_state_selected_test.go:39: checker native build: 1m3.549060625s
+    direct_state_selected_test.go:39: Go, Node, emitted JavaScript, native identical: 585071 bytes
+--- PASS: TestReactNoDirectMutationStateSelected (178.89s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	179.000s

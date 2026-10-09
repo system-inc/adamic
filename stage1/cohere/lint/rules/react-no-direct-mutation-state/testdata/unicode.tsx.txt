@@ -1,0 +1,4 @@
+// 🌍 état
+class H extends React.Component {
+  render() { this.state.x = "é"; return <div>{this.state.x}</div>; }
+}

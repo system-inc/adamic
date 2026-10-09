@@ -1,0 +1,67 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { isEs5ComponentCallStrict } from '../../helpers/rules-react/is_es5_component_call_strict.a';
+import { skipParenthesesOptional } from '../../helpers/rules-react/skip_parentheses_optional.a';
+import { messageNoDirectMutationState } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    nodes: HelperNode[] = [];
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void { this.nodes = project(this.context.parser.nodes); }
+    stateRooted(target: number): boolean {
+        let root = target;
+        while(root >= 0) {
+            const kind = this.context.kind(root);
+            if(kind !== 'PropertyAccessExpression' && kind !== 'ElementAccessExpression') { return false; }
+            const object = this.context.node(root).children[0] ?? -1;
+            if(object < 0) { return false; }
+            const objectKind = this.context.kind(object);
+            if(objectKind !== 'PropertyAccessExpression' && objectKind !== 'ElementAccessExpression') { break; }
+            root = object;
+        }
+        // Go only accepts a dotted root, and does not unwrap inside the chain.
+        if(this.context.kind(root) !== 'PropertyAccessExpression') { return false; }
+        const object = this.context.node(root).children[0] ?? -1;
+        const name = this.context.property(root);
+        return this.context.kind(object) === 'ThisKeyword' && this.context.kind(name) === 'Identifier' && this.context.node(name).text === 'state';
+    }
+    ignore(index: number): boolean {
+        let isConstructor = false;
+        let isCallExpression = false;
+        let isComponent = false;
+        let current = this.context.parent(index);
+        while(current >= 0) {
+            const kind = this.context.kind(current);
+            if(kind === 'Constructor') { isConstructor = true; }
+            if(kind === 'CallExpression') { isCallExpression = true; }
+            if(reactEs6ComponentClass(this.nodes, current, (expression: number): boolean => isComponentBase(this.nodes, expression, isComponentBaseName)) || isEs5ComponentCallStrict(this.context, current)) { isComponent = true; }
+            // Component detection precedes the first-class boundary.
+            if(kind === 'ClassDeclaration' || kind === 'ClassExpression') { break; }
+            current = this.context.parent(current);
+        }
+        return (isConstructor && !isCallExpression) || !isComponent;
+    }
+    visit(index: number): void {
+        const node = this.context.node(index);
+        let report = index;
+        let target = -1;
+        if(node.kind === 'BinaryExpression') {
+            const operator = this.context.kind(node.children[1] ?? -1);
+            if(!['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken', 'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken', 'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken', 'BarBarEqualsToken', 'AmpersandAmpersandEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator)) { return; }
+            target = skipParenthesesOptional(this.context, node.children[0] ?? -1);
+            report = target;
+        }
+        else {
+            if(node.kind === 'PrefixUnaryExpression' && node.operator !== 'PlusPlusToken' && node.operator !== 'MinusMinusToken') { return; }
+            target = skipParenthesesOptional(this.context, node.children[0] ?? -1);
+        }
+        if(!this.stateRooted(target) || this.ignore(index)) { return; }
+        this.context.reportNode(report, 'react/no-direct-mutation-state', 'noDirectMutationState', messageNoDirectMutationState);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

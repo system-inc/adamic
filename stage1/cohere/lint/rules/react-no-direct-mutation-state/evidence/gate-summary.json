@@ -1,0 +1,825 @@
+{
+  "counts": {
+    "pass": 160,
+    "skip": 1,
+    "fail": 0
+  },
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "failed": [],
+  "wallSeconds": 1163.055,
+  "nproc": 5,
+  "loadBefore": "1.50 2.46 1.30 1/138 4116",
+  "loadAfter": "5.06 5.64 4.16 1/143 160282",
+  "exitCode": 0,
+  "typescriptPin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "profileDirectory": "/tmp/s13-react-no-direct-mutation-state-profile.46hDiH",
+  "completed": [
+    {
+      "test": "TestCompilerGuardBackend",
+      "action": "pass",
+      "elapsed": 0
+    },
+    {
+      "test": "TestChildCPUHangGuard",
+      "action": "pass",
+      "elapsed": 1.05
+    },
+    {
+      "test": "TestChildWallBackstop",
+      "action": "pass",
+      "elapsed": 0.2
+    },
+    {
+      "test": "TestChildCPUWaitGuard",
+      "action": "pass",
+      "elapsed": 1.63
+    },
+    {
+      "test": "TestJsxLintReleaseAndThroughput",
+      "action": "pass",
+      "elapsed": 97.72
+    },
+    {
+      "test": "TestJsxInventoryDiscovery/new_rule_and_cases_require_no_inventory_edit",
+      "action": "pass",
+      "elapsed": 0
+    },
+    {
+      "test": "TestJsxInventoryDiscovery/missing_JSX_coverage_is_refused",
+      "action": "pass",
+      "elapsed": 0
+    },
+    {
+      "test": "TestJsxInventoryDiscovery/unregistered_captured_rule_is_refused",
+      "action": "pass",
+      "elapsed": 0
+    },
+    {
+      "test": "TestJsxInventoryDiscovery/malformed_row_is_refused",
+      "action": "pass",
+      "elapsed": 0
+    },
+    {
+      "test": "TestJsxInventoryDiscovery/empty_JSX_inventory_is_refused",
+      "action": "pass",
+      "elapsed": 0
+    },
+    {
+      "test": "TestJsxInventoryDiscovery",
+      "action": "pass",
+      "elapsed": 0
+    },
+    {
+      "test": "TestThroughput",
+      "action": "pass",
+      "elapsed": 92.97
+    },
+    {
+      "test": "TestNonprogressingFix",
+      "action": "pass",
+      "elapsed": 17.15
+    },
+    {
+      "test": "TestNonprogressingFixPanicMutant/Node",
+      "action": "pass",
+      "elapsed": 0.3
+    },
+    {
+      "test": "TestNonprogressingFixPanicMutant/emitted_JavaScript",
+      "action": "pass",
+      "elapsed": 0.06
+    },
+    {
+      "test": "TestNonprogressingFixPanicMutant/sanitized_native",
+      "action": "pass",
+      "elapsed": 0.01
+    },
+    {
+      "test": "TestNonprogressingFixPanicMutant",
+      "action": "pass",
+      "elapsed": 71.07
+    },
+    {
+      "test": "TestNonprogressingFixPlanOrder",
+      "action": "pass",
+      "elapsed": 76.94
+    },
+    {
+      "test": "TestProfileArtifacts",
+      "action": "pass",
+      "elapsed": 57.83
+    },
+    {
+      "test": "TestCapturedOracleRecovery",
+      "action": "pass",
+      "elapsed": 0.06
+    },
+    {
+      "test": "TestUnmarkedMalformedOracleInputStillFails",
+      "action": "pass",
+      "elapsed": 0.01
+    },
+    {
+      "test": "TestRecoveryClassificationPreservesModes",
+      "action": "pass",
+      "elapsed": 0
+    },
+    {
+      "test": "TestNestedConstructorGap",
+      "action": "pass",
+      "elapsed": 0.19
+    },
+    {
+      "test": "TestCompilerCorpusSourcesExcludeOnlyNamedFolders",
+      "action": "pass",
+      "elapsed": 0.1
+    },
+    {
+      "test": "TestExecuteFailsOnStderrOtherThanModuleDownloads",
+      "action": "pass",
+      "elapsed": 0.23
+    },
+    {
+      "test": "TestCommandDiagnosticsDropOnlyModuleDownloads",
+      "action": "pass",
+      "elapsed": 0
+    },
+    {
+      "test": "TestCheckerHashes",
+      "action": "pass",
+      "elapsed": 0.67
+    },
+    {
+      "test": "TestReactNoDirectMutationStateSelected",
+      "action": "pass",
+      "elapsed": 2.79
+    },
+    {
+      "test": "TestCheckerBridgeRefusalPending",
+      "action": "skip",
+      "elapsed": 0
+    },
+    {
+      "test": "TestCheckerNoProgramCoverage",
+      "action": "pass",
+      "elapsed": 1.86
+    },
+    {
+      "test": "TestCheckerReplayEntryControl",
+      "action": "pass",
+      "elapsed": 6.22
+    },
+    {
+      "test": "TestDotARename",
+      "action": "pass",
+      "elapsed": 24.28
+    },
+    {
+      "test": "TestCheckerCacheSourceByte",
+      "action": "pass",
+      "elapsed": 60.66
+    },
+    {
+      "test": "TestOptionAndComparatorGaps/2_optional_index.ts",
+      "action": "pass",
+      "elapsed": 0.22
+    },
+    {
+      "test": "TestOptionAndComparatorGaps/3_numeric_or.ts",
+      "action": "pass",
+      "elapsed": 0.2
+    },
+    {
+      "test": "TestOptionAndComparatorGaps/4_last_index_position.ts",
+      "action": "pass",
+      "elapsed": 0.21
+    },
+    {
+      "test": "TestOptionAndComparatorGaps",
+      "action": "pass",
+      "elapsed": 0.63
+    },
+    {
+      "test": "TestEmittedJavaScriptMismatch",
+      "action": "pass",
+      "elapsed": 40.78
+    },
+    {
+      "test": "TestTypedReplayKeepsUpstreamCompilerOptions",
+      "action": "pass",
+      "elapsed": 0.18
+    },
+    {
+      "test": "TestCommentFoldMutant",
+      "action": "pass",
+      "elapsed": 27.81
+    },
+    {
+      "test": "TestNestedOutsideModuleCopy",
+      "action": "pass",
+      "elapsed": 1.4
+    },
+    {
+      "test": "TestDecodedOptionsAndMutant",
+      "action": "pass",
+      "elapsed": 27.33
+    },
+    {
+      "test": "TestRegistrationMutant",
+      "action": "pass",
+      "elapsed": 22.68
+    },
+    {
+      "test": "TestOwnedWitnesses",
+      "action": "pass",
+      "elapsed": 17.97
+    },
+    {
+      "test": "TestPositionIndexMutant",
+      "action": "pass",
+      "elapsed": 17.2
+    },
+    {
+      "test": "TestSuggestionAlongsideAutomaticFix",
+      "action": "pass",
+      "elapsed": 156.58
+    },
+    {
+      "test": "TestCompilerAndStage1Agree",
+      "action": "pass",
+      "elapsed": 169.36
+    },
+    {
+      "test": "TestCompleteSuggestionSerialization",
+      "action": "pass",
+      "elapsed": 163.88
+    },
+    {
+      "test": "TestWitnessScriptKind",
+      "action": "pass",
+      "elapsed": 18.15
+    },
+    {
+      "test": "TestFactoryHooks",
+      "action": "pass",
+      "elapsed": 133.13
+    },
+    {
+      "test": "TestJsxLintTrees",
+      "action": "pass",
+      "elapsed": 114.71
+    },
+    {
+      "test": "TestProfileCompilation",
+      "action": "pass",
+      "elapsed": 68.23
+    },
+    {
+      "test": "TestNodeTableIsLinkOnly",
+      "action": "pass",
+      "elapsed": 4.56
+    },
+    {
+      "test": "TestCountGuardMutant",
+      "action": "pass",
+      "elapsed": 27.48
+    },
+    {
+      "test": "TestDecorationOptionMutant",
+      "action": "pass",
+      "elapsed": 26.93
+    },
+    {
+      "test": "TestMutants/debugger_fix_suppressed",
+      "action": "pass",
+      "elapsed": 17.5
+    },
+    {
+      "test": "TestMutants/await_crosses_function_boundary",
+      "action": "pass",
+      "elapsed": 16.24
+    },
+    {
+      "test": "TestShardsAgree",
+      "action": "pass",
+      "elapsed": 190.37
+    },
+    {
+      "test": "TestMutants/directive_prefix_ignored",
+      "action": "pass",
+      "elapsed": 14.69
+    },
+    {
+      "test": "TestMutants/bom_removes_two_marks",
+      "action": "pass",
+      "elapsed": 15.34
+    },
+    {
+      "test": "TestMutants/bare-fetch-omitted",
+      "action": "pass",
+      "elapsed": 14.54
+    },
+    {
+      "test": "TestMutants/nested_generator_owns_outer_yield",
+      "action": "pass",
+      "elapsed": 14.32
+    },
+    {
+      "test": "TestMutants/accept-plain-classes",
+      "action": "pass",
+      "elapsed": 14.91
+    },
+    {
+      "test": "TestMutants/require-optimization-accept-class-field",
+      "action": "pass",
+      "elapsed": 15.2
+    },
+    {
+      "test": "TestProfileSnapshotsAgree",
+      "action": "pass",
+      "elapsed": 226.2
+    },
+    {
+      "test": "TestMutants/direct-state-constructor-call-lost",
+      "action": "pass",
+      "elapsed": 14.26
+    },
+    {
+      "test": "TestMutants/empty-string-is-whitespace",
+      "action": "pass",
+      "elapsed": 14.96
+    },
+    {
+      "test": "TestLegacyMutants/overlap_winner_misreported",
+      "action": "pass",
+      "elapsed": 124.2
+    },
+    {
+      "test": "TestLegacyMutants",
+      "action": "pass",
+      "elapsed": 124.37
+    },
+    {
+      "test": "TestMutants/try_block_omitted",
+      "action": "pass",
+      "elapsed": 15.25
+    },
+    {
+      "test": "TestMutants/prefer-destructuring-object-fix",
+      "action": "pass",
+      "elapsed": 16.13
+    },
+    {
+      "test": "TestMutants/operator-assignment-reversed-fix",
+      "action": "pass",
+      "elapsed": 16.54
+    },
+    {
+      "test": "TestMutants/with_statement_underlined_whole",
+      "action": "pass",
+      "elapsed": 16.91
+    },
+    {
+      "test": "TestMutants/comment_self_directive_exemption_removed",
+      "action": "pass",
+      "elapsed": 16.95
+    },
+    {
+      "test": "TestMutants/no-useless-rename-import-side",
+      "action": "pass",
+      "elapsed": 16.57
+    },
+    {
+      "test": "TestMutants/no-useless-escape_drops_quoted_findings",
+      "action": "pass",
+      "elapsed": 15.64
+    },
+    {
+      "test": "TestMutants/concat_substituted_template_ignored",
+      "action": "pass",
+      "elapsed": 16.66
+    },
+    {
+      "test": "TestMutants/no-useless-catch_finally_repair_range_reversed",
+      "action": "pass",
+      "elapsed": 15.9
+    },
+    {
+      "test": "TestMutants/continue_target_ignored",
+      "action": "pass",
+      "elapsed": 16.44
+    },
+    {
+      "test": "TestMutants/and-left-undefined-ignored",
+      "action": "pass",
+      "elapsed": 15.66
+    },
+    {
+      "test": "TestMutants/ordering-relations-ignored",
+      "action": "pass",
+      "elapsed": 15.72
+    },
+    {
+      "test": "TestMutants/finally_continue_incorrectly_absorbed_by_switch",
+      "action": "pass",
+      "elapsed": 15.61
+    },
+    {
+      "test": "TestMutants/boolean_inverse_changed",
+      "action": "pass",
+      "elapsed": 14.88
+    },
+    {
+      "test": "TestMutants/constructor-property-name-ignored",
+      "action": "pass",
+      "elapsed": 15.6
+    },
+    {
+      "test": "TestMutants/empty_placeholder_reported",
+      "action": "pass",
+      "elapsed": 17.85
+    },
+    {
+      "test": "TestMutants/destructuring_hole_reported",
+      "action": "pass",
+      "elapsed": 17.29
+    },
+    {
+      "test": "TestMutants/comma_chain_reports_inner",
+      "action": "pass",
+      "elapsed": 15.8
+    },
+    {
+      "test": "TestRulesAgree",
+      "action": "pass",
+      "elapsed": 348.19
+    },
+    {
+      "test": "TestMutants/self-comparison-equality-reversed",
+      "action": "pass",
+      "elapsed": 13.72
+    },
+    {
+      "test": "TestMutants/no-script-url-case-fold",
+      "action": "pass",
+      "elapsed": 14.01
+    },
+    {
+      "test": "TestMutants/return_parentheses_option_reversed",
+      "action": "pass",
+      "elapsed": 14.08
+    },
+    {
+      "test": "TestMutants/regex-spaces-first-run-lost",
+      "action": "pass",
+      "elapsed": 14.11
+    },
+    {
+      "test": "TestMutants/omit-is-prototype-of",
+      "action": "pass",
+      "elapsed": 14.51
+    },
+    {
+      "test": "TestMutants/proto_accessor_suppressed",
+      "action": "pass",
+      "elapsed": 14.88
+    },
+    {
+      "test": "TestMutants/for_update_option_ignored",
+      "action": "pass",
+      "elapsed": 13.5
+    },
+    {
+      "test": "TestMutants/parentheses_around_a_discarded_construction_not_seen_through",
+      "action": "pass",
+      "elapsed": 13.62
+    },
+    {
+      "test": "TestMutants/condition_polarity_reversed",
+      "action": "pass",
+      "elapsed": 13.28
+    },
+    {
+      "test": "TestMutants/no-multi-assign-option-reversed",
+      "action": "pass",
+      "elapsed": 13.43
+    },
+    {
+      "test": "TestMutants/label_option_widened",
+      "action": "pass",
+      "elapsed": 14.16
+    },
+    {
+      "test": "TestMutants/no-iterator-static-key",
+      "action": "pass",
+      "elapsed": 14.35
+    },
+    {
+      "test": "TestMutants/miss-postfix-writes",
+      "action": "pass",
+      "elapsed": 14.41
+    },
+    {
+      "test": "TestMutants/comment_exemption_removed",
+      "action": "pass",
+      "elapsed": 15.28
+    },
+    {
+      "test": "TestMutants/no-empty-pattern_reports_real_bindings",
+      "action": "pass",
+      "elapsed": 14.3
+    },
+    {
+      "test": "TestMutants/empty_character_class_silenced",
+      "action": "pass",
+      "elapsed": 15.05
+    },
+    {
+      "test": "TestMutants/duplicate-else-if-keeps-covered-group",
+      "action": "pass",
+      "elapsed": 14.04
+    },
+    {
+      "test": "TestMutants/regex_fix_eats_extra_byte",
+      "action": "pass",
+      "elapsed": 14.2
+    },
+    {
+      "test": "TestMutants/control-range-lost",
+      "action": "pass",
+      "elapsed": 13.37
+    },
+    {
+      "test": "TestMutants/continue_finding_stops_before_its_semicolon",
+      "action": "pass",
+      "elapsed": 13.92
+    },
+    {
+      "test": "TestMutants/no-caller-property",
+      "action": "pass",
+      "elapsed": 14.36
+    },
+    {
+      "test": "TestMutants/non_Error_throw_suppressed",
+      "action": "pass",
+      "elapsed": 110.66
+    },
+    {
+      "test": "TestMutants/int32_hint_option_ignored",
+      "action": "pass",
+      "elapsed": 14.38
+    },
+    {
+      "test": "TestMutants/parenthesized_alias_lost",
+      "action": "pass",
+      "elapsed": 14.91
+    },
+    {
+      "test": "TestMutants/interface_accepts_type_suffix",
+      "action": "pass",
+      "elapsed": 13.9
+    },
+    {
+      "test": "TestMutants/nexus-stuttering-name-equality",
+      "action": "pass",
+      "elapsed": 14.39
+    },
+    {
+      "test": "TestMutants/empty_JSX_comment_anchor_dropped",
+      "action": "pass",
+      "elapsed": 14.26
+    },
+    {
+      "test": "TestMutants/shouting_fourth_token_omitted",
+      "action": "pass",
+      "elapsed": 14.2
+    },
+    {
+      "test": "TestMutants/multiline-arrow-single-line-exemption-removed",
+      "action": "pass",
+      "elapsed": 15.07
+    },
+    {
+      "test": "TestMutants/nexus_long_line_comment_configured_threshold_ignored",
+      "action": "pass",
+      "elapsed": 14.78
+    },
+    {
+      "test": "TestMutants/nexus-for-in-message",
+      "action": "pass",
+      "elapsed": 14.6
+    },
+    {
+      "test": "TestMutants/enum_reported_at_its_declaration_rather_than_its_name",
+      "action": "pass",
+      "elapsed": 14.96
+    },
+    {
+      "test": "TestMutants/ambiguous-identifier-span",
+      "action": "pass",
+      "elapsed": 14.19
+    },
+    {
+      "test": "TestMutants/nexus-abbreviated-identifier_whole-word_finding_suppressed",
+      "action": "pass",
+      "elapsed": 14.84
+    },
+    {
+      "test": "TestMutants/callback_at_the_limit_is_reported",
+      "action": "pass",
+      "elapsed": 14.98
+    },
+    {
+      "test": "TestMutants/max-depth-keyword-span",
+      "action": "pass",
+      "elapsed": 14.53
+    },
+    {
+      "test": "TestMutants/one_excess_class_is_silently_allowed",
+      "action": "pass",
+      "elapsed": 15.06
+    },
+    {
+      "test": "TestMutants/pagination_bad_name_accepted",
+      "action": "pass",
+      "elapsed": 14.6
+    },
+    {
+      "test": "TestMutants/declared_BaseError_constructor_ignored",
+      "action": "pass",
+      "elapsed": 14.63
+    },
+    {
+      "test": "TestMutants/console_receiver_widened",
+      "action": "pass",
+      "elapsed": 13.4
+    },
+    {
+      "test": "TestMutants/global_container_name_judgement_reversed",
+      "action": "pass",
+      "elapsed": 13.1
+    },
+    {
+      "test": "TestMutants/predicate_finding_widened_to_its_owner",
+      "action": "pass",
+      "elapsed": 13.23
+    },
+    {
+      "test": "TestMutants/enum_bitwise_option_ignored",
+      "action": "pass",
+      "elapsed": 12.79
+    },
+    {
+      "test": "TestMutants/wrapper_Number_ignored",
+      "action": "pass",
+      "elapsed": 13.43
+    },
+    {
+      "test": "TestMutants/module_empty_export_fix_suppressed",
+      "action": "pass",
+      "elapsed": 12.7
+    },
+    {
+      "test": "TestMutants/prefer-find_array_verdict_suppressed",
+      "action": "pass",
+      "elapsed": 20.87
+    },
+    {
+      "test": "TestMutants/react-no-is-mounted_mutant_from_batch_8",
+      "action": "pass",
+      "elapsed": 13.89
+    },
+    {
+      "test": "TestMutants/boolean_type_verdict_inverted",
+      "action": "pass",
+      "elapsed": 21.09
+    },
+    {
+      "test": "TestMutants/number-inference",
+      "action": "pass",
+      "elapsed": 14.08
+    },
+    {
+      "test": "TestMutants/no-redundant-type-constituents-decision",
+      "action": "pass",
+      "elapsed": 21.69
+    },
+    {
+      "test": "TestMutants/inline_type_gate",
+      "action": "pass",
+      "elapsed": 13.56
+    },
+    {
+      "test": "TestMutants/method_listener_lost",
+      "action": "pass",
+      "elapsed": 12.92
+    },
+    {
+      "test": "TestMutants/wave14-no_array_delete",
+      "action": "pass",
+      "elapsed": 20.28
+    },
+    {
+      "test": "TestMutants/init_declarations_always_span_includes_annotation",
+      "action": "pass",
+      "elapsed": 13.13
+    },
+    {
+      "test": "TestMutants/object-alias-message-changed",
+      "action": "pass",
+      "elapsed": 13.21
+    },
+    {
+      "test": "TestMutants/adjacent_overload_separation_ignored",
+      "action": "pass",
+      "elapsed": 12.96
+    },
+    {
+      "test": "TestMutants/next-no-typos-threshold",
+      "action": "pass",
+      "elapsed": 13.93
+    },
+    {
+      "test": "TestMutants/inline-script-presence-inverted",
+      "action": "pass",
+      "elapsed": 13.87
+    },
+    {
+      "test": "TestMutants/react-no-redundant-should-component-update_mutant_from_batch_8",
+      "action": "pass",
+      "elapsed": 13.61
+    },
+    {
+      "test": "TestMutants/no-unused-private-class-members_mutant_from_batch_8",
+      "action": "pass",
+      "elapsed": 13.54
+    },
+    {
+      "test": "TestMutants/react-no-find-dom-node_mutant_from_batch_8",
+      "action": "pass",
+      "elapsed": 13.47
+    },
+    {
+      "test": "TestMutants/Only_root_nullability_accepted",
+      "action": "pass",
+      "elapsed": 105.22
+    },
+    {
+      "test": "TestMutants/react-forward-ref-uses-ref_mutant_from_batch_8",
+      "action": "pass",
+      "elapsed": 13.68
+    },
+    {
+      "test": "TestMutants/prefer-template_mutant_from_batch_8",
+      "action": "pass",
+      "elapsed": 12.83
+    },
+    {
+      "test": "TestMutants/react-jsx-no-comment-textnodes_mutant_from_batch_8",
+      "action": "pass",
+      "elapsed": 23.96
+    },
+    {
+      "test": "TestMutants/no-useless-constructor_mutant_from_batch_8",
+      "action": "pass",
+      "elapsed": 13.3
+    },
+    {
+      "test": "TestMutants/duplicate_case_suppressed",
+      "action": "pass",
+      "elapsed": 14.19
+    },
+    {
+      "test": "TestMutants/no-unexpected-multiline_mutant_from_batch_8",
+      "action": "pass",
+      "elapsed": 13.92
+    },
+    {
+      "test": "TestMutants/no-octal-escape_mutant_from_batch_8",
+      "action": "pass",
+      "elapsed": 12.35
+    },
+    {
+      "test": "TestMutants/suggestion_applied_as_fix",
+      "action": "pass",
+      "elapsed": 11.14
+    },
+    {
+      "test": "TestMutants/var_declaration_suppressed",
+      "action": "pass",
+      "elapsed": 10.54
+    },
+    {
+      "test": "TestMutants/empty_function_body_reported",
+      "action": "pass",
+      "elapsed": 9.8
+    },
+    {
+      "test": "TestMutants",
+      "action": "pass",
+      "elapsed": 0.03
+    }
+  ]
+}

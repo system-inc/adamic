@@ -1,0 +1,9 @@
+class Outer extends React.PureComponent {
+  m() {
+    this.state.x = 1;
+    class Plain { m() { this.state.x = 2; } }
+    createReactClass({ m() { this.state.x = 3; } });
+  }
+}
+const H = class extends Component { m() { this.state.x = 4; } };
+class Plain { m() { this.state.x = 5; } }

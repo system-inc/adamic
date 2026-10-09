@@ -1,0 +1,8 @@
+class H extends React.Component {
+  constructor() {
+    this.state = {};
+    this.state.x = 1;
+    consume(this.state.y = 2);
+    later(() => { this.state.z++; });
+  }
+}
