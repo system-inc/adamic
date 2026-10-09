@@ -1,0 +1,41 @@
+{
+  "TestNodeCacheProgram": {
+    "subsumer": "TestCacheKeyDimensions",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:379.2,380.1 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:384.2,396.40 13",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:401.2,401.43 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:406.2,406.16 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:407.3,408.1 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:442.2,444.20 3",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:447.2,447.14 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:448.3,448.23 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:451.3,451.32 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:453.2,453.21 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:456.48,456.76 1"
+    ]
+  },
+  "TestNativeCacheGeneratedC": {
+    "subsumer": "TestCacheKeyDimensions",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:379.2,380.1 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:384.2,396.40 13",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:401.2,401.43 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:406.2,406.16 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:407.3,408.1 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:442.2,444.20 3",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:447.2,447.14 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:448.3,448.23 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:451.3,451.32 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:453.2,453.21 1",
+      "github.com/system-inc/adamic/cmd/adamic-test262/run.go:456.48,456.76 1"
+    ]
+  },
+  "TestCacheBypass": {
+    "subsumer": "TestEditCacheSeparation",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-test262/cache.go:68.3,70.1 2",
+      "github.com/system-inc/adamic/cmd/adamic-test262/cache.go:91.3,92.1 1"
+    ]
+  }
+}

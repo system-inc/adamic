@@ -1,0 +1,11 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -376,7 +376,7 @@
+ }
+ 
+ func runCommand(timeout time.Duration, extra []string, name string, args ...string) execution {
+-	return runCommandWithLimit(timeout, extra, outputLimit, name, args...)
++	return runCommandWithLimit(timeout, extra, 6, name, args...)
+ }
+ 
+ // Generated C is an artifact, not program output: give it room, and never compile a truncated one.

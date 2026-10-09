@@ -1,0 +1,13 @@
+--- a/cmd/adamic-test262/run.go
++++ b/cmd/adamic-test262/run.go
+@@ -389,8 +389,8 @@
+ 	var stdout, stderr limitedBuffer
+ 	stdout.limit = limit
+ 	stderr.limit = limit
+-	command.Stdout = &stdout
+-	command.Stderr = &stderr
++	command.Stdout = &stderr
++	command.Stderr = &stdout
+ 	err := command.Run()
+ 	result := execution{Stdout: stdout.String(), Stderr: stderr.String()}
+ 	if stdout.exceeded || stderr.exceeded {

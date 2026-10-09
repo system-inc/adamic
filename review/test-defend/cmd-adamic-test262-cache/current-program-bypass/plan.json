@@ -1,0 +1,45 @@
+{
+  "starting_commit": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "mutants": [
+    {
+      "mutant": "D01",
+      "file_line": "cmd/adamic-test262/cache.go:90",
+      "change": "result.Exit == -2 && result.Signal == \"\"",
+      "menu": "change constant",
+      "target": "TestCacheBypass",
+      "difference": "failed process starts must not become durable observations"
+    },
+    {
+      "mutant": "D02",
+      "file_line": "cmd/adamic-test262/cache.go:60",
+      "change": "return cacheKey(\"test262-node-v1\", version, adaptation, command, context)",
+      "menu": "drop key dimension",
+      "target": "TestNodeCacheProgram",
+      "difference": "source edit at a stable module path"
+    },
+    {
+      "mutant": "D03",
+      "file_line": "cmd/adamic-test262/cache.go:63",
+      "change": "return cacheKey(\"test262-native-v1\", library, command, context)",
+      "menu": "drop key dimension",
+      "target": "TestNativeCacheGeneratedC",
+      "difference": "changed generated C at a stable binary path"
+    },
+    {
+      "mutant": "D04",
+      "file_line": "cmd/adamic-test262/run.go:379",
+      "change": "return runCommandWithLimit(timeout, extra, 6, name, args...)",
+      "menu": "change option",
+      "target": "TestNodeCacheProgram, TestNativeCacheGeneratedC",
+      "difference": "real program stdout needs the complete word plus newline; synthetic key observations do not exercise capture"
+    },
+    {
+      "mutant": "D05",
+      "file_line": "cmd/adamic-test262/run.go:392",
+      "change": "command.Stdout = &stderr\n\tcommand.Stderr = &stdout",
+      "menu": "swap two stream arguments",
+      "target": "TestNodeCacheProgram, TestNativeCacheGeneratedC",
+      "difference": "real execution stdout must remain stdout; synthetic key observations bypass command capture"
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+[
+  {
+    "test": "TestNodeCacheProgram",
+    "package": "cmd/adamic-test262",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCacheKeyDimensions"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D02",
+        "file_line": "cmd/adamic-test262/cache.go:60",
+        "change": "return cacheKey(\"test262-node-v1\", version, adaptation, command, context)",
+        "rows_failed": [
+          "TestCacheKeyDimensions",
+          "TestNodeCacheProgram"
+        ]
+      },
+      {
+        "mutant": "D04",
+        "file_line": "cmd/adamic-test262/run.go:379",
+        "change": "return runCommandWithLimit(timeout, extra, 6, name, args...)",
+        "rows_failed": [
+          "TestParallelCachedMatchesSerial",
+          "TestProgramCPUDeadline",
+          "TestCompilerCacheProgram",
+          "TestNodeCacheProgram",
+          "TestNativeCacheGeneratedC"
+        ]
+      },
+      {
+        "mutant": "D05",
+        "file_line": "cmd/adamic-test262/run.go:392",
+        "change": "command.Stdout = &stderr\n\tcommand.Stderr = &stdout",
+        "rows_failed": [
+          "TestParallelCachedMatchesSerial",
+          "TestCompilerStartupMeasurement",
+          "TestProgramCPUDeadline",
+          "TestRunProgramFractionalCPUBudget",
+          "TestCompilerCacheProgram",
+          "TestLargeCompilerOutputIsComplete",
+          "TestNativeCacheGeneratedC",
+          "TestNodeCacheProgram",
+          "TestWorkerLazyFallback",
+          "TestRunCommandExactCaptureCapacity",
+          "TestImportedInputsRunFresh",
+          "TestUnavailableCacheStillRuns",
+          "TestMiniRunner"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend262/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D05.log 2>&1; cache_test.go:31: changed Node program served \"\", want \"before\\n\""
+  },
+  {
+    "test": "TestNativeCacheGeneratedC",
+    "package": "cmd/adamic-test262",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCacheKeyDimensions"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D03",
+        "file_line": "cmd/adamic-test262/cache.go:63",
+        "change": "return cacheKey(\"test262-native-v1\", library, command, context)",
+        "rows_failed": [
+          "TestCacheKeyDimensions",
+          "TestNativeCacheGeneratedC"
+        ]
+      },
+      {
+        "mutant": "D04",
+        "file_line": "cmd/adamic-test262/run.go:379",
+        "change": "return runCommandWithLimit(timeout, extra, 6, name, args...)",
+        "rows_failed": [
+          "TestParallelCachedMatchesSerial",
+          "TestProgramCPUDeadline",
+          "TestCompilerCacheProgram",
+          "TestNodeCacheProgram",
+          "TestNativeCacheGeneratedC"
+        ]
+      },
+      {
+        "mutant": "D05",
+        "file_line": "cmd/adamic-test262/run.go:392",
+        "change": "command.Stdout = &stderr\n\tcommand.Stderr = &stdout",
+        "rows_failed": [
+          "TestParallelCachedMatchesSerial",
+          "TestCompilerStartupMeasurement",
+          "TestProgramCPUDeadline",
+          "TestRunProgramFractionalCPUBudget",
+          "TestCompilerCacheProgram",
+          "TestLargeCompilerOutputIsComplete",
+          "TestNativeCacheGeneratedC",
+          "TestNodeCacheProgram",
+          "TestWorkerLazyFallback",
+          "TestRunCommandExactCaptureCapacity",
+          "TestImportedInputsRunFresh",
+          "TestUnavailableCacheStillRuns",
+          "TestMiniRunner"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend262/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D05.log 2>&1; cache_test.go:50: changed emitted C served \"\", want \"before\\n\""
+  },
+  {
+    "test": "TestCacheBypass",
+    "package": "cmd/adamic-test262",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestEditCacheSeparation"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D01 cmd/adamic-test262/cache.go:90",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "cmd/adamic-test262/cache.go:90",
+        "change": "result.Exit == -2 && result.Signal == \"\"",
+        "rows_failed": [
+          "TestCacheBypass"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend262/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D01.log 2>&1; cache_test.go:130: transient failure cached"
+  }
+]
