@@ -745,6 +745,8 @@ adamic_object *adamic_regex_next(adamic_object *iterator) {
 	adamic_object *result = adamic_object_new(&next_shape);
 	result->slots[0].boolean = value == NULL;
 	result->slots[1].reference = value;
+	adamic_object_field_types(result)[0] = 2;
+	adamic_object_field_types(result)[1] = value == NULL ? 13 : 5;
 	return result;
 }
 double adamic_regex_search(adamic_string *input, adamic_object *regex) {

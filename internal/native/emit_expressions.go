@@ -4,6 +4,7 @@ package native
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"slices"
 	"strconv"
 	"strings"
 )
@@ -606,7 +607,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		text := e.value(expression.Text)
 		return e.own(ir.Object, fmt.Sprintf("adamic_write_text_file(%s, %s)", path, text))
 	case ir.ArrayPush:
-		array := e.own(ir.Array, fmt.Sprintf("adamic_retain(%s)", e.value(expression.Array)))
+		array := e.value(expression.Array)
+		// Reuse the statement's hold; borrowed receivers still need a hold before the argument.
+		if !slices.Contains(e.owned, array) {
+			array = e.own(ir.Array, fmt.Sprintf("adamic_retain(%s)", array))
+		}
 		value := e.value(expression.Value)
 		if e.program.CheckedElements {
 			e.line("adamic_array_check_never(%s, %d, %s, %s);", array, expression.Element, borrowed(expression.Element, value), cString(expression.WriteOrigin.Expression))

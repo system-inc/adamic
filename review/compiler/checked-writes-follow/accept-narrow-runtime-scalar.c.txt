@@ -295,7 +295,7 @@ static bool adamic_contract_runtime_scalar(const adamic_field_contract *expected
 
 // Compare allocation declarations, not a snapshot of a mutable object's values.
 // This preserves a nested literal contract even when the candidate arrived through
-// a broader source view. Getters and unproven domains fail closed.
+// a broader source view. Getters and unavailable allocation metadata fail closed.
 static bool adamic_contract_object(const adamic_field_contract *contract, const adamic_object *value) {
 	if (value->shape->contracts != NULL && adamic_contract_proven(contract->field_proof_count, contract->field_proofs, value->shape->contracts[-1].type_id)) { return true; }
 	if (!contract->structural) { return false; }
@@ -306,7 +306,7 @@ static bool adamic_contract_object(const adamic_field_contract *contract, const 
 		if (!adamic_object_initialized(value)[cache.index] || adamic_accessor_find(value, contract->field_names[index]) != NULL) { return false; }
 		const adamic_field_contract *expected = &contract->field_contracts[index];
 		if (value->shape->contracts == NULL) {
-			if (!adamic_contract_runtime_scalar(expected, adamic_object_field_types(value)[cache.index])) { return false; }
+			if (expected->kind != 2 && !adamic_contract_runtime_scalar(expected, adamic_object_field_types(value)[cache.index])) { return false; }
 			continue;
 		}
 		const adamic_field_contract *actual = &value->shape->contracts[cache.index];
