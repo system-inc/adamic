@@ -1,0 +1,58 @@
+run adamic-verify-20261009T020845-6cff02c6: red, 12126 tests in 12 units, 18 failed, 0 units broken, 0 killed over budget
+FAIL github.com/system-inc/adamic/internal/skipcensus TestCensus (tests-00)
+    census_test.go:31: stale metadata internal/native/units_tsgo_test.go:TestSplitTSGoAgrees:fe6e33c0c5029eba251ce8abd2b20d0057e044956c6b84aa601a203a9d9680ae
+    stale metadata internal/native/wasm_test.go:TestWASI:362f333fa4b72ea7c25a5bb02fd791f13e6995ff1db70c6bcd5e8b503ce3da89
+    stale metadata internal/native/wasm_test.go:TestWASI:84bb45dda60b9ac4a325def472053ec24083a3eca7b2cf2474e71763541bf80c
+    stale metadata internal/native/wasm_test.go:TestWASI:c21b865ade4f7ec33e3c43e989d4915bb320441b56260e70d1b404d8e6ee400c
+    stale metadata internal/native/wasm_test.go:TestWASI:e331d554fc45e12edd105c0ed30539b5b8161c822ca013eeb9b559b9a29e4822
+    stale metadata internal/native/wasm_test.go:TestWASI:f69cd3364c297e515a7579901e72251584219181e3d65f6db4443ff8a7833420
+    stale metadata stage1/cohere/tsprinter/expressions_test.go:TestExpressionsAgainstGoAndPrettier:d477d9e8698360d4235fd6018e2b01d8580d25ea79afd8417ad44c9dfcdd86fc
+    undeclared skip bridge/tsgo/units_test.go:TestBridgeABI,TestBridgeInputLength,TestBridgeLinkage,TestBridgeOracleChecker,TestBridgeOracleParser,TestBridgeOracleSample,TestBridgeOracleTypes,TestBridgeOracleUtilities,TestBridgeOutputFree,TestBridgeOutputLength,TestBridgeRegion,TestBridgeRegionOwnership,TestBridgeStaleHandle,TestBridgeTimingRound1Checker,TestBridgeTimingRound1Parser,TestBridgeTimingRound1Sample,TestBridgeTimingRound1Types,TestBridgeTimingRound1Utilities,TestBridgeTimingRound2Checker,TestBridgeTimingRound2Parser,TestBridgeTimingRound2Sample,TestBridgeTimingRound2Types,TestBridgeTimingRound2Utilities,TestBridgeTimingRound3Checker,TestBridgeTimingRound3Parser,TestBridgeTimingRound3Sample,TestBridgeTimingRound3Types,TestBridgeTimingRound3Utilities,TestBridgeUnlinkedBuild,TestBridgeUnlinkedC,TestBridgeUnlinkedJavaScript,TestBridgeWrongPositionChecker,TestBridgeWrongPositionParser,TestBridgeWrongPositionSample,TestBridgeWrongPositionTypes,TestBridgeWrongPositionUtilities:4f83fbf63794201d559dc36
+FAIL github.com/system-inc/adamic/internal/ir TestCallTargetReaders (tests-03)
+    call_targets_guard_test.go:172: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /tmp/adamic/internal/lower/overload_results.go:212:23; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:172: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:Call.Function at /tmp/adamic/internal/lower/overload_results.go:255:49; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:172: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /tmp/adamic/internal/lower/overload_results.go:274:47; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:172: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:Call.Function at /tmp/adamic/internal/lower/overload_results.go:313:46; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:172: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /tmp/adamic/internal/lower/overload_results.go:325:46; use CallTargets or ClosureTargets
+FAIL github.com/system-inc/adamic/internal/lower TestRepresentationClockSourceCheckedTypes (tests-03)
+    representation_clock_source_test.go:69: source: representation = (10, true), want (0, false)
+    representation_clock_source_test.go:78: CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI
+FAIL github.com/system-inc/adamic/internal/oracle TestNewExpressionUint16RemainsNotYet (tests-04)
+    new_expression_test.go:35: want Uint16Array element-type NotYet, got <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a (tests-06)
+    wasi_test.go:34: want NotYet, got <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a (tests-06)
+    wasi_test.go:34: want NotYet, got <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a (tests-06)
+    wasi_test.go:34: want NotYet, got <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a (tests-06)
+    wasi_test.go:34: want NotYet, got <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16.a (tests-07)
+    oracle_test.go:750: want stage 0 to refuse with where and what, got <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/new_expression_uint16_notyet.a (tests-07)
+    oracle_test.go:750: want stage 0 to refuse with where and what, got <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a (tests-07)
+    oracle_test.go:750: want stage 0 to refuse with where and what, got <nil>
+FAIL github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/stage3/fixtures/taste/17_binder_flow.a (tests-07)
+    oracle_test.go:750: want stage 0 to refuse with where and what, got <nil>
+FAIL github.com/system-inc/adamic/internal/flow TestFlowCorpusUnitsCoverEveryProgram (tests-09)
+    corpus_coverage_test.go:66: corpus count: 826 paths, 866 expected, 4 families, 4 checks
+FAIL github.com/system-inc/adamic/internal/fresh TestFreshCorpusUnitsCoverEveryProgram (tests-09)
+    corpus_coverage_test.go:36: corpus count: 801 paths, 841 expected, 1 families
+FAIL github.com/system-inc/adamic/internal/fuzz TestFindingReproducesAlone/leak_runner_death (tests-09)
+    confirm_test.go:84: got finding leak: exit -1
+    panic: fixture failure under load
+    ; want flaked under load
+FAIL github.com/system-inc/adamic/internal/lower TestHiddenTNodeConstraintMutationRemainsNotYet (tests-09)
+    hidden_boundary_generic_tnode_test.go:93: want constrained mutation refusal, got <nil>
+FAIL github.com/system-inc/adamic/internal/native TestRuntimeStaticsSignalAndExit/handler_buffer_mutant (tests-09)
+    runtime_statics_parallel_test.go:97: SUMMARY: ThreadSanitizer: data race /tmp/adamic-gate/TestRuntimeStaticsSignalAndExithandler_buffer_mutant1071109525/001/adamic.c:82:6 in flush
+    runtime_statics_parallel_test.go:97: signal mutant not caught: signal: terminated
+    signal worker line
+    signal worker line
+    signal worker line
+    signal worker line
+    signal worker line
+    signal worker line
+FAIL github.com/system-inc/adamic/internal/oracle TestOptionalFieldCheckedViewPending (tests-09)
+    optional_field_write_test.go:207: pending boundary changed: /tmp/adamic/internal/oracle/testdata/optional_field_checked_view_pending.a:6:1: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet
