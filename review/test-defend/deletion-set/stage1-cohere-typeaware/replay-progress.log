@@ -1,0 +1,9 @@
+test-audit-M1-1 345.7325557229997 ['TestVolumeAgreementAndMutants_014', 'TestVolumeAgreementAndMutants_030'] []
+test-audit-M4-1 244.45314708500155 ['TestSixRuleAgreementAndMutants_015'] []
+Traceback (most recent call last):
+  File "/workspace/adamic/review/test-defend/deletion-set/stage1-cohere-typeaware/replay.py", line 68, in <module>
+    r=observe(m,attempt,panics)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/review/test-defend/deletion-set/stage1-cohere-typeaware/replay.py", line 46, in observe
+    time.sleep(0.5)
+KeyboardInterrupt

@@ -1,0 +1,5 @@
+{
+  "mutant": "M1",
+  "reason": "Clean ordinary controls mismatch observed in TestVolumeAgreementAndMutants_030; stopped slow package as authorized",
+  "failing_line": "volume_agreement_shards_test.go:365: controls mismatch byte 8412"
+}

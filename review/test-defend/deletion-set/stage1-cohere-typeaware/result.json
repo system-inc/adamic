@@ -1,0 +1,92 @@
+{
+  "package": "stage1/cohere/typeaware",
+  "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "skipped": [
+    "TestVolumeProfileCorpora family"
+  ],
+  "mutants": [
+    {
+      "mutant": "M1",
+      "file_line": "stage1/cohere/typeaware/shadow.ts:106",
+      "branch": "test-audit/stage1-cohere-typeaware-volume_profile_Controls",
+      "candidates_failed": [
+        "TestVolumeProfileCorpora family"
+      ],
+      "still_caught_by": [
+        "TestVolumeAgreementAndMutants_014",
+        "TestVolumeAgreementAndMutants_030"
+      ],
+      "stale": false,
+      "wall_seconds": 345.733,
+      "observed_failures": [
+        "TestVolumeAgreementAndMutants_014",
+        "TestVolumeAgreementAndMutants_030"
+      ],
+      "panicking_tests": [],
+      "stopped_after_clean_catch": true
+    },
+    {
+      "mutant": "M4",
+      "file_line": "stage1/cohere/typeaware/diagnostic.ts:17",
+      "branch": "test-audit/stage1-cohere-typeaware-volume_profile_Controls",
+      "candidates_failed": [
+        "TestVolumeProfileCorpora family"
+      ],
+      "still_caught_by": [
+        "TestSixRuleAgreementAndMutants_015"
+      ],
+      "stale": false,
+      "wall_seconds": 244.453,
+      "observed_failures": [
+        "TestSixRuleAgreementAndMutants_015"
+      ],
+      "panicking_tests": [],
+      "stopped_after_clean_catch": true
+    },
+    {
+      "mutant": "D1",
+      "file_line": "stage1/cohere/typeaware/shadow.ts:70",
+      "branch": "test-defend/stage1-cohere-typeaware-volume_profile_Controls",
+      "candidates_failed": [
+        "TestVolumeProfileCorpora family"
+      ],
+      "still_caught_by": [
+        "TestVolumeAgreementRepository_017"
+      ],
+      "stale": false,
+      "wall_seconds": 122.676,
+      "observed_failures": [
+        "TestVolumeAgreementRepository_017"
+      ],
+      "panicking_tests": [],
+      "stopped_after_clean_catch": true
+    },
+    {
+      "mutant": "D3",
+      "file_line": "stage1/cohere/typeaware/shadow.ts:66",
+      "branch": "test-defend/stage1-cohere-typeaware-volume_profile_Controls",
+      "candidates_failed": [
+        "TestVolumeProfileCorpora family"
+      ],
+      "still_caught_by": [
+        "TestVolumeAgreementRepository_017"
+      ],
+      "stale": false,
+      "wall_seconds": 375.624,
+      "observed_failures": [
+        "TestVolumeAgreementRepository_017"
+      ],
+      "panicking_tests": [],
+      "stopped_after_clean_catch": true
+    }
+  ],
+  "keep": [],
+  "deletable": [
+    "TestVolumeProfileCorpora family"
+  ],
+  "notes": [
+    "Only shown mutants establish this decision.",
+    "The requested skip expression retains the enumeration-only TestVolumeProfileCorporaUnion.",
+    "Historical repository corpus manifest enabled for D1/D3 after a second clean baseline."
+  ]
+}

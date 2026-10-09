@@ -1,0 +1,120 @@
+[
+  {
+    "mutant": "M1",
+    "branch": "test-audit/stage1-cohere-typeaware-volume_profile_Controls",
+    "diff": "review/test-audit/stage1-cohere-typeaware-volume_profile_Controls/M1.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-typeaware/audit-M1.diff",
+    "file_line": "stage1/cohere/typeaware/shadow.ts:106",
+    "candidates_failed": [
+      "TestVolumeProfileCorpora_063",
+      "TestVolumeProfileCorpora_023",
+      "TestVolumeProfileCorpora_007",
+      "TestVolumeProfileCorpora_044",
+      "TestVolumeProfileCorpora_045",
+      "TestVolumeProfileCorpora_001",
+      "TestVolumeProfileCorpora_042",
+      "TestVolumeProfileCorpora_041",
+      "TestVolumeProfileCorpora_062",
+      "TestVolumeProfileCorpora_038",
+      "TestVolumeProfileCorpora_037",
+      "TestVolumeProfileCorpora_057",
+      "TestVolumeProfileCorpora_054",
+      "TestVolumeProfileCorpora_053",
+      "TestVolumeProfileCorpora_052",
+      "TestVolumeProfileCorpora_049",
+      "TestVolumeProfileCorpora_048"
+    ],
+    "other_rows_failed": [
+      "TestVolumeProfileControls_000",
+      "TestVolumeProfileControls_001"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "M4",
+    "branch": "test-audit/stage1-cohere-typeaware-volume_profile_Controls",
+    "diff": "review/test-audit/stage1-cohere-typeaware-volume_profile_Controls/M4.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-typeaware/audit-M4.diff",
+    "file_line": "stage1/cohere/typeaware/diagnostic.ts:17",
+    "candidates_failed": [
+      "TestVolumeProfileCorpora_028",
+      "TestVolumeProfileCorpora_062",
+      "TestVolumeProfileCorpora_063",
+      "TestVolumeProfileCorpora_008",
+      "TestVolumeProfileCorpora_009",
+      "TestVolumeProfileCorpora_007",
+      "TestVolumeProfileCorpora_006",
+      "TestVolumeProfileCorpora_005",
+      "TestVolumeProfileCorpora_059",
+      "TestVolumeProfileCorpora_057",
+      "TestVolumeProfileCorpora_058",
+      "TestVolumeProfileCorpora_054",
+      "TestVolumeProfileCorpora_055",
+      "TestVolumeProfileCorpora_052",
+      "TestVolumeProfileCorpora_053",
+      "TestVolumeProfileCorpora_046",
+      "TestVolumeProfileCorpora_049",
+      "TestVolumeProfileCorpora_048",
+      "TestVolumeProfileCorpora_044",
+      "TestVolumeProfileCorpora_042",
+      "TestVolumeProfileCorpora_041",
+      "TestVolumeProfileCorpora_045",
+      "TestVolumeProfileCorpora_038",
+      "TestVolumeProfileCorpora_037",
+      "TestVolumeProfileCorpora_035",
+      "TestVolumeProfileCorpora_026",
+      "TestVolumeProfileCorpora_024",
+      "TestVolumeProfileCorpora_023",
+      "TestVolumeProfileCorpora_021",
+      "TestVolumeProfileCorpora_031",
+      "TestVolumeProfileCorpora_002",
+      "TestVolumeProfileCorpora_001",
+      "TestVolumeProfileCorpora_018",
+      "TestVolumeProfileCorpora_016",
+      "TestVolumeProfileCorpora_015",
+      "TestVolumeProfileCorpora_013"
+    ],
+    "other_rows_failed": [
+      "TestVolumeProfileControls_000",
+      "TestVolumeProfileControls_001",
+      "TestVolumeAgreementAndMutants_030"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D1",
+    "branch": "test-defend/stage1-cohere-typeaware-volume_profile_Controls",
+    "diff": "review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/diffs/D1.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-typeaware/defend-D1.diff",
+    "file_line": "stage1/cohere/typeaware/shadow.ts:70",
+    "candidates_failed": [
+      "TestVolumeProfileCorpora_038",
+      "TestVolumeProfileCorpora_041"
+    ],
+    "other_rows_failed": [
+      "TestVolumeAgreementRepository_001",
+      "TestVolumeAgreementRepository_017"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D3",
+    "branch": "test-defend/stage1-cohere-typeaware-volume_profile_Controls",
+    "diff": "review/test-defend/stage1-cohere-typeaware-volume_profile_Controls/diffs/D3.diff",
+    "local_diff": "review/test-defend/deletion-set/stage1-cohere-typeaware/defend-D3.diff",
+    "file_line": "stage1/cohere/typeaware/shadow.ts:66",
+    "candidates_failed": [
+      "TestVolumeProfileCorpora_038",
+      "TestVolumeProfileCorpora_041"
+    ],
+    "other_rows_failed": [
+      "TestVolumeAgreementRepository_001",
+      "TestVolumeAgreementRepository_017"
+    ],
+    "stale": false,
+    "apply_check": ""
+  }
+]

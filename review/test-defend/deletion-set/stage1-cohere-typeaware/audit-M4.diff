@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/diagnostic.ts
++++ b/stage1/cohere/typeaware/diagnostic.ts
+@@ -14,7 +14,7 @@
+     readonly repairs: Repair[] = [];
+     readonly suggestions: Suggestion[] = [];
+     constructor(rule: string, id: string, message: string, start: number, end: number) {
+-        this.rule = `@typescript-eslint/${rule}`;
++        this.rule = `@typescript-eslint-broken/${rule}`;
+         this.id = id;
+         this.message = message;
+         this.start = start;

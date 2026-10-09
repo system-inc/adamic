@@ -1,0 +1,42 @@
+{
+  "mutants": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/typeaware/shadow.ts",
+      "from_": "if(binding.name === 'this')",
+      "to": "if(binding.name !== 'this')",
+      "menu": "flip condition",
+      "line": 106
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/typeaware/volume.ts",
+      "from_": "        this.nullish(index);",
+      "to": "        // audit mutant drops nullish dispatch",
+      "menu": "drop statement",
+      "line": 652
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/typeaware/assignment.ts",
+      "from_": "(facts.type(root.arguments[0] ?? 0).flags & 1)",
+      "to": "(facts.type(root.arguments[0] ?? 0).flags & 2)",
+      "menu": "change constant",
+      "line": 23
+    },
+    {
+      "id": "M4",
+      "file": "stage1/cohere/typeaware/diagnostic.ts",
+      "from_": "`@typescript-eslint/${rule}`",
+      "to": "`@typescript-eslint-broken/${rule}`",
+      "menu": "change constant",
+      "line": 17
+    }
+  ],
+  "rebuild_strategy": "four separately applied mutants; native rebuild each",
+  "probes": [
+    "empty volume_suite.ts module entry",
+    "empty setup build helpers as their own construction entries"
+  ],
+  "baseline": "whole package timeout; structural, lowering and controls clean"
+}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/typeaware/shadow.ts
++++ b/stage1/cohere/typeaware/shadow.ts
+@@ -63,7 +63,7 @@
+         if(binding.flags === 0) {
+             return true;
+         }
+-        if((binding.flags & 2097152) !== 0) {
++        if((binding.flags & 1048576) !== 0) {
+             let current = binding.declarations[0] ?? -1;
+             while(current >= 0) {
+                 const node = this.rules.parser.node(current);
