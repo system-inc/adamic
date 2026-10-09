@@ -1,0 +1,17 @@
+From https://github.com/system-inc/adamic
+ * [new branch]        main       -> origin/main
+From https://github.com/system-inc/adamic
+ * branch              gate-logs/e628f5274878/20261009T130445Z/fast -> FETCH_HEAD
+fatal: 'origin/compiler/after-chain' is not a commit and a branch 'compiler/after-chain-fix-oracle' cannot be created from it
+go version go1.27.1 linux/amd64
+setup: go ready (0.055s)
+v24.19.0
+setup: node ready (0.071s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.410s)
+
+added 3 packages in 502ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=0.863s
+setup: markdown dependencies ready (1.032s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (21.382s)
