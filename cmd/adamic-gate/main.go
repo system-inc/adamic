@@ -733,7 +733,7 @@ func shard(index, count int, out, scratch string, resume bool) error {
 	var commandStderr io.Writer = stderr
 	runCommand := func(name string, args []string, tmp string, w io.Writer) int {
 		cmd := exec.Command(name, args...)
-		cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "TMPDIR="+tmp)
+		cmd.Env = append(os.Environ(), "ADAMIC_GATE_UNCACHED=1", "ADAMIC_GATE_COHERE=1", "TMPDIR="+tmp)
 		cmd.Stdout = w
 		cmd.Stderr = commandStderr
 		t := time.Now()
