@@ -310,8 +310,9 @@ stopOlderRuns() {
     [ "${runningSha}" = "${sha}" ] && [ "${runningBox:-threadripper}" != pool ] && ! isCanary "${runningBranch}" || continue
     # By what the box runs, not the commit: a Mac-only tools commit changes no gate.
     [ "$(boxTools "${token%%:*}")" != "$(boxTools "${tools}")" ] || continue
-    touch "${state}/race-lost/${pid}"
+    # Marked only once stopped (#ew97ec2): a run a failed stop left running ends with a real verdict.
     stopGate "${pid}" "${runningBranch}" "${sha}" "${runningBox:-threadripper}" "superseded by a newer run of the same sha (tools ${tools:0:9})" &&
+      touch "${state}/race-lost/${pid}" &&
       echo "$(date -u +%H:%M:%S) stopped ${runningBranch} ${sha} on ${runningBox:-threadripper} (tools ${token:0:9}): a newer run of the same sha starts with tools ${tools:0:9}"
   done
 }
@@ -461,8 +462,10 @@ endRace() {
     pid=$(basename "${file}")
     read -r runningBranch runningSha runningSlot runningBox rest < "${file}"
     [ "${runningSha}" = "${sha}" ] || continue
-    touch "${state}/race-lost/${pid}"
+    # Marked lost only once stopped (#ew97ec2, Oct 9: a stop-gate.sh that failed silently left a run going on to a green
+    # that its mark then dropped). A route still running ends with a real verdict of its own.
     stopGate "${pid}" "${runningBranch}" "${sha}" "${runningBox:-threadripper}" "the race's other route (${winner}) answered first" &&
+      touch "${state}/race-lost/${pid}" &&
       echo "$(date -u +%H:%M:%S) stopped ${runningBranch} ${sha} on ${runningBox:-threadripper}: ${winner} answered the race first"
   done
 }
@@ -477,12 +480,13 @@ yieldRaceForCanary() {
     pid=$(basename "${file}")
     read -r branch sha slot box rest < "${file}"
     [ "${box:-threadripper}" != pool ] && [ -f "${state}/racing/${sha}" ] && [ ! -f "${state}/stopped-running/${pid}" ] || continue
+    # The race ends, the run is marked lost and the yield recorded only once the stop took (#ew97ec2): on a failed stop
+    # the run races on unchanged, and the next race may yield instead.
+    stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "a canary of main takes the slot; the pool job answers alone" || continue
     rm -f "${state}/racing/${sha}"
     touch "${state}/race-lost/${pid}"
-    if stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "a canary of main takes the slot; the pool job answers alone"; then
-      echo "${pid}" > "${state}/canary-yield"
-      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}'s box race on ${box:-threadripper}: a canary takes its slot, and the pool job answers alone"
-    fi
+    echo "${pid}" > "${state}/canary-yield"
+    echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}'s box race on ${box:-threadripper}: a canary takes its slot, and the pool job answers alone"
     return 0
   done
 }
@@ -1248,7 +1252,16 @@ while true; do
       if [ -z "${cause}" ]; then
         endRace "${sha}" "${box:-threadripper}"
       elif [ "${box}" = pool ]; then
-        echo "$(date -u +%H:%M:%S) pool void ${branch} ${sha}: ${cause}; its box race goes on"
+        # The box run is the tip's only route now, so it is no race (#ew97ec2): on Oct 9 2aff1aa5's pool job voided at
+        # 15:48 with racing/<sha> left, a canary took its box run for a race to yield, and the run's green read as a lost
+        # race. pool-void keeps it off the pool as racing/<sha> did. A box run still queued is un-gated, or pruneQueue
+        # would drop it as gated and nothing would gate the tip.
+        rm -f "${state}/racing/${sha}"
+        echo "${sha}" >> "${state}/pool-void"
+        if grep -q " ${sha}\$" "${state}/queue"; then
+          grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
+        fi
+        echo "$(date -u +%H:%M:%S) pool void ${branch} ${sha}: ${cause}; its box race goes on as the only route"
         continue
       fi
     fi

@@ -71,9 +71,11 @@ printf '%s|%s|%s|%s\\n' "$3" "$text" "$5" "$6" >> "$TEST_ROOT/messages"
 *) /bin/date -u +%H:%M:%S ;;
 esac
 ''')
+        # A stop that fails (a dropped ssh, Oct 9's stop-gate.sh that matched nothing) exits nonzero and stops nothing.
         self.script(self.bin / 'ssh', '''box=$1; shift
 cat > "$TEST_ROOT/stop-command"
 sha=${4%% *}
+if [ -f "$TEST_ROOT/ssh-fails" ]; then printf '%s %s\\n' "$box" "$*" >> "$TEST_ROOT/failed-stops"; exit 255; fi
 printf '%s %s\\n' "$box" "$*" >> "$TEST_ROOT/stops"
 touch "$TEST_ROOT/stopped-$sha"
 ''')
@@ -916,6 +918,99 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'ended codex/test0 %s on box0: it lost the race' % sha in w.read('output'))
         self.assertNotIn('done codex/test0: red', w.read('output'))
         self.assertTrue(w.read('stops').startswith('box0 '))
+
+    def test_a_box_race_whose_pool_job_voided_is_the_only_route_and_no_canary_yields_it(self):
+        # #ew97ec2 (Oct 9): 2aff1aa5's pool job voided at 15:48 with racing/<sha> left, a canary yielded its box run as a race,
+        # and the run's green read as a lost race.
+        w, sha = self.race(mainCanary=1800)
+        w.put('pool-mode', 'void')
+        w.wait(lambda: 'pool void codex/test0 %s: ' % sha in w.read('output'))
+        self.assertIn('its box race goes on as the only route', w.read('output'))
+        # The half-hourly canary finds no box slot, as in the race yield test: the box run is no race, so nothing yields it.
+        for started in (w.state / 'running-started').iterdir():
+            started.write_text('2700\n')
+        w.put('clock', '2800')
+        time.sleep(1)
+        self.assertNotIn("box race on box0", w.read('output'))
+        self.assertEqual(w.read('stops'), '')
+        w.put('mode', 'pass')
+        w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
+        self.assertNotIn('lost the race', w.read('output'))
+        self.assertEqual(w.read('pool-starts').count('codex/test0 '), 1)
+
+    def test_a_pool_void_before_its_box_race_starts_sends_the_tip_to_the_boxes(self):
+        # #ew97ec2: with racing/<sha> gone, a box run still queued would read as gated and leave the queue with nothing gating it.
+        w = Watcher(1, mode='hold', slots='box0 S\npool P\n')
+        self.addCleanup(w.close)
+        (w.state / 'pool-side').touch()
+        w.put('initial', 'pass')
+        w.wait(lambda: 'codex/test0 ' in w.read('pool-starts'))
+        sha = w.tips[0][1]
+        # box0's one slot is busy, so the race's box run waits in the queue.
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        (w.state / 'running' / str(holder.pid)).write_text('codex/old %s S box0 S x %s\n' % ('c' * 40, w.state / 'logs/old.log'))
+        (w.state / 'race-wanted' / sha).write_text('codex/test0\n')
+        w.wait(lambda: 'racing codex/test0 %s' % sha in w.read('output'))
+        w.put('pool-mode', 'void')
+        w.wait(lambda: 'pool void codex/test0 %s: ' % sha in w.read('output'))
+        (w.state / 'slots').write_text('box0 S\nbox1 S\npool P\n')
+        w.wait(lambda: 'codex/test0 %s S box1' % sha in w.read('starts'))
+        self.assertEqual(w.read('pool-starts').count('codex/test0 '), 1)
+
+    def test_a_stop_that_fails_leaves_no_race_lost_mark_so_the_run_s_green_counts(self):
+        # #ew97ec2 (Oct 9): stop-gate.sh failed silently, the run went on to a green, and its race-lost mark dropped the green.
+        with self.subTest(stopper='yieldRaceForCanary'):
+            w, sha = self.race(mainCanary=1800)
+            w.put('ssh-fails', '')
+            for started in (w.state / 'running-started').iterdir():
+                started.write_text('2700\n')
+            w.put('clock', '2800')
+            w.wait(lambda: 'box0 bash -s -- ' + sha in w.read('failed-stops'))
+            time.sleep(.3)
+            self.assertEqual(list((w.state / 'race-lost').iterdir()), [])
+            self.assertNotIn("box race on box0", w.read('output'))
+            self.assertFalse((w.state / 'canary-yield').exists())
+            self.assertTrue((w.state / 'racing' / sha).exists(), 'the run races on')
+            w.put('mode', 'pass')
+            w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
+            self.assertNotIn('ended codex/test0 %s on box0: it lost the race' % sha, w.read('output'))
+        with self.subTest(stopper='endRace'):
+            w, sha = self.race()
+            w.put('ssh-fails', '')
+            w.put('pool-mode', 'green')
+            w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
+            w.wait(lambda: 'box0 bash -s -- ' + sha in w.read('failed-stops'))
+            time.sleep(.3)
+            self.assertEqual(list((w.state / 'race-lost').iterdir()), [])
+            self.assertNotIn('stopped codex/test0 %s on box0' % sha, w.read('output'))
+            w.put('mode', 'pass')
+            w.wait(lambda: w.read('output').count('done codex/test0: green: %s' % sha) == 2)
+            self.assertNotIn('lost the race', w.read('output'))
+        with self.subTest(stopper='stopOlderRuns'):
+            w = self.reservation('box0 S\nbox1 S\n', [], release=False)
+            w.put('ssh-fails', '')
+            sha = '7' * 40
+            holder = subprocess.Popen(['sleep', '30'])
+            self.addCleanup(holder.kill)
+            log = w.state / 'logs/old.log'
+            (w.state / 'running' / str(holder.pid)).write_text('codex/old %s S box1 S tools-old:1 %s\n' % (sha, log))
+            (w.state / 'running-started' / str(holder.pid)).write_text('1000\n')
+            w.tips = [('codex/old', sha)]
+            w.put('tips', '%s\trefs/heads/codex/old\n' % sha)
+            (w.state / 'seen').write_text('codex/old %s\n' % sha)
+            (w.state / 'queue').write_text('S 900 codex/old %s\n' % sha)
+            w.put('initial', 'pass')
+            w.wait(lambda: 'codex/old %s' % sha in w.read('starts'))
+            self.assertIn('box1 bash -s -- ' + sha, w.read('failed-stops'))
+            self.assertNotIn('a newer run of the same sha starts', w.read('output'))
+            self.assertFalse((w.state / 'race-lost' / str(holder.pid)).exists())
+            # The old run, never stopped, ends green: a verdict, not a lost race.
+            log.write_text('green: %s passed, 3 packages, 900 pass, 0 skip, smoke 1 fixtures\n' % sha)
+            holder.kill()
+            holder.wait()  # a zombie still answers kill -0
+            w.wait(lambda: 'done codex/old: ' in w.read('output'))
+            self.assertNotIn('lost the race', w.read('output'))
 
     def test_a_pool_green_reaches_its_owner_and_promotes_no_tools(self):
         w = Watcher(1, canaryBox='box1', mode='hold', slots='pool P\n')
