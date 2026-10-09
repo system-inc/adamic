@@ -57,6 +57,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if _, _, known := l.nodeArrayLayoutOf(proven); known {
+		return ir.Array, true
+	}
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
 	}

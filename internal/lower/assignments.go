@@ -40,6 +40,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	// array[index] += value never reaches here: the element may be missing, so the checker refuses it
 	// (noUncheckedIndexedAccess).
 	if target.Kind == ast.KindElementAccessExpression && binary.OperatorToken.Kind == ast.KindEqualsToken {
+		if body, handled, err := l.constructionIndexWrite(target, binary.Right); handled {
+			return body, err
+		}
 		if body, handled, err := l.typedArrayWrite(target, binary.Right); handled {
 			return body, err
 		}

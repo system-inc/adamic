@@ -14,7 +14,14 @@ process.on('uncaughtException', (error) => {
 		process.exit(70);
 	}
 	panicking = true;
-	const message = String(error);
+	let message = String(error);
+	// Preserve the independently observed function from V8's stack. Generated
+	// backend function labels carry the same source name after their index.
+	if (message === 'RangeError: Maximum call stack size exceeded') {
+		const frame = String(error.stack).split('\n')[1] ?? '';
+		const name = frame.match(/^\s*at ([^ ()]+) \(/)?.[1];
+		if (name) message += ` in ${name.replace(/^function_\d+_/, '')}`;
+	}
 	process.stderr.write(`adamic: panic: ${message}\n`);
 	process.exitCode = 70;
 });

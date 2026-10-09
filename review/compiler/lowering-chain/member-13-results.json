@@ -1786,7 +1786,7 @@
           "18",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Literal placeholders in locals, parameters and fields no longer stop at initialization. Boxed storage and typed-use checks let the initialization writes and the rest of this program execute."
       },
       {
         "row": "internal/oracle/testdata/non_null_uninitialized_field.ts",
@@ -1806,7 +1806,7 @@
           "1",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Class field null! is stored as a tagged placeholder. Construction and field-read retention now run before the consuming check, rather than stopping in the initializer."
       },
       {
         "row": "internal/oracle/testdata/non_null_uninitialized_capture.ts",
@@ -1826,7 +1826,7 @@
           "2",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The local undefined! becomes tagged storage in a captured cell. Cell/closure construction now precedes the captured-value use check."
       },
       {
         "row": "internal/oracle/testdata/non_null_uninitialized_exception.ts",
@@ -1846,7 +1846,7 @@
           "1",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The undefined! local is installed without an assertion trap. Error construction, throw/catch cleanup and the later placeholder use now execute."
       },
       {
         "row": "internal/oracle/testdata/non_null_uninitialized_loop.ts",
@@ -1866,7 +1866,7 @@
           "0",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The null! local survives initialization; the zero-iteration path reaches its tagged read instead of stopping at the initializer."
       },
       {
         "row": "internal/oracle/testdata/non_null_uninitialized_const.ts",
@@ -1886,7 +1886,7 @@
           "0",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The constant stores the null tag and reaches its later read instead of stopping at null!. Tagged reads add retain/release operations."
       },
       {
         "row": "internal/oracle/testdata/non_null_static_initialized.ts",
@@ -1906,7 +1906,7 @@
           "6",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Static placeholder fields retain tagged storage and accept the subsequent real writes. The rest of the initialized static/inherited-read program now executes."
       },
       {
         "row": "internal/oracle/testdata/non_null_static_uninitialized.ts",
@@ -1926,7 +1926,7 @@
           "1",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The static field stores the null tag before the read. Its tagged field read changes retention before the unset consumption check."
       },
       {
         "row": "internal/oracle/testdata/non_null_uninitialized_optional.ts",
@@ -1946,7 +1946,7 @@
           "3",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Optional field undefined! remains an observable undefined payload. The ?? fallback can execute instead of an initializer assertion stopping construction."
       },
       {
         "row": "internal/oracle/testdata/non_null_uninitialized_spread.ts",
@@ -1966,7 +1966,7 @@
           "2",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Undefined! field initialization is deferred to typed use. Spread now copies the tagged slot and readiness before the copied-value use."
       },
       {
         "row": "internal/oracle/testdata/non_null_literal_assignment.ts",
@@ -1986,7 +1986,7 @@
           "1",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): A literal null! reset now writes the null tag into placeholder storage, instead of executing a non-null assertion. Its later observation runs."
       },
       {
         "row": "internal/oracle/testdata/non_null_uninitialized_iteration.ts",
@@ -2006,7 +2006,7 @@
           "6",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Loop-local undefined! is stored in the captured placeholder representation. Iteration, per-iteration cells, closures and the selected closure read now precede consumption."
       },
       {
         "row": "internal/oracle/testdata/non_null_uninitialized_interface.ts",
@@ -2026,7 +2026,7 @@
           "1",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The initialized object carries an undefined placeholder. The interface view reads its tagged slot before the consuming check, changing retained reads."
       },
       {
         "row": "internal/oracle/testdata/non_null_uninitialized_map_entry.ts",
@@ -2046,7 +2046,7 @@
           "0",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The local undefined! is installed without trapping; the container-element consuming check is reached, with its own tagged read retention."
       },
       {
         "row": "stage3/interface-downcasts/default-staged.ts",
@@ -2066,7 +2066,7 @@
           "2",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The escapedText placeholder is reserved in the object, then the real string write and checked cast/view read execute. The old initializer trap prevented those allocations."
       },
       {
         "row": "stage3/interface-downcasts/default-boxed-write.ts",
@@ -2086,7 +2086,7 @@
           "4",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The boxed union field begins as an undefined placeholder. The checked NumberNode write keeps the boxed slot representation, and the checked read and identity observation now execute."
       },
       {
         "row": "stage3/interface-downcasts/default-read-before-set.ts",
@@ -2106,7 +2106,7 @@
           "1",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The object stores its undefined escapedText slot. The checked downcast/view read reaches the unset-use stop after construction, instead of trapping before object allocation."
       },
       {
         "row": "stage3/interface-downcasts/readiness-identifier.ts",
@@ -2126,7 +2126,7 @@
           "2",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The object reserves tagged escapedText storage; its subsequent string write initializes it and the completed factory/read path executes."
       },
       {
         "row": "stage3/interface-downcasts/readiness-identifier-uninitialized.ts",
@@ -2146,7 +2146,7 @@
           "1",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The factory can return the object with honest undefined storage. The later required-string use stops after object construction and retained field reads."
       },
       {
         "row": "stage3/interface-downcasts/readiness-number.ts",
@@ -2166,7 +2166,7 @@
           "5",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The factory preserves null! as a tagged number placeholder, then boxes the real zero write and performs the initialized number read."
       },
       {
         "row": "stage3/interface-downcasts/readiness-number-uninitialized.ts",
@@ -2186,7 +2186,7 @@
           "1",
           "0"
         ],
-        "reason": "Placeholder null and undefined tags now remain observable; typed uses carry readiness checks, and checked casts use the same tags. Namespace fields retain singleton storage while reading a raw tagged value before a placeholder use check; initialization and reset use literal placeholder tags. Preparation initializes placeholder state before checked-any JSON preparation. Existing non-null and view rows change due to these checks and tagged representations. Node observations in both changed stage3 status files are preserved."
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The factory preserves the null tag and returns the object. The later required-number use stops after construction and tagged field-read retention."
       }
     ],
     "removed": [],

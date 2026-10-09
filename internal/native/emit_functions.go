@@ -52,7 +52,11 @@ func (e *emitter) functionBody(function ir.Function) {
 	e.functionDepth = len(e.scopes)
 	e.scopes = append(e.scopes, nil)
 	// Recursion that runs out of stack panics, as Node's does, rather than crashing (stack.c).
-	e.line("ADAMIC_CHECK_STACK();")
+	name := function.Name
+	if name == "" {
+		name = "<anonymous>"
+	}
+	e.line("ADAMIC_CHECK_STACK_NAMED(%s);", cString(name))
 	if function.ArgumentsCount != 0 && !function.Closure {
 		e.line("(void)%s;", e.localName(function.ArgumentsCount-1))
 	}

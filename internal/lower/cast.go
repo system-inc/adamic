@@ -18,6 +18,15 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if proof.speculation {
+		return l.checkedSpeculativeResult(node)
+	}
+	if proof.nodeArray {
+		return l.constructNodeArray(node)
+	}
+	if proof.construction {
+		return l.constructLiteral(node)
+	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	if target.Flags()&checker.TypeFlagsAny != 0 {
