@@ -12,6 +12,8 @@ func cType(valueType ir.Type) string {
 		return "double"
 	case ir.Boolean:
 		return "bool"
+	case ir.Promise:
+		return "adamic_async_promise *"
 	case ir.Object:
 		return "adamic_object *"
 	case ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array:

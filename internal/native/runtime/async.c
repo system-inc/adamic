@@ -14,6 +14,30 @@ struct pending { adamic_async_promise *promise; pending *next; };
 static pending *subscriptions;
 static adamic_async_reaction *jobs, *jobs_last;
 
+/* Compiler-private abandonment cleanup; records borrow a frame, never own a protocol edge. */
+typedef struct cleanup_record cleanup_record;
+struct cleanup_record { adamic_async_frame *frame; void (*cleanup)(adamic_async_frame *); cleanup_record *next; };
+static cleanup_record *cleanups;
+static void (*take_cleanup(adamic_async_frame *frame))(adamic_async_frame *) {
+    cleanup_record **at = &cleanups;
+    while (*at != NULL) {
+        cleanup_record *record = *at;
+        if (record->frame == frame) {
+            void (*cleanup)(adamic_async_frame *) = record->cleanup;
+            *at = record->next; free(record); return cleanup;
+        }
+        at = &record->next;
+    }
+    return NULL;
+}
+void adamic_async_register_cleanup(adamic_async_frame *frame, void (*cleanup)(adamic_async_frame *)) {
+    cleanup_record *record = malloc(sizeof *record);
+    if (record == NULL) adamic_panic("out of memory", 13);
+    *record = (cleanup_record){frame, cleanup, cleanups}; cleanups = record;
+}
+void adamic_async_forget_cleanup(adamic_async_frame *frame) { (void)take_cleanup(frame); }
+
+
 adamic_async_promise *adamic_async_new(void) {
     adamic_async_promise *promise = adamic_allocate(sizeof *promise, adamic_kind_async_promise);
     promise->settled = promise->rejected = promise->references = false;
@@ -106,6 +130,10 @@ static void abandon(adamic_async_promise *promise, bool cancelling) {
     if (!cancelling) break_cycle = false;
 #endif
     (void)cancelling;
+    for (adamic_async_reaction *entry = reaction; entry != NULL; entry = entry->next) {
+        void (*cleanup)(adamic_async_frame *) = take_cleanup(entry->frame);
+        if (break_cycle && cleanup != NULL) cleanup(entry->frame);
+    }
     if (break_cycle) {
         promise->first = promise->last = NULL;
         while (reaction != NULL) {
@@ -153,6 +181,7 @@ void adamic_async_free_children(void *value, void (*drop)(void *)) {
     switch (heap->kind) {
         case adamic_kind_async_frame: {
             adamic_async_frame *frame = value;
+            adamic_async_forget_cleanup(frame);
             drop(frame->waiting); drop(frame->output);
             frame->children(frame, drop);
             break;

@@ -1,0 +1,19 @@
+class Worker {
+    readonly name: string;
+    constructor(name: string) { this.name = name; }
+    async work(value: number): Promise<string> {
+        await Promise.resolve();
+        return `${this.name}:${value}`;
+    }
+}
+let current = new Worker(`old${1}`);
+async function replace(): Promise<number> {
+    current = new Worker(`new${2}`);
+    await Promise.resolve();
+    return 3;
+}
+async function run(): Promise<string> {
+    return await current.work(await replace());
+}
+console.log(await run());
+console.log(await current.work(4));

@@ -473,3 +473,8 @@ Stress observations on codex/signal-mutant-steady, based on area/runtime 915b9e0
 - A complete final native rerun was also launched alongside the stress test. After the environment reconnect its native.test process (PID 136015) was a zombie with PPID 1 and wait status 0, but the enclosing go command's summary was unavailable and `/tmp/signal-steady-native-final.log` was empty. This is not reported as a normal logged package pass. No full repository or oracle rerun was made for these test-only hooks.
 
 Setup completed in 37.548s: Go ready at 0.070s, Node at 0.078s, submodules at 0.177s, clang at 0.403s, build cache warm at 37.506s. nproc is 5 with a four-CPU quota. The generated environment was sourced for each test command.
+## Ordinary async environment cleanup
+
+| Audit key | Holds / writers and timing | Classification |
+|---|---|---|
+| `async.c:cleanups:1` | Borrowed frame cleanup records; generated wrappers register, settlement/destruction forget, cancel and exit take records before releasing reactions | Loop confined under the host bridge loop-affinity contract. No foreign publisher accesses this list; source pool callbacks capturing async frames are rejected. Records own no Adamic reference |

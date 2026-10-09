@@ -1,0 +1,2 @@
+async function f(): Promise<void> { const value = await Promise.resolve(); console.log(String(value)); }
+await f();

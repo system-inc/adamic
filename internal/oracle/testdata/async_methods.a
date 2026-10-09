@@ -1,0 +1,16 @@
+class Worker {
+    readonly name: string;
+    constructor(name: string) { this.name = name; }
+    async work(value: number): Promise<string> {
+        const held = `${this.name}:${value}`;
+        await Promise.resolve();
+        return `${held}:${this.name}`;
+    }
+    static async twice(value: number): Promise<number> {
+        return 2 * await Promise.resolve(value);
+    }
+}
+function start(worker: Worker): Promise<string> { return worker.work(3); }
+const worker = new Worker(`worker${1}`);
+const pending = start(worker);
+console.log(`${await pending} ${await Worker.twice(5)}`);

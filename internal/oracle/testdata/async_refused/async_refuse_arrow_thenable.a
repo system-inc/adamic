@@ -1,0 +1,6 @@
+const f = async (): Promise<number> => ({
+    then(resolve: (value: number) => void): void {
+        resolve(7);
+    }
+});
+console.log(`${await f()}`);
