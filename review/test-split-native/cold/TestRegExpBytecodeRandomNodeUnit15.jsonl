@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T06:00:36.60071845Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T06:00:36.608017265Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15"}
+{"Time":"2026-10-09T06:00:36.608090274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15","Output":"=== RUN   TestRegExpBytecodeRandomNodeUnit15\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:00:36.608123083Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15","Output":"=== PAUSE TestRegExpBytecodeRandomNodeUnit15\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:00:36.608125597Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15"}
+{"Time":"2026-10-09T06:00:36.608129733Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15"}
+{"Time":"2026-10-09T06:00:36.608131486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15","Output":"=== CONT  TestRegExpBytecodeRandomNodeUnit15\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:00:37.11661389Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeRandomNodeUnit15","Output":"    regexp_test.go:395: compiling 247 patterns, 250 executions, 612639 C bytes\n"}

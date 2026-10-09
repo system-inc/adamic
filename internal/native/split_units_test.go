@@ -418,3 +418,48 @@ func TestRetainedSplitCoverage(t *testing.T) {
 		}
 	})
 }
+
+func TestRetainedTopLevelCoverage(t *testing.T) {
+	t.Parallel()
+	for _, plan := range []struct {
+		file, prefix, helper string
+		count                int
+	}{
+		{"regexp_test.go", "TestRegExpBytecodeRandomNodeUnit", "runRegExpBytecodeRandomNodeUnit", 40},
+		{"record_test.go", "TestRecordMutantsUnit", "runRecordMutantUnit", 6},
+		{"units_tsgo_test.go", "TestSplitTSGoAgreesUnit", "runSplitTSGoAgreesUnit", 2},
+		{"wasm_test.go", "TestWASIUnit", "runWASIUnit", 36},
+	} {
+		file, err := parser.ParseFile(token.NewFileSet(), plan.file, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		seen := make([]bool, plan.count)
+		for _, declaration := range file.Decls {
+			function, ok := declaration.(*ast.FuncDecl)
+			if !ok || !strings.HasPrefix(function.Name.Name, plan.prefix) {
+				continue
+			}
+			index, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, plan.prefix))
+			if err != nil || index < 0 || index >= plan.count || seen[index] {
+				t.Fatalf("invalid unit %s", function.Name.Name)
+			}
+			seen[index] = true
+			statement := function.Body.List[len(function.Body.List)-1].(*ast.ExprStmt)
+			call := statement.X.(*ast.CallExpr)
+			helper, ok := call.Fun.(*ast.Ident)
+			if !ok || helper.Name != plan.helper || len(call.Args) != 2 {
+				t.Fatalf("wrong helper in %s", function.Name.Name)
+			}
+			unit, ok := call.Args[1].(*ast.BasicLit)
+			if !ok || unit.Value != strconv.Itoa(index) {
+				t.Fatalf("wrong unit in %s", function.Name.Name)
+			}
+		}
+		for index, present := range seen {
+			if !present {
+				t.Errorf("missing %s%02d", plan.prefix, index)
+			}
+		}
+	}
+}
