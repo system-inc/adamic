@@ -61,9 +61,5 @@ from the helper seed (0.41 seconds). With that temporary sidecar present the hel
 subtest skipped with exactly its `awaits devtools/review-lane: ...` message. All temporary
 probe files were removed.
 
-No verified fixing branch was found among origin's branch names and the fetched compiler
-and predicate branches' commit messages/history (`predicates_proof`, `arrayVisit`, `filter`,
-second parameters, and narrow refusals). Consequently both supplied miscompile seeds have
-no pending sidecar and deliberately leave the agreement lane failing, pending identification
-of their actual fixes. Neither the historical predicate branches nor the ahead specification
-branch supplied evidence sufficient to assign either fix.
+Both miscompile seeds were refused on main by 2c255712 (predicate helper parameter index, and
+filter over a boxed union), so they moved to `refused/` when the lane landed.
