@@ -35,7 +35,8 @@
 #   bash cloud/gocacheprog-identity.sh [product...]   (default: every product; Linux gate box or Codex)
 #
 # ADAMIC_IDENTITY_PLANT=<product> is the comparator's own mutant: that product's warm build links with
-# -ldflags=-s, and the check must fail naming it.
+# -ldflags=-s, and the check must fail naming it, with plant-kept=yes on its line: both sides of every
+# mismatch are kept under <scratch>/<product>/kept/ for a byte-diff, and the plant proves they outlive cleanup.
 #
 # macOS: Apple's ar stamps the archive's __.SYMDEF member with the current time, and go then writes the
 # archive's hash into go.o's build ID, so two plain builds of tsgo.a a second apart differ in 22 to 24
@@ -234,11 +235,21 @@ leg() {
 primary() { awk 'NR == 1 {print $1}' "$1"; }
 
 # differs <product> <leg> <manifest>: compares a leg's outputs with the baseline's, saying which file differs.
+# Both copies of every differing file are kept under $run/<product>/kept/, where discard never reaches: a
+# difference that can't be byte-diffed afterwards is evidence destroyed (#vtr4at3, October 9).
 differs() {
 	local product=$1 name=$2 manifest=$3 file
 	cmp -s "$run/$product/baseline/manifest" "$manifest" && return 1
 	echo "identity: $product $name differs from baseline:" >&2
 	diff "$run/$product/baseline/manifest" "$manifest" | sed 's/^/identity:   /' >&2 || true
+	awk '{print $2}' "$manifest" | while read -r file; do
+		local base=$run/$product/baseline/output/$file other=$run/$product/$name/output/$file
+		[ -f "$base" ] && [ -f "$other" ] && ! cmp -s "$base" "$other" || continue
+		mkdir -p "$(dirname "$run/$product/kept/baseline/$file")" "$(dirname "$run/$product/kept/$name/$file")"
+		cp "$base" "$run/$product/kept/baseline/$file"
+		cp "$other" "$run/$product/kept/$name/$file"
+		echo "identity:   kept $run/$product/kept/{baseline,$name}/${file#./}" >&2
+	done
 	if [ "$(uname)" = Darwin ]; then
 		awk '{print $2}' "$manifest" | while read -r file; do
 			local base=$run/$product/baseline/output/$file other=$run/$product/$name/output/$file
@@ -369,6 +380,25 @@ for product in $selected; do
 		break
 	done
 	discard "$product"
+	# The plant's own check: its warm mismatch must still be on disk, both sides, after discard.
+	if [ "${ADAMIC_IDENTITY_PLANT:-}" = "$product" ] && [ "$judged" = yes ]; then
+		# diff exits 1 on the difference the plant made, which pipefail would turn into the script's exit.
+		lost=$({ diff "$run/$product/baseline/manifest" "$run/$product/warm/manifest" || true; } | awk '/^[<>]/ {print $2, $3}' | while read -r hash file; do
+			for side in baseline warm; do
+				grep -qxF "$hash  $file" "$run/$product/$side/manifest" || continue
+				kept=$run/$product/kept/$side/$file
+				[ -f "$kept" ] && [ "$(digest "$kept")" = "$hash" ] || echo "$side/${file#./}"
+			done
+		done)
+		[ -d "$run/$product/kept/warm" ] || lost="$lost (no kept/warm at all)"
+		if [ -n "$lost" ]; then
+			echo "identity: $product plant: the mismatch's outputs did not survive cleanup: $lost" >&2
+			verdict=MISMATCH
+			notes="$notes plant-kept=LOST"
+		else
+			notes="$notes plant-kept=yes"
+		fi
+	fi
 	if [ "$judged" = no ]; then
 		echo "identity: $product UNJUDGED (infra; see $run/$product) peak=$(gigabytes "$productPeak") free=$(gigabytes "$(freeKilobytes "$run")")"
 		unjudged="$unjudged $product"
