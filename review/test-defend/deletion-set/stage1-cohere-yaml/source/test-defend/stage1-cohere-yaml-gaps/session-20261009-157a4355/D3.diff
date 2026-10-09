@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/yaml/lexer.ts b/stage1/cohere/yaml/lexer.ts
+index 31658446..9feef44a 100644
+--- a/stage1/cohere/yaml/lexer.ts
++++ b/stage1/cohere/yaml/lexer.ts
+@@ -632,7 +632,7 @@ export class Lexer {
+                 return 'flow';
+             case '"':
+             case "'":
+-                this.flowKey = true;
++                this.flowKey = false;
+                 return this.parseQuotedScalar();
+             case ':': {
+                 const next = this.charAt(1);

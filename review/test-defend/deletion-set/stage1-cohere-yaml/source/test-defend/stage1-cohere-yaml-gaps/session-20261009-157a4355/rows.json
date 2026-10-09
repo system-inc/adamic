@@ -1,0 +1,45 @@
+[
+  {
+    "test": "TestLexerMatchesGo",
+    "package": "stage1/cohere/yaml",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestPropsMatchGo",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/yaml/lexer.ts:359",
+        "change": "blockScalarKeep false -> true at header reset",
+        "rows_failed": [
+          "TestLexerMatchesGo",
+          "TestPropsMatchGo"
+        ]
+      },
+      {
+        "mutant": "D2",
+        "file_line": "stage1/cohere/yaml/lexer.ts:483",
+        "change": "empty block-scalar body option true -> false",
+        "rows_failed": [
+          "TestLexerMatchesGo",
+          "TestPropsMatchGo"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "stage1/cohere/yaml/lexer.ts:635",
+        "change": "quoted-key flowKey true -> false",
+        "rows_failed": [
+          "TestLexerMatchesGo",
+          "TestPropsMatchGo"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_YAML_LIBRARY=/tmp/yaml-defense/library ADAMIC_BUILD_CACHE_DIR=/tmp/yaml-gaps-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerMatchesGo|TestPropsMatchGo)$'; lexer_test.go:210: native ASan/UBSan/LSan: byte 4163499: got \"0022002a003f003a002dd83dde00002a00310061003a003f00630023feff00310020002d0022\\n=001f\\n=003a002d\\n=0020\\n=005b\\n=001f\\n=002d002500300062007c002b002d003e00210000005c003e\", want \"0022002a003f003a002dd83dde00002a00310061003a003f00630023feff00310020002d0022\\n=003a\\n=002d\\n=0020\\n=005b\\n=001f\\n=002d002500300062007c002b002d003e00210000005c003e003f\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestLexerMatchesGo",
+      "TestPropsMatchGo"
+    ]
+  }
+]

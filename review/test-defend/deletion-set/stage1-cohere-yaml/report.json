@@ -1,0 +1,91 @@
+{
+  "package": "stage1/cohere/yaml",
+  "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "skipped": [
+    "TestLexerMatchesGo"
+  ],
+  "mutants": [
+    {
+      "mutant": "M1",
+      "file_line": "internal/lower/object.go:1265",
+      "branch": "test-audit/stage1-cohere-yaml-gaps",
+      "candidates_failed": [
+        "TestLexerMatchesGo"
+      ],
+      "still_caught_by": [
+        "TestFileDriver_Setup"
+      ],
+      "stale": false,
+      "source_diff": "source/test-audit/stage1-cohere-yaml-gaps/M1.diff"
+    },
+    {
+      "mutant": "D3",
+      "file_line": "stage1/cohere/yaml/lexer.ts:635",
+      "branch": "test-defend/stage1-cohere-yaml-gaps",
+      "candidates_failed": [
+        "TestLexerMatchesGo"
+      ],
+      "still_caught_by": [
+        "TestComposeMatchGo"
+      ],
+      "stale": false,
+      "source_diff": "source/test-defend/stage1-cohere-yaml-gaps/session-20261009-157a4355/D3.diff"
+    },
+    {
+      "mutant": "D2",
+      "file_line": "stage1/cohere/yaml/lexer.ts:483",
+      "branch": "test-defend/stage1-cohere-yaml-gaps",
+      "candidates_failed": [
+        "TestLexerMatchesGo"
+      ],
+      "still_caught_by": [
+        "TestComposeMatchGo"
+      ],
+      "stale": false,
+      "source_diff": "source/test-defend/stage1-cohere-yaml-gaps/session-20261009-157a4355/D2.diff"
+    },
+    {
+      "mutant": "D1",
+      "file_line": "stage1/cohere/yaml/lexer.ts:359",
+      "branch": "test-defend/stage1-cohere-yaml-gaps",
+      "candidates_failed": [
+        "TestLexerMatchesGo"
+      ],
+      "still_caught_by": [
+        "TestComposeMatchGo"
+      ],
+      "stale": false,
+      "source_diff": "source/test-defend/stage1-cohere-yaml-gaps/session-20261009-157a4355/D1.diff"
+    },
+    {
+      "mutant": "D3",
+      "file_line": "stage1/cohere/yaml/lexer.ts:286",
+      "branch": "test-defend/stage1-cohere-yaml-gaps",
+      "candidates_failed": [
+        "TestLexerMatchesGo"
+      ],
+      "still_caught_by": [
+        "TestComposeMatchGo"
+      ],
+      "stale": false,
+      "source_diff": "source/test-defend/stage1-cohere-yaml-gaps/sessions/6eef5ae5/D3.diff"
+    },
+    {
+      "mutant": "D4",
+      "file_line": "stage1/cohere/yaml/lexer.ts:365",
+      "branch": "test-defend/stage1-cohere-yaml-gaps",
+      "candidates_failed": [
+        "TestLexerMatchesGo"
+      ],
+      "still_caught_by": [
+        "TestComposeMatchGo"
+      ],
+      "stale": false,
+      "source_diff": "source/test-defend/stage1-cohere-yaml-gaps/sessions/6eef5ae5/D4.diff"
+    }
+  ],
+  "keep": [],
+  "deletable": [
+    "TestLexerMatchesGo"
+  ]
+}

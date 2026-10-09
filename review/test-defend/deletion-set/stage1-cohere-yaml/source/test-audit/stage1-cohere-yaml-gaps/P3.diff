@@ -1,0 +1,26 @@
+--- a/stage1/cohere/yaml/props_main.ts
++++ b/stage1/cohere/yaml/props_main.ts
+@@ -96,23 +96,3 @@
+         }
+     }
+ }
+-const path = programArguments()[0] ?? panic('usage: props_main.ts <cases>');
+-const read = readTextFile(path);
+-if(read.kind === 'Error') panic(read.message);
+-let number = 0;
+-for(const line of read.text.split('\n')) {
+-    if(line === '') continue;
+-    const tab = line.indexOf('\t');
+-    const size = Number(line.slice(0, tab));
+-    const text = unescaped(line.slice(tab + 1));
+-    const parser = new CSTParser();
+-    console.log(`case ${number}`);
+-    number++;
+-    if(size === 0) parser.parse(text);
+-    else {
+-        for(let start = 0; start < text.length; start += size) parser.parse(text.slice(start, start + size), true);
+-        parser.parse('', false);
+-    }
+-    const writer = new PropsOutline(parser);
+-    for(const root of parser.roots) writer.visit(root);
+-}

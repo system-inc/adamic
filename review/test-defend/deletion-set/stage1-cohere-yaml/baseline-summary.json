@@ -1,0 +1,16 @@
+{
+  "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "binary_seconds": 428.84,
+  "top_level_passes": 72,
+  "unexpected_skips": [],
+  "env": {
+    "ADAMIC_GATE_UNCACHED": "1",
+    "ADAMIC_YAML_LIBRARY": "/tmp/deletion-yaml/library",
+    "ADAMIC_BUILD_CACHE_DIR": "/tmp/deletion-yaml/cache/baseline"
+  },
+  "oracle_packages": {
+    "yaml": "2.9.0",
+    "prettier": "3.9.6",
+    "yaml-unist-parser": "3.2.0"
+  }
+}

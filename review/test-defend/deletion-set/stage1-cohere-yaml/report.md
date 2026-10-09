@@ -1,0 +1,7 @@
+Replay at b8bcadb2c493173855f19d7e5c508b34f5eeb5b6, with TestLexerMatchesGo skipped. The baseline passed with 72 top-level passes, no skips, and a binary time of 428.84 seconds. Six qualifying standalone diffs applied without changes. Replay wall time totaled 365.288 seconds. M1 completed with a clean TestFileDriver_Setup failure. The five port mutants were stopped after a clean TestComposeMatchGo failure, as allowed for this slow package. No witness-only catches, package panics, stale diffs, or broken runs occurred. These are observed catchers, not an exhaustive list of all catchers after early stopping.
+
+Two defender sessions reused D3, distinguished by source_diff and file_line. Timeout-only historical attempts and empty-answer probes were excluded from the caught-mutant list. Temporary detached commits allowed corpus collection against clean tracked sources; main was restored after every replay. Only this evidence directory is committed on the delivery branch.
+
+Disk cleanup removed only the earlier /tmp/deletion-scanner scratch directory. The 15 GB free target cannot be met on the 8.8 GB /tmp filesystem; remaining free space was sufficient and no disk errors occurred. The external YAML oracle packages were installed in /tmp/deletion-yaml/library and enabled in every run. TestFileDriver_Setup is product construction, not a planted-mutant witness.
+
+The gathered evidence loses no last catcher. This result supports the candidate's deletable classification for these six mutants only.

@@ -1,0 +1,90 @@
+[
+  {
+    "mutant": "M1",
+    "file_line": "internal/lower/object.go:1265",
+    "branch": "test-audit/stage1-cohere-yaml-gaps",
+    "diff": "source/test-audit/stage1-cohere-yaml-gaps/M1.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestLexerGaps",
+      "TestStructuralPositionRefusal",
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/yaml/lexer.ts:635",
+    "branch": "test-defend/stage1-cohere-yaml-gaps",
+    "diff": "source/test-defend/stage1-cohere-yaml-gaps/session-20261009-157a4355/D3.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D2",
+    "file_line": "stage1/cohere/yaml/lexer.ts:483",
+    "branch": "test-defend/stage1-cohere-yaml-gaps",
+    "diff": "source/test-defend/stage1-cohere-yaml-gaps/session-20261009-157a4355/D2.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D1",
+    "file_line": "stage1/cohere/yaml/lexer.ts:359",
+    "branch": "test-defend/stage1-cohere-yaml-gaps",
+    "diff": "source/test-defend/stage1-cohere-yaml-gaps/session-20261009-157a4355/D1.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/yaml/lexer.ts:286",
+    "branch": "test-defend/stage1-cohere-yaml-gaps",
+    "diff": "source/test-defend/stage1-cohere-yaml-gaps/sessions/6eef5ae5/D3.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSTMatchesGo",
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "D4",
+    "file_line": "stage1/cohere/yaml/lexer.ts:365",
+    "branch": "test-defend/stage1-cohere-yaml-gaps",
+    "diff": "source/test-defend/stage1-cohere-yaml-gaps/sessions/6eef5ae5/D4.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSTMatchesGo",
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": ""
+  }
+]

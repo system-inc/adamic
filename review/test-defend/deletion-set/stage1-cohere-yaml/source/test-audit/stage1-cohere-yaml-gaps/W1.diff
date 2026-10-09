@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/lexer_test.go
++++ b/stage1/cohere/yaml/lexer_test.go
+@@ -260,7 +260,7 @@
+ 				name   string
+ 				output []byte
+ 			}{{"native", nativeOut}, {"Node", node}} {
+-				if bytes.Equal(side.output, expected) {
++				if true {
+ 					t.Fatalf("%s missed mutant", side.name)
+ 				}
+ 				t.Logf("%s successful execution, wrong bytes caught: %s", side.name, firstDifference(side.output, expected))

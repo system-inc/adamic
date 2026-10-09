@@ -1,0 +1,264 @@
+[
+  {
+    "mutant": "M1",
+    "file_line": "internal/lower/object.go:1265",
+    "branch": "test-audit/stage1-cohere-yaml-gaps",
+    "diff": "source/test-audit/stage1-cohere-yaml-gaps/M1.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestLexerGaps",
+      "TestStructuralPositionRefusal",
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestFileDriver_Setup"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/yaml/",
+          "-skip",
+          "^(TestLexerMatchesGo)($|_|/)"
+        ],
+        "log": "01-M1-0.log",
+        "wall_seconds": 13.309222171999863,
+        "exit": 1,
+        "rows_failed": [
+          "TestFileDriver_Setup"
+        ],
+        "stopped_at_first_non_witness_failure": false
+      }
+    ],
+    "scratch_commit": "55dced1d8bd5b2ba1ad0ef09e496160481e611ac",
+    "complete": true
+  },
+  {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/yaml/lexer.ts:635",
+    "branch": "test-defend/stage1-cohere-yaml-gaps",
+    "diff": "source/test-defend/stage1-cohere-yaml-gaps/session-20261009-157a4355/D3.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestComposeMatchGo"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/yaml/",
+          "-skip",
+          "^(TestLexerMatchesGo)($|_|/)"
+        ],
+        "log": "02-D3-0.log",
+        "wall_seconds": 70.38560942699405,
+        "exit": -15,
+        "rows_failed": [
+          "TestComposeMatchGo"
+        ],
+        "stopped_at_first_non_witness_failure": true
+      }
+    ],
+    "scratch_commit": "eb49ce709baf2c7ac18f0b4c90729fe60b707763",
+    "complete": false
+  },
+  {
+    "mutant": "D2",
+    "file_line": "stage1/cohere/yaml/lexer.ts:483",
+    "branch": "test-defend/stage1-cohere-yaml-gaps",
+    "diff": "source/test-defend/stage1-cohere-yaml-gaps/session-20261009-157a4355/D2.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestComposeMatchGo"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/yaml/",
+          "-skip",
+          "^(TestLexerMatchesGo)($|_|/)"
+        ],
+        "log": "03-D2-0.log",
+        "wall_seconds": 69.65734447099385,
+        "exit": -15,
+        "rows_failed": [
+          "TestComposeMatchGo"
+        ],
+        "stopped_at_first_non_witness_failure": true
+      }
+    ],
+    "scratch_commit": "09e818f40a3a85054017f975a812bcc7e07d1c4c",
+    "complete": false
+  },
+  {
+    "mutant": "D1",
+    "file_line": "stage1/cohere/yaml/lexer.ts:359",
+    "branch": "test-defend/stage1-cohere-yaml-gaps",
+    "diff": "source/test-defend/stage1-cohere-yaml-gaps/session-20261009-157a4355/D1.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestComposeMatchGo"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/yaml/",
+          "-skip",
+          "^(TestLexerMatchesGo)($|_|/)"
+        ],
+        "log": "04-D1-0.log",
+        "wall_seconds": 72.1559439670018,
+        "exit": -15,
+        "rows_failed": [
+          "TestComposeMatchGo"
+        ],
+        "stopped_at_first_non_witness_failure": true
+      }
+    ],
+    "scratch_commit": "b131d643ed1566025b955c0bb8f0a0519f0c9369",
+    "complete": false
+  },
+  {
+    "mutant": "D3",
+    "file_line": "stage1/cohere/yaml/lexer.ts:286",
+    "branch": "test-defend/stage1-cohere-yaml-gaps",
+    "diff": "source/test-defend/stage1-cohere-yaml-gaps/sessions/6eef5ae5/D3.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSTMatchesGo",
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestComposeMatchGo"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/yaml/",
+          "-skip",
+          "^(TestLexerMatchesGo)($|_|/)"
+        ],
+        "log": "05-D3-0.log",
+        "wall_seconds": 70.13381883699913,
+        "exit": -15,
+        "rows_failed": [
+          "TestComposeMatchGo"
+        ],
+        "stopped_at_first_non_witness_failure": true
+      }
+    ],
+    "scratch_commit": "3f19dfc570b1d1726938d7f04ce0980839052522",
+    "complete": false
+  },
+  {
+    "mutant": "D4",
+    "file_line": "stage1/cohere/yaml/lexer.ts:365",
+    "branch": "test-defend/stage1-cohere-yaml-gaps",
+    "diff": "source/test-defend/stage1-cohere-yaml-gaps/sessions/6eef5ae5/D4.diff",
+    "candidates_failed": [
+      "TestLexerMatchesGo"
+    ],
+    "other_rows_failed": [
+      "TestCSTMatchesGo",
+      "TestPropsMatchGo"
+    ],
+    "stale": false,
+    "apply_check": "",
+    "still_caught_by": [
+      "TestComposeMatchGo"
+    ],
+    "witness_failures": [],
+    "panicking_tests": [],
+    "runs": [
+      {
+        "command": [
+          "go",
+          "test",
+          "-json",
+          "-count=1",
+          "-timeout",
+          "30m",
+          "./stage1/cohere/yaml/",
+          "-skip",
+          "^(TestLexerMatchesGo)($|_|/)"
+        ],
+        "log": "06-D4-0.log",
+        "wall_seconds": 69.64588022299722,
+        "exit": -15,
+        "rows_failed": [
+          "TestComposeMatchGo"
+        ],
+        "stopped_at_first_non_witness_failure": true
+      }
+    ],
+    "scratch_commit": "e016918be71025374fa5b96cbe49a4c2b801e1bc",
+    "complete": false
+  }
+]

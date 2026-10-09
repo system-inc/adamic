@@ -1,0 +1,44 @@
+{
+  "D1": {
+    "command": "ADAMIC_YAML_LIBRARY=/tmp/yaml-defense/library ADAMIC_BUILD_CACHE_DIR=/tmp/yaml-gaps-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerMatchesGo|TestPropsMatchGo)$'",
+    "failed": [
+      "TestLexerMatchesGo",
+      "TestPropsMatchGo"
+    ],
+    "failure_lines": [
+      "lexer_test.go:210: native ASan/UBSan/LSan: byte 39040: got \"006f006c0073002f00670065006e006500720061007400650020002d0063006800650063006b000a000a\\n=002000200020002000200020002000200020002000200020\\n=002d\\n=0020\\n=001f\\n=006e00\", want \"006f006c0073002f00670065006e006500720061007400650020002d0063006800650063006b000a\\n=000a\\n=002000200020002000200020002000200020002000200020\\n=002d\\n=0020\\n=001f\\n=006e\"",
+      "props_test.go:121: native ASan/UBSan/LSan: byte 4335: got \"e|1|-|-|-|20992|20992||\\n-|map-value-ind,21006,003a|0||1|-|-|-|21016|21016||\\n-|-|0|0020005400680065002000570069006e0064006f00770073002000780036003400200070006100\", want \"e|1|-|-|-|20992|20992||\\n-|map-value-ind,21006,003a|0||1|-|-|-|21016|21016||\\n-|-|1|0020005400680065002000570069006e0064006f00770073002000780036003400200070006100\""
+    ],
+    "passed": [],
+    "elapsed": 16.802,
+    "outside_matrix": "unknown"
+  },
+  "D2": {
+    "command": "ADAMIC_YAML_LIBRARY=/tmp/yaml-defense/library ADAMIC_BUILD_CACHE_DIR=/tmp/yaml-gaps-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerMatchesGo|TestPropsMatchGo)$'",
+    "failed": [
+      "TestLexerMatchesGo",
+      "TestPropsMatchGo"
+    ],
+    "failure_lines": [
+      "lexer_test.go:210: native ASan/UBSan/LSan: byte 860641: got \"2000200062000a\\ncase 61\\n=0002\\n=001f\\n=0061\\n=003a\\n=0020\\n=003e0032002d\\n=000a\\n=001f\\n=00200020\\n=001f\\n=0062\\n=000a\\ncase 62\\n=0002\\n=001f\\n=0061\\n=003a\\n=0020\\n=003e0032002d\\n=\", want \"2000200062000a\\ncase 61\\n=0002\\n=001f\\n=0061\\n=003a\\n=0020\\n=003e0032002d\\n=000a\\n=001f\\n=\\n=00200020\\n=001f\\n=0062\\n=000a\\ncase 62\\n=0002\\n=001f\\n=0061\\n=003a\\n=0020\\n=003e0032002d\"",
+      "props_test.go:121: native ASan/UBSan/LSan: byte 245694: got \"0||\\n-|-|0||0|-|-|-|0|0||\\n-|map-value-ind,1,003a|0||0|-|-|-|3|3||\\n-|-|0||0|-|-|-|0|0||\\n-|-|0||1|-|-|-|11|11||\\ncase 62\\n-|-|0||0|-|-|-|0|0||\\n-|-|0||0|-|-|-|0|0||\\n-\", want \"0||\\n-|-|0||0|-|-|-|0|0||\\n-|map-value-ind,1,003a|0||0|-|-|-|3|3||\\n-|-|0||0|-|-|-|9|9||\\n-|-|0||1|-|-|-|11|11||\\ncase 62\\n-|-|0||0|-|-|-|0|0||\\n-|-|0||0|-|-|-|0|0||\\n-\""
+    ],
+    "passed": [],
+    "elapsed": 17.289,
+    "outside_matrix": "unknown"
+  },
+  "D3": {
+    "command": "ADAMIC_YAML_LIBRARY=/tmp/yaml-defense/library ADAMIC_BUILD_CACHE_DIR=/tmp/yaml-gaps-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/yaml/ -run '^(TestLexerMatchesGo|TestPropsMatchGo)$'",
+    "failed": [
+      "TestLexerMatchesGo",
+      "TestPropsMatchGo"
+    ],
+    "failure_lines": [
+      "lexer_test.go:210: native ASan/UBSan/LSan: byte 4163499: got \"0022002a003f003a002dd83dde00002a00310061003a003f00630023feff00310020002d0022\\n=001f\\n=003a002d\\n=0020\\n=005b\\n=001f\\n=002d002500300062007c002b002d003e00210000005c003e\", want \"0022002a003f003a002dd83dde00002a00310061003a003f00630023feff00310020002d0022\\n=003a\\n=002d\\n=0020\\n=005b\\n=001f\\n=002d002500300062007c002b002d003e00210000005c003e003f\"",
+      "props_test.go:121: native ASan/UBSan/LSan: byte 1169863: got \"|0||0|-|-|-|37|37||\\ncomma,43,002c|-|0||0|-|-|-|44|44||\\n-|-|0||0|-|-|-|78|78||\\n-|-|0||0|-|-|-|78|78||\\n-|-|0||0|-|-|-|78|78||\\ncomma,148,002c|-|0||0|-|-|-|149|149|\", want \"|0||0|-|-|-|37|37||\\ncomma,43,002c|-|0||0|-|-|-|44|44||\\n-|-|0||0|-|-|-|78|78||\\n-|map-value-ind,98,003a|0||0|-|-|-|99|99||\\n-|-|0||0|-|-|-|78|78||\\n-|seq-item-ind,9\""
+    ],
+    "passed": [],
+    "elapsed": 17.307,
+    "outside_matrix": "unknown"
+  }
+}

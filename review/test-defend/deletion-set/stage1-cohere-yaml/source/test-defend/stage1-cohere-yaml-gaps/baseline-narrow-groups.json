@@ -1,0 +1,146 @@
+[
+  {
+    "group": "unist-control",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestUnistMatchesGo$"
+    ],
+    "exit": 0,
+    "wall": 39.11158311700274
+  },
+  {
+    "group": "widths",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestWidthsMatchGo$"
+    ],
+    "exit": 0,
+    "wall": 15.83827337600087
+  },
+  {
+    "group": "unist-comment_prefix_lost",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestUnistMutants$/^comment_prefix_lost$"
+    ],
+    "exit": 0,
+    "wall": 20.65372931499951
+  },
+  {
+    "group": "unist-point_column_shifted",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestUnistMutants$/^point_column_shifted$"
+    ],
+    "exit": 0,
+    "wall": 21.01923653099948
+  },
+  {
+    "group": "unist-document_end_marker_lost",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestUnistMutants$/^document_end_marker_lost$"
+    ],
+    "exit": 0,
+    "wall": 21.61185962200034
+  },
+  {
+    "group": "speed-stringUnitScan.ts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestSpeedCostProbes$/^stringUnitScan.ts$"
+    ],
+    "exit": 0,
+    "wall": 3.2947233519989823
+  },
+  {
+    "group": "speed-arenaNodeRead.ts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestSpeedCostProbes$/^arenaNodeRead.ts$"
+    ],
+    "exit": 0,
+    "wall": 2.6496039739977277
+  },
+  {
+    "group": "speed-numericMapLookup.ts",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestSpeedCostProbes$/^numericMapLookup.ts$"
+    ],
+    "exit": 0,
+    "wall": 2.6416163460016833
+  }
+]
