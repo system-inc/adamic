@@ -22,11 +22,11 @@ func init() {
 
 // The source on Node remains unchanged. These mutants alter the lowered program, so an
 // agreement between Adamic's two backends cannot hide a missing runtime guard.
-// Not parallel: lowered writes sourceImports; Node and native helpers write the shared adamic/gate and adamic/runtime cache directories.
 func TestUnknownNarrowingMutants(t *testing.T) {
+	t.Parallel()
 	for _, mutant := range []string{"in_always_true", "skip_inner_typeof"} {
-		// Not parallel: lowered writes sourceImports; helpers write the shared adamic/gate and adamic/runtime cache directories.
 		t.Run(mutant, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/unknown_narrowing.a"))
 			if err != nil {
 				t.Fatal(err)

@@ -13,7 +13,6 @@ import (
 
 // TestWASIAgreesWithNode runs every ordinary fixture as a WASI command.
 // Opt in with ADAMIC_ORACLE_WASI=1; these observations always run uncached.
-// Not parallel: lowered writes sourceImports; Node and native helpers write the shared adamic/gate and adamic/runtime cache directories.
 func TestWASIAgreesWithNode(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1 to run the WASI oracle")
@@ -22,8 +21,8 @@ func TestWASIAgreesWithNode(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, fixture := range fixtures {
-		// Not parallel: lowered writes the package-level sourceImports map; WASI helpers can write shared runtime and gate caches.
 		t.Run(fixture.path, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 			if err != nil {
 				t.Fatal(err)
@@ -60,7 +59,6 @@ func onWASI(t *testing.T, source string) run {
 	return execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle", "wasi.mjs"), binary)
 }
 
-// Not parallel: lowered writes sourceImports; Node and native helpers write the shared adamic/gate and adamic/runtime cache directories.
 func TestWASIOracleCatchesMutants(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -85,7 +83,6 @@ func TestWASIOracleCatchesMutants(t *testing.T) {
 
 // This probe holds the runner to real Wasm artifacts even before the runtime port is available.
 func TestWASIRunnerCatchesMutants(t *testing.T) {
-	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -116,7 +113,6 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 }
 
 // Compile every emitted translation unit for the 32-bit ABI independently of runtime linking.
-// Not parallel: lowered writes the package-level sourceImports map.
 func TestWASIEmission(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -127,8 +123,8 @@ func TestWASIEmission(t *testing.T) {
 	}
 	compiler := filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin", "clang")
 	for _, fixture := range fixtures {
-		// Not parallel: lowered writes the package-level sourceImports map.
 		t.Run(fixture.path, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
 			if err != nil {
 				t.Fatal(err)
