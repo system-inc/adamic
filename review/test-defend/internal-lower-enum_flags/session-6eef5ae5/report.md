@@ -15,3 +15,5 @@ D01: binary 76.941s, vet/build/run wall 89.823s, failed ['TestFlagEnumsDomain'],
 D02: binary 68.764s, vet/build/run wall 83.829s, failed ['TestEnumNeverDefault'], passed 272 top-level rows.
 D03: binary 67.404s, vet/build/run wall 84.224s, failed [], passed 273 top-level rows.
 D04: binary 45.854s, vet/build/run wall 59.904s, failed ['TestFlagEnumInlineIteration'], passed 272 top-level rows.
+
+Publishing cost: the requested remote defense branch already existed, so the initial push was rejected as non-fast-forward. This session was moved to session-6eef5ae5, the existing branch was merged without force, and both evidence sets were preserved. Commands in rows.json retain their original execution paths; their log artifacts now live beside rows.json in this session directory. The root-level report belongs to the earlier defense, not this run. Log files were ignored by repository rules and explicitly added before publishing.
