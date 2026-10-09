@@ -1,0 +1,15 @@
+github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeProfileMutants_001
+=== RUN   TestVolumeProfileMutants_001
+=== PAUSE TestVolumeProfileMutants_001
+=== CONT  TestVolumeProfileMutants_001
+    volume_test.go:8: build typeaware_six_volume-oracle-build 593649d4a91c hit 2.88
+    volume_profile_Mutants_test.go:69: phase command controls-go 0.087639s
+    volume_profile_Mutants_test.go:69: TestVolumeProfileMutants_001 (setup): 4.864246s; slice coverage: 1 source mutants, 54 controls
+    volume_profile_Mutants_test.go:141: phase command clang-version 0.050784s
+    volume_profile_Mutants_test.go:142: phase command go-version 0.011405s
+    volume_profile_Mutants_test.go:166: phase command scope-containment 90.016167s
+    volume_profile_Mutants_test.go:166: scope-containment: signal: killed
+        
+--- FAIL: TestVolumeProfileMutants_001 (95.54s)
+
+(box load 50.2 on 64 cores at first failure)
