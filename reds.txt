@@ -1,0 +1,43 @@
+run adamic-verify-20261009T104359-f6816254: void, 6603 tests in 91 units, 1 failed, 33 units broken, 0 killed over budget
+BROKEN tests-01: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-03: no results (exited false, last output "loom-runner: still running after 270 s")
+BROKEN tests-08: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-11: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-12: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-13: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-20: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-25: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-26: no results (exited false, last output "loom-pilot: github.com/system-inc/adamic/internal/ir exited 1")
+BROKEN tests-28: no results (exited false, last output "")
+BROKEN tests-30: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-32: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-35: no results (exited false, last output "loom-runner: still running after 300 s")
+BROKEN tests-06-r1: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-11-r10: no results (exited false, last output "")
+BROKEN tests-11-r11: no results (exited false, last output "")
+BROKEN tests-23-r4: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-28-r1: no results (exited false, last output "")
+BROKEN tests-28-r2: no results (exited false, last output "")
+BROKEN tests-28-r3: no results (exited false, last output "")
+BROKEN tests-28-r4: no results (exited false, last output "")
+BROKEN tests-28-r5: no results (exited false, last output "")
+BROKEN tests-28-r6: no results (exited false, last output "")
+BROKEN tests-28-r7: no results (exited false, last output "")
+BROKEN tests-28-r8: no results (exited false, last output "")
+BROKEN tests-28-r9: no results (exited false, last output "")
+BROKEN tests-28-r10: no results (exited false, last output "")
+BROKEN tests-28-r11: no results (exited false, last output "")
+BROKEN tests-28-r12: no results (exited false, last output "")
+BROKEN tests-28-r13: no results (exited false, last output "")
+BROKEN tests-28-r14: no results (exited false, last output "")
+BROKEN tests-28-r15: no results (exited false, last output "")
+BROKEN tests-28-r16: no results (exited false, last output "")
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterAsGoCohere_003 (tests-01-r1)
+    grain_asgo_test.go:144: corpus-files: upstream /tmp/adamic/cohere root internal/format/graphql pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 3
+    grain_asgo_test.go:144: GraphQL documents: no tracked .graphql corpus; pinned upstream test constants and generated controls
+    grain_asgo_test.go:144: build GraphQL_printer_oracle_outputs 340d72cc9ede miss 1.39
+    grain_asgo_test.go:240: union: 14256 unique mode/case ids across 4 shards
+    grain_asgo_test.go:253: setup wall 6.158s
+    grain_asgo_test.go:261: mode tabs, cases 0..3563
+    grain_asgo_test.go:299: native: shard-003: exit -1,
+    grain_asgo_test.go:256: own work wall 30.072s
