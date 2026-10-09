@@ -1,0 +1,11 @@
+--- a/stage1/typescript/scanner/main.ts
++++ b/stage1/typescript/scanner/main.ts
+@@ -55,7 +55,7 @@
+         if(mode === 'template' && scanner.kind === 'CloseBraceToken') {
+             scanner.rescanTemplate();
+         }
+-        count++;
++        count += 2;
+         if(!countOnly) {
+             while(errorIndex < scanner.errors.length) {
+                 const error = scanner.errors[errorIndex] ?? panic('missing diagnostic');

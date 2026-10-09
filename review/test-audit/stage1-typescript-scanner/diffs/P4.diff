@@ -1,0 +1,10 @@
+--- a/stage1/typescript/scanner/scanner_products_test.go
++++ b/stage1/typescript/scanner/scanner_products_test.go
+@@ -189,6 +189,7 @@
+ }
+ 
+ func scannerSelect(lines []string, shard int) []string {
++	if lines != nil { return nil }
+ 	var selected []string
+ 	for _, line := range lines {
+ 		if scannerOwner(scannerCaseIdentity(line)) == shard {

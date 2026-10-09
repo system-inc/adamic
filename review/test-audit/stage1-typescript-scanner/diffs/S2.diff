@@ -1,0 +1,11 @@
+--- a/stage1/typescript/scanner/profile_test.go
++++ b/stage1/typescript/scanner/profile_test.go
+@@ -81,7 +81,7 @@
+ 			units = append(units, path)
+ 		}
+ 	}
+-	flags := append(native.Flags(native.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
++	flags := append(native.Flags(native.Options{}), "-audit-invalid-profile-option", "-o", filepath.Join(directory, "profiled"))
+ 	flags = append(flags, units...)
+ 	flags = append(flags, "-lm")
+ 	execute(t, "", "clang", flags...)

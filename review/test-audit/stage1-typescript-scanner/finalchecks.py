@@ -1,0 +1,20 @@
+exec(open('/tmp/u159/audit.py').read().split('for name,pattern in rows.items():')[0])
+meta=json.loads((E/'runs.json').read_text())
+for name,pat in [('coverage','^TestScannerShardCoverage$'),('agreement-only','^TestScannerAgreesWithTypescriptGo_')]:
+ for i in range(3):run('timing-'+name+'-'+str(i+1),pat)
+path=P+'/main.ts'; f=R/path;o=f.read_text();n=o.replace('function run(path: string, mode: string, countOnly: boolean): number {','function run(path: string, mode: string, countOnly: boolean): number {\n    if(path.length >= 0) { return 0; }')
+(E/'P1.log').rename(E/'P1-partial-invalid.log');(E/'diffs/P1.diff').write_text(''.join(difflib.unified_diff(o.splitlines(True),n.splitlines(True),'a/'+path,'b/'+path)))
+f.write_text(n)
+base=subprocess.check_output(['git','rev-parse','HEAD'],cwd=R,text=True).strip()
+try:
+ subprocess.run(['git','add',path],cwd=R,check=True);subprocess.run(['git','commit','--quiet','-m','Temporary audit P1 corrected'],cwd=R,check=True)
+ (E/'P1-commit.txt').write_text(subprocess.check_output(['git','rev-parse','HEAD'],cwd=R,text=True))
+ run('P1','.', 'P1-final')
+finally:subprocess.run(['git','reset','--hard',base],cwd=R,check=True,stdout=subprocess.DEVNULL)
+path=P+'/scanner_products_test.go';f=R/path;o=f.read_text();n=o.replace('func scannerSelect(lines []string, shard int) []string {','func scannerSelect(lines []string, shard int) []string {\n\tif lines != nil { return nil }')
+(E/'diffs/P4.diff').write_text(''.join(difflib.unified_diff(o.splitlines(True),n.splitlines(True),'a/'+path,'b/'+path)));f.write_text(n)
+try:
+ with open(E/'P4-vet.log','w') as out: subprocess.run(['go','vet','./'+P+'/'],cwd=R,env=env,stdout=out,stderr=subprocess.STDOUT,check=True)
+ run('P4','^TestScannerShardCoverage$', 'P4')
+finally:f.write_text(o)
+print('RESTORED',flush=True)

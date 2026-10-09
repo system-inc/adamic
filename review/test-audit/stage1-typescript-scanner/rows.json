@@ -1,0 +1,239 @@
+[
+  {
+    "test": "TestGapStandsWhereGapsMdSays",
+    "package": "stage1/typescript/scanner",
+    "file": "stage1/typescript/scanner/gaps_test.go:13",
+    "seconds": 0.1,
+    "oracle": "Node runs the fixture and returns ab; lower.NotYet and exact What label are self-written. Location and execution of lowered output are not checked.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: gaps_test.go:34: gap changed: /workspace/adamic/stage1/typescript/scanner/gaps/1_push.ts:3:1: stage 0 can't lower unsupported yet; update GAPS.md and undo gap 1 workaround",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestBigintGapStandsWhereGapsMdSays"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": 0.098,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > M4.log 2>&1; gaps_test.go:34: gap changed: /workspace/adamic/stage1/typescript/scanner/gaps/1_push.ts:3:1: stage 0 can't lower unsupported yet; update GAPS.md and undo gap 1 workaround"
+  },
+  {
+    "test": "TestBigintGapStandsWhereGapsMdSays",
+    "package": "stage1/typescript/scanner",
+    "file": "stage1/typescript/scanner/gaps_test.go:38",
+    "seconds": 0.098,
+    "oracle": "Node returns 1237940039285380274899124223; lower.NotYet and exact What label are self-written. Location is not checked.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: gaps_test.go:59: gap changed: /workspace/adamic/stage1/typescript/scanner/gaps/2_bigint.ts:2:7: stage 0 can't lower unsupported yet; update GAPS.md and undo gap 2 workaround",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestGapStandsWhereGapsMdSays"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": 0.1,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > M4.log 2>&1; gaps_test.go:59: gap changed: /workspace/adamic/stage1/typescript/scanner/gaps/2_bigint.ts:2:7: stage 0 can't lower unsupported yet; update GAPS.md and undo gap 2 workaround"
+  },
+  {
+    "test": "TestProfileArtifacts",
+    "package": "stage1/typescript/scanner",
+    "file": "stage1/typescript/scanner/profile_test.go:18",
+    "seconds": 7.657,
+    "oracle": "Self: file writes and compiler command success. S2 proves failed profile construction is detected; artifact behavior is checked in another row.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S2: clang: error: unknown argument: '-audit-invalid-profile-option'",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProfileArtifacts$ > S2.log 2>&1; clang: error: unknown argument: '-audit-invalid-profile-option'",
+    "construction_kills": [
+      "S2"
+    ]
+  },
+  {
+    "test": "TestProfileSnapshotsAgree",
+    "package": "stage1/typescript/scanner",
+    "file": "stage1/typescript/scanner/profile_test.go:92",
+    "seconds": 6.418,
+    "oracle": "Pinned TypeScript-Go full bytes compared to release, profiled and Node port across all 18791 cases. Artifact directories freshly rebuilt for each mutant.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: profile_test.go:110: /tmp/u159/artifacts/M3-replay release: line 886390: port \"Identifier 0 1 0\\ta\", Go \"Identifier 0 4 0\\ta\\\\u200d\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestScannerAgreesWithTypescriptGo family"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 12.93,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > M3.log 2>&1; profile_test.go:110: /tmp/u159/artifacts/M3-replay release: line 886390: port \"Identifier 0 1 0\\ta\", Go \"Identifier 0 4 0\\ta\\\\u200d\""
+  },
+  {
+    "test": "TestPerformance",
+    "package": "stage1/typescript/scanner",
+    "file": "stage1/typescript/scanner/scanner_agreement_shards_test.go:292",
+    "seconds": 4.157,
+    "oracle": "TypeScript-Go token count compared with native and Node counts. Only total count is asserted; token kinds, values, offsets and speed have no assertion. M1 and M3 survive this row.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [
+      "M2"
+    ],
+    "last_proven_fail": "M2: scanner_agreement_shards_test.go:317: native count \"869580\\n\", Go \"434790\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > M2.log 2>&1; scanner_agreement_shards_test.go:317: native count \"869580\\n\", Go \"434790\\n\""
+  },
+  {
+    "test": "TestProduct_Scanner family",
+    "package": "stage1/typescript/scanner",
+    "file": "stage1/typescript/scanner/scanner_products_test.go:137",
+    "seconds": 2.98,
+    "oracle": "Self: build recipes must complete without t.Fatal. Return paths are discarded, with no product existence or behavior assertion.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: scanner_products_test.go:139: scanner product preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProduct_Scanner > S1.log 2>&1; scanner_products_test.go:139: scanner product preparation failed",
+    "members": [
+      "TestProduct_ScannerOracle",
+      "TestProduct_ScannerNative",
+      "TestProduct_ScannerRelease",
+      "TestProduct_ScannerSourceIdentifier",
+      "TestProduct_ScannerPunctuator",
+      "TestProduct_ScannerDecimalSeparator",
+      "TestProduct_ScannerRegexRescan"
+    ],
+    "construction_kills": [
+      "S1"
+    ]
+  },
+  {
+    "test": "TestScannerShardCoverage",
+    "package": "stage1/typescript/scanner",
+    "file": "stage1/typescript/scanner/scanner_products_test.go:289",
+    "seconds": 0.371,
+    "oracle": "Self: corpus union, exactly-once ownership, mutant ownership and one planted mismatch. Git supplies tracked inputs, not expected scanner semantics.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: scanner_products_test.go:329: planted failure caught by 0 shards",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P4"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^(TestScannerAgreesWithTypescriptGo_|TestScannerShardCoverage$) > W1.log 2>&1; scanner_products_test.go:329: planted failure caught by 0 shards",
+    "construction_kills": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestScannerAgreesWithTypescriptGo family",
+    "package": "stage1/typescript/scanner",
+    "file": "stage1/typescript/scanner/scanner_products_test.go:334",
+    "seconds": 12.93,
+    "oracle": "Pinned TypeScript-Go scanner, compared byte for byte to native and Node-executed port. Includes separate built-in mismatch witnesses, verified by W1.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: scanner_products_test.go:340: native: line 37545: port \"error 1127 0 2\", Go \"Identifier 0 2 0\\t\\\\u038e\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestProfileSnapshotsAgree"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 6.418,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run . > M3.log 2>&1; scanner_products_test.go:340: native: line 37545: port \"error 1127 0 2\", Go \"Identifier 0 2 0\\t\\\\u038e\"",
+    "members": [
+      "TestScannerAgreesWithTypescriptGo_000",
+      "TestScannerAgreesWithTypescriptGo_001",
+      "TestScannerAgreesWithTypescriptGo_002",
+      "TestScannerAgreesWithTypescriptGo_003",
+      "TestScannerAgreesWithTypescriptGo_004",
+      "TestScannerAgreesWithTypescriptGo_005",
+      "TestScannerAgreesWithTypescriptGo_006",
+      "TestScannerAgreesWithTypescriptGo_007",
+      "TestScannerAgreesWithTypescriptGo_008",
+      "TestScannerAgreesWithTypescriptGo_009",
+      "TestScannerAgreesWithTypescriptGo_010",
+      "TestScannerAgreesWithTypescriptGo_011",
+      "TestScannerAgreesWithTypescriptGo_012",
+      "TestScannerAgreesWithTypescriptGo_013",
+      "TestScannerAgreesWithTypescriptGo_014",
+      "TestScannerAgreesWithTypescriptGo_015"
+    ],
+    "witness_evidence": "W1: scanner_products_test.go:356: source scanned as Identifier Node: mutant survives comparison; weakening difference also fails the other three built-in witness owners."
+  }
+]

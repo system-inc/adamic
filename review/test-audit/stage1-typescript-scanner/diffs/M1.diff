@@ -1,0 +1,11 @@
+--- a/stage1/typescript/scanner/scanner.ts
++++ b/stage1/typescript/scanner/scanner.ts
+@@ -71,7 +71,7 @@
+         return Number.isNaN(unit) ? -1 : unit;
+     }
+     advance(code: number): void {
+-        this.pos += code > 0xffff ? 2 : 1;
++        this.pos += code > 0xffff ? 1 : 1;
+     }
+     error(code: number, start: number = this.pos, length = 0): void {
+         this.errors.push({ code, start, length });

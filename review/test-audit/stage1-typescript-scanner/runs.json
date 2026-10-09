@@ -1,0 +1,534 @@
+[
+  {
+    "id": "timing-gappush-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestGapStandsWhereGapsMdSays$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 1.7309812399998918,
+    "exit": 0
+  },
+  {
+    "id": "timing-gappush-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestGapStandsWhereGapsMdSays$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 1.7822345990007307,
+    "exit": 0
+  },
+  {
+    "id": "timing-gappush-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestGapStandsWhereGapsMdSays$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 1.7201534020005056,
+    "exit": 0
+  },
+  {
+    "id": "timing-gapbigint-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestBigintGapStandsWhereGapsMdSays$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 1.7465238699987822,
+    "exit": 0
+  },
+  {
+    "id": "timing-gapbigint-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestBigintGapStandsWhereGapsMdSays$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 1.8222256589997414,
+    "exit": 0
+  },
+  {
+    "id": "timing-gapbigint-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestBigintGapStandsWhereGapsMdSays$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 1.6270525839991024,
+    "exit": 0
+  },
+  {
+    "id": "timing-products-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProduct_Scanner",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 4.394235451998611,
+    "exit": 0
+  },
+  {
+    "id": "timing-products-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProduct_Scanner",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 4.515774396999404,
+    "exit": 0
+  },
+  {
+    "id": "timing-products-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProduct_Scanner",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 4.70993326000098,
+    "exit": 0
+  },
+  {
+    "id": "timing-agreement-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^(TestScannerAgreesWithTypescriptGo_|TestScannerShardCoverage$)",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 15.40830474699942,
+    "exit": 0
+  },
+  {
+    "id": "timing-agreement-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^(TestScannerAgreesWithTypescriptGo_|TestScannerShardCoverage$)",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 14.848113034999187,
+    "exit": 0
+  },
+  {
+    "id": "timing-agreement-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^(TestScannerAgreesWithTypescriptGo_|TestScannerShardCoverage$)",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 14.564387460000944,
+    "exit": 0
+  },
+  {
+    "id": "timing-performance-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestPerformance$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 5.953222849000667,
+    "exit": 0
+  },
+  {
+    "id": "timing-performance-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestPerformance$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 5.745815243000834,
+    "exit": 0
+  },
+  {
+    "id": "timing-performance-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestPerformance$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 5.718453658000726,
+    "exit": 0
+  },
+  {
+    "id": "timing-artifacts-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProfileArtifacts$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 9.164810017999116,
+    "exit": 0
+  },
+  {
+    "id": "timing-artifacts-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProfileArtifacts$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 9.252710791999561,
+    "exit": 0
+  },
+  {
+    "id": "timing-artifacts-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProfileArtifacts$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 9.3679617100006,
+    "exit": 0
+  },
+  {
+    "id": "timing-snapshots-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProfileSnapshotsAgree$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 8.059918013999777,
+    "exit": 0
+  },
+  {
+    "id": "timing-snapshots-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProfileSnapshotsAgree$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 8.016411460999734,
+    "exit": 0
+  },
+  {
+    "id": "timing-snapshots-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProfileSnapshotsAgree$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 8.126333567000984,
+    "exit": 0
+  },
+  {
+    "id": "M1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run .",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/M1",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/M1",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/M1"
+    },
+    "wall": 17.87709913099934,
+    "exit": 1
+  },
+  {
+    "id": "M2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run .",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/M2",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/M2",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/M2"
+    },
+    "wall": 17.64583200999914,
+    "exit": 1
+  },
+  {
+    "id": "M3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run .",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/M3",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/M3",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/M3"
+    },
+    "wall": 17.98533338500056,
+    "exit": 1
+  },
+  {
+    "id": "M4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run .",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/M4",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/M4",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/M4"
+    },
+    "wall": 40.75724572500076,
+    "exit": 1
+  },
+  {
+    "id": "P1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run .",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/P1",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/P1",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/P1"
+    },
+    "wall": 5.62579415899927,
+    "exit": 1
+  },
+  {
+    "id": "P2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^(TestGapStandsWhereGapsMdSays|TestBigintGapStandsWhereGapsMdSays)$",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/P2",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/P2",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/P2"
+    },
+    "wall": 9.119748969000284,
+    "exit": 1
+  },
+  {
+    "id": "P3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProduct_Scanner",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/P3",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/P3",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/P3"
+    },
+    "wall": 4.301957587000288,
+    "exit": 0
+  },
+  {
+    "id": "S1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProduct_Scanner",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/S1",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/S1",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/S1"
+    },
+    "wall": 4.440243706998444,
+    "exit": 1
+  },
+  {
+    "id": "S2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestProfileArtifacts$",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/S2",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/S2",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/S2"
+    },
+    "wall": 7.623399920999873,
+    "exit": 1
+  },
+  {
+    "id": "W1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^(TestScannerAgreesWithTypescriptGo_|TestScannerShardCoverage$)",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/W1",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/W1",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/W1"
+    },
+    "wall": 21.565577069999563,
+    "exit": 1
+  },
+  {
+    "id": "M1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run .",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/M1-replay",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/M1-replay",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/M1-replay"
+    },
+    "wall": 33.777882166999916,
+    "exit": 1
+  },
+  {
+    "id": "M2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run .",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/M2-replay",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/M2-replay",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/M2-replay"
+    },
+    "wall": 28.889910292000422,
+    "exit": 1
+  },
+  {
+    "id": "M3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run .",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/M3-replay",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/M3-replay",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/M3-replay"
+    },
+    "wall": 35.01980392399855,
+    "exit": 1
+  },
+  {
+    "id": "P1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run .",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/P1-replay",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/P1-replay",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/P1-replay"
+    },
+    "wall": 15.80246685199927,
+    "exit": 1
+  },
+  {
+    "id": "timing-coverage-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestScannerShardCoverage$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 2.0690470870013087,
+    "exit": 0
+  },
+  {
+    "id": "timing-coverage-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestScannerShardCoverage$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 1.996155856999394,
+    "exit": 0
+  },
+  {
+    "id": "timing-coverage-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestScannerShardCoverage$",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 2.019121102999634,
+    "exit": 0
+  },
+  {
+    "id": "timing-agreement-only-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestScannerAgreesWithTypescriptGo_",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 14.178829858999961,
+    "exit": 0
+  },
+  {
+    "id": "timing-agreement-only-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestScannerAgreesWithTypescriptGo_",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 15.812320822000402,
+    "exit": 0
+  },
+  {
+    "id": "timing-agreement-only-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestScannerAgreesWithTypescriptGo_",
+    "env": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/clean",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/clean"
+    },
+    "wall": 14.55243313199935,
+    "exit": 0
+  },
+  {
+    "id": "P1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run .",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/P1-final",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/P1-final",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/P1-final"
+    },
+    "wall": 20.269013546001588,
+    "exit": 1
+  },
+  {
+    "id": "P4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/scanner/ -run ^TestScannerShardCoverage$",
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u159/cache/P4",
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u159/typescript",
+      "ADAMIC_SCANNER_BENCH": "1",
+      "ADAMIC_SCANNER_PROFILE_DIR": "/tmp/u159/artifacts/P4",
+      "ADAMIC_SCANNER_PROFILE_SNAPSHOTS": "/tmp/u159/artifacts/P4"
+    },
+    "wall": 5.043685693000953,
+    "exit": 1
+  }
+]

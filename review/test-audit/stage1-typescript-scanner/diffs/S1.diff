@@ -1,0 +1,11 @@
+--- a/stage1/typescript/scanner/scanner_products_test.go
++++ b/stage1/typescript/scanner/scanner_products_test.go
+@@ -47,7 +47,7 @@
+ 	}
+ 	value, _ := scannerProducts.LoadOrStore(string(identity), &scannerPrepared{})
+ 	prepared := value.(*scannerPrepared)
+-	prepared.once.Do(func() { prepared.directory = buildcache.Product(t, inputs, recipe) })
++	// audit: dropped the product construction statement
+ 	if prepared.directory == "" {
+ 		t.Fatal("scanner product preparation failed")
+ 	}
