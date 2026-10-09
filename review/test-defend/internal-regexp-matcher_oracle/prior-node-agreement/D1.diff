@@ -1,0 +1,14 @@
+diff --git a/internal/regexp/parser.go b/internal/regexp/parser.go
+index 99c873f1..e2318fb2 100644
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -268,9 +268,6 @@ func (p *parser) modifiers() (Flags, Flags, error) {
+ 			p.pos++
+ 			continue
+ 		}
+-		if c != 'i' && c != 'm' && c != 's' || seen[c] {
+-			return enable, disable, p.fail("invalid modifiers")
+-		}
+ 		seen[c], any = true, true
+ 		target := &enable
+ 		if disabling {

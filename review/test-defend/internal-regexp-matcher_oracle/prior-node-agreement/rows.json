@@ -1,0 +1,41 @@
+[
+  {
+    "test": "TestNodeAgreement",
+    "package": "internal/regexp",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/regexp/parser.go:271",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/regexp/parser.go:271",
+        "change": "Drop complete illegal/repeated inline modifier guard in parser.modifiers.",
+        "rows_failed": [
+          "TestNodeAgreement"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-regexp/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D1.log 2>&1; oracle_test.go:79: 52 disagreements among 5746 test262 and 630 generated cases; pattern=\"(?i-i:a)\" flags=\"\" parser=true node=false error=<nil>",
+    "rows_passed": [
+      "TestUnicodeDecimalEscape",
+      "TestMatcherStepLimit",
+      "TestMatcherUTF16PatternsNode",
+      "TestSharedCanonicalize",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherPropertyProviderStrings",
+      "TestQuantifierBounds",
+      "TestFlags",
+      "TestParse",
+      "TestMatcherOct6Node",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherNodeControls",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "bounded": false
+  }
+]

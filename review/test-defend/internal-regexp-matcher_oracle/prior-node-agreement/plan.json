@@ -1,0 +1,11 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/regexp/parser.go",
+    "line": 271,
+    "before": "\t\tif c != 'i' && c != 'm' && c != 's' || seen[c] {\n\t\t\treturn enable, disable, p.fail(\"invalid modifiers\")\n\t\t}\n",
+    "after": "",
+    "menu": "drop statement",
+    "change": "Drop complete inline modifier validity check. Illegal/repeated modifiers are accepted while valid modifier handling stays intact."
+  }
+]
