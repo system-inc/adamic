@@ -1,8 +1,10 @@
 package formatfiles
 
 import (
+	"context"
 	"crypto/sha256"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"hash/fnv"
 	"os"
@@ -11,7 +13,9 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ir"
@@ -369,7 +373,7 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 		Flags:     []string{"go test -c -overlay ./internal/format/formatfiles", buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOFLAGS")},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")}}
 	product := buildcache.Product(t, inputs, func(directory string) error {
-		command := exec.Command("go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(directory, "oracle"), "./internal/format/formatfiles")
+		command := formatfilesCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(directory, "oracle"), "./internal/format/formatfiles")
 		command.Dir = cohere
 		output, err := combinedOutput(command)
 		if err != nil {
@@ -377,10 +381,29 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
 		}
 		return nil
 	})
-	command := exec.Command(filepath.Join(product, "oracle"), "-test.run=^TestAdamicPortCases$", "-test.timeout=75s")
+	command := formatfilesCommand(t, filepath.Join(product, "oracle"), "-test.run=^TestAdamicPortCases$", "-test.timeout=75s")
 	command.Dir = packageDirectory
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("cohere's side: %v\n%s", err, output)
 	}
+}
+
+// Bound child processes without an external timeout executable. Killing the
+// process group also terminates compilers launched by the Go oracle build.
+func formatfilesCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	t.Cleanup(cancel)
+	command := exec.CommandContext(ctx, name, arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 2 * time.Second
+	return command
 }
