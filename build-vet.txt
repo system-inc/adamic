@@ -1,0 +1,9 @@
+fatal: not a git repository (or any parent up to mount point /)
+Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
+loom-build: tree  setup 0 s
+adamic-build-vet: line 8: /build.log: Permission denied
+adamic-build-vet: line 9: /vet.log: Permission denied
+loom-build: go build ./... FAILED (exit 1)
+head: cannot open '/build.log' for reading: No such file or directory
+loom-build: go vet ./... FAILED (exit 1)
+head: cannot open '/vet.log' for reading: No such file or directory
