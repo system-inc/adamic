@@ -17,53 +17,33 @@ import (
 	"testing"
 )
 
-// The probe runs in a subprocess of this test binary, so the planted mismatch can fail it without failing
-// this run.
+const testEmittedJavaScriptMismatchShards = 1
+
+// ADAMIC_TEST_SHARD=i/n selects local case shards; unset runs all. The gate uses
+// -run '^TestEmittedJavaScriptMismatch$/^shard-NNN$'. Setup shares builds once
+// until internal/buildcache supplies read-only products by hash. The planted
+// mismatch runs in a subprocess with those same products and must fail its shard.
 func TestEmittedJavaScriptMismatch(t *testing.T) {
 	t.Parallel()
-	if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
+	products, supplied := harnessSuppliedProducts(t)
+	if !supplied {
 		directory, err := filepath.Abs(".")
 		if err != nil {
 			t.Fatal(err)
 		}
-		path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-		oracle := goOracle(t)
-		binary := buildPort(t, directory, true)
-		module := emittedJavaScript(t, directory)
-		compareWithJavaScript(t, oracle, binary, directory, path, module)
-		data, err := os.ReadFile(module)
-		if err != nil {
-			t.Fatal(err)
+		products.Rows = []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"}
+		oracle := harnessOracle(t, directory, "emitted-mismatch")
+		archive := ""
+		products.Original = harnessBuild(t, directory, "emitted-mismatch", &archive, true)
+		products.Original.Oracle = oracle
+	}
+	harnessShards(t, []string{"no-var-emitted-javascript-mismatch"}, testEmittedJavaScriptMismatchShards, func(t *testing.T) {
+		harnessCompare(t, products.Original, manifest(t, products.Rows))
+		if !supplied {
+			harnessPlantedDisagreement(t, products, false, "planted emitted JavaScript mismatch")
+			t.Log("ordinary comparison rejected clean-running emitted JavaScript mutant")
 		}
-		// The emitted module is the run's shared one, so the planted mismatch goes into a copy of it.
-		module = filepath.Join(t.TempDir(), "lint.mjs")
-		data = append(data, []byte("\nconsole.log('planted emitted JavaScript mismatch');\n")...)
-		if err := os.WriteFile(module, data, 0644); err != nil {
-			t.Fatal(err)
-		}
-		compareWithJavaScript(t, oracle, binary, directory, path, module)
-		t.Fatal("emitted JavaScript mutant survived")
-	}
-	log := filepath.Join(t.TempDir(), "mismatch.log")
-	output, err := os.Create(log)
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := exec.Command(os.Args[0], "-test.run=^TestEmittedJavaScriptMismatch$", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_LINT_MISMATCH_PROBE=1")
-	command.Stdout, command.Stderr = output, output
-	runError := command.Run()
-	if err := output.Close(); err != nil {
-		t.Fatal(err)
-	}
-	data, err := os.ReadFile(log)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if runError == nil || !bytes.Contains(data, []byte("emitted JavaScript:")) || !bytes.Contains(data, []byte("planted emitted JavaScript mismatch")) {
-		t.Fatalf("wrong mutant failure: %v\n%s", runError, data)
-	}
-	t.Logf("ordinary comparison rejected clean-running emitted JavaScript mutant:\n%s", data)
+	})
 }
 
 const testDotARenameShards = 1
@@ -431,8 +411,12 @@ func harnessShards(t *testing.T, ids []string, count int, check func(*testing.T)
 	}
 }
 
-func harnessPlantedDisagreement(t *testing.T, products harnessRunProducts, changed bool) {
+func harnessPlantedDisagreement(t *testing.T, products harnessRunProducts, changed bool, marker ...string) {
 	t.Helper()
+	message := "planted harness disagreement"
+	if len(marker) != 0 {
+		message = marker[0]
+	}
 	p := &products.Original
 	if changed {
 		p = &products.Changed
@@ -442,7 +426,7 @@ func harnessPlantedDisagreement(t *testing.T, products harnessRunProducts, chang
 		t.Fatal(err)
 	}
 	p.JavaScript = filepath.Join(t.TempDir(), "planted.mjs")
-	if err := os.WriteFile(p.JavaScript, append(data, []byte("\nconsole.log('planted harness disagreement');\n")...), 0644); err != nil {
+	if err := os.WriteFile(p.JavaScript, append(data, []byte(fmt.Sprintf("\nconsole.log(%q);\n", message))...), 0644); err != nil {
 		t.Fatal(err)
 	}
 	data, err = json.Marshal(products)
@@ -460,7 +444,7 @@ func harnessPlantedDisagreement(t *testing.T, products harnessRunProducts, chang
 		output, err := command.CombinedOutput()
 		text := string(output)
 		if seat == 0 {
-			if err == nil || strings.Count(text, "--- FAIL: "+name+"/shard-000") != 1 || !strings.Contains(text, "emitted JavaScript:") || !strings.Contains(text, "planted harness disagreement") {
+			if err == nil || strings.Count(text, "--- FAIL: "+name+"/shard-000") != 1 || !strings.Contains(text, "emitted JavaScript:") || !strings.Contains(text, message) {
 				t.Fatalf("wrong planted failure: %v\n%s", err, text)
 			}
 			t.Log("planted disagreement caught exactly by shard-000 on seat 0/2")
