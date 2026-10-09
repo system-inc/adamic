@@ -62,7 +62,10 @@ echo $$ > "${lock}/pid"
 trap 'rm -f "${lock}/pid"; rmdir "${lock}" 2> /dev/null' EXIT
 source ~/sdk/env.sh
 cd ~/adamic || { echo "void: no ~/adamic on $(hostname -s)"; exit 2; }
-git fetch -q origin "${sha}" && git checkout -q --detach "${sha}" || { echo "void: $(hostname -s) could not check out ${sha}"; exit 2; }
+# The leg owns this checkout, and its stage 3 runs rewrite tracked evidence in it: Sun2's leg for C emission's 88c5085b
+# went void at 21:08Z on Oct 9 because a run at 16:47Z had rewritten stage3/scouts/step09/adapted-casts/evidence/
+# PROVENANCE.json. So the checkout is forced, and a tracked file a run changed never blocks the next leg.
+git fetch -q origin "${sha}" && git checkout -q -f --detach "${sha}" || { echo "void: $(hostname -s) could not check out ${sha}"; exit 2; }
 # The cohere pin rarely moves; when it does, a host without credentials can't follow, and that's the host.
 git submodule update -q --init --recursive 2> /dev/null || { echo "void: $(hostname -s) could not update submodules at ${sha}"; exit 2; }
 mkdir -p ~/darwin-leg
