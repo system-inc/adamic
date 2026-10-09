@@ -60,6 +60,7 @@ class Watcher:
 *'branch -r --contains'*) echo origin/devtools/fast-gate ;;
 *'ls-remote'*refs/heads/main*) printf '%s\\trefs/heads/main\\n' aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ;;
 *'ls-remote'*refs/heads/codex*) cat "$TEST_ROOT/tips" ;;
+*'rev-list refs/remotes/origin/main'*) cat "$TEST_ROOT/main-commits" 2>/dev/null ;;
 *merge-base*) exit 1 ;;
 *trailers:key=Task*) cat "$TEST_ROOT/trailers-$5" 2>/dev/null ;;
 *trailers:key=Gate-tier*) cat "$TEST_ROOT/gate-tier-$5" 2>/dev/null ;;
@@ -702,6 +703,44 @@ class WatchTests(unittest.TestCase):
         self.assertIn('skipped by hand codex/hand', output)
         self.assertIn('skipped by pattern codex/views-* codex/views-a', output)
         self.assertNotIn('codex/gone', w.read('starts'))
+
+    def test_a_queued_tip_already_on_main_leaves_the_queue(self):
+        # @system_adamic_release, Oct 9 21:36Z: landed tips sat in the box queue, at landing rank, until a pick reached them.
+        w = self.start(0)
+        landed, live = '3' * 40, '4' * 40
+        w.put('main-commits', '%s\n%s\n' % ('f' * 40, landed))
+        (w.state / 'seen').write_text('cloud/land-x %s\ncodex/live %s\n' % (landed, live))
+        (w.state / 'queue').write_text('B 800 cloud/land-x %s\nS 900 codex/live %s\n' % (landed, live))
+        # The log line comes before the pruned queue is written, so wait on the queue.
+        w.wait(lambda: (w.state / 'queue').read_text() == 'S 900 codex/live %s\n' % live)
+        self.assertIn('already on main cloud/land-x %s' % landed, w.read('output'))
+
+    def test_a_cut_with_a_newer_cut_of_its_name_leaves_the_queue(self):
+        # @system_adamic_release, Oct 9 21:36Z: 21 superseded land-stack cuts in the box queue, some at rank 0. A cut is
+        # cloud/land-stack-<name>-<sha8>, a new branch each time, and newer means first queued later.
+        w = self.start(0)
+        cut = lambda name, digit: ('cloud/land-stack-%s-%s' % (name, digit * 8), digit * 8 + '0' * 32)
+        views, viewsNewer = cut('views', '1'), cut('views', '2')
+        lint, lintNewer = cut('lint', '3'), cut('lint', '4')
+        solo, plain = cut('solo', '5'), ('cloud/land-stack-1-runtime-slice1', '6' * 40)
+        (w.state / 'seen').write_text(''.join('%s %s\n' % tip for tip in (views, viewsNewer, lint, lintNewer, solo, plain)))
+        # lint's newer cut is already gated (on origin, out of the queue), and its older cut was requeued at 950 by a void:
+        # its first queue time, 700, still makes it the older.
+        (w.state / 'cut-queued').write_text('%s %s 700\n%s %s 850\n' % (lint + lintNewer))
+        rows = [('B', 800) + views, ('B', 900) + viewsNewer, ('B', 950) + lint, ('B', 600) + solo, ('B', 610) + plain]
+        (w.state / 'queue').write_text(''.join('%s %d %s %s\n' % row for row in rows))
+        w.wait(lambda: (w.state / 'queue').read_text() == ''.join('%s %d %s %s\n' % row for row in (rows[1], rows[3], rows[4])))
+        self.assertIn('superseded %s %s by the newer cut %s' % (lint + (lintNewer[0],)), w.read('output'))
+        self.assertIn('superseded %s %s by the newer cut %s' % (views + (viewsNewer[0],)), w.read('output'))
+        self.assertIn('%s %s 900\n' % viewsNewer, (w.state / 'cut-queued').read_text())
+
+    def test_a_second_queue_line_for_a_sha_leaves_the_queue(self):
+        w = self.start(0)
+        dup, other = '7' * 40, '8' * 40
+        (w.state / 'seen').write_text('codex/dup %s\ncodex/other %s\n' % (dup, other))
+        (w.state / 'queue').write_text('S 800 codex/dup %s\nS 850 codex/other %s\nS 900 codex/dup %s\n' % (dup, other, dup))
+        w.wait(lambda: 'dropped a second queue line for codex/dup %s' % dup in w.read('output'))
+        self.assertEqual((w.state / 'queue').read_text(), 'S 800 codex/dup %s\nS 850 codex/other %s\n' % (dup, other))
 
     def test_front_outranks_every_step_and_skip_globs_take_a_family_out(self):
         # The steps' globs are known before any slot exists, so the second step's tip would go first without

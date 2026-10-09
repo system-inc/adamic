@@ -669,21 +669,57 @@ publishEarlyRed() {
 # skipped by hand or by pattern, or superseded by a newer tip of their branch. Ranking reads the whole queue
 # for every pick (about 40 s at 150 queued, Oct 8 19:08Z), so each discard found there cost a full pass,
 # and a run of them kept the loop from reaping finished gates for minutes.
+# Three more leave here (asked by @system_adamic_release, Oct 9 21:36Z: integration found 21 superseded land-stack cuts in
+# the box queue, some at rank 0): a tip already on main (it landed by another route; read from one listing of main's
+# commits, no fork per tip), a cut whose name has a newer cut, and a second line for a sha already kept.
+# A cut is cloud/land-stack-<name>-<sha8>, a new branch per cut, so a recut never moves the old branch and the
+# superseded check never sees it. Newer means first queued later: the poll that saw it pushed. ${state}/cut-queued keeps
+# each cut's first queue time ("branch sha epoch"), since a void, preempt or pool-void requeue stamps the line afresh and
+# would make an older cut look newer. A cut on origin (seen) with a later first queue time supersedes an older one,
+# queued or already gated; a cut never queued (the backlog at the first start) has no time and supersedes nothing.
 pruneQueue() {
   [ -s "${state}/queue" ] || return 0
-  touch "${state}/seen" "${state}/gated" "${state}/skip"
+  touch "${state}/seen" "${state}/gated" "${state}/skip" "${state}/cut-queued"
   local verdict line class queued branch sha glob kept=${state}/queue.pruned skipped
   # A raced tip is gated (its pool job runs) and queued for its box run at once.
   ls "${state}/racing" > "${state}/racing.list"
   grep -vxF -f "${state}/racing.list" "${state}/gated" > "${state}/gated.prune"
-  awk 'FILENAME == ARGV[1] { seen[$1 " " $2] = 1; next }
+  git -C "${here}" fetch -q origin "+refs/heads/main:refs/remotes/origin/main" 2> /dev/null
+  git -C "${here}" rev-list refs/remotes/origin/main > "${state}/main-commits" 2> /dev/null || : > "${state}/main-commits"
+  awk -v records="${state}/cut-queued.tmp" '
+       function cutName(b,   n, i) {
+         if (substr(b, 1, 17) != "cloud/land-stack-") return ""
+         n = substr(b, 18); i = length(n) - 8
+         if (i < 2 || substr(n, i, 1) != "-" || substr(n, i + 1) !~ /^[0-9a-f]+$/) return ""
+         return substr(n, 1, i - 1)
+       }
+       FILENAME == ARGV[1] { seen[$1 " " $2] = 1; next }
        FILENAME == ARGV[2] { gated[$1] = 1; next }
        FILENAME == ARGV[3] { skip[$0] = 1; next }
-       { key = $3 " " $4
-         if ($4 in gated) print "gated\t" $0
-         else if (key in skip) print "skip\t" $0
-         else if (!(key in seen)) print "superseded\t" $0
-         else print "keep\t" $0 }' "${state}/seen" "${state}/gated.prune" "${state}/skip" "${state}/queue" > "${state}/queue.verdicts"
+       FILENAME == ARGV[4] { landed[$1] = 1; next }
+       FILENAME == ARGV[5] { first[$1 " " $2] = $3; next }
+       { lines[++count] = $0; key = $3 " " $4; queuedKey[key] = 1
+         if (cutName($3) != "" && !(key in first) && (!(key in fresh) || $2 < fresh[key])) fresh[key] = $2 }
+       END {
+         for (key in fresh) first[key] = fresh[key]
+         for (key in first) {
+           if (!(key in seen) && !(key in queuedKey)) continue
+           print key, first[key] > records
+           if (!(key in seen)) continue
+           split(key, part, " "); name = cutName(part[1])
+           if (!(name in newest) || first[key] > newest[name]) { newest[name] = first[key]; newestBranch[name] = part[1] }
+         }
+         for (row = 1; row <= count; row++) {
+           $0 = lines[row]; key = $3 " " $4; name = cutName($3)
+           if ($4 in gated) print "gated\t" $0
+           else if (key in skip) print "skip\t" $0
+           else if (!(key in seen)) print "superseded\t" $0
+           else if ($4 in landed) print "landed\t" $0
+           else if (name != "" && first[key] < newest[name]) print "recut " newestBranch[name] "\t" $0
+           else print "keep\t" $0
+         }
+       }' "${state}/seen" "${state}/gated.prune" "${state}/skip" "${state}/main-commits" "${state}/cut-queued" "${state}/queue" > "${state}/queue.verdicts"
+  mv "${state}/cut-queued.tmp" "${state}/cut-queued" 2> /dev/null || : > "${state}/cut-queued"
   : > "${kept}"
   while IFS=$'\t' read -r verdict line; do
     read -r class queued branch sha <<< "${line}"
@@ -691,6 +727,8 @@ pruneQueue() {
       gated) continue ;;
       skip) echo "$(date -u +%H:%M:%S) skipped by hand ${branch} ${sha}"; continue ;;
       superseded) echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha}"; continue ;;
+      landed) echo "$(date -u +%H:%M:%S) already on main ${branch} ${sha}"; continue ;;
+      recut\ *) echo "$(date -u +%H:%M:%S) superseded ${branch} ${sha} by the newer cut ${verdict#recut }"; continue ;;
     esac
     skipped=""
     while read -r glob _; do
@@ -702,8 +740,13 @@ pruneQueue() {
     fi
     echo "${line}" >> "${kept}"
   done < "${state}/queue.verdicts"
-  mv "${kept}" "${state}/queue"
-  rm -f "${state}/queue.verdicts"
+  # One line per sha, the first queued: a requeue beside a line still waiting adds nothing but a second dispatch. In awk:
+  # a list of kept shas grown in this shell loop left macOS bash 3.2 spinning at full CPU a pass later (the realistic queue test).
+  awk -v dropped="${state}/queue.duplicates" '$4 in kept { print > dropped; next } { kept[$4] = 1; print }' "${kept}" > "${state}/queue"
+  while read -r class queued branch sha; do
+    echo "$(date -u +%H:%M:%S) dropped a second queue line for ${branch} ${sha}"
+  done < <(cat "${state}/queue.duplicates" 2> /dev/null)
+  rm -f "${kept}" "${state}/queue.verdicts" "${state}/queue.duplicates"
 }
 # ${state}/front (a glob per line, # comments) puts a tip ahead of every roadmap step, behind only a reserved
 # landing: a fix the parent ruled lands first, such as Oct 8's cloud/land-gate-speed. A front tip is the star,
