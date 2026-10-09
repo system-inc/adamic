@@ -1,0 +1,14 @@
+=== RUN   TestViewSnapshotTypedArrayReference
+=== PAUSE TestViewSnapshotTypedArrayReference
+=== CONT  TestViewSnapshotTypedArrayReference
+    view_snapshot_test.go:70: gate cache node hit
+    view_snapshot_test.go:77: native: exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of string | number; expected string | number, found unsupported representation\n"
+    view_snapshot_test.go:77: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of string | number; expected string | number, found unsupported representation\n"
+    view_snapshot_test.go:109: exit codes differ
+--- FAIL: TestViewSnapshotTypedArrayReference (14.79s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	14.810s
+FAIL

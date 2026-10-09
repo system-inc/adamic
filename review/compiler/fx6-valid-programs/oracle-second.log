@@ -1,0 +1,100 @@
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== RUN   TestFX6P70
+=== PAUSE TestFX6P70
+=== RUN   TestFX6P49
+=== PAUSE TestFX6P49
+=== CONT  TestFX6P35
+=== CONT  TestFX6P51
+=== CONT  TestFX6P70
+=== CONT  TestFX6P53
+=== CONT  TestFX6P49
+=== NAME  TestFX6P70
+    fx6_valid_test.go:179: /workspace/adamic/internal/lower/testdata/fx6/p70.a:3:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestFX6P70 (0.08s)
+=== CONT  TestFX6P37
+=== NAME  TestFX6P49
+    fx6_valid_test.go:197: Load: /workspace/adamic/internal/lower/testdata/fx6/p49.a:7:16: error TS2367: This comparison appears to be unintentional because the types '{ readonly n: number; } | { readonly s: string; }' and '{ wrong: boolean; }' have no overlap.
+--- FAIL: TestFX6P49 (0.13s)
+=== CONT  TestFX6P38
+=== NAME  TestFX6P51
+    fx6_valid_test.go:141: gate cache node miss
+=== NAME  TestFX6P35
+    fx6_valid_test.go:61: gate cache node miss
+=== NAME  TestFX6P53
+    fx6_valid_test.go:161: gate cache node miss
+=== NAME  TestFX6P37
+    fx6_valid_test.go:101: gate cache node miss
+=== NAME  TestFX6P38
+    fx6_valid_test.go:121: gate cache node miss
+=== NAME  TestFX6P51
+    fx6_valid_test.go:142: Node: exit=0 stdout="n5\n" stderr=""
+=== NAME  TestFX6P35
+    fx6_valid_test.go:62: Node: exit=0 stdout="3 / number 5\n" stderr=""
+=== NAME  TestFX6P53
+    fx6_valid_test.go:162: Node: exit=0 stdout="n5\n" stderr=""
+=== NAME  TestFX6P38
+    fx6_valid_test.go:122: Node: exit=0 stdout="3 / string five\n" stderr=""
+=== NAME  TestFX6P37
+    fx6_valid_test.go:102: Node: exit=0 stdout="3 / number 5\n" stderr=""
+=== NAME  TestFX6P35
+    fx6_valid_test.go:63: gate cache node miss
+=== NAME  TestFX6P53
+    fx6_valid_test.go:163: gate cache node miss
+=== NAME  TestFX6P38
+    fx6_valid_test.go:123: gate cache node miss
+=== NAME  TestFX6P51
+    fx6_valid_test.go:143: gate cache node miss
+=== NAME  TestFX6P35
+    fx6_valid_test.go:64: native: exit=0 stdout="3 / number 5\n" stderr=""
+    fx6_valid_test.go:64: sanitized: exit=0 stdout="3 / number 5\n" stderr=""
+    fx6_valid_test.go:64: javascript: exit=0 stdout="3 / number 5\n" stderr=""
+--- PASS: TestFX6P35 (0.58s)
+=== CONT  TestFX6P36
+=== NAME  TestFX6P38
+    fx6_valid_test.go:124: native: exit=0 stdout="3 / string five\n" stderr=""
+    fx6_valid_test.go:124: sanitized: exit=0 stdout="3 / string five\n" stderr=""
+    fx6_valid_test.go:124: javascript: exit=0 stdout="3 / string five\n" stderr=""
+--- PASS: TestFX6P38 (0.49s)
+=== NAME  TestFX6P53
+    fx6_valid_test.go:164: native: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:164: sanitized: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:164: javascript: exit=0 stdout="n5\n" stderr=""
+--- PASS: TestFX6P53 (0.62s)
+=== NAME  TestFX6P51
+    fx6_valid_test.go:144: native: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:144: sanitized: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:144: javascript: exit=0 stdout="n5\n" stderr=""
+--- PASS: TestFX6P51 (0.62s)
+=== NAME  TestFX6P37
+    fx6_valid_test.go:103: gate cache node miss
+=== NAME  TestFX6P36
+    fx6_valid_test.go:81: gate cache node miss
+=== NAME  TestFX6P37
+    fx6_valid_test.go:104: native: exit=0 stdout="3 / number 5\n" stderr=""
+    fx6_valid_test.go:104: sanitized: exit=0 stdout="3 / number 5\n" stderr=""
+    fx6_valid_test.go:104: javascript: exit=0 stdout="3 / number 5\n" stderr=""
+--- PASS: TestFX6P37 (0.58s)
+=== NAME  TestFX6P36
+    fx6_valid_test.go:82: Node: exit=0 stdout="3 / undefined undefined\n" stderr=""
+    fx6_valid_test.go:83: gate cache node miss
+    fx6_valid_test.go:84: sanitized: exit=0 stdout="3 / undefined undefined\n" stderr=""
+    fx6_valid_test.go:84: javascript: exit=0 stdout="3 / undefined undefined\n" stderr=""
+    fx6_valid_test.go:84: native: exit=0 stdout="3 / undefined undefined\n" stderr=""
+--- PASS: TestFX6P36 (0.39s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.976s
+FAIL

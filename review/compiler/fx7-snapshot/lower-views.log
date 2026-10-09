@@ -1,0 +1,298 @@
+=== RUN   TestInheritanceRefusesFalseNominalViews
+=== PAUSE TestInheritanceRefusesFalseNominalViews
+=== RUN   TestInheritanceGenericViewsKeepNominalArguments
+=== PAUSE TestInheritanceGenericViewsKeepNominalArguments
+=== RUN   TestEnumSlotViews
+=== PAUSE TestEnumSlotViews
+=== RUN   TestFunctionValueUnionViewsStayNotYet
+=== PAUSE TestFunctionValueUnionViewsStayNotYet
+=== RUN   TestIteratorViewsCannotHideReturn
+=== PAUSE TestIteratorViewsCannotHideReturn
+=== RUN   TestIteratorViewsCannotEraseReceivers
+=== PAUSE TestIteratorViewsCannotEraseReceivers
+=== RUN   TestLiteralMethodViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodViewsDoNotLoseThis
+=== RUN   TestLiteralMethodSignatureViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodSignatureViewsDoNotLoseThis
+=== RUN   TestGenericIteratorViewsPreserveNativeArguments
+=== PAUSE TestGenericIteratorViewsPreserveNativeArguments
+=== RUN   TestAViewThatCantWriteIsNotRefused
+=== PAUSE TestAViewThatCantWriteIsNotRefused
+=== RUN   TestPrototypeHazardsBehindObjectViewsAreNotYet
+=== PAUSE TestPrototypeHazardsBehindObjectViewsAreNotYet
+=== RUN   TestTypedArrayViewsCannotChangeRepresentation
+=== PAUSE TestTypedArrayViewsCannotChangeRepresentation
+=== RUN   TestViewObjectContractsAreAvailableToEraser
+=== PAUSE TestViewObjectContractsAreAvailableToEraser
+=== RUN   TestViewObjectWritesNeedSourceCertificate
+=== PAUSE TestViewObjectWritesNeedSourceCertificate
+=== RUN   TestViewSnapshotMaybeBoolean
+=== PAUSE TestViewSnapshotMaybeBoolean
+=== RUN   TestViewSnapshotMaybeNumber
+=== PAUSE TestViewSnapshotMaybeNumber
+=== RUN   TestUntaggedViewMemberTags
+=== PAUSE TestUntaggedViewMemberTags
+=== RUN   TestUntaggedViewStructuralFallback
+=== PAUSE TestUntaggedViewStructuralFallback
+=== CONT  TestInheritanceRefusesFalseNominalViews
+=== CONT  TestAViewThatCantWriteIsNotRefused
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== RUN   TestInheritanceRefusesFalseNominalViews/weak_structural
+=== PAUSE TestInheritanceRefusesFalseNominalViews/weak_structural
+=== RUN   TestInheritanceRefusesFalseNominalViews/source_union
+=== PAUSE TestInheritanceRefusesFalseNominalViews/source_union
+=== RUN   TestInheritanceRefusesFalseNominalViews/target_union
+=== PAUSE TestInheritanceRefusesFalseNominalViews/target_union
+=== RUN   TestInheritanceRefusesFalseNominalViews/nested_array
+=== CONT  TestGenericIteratorViewsPreserveNativeArguments
+=== PAUSE TestInheritanceRefusesFalseNominalViews/nested_array
+=== RUN   TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== PAUSE TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== CONT  TestLiteralMethodSignatureViewsDoNotLoseThis
+=== RUN   TestInheritanceRefusesFalseNominalViews/structural_object
+=== PAUSE TestInheritanceRefusesFalseNominalViews/structural_object
+=== RUN   TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== PAUSE TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== CONT  TestIteratorViewsCannotEraseReceivers
+=== CONT  TestLiteralMethodViewsDoNotLoseThis
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== CONT  TestIteratorViewsCannotHideReturn
+--- PASS: TestIteratorViewsCannotEraseReceivers (0.11s)
+=== CONT  TestFunctionValueUnionViewsStayNotYet
+--- PASS: TestIteratorViewsCannotHideReturn (0.11s)
+=== CONT  TestEnumSlotViews
+=== RUN   TestEnumSlotViews/variable
+=== PAUSE TestEnumSlotViews/variable
+=== RUN   TestEnumSlotViews/initializer
+=== PAUSE TestEnumSlotViews/initializer
+=== RUN   TestEnumSlotViews/member_initializer
+=== PAUSE TestEnumSlotViews/member_initializer
+=== RUN   TestEnumSlotViews/argument
+=== PAUSE TestEnumSlotViews/argument
+=== RUN   TestEnumSlotViews/assignment
+=== PAUSE TestEnumSlotViews/assignment
+=== RUN   TestEnumSlotViews/literal_property
+=== PAUSE TestEnumSlotViews/literal_property
+=== RUN   TestEnumSlotViews/array_literal
+=== PAUSE TestEnumSlotViews/array_literal
+=== RUN   TestEnumSlotViews/increment
+=== PAUSE TestEnumSlotViews/increment
+=== RUN   TestEnumSlotViews/compound
+=== PAUSE TestEnumSlotViews/compound
+=== RUN   TestEnumSlotViews/array_alias
+=== PAUSE TestEnumSlotViews/array_alias
+=== RUN   TestEnumSlotViews/readonly_into_enum_array
+=== PAUSE TestEnumSlotViews/readonly_into_enum_array
+=== RUN   TestEnumSlotViews/function_view
+=== PAUSE TestEnumSlotViews/function_view
+=== RUN   TestEnumSlotViews/object_assign
+=== PAUSE TestEnumSlotViews/object_assign
+=== RUN   TestEnumSlotViews/override
+=== PAUSE TestEnumSlotViews/override
+=== RUN   TestEnumSlotViews/class_field
+=== PAUSE TestEnumSlotViews/class_field
+=== RUN   TestEnumSlotViews/optional_union
+=== PAUSE TestEnumSlotViews/optional_union
+=== RUN   TestEnumSlotViews/map_alias
+=== PAUSE TestEnumSlotViews/map_alias
+=== RUN   TestEnumSlotViews/mutable_field_alias
+=== PAUSE TestEnumSlotViews/mutable_field_alias
+=== RUN   TestEnumSlotViews/generic_class_invariant
+=== PAUSE TestEnumSlotViews/generic_class_invariant
+=== RUN   TestEnumSlotViews/structural_numeric_enum_object
+=== PAUSE TestEnumSlotViews/structural_numeric_enum_object
+=== RUN   TestEnumSlotViews/structural_string_enum_object
+=== PAUSE TestEnumSlotViews/structural_string_enum_object
+=== RUN   TestEnumSlotViews/structural_enum_object_array
+=== PAUSE TestEnumSlotViews/structural_enum_object_array
+=== RUN   TestEnumSlotViews/enum_object_writable_view
+=== PAUSE TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestInheritanceGenericViewsKeepNominalArguments
+--- PASS: TestGenericIteratorViewsPreserveNativeArguments (0.12s)
+=== CONT  TestViewSnapshotMaybeBoolean
+=== CONT  TestUntaggedViewStructuralFallback
+=== CONT  TestUntaggedViewMemberTags
+--- PASS: TestInheritanceGenericViewsKeepNominalArguments (0.06s)
+--- PASS: TestUntaggedViewStructuralFallback (0.00s)
+--- PASS: TestUntaggedViewMemberTags (0.00s)
+=== CONT  TestViewSnapshotMaybeNumber
+--- PASS: TestLiteralMethodViewsDoNotLoseThis (0.31s)
+=== CONT  TestViewObjectContractsAreAvailableToEraser
+--- PASS: TestLiteralMethodSignatureViewsDoNotLoseThis (0.31s)
+=== CONT  TestViewObjectWritesNeedSourceCertificate
+--- PASS: TestFunctionValueUnionViewsStayNotYet (0.23s)
+=== CONT  TestTypedArrayViewsCannotChangeRepresentation
+--- PASS: TestViewObjectContractsAreAvailableToEraser (0.06s)
+=== CONT  TestPrototypeHazardsBehindObjectViewsAreNotYet
+--- PASS: TestViewSnapshotMaybeBoolean (0.27s)
+=== CONT  TestInheritanceRefusesFalseNominalViews/weak_structural
+--- PASS: TestViewSnapshotMaybeNumber (0.26s)
+=== CONT  TestInheritanceRefusesFalseNominalViews/unrelated_override
+--- PASS: TestViewObjectWritesNeedSourceCertificate (0.16s)
+=== CONT  TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== CONT  TestInheritanceRefusesFalseNominalViews/structural_object
+--- PASS: TestTypedArrayViewsCannotChangeRepresentation (0.18s)
+=== CONT  TestInheritanceRefusesFalseNominalViews/target_union
+=== CONT  TestInheritanceRefusesFalseNominalViews/nested_array
+=== CONT  TestInheritanceRefusesFalseNominalViews/source_union
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+--- PASS: TestInheritanceRefusesFalseNominalViews (0.00s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/weak_structural (0.09s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/structural_object (0.06s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/unrelated_override (0.09s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/unrelated_class (0.09s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/target_union (0.07s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/source_union (0.08s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/nested_array (0.09s)
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+--- PASS: TestPrototypeHazardsBehindObjectViewsAreNotYet (0.69s)
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== CONT  TestEnumSlotViews/variable
+=== CONT  TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestEnumSlotViews/structural_enum_object_array
+=== CONT  TestEnumSlotViews/structural_string_enum_object
+=== CONT  TestEnumSlotViews/structural_numeric_enum_object
+=== CONT  TestEnumSlotViews/generic_class_invariant
+=== CONT  TestEnumSlotViews/mutable_field_alias
+--- PASS: TestAViewThatCantWriteIsNotRefused (0.00s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself (0.04s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type (0.22s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field (0.32s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself (0.27s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type (0.29s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write (0.19s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write (0.25s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map (0.27s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map_passed (0.27s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies (0.24s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs (0.27s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays (0.21s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter (0.25s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map (0.28s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice (0.22s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag (0.06s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type (0.23s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one (0.27s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself (0.06s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot (0.05s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one (0.25s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself (0.10s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field (0.27s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names (0.25s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array (0.30s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider (0.31s)
+=== CONT  TestEnumSlotViews/map_alias
+=== CONT  TestEnumSlotViews/optional_union
+=== CONT  TestEnumSlotViews/class_field
+=== CONT  TestEnumSlotViews/override
+=== CONT  TestEnumSlotViews/object_assign
+=== CONT  TestEnumSlotViews/function_view
+=== CONT  TestEnumSlotViews/readonly_into_enum_array
+=== CONT  TestEnumSlotViews/array_alias
+=== CONT  TestEnumSlotViews/compound
+=== CONT  TestEnumSlotViews/increment
+=== CONT  TestEnumSlotViews/array_literal
+=== CONT  TestEnumSlotViews/literal_property
+=== CONT  TestEnumSlotViews/assignment
+=== CONT  TestEnumSlotViews/argument
+=== CONT  TestEnumSlotViews/member_initializer
+=== CONT  TestEnumSlotViews/initializer
+--- PASS: TestEnumSlotViews (0.00s)
+    --- PASS: TestEnumSlotViews/enum_object_writable_view (0.04s)
+    --- PASS: TestEnumSlotViews/structural_enum_object_array (0.07s)
+    --- PASS: TestEnumSlotViews/structural_string_enum_object (0.06s)
+    --- PASS: TestEnumSlotViews/variable (0.29s)
+    --- PASS: TestEnumSlotViews/generic_class_invariant (0.07s)
+    --- PASS: TestEnumSlotViews/structural_numeric_enum_object (0.09s)
+    --- PASS: TestEnumSlotViews/optional_union (0.27s)
+    --- PASS: TestEnumSlotViews/map_alias (0.29s)
+    --- PASS: TestEnumSlotViews/mutable_field_alias (0.32s)
+    --- PASS: TestEnumSlotViews/override (0.27s)
+    --- PASS: TestEnumSlotViews/object_assign (0.05s)
+    --- PASS: TestEnumSlotViews/class_field (0.32s)
+    --- PASS: TestEnumSlotViews/function_view (0.33s)
+    --- PASS: TestEnumSlotViews/increment (0.27s)
+    --- PASS: TestEnumSlotViews/readonly_into_enum_array (0.35s)
+    --- PASS: TestEnumSlotViews/compound (0.33s)
+    --- PASS: TestEnumSlotViews/array_alias (0.37s)
+    --- PASS: TestEnumSlotViews/array_literal (0.25s)
+    --- PASS: TestEnumSlotViews/literal_property (0.24s)
+    --- PASS: TestEnumSlotViews/assignment (0.24s)
+    --- PASS: TestEnumSlotViews/argument (0.25s)
+    --- PASS: TestEnumSlotViews/member_initializer (0.23s)
+    --- PASS: TestEnumSlotViews/initializer (0.14s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.960s

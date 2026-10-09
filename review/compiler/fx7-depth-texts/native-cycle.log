@@ -1,0 +1,8 @@
+=== RUN   TestFX7ViewCycleAndStackGuard
+=== PAUSE TestFX7ViewCycleAndStackGuard
+=== CONT  TestFX7ViewCycleAndStackGuard
+    fx7_view_runtime_test.go:62: cycle: exit status 1 ""
+--- FAIL: TestFX7ViewCycleAndStackGuard (2.98s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	2.986s
+FAIL

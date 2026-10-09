@@ -1,0 +1,47 @@
+=== RUN   TestViewSnapshotMaybeBoolean
+=== PAUSE TestViewSnapshotMaybeBoolean
+=== RUN   TestViewSnapshotMaybeNumber
+=== PAUSE TestViewSnapshotMaybeNumber
+=== RUN   TestViewSnapshotTypedArrayReference
+=== PAUSE TestViewSnapshotTypedArrayReference
+=== CONT  TestViewSnapshotMaybeBoolean
+=== CONT  TestViewSnapshotMaybeNumber
+=== CONT  TestViewSnapshotTypedArrayReference
+    view_snapshot_test.go:70: gate cache node hit
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:44: gate cache node miss
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:39: gate cache node miss
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:44: Node: exit=0 stdout="7\n0\nundefined\n" stderr=""
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:39: Node: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+=== NAME  TestViewSnapshotTypedArrayReference
+    view_snapshot_test.go:77: native: exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of string | number; expected string | number, found unsupported representation\n"
+    view_snapshot_test.go:77: native-sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: viewed.value matches no member of string | number; expected string | number, found unsupported representation\n"
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:39: gate cache node miss
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:44: gate cache node miss
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:39: javascript: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:39: native: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:39: native-sanitized: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+--- PASS: TestViewSnapshotMaybeBoolean (0.58s)
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:44: javascript: exit=0 stdout="7\n0\nundefined\n" stderr=""
+    view_snapshot_test.go:44: native: exit=0 stdout="7\n0\nundefined\n" stderr=""
+    view_snapshot_test.go:44: native-sanitized: exit=0 stdout="7\n0\nundefined\n" stderr=""
+--- PASS: TestViewSnapshotMaybeNumber (0.59s)
+--- PASS: TestViewSnapshotTypedArrayReference (0.62s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.633s
+=== RUN   TestViewSnapshotPayloadOwnership
+=== PAUSE TestViewSnapshotPayloadOwnership
+=== CONT  TestViewSnapshotPayloadOwnership
+--- PASS: TestViewSnapshotPayloadOwnership (0.23s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.240s

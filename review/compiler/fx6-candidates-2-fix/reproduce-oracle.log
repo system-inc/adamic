@@ -1,0 +1,26 @@
+--- FAIL: TestCheckedViewObjectPrimitiveSource (0.01s)
+    --- FAIL: TestCheckedViewObjectPrimitiveSource/optional-receiver (0.91s)
+        checked_views_v2_object_primitive_test.go:46: gate cache node miss
+        checked_views_v2_object_primitive_test.go:56: base optional boundary changed: <nil>
+--- FAIL: TestCheckedViewUntaggedSourceFlows (0.00s)
+    --- FAIL: TestCheckedViewUntaggedSourceFlows/generic/wrong (1.59s)
+        checked_views_v2_source_test.go:134: gate cache node miss
+        checked_views_v2_source_test.go:140: gate cache node miss
+        checked_views_v2_source_test.go:141: native: exit=0 stdout="true\n" stderr=""
+        checked_views_v2_source_test.go:143: native: exit codes differ
+        checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout="true\n" stderr=""
+        checked_views_v2_source_test.go:143: native-sanitized: exit codes differ
+        checked_views_v2_source_test.go:141: javascript: exit=0 stdout="true\n" stderr=""
+        checked_views_v2_source_test.go:143: javascript: exit codes differ
+--- FAIL: TestCheckedViewOptionalReadBoundary (0.62s)
+    checked_views_optional_read_test.go:23: gate cache node miss
+    --- FAIL: TestCheckedViewOptionalReadBoundary/JavaScript (0.20s)
+        checked_views_optional_read_test.go:57: optional checked read escaped the V1 NotYet boundary
+    --- FAIL: TestCheckedViewOptionalReadBoundary/native (0.21s)
+        checked_views_optional_read_test.go:57: optional checked read escaped the V1 NotYet boundary
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.998s
+FAIL

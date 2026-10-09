@@ -1,0 +1,9 @@
+interface Base { readonly label: string; }
+interface View extends Base {
+    readonly count: number | string;
+    readonly extra: string | Map<string, number>;
+}
+const raw = { label: 'xx', count: 0, extra: 'unused' };
+const base: Base = raw;
+const view = base as View;
+console.log(`${view.label} / ${view.count}`);

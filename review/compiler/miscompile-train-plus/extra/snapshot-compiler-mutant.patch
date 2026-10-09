@@ -1,0 +1,24 @@
+--- a/internal/native/view_unions_read.go
++++ b/internal/native/view_unions_read.go
+@@ -35,8 +35,7 @@
+ 	e.line("if (%s.kind == adamic_view_union_number) %s = adamic_box_number(%s.payload.number);", snapshot, boxed, snapshot)
+ 	e.line("else if (%s.kind == adamic_view_union_boolean) %s = %s.payload.boolean ? (adamic_heap *)&adamic_box_true : (adamic_heap *)&adamic_box_false;", snapshot, boxed, snapshot)
+ 	e.line("else if (%s.kind == adamic_view_union_null) %s = &adamic_null;", snapshot, boxed)
+-	e.line("else if (%s.kind >= adamic_view_union_string && %s.kind <= adamic_view_union_function) %s = adamic_retain(%s.payload.reference);", snapshot, snapshot, boxed, snapshot)
+-	e.line("else %s = NULL;", boxed)
++	e.line("else %s = adamic_retain(%s.payload.reference);", boxed, snapshot)
+ 	value := e.own(ir.Union, boxed)
+ 	if contract.Of == ir.Closure {
+ 		recorded := e.temporary()
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -161,8 +161,7 @@
+     size_t index = adamic_slot_index(owner, slot);
+     unsigned char storage = adamic_object_field_types(owner)[index];
+     adamic_view_union_value value = {adamic_view_union_unknown, {0}};
+-    // Unknown storage is the one exception: its readers decide from the raw slot.
+-    if (storage == 0) { value.payload = *slot; }
++    value.payload = *slot;
+     if (storage == adamic_rep_number) { value.kind = adamic_view_union_number; value.payload.number = slot->number; }
+     else if (storage == adamic_rep_boolean) { value.kind = adamic_view_union_boolean; value.payload.boolean = slot->boolean; }
+     else if (storage == adamic_rep_maybe_number) {

@@ -1,0 +1,21 @@
+=== RUN   TestFixturesAssertions
+=== PAUSE TestFixturesAssertions
+=== CONT  TestFixturesAssertions
+    fixtures_test.go:161: build stage3-fixture-oracle-hook 50f0735a3e88 miss 3.04
+=== RUN   TestFixturesAssertions/assertions
+=== PAUSE TestFixturesAssertions/assertions
+=== CONT  TestFixturesAssertions/assertions
+=== RUN   TestFixturesAssertions/assertions/09_interface_kind.a
+=== PAUSE TestFixturesAssertions/assertions/09_interface_kind.a
+=== CONT  TestFixturesAssertions/assertions/09_interface_kind.a
+=== RUN   TestFixturesAssertions/assertions/09_interface_kind.a/node
+=== RUN   TestFixturesAssertions/assertions/09_interface_kind.a/stage0
+    fixtures_test.go:406: gap changed: update status.json and check the native output; got {Outcome:Refused What:stage3/fixtures/assertions/09_interface_kind.a:15:10: Adamic 0.1 refuses view type has an unsupported member: properties; use a supported, checked type for properties (currently readonly number[]) before creating this view}; recorded {Outcome:NotYet What:stage3/fixtures/assertions/09_interface_kind.a:15:9: stage 0 can't lower checked view union arm awaits views-v3: array element kind yet}
+--- FAIL: TestFixturesAssertions (4.13s)
+    --- FAIL: TestFixturesAssertions/assertions (0.00s)
+        --- FAIL: TestFixturesAssertions/assertions/09_interface_kind.a (0.11s)
+            --- PASS: TestFixturesAssertions/assertions/09_interface_kind.a/node (0.00s)
+            --- FAIL: TestFixturesAssertions/assertions/09_interface_kind.a/stage0 (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	4.251s
+FAIL

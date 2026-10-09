@@ -1,0 +1,11 @@
+FINDING: original spread-method mutant survives because creation admission independently refuses it; the adapted fx6 run removes both guards and is caught
+unsupported-view-revert: caught
+unsupported-stage3-revert: caught
+snapshot-runtime-alone: control passed
+snapshot-compiler-alone: control passed
+snapshot-runtime-mutant: caught
+snapshot-compiler-mutant: caught
+snapshot-reference-mutant: caught
+callable-zero-reference: control passed
+callable-six-reference: control passed
+all extra mutant obligations caught

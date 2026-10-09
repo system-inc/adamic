@@ -238,7 +238,14 @@ func (e *emitter) statement(statement ir.Statement) {
 			cache = e.cache()
 		}
 		if e.program.CheckedFields[statement.Name] {
-			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, fieldRepresentation(statement.Value), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
+			expected := statement.DeclaredType
+			if expected == "" {
+				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map", ir.Closure: "function", ir.Union: "unknown"}[statement.Value.Type()]
+				if expected == "" {
+					expected = "unknown"
+				}
+			}
+			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, fieldRepresentation(statement.Value), cString(expected), cString("<write>."+statement.Name))
 		}
 		if e.fieldTypesNeeded() {
 			e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), cache)

@@ -1,0 +1,5 @@
+--- FAIL: TestViewSpreadMethodRefused (0.15s)
+    view_element_reads_test.go:88: want checked method spread refused, got /tmp/adamic-gate/TestViewSpreadMethodRefused33117653/001/main.a:1:157: Adamic 0.1 refuses view type has an unsupported member: read; use a supported, checked type for read (currently () => number) before creating this view
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	179.343s
+FAIL
