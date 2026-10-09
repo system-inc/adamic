@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/profile_compilation_main_test.go
++++ b/stage1/cohere/lint/profile_compilation_main_test.go
+@@ -200,7 +200,7 @@
+ 			defer group.Done()
+ 			product := buildcache.Product(t, variant, func(dir string) error {
+ 				if kind != "profiled" {
+-					return native.Build(string(source), filepath.Join(dir, kind), options)
++					return native.Build(string(source), filepath.Join(dir, kind+"-lost"), options)
+ 				}
+ 				if err := os.WriteFile(filepath.Join(dir, "main.c"), source, 0644); err != nil {
+ 					return err

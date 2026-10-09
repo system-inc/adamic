@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/registration_test.go
++++ b/stage1/cohere/lint/registration_test.go
+@@ -53,7 +53,7 @@
+ 		{"Node", node(t, directory, path, false)},
+ 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+ 	} {
+-		if bytes.Equal(side.run.output, want) {
++		if bytes.Equal(want, want) {
+ 			t.Fatalf("listener omission survived on %s", side.name)
+ 		}
+ 		t.Logf("wrong descriptor kind caught on %s: %s", side.name, difference(side.run.output, want))

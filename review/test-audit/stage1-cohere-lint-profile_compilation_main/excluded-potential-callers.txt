@@ -1,0 +1,32 @@
+stage1/cohere/lint/profile_compilation_main_test.go:365:func compilationPrepare(t *testing.T) (string, string, string, []byte, []byte) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:180:		got = node(t, s.directory, s.manifest, false).output
+stage1/cohere/lint/lint_setup_clock_regression_test.go:67:	compilationPrepare(t)
+stage1/cohere/lint/lint_setup_clock_regression_test.go:101:	compilationPrepare(t)
+stage1/cohere/lint/lint_setup_clock_products_test.go:88:	compilationPrepare(t)
+stage1/cohere/lint/lint_test.go:123:func buildPort(t *testing.T, directory string, sanitize bool) string {
+stage1/cohere/lint/lint_test.go:312:	}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", runJavaScript(t, module, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
+stage1/cohere/lint/lint_test.go:549:			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
+stage1/cohere/lint/lint_test.go:568:		{"Node", node(t, directory, path, false)},
+stage1/cohere/lint/lint_test.go:569:		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+stage1/cohere/lint/lint_test.go:593:		{"Node", node(t, directory, path, false), node(t, directory, path, true)},
+stage1/cohere/lint/lint_test.go:594:		{"emitted JavaScript", emittedNode(t, directory, path, false), emittedNode(t, directory, path, true)},
+stage1/cohere/lint/lint_test.go:634:	binary := buildPort(t, directory, false)
+stage1/cohere/lint/lint_test.go:660:				result = node(t, directory, path, true)
+stage1/cohere/lint/lint_test.go:739:			mutatedNode := node(t, directory, path, false)
+stage1/cohere/lint/lint_test.go:743:			}{{"Node", mutatedNode}, {"emitted JavaScript", emittedNode(t, directory, path, false)}} {
+stage1/cohere/lint/lint_test.go:750:				binary := buildPort(t, directory, true)
+stage1/cohere/lint/lint_test.go:808:func emittedNode(t *testing.T, directory, manifest string, count bool) execution {
+stage1/cohere/lint/jsx_integration_test.go:97:	binary := buildPort(t, directory, false)
+stage1/cohere/lint/jsx_integration_test.go:115:				result = node(t, directory, input, true)
+stage1/cohere/lint/registration_test.go:53:		{"Node", node(t, directory, path, false)},
+stage1/cohere/lint/registration_test.go:54:		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+stage1/cohere/lint/registration_test.go:156:		{"Node", node(t, directory, path, false)},
+stage1/cohere/lint/registration_test.go:157:		{"native", execute(t, "", buildPort(t, directory, true))},
+stage1/cohere/lint/profile_test.go:115:	directory, products, path, want, countedWant := compilationPrepare(t)
+stage1/cohere/lint/profile_test.go:123:		{"Node", node(t, directory, path, false)},
+stage1/cohere/lint/profile_test.go:221:			{"Node", node(t, directory, path, false)},
+stage1/cohere/lint/profile_test.go:222:			{"emitted JavaScript", emittedNode(t, directory, path, false)},
+stage1/cohere/lint/profile_test.go:240:		{"Node", node(t, directory, path, false)},
+stage1/cohere/lint/profile_test.go:241:		{"emitted JavaScript", emittedNode(t, directory, path, false)},
+stage1/cohere/lint/profile_test.go:259:		{"Node", node(t, directory, path, false)},
+stage1/cohere/lint/profile_test.go:260:		{"emitted JavaScript", emittedNode(t, directory, path, false)},

@@ -1,0 +1,3092 @@
+[
+  {
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 11,
+    "declaration": "function run(row: string, countOnly: boolean): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 191,
+    "declaration": "run(first, false);"
+  },
+  {
+    "file": "stage1/cohere/lint/settings.ts",
+    "line": 9,
+    "declaration": "load(text: string): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/settings.ts",
+    "line": 65,
+    "declaration": "read(name: string, fallback: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/settings.ts",
+    "line": 72,
+    "declaration": "list(name: string, fallback: string[]): string[] {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 19,
+    "declaration": "constructor(text: string, path = 'source') {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 27,
+    "declaration": "kind(): string {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 30,
+    "declaration": "next(): void {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 33,
+    "declaration": "node(index: number): ParseNode {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 36,
+    "declaration": "make(kind: string, pos: number, children: number[] = []): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 40,
+    "declaration": "token(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 46,
+    "declaration": "expect(kind: string): void {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 52,
+    "declaration": "literal(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 72,
+    "declaration": "identifier(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 80,
+    "declaration": "primary(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 179,
+    "declaration": "jsxParser(): Jsx {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 204,
+    "declaration": "bindingIdentifier(): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 209,
+    "declaration": "nextIdentifierSameLine(): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 218,
+    "declaration": "yieldOperandAhead(): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 229,
+    "declaration": "mark(): ParserStateInterface {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 241,
+    "declaration": "rewind(state: ParserStateInterface): void {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 251,
+    "declaration": "docTypes(): number[] {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 280,
+    "declaration": "tupleNameAhead(): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 294,
+    "declaration": "typeArguments(): number[] {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 310,
+    "declaration": "typeParameters(): number[] {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 340,
+    "declaration": "entityName(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 350,
+    "declaration": "importType(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 387,
+    "declaration": "type(minimum = 0, conditional = true): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 667,
+    "declaration": "mappedAhead(): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 685,
+    "declaration": "mappedType(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 724,
+    "declaration": "indexSignatureAhead(): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 732,
+    "declaration": "typeLiteral(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 812,
+    "declaration": "parameters(): number[] {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 857,
+    "declaration": "bindingName(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 897,
+    "declaration": "decorator(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 909,
+    "declaration": "rootAssignment(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 918,
+    "declaration": "rootExpression(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 927,
+    "declaration": "arrow(allowReturn: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 964,
+    "declaration": "returnType(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 988,
+    "declaration": "functionExpression(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1027,
+    "declaration": "statements(): Statements {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1075,
+    "declaration": "block(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1078,
+    "declaration": "statement(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1081,
+    "declaration": "semicolon(): void {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1084,
+    "declaration": "classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1088,
+    "declaration": "peek(): string {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1107,
+    "declaration": "optionalChain(index: number): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1122,
+    "declaration": "spread(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1128,
+    "declaration": "arguments(): number[] {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1147,
+    "declaration": "suffix(expression: number, allowCall: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1276,
+    "declaration": "templatePart(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1289,
+    "declaration": "templateType(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1305,
+    "declaration": "template(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1324,
+    "declaration": "array(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1351,
+    "declaration": "propertyName(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1367,
+    "declaration": "methodBody(pos: number, prefix: readonly number[], kind: string, async: boolean, generator: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1396,
+    "declaration": "object(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1478,
+    "declaration": "unary(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1548,
+    "declaration": "binary(minimum: number): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1576,
+    "declaration": "assignment(allowReturn = true): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1612,
+    "declaration": "allowInAssignment(allowReturn = true): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1622,
+    "declaration": "allowInExpression(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1632,
+    "declaration": "expression(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/parser.ts",
+    "line": 1642,
+    "declaration": "file(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "line": 16,
+    "declaration": "function kind(scanner: Scanner): string {"
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "line": 31,
+    "declaration": "constructor(scanner: Scanner) {"
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "line": 41,
+    "declaration": "prepare(): void {"
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "line": 74,
+    "declaration": "next(): void {"
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "line": 79,
+    "declaration": "restore(): void {"
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "line": 90,
+    "declaration": "function optionalParameterAhead(scanner: Scanner): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "line": 98,
+    "declaration": "export function arrowAhead(scanner: Scanner, allowReturn: boolean): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "line": 188,
+    "declaration": "export function jsxArrowAhead(scanner: Scanner): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/lookahead.ts",
+    "line": 212,
+    "declaration": "export function typeArgumentsAhead(scanner: Scanner): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/grammar.ts",
+    "line": 2,
+    "declaration": "export function precedence(kind: string): number {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 14,
+    "declaration": "function decimalDigits(text: string, base: number): string {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 37,
+    "declaration": "function numberValue(text: string): string {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 62,
+    "declaration": "constructor(text: string) {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 65,
+    "declaration": "code(offset = 0): number {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 73,
+    "declaration": "advance(code: number): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 76,
+    "declaration": "error(code: number, start: number = this.pos, length = 0): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 81,
+    "declaration": "fragment(base: number, separators: boolean, minimum = 0, maximum: number = Number.MAX_SAFE_INTEGER): string {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 122,
+    "declaration": "unicode(report: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 173,
+    "declaration": "escape(report: boolean): string {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 251,
+    "declaration": "identifier(prefix: number): boolean {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 289,
+    "declaration": "string(): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 324,
+    "declaration": "template(report: boolean): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 370,
+    "declaration": "bigint(): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 385,
+    "declaration": "number(): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 492,
+    "declaration": "scan(): string {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 676,
+    "declaration": "punctuation(code: number): string {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 817,
+    "declaration": "rescanGreater(): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 834,
+    "declaration": "rescanTemplate(): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 840,
+    "declaration": "rescanSlash(): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 936,
+    "declaration": "scanJsxIdentifier(): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 948,
+    "declaration": "scanJsxAttributeValue(): void {"
+  },
+  {
+    "file": "stage1/typescript/scanner/scanner.ts",
+    "line": 978,
+    "declaration": "scanJsx(): string {"
+  },
+  {
+    "file": "stage1/typescript/scanner/characters.ts",
+    "line": 240,
+    "declaration": "function contains(ranges: readonly number[], code: number): boolean {"
+  },
+  {
+    "file": "stage1/typescript/scanner/characters.ts",
+    "line": 259,
+    "declaration": "export function isIdentifierStart(code: number): boolean {"
+  },
+  {
+    "file": "stage1/typescript/scanner/characters.ts",
+    "line": 268,
+    "declaration": "export function isIdentifierPart(code: number): boolean {"
+  },
+  {
+    "file": "stage1/typescript/scanner/characters.ts",
+    "line": 271,
+    "declaration": "export function isLineBreak(code: number): boolean {"
+  },
+  {
+    "file": "stage1/typescript/scanner/characters.ts",
+    "line": 274,
+    "declaration": "export function isSpace(code: number): boolean {"
+  },
+  {
+    "file": "stage1/typescript/scanner/characters.ts",
+    "line": 290,
+    "declaration": "export function digit(code: number): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/nodes.ts",
+    "line": 18,
+    "declaration": "constructor(kind: string, pos: number, end: number, children: number[]) {"
+  },
+  {
+    "file": "stage1/typescript/parser/nodes.ts",
+    "line": 26,
+    "declaration": "export function written(text: string): string {"
+  },
+  {
+    "file": "stage1/typescript/parser/nodes.ts",
+    "line": 38,
+    "declaration": "export function printTree("
+  },
+  {
+    "file": "stage1/typescript/parser/nodes.ts",
+    "line": 56,
+    "declaration": "export function countTree(nodes: readonly ParseNode[], root: number): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 26,
+    "declaration": "constructor(parser: JsxContextInterface) {"
+  },
+  {
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 29,
+    "declaration": "make(kind: string, pos: number, children: number[] = []): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 32,
+    "declaration": "identifier(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 41,
+    "declaration": "name(tag: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 64,
+    "declaration": "text(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 74,
+    "declaration": "finishGreater(expression: boolean): void {"
+  },
+  {
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 87,
+    "declaration": "expression(attribute: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 108,
+    "declaration": "attributes(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 143,
+    "declaration": "tagKey(index: number): string {"
+  },
+  {
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 151,
+    "declaration": "element(inExpression: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 51,
+    "declaration": "constructor(parser: StatementContextInterface) {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 54,
+    "declaration": "block(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 64,
+    "declaration": "semicolon(): void {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 76,
+    "declaration": "variableList(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 117,
+    "declaration": "lookahead(offset: number): string {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 140,
+    "declaration": "decorator(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 143,
+    "declaration": "canExportName(): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 150,
+    "declaration": "specifiers(importing: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 212,
+    "declaration": "attributes(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 218,
+    "declaration": "attributeBody(pos: number, operator: string): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 244,
+    "declaration": "importDeclaration(pos: number, prefix: readonly number[]): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 335,
+    "declaration": "exportDeclaration(pos: number, prefix: readonly number[]): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 389,
+    "declaration": "moduleDeclaration(pos: number, prefix: readonly number[], keyword: string): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 420,
+    "declaration": "exportedClauseAhead(): boolean {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 442,
+    "declaration": "functionDeclaration(pos: number, prefix: readonly number[], async: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 479,
+    "declaration": "classDeclaration(pos: number, prefix: readonly number[], expression: boolean): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 640,
+    "declaration": "forStatement(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 682,
+    "declaration": "switchStatement(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 713,
+    "declaration": "tryStatement(): number {"
+  },
+  {
+    "file": "stage1/typescript/parser/statements.ts",
+    "line": 741,
+    "declaration": "statement(): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 20,
+    "declaration": "function compareFindings(left: Finding, right: Finding): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 23,
+    "declaration": "function compareEdits(left: Finding, right: Finding): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 56,
+    "declaration": "constructor("
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 75,
+    "declaration": "run(): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 106,
+    "declaration": "ancestry(index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 112,
+    "declaration": "node(index: number): ParseNode {"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 115,
+    "declaration": "walk(index: number, parent: number, rules: RuleSet): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 121,
+    "declaration": "fixed(): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/finding.ts",
+    "line": 18,
+    "declaration": "constructor("
+  },
+  {
+    "file": "stage1/cohere/lint/suggestions.a",
+    "line": 6,
+    "declaration": "constructor(start: number, end: number, text: string) {"
+  },
+  {
+    "file": "stage1/cohere/lint/suggestions.a",
+    "line": 16,
+    "declaration": "constructor(id: string, message: string, edits: readonly SuggestionEdit[]) {"
+  },
+  {
+    "file": "stage1/cohere/lint/.generated/registry.ts",
+    "line": 227,
+    "declaration": "constructor(context: RuleContext, rule0: Rule0, rule1: Rule1, rule2: Rule2, rule3: Rule3, rule4: Rule4, rule5: Rule5, rule6: Rule6, rule7: Rule7, rule8: Rule8, rule9: Rule9, rule10: Rule10, rule11: Rule11, rule12: Rule12, rule13: Rule13, rule14: Rule14, rule15: Rule15, rule16: Rule16, rule17: Rule17, rule18: Rule18, rule19: Rule19, rule20: Rule20, rule21: Rule21, rule22: Rule22, rule23: Rule23, rule24: Rule24, rule25: Rule25, rule26: Rule26, rule27: Rule27, rule28: Rule28, rule29: Rule29, rule30: Rule30, rule31: Rule31, rule32: Rule32, rule33: Rule33, rule34: Rule34, rule35: Rule35, rule36: Rule36, rule37: Rule37, rule38: Rule38, rule39: Rule39, rule40: Rule40, rule41: Rule41, rule42: Rule42, rule43: Rule43, rule44: Rule44, rule45: Rule45, rule46: Rule46, rule47: Rule47, rule48: Rule48, rule49: Rule49, rule50: Rule50, rule51: Rule51, rule52: Rule52, rule53: Rule53, rule54: Rule54, rule55: Rule55, rule56: Rule56, rule57: Rule57, rule58: Rule58, rule59: Rule59, rule60: Rule60, rule61: Rule61, rule62: Rule62, rule63: Rule63, rule64: Rule64, rule65: Rule65, rule66: Rule66, rule67: Rule67, rule68: Rule68, rule69: Rule69, rule70: Rule70, rule71: Rule71, rule72: Rule72, rule73: Rule73) {"
+  },
+  {
+    "file": "stage1/cohere/lint/.generated/registry.ts",
+    "line": 378,
+    "declaration": "prepare(root: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/.generated/registry.ts",
+    "line": 381,
+    "declaration": "finish(root: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/.generated/registry.ts",
+    "line": 384,
+    "declaration": "visit(index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/.generated/registry.ts",
+    "line": 677,
+    "declaration": "export function createRuleSet(context: RuleContext): RuleSet {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/vars-on-top/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/vars-on-top/rule.ts",
+    "line": 12,
+    "declaration": "visit(node: ParseNode, index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/vars-on-top/rule.ts",
+    "line": 58,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 15,
+    "declaration": "function lineStartsOf(source: string): number[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 33,
+    "declaration": "function isFunctionKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 50,
+    "declaration": "function isLiteralPartKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 64,
+    "declaration": "export function space(character: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 85,
+    "declaration": "constructor("
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 108,
+    "declaration": "node(index: number): ParseNode {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 111,
+    "declaration": "enabled(name: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 114,
+    "declaration": "start(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 120,
+    "declaration": "report("
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 145,
+    "declaration": "reportNode("
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 155,
+    "declaration": "reportRange("
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 189,
+    "declaration": "edit(index: number, text: string): SuggestionEdit {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 192,
+    "declaration": "line(position: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 213,
+    "declaration": "literalEnds(): readonly number[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 221,
+    "declaration": "literalSpans(index: number, ends: number[]): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 230,
+    "declaration": "child(index: number, position: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 233,
+    "declaration": "parent(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 238,
+    "declaration": "kind(index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 241,
+    "declaration": "functionLike(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 245,
+    "declaration": "has(index: number, kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 253,
+    "declaration": "children(index: number, kind: string): number[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 256,
+    "declaration": "scanAt(position: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 260,
+    "declaration": "scanStart(): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 263,
+    "declaration": "scanEnd(): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 266,
+    "declaration": "scanKind(): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 269,
+    "declaration": "raw(index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 274,
+    "declaration": "name(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 295,
+    "declaration": "memberName(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 300,
+    "declaration": "members(index: number): number[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 314,
+    "declaration": "arguments(index: number): number[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 318,
+    "declaration": "property(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 322,
+    "declaration": "questionDot(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 325,
+    "declaration": "initializer(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 330,
+    "declaration": "extendsClass(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 333,
+    "declaration": "comment(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 345,
+    "declaration": "unwrap(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 352,
+    "declaration": "literalType(index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 371,
+    "declaration": "tokens(start: number, end: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/context.ts",
+    "line": 379,
+    "declaration": "signature(index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/unicode-bom/rule.ts",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/unicode-bom/rule.ts",
+    "line": 13,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/unicode-bom/rule.ts",
+    "line": 29,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/require-yield/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/require-yield/rule.ts",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/require-yield/rule.ts",
+    "line": 25,
+    "declaration": "containsYield(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/require-yield/rule.ts",
+    "line": 50,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-destructuring/rule.a",
+    "line": 9,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-destructuring/rule.a",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-destructuring/rule.a",
+    "line": 63,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-destructuring/helpers.a",
+    "line": 6,
+    "declaration": "export function initializer(context: RuleContext, node: ParseNode, bound: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-destructuring/helpers.a",
+    "line": 21,
+    "declaration": "export function enabled(context: RuleContext, declarator: boolean, array: boolean): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-destructuring/helpers.a",
+    "line": 29,
+    "declaration": "export function commentsInside(context: RuleContext, start: number, end: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-with/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-with/rule.ts",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-with/rule.ts",
+    "line": 17,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 8,
+    "declaration": "function isParameterListKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 28,
+    "declaration": "function isBracedListKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 52,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 55,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 69,
+    "declaration": "commentAnchors(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 131,
+    "declaration": "reachableComments(anchors: readonly boolean[]): boolean[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 185,
+    "declaration": "scanWarnings(literalEnds: readonly number[], reachable: readonly boolean[], terms: readonly string[]): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/rule.ts",
+    "line": 248,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-warning-comments/messages.ts",
+    "line": 2,
+    "declaration": "export function messageWarningComment(term: string, quoted: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 6,
+    "declaration": "export function word(character: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 15,
+    "declaration": "export function space(character: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 31,
+    "declaration": "export function selfDirective(value: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 65,
+    "declaration": "function validDecoration(decoration: string[]): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 76,
+    "declaration": "function decorated(character: string, decoration: string[]): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 90,
+    "declaration": "export function matches(value: string, term: string, location: string, decoration: string[]): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/comments.ts",
+    "line": 136,
+    "declaration": "export function quote(value: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/unicode.ts",
+    "line": 1518,
+    "declaration": "export function foldPoint(point: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/unicode.ts",
+    "line": 1617,
+    "declaration": "export function printable(point: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/unicode.ts",
+    "line": 1637,
+    "declaration": "export function foldedRange(character: string, first: number, last: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-concat/rule.a",
+    "line": 7,
+    "declaration": "function concatenation(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-concat/rule.a",
+    "line": 11,
+    "declaration": "function literal(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-concat/rule.a",
+    "line": 17,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-concat/rule.a",
+    "line": 18,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-concat/rule.a",
+    "line": 33,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-catch/rule.a",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-catch/rule.a",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-catch/rule.a",
+    "line": 54,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+    "line": 9,
+    "declaration": "pattern(index: number): boolean { return index >= 0 && ['ObjectBindingPattern', 'ArrayBindingPattern', 'ObjectLiteralExpression', 'ArrayLiteralExpression'].includes(this.context.node(index).kind); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+    "line": 10,
+    "declaration": "reaching(index: number, arithmetic: boolean): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+    "line": 30,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/rule.a",
+    "line": 70,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-negation/rule.a",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-negation/rule.a",
+    "line": 8,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-negation/rule.a",
+    "line": 27,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-finally/rule.a",
+    "line": 12,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-finally/rule.a",
+    "line": 15,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-finally/rule.a",
+    "line": 53,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 11,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 14,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 74,
+    "declaration": "precedence(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 197,
+    "declaration": "invert(index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 221,
+    "declaration": "alwaysBoolean(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unneeded-ternary/rule.ts",
+    "line": 232,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "line": 6,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "line": 7,
+    "declaration": "flag(name: string, fallback: string): boolean { return this.context.settings.read(name, fallback) === 'true'; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "line": 8,
+    "declaration": "reportable(name: string): boolean { return name !== '' && name !== '_' && (name.startsWith('_') || name.endsWith('_')) && !this.context.settings.list('allow', []).includes(name); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "line": 9,
+    "declaration": "report(index: number, name: string): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "line": 12,
+    "declaration": "name(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "line": 21,
+    "declaration": "bindingName(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "line": 30,
+    "declaration": "bindings(index: number, declaration: number, pattern: string): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "line": 43,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+    "line": 80,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-template-curly-in-string/rule.ts",
+    "line": 35,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+    "line": 11,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+    "line": 17,
+    "declaration": "assignmentTarget(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sparse-arrays/rule.ts",
+    "line": 91,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 12,
+    "declaration": "visit(node: ParseNode, index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 18,
+    "declaration": "chain(index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 41,
+    "declaration": "comma(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 50,
+    "declaration": "forSlot(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-sequences/rule.ts",
+    "line": 107,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-self-compare/rule.a",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-self-compare/rule.a",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-self-compare/rule.a",
+    "line": 32,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-script-url/rule.a",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-script-url/rule.a",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-script-url/rule.a",
+    "line": 25,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-return-assign/rule.ts",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-return-assign/rule.ts",
+    "line": 12,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-return-assign/rule.ts",
+    "line": 71,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-proto/rule.a",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-proto/rule.a",
+    "line": 8,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-proto/rule.a",
+    "line": 30,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-plusplus/rule.ts",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-plusplus/rule.ts",
+    "line": 11,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-plusplus/rule.ts",
+    "line": 29,
+    "declaration": "afterthought(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-plusplus/rule.ts",
+    "line": 70,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-plusplus/messages.ts",
+    "line": 2,
+    "declaration": "export function messageUnexpectedUnaryOp(operator: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-new/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-new/rule.ts",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-new/rule.ts",
+    "line": 19,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+    "line": 12,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+    "line": 31,
+    "declaration": "negated(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-negated-condition/rule.ts",
+    "line": 42,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-multi-assign/rule.a",
+    "line": 7,
+    "declaration": "function assignment(context: RuleContext, node: ParseNode): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-multi-assign/rule.a",
+    "line": 24,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-multi-assign/rule.a",
+    "line": 27,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-multi-assign/rule.a",
+    "line": 54,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "line": 11,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "line": 14,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "line": 17,
+    "declaration": "walk(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "line": 53,
+    "declaration": "allowedLabel(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-labels/rule.ts",
+    "line": 61,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-iterator/rule.a",
+    "line": 10,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-iterator/rule.a",
+    "line": 13,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-iterator/rule.a",
+    "line": 34,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-ex-assign/rule.a",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-ex-assign/rule.a",
+    "line": 8,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-ex-assign/rule.a",
+    "line": 16,
+    "declaration": "assignments(index: number, name: string): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-ex-assign/rule.a",
+    "line": 39,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-static-block/rule.a",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-static-block/rule.a",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-static-block/rule.a",
+    "line": 23,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-pattern/rule.a",
+    "line": 9,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-pattern/rule.a",
+    "line": 14,
+    "declaration": "visit(node: ParseNode, index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-pattern/rule.a",
+    "line": 33,
+    "declaration": "allowedParameter(parent: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-pattern/rule.a",
+    "line": 46,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-character-class/rule.a",
+    "line": 9,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-character-class/rule.a",
+    "line": 12,
+    "declaration": "visit(node: ParseNode, _index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-character-class/rule.a",
+    "line": 51,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty-character-class/escapes.a",
+    "line": 2,
+    "declaration": "export function escapeEnd(pattern: string, start: number, unicode: boolean): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-div-regex/rule.ts",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-div-regex/rule.ts",
+    "line": 11,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-div-regex/rule.ts",
+    "line": 22,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-continue/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-continue/rule.ts",
+    "line": 11,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-continue/rule.ts",
+    "line": 16,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-caller/rule.a",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-caller/rule.a",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-caller/rule.a",
+    "line": 28,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-caller/messages.a",
+    "line": 2,
+    "declaration": "export function messageNoCaller(name: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-bitwise/rule.ts",
+    "line": 7,
+    "declaration": "function bitwiseOperator(kind: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-bitwise/rule.ts",
+    "line": 42,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-bitwise/rule.ts",
+    "line": 45,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-bitwise/rule.ts",
+    "line": 75,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+    "line": 31,
+    "declaration": "awaitedLoop(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-await-in-loop/rule.ts",
+    "line": 72,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 39,
+    "declaration": "report(name: number, id: string, message: string): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 43,
+    "declaration": "constEnum(index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/rule.ts",
+    "line": 82,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts",
+    "line": 2,
+    "declaration": "export function messageNoTypeAliasSuffix(name: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts",
+    "line": 7,
+    "declaration": "export function messageNoInterfaceSuffix(name: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-require-type-suffix/messages.ts",
+    "line": 12,
+    "declaration": "export function messageNoConstEnumSuffix(name: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a",
+    "line": 9,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a",
+    "line": 16,
+    "declaration": "visit(node: ParseNode, _index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/rule.a",
+    "line": 28,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-stuttering-name/messages.a",
+    "line": 3,
+    "declaration": "export function stutteringName(name: string): string { return text.replaceAll('{{name}}', name); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a",
+    "line": 11,
+    "declaration": "function noSingleLineJsdoc(context: RuleContext, ranges: readonly CommentRange[]): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a",
+    "line": 60,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a",
+    "line": 63,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/rule.a",
+    "line": 68,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a",
+    "line": 2,
+    "declaration": "function whiteSpace(code: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/trim.a",
+    "line": 17,
+    "declaration": "export function trim(value: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a",
+    "line": 5,
+    "declaration": "function isParameterListKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a",
+    "line": 25,
+    "declaration": "function isBracedListKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a",
+    "line": 48,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a",
+    "line": 52,
+    "declaration": "collect(node: ParseNode): boolean[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a",
+    "line": 61,
+    "declaration": "commentAnchors(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_anchors.a",
+    "line": 123,
+    "declaration": "reachableComments(anchors: readonly boolean[]): boolean[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a",
+    "line": 4,
+    "declaration": "function lineIndex(lines: readonly number[], position: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a",
+    "line": 26,
+    "declaration": "constructor(source: string, start: number, end: number, lines: readonly number[]) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-single-line-jsdoc/comment_ranges.a",
+    "line": 36,
+    "declaration": "export function comments("
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a",
+    "line": 9,
+    "declaration": "function isShoutedToken(token: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a",
+    "line": 21,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a",
+    "line": 24,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/rule.a",
+    "line": 54,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/messages.a",
+    "line": 4,
+    "declaration": "export function shoutingMessage(tokens: readonly string[]): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+    "line": 7,
+    "declaration": "export function accepts(pattern: RegExp, text: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+    "line": 12,
+    "declaration": "function blank(text: string, pattern: RegExp, keepNewlines: boolean): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+    "line": 29,
+    "declaration": "function asciiLetterOrDigit(character: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+    "line": 34,
+    "declaration": "function capitalPhrases(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+    "line": 56,
+    "declaration": "function wrappedDoubleQuotes(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+    "line": 72,
+    "declaration": "function indentedBlocks(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+    "line": 94,
+    "declaration": "function examplesAndCommands(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/masking.a",
+    "line": 121,
+    "declaration": "export function maskCodeAndCommands(text: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "line": 7,
+    "declaration": "function lineIndex(lines: readonly number[], position: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "line": 29,
+    "declaration": "constructor(source: string, start: number, end: number, lines: readonly number[]) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "line": 39,
+    "declaration": "export function comments("
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "line": 90,
+    "declaration": "function isParameterListKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "line": 110,
+    "declaration": "function isBracedListKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "line": 129,
+    "declaration": "function commentAnchors(context: RuleContext, node: ParseNode, anchors: boolean[]): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "line": 192,
+    "declaration": "function reachableComments(source: string, anchors: readonly boolean[]): boolean[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "line": 242,
+    "declaration": "export function fileComments(context: RuleContext, root: ParseNode): CommentRange[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-shouting/comments.a",
+    "line": 244,
+    "declaration": "commentAnchors(context, root, anchors);"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+    "line": 7,
+    "declaration": "function claimed(context: RuleContext, node: ParseNode): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+    "line": 26,
+    "declaration": "function inherited(context: RuleContext, index: number, onlyThis: boolean): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+    "line": 75,
+    "declaration": "function report(context: RuleContext, node: ParseNode, index: number, id: string, fields: string[]): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+    "line": 152,
+    "declaration": "function noMultilineArrowFunction(context: RuleContext, node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+    "line": 186,
+    "declaration": "report(context, node, index, 'multilineArrow', []);"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+    "line": 191,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+    "line": 194,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/rule.a",
+    "line": 199,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a",
+    "line": 3,
+    "declaration": "export function first(context: RuleContext, index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a",
+    "line": 7,
+    "declaration": "export function last(context: RuleContext, index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a",
+    "line": 13,
+    "declaration": "function goSpace(code: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/helpers.a",
+    "line": 19,
+    "declaration": "export function trim(value: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-multiline-arrow-function/messages.a",
+    "line": 1,
+    "declaration": "export function message(id: string, fields: readonly string[]): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+    "line": 9,
+    "declaration": "function report(context: RuleContext, run: readonly CommentRange[], maximum: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+    "line": 40,
+    "declaration": "export function noLongLineComment(context: RuleContext, ranges: readonly CommentRange[]): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+    "line": 96,
+    "declaration": "report(context, run, maximum);"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+    "line": 101,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+    "line": 102,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/rule.a",
+    "line": 106,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a",
+    "line": 10,
+    "declaration": "function isParameterListKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a",
+    "line": 30,
+    "declaration": "function isBracedListKind(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a",
+    "line": 49,
+    "declaration": "export function trim(value: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a",
+    "line": 56,
+    "declaration": "export function commentRanges(context: RuleContext, node: ParseNode, index: number): readonly CommentRange[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a",
+    "line": 58,
+    "declaration": "commentAnchors(context, index, anchors, node);"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a",
+    "line": 62,
+    "declaration": "export function commentAnchors(context: RuleContext, index: number, anchors: boolean[], node: ParseNode): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/comments.a",
+    "line": 123,
+    "declaration": "export function reachableComments(context: RuleContext, anchors: readonly boolean[]): boolean[] {"
+  },
+  {
+    "file": "stage1/cohere/lint/comment_ranges.a",
+    "line": 4,
+    "declaration": "function lineIndex(lines: readonly number[], position: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/comment_ranges.a",
+    "line": 26,
+    "declaration": "constructor(source: string, start: number, end: number, lines: readonly number[]) {"
+  },
+  {
+    "file": "stage1/cohere/lint/comment_ranges.a",
+    "line": 36,
+    "declaration": "export function comments("
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-long-line-comment/messages.a",
+    "line": 1,
+    "declaration": "export function messageLongLineComment(lineCount: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a",
+    "line": 11,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-for-in/rule.a",
+    "line": 17,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+    "line": 11,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-enum/rule.ts",
+    "line": 17,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a",
+    "line": 9,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a",
+    "line": 19,
+    "declaration": "report(node: ParseNode, id: string, message: string): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/rule.a",
+    "line": 24,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/messages.a",
+    "line": 2,
+    "declaration": "export function messageNoSingleLetter(name: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/messages.a",
+    "line": 5,
+    "declaration": "export function messageNoAmbiguousE(context: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a",
+    "line": 8,
+    "declaration": "export function comparator(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a",
+    "line": 19,
+    "declaration": "export function eventContext(context: RuleContext, index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-ambiguous-identifier/helpers.a",
+    "line": 53,
+    "declaration": "export function foreignName(context: RuleContext, index: number, node: ParseNode): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 7,
+    "declaration": "function binding(context: RuleContext, index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 51,
+    "declaration": "function nonbinding(kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 67,
+    "declaration": "function rest(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 76,
+    "declaration": "function prepareBindings(context: RuleContext, state: Bindings): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 102,
+    "declaration": "function imported(context: RuleContext, text: string, state: Bindings): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 103,
+    "declaration": "prepareBindings(context, state);"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 106,
+    "declaration": "function onlyRest(context: RuleContext, state: Bindings): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 107,
+    "declaration": "prepareBindings(context, state);"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 110,
+    "declaration": "function nested(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 129,
+    "declaration": "function routeContract(path: string, text: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 203,
+    "declaration": "function filePattern(context: RuleContext, option: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 211,
+    "declaration": "function frameworkName(context: RuleContext, text: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 228,
+    "declaration": "function frameworkScope(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 254,
+    "declaration": "function referenceProperty(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 289,
+    "declaration": "function noAbbreviatedIdentifier(context: RuleContext, node: ParseNode, index: number, state: Bindings): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 324,
+    "declaration": "emit(context, index, 'nexus/consistency-no-abbreviated-identifier', finding.id, finding.fields);"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 330,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 331,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/rule.a",
+    "line": 335,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a",
+    "line": 5,
+    "declaration": "export function parent(context: RuleContext, index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a",
+    "line": 8,
+    "declaration": "export function first(context: RuleContext, index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a",
+    "line": 11,
+    "declaration": "export function last(context: RuleContext, index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a",
+    "line": 15,
+    "declaration": "export function name(context: RuleContext, index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a",
+    "line": 33,
+    "declaration": "export function emit(context: RuleContext, index: number, rule: string, id: string, fields: string[]): Finding {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a",
+    "line": 36,
+    "declaration": "export function betweenToken(context: RuleContext, start: number, end: number, kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/helpers.a",
+    "line": 54,
+    "declaration": "export function foreign(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/messages.a",
+    "line": 4,
+    "declaration": "export function policyMessage(rule: string, id: string, fields: readonly string[]): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a",
+    "line": 10,
+    "declaration": "constructor(form: string, word: string, id: string, fields: string[]) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a",
+    "line": 17,
+    "declaration": "function capitalized(value: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a",
+    "line": 20,
+    "declaration": "function prefixFinding(text: string, entry: readonly string[]): Abbreviation {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/abbreviation_vocabulary.a",
+    "line": 31,
+    "declaration": "export function abbreviation(text: string): Abbreviation | undefined {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a",
+    "line": 2,
+    "declaration": "export function prefixMatches(word: string, text: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a",
+    "line": 36,
+    "declaration": "export function segmentMatches(word: string, text: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/patterns.a",
+    "line": 51,
+    "declaration": "export function replaceSegment(word: string, text: string, replacement: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/bindings.a",
+    "line": 7,
+    "declaration": "recordBinding(text: string, imported: boolean, rest: boolean): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/nexus-consistency-no-abbreviated-identifier/bindings.a",
+    "line": 12,
+    "declaration": "completeBindings(): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-nested-callbacks/rule.a",
+    "line": 10,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-nested-callbacks/rule.a",
+    "line": 21,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-nested-callbacks/rule.a",
+    "line": 49,
+    "declaration": "reportHead(node: ParseNode, index: number, depth: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-nested-callbacks/rule.a",
+    "line": 86,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-nested-callbacks/messages.a",
+    "line": 4,
+    "declaration": "export function exceedMessage(depth: number, maximum: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-depth/rule.a",
+    "line": 10,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-depth/rule.a",
+    "line": 15,
+    "declaration": "elseIf(node: ParseNode, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-depth/rule.a",
+    "line": 26,
+    "declaration": "counted(node: ParseNode, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-depth/rule.a",
+    "line": 43,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-depth/rule.a",
+    "line": 71,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-depth/options.a",
+    "line": 4,
+    "declaration": "export function integer(value: string): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-classes-per-file/rule.a",
+    "line": 11,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-classes-per-file/rule.a",
+    "line": 27,
+    "declaration": "visit(node: ParseNode, index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-classes-per-file/rule.a",
+    "line": 45,
+    "declaration": "finish(root: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/max-classes-per-file/rule.a",
+    "line": 61,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a",
+    "line": 9,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/rule.a",
+    "line": 43,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/patterns.a",
+    "line": 2,
+    "declaration": "export function paginationType(text: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-require-pagination-argument-name/patterns.a",
+    "line": 7,
+    "declaration": "export function paginationName(text: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a",
+    "line": 11,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-hand-built-declared-error/rule.a",
+    "line": 40,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+    "line": 8,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+    "line": 11,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-console/rule.ts",
+    "line": 30,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-consistency-no-console/messages.ts",
+    "line": 2,
+    "declaration": "export function messageConsistencyNoConsole(methodName: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a",
+    "line": 10,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/base-boundary-no-global-container/rule.a",
+    "line": 24,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+    "line": 11,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/adamic-no-type-predicate/rule.ts",
+    "line": 16,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 11,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 16,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 36,
+    "declaration": "enumSelf(declaration: number, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 78,
+    "declaration": "enumAllowed(declaration: number, index: number, part: boolean, bitwise: boolean): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-prefer-literal-enum-member/rule.ts",
+    "line": 125,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+    "line": 9,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+    "line": 12,
+    "declaration": "prepare(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+    "line": 30,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-wrapper-object-types/rule.ts",
+    "line": 65,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+    "line": 10,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+    "line": 11,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+    "line": 44,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 14,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 17,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 32,
+    "declaration": "method(index: number, key: string): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 104,
+    "declaration": "property(index: number, key: string): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 127,
+    "declaration": "report(index: number, id: string, message: string): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 130,
+    "declaration": "containsKind(index: number, kind: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 136,
+    "declaration": "returnType(index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 150,
+    "declaration": "parametersText(index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 178,
+    "declaration": "delimiter(index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 182,
+    "declaration": "signatureKey(index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts",
+    "line": 188,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-init-declarations/rule.a",
+    "line": 10,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-init-declarations/rule.a",
+    "line": 15,
+    "declaration": "visit(node: ParseNode, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-init-declarations/rule.a",
+    "line": 67,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-init-declarations/messages.a",
+    "line": 1,
+    "declaration": "export function initializedMessage(name: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-init-declarations/messages.a",
+    "line": 5,
+    "declaration": "export function notInitializedMessage(name: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-init-declarations/initializer.a",
+    "line": 5,
+    "declaration": "export function hasInitializer(context: RuleContext, declaration: ParseNode): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a",
+    "line": 6,
+    "declaration": "function identifier(text: string): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a",
+    "line": 19,
+    "declaration": "constructor(context: RuleContext) { this.context = context; }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a",
+    "line": 20,
+    "declaration": "visit(container: ParseNode, _index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/rule.a",
+    "line": 104,
+    "declaration": "export function create(context: RuleContext): Rule { return new Rule(context); }"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-adjacent-overload-signatures/messages.a",
+    "line": 1,
+    "declaration": "export function adjacentSignature(display: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+    "line": 2,
+    "declaration": "export function noRedundantShouldComponentUpdate(context: RuleContext, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+    "line": 61,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+    "line": 64,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-redundant-should-component-update/rule.ts",
+    "line": 69,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+    "line": 3,
+    "declaration": "export function noIsMounted(context: RuleContext, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+    "line": 36,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+    "line": 39,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-is-mounted/rule.ts",
+    "line": 44,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+    "line": 3,
+    "declaration": "export function noFindDomNode(context: RuleContext, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+    "line": 35,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+    "line": 38,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-no-find-dom-node/rule.ts",
+    "line": 43,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 4,
+    "declaration": "export function jsxNoCommentTextnodes(context: RuleContext, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 36,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 39,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 44,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+    "line": 10,
+    "declaration": "export function forwardRefUsesRef(context: RuleContext, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+    "line": 115,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+    "line": 118,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/react-forward-ref-uses-ref/rule.ts",
+    "line": 123,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 5,
+    "declaration": "function tokenStart(context: RuleContext, index: number): number {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 31,
+    "declaration": "function tokenText(context: RuleContext, index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 34,
+    "declaration": "function triviaText(context: RuleContext, index: number): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 41,
+    "declaration": "function concatenation(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 44,
+    "declaration": "function string(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 47,
+    "declaration": "function contains(context: RuleContext, index: number, strings: boolean): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 54,
+    "declaration": "function legacy(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 76,
+    "declaration": "function escape(inner: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 97,
+    "declaration": "function curly(context: RuleContext, index: number, end: boolean): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 109,
+    "declaration": "function build(context: RuleContext, index: number, before: string, after: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 142,
+    "declaration": "export function preferTemplate(context: RuleContext, reported: Set<number>, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 203,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 206,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/prefer-template/rule.ts",
+    "line": 211,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 5,
+    "declaration": "function forwarding(context: RuleContext, body: number, parameters: readonly number[]): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 53,
+    "declaration": "export function noUselessConstructor(context: RuleContext, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 131,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 134,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-useless-constructor/rule.ts",
+    "line": 139,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 2,
+    "declaration": "function assignment(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 25,
+    "declaration": "function destructuring(context: RuleContext, index: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 45,
+    "declaration": "function writeOnly(context: RuleContext, access: number): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 73,
+    "declaration": "function used(context: RuleContext, index: number, name: string, accessor: boolean): boolean {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 99,
+    "declaration": "export function noUnusedPrivateClassMembers(context: RuleContext, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 145,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 148,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unused-private-class-members/rule.ts",
+    "line": 153,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 10,
+    "declaration": "function after(context: RuleContext, expression: number, id: string, message: string): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 17,
+    "declaration": "export function noUnexpectedMultiline(context: RuleContext, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 20,
+    "declaration": "after(context, context.child(index, 0), 'function', messageUnexpectedMultilineFunction);"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 74,
+    "declaration": "after(context, context.child(left, 0), 'division', messageUnexpectedMultilineDivision);"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 79,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 82,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unexpected-multiline/rule.ts",
+    "line": 87,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+    "line": 3,
+    "declaration": "export function noOctalEscape(context: RuleContext, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+    "line": 58,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+    "line": 61,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-octal-escape/rule.ts",
+    "line": 66,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "line": 5,
+    "declaration": "function duplicateCases(context: RuleContext, index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "line": 22,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "line": 25,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-duplicate-case/rule.ts",
+    "line": 34,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-var/rule.a",
+    "line": 6,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-var/rule.a",
+    "line": 9,
+    "declaration": "visit(index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-var/rule.a",
+    "line": 33,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/eqeqeq/rule.ts",
+    "line": 7,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/eqeqeq/rule.ts",
+    "line": 10,
+    "declaration": "visit(index: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/eqeqeq/rule.ts",
+    "line": 60,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/eqeqeq/messages.ts",
+    "line": 1,
+    "declaration": "export function description(actual: string, expected: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/eqeqeq/messages.ts",
+    "line": 5,
+    "declaration": "export function suggestionDescription(actual: string, expected: string): string {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty/rule.ts",
+    "line": 6,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty/rule.ts",
+    "line": 9,
+    "declaration": "visit(index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-empty/rule.ts",
+    "line": 44,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-debugger/rule.ts",
+    "line": 6,
+    "declaration": "constructor(context: RuleContext) {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-debugger/rule.ts",
+    "line": 9,
+    "declaration": "visit(index: number, parent: number): void {"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-debugger/rule.ts",
+    "line": 29,
+    "declaration": "export function create(context: RuleContext): Rule {"
+  }
+]

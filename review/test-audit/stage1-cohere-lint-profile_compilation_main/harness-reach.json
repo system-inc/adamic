@@ -1,0 +1,1202 @@
+{
+  "TestCommentFoldMutant": [
+    {
+      "file": "stage1/cohere/lint/profile_test.go",
+      "line": 231,
+      "function": "TestCommentFoldMutant"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 64,
+      "function": "commandDiagnostics"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 479,
+      "function": "copyPort"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 158,
+      "function": "difference"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 117,
+      "function": "emitJavaScriptTo"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 788,
+      "function": "emittedJavaScript"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 808,
+      "function": "emittedNode"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 72,
+      "function": "execute"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 233,
+      "function": "generated"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 97,
+      "function": "goOracle"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 100,
+      "function": "goOracleFrom"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 134,
+      "function": "goOracleIn"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_ir_test.go",
+      "line": 8,
+      "function": "init"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 62,
+      "function": "isPackage"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 193,
+      "function": "manifest"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 476,
+      "function": "mutant"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 144,
+      "function": "node"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 23,
+      "function": "prepareRegistry"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 765,
+      "function": "rewritePortImports"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 78,
+      "function": "run"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 812,
+      "function": "runJavaScript"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 46,
+      "function": "shared"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 68,
+      "function": "sharedPath"
+    }
+  ],
+  "TestFactoryHooks_Setup": [
+    {
+      "file": "stage1/cohere/lint/registration_test.go",
+      "line": 64,
+      "function": "TestFactoryHooks_Setup"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 479,
+      "function": "copyPort"
+    },
+    {
+      "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+      "line": 334,
+      "function": "factoryHooksBuildNative"
+    },
+    {
+      "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+      "line": 320,
+      "function": "factoryHooksCommand"
+    },
+    {
+      "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+      "line": 100,
+      "function": "factoryHooksDirectory"
+    },
+    {
+      "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+      "line": 243,
+      "function": "factoryHooksLowered"
+    },
+    {
+      "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+      "line": 109,
+      "function": "factoryHooksManifest"
+    },
+    {
+      "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+      "line": 282,
+      "function": "factoryHooksNative"
+    },
+    {
+      "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+      "line": 118,
+      "function": "factoryHooksPrepare"
+    },
+    {
+      "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+      "line": 223,
+      "function": "factoryHooksProducts"
+    },
+    {
+      "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+      "line": 196,
+      "function": "factoryHooksSetup"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 23,
+      "function": "prepareRegistry"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 765,
+      "function": "rewritePortImports"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 46,
+      "function": "shared"
+    }
+  ],
+  "TestNestedOutsideModuleCopy": [
+    {
+      "file": "stage1/cohere/lint/registration_test.go",
+      "line": 141,
+      "function": "TestNestedOutsideModuleCopy"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 123,
+      "function": "buildPort"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 102,
+      "function": "buildPortTo"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 64,
+      "function": "commandDiagnostics"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 479,
+      "function": "copyPort"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 72,
+      "function": "execute"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 62,
+      "function": "isPackage"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 193,
+      "function": "manifest"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 476,
+      "function": "mutant"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 144,
+      "function": "node"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 23,
+      "function": "prepareRegistry"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 765,
+      "function": "rewritePortImports"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 46,
+      "function": "shared"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 68,
+      "function": "sharedPath"
+    }
+  ],
+  "TestPositionIndexMutant": [
+    {
+      "file": "stage1/cohere/lint/profile_test.go",
+      "line": 250,
+      "function": "TestPositionIndexMutant"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 64,
+      "function": "commandDiagnostics"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 479,
+      "function": "copyPort"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 158,
+      "function": "difference"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 117,
+      "function": "emitJavaScriptTo"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 788,
+      "function": "emittedJavaScript"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 808,
+      "function": "emittedNode"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 72,
+      "function": "execute"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 233,
+      "function": "generated"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 97,
+      "function": "goOracle"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 100,
+      "function": "goOracleFrom"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 134,
+      "function": "goOracleIn"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_ir_test.go",
+      "line": 8,
+      "function": "init"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 62,
+      "function": "isPackage"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 193,
+      "function": "manifest"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 476,
+      "function": "mutant"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 144,
+      "function": "node"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 23,
+      "function": "prepareRegistry"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 765,
+      "function": "rewritePortImports"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 78,
+      "function": "run"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 812,
+      "function": "runJavaScript"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 46,
+      "function": "shared"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 68,
+      "function": "sharedPath"
+    }
+  ],
+  "TestProfileArtifacts": [
+    {
+      "file": "stage1/cohere/lint/profile_test.go",
+      "line": 17,
+      "function": "TestProfileArtifacts"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_test.go",
+      "line": 62,
+      "function": "buildProfile"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 64,
+      "function": "commandDiagnostics"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 479,
+      "function": "copyPort"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 72,
+      "function": "execute"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 97,
+      "function": "goOracle"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 100,
+      "function": "goOracleFrom"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 134,
+      "function": "goOracleIn"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 62,
+      "function": "isPackage"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 23,
+      "function": "prepareRegistry"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 765,
+      "function": "rewritePortImports"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 78,
+      "function": "run"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 46,
+      "function": "shared"
+    }
+  ],
+  "TestProfileCompilationBuildC": [
+    {
+      "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+      "line": 78,
+      "function": "TestProfileCompilationBuildC"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 321,
+      "function": "compilationEmission"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 109,
+      "function": "compilationInputs"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 302,
+      "function": "compilationLowered"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    }
+  ],
+  "TestProfileCompilationBuildJavaScript": [
+    {
+      "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+      "line": 85,
+      "function": "TestProfileCompilationBuildJavaScript"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 321,
+      "function": "compilationEmission"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 109,
+      "function": "compilationInputs"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 302,
+      "function": "compilationLowered"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    }
+  ],
+  "TestProfileCompilationBuildLower": [
+    {
+      "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+      "line": 71,
+      "function": "TestProfileCompilationBuildLower"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 109,
+      "function": "compilationInputs"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 302,
+      "function": "compilationLowered"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    }
+  ],
+  "TestProfileCompilationBuildNative": [
+    {
+      "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+      "line": 92,
+      "function": "TestProfileCompilationBuildNative"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 321,
+      "function": "compilationEmission"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 109,
+      "function": "compilationInputs"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 302,
+      "function": "compilationLowered"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 176,
+      "function": "compilationProductKinds"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 172,
+      "function": "compilationProducts"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    }
+  ],
+  "TestProfileCompilationPlantedFailure": [
+    {
+      "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+      "line": 99,
+      "function": "TestProfileCompilationPlantedFailure"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 64,
+      "function": "commandDiagnostics"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 34,
+      "function": "compilationCase"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 321,
+      "function": "compilationEmission"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 109,
+      "function": "compilationInputs"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 302,
+      "function": "compilationLowered"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 378,
+      "function": "compilationOracle"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 261,
+      "function": "compilationOracleOutputs"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 365,
+      "function": "compilationPrepare"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 176,
+      "function": "compilationProductKinds"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 172,
+      "function": "compilationProducts"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 479,
+      "function": "copyPort"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 72,
+      "function": "execute"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 134,
+      "function": "goOracleIn"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+      "line": 16,
+      "function": "lintBuildPhaseChild"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 193,
+      "function": "manifest"
+    },
+    {
+      "file": "stage1/cohere/lint/registration_test.go",
+      "line": 69,
+      "function": "ownedWitnesses"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 23,
+      "function": "prepareRegistry"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 765,
+      "function": "rewritePortImports"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 78,
+      "function": "run"
+    },
+    {
+      "file": "stage1/cohere/lint/shards_agree_split_test.go",
+      "line": 113,
+      "function": "testShardsAgreeInputs"
+    }
+  ],
+  "TestProfileCompilationUnion": [
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 52,
+      "function": "TestProfileCompilationUnion"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 34,
+      "function": "compilationCase"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 46,
+      "function": "compilationShard"
+    }
+  ],
+  "TestProfileCompilation_000": [
+    {
+      "file": "stage1/cohere/lint/profile_test.go",
+      "line": 112,
+      "function": "TestProfileCompilation_000"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 64,
+      "function": "commandDiagnostics"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 95,
+      "function": "compilationBudget"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 34,
+      "function": "compilationCase"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 346,
+      "function": "compilationCommand"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 321,
+      "function": "compilationEmission"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 109,
+      "function": "compilationInputs"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 302,
+      "function": "compilationLowered"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 378,
+      "function": "compilationOracle"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 261,
+      "function": "compilationOracleOutputs"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 365,
+      "function": "compilationPrepare"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 176,
+      "function": "compilationProductKinds"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 172,
+      "function": "compilationProducts"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 88,
+      "function": "compilationSelected"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 479,
+      "function": "copyPort"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 158,
+      "function": "difference"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 72,
+      "function": "execute"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 134,
+      "function": "goOracleIn"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 193,
+      "function": "manifest"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 144,
+      "function": "node"
+    },
+    {
+      "file": "stage1/cohere/lint/registration_test.go",
+      "line": 69,
+      "function": "ownedWitnesses"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 23,
+      "function": "prepareRegistry"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 765,
+      "function": "rewritePortImports"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 78,
+      "function": "run"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 812,
+      "function": "runJavaScript"
+    },
+    {
+      "file": "stage1/cohere/lint/shards_agree_split_test.go",
+      "line": 113,
+      "function": "testShardsAgreeInputs"
+    }
+  ],
+  "TestProfileCompilation_Setup": [
+    {
+      "file": "stage1/cohere/lint/lint_setup_clock_regression_test.go",
+      "line": 64,
+      "function": "TestProfileCompilation_Setup"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 64,
+      "function": "commandDiagnostics"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 34,
+      "function": "compilationCase"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 321,
+      "function": "compilationEmission"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 109,
+      "function": "compilationInputs"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 302,
+      "function": "compilationLowered"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 378,
+      "function": "compilationOracle"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 261,
+      "function": "compilationOracleOutputs"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 365,
+      "function": "compilationPrepare"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 176,
+      "function": "compilationProductKinds"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+      "line": 172,
+      "function": "compilationProducts"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 479,
+      "function": "copyPort"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 72,
+      "function": "execute"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 134,
+      "function": "goOracleIn"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 193,
+      "function": "manifest"
+    },
+    {
+      "file": "stage1/cohere/lint/registration_test.go",
+      "line": 69,
+      "function": "ownedWitnesses"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 23,
+      "function": "prepareRegistry"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 765,
+      "function": "rewritePortImports"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 78,
+      "function": "run"
+    },
+    {
+      "file": "stage1/cohere/lint/shards_agree_split_test.go",
+      "line": 113,
+      "function": "testShardsAgreeInputs"
+    }
+  ],
+  "TestProfileSnapshotsAgree": [
+    {
+      "file": "stage1/cohere/lint/profile_test.go",
+      "line": 172,
+      "function": "TestProfileSnapshotsAgree"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 188,
+      "function": "captureUpstream"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 324,
+      "function": "checkRecoveryRefusal"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 64,
+      "function": "commandDiagnostics"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 158,
+      "function": "difference"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 117,
+      "function": "emitJavaScriptTo"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 788,
+      "function": "emittedJavaScript"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 808,
+      "function": "emittedNode"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 72,
+      "function": "execute"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 233,
+      "function": "generated"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 97,
+      "function": "goOracle"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 100,
+      "function": "goOracleFrom"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 134,
+      "function": "goOracleIn"
+    },
+    {
+      "file": "stage1/cohere/lint/profile_compilation_ir_test.go",
+      "line": 8,
+      "function": "init"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 62,
+      "function": "isPackage"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 193,
+      "function": "manifest"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 144,
+      "function": "node"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 23,
+      "function": "prepareRegistry"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 206,
+      "function": "recoveryRows"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 78,
+      "function": "run"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 812,
+      "function": "runJavaScript"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 46,
+      "function": "shared"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 68,
+      "function": "sharedPath"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 275,
+      "function": "upstream"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 278,
+      "function": "upstreamFrom"
+    }
+  ],
+  "TestRegistrationMutant": [
+    {
+      "file": "stage1/cohere/lint/registration_test.go",
+      "line": 42,
+      "function": "TestRegistrationMutant"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 64,
+      "function": "commandDiagnostics"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 479,
+      "function": "copyPort"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 158,
+      "function": "difference"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 117,
+      "function": "emitJavaScriptTo"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 788,
+      "function": "emittedJavaScript"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 808,
+      "function": "emittedNode"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 72,
+      "function": "execute"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 97,
+      "function": "goOracle"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 100,
+      "function": "goOracleFrom"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 134,
+      "function": "goOracleIn"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 62,
+      "function": "isPackage"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 193,
+      "function": "manifest"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 476,
+      "function": "mutant"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 144,
+      "function": "node"
+    },
+    {
+      "file": "stage1/cohere/lint/registration_test.go",
+      "line": 69,
+      "function": "ownedWitnesses"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 32,
+      "function": "portFiles"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 23,
+      "function": "prepareRegistry"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 765,
+      "function": "rewritePortImports"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 78,
+      "function": "run"
+    },
+    {
+      "file": "stage1/cohere/lint/lint_test.go",
+      "line": 812,
+      "function": "runJavaScript"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 46,
+      "function": "shared"
+    },
+    {
+      "file": "stage1/cohere/lint/shared_test.go",
+      "line": 68,
+      "function": "sharedPath"
+    }
+  ]
+}

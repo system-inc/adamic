@@ -1,0 +1,23 @@
+[
+  {
+    "id": "M01",
+    "command": [
+      "timeout",
+      "90",
+      "/workspace/u111-verify/adamic",
+      "build",
+      "/workspace/u111-verify/M01/main.ts",
+      "-o",
+      "/workspace/u111-verify/M01/scanner"
+    ],
+    "status": 124,
+    "wall": 90.01648519699665,
+    "binary_exists": false,
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/u111-verify/M01/cache"
+    },
+    "copy": "only imports rewritten to the identical absolute source graph; mutated main/lint copied from applied standalone diff",
+    "apply_status": 0,
+    "apply_error": ""
+  }
+]

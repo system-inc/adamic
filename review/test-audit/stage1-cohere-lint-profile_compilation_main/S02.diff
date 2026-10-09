@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/factory_hooks_shards_test.go
++++ b/stage1/cohere/lint/factory_hooks_shards_test.go
+@@ -224,7 +224,7 @@
+ 	t.Helper()
+ 	started := time.Now()
+ 	value := shared("factory-hooks-fixtures", func(value *sharedValue) {
+-		for index := 0; index < 2; index++ {
++		for index := 0; index < 1; index++ {
+ 			directory, manifest := factoryHooksPrepare(t, index == 1)
+ 			value.rows = append(value.rows, directory, manifest)
+ 		}

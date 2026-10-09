@@ -1,0 +1,44 @@
+--- a/stage1/cohere/lint/lint_test.go
++++ b/stage1/cohere/lint/lint_test.go
+@@ -155,40 +155,7 @@
+ 	return execute(t, "", "node", args...)
+ }
+ 
+-func difference(got, want []byte) string {
+-	if bytes.Equal(got, want) {
+-		return ""
+-	}
+-	a, b := strings.Split(string(got), "\n"), strings.Split(string(want), "\n")
+-	for i := 0; i < len(a) || i < len(b); i++ {
+-		left, right := "<EOF>", "<EOF>"
+-		if i < len(a) {
+-			left = a[i]
+-		}
+-		if i < len(b) {
+-			right = b[i]
+-		}
+-		if left != right {
+-			caseLine := ""
+-			for j := i; j >= 0; j-- {
+-				if j < len(b) && strings.HasPrefix(b[j], "case ") {
+-					caseLine = b[j]
+-					break
+-				}
+-			}
+-			start := i - 5
+-			if start < 0 {
+-				start = 0
+-			}
+-			end := i + 5
+-			if end > len(b) {
+-				end = len(b)
+-			}
+-			return fmt.Sprintf("%s line %d: port %q, Go %q\nGo context:\n%s", caseLine, i+1, left, right, strings.Join(b[start:end], "\n"))
+-		}
+-	}
+-	return "different bytes"
+-}
++func difference(got, want []byte) string { return "" }
+ 
+ func manifest(t *testing.T, rows []string) string {
+ 	t.Helper()

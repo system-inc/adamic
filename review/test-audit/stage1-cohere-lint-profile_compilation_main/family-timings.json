@@ -1,0 +1,158 @@
+[
+  {
+    "test": "TestProfileCompilation family",
+    "members": [
+      "TestProfileCompilationUnion",
+      "TestProfileCompilation_000"
+    ],
+    "run": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationUnion|TestProfileCompilation_000)$"
+    ],
+    "status": 0,
+    "wall": 4.141450662998977,
+    "seconds": 2.021,
+    "seconds_go_json_elapsed": 2.021,
+    "seconds_source": "test binary ok line"
+  },
+  {
+    "test": "TestProfileCompilation family",
+    "members": [
+      "TestProfileCompilationUnion",
+      "TestProfileCompilation_000"
+    ],
+    "run": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationUnion|TestProfileCompilation_000)$"
+    ],
+    "status": 0,
+    "wall": 4.004312728000514,
+    "seconds": 2.021,
+    "seconds_go_json_elapsed": 2.022,
+    "seconds_source": "test binary ok line"
+  },
+  {
+    "test": "TestProfileCompilation family",
+    "members": [
+      "TestProfileCompilationUnion",
+      "TestProfileCompilation_000"
+    ],
+    "run": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationUnion|TestProfileCompilation_000)$"
+    ],
+    "status": 0,
+    "wall": 4.359148045998154,
+    "seconds": 2.264,
+    "seconds_go_json_elapsed": 2.265,
+    "seconds_source": "test binary ok line"
+  },
+  {
+    "test": "TestProfileCompilationBuildEmission family",
+    "members": [
+      "TestProfileCompilationBuildC",
+      "TestProfileCompilationBuildJavaScript"
+    ],
+    "run": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript)$"
+    ],
+    "status": 0,
+    "wall": 2.3638311470022018,
+    "seconds": 0.289,
+    "seconds_go_json_elapsed": 0.289,
+    "seconds_source": "test binary ok line"
+  },
+  {
+    "test": "TestProfileCompilationBuildEmission family",
+    "members": [
+      "TestProfileCompilationBuildC",
+      "TestProfileCompilationBuildJavaScript"
+    ],
+    "run": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript)$"
+    ],
+    "status": 0,
+    "wall": 2.3252653130002727,
+    "seconds": 0.282,
+    "seconds_go_json_elapsed": 0.283,
+    "seconds_source": "test binary ok line"
+  },
+  {
+    "test": "TestProfileCompilationBuildEmission family",
+    "members": [
+      "TestProfileCompilationBuildC",
+      "TestProfileCompilationBuildJavaScript"
+    ],
+    "run": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript)$"
+    ],
+    "status": 0,
+    "wall": 2.426017801000853,
+    "seconds": 0.309,
+    "seconds_go_json_elapsed": 0.31,
+    "seconds_source": "test binary ok line"
+  }
+]

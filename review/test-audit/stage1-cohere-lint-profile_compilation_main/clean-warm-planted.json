@@ -1,0 +1,71 @@
+[
+  {
+    "test": "TestProfileCompilationPlantedFailure",
+    "run": 0,
+    "status": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProfileCompilationPlantedFailure$"
+    ],
+    "wall": 5.9627694390001125,
+    "seconds": 3.854,
+    "errors": [],
+    "seconds_go_json_elapsed": 3.855,
+    "seconds_source": "test binary ok line"
+  },
+  {
+    "test": "TestProfileCompilationPlantedFailure",
+    "run": 1,
+    "status": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProfileCompilationPlantedFailure$"
+    ],
+    "wall": 6.645549028999085,
+    "seconds": 4.207,
+    "errors": [],
+    "seconds_go_json_elapsed": 4.208,
+    "seconds_source": "test binary ok line"
+  },
+  {
+    "test": "TestProfileCompilationPlantedFailure",
+    "run": 2,
+    "status": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProfileCompilationPlantedFailure$"
+    ],
+    "wall": 6.054335382999852,
+    "seconds": 3.704,
+    "errors": [],
+    "seconds_go_json_elapsed": 3.705,
+    "seconds_source": "test binary ok line"
+  }
+]

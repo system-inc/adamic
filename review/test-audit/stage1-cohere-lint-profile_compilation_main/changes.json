@@ -1,0 +1,171 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 67,
+    "change": "const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 1; -> const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 2;",
+    "kind": "change constant",
+    "failed_functions": [
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "failed_rows": [
+      "TestProfileCompilation family",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "production_witness_failures_are_preconditions": true
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 137,
+    "change": "drop fixed declaration and fixed-output log",
+    "kind": "drop statement",
+    "failed_functions": [
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "failed_rows": [
+      "TestProfileCompilation family",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "production_witness_failures_are_preconditions": true
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 116,
+    "change": "rules.visit(index, parent); -> ",
+    "kind": "drop statement",
+    "failed_functions": [
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "failed_rows": [
+      "TestProfileCompilation family",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "production_witness_failures_are_preconditions": true
+  },
+  {
+    "id": "W01",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "line": 158,
+    "change": "func difference(got, want []byte) string { return \"\" }",
+    "kind": "weaken agreement comparison",
+    "failed_functions": [
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant"
+    ],
+    "failed_rows": [
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant"
+    ],
+    "production_witness_failures_are_preconditions": false
+  },
+  {
+    "id": "W02",
+    "file": "stage1/cohere/lint/registration_test.go",
+    "line": 56,
+    "change": "equality becomes reflexive true",
+    "kind": "weaken equality comparison",
+    "failed_functions": [
+      "TestRegistrationMutant"
+    ],
+    "failed_rows": [
+      "TestRegistrationMutant"
+    ],
+    "production_witness_failures_are_preconditions": false
+  },
+  {
+    "id": "S01",
+    "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+    "line": 32,
+    "change": "const testProfileCompilationShards = 2",
+    "kind": "change construction constant",
+    "failed_functions": [
+      "TestProfileCompilationUnion"
+    ],
+    "failed_rows": [
+      "TestProfileCompilation family"
+    ],
+    "production_witness_failures_are_preconditions": false
+  },
+  {
+    "id": "S02",
+    "file": "stage1/cohere/lint/factory_hooks_shards_test.go",
+    "line": 227,
+    "change": "for index := 0; index < 1; index++ {",
+    "kind": "off-by-one construction bound",
+    "failed_functions": [
+      "TestFactoryHooks_Setup"
+    ],
+    "failed_rows": [
+      "TestFactoryHooks_Setup"
+    ],
+    "production_witness_failures_are_preconditions": false
+  },
+  {
+    "id": "S03",
+    "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+    "line": 312,
+    "change": "os.Create(filepath.Join(dir, \"lost.gob\"))",
+    "kind": "change construction filename",
+    "failed_functions": [
+      "TestProfileCompilationBuildC",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilation_Setup"
+    ],
+    "failed_rows": [
+      "TestProfileCompilationBuildEmission family",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilation_Setup"
+    ],
+    "production_witness_failures_are_preconditions": false
+  },
+  {
+    "id": "S04",
+    "file": "stage1/cohere/lint/profile_compilation_main_test.go",
+    "line": 203,
+    "change": "native.Build(string(source), filepath.Join(dir, kind+\"-lost\"), options)",
+    "kind": "change construction filename",
+    "failed_functions": [
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilation_Setup"
+    ],
+    "failed_rows": [
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilation_Setup"
+    ],
+    "production_witness_failures_are_preconditions": false
+  },
+  {
+    "id": "P02",
+    "file": "stage1/cohere/lint/profile_test.go",
+    "line": 62,
+    "change": "buildProfile returns at entry",
+    "kind": "empty construction probe",
+    "failed_functions": [],
+    "failed_rows": [],
+    "production_witness_failures_are_preconditions": false
+  },
+  {
+    "id": "P01",
+    "file": "stage1/cohere/lint/main.ts",
+    "line": 11,
+    "change": "run returns 0 at entry",
+    "kind": "empty port answer probe",
+    "failed_functions": [
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "failed_rows": [
+      "TestProfileCompilation family",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "production_witness_failures_are_preconditions": false
+  }
+]

@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:37:10.589000583Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:37:10.616544702Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_Setup"}
+{"Time":"2026-10-09T12:37:10.616686532Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_Setup","Output":"=== RUN   TestFactoryHooks_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:37:10.841514208Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_Setup","Output":"    factory_hooks_shards_test.go:203: incomplete factory hook fixture setup\n","OutputType":"error"}
+{"Time":"2026-10-09T12:37:10.841580566Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_Setup","Output":"--- FAIL: TestFactoryHooks_Setup (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:37:10.841604381Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestFactoryHooks_Setup","Elapsed":0.22}
+{"Time":"2026-10-09T12:37:10.841622378Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:37:10.842778499Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.250s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:37:10.842800431Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.254}

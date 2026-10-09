@@ -1,0 +1,1 @@
+NestedOutsideModuleCopy embeds bad-input checks directly against Node module loading and load.Load. No independent agreement helper guards this witness. Making its inline assertions always fail would be tautological; weakening Node or load.Load would mutate the oracle for the copy harness. Not attempted; cannot judge witness strength.

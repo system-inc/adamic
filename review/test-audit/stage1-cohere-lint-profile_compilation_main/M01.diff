@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/main.ts
++++ b/stage1/cohere/lint/main.ts
+@@ -64,7 +64,7 @@
+             }
+         }
+         const line = left;
+-        const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 1;
++        const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 2;
+         console.log(`${path}:${line}:${column}\n  ${finding.rule}  ${finding.message}\n`);
+         let repair = finding.repair;
+         let replacement = finding.replacement;

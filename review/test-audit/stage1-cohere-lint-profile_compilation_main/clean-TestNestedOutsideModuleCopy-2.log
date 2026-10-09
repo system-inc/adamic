@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:27:20.666532929Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:27:20.690950798Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedOutsideModuleCopy"}
+{"Time":"2026-10-09T12:27:20.691047771Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedOutsideModuleCopy","Output":"=== RUN   TestNestedOutsideModuleCopy\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:20.691078417Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedOutsideModuleCopy","Output":"=== PAUSE TestNestedOutsideModuleCopy\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:20.69108084Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedOutsideModuleCopy"}
+{"Time":"2026-10-09T12:27:20.691086639Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedOutsideModuleCopy"}
+{"Time":"2026-10-09T12:27:20.691089133Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedOutsideModuleCopy","Output":"=== CONT  TestNestedOutsideModuleCopy\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:21.29038397Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedOutsideModuleCopy","Output":"    registration_test.go:198: root-only import rewrite mutant caught by Node and native module loading\n"}
+{"Time":"2026-10-09T12:27:21.296496631Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedOutsideModuleCopy","Output":"--- PASS: TestNestedOutsideModuleCopy (0.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:21.296531062Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestNestedOutsideModuleCopy","Elapsed":0.61}
+{"Time":"2026-10-09T12:27:21.296558132Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:21.298303669Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.631s\n"}
+{"Time":"2026-10-09T12:27:21.298336277Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.632}

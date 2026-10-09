@@ -1,0 +1,69 @@
+diff --git a/stage1/cohere/lint/lint.ts b/stage1/cohere/lint/lint.ts
+index 406f1270..47336937 100644
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -1,3 +1,4 @@
++import { auditSelected } from './audit_selector.ts';
+ // The lint harness: parse, one preorder walk that hands each node to the generated rule registry, the
+ // stable finding sort, and the converging fixer. Every rule lives in its own directory under rules/.
+ import { RuleContext } from './context.ts';
+@@ -113,7 +114,7 @@ export class Linter {
+         return this.parser.node(index);
+     }
+     walk(index: number, parent: number, rules: RuleSet): void {
+-        rules.visit(index, parent);
++        if(!auditSelected('M03')) { rules.visit(index, parent); }
+         for(const child of this.node(index).children) {
+             this.walk(child, index, rules);
+         }
+diff --git a/stage1/cohere/lint/main.ts b/stage1/cohere/lint/main.ts
+index 8e72ad74..90eb17b6 100644
+--- a/stage1/cohere/lint/main.ts
++++ b/stage1/cohere/lint/main.ts
+@@ -1,4 +1,5 @@
+ import { panic, programArguments, readTextFile } from 'adamic';
++import { auditSelected } from './audit_selector.ts';
+ import { written } from '../../typescript/parser/nodes.ts';
+ import { Parser } from '../../typescript/parser/parser.ts';
+ import { Scanner } from '../../typescript/scanner/scanner.ts';
+@@ -9,6 +10,7 @@ import { Settings } from './settings.ts';
+ const junkRows = programArguments().includes('--junk-rows');
+ 
+ function run(row: string, countOnly: boolean): number {
++    if(auditSelected('P01')) { return 0; }
+     const fields = row.split('\t');
+     const path = fields[0] ?? panic('missing path');
+     const source = readTextFile(path);
+@@ -64,7 +66,7 @@ function run(row: string, countOnly: boolean): number {
+             }
+         }
+         const line = left;
+-        const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + 1;
++        const column = start - (offsets[lines[line - 1] ?? 0] ?? 0) + (auditSelected('M01') ? 2 : 1);
+         console.log(`${path}:${line}:${column}\n  ${finding.rule}  ${finding.message}\n`);
+         let repair = finding.repair;
+         let replacement = finding.replacement;
+@@ -134,14 +136,14 @@ function run(row: string, countOnly: boolean): number {
+         console.log('recovery findings only');
+     }
+     else {
+-        const fixed = linter.fixed();
++        const fixed = auditSelected('M02') ? '' : linter.fixed();
+         for(const rejection of linter.rejected) {
+             console.log(rejection);
+         }
+         if(linter.unconverged.length > 0) {
+             console.log(`unconverged\t${linter.unconverged.join(',')}`);
+         }
+-        console.log(`fixed\t${written(fixed)}`);
++        if(!auditSelected('M02')) { console.log(`fixed\t${written(fixed)}`); }
+     }
+     return linter.findings.length;
+ }
+--- /dev/null
++++ b/stage1/cohere/lint/audit_selector.ts
+@@ -0,0 +1,4 @@
++import { readTextFile } from 'adamic';
++const selection = readTextFile('/workspace/u111-selector');
++const selected = selection.kind === 'Ok' ? selection.text : '';
++export function auditSelected(id: string): boolean { return selected === id; }

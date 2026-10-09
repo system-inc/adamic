@@ -1,0 +1,17 @@
+--- a/stage1/cohere/lint/main.ts
++++ b/stage1/cohere/lint/main.ts
+@@ -134,14 +134,12 @@
+         console.log('recovery findings only');
+     }
+     else {
+-        const fixed = linter.fixed();
+         for(const rejection of linter.rejected) {
+             console.log(rejection);
+         }
+         if(linter.unconverged.length > 0) {
+             console.log(`unconverged\t${linter.unconverged.join(',')}`);
+         }
+-        console.log(`fixed\t${written(fixed)}`);
+     }
+     return linter.findings.length;
+ }

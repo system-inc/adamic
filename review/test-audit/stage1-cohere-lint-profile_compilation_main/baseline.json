@@ -1,0 +1,1 @@
+{"command": ["timeout", "120", "go", "test", "-json", "-count=1", "-timeout", "90s", "./stage1/cohere/lint/", "-run", "."], "status": 1, "wall": 93.42282380500183, "env": {"ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/u111-profile", "ADAMIC_LINT_PROFILE_DIR": "/workspace/u111-profile", "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/u111-typescript"}}

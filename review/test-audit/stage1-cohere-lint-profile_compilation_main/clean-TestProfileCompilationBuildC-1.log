@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T12:22:06.750886558Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:22:06.774393365Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC"}
+{"Time":"2026-10-09T12:22:06.774492091Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC","Output":"=== RUN   TestProfileCompilationBuildC\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:06.774528926Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC","Output":"=== PAUSE TestProfileCompilationBuildC\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:06.774531279Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC"}
+{"Time":"2026-10-09T12:22:06.774533613Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC"}
+{"Time":"2026-10-09T12:22:06.774535315Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC","Output":"=== CONT  TestProfileCompilationBuildC\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:06.935306072Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC","Output":"    profile_compilation_main_test.go:303: build lint-profile-lowered 6f597cf5f805 hit 0.04\n"}
+{"Time":"2026-10-09T12:22:06.977359198Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC","Output":"    profile_compilation_main_test.go:329: build lint-profile-emit-c 2444fc538e7b hit 0.03\n"}
+{"Time":"2026-10-09T12:22:06.977402533Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC","Output":"    lint_setup_clock_regression_test.go:81: build wall=202.782747ms\n"}
+{"Time":"2026-10-09T12:22:06.977422692Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC","Output":"--- PASS: TestProfileCompilationBuildC (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:06.977425286Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProfileCompilationBuildC","Elapsed":0.2}
+{"Time":"2026-10-09T12:22:06.977444925Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:22:06.979424823Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.228s\n"}
+{"Time":"2026-10-09T12:22:06.979461688Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.229}
