@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
@@ -258,4 +259,33 @@ func estreeShardFailure(t *testing.T, count, cases int, groups [][]int, mode str
 		t.Fatalf("planted %s did not fail exactly shard-%03d: %v\n%s", mode, owner, err, text)
 	}
 	t.Logf("case %d planted %s caught by exactly shard-%03d", planted, mode, owner)
+}
+
+func estreeAgreementShards(t *testing.T, count int, sources []string) {
+	t.Helper()
+	estreeAccounting(t)
+	started := time.Now()
+	selected := estreeShardPlan(t, count, len(sources), estreeSingles(len(sources)))
+	oracle := estreeTimedOracle(t)
+	main, err := filepath.Abs("main.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary, script := estreeTimedBuild(t, main, true)
+	t.Logf("setup including builds: %.3fs", time.Since(started).Seconds())
+	for i, source := range sources {
+		if !selected[i] {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+			t.Parallel()
+			list := manifest(t, []string{source})
+			want := execute(t, "", oracle, "--manifest", list)
+			for name, got := range map[string][]byte{"source Node": onNode(t, main, "--manifest", list), "sanitized native": execute(t, "", binary, "--manifest", list), "emitted JS": onNode(t, script, "--manifest", list)} {
+				if err := estreeAgreementVerdict(want, got); err != nil {
+					t.Fatalf("case %d %s: %v", i, name, err)
+				}
+			}
+		})
+	}
 }

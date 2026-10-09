@@ -12,18 +12,18 @@ import (
 func cookedSurrogates() []string {
 	return []string{"'\\ud800a\\udc00';", "'\\ud800';", "'\\udfff';", "'\\ud800\\udc00';", "'\\ud800\\ud800';", "`a\\ud800b`;", "tag`a\\ud800b`;", "const key = {'\\ud800': 1};"}
 }
+
+const testCookedSurrogatesShards = 8
+
+// ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 func TestCookedSurrogates(t *testing.T) {
-	list := manifest(t, cookedSurrogates())
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
-		if d := firstDifference(want, got); d != "" {
-			t.Fatal(name + ": " + d)
-		}
-	}
-	t.Logf("%d cooked-surrogate files, %d bytes match Go", len(cookedSurrogates()), len(want))
+	estreeAgreementShards(t, testCookedSurrogatesShards, cookedSurrogates())
 }
+func TestCookedSurrogatesShardFailure(t *testing.T) {
+	sources := cookedSurrogates()
+	estreeShardFailure(t, testCookedSurrogatesShards, len(sources), estreeSingles(len(sources)), "agreement", 4)
+}
+
 func TestCookedSurrogateMutant(t *testing.T) {
 	list := manifest(t, cookedSurrogates())
 	want := execute(t, "", goOracle(t), "--manifest", list)
