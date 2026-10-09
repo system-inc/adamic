@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T14:11:37.797340071Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T14:11:37.807157406Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262"}
+{"Time":"2026-10-09T14:11:37.807289119Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262","Output":"=== RUN   TestRegExpBytecodeTest262\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:37.80733054Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262","Output":"=== PAUSE TestRegExpBytecodeTest262\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:37.807334406Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262"}
+{"Time":"2026-10-09T14:11:37.807344177Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262"}
+{"Time":"2026-10-09T14:11:37.807347126Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262","Output":"=== CONT  TestRegExpBytecodeTest262\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:38.798281532Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262","Output":"    regexp_test.go:53: compiling 2776 patterns, 127369 executions, 15748093 C bytes\n"}
+{"Time":"2026-10-09T14:11:51.543687994Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262","Output":"    regexp_test.go:53: mode=[] native execution totals: 127369 cases, 0 disagreements\n"}
+{"Time":"2026-10-09T14:11:52.91569803Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262","Output":"    regexp_test.go:53: mode=[unlimited] native execution totals: 127369 cases, 0 disagreements\n"}
+{"Time":"2026-10-09T14:11:52.91791095Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262","Output":"--- PASS: TestRegExpBytecodeTest262 (15.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:52.917933124Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRegExpBytecodeTest262","Elapsed":15.11}
+{"Time":"2026-10-09T14:11:52.917958066Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:52.919615461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"coverage: 16.6% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:52.934789248Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t15.136s\tcoverage: 16.6% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:52.934825731Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":15.137}

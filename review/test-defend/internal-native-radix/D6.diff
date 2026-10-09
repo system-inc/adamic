@@ -1,0 +1,11 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -60,7 +60,7 @@
+ 			i++
+ 		}
+ 		if c >= 0xd800 && c <= 0xdfff {
+-			encoded = append(encoded, byte(0xe0|c>>12), byte(0x80|(c>>6)&0x3f), byte(0x80|c&0x3f))
++			encoded = append(encoded, byte(0xe0|c>>12), byte(0x80|(c>>6)&0x3f), byte(0x80|c&0x3e))
+ 		} else {
+ 			encoded = utf8.AppendRune(encoded, c)
+ 		}
