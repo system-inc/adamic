@@ -1,0 +1,31 @@
+{
+  "parallel_violations": 117,
+  "unchanged_base_test_files": 23,
+  "paths": [
+    "internal/boundedrun/run_test.go",
+    "internal/fuzz/confirm_test.go",
+    "internal/lower/async_test.go",
+    "internal/lower/graph_flow_walk_test.go",
+    "internal/lower/graph_regions_review_test.go",
+    "internal/lower/graph_types_test.go",
+    "internal/native/async_host_test.go",
+    "internal/native/closure_convention_test.go",
+    "internal/native/graph_concurrency_test.go",
+    "internal/native/graph_regions_test.go",
+    "internal/native/library_test.go",
+    "internal/native/program_region_core_test.go",
+    "internal/native/release_test.go",
+    "internal/native/runtime_statics_parallel_test.go",
+    "internal/native/scaling_test.go",
+    "internal/native/string_units_test.go",
+    "internal/native/wasi_async_test.go",
+    "internal/oracle/async_test.go",
+    "internal/oracle/graph_regions_gap_probe_test.go",
+    "internal/oracle/graph_regions_review_test.go",
+    "internal/oracle/graph_regions_test.go",
+    "internal/oracle/parallel_schedules_test.go",
+    "internal/oracle/release_test.go"
+  ],
+  "a_check_witness_unchanged_from_base": "review/compiler/program-region-node-check/tsc-node-array-interface.a",
+  "unit_files_named_by_lane": []
+}

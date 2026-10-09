@@ -1,8 +1,8 @@
 Built: the Program container selector now rejects acyclic payloads and phantom primitive brands, advancing step 06 and preserving step 24 point 4.
 Commits: delivery branch compiler/region-selector-acyclic on 52252d5a8ab0e0f977b98b7826bde79420643a99; delivery SHA is in the final response.
-Commands: both censuses, Program lower/oracle/native controls, ownership, leaks, TestCallTargetReaders and changed-package vet pass; counts and lane results follow below.
+Commands: both censuses, Program controls, ownership, leaks, TestCallTargetReaders, counts and vet pass; the exact lane command fails on inherited files.
 Mutants: re-inclusion, payload over-inclusion, cyclic-root removal, phantom-brand ownership and ignored method captures are caught by independent assertions.
-Uncovered: original tsc lowering, full package/full gate runs, non-Linux hosts and the inherited host/optional-field pending lowering probes.
+Uncovered: inherited lane failures, original tsc lowering, full package/full gate runs, non-Linux hosts and pending host/optional lowering.
 
 The requested exact runtime base takes precedence over the generic main-start instruction.
 No other worker's unlanded changes were merged. Runtime's 23a4f2f0 report was read as evidence.
@@ -108,3 +108,35 @@ and no -update-counts rewrite is needed. The new witness is a checker-only temp
 .a file inside a focused Go test. Changed-package vet, formatting and diff checks
 pass. Full evidence is stored as deterministic .log.gz files beside this report.
 
+The exact committed-tree lane command was run:
+
+```sh
+git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
+```
+
+It exits 1. Output begins "the t.Parallel analyzer failed: FAIL", followed by
+117 parallel-rule findings across 23 inherited test files. Every named file is
+byte-for-byte identical to 52252d5a; none is one of this unit's changed files.
+It also reports:
+
+```text
+a-check: review/compiler/program-region-node-check/tsc-node-array-interface.a: checked, expected refused adamic/cycle-capable (adamic: /workspace/adamic/review/compiler/program-region-node-check/tsc-node-array-interface.a:47:18: stage 0 can't lower a computed key without an own data field yet)
+a-check 53 .a files
+vet 27 packages
+```
+
+The same unchanged witness was rerun after temporarily restoring just the pinned
+base selector, and produced the same computed-key NotYet with exit 1. The final
+selector was restored byte-for-byte. Thus neither blocker was introduced by this
+unit. No gofmt or declared-tool finding was emitted, and changed-package vet and
+all touched tests' explicit first-statement t.Parallel controls pass.
+
+The full lane cannot be made green within this selector unit without changing
+23 other test files and an inherited witness. Those are outside this unit's
+territory. They are recorded in lane-baseline.json and lane-checks.log.gz rather
+than weakening the analyzer, changing its baseline or widening the production
+change. This delivery is not a claim that the requested lane acceptance passed.
+The pinned runtime base is retained rather than merging a materially different
+main tree into the scoped dependency branch. Implementation commit:
+16254ccc8f137182933feff45c16fb2068d93bfa. Final evidence commit is reported with
+its pushed delivery SHA in the final response.

@@ -25,5 +25,13 @@
   "count_rows_changed": 0,
   "new_fixtures": 0,
   "vet": "passed",
-  "early_test_build_limits": 124
+  "early_test_build_limits": 124,
+  "lane": {
+    "exit": 1,
+    "parallel_violations_in_unchanged_base_files": 117,
+    "unchanged_base_test_files": 23,
+    "unit_files_named": 0,
+    "a_check_base_mismatch_reproduced": true,
+    "vet_packages": 27
+  }
 }
