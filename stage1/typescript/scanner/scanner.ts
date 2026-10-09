@@ -854,7 +854,7 @@ export class Scanner {
             if(escaped) {
                 escaped = false;
             }
-            else if(code === 47 && !characterClass) {
+            else if(code === 47 && characterClass) {
                 break;
             }
             else if(code === 91) {
