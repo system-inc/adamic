@@ -1,0 +1,49 @@
+run adamic-verify-20261009T114425-061b4071: void, 16421 tests in 51 units, 1 failed, 1 units broken, 0 killed over budget
+BROKEN tests-26-r1: no results (exited true, last output "tar: bin/lldb-instr: Cannot write: No space left o")
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-17-r5)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint	1269.015s
+FAIL github.com/system-inc/adamic/stage1/cohere/markdowninline requested tests ran: 0 (tests-00): requested 1, ran 0 of: TestMarkdownInline
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter requested tests ran: 0 (tests-03): requested 1, ran 0 of: TestMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0 (tests-04): requested 1, ran 0 of: TestVolumeProfileAgreementAndMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-05): requested 1, ran 0 of: TestDotARename
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks requested tests ran: 0 (tests-05): requested 1, ran 0 of: TestWholeDocumentOraclePreflight
+FAIL github.com/system-inc/adamic/internal/native requested tests ran: 0 (tests-07): requested 1, ran 0 of: TestDecodeASCII
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks requested tests ran: 0 (tests-08): requested 1, ran 0 of: TestMdastMalformedEvents
+FAIL github.com/system-inc/adamic/internal/native requested tests ran: 0 (tests-10): requested 1, ran 0 of: TestSplitTSGoAgrees
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks requested tests ran: 0 (tests-10): requested 1, ran 0 of: TestMarkdownWhitespaceLayout
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks requested tests ran: 0 (tests-11): requested 1, ran 0 of: TestMarkdownStructureLayout
+FAIL github.com/system-inc/adamic/stage1/cohere/yaml requested tests ran: 0 (tests-12): requested 1, ran 0 of: TestFormatterMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer requested tests ran: 0 (tests-13): requested 1, ran 0 of: TestPrinterWhitespaceGap
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-15): requested 1, ran 0 of: TestJsxLintTrees
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter requested tests ran: 0 (tests-15): requested 1, ran 0 of: TestExpressionsAgainstGoAndPrettier
+FAIL github.com/system-inc/adamic/stage1/typescript/parser requested tests ran: 0 (tests-15): requested 1, ran 0 of: TestCompilerExpressionsAgree
+FAIL github.com/system-inc/adamic/stage1/typescript/parser requested tests ran: 0 (tests-16): requested 1, ran 0 of: TestWholeMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0 (tests-18): requested 1, ran 0 of: TestShadowIndexMissingBinding
+FAIL github.com/system-inc/adamic/stage1/cohere/cssstrings requested tests ran: 0 (tests-19): requested 1, ran 0 of: TestCSSStrings
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0 (tests-19): requested 1, ran 0 of: TestBoundedPortParser
+FAIL github.com/system-inc/adamic/stage1/typescript/scanner requested tests ran: 0 (tests-21): requested 1, ran 0 of: TestScannerAgreesWithTypescriptGo
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0 (tests-22): requested 1, ran 0 of: TestThreePortMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/gitignore requested tests ran: 0 (tests-22): requested 1, ran 0 of: TestThePortAnswersAsGoCohereAndGitDo
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0 (tests-23): requested 1, ran 0 of: TestDeepMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/formatfiles requested tests ran: 0 (tests-24): requested 1, ran 0 of: TestThePortParsesAsGoCohereDoes
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks requested tests ran: 0 (tests-24): requested 1, ran 0 of: TestTokenizerEvents
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0 (tests-25): requested 1, ran 0 of: TestAcceptanceMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer requested tests ran: 0 (tests-25): requested 1, ran 0 of: TestPrinterUpstreamPreflight
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-25): requested 1, ran 0 of: TestNodeTableIsLinkOnly
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-26): requested 1, ran 0 of: TestOwnedWitnesses
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter requested tests ran: 0 (tests-26): requested 1, ran 0 of: TestTSCCorpusAgreement
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks requested tests ran: 0 (tests-27): requested 1, ran 0 of: TestMarkdownTextSplitting
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0 (tests-28): requested 1, ran 0 of: TestPortStallControl
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer requested tests ran: 0 (tests-29): requested 1, ran 0 of: TestPrinterMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/tsprinter requested tests ran: 0 (tests-29): requested 1, ran 0 of: TestStatementsAgainstGoAndPrettier
+FAIL github.com/system-inc/adamic/stage1/cohere/graphql/printer requested tests ran: 0 (tests-30): requested 1, ran 0 of: TestPrinterAsGoCohere
+FAIL github.com/system-inc/adamic/stage1/cohere/yaml requested tests ran: 0 (tests-30): requested 1, ran 0 of: TestScalarsMatchGo
+FAIL github.com/system-inc/adamic/stage1/typescript/parser requested tests ran: 0 (tests-31): requested 1, ran 0 of: TestJsxMutants
+FAIL github.com/system-inc/adamic/internal/native requested tests ran: 0 (tests-32): requested 1, ran 0 of: TestRecordMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-32): requested 1, ran 0 of: TestProfileCompilation
+FAIL github.com/system-inc/adamic/stage1/cohere/css requested tests ran: 0 (tests-33): requested 1, ran 0 of: TestThePortParsesAsGoCohereDoes
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-33): requested 1, ran 0 of: TestShardsAgree
+FAIL github.com/system-inc/adamic/internal/native requested tests ran: 0 (tests-34): requested 1, ran 0 of: TestRegExpBytecodeRandomNode
+FAIL github.com/system-inc/adamic/stage1/cohere/cssnumbers requested tests ran: 0 (tests-34): requested 1, ran 0 of: TestCSSNumbers
+FAIL github.com/system-inc/adamic/stage1/cohere/estree requested tests ran: 0 (tests-34): requested 1, ran 0 of: TestSyntaxMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-34): requested 1, ran 0 of: TestRulesAgree
