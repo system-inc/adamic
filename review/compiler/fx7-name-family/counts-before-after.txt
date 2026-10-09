@@ -1,0 +1,7 @@
+Before: these six rows were absent. After: six new rows below. Existing rows are unchanged.
+| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a | 5 | 5 | 10 | 17 | 3 | 0 |
+| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a | 8 | 8 | 6 | 17 | 4 | 0 |
+| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a | 9 | 9 | 9 | 21 | 5 | 0 |
+| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a | 8 | 8 | 6 | 15 | 5 | 0 |
+| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a | 6 | 6 | 5 | 12 | 4 | 0 |
+| internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a | 5 | 5 | 5 | 11 | 3 | 0 |
