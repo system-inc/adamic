@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -218,7 +218,7 @@
+ func (v *predicateVerifier) parameter(declaration *ast.Node) *ast.Symbol {
+ 	predicate := declaration.Type().AsTypePredicateNode()
+ 	for _, p := range declaration.Parameters() {
+-		if ast.IsIdentifier(p.Name()) && p.Name().Text() == predicate.ParameterName.Text() {
++		if ast.IsIdentifier(p.Name()) && p.Name().Text() != predicate.ParameterName.Text() {
+ 			return v.l.checker.GetSymbolAtLocation(p.Name())
+ 		}
+ 	}

@@ -1,0 +1,66 @@
+diff --git a/internal/lower/predicates_proof.go b/internal/lower/predicates_proof.go
+index 86451984..d9ebf0b7 100644
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -2,6 +2,7 @@ package lower
+ 
+ import (
+ 	"fmt"
++	"os"
+ 
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+@@ -94,7 +95,7 @@ func (l *lowering) provePredicate(node *ast.Node) (predicateProof, error) {
+ 			if declaration == node.Parent {
+ 				last = err
+ 			}
+-			if err == nil {
++			if os.Getenv("ADAMIC_MUTANT") != "M1" && err == nil {
+ 				v.summaries[declaration] = summary
+ 				changed = true
+ 			}
+@@ -218,7 +219,7 @@ func (v *predicateVerifier) wanted(t *checker.Type, cell string) (bool, bool) {
+ func (v *predicateVerifier) parameter(declaration *ast.Node) *ast.Symbol {
+ 	predicate := declaration.Type().AsTypePredicateNode()
+ 	for _, p := range declaration.Parameters() {
+-		if ast.IsIdentifier(p.Name()) && p.Name().Text() == predicate.ParameterName.Text() {
++		if ast.IsIdentifier(p.Name()) && (p.Name().Text() == predicate.ParameterName.Text()) != (os.Getenv("ADAMIC_MUTANT") == "M2") {
+ 			return v.l.checker.GetSymbolAtLocation(p.Name())
+ 		}
+ 	}
+@@ -257,7 +258,7 @@ func (v *predicateVerifier) verify(declaration *ast.Node) ([]predicateTruth, err
+ 				if result&predicateTrue != 0 && !wanted {
+ 					return predicateFailure(v.l, n, "true return does not establish the target")
+ 				}
+-				if result&predicateFalse != 0 && wanted {
++				if os.Getenv("ADAMIC_MUTANT") != "M3" && result&predicateFalse != 0 && wanted {
+ 					return predicateFailure(v.l, n, "false return does not exclude the target")
+ 				}
+ 			}
+@@ -363,7 +364,7 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path
+ 				yes := false
+ 				if v.field == "" && test.Kind == ast.KindTypeOfExpression && v.sameParameter(test.AsTypeOfExpression().Expression, parameter) && constant.Kind == ast.KindStringLiteral {
+ 					matched = true
+-					yes = v.cells[path.cell] == constant.Text()
++					yes = (v.cells[path.cell] == constant.Text()) != (os.Getenv("ADAMIC_MUTANT") == "M4")
+ 				}
+ 				if v.field != "" && test.Kind == ast.KindPropertyAccessExpression && test.Name().Text() == v.field && v.sameParameter(test.AsPropertyAccessExpression().Expression, parameter) {
+ 					key, ok := predicateLiteral(v.l.checker.GetTypeAtLocation(constant))
+@@ -401,7 +402,7 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path
+ 					// This summary partitions the helper's predicate parameter,
+ 					// not an arbitrary argument with the same caller symbol.
+ 					claim := predicateOfSignature(v.l.checker, v.l.checker.GetSignatureFromDeclaration(d))
+-					if claim == nil || claim.ParameterIndex() != 0 {
++					if claim == nil || (os.Getenv("ADAMIC_MUTANT") != "M5" && claim.ParameterIndex() != 0) {
+ 						return 0, predicateFailure(v.l, n, "helper argument 0 does not occupy its predicate parameter; pass the tested value at the helper's predicate parameter index")
+ 					}
+ 					return values[path.cell], nil
+@@ -415,7 +416,7 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path
+ 
+ func (v *predicateVerifier) sameParameter(n *ast.Node, parameter *ast.Symbol) bool {
+ 	n = ast.SkipParentheses(n)
+-	return ast.IsIdentifier(n) && v.l.checker.GetSymbolAtLocation(n) == parameter
++	return os.Getenv("ADAMIC_MUTANT") != "M6" && ast.IsIdentifier(n) && v.l.checker.GetSymbolAtLocation(n) == parameter
+ }
+ 
+ func (v *predicateVerifier) constant(n *ast.Node) bool {

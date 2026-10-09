@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -94,7 +94,7 @@
+ 			if declaration == node.Parent {
+ 				last = err
+ 			}
+-			if err == nil {
++			if false && err == nil {
+ 				v.summaries[declaration] = summary
+ 				changed = true
+ 			}

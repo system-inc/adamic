@@ -1,0 +1,44 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 97,
+    "before": "if err == nil {",
+    "after": "if false && err == nil {"
+  },
+  {
+    "id": "M2",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 221,
+    "before": "p.Name().Text() == predicate.ParameterName.Text()",
+    "after": "p.Name().Text() != predicate.ParameterName.Text()"
+  },
+  {
+    "id": "M3",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 260,
+    "before": "if result&predicateFalse != 0 && wanted {",
+    "after": "if false && result&predicateFalse != 0 && wanted {"
+  },
+  {
+    "id": "M4",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 366,
+    "before": "yes = v.cells[path.cell] == constant.Text()",
+    "after": "yes = v.cells[path.cell] != constant.Text()"
+  },
+  {
+    "id": "M5",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 404,
+    "before": "if claim == nil || claim.ParameterIndex() != 0 {",
+    "after": "if claim == nil {"
+  },
+  {
+    "id": "M6",
+    "file": "internal/lower/predicates_proof.go",
+    "line": 418,
+    "before": "return ast.IsIdentifier(n) && v.l.checker.GetSymbolAtLocation(n) == parameter",
+    "after": "return false"
+  }
+]

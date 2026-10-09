@@ -1,0 +1,255 @@
+[
+  {
+    "mutant": "M1",
+    "scope": "target",
+    "command": "ADAMIC_MUTANT=M1 go test -v -count=1 -timeout 90s ./internal/lower/ -run ^TestPredicateSummaryParameterIndex$",
+    "seconds": 1.917615,
+    "exit": 1,
+    "failed_tests": [
+      "TestPredicateSummaryParameterIndex"
+    ],
+    "failing_lines": [
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M1-target.log"
+  },
+  {
+    "mutant": "M1",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M1 go test -v -count=1 -timeout 90s ./internal/lower/ -run .",
+    "seconds": 28.882153,
+    "exit": 1,
+    "failed_tests": [
+      "TestPredicateSummaryParameterIndex",
+      "TestPredicateOverloadRuntime",
+      "TestPredicateBodyProof"
+    ],
+    "failing_lines": [
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_overload_test.go:83: /tmp/adamic-gate/TestPredicateOverloadRuntimeoverload_every3196610189/001/main.ts:16:18: Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isIdentifier\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofassertion2294808696/001/main.a:1:61: Adamic 0.1 refuses an unproven type predicate; unconverged helper proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofhelper2667865167/001/main.a:1:136: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=true, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofkind_helpers_fixed_point4181056260/001/main.a:1:319: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=true, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofkind2409443025/001/main.a:1:244: Adamic 0.1 refuses an unproven type predicate; unconverged helper proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProoftypeof404341387/001/main.a:1:35: Adamic 0.1 refuses an unproven type predicate; unconverged helper proof; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M1-package.log"
+  },
+  {
+    "mutant": "M2",
+    "scope": "target",
+    "command": "ADAMIC_MUTANT=M2 go test -v -count=1 -timeout 90s ./internal/lower/ -run ^TestPredicateSummaryParameterIndex$",
+    "seconds": 1.700008,
+    "exit": 1,
+    "failed_tests": [
+      "TestPredicateSummaryParameterIndex"
+    ],
+    "failing_lines": [
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:4:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:4:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a:4:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M2-target.log"
+  },
+  {
+    "mutant": "M2",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M2 go test -v -count=1 -timeout 90s ./internal/lower/ -run .",
+    "seconds": 28.443177,
+    "exit": 1,
+    "failed_tests": [
+      "TestConditionAssertionAdmission",
+      "TestPredicateSummaryParameterIndex",
+      "TestPredicateOverloadRuntime",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodyProof"
+    ],
+    "failing_lines": [
+      "predicates_proof_test.go:108: condition assertion must pass the production admission seam: /tmp/adamic-gate/TestConditionAssertionAdmission2769176389/001/assert.a:2:57: Adamic 0.1 refuses a type predicate whose return is not proven (asserts cond needs a boolean parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:4:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:4:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a:4:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_overload_test.go:83: /tmp/adamic-gate/TestPredicateOverloadRuntimeoverload_every3921182728/001/main.ts:16:18: Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isIdentifier\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_test.go:44: got <nil>, want a predicate refusal naming \"return expression\" and its rewrite",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofcondition_assertion1201041394/001/main.a:1:157: Adamic 0.1 refuses an unproven type predicate; normal return does not establish the asserted condition's truthiness; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"normal return\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofdisabled_assertion1456540369/001/main.a:1:116: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"normal return\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofempty_assertion3089913885/001/main.a:1:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofassertion426280051/001/main.a:1:33: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"false return\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProoffalse_branch_lies1573250553/001/main.a:1:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"parameter initialization\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofdefault_changes_input141564163/001/main.a:1:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"true return\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProoftrue_branch_lies4040808577/001/main.a:1:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"unconverged\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofrecursive2746328614/001/main.a:1:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProoftypeof4200604902/001/main.a:1:1: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofhelper1896443123/001/main.a:1:87: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=true, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofkind_helpers_fixed_point2625505448/001/main.a:1:256: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofdiagnostic_work_on_failure1877391084/001/main.a:1:178: Adamic 0.1 refuses an unproven type predicate; normal return does not establish the asserted condition's truthiness; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"normal return\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofempty_condition_assertion1469440915/001/main.a:1:39: Adamic 0.1 refuses an unproven type predicate; a non-parameter assertion has no truthiness proof; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=true, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofkind3019308714/001/main.a:1:202: Adamic 0.1 refuses an unproven type predicate; a generic or non-parameter target has no body proof; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M2-package.log"
+  },
+  {
+    "mutant": "M3",
+    "scope": "target",
+    "command": "ADAMIC_MUTANT=M3 go test -v -count=1 -timeout 90s ./internal/lower/ -run ^TestPredicateSummaryParameterIndex$",
+    "seconds": 1.795126,
+    "exit": 0,
+    "failed_tests": [],
+    "failing_lines": [],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M3-target.log"
+  },
+  {
+    "mutant": "M3",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M3 go test -v -count=1 -timeout 90s ./internal/lower/ -run .",
+    "seconds": 28.789056,
+    "exit": 1,
+    "failed_tests": [
+      "TestPredicateCallbackContracts",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodyProof"
+    ],
+    "failing_lines": [
+      "predicates_proof_test.go:131: want pinned callback argument refusal, got <nil>",
+      "predicates_test.go:44: got <nil>, want a predicate refusal naming \"false return\" and its rewrite",
+      "predicates_test.go:44: got <nil>, want a predicate refusal naming \"return expression\" and its rewrite",
+      "predicates_proof_test.go:70: want \"false return\" refusal with caller fix, got {TaggedView:false}, <nil>"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M3-package.log"
+  },
+  {
+    "mutant": "M4",
+    "scope": "target",
+    "command": "ADAMIC_MUTANT=M4 go test -v -count=1 -timeout 90s ./internal/lower/ -run ^TestPredicateSummaryParameterIndex$",
+    "seconds": 1.796273,
+    "exit": 1,
+    "failed_tests": [
+      "TestPredicateSummaryParameterIndex"
+    ],
+    "failing_lines": [
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M4-target.log"
+  },
+  {
+    "mutant": "M4",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M4 go test -v -count=1 -timeout 90s ./internal/lower/ -run .",
+    "seconds": 28.957721,
+    "exit": 1,
+    "failed_tests": [
+      "TestPredicateSummaryParameterIndex",
+      "TestUnprovenPredicateReturnsAreRefused",
+      "TestPredicateBodyProof"
+    ],
+    "failing_lines": [
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a:5:10: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_test.go:44: got <nil>, want a predicate refusal naming \"normal return\" and its rewrite",
+      "predicates_proof_test.go:70: want \"false return\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProoffalse_branch_lies1210263098/001/main.a:1:43: Adamic 0.1 refuses an unproven type predicate; true return does not establish the target; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofhelper2306616765/001/main.a:1:136: Adamic 0.1 refuses an unproven type predicate; unconverged or opaque helper on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProoftypeof4287913751/001/main.a:1:52: Adamic 0.1 refuses an unproven type predicate; false return does not exclude the target; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofassertion318019581/001/main.a:1:81: Adamic 0.1 refuses an unproven type predicate; normal return does not establish the asserted target; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M4-package.log"
+  },
+  {
+    "mutant": "M5",
+    "scope": "target",
+    "command": "ADAMIC_MUTANT=M5 go test -v -count=1 -timeout 90s ./internal/lower/ -run ^TestPredicateSummaryParameterIndex$",
+    "seconds": 1.760562,
+    "exit": 1,
+    "failed_tests": [
+      "TestPredicateSummaryParameterIndex"
+    ],
+    "failing_lines": [
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got <nil>",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got <nil>",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got <nil>"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M5-target.log"
+  },
+  {
+    "mutant": "M5",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M5 go test -v -count=1 -timeout 90s ./internal/lower/ -run .",
+    "seconds": 28.775071,
+    "exit": 1,
+    "failed_tests": [
+      "TestPredicateSummaryParameterIndex"
+    ],
+    "failing_lines": [
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got <nil>",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got <nil>",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got <nil>"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M5-package.log"
+  },
+  {
+    "mutant": "M6",
+    "scope": "target",
+    "command": "ADAMIC_MUTANT=M6 go test -v -count=1 -timeout 90s ./internal/lower/ -run ^TestPredicateSummaryParameterIndex$",
+    "seconds": 1.710116,
+    "exit": 1,
+    "failed_tests": [
+      "TestPredicateSummaryParameterIndex"
+    ],
+    "failing_lines": [
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:5:10: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:5:10: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a:5:10: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M6-target.log"
+  },
+  {
+    "mutant": "M6",
+    "scope": "package",
+    "command": "ADAMIC_MUTANT=M6 go test -v -count=1 -timeout 90s ./internal/lower/ -run .",
+    "seconds": 28.858477,
+    "exit": 1,
+    "failed_tests": [
+      "TestConditionAssertionAdmission",
+      "TestPredicateSummaryParameterIndex",
+      "TestPredicateOverloadRuntime",
+      "TestPredicateBodyProof"
+    ],
+    "failing_lines": [
+      "predicates_proof_test.go:108: condition assertion must pass the production admission seam: /tmp/adamic-gate/TestConditionAssertionAdmission2703605624/001/assert.a:2:57: Adamic 0.1 refuses a type predicate whose return is not proven (asserts cond needs a boolean parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:5:10: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p06_helper_second_parameter_undefined.a:5:10: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p13_filter_wrong_parameter_helper.a:5:10: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_overload_test.go:83: /tmp/adamic-gate/TestPredicateOverloadRuntimeoverload_every3846362073/001/main.ts:16:18: Adamic 0.1 refuses an unproven predicate argument for parameter callback (argument \"isIdentifier\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofcondition_assertion24403837/001/main.a:1:157: Adamic 0.1 refuses an unproven type predicate; normal return does not establish the asserted condition's truthiness; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofassertion4192413520/001/main.a:1:87: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"unconverged\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofrecursive1236826703/001/main.a:1:50: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"normal return\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofdisabled_assertion3838911678/001/main.a:1:116: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"true return\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProoftrue_branch_lies2265328170/001/main.a:1:50: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:70: want \"false return\" refusal with caller fix, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProoffalse_branch_lies1409191677/001/main.a:1:50: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=true, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofkind1331914404/001/main.a:1:272: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProoftypeof639932777/001/main.a:1:59: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofhelper1990336127/001/main.a:1:136: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=true, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofkind_helpers_fixed_point74045604/001/main.a:1:319: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+      "predicates_proof_test.go:73: want proof tagged=false, got {TaggedView:false}, /tmp/adamic-gate/TestPredicateBodyProofdiagnostic_work_on_failure3842694868/001/main.a:1:178: Adamic 0.1 refuses an unproven type predicate; normal return does not establish the asserted condition's truthiness; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+    ],
+    "timeout": false,
+    "log": "test-audit/internal-lower-predicate-refusals/M6-package.log"
+  }
+]

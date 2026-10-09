@@ -1,0 +1,24 @@
+Starting commit: 8070fbeb42e3f4dc7b8d3dd67e975f484b7daa68
+CODE UNDER TEST: Adamic stage 0 Go predicate body verifier in internal/lower.
+ORACLE: hand-written diagnostic text, fix and fixture location in predicate_refusals_test.go:43; self. No external authority checked.
+
+Setup:
+git fetch origin && git checkout -b test-audit/internal-lower-predicate-refusals origin/main
+bash cloud/setup.sh
+source /workspace/adamic-tools/env.sh
+npm ci --prefix stage3/api
+
+Baseline:
+go test -count=1 -timeout 90s ./internal/lower/ -run .
+go test -run '^TestPredicateSummaryParameterIndex$' -count=1 -timeout 90s ./internal/lower/
+go test -run '^TestPredicateSummaryParameterIndex$' -count=1 -timeout 90s -coverprofile=/tmp/predicate-audit-target.cover ./internal/lower/
+go tool cover -func=/tmp/predicate-audit-target.cover
+
+Replay switch and matrix:
+python3 test-audit/internal-lower-predicate-refusals/plant.py
+gofmt -w internal/lower/predicates_proof.go
+go test -c -o /tmp/predicate-audit-mutant.test ./internal/lower/
+python3 test-audit/internal-lower-predicate-refusals/run.py
+git restore --source=origin/main -- internal/lower/predicates_proof.go
+
+All test output was redirected to log files, never piped. run.py logs via subprocess stdout/stderr file descriptors. Runs and exact failure evidence are in runs.json. Each M*.diff contains one mutant against the starting commit, without a switch. switch.diff preserves the combined compiled source change. Source and tests were restored; no oracle or harness mutation. No other package tested, no stage1 native rebuilds, no PR.

@@ -1,0 +1,30 @@
+{
+  "origin_main": "8070fbeb42e3f4dc7b8d3dd67e975f484b7daa68",
+  "nproc": "5",
+  "source_env": "/workspace/adamic-tools/env.sh",
+  "setup_seconds": 414.082,
+  "node_dependency_install_seconds": 0.779,
+  "initial_cold_target_command_seconds": 332.401,
+  "initial_cold_package_command_seconds": 397.273,
+  "initial_package_test_seconds": 52.455,
+  "initial_package_status": "failed because pinned @types/node dependency missing",
+  "ready_package_command_seconds": 27.873,
+  "ready_package_test_seconds": 26.082,
+  "target_command_seconds": 1.944,
+  "target_test_seconds": 0.091,
+  "mutant_switch_build_seconds": 7.143,
+  "coverage_command_seconds": 235.019,
+  "coverage_test_seconds": 0.383,
+  "restored_target_command_seconds": 1.767,
+  "restored_target_test_seconds": 0.086,
+  "mutant_runs_wall_seconds": 183.385355,
+  "matrix_package_wall_seconds": 172.705655,
+  "matrix_scope": "entire internal/lower package",
+  "timeouts": [],
+  "package_survivors": [],
+  "target_survivors": [
+    "M3"
+  ],
+  "source_restored": true,
+  "repo_wide_uniqueness": "unknown; no other package tested"
+}

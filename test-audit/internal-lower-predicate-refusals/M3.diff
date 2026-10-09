@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -257,7 +257,7 @@
+ 				if result&predicateTrue != 0 && !wanted {
+ 					return predicateFailure(v.l, n, "true return does not establish the target")
+ 				}
+-				if result&predicateFalse != 0 && wanted {
++				if false && result&predicateFalse != 0 && wanted {
+ 					return predicateFailure(v.l, n, "false return does not exclude the target")
+ 				}
+ 			}

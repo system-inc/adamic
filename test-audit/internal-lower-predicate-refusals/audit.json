@@ -1,0 +1,25 @@
+[
+  {
+    "test": "TestPredicateSummaryParameterIndex",
+    "package": "github.com/system-inc/adamic/internal/lower",
+    "file": "internal/lower/predicate_refusals_test.go",
+    "seconds": 1.767,
+    "oracle": "Hand-written Adamic diagnostic substrings, fix text and fixture location at predicate_refusals_test.go:43",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2",
+      "M4",
+      "M5",
+      "M6"
+    ],
+    "unique_kills": [
+      "M5"
+    ],
+    "last_proven_fail": "M6 predicate_refusals_test.go:44: want helper call path and parameter-index fix, got /workspace/adamic/internal/oracle/testdata/predicate_refusals/oct8_predicates_p05_helper_second_parameter.a:5:10: Adamic 0.1 refuses an unproven type predicate; opaque test or possible mutation on this return path; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 6,
+    "evidence": "ADAMIC_MUTANT=M5 go test -v -count=1 -timeout 90s ./internal/lower/ -run ^TestPredicateSummaryParameterIndex$; predicate_refusals_test.go:44: want helper call path and parameter-index fix, got <nil>"
+  }
+]
