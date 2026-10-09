@@ -356,6 +356,14 @@ class Gate:
         except BaseException:
             self.fail("build", traceback.format_exc())
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
+        # Never more runnable threads than the box has cores (@system_adamic, Oct 9 00:11Z: -p of half the CPUs, each
+        # test binary on every core, put Home at load 178 and the Threadripper at 81 to 145, and a wall-clock stall
+        # guard failed V1 on it): a package's test binary gets GOMAXPROCS cores, and -p packages run at once, so the
+        # two multiply to about the box. ADAMIC_FULL_GATE_PACKAGES overrides the package count.
+        cpus = len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else (os.cpu_count() or 1)
+        packagesAtOnce = int(os.environ.get("ADAMIC_FULL_GATE_PACKAGES", max(1, cpus // 8)))
+        threadsEach = max(2, cpus // packagesAtOnce)
+        self.result["parallelism"] = {"cpus": cpus, "packages_at_once": packagesAtOnce, "gomaxprocs_each": threadsEach}
         wasi = None
         if os.environ.get("WASI_SYSROOT"):
             wasi = {"PATH": os.path.join(os.path.dirname(os.path.dirname(os.environ["WASI_SYSROOT"])), "bin") + os.pathsep + os.environ["PATH"]}
@@ -364,7 +372,7 @@ class Gate:
                    # on purpose, and a wall-clock package timeout there is the per-test fragility at a larger
                    # size. Hangs belong to stall guards that count from output; a package over an hour is
                    # named in the status line as slow, so it never reads as a quiet pass.
-                   self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-p", str(self.arguments.parallel), "-skip", "^TestWASI$"] + packages, log),
+                   self.guarded("tests", self.test, "tests", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-p", str(packagesAtOnce), "-skip", "^TestWASI$"] + packages, log, {"GOMAXPROCS": str(threadsEach)}),
                    self.guarded("wasi", self.test, "wasi", ["go", "test", "-count=1", "-json", "-timeout", fullPackageTimeout, "-run", "^TestWASI$", "./internal/native"], log, wasi),
                    self.guarded("stage3", self.stage3),
                    # The bug catalog: each catalogued bug reintroduced and caught, on every main that has it.

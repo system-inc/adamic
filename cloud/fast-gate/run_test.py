@@ -150,6 +150,14 @@ class FailClosed(unittest.TestCase):
                     self.assertIsNotNone(gate.failure)
                     self.assertNotEqual(result["stages_exit"].get(broken), 0)
 
+    def test_a_whole_gate_never_runs_more_threads_than_the_box_has_cores(self):
+        gate, status, result = self.gate(full=True)
+        shape = result["parallelism"]
+        self.assertLessEqual(shape["packages_at_once"] * shape["gomaxprocs_each"], max(shape["cpus"], 2 * shape["packages_at_once"]))
+        with mock.patch.dict(os.environ, {"ADAMIC_FULL_GATE_PACKAGES": "2"}):
+            gate, status, result = self.gate(full=True)
+        self.assertEqual(result["parallelism"]["packages_at_once"], 2)
+
     def test_a_whole_gate_cancels_itself_at_its_first_failure(self):
         # Kirk, Oct 8: fail fast and loud, and free the box. The record is red and says it was cancelled.
         gate, status, result = self.gate(full=True, failing="vet")
