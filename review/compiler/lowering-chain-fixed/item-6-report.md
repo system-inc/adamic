@@ -9,3 +9,5 @@ TestFactsDecoderGuards passes through its unchanged driver, 14.60 seconds. On ma
 The spec-load test previously assumed every fixture directory contained main.ts. checked_any instead contains individual .a programs. It now loads every .a in that directory independently, preserving legacy main.ts project entries. TestTheProgramsInTheSpecLoad passes.
 
 Commands use GOMAXPROCS=4, -p 1, -parallel 4, -timeout 90s, -count=1 and JSON output files, with 120-second outer bounds. Each overlay subprocess is bounded to 120 seconds. No oracle fixture registration or counts row is added by this loader item. Counts will be regenerated once with the readiness item. No full gate was run.
+
+The lane analyzer found one stale inherited serial-baseline entry: TestTSCCorpusAgreement already calls Parallel. Remove that obsolete entry; no tsprinter test behavior changes. The newly added stage3 wrapper explains that its directory helper owns the single Parallel call.
