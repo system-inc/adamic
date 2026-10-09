@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:55:36.904472698Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:55:37.03911388Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementStaticInitializerWitness"}
+{"Time":"2026-10-09T19:55:37.039235451Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementStaticInitializerWitness","Output":"=== RUN   TestAgreementStaticInitializerWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:37.039277731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementStaticInitializerWitness","Output":"=== PAUSE TestAgreementStaticInitializerWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:37.039281874Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementStaticInitializerWitness"}
+{"Time":"2026-10-09T19:55:37.039290078Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementStaticInitializerWitness"}
+{"Time":"2026-10-09T19:55:37.039296921Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementStaticInitializerWitness","Output":"=== CONT  TestAgreementStaticInitializerWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:37.881043149Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementStaticInitializerWitness","Output":"--- PASS: TestAgreementStaticInitializerWitness (0.85s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:37.881092948Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementStaticInitializerWitness","Elapsed":0.85}
+{"Time":"2026-10-09T19:55:37.881109813Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:37.883425151Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.979}

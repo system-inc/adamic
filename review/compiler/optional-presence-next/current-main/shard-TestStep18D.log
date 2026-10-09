@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T20:00:01.59246545Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T20:00:01.638606506Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18DetachedCallableOrigins"}
+{"Time":"2026-10-09T20:00:01.638659806Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18DetachedCallableOrigins","Output":"=== RUN   TestStep18DetachedCallableOrigins\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:01.647072483Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18DetachedCallableOrigins","Output":"=== PAUSE TestStep18DetachedCallableOrigins\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:01.647097822Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18DetachedCallableOrigins"}
+{"Time":"2026-10-09T20:00:01.64710199Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18DetachedCallableOrigins"}
+{"Time":"2026-10-09T20:00:01.647104131Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18DetachedCallableOrigins","Output":"=== CONT  TestStep18DetachedCallableOrigins\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:02.263039406Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18DetachedCallableOrigins","Output":"--- PASS: TestStep18DetachedCallableOrigins (0.62s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:02.263077095Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep18DetachedCallableOrigins","Elapsed":0.62}
+{"Time":"2026-10-09T20:00:02.263115907Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:02.269352658Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.677}

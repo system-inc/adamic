@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T19:58:20.208748792Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:58:20.265026536Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverArrowInheritsScope"}
+{"Time":"2026-10-09T19:58:20.265154315Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverArrowInheritsScope","Output":"=== RUN   TestNamespaceReceiverArrowInheritsScope\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:20.280048774Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverArrowInheritsScope","Output":"=== PAUSE TestNamespaceReceiverArrowInheritsScope\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:20.280078799Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverArrowInheritsScope"}
+{"Time":"2026-10-09T19:58:20.280084719Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverRefusal"}
+{"Time":"2026-10-09T19:58:20.280088421Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverRefusal","Output":"=== RUN   TestNamespaceReceiverRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:20.280100141Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverRefusal","Output":"=== PAUSE TestNamespaceReceiverRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:20.280103183Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverRefusal"}
+{"Time":"2026-10-09T19:58:20.280106568Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReturnedAssignmentLimits"}
+{"Time":"2026-10-09T19:58:20.280109827Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReturnedAssignmentLimits","Output":"=== RUN   TestNamespaceReturnedAssignmentLimits\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:20.280113774Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReturnedAssignmentLimits","Output":"=== PAUSE TestNamespaceReturnedAssignmentLimits\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:20.28011656Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReturnedAssignmentLimits"}
+{"Time":"2026-10-09T19:58:20.280119912Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverArrowInheritsScope"}
+{"Time":"2026-10-09T19:58:20.280122551Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverArrowInheritsScope","Output":"=== CONT  TestNamespaceReceiverArrowInheritsScope\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:20.280125679Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReturnedAssignmentLimits"}
+{"Time":"2026-10-09T19:58:20.280128417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReturnedAssignmentLimits","Output":"=== CONT  TestNamespaceReturnedAssignmentLimits\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:20.280131613Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverRefusal"}
+{"Time":"2026-10-09T19:58:20.280134302Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverRefusal","Output":"=== CONT  TestNamespaceReceiverRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:20.755723027Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverRefusal","Output":"--- PASS: TestNamespaceReceiverRefusal (0.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:20.869259984Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverRefusal","Elapsed":0.49}
+{"Time":"2026-10-09T19:58:20.869312431Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverArrowInheritsScope","Output":"--- PASS: TestNamespaceReceiverArrowInheritsScope (0.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:21.000291614Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReceiverArrowInheritsScope","Elapsed":0.6}
+{"Time":"2026-10-09T19:58:21.000332757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReturnedAssignmentLimits","Output":"--- PASS: TestNamespaceReturnedAssignmentLimits (0.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:21.00340651Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceReturnedAssignmentLimits","Elapsed":0.73}
+{"Time":"2026-10-09T19:58:21.003439803Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:21.043145808Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.834}

@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:58:40.663685003Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:58:40.709038183Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport"}
+{"Time":"2026-10-09T19:58:40.709095304Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport","Output":"=== RUN   TestNodeFSFileNamespaceImport\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:40.709177461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport","Output":"=== PAUSE TestNodeFSFileNamespaceImport\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:40.709181036Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport"}
+{"Time":"2026-10-09T19:58:40.709183813Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport"}
+{"Time":"2026-10-09T19:58:40.70918585Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport","Output":"=== CONT  TestNodeFSFileNamespaceImport\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:43.36481244Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport","Output":"--- PASS: TestNodeFSFileNamespaceImport (2.66s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:43.364895828Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileNamespaceImport","Elapsed":2.66}
+{"Time":"2026-10-09T19:58:43.36493361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:43.405731015Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":2.742}

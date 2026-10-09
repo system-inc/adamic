@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:59:22.259527977Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:59:22.339873102Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParseIntMapUsesIndexRadix"}
+{"Time":"2026-10-09T19:59:22.339945317Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParseIntMapUsesIndexRadix","Output":"=== RUN   TestParseIntMapUsesIndexRadix\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:22.340007242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParseIntMapUsesIndexRadix","Output":"=== PAUSE TestParseIntMapUsesIndexRadix\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:22.340011352Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParseIntMapUsesIndexRadix"}
+{"Time":"2026-10-09T19:59:22.340019279Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParseIntMapUsesIndexRadix"}
+{"Time":"2026-10-09T19:59:22.340021992Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParseIntMapUsesIndexRadix","Output":"=== CONT  TestParseIntMapUsesIndexRadix\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:23.071132318Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParseIntMapUsesIndexRadix","Output":"--- PASS: TestParseIntMapUsesIndexRadix (0.73s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:23.071181497Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParseIntMapUsesIndexRadix","Elapsed":0.73}
+{"Time":"2026-10-09T19:59:23.07123869Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:23.080758598Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.821}

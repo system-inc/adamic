@@ -1,0 +1,1 @@
+adamic: /workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:8:42: stage 0 can't lower a static field read with an earlier initializer calling this; move that initializer after the fields read by static methods, or evaluate the call after class construction yet

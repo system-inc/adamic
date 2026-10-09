@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T19:59:27.883879151Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T19:59:27.952789876Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewLiteral"}
+{"Time":"2026-10-09T19:59:27.95287595Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewLiteral","Output":"=== RUN   TestOptionalFieldCheckedViewLiteral\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:27.952944718Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewLiteral","Output":"=== PAUSE TestOptionalFieldCheckedViewLiteral\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:27.952948421Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewLiteral"}
+{"Time":"2026-10-09T19:59:27.952952753Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewLiteral"}
+{"Time":"2026-10-09T19:59:27.952956038Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewLiteral","Output":"=== CONT  TestOptionalFieldCheckedViewLiteral\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:33.771232502Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewLiteral","Output":"    optional_field_view_test.go:232: omitted optional literal contract caught by pinned diagnostic in both backends\n"}
+{"Time":"2026-10-09T19:59:33.77132858Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewLiteral","Output":"--- PASS: TestOptionalFieldCheckedViewLiteral (5.82s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:33.771335824Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewLiteral","Elapsed":5.82}
+{"Time":"2026-10-09T19:59:33.771364972Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:33.7713699Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T19:59:33.771373092Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=3\n"}
+{"Time":"2026-10-09T19:59:33.77137743Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T19:59:33.787186656Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t5.896s\n"}
+{"Time":"2026-10-09T19:59:33.787270029Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":5.9030000000000005}

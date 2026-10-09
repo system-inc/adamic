@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/optional-presence-next/current-main/run-source-mutants.py", line 26, in <module>
+    assert result.returncode == 1 and catcher in text and 'build failed' not in text, (name, text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('drop-bool-reservation', 'github.com/microsoft/TypeScript/tsc/internal/ast: /workspace/adamic-tools/go/pkg/tool/linux_amd64/compile: signal: killed\nFAIL\tgithub.com/system-inc/adamic/internal/oracle [build failed]\nFAIL\n')

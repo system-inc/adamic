@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T19:59:20.051564133Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:59:20.090475209Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature"}
+{"Time":"2026-10-09T19:59:20.090573665Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"=== RUN   TestOverrideOptionalNumberRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:20.090641844Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"=== PAUSE TestOverrideOptionalNumberRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:20.090646406Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature"}
+{"Time":"2026-10-09T19:59:20.090649908Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature"}
+{"Time":"2026-10-09T19:59:20.090652215Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"=== RUN   TestOverrideOptionalRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:20.090655635Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"=== PAUSE TestOverrideOptionalRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:20.090658099Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature"}
+{"Time":"2026-10-09T19:59:20.090661094Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature"}
+{"Time":"2026-10-09T19:59:20.090663816Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"=== CONT  TestOverrideOptionalNumberRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:20.090666834Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature"}
+{"Time":"2026-10-09T19:59:20.090669022Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"=== CONT  TestOverrideOptionalRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:20.410946308Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"--- PASS: TestOverrideOptionalNumberRefusesNativeSignature (0.32s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:20.461568003Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Elapsed":0.32}
+{"Time":"2026-10-09T19:59:20.461623145Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"--- PASS: TestOverrideOptionalRefusesNativeSignature (0.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:20.461633062Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Elapsed":0.37}
+{"Time":"2026-10-09T19:59:20.461636592Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:20.479197987Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.428}
