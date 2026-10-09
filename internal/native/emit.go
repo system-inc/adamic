@@ -3,6 +3,7 @@ package native
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"sort"
 	"strings"
 )
 
@@ -196,7 +197,19 @@ func cProgram(program *ir.Program, handler int) string {
 		builder.WriteString("\n")
 	}
 	emitter.classDeclarations(&builder)
-	builder.WriteString(bodies.String())
+	// Validate every emitted layout, including public class shapes that need no allocation.
+	checks := strings.Builder{}
+	checks.WriteString("#ifdef ADAMIC_COUNT\n")
+	shapeNames := make([]string, 0, len(emitter.shapes))
+	for _, name := range emitter.shapes {
+		shapeNames = append(shapeNames, name)
+	}
+	sort.Strings(shapeNames)
+	for _, name := range shapeNames {
+		fmt.Fprintf(&checks, "\tadamic_shape_check(&%s);\n", name)
+	}
+	checks.WriteString("#endif\n")
+	builder.WriteString(strings.Replace(bodies.String(), "\tadamic_start(argc, argv);\n", "\tadamic_start(argc, argv);\n"+checks.String(), 1))
 	return builder.String()
 }
 

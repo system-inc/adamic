@@ -33,14 +33,16 @@ int main(int argc, char **argv) {
 	if (names == NULL || references == NULL) { abort(); }
 	for (size_t i = 0; i < count; i++) { names[i] = "padding"; }
 	names[count - 1] = "value";
-	adamic_shape shape = {count, names, references, NULL};
+	adamic_field_kind *kinds = calloc(count, sizeof *kinds);
+	if (kinds == NULL) { abort(); }
+	adamic_shape shape = {count, names, references, NULL, kinds};
 	adamic_object *object = adamic_object_new(&shape);
 	object->slots[count - 1].number = 987;
 	for (size_t i = 0; i < 2; i++) {
 		if (adamic_object_field(object, "value", &cache)->number != 987 || cache.packed != 0) { abort(); }
 	}
 	adamic_release(object);
-	free(names); free(references);
+	free(names); free(references); free(kinds);
 	adamic_array *items = adamic_array_new(1024, true);
 	// Repeated aliases exercise racing builders. Empty, small, ASCII and indexed BMP
 	// strings all publish a length; only indexed strings need checkpoints and a view.

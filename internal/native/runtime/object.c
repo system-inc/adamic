@@ -8,6 +8,7 @@
 #include <stdlib.h>
 
 adamic_object *adamic_object_new(const adamic_shape *shape) {
+	adamic_shape_check(shape);
 	adamic_object *object = adamic_allocate(adamic_object_size(shape->count), adamic_kind_object);
 	object->shape = shape;
 	object->class = NULL;
