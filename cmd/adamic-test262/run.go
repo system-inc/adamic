@@ -25,9 +25,7 @@ type engine struct {
 	test262          string
 	work             string
 	adamic           string
-	runtime          []string
 	include          string
-	flags            []string
 	log              io.Writer
 	adapt            bool
 	jobs             int
@@ -67,16 +65,8 @@ func prepareMode(root string, test262 string, work string, profile *runProfile, 
 		}
 	}
 	done()
-	done = profile.preparing("runtime-library")
 	include := filepath.Join(root, "internal", "native", "runtime")
-	// Sanitizers, as the oracle compiles: a native memory bug is a crash, not a pass. Leaks are not
-	// compared to Node (the process exits either way), so leak detection stays off at run time.
-	flags := native.Flags(native.Options{Sanitize: true})
-	library, err := native.RuntimeLibrary(include, native.Options{Sanitize: true})
-	if err != nil {
-		return nil, err
-	}
-	done()
+	var err error
 	done = profile.preparing("cache-context")
 	identityPath := adamic
 	if inProcess {
@@ -105,12 +95,9 @@ func prepareMode(root string, test262 string, work string, profile *runProfile, 
 		test262:          test262,
 		work:             work,
 		adamic:           adamic,
-		runtime:          native.RuntimeLinkFlags(library),
-		runtimeKey:       filepath.Base(filepath.Dir(library)),
 		compilerIdentity: cacheKey(string(compilerBytes)),
 		cache:            cache, nodeVersion: version, context: context, nodeContext: cache.nodeContext,
-		include: filepath.Dir(library),
-		flags:   flags,
+		include: include,
 		log:     os.Stderr,
 	}, nil
 }
@@ -310,11 +297,17 @@ func (e *engine) attempt(test classified) result {
 		return base
 	}
 	binary := filepath.Join(directory, "program.bin")
-	arguments := append(append([]string{}, e.flags...), "-I", e.include, "-o", binary, cPath)
-	arguments = append(arguments, e.runtime...)
+	options := native.Options{Sanitize: true}
+	library, err := native.RuntimeLibraryForSource(e.include, lowered.Stdout, options)
+	if err != nil {
+		base.Kind, base.Reason = outcomeCrashed, err.Error()
+		return base
+	}
+	arguments := append(native.SourceFlags(lowered.Stdout, options), "-I", filepath.Dir(library), "-o", binary, cPath)
+	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
 	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
-	key := nativeResultKey(lowered.Stdout, e.runtimeKey, nativeCommand, e.context)
+	key := nativeResultKey(lowered.Stdout, cacheKey(filepath.Base(filepath.Dir(library)), e.runtimeKey), nativeCommand, e.context)
 	linkFailed := false
 	// Imported modules can read files or have mutable dependencies. Until their whole input
 	// graph is keyed, all their observations run fresh.
