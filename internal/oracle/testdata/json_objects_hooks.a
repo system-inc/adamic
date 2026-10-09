@@ -1,6 +1,6 @@
 class Numeric { toJSON(): number { return 7; } }
 class Textual { toJSON(): string { return 'hook'.repeat(2); } }
-class Absent { toJSON(): undefined { return undefined; } }
+class Absent { toJSON(): void { return undefined; } }
 class ObjectHook { toJSON(): {readonly n: number; readonly words: string[]} { return {n: 0, words: ['made'.repeat(2)]}; } }
 class ArrayHook { toJSON(): (number | boolean | string)[] { return [0, false, 'array'.repeat(2)]; } }
 class Returned { value = 3; toJSON(): number { return 99; } }
@@ -17,18 +17,18 @@ class Changing {
   return {label: 'last'.repeat(2)};
  }
 }
-console.log(JSON.stringify(new Numeric()));
-console.log(JSON.stringify(new Textual()));
+console.log(JSON.stringify(new Numeric()) ?? 'undefined');
+console.log(JSON.stringify(new Textual()) ?? 'undefined');
 console.log(JSON.stringify(new Absent()) ?? 'undefined');
-console.log(JSON.stringify({absent: new Absent(), number: new Numeric(), text: new Textual()}));
-console.log(JSON.stringify([new Absent(), new Numeric(), new Textual()]));
-console.log(JSON.stringify(new ObjectHook()));
-console.log(JSON.stringify(new ArrayHook()));
-console.log(JSON.stringify(new Outer()));
+console.log(JSON.stringify({absent: new Absent(), number: new Numeric(), text: new Textual()}) ?? 'undefined');
+console.log(JSON.stringify([new Absent(), new Numeric(), new Textual()]) ?? 'undefined');
+console.log(JSON.stringify(new ObjectHook()) ?? 'undefined');
+console.log(JSON.stringify(new ArrayHook()) ?? 'undefined');
+console.log(JSON.stringify(new Outer()) ?? 'undefined');
 const changing = new Changing();
-console.log(JSON.stringify(changing));
-console.log(JSON.stringify({field: changing}));
-console.log(JSON.stringify([changing]));
-console.log(JSON.stringify(changing));
-console.log(JSON.stringify(changing));
+console.log(JSON.stringify(changing) ?? 'undefined');
+console.log(JSON.stringify({field: changing}) ?? 'undefined');
+console.log(JSON.stringify([changing]) ?? 'undefined');
+console.log(JSON.stringify(changing) ?? 'undefined');
+console.log(JSON.stringify(changing) ?? 'undefined');
 console.log(`total ${changing.calls}`);

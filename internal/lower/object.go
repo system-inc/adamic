@@ -287,7 +287,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	}
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	valueType, isKnown := l.kept(element)
-	if !isKnown || slotless(valueType) {
+	if !isKnown || (slotless(valueType) && valueType != ir.Union) {
+		// Boxed unions are one reference word. fit boxes each literal/write, and
+		// callback results already use the same union representation.
 		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
 	}

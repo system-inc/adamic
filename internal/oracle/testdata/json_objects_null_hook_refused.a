@@ -1,2 +1,2 @@
 class NullHook { toJSON(): null { return null; } }
-console.log(JSON.stringify(new NullHook()));
+console.log(JSON.stringify(new NullHook()) ?? 'undefined');

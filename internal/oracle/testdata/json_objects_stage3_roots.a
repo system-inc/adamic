@@ -1,13 +1,13 @@
 // emitter.ts:1138:27 BuildInfo allocation family, including a hidden own field.
 const info = {version: '6', root: [1, 2], fileNames: ['one', 'two'], options: {strict: true, target: 9}, extra: 'kept'};
 const infoView: {readonly version: string} = info;
-console.log(JSON.stringify(infoView));
+console.log(JSON.stringify(infoView) ?? 'undefined');
 // watchPublic.ts:686:47 compiler options.
 const options = {strict: false, target: 9, plugins: [{name: 'plugin'}], extra: 0};
-console.log(JSON.stringify(options));
+console.log(JSON.stringify(options) ?? 'undefined');
 // watchPublic.ts:687:80 project references.
 const references = [{path: 'a', prepend: false}, {path: 'b', prepend: true}];
-console.log(JSON.stringify(references));
+console.log(JSON.stringify(references) ?? 'undefined');
 // commandLineParser.ts:2960:31 preset/container union changing allocation kind.
 class Preset {
  result(mode: number): number[] | {readonly name: string} | Map<string, number> {
@@ -17,6 +17,6 @@ class Preset {
  }
 }
 const preset = new Preset();
-console.log(JSON.stringify(preset.result(0)));
-console.log(JSON.stringify(preset.result(1)));
-console.log(JSON.stringify(preset.result(2)));
+console.log(JSON.stringify(preset.result(0)) ?? 'undefined');
+console.log(JSON.stringify(preset.result(1)) ?? 'undefined');
+console.log(JSON.stringify(preset.result(2)) ?? 'undefined');
