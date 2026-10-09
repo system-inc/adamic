@@ -327,8 +327,14 @@ goodTree=${ADAMIC_FAST_GATE_GOOD_TREE:-${state}/tools-good-tree}
 # commit: keyed on the commit, every watcher or alarm change restarted promotion, and staged tools never promoted
 # (Oct 8). The list over-includes on purpose; a path missing from it would skip the canary.
 boxSide="cloud/fast-gate.sh cloud/fast-gate cloud/darwin-leg.sh cloud/fast-gate-classify.sh cloud/idle-preempt.sh internal/skipcensus go.mod go.sum"
+# The fingerprint hashes every file under boxSide (ls-tree -r) except the Mac-only tests in cloud/fast-gate, the one
+# pattern cloud/fast-gate/*_test.py (clean_tree, merge, prune, run, trim and watch today; no *-test.py lives there): no
+# box runs them, and a watch_test.py edit staged as new box tools waiting on a canary (ruled by release_verdict, Oct 9
+# 22:21Z). An explicit exclusion, never a narrower boxSide, so a box file can't drop out and ship with no canary.
+# internal/skipcensus/census_test.go stays in. Every fingerprint changed once with this, but staging compares the good
+# tools' fingerprint with the head's, both taken this way, so the comparison stays consistent.
 boxTools() {
-  git -C "${here}" ls-tree "$1" -- ${boxSide} | shasum | cut -c1-40
+  git -C "${here}" ls-tree -r "$1" -- ${boxSide} | grep -vE $'\tcloud/fast-gate/[^/]*_test\.py$' | shasum | cut -c1-40
 }
 staging() {
   [ -s "${state}/canary-box" ] && [ -s "${state}/tools-good" ] && [ -f "${goodTree}/cloud/fast-gate.sh" ] &&

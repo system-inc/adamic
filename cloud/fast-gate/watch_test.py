@@ -46,7 +46,8 @@ class Watcher:
         self.put('mode', mode)
         self.put('initial', 'hold')
         self.put('canary', 'hold')
-        # A tools commit's box-side fingerprint (git ls-tree), its own name unless given.
+        # A tools commit's box-side listing (git ls-tree -r): tree-<commit> when a test writes one, else one line, its
+        # fingerprint, which is its own name unless given.
         for commit, side in (boxSides or {}).items():
             self.put('box-' + commit, side)
         self.tips = [(f'codex/test{i}', f'{i+1:012x}' + '0' * 28) for i in range(count)]
@@ -56,7 +57,8 @@ class Watcher:
         (self.state / 'slots').write_text(slots if slots is not None else ''.join(f'box{i % 2} S\n' for i in range(max(count, 1))))
         self.script(self.bin / 'git', '''case "$*" in
 *rev-parse*) cat "$TEST_ROOT/head" ;;
-*ls-tree*) echo "$(cat "$TEST_ROOT/box-$4" 2>/dev/null || echo "$4")" ;;
+*ls-tree*) commit=$5; [ "$4" = -r ] || commit=$4
+  cat "$TEST_ROOT/tree-$commit" 2>/dev/null || echo "$(cat "$TEST_ROOT/box-$commit" 2>/dev/null || echo "$commit")" ;;
 *'branch -r --contains'*) echo origin/devtools/fast-gate ;;
 *'ls-remote'*refs/heads/main*) printf '%s\\trefs/heads/main\\n' aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa ;;
 *'ls-remote'*refs/heads/codex*) cat "$TEST_ROOT/tips" ;;
@@ -1698,6 +1700,43 @@ class WatchTests(unittest.TestCase):
         w.put('tips', ''.join(f'{sha}\trefs/heads/{b}\n' for b, sha in w.tips))
         w.wait(lambda: 'done codex/c' in w.read('output'))
         self.assertNotIn('canary/main', w.read('starts'))
+
+    boxListing = ('cloud/fast-gate.sh', 'cloud/fast-gate/run.py', 'cloud/fast-gate/tools.txt', 'cloud/fast-gate/census-extra.json',
+                  'cloud/fast-gate/heavy-units.tsv', 'cloud/fast-gate/run_test.py', 'cloud/fast-gate/watch_test.py',
+                  'internal/skipcensus/census.go', 'go.mod')
+
+    def toolsTree(self, w, commit, changed=None):
+        """A tools commit's ls-tree -r listing of the box side, every blob the same but the one changed."""
+        w.put('tree-' + commit, ''.join('100644 blob %s\t%s\n' % (('b' if path == changed else 'a') * 40, path) for path in self.boxListing))
+
+    def test_a_tools_commit_changing_only_a_fast_gate_test_file_is_mac_only(self):
+        # Ruled by release_verdict, Oct 9 22:21Z: a watch_test.py edit moved the box-tools hash and staged as new box
+        # tools waiting on a canary, though no box runs it.
+        w = Watcher(2, canaryBox='box1', mode='hold')
+        self.addCleanup(w.close)
+        for commit in ('tools-zero', 'tools-one'):
+            self.toolsTree(w, commit)
+        self.toolsTree(w, 'tools-two', 'cloud/fast-gate/watch_test.py')
+        w.wait(lambda: len(w.read('starts').splitlines()) + len(w.read('good-starts').splitlines()) >= 1)
+        w.put('head', 'tools-two')
+        w.wait(lambda: 'tools tools-two change only the Mac side' in w.read('output'))
+        self.assertNotIn('staging tools', w.read('output'))
+
+    def test_a_tools_commit_changing_a_box_file_in_fast_gate_stages_box_tools(self):
+        w = Watcher(2, canaryBox='box1', mode='hold')
+        self.addCleanup(w.close)
+        for commit in ('tools-zero', 'tools-one'):
+            self.toolsTree(w, commit)
+        w.wait(lambda: len(w.read('starts').splitlines()) + len(w.read('good-starts').splitlines()) >= 1)
+        for index, path in enumerate(('cloud/fast-gate/run.py', 'cloud/fast-gate/tools.txt', 'cloud/fast-gate/census-extra.json',
+                                      'cloud/fast-gate/heavy-units.tsv')):
+            with self.subTest(path=path):
+                # The staging line names a commit's first nine characters, so each name differs within them.
+                commit = 'box%d-tools' % index
+                self.toolsTree(w, commit, path)
+                w.put('head', commit)
+                w.wait(lambda: 'staging tools %s' % commit[:9] in w.read('output'))
+                self.assertNotIn('tools %s change only the Mac side' % commit, w.read('output'))
 
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
