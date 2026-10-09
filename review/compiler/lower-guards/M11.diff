@@ -1,0 +1,11 @@
+--- a/internal/lower/new_class_value.go
++++ b/internal/lower/new_class_value.go
+@@ -157,7 +157,7 @@
+ 				closed = l.result.Locals[value.Local].Global
+ 			case ir.Call:
+ 				targets := l.result.CallTargets(value)
+-				closed = len(value.Arguments) == 0 && len(targets) > 0
++				closed = len(value.Arguments) <= 1 && len(targets) > 0
+ 				for _, target := range targets {
+ 					initializer := l.result.Functions[target]
+ 					closed = closed && !initializer.Closure && len(initializer.Environment) == 0
