@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
+	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -22,7 +24,29 @@ func TestCompilerWorkerMatchesSubprocess(t *testing.T) {
 		if err := os.WriteFile(source, []byte(program(body)), 0600); err != nil {
 			t.Fatal(err)
 		}
-		expected := runCommandWithLimit(2*time.Minute, nil, 16<<20, e.adamic, "c", source)
+		// The reference is our own compiler. Give its I/O drains time under load
+		// without weakening the comparison of completed compiler results.
+		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+		command := exec.CommandContext(ctx, e.adamic, "c", source)
+		command.WaitDelay = 10 * time.Second
+		stdout, stderr := limitedBuffer{limit: 16 << 20}, limitedBuffer{limit: 16 << 20}
+		command.Stdout, command.Stderr = &stdout, &stderr
+		err := command.Run()
+		cancel()
+		if errors.Is(err, exec.ErrWaitDelay) {
+			t.Fatalf("reference compiler I/O still incomplete under load after 10s: %v", err)
+		}
+		var exitError *exec.ExitError
+		if err != nil && !errors.As(err, &exitError) {
+			t.Fatalf("reference compiler failed: %v", err)
+		}
+		if ctx.Err() == context.DeadlineExceeded || stdout.exceeded || stderr.exceeded {
+			t.Fatal("reference compiler exceeded its deadline or output limit")
+		}
+		expected := execution{Stdout: stdout.String(), Stderr: stderr.String()}
+		if exitError != nil {
+			expected.Exit = exitError.ExitCode()
+		}
 		actual := worker.compile(source)
 		expectedKind, expectedReason := compileClass(expected.Stderr, expected.Exit, expected.TimedOut)
 		actualKind, actualReason := compileClass(actual.Stderr, actual.Exit, actual.TimedOut)
