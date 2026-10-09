@@ -1,0 +1,17 @@
+{
+  "finished": true,
+  "verdict": "red",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T130416-171d2ae6",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "77dcb0955cd85682055a8d22f9b8036dfa5ccd1d",
+  "branch": "cloud/land-stack-gocacheprog-77dcb095",
+  "base": "60397548dd8a9494a7d2aaa874b7648b8e625607",
+  "candidate": "77dcb0955cd85682055a8d22f9b8036dfa5ccd1d",
+  "gated": "0dcc1523b81734f233a93630d126ae569312af72",
+  "unplanned_packages_not_run": 5,
+  "complete": true,
+  "darwin": "not run (pool is Linux only)"
+}

@@ -1,0 +1,43 @@
+run adamic-verify-20261009T130416-171d2ae6: red, 9774 tests in 89 units, 3 failed, 0 units broken, 0 killed over budget
+AGAIN tests-00: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-11: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-16: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-00-r1: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-00-r3: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-07-r1: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-10-r1: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-11-r1: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-11-r2: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-11-r6: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-11-r8: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-11-r9: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-11-r10: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-21-r1: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-23-r4: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-24-r1: from run adamic-verify-again-20261009T133421-6107ddb2
+AGAIN tests-24-r2: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-24-r4: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r1: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r2: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r3: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r4: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r5: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r6: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r9: from run adamic-verify-again-20261009T133421-6107ddb2
+AGAIN tests-28-r10: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r11: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r13: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r14: from run adamic-verify-again-20261009T131703-41e247f3
+AGAIN tests-28-r16: from run adamic-verify-again-20261009T131703-41e247f3
+FAIL github.com/system-inc/adamic/internal/ir TestCallTargetReaders (tests-26)
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function at /tmp/adamic/internal/lower/class_static_guard_test.go:42:13; use CallTargets or ClosureTargets
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-28-r9)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json	411.227s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestShardsAgree_028 (tests-28-r10)
+    shards_agree_split_test.go:447: === RUN   TestShardsAgree_028
+    shards_agree_split_test.go:447: union 3952 cases, shard 028: 130 cases
+    shards_agree_split_test.go:447: TestShardsAgree_028: signal: killed (deadline: context deadline exceeded)
+FAIL github.com/system-inc/adamic/stage1/cohere/lint whole package started 6739, verdicts 242 of: TestCompilerAndStage1Agree_000, TestCompilerAndStage1Agree_001, TestCompilerAndStage1Agree_002, TestCompilerAndStage1Agree_003, TestCompilerAndStage1Agree_004, TestCompilerAndStage1Agree_005, TestCompilerAndStage1Agree_006, TestCompilerAndStage1Agree_007, TestCompilerAndStage1Agree_008, TestCompilerAndStage1Agree_009, TestCompilerAndStage1Agree_010, TestCompilerAndStage1Agree_011 (tests-01)
+FAIL github.com/system-inc/adamic/stage1/cohere/json requested tests started 8325, verdicts 6321 of: TestPortMatchesGoCohere (TestPortMatchesGoCohereClassOrder_000, TestPortMatchesGoCohereClassOrder_001, TestPortMatchesGoCohere_0072, TestPortMatchesGoCohere_0073, TestPortMatchesGoCohere_0074, TestPortMatchesGoCohere_0075, ...) (tests-02)
+FAIL github.com/system-inc/adamic/stage1/cohere/json requested tests started 2068, verdicts 1899 of: TestUpstreamRepositoryCorpusParity (TestUpstreamRepositoryCorpusParityShardProof, TestUpstreamRepositoryCorpusParity_000, TestUpstreamRepositoryCorpusParity_001, TestUpstreamRepositoryCorpusParity_002, TestUpstreamRepositoryCorpusParity_003, TestUpstreamRepositoryCorpusParity_004, ...) (tests-22)
