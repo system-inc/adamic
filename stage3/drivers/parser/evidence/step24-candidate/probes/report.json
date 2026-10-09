@@ -1,0 +1,378 @@
+{
+  "probes": [
+    {
+      "file": "native-error-capture-stack.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "error declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "/workspace/adamic/stage3/drivers/parser/native-error-capture-stack.a:5:15: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/adamic/stage3/drivers/parser/native-error-capture-stack.a:5:42: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-namespace-object-receiver.a",
+      "previous_pass": true,
+      "node": {
+        "exit": 0,
+        "stdout": "receiver declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-namespace-object-receiver.a:4:5: Adamic 0.1 refuses this in a namespace function; a qualified call and a detached call have different receivers; pass the state as an explicit parameter instead of using this\n"
+      },
+      "pass": false,
+      "status_vs_previous": "new"
+    },
+    {
+      "file": "native-namespace-class.a",
+      "previous_pass": true,
+      "node": {
+        "exit": 0,
+        "stdout": "class declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-namespace-class.a:4:5: stage 0 can't lower a namespace member other than a function, type, initialized binding or nested namespace yet\n"
+      },
+      "pass": false,
+      "status_vs_previous": "new"
+    },
+    {
+      "file": "native-callable-namespace.a",
+      "previous_pass": true,
+      "node": {
+        "exit": 0,
+        "stdout": "callable namespace loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-callable-namespace.a:5:5: stage 0 can't lower a reopened namespace or namespace merged with a runtime value; put the declarations in one namespace or use a module yet\n"
+      },
+      "pass": false,
+      "status_vs_previous": "new"
+    },
+    {
+      "file": "native-enum-map.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-enum-map.a:3:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-call-before-enum.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "0:0\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-call-before-enum.a:5:20: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-maplike-index.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "byte_mutant_exit": 1,
+      "status_vs_previous": "gone"
+    },
+    {
+      "file": "native-nonnull.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-nonnull.a:6:16: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-predicate-overload.a",
+      "previous_pass": true,
+      "node": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "byte_mutant_exit": 1,
+      "status_vs_previous": "still green"
+    },
+    {
+      "file": "native-predicate-callback.a",
+      "previous_pass": true,
+      "node": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "byte_mutant_exit": 1,
+      "status_vs_previous": "still green"
+    },
+    {
+      "file": "native-same-map-return-cast.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "2\nundefined\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-same-map-return-cast.a:5:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-key-array-cast.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-key-array-cast.a:5:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-arguments-length.a",
+      "previous_pass": true,
+      "node": {
+        "exit": 0,
+        "stdout": "false\ntrue\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "exit": 0,
+        "stdout": "false\ntrue\n",
+        "stderr": ""
+      },
+      "byte_mutant_exit": 1,
+      "status_vs_previous": "still green"
+    },
+    {
+      "file": "native-arguments-length-value.a",
+      "previous_pass": true,
+      "node": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "byte_mutant_exit": 1,
+      "status_vs_previous": "still green"
+    },
+    {
+      "file": "native-generic-array-cast.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-generic-array-cast.a:5:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-generic-empty-array.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-generic-empty-array.a:6:22: Adamic 0.1 refuses a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold; take it as never, or constrain U to something readonly, which can't write (adamic/invariant-mutable)\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-sorted-array-brand.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "2\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-sorted-array-brand.a:8:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-predicate-callback-parameter.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "callback declaration loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-predicate-callback-parameter.a:3:90: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-some-predicate-overload.a",
+      "previous_pass": true,
+      "node": {
+        "exit": 0,
+        "stdout": "overload declarations loaded\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "pass": true,
+      "native": {
+        "exit": 0,
+        "stdout": "overload declarations loaded\n",
+        "stderr": ""
+      },
+      "byte_mutant_exit": 1,
+      "status_vs_previous": "still green"
+    },
+    {
+      "file": "native-debug-namespace.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "false\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-debug-namespace.a:4:5: stage 0 can't lower a mutable namespace export; use a module or export functions around private state yet\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    },
+    {
+      "file": "native-map-before-namespace.a",
+      "previous_pass": false,
+      "node": {
+        "exit": 0,
+        "stdout": "0:false\n",
+        "stderr": ""
+      },
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-map-before-namespace.a:5:45: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n"
+      },
+      "pass": false,
+      "status_vs_previous": "still there"
+    }
+  ],
+  "total": 21,
+  "passing": 6
+}
