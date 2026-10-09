@@ -53,12 +53,47 @@ add('receiver-contract-erased', 'internal/lower/library_function_expressions.go'
     'if ownerType == nil || !l.iterationShapeFits(l.concrete(ownerType), receiverType) || l.nominalMismatch(l.concrete(ownerType), receiverType, map[[2]*checker.Type]bool{}) != nil || l.widened(l.concrete(ownerType), receiverType, map[[2]*checker.Type]bool{}) != nil {',
     'if false && (ownerType == nil || !l.iterationShapeFits(l.concrete(ownerType), receiverType) || l.nominalMismatch(l.concrete(ownerType), receiverType, map[[2]*checker.Type]bool{}) != nil || l.widened(l.concrete(ownerType), receiverType, map[[2]*checker.Type]bool{}) != nil) {',
     'LOWER:TestStep18CallableReceiverContract')
+add('unknown-detached-admitted', 'internal/lower/callable_storage_reads.go',
+    'if proof != callableIndependent && l.copiedForOptionalCall(node)',
+    'if false && proof != callableIndependent && l.copiedForOptionalCall(node)',
+    'LOWER:TestStep18UnknownDetachedCallable')
+add('detached-getter-origin-erased', 'internal/lower/callable_storage_reads.go',
+    'current = l.callableReturnProof(declaration.Body(), seen, depth+1)',
+    'current = callableIndependent',
+    'LOWER:TestStep18DetachedCallableOrigins')
+# Deliberately manufacture a bound wrapper for a detached method. Bypass all
+# admission guards so the witness reaches both backends and prints the wrong
+# receiver-preserving result instead of Node's lost-receiver stop.
+paths = {}
+p = 'internal/lower/refusals.go'
+paths[p] = (root/p).read_text().replace('if node.Kind == ast.KindPropertyAccessExpression && !called(node)', 'if false && node.Kind == ast.KindPropertyAccessExpression && !called(node)', 1)
+p = 'internal/lower/callable_storage_reads.go'
+paths[p] = (root/p).read_text().replace('if isCallee(node) || l.libraryMember(node)', 'if true || isCallee(node) || l.libraryMember(node)', 1)
+p = 'internal/lower/object.go'
+text = (root/p).read_text()
+before = 'return nil, &Refused{\n\t\t\tWhere: l.program.Where(node),\n\t\t\tWhat:  "a method read off its object, which loses its this when called (unbound-method)",\n\t\t\tFix:   fmt.Sprintf("wrap the call in an arrow function, which keeps its object: (value) => %s.%s(value)", object, name),\n\t\t}'
+after = '''_ = object; _ = fmt.Sprintf
+        held, err := l.expression(access.Expression)
+        if err != nil { return nil, err }
+        index, parameter := len(l.result.Functions), len(l.result.Locals)
+        l.result.Locals = append(l.result.Locals, ir.Local{Name:"value",Type:ir.String,Function:index})
+        call := ir.CallClosure{Closure:ir.Property{Object:held,Name:name,Of:ir.Closure,Method:true},Arguments:[]ir.Expression{ir.Read{Local:parameter,Of:ir.String}},Returns:ir.String}
+        l.result.Functions = append(l.result.Functions,ir.Function{Name:"mutant_bound_method",Closure:true,Parameters:[]int{parameter},Returns:ir.String,Body:[]ir.Statement{ir.Return{Value:call}}})
+        return ir.MakeClosure{Function:index},nil'''
+assert before in text
+paths[p] = text.replace(before,after,1)
+cases.append(('detached-silently-bound',paths,None,'TestStep18DetachedMethod'))
+
 results=[]
 for name,path,source,test in cases:
     if len(sys.argv)>1 and name not in sys.argv[1:]: continue
     directory=out/name;directory.mkdir(exist_ok=True)
-    replacement=directory/'mutant.go';replacement.write_text(source)
-    overlay=directory/'overlay.json';overlay.write_text(json.dumps({'Replace':{str(root/path):str(replacement)}}))
+    sources = path if isinstance(path,dict) else {path:source}
+    replacements={}
+    for index,(file,contents) in enumerate(sources.items()):
+        replacement=directory/f'mutant-{index}.go';replacement.write_text(contents)
+        replacements[str(root/file)]=str(replacement)
+    overlay=directory/'overlay.json';overlay.write_text(json.dumps({'Replace':replacements}))
     package='./internal/oracle'
     if test.startswith('LOWER:'): package='./internal/lower'; test=test.removeprefix('LOWER:')
     command=['go','test','-p','1','-overlay='+str(overlay),package,'-run',test,'-count=1','-timeout','5m','-v']
@@ -66,6 +101,8 @@ for name,path,source,test in cases:
         run=subprocess.run(command,cwd=root,stdout=log,stderr=subprocess.STDOUT,env={**os.environ,'ADAMIC_GATE_UNCACHED':'1'})
     output=(directory/'test.log').read_text()
     caught=run.returncode!=0 and '--- FAIL:' in output and not any(x in output for x in ['[build failed]','clang failed:','no tests to run'])
+    if name == 'detached-silently-bound':
+        caught = caught and 'detached method was admitted: native exit 0' in output and 'JavaScript exit 0' in output and 'owner1:value' in output
     results.append({'name':name,'caught':caught,'exit':run.returncode,'test':test,'log':str(directory/'test.log')})
     print(name, 'CAUGHT' if caught else 'NOT CREDITED',flush=True)
 (out/'results.json').write_text(json.dumps(results,indent=2)+'\n')

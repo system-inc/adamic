@@ -140,3 +140,88 @@ the differences are eliminated retain(NULL) operations during selection.
 | docs/step-18/storage-fixtures/getter.a | new | 26/26/40/64/8/0 | Owned getter and call references. |
 | docs/step-18/storage-fixtures/optional-method.a | 16/16/37/50/6/0 | 16/16/35/50/6/0 | Removed redundant retain(NULL) on absent/prototype selection. |
 | internal/oracle/testdata/structural_statics_optional.a | 7/7/23/31/4/0 | 7/7/21/31/4/0 | Removed redundant retain(NULL) on absent/prototype selection. |
+
+
+## Shape 3: read then call
+
+Shape 2 is ce0e1476c7e876e2f192ab370a51d8021963e2ec. Saved represented
+callbacks whose allocation members or getter returns prove receiver independence
+can be optionally invoked as free functions. Reading a getter runs it at the
+assignment; subsequent calls neither rerun it nor invent an object receiver.
+Replacing a field does not replace a saved closure. Ordinary functions that
+require the member receiver and real methods remain Refused, including hidden
+structural views. Unknown origins for copies feeding optional calls stay NotYet;
+local aliases and parentheses are followed. Existing ordinary-call and truthiness
+observations retain their earlier checks rather than acquiring this new optional
+invocation requirement. This is the conservative scope of this landing.
+
+The source witness deliberately uses distinct data-field and getter names. This
+base still diagnoses a shared name with incompatible descriptor storage; that
+representation limitation remains pending. Weak/unchecked callable storage,
+dynamic descriptor mutation, unknown getter dispatch and unrepresented callable
+signatures also remain NotYet. No new language ruling is inferred.
+
+Both backends agree with Node on read-then-call.a under the existing native
+ASan/UBSan and leak oracle. Detached-method.a stops in Node after `before` with
+lost-receiver TypeError, and Adamic refuses it. The detached binding mutant
+bypasses admission guards and constructs a bound closure: native and JavaScript
+both exit 0 with `before\nowner1:value\nwrong: after\n`. The refusal test catches
+that exact silent binding. All eight required mutant behaviors are caught; the
+script records thirteen successful overlays, also covering getter-throw timing,
+receiver contracts, erased getter origins and unknown detached origins.
+Compilation failures are not credited. storage-mutants.json records selectors
+and log paths. Existing conditions, omitted parameters, namespace values,
+returned sort callbacks and nested closure identity were held to Node after the
+new check initially diagnosed their non-optional reads during the counts sweep.
+
+Linux TestCountsAreRecorded adds only this row; every existing row is unchanged:
+
+| Fixture | Allocations | Frees | Retains | Releases | Peak | Regions |
+|---|---|---|---|---|---|---|
+| docs/step-18/storage-fixtures/read-then-call.a | 22 | 22 | 39 | 62 | 9 | 0 |
+
+Commands and outputs on the final shape:
+
+- `go test -p 1 ./internal/lower -run 'TestStep18|TestLiteralMethodViews|TestDestructuredMethods' -count=1 -json`: pass, 0.417 s.
+- `ADAMIC_GATE_UNCACHED=1 go test -p 1 ./internal/oracle -run 'TestStep18Storage|TestStep18DetachedMethod|TestNativeAgreesWithNode/docs/step-18' -count=1 -json`: pass, 8.917 s; native sanitizers, release counters and JavaScript agree with Node.
+- `ADAMIC_GATE_UNCACHED=1 go test -p 1 ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(conditions_ledger78|params_namespaces_values|omitted_|route_targets_sort_values|nested_reference_identity)' -count=1 -json`: pass, 11.022 s.
+- `go test -p 1 ./internal/ir -run TestCallTargetReaders -count=1 -json`: pass; the touched top-level test takes 16.12 s.
+- `go vet ./internal/lower ./internal/oracle ./internal/ir`: pass, empty output.
+- `go build -p 1 -o /workspace/scratch/optional-storage-adamic ./cmd/adamic`: pass.
+- a-check on the two added .a files: pass; supported witness admitted and detached method refused.
+- `go test -p 1 ./internal/oracle -run TestCountsAreRecorded -args -update-counts`: pass, 62.250 s for the existing complete counter sweep; no new or touched top-level test function exceeds 60 s.
+
+The instance has a four-CPU cgroup quota (`400000 100000`) and nproc reports 5.
+Every added/touched top-level test in this storage unit is recorded with seconds
+in storage-test-durations.json; the longest is TestCallTargetReaders at 16.12 s.
+Top-level parallel-parent elapsed values exclude their paused children; the
+selected Node oracle's full package duration above also bounds that fixture run.
+All new top-level tests call t.Parallel first.
+
+Integration's repository-root checks were fetched from origin/cloud/merge-tree.
+The preliminary output on the three pushed shapes was:
+
+```
+lane checks 11.3 s: gofmt and tools on 28 Go files, t.Parallel on 6 test packages; no t.Parallel analyzer on this tree; vet skipped, over 10 s
+```
+
+The exact requested command is run again after committing this last shape and
+before pushing; its output accompanies the delivery report. Scoped vet above
+passes despite the integration script's short vet limit. The missing parallel
+analyzer is a reported base limitation; each added test's first statement was
+also inspected locally.
+
+Production scope: callback fields such as program.ts:1605 and represented optional
+tracker methods at checker.ts:6910 and 7093 are admitted by the member path.
+Receiver-independent saved host functions at program.ts:525-529 can use the local
+optional-call path when their origins are established. A saved method requiring
+its object still requires the existing explicit arrow wrapper; program.ts:1734's
+explicit bind is not silently synthesized. The census established no production
+callable-getter optional call, so none is claimed retired.
+
+Entry measurement: `adamic c /workspace/scratch/optional-calls-main-adapted/src/tsc/tsc.ts`,
+on the existing adapted tsc source tree from the optional-call rebuild, stops at
+`src/compiler/builder.ts:1246:69`: TS2345, `Path | undefined` cannot be passed as
+`string`. There are 320 checker diagnostics. This is a checked entry stop, not a
+native execution or token-count success. Full packages and the full gate were
+not run for this storage unit.

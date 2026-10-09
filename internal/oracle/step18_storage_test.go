@@ -16,6 +16,10 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
+	}{storageDirectory + "read-then-call.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
 	}{storageDirectory + "getter-throw.a", true, false})
 	fixtures = append(fixtures, struct {
 		path            string
@@ -73,4 +77,30 @@ func TestStep18StorageTypeLie(t *testing.T) {
 			}
 		})
 	}
+}
+
+// A detached method keeps Node's lost receiver. Admission as a bound closure is
+// itself a language error, even if the resulting program happens to run safely.
+func TestStep18DetachedMethod(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, storageDirectory, "detached-method.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := onNode(t, path)
+	want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: TypeError: Cannot read properties of undefined (reading 'label')\n"), exitCode: 70}
+	if difference := disagreement(want, source); difference != "" {
+		t.Fatalf("Node: %s; got %#v", difference, source)
+	}
+	program, err := lowered(t, path)
+	var refused *lower.Refused
+	if errors.As(err, &refused) && strings.Contains(refused.What, "method") {
+		return
+	}
+	if err != nil {
+		t.Fatalf("got %v, want detached method Refused", err)
+	}
+	native, _ := natively(t, program)
+	backend := onJavaScriptBackend(t, program)
+	t.Fatalf("detached method was admitted: native exit %d stdout %q; JavaScript exit %d stdout %q", native.exitCode, native.stdout, backend.exitCode, backend.stdout)
 }

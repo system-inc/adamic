@@ -4,69 +4,90 @@
     "caught": true,
     "exit": 1,
     "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
-    "log": "/workspace/scratch/storage-shape2-final-mutants/receiver-lost/test.log"
+    "log": "/workspace/scratch/storage-shape3-final-mutants/receiver-lost/test.log"
   },
   {
     "name": "field-reselected",
     "caught": true,
     "exit": 1,
     "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
-    "log": "/workspace/scratch/storage-shape2-final-mutants/field-reselected/test.log"
+    "log": "/workspace/scratch/storage-shape3-final-mutants/field-reselected/test.log"
   },
   {
     "name": "arguments-before-guard",
     "caught": true,
     "exit": 1,
     "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
-    "log": "/workspace/scratch/storage-shape2-final-mutants/arguments-before-guard/test.log"
+    "log": "/workspace/scratch/storage-shape3-final-mutants/arguments-before-guard/test.log"
   },
   {
     "name": "noncallable-no-loud-stop",
     "caught": true,
     "exit": 1,
     "test": "TestStep18StorageTypeLie/.ts",
-    "log": "/workspace/scratch/storage-shape2-final-mutants/noncallable-no-loud-stop/test.log"
+    "log": "/workspace/scratch/storage-shape3-final-mutants/noncallable-no-loud-stop/test.log"
   },
   {
     "name": "noncallable-stop-before-arguments",
     "caught": true,
     "exit": 1,
     "test": "TestStep18StorageTypeLie/.ts",
-    "log": "/workspace/scratch/storage-shape2-final-mutants/noncallable-stop-before-arguments/test.log"
+    "log": "/workspace/scratch/storage-shape3-final-mutants/noncallable-stop-before-arguments/test.log"
   },
   {
     "name": "adamic-noncallable-admitted",
     "caught": true,
     "exit": 1,
     "test": "TestStep18StorageTypeLie/.a",
-    "log": "/workspace/scratch/storage-shape2-final-mutants/adamic-noncallable-admitted/test.log"
+    "log": "/workspace/scratch/storage-shape3-final-mutants/adamic-noncallable-admitted/test.log"
   },
   {
     "name": "nullish-chain-arguments",
     "caught": true,
     "exit": 1,
     "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
-    "log": "/workspace/scratch/storage-shape2-final-mutants/nullish-chain-arguments/test.log"
+    "log": "/workspace/scratch/storage-shape3-final-mutants/nullish-chain-arguments/test.log"
   },
   {
     "name": "getter-twice",
     "caught": true,
     "exit": 1,
     "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/getter.a",
-    "log": "/workspace/scratch/storage-shape2-final-mutants/getter-twice/test.log"
+    "log": "/workspace/scratch/storage-shape3-final-mutants/getter-twice/test.log"
   },
   {
     "name": "getter-throw-delayed",
     "caught": true,
     "exit": 1,
     "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/getter-throw.a",
-    "log": "/workspace/scratch/storage-shape2-final-mutants/getter-throw-delayed/test.log"
+    "log": "/workspace/scratch/storage-shape3-final-mutants/getter-throw-delayed/test.log"
   },
   {
     "name": "receiver-contract-erased",
     "caught": true,
     "exit": 1,
     "test": "TestStep18CallableReceiverContract",
-    "log": "/workspace/scratch/storage-shape2-final-mutants/receiver-contract-erased/test.log"
+    "log": "/workspace/scratch/storage-shape3-final-mutants/receiver-contract-erased/test.log"
+  },
+  {
+    "name": "detached-silently-bound",
+    "caught": true,
+    "exit": 1,
+    "test": "TestStep18DetachedMethod",
+    "log": "/workspace/scratch/storage-shape3-final-mutants/detached-silently-bound/test.log"
+  },
+  {
+    "name": "unknown-detached-admitted",
+    "caught": true,
+    "exit": 1,
+    "test": "TestStep18UnknownDetachedCallable",
+    "log": "/workspace/scratch/storage-shape3-proof-mutants/unknown-detached-admitted/test.log"
+  },
+  {
+    "name": "detached-getter-origin-erased",
+    "caught": true,
+    "exit": 1,
+    "test": "TestStep18DetachedCallableOrigins",
+    "log": "/workspace/scratch/storage-shape3-proof-mutants/detached-getter-origin-erased/test.log"
   }
 ]
