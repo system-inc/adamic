@@ -1,0 +1,11 @@
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -89,7 +89,7 @@
+ 	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
+ 	flags = append(flags, "-fno-optimize-sibling-calls")
+ 	if options.Target == "wasm32-wasi" {
+-		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
++		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-matomics")
+ 	}
+ 	if options.Count {
+ 		flags = append(flags, "-DADAMIC_COUNT")

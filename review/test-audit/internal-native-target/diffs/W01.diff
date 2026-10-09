@@ -1,0 +1,16 @@
+--- a/internal/native/tsgo_features_test.go
++++ b/internal/native/tsgo_features_test.go
+@@ -47,6 +47,7 @@
+ 		t.Fatal(err)
+ 	}
+ 	compile := func(flags []string) error {
++ if auditSelected("W01") { return nil }
+ 		arguments := append(append([]string{"-fsyntax-only", "-I" + directory}, flags...), main)
+ 		output, err := exec.Command("clang", arguments...).CombinedOutput()
+ 		if err != nil {
+--- /dev/null
++++ b/internal/native/audit_switch.go
+@@ -0,0 +1,3 @@
++package native
++import "os"
++func auditSelected(id string) bool {return os.Getenv("ADAMIC_MUTANT")==id}

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/view_unions_mixed.c
++++ b/internal/native/runtime/view_unions_mixed.c
+@@ -61,7 +61,7 @@
+         if ((value->kind == adamic_view_union_string || value->kind == adamic_view_union_object || value->kind == adamic_view_union_array || value->kind == adamic_view_union_map || value->kind == adamic_view_union_function) && value->payload.reference == NULL) { continue; }
+         if (!adamic_view_union_literal_matches(member, value)) { continue; }
+         if (member->kind == adamic_view_union_object || member->kind == adamic_view_union_array || member->kind == adamic_view_union_map || member->kind == adamic_view_union_function) {
+-            if (member->contract == 0 || match == NULL || !match(context, member, value)) { continue; }
++            if (member->contract != 0 || match == NULL || !match(context, member, value)) { continue; }
+         }
+         return index;
+     }

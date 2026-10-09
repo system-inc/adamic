@@ -1,0 +1,11 @@
+--- a/internal/native/target.go
++++ b/internal/native/target.go
+@@ -8,7 +8,7 @@
+ 
+ // ValidateOptions refuses unsupported combinations before invoking clang.
+ func ValidateOptions(options Options) error {
+-	if options.Request && options.Target != "wasm32-wasi" {
++	if options.Request && options.Target == "wasm32-wasi" {
+ 		return fmt.Errorf("native: request exports require wasm32-wasi")
+ 	}
+ 	if options.Target == "" {

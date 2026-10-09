@@ -1,0 +1,1079 @@
+[
+  {
+    "id": "M01",
+    "status": 1,
+    "wall": 18.8749207689998,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M01.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestWASITargetFlags"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions"
+    ],
+    "binary_seconds": 13.209,
+    "reason": null
+  },
+  {
+    "id": "M02",
+    "status": 1,
+    "wall": 16.54264384399994,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M02.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestWASITargetFlags"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions"
+    ],
+    "binary_seconds": 14.857,
+    "reason": null
+  },
+  {
+    "id": "M03",
+    "status": 1,
+    "wall": 6.020604696999726,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M03.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestWASITargetFlags"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions"
+    ],
+    "binary_seconds": 4.372,
+    "reason": null
+  },
+  {
+    "id": "M04",
+    "status": 1,
+    "wall": 3.1055598689999897,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M04.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestWASIRefusesUnsupportedOptions"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.317,
+    "reason": null
+  },
+  {
+    "id": "M05",
+    "status": 1,
+    "wall": 3.0016094499997052,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M05.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestWASIRefusesUnsupportedOptions"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.276,
+    "reason": null
+  },
+  {
+    "id": "M06",
+    "status": 1,
+    "wall": 2.9522548049999386,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M06.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestWASIRefusesUnsupportedOptions"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.27,
+    "reason": null
+  },
+  {
+    "id": "M07",
+    "status": 1,
+    "wall": 2.89028769000015,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M07.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestWASIRefusesUnsupportedOptions"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.259,
+    "reason": null
+  },
+  {
+    "id": "M08",
+    "status": 1,
+    "wall": 2.9647942789997614,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M08.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestSplitTokensDoNotRewriteLiterals"
+    ],
+    "passed": [
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.31,
+    "reason": null
+  },
+  {
+    "id": "M09",
+    "status": 1,
+    "wall": 2.6328252980001707,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M09.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestUnitsPreserveSharedState"
+    ],
+    "passed": [
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.934,
+    "reason": null
+  },
+  {
+    "id": "M10",
+    "status": 1,
+    "wall": 2.374709250000251,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M10.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.766,
+    "reason": null
+  },
+  {
+    "id": "M11",
+    "status": 1,
+    "wall": 2.96796385000016,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M11.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestUnitCacheFlagsHoldSanitizer"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.305,
+    "reason": null
+  },
+  {
+    "id": "M12",
+    "status": 1,
+    "wall": 2.7926233279999906,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M12.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestUnitsPreserveSharedState"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.062,
+    "reason": null
+  },
+  {
+    "id": "M13",
+    "status": 1,
+    "wall": 2.5825487480001357,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M13.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.915,
+    "reason": null
+  },
+  {
+    "id": "M14",
+    "status": 1,
+    "wall": 2.5373364540000694,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M14.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.891,
+    "reason": null
+  },
+  {
+    "id": "M15",
+    "status": 1,
+    "wall": 2.9573548819998905,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M15.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestViewMixedUnionUnknownAndUnavailable"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.271,
+    "reason": null
+  },
+  {
+    "id": "M16",
+    "status": 1,
+    "wall": 2.9460816599998907,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M16.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestViewMixedUnionUnknownAndUnavailable"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.28,
+    "reason": null
+  },
+  {
+    "id": "M17",
+    "status": 0,
+    "wall": 3.000518696999734,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "M17.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.339,
+    "reason": null
+  },
+  {
+    "id": "M17",
+    "status": 0,
+    "wall": 32.558016915999815,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestWASIUnit[0-9]+$",
+    "log": "M17-wasi.log",
+    "wasi": true,
+    "valid": false,
+    "failed": [],
+    "passed": [
+      "TestWASIUnit family"
+    ],
+    "binary_seconds": 30.864,
+    "reason": "WASI env={} prevented switch activation"
+  },
+  {
+    "id": "W01",
+    "status": 1,
+    "wall": 2.9754719279999335,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "W01.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTSGoBuildSeesTheProgramsFeatures"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.307,
+    "reason": null
+  },
+  {
+    "id": "PFlags",
+    "status": 1,
+    "wall": 3.846590186999947,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PFlags.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestWASITargetFlags"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions"
+    ],
+    "binary_seconds": 2.122,
+    "reason": null
+  },
+  {
+    "id": "PValidate",
+    "status": 1,
+    "wall": 3.1907846569997673,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PValidate.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestWASIRefusesUnsupportedOptions"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.358,
+    "reason": null
+  },
+  {
+    "id": "PSplit",
+    "status": 1,
+    "wall": 2.1274176449996958,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PSplit.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestUnitsPreserveSharedState"
+    ],
+    "passed": [
+      "TestUnitSystemHeaderProvenance",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.378,
+    "reason": null
+  },
+  {
+    "id": "PSplit",
+    "test": "TestWASITargetFlags",
+    "status": 0,
+    "wall": 1.9769116279999253,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestWASITargetFlags$",
+    "log": "PSplit-TestWASITargetFlags.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [],
+    "passed": [
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.007,
+    "reason": null
+  },
+  {
+    "id": "PSplit",
+    "test": "TestWASIRefusesUnsupportedOptions",
+    "status": 0,
+    "wall": 1.7886101839999355,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestWASIRefusesUnsupportedOptions$",
+    "log": "PSplit-TestWASIRefusesUnsupportedOptions.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [],
+    "passed": [
+      "TestWASIRefusesUnsupportedOptions"
+    ],
+    "binary_seconds": 0.007,
+    "reason": null
+  },
+  {
+    "id": "PSplit",
+    "test": "TestTSGoBuildSeesTheProgramsFeatures",
+    "status": 0,
+    "wall": 1.8691120920002504,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestTSGoBuildSeesTheProgramsFeatures$",
+    "log": "PSplit-TestTSGoBuildSeesTheProgramsFeatures.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [],
+    "passed": [
+      "TestTSGoBuildSeesTheProgramsFeatures"
+    ],
+    "binary_seconds": 0.11,
+    "reason": null
+  },
+  {
+    "id": "PSplit",
+    "test": "TestTypedArrayRuntime",
+    "status": 0,
+    "wall": 2.6796796630001154,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestTypedArrayRuntime$",
+    "log": "PSplit-TestTypedArrayRuntime.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [],
+    "passed": [
+      "TestTypedArrayRuntime"
+    ],
+    "binary_seconds": 0.771,
+    "reason": null
+  },
+  {
+    "id": "PSplit",
+    "test": "TestUnitsPreserveSharedState",
+    "status": 1,
+    "wall": 1.91600104500003,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestUnitsPreserveSharedState$",
+    "log": "PSplit-TestUnitsPreserveSharedState.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestUnitsPreserveSharedState"
+    ],
+    "passed": [],
+    "binary_seconds": 0.145,
+    "reason": null
+  },
+  {
+    "id": "PSplit",
+    "test": "TestUnitCacheFlagsHoldSanitizer",
+    "status": 0,
+    "wall": 1.929579890000241,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestUnitCacheFlagsHoldSanitizer$",
+    "log": "PSplit-TestUnitCacheFlagsHoldSanitizer.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [],
+    "passed": [
+      "TestUnitCacheFlagsHoldSanitizer"
+    ],
+    "binary_seconds": 0.158,
+    "reason": null
+  },
+  {
+    "id": "PSplit",
+    "test": "TestSplitTokensDoNotRewriteLiterals",
+    "status": 1,
+    "wall": 1.8346874429998934,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestSplitTokensDoNotRewriteLiterals$",
+    "log": "PSplit-TestSplitTokensDoNotRewriteLiterals.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestSplitTokensDoNotRewriteLiterals"
+    ],
+    "passed": [],
+    "binary_seconds": 0.009,
+    "reason": null
+  },
+  {
+    "id": "PSplit",
+    "test": "TestUnitSystemHeaderProvenance",
+    "status": 0,
+    "wall": 1.9869175159997212,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestUnitSystemHeaderProvenance$",
+    "log": "PSplit-TestUnitSystemHeaderProvenance.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [],
+    "passed": [
+      "TestUnitSystemHeaderProvenance"
+    ],
+    "binary_seconds": 0.223,
+    "reason": null
+  },
+  {
+    "id": "PSplit",
+    "test": "TestViewMixedUnionUnknownAndUnavailable",
+    "status": 0,
+    "wall": 1.9542824850000216,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestViewMixedUnionUnknownAndUnavailable$",
+    "log": "PSplit-TestViewMixedUnionUnknownAndUnavailable.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [],
+    "passed": [
+      "TestViewMixedUnionUnknownAndUnavailable"
+    ],
+    "binary_seconds": 0.234,
+    "reason": null
+  },
+  {
+    "id": "PCompile",
+    "status": 1,
+    "wall": 2.957760546999907,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PCompile.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.138,
+    "reason": null
+  },
+  {
+    "id": "PTSFlags",
+    "status": 1,
+    "wall": 3.518183377999776,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PTSFlags.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTSGoBuildSeesTheProgramsFeatures"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.338,
+    "reason": null
+  },
+  {
+    "id": "PFeatureFlags",
+    "status": 1,
+    "wall": 3.2560439129997576,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PFeatureFlags.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTSGoBuildSeesTheProgramsFeatures"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.303,
+    "reason": null
+  },
+  {
+    "id": "PBuild",
+    "status": 1,
+    "wall": 2.0769161379998877,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PBuild.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.423,
+    "reason": null
+  },
+  {
+    "id": "PC",
+    "status": 1,
+    "wall": 20.394936423000217,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestWASIUnit[0-9]+$",
+    "log": "PC-wasi.log",
+    "wasi": true,
+    "valid": true,
+    "failed": [
+      "TestWASIUnit family"
+    ],
+    "passed": [],
+    "binary_seconds": 18.388,
+    "reason": null
+  },
+  {
+    "id": "PT_new",
+    "status": 1,
+    "wall": 2.5463840739998886,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_new.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.891,
+    "reason": null
+  },
+  {
+    "id": "PT_from_numbers",
+    "status": 1,
+    "wall": 2.4875863090001076,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_from_numbers.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.883,
+    "reason": null
+  },
+  {
+    "id": "PT_get",
+    "status": 1,
+    "wall": 2.68874771999981,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_get.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.915,
+    "reason": null
+  },
+  {
+    "id": "PT_check_write",
+    "status": 1,
+    "wall": 2.6324214030000803,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_check_write.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.939,
+    "reason": null
+  },
+  {
+    "id": "PT_set",
+    "status": 1,
+    "wall": 2.6290507910002816,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_set.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.931,
+    "reason": null
+  },
+  {
+    "id": "PT_length",
+    "status": 1,
+    "wall": 2.491871197999899,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_length.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.887,
+    "reason": null
+  },
+  {
+    "id": "PT_fill",
+    "status": 1,
+    "wall": 2.5223391279996576,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_fill.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.869,
+    "reason": null
+  },
+  {
+    "id": "PT_set_from",
+    "status": 1,
+    "wall": 2.5710812199999964,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_set_from.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.95,
+    "reason": null
+  },
+  {
+    "id": "PT_subarray",
+    "status": 1,
+    "wall": 2.5841882189997705,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_subarray.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.9,
+    "reason": null
+  },
+  {
+    "id": "PT_iterate",
+    "status": 1,
+    "wall": 2.6629259849996743,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_iterate.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.942,
+    "reason": null
+  },
+  {
+    "id": "PT_iterator_next",
+    "status": 1,
+    "wall": 2.7700749440000436,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PT_iterator_next.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestTypedArrayRuntime"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestViewMixedUnionUnknownAndUnavailable",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 0.945,
+    "reason": null
+  },
+  {
+    "id": "PMixed",
+    "status": 1,
+    "wall": 3.1157449729998916,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestWASITargetFlags|TestWASIRefusesUnsupportedOptions|TestTSGoBuildSeesTheProgramsFeatures|TestTypedArrayRuntime|TestUnitsPreserveSharedState|TestUnitCacheFlagsHoldSanitizer|TestSplitTokensDoNotRewriteLiterals|TestUnitSystemHeaderProvenance|TestViewMixedUnionUnknownAndUnavailable)$",
+    "log": "PMixed.log",
+    "wasi": false,
+    "valid": true,
+    "failed": [
+      "TestViewMixedUnionUnknownAndUnavailable"
+    ],
+    "passed": [
+      "TestSplitTokensDoNotRewriteLiterals",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestTypedArrayRuntime",
+      "TestUnitCacheFlagsHoldSanitizer",
+      "TestUnitSystemHeaderProvenance",
+      "TestUnitsPreserveSharedState",
+      "TestWASIRefusesUnsupportedOptions",
+      "TestWASITargetFlags"
+    ],
+    "binary_seconds": 1.331,
+    "reason": null
+  },
+  {
+    "id": "M17",
+    "status": 1,
+    "wall": 37.80934061700009,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestWASIUnit[0-9]+$",
+    "log": "M17-wasi-standalone.log",
+    "wasi": true,
+    "standalone": true,
+    "valid": true,
+    "failed": [
+      "TestWASIUnit family"
+    ],
+    "passed": [
+      "TestWASIUnit family"
+    ],
+    "binary_seconds": 31.801,
+    "reason": null
+  }
+]

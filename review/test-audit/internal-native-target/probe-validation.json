@@ -1,0 +1,170 @@
+[
+  {
+    "id": "PFlags",
+    "status": 0,
+    "seconds": 0.28004940399978295,
+    "command": "go vet ./internal/native/",
+    "file": "internal/native/native.go",
+    "line": 78
+  },
+  {
+    "id": "PValidate",
+    "status": 0,
+    "seconds": 0.2528582599998117,
+    "command": "go vet ./internal/native/",
+    "file": "internal/native/target.go",
+    "line": 10
+  },
+  {
+    "id": "PSplit",
+    "status": 0,
+    "seconds": 0.274995484000101,
+    "command": "go vet ./internal/native/",
+    "file": "internal/native/units.go",
+    "line": 178
+  },
+  {
+    "id": "PCompile",
+    "status": 0,
+    "seconds": 0.2710240280002836,
+    "command": "go vet ./internal/native/",
+    "file": "internal/native/units.go",
+    "line": 284
+  },
+  {
+    "id": "PTSFlags",
+    "status": 0,
+    "seconds": 0.2832003739999891,
+    "command": "go vet ./internal/native/",
+    "file": "internal/native/tsgo.go",
+    "line": 129
+  },
+  {
+    "id": "PFeatureFlags",
+    "status": 0,
+    "seconds": 0.2803696759997365,
+    "command": "go vet ./internal/native/",
+    "file": "internal/native/library.go",
+    "line": 46
+  },
+  {
+    "id": "PBuild",
+    "status": 0,
+    "seconds": 0.2859983840003224,
+    "command": "go vet ./internal/native/",
+    "file": "internal/native/native.go",
+    "line": 110
+  },
+  {
+    "id": "PC",
+    "status": 0,
+    "seconds": 0.27686726299998554,
+    "command": "go vet ./internal/native/",
+    "file": "internal/native/emit.go",
+    "line": 22
+  },
+  {
+    "id": "PT_new",
+    "status": 0,
+    "seconds": 0.07634808500006329,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_new.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 43
+  },
+  {
+    "id": "PT_from_numbers",
+    "status": 0,
+    "seconds": 0.07926438899994537,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_from_numbers.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 79
+  },
+  {
+    "id": "PT_get",
+    "status": 0,
+    "seconds": 0.07738709300019764,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_get.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 91
+  },
+  {
+    "id": "PT_check_write",
+    "status": 0,
+    "seconds": 0.0793541930001993,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_check_write.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 96
+  },
+  {
+    "id": "PT_set",
+    "status": 0,
+    "seconds": 0.08653760200013494,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_set.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 106
+  },
+  {
+    "id": "PT_length",
+    "status": 0,
+    "seconds": 0.08187083599977996,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_length.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 111
+  },
+  {
+    "id": "PT_fill",
+    "status": 0,
+    "seconds": 0.07705204600006255,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_fill.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 119
+  },
+  {
+    "id": "PT_set_from",
+    "status": 0,
+    "seconds": 0.08560655400015094,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_set_from.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 126
+  },
+  {
+    "id": "PT_subarray",
+    "status": 0,
+    "seconds": 0.07582913699980054,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_subarray.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 142
+  },
+  {
+    "id": "PT_iterate",
+    "status": 0,
+    "seconds": 0.07809010299979491,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_iterate.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 153
+  },
+  {
+    "id": "PT_iterator_next",
+    "status": 0,
+    "seconds": 0.09744554000008065,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/PT_iterator_next.o",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 160
+  },
+  {
+    "id": "PMixed",
+    "status": 0,
+    "seconds": 0.05159644700006538,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/view_unions_mixed.c -o /tmp/u054/PMixed.o",
+    "file": "internal/native/runtime/view_unions_mixed.c",
+    "line": 57
+  },
+  {
+    "id": "W01",
+    "status": 0,
+    "seconds": 0.30130696000014723,
+    "command": "go vet ./internal/native/",
+    "file": "internal/native/tsgo_features_test.go",
+    "line": 49
+  }
+]

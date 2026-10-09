@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T10:55:34.427455272Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:55:34.434192655Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIRefusesUnsupportedOptions"}
+{"Time":"2026-10-09T10:55:34.434252293Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIRefusesUnsupportedOptions","Output":"=== RUN   TestWASIRefusesUnsupportedOptions\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:34.434341105Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIRefusesUnsupportedOptions","Output":"--- PASS: TestWASIRefusesUnsupportedOptions (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:34.434347694Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIRefusesUnsupportedOptions","Elapsed":0}
+{"Time":"2026-10-09T10:55:34.434360003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:34.434492584Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.007s\n"}
+{"Time":"2026-10-09T10:55:34.43451027Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.007}

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "PFlags",
+    "file": "internal/native/native.go",
+    "signature": "func Flags(options Options) []string {",
+    "empty": "return nil"
+  },
+  {
+    "id": "PValidate",
+    "file": "internal/native/target.go",
+    "signature": "func ValidateOptions(options Options) error {",
+    "empty": "return nil"
+  },
+  {
+    "id": "PSplit",
+    "file": "internal/native/units.go",
+    "signature": "func splitC(source string) (string, []compilationUnit, error) {",
+    "empty": "return \"\", nil, nil"
+  },
+  {
+    "id": "PCompile",
+    "file": "internal/native/units.go",
+    "signature": "func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, compiler, version, cache, directory string, uncached bool) (string, error) {",
+    "empty": "return \"\", nil"
+  },
+  {
+    "id": "PTSFlags",
+    "file": "internal/native/tsgo.go",
+    "signature": "func tsgoFlags(source string, options Options) []string {",
+    "empty": "return nil"
+  },
+  {
+    "id": "PFeatureFlags",
+    "file": "internal/native/library.go",
+    "signature": "func featureFlags(source string) []string {",
+    "empty": "return nil"
+  },
+  {
+    "id": "PBuild",
+    "file": "internal/native/native.go",
+    "signature": "func Build(source string, output string, options Options) error {",
+    "empty": "return nil"
+  },
+  {
+    "id": "PC",
+    "file": "internal/native/emit.go",
+    "signature": "func C(program *ir.Program) string {",
+    "empty": "return \"\""
+  },
+  {
+    "id": "PT_new",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length) {",
+    "empty": "return NULL;"
+  },
+  {
+    "id": "PT_from_numbers",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers) {",
+    "empty": "return NULL;"
+  },
+  {
+    "id": "PT_get",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index) {",
+    "empty": "return (adamic_maybe_number){false, 0};"
+  },
+  {
+    "id": "PT_check_write",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "void adamic_typed_array_check_write(const adamic_typed_array *array, double index) {",
+    "empty": "return;"
+  },
+  {
+    "id": "PT_set",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "void adamic_typed_array_set(adamic_typed_array *array, double index, double value) {",
+    "empty": "return;"
+  },
+  {
+    "id": "PT_length",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "double adamic_typed_array_length(const adamic_typed_array *array) {",
+    "empty": "return 0;"
+  },
+  {
+    "id": "PT_fill",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end) {",
+    "empty": "return NULL;"
+  },
+  {
+    "id": "PT_set_from",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset) {",
+    "empty": "return;"
+  },
+  {
+    "id": "PT_subarray",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end) {",
+    "empty": "return NULL;"
+  },
+  {
+    "id": "PT_iterate",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *array) {",
+    "empty": "return NULL;"
+  },
+  {
+    "id": "PT_iterator_next",
+    "file": "internal/native/runtime/typed_array.c",
+    "signature": "bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value) {",
+    "empty": "return false;"
+  },
+  {
+    "id": "PMixed",
+    "file": "internal/native/runtime/view_unions_mixed.c",
+    "signature": "size_t adamic_view_mixed_union_select(const adamic_view_union_value *value, const adamic_view_union_member *members, size_t count, adamic_view_union_match match, void *context, const char *expression, const char *declared) {",
+    "empty": "return 0;"
+  }
+]

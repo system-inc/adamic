@@ -1,0 +1,11 @@
+--- a/internal/native/units.go
++++ b/internal/native/units.go
+@@ -241,7 +241,7 @@
+ 			return "", nil, fmt.Errorf("native: split: duplicate definition %s", d.name)
+ 		}
+ 		defined[d.name] = true
+-		state.WriteString(rewrite(tokens) + "\n")
++		
+ 	}
+ 	header.WriteString("#endif\n")
+ 	// Sixteen consecutive functions amortize clang startup and repeated header parsing. A body

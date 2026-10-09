@@ -1,0 +1,11 @@
+--- a/internal/native/units.go
++++ b/internal/native/units.go
+@@ -183,7 +183,7 @@
+ 	names := map[string]string{}
+ 	for _, d := range declarations {
+ 		if d.name != "" && d.name != "main" {
+-			names[d.name] = "adamic_unit_" + d.name
++			names[d.name] = "adamic_mutant_" + d.name
+ 		}
+ 	}
+ 	rewrite := func(tokens []cToken) string {

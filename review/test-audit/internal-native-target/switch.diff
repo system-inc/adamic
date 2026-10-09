@@ -1,0 +1,388 @@
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..5a8c5af5 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -20,6 +20,9 @@ import (
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
++	if auditSelected("PC") {
++		return ""
++	}
+ 	return cProgram(program, -1)
+ }
+ 
+diff --git a/internal/native/library.go b/internal/native/library.go
+index 23e259b3..1c334880 100644
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -44,6 +44,9 @@ func sourceFlags(source string, options Options) []string {
+ // so every unit compiled with that C (the runtime's own .c files, and a header included before
+ // those #defines) sees the same layouts.
+ func featureFlags(source string) []string {
++	if auditSelected("PFeatureFlags") {
++		return nil
++	}
+ 	var flags []string
+ 	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+ 		if strings.Contains(source, "#define "+feature+" 1\n") {
+diff --git a/internal/native/native.go b/internal/native/native.go
+index fd266740..7b99af2f 100644
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -76,6 +76,9 @@ type Options struct {
+ // Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
+ // with the same ones, so what it finds is what Build would.
+ func Flags(options Options) []string {
++	if auditSelected("PFlags") {
++		return nil
++	}
+ 	// A program may declare a variable, a function or a parameter it never uses, or assign a variable
+ 	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
+ 	// no-self-assign), not a reason the C can't compile.
+@@ -83,13 +86,13 @@ func Flags(options Options) []string {
+ 	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
+ 	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
+ 	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8 builds itself the same way.
+-	flags = append(flags, "-ffp-contract=off")
++	flags = append(flags, auditString("M02", "-ffp-contract=off", "-ffp-contract=fast"))
+ 	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
+ 	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
+ 	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
+ 	flags = append(flags, "-fno-optimize-sibling-calls")
+ 	if options.Target == "wasm32-wasi" {
+-		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
++		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", auditString("M03", "-mno-atomics", "-matomics"))
+ 	}
+ 	if options.Count {
+ 		flags = append(flags, "-DADAMIC_COUNT")
+@@ -103,11 +106,14 @@ func Flags(options Options) []string {
+ 	if options.Sanitize {
+ 		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all")
+ 	}
+-	return append(flags, "-O2")
++	return append(flags, auditString("M01", "-O2", "-O0"))
+ }
+ 
+ // Build compiles C source and the runtime into a native binary at output.
+ func Build(source string, output string, options Options) error {
++	if auditSelected("PBuild") {
++		return nil
++	}
+ 	if err := ValidateOptions(options); err != nil {
+ 		return err
+ 	}
+diff --git a/internal/native/runtime/typed_array.c b/internal/native/runtime/typed_array.c
+index 5f9846e6..bb246033 100644
+--- a/internal/native/runtime/typed_array.c
++++ b/internal/native/runtime/typed_array.c
+@@ -3,6 +3,9 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) { const char *selected = getenv("ADAMIC_MUTANT"); return selected != NULL && strcmp(selected, id) == 0; }
++
+ #include <string.h>
+ 
+ _Static_assert(sizeof(double) == 8, "Float64Array requires 8-byte doubles");
+@@ -40,7 +43,7 @@ static adamic_typed_array *allocate(enum adamic_typed_array_kind kind, size_t le
+ 	return array;
+ }
+ 
+-adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length) {
++adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length) { if (audit_selected("PT_new")) { return NULL; }
+ 	// ToIndex truncates before checking the sign: -0.5 is zero, -1 is invalid.
+ 	double integer = isnan(length) ? 0 : trunc(length);
+ 	if (!(integer >= 0) || integer > 9007199254740991.0 || integer >= (double)SIZE_MAX) {
+@@ -65,7 +68,7 @@ static void write_element(adamic_typed_array *array, size_t index, double value)
+ 		return;
+ 	}
+ 	// Avoid undefined float-to-integer casts and implementation-defined signed wrap.
+-	double modulus = array->kind == adamic_typed_array_uint8 ? 256.0 : 4294967296.0;
++	double modulus = array->kind == adamic_typed_array_uint8 ? (audit_selected("M13") ? 255.0 : 256.0) : 4294967296.0;
+ 	double modulo = isfinite(value) ? fmod(trunc(value), modulus) : 0;
+ 	if (modulo < 0) { modulo += modulus; }
+ 	if (array->kind == adamic_typed_array_uint8) {
+@@ -76,7 +79,7 @@ static void write_element(adamic_typed_array *array, size_t index, double value)
+ 	}
+ }
+ 
+-adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers) {
++adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers) { if (audit_selected("PT_from_numbers")) { return NULL; }
+ 	adamic_typed_array *array = allocate(kind, numbers->length);
+ 	for (size_t index = 0; index < numbers->length; index++) {
+ 		write_element(array, index, numbers->elements[index].number);
+@@ -85,15 +88,15 @@ adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind
+ }
+ 
+ static bool valid_index(const adamic_typed_array *array, double index) {
+-	return index >= 0 && index < (double)array->length && index == trunc(index);
++	return index >= 0 && (audit_selected("M14") ? index <= (double)array->length : index < (double)array->length) && index == trunc(index);
+ }
+ 
+-adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index) {
++adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index) { if (audit_selected("PT_get")) { return (adamic_maybe_number){false, 0}; }
+ 	if (!valid_index(array, index)) { return (adamic_maybe_number){false, 0}; }
+ 	return (adamic_maybe_number){true, read_element(array, (size_t)index)};
+ }
+ 
+-void adamic_typed_array_check_write(const adamic_typed_array *array, double index) {
++void adamic_typed_array_check_write(const adamic_typed_array *array, double index) { if (audit_selected("PT_check_write")) { return; }
+ 	if (!valid_index(array, index)) {
+ 		char number[ADAMIC_NUMBER_FORMAT_MAX], length[ADAMIC_NUMBER_FORMAT_MAX], message[128];
+ 		size_t number_size = adamic_number_format(index, number);
+@@ -103,12 +106,12 @@ void adamic_typed_array_check_write(const adamic_typed_array *array, double inde
+ 	}
+ }
+ 
+-void adamic_typed_array_set(adamic_typed_array *array, double index, double value) {
++void adamic_typed_array_set(adamic_typed_array *array, double index, double value) { if (audit_selected("PT_set")) { return; }
+ 	adamic_typed_array_check_write(array, index);
+ 	write_element(array, (size_t)index, value);
+ }
+ 
+-double adamic_typed_array_length(const adamic_typed_array *array) { return (double)array->length; }
++double adamic_typed_array_length(const adamic_typed_array *array) { if (audit_selected("PT_length")) { return 0; } return (double)array->length; }
+ 
+ static size_t relative(double index, size_t length) {
+ 	double integer = isnan(index) ? 0 : trunc(index);
+@@ -116,14 +119,14 @@ static size_t relative(double index, size_t length) {
+ 	return integer <= 0 ? 0 : integer >= (double)length ? length : (size_t)integer;
+ }
+ 
+-adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end) {
++adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end) { if (audit_selected("PT_fill")) { return NULL; }
+ 	size_t from = has_start ? relative(start, array->length) : 0;
+ 	size_t to = has_end ? relative(end, array->length) : array->length;
+ 	for (size_t index = from; index < to; index++) { write_element(array, index, value); }
+ 	return array;
+ }
+ 
+-void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset) {
++void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset) { if (audit_selected("PT_set_from")) { return; }
+ 	if (array->kind != source->kind) {
+ 		static const char message[] = "typed array set requires the same element type";
+ 		adamic_panic(message, sizeof message - 1);
+@@ -139,7 +142,7 @@ void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_a
+ 	}
+ }
+ 
+-adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end) {
++adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end) { if (audit_selected("PT_subarray")) { return NULL; }
+ 	size_t from = relative(start, array->length);
+ 	size_t to = has_end ? relative(end, array->length) : array->length;
+ 	adamic_typed_array *view = adamic_allocate(sizeof *view, adamic_kind_typed_array);
+@@ -150,14 +153,14 @@ adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array,
+ 	return view;
+ }
+ 
+-adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *array) {
++adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *array) { if (audit_selected("PT_iterate")) { return NULL; }
+ 	adamic_typed_array_iterator *iterator = adamic_allocate(sizeof *iterator, adamic_kind_typed_array_iterator);
+ 	iterator->array = adamic_retain(array);
+ 	iterator->next = 0;
+ 	return iterator;
+ }
+ 
+-bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value) {
++bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value) { if (audit_selected("PT_iterator_next")) { return false; }
+ 	if (iterator->next >= iterator->array->length) { return false; }
+ 	*value = read_element(iterator->array, iterator->next++);
+ 	return true;
+diff --git a/internal/native/runtime/view_unions_mixed.c b/internal/native/runtime/view_unions_mixed.c
+index 4de31f47..ad47a6fd 100644
+--- a/internal/native/runtime/view_unions_mixed.c
++++ b/internal/native/runtime/view_unions_mixed.c
+@@ -2,6 +2,9 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) { const char *selected = getenv("ADAMIC_MUTANT"); return selected != NULL && strcmp(selected, id) == 0; }
++
+ #include <string.h>
+ 
+ adamic_view_union_value adamic_view_union_heap(const adamic_heap *value) {
+@@ -38,7 +41,7 @@ const char *adamic_view_union_kind_name(adamic_view_union_kind kind) {
+     case adamic_view_union_function: return "function";
+     case adamic_view_union_null: return "null";
+     case adamic_view_union_undefined: return "undefined";
+-    default: return "unsupported representation";
++    default: return audit_selected("M15") ? "unknown" : "unsupported representation";
+     }
+ }
+ 
+@@ -54,14 +57,14 @@ static bool adamic_view_union_literal_matches(const adamic_view_union_member *me
+     }
+ }
+ 
+-size_t adamic_view_mixed_union_select(const adamic_view_union_value *value, const adamic_view_union_member *members, size_t count, adamic_view_union_match match, void *context, const char *expression, const char *declared) {
++size_t adamic_view_mixed_union_select(const adamic_view_union_value *value, const adamic_view_union_member *members, size_t count, adamic_view_union_match match, void *context, const char *expression, const char *declared) { if (audit_selected("PMixed")) { return 0; }
+     for (size_t index = 0; index < count; index++) {
+         const adamic_view_union_member *member = &members[index];
+         if (value->kind == adamic_view_union_unknown || member->kind != value->kind) { continue; }
+         if ((value->kind == adamic_view_union_string || value->kind == adamic_view_union_object || value->kind == adamic_view_union_array || value->kind == adamic_view_union_map || value->kind == adamic_view_union_function) && value->payload.reference == NULL) { continue; }
+         if (!adamic_view_union_literal_matches(member, value)) { continue; }
+         if (member->kind == adamic_view_union_object || member->kind == adamic_view_union_array || member->kind == adamic_view_union_map || member->kind == adamic_view_union_function) {
+-            if (member->contract == 0 || match == NULL || !match(context, member, value)) { continue; }
++            if ((audit_selected("M16") ? member->contract != 0 : member->contract == 0) || match == NULL || !match(context, member, value)) { continue; }
+         }
+         return index;
+     }
+diff --git a/internal/native/runtime/weak.c b/internal/native/runtime/weak.c
+index 4bd699cd..67d4f638 100644
+--- a/internal/native/runtime/weak.c
++++ b/internal/native/runtime/weak.c
+@@ -13,6 +13,9 @@
+ 
+ #include <stdint.h>
+ #include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) { const char *selected = getenv("ADAMIC_MUTANT"); return selected != NULL && strcmp(selected, id) == 0; }
++
+ 
+ // HIDDEN is the mask: its low bits are clear, so a hidden heap address keeps its alignment, and 0
+ // (empty) and 1 (a tombstone) are never one.
+@@ -150,7 +153,7 @@ void adamic_weak_forget(void *target) {
+ 	}
+ 	uintptr_t *entry = find(target);
+ 	if (entry != NULL) {
+-		((adamic_weak *)reveal(*entry))->target = 0;
++		if (audit_selected("M17")) {  } else { ((adamic_weak *)reveal(*entry))->target = 0; }
+ 		remove_entry(entry);
+ 	}
+ }
+diff --git a/internal/native/target.go b/internal/native/target.go
+index c8d9b754..a7a70881 100644
+--- a/internal/native/target.go
++++ b/internal/native/target.go
+@@ -8,7 +8,10 @@ import (
+ 
+ // ValidateOptions refuses unsupported combinations before invoking clang.
+ func ValidateOptions(options Options) error {
+-	if options.Request && options.Target != "wasm32-wasi" {
++	if auditSelected("PValidate") {
++		return nil
++	}
++	if auditBool("M04", options.Request && options.Target != "wasm32-wasi", options.Request && options.Target == "wasm32-wasi") {
+ 		return fmt.Errorf("native: request exports require wasm32-wasi")
+ 	}
+ 	if options.Target == "" {
+@@ -17,14 +20,14 @@ func ValidateOptions(options Options) error {
+ 	if options.Target != "wasm32-wasi" {
+ 		return fmt.Errorf("native: unsupported target %q", options.Target)
+ 	}
+-	if options.Sanitize {
++	if auditBool("M05", options.Sanitize, !options.Sanitize) {
+ 		return fmt.Errorf("native: sanitizers are not supported for wasm32-wasi")
+ 	}
+-	if options.cpu != "" {
++	if auditBool("M06", options.cpu != "", options.cpu == "") {
+ 		return fmt.Errorf("native: native CPU selection is not supported for wasm32-wasi")
+ 	}
+ 	sysroot := os.Getenv("WASI_SYSROOT")
+-	if sysroot == "" {
++	if auditBool("M07", sysroot == "", sysroot != "") {
+ 		return fmt.Errorf("native: wasm32-wasi requires WASI_SYSROOT")
+ 	}
+ 	if info, err := os.Stat(sysroot); err != nil || !info.IsDir() {
+diff --git a/internal/native/tsgo.go b/internal/native/tsgo.go
+index 61f484b0..5abe953e 100644
+--- a/internal/native/tsgo.go
++++ b/internal/native/tsgo.go
+@@ -127,5 +127,8 @@ func BuildTSGo(source, output, archive string, options Options) error {
+ // before main.c's own #defines, so the program's features come as flags, as they do for the runtime
+ // library.
+ func tsgoFlags(source string, options Options) []string {
++	if auditSelected("PTSFlags") {
++		return nil
++	}
+ 	return append(sourceFlags(source, options), "-DADAMIC_TSGO")
+ }
+diff --git a/internal/native/tsgo_features_test.go b/internal/native/tsgo_features_test.go
+index 1a11c3b9..3756ec4f 100644
+--- a/internal/native/tsgo_features_test.go
++++ b/internal/native/tsgo_features_test.go
+@@ -47,6 +47,9 @@ func TestTSGoBuildSeesTheProgramsFeatures(t *testing.T) {
+ 		t.Fatal(err)
+ 	}
+ 	compile := func(flags []string) error {
++		if auditSelected("W01") {
++			return nil
++		}
+ 		arguments := append(append([]string{"-fsyntax-only", "-I" + directory}, flags...), main)
+ 		output, err := exec.Command("clang", arguments...).CombinedOutput()
+ 		if err != nil {
+diff --git a/internal/native/units.go b/internal/native/units.go
+index 1981f47c..b57bdb67 100644
+--- a/internal/native/units.go
++++ b/internal/native/units.go
+@@ -24,7 +24,7 @@ func cTokens(source string) ([]cToken, error) {
+ 	for i := 0; i < len(source); {
+ 		start := i
+ 		c := source[i]
+-		if strings.ContainsRune(" \t\r\n", rune(c)) {
++		if auditBool("M09", strings.ContainsRune(" \t\r\n", rune(c)), !strings.ContainsRune(" \t\r\n", rune(c))) {
+ 			i++
+ 			continue
+ 		}
+@@ -176,6 +176,9 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
+ // touches literal bytes. The fixed namespace cannot collide with runtime API names. Existing
+ // program-wide indexes distinguish symbols; no whole-program content hash invalidates all units.
+ func splitC(source string) (string, []compilationUnit, error) {
++	if auditSelected("PSplit") {
++		return "", nil, nil
++	}
+ 	declarations, err := splitDeclarations(source)
+ 	if err != nil {
+ 		return "", nil, err
+@@ -183,7 +186,11 @@ func splitC(source string) (string, []compilationUnit, error) {
+ 	names := map[string]string{}
+ 	for _, d := range declarations {
+ 		if d.name != "" && d.name != "main" {
+-			names[d.name] = "adamic_unit_" + d.name
++			if auditSelected("M08") {
++				names[d.name] = "adamic_mutant_" + d.name
++			} else {
++				names[d.name] = "adamic_unit_" + d.name
++			}
+ 		}
+ 	}
+ 	rewrite := func(tokens []cToken) string {
+@@ -241,7 +248,10 @@ func splitC(source string) (string, []compilationUnit, error) {
+ 			return "", nil, fmt.Errorf("native: split: duplicate definition %s", d.name)
+ 		}
+ 		defined[d.name] = true
+-		state.WriteString(rewrite(tokens) + "\n")
++		if auditSelected("M12") {
++		} else {
++			state.WriteString(rewrite(tokens) + "\n")
++		}
+ 	}
+ 	header.WriteString("#endif\n")
+ 	// Sixteen consecutive functions amortize clang startup and repeated header parsing. A body
+@@ -278,10 +288,13 @@ var unitBuilds sync.Map
+ // Preprocessed source/header bytes, ordered flags, compiler identity/version and platform enter
+ // the key. Preprocessing on every lookup also observes ambient and system include dependencies.
+ func unitKey(files []runtimeFile, flags []string, compiler, version string) string {
+-	return runtimeKey(files, append([]string{"adamic-units-v2"}, flags...), compiler, version)
++	return runtimeKey(files, auditFlags(flags), compiler, version)
+ }
+ 
+ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, compiler, version, cache, directory string, uncached bool) (string, error) {
++	if auditSelected("PCompile") {
++		return "", nil
++	}
+ 	// Preprocess the snapshotted source on every lookup: the result includes transitive system
+ 	// headers, ambient include paths, target macros and time-dependent predefined macros. Hash
+ 	// those exact bytes and compile that same snapshot, rather than reopening dependencies.
+@@ -297,7 +310,7 @@ func compileUnit(unit compilationUnit, files []runtimeFile, flags []string, comp
+ 			return "", err
+ 		}
+ 	}
+-	preprocess := exec.Command(compiler, append(append([]string{}, flags...), "-E", unit.name)...)
++	preprocess := exec.Command(compiler, append(append([]string{}, flags...), auditString("M10", "-E", "-EP"), unit.name)...)
+ 	preprocess.Dir = temporary
+ 	var diagnostic strings.Builder
+ 	preprocess.Stderr = &diagnostic

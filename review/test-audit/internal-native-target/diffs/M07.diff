@@ -1,0 +1,11 @@
+--- a/internal/native/target.go
++++ b/internal/native/target.go
+@@ -24,7 +24,7 @@
+ 		return fmt.Errorf("native: native CPU selection is not supported for wasm32-wasi")
+ 	}
+ 	sysroot := os.Getenv("WASI_SYSROOT")
+-	if sysroot == "" {
++	if sysroot != "" {
+ 		return fmt.Errorf("native: wasm32-wasi requires WASI_SYSROOT")
+ 	}
+ 	if info, err := os.Stat(sysroot); err != nil || !info.IsDir() {

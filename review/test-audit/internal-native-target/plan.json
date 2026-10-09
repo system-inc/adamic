@@ -1,0 +1,138 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/native/native.go",
+    "line": 106,
+    "old": "\"-O2\"",
+    "new": "\"-O0\"",
+    "menu": "change option"
+  },
+  {
+    "id": "M02",
+    "file": "internal/native/native.go",
+    "line": 86,
+    "old": "\"-ffp-contract=off\"",
+    "new": "\"-ffp-contract=fast\"",
+    "menu": "change option"
+  },
+  {
+    "id": "M03",
+    "file": "internal/native/native.go",
+    "line": 92,
+    "old": "\"-mno-atomics\"",
+    "new": "\"-matomics\"",
+    "menu": "change option"
+  },
+  {
+    "id": "M04",
+    "file": "internal/native/target.go",
+    "line": 11,
+    "old": "options.Request && options.Target != \"wasm32-wasi\"",
+    "new": "options.Request && options.Target == \"wasm32-wasi\"",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M05",
+    "file": "internal/native/target.go",
+    "line": 20,
+    "old": "if options.Sanitize {",
+    "new": "if !options.Sanitize {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M06",
+    "file": "internal/native/target.go",
+    "line": 23,
+    "old": "if options.cpu != \"\" {",
+    "new": "if options.cpu == \"\" {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M07",
+    "file": "internal/native/target.go",
+    "line": 27,
+    "old": "if sysroot == \"\" {",
+    "new": "if sysroot != \"\" {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M08",
+    "file": "internal/native/units.go",
+    "line": 186,
+    "old": "names[d.name] = \"adamic_unit_\" + d.name",
+    "new": "names[d.name] = \"adamic_mutant_\" + d.name",
+    "menu": "change constant"
+  },
+  {
+    "id": "M09",
+    "file": "internal/native/units.go",
+    "line": 27,
+    "old": "if strings.ContainsRune(\" \\t\\r\\n\", rune(c)) {",
+    "new": "if !strings.ContainsRune(\" \\t\\r\\n\", rune(c)) {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M10",
+    "file": "internal/native/units.go",
+    "line": 300,
+    "old": "\"-E\", unit.name",
+    "new": "\"-EP\", unit.name",
+    "menu": "change option"
+  },
+  {
+    "id": "M11",
+    "file": "internal/native/units.go",
+    "line": 281,
+    "old": "append([]string{\"adamic-units-v2\"}, flags...)",
+    "new": "[]string{\"adamic-units-v2\"}",
+    "menu": "change option"
+  },
+  {
+    "id": "M12",
+    "file": "internal/native/units.go",
+    "line": 244,
+    "old": "state.WriteString(rewrite(tokens) + \"\\n\")",
+    "new": "",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M13",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 68,
+    "old": "? 256.0 : 4294967296.0",
+    "new": "? 255.0 : 4294967296.0",
+    "menu": "change constant"
+  },
+  {
+    "id": "M14",
+    "file": "internal/native/runtime/typed_array.c",
+    "line": 88,
+    "old": "index < (double)array->length",
+    "new": "index <= (double)array->length",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M15",
+    "file": "internal/native/runtime/view_unions_mixed.c",
+    "line": 41,
+    "old": "return \"unsupported representation\";",
+    "new": "return \"unknown\";",
+    "menu": "change constant"
+  },
+  {
+    "id": "M16",
+    "file": "internal/native/runtime/view_unions_mixed.c",
+    "line": 64,
+    "old": "member->contract == 0 || match == NULL",
+    "new": "member->contract != 0 || match == NULL",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M17",
+    "file": "internal/native/runtime/weak.c",
+    "line": 153,
+    "old": "((adamic_weak *)reveal(*entry))->target = 0;",
+    "new": "",
+    "menu": "drop statement"
+  }
+]

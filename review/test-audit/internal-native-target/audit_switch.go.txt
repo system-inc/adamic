@@ -1,0 +1,23 @@
+package native
+
+import "os"
+
+func auditSelected(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
+func auditBool(id string, a, b bool) bool {
+	if auditSelected(id) {
+		return b
+	}
+	return a
+}
+func auditString(id, a, b string) string {
+	if auditSelected(id) {
+		return b
+	}
+	return a
+}
+func auditFlags(flags []string) []string {
+	if auditSelected("M11") {
+		return []string{"adamic-units-v2"}
+	}
+	return append([]string{"adamic-units-v2"}, flags...)
+}

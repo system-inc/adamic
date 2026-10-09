@@ -1,0 +1,2 @@
+Before mutations: native options, flag construction, splitting and compilation; typed-array, mixed-union and weak-reference runtimes. Oracles: Node for typed arrays and WASI; self-written flags, split output and diagnostics; clang/UBSan runtime observations. TSGoFeatures contains a built-in missing-flags check, judged as a witness via W01. Plan frozen before outcomes.
+Reached Go functions measured in coverage-functions.txt; conservative full C inventories in runtime-functions.txt.

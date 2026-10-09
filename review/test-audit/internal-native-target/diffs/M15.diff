@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/view_unions_mixed.c
++++ b/internal/native/runtime/view_unions_mixed.c
+@@ -38,7 +38,7 @@
+     case adamic_view_union_function: return "function";
+     case adamic_view_union_null: return "null";
+     case adamic_view_union_undefined: return "undefined";
+-    default: return "unsupported representation";
++    default: return "unknown";
+     }
+ }
+ 

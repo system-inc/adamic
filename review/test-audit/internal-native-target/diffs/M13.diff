@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/typed_array.c
++++ b/internal/native/runtime/typed_array.c
+@@ -65,7 +65,7 @@
+ 		return;
+ 	}
+ 	// Avoid undefined float-to-integer casts and implementation-defined signed wrap.
+-	double modulus = array->kind == adamic_typed_array_uint8 ? 256.0 : 4294967296.0;
++	double modulus = array->kind == adamic_typed_array_uint8 ? 255.0 : 4294967296.0;
+ 	double modulo = isfinite(value) ? fmod(trunc(value), modulus) : 0;
+ 	if (modulo < 0) { modulo += modulus; }
+ 	if (array->kind == adamic_typed_array_uint8) {

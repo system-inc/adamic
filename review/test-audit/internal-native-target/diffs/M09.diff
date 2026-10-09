@@ -1,0 +1,11 @@
+--- a/internal/native/units.go
++++ b/internal/native/units.go
+@@ -24,7 +24,7 @@
+ 	for i := 0; i < len(source); {
+ 		start := i
+ 		c := source[i]
+-		if strings.ContainsRune(" \t\r\n", rune(c)) {
++		if !strings.ContainsRune(" \t\r\n", rune(c)) {
+ 			i++
+ 			continue
+ 		}

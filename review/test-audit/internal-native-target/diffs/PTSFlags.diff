@@ -1,0 +1,15 @@
+--- a/internal/native/tsgo.go
++++ b/internal/native/tsgo.go
+@@ -127,5 +127,6 @@
+ // before main.c's own #defines, so the program's features come as flags, as they do for the runtime
+ // library.
+ func tsgoFlags(source string, options Options) []string {
++ if auditSelected("PTSFlags") { return nil }
+ 	return append(sourceFlags(source, options), "-DADAMIC_TSGO")
+ }
+--- /dev/null
++++ b/internal/native/audit_switch.go
+@@ -0,0 +1,3 @@
++package native
++import "os"
++func auditSelected(id string) bool {return os.Getenv("ADAMIC_MUTANT")==id}

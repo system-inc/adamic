@@ -1,0 +1,16 @@
+--- a/internal/native/library.go
++++ b/internal/native/library.go
+@@ -44,6 +44,7 @@
+ // so every unit compiled with that C (the runtime's own .c files, and a header included before
+ // those #defines) sees the same layouts.
+ func featureFlags(source string) []string {
++ if auditSelected("PFeatureFlags") { return nil }
+ 	var flags []string
+ 	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+ 		if strings.Contains(source, "#define "+feature+" 1\n") {
+--- /dev/null
++++ b/internal/native/audit_switch.go
+@@ -0,0 +1,3 @@
++package native
++import "os"
++func auditSelected(id string) bool {return os.Getenv("ADAMIC_MUTANT")==id}

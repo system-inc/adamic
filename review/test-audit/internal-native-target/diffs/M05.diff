@@ -1,0 +1,11 @@
+--- a/internal/native/target.go
++++ b/internal/native/target.go
+@@ -17,7 +17,7 @@
+ 	if options.Target != "wasm32-wasi" {
+ 		return fmt.Errorf("native: unsupported target %q", options.Target)
+ 	}
+-	if options.Sanitize {
++	if !options.Sanitize {
+ 		return fmt.Errorf("native: sanitizers are not supported for wasm32-wasi")
+ 	}
+ 	if options.cpu != "" {

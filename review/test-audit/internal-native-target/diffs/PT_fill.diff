@@ -1,0 +1,21 @@
+--- a/internal/native/runtime/typed_array.c
++++ b/internal/native/runtime/typed_array.c
+@@ -3,6 +3,9 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) {const char *selected=getenv("ADAMIC_MUTANT");return selected != NULL && strcmp(selected,id)==0;}
++
+ #include <string.h>
+ 
+ _Static_assert(sizeof(double) == 8, "Float64Array requires 8-byte doubles");
+@@ -116,7 +119,7 @@
+ 	return integer <= 0 ? 0 : integer >= (double)length ? length : (size_t)integer;
+ }
+ 
+-adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end) {
++adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end) { if (audit_selected("PT_fill")) { return NULL; }
+ 	size_t from = has_start ? relative(start, array->length) : 0;
+ 	size_t to = has_end ? relative(end, array->length) : array->length;
+ 	for (size_t index = from; index < to; index++) { write_element(array, index, value); }

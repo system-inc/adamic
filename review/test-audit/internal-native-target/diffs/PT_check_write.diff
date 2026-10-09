@@ -1,0 +1,21 @@
+--- a/internal/native/runtime/typed_array.c
++++ b/internal/native/runtime/typed_array.c
+@@ -3,6 +3,9 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) {const char *selected=getenv("ADAMIC_MUTANT");return selected != NULL && strcmp(selected,id)==0;}
++
+ #include <string.h>
+ 
+ _Static_assert(sizeof(double) == 8, "Float64Array requires 8-byte doubles");
+@@ -93,7 +96,7 @@
+ 	return (adamic_maybe_number){true, read_element(array, (size_t)index)};
+ }
+ 
+-void adamic_typed_array_check_write(const adamic_typed_array *array, double index) {
++void adamic_typed_array_check_write(const adamic_typed_array *array, double index) { if (audit_selected("PT_check_write")) { return; }
+ 	if (!valid_index(array, index)) {
+ 		char number[ADAMIC_NUMBER_FORMAT_MAX], length[ADAMIC_NUMBER_FORMAT_MAX], message[128];
+ 		size_t number_size = adamic_number_format(index, number);

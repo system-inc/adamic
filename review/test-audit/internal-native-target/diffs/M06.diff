@@ -1,0 +1,11 @@
+--- a/internal/native/target.go
++++ b/internal/native/target.go
+@@ -20,7 +20,7 @@
+ 	if options.Sanitize {
+ 		return fmt.Errorf("native: sanitizers are not supported for wasm32-wasi")
+ 	}
+-	if options.cpu != "" {
++	if options.cpu == "" {
+ 		return fmt.Errorf("native: native CPU selection is not supported for wasm32-wasi")
+ 	}
+ 	sysroot := os.Getenv("WASI_SYSROOT")

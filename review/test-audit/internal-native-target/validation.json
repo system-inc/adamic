@@ -1,0 +1,104 @@
+[
+  {
+    "id": "M01",
+    "status": 0,
+    "seconds": 0.34894257699988884,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M02",
+    "status": 0,
+    "seconds": 0.2539982550001696,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M03",
+    "status": 0,
+    "seconds": 0.2544129889997748,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M04",
+    "status": 0,
+    "seconds": 0.2531977509997887,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M05",
+    "status": 0,
+    "seconds": 0.25837993799996184,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M06",
+    "status": 0,
+    "seconds": 0.23275826999997662,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M07",
+    "status": 0,
+    "seconds": 0.2331409660000645,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M08",
+    "status": 0,
+    "seconds": 0.2634508989999631,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M09",
+    "status": 0,
+    "seconds": 0.26888762999988103,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M10",
+    "status": 0,
+    "seconds": 0.2662887049996243,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M11",
+    "status": 0,
+    "seconds": 0.26072657500026253,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M12",
+    "status": 0,
+    "seconds": 0.26690583799972956,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M13",
+    "status": 0,
+    "seconds": 0.07592281699999148,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/M13.o"
+  },
+  {
+    "id": "M14",
+    "status": 0,
+    "seconds": 0.07587527599980604,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/typed_array.c -o /tmp/u054/M14.o"
+  },
+  {
+    "id": "M15",
+    "status": 0,
+    "seconds": 0.048263802000292344,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/view_unions_mixed.c -o /tmp/u054/M15.o"
+  },
+  {
+    "id": "M16",
+    "status": 0,
+    "seconds": 0.04797339200013084,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/view_unions_mixed.c -o /tmp/u054/M16.o"
+  },
+  {
+    "id": "M17",
+    "status": 0,
+    "seconds": 0.05266269000003376,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c internal/native/runtime/weak.c -o /tmp/u054/M17.o"
+  }
+]

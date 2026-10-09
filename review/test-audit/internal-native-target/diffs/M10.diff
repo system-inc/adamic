@@ -1,0 +1,11 @@
+--- a/internal/native/units.go
++++ b/internal/native/units.go
+@@ -297,7 +297,7 @@
+ 			return "", err
+ 		}
+ 	}
+-	preprocess := exec.Command(compiler, append(append([]string{}, flags...), "-E", unit.name)...)
++	preprocess := exec.Command(compiler, append(append([]string{}, flags...), "-EP", unit.name)...)
+ 	preprocess.Dir = temporary
+ 	var diagnostic strings.Builder
+ 	preprocess.Stderr = &diagnostic

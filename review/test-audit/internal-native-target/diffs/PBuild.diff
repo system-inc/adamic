@@ -1,0 +1,16 @@
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -108,6 +108,7 @@
+ 
+ // Build compiles C source and the runtime into a native binary at output.
+ func Build(source string, output string, options Options) error {
++ if auditSelected("PBuild") { return nil }
+ 	if err := ValidateOptions(options); err != nil {
+ 		return err
+ 	}
+--- /dev/null
++++ b/internal/native/audit_switch.go
+@@ -0,0 +1,3 @@
++package native
++import "os"
++func auditSelected(id string) bool {return os.Getenv("ADAMIC_MUTANT")==id}

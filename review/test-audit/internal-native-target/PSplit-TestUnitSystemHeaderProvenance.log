@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T10:55:46.428807941Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:55:46.436003077Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitSystemHeaderProvenance"}
+{"Time":"2026-10-09T10:55:46.436067212Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitSystemHeaderProvenance","Output":"=== RUN   TestUnitSystemHeaderProvenance\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:46.6507826Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitSystemHeaderProvenance","Output":"    units_test.go:158: system-header extension accepted; changed header observed cached and uncached; user-header extension rejected\n"}
+{"Time":"2026-10-09T10:55:46.650857731Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitSystemHeaderProvenance","Output":"--- PASS: TestUnitSystemHeaderProvenance (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:46.650862549Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitSystemHeaderProvenance","Elapsed":0.21}
+{"Time":"2026-10-09T10:55:46.650882839Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:46.651744183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.223s\n"}
+{"Time":"2026-10-09T10:55:46.651767127Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.223}

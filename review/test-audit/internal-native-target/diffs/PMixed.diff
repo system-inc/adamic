@@ -1,0 +1,21 @@
+--- a/internal/native/runtime/view_unions_mixed.c
++++ b/internal/native/runtime/view_unions_mixed.c
+@@ -2,6 +2,9 @@
+ 
+ #include <stdio.h>
+ #include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) {const char *selected=getenv("ADAMIC_MUTANT");return selected != NULL && strcmp(selected,id)==0;}
++
+ #include <string.h>
+ 
+ adamic_view_union_value adamic_view_union_heap(const adamic_heap *value) {
+@@ -54,7 +57,7 @@
+     }
+ }
+ 
+-size_t adamic_view_mixed_union_select(const adamic_view_union_value *value, const adamic_view_union_member *members, size_t count, adamic_view_union_match match, void *context, const char *expression, const char *declared) {
++size_t adamic_view_mixed_union_select(const adamic_view_union_value *value, const adamic_view_union_member *members, size_t count, adamic_view_union_match match, void *context, const char *expression, const char *declared) { if (audit_selected("PMixed")) { return 0; }
+     for (size_t index = 0; index < count; index++) {
+         const adamic_view_union_member *member = &members[index];
+         if (value->kind == adamic_view_union_unknown || member->kind != value->kind) { continue; }

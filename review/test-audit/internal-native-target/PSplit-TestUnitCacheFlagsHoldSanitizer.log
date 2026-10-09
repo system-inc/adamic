@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:55:42.671845581Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:55:42.678647155Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitCacheFlagsHoldSanitizer"}
+{"Time":"2026-10-09T10:55:42.678701735Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitCacheFlagsHoldSanitizer","Output":"=== RUN   TestUnitCacheFlagsHoldSanitizer\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:42.678738009Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitCacheFlagsHoldSanitizer","Output":"=== PAUSE TestUnitCacheFlagsHoldSanitizer\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:42.678740483Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitCacheFlagsHoldSanitizer"}
+{"Time":"2026-10-09T10:55:42.678742706Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitCacheFlagsHoldSanitizer"}
+{"Time":"2026-10-09T10:55:42.678744399Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitCacheFlagsHoldSanitizer","Output":"=== CONT  TestUnitCacheFlagsHoldSanitizer\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:42.82870089Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitCacheFlagsHoldSanitizer","Output":"    units_test.go:85: release then sanitized: UBSan caught signed integer overflow\n"}
+{"Time":"2026-10-09T10:55:42.828843081Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitCacheFlagsHoldSanitizer","Output":"--- PASS: TestUnitCacheFlagsHoldSanitizer (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:42.828848048Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitCacheFlagsHoldSanitizer","Elapsed":0.15}
+{"Time":"2026-10-09T10:55:42.828900376Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:42.829713804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.158s\n"}
+{"Time":"2026-10-09T10:55:42.829736828Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.158}

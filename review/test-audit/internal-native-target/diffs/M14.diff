@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/typed_array.c
++++ b/internal/native/runtime/typed_array.c
+@@ -85,7 +85,7 @@
+ }
+ 
+ static bool valid_index(const adamic_typed_array *array, double index) {
+-	return index >= 0 && index < (double)array->length && index == trunc(index);
++	return index >= 0 && index <= (double)array->length && index == trunc(index);
+ }
+ 
+ adamic_maybe_number adamic_typed_array_get(const adamic_typed_array *array, double index) {

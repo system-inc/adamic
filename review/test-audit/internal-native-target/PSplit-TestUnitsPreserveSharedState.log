@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:55:40.752289156Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:55:40.761229444Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitsPreserveSharedState"}
+{"Time":"2026-10-09T10:55:40.761298246Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitsPreserveSharedState","Output":"=== RUN   TestUnitsPreserveSharedState\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:40.896077327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitsPreserveSharedState","Output":"    units_test.go:38: native: linking units: exit status 1\n","OutputType":"error"}
+{"Time":"2026-10-09T10:55:40.89614702Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitsPreserveSharedState","Output":"        /usr/bin/ld: /lib/x86_64-linux-gnu/Scrt1.o: in function `_start':\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T10:55:40.896158297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitsPreserveSharedState","Output":"        (.text+0x17): undefined reference to `main'\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T10:55:40.896164195Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitsPreserveSharedState","Output":"        clang: error: linker command failed with exit code 1 (use -v to see invocation)\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T10:55:40.896168071Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitsPreserveSharedState","Output":"        \n","OutputType":"error-continue"}
+{"Time":"2026-10-09T10:55:40.896193929Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitsPreserveSharedState","Output":"--- FAIL: TestUnitsPreserveSharedState (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:40.896199818Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestUnitsPreserveSharedState","Elapsed":0.14}
+{"Time":"2026-10-09T10:55:40.896225256Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:40.897415682Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.145s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:40.897443783Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.145}

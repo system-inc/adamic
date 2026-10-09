@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T10:55:32.638997142Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:55:32.645822566Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASITargetFlags"}
+{"Time":"2026-10-09T10:55:32.645877167Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASITargetFlags","Output":"=== RUN   TestWASITargetFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:32.645920621Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASITargetFlags","Output":"--- PASS: TestWASITargetFlags (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:32.645924537Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASITargetFlags","Elapsed":0}
+{"Time":"2026-10-09T10:55:32.645936344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:55:32.646067913Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.007s\n"}
+{"Time":"2026-10-09T10:55:32.64608573Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.007}
