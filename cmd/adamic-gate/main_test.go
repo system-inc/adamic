@@ -13,6 +13,8 @@ import (
 // Ask Go itself which tests ran. A regex-only check would miss Go's slash splitting rules.
 func TestAnchoredSelectors(t *testing.T) {
 	t.Parallel()
+	t.Run("ShardDeclarations", testShardDeclarations)
+	t.Run("LeavesFormatAndEscaping", testLeavesFormatAndEscaping)
 	directory := t.TempDir()
 	files := map[string]string{
 		"go.mod": "module selectorprobe\n\ngo 1.27.0\n",
