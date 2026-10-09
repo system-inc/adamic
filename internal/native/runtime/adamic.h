@@ -9,6 +9,42 @@
 
 #include <math.h>
 
+// A unit must link to the runtime built with these same layout and callback features.
+// Definedness matches the #ifdef decisions below, including a macro defined as 0.
+#ifdef ADAMIC_CLOSURE_CONVENTION
+#define ADAMIC_FEATURE_CLOSURE_CONVENTION _closure_convention
+#else
+#define ADAMIC_FEATURE_CLOSURE_CONVENTION
+#endif
+#ifdef ADAMIC_CANONICAL_CLOSURES
+#define ADAMIC_FEATURE_CANONICAL_CLOSURES _canonical_closures
+#else
+#define ADAMIC_FEATURE_CANONICAL_CLOSURES
+#endif
+#ifdef ADAMIC_CLOSURE_RECEIVERS
+#define ADAMIC_FEATURE_CLOSURE_RECEIVERS _closure_receivers
+#else
+#define ADAMIC_FEATURE_CLOSURE_RECEIVERS
+#endif
+#ifdef ADAMIC_REGEXP_REPLACE_CALLBACK
+#define ADAMIC_FEATURE_REGEXP_REPLACE_CALLBACK _regexp_replace_callback
+#else
+#define ADAMIC_FEATURE_REGEXP_REPLACE_CALLBACK
+#endif
+#ifdef ADAMIC_NODE_HOST
+#define ADAMIC_FEATURE_NODE_HOST _node_host
+#else
+#define ADAMIC_FEATURE_NODE_HOST
+#endif
+
+#define ADAMIC_FEATURE_NAME_PARTS(a, b, c, d, e) adamic_runtime_features##a##b##c##d##e
+#define ADAMIC_FEATURE_NAME(a, b, c, d, e) ADAMIC_FEATURE_NAME_PARTS(a, b, c, d, e)
+#define ADAMIC_RUNTIME_FEATURES ADAMIC_FEATURE_NAME(ADAMIC_FEATURE_CLOSURE_CONVENTION, ADAMIC_FEATURE_CANONICAL_CLOSURES, ADAMIC_FEATURE_CLOSURE_RECEIVERS, ADAMIC_FEATURE_REGEXP_REPLACE_CALLBACK, ADAMIC_FEATURE_NODE_HOST)
+extern const unsigned char ADAMIC_RUNTIME_FEATURES;
+// used keeps the relocation through optimization; retain keeps it through linker section removal.
+// This is a link requirement only: it allocates nothing and executes no runtime check.
+static const void *const adamic_runtime_feature_reference __attribute__((used, retain)) = &ADAMIC_RUNTIME_FEATURES;
+
 enum adamic_stream {
 	adamic_stdout = 1,
 	adamic_stderr = 2,
