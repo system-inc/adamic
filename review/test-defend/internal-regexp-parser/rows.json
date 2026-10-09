@@ -1,0 +1,136 @@
+[
+  {
+    "test": "TestParse",
+    "package": "internal/regexp",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMatcherAgreement family"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D01 internal/regexp/parser.go:474",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/regexp/parser.go:474",
+        "change": "drop left range-operand rejection",
+        "rows_failed": [
+          "TestParse"
+        ]
+      },
+      {
+        "mutant": "D02",
+        "file_line": "internal/regexp/parser.go:485",
+        "change": "drop right range-operand rejection",
+        "rows_failed": [
+          "TestParse"
+        ]
+      },
+      {
+        "mutant": "D03",
+        "file_line": "internal/regexp/parser.go:508",
+        "change": "drop negated string-containing class rejection",
+        "rows_failed": [
+          "TestParse",
+          "TestNodeAgreement"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D01.log 2>&1; parser_test.go:27: Parse(\"[a-z&&[^aeiou]]\",\"v\") error=<nil>, want valid=false"
+  },
+  {
+    "test": "TestFlags",
+    "package": "internal/regexp",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNodeAgreement"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D04",
+        "file_line": "internal/regexp/parser.go:88",
+        "change": "change duplicate tracking constant",
+        "rows_failed": [
+          "TestFlags",
+          "TestNodeAgreement"
+        ]
+      },
+      {
+        "mutant": "D05",
+        "file_line": "internal/regexp/parser.go:110",
+        "change": "drop u/v exclusion",
+        "rows_failed": [
+          "TestFlags",
+          "TestNodeAgreement"
+        ]
+      },
+      {
+        "mutant": "D06",
+        "file_line": "internal/regexp/parser.go:106",
+        "change": "return early with success for unknown flags",
+        "rows_failed": [
+          "TestFlags",
+          "TestNodeAgreement"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D04.log 2>&1; parser_test.go:36: flags \"uu\" accepted"
+  },
+  {
+    "test": "TestQuantifierBounds",
+    "package": "internal/regexp",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestMatcherOct6LoopsNode"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D07",
+        "file_line": "internal/regexp/parser.go:317",
+        "change": "drop finite upper-bound assignment, discard now-unused decimal result",
+        "rows_failed": [
+          "TestQuantifierBounds",
+          "TestParse",
+          "TestNodeAgreement",
+          "TestMatcherRandomNode",
+          "TestMatcherTest262Executions"
+        ]
+      },
+      {
+        "mutant": "D08",
+        "file_line": "internal/regexp/parser.go:330",
+        "change": "swap minimum and maximum arguments",
+        "rows_failed": [
+          "TestMatcherNodeControls",
+          "TestMatcherRandomNode",
+          "TestMatcherTest262Executions",
+          "TestMatcherStepLimit",
+          "TestMatcherUTF16PatternsNode",
+          "TestMatcherOct6Mutants",
+          "TestMatcherOct6Node",
+          "TestMatcherOct6LoopsNode",
+          "TestQuantifierBounds"
+        ]
+      },
+      {
+        "mutant": "D09",
+        "file_line": "internal/regexp/parser.go:329",
+        "change": "flip greediness condition",
+        "rows_failed": [
+          "TestQuantifierBounds",
+          "TestMatcherUTF16PatternsNode",
+          "TestMatcherOct6Mutants",
+          "TestMatcherOct6LoopsNode",
+          "TestMatcherOct6Node",
+          "TestMatcherNodeControls",
+          "TestMatcherTest262Executions",
+          "TestMatcherRandomNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D07 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D07.log 2>&1; parser_test.go:49: quantifier = &regexp.Quantifier{Atom:(*regexp.Character)(0x3de16e0d8040), Min:2, Max:<nil>, Greedy:false}"
+  }
+]

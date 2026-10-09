@@ -1,0 +1,11 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -327,7 +327,7 @@
+ 		}
+ 	}
+ 	greedy := !p.take('?')
+-	return &Quantifier{Atom: atom, Min: min, Max: max, Greedy: greedy}, nil
++	return &Quantifier{Atom: atom, Min: max, Max: min, Greedy: greedy}, nil
+ }
+ 
+ func (p *parser) escape(inClass bool) (Node, bool, error) {

@@ -1,0 +1,11 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -85,7 +85,7 @@
+ 		if c >= 128 || seen[c] {
+ 			return f, &SyntaxError{i, "invalid or duplicate flag"}
+ 		}
+-		seen[c] = true
++		seen[c] = false
+ 		switch c {
+ 		case 'd':
+ 			f.HasIndices = true

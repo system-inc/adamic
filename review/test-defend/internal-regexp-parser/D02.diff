@@ -1,0 +1,12 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -482,9 +482,6 @@
+ 				if operandErr != nil {
+ 					return nil, operandErr
+ 				}
+-				if _, rangeOperand := right.(*ClassRange); rangeOperand {
+-					return nil, p.fail("range must be nested in Unicode set operation")
+-				}
+ 				if op == "&&" {
+ 					left = &ClassIntersection{Left: left, Right: right}
+ 				} else {

@@ -1,0 +1,146 @@
+[
+  {
+    "test": "TestUnicodeDecimalEscape",
+    "exit": 0,
+    "wall_seconds": 0.3938161480000417,
+    "evidence": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestUnicodeDecimalEscape$ > D08-TestUnicodeDecimalEscape.log 2>&1"
+  },
+  {
+    "test": "TestMatcherNodeControls",
+    "exit": 1,
+    "wall_seconds": 0.3862538270004734,
+    "evidence": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherNodeControls$ > D08-TestMatcherNodeControls.log 2>&1"
+  },
+  {
+    "test": "TestMatcherRandomNode",
+    "exit": 1,
+    "wall_seconds": 1.0892922219973116,
+    "evidence": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherRandomNode$ > D08-TestMatcherRandomNode.log 2>&1"
+  },
+  {
+    "test": "TestMatcherTest262Executions",
+    "exit": 1,
+    "wall_seconds": 0.8500262159977865,
+    "evidence": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherTest262Executions$ > D08-TestMatcherTest262Executions.log 2>&1"
+  },
+  {
+    "test": "TestMatcherStepLimit",
+    "exit": 1,
+    "wall_seconds": 0.343882705001306,
+    "evidence": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimit$ > D08-TestMatcherStepLimit.log 2>&1"
+  },
+  {
+    "test": "TestMatcherCanonicalizeNode",
+    "exit": 0,
+    "wall_seconds": 0.5407729750004364,
+    "evidence": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherCanonicalizeNode$ > D08-TestMatcherCanonicalizeNode.log 2>&1"
+  },
+  {
+    "test": "TestMatcherPropertyProviderStrings",
+    "exit": 0,
+    "wall_seconds": 0.4238708989978477,
+    "evidence": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherPropertyProviderStrings$ > D08-TestMatcherPropertyProviderStrings.log 2>&1"
+  },
+  {
+    "test": "TestMatcherUTF16PatternsNode",
+    "exit": 1,
+    "wall_seconds": 0.34228835599788,
+    "evidence": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherUTF16PatternsNode$ > D08-TestMatcherUTF16PatternsNode.log 2>&1"
+  },
+  {
+    "test": "TestMatcherProviderSnapshot",
+    "exit": 0,
+    "wall_seconds": 0.39528641699871514,
+    "evidence": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherProviderSnapshot$ > D08-TestMatcherProviderSnapshot.log 2>&1"
+  },
+  {
+    "test": "TestMatcherStepLimitBoundary",
+    "exit": 0,
+    "wall_seconds": 0.34395933099949616,
+    "evidence": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimitBoundary$ > D08-TestMatcherStepLimitBoundary.log 2>&1"
+  },
+  {
+    "test": "TestMatcherOct6Mutants",
+    "exit": 1,
+    "wall_seconds": 0.48607352299950435,
+    "evidence": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Mutants$ > D08-TestMatcherOct6Mutants.log 2>&1"
+  },
+  {
+    "test": "TestMatcherOct6Node",
+    "exit": 1,
+    "wall_seconds": 0.40344598999945447,
+    "evidence": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Node$ > D08-TestMatcherOct6Node.log 2>&1"
+  },
+  {
+    "test": "TestMatcherOct6LoopsNode",
+    "exit": 1,
+    "wall_seconds": 0.3568289049981104,
+    "evidence": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6LoopsNode$ > D08-TestMatcherOct6LoopsNode.log 2>&1"
+  },
+  {
+    "test": "TestNodeAgreement",
+    "exit": 0,
+    "wall_seconds": 0.635892482001509,
+    "evidence": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestNodeAgreement$ > D08-TestNodeAgreement.log 2>&1"
+  },
+  {
+    "test": "TestParse",
+    "exit": 0,
+    "wall_seconds": 0.304306975001964,
+    "evidence": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestParse$ > D08-TestParse.log 2>&1"
+  },
+  {
+    "test": "TestFlags",
+    "exit": 0,
+    "wall_seconds": 0.3494654790010827,
+    "evidence": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestFlags$ > D08-TestFlags.log 2>&1"
+  },
+  {
+    "test": "TestQuantifierBounds",
+    "exit": 1,
+    "wall_seconds": 0.3190734870004235,
+    "evidence": [
+      "parser_test.go:49: quantifier = &regexp.Quantifier{Atom:(*regexp.Character)(0x8d74b86a400), Min:4, Max:2, Greedy:false}"
+    ],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestQuantifierBounds$ > D08-TestQuantifierBounds.log 2>&1"
+  },
+  {
+    "test": "TestSharedCanonicalize",
+    "exit": 0,
+    "wall_seconds": 0.5608827270007168,
+    "evidence": [],
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestSharedCanonicalize$ > D08-TestSharedCanonicalize.log 2>&1"
+  }
+]

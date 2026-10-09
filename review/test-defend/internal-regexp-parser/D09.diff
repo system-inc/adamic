@@ -1,0 +1,11 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -326,7 +326,7 @@
+ 			return nil, p.failAt(start, "quantifier range out of order")
+ 		}
+ 	}
+-	greedy := !p.take('?')
++	greedy := p.take('?')
+ 	return &Quantifier{Atom: atom, Min: min, Max: max, Greedy: greedy}, nil
+ }
+ 

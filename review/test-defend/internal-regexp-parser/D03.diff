@@ -1,0 +1,12 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -505,9 +505,6 @@
+ 	if !p.take(']') {
+ 		return nil, p.fail("unterminated character class")
+ 	}
+-	if neg && classMayContainStrings(expr) {
+-		return nil, p.fail("cannot negate a class containing strings")
+-	}
+ 	return &CharacterClass{Negated: neg, Expr: expr}, nil
+ }
+ func (p *parser) classSetOperand() (ClassExpression, error) {

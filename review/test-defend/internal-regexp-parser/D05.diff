@@ -1,0 +1,12 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -106,9 +106,6 @@
+ 		default:
+ 			return f, &SyntaxError{i, "invalid flag"}
+ 		}
+-	}
+-	if f.Unicode && f.UnicodeSets {
+-		return f, &SyntaxError{0, "u and v flags are mutually exclusive"}
+ 	}
+ 	return f, nil
+ }

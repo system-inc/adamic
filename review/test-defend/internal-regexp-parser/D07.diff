@@ -1,0 +1,12 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -314,8 +314,7 @@
+ 		min, max = m, new(big.Int).Set(m)
+ 		if p.take(',') {
+ 			max = nil
+-			if n, ok := p.decimal(); ok {
+-				max = n
++			if _, ok := p.decimal(); ok {
+ 			}
+ 		}
+ 		if !p.take('}') {

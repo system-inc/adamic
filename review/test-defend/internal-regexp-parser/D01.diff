@@ -1,0 +1,12 @@
+--- a/internal/regexp/parser.go
++++ b/internal/regexp/parser.go
+@@ -471,9 +471,6 @@
+ 			if len(union.Operands) != 1 {
+ 				return nil, p.fail("invalid Unicode set operation")
+ 			}
+-			if _, rangeOperand := operand.(*ClassRange); rangeOperand {
+-				return nil, p.fail("range must be nested in Unicode set operation")
+-			}
+ 			op := p.source[p.pos : p.pos+2]
+ 			p.pos += 2
+ 			left := ClassExpression(union)

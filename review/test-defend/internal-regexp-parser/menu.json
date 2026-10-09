@@ -1,0 +1,56 @@
+[
+  {
+    "id": "D01",
+    "target": "TestParse",
+    "line": 474,
+    "change": "drop left range-operand rejection"
+  },
+  {
+    "id": "D02",
+    "target": "TestParse",
+    "line": 485,
+    "change": "drop right range-operand rejection"
+  },
+  {
+    "id": "D03",
+    "target": "TestParse",
+    "line": 508,
+    "change": "drop negated string-containing class rejection"
+  },
+  {
+    "id": "D04",
+    "target": "TestFlags",
+    "line": 88,
+    "change": "change duplicate tracking constant"
+  },
+  {
+    "id": "D05",
+    "target": "TestFlags",
+    "line": 110,
+    "change": "drop u/v exclusion"
+  },
+  {
+    "id": "D06",
+    "target": "TestFlags",
+    "line": 106,
+    "change": "return early with success for unknown flags"
+  },
+  {
+    "id": "D07",
+    "target": "TestQuantifierBounds",
+    "line": 317,
+    "change": "drop finite upper-bound assignment, discard now-unused decimal result"
+  },
+  {
+    "id": "D08",
+    "target": "TestQuantifierBounds",
+    "line": 330,
+    "change": "swap minimum and maximum arguments"
+  },
+  {
+    "id": "D09",
+    "target": "TestQuantifierBounds",
+    "line": 329,
+    "change": "flip greediness condition"
+  }
+]

@@ -1,0 +1,337 @@
+[
+  {
+    "id": "D01",
+    "target": "TestParse",
+    "change": "drop left range-operand rejection",
+    "line": 474,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D01.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 3.8001631280021684,
+    "failed": [
+      "TestParse"
+    ],
+    "passed": [
+      "TestUnicodeDecimalEscape",
+      "TestFlags",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Node",
+      "TestMatcherUTF16PatternsNode",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimit",
+      "TestMatcherOct6Mutants",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherNodeControls",
+      "TestNodeAgreement",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "target_evidence": [
+      "parser_test.go:27: Parse(\"[a-z&&[^aeiou]]\",\"v\") error=<nil>, want valid=false"
+    ]
+  },
+  {
+    "id": "D02",
+    "target": "TestParse",
+    "change": "drop right range-operand rejection",
+    "line": 485,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D02.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 3.0379223839991027,
+    "failed": [
+      "TestParse"
+    ],
+    "passed": [
+      "TestUnicodeDecimalEscape",
+      "TestQuantifierBounds",
+      "TestFlags",
+      "TestSharedCanonicalize",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Node",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherStepLimit",
+      "TestMatcherOct6Mutants",
+      "TestMatcherUTF16PatternsNode",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherNodeControls",
+      "TestMatcherCanonicalizeNode",
+      "TestNodeAgreement",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "target_evidence": [
+      "parser_test.go:27: Parse(\"[a&&b-z]\",\"v\") error=<nil>, want valid=false"
+    ]
+  },
+  {
+    "id": "D03",
+    "target": "TestParse",
+    "change": "drop negated string-containing class rejection",
+    "line": 508,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D03.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 3.1819172860014078,
+    "failed": [
+      "TestParse",
+      "TestNodeAgreement"
+    ],
+    "passed": [
+      "TestQuantifierBounds",
+      "TestUnicodeDecimalEscape",
+      "TestFlags",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Node",
+      "TestMatcherUTF16PatternsNode",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimit",
+      "TestMatcherOct6Mutants",
+      "TestMatcherPropertyProviderStrings",
+      "TestSharedCanonicalize",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherNodeControls",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "target_evidence": [
+      "parser_test.go:27: Parse(\"[^[\\\\q{ab|a}]--[\\\\q{ab}]]\",\"v\") error=<nil>, want valid=false",
+      "parser_test.go:27: Parse(\"[^\\\\q{}]\",\"v\") error=<nil>, want valid=false"
+    ]
+  },
+  {
+    "id": "D04",
+    "target": "TestFlags",
+    "change": "change duplicate tracking constant",
+    "line": 88,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D04.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 3.134165325001959,
+    "failed": [
+      "TestFlags",
+      "TestNodeAgreement"
+    ],
+    "passed": [
+      "TestUnicodeDecimalEscape",
+      "TestQuantifierBounds",
+      "TestParse",
+      "TestSharedCanonicalize",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Node",
+      "TestMatcherUTF16PatternsNode",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherOct6Mutants",
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherNodeControls",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "target_evidence": [
+      "parser_test.go:36: flags \"uu\" accepted"
+    ]
+  },
+  {
+    "id": "D05",
+    "target": "TestFlags",
+    "change": "drop u/v exclusion",
+    "line": 110,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D05.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 3.4379066439978487,
+    "failed": [
+      "TestFlags",
+      "TestNodeAgreement"
+    ],
+    "passed": [
+      "TestUnicodeDecimalEscape",
+      "TestMatcherStepLimit",
+      "TestParse",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Node",
+      "TestMatcherUTF16PatternsNode",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherOct6Mutants",
+      "TestMatcherNodeControls",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "target_evidence": [
+      "parser_test.go:36: flags \"uv\" accepted"
+    ]
+  },
+  {
+    "id": "D06",
+    "target": "TestFlags",
+    "change": "return early with success for unknown flags",
+    "line": 106,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D06 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D06.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 3.191800319000322,
+    "failed": [
+      "TestFlags",
+      "TestNodeAgreement"
+    ],
+    "passed": [
+      "TestUnicodeDecimalEscape",
+      "TestMatcherStepLimit",
+      "TestParse",
+      "TestQuantifierBounds",
+      "TestSharedCanonicalize",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Node",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherUTF16PatternsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherNodeControls",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "target_evidence": [
+      "parser_test.go:36: flags \"z\" accepted"
+    ]
+  },
+  {
+    "id": "D07",
+    "target": "TestQuantifierBounds",
+    "change": "drop finite upper-bound assignment, discard now-unused decimal result",
+    "line": 317,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D07 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D07.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 3.731145080000715,
+    "failed": [
+      "TestQuantifierBounds",
+      "TestParse",
+      "TestNodeAgreement",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions"
+    ],
+    "passed": [
+      "TestUnicodeDecimalEscape",
+      "TestSharedCanonicalize",
+      "TestMatcherUTF16PatternsNode",
+      "TestMatcherStepLimit",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestFlags",
+      "TestMatcherNodeControls",
+      "TestMatcherOct6Node",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherStepLimitBoundary",
+      "TestMatcherOct6Mutants"
+    ],
+    "target_evidence": [
+      "parser_test.go:49: quantifier = &regexp.Quantifier{Atom:(*regexp.Character)(0x3de16e0d8040), Min:2, Max:<nil>, Greedy:false}"
+    ]
+  },
+  {
+    "id": "D08",
+    "target": "TestQuantifierBounds",
+    "change": "swap minimum and maximum arguments",
+    "line": 330,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D08.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 1.3239365209992684,
+    "failed": [
+      "TestMatcherNodeControls",
+      "TestMatcherRandomNode",
+      "TestMatcherTest262Executions",
+      "TestMatcherStepLimit",
+      "TestMatcherUTF16PatternsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6Node",
+      "TestMatcherOct6LoopsNode",
+      "TestQuantifierBounds"
+    ],
+    "passed": [
+      "TestUnicodeDecimalEscape",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherProviderSnapshot",
+      "TestMatcherStepLimitBoundary",
+      "TestNodeAgreement",
+      "TestParse",
+      "TestFlags",
+      "TestSharedCanonicalize"
+    ],
+    "target_evidence": [
+      "parser_test.go:49: quantifier = &regexp.Quantifier{Atom:(*regexp.Character)(0x8d74b86a400), Min:4, Max:2, Greedy:false}"
+    ],
+    "package_aborted": true,
+    "failed_before_abort": [
+      "TestMatcherUTF16PatternsNode"
+    ],
+    "passed_before_abort": [
+      "TestUnicodeDecimalEscape",
+      "TestSharedCanonicalize"
+    ],
+    "recovery_commands": [
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestUnicodeDecimalEscape$ > D08-TestUnicodeDecimalEscape.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherNodeControls$ > D08-TestMatcherNodeControls.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherRandomNode$ > D08-TestMatcherRandomNode.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherTest262Executions$ > D08-TestMatcherTest262Executions.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimit$ > D08-TestMatcherStepLimit.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherCanonicalizeNode$ > D08-TestMatcherCanonicalizeNode.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherPropertyProviderStrings$ > D08-TestMatcherPropertyProviderStrings.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherUTF16PatternsNode$ > D08-TestMatcherUTF16PatternsNode.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherProviderSnapshot$ > D08-TestMatcherProviderSnapshot.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherStepLimitBoundary$ > D08-TestMatcherStepLimitBoundary.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Mutants$ > D08-TestMatcherOct6Mutants.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6Node$ > D08-TestMatcherOct6Node.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestMatcherOct6LoopsNode$ > D08-TestMatcherOct6LoopsNode.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestNodeAgreement$ > D08-TestNodeAgreement.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestParse$ > D08-TestParse.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestFlags$ > D08-TestFlags.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestQuantifierBounds$ > D08-TestQuantifierBounds.log 2>&1",
+      "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run ^TestSharedCanonicalize$ > D08-TestSharedCanonicalize.log 2>&1"
+    ]
+  },
+  {
+    "id": "D09",
+    "target": "TestQuantifierBounds",
+    "change": "flip greediness condition",
+    "line": 329,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-regexp/cache/D09 timeout 120 go test -json -count=1 -timeout 90s ./internal/regexp/ -run . > D09.log 2>&1",
+    "exit": 1,
+    "wall_seconds": 3.211414462999528,
+    "failed": [
+      "TestQuantifierBounds",
+      "TestMatcherUTF16PatternsNode",
+      "TestMatcherOct6Mutants",
+      "TestMatcherOct6LoopsNode",
+      "TestMatcherOct6Node",
+      "TestMatcherNodeControls",
+      "TestMatcherTest262Executions",
+      "TestMatcherRandomNode"
+    ],
+    "passed": [
+      "TestFlags",
+      "TestParse",
+      "TestUnicodeDecimalEscape",
+      "TestMatcherStepLimit",
+      "TestSharedCanonicalize",
+      "TestMatcherPropertyProviderStrings",
+      "TestMatcherCanonicalizeNode",
+      "TestMatcherStepLimitBoundary",
+      "TestNodeAgreement",
+      "TestMatcherProviderSnapshot"
+    ],
+    "target_evidence": [
+      "parser_test.go:49: quantifier = &regexp.Quantifier{Atom:(*regexp.Character)(0x16cb4b24100), Min:2, Max:4, Greedy:true}"
+    ]
+  }
+]
