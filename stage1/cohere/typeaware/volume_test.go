@@ -2,7 +2,6 @@ package typeaware
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -16,16 +15,7 @@ import (
 var volumeRules = []string{"no_unsafe_type_assertion", "no_unsafe_member_access", "prefer_nullish_coalescing", "no_shadow", "no_unsafe_enum_comparison", "no_unsafe_assignment", "no_confusing_void_expression", "consistent_return", "switch_exhaustiveness_check", "unbound_method"}
 
 func volumeOracle(h *harness, name, source string) string {
-	virtual := filepath.Join(h.repository, "cohere/adamic_"+name+".go")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata", source)}})
-	if err != nil {
-		h.t.Fatal(err)
-	}
-	binary := filepath.Join(h.directory, name)
-	cmd := exec.Command("go", "build", "-overlay", h.write(name+"-overlay.json", string(data)), "-o", binary, virtual)
-	cmd.Dir = filepath.Join(h.repository, "cohere")
-	h.must(name+"-build", cmd)
-	return binary
+	return typeAwareOverlayOracle(h, name+"-build", name, "adamic_"+name+".go", source, name+"-overlay.json", false)
 }
 
 // These controls exercise decisions, report spans and repairs, not implementation structure.
