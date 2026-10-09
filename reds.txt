@@ -1,0 +1,24 @@
+run adamic-verify-20261009T095312-d715e9ef: void, 12595 tests in 36 units, 3 failed, 2 units broken, 0 killed over budget
+BROKEN tests-01: exited 2, Loom's fault (last output "none            8.8G  5.7G  3.2G  64% /tmp")
+BROKEN tests-28: no results (exited false, last output "loom-pilot: github.com/system-inc/adamic/stage1/cohere/css exited 1")
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants/apparent-shape (tests-02)
+    volume_test.go:143: phase command apparent-shape-checker 90.005202s
+    volume_test.go:143: apparent-shape-checker: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants (tests-13)
+    volume_test.go:95: phase command stage0 22.038212s
+    typeaware_test.go:159: phase command checker 29.205820s
+    typeaware_test.go:185: phase load volume 0.342722s
+    typeaware_test.go:192: phase lowering volume 6.370054s
+    typeaware_test.go:198: phase emission volume 49.523735s
+    typeaware_test.go:225: phase clang volume 23.099724s
+    volume_test.go:18: build typeaware_six_volume-oracle-build c8b592a21562 miss 8.44
+    volume_test.go:108: phase command controls-go 0.057423s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeAgreementAndMutants (tests-34)
+    volume_test.go:95: phase command stage0 15.112406s
+    typeaware_test.go:159: phase command checker 18.761608s
+    typeaware_test.go:185: phase load volume 0.208996s
+    typeaware_test.go:192: phase lowering volume 5.705601s
+    typeaware_test.go:198: phase emission volume 39.993165s
+    typeaware_test.go:225: phase clang volume 21.432362s
+    volume_test.go:18: build typeaware_six_volume-oracle-build c8b592a21562 miss 12.72
+    volume_test.go:108: phase command controls-go 0.111205s
