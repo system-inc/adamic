@@ -1,0 +1,305 @@
+[
+  {
+    "test": "TestMarkdownLayoutSetupHasNoDeadline",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "seconds": 0.034,
+    "oracle": "self: no setup deadline, subprocess must end with its work deadline, and setup context must remain uncanceled.",
+    "oracle_kind": "self",
+    "kills": [
+      "S1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S1: setup_deadline_markdownblocks_test.go:31: setup has deadline 2026-10-09 12:53:05.067083033 +0000 UTC m=+0.004664484",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownLayoutSetupHasNoDeadline"
+    ],
+    "evidence": "ADAMIC_MUTANT=S1 ADAMIC_BUILD_CACHE_DIR=/tmp/u129/cache/S1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownLayoutSetupHasNoDeadline)$; S1: setup_deadline_markdownblocks_test.go:31: setup has deadline 2026-10-09 12:53:05.067083033 +0000 UTC m=+0.004664484",
+    "members": [
+      "TestMarkdownLayoutSetupHasNoDeadline"
+    ]
+  },
+  {
+    "test": "TestMarkdownLayoutDeadlineWorker",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "seconds": 0.008,
+    "oracle": "Subprocess entry activated by ADAMIC_MARKDOWN_LAYOUT_DEADLINE_WORKER=1; parent checks its termination.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "helper",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "No construction matrix: subprocess helper for TestMarkdownLayoutSetupHasNoDeadline.",
+    "members": [
+      "TestMarkdownLayoutDeadlineWorker"
+    ],
+    "parent": "TestMarkdownLayoutSetupHasNoDeadline"
+  },
+  {
+    "test": "TestProduct_MarkdownQuote_build family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "seconds": 2.386,
+    "oracle": "self: successful product construction and artifact reads; Go oracle executables are built but not run or compared. Empty helper return is not asserted by this wrapper.",
+    "oracle_kind": "self",
+    "kills": [
+      "S2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S2: quote_layout_shards_test.go:230: open /tmp/u129/cache/S2/8b1c72f093ae5c041802a9117fc1aad459aca7e9ffe0894742de102602015b32/program.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownQuote_build family",
+      "TestProduct_MarkdownQuote_native family"
+    ],
+    "evidence": "ADAMIC_MUTANT=S2 ADAMIC_BUILD_CACHE_DIR=/tmp/u129/cache/S2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestProduct_MarkdownQuote_lowered|TestProduct_MarkdownQuote_lists|TestProduct_MarkdownQuote_layout|TestProduct_MarkdownQuote_native_true|TestProduct_MarkdownQuote_native_false)$; S2: quote_layout_shards_test.go:230: open /tmp/u129/cache/S2/8b1c72f093ae5c041802a9117fc1aad459aca7e9ffe0894742de102602015b32/program.c: no such file or directory",
+    "members": [
+      "TestProduct_MarkdownQuote_lowered",
+      "TestProduct_MarkdownQuote_lists",
+      "TestProduct_MarkdownQuote_layout"
+    ]
+  },
+  {
+    "test": "TestProduct_MarkdownQuote_native family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "seconds": 1.92,
+    "oracle": "self: successful product construction and artifact reads; Go oracle executables are built but not run or compared. Empty helper return is not asserted by this wrapper.",
+    "oracle_kind": "self",
+    "kills": [
+      "S2",
+      "S3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S3: quote_layout_shards_test.go:628: build markdown-quote-layout-native-false: native: clang failed: exit status 1",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 2,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownQuote_build family",
+      "TestProduct_MarkdownQuote_native family"
+    ],
+    "evidence": "ADAMIC_MUTANT=S3 ADAMIC_BUILD_CACHE_DIR=/tmp/u129/cache/S3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestProduct_MarkdownQuote_native_true|TestProduct_MarkdownQuote_native_false)$; S3: quote_layout_shards_test.go:628: build markdown-quote-layout-native-false: native: clang failed: exit status 1",
+    "members": [
+      "TestProduct_MarkdownQuote_native_true",
+      "TestProduct_MarkdownQuote_native_false"
+    ]
+  },
+  {
+    "test": "TestProduct_MarkdownStructure family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "seconds": 2.559,
+    "oracle": "self: successful product construction and artifact reads; Go oracle executables are built but not run or compared. Empty helper return is not asserted by this wrapper.",
+    "oracle_kind": "self",
+    "kills": [
+      "S4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S4: structure_layout_shards_test.go:186: open /tmp/u129/cache/S4/0b4a7cefba37501053bf67fc3a21055c777fa06d8cd85d8081c6ca3cd544d539/program.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownStructure family"
+    ],
+    "evidence": "ADAMIC_MUTANT=S4 ADAMIC_BUILD_CACHE_DIR=/tmp/u129/cache/S4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestProduct_MarkdownStructure_lowered|TestProduct_MarkdownStructure_native|TestProduct_MarkdownStructure_adamic_markdown_lists|TestProduct_MarkdownStructure_adamic_markdown_doclayout)$; S4: structure_layout_shards_test.go:186: open /tmp/u129/cache/S4/0b4a7cefba37501053bf67fc3a21055c777fa06d8cd85d8081c6ca3cd544d539/program.c: no such file or directory",
+    "members": [
+      "TestProduct_MarkdownStructure_lowered",
+      "TestProduct_MarkdownStructure_native",
+      "TestProduct_MarkdownStructure_adamic_markdown_lists",
+      "TestProduct_MarkdownStructure_adamic_markdown_doclayout"
+    ]
+  },
+  {
+    "test": "TestProduct_MarkdownTable family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "seconds": 3.373,
+    "oracle": "self: successful product construction and artifact reads; Go oracle executables are built but not run or compared. Empty helper return is not asserted by this wrapper.",
+    "oracle_kind": "self",
+    "kills": [
+      "S5"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S5: setup_deadline_markdownblocks_test.go:109: open /tmp/u129/cache/S5/cb82c2cbde51144e483a8df0cb8f632d46111c871d26b7c570a431d54034c56a/program.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownTable family"
+    ],
+    "evidence": "ADAMIC_MUTANT=S5 ADAMIC_BUILD_CACHE_DIR=/tmp/u129/cache/S5 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestProduct_MarkdownTable_lowered|TestProduct_MarkdownTable_native_true|TestProduct_MarkdownTable_native_false|TestProduct_MarkdownTable_list|TestProduct_MarkdownTable_document)$; S5: setup_deadline_markdownblocks_test.go:109: open /tmp/u129/cache/S5/cb82c2cbde51144e483a8df0cb8f632d46111c871d26b7c570a431d54034c56a/program.c: no such file or directory",
+    "members": [
+      "TestProduct_MarkdownTable_lowered",
+      "TestProduct_MarkdownTable_native_true",
+      "TestProduct_MarkdownTable_native_false",
+      "TestProduct_MarkdownTable_list",
+      "TestProduct_MarkdownTable_document"
+    ]
+  },
+  {
+    "test": "TestProduct_MarkdownWhitespace_build family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "seconds": 2.567,
+    "oracle": "self: successful product construction and artifact reads; Go oracle executables are built but not run or compared. Empty helper return is not asserted by this wrapper.",
+    "oracle_kind": "self",
+    "kills": [
+      "S6"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S6: whitespace_layout_split_test.go:270: open /tmp/u129/cache/S6/894ac7f6b20f8479fa74d3eca77db1a6645d63d36b69653a43f97ffcc5bd0ebf/program.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownWhitespace_build family",
+      "TestProduct_MarkdownWhitespace_manifest",
+      "TestProduct_MarkdownWhitespace_native family",
+      "TestProduct_MarkdownWhitespace_policy_native"
+    ],
+    "evidence": "ADAMIC_MUTANT=S6 ADAMIC_BUILD_CACHE_DIR=/tmp/u129/cache/S6 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestProduct_MarkdownWhitespace_lowered|TestProduct_MarkdownWhitespace_lists|TestProduct_MarkdownWhitespace_layout|TestProduct_MarkdownWhitespace_policy_lowered|TestProduct_MarkdownWhitespace_native_true|TestProduct_MarkdownWhitespace_native_false|TestProduct_MarkdownWhitespace_policy_native|TestProduct_MarkdownWhitespace_manifest)$; S6: whitespace_layout_split_test.go:270: open /tmp/u129/cache/S6/894ac7f6b20f8479fa74d3eca77db1a6645d63d36b69653a43f97ffcc5bd0ebf/program.c: no such file or directory",
+    "members": [
+      "TestProduct_MarkdownWhitespace_lowered",
+      "TestProduct_MarkdownWhitespace_lists",
+      "TestProduct_MarkdownWhitespace_layout",
+      "TestProduct_MarkdownWhitespace_policy_lowered"
+    ]
+  },
+  {
+    "test": "TestProduct_MarkdownWhitespace_native family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "seconds": 1.959,
+    "oracle": "self: successful product construction and artifact reads; Go oracle executables are built but not run or compared. Empty helper return is not asserted by this wrapper.",
+    "oracle_kind": "self",
+    "kills": [
+      "S6",
+      "S8"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S8: whitespace_layout_split_test.go:888: native: linking units: exit status 1",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 2,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownWhitespace_build family",
+      "TestProduct_MarkdownWhitespace_manifest",
+      "TestProduct_MarkdownWhitespace_native family",
+      "TestProduct_MarkdownWhitespace_policy_native"
+    ],
+    "evidence": "ADAMIC_MUTANT=S8 ADAMIC_BUILD_CACHE_DIR=/tmp/u129/cache/S8 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestProduct_MarkdownWhitespace_native_true|TestProduct_MarkdownWhitespace_native_false|TestProduct_MarkdownWhitespace_manifest)$; S8: whitespace_layout_split_test.go:888: native: linking units: exit status 1",
+    "members": [
+      "TestProduct_MarkdownWhitespace_native_true",
+      "TestProduct_MarkdownWhitespace_native_false"
+    ]
+  },
+  {
+    "test": "TestProduct_MarkdownWhitespace_policy_native",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "seconds": 1.645,
+    "oracle": "self: successful product construction and artifact reads; Go oracle executables are built but not run or compared. Empty helper return is not asserted by this wrapper.",
+    "oracle_kind": "self",
+    "kills": [
+      "S6",
+      "S9"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S9: whitespace_layout_split_test.go:888: native: linking units: exit status 1",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 2,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownWhitespace_build family",
+      "TestProduct_MarkdownWhitespace_manifest",
+      "TestProduct_MarkdownWhitespace_native family",
+      "TestProduct_MarkdownWhitespace_policy_native"
+    ],
+    "evidence": "ADAMIC_MUTANT=S9 ADAMIC_BUILD_CACHE_DIR=/tmp/u129/cache/S9 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestProduct_MarkdownWhitespace_policy_native|TestProduct_MarkdownWhitespace_manifest)$; S9: whitespace_layout_split_test.go:888: native: linking units: exit status 1",
+    "members": [
+      "TestProduct_MarkdownWhitespace_policy_native"
+    ]
+  },
+  {
+    "test": "TestProduct_MarkdownWhitespace_manifest",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "seconds": 1.129,
+    "oracle": "self: deserialize the cached product manifest, read backend files, and require nonempty Go binary path; no executable or formatting output is compared.",
+    "oracle_kind": "self",
+    "kills": [
+      "S6",
+      "S7",
+      "S8",
+      "S9"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S9: whitespace_layout_split_test.go:117: build markdown-whitespace-layout-setup-v2: whitespace policy setup failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_MarkdownWhitespace_build family",
+      "TestProduct_MarkdownWhitespace_manifest",
+      "TestProduct_MarkdownWhitespace_native family",
+      "TestProduct_MarkdownWhitespace_policy_native"
+    ],
+    "evidence": "ADAMIC_MUTANT=S9 ADAMIC_BUILD_CACHE_DIR=/tmp/u129/cache/S9 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestProduct_MarkdownWhitespace_policy_native|TestProduct_MarkdownWhitespace_manifest)$; S9: whitespace_layout_split_test.go:117: build markdown-whitespace-layout-setup-v2: whitespace policy setup failed",
+    "members": [
+      "TestProduct_MarkdownWhitespace_manifest"
+    ]
+  }
+]

@@ -1,0 +1,355 @@
+[
+  {
+    "id": "switch",
+    "kind": "vet",
+    "exit": 0,
+    "seconds": 0.35007212900018203,
+    "command": [
+      "go",
+      "vet",
+      "./stage1/cohere/markdownblocks/"
+    ]
+  },
+  {
+    "id": "S1",
+    "kind": "matrix",
+    "exit": 1,
+    "seconds": 5.822027996999168,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownLayoutSetupHasNoDeadline)$"
+    ]
+  },
+  {
+    "id": "S2",
+    "kind": "matrix",
+    "exit": 1,
+    "seconds": 35.70724345400049,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownQuote_lowered|TestProduct_MarkdownQuote_lists|TestProduct_MarkdownQuote_layout|TestProduct_MarkdownQuote_native_true|TestProduct_MarkdownQuote_native_false)$"
+    ]
+  },
+  {
+    "id": "S3",
+    "kind": "matrix",
+    "exit": 1,
+    "seconds": 56.79155698999966,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownQuote_native_true|TestProduct_MarkdownQuote_native_false)$"
+    ]
+  },
+  {
+    "id": "S4",
+    "kind": "matrix",
+    "exit": 1,
+    "seconds": 35.99361308599873,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownStructure_lowered|TestProduct_MarkdownStructure_native|TestProduct_MarkdownStructure_adamic_markdown_lists|TestProduct_MarkdownStructure_adamic_markdown_doclayout)$"
+    ]
+  },
+  {
+    "id": "S5",
+    "kind": "matrix",
+    "exit": 1,
+    "seconds": 35.81917207100014,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownTable_lowered|TestProduct_MarkdownTable_native_true|TestProduct_MarkdownTable_native_false|TestProduct_MarkdownTable_list|TestProduct_MarkdownTable_document)$"
+    ]
+  },
+  {
+    "id": "S6",
+    "kind": "matrix",
+    "exit": 1,
+    "seconds": 37.13830488900021,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_lowered|TestProduct_MarkdownWhitespace_lists|TestProduct_MarkdownWhitespace_layout|TestProduct_MarkdownWhitespace_policy_lowered|TestProduct_MarkdownWhitespace_native_true|TestProduct_MarkdownWhitespace_native_false|TestProduct_MarkdownWhitespace_policy_native|TestProduct_MarkdownWhitespace_manifest)$"
+    ]
+  },
+  {
+    "id": "S7",
+    "kind": "matrix",
+    "exit": 1,
+    "seconds": 40.62170099099967,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_manifest)$"
+    ]
+  },
+  {
+    "id": "S8",
+    "kind": "matrix",
+    "exit": 1,
+    "seconds": 39.77561922899986,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_native_true|TestProduct_MarkdownWhitespace_native_false|TestProduct_MarkdownWhitespace_manifest)$"
+    ]
+  },
+  {
+    "id": "S9",
+    "kind": "matrix",
+    "exit": 1,
+    "seconds": 40.382141555999624,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_policy_native|TestProduct_MarkdownWhitespace_manifest)$"
+    ]
+  },
+  {
+    "id": "P1",
+    "kind": "matrix",
+    "exit": 1,
+    "seconds": 1.718832377999206,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownLayoutSetupHasNoDeadline)$"
+    ]
+  },
+  {
+    "id": "P2",
+    "kind": "matrix",
+    "exit": 0,
+    "seconds": 1.7480810670003848,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownQuote_lowered|TestProduct_MarkdownQuote_lists|TestProduct_MarkdownQuote_layout)$"
+    ]
+  },
+  {
+    "id": "P3",
+    "kind": "matrix",
+    "exit": 0,
+    "seconds": 34.979198351999,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownQuote_native_true|TestProduct_MarkdownQuote_native_false)$"
+    ]
+  },
+  {
+    "id": "P4",
+    "kind": "matrix",
+    "exit": 0,
+    "seconds": 1.67693277699982,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownStructure_lowered|TestProduct_MarkdownStructure_native|TestProduct_MarkdownStructure_adamic_markdown_lists|TestProduct_MarkdownStructure_adamic_markdown_doclayout)$"
+    ]
+  },
+  {
+    "id": "P5",
+    "kind": "matrix",
+    "exit": 0,
+    "seconds": 1.7065654620000714,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownTable_lowered|TestProduct_MarkdownTable_native_true|TestProduct_MarkdownTable_native_false|TestProduct_MarkdownTable_list|TestProduct_MarkdownTable_document)$"
+    ]
+  },
+  {
+    "id": "P6",
+    "kind": "matrix",
+    "exit": 0,
+    "seconds": 1.6483243170005153,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_lowered|TestProduct_MarkdownWhitespace_lists|TestProduct_MarkdownWhitespace_layout|TestProduct_MarkdownWhitespace_policy_lowered)$"
+    ]
+  },
+  {
+    "id": "P7",
+    "kind": "matrix",
+    "exit": 0,
+    "seconds": 34.727801146000274,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_native_true|TestProduct_MarkdownWhitespace_native_false)$"
+    ]
+  },
+  {
+    "id": "P8",
+    "kind": "matrix",
+    "exit": 0,
+    "seconds": 1.6543589610009803,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_policy_native)$"
+    ]
+  },
+  {
+    "id": "P9",
+    "kind": "matrix",
+    "exit": 0,
+    "seconds": 1.6749805140007084,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_manifest)$"
+    ]
+  }
+]

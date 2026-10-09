@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/quote_layout_shards_test.go
++++ b/stage1/cohere/markdownblocks/quote_layout_shards_test.go
+@@ -625,6 +625,6 @@
+ 	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native.Flags(options)...)
+ 	nativeInputs.Flags = append(nativeInputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+ 	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
+-	dir := buildcache.Product(t, nativeInputs, func(dir string) error { return native.Build(products.source, filepath.Join(dir, "port"), options) })
++	dir := buildcache.Product(t, nativeInputs, func(dir string) error { return native.Build(products.source, filepath.Join(dir, ""), options) })
+ 	return dir
+ }

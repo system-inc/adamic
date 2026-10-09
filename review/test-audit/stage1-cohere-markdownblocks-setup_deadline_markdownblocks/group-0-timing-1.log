@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T12:50:38.945427348Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T12:50:38.953140214Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLayoutSetupHasNoDeadline"}
+{"Time":"2026-10-09T12:50:38.953200383Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLayoutSetupHasNoDeadline","Output":"=== RUN   TestMarkdownLayoutSetupHasNoDeadline\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:50:38.953222106Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLayoutSetupHasNoDeadline","Output":"=== PAUSE TestMarkdownLayoutSetupHasNoDeadline\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:50:38.953224559Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLayoutSetupHasNoDeadline"}
+{"Time":"2026-10-09T12:50:38.953226672Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLayoutSetupHasNoDeadline"}
+{"Time":"2026-10-09T12:50:38.953228205Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLayoutSetupHasNoDeadline","Output":"=== CONT  TestMarkdownLayoutSetupHasNoDeadline\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:50:38.978843345Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLayoutSetupHasNoDeadline","Output":"--- PASS: TestMarkdownLayoutSetupHasNoDeadline (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:50:38.978883685Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMarkdownLayoutSetupHasNoDeadline","Elapsed":0.03}
+{"Time":"2026-10-09T12:50:38.978902783Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:50:38.979093716Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.033s\n"}
+{"Time":"2026-10-09T12:50:38.979108077Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.034}

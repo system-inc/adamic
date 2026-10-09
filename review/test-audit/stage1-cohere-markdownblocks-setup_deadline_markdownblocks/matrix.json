@@ -1,0 +1,302 @@
+[
+  {
+    "id": "S1",
+    "kind": "construction",
+    "observed": {
+      "TestMarkdownLayoutSetupHasNoDeadline": "fail"
+    },
+    "selected_rows": [
+      "TestMarkdownLayoutSetupHasNoDeadline"
+    ],
+    "selected_members": [
+      "TestMarkdownLayoutSetupHasNoDeadline"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "S2",
+    "kind": "construction",
+    "observed": {
+      "TestProduct_MarkdownQuote_build family": "fail",
+      "TestProduct_MarkdownQuote_native family": "fail"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownQuote_build family",
+      "TestProduct_MarkdownQuote_native family"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownQuote_lowered",
+      "TestProduct_MarkdownQuote_lists",
+      "TestProduct_MarkdownQuote_layout",
+      "TestProduct_MarkdownQuote_native_true",
+      "TestProduct_MarkdownQuote_native_false"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "S3",
+    "kind": "construction",
+    "observed": {
+      "TestProduct_MarkdownQuote_native family": "fail"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownQuote_native family"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownQuote_native_true",
+      "TestProduct_MarkdownQuote_native_false"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "S4",
+    "kind": "construction",
+    "observed": {
+      "TestProduct_MarkdownStructure family": "fail"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownStructure family"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownStructure_lowered",
+      "TestProduct_MarkdownStructure_native",
+      "TestProduct_MarkdownStructure_adamic_markdown_lists",
+      "TestProduct_MarkdownStructure_adamic_markdown_doclayout"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "S5",
+    "kind": "construction",
+    "observed": {
+      "TestProduct_MarkdownTable family": "fail"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownTable family"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownTable_lowered",
+      "TestProduct_MarkdownTable_native_true",
+      "TestProduct_MarkdownTable_native_false",
+      "TestProduct_MarkdownTable_list",
+      "TestProduct_MarkdownTable_document"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "S6",
+    "kind": "construction",
+    "observed": {
+      "TestProduct_MarkdownWhitespace_build family": "fail",
+      "TestProduct_MarkdownWhitespace_native family": "fail",
+      "TestProduct_MarkdownWhitespace_policy_native": "fail",
+      "TestProduct_MarkdownWhitespace_manifest": "fail"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownWhitespace_build family",
+      "TestProduct_MarkdownWhitespace_native family",
+      "TestProduct_MarkdownWhitespace_policy_native",
+      "TestProduct_MarkdownWhitespace_manifest"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownWhitespace_lowered",
+      "TestProduct_MarkdownWhitespace_lists",
+      "TestProduct_MarkdownWhitespace_layout",
+      "TestProduct_MarkdownWhitespace_policy_lowered",
+      "TestProduct_MarkdownWhitespace_native_true",
+      "TestProduct_MarkdownWhitespace_native_false",
+      "TestProduct_MarkdownWhitespace_policy_native",
+      "TestProduct_MarkdownWhitespace_manifest"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "S7",
+    "kind": "construction",
+    "observed": {
+      "TestProduct_MarkdownWhitespace_manifest": "fail"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownWhitespace_manifest"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownWhitespace_manifest"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "S8",
+    "kind": "construction",
+    "observed": {
+      "TestProduct_MarkdownWhitespace_native family": "fail",
+      "TestProduct_MarkdownWhitespace_manifest": "fail"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownWhitespace_native family",
+      "TestProduct_MarkdownWhitespace_manifest"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownWhitespace_native_true",
+      "TestProduct_MarkdownWhitespace_native_false",
+      "TestProduct_MarkdownWhitespace_manifest"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "S9",
+    "kind": "construction",
+    "observed": {
+      "TestProduct_MarkdownWhitespace_policy_native": "fail",
+      "TestProduct_MarkdownWhitespace_manifest": "fail"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownWhitespace_policy_native",
+      "TestProduct_MarkdownWhitespace_manifest"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownWhitespace_policy_native",
+      "TestProduct_MarkdownWhitespace_manifest"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "observed": {
+      "TestMarkdownLayoutSetupHasNoDeadline": "fail"
+    },
+    "selected_rows": [
+      "TestMarkdownLayoutSetupHasNoDeadline"
+    ],
+    "selected_members": [
+      "TestMarkdownLayoutSetupHasNoDeadline"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "observed": {
+      "TestProduct_MarkdownQuote_build family": "pass"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownQuote_build family"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownQuote_lowered",
+      "TestProduct_MarkdownQuote_lists",
+      "TestProduct_MarkdownQuote_layout"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "P3",
+    "kind": "probe",
+    "observed": {
+      "TestProduct_MarkdownQuote_native family": "pass"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownQuote_native family"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownQuote_native_true",
+      "TestProduct_MarkdownQuote_native_false"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "P4",
+    "kind": "probe",
+    "observed": {
+      "TestProduct_MarkdownStructure family": "pass"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownStructure family"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownStructure_lowered",
+      "TestProduct_MarkdownStructure_native",
+      "TestProduct_MarkdownStructure_adamic_markdown_lists",
+      "TestProduct_MarkdownStructure_adamic_markdown_doclayout"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "P5",
+    "kind": "probe",
+    "observed": {
+      "TestProduct_MarkdownTable family": "pass"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownTable family"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownTable_lowered",
+      "TestProduct_MarkdownTable_native_true",
+      "TestProduct_MarkdownTable_native_false",
+      "TestProduct_MarkdownTable_list",
+      "TestProduct_MarkdownTable_document"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "P6",
+    "kind": "probe",
+    "observed": {
+      "TestProduct_MarkdownWhitespace_build family": "pass"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownWhitespace_build family"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownWhitespace_lowered",
+      "TestProduct_MarkdownWhitespace_lists",
+      "TestProduct_MarkdownWhitespace_layout",
+      "TestProduct_MarkdownWhitespace_policy_lowered"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "P7",
+    "kind": "probe",
+    "observed": {
+      "TestProduct_MarkdownWhitespace_native family": "pass"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownWhitespace_native family"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownWhitespace_native_true",
+      "TestProduct_MarkdownWhitespace_native_false"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "P8",
+    "kind": "probe",
+    "observed": {
+      "TestProduct_MarkdownWhitespace_policy_native": "pass"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownWhitespace_policy_native"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownWhitespace_policy_native"
+    ],
+    "timeouts": false
+  },
+  {
+    "id": "P9",
+    "kind": "probe",
+    "observed": {
+      "TestProduct_MarkdownWhitespace_manifest": "pass"
+    },
+    "selected_rows": [
+      "TestProduct_MarkdownWhitespace_manifest"
+    ],
+    "selected_members": [
+      "TestProduct_MarkdownWhitespace_manifest"
+    ],
+    "timeouts": false
+  }
+]

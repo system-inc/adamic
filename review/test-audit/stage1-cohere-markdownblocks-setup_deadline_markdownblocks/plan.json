@@ -1,0 +1,215 @@
+[
+  {
+    "id": "S1",
+    "kind": "construction",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "line": 14,
+    "function": "markdownLayoutSetupContext",
+    "old": "return context.WithCancel(parent)",
+    "new": "return context.WithTimeout(parent, time.Nanosecond)",
+    "groups": [
+      0
+    ]
+  },
+  {
+    "id": "S2",
+    "kind": "construction",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 223,
+    "function": "quoteLayoutBuildProduct",
+    "old": "filepath.Join(dir, \"program.c\")",
+    "new": "filepath.Join(dir, \"missing.c\")",
+    "groups": [
+      2,
+      3
+    ]
+  },
+  {
+    "id": "S3",
+    "kind": "construction",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 628,
+    "function": "quoteLayoutNativeProduct",
+    "old": "filepath.Join(dir, \"port\")",
+    "new": "filepath.Join(dir, \"\")",
+    "groups": [
+      3
+    ]
+  },
+  {
+    "id": "S4",
+    "kind": "construction",
+    "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+    "line": 179,
+    "function": "structureLayoutBuildProduct",
+    "old": "filepath.Join(dir, \"program.c\")",
+    "new": "filepath.Join(dir, \"missing.c\")",
+    "groups": [
+      4
+    ]
+  },
+  {
+    "id": "S5",
+    "kind": "construction",
+    "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+    "line": 169,
+    "function": "tableLayoutBuildProduct",
+    "old": "filepath.Join(directory, \"program.c\")",
+    "new": "filepath.Join(directory, \"missing.c\")",
+    "groups": [
+      5
+    ]
+  },
+  {
+    "id": "S6",
+    "kind": "construction",
+    "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "line": 263,
+    "function": "whitespaceLayoutBuildProduct",
+    "old": "filepath.Join(dir, \"program.c\")",
+    "new": "filepath.Join(dir, \"missing.c\")",
+    "groups": [
+      6,
+      7,
+      8,
+      9
+    ]
+  },
+  {
+    "id": "S7",
+    "kind": "construction",
+    "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "line": 137,
+    "function": "whitespaceLayoutPrepare",
+    "old": "filepath.Join(directory, \"products.json\")",
+    "new": "filepath.Join(directory, \"missing.json\")",
+    "groups": [
+      9
+    ]
+  },
+  {
+    "id": "S8",
+    "kind": "construction",
+    "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "line": 900,
+    "function": "whitespaceLayoutNativeProduct",
+    "old": "filepath.Join(dir, \"port\")",
+    "new": "filepath.Join(dir, \"\")",
+    "groups": [
+      7,
+      9
+    ]
+  },
+  {
+    "id": "S9",
+    "kind": "construction",
+    "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "line": 691,
+    "function": "whitespaceLayoutPolicySetup",
+    "old": "filepath.Join(dir, \"port\")",
+    "new": "filepath.Join(dir, \"\")",
+    "groups": [
+      8,
+      9
+    ]
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "file": "stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go",
+    "line": 13,
+    "function": "markdownLayoutSetupContext",
+    "groups": [
+      0
+    ],
+    "change": "return nil, func() {}"
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 207,
+    "function": "quoteLayoutBuildProduct",
+    "groups": [
+      2
+    ],
+    "change": "return quoteLayoutProducts{}"
+  },
+  {
+    "id": "P3",
+    "kind": "probe",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 621,
+    "function": "quoteLayoutNativeProduct",
+    "groups": [
+      3
+    ],
+    "change": "return \"\""
+  },
+  {
+    "id": "P4",
+    "kind": "probe",
+    "file": "stage1/cohere/markdownblocks/structure_layout_shards_test.go",
+    "line": 160,
+    "function": "structureLayoutBuildProduct",
+    "groups": [
+      4
+    ],
+    "change": "return structureLayoutProducts{}"
+  },
+  {
+    "id": "P5",
+    "kind": "probe",
+    "file": "stage1/cohere/markdownblocks/table_layout_shards_test.go",
+    "line": 152,
+    "function": "tableLayoutBuildProduct",
+    "groups": [
+      5
+    ],
+    "change": "return tableLayoutProducts{}"
+  },
+  {
+    "id": "P6",
+    "kind": "probe",
+    "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "line": 247,
+    "function": "whitespaceLayoutBuildProduct",
+    "groups": [
+      6
+    ],
+    "change": "return whitespaceLayoutProducts{}"
+  },
+  {
+    "id": "P7",
+    "kind": "probe",
+    "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "line": 892,
+    "function": "whitespaceLayoutNativeProduct",
+    "groups": [
+      7
+    ],
+    "change": "return \"\""
+  },
+  {
+    "id": "P8",
+    "kind": "probe",
+    "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "line": 677,
+    "function": "whitespaceLayoutPolicySetup",
+    "groups": [
+      8
+    ],
+    "change": "return whitespaceLayoutProducts{}"
+  },
+  {
+    "id": "P9",
+    "kind": "probe",
+    "file": "stage1/cohere/markdownblocks/whitespace_layout_split_test.go",
+    "line": 764,
+    "function": "whitespaceLayoutReadyProducts",
+    "groups": [
+      9
+    ],
+    "change": "return whitespaceLayoutProducts{}, whitespaceLayoutProducts{}"
+  }
+]

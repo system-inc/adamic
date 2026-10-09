@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:52:28.340956245Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T12:52:28.347771525Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownWhitespace_manifest"}
+{"Time":"2026-10-09T12:52:28.347831995Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownWhitespace_manifest","Output":"=== RUN   TestProduct_MarkdownWhitespace_manifest\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:52:28.347854067Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownWhitespace_manifest","Output":"=== PAUSE TestProduct_MarkdownWhitespace_manifest\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:52:28.347856411Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownWhitespace_manifest"}
+{"Time":"2026-10-09T12:52:28.347860717Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownWhitespace_manifest"}
+{"Time":"2026-10-09T12:52:28.347863061Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownWhitespace_manifest","Output":"=== CONT  TestProduct_MarkdownWhitespace_manifest\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:52:29.40428277Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownWhitespace_manifest","Output":"    whitespace_layout_split_test.go:117: build markdown-whitespace-layout-setup-v2 a5bc3873de5e hit 1.04\n"}
+{"Time":"2026-10-09T12:52:29.406542273Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownWhitespace_manifest","Output":"--- PASS: TestProduct_MarkdownWhitespace_manifest (1.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:52:29.406549304Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestProduct_MarkdownWhitespace_manifest","Elapsed":1.06}
+{"Time":"2026-10-09T12:52:29.406610344Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:52:29.407822592Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t1.067s\n"}
+{"Time":"2026-10-09T12:52:29.407852136Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":1.067}

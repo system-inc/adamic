@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go
++++ b/stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go
+@@ -11,6 +11,7 @@
+ 
+ // Shared preparation has no deadline; the unit runner still bounds the process.
+ func markdownLayoutSetupContext(parent context.Context) (context.Context, context.CancelFunc) {
++ if true { return nil, func() {} }
+ 	return context.WithCancel(parent)
+ }
+ 

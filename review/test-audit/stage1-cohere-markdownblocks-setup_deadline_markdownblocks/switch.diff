@@ -1,0 +1,171 @@
+diff --git a/stage1/cohere/markdownblocks/quote_layout_shards_test.go b/stage1/cohere/markdownblocks/quote_layout_shards_test.go
+index 389ccb14..7aa40047 100644
+--- a/stage1/cohere/markdownblocks/quote_layout_shards_test.go
++++ b/stage1/cohere/markdownblocks/quote_layout_shards_test.go
+@@ -205,6 +205,7 @@ func quoteLayoutBuild(t *testing.T, root string) quoteLayoutProducts {
+ }
+ 
+ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProducts {
++ if markdownAuditMutant("P2") { return quoteLayoutProducts{} }
+ 	main, err := filepath.Abs("testdata/list_probe.ts")
+ 	if err != nil {
+ 		t.Fatal(err)
+@@ -220,7 +221,7 @@ func quoteLayoutBuildProduct(t *testing.T, root, target string) quoteLayoutProdu
+ 		if err != nil {
+ 			return err
+ 		}
+-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
++		if err := os.WriteFile(markdownAuditPath("S2", filepath.Join(dir, "program.c"), filepath.Join(dir, "missing.c")), []byte(native.C(program)), 0644); err != nil {
+ 			return err
+ 		}
+ 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+@@ -619,12 +620,13 @@ func quoteLayoutOnNode(t *testing.T, path string, arguments ...string) run {
+ }
+ 
+ func quoteLayoutNativeProduct(t *testing.T, products quoteLayoutProducts, sanitize bool) string {
++ if markdownAuditMutant("P3") { return "" }
+ 	options := native.Options{Sanitize: sanitize}
+ 	nativeInputs := products.inputs
+ 	nativeInputs.Name = fmt.Sprintf("markdown-quote-layout-native-%t", sanitize)
+ 	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native.Flags(options)...)
+ 	nativeInputs.Flags = append(nativeInputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+ 	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
+-	dir := buildcache.Product(t, nativeInputs, func(dir string) error { return native.Build(products.source, filepath.Join(dir, "port"), options) })
++	dir := buildcache.Product(t, nativeInputs, func(dir string) error { return native.Build(products.source, markdownAuditPath("S3", filepath.Join(dir, "port"), filepath.Join(dir, "")), options) })
+ 	return dir
+ }
+diff --git a/stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go b/stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go
+index fef91cec..908a2720 100644
+--- a/stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go
++++ b/stage1/cohere/markdownblocks/setup_deadline_markdownblocks_test.go
+@@ -11,7 +11,8 @@ import (
+ 
+ // Shared preparation has no deadline; the unit runner still bounds the process.
+ func markdownLayoutSetupContext(parent context.Context) (context.Context, context.CancelFunc) {
+-	return context.WithCancel(parent)
++ if markdownAuditMutant("P1") { return nil, func() {} }
++	if markdownAuditMutant("S1") { return context.WithTimeout(parent, time.Nanosecond) }; return context.WithCancel(parent)
+ }
+ 
+ func markdownLayoutProductRoot(t *testing.T) string {
+@@ -182,3 +183,6 @@ func TestProduct_MarkdownWhitespace_manifest(t *testing.T) {
+ 	t.Parallel()
+ 	whitespaceLayoutReadyProducts(t)
+ }
++
++func markdownAuditMutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
++func markdownAuditPath(id, clean, broken string) string { if markdownAuditMutant(id) { return broken }; return clean }
+diff --git a/stage1/cohere/markdownblocks/structure_layout_shards_test.go b/stage1/cohere/markdownblocks/structure_layout_shards_test.go
+index 88d4b403..1b4ed7ff 100644
+--- a/stage1/cohere/markdownblocks/structure_layout_shards_test.go
++++ b/stage1/cohere/markdownblocks/structure_layout_shards_test.go
+@@ -158,6 +158,7 @@ func buildStructureLayoutProducts(t *testing.T, root string) structureLayoutProd
+ }
+ 
+ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLayoutProducts {
++ if markdownAuditMutant("P4") { return structureLayoutProducts{} }
+ 	p := structureLayoutProducts{root: root}
+ 	main, err := filepath.Abs("testdata/list_probe.ts")
+ 	if err != nil {
+@@ -176,7 +177,7 @@ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLay
+ 		if err != nil {
+ 			return err
+ 		}
+-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
++		if err := os.WriteFile(markdownAuditPath("S4", filepath.Join(dir, "program.c"), filepath.Join(dir, "missing.c")), []byte(native.C(program)), 0644); err != nil {
+ 			return err
+ 		}
+ 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+diff --git a/stage1/cohere/markdownblocks/table_layout_shards_test.go b/stage1/cohere/markdownblocks/table_layout_shards_test.go
+index 4fca512f..8439557e 100644
+--- a/stage1/cohere/markdownblocks/table_layout_shards_test.go
++++ b/stage1/cohere/markdownblocks/table_layout_shards_test.go
+@@ -150,6 +150,7 @@ func tableLayoutBuild(t *testing.T) tableLayoutProducts {
+ }
+ 
+ func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
++ if markdownAuditMutant("P5") { return tableLayoutProducts{} }
+ 	t.Helper()
+ 	var products tableLayoutProducts
+ 	root, err := filepath.Abs(repository)
+@@ -166,7 +167,7 @@ func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
+ 		if err != nil {
+ 			return err
+ 		}
+-		if err := os.WriteFile(filepath.Join(directory, "program.c"), []byte(native.C(program)), 0644); err != nil {
++		if err := os.WriteFile(markdownAuditPath("S5", filepath.Join(directory, "program.c"), filepath.Join(directory, "missing.c")), []byte(native.C(program)), 0644); err != nil {
+ 			return err
+ 		}
+ 		return os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+diff --git a/stage1/cohere/markdownblocks/whitespace_layout_split_test.go b/stage1/cohere/markdownblocks/whitespace_layout_split_test.go
+index ab8c1d62..a78aff2c 100644
+--- a/stage1/cohere/markdownblocks/whitespace_layout_split_test.go
++++ b/stage1/cohere/markdownblocks/whitespace_layout_split_test.go
+@@ -134,7 +134,7 @@ func whitespaceLayoutPrepare(t *testing.T) {
+ 		if err != nil {
+ 			return err
+ 		}
+-		return os.WriteFile(filepath.Join(directory, "products.json"), data, 0644)
++		return os.WriteFile(markdownAuditPath("S7", filepath.Join(directory, "products.json"), filepath.Join(directory, "missing.json")), data, 0644)
+ 	})
+ 	whitespaceLayoutPrepared, whitespaceLayoutPolicyPrepared = whitespaceLayoutReadProducts(t, directory)
+ }
+@@ -245,6 +245,7 @@ func whitespaceLayoutBuildProbe(t *testing.T, ctx context.Context, root, probe s
+ }
+ 
+ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe, target string) whitespaceLayoutProducts {
++ if markdownAuditMutant("P6") { return whitespaceLayoutProducts{} }
+ 	main, err := filepath.Abs(filepath.Join("testdata", probe))
+ 	if err != nil {
+ 		t.Fatal(err)
+@@ -260,7 +261,7 @@ func whitespaceLayoutBuildProduct(t *testing.T, ctx context.Context, root, probe
+ 		if err != nil {
+ 			return err
+ 		}
+-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
++		if err := os.WriteFile(markdownAuditPath("S6", filepath.Join(dir, "program.c"), filepath.Join(dir, "missing.c")), []byte(native.C(program)), 0644); err != nil {
+ 			return err
+ 		}
+ 		return os.WriteFile(filepath.Join(dir, "program.mjs"), []byte(javascript.JavaScript(program)), 0644)
+@@ -675,6 +676,7 @@ var whitespaceLayoutPolicyOnce sync.Once
+ var whitespaceLayoutPolicyProducts whitespaceLayoutProducts
+ 
+ func whitespaceLayoutPolicySetup(t *testing.T, ctx context.Context) whitespaceLayoutProducts {
++ if markdownAuditMutant("P8") { return whitespaceLayoutProducts{} }
+ 	whitespaceLayoutPolicyOnce.Do(func() {
+ 		started := time.Now()
+ 		root, err := filepath.Abs(repository)
+@@ -688,7 +690,7 @@ func whitespaceLayoutPolicySetup(t *testing.T, ctx context.Context) whitespaceLa
+ 		inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+ 		inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
+ 		dir := buildcache.Product(t, inputs, func(dir string) error {
+-			return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true, Jobs: 2})
++			return whitespaceLayoutNativeBuild(ctx, products.source, markdownAuditPath("S9", filepath.Join(dir, "port"), filepath.Join(dir, "")), native.Options{Sanitize: true, Split: true, Jobs: 2})
+ 		})
+ 		products.sanitized = filepath.Join(dir, "port")
+ 		whitespaceLayoutPolicyProducts = products
+@@ -762,6 +764,7 @@ func whitespaceLayoutSetupInputs(t *testing.T) buildcache.Inputs {
+ }
+ 
+ func whitespaceLayoutReadyProducts(t *testing.T) (whitespaceLayoutProducts, whitespaceLayoutProducts) {
++ if markdownAuditMutant("P9") { return whitespaceLayoutProducts{}, whitespaceLayoutProducts{} }
+ 	t.Helper()
+ 	whitespaceLayoutReadyOnce.Do(func() { whitespaceLayoutPrepare(t) })
+ 	if whitespaceLayoutPrepared.goBinary == "" {
+@@ -890,6 +893,7 @@ func TestMarkdownWhitespaceLayoutBuildWorker(t *testing.T) {
+ }
+ 
+ func whitespaceLayoutNativeProduct(t *testing.T, ctx context.Context, products whitespaceLayoutProducts, sanitize bool) string {
++ if markdownAuditMutant("P7") { return "" }
+ 	options := native.Options{Sanitize: sanitize, Split: true, Jobs: 2}
+ 	nativeInputs := products.inputs
+ 	nativeInputs.Name = fmt.Sprintf("%s-native-%t", products.inputs.Name, sanitize)
+@@ -897,7 +901,7 @@ func whitespaceLayoutNativeProduct(t *testing.T, ctx context.Context, products w
+ 	nativeInputs.Flags = append(nativeInputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+ 	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
+ 	dir := buildcache.Product(t, nativeInputs, func(dir string) error {
+-		return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, "port"), options)
++		return whitespaceLayoutNativeBuild(ctx, products.source, markdownAuditPath("S8", filepath.Join(dir, "port"), filepath.Join(dir, "")), options)
+ 	})
+ 	return dir
+ }

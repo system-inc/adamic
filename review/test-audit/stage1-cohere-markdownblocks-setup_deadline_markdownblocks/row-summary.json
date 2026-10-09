@@ -1,0 +1,86 @@
+[
+  {
+    "test": "TestMarkdownLayoutSetupHasNoDeadline",
+    "seconds": 0.034,
+    "kills": [
+      "S1"
+    ],
+    "vacuous": false
+  },
+  {
+    "test": "TestMarkdownLayoutDeadlineWorker",
+    "seconds": 0.008,
+    "kills": [],
+    "vacuous": null
+  },
+  {
+    "test": "TestProduct_MarkdownQuote_build family",
+    "seconds": 2.386,
+    "kills": [
+      "S2"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestProduct_MarkdownQuote_native family",
+    "seconds": 1.92,
+    "kills": [
+      "S2",
+      "S3"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestProduct_MarkdownStructure family",
+    "seconds": 2.559,
+    "kills": [
+      "S4"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestProduct_MarkdownTable family",
+    "seconds": 3.373,
+    "kills": [
+      "S5"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestProduct_MarkdownWhitespace_build family",
+    "seconds": 2.567,
+    "kills": [
+      "S6"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestProduct_MarkdownWhitespace_native family",
+    "seconds": 1.959,
+    "kills": [
+      "S6",
+      "S8"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestProduct_MarkdownWhitespace_policy_native",
+    "seconds": 1.645,
+    "kills": [
+      "S6",
+      "S9"
+    ],
+    "vacuous": true
+  },
+  {
+    "test": "TestProduct_MarkdownWhitespace_manifest",
+    "seconds": 1.129,
+    "kills": [
+      "S6",
+      "S7",
+      "S8",
+      "S9"
+    ],
+    "vacuous": true
+  }
+]

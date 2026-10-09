@@ -1,0 +1,602 @@
+[
+  {
+    "group": "TestMarkdownLayoutSetupHasNoDeadline",
+    "index": 0,
+    "run": 1,
+    "exit": 0,
+    "seconds": 1.7706068699990283,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownLayoutSetupHasNoDeadline)$"
+    ]
+  },
+  {
+    "group": "TestMarkdownLayoutSetupHasNoDeadline",
+    "index": 0,
+    "run": 2,
+    "exit": 0,
+    "seconds": 1.751220963000378,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownLayoutSetupHasNoDeadline)$"
+    ]
+  },
+  {
+    "group": "TestMarkdownLayoutSetupHasNoDeadline",
+    "index": 0,
+    "run": 3,
+    "exit": 0,
+    "seconds": 1.7013223550002294,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownLayoutSetupHasNoDeadline)$"
+    ]
+  },
+  {
+    "group": "TestMarkdownLayoutDeadlineWorker",
+    "index": 1,
+    "run": 1,
+    "exit": 0,
+    "seconds": 1.7152577219985687,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownLayoutDeadlineWorker)$"
+    ]
+  },
+  {
+    "group": "TestMarkdownLayoutDeadlineWorker",
+    "index": 1,
+    "run": 2,
+    "exit": 0,
+    "seconds": 1.6763731209994148,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownLayoutDeadlineWorker)$"
+    ]
+  },
+  {
+    "group": "TestMarkdownLayoutDeadlineWorker",
+    "index": 1,
+    "run": 3,
+    "exit": 0,
+    "seconds": 1.7164259710007173,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestMarkdownLayoutDeadlineWorker)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownQuote_build family",
+    "index": 2,
+    "run": 1,
+    "exit": 0,
+    "seconds": 4.12347748799948,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownQuote_lowered|TestProduct_MarkdownQuote_lists|TestProduct_MarkdownQuote_layout)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownQuote_build family",
+    "index": 2,
+    "run": 2,
+    "exit": 0,
+    "seconds": 4.1328318169998965,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownQuote_lowered|TestProduct_MarkdownQuote_lists|TestProduct_MarkdownQuote_layout)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownQuote_build family",
+    "index": 2,
+    "run": 3,
+    "exit": 0,
+    "seconds": 4.144900526000129,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownQuote_lowered|TestProduct_MarkdownQuote_lists|TestProduct_MarkdownQuote_layout)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownQuote_native family",
+    "index": 3,
+    "run": 1,
+    "exit": 0,
+    "seconds": 3.8553679199994804,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownQuote_native_true|TestProduct_MarkdownQuote_native_false)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownQuote_native family",
+    "index": 3,
+    "run": 2,
+    "exit": 0,
+    "seconds": 3.591828953000004,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownQuote_native_true|TestProduct_MarkdownQuote_native_false)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownQuote_native family",
+    "index": 3,
+    "run": 3,
+    "exit": 0,
+    "seconds": 3.6414427220006473,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownQuote_native_true|TestProduct_MarkdownQuote_native_false)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownStructure family",
+    "index": 4,
+    "run": 1,
+    "exit": 0,
+    "seconds": 4.298989053000696,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownStructure_lowered|TestProduct_MarkdownStructure_native|TestProduct_MarkdownStructure_adamic_markdown_lists|TestProduct_MarkdownStructure_adamic_markdown_doclayout)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownStructure family",
+    "index": 4,
+    "run": 2,
+    "exit": 0,
+    "seconds": 4.265776924999955,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownStructure_lowered|TestProduct_MarkdownStructure_native|TestProduct_MarkdownStructure_adamic_markdown_lists|TestProduct_MarkdownStructure_adamic_markdown_doclayout)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownStructure family",
+    "index": 4,
+    "run": 3,
+    "exit": 0,
+    "seconds": 4.277505726000527,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownStructure_lowered|TestProduct_MarkdownStructure_native|TestProduct_MarkdownStructure_adamic_markdown_lists|TestProduct_MarkdownStructure_adamic_markdown_doclayout)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownTable family",
+    "index": 5,
+    "run": 1,
+    "exit": 0,
+    "seconds": 9.087201432999791,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownTable_lowered|TestProduct_MarkdownTable_native_true|TestProduct_MarkdownTable_native_false|TestProduct_MarkdownTable_list|TestProduct_MarkdownTable_document)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownTable family",
+    "index": 5,
+    "run": 2,
+    "exit": 0,
+    "seconds": 5.005735620999985,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownTable_lowered|TestProduct_MarkdownTable_native_true|TestProduct_MarkdownTable_native_false|TestProduct_MarkdownTable_list|TestProduct_MarkdownTable_document)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownTable family",
+    "index": 5,
+    "run": 3,
+    "exit": 0,
+    "seconds": 5.087303584999972,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownTable_lowered|TestProduct_MarkdownTable_native_true|TestProduct_MarkdownTable_native_false|TestProduct_MarkdownTable_list|TestProduct_MarkdownTable_document)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_build family",
+    "index": 6,
+    "run": 1,
+    "exit": 0,
+    "seconds": 4.313413478001166,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_lowered|TestProduct_MarkdownWhitespace_lists|TestProduct_MarkdownWhitespace_layout|TestProduct_MarkdownWhitespace_policy_lowered)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_build family",
+    "index": 6,
+    "run": 2,
+    "exit": 0,
+    "seconds": 4.345610481999756,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_lowered|TestProduct_MarkdownWhitespace_lists|TestProduct_MarkdownWhitespace_layout|TestProduct_MarkdownWhitespace_policy_lowered)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_build family",
+    "index": 6,
+    "run": 3,
+    "exit": 0,
+    "seconds": 4.1015476289994695,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_lowered|TestProduct_MarkdownWhitespace_lists|TestProduct_MarkdownWhitespace_layout|TestProduct_MarkdownWhitespace_policy_lowered)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_native family",
+    "index": 7,
+    "run": 1,
+    "exit": 0,
+    "seconds": 4.0258092879994365,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_native_true|TestProduct_MarkdownWhitespace_native_false)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_native family",
+    "index": 7,
+    "run": 2,
+    "exit": 0,
+    "seconds": 3.507064684999932,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_native_true|TestProduct_MarkdownWhitespace_native_false)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_native family",
+    "index": 7,
+    "run": 3,
+    "exit": 0,
+    "seconds": 3.5958633179998287,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_native_true|TestProduct_MarkdownWhitespace_native_false)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_policy_native",
+    "index": 8,
+    "run": 1,
+    "exit": 0,
+    "seconds": 3.651557422001133,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_policy_native)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_policy_native",
+    "index": 8,
+    "run": 2,
+    "exit": 0,
+    "seconds": 3.3053044880016387,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_policy_native)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_policy_native",
+    "index": 8,
+    "run": 3,
+    "exit": 0,
+    "seconds": 3.3626989589993173,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_policy_native)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_manifest",
+    "index": 9,
+    "run": 1,
+    "exit": 0,
+    "seconds": 6.475394035998761,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_manifest)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_manifest",
+    "index": 9,
+    "run": 2,
+    "exit": 0,
+    "seconds": 2.8455253140000423,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_manifest)$"
+    ]
+  },
+  {
+    "group": "TestProduct_MarkdownWhitespace_manifest",
+    "index": 9,
+    "run": 3,
+    "exit": 0,
+    "seconds": 2.8144311560008646,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^(TestProduct_MarkdownWhitespace_manifest)$"
+    ]
+  }
+]

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/whitespace_layout_split_test.go
++++ b/stage1/cohere/markdownblocks/whitespace_layout_split_test.go
+@@ -897,7 +897,7 @@
+ 	nativeInputs.Flags = append(nativeInputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+ 	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.Tool("clang", "--version"))
+ 	dir := buildcache.Product(t, nativeInputs, func(dir string) error {
+-		return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, "port"), options)
++		return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, ""), options)
+ 	})
+ 	return dir
+ }

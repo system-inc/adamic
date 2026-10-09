@@ -1,0 +1,41 @@
+[
+  {
+    "name": "npm-ci",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "exit": 0,
+    "seconds": 0.3965022129996214
+  },
+  {
+    "name": "list",
+    "command": [
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./stage1/cohere/markdownblocks/"
+    ],
+    "exit": 0,
+    "seconds": 5.788859668000441
+  },
+  {
+    "name": "baseline",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "."
+    ],
+    "exit": 1,
+    "seconds": 91.88841260799927
+  }
+]

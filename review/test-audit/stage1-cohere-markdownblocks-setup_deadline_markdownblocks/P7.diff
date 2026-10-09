@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/whitespace_layout_split_test.go
++++ b/stage1/cohere/markdownblocks/whitespace_layout_split_test.go
+@@ -890,6 +890,7 @@
+ }
+ 
+ func whitespaceLayoutNativeProduct(t *testing.T, ctx context.Context, products whitespaceLayoutProducts, sanitize bool) string {
++ if true { return "" }
+ 	options := native.Options{Sanitize: sanitize, Split: true, Jobs: 2}
+ 	nativeInputs := products.inputs
+ 	nativeInputs.Name = fmt.Sprintf("%s-native-%t", products.inputs.Name, sanitize)
