@@ -1,0 +1,13 @@
+diff --git a/internal/lower/class_inheritance.go b/internal/lower/class_inheritance.go
+index b1906e9d..92f07da6 100644
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -569,7 +569,7 @@ func (l *lowering) classViewRefusal(node *ast.Node) error {
+ 	}
+ 	source := l.checker.GetTypeAtLocation(node)
+ 	mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{})
+-	if mismatch == nil {
++	if mismatch == nil || node.Kind == ast.KindNewExpression {
+ 		return nil
+ 	}
+ 	target = mismatch
