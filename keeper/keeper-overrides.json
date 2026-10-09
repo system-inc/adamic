@@ -1,4 +1,34 @@
 {
- "u156 TestJsxNode": {"defense": "twin", "keeper_note": "Node half of the TestJsxNative twin; port mutants fail both by construction (defender brief v4)."},
- "u156 TestJsxNative": {"defense": "twin", "keeper_note": "Native half of the TestJsxNode twin; also guards the compiler, which du156.1's port mutants never touched."}
+ "u156 TestJsxNode": {
+  "defense": "twin",
+  "keeper_note": "Node half of the TestJsxNative twin; port mutants fail both by construction (defender brief v4)."
+ },
+ "u156 TestJsxNative": {
+  "defense": "twin",
+  "keeper_note": "Native half of the TestJsxNode twin; also guards the compiler, which du156.1's port mutants never touched."
+ },
+ "u156 TestCompilerExpressionsAgree_Setup": {
+  "defense": "family-part",
+  "keeper_note": "The build phase of the TestCompilerExpressionsAgree family (shards _000.._015 plus setup are one test, brief rule). Not a deletion candidate on its own; judged with its family."
+ },
+ "u112 TestSuggestionAlongsideAutomaticFix_Setup": {
+  "defense": "family-part",
+  "keeper_note": "Part of its family (setup or shard), judged with the family; filtered out of defender briefs."
+ },
+ "u141 TestStatementsAgainstGoAndPrettier_Setup": {
+  "defense": "family-part",
+  "keeper_note": "Part of its family (setup or shard), judged with the family; filtered out of defender briefs."
+ },
+ "u146 TestVolumeConfigGuardAndMutant_000": {
+  "defense": "family-part",
+  "keeper_note": "Part of its family (setup or shard), judged with the family; filtered out of defender briefs."
+ },
+ "u127 TestMarkdownListLayout_Setup": {
+  "defense": "family-part",
+  "keeper_note": "Part of its family (setup or shard), judged with the family; filtered out of defender briefs."
+ },
+ "u144 TestProduct_profile_controls_lowered": {
+  "defense": "family-part",
+  "keeper_note": "A product row: the build phase of its consumers, one family with its TestProduct_ siblings (brief v8). The defender disproved the audit's untrue: it fails under tsgo.go mutants. Not a deletion candidate on its own."
+ }
 }

@@ -1,5 +1,5 @@
 """defender-for.py: the defender brief for one unit, its rows filled from the ledger (subsumed and untrue rows)."""
-import json, sys
+import json, re, sys
 brief, manifest, ledgerPath, unitId = sys.argv[1:5]
 # "u031" is every candidate row of the unit; "u031.2" is its second chunk of three, so a defender has the budget for
 # three honest attempts per row (du033 showed ten rows can't get them in one window); "u033=TestA,TestB" names rows.
@@ -13,6 +13,10 @@ elif "." in unitId:
 units = {u["unit"]: u for u in json.load(open(manifest))["units"]}
 u = units[unitId]
 rows = [r for r in json.load(open(ledgerPath)) if r["unit"] == unitId and (r.get("keeper_verdict") or r.get("verdict")) in ("subsumed", "untrue")]
+# A family's setup or numbered shard is part of one test (the audit brief's family rule), never defended on its own.
+# Product rows are one family too (brief v8: TestProduct_* siblings differ only in input), the build phase their
+# consumers run, so they are never deletion candidates on their own.
+rows = [r for r in rows if not re.search(r"_(Setup|\d{2,3})$", r["test"]) and not r["test"].startswith("TestProduct_")]
 if names is not None:
     rows = [r for r in rows if r["test"] in names]
 if chunk is not None:
