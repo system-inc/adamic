@@ -4,41 +4,48 @@
     "caught": true,
     "exit": 1,
     "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
-    "log": "/workspace/scratch/step18-storage-mutants/receiver-lost/test.log"
+    "log": "/workspace/scratch/storage-shape4-mutants/receiver-lost/test.log"
   },
   {
     "name": "field-reselected",
     "caught": true,
     "exit": 1,
     "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
-    "log": "/workspace/scratch/step18-storage-mutants/field-reselected/test.log"
+    "log": "/workspace/scratch/storage-shape4-mutants/field-reselected/test.log"
   },
   {
     "name": "arguments-before-guard",
     "caught": true,
     "exit": 1,
     "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
-    "log": "/workspace/scratch/step18-storage-mutants/arguments-before-guard/test.log"
+    "log": "/workspace/scratch/storage-shape4-mutants/arguments-before-guard/test.log"
   },
   {
     "name": "noncallable-no-loud-stop",
     "caught": true,
     "exit": 1,
     "test": "TestStep18StorageTypeLie/.ts",
-    "log": "/workspace/scratch/storage-no-stop-retry/noncallable-no-loud-stop/test.log"
+    "log": "/workspace/scratch/storage-shape4-mutants/noncallable-no-loud-stop/test.log"
   },
   {
     "name": "noncallable-stop-before-arguments",
     "caught": true,
     "exit": 1,
     "test": "TestStep18StorageTypeLie/.ts",
-    "log": "/workspace/scratch/step18-storage-mutants/noncallable-stop-before-arguments/test.log"
+    "log": "/workspace/scratch/storage-shape4-mutants/noncallable-stop-before-arguments/test.log"
   },
   {
     "name": "adamic-noncallable-admitted",
     "caught": true,
     "exit": 1,
     "test": "TestStep18StorageTypeLie/.a",
-    "log": "/workspace/scratch/step18-storage-mutants/adamic-noncallable-admitted/test.log"
+    "log": "/workspace/scratch/storage-shape4-mutants/adamic-noncallable-admitted/test.log"
+  },
+  {
+    "name": "nullish-chain-arguments",
+    "caught": true,
+    "exit": 1,
+    "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+    "log": "/workspace/scratch/storage-shape4-mutants/nullish-chain-arguments/test.log"
   }
 ]

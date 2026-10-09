@@ -20,7 +20,11 @@ still execute before the ruled panic. A checker narrowing over a union slot is
 Refused in .a; the paired .ts witness, generated temporarily from the .a source,
 prints `arguments` and stops with exit 70. Native and JavaScript both print
 `adamic: panic: TypeError: optional call value is not callable`.
-Original Node prints `arguments`, then exits 1 with TypeError.
+Original Node prints `arguments`, then exits 1 with TypeError; the source oracle
+normalizes that uncaught TypeError to exit 70. The shape-1 commit tightened the
+source exit assertion after its initial green run using raw Node's exit rather
+than the oracle normalization. Shape 4 corrects that test assertion; the compiler
+behavior was unchanged.
 
 Dependency: compiler/per-backend-stops 8273e6f5 is not on this base. No backend
 divergence is needed: this fixture's two backend outcomes agree exactly, and its
@@ -57,3 +61,27 @@ through the optional host member at program.ts:1605/1624 without losing its
 receiver. This is a reduced-storage result, not whole-tsc acceptance. Checked
 and uninitialized callable fields, unsupported result/signature representations,
 Weak and unchecked storage remain pending. Entry measurement follows all shapes.
+
+## Shape 4: optional method
+
+Shape 1 is 6b3238d4a71416e1d7d13773cb90111d7a1c7c2b. Optional-method
+selection preserves own/prototype selection and the receiver before arguments.
+A required member call inside a continuous optional chain now carries an explicit
+required-callable flag: only its earlier receiver guard short-circuits it, and a
+missing or invalid callable stops after arguments rather than dereferencing it.
+
+optional-method.a holds inherited class methods, absent members, explicit
+undefined fields, receiver binding and `a?.b.report(argument())` to Node in both
+backends with ASan/UBSan and leak checks. The nullish-chain-arguments overlay
+executes arguments outside the receiver guard and is caught by Node output.
+All six shape-1 mutants were rerun and caught. Scoped lower/IR/flow checks, vet
+and changed-file a-check pass. The source type-lie expectation now pins the
+oracle-normalized Node TypeError bytes; the shape-1 raw-exit assertion correction
+is recorded above. Both backend loud stops still match exactly.
+
+Linux counts add optional-method.a only; no existing row changes. Tsc's
+checker.ts:6910 and 7093 optional tracker methods retain their receiver and lazy
+arguments through the admitted represented method path. No entry-level success
+is inferred from those reduced witnesses.
+
+| docs/step-18/storage-fixtures/optional-method.a | 16 | 16 | 37 | 50 | 6 | 0 |

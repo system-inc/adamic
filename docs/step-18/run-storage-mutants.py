@@ -23,7 +23,7 @@ cases[-1] = (name,path,source.replace('if (!(fn instanceof AdamicClosure)', 'fn 
 add('arguments-before-guard', js, 'const fn = object[%s];', 'const eager = () => object; const fn = object[%s];',
     'TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a')
 name,path,source,test=cases[-1]
-cases[-1]=(name,path,source.replace('const values = [%s];','const values = [%s];',1).replace('if (fn === undefined || fn === null) return undefined;', 'const premature = [%s]; void eager; void premature; if (fn === undefined || fn === null) return undefined;',1).replace('presence, e.callValues(call.Arguments, call.Spread), method','e.callValues(call.Arguments, call.Spread), presence, e.callValues(call.Arguments, call.Spread), method',1),test)
+cases[-1]=(name,path,source.replace('%s%sconst values', 'const premature = [%s]; void eager; void premature; %s%sconst values',1).replace('guard, presence, e.callValues(call.Arguments, call.Spread), method','e.callValues(call.Arguments, call.Spread), guard, presence, e.callValues(call.Arguments, call.Spread), method',1),test)
 add('noncallable-no-loud-stop',native,
     'e.line("if (%s) adamic_panic(\\"TypeError: optional call value is not callable\\", 46);", invalid)',
     'e.declarations = append(e.declarations, "#include <stdlib.h>"); e.line("if (%s) exit(0);", invalid)', 'TestStep18StorageTypeLie/.ts')
@@ -34,6 +34,13 @@ add('noncallable-stop-before-arguments',native,
 add('adamic-noncallable-admitted','internal/lower/optional_callable.go',
     'if held == ir.Union && strings.HasSuffix(', 'if false && held == ir.Union && strings.HasSuffix(',
     'TestStep18StorageTypeLie/.a')
+
+chain = 'internal/lower/optional_chain.go'
+add('nullish-chain-arguments',chain,
+    'Body: []ir.Statement{ir.Declare{Local: local, Value: current}}, Result:',
+    'Body: func() []ir.Statement { body := []ir.Statement{ir.Declare{Local:local, Value:current}}; for _, last := range steps { if last.Kind == ast.KindCallExpression { for _, argument := range last.AsCallExpression().Arguments.Nodes { value, err := l.expression(argument); if err != nil { panic(err) }; body=append(body,ir.Evaluate{Value:value}) } } }; return body }(), Result:',
+    'TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a')
+
 results=[]
 for name,path,source,test in cases:
     if len(sys.argv)>1 and name not in sys.argv[1:]: continue

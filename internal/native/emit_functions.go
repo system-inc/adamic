@@ -295,7 +295,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	exactCount := false
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
-		if function, known := e.exactReceiverMethod(property.Object, property.Name); known && !expression.Optional {
+		if function, known := e.exactReceiverMethod(property.Object, property.Name); known && !expression.Optional && !expression.RequiredCallable {
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
 			method = e.methodThunk(function)
@@ -308,7 +308,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 				e.line("adamic_method %s = NULL;", method)
 			}
 			lookup := "adamic_object_callee"
-			if expression.Optional {
+			if expression.Optional || expression.RequiredCallable {
 				lookup = e.optionalCalleeLookup()
 				invalid = e.temporary()
 				e.line("bool %s = false;", invalid)
@@ -319,6 +319,14 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			}
 			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(%s(%s, %s, &%s, &%s%s))", lookup, receiver, cString(property.Name), e.cache(), method, extra))
 		}
+	}
+	if expression.RequiredCallable {
+		missing := closure + " == NULL && " + method + " == NULL"
+		if e.program.ClosureConventionNeeded() {
+			missing = fmt.Sprintf("%s == NULL && (%s.counted ? %s.counted_code == NULL : %s.code == NULL)", closure, method, method, method)
+		}
+		e.line("%s = %s || (%s);", invalid, invalid, missing)
+		return e.callSelectedChecked(expression, closure, receiver, method, exactCount, invalid)
 	}
 	if expression.Optional {
 		return e.optionalSelectedCall(expression, closure, receiver, method, exactCount, invalid)

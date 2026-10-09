@@ -447,7 +447,7 @@ func (e *emitter) fieldTypesNeeded() bool {
 	}
 	needed := false
 	walkExpressions(e.program, func(expression ir.Expression) {
-		if call, ok := expression.(ir.CallClosure); ok && call.Optional {
+		if call, ok := expression.(ir.CallClosure); ok && (call.Optional || call.RequiredCallable) {
 			needed = true
 		}
 		if property, ok := expression.(ir.Property); ok && property.View != "" {

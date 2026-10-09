@@ -16,9 +16,13 @@ func (e *emitter) optionalMethodCall(call ir.CallClosure) string {
 	if counted {
 		method = "adamicDirect(fn, [object, ...values])"
 	}
+	guard := "if (fn === undefined || fn === null) return undefined; "
+	if call.RequiredCallable {
+		guard = ""
+	}
 	presence := ""
 	if call.OptionalPresent != 0 {
 		presence = e.name(call.OptionalPresent-1) + " = true; "
 	}
-	return fmt.Sprintf("((object) => { const fn = object[%s]; const own = Object.hasOwn(object, %s); if (fn === undefined || fn === null) return undefined; %sconst values = [%s]; if (!(fn instanceof AdamicClosure) && typeof fn !== 'function') panic('TypeError: optional call value is not callable'); return own ? (fn.receiver ? adamicCall(fn, [object, ...values]) : adamicCall(fn, values)) : %s; })(%s)", quote(property.Name), quote(property.Name), presence, e.callValues(call.Arguments, call.Spread), method, e.value(property.Object))
+	return fmt.Sprintf("((object) => { const fn = object[%s]; const own = Object.hasOwn(object, %s); %s%sconst values = [%s]; if (!(fn instanceof AdamicClosure) && typeof fn !== 'function') panic('TypeError: optional call value is not callable'); return own ? (fn.receiver ? adamicCall(fn, [object, ...values]) : adamicCall(fn, values)) : %s; })(%s)", quote(property.Name), quote(property.Name), guard, presence, e.callValues(call.Arguments, call.Spread), method, e.value(property.Object))
 }

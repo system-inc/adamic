@@ -291,6 +291,7 @@ func (l *lowering) chainMethodCall(member, node *ast.Node, object ir.Expression,
 		return nil, err
 	}
 	call := value.(ir.CallClosure)
+	call.RequiredCallable = node.AsCallExpression().QuestionDotToken == nil
 	if node.AsCallExpression().QuestionDotToken != nil {
 		if call.Returns == 0 && !discarded {
 			return nil, l.notYet(node, "observing an optional void call's runtime result")

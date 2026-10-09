@@ -16,6 +16,10 @@ func init() {
 	fixtures = append(fixtures, struct {
 		path            string
 		lowers, checked bool
+	}{storageDirectory + "optional-method.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
 	}{storageDirectory + "field.a", true, false})
 }
 
@@ -47,9 +51,11 @@ func TestStep18StorageTypeLie(t *testing.T) {
 				t.Fatal(err)
 			}
 			node := onNode(t, path)
-			if node.exitCode != 1 || string(node.stdout) != "arguments\n" || !strings.Contains(string(node.stderr), "TypeError") {
-				t.Fatalf("Node order changed: %#v", node)
+			wantNode := run{stdout: []byte("arguments\n"), stderr: []byte("adamic: panic: TypeError: host.callback is not a function\n"), exitCode: 70}
+			if difference := disagreement(wantNode, node); difference != "" {
+				t.Fatalf("Node order changed: %s; got %#v", difference, node)
 			}
+
 			want := run{stdout: []byte("arguments\n"), stderr: []byte("adamic: panic: TypeError: optional call value is not callable\n"), exitCode: 70}
 			native, _ := natively(t, program)
 			for name, got := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program)} {

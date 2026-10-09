@@ -728,8 +728,11 @@ type (
 		Returns      Type
 		// Optional tests the selected callable before arguments; OptionalResult is
 		// the widened result, or zero when discarded. Returns keeps the call ABI.
-		Optional       bool
-		OptionalResult Type
+		// RequiredCallable selects a member inside a guarded chain without guarding
+		// the callable itself: missing values fail after argument effects.
+		RequiredCallable bool
+		Optional         bool
+		OptionalResult   Type
 		// OptionalPresent names a boolean local plus one, set only after selection.
 		// It distinguishes a skipped invocation from a present undefined result.
 		OptionalPresent int

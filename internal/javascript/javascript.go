@@ -1102,7 +1102,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("new AdamicClosure(%s, [%s], %t)", functionName(e.program, expression.Function), strings.Join(cells, ", "), e.program.Functions[expression.Function].Receiver)
 	case ir.CallClosure:
-		if expression.Optional {
+		if expression.Optional || expression.RequiredCallable {
 			return e.optionalMethodCall(expression)
 		}
 		if expression.Direct > 0 {
