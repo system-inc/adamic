@@ -9,7 +9,7 @@
 # branch isn't gated again), one per slot, on every box in the slot table. The queue is by priority, decided
 # when a gate starts: what integration is landing first (cloud/land-*, then area/* and any branch named in the state
 # directory's priority file, one per line, such as a fix-forward), then devtools/*, then workers'
-# codex/*, newest first within each, and only a branch's newest tip. Each tip is classed when queued:
+# codex/*, oldest first within each, and only a branch's newest tip. Each tip is classed when queued:
 # big (an area, a stage3/ change, which runs the stage 3 lane, or more than two touched packages) or
 # small. A big gate runs in an area slot (24 CPUs), a small one in a small slot (12 each), so a
 # worker's tip never waits behind an area. The slot table (${state}/slots, one "box class" per line,
@@ -895,7 +895,8 @@ matchesReservation() {
 }
 # The static part of each queued tip's rank, once per pass: position * 100 + rank, the time it was queued,
 # its class, branch and sha, and whether it matches a reservation. Sorted as the picks read it: lowest
-# first, newest first among equals.
+# first, oldest queued first among equals (ruled by @system_adamic, Oct 9 21:35Z: newest first, every later cut jumped
+# the older ones of its rank, and typescript's batch 6, 0fed6a91, starved 1h40m).
 rankQueue() {
   local class queued branch sha rank position reserved name
   while read -r class queued branch sha; do
@@ -911,12 +912,12 @@ rankQueue() {
     fi
     if [ "${rank}" = 0 ]; then position=0; else position=$(stepPosition "${branch}"); fi
     # Among equal keys the star's train runs bottom first: cloud/land-train-<n>, lower n first (@system_adamic, Oct 8
-    # 23:17Z: train-3 outranked train-2 because ties break newest first). Other tips sort as 0, newest first.
+    # 23:17Z: train-3 outranked train-2 because ties broke newest first). Other tips sort as 0, oldest first.
     train=0
     if [[ ${branch} =~ ^cloud/land-train-([0-9]+) ]]; then train=${BASH_REMATCH[1]}; fi
     isFront "${branch}" && train=$(( $(frontLine "${branch}") * 1000 + train ))
     echo "$(( position * 100 + rank )) ${train} ${queued} ${class} ${branch} ${sha} ${reserved}"
-  done < "${state}/queue" | sort -k1,1n -k2,2n -k3,3nr | cut -d' ' -f1,3- > "${state}/queue.ranked"
+  done < "${state}/queue" | sort -k1,1n -k2,2n -k3,3n | cut -d' ' -f1,3- > "${state}/queue.ranked"
 }
 # The box a big tip may borrow a small slot on: the first box among these slots' with a free small slot and
 # fewer big gates running than its limit.
@@ -1000,7 +1001,7 @@ pickNext() {
       box=$(echo "${eligible}" | awk -v c="${slot}" '$2 == c && box == "" {box = $1} END {print box}')
     else box=${borrowable}; fi
     best="${score} ${queued} ${branch} ${sha} ${class} ${slot} ${box}" bestScore=${score} bestPosition=${position}
-    # The list is in key order, newest first among equals: with nothing added, nothing after can beat it.
+    # The list is in key order, oldest first among equals: with nothing added, nothing after can beat it.
     [ "${extra}" = 0 ] && break
   done < "${state}/queue.ranked"
   echo "${best}"

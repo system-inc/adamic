@@ -641,6 +641,23 @@ class WatchTests(unittest.TestCase):
         self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if x.startswith('codex/')],
                          ['codex/step-a-x', 'codex/step-b-x', 'codex/other'])
 
+    def test_within_a_rank_the_oldest_queued_tip_goes_first(self):
+        # @system_adamic, Oct 9 21:35Z: ties broke newest first, so every later cut jumped the older ones of its rank and
+        # typescript's batch 6 (0fed6a91) starved 1h40m. The newer tip is first in the file, so file order can't pass this.
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        w.put('mode', 'pass')
+        older, newer = '1' * 40, '2' * 40
+        (w.state / 'slots').write_text('box S\n')
+        (w.state / 'seen').write_text('codex/newer %s\ncodex/older %s\n' % (newer, older))
+        (w.state / 'queue').write_text('S 900 codex/newer %s\nS 800 codex/older %s\n' % (newer, older))
+        w.put('tips', '%s\trefs/heads/codex/newer\n%s\trefs/heads/codex/older\n' % (newer, older))
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if x.startswith('codex/')]) == 2)
+        self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if x.startswith('codex/')],
+                         ['codex/older', 'codex/newer'])
+
     def test_a_realistic_queue_fills_and_refills_every_slot_in_seconds(self):
         # @system_adamic, Oct 8: a watcher change is tested against a realistic queue before it deploys.
         # 150 tips, a run of discards, sixteen slots on four boxes, and every gate finishing at once: each
