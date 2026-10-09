@@ -1,0 +1,8 @@
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsLiteral
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsLiteral
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsLiteral
+    checked_reference_fields_test.go:68: want exit 70 "adamic: panic: write failed: results[] expects Result, got object\n", got exit status 70 "adamic: panic: write failed: array[] expects \"alpha\", got object\n"
+--- FAIL: TestRuntimeCheckedReferenceArrayRejectsLiteral (5.70s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	5.705s
+FAIL

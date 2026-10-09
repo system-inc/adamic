@@ -216,23 +216,23 @@ extern char adamic_literal_mark;
 // object: a call through an interface the class implements finds one there (adamic_object_callee).
 typedef struct adamic_methods adamic_methods;
 typedef struct adamic_field_contract {
- bool nullish_only;
+	bool nullish_only;
 	unsigned char kind;
 	bool nullable;
 	const char *declared;
 	size_t count;
 	const adamic_value *allowed;
- int type_id;
- bool reference;
- bool structural;
- size_t write_proof_count;
- const int *write_proofs;
- size_t field_proof_count;
- const int *field_proofs;
- size_t field_count;
- const char *const *field_names;
- const bool *field_optional;
- const struct adamic_field_contract *field_contracts;
+	int type_id;
+	bool reference;
+	bool structural;
+	size_t write_proof_count;
+	const int *write_proofs;
+	size_t field_proof_count;
+	const int *field_proofs;
+	size_t field_count;
+	const char *const *field_names;
+	const bool *field_optional;
+	const struct adamic_field_contract *field_contracts;
 } adamic_field_contract;
 
 typedef struct adamic_shape {
@@ -240,6 +240,7 @@ typedef struct adamic_shape {
 	const char *const *names;
 	const bool *references;
 	const adamic_methods *methods;
+	// Points one past a header entry whose type_id is the allocation type; NULL when absent.
 	const adamic_field_contract *contracts;
 } adamic_shape;
 

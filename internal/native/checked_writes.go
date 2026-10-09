@@ -9,7 +9,7 @@ import (
 
 func (e *emitter) shapeContracts(shape string, fields []ir.Field, allocationType int) string {
 	// The header precedes the field-indexed entries. Runtime shapes with no contracts use NULL.
-	rows := []string{fmt.Sprintf("{.type_id=%d}", allocationType)}
+	rows := []string{fmt.Sprintf("{.type_id=%d, .declared=%s}", allocationType, cString(e.program.ContractTypeNames[allocationType]))}
 	for index, field := range fields {
 		contract := field.Contract
 		if contract == nil {

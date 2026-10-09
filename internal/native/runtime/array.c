@@ -37,7 +37,7 @@ void adamic_array_check_never(const adamic_array *array, unsigned char kind, ada
 }
 
 void adamic_array_push(adamic_array *array, adamic_value value) {
-	adamic_array_check_never(array, 0, value, "array[]");
+	if (array->element_contract != NULL || array->never_elements) { adamic_array_check_never(array, 0, value, "array[]"); }
 	if (array->length == array->capacity) {
 		size_t capacity = array->capacity == 0 ? 4 : array->capacity * 2;
 		adamic_value *grown = realloc(array->elements, capacity * sizeof *grown);
@@ -297,7 +297,7 @@ adamic_array *adamic_array_fill_checked(adamic_array *array, adamic_value value,
 	start = start < 0 ? (length + start < 0 ? 0 : length + start) : (start > length ? length : start);
 	end = has_end ? (isnan(end) ? 0 : trunc(end)) : length;
 	end = end < 0 ? (length + end < 0 ? 0 : length + end) : (end > length ? length : end);
-	if (start < end) { adamic_array_check_never(array, kind, value, expression); }
+	if (start < end && (array->element_contract != NULL || array->never_elements)) { adamic_array_check_never(array, kind, value, expression); }
 	for (size_t index = (size_t)start; (double)index < end; index++) {
 		if (array->references) {
 			// The new reference first: the value may be the one already there.
@@ -316,7 +316,9 @@ adamic_array *adamic_array_fill(adamic_array *array, adamic_value value, double 
 // splice_into is splice, the removed elements moving to removed, or let go when removed is NULL:
 // a splice whose result nothing uses (adamic_array_remove) allocates no array to hold them.
 static void splice_into(adamic_array *array, double start, double count, bool has_count, size_t item_count, const adamic_value *items, adamic_array **removed) {
-	for (size_t item=0; item<item_count; item++) { adamic_array_check_never(array, 0, items[item], "array[]"); }
+	if (array->element_contract != NULL || array->never_elements) {
+		for (size_t item = 0; item < item_count; item++) { adamic_array_check_never(array, 0, items[item], "array[]"); }
+	}
 	// ECMAScript's relative start, clamped to the array; a count left out is everything after it, and
 	// a count given is clamped to what's there.
 	double length = (double)array->length;
@@ -415,7 +417,7 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]) {
 }
 
 void adamic_array_set(adamic_array *array, double index, adamic_value value) {
-	adamic_array_check_never(array, 0, value, "array[]");
+	if (array->element_contract != NULL || array->never_elements) { adamic_array_check_never(array, 0, value, "array[]"); }
 	// 0.1 writes only at an index the array has: JavaScript would grow the array, or leave a hole, and
 	// a hole is something 0.1 can't hold. push is how to append.
 	adamic_value *slot = adamic_array_at(array, index);

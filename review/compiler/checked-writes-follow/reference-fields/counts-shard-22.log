@@ -1,0 +1,330 @@
+=== RUN   TestCheckedCountsWarmShard
+=== PAUSE TestCheckedCountsWarmShard
+=== CONT  TestCheckedCountsWarmShard
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/15_barrel.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/15_barrel.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/16_scan_exclamation.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/16_scan_exclamation.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/18_named_export.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/18_named_export.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/19_deprecated_flags.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/19_deprecated_flags.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/20_jsdoc_terminate.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/20_jsdoc_terminate.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/22_assignment_once.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/22_assignment_once.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/23_labels_finally.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/23_labels_finally.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/24_proportional_conditions.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/24_proportional_conditions.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_optional_join.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_optional_join.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_truthiness.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_truthiness.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_logical_assignment.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_logical_assignment.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_comma.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_comma.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_labels.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_labels.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_void.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_void.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_exports/main.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_exports/main.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_stage3_representations.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_stage3_representations.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/function.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/function.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/class.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/class.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/const.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/const.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/enum.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/enum.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/type.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/type.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_uint8array.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_uint8array.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_int32array.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_int32array.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_float64array.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_float64array.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_views.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_views.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_order.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_order.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes_large.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes_large.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stats.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stats.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_workers_stats.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_workers_stats.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stop.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stop.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_dispatch.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_dispatch.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_string_literal.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_string_literal.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_compare.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_compare.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_switch.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_switch.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_slots.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_slots.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_roll.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_roll.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing_host.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing_host.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/read_files.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/read_files.a
+=== NAME  TestCheckedCountsWarmShard
+    counts_test.go:238: fixture census 932
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/15_barrel.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stop.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/type.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/read_files.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing_host.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/15_barrel.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/type.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stop.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/read_files.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/15_barrel.a
+    counts_test.go:233: | stage3/fixtures/taste/15_barrel.a | 2 | 2 | 0 | 2 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stop.a
+    counts_test.go:233: | internal/oracle/testdata/typed_arrays_stop.a | 5 | 4 | 1 | 6 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_roll.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/type.a
+    counts_test.go:233: | internal/oracle/testdata/taste_star/type.a | 3 | 3 | 7 | 7 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_slots.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_roll.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_slots.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/read_files.a
+    counts_test.go:233: | internal/oracle/testdata/read_files.a | 58 | 58 | 130 | 173 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_switch.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_roll.a
+    counts_test.go:233: | internal/oracle/testdata/typeof_null_roll.a | 1 | 1 | 0 | 1 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_compare.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing.a
+    counts_test.go:233: | internal/oracle/testdata/unknown_narrowing.a | 31 | 31 | 42 | 63 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_string_literal.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_compare.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_slots.a
+    counts_test.go:233: | internal/oracle/testdata/typeof_null_slots.a | 14 | 14 | 26 | 36 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_dispatch.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_switch.a
+    counts_test.go:233: | internal/oracle/testdata/typeof_null_switch.a | 4 | 4 | 11 | 11 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_logical_assignment.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_string_literal.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing_host.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_dispatch.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_logical_assignment.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_string_literal.a
+    counts_test.go:233: | internal/oracle/testdata/typeof_string_literal.a | 1 | 1 | 0 | 1 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/enum.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_compare.a
+    counts_test.go:233: | internal/oracle/testdata/typeof_null_compare.a | 17 | 17 | 10 | 21 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/const.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/enum.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/const.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_dispatch.a
+    counts_test.go:233: | internal/oracle/testdata/typeof_dispatch.a | 9 | 9 | 6 | 16 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/class.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing_host.a
+    counts_test.go:233: | internal/oracle/testdata/unknown_narrowing_host.a | 8 | 8 | 11 | 16 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/function.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_logical_assignment.a
+    counts_test.go:233: | internal/oracle/testdata/taste_logical_assignment.a | 145 | 145 | 50 | 196 | 8 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_stage3_representations.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/class.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/function.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/const.a
+    counts_test.go:233: | internal/oracle/testdata/taste_star/const.a | 3 | 3 | 5 | 5 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_exports/main.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/enum.a
+    counts_test.go:233: | internal/oracle/testdata/taste_star/enum.a | 9 | 9 | 7 | 13 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_void.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/class.a
+    counts_test.go:233: | internal/oracle/testdata/taste_star/class.a | 3 | 3 | 8 | 7 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_labels.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_stage3_representations.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_exports/main.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_void.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/function.a
+    counts_test.go:233: | internal/oracle/testdata/taste_star/function.a | 3 | 3 | 5 | 5 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_comma.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_labels.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_comma.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_stage3_representations.a
+    counts_test.go:233: | internal/oracle/testdata/taste_stage3_representations.a | 24 | 24 | 11 | 34 | 10 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_order.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_exports/main.a
+    counts_test.go:233: | internal/oracle/testdata/taste_exports/main.a | 10 | 10 | 7 | 20 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_workers_stats.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_order.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_void.a
+    counts_test.go:233: | internal/oracle/testdata/taste_void.a | 39 | 39 | 8 | 44 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stats.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_comma.a
+    counts_test.go:233: | internal/oracle/testdata/taste_comma.a | 51 | 51 | 5 | 54 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes_large.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_workers_stats.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_labels.a
+    counts_test.go:233: | internal/oracle/testdata/taste_labels.a | 56 | 56 | 6 | 59 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stats.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes_large.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_order.a
+    counts_test.go:233: | internal/oracle/testdata/typed_arrays_order.a | 34 | 34 | 12 | 50 | 8 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_float64array.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_float64array.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_workers_stats.a
+    counts_test.go:233: | internal/oracle/testdata/typed_arrays_workers_stats.a | 513 | 513 | 82 | 584 | 23 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_views.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes_large.a
+    counts_test.go:233: | internal/oracle/testdata/typed_arrays_primes_large.a | 29 | 29 | 0 | 29 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/22_assignment_once.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stats.a
+    counts_test.go:233: | internal/oracle/testdata/typed_arrays_stats.a | 54 | 54 | 14 | 61 | 10 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_truthiness.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes.a
+    counts_test.go:233: | internal/oracle/testdata/typed_arrays_primes.a | 21 | 21 | 0 | 21 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_optional_join.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_views.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_truthiness.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/22_assignment_once.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_float64array.a
+    counts_test.go:233: | internal/oracle/testdata/typed_arrays_float64array.a | 85 | 85 | 15 | 110 | 13 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/24_proportional_conditions.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_optional_join.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/24_proportional_conditions.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/22_assignment_once.a
+    counts_test.go:233: | stage3/fixtures/taste/22_assignment_once.a | 164 | 164 | 40 | 208 | 19 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/23_labels_finally.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_views.a
+    counts_test.go:233: | internal/oracle/testdata/typed_arrays_views.a | 83 | 83 | 40 | 111 | 13 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_int32array.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_optional_join.a
+    counts_test.go:233: | internal/oracle/testdata/taste_optional_join.a | 11 | 11 | 8 | 22 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/19_deprecated_flags.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/taste_truthiness.a
+    counts_test.go:233: | internal/oracle/testdata/taste_truthiness.a | 113 | 113 | 50 | 165 | 10 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/20_jsdoc_terminate.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/24_proportional_conditions.a
+    counts_test.go:233: | stage3/fixtures/taste/24_proportional_conditions.a | 43 | 43 | 89 | 131 | 14 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/18_named_export.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/23_labels_finally.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_int32array.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/19_deprecated_flags.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/20_jsdoc_terminate.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/18_named_export.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/23_labels_finally.a
+    counts_test.go:233: | stage3/fixtures/taste/23_labels_finally.a | 42 | 42 | 0 | 42 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/16_scan_exclamation.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_int32array.a
+    counts_test.go:233: | internal/oracle/testdata/typed_arrays_int32array.a | 85 | 85 | 15 | 110 | 13 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_uint8array.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/19_deprecated_flags.a
+    counts_test.go:233: | stage3/fixtures/taste/19_deprecated_flags.a | 6 | 6 | 0 | 7 | 3 | 0 |
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/20_jsdoc_terminate.a
+    counts_test.go:233: | stage3/fixtures/taste/20_jsdoc_terminate.a | 25 | 25 | 8 | 35 | 9 | 0 |
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/16_scan_exclamation.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_uint8array.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/18_named_export.a
+    counts_test.go:233: | stage3/fixtures/taste/18_named_export.a | 2 | 2 | 0 | 3 | 2 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_uint8array.a
+    counts_test.go:233: | internal/oracle/testdata/typed_arrays_uint8array.a | 85 | 85 | 15 | 110 | 13 | 0 |
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/16_scan_exclamation.a
+    counts_test.go:233: | stage3/fixtures/taste/16_scan_exclamation.a | 24 | 24 | 10 | 34 | 10 | 0 |
+--- PASS: TestCheckedCountsWarmShard (0.00s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/15_barrel.a (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stop.a (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/type.a (0.23s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/read_files.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_roll.a (0.17s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing.a (0.24s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_slots.a (0.24s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_switch.a (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_string_literal.a (0.16s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null_compare.a (0.24s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_dispatch.a (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/unknown_narrowing_host.a (0.72s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_logical_assignment.a (0.26s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/const.a (0.16s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/enum.a (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/class.a (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_star/function.a (0.21s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_stage3_representations.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_exports/main.a (0.27s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_void.a (0.41s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_comma.a (0.31s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_labels.a (0.42s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_order.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_workers_stats.a (0.55s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes_large.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_stats.a (0.42s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_primes.a (0.42s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_float64array.a (0.37s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/22_assignment_once.a (0.40s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_views.a (0.42s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_optional_join.a (0.33s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/taste_truthiness.a (0.50s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/24_proportional_conditions.a (0.40s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/23_labels_finally.a (0.34s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_int32array.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/19_deprecated_flags.a (0.37s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/20_jsdoc_terminate.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/18_named_export.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typed_arrays_uint8array.a (0.24s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/16_scan_exclamation.a (0.31s)
+PASS
+gate cache: native hits=0 misses=40
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.702s

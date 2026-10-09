@@ -1,0 +1,175 @@
+=== RUN   TestCheckedRuntimeRegexFields
+=== PAUSE TestCheckedRuntimeRegexFields
+=== RUN   TestCheckedRuntimeMapFields
+=== PAUSE TestCheckedRuntimeMapFields
+=== RUN   TestCheckedRuntimeSetFields
+=== PAUSE TestCheckedRuntimeSetFields
+=== RUN   TestCheckedRuntimeFSFields
+=== PAUSE TestCheckedRuntimeFSFields
+=== RUN   TestCheckedRuntimeDirectoryFields
+=== PAUSE TestCheckedRuntimeDirectoryFields
+=== RUN   TestCheckedWriteMessage02
+=== PAUSE TestCheckedWriteMessage02
+=== RUN   TestCheckedWriteMessage03
+=== PAUSE TestCheckedWriteMessage03
+=== RUN   TestCheckedWriteMessage13
+=== PAUSE TestCheckedWriteMessage13
+=== RUN   TestCheckedWriteMessage15
+=== PAUSE TestCheckedWriteMessage15
+=== RUN   TestCheckedWriteMessage16
+=== PAUSE TestCheckedWriteMessage16
+=== RUN   TestCheckedWriteMessageMutant02
+=== PAUSE TestCheckedWriteMessageMutant02
+=== RUN   TestCheckedWriteMessageMutant03
+=== PAUSE TestCheckedWriteMessageMutant03
+=== RUN   TestCheckedWriteMessageMutant13
+=== PAUSE TestCheckedWriteMessageMutant13
+=== RUN   TestCheckedWriteMessageMutant15
+=== PAUSE TestCheckedWriteMessageMutant15
+=== RUN   TestCheckedWriteMessageMutant16
+=== PAUSE TestCheckedWriteMessageMutant16
+=== CONT  TestCheckedRuntimeRegexFields
+=== CONT  TestCheckedWriteMessageMutant13
+=== CONT  TestCheckedRuntimeDirectoryFields
+=== CONT  TestCheckedWriteMessage03
+=== CONT  TestCheckedWriteMessage15
+=== NAME  TestCheckedWriteMessage03
+    checked_write_messages_test.go:86: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/03_flow-node_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+=== NAME  TestCheckedWriteMessageMutant13
+    checked_write_messages_test.go:110: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/13_declaration-array_out.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+=== NAME  TestCheckedWriteMessage15
+    checked_write_messages_test.go:94: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/15_detached-diagnostic_out.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+=== NAME  TestCheckedRuntimeRegexFields
+    checked_runtime_fields_test.go:69: gate cache node miss
+=== NAME  TestCheckedWriteMessage03
+    checked_write_messages_test.go:86: gate cache node miss
+=== NAME  TestCheckedRuntimeDirectoryFields
+    checked_runtime_fields_test.go:75: gate cache node miss
+=== NAME  TestCheckedWriteMessageMutant13
+    checked_write_messages_test.go:110: gate cache node miss
+=== NAME  TestCheckedWriteMessage15
+    checked_write_messages_test.go:94: gate cache node miss
+=== NAME  TestCheckedWriteMessage03
+    checked_write_messages_test.go:86: gate cache node miss
+=== NAME  TestCheckedRuntimeDirectoryFields
+    checked_runtime_fields_test.go:75: gate cache node miss
+=== NAME  TestCheckedRuntimeRegexFields
+    checked_runtime_fields_test.go:69: gate cache node miss
+--- PASS: TestCheckedWriteMessage03 (14.48s)
+=== CONT  TestCheckedWriteMessage02
+=== NAME  TestCheckedWriteMessage15
+    checked_write_messages_test.go:94: gate cache node miss
+=== NAME  TestCheckedRuntimeRegexFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeDirectoryFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWriteMessage02
+    checked_write_messages_test.go:82: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/02_shared-empty_out.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+--- PASS: TestCheckedWriteMessage15 (14.56s)
+=== CONT  TestCheckedWriteMessageMutant16
+=== NAME  TestCheckedWriteMessageMutant13
+    checked_write_messages_test.go:110: gate cache node miss
+    checked_write_messages_test.go:110: native sanitized message mutant caught by exact stderr: "adamic: panic: write failed: array[] expects Node, got Node\n"
+    checked_write_messages_test.go:110: native release message mutant caught by exact stderr: "adamic: panic: write failed: array[] expects Node, got Node\n"
+    checked_write_messages_test.go:110: JavaScript message mutant caught by exact stderr: "adamic: panic: write failed: array[] expects Node, got Node\n"
+--- PASS: TestCheckedWriteMessageMutant13 (14.63s)
+=== CONT  TestCheckedWriteMessage13
+=== NAME  TestCheckedWriteMessageMutant16
+    checked_write_messages_test.go:118: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/16_flow-assignment-union_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+=== NAME  TestCheckedWriteMessage02
+    checked_write_messages_test.go:82: gate cache node miss
+=== NAME  TestCheckedWriteMessageMutant16
+    checked_write_messages_test.go:118: gate cache node miss
+=== NAME  TestCheckedWriteMessage13
+    checked_write_messages_test.go:90: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/13_declaration-array_out.a:15:9: Adamic 0.1 refuses a value of type Declaration[] seen as Node[], which can write Node where Declaration is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+    checked_write_messages_test.go:90: gate cache node hit
+=== NAME  TestCheckedRuntimeRegexFields
+    checked_runtime_fields_test.go:69: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/regex.a: source Node exit 0 stdout "a\na\ndone\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+=== CONT  TestCheckedWriteMessageMutant15
+--- PASS: TestCheckedRuntimeRegexFields (14.83s)
+=== NAME  TestCheckedRuntimeDirectoryFields
+    checked_runtime_fields_test.go:75: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/directory.a: source Node exit 0 stdout "alpha.txt\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeDirectoryFields (14.84s)
+=== CONT  TestCheckedRuntimeSetFields
+=== NAME  TestCheckedWriteMessageMutant15
+    checked_write_messages_test.go:114: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/15_detached-diagnostic_out.a:15:11: Adamic 0.1 refuses a value of type DiagnosticWithDetachedLocation seen as DiagnosticRelatedInformation, which can write SourceFile | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+=== NAME  TestCheckedRuntimeSetFields
+    checked_runtime_fields_test.go:71: gate cache node miss
+=== NAME  TestCheckedWriteMessageMutant15
+    checked_write_messages_test.go:114: gate cache node hit
+=== NAME  TestCheckedWriteMessage13
+    checked_write_messages_test.go:90: gate cache node miss
+=== NAME  TestCheckedWriteMessage02
+    checked_write_messages_test.go:82: gate cache node miss
+--- PASS: TestCheckedWriteMessage13 (0.56s)
+=== CONT  TestCheckedRuntimeFSFields
+=== NAME  TestCheckedWriteMessageMutant16
+    checked_write_messages_test.go:118: gate cache node miss
+--- PASS: TestCheckedWriteMessage02 (0.76s)
+=== CONT  TestCheckedWriteMessageMutant02
+=== NAME  TestCheckedRuntimeFSFields
+    checked_runtime_fields_test.go:72: gate cache node miss
+=== NAME  TestCheckedWriteMessageMutant02
+    checked_write_messages_test.go:102: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/02_shared-empty_out.a:11:9: Adamic 0.1 refuses a value of type never[] seen as number[], which can write number where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+=== NAME  TestCheckedWriteMessageMutant16
+    checked_write_messages_test.go:118: native sanitized message mutant caught by exact stderr: "adamic: panic: write failed: flow.node expects BinaryExpression | BindingElement, got BindingElement\n"
+    checked_write_messages_test.go:118: native release message mutant caught by exact stderr: "adamic: panic: write failed: flow.node expects BinaryExpression | BindingElement, got BindingElement\n"
+    checked_write_messages_test.go:118: JavaScript message mutant caught by exact stderr: "adamic: panic: write failed: flow.node expects BinaryExpression | BindingElement, got BindingElement\n"
+--- PASS: TestCheckedWriteMessageMutant16 (0.74s)
+=== CONT  TestCheckedWriteMessageMutant03
+    checked_write_messages_test.go:106: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/03_flow-node_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+=== NAME  TestCheckedWriteMessageMutant02
+    checked_write_messages_test.go:102: gate cache node hit
+    checked_write_messages_test.go:102: message mutant changed no declaration
+--- FAIL: TestCheckedWriteMessageMutant02 (0.11s)
+=== CONT  TestCheckedRuntimeMapFields
+=== NAME  TestCheckedWriteMessageMutant15
+    checked_write_messages_test.go:114: gate cache node miss
+    checked_write_messages_test.go:114: JavaScript message mutant caught by exact stderr: "adamic: panic: write failed: diagnostic.file expects SourceFile | undefined, got SourceFile\n"
+    checked_write_messages_test.go:114: native sanitized message mutant caught by exact stderr: "adamic: panic: write failed: diagnostic.file expects SourceFile | undefined, got SourceFile\n"
+    checked_write_messages_test.go:114: native release message mutant caught by exact stderr: "adamic: panic: write failed: diagnostic.file expects SourceFile | undefined, got SourceFile\n"
+--- PASS: TestCheckedWriteMessageMutant15 (0.57s)
+=== CONT  TestCheckedWriteMessage16
+=== NAME  TestCheckedRuntimeMapFields
+    checked_runtime_fields_test.go:70: gate cache node miss
+=== NAME  TestCheckedWriteMessageMutant03
+    checked_write_messages_test.go:106: gate cache node hit
+=== NAME  TestCheckedRuntimeSetFields
+    checked_runtime_fields_test.go:71: gate cache node miss
+=== NAME  TestCheckedWriteMessage16
+    checked_write_messages_test.go:98: .a refusal: /workspace/adamic/internal/oracle/testdata/checked-write-messages/16_flow-assignment-union_out.a:17:11: Adamic 0.1 refuses a value of type FlowArrayMutation seen as FlowNodeBase, which can write BinaryExpression | BindingElement where BinaryExpression is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+    checked_write_messages_test.go:98: gate cache node hit
+=== NAME  TestCheckedRuntimeSetFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeFSFields
+    checked_runtime_fields_test.go:72: gate cache node miss
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedWriteMessageMutant03
+    checked_write_messages_test.go:106: gate cache node miss
+=== NAME  TestCheckedRuntimeSetFields
+    checked_runtime_fields_test.go:71: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/set.a: source Node exit 0 stdout "alpha\ndone\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeSetFields (1.02s)
+=== NAME  TestCheckedWriteMessageMutant03
+    checked_write_messages_test.go:106: native sanitized message mutant caught by exact stderr: "adamic: panic: write failed: flow.node expects BinaryExpression | BindingElement, got BindingElement\n"
+    checked_write_messages_test.go:106: native release message mutant caught by exact stderr: "adamic: panic: write failed: flow.node expects BinaryExpression | BindingElement, got BindingElement\n"
+    checked_write_messages_test.go:106: JavaScript message mutant caught by exact stderr: "adamic: panic: write failed: flow.node expects BinaryExpression | BindingElement, got BindingElement\n"
+--- PASS: TestCheckedWriteMessageMutant03 (0.64s)
+=== NAME  TestCheckedRuntimeMapFields
+    checked_runtime_fields_test.go:70: gate cache node miss
+=== NAME  TestCheckedWriteMessage16
+    checked_write_messages_test.go:98: gate cache node miss
+=== NAME  TestCheckedRuntimeMapFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeFSFields
+    checked_runtime_fields_test.go:72: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/fs.a: source Node exit 0 stdout "alpha\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeFSFields (0.93s)
+--- PASS: TestCheckedWriteMessage16 (0.74s)
+=== NAME  TestCheckedRuntimeMapFields
+    checked_runtime_fields_test.go:70: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/map.a: source Node exit 0 stdout "alpha\ndone\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeMapFields (1.07s)
+FAIL
+gate cache: native hits=0 misses=5
+gate cache: node hits=5 misses=24
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	16.484s
+FAIL

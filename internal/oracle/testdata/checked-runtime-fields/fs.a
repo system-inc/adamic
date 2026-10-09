@@ -1,0 +1,10 @@
+// a-check: refused a value of type Result[] seen as
+import { readTextFile } from 'adamic';
+interface Result { readonly text: string }
+const result = readTextFile('testdata/checked-runtime-fields/input.txt');
+if (result.kind === 'Ok') {
+    const results: Result[] = [];
+const wider: { text: string }[] = results;
+    results.push(result);
+    for (const item of results) console.log(item.text.trim());
+}

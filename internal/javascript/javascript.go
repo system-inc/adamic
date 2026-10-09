@@ -853,7 +853,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			if expression.SpreadReadiness != "" {
 				spread = "adamicSpreadFields(" + spread + ", " + quote(expression.SpreadReadiness) + ")"
 			}
-			if len(e.program.CheckedFields) != 0 || len(e.program.CheckedWrites) != 0 {
+			if len(e.program.CheckedFields) != 0 || len(e.program.CheckedWrites) != 0 || e.program.CheckedElements {
 				spreadValue = spread
 				spread = "adamicSpreadSource"
 			}
@@ -875,7 +875,7 @@ func (e *emitter) value(expression ir.Expression) string {
 		if len(unready) > 0 {
 			object = "adamicUninitializedFields(" + object + ", [" + strings.Join(unready, ", ") + "])"
 		}
-		if len(e.program.CheckedFields) != 0 || len(e.program.CheckedWrites) != 0 {
+		if len(e.program.CheckedFields) != 0 || len(e.program.CheckedWrites) != 0 || e.program.CheckedElements {
 			types := []string{}
 			for _, field := range expression.Fields {
 				types = append(types, quote(field.Name)+": "+fmt.Sprint(viewFieldRepresentation(field.Value)))
@@ -886,7 +886,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			}
 			object = "adamicRecordFieldTypes(" + object + ", {" + parentTypes + strings.Join(types, ", ") + "})"
 		}
-		if len(e.program.CheckedWrites) != 0 {
+		if len(e.program.CheckedWrites) != 0 || e.program.CheckedElements {
 			contracts := []string{}
 			for _, field := range expression.Fields {
 				if c := field.Contract; c != nil {
@@ -898,10 +898,12 @@ func (e *emitter) value(expression ir.Expression) string {
 				parentContracts = "...adamicFieldContracts.get(adamicSpreadSource), "
 			}
 			allocationType := fmt.Sprint(expression.ContractType)
+			allocationName := quote(e.program.ContractTypeNames[expression.ContractType])
 			if expression.Spread != nil {
 				allocationType = "adamicAllocationContracts.get(adamicSpreadSource) || 0"
+				allocationName = "adamicAllocationNames.get(adamicSpreadSource) || \"\""
 			}
-			object = "adamicRecordFieldContracts(" + object + ", {" + parentContracts + strings.Join(contracts, ", ") + "}, " + allocationType + ")"
+			object = "adamicRecordFieldContracts(" + object + ", {" + parentContracts + strings.Join(contracts, ", ") + "}, " + allocationType + ", " + allocationName + ")"
 		}
 		if spreadValue != "" {
 			object = "((adamicSpreadSource) => " + object + ")(" + spreadValue + ")"

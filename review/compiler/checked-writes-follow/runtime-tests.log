@@ -1,0 +1,76 @@
+=== RUN   TestRuntimeCheckedLibraryPush
+=== PAUSE TestRuntimeCheckedLibraryPush
+=== RUN   TestRuntimeCheckedLibraryPushRejectsLiteral
+=== PAUSE TestRuntimeCheckedLibraryPushRejectsLiteral
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== RUN   TestFreedValuesAreCaughtWithSlabs
+=== PAUSE TestFreedValuesAreCaughtWithSlabs
+=== RUN   TestSizeClassesShareTheirChunks
+    heap_test.go:139: control: peak 5892 KiB, acquired 79 chunks, largest generation 79 chunks
+    heap_test.go:139: churn: peak 6296 KiB, acquired 85 chunks, largest generation 79 chunks
+    heap_test.go:150: peak 6296 KiB through every class, 5892 KiB at one size
+--- PASS: TestSizeClassesShareTheirChunks (0.09s)
+=== RUN   TestRuntimeKeyIncludesEveryInput
+=== PAUSE TestRuntimeKeyIncludesEveryInput
+=== RUN   TestRuntimeKeyKeepsBoundaries
+=== PAUSE TestRuntimeKeyKeepsBoundaries
+=== RUN   TestRuntimeCacheKeepsCountFlags
+=== PAUSE TestRuntimeCacheKeepsCountFlags
+=== RUN   TestRuntimeCacheRebuildsChangedSources
+=== PAUSE TestRuntimeCacheRebuildsChangedSources
+=== RUN   TestRuntimeCacheConcurrentBuilders
+=== PAUSE TestRuntimeCacheConcurrentBuilders
+=== RUN   TestRuntimeCacheConcurrentProcesses
+=== PAUSE TestRuntimeCacheConcurrentProcesses
+=== RUN   TestNodeBufferRuntimeWithoutDeclarations
+=== PAUSE TestNodeBufferRuntimeWithoutDeclarations
+=== RUN   TestRegExpIteratorResultShape
+=== PAUSE TestRegExpIteratorResultShape
+=== RUN   TestRuntimeReleasePaths
+=== PAUSE TestRuntimeReleasePaths
+=== RUN   TestRuntimeStringEquality
+=== PAUSE TestRuntimeStringEquality
+=== RUN   TestRuntimeStringViews
+=== PAUSE TestRuntimeStringViews
+=== RUN   TestTypedArrayRuntime
+=== PAUSE TestTypedArrayRuntime
+=== CONT  TestRuntimeCheckedLibraryPush
+=== CONT  TestRuntimeCacheConcurrentBuilders
+=== CONT  TestTypedArrayRuntime
+=== CONT  TestFreedValuesAreCaughtWithSlabs
+=== CONT  TestRuntimeReleasePaths
+=== RUN   TestTypedArrayRuntime/release
+--- PASS: TestRuntimeReleasePaths (0.41s)
+=== CONT  TestRuntimeStringViews
+--- PASS: TestRuntimeCheckedLibraryPush (0.45s)
+=== CONT  TestRuntimeStringEquality
+=== RUN   TestTypedArrayRuntime/sanitized
+--- PASS: TestRuntimeStringViews (0.35s)
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:178: 32 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.00s)
+=== CONT  TestRuntimeCheckedLibraryPushRejectsLiteral
+--- PASS: TestRuntimeStringEquality (0.37s)
+=== CONT  TestRuntimeCacheKeepsCountFlags
+--- PASS: TestRuntimeCacheKeepsCountFlags (0.21s)
+=== CONT  TestRuntimeCacheRebuildsChangedSources
+--- PASS: TestRuntimeCheckedLibraryPushRejectsLiteral (0.31s)
+=== CONT  TestRuntimeKeyKeepsBoundaries
+--- PASS: TestRuntimeKeyKeepsBoundaries (0.00s)
+=== CONT  TestRegExpIteratorResultShape
+--- PASS: TestTypedArrayRuntime (1.17s)
+    --- PASS: TestTypedArrayRuntime/release (0.41s)
+    --- PASS: TestTypedArrayRuntime/sanitized (0.69s)
+=== CONT  TestNodeBufferRuntimeWithoutDeclarations
+--- PASS: TestRuntimeCacheRebuildsChangedSources (0.21s)
+=== CONT  TestRuntimeCacheConcurrentProcesses
+--- PASS: TestRegExpIteratorResultShape (0.29s)
+=== CONT  TestRuntimeKeyIncludesEveryInput
+--- PASS: TestRuntimeCacheConcurrentProcesses (0.24s)
+--- PASS: TestRuntimeKeyIncludesEveryInput (0.16s)
+--- PASS: TestRuntimeCacheConcurrentBuilders (1.78s)
+--- PASS: TestNodeBufferRuntimeWithoutDeclarations (1.04s)
+--- PASS: TestFreedValuesAreCaughtWithSlabs (6.66s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	6.769s

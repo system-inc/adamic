@@ -176,7 +176,7 @@ void adamic_map_check_contract(const adamic_map *map, unsigned char kind, adamic
 }
 
 void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
-	adamic_map_check_contract(map, 0, value, "Map[value]");
+	if (map->element_contract != NULL) { adamic_map_check_contract(map, 0, value, "Map[value]"); }
 	size_t index = find(map, key);
 	if (index != SIZE_MAX) {
 		// The key it already has stays; the one passed in is let go, and so is the old value.

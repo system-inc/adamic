@@ -1,0 +1,8 @@
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+    checked_reference_fields_test.go:73: want exit 70 "adamic: panic: write failed: results[] expects Result, got object\n", got exit status 70 "adamic: panic: write failed: array[] expects string | undefined, got object\n"
+--- FAIL: TestRuntimeCheckedReferenceArrayRejectsWeakerContract (5.66s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	5.663s
+FAIL

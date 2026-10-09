@@ -1,0 +1,331 @@
+=== RUN   TestCheckedCountsWarmShard
+=== PAUSE TestCheckedCountsWarmShard
+=== CONT  TestCheckedCountsWarmShard
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_at.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_at.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charat.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charat.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charcodeat.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charcodeat.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_codepointat.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_codepointat.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_concat.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_concat.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_endswith.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_endswith.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_includes.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_includes.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_indexof.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_indexof.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_lastindexof.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_lastindexof.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_normalize.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_normalize.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_overloads.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_overloads.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padend.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padend.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padstart.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padstart.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_repeat.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_repeat.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_slice.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_slice.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_startswith.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_startswith.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_substring.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_substring.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tolowercase.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tolowercase.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tostring.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tostring.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_touppercase.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_touppercase.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trim.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trim.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimend.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimend.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimstart.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimstart.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_valueof.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_valueof.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values_dead_zone.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values_dead_zone.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/main.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/main.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/early.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/early.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/initialized.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/initialized.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_early.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_early.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_initialized.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_initialized.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/hoisted.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/hoisted.a
+=== RUN   TestCheckedCountsWarmShard/stage3/namespace-live-export/live.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/namespace-live-export/live.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_repeated_var.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_repeated_var.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_nested.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_nested.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_pair/main.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_pair/main.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_enums.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_enums.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_state.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_state.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_modules/main.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_modules/main.a
+=== NAME  TestCheckedCountsWarmShard
+    counts_test.go:238: fixture census 932
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_at.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trim.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_initialized.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_overloads.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_normalize.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_initialized.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trim.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_overloads.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_normalize.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_at.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trim.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_trim.a | 3 | 3 | 2 | 6 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_lastindexof.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_at.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_at.a | 3 | 3 | 3 | 8 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_early.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_overloads.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_overloads.a | 31 | 31 | 16 | 45 | 9 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_indexof.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_normalize.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_normalize.a | 3 | 3 | 2 | 6 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/initialized.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_initialized.a
+    counts_test.go:233: | internal/oracle/testdata/module_namespace_reads/direct_initialized.a | 2 | 2 | 0 | 2 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_touppercase.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_indexof.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_early.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_lastindexof.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/initialized.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_touppercase.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_indexof.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_indexof.a | 5 | 5 | 0 | 6 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/early.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_early.a
+    counts_test.go:233: | internal/oracle/testdata/module_namespace_reads/direct_early.a | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_includes.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/initialized.a
+    counts_test.go:233: | internal/oracle/testdata/module_namespace_reads/initialized.a | 2 | 2 | 0 | 2 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_endswith.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_lastindexof.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_lastindexof.a | 5 | 5 | 0 | 6 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_concat.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/early.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_touppercase.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_touppercase.a | 3 | 3 | 2 | 6 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_codepointat.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_includes.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_codepointat.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_concat.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_endswith.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/early.a
+    counts_test.go:233: | internal/oracle/testdata/module_namespace_reads/early.a | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charcodeat.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_includes.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_includes.a | 3 | 3 | 0 | 4 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charat.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charcodeat.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_codepointat.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_codepointat.a | 5 | 5 | 0 | 6 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_slice.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_endswith.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_endswith.a | 3 | 3 | 0 | 4 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tolowercase.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_concat.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_concat.a | 3 | 3 | 2 | 6 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_substring.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charat.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charcodeat.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_charcodeat.a | 5 | 5 | 0 | 6 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_startswith.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tolowercase.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_slice.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_startswith.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_substring.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tolowercase.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_tolowercase.a | 3 | 3 | 2 | 6 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_pair/main.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_slice.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_slice.a | 2 | 2 | 3 | 6 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_modules/main.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charat.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_charat.a | 1 | 1 | 5 | 8 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_pair/main.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_substring.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_substring.a | 2 | 2 | 5 | 8 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_state.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_modules/main.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_startswith.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_startswith.a | 3 | 3 | 0 | 4 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_enums.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_enums.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_state.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_pair/main.a
+    counts_test.go:233: | internal/oracle/testdata/namespaces_pair/main.a | 8 | 8 | 8 | 20 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_valueof.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_modules/main.a
+    counts_test.go:233: | internal/oracle/testdata/namespaces_modules/main.a | 9 | 9 | 5 | 17 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values_dead_zone.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces.a
+    counts_test.go:233: | internal/oracle/testdata/namespaces.a | 36 | 36 | 18 | 58 | 13 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/main.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_valueof.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_enums.a
+    counts_test.go:233: | internal/oracle/testdata/namespaces_parser_enums.a | 12 | 12 | 8 | 16 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values_dead_zone.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_state.a
+    counts_test.go:233: | internal/oracle/testdata/namespaces_parser_state.a | 9 | 9 | 1 | 11 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimstart.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/main.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_valueof.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_valueof.a | 1 | 1 | 2 | 4 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimend.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimstart.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimend.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values_dead_zone.a
+    counts_test.go:233: | internal/oracle/testdata/library_method_values_dead_zone.a | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padstart.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/main.a
+    counts_test.go:233: | internal/oracle/testdata/module_namespace_reads/main.a | 13 | 13 | 4 | 19 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_repeated_var.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimend.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_trimend.a | 3 | 3 | 2 | 6 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_nested.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimstart.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_trimstart.a | 3 | 3 | 2 | 6 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/namespace-live-export/live.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padstart.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_repeated_var.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/namespace-live-export/live.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_nested.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values.a
+    counts_test.go:233: | internal/oracle/testdata/library_method_values.a | 137 | 137 | 154 | 295 | 42 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padend.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padstart.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_padstart.a | 5 | 5 | 4 | 10 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/hoisted.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padend.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/namespace-live-export/live.a
+    counts_test.go:233: | stage3/namespace-live-export/live.a | 3 | 3 | 0 | 3 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_repeat.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/hoisted.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_repeated_var.a
+    counts_test.go:233: | internal/oracle/testdata/namespaces_repeated_var.a | 11 | 11 | 0 | 12 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tostring.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_repeat.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_nested.a
+    counts_test.go:233: | internal/oracle/testdata/namespaces_nested.a | 17 | 17 | 18 | 43 | 13 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padend.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_padend.a | 5 | 5 | 4 | 10 | 3 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tostring.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/hoisted.a
+    counts_test.go:233: | internal/oracle/testdata/module_namespace_reads/hoisted.a | 2 | 2 | 0 | 2 | 2 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_repeat.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_repeat.a | 2 | 2 | 3 | 6 | 2 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tostring.a
+    counts_test.go:233: | internal/oracle/testdata/method_coverage_string_tostring.a | 1 | 1 | 2 | 4 | 1 | 0 |
+--- PASS: TestCheckedCountsWarmShard (0.00s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trim.a (0.46s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_at.a (0.47s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_overloads.a (0.47s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_normalize.a (0.50s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_initialized.a (0.51s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_indexof.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/direct_early.a (0.33s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/initialized.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_lastindexof.a (0.36s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_touppercase.a (0.32s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/early.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_includes.a (0.31s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_codepointat.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_endswith.a (0.34s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_concat.a (0.34s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charcodeat.a (0.21s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tolowercase.a (0.21s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_slice.a (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_charat.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_substring.a (0.28s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_startswith.a (0.21s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_pair/main.a (0.19s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_modules/main.a (0.24s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces.a (0.22s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_enums.a (0.17s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_parser_state.a (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_valueof.a (0.17s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values_dead_zone.a (0.19s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/main.a (0.21s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimend.a (0.13s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_trimstart.a (0.17s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/library_method_values.a (0.33s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padstart.a (0.19s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/namespace-live-export/live.a (0.16s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_repeated_var.a (0.21s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/namespaces_nested.a (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_padend.a (0.15s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/module_namespace_reads/hoisted.a (0.14s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_repeat.a (0.13s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/method_coverage_string_tostring.a (0.16s)
+PASS
+gate cache: native hits=0 misses=40
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.215s

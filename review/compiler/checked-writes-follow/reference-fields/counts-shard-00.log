@@ -1,0 +1,329 @@
+=== RUN   TestCheckedCountsWarmShard
+=== PAUSE TestCheckedCountsWarmShard
+=== CONT  TestCheckedCountsWarmShard
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_lifetime.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_lifetime.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_holders.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_holders.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_throw.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_throw.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_loops.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_loops.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_policy.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_policy.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_methods.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_methods.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_characters.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_characters.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_calls.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_calls.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_surrogates.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_surrogates.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_map.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_map.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_catch.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_catch.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_field.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_field.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_capture.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_capture.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_array.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_array.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_union.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_union.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_boolean.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_boolean.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_null.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_null.ts
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_callbacks.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_callbacks.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_virtual_fresh.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_virtual_fresh.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_unknown.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_unknown.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_bound_method.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_bound_method.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_recursive.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_recursive.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_try_loop.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_try_loop.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_accessor.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_accessor.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_sort_values.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_sort_values.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_named_keys.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_named_keys.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_named_keys.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_named_keys.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keys.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keys.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keys.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keys.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keep.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keep.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keep.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keep.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_objects.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_objects.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_objects.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_objects.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_closures.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_closures.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_closures.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_closures.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_numbers.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_numbers.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_numbers.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_numbers.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_arrays.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_arrays.a
+=== NAME  TestCheckedCountsWarmShard
+    counts_test.go:238: fixture census 932
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_lifetime.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_virtual_fresh.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_callbacks.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null.ts
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_map.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_callbacks.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_map.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_lifetime.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_virtual_fresh.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_map.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_map.ts | 1 | 0 | 0 | 1 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_lifetime.a
+    counts_test.go:233: | internal/oracle/testdata/string_views_lifetime.a | 19 | 19 | 21 | 34 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_null.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null.ts | 22 | 22 | 12 | 29 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_boolean.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_virtual_fresh.a
+    counts_test.go:233: | internal/oracle/testdata/route_targets_virtual_fresh.a | 54 | 50 | 20 | 64 | 10 | 4 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_union.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_callbacks.a
+    counts_test.go:233: | internal/oracle/testdata/route_targets_callbacks.a | 35 | 35 | 43 | 65 | 12 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_array.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_null.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_array.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_union.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_boolean.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null.a
+    counts_test.go:233: | internal/oracle/testdata/typeof_null.a | 4 | 4 | 1 | 9 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_capture.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_null.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_null.ts | 1 | 0 | 2 | 0 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_field.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_array.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_array.ts | 1 | 0 | 0 | 1 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_catch.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_field.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_union.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_union.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_surrogates.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_capture.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_boolean.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_boolean.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_calls.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_catch.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_calls.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_surrogates.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_field.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_field.ts | 1 | 0 | 1 | 2 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_characters.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_capture.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_capture.ts | 2 | 0 | 3 | 1 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_methods.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_catch.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_catch.ts | 1 | 0 | 0 | 1 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_policy.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_characters.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_methods.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_surrogates.a
+    counts_test.go:233: | internal/oracle/testdata/string_views_surrogates.a | 188 | 188 | 98 | 270 | 13 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_loops.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_policy.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_calls.a
+    counts_test.go:233: | internal/oracle/testdata/string_views_calls.a | 85 | 85 | 61 | 116 | 11 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_throw.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_loops.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_characters.a
+    counts_test.go:233: | internal/oracle/testdata/string_views_characters.a | 281 | 281 | 2310 | 2593 | 8 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_holders.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_throw.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_holders.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_loops.a
+    counts_test.go:233: | internal/oracle/testdata/string_views_loops.a | 159 | 159 | 63 | 185 | 21 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keys.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_policy.a
+    counts_test.go:233: | internal/oracle/testdata/string_views_policy.a | 344 | 344 | 73 | 371 | 11 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_arrays.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_methods.a
+    counts_test.go:233: | internal/oracle/testdata/string_views_methods.a | 5253 | 5253 | 2022 | 6546 | 15 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_numbers.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keys.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_throw.a
+    counts_test.go:233: | internal/oracle/testdata/string_views_throw.a | 55 | 55 | 65 | 79 | 14 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_numbers.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_holders.a
+    counts_test.go:233: | internal/oracle/testdata/string_views_holders.a | 45 | 45 | 75 | 82 | 13 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_closures.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_arrays.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_numbers.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_numbers.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_closures.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keys.a
+    counts_test.go:233: | internal/oracle/testdata/set_foreach_keys.a | 285 | 285 | 242 | 477 | 16 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_closures.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_numbers.a
+    counts_test.go:233: | internal/oracle/testdata/set_foreach_numbers.a | 214 | 214 | 140 | 317 | 11 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_objects.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_arrays.a
+    counts_test.go:233: | internal/oracle/testdata/map_foreach_arrays.a | 995 | 995 | 1028 | 1451 | 95 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_objects.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_numbers.a
+    counts_test.go:233: | internal/oracle/testdata/map_foreach_numbers.a | 373 | 373 | 155 | 478 | 14 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keep.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_objects.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_closures.a
+    counts_test.go:233: | internal/oracle/testdata/set_foreach_closures.a | 411 | 411 | 674 | 745 | 39 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keep.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_objects.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keep.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keep.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_closures.a
+    counts_test.go:233: | internal/oracle/testdata/map_foreach_closures.a | 816 | 816 | 1140 | 1373 | 87 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_accessor.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_objects.a
+    counts_test.go:233: | internal/oracle/testdata/set_foreach_objects.a | 368 | 368 | 555 | 626 | 30 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keys.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keep.a
+    counts_test.go:233: | internal/oracle/testdata/set_foreach_keep.a | 290 | 290 | 385 | 520 | 18 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_named_keys.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_objects.a
+    counts_test.go:233: | internal/oracle/testdata/map_foreach_objects.a | 732 | 732 | 930 | 1172 | 63 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_named_keys.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keys.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_named_keys.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keep.a
+    counts_test.go:233: | internal/oracle/testdata/map_foreach_keep.a | 516 | 516 | 628 | 934 | 35 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_sort_values.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_accessor.a
+    counts_test.go:233: | internal/oracle/testdata/route_targets_accessor.a | 14 | 14 | 13 | 22 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_bound_method.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_named_keys.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_sort_values.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_bound_method.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_named_keys.a
+    counts_test.go:233: | internal/oracle/testdata/set_foreach_named_keys.a | 84 | 84 | 68 | 144 | 15 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_try_loop.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keys.a
+    counts_test.go:233: | internal/oracle/testdata/map_foreach_keys.a | 391 | 391 | 363 | 674 | 25 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_recursive.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_named_keys.a
+    counts_test.go:233: | internal/oracle/testdata/map_foreach_named_keys.a | 92 | 92 | 60 | 144 | 15 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_unknown.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_try_loop.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_bound_method.a
+    counts_test.go:233: | internal/oracle/testdata/route_targets_bound_method.a | 37 | 37 | 27 | 52 | 9 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_sort_values.a
+    counts_test.go:233: | internal/oracle/testdata/route_targets_sort_values.a | 84 | 84 | 92 | 142 | 17 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_recursive.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_unknown.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_try_loop.a
+    counts_test.go:233: | internal/oracle/testdata/route_targets_try_loop.a | 68 | 66 | 41 | 85 | 9 | 2 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_recursive.a
+    counts_test.go:233: | internal/oracle/testdata/route_targets_recursive.a | 19 | 18 | 7 | 24 | 7 | 1 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_unknown.a
+    counts_test.go:233: | internal/oracle/testdata/route_targets_unknown.a | 36 | 36 | 21 | 52 | 7 | 0 |
+--- PASS: TestCheckedCountsWarmShard (0.00s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_map.ts (0.57s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_lifetime.a (0.64s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null.ts (0.67s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_virtual_fresh.a (0.70s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_callbacks.a (0.70s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/typeof_null.a (0.49s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_null.ts (0.45s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_array.ts (0.48s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_union.ts (0.58s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_boolean.ts (0.61s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_field.ts (0.44s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_capture.ts (0.50s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_catch.ts (0.48s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_surrogates.a (0.56s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_calls.a (0.61s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_characters.a (0.51s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_loops.a (0.46s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_policy.a (0.72s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_methods.a (0.84s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_throw.a (0.59s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/string_views_holders.a (0.55s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keys.a (0.52s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_numbers.a (0.59s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_arrays.a (0.63s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_numbers.a (0.66s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_closures.a (0.66s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_closures.a (0.69s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_objects.a (0.68s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_keep.a (0.55s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_objects.a (0.72s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keep.a (0.68s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_accessor.a (0.46s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/set_foreach_named_keys.a (0.58s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_keys.a (0.63s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/map_foreach_named_keys.a (0.67s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_bound_method.a (0.54s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_sort_values.a (0.65s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_try_loop.a (0.51s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_recursive.a (0.48s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/route_targets_unknown.a (0.40s)
+PASS
+gate cache: native hits=0 misses=40
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.842s

@@ -1,0 +1,18 @@
+=== RUN   TestRuntimeCheckedReferenceArrayKeepsContract
+=== PAUSE TestRuntimeCheckedReferenceArrayKeepsContract
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsWrongElement
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsWrongElement
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsLiteral
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsLiteral
+=== RUN   TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+=== PAUSE TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+=== CONT  TestRuntimeCheckedReferenceArrayKeepsContract
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsLiteral
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsWeakerContract
+=== CONT  TestRuntimeCheckedReferenceArrayRejectsWrongElement
+--- PASS: TestRuntimeCheckedReferenceArrayRejectsWeakerContract (6.14s)
+--- PASS: TestRuntimeCheckedReferenceArrayRejectsLiteral (6.18s)
+--- PASS: TestRuntimeCheckedReferenceArrayKeepsContract (6.18s)
+--- PASS: TestRuntimeCheckedReferenceArrayRejectsWrongElement (6.23s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	6.236s
