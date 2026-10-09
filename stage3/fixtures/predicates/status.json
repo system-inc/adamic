@@ -42,7 +42,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome":"Refused","what":"stage3/fixtures/predicates/03_void_zero.a:31:55: Adamic 0.1 refuses checked view read of field expression with unsupported union contract; prove or implement the union contract before reading this field"}
+    "stage0": {"outcome":"Compiles"}
   },
   {
     "file": "04_literal_or.a",

@@ -40,7 +40,7 @@ func TestMixedUnionContractGraph(t *testing.T) {
 		t.Run(source, func(t *testing.T) {
 			if strings.Contains(source, "readonly Node[]") {
 				// Array membership needs V3 element-kind metadata and hole-aware reads.
-				t.Skip("acceptance dependency: compiler/views-v3 787cea7a")
+				t.Skip("awaits compiler/views-v3: array element kind and holes (787cea7a)")
 			}
 			l, target, release := mixedUnionLowering(t, source)
 			defer release()

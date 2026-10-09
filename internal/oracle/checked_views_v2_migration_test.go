@@ -239,3 +239,32 @@ func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
 		t.Logf("producer certificate removal caught by %s: exit %d stdout %q", backend, got.exitCode, got.stdout)
 	}
 }
+
+func TestCheckedViewV2MovedStage3Results(t *testing.T) {
+	for _, name := range []string{"taste/refused/21_truthy_loops.a", "predicates/03_void_zero.a"} {
+		t.Run(name, func(t *testing.T) {
+			path, err := filepath.Abs("../../stage3/fixtures/" + name)
+			if err != nil {
+				t.Fatal(err)
+			}
+			loaded, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lower.Lower(context.Background(), loaded)
+			if err != nil {
+				t.Fatal(err)
+			}
+			node := onNode(t, path)
+			sanitized, binary := nativelyUncached(t, program)
+			for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
+				if difference := disagreement(node, got); difference != "" {
+					t.Fatalf("%s: %s; %#v", backend, difference, got)
+				}
+			}
+			if report := leaks(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+		})
+	}
+}
