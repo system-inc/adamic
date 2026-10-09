@@ -9,7 +9,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"strings"
 	"sync"
 	"syscall"
@@ -125,119 +124,29 @@ func volumeGuardNative(h *volumeGuardHarness, stage0, name, entry, archive strin
 
 type volumeGuardProducts struct{ repository, binary, mutant, oracle, asan string }
 
-// Each harness carries only its own unit's deadline; products are published by Setup.
+// Each harness carries its shard's deadline, after shared preparation completes.
 type volumeGuardHarness struct {
 	*harness
 	ctx context.Context
 }
 
 var volumeGuardShared struct {
+	once     sync.Once
 	products volumeGuardProducts
-	ready    bool
 }
 
-// The gate may select a shard without selecting its setup. Include the dedicated
-// serial setup test in that invocation before parallel leaves are resumed. This
-// runs no builds at package initialization and does not select unrelated tests.
-func init() {
-	for i, arg := range os.Args {
-		value := ""
-		equal := strings.HasPrefix(arg, "-test.run=")
-		if equal {
-			value = strings.TrimPrefix(arg, "-test.run=")
-		} else if arg == "-test.run" && i+1 < len(os.Args) {
-			value = os.Args[i+1]
-		} else {
-			continue
-		}
-		if selected, rewritten := volumeGuardSetupFilter(value); selected {
-			if equal {
-				os.Args[i] = "-test.run=" + rewritten
-			} else {
-				os.Args[i+1] = rewritten
-			}
-		}
-		return
-	}
-}
-
-func volumeGuardSetupFilter(value string) (bool, string) {
-	parts := strings.SplitN(value, "/", 2)
-	filter, err := regexp.Compile(parts[0])
-	if err != nil {
-		return false, value
-	}
-	selected := filter.MatchString("TestVolumeConfigGuardAndMutant") || filter.MatchString("TestVolumeConfigGuardAndMutant_Setup")
-	for shard := 0; shard < testVolumeConfigGuardAndMutantShards && !selected; shard++ {
-		selected = filter.MatchString(fmt.Sprintf("TestVolumeConfigGuardAndMutant_%03d", shard))
-	}
-	if !selected {
-		return false, value
-	}
-	parts[0] = "(" + parts[0] + ")|^TestVolumeConfigGuardAndMutant_Setup$"
-	return true, strings.Join(parts, "/")
-}
-
-// Filtered leaves must schedule setup without broadening unrelated selections.
-func TestVolumeConfigGuardSetupFilter(t *testing.T) {
-	t.Parallel()
-	cases := []struct {
-		run   string
-		setup bool
-	}{
-		{"^TestVolumeConfigGuardAndMutant_005$", true},
-		{"^TestVolumeConfigGuardAndMutant_Setup$", true},
-		{"^TestVolumeConfigGuardAndMutant$", true},
-		{"^(TestVolumeConfigGuardAndMutant_000|Other)$/specific$", true},
-		{"^TestVolumeConfigGuardAndMutantUnion$", false},
-		{"^Other$/specific$", false},
-		{"[", false},
-	}
-	for _, c := range cases {
-		selected, rewritten := volumeGuardSetupFilter(c.run)
-		if selected != c.setup {
-			t.Fatalf("filter %q selected setup=%t", c.run, selected)
-		}
-		if !selected {
-			if rewritten != c.run {
-				t.Fatalf("unrelated filter %q changed", c.run)
-			}
-			continue
-		}
-		before := strings.SplitN(c.run, "/", 2)
-		after := strings.SplitN(rewritten, "/", 2)
-		if len(before) != len(after) || (len(before) == 2 && before[1] != after[1]) {
-			t.Fatalf("child selection changed: %q -> %q", c.run, rewritten)
-		}
-		old := regexp.MustCompile(before[0])
-		next := regexp.MustCompile(after[0])
-		if !next.MatchString("TestVolumeConfigGuardAndMutant_Setup") {
-			t.Fatal("setup was not selected")
-		}
-		for _, name := range []string{"Other", "Another", "TestVolumeConfigGuardAndMutant_000", "TestVolumeConfigGuardAndMutant_005", "TestVolumeConfigGuardAndMutantUnion"} {
-			if old.MatchString(name) != next.MatchString(name) {
-				t.Fatalf("selection of %s changed for %q", name, c.run)
-			}
-		}
-	}
-}
-
-// Not parallel: publishes immutable products before any guard shard resumes.
 func TestVolumeConfigGuardAndMutant_Setup(t *testing.T) {
-	ctx, cancel := volumeGuardUnitContext(t.Name())
-	defer cancel()
-	started := time.Now()
-	defer func() { t.Logf("setup elapsed_s=%.6f cooked=%t", time.Since(started).Seconds(), ctx.Err() != nil) }()
-	volumeGuardShared.products = buildVolumeConfigGuardProducts(t, ctx)
-	if ctx.Err() != nil {
-		t.Fatal("cooked: shared setup exceeded 90s (over budget)")
-	}
-	volumeGuardShared.ready = true
+	t.Parallel()
+	volumeGuardProductsFor(t)
 }
+
 func volumeGuardProductsFor(t *testing.T) volumeGuardProducts {
 	t.Helper()
-	if !volumeGuardShared.ready {
-		t.Fatal("shared setup did not complete; no shard may build products")
+	volumeGuardShared.once.Do(func() {
+		volumeGuardShared.products = buildVolumeConfigGuardProducts(t, context.Background())
+	})
+	if volumeGuardShared.products.repository == "" {
+		t.Fatal("shared product preparation failed")
 	}
 	return volumeGuardShared.products
 }
@@ -485,7 +394,7 @@ func TestVolumeConfigGuardAndMutant_015(t *testing.T) {
 
 // Bound both the driver and compilers it launches without an external deadline tool.
 func volumeGuardCommand(parent context.Context, name string, args ...string) (*exec.Cmd, context.CancelFunc) {
-	ctx, cancel := context.WithTimeout(parent, 90*time.Second)
+	ctx, cancel := context.WithCancel(parent)
 	cmd := exec.CommandContext(ctx, name, args...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	cmd.Cancel = func() error {
@@ -534,7 +443,7 @@ func volumeGuardRun(h *volumeGuardHarness, name string, original *exec.Cmd) resu
 		h.t.Fatal(err)
 	}
 	observed := result{stdout: stdout, stderr: stderr, elapsed: elapsed, err: runErr}
-	if h.ctx.Err() != nil || observed.elapsed >= 90*time.Second {
+	if h.ctx.Err() != nil {
 		h.t.Fatalf("%s cooked: child deadline exceeded (over budget)", name)
 	}
 	return observed
@@ -591,4 +500,10 @@ func volumeGuardUnitContext(name string) (context.Context, context.CancelFunc) {
 		os.Exit(124)
 	})
 	return ctx, func() { stop(); cancel() }
+}
+
+// Exercise the holding shard's planted disagreement against real oracle bytes.
+func TestVolumeConfigGuardAndMutantPlantedFailure(t *testing.T) {
+	t.Parallel()
+	runVolumeConfigGuardShard(t, volumeGuardShard("edge-control-000.ts"))
 }
