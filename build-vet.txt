@@ -1,0 +1,14 @@
+loom-pilot: trimmed the product cache's entries older than an hour: 0 MB free, now 0
+loom-pilot: 0 MB free after trimming; the tree and the npm cache are made again
+loom-pilot: only 0 MB free on the instance after trimming its caches: Loom's fault
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          32G   31G     0 100% /
+none            8.8G  1.8G  7.1G  20% /tmp
+5.5M	/tmp/node-compile-cache
+11M	/tmp/loom-runner-7f01c04925b5
+11M	/tmp/loom-runner-c1825196c9c8
+68M	/tmp/adamic-stage3-cache
+180M	/tmp/adamic-gate-tools
+180M	/tmp/adamic-tools-checkout
+364M	/tmp/adamic-binaries
+960M	/tmp/adamic-tools
