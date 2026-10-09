@@ -137,6 +137,10 @@ class LandingTests(unittest.TestCase):
         git(self.repository, 'rm', '-q', 'documentation/read.csv')
         read = self.commit('delete a read file')
         self.assertIn('code reads documentation/read.csv: code/reader.go', self.push('--deletion', read, 'read').stderr)
+        # A file checked by hand to name the path without reading it is passed by name, and the landing says so.
+        named = self.assertLanded(self.push('--deletion', '--not-a-reader', 'code/reader.go', read, 'read'), new, read)
+        self.assertIn('Named but not read, checked by hand: code/reader.go', git(self.repository, 'log', '-1', '--format=%B', named))
+        new = named
         git(self.repository, 'checkout', '-q', '--detach', new)
         self.write('other/b.go', 'package other\n\n// beside\n')
         git(self.repository, 'rm', '-q', 'code/a.go')

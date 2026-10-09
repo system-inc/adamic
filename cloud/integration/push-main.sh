@@ -30,7 +30,7 @@
 # usage: cloud/integration/push-main.sh [--revert | --fix-forward <red log ref>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
 #        cloud/integration/push-main.sh [same options] (--fast-gate | --full-gate) <gate-logs ref> [--smoke-list-reviewed] <full sha> "<branches landed>"
 #        cloud/integration/push-main.sh --test-only <full sha> "<branches landed>"
-#        cloud/integration/push-main.sh --deletion <full sha> "<branches landed>"
+#        cloud/integration/push-main.sh --deletion [--not-a-reader <file>]... <full sha> "<branches landed>"
 set -euo pipefail
 
 fastGate=""
@@ -41,6 +41,7 @@ smokeReviewed=no
 pauseException=""
 testOnly=no
 deletion=no
+notReaders=()
 while [ "$#" -gt 0 ]; do
 	case "$1" in
 	--fast-gate) fastGate=${2#origin/}; shift 2 ;;
@@ -66,6 +67,9 @@ while [ "$#" -gt 0 ]; do
 	# since a gate of it would test main's tree unchanged (@system_adamic, Oct 9 07:53Z: "a deletion no code
 	# reads lands ungated", first for the velocity table's CSV). It rides the test-only lane's checks.
 	--deletion) testOnly=yes; deletion=yes; shift ;;
+	# --not-a-reader <file>, repeatable: a file that names a deleted path without reading it (a list of record
+	# paths, a test writing its own copy), checked by hand; the landing names each one.
+	--not-a-reader) notReaders+=("$2"); shift 2 ;;
 	--revert) pauseException=revert; shift ;;
 	--fix-forward) pauseException="fix-forward ${2#origin/}"; shift 2 ;;
 	*) break ;;
@@ -558,8 +562,9 @@ if [ "$testOnly" = yes ]; then
 		tools=$(git rev-parse -q --verify origin/devtools/fast-gate 2>/dev/null || true)
 		for path in $changed; do
 			for where in "$old" $tools; do
-				if readers=$(git grep -l -F -e "$path" -e "${path##*/}" "$where" -- '*.go' '*.py' '*.sh' '*.mjs' '*.cjs' '*.js' '*.ts' '*.json' '*.yml' '*.yaml' '*.toml' ':!*/testdata/*'); then
-					echo "refused: code reads ${path}: $(printf '%s\n' "$readers" | sed 's/^[^:]*://' | head -n 3 | paste -sd ' ' -)" >&2
+				readers=$(git grep -l -F -e "$path" -e "${path##*/}" "$where" -- '*.go' '*.py' '*.sh' '*.mjs' '*.cjs' '*.js' '*.ts' '*.json' '*.yml' '*.yaml' '*.toml' ':!*/testdata/*' | sed 's/^[^:]*://' | grep -v -x -F -e '' "${notReaders[@]/#/-e}" || true)
+				if [ -n "$readers" ]; then
+					echo "refused: code reads ${path}: $(printf '%s\n' "$readers" | head -n 3 | paste -sd ' ' -); if one only names it, check by hand and pass --not-a-reader <file>" >&2
 					exit 1
 				fi
 			done
@@ -568,6 +573,8 @@ if [ "$testOnly" = yes ]; then
 		landingBody="It only deletes $(printf '%s' "$changed" | paste -sd ' ' -), which no code on main or in developer tools'
 gate tools reads, so a gate would test main's tree unchanged; it lands with no gate (@system_adamic, Oct 9
 07:53Z: a deletion no code reads lands ungated)."
+		[ "${#notReaders[@]}" -eq 0 ] || landingBody="${landingBody}
+Named but not read, checked by hand: ${notReaders[*]}."
 		echo "Landing deletion ${gated:0:8} over main ${old:0:8}."
 	else
 	nonTest=$(printf '%s\n' "$changed" | grep -v -E "$testOnlyPattern" | grep . || true)
