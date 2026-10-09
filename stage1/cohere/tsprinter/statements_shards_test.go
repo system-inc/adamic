@@ -21,17 +21,6 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-func statementOracleBuild(t *testing.T, build func(dir string) error) string {
-	t.Helper()
-	dir := t.TempDir()
-	start, cpu := time.Now(), statementCPU()
-	if err := build(dir); err != nil {
-		t.Fatalf("build Go statement oracle: %v", err)
-	}
-	t.Logf("build Go statement oracle (uncached): %.3fs, %.3f CPU s", time.Since(start).Seconds(), statementCPU()-cpu)
-	return dir
-}
-
 func statementProduct(t *testing.T, inputs buildcache.Inputs, build func(dir string) error) string {
 	t.Helper()
 	return buildcache.Product(t, inputs, func(dir string) error {
