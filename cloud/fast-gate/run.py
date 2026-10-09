@@ -162,6 +162,9 @@ def main():
     # also runs clang and Node: a slot that oversubscribed itself sent a 150 s node deadline red.
     parser.add_argument("--parallel", type=int, default=max(1, len(os.sched_getaffinity(0)) // 2))
     parser.add_argument("--full", action="store_true")
+    # A whole gate that is also a parity proof runs to the end after its first failure, so every test can be
+    # compared with the pool's run (@system_adamic, Oct 9 00:12Z). Its red still blocks landing.
+    parser.add_argument("--run-to-end", action="store_true")
     # Landing and area gates (@system_adamic, Oct 8 09:43): run every test and fixture and report every
     # failure in one pass, failing at the end; area-next found its moved fixtures one per gate.
     parser.add_argument("--complete", action="store_true", help="fast gate that runs on after a failure and names every failed test")
@@ -1359,6 +1362,11 @@ class Gate:
                     with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
                         handle.write(detail + "\n")
                 self.killSessions()
+                return
+            if self.arguments.full and getattr(self.arguments, "run_to_end", False):
+                with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
+                    handle.write(detail + "\n")
+                self.status("red: %s first failure at %s after %.1f s (parity: running to the end)" % (self.arguments.sha, step, self.failure["after_seconds"]))
                 return
             if self.arguments.full:
                 # A whole gate fails fast and frees its box (Kirk, Oct 8: "all tests should fail fast and loud and

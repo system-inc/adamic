@@ -95,6 +95,7 @@ stopRemote() {
   [[ ${sha} =~ ^[0-9a-f]{40}$ ]] || return 1
   ssh "${box}" "pkill -TERM -f 'run.py .*--sha ${sha}'" || true
 }
+# ADAMIC_FULL_GATE_RUN_TO_END=1: a parity proof, run to the end after its first failure (run.py --run-to-end).
 run() {
   local sha=$1 origin=${2:-main} tools stamp out status previous="" parent="" stopping=""
   tools=$(git -C "${here}" rev-parse HEAD)
@@ -103,9 +104,9 @@ run() {
   echo "$(date -u +%H:%M:%S) full gate of main ${sha} (tools ${tools}) on ${box}"
   reclaim
   (heartbeat start "${sha}" > /dev/null 2>&1 &)
-  ssh "${box}" bash -s -- "${sha}" "${tools}" "${out}" "${share}" <<'BOX'
+  ssh "${box}" bash -s -- "${sha}" "${tools}" "${out}" "${share}" "$([ "${ADAMIC_FULL_GATE_RUN_TO_END:-}" = 1 ] && echo --run-to-end)" <<'BOX'
 set -euo pipefail
-sha=$1 tools=$2 out=$3 share=${4:-all}
+sha=$1 tools=$2 out=$3 share=${4:-all} runToEnd=${5:-}
 mkdir -p ~/full-gate ~/"${out}"
 for directory in tools tree; do
   [ -d ~/full-gate/${directory} ] || git clone -q https://github.com/system-inc/adamic.git ~/full-gate/${directory}
@@ -247,7 +248,7 @@ git -C ~/full-gate/tree fetch -q origin "${sha}" && git -C ~/full-gate/tree swit
 git -C ~/full-gate/tree submodule update -q --init --recursive
 cpus=\$(nproc --all)
 first=\$([ "${share}" = quarter ] && echo \$((cpus * 3 / 4)) || echo 0)
-taskset -c "\$first-\$((cpus - 1))" python3 ~/full-gate/tools/cloud/fast-gate/run.py --full --tree ~/full-gate/tree --sha "${sha}" --base "${sha}" --tools ~/full-gate/tools --weights ~/full-gate/weights.txt --out ~/"${out}"
+taskset -c "\$first-\$((cpus - 1))" python3 ~/full-gate/tools/cloud/fast-gate/run.py --full --tree ~/full-gate/tree --sha "${sha}" --base "${sha}" --tools ~/full-gate/tools --weights ~/full-gate/weights.txt --out ~/"${out}" ${runToEnd}
 RUN
 echo "running: full gate of ${sha}, waiting for the box" > ~/"${out}"/status.txt
 tmux new -d -s "full-${sha:0:12}" "bash ~/${out}/run.sh > ~/${out}/driver.log 2>&1"

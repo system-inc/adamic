@@ -83,10 +83,10 @@ class FailClosed(unittest.TestCase):
             realRun(["git", "-C", self.tree] + command, check=True)
         self.sha = run.git(self.tree, "rev-parse", "HEAD")
 
-    def gate(self, full=False, broken=None, silent=None, unowned=(), base=None, failing=None):
+    def gate(self, full=False, broken=None, silent=None, unowned=(), base=None, failing=None, runToEnd=False):
         out = tempfile.mkdtemp(dir=self.directory)
         arguments = mock.Mock(tree=self.tree, sha=self.sha, base=base or self.sha, tools=self.tree, out=out, parallel=4, full=full,
-                              branch="", branch_source="", session="", session_source="", weights=None)
+                              branch="", branch_source="", session="", session_source="", weights=None, run_to_end=runToEnd)
 
         def popen(command, **options):
             if command[0] == "git":
@@ -160,6 +160,12 @@ class FailClosed(unittest.TestCase):
         self.assertTrue(result["finished"])
         # Nothing after the failure ran: the census never reported.
         self.assertNotEqual(result["stages_exit"].get("census"), 0)
+        # A parity proof runs to the end: red, not cancelled, and its census still ran.
+        gate, status, result = self.gate(full=True, failing="vet", runToEnd=True)
+        self.assertTrue(status.startswith("red:"), status)
+        self.assertNotIn("cancelled", status)
+        self.assertFalse(result["cancelled_after_first_failure"])
+        self.assertEqual(result["stages_exit"].get("census"), 0)
         # A fast gate is not a whole gate: it is never marked cancelled.
         gate, status, result = self.gate(full=False, failing="vet")
         self.assertNotIn("cancelled", status)
