@@ -1,0 +1,8 @@
+=== RUN   TestProgramRegionScoutParseSelectionEmpty
+=== PAUSE TestProgramRegionScoutParseSelectionEmpty
+=== CONT  TestProgramRegionScoutParseSelectionEmpty
+    program_region_host_witness_test.go:147: acyclic parse.a selector selected 1 type identities
+--- FAIL: TestProgramRegionScoutParseSelectionEmpty (8.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	8.151s
+FAIL

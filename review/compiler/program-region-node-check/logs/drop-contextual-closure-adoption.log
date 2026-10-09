@@ -1,0 +1,12 @@
+=== RUN   TestProgramRegionHost14AgreesWithNode
+=== PAUSE TestProgramRegionHost14AgreesWithNode
+=== CONT  TestProgramRegionHost14AgreesWithNode
+    program_region_host_witness_test.go:14: adamic: counts: allocations 11 frees 8 retains 18 releases 34 peak 7 regions 3
+    program_region_host_witness_test.go:16: host 14 adopts 3 members, want its two cells and two closures
+--- FAIL: TestProgramRegionHost14AgreesWithNode (1.25s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.266s
+FAIL

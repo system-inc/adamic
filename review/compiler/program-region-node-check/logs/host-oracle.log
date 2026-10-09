@@ -1,0 +1,11 @@
+=== RUN   TestProgramRegionHost14AgreesWithNode
+=== PAUSE TestProgramRegionHost14AgreesWithNode
+=== CONT  TestProgramRegionHost14AgreesWithNode
+    program_region_host_witness_test.go:14: adamic: counts: allocations 11 frees 7 retains 18 releases 34 peak 8 regions 4
+    program_region_host_witness_test.go:18: host 14 matches Node in both backends with sanitizers and leak checks; it contains no parser Node or NodeArray
+--- PASS: TestProgramRegionHost14AgreesWithNode (36.35s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	36.364s

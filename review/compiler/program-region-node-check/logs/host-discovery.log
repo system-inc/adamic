@@ -1,0 +1,14 @@
+=== RUN   TestProgramRegionHost14MemberSites
+=== PAUSE TestProgramRegionHost14MemberSites
+=== CONT  TestProgramRegionHost14MemberSites
+    program_region_host_witness_test.go:52: closure candidate /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:1 function=0 selected=false typeSelected=false
+    program_region_host_witness_test.go:52: closure candidate /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:15:12 function=1 selected=true typeSelected=false
+    program_region_host_witness_test.go:52: closure candidate /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:23:37 function=2 selected=false typeSelected=false
+    program_region_host_witness_test.go:61: cell callback: (() => string) | undefined at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28
+    program_region_host_witness_test.go:61: cell value: string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:14:9
+    program_region_host_witness_test.go:61: closure () => string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:15:12
+    program_region_host_witness_test.go:64: host 14 member allocation sites 3, want two cells and two closures: [cell callback: (() => string) | undefined at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28 cell value: string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:14:9 closure () => string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:15:12]
+--- FAIL: TestProgramRegionHost14MemberSites (0.28s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.293s
+FAIL

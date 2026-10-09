@@ -1,0 +1,18 @@
+=== RUN   TestProgramRegionHost14MemberSites
+=== PAUSE TestProgramRegionHost14MemberSites
+=== RUN   TestProgramRegionScoutParseSelectionEmpty
+=== PAUSE TestProgramRegionScoutParseSelectionEmpty
+=== CONT  TestProgramRegionHost14MemberSites
+=== CONT  TestProgramRegionScoutParseSelectionEmpty
+=== NAME  TestProgramRegionHost14MemberSites
+    program_region_host_witness_test.go:60: cell callback: (() => string) | undefined at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28
+    program_region_host_witness_test.go:60: cell value: string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:14:9
+    program_region_host_witness_test.go:60: closure () => string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:15:12
+    program_region_host_witness_test.go:63: host 14 member allocation sites 3, want two cells and two closures: [cell callback: (() => string) | undefined at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28 cell value: string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:14:9 closure () => string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:15:12]
+--- FAIL: TestProgramRegionHost14MemberSites (0.30s)
+=== NAME  TestProgramRegionScoutParseSelectionEmpty
+    program_region_host_witness_test.go:148: parse.a selector member set empty: all parser allocations stay counted
+--- PASS: TestProgramRegionScoutParseSelectionEmpty (7.94s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	7.952s
+FAIL

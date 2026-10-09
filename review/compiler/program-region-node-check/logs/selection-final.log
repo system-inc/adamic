@@ -1,0 +1,18 @@
+=== RUN   TestProgramRegionHost14MemberSites
+=== PAUSE TestProgramRegionHost14MemberSites
+=== RUN   TestProgramRegionScoutParseSelectionEmpty
+=== PAUSE TestProgramRegionScoutParseSelectionEmpty
+=== CONT  TestProgramRegionHost14MemberSites
+=== CONT  TestProgramRegionScoutParseSelectionEmpty
+=== NAME  TestProgramRegionHost14MemberSites
+    program_region_host_witness_test.go:78: cell callback: (() => string) | undefined at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:13:28
+    program_region_host_witness_test.go:78: cell value: string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:14:9
+    program_region_host_witness_test.go:78: closure () => string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:15:12
+    program_region_host_witness_test.go:78: closure () => string at /workspace/adamic/stage3/fixtures/host/14_getCurrentDirectory.a:23:37
+    program_region_host_witness_test.go:92: selector selected type identities: 6; fixture 14 has no Node or NodeArray declarations or allocations
+--- PASS: TestProgramRegionHost14MemberSites (0.35s)
+=== NAME  TestProgramRegionScoutParseSelectionEmpty
+    program_region_host_witness_test.go:164: parse.a selector member set empty: all parser allocations stay counted
+--- PASS: TestProgramRegionScoutParseSelectionEmpty (8.16s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	8.174s
