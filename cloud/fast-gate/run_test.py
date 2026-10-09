@@ -157,7 +157,8 @@ class FailClosed(unittest.TestCase):
             return process
 
         listing = mock.Mock(stdout="example.com/p\n")
-        with mock.patch.object(run.subprocess, "Popen", side_effect=popen), \
+        with mock.patch.object(run.Gate, "recordInputHashes", lambda gate: None), \
+                mock.patch.object(run.subprocess, "Popen", side_effect=popen), \
                 mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree, run.module + "/stage1/cohere/tsprinter": self.tree}) or ["p"], list(unowned))), \
                 mock.patch.object(run.Gate, "command", side_effect=lambda command, **options: (mock.Mock(stdout="p\t" + self.tree + "\n") if "-f" in command else listing) if command[:2] == ["go", "list"] else realRun(command, **options)), \
                 mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else mock.patch.object(run, "smokeTest", run.smokeTest), \
@@ -2463,3 +2464,53 @@ class PhaseInputs(unittest.TestCase):
             PhaseInputs("test_wasi_inputs_cover_inventory_and_command_working_directories").run(result)
         self.assertEqual(len(result.failures), 1, result.errors)
         self.assertEqual(result.errors, [])
+
+
+class UnitInputHashes(unittest.TestCase):
+    def test_closure_embed_tests_and_declared_paths(self):
+        from input_hashes import InputHashes
+        with tempfile.TemporaryDirectory() as tree:
+            def write(path, text):
+                target = os.path.join(tree, path)
+                os.makedirs(os.path.dirname(target), exist_ok=True)
+                with open(target, 'w') as handle:
+                    handle.write(text)
+            write('go.mod', 'module example.com/hash\n\ngo 1.23\n')
+            write('dep/dep.go', 'package dep\nconst Answer = 1\n')
+            write('p/p.go', 'package p\nimport "example.com/hash/dep"\nvar Answer = dep.Answer\n')
+            write('p/p_test.go', 'package p\nimport _ "embed"\n//go:embed data.txt\nvar data string\n')
+            write('p/data.txt', 'one')
+            write('declared/file.txt', 'one')
+            write('other/x.go', 'package other\n')
+            realRun(['git', 'init', '-q', tree], check=True, timeout=10)
+            inputs = {'packages': ['example.com/hash/p'], 'paths': ['declared']}
+            def identity():
+                return InputHashes(tree).hash(inputs)
+            first = identity()
+            for path in ('dep/dep.go', 'p/p_test.go', 'p/data.txt', 'declared/file.txt'):
+                with open(os.path.join(tree, path)) as handle:
+                    old = handle.read()
+                write(path, old + '\n')
+                self.assertNotEqual(first['input_hash'], identity()['input_hash'], path)
+                write(path, old)
+            write('other/x.go', 'package other\nconst Unrelated = 2\n')
+            self.assertEqual(first['input_hash'], identity()['input_hash'])
+            self.assertIn('dep/dep.go', first['input_paths'])
+            self.assertIn('p/data.txt', first['input_paths'])
+
+    def test_box_tools_matches_watchers_bytes(self):
+        from input_hashes import BOX_PATHS, tools_fingerprint
+        import hashlib
+        listing = realRun(['git', '-C', PhaseInputs.tree, 'ls-tree', 'HEAD', '--'] + BOX_PATHS,
+                          capture_output=True, check=True, timeout=10).stdout
+        self.assertEqual(tools_fingerprint(PhaseInputs.tree), hashlib.sha1(listing).hexdigest())
+        with open(os.path.join(PhaseInputs.tree, 'cloud/fast-gate-watch.sh')) as handle:
+            declared = re.search(r'^boxSide="([^"]+)"', handle.read(), re.M)[1].split()
+        self.assertEqual(BOX_PATHS, declared)
+
+    def test_missing_closure_cannot_match(self):
+        from input_hashes import InputHashes
+        identity = InputHashes('/unused')
+        identity.packages = {}
+        with self.assertRaises(ValueError):
+            identity.hash({'packages': ['missing'], 'paths': []})

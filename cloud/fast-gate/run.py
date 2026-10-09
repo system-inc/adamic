@@ -50,6 +50,8 @@ import time
 import datetime
 import traceback
 
+from input_hashes import InputHashes, tools_fingerprint
+
 module = "github.com/system-inc/adamic"
 # What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
 gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1"}
@@ -424,6 +426,7 @@ class Gate:
             "base": arguments.base,
             "base_name": vars(arguments).get("base_name") or "main",
             "tools_sha": self.git(arguments.tools, "rev-parse", "HEAD"),
+            "tools_fingerprint": tools_fingerprint(arguments.tools),
             "machine": {"hostname": socket.gethostname(), "nproc": os.cpu_count()},
             "uncached_tests": True,
             "build_ok": False,
@@ -2349,6 +2352,46 @@ class Gate:
         with open(os.path.join(self.arguments.out, "status.txt"), "w") as handle:
             handle.write(line + "\n")
 
+    def recordInputHashes(self):
+        identities = InputHashes(self.arguments.tree)
+        errors = []
+        def attach(row, inputs):
+            try:
+                row.update(identities.hash(inputs))
+            except (OSError, ValueError, subprocess.SubprocessError, TimeoutError) as error:
+                row["input_hash"] = None
+                row["input_hash_error"] = str(error)
+                errors.append(str(error))
+        for field in ("units", "test_outcomes", "product_units", "cache_drain_units"):
+            for row in self.result.get(field, []):
+                attach(row, {"packages": [row["package"]], "paths": []})
+        phases = []
+        for phase in self.planned:
+            if phase == "tests":
+                continue
+            rows = self.result.get(phase + "_units", [])
+            if not rows:
+                rows = [{"name": phase, "exit": self.exits.get(phase),
+                         "status": "not run" if phase not in self.exits else
+                                   ("passed" if self.exits[phase] == 0 else "failed")}]
+            for row in rows:
+                unit = "" if row["name"] == phase else row["name"]
+                if phase == "catalog" and unit:
+                    unit = str(int(unit.split()[0]))
+                line = phase + (" " + unit if unit else "")
+                row["unit"] = line
+                try:
+                    identities.check_time()
+                    inputs = phaseInputs(self.arguments.tree, line, self.arguments.full)["inputs"]
+                    attach(row, inputs)
+                except (OSError, ValueError, subprocess.SubprocessError, TimeoutError) as error:
+                    row.update(input_hash=None, input_hash_error=str(error))
+                    errors.append(str(error))
+                phases.append(row)
+        self.result["phase_units"] = phases
+        if errors:
+            self.result["input_hash_errors"] = sorted(set(errors))
+
     def finish(self):
         if getattr(self, "stopThread", None):
             self.stopThread.join()
@@ -2403,6 +2446,7 @@ class Gate:
         self.result["planned_test_counts"] = {status: sum(row["status"] == status for row in outcomes)
                                                for status in ("passed", "failed", "not run")}
         self.result["gate_kind"] = self.kind
+        self.recordInputHashes()
         with open(os.path.join(self.arguments.out, self.kind + ".json"), "w") as handle:
             json.dump(self.result, handle, indent=2)
             handle.write("\n")
