@@ -1,0 +1,11 @@
+--- a/internal/lower/library_map_set.go
++++ b/internal/lower/library_map_set.go
+@@ -161,7 +161,7 @@
+ // Other callbacks stay refused until stage 0 can represent and check their dynamic this parameter.
+ func (l *lowering) libraryForEachThisArg(node, receiver *ast.Node, set bool) (ir.Expression, bool, error) {
+ 	arguments := node.AsCallExpression().Arguments.Nodes
+-	if ast.SkipParentheses(arguments[0]).Kind != ast.KindArrowFunction {
++	if ast.SkipParentheses(arguments[0]).Kind == ast.KindArrowFunction {
+ 		return nil, true, l.notYet(node, "forEach thisArg with a callback other than an arrow")
+ 	}
+ 	var key, value ir.Type

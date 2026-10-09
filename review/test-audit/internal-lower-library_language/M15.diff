@@ -1,0 +1,11 @@
+--- a/internal/lower/library_method_values.go
++++ b/internal/lower/library_method_values.go
+@@ -238,7 +238,7 @@
+ 		if receiver == nil {
+ 			return nil, true, l.notYet(node, "an unbound Array method call (this is undefined); supply an array to call/apply")
+ 		}
+-		if l.mayBeUndefined(receiver) {
++		if !l.mayBeUndefined(receiver) {
+ 			return nil, true, l.notYet(receiver, "an Array method receiver that may be undefined")
+ 		}
+ 		if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of != ir.Array {

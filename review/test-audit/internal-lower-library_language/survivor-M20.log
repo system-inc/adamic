@@ -1,0 +1,11 @@
+adapter: ir.NumberCall{Function:"parseInt", Arguments:[]ir.Expression{ir.Read{Local:0, Of:3, Checked:false, Readiness:""}, ir.Read{Local:0, Of:3, Checked:false, Readiness:""}}}
+native_build_seconds: 0.044477
+build_error: native: clang failed: exit status 1
+/tmp/adamic-gate/adamic-build-97704598/main.c:22:79: error: passing 'adamic_string *' (aka 'struct adamic_string *') to parameter of incompatible type 'double'
+   22 |         double adamic_temporary_1 = adamic_number_parse_int(adamic_local_0_argument, adamic_local_0_argument);
+      |                                                                                      ^~~~~~~~~~~~~~~~~~~~~~~
+/home/agent/.cache/adamic/runtime/f4dd3250bbc59a02cb4514a70f46280b0e2701e6fb9c91044247c935f833ebfe/adamic.h:694:66: note: passing argument to parameter 'radix' here
+  694 | double adamic_number_parse_int(const adamic_string *text, double radix);
+      |                                                                  ^
+1 error generated.
+

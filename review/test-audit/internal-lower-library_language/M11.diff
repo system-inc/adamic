@@ -1,0 +1,11 @@
+--- a/internal/lower/library_method_values.go
++++ b/internal/lower/library_method_values.go
+@@ -124,7 +124,7 @@
+ 	if called(node) {
+ 		return nil, false, nil
+ 	}
+-	if !constMethodInitializer(node) {
++	if constMethodInitializer(node) {
+ 		return nil, true, l.notYet(node, "a library method value outside a const alias, typed call/apply, or supported map callback (its receiver and callable ABI are not proven); wrap the call in an arrow")
+ 	}
+ 	if ast.IsIdentifier(node) && !l.isLibraryGlobal(node, "String") && !l.isLibraryGlobal(node, "Number") && !l.isLibraryGlobal(node, "parseInt") && !l.isLibraryGlobal(node, "parseFloat") {

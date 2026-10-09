@@ -1,0 +1,170 @@
+[
+  {
+    "id": "M01",
+    "exit": 1,
+    "wall_seconds": 29.716021876000013,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M02",
+    "exit": 1,
+    "wall_seconds": 29.733614150999983,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M03",
+    "exit": 1,
+    "wall_seconds": 29.38944302699997,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M04",
+    "exit": 1,
+    "wall_seconds": 30.066956666999886,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M05",
+    "exit": 1,
+    "wall_seconds": 29.619391708999956,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M06",
+    "exit": 1,
+    "wall_seconds": 29.717123168999933,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M07",
+    "exit": 1,
+    "wall_seconds": 27.261238538000043,
+    "pattern": ".",
+    "panic": true,
+    "timeout": false
+  },
+  {
+    "id": "M08",
+    "exit": 1,
+    "wall_seconds": 29.30966661499997,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M09",
+    "exit": 1,
+    "wall_seconds": 29.397968299000013,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M10",
+    "exit": 1,
+    "wall_seconds": 30.179742525999927,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M11",
+    "exit": 1,
+    "wall_seconds": 30.381465876999982,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M12",
+    "exit": 1,
+    "wall_seconds": 29.589739452999993,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M13",
+    "exit": 1,
+    "wall_seconds": 29.36400414700006,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M14",
+    "exit": 1,
+    "wall_seconds": 29.616342365000037,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M15",
+    "exit": 1,
+    "wall_seconds": 29.79970472800005,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M16",
+    "exit": 1,
+    "wall_seconds": 29.14816950300019,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M17",
+    "exit": 1,
+    "wall_seconds": 29.664561283000012,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M18",
+    "exit": 1,
+    "wall_seconds": 29.54958375299975,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M19",
+    "exit": 1,
+    "wall_seconds": 29.678534747999947,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "M20",
+    "exit": 0,
+    "wall_seconds": 29.450221108000278,
+    "pattern": ".",
+    "panic": false,
+    "timeout": false
+  },
+  {
+    "id": "P01",
+    "exit": 1,
+    "wall_seconds": 4.2816469100002905,
+    "pattern": "^(TestLibraryLanguageBoundaries|TestLibraryMapSetGapsStayRefused|TestLibraryMapSetIteratorCopyTypesRefused|TestLibraryMethodValues|TestLibraryMethodValueBoundaries|TestLibraryMethodValueSafety|TestNodeBufferRefusals)$",
+    "panic": false,
+    "timeout": false
+  }
+]

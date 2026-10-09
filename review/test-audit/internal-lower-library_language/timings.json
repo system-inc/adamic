@@ -1,0 +1,58 @@
+{
+  "TestLibraryLanguageBoundaries": {
+    "runs": [
+      0.232,
+      0.277,
+      0.288
+    ],
+    "median": 0.277
+  },
+  "TestLibraryMapSetGapsStayRefused": {
+    "runs": [
+      0.105,
+      0.106,
+      0.109
+    ],
+    "median": 0.106
+  },
+  "TestLibraryMapSetIteratorCopyTypesRefused": {
+    "runs": [
+      0.163,
+      0.485,
+      0.165
+    ],
+    "median": 0.165
+  },
+  "TestLibraryMethodValues": {
+    "runs": [
+      0.393,
+      0.363,
+      0.362
+    ],
+    "median": 0.363
+  },
+  "TestLibraryMethodValueBoundaries": {
+    "runs": [
+      0.332,
+      0.323,
+      0.315
+    ],
+    "median": 0.323
+  },
+  "TestLibraryMethodValueSafety": {
+    "runs": [
+      0.392,
+      0.398,
+      0.388
+    ],
+    "median": 0.392
+  },
+  "TestNodeBufferRefusals": {
+    "runs": [
+      2.416,
+      2.052,
+      2.426
+    ],
+    "median": 2.416
+  }
+}

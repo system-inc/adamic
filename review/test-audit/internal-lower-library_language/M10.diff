@@ -1,0 +1,11 @@
+--- a/internal/lower/library_method_values.go
++++ b/internal/lower/library_method_values.go
+@@ -28,7 +28,7 @@
+ 		}
+ 		seen[symbol] = true
+ 		declaration := symbol.Declarations[0]
+-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
++		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+ 			return libraryMethod{}, false
+ 		}
+ 		initializer := declaration.AsVariableDeclaration().Initializer

@@ -1,0 +1,11 @@
+--- a/internal/lower/library_map_set.go
++++ b/internal/lower/library_map_set.go
+@@ -368,7 +368,7 @@
+ 		return nil, true, l.notYet(node, "Map.groupBy without known grouped elements")
+ 	}
+ 	groupedElement := l.checker.GetElementTypeOfArrayType(grouped[1])
+-	if held, known := l.representation(groupedElement); !known || held != element {
++	if held, known := l.representation(groupedElement); !known || held == element {
+ 		return nil, true, l.notYet(node, "Map.groupBy grouped elements held otherwise than the input's")
+ 	}
+ 	if l.isLibraryType(proven, "Map", "ReadonlyMap") {

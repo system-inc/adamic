@@ -1,0 +1,11 @@
+--- a/internal/lower/library_method_values.go
++++ b/internal/lower/library_method_values.go
+@@ -187,7 +187,7 @@
+ 		value, err := l.libraryMethodBind(node, target, method)
+ 		return value, true, err
+ 	}
+-	if hasSpread(node) {
++	if !hasSpread(node) {
+ 		return nil, true, l.notYet(node, "spread into a delayed library call (argument arity is not proven)")
+ 	}
+ 	written := call.Arguments.Nodes

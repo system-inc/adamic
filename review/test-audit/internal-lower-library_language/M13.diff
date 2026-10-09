@@ -1,0 +1,11 @@
+--- a/internal/lower/library_method_values.go
++++ b/internal/lower/library_method_values.go
+@@ -199,7 +199,7 @@
+ 		receiver, written = written[0], written[1:]
+ 	}
+ 	if mode == "apply" {
+-		if len(written) != 1 || ast.SkipParentheses(written[0]).Kind != ast.KindArrayLiteralExpression {
++		if len(written) != 2 || ast.SkipParentheses(written[0]).Kind != ast.KindArrayLiteralExpression {
+ 			return nil, true, l.notYet(node, "apply without a dense argument literal (length, presence and argument representations must be proven)")
+ 		}
+ 		written = ast.SkipParentheses(written[0]).AsArrayLiteralExpression().Elements.Nodes

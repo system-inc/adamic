@@ -1,0 +1,11 @@
+--- a/internal/lower/library_for_in.go
++++ b/internal/lower/library_for_in.go
+@@ -141,7 +141,7 @@
+ 				var target ast.Visitor
+ 				target = func(part *ast.Node) bool {
+ 					if ast.IsIdentifier(part) && l.symbol(part) == symbol {
+-						safe = false
++						safe = true
+ 					}
+ 					return part.ForEachChild(target)
+ 				}

@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_buffer.go
++++ b/internal/lower/library_node_buffer.go
+@@ -172,7 +172,7 @@
+ 			}
+ 			operation, result = "hash_update", ir.Object
+ 		case "digest":
+-			if len(args) != 1 || args[0].Kind != ast.KindStringLiteral || args[0].Text() != "hex" {
++			if len(args) != 1 || args[0].Kind != ast.KindStringLiteral || args[0].Text() != "base64" {
+ 				return nil, true, l.notYet(node, "Hash.digest outside hex")
+ 			}
+ 			operation, result, args = "hash_digest", ir.String, nil

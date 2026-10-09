@@ -1,0 +1,33 @@
+--- a/internal/lower/library_map_set.go
++++ b/internal/lower/library_map_set.go
+@@ -493,30 +493,6 @@
+ // Iterator next is inherited in JavaScript. Copying our internal closure slot as an own
+ // enumerable field would let a copy drive the original iterator, unlike Node.
+ func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
+-	isIterator := func(source *ast.Node) bool {
+-		return l.libraryIteratorType(l.checker.GetTypeAtLocation(source))
+-	}
+-	if node.Kind == ast.KindObjectLiteralExpression {
+-		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
+-			if property.Kind == ast.KindSpreadAssignment && isIterator(property.AsSpreadAssignment().Expression) {
+-				return l.notYet(property, "spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array")
+-			}
+-		}
+-	}
+-	if node.Kind == ast.KindCallExpression {
+-		call := node.AsCallExpression()
+-		callee := ast.SkipParentheses(call.Expression)
+-		if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "assign" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
+-			for index, source := range call.Arguments.Nodes {
+-				if index == 0 {
+-					continue
+-				}
+-				if isIterator(source) {
+-					return l.notYet(source, "Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator")
+-				}
+-			}
+-		}
+-	}
+ 	return nil
+ }
+ 

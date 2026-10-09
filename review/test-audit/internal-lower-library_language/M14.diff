@@ -1,0 +1,11 @@
+--- a/internal/lower/library_method_values.go
++++ b/internal/lower/library_method_values.go
+@@ -464,7 +464,7 @@
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	if receiver.Type() != ir.String || l.mayBeUndefined(written[0]) {
++	if receiver.Type() != ir.String || !l.mayBeUndefined(written[0]) {
+ 		return nil, l.notYet(node, "bind without a proven present primitive string receiver")
+ 	}
+ 	maker := len(l.result.Functions)

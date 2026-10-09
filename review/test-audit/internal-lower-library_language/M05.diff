@@ -1,0 +1,11 @@
+--- a/internal/lower/library_function_expressions.go
++++ b/internal/lower/library_function_expressions.go
+@@ -19,7 +19,7 @@
+ 		return nil, l.notYet(node, "a generic function expression")
+ 	}
+ 	for _, parameter := range node.Parameters() {
+-		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
++		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "that" {
+ 			return nil, l.notYet(parameter, "a function expression with a this parameter (dynamic receivers are not implemented)")
+ 		}
+ 	}

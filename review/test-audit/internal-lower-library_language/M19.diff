@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_buffer.go
++++ b/internal/lower/library_node_buffer.go
+@@ -107,7 +107,7 @@
+ func (l *lowering) nodeBufferView(from, to *checker.Type) bool {
+ 	for _, name := range []string{"Buffer", "Hash"} {
+ 		if l.nodeBufferType(from, name) != l.nodeBufferType(to, name) {
+-			return false
++			return true
+ 		}
+ 	}
+ 	return true

@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_buffer.go
++++ b/internal/lower/library_node_buffer.go
+@@ -139,7 +139,7 @@
+ 	operation, encoding, result := "", 0, ir.Array
+ 	var receiver *ast.Node
+ 	if l.nodeBufferSymbol(callee, "createHash") {
+-		if len(args) != 1 || ast.SkipParentheses(args[0]).Kind != ast.KindStringLiteral || args[0].Text() != "sha256" {
++		if len(args) != 1 || ast.SkipParentheses(args[0]).Kind != ast.KindStringLiteral || args[0].Text() != "sha1" {
+ 			return nil, true, l.notYet(node, "crypto.createHash outside the census's sha256 algorithm")
+ 		}
+ 		return ir.NodeBufferCall{Function: "hash_new", Returns: ir.Object}, true, nil

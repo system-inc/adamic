@@ -1,0 +1,11 @@
+--- a/internal/lower/library_map_set.go
++++ b/internal/lower/library_map_set.go
+@@ -28,7 +28,7 @@
+ 	if err != nil {
+ 		return nil, true, err
+ 	}
+-	if element != otherElement {
++	if element == otherElement {
+ 		return nil, true, l.notYet(node, name+" between Sets whose elements have different representations")
+ 	}
+ 	left, err := l.expression(receiver)

@@ -1,0 +1,11 @@
+--- a/internal/lower/library_globals.go
++++ b/internal/lower/library_globals.go
+@@ -17,7 +17,7 @@
+ 		for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+ 			parent = parent.Parent
+ 		}
+-		if parent != nil && parent.Kind == ast.KindTypeOfExpression {
++		if parent != nil && parent.Kind != ast.KindTypeOfExpression {
+ 			return ir.LibraryGlobal{Name: name}, true, nil
+ 		}
+ 		if parent != nil && parent.Kind == ast.KindBinaryExpression {

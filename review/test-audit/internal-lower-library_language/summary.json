@@ -1,0 +1,21 @@
+{
+  "starting_commit": "e2492670b06a4dce1deafe837158ce0366cf2bc4",
+  "nproc": 5,
+  "baseline_seconds": 33.73,
+  "inactive_switch_seconds": 28.049,
+  "verdicts": {
+    "sacred": 5,
+    "subsumed": 1,
+    "overlapping": 1,
+    "untrue": 0
+  },
+  "survivors": [
+    "M20"
+  ],
+  "vacuous": [
+    "TestLibraryMethodValues"
+  ],
+  "matrix_wall_seconds": 594.9151404520003,
+  "timing_binary_seconds": 12.09,
+  "vet_seconds": 9.047865547999663
+}

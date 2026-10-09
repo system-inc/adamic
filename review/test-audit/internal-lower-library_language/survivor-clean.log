@@ -1,0 +1,4 @@
+adapter: ir.NumberCall{Function:"parseInt", Arguments:[]ir.Expression{ir.Read{Local:0, Of:3, Checked:false, Readiness:""}, ir.Read{Local:1, Of:1, Checked:false, Readiness:""}}}
+native_build_seconds: 0.171328
+native: 10,NaN,2
+run_error: <nil>
