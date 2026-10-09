@@ -1,0 +1,53 @@
+FIRST FAILURE (census, at 45.7 s):
+
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2258
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2257
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2256
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2255
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2254
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2253
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2252
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2251
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2250
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2249
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2248
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2247
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2246
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2245
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2244
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2243
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2242
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2241
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2240
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2239
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2238
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2237
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2236
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2235
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2234
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2233
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2232
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2231
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2230
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2229
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2228
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2227
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2226
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2225
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2224
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2223
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2222
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2221
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2220
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2219
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2218
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2217
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2216
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2215
+unknown	github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_2214
+skips=6146 required-input=0 unknown=6144 pending=0
+gate skipped 0 required-input tests; 6144 unclassified skips; 0 pending skips past or unsure of their reason
+exit status 1
+
+(box load 5.5 on 5 cores at first failure)
+red: f71518a8b33b0f3b6b16d54edfc8ce26b547ab5e fast gate, first failure at census after 45.7 s, under load (load 5.5 on 5 cores at first failure) (build=36.5s vet=0.9s smoke=7.7s census=0.5s; 5 units over 30 s (311 s, 0 on the burn-down, 5 drifted over); box load 0.6 on 5 cores at start, load 5.5 on 5 cores at first failure, load 5.5 on 5 cores at end; deferred to full gate: 0 tests; branch none, session none), 0 fail, 46 pass
