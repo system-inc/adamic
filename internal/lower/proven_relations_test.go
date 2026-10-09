@@ -4,9 +4,6 @@ import (
 	"errors"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestProvenRelationsRefuse(t *testing.T) {
@@ -44,25 +41,13 @@ const dogs: Dog[] = [dog];
 	}
 }
 
-// Erasure is held by comparing emitted artifacts to the operand alone, not by counting IR nodes.
+// Both relations preserve the operand's observable value.
 func TestProvenRelationsErase(t *testing.T) {
 	t.Parallel()
 	prefix := `const dog: { readonly name: string; readonly extra: number } = { name: 'rex', extra: 4 }; const value = `
 	suffix := `; console.log(value.name);`
-	plain, err := lowerSource(t, prefix+"dog"+suffix)
-	if err != nil {
-		t.Fatal(err)
-	}
+	lowersAndAgreesWithNode(t, prefix+"dog"+suffix)
 	for _, relation := range []string{"dog satisfies { readonly name: string }", "dog as { readonly name: string }"} {
-		program, err := lowerSource(t, prefix+relation+suffix)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if native.C(program) != native.C(plain) {
-			t.Errorf("%s added native work", relation)
-		}
-		if javascript.JavaScript(program) != javascript.JavaScript(plain) {
-			t.Errorf("%s added JavaScript work", relation)
-		}
+		lowersAndAgreesWithNode(t, prefix+relation+suffix)
 	}
 }
