@@ -212,7 +212,6 @@ var normalizeAlphabet = []string{
 
 func runNormalizeUnit(t *testing.T, index int) {
 	t.Helper()
-	t.Parallel()
 	defer checkGrainBudget(t)()
 	alphabet := strings.Join(normalizeAlphabet, ", ")
 	repository, err := filepath.Abs("../..")
@@ -244,38 +243,92 @@ func runNormalizeUnit(t *testing.T, index int) {
 		[]string{binary, "contexts"}, []string{"node", "--eval", oracle, "contexts"})
 }
 
-func TestNormalizeMatchesNodePoints00(t *testing.T) { runNormalizeUnit(t, 0) }
+func TestNormalizeMatchesNodePoints00(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 0)
+}
 
-func TestNormalizeMatchesNodePoints01(t *testing.T) { runNormalizeUnit(t, 1) }
+func TestNormalizeMatchesNodePoints01(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 1)
+}
 
-func TestNormalizeMatchesNodePoints02(t *testing.T) { runNormalizeUnit(t, 2) }
+func TestNormalizeMatchesNodePoints02(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 2)
+}
 
-func TestNormalizeMatchesNodePoints03(t *testing.T) { runNormalizeUnit(t, 3) }
+func TestNormalizeMatchesNodePoints03(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 3)
+}
 
-func TestNormalizeMatchesNodePoints04(t *testing.T) { runNormalizeUnit(t, 4) }
+func TestNormalizeMatchesNodePoints04(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 4)
+}
 
-func TestNormalizeMatchesNodePoints05(t *testing.T) { runNormalizeUnit(t, 5) }
+func TestNormalizeMatchesNodePoints05(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 5)
+}
 
-func TestNormalizeMatchesNodePoints06(t *testing.T) { runNormalizeUnit(t, 6) }
+func TestNormalizeMatchesNodePoints06(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 6)
+}
 
-func TestNormalizeMatchesNodePoints07(t *testing.T) { runNormalizeUnit(t, 7) }
+func TestNormalizeMatchesNodePoints07(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 7)
+}
 
-func TestNormalizeMatchesNodePoints08(t *testing.T) { runNormalizeUnit(t, 8) }
+func TestNormalizeMatchesNodePoints08(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 8)
+}
 
-func TestNormalizeMatchesNodePoints09(t *testing.T) { runNormalizeUnit(t, 9) }
+func TestNormalizeMatchesNodePoints09(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 9)
+}
 
-func TestNormalizeMatchesNodePoints10(t *testing.T) { runNormalizeUnit(t, 10) }
+func TestNormalizeMatchesNodePoints10(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 10)
+}
 
-func TestNormalizeMatchesNodePoints11(t *testing.T) { runNormalizeUnit(t, 11) }
+func TestNormalizeMatchesNodePoints11(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 11)
+}
 
-func TestNormalizeMatchesNodePoints12(t *testing.T) { runNormalizeUnit(t, 12) }
+func TestNormalizeMatchesNodePoints12(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 12)
+}
 
-func TestNormalizeMatchesNodePoints13(t *testing.T) { runNormalizeUnit(t, 13) }
+func TestNormalizeMatchesNodePoints13(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 13)
+}
 
-func TestNormalizeMatchesNodePoints14(t *testing.T) { runNormalizeUnit(t, 14) }
+func TestNormalizeMatchesNodePoints14(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 14)
+}
 
-func TestNormalizeMatchesNodePoints15(t *testing.T) { runNormalizeUnit(t, 15) }
+func TestNormalizeMatchesNodePoints15(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 15)
+}
 
-func TestNormalizeMatchesNodePoints16(t *testing.T) { runNormalizeUnit(t, 16) }
+func TestNormalizeMatchesNodePoints16(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 16)
+}
 
-func TestNormalizeMatchesNodeContexts(t *testing.T) { runNormalizeUnit(t, 17) }
+func TestNormalizeMatchesNodeContexts(t *testing.T) {
+	t.Parallel()
+	runNormalizeUnit(t, 17)
+}

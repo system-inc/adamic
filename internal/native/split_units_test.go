@@ -41,6 +41,7 @@ func unitRanges(total, width int) []testUnitRange {
 // Frozen counts describe the old workloads. A missing, duplicated or overlapping
 // piece fails independently of whether all the remaining observations agree.
 func TestSplitUnitCoverage(t *testing.T) {
+	t.Parallel()
 	for _, plan := range []struct {
 		name                string
 		total, width, units int
@@ -93,11 +94,27 @@ func TestSplitUnitCoverage(t *testing.T) {
 					t.Fatalf("unexpected unit %s", function.Name.Name)
 				}
 			}
-			if seen[index] || len(function.Body.List) != 1 {
+			if seen[index] || len(function.Body.List) != 2 {
 				t.Fatalf("invalid wrapper %s", function.Name.Name)
 			}
 			seen[index] = true
-			statement, ok := function.Body.List[0].(*ast.ExprStmt)
+			parallel, ok := function.Body.List[0].(*ast.ExprStmt)
+			if !ok {
+				t.Fatalf("missing first-statement t.Parallel in %s", function.Name.Name)
+			}
+			parallelCall, ok := parallel.X.(*ast.CallExpr)
+			if !ok {
+				t.Fatalf("missing t.Parallel in %s", function.Name.Name)
+			}
+			selector, ok := parallelCall.Fun.(*ast.SelectorExpr)
+			if !ok || selector.Sel.Name != "Parallel" || len(parallelCall.Args) != 0 {
+				t.Fatalf("missing t.Parallel in %s", function.Name.Name)
+			}
+			receiver, ok := selector.X.(*ast.Ident)
+			if !ok || receiver.Name != "t" {
+				t.Fatalf("wrong parallel receiver in %s", function.Name.Name)
+			}
+			statement, ok := function.Body.List[1].(*ast.ExprStmt)
 			if !ok {
 				t.Fatalf("invalid wrapper %s", function.Name.Name)
 			}

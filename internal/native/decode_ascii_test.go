@@ -16,7 +16,6 @@ import (
 // shared by input hashes; comparisons and sanitizer execution always run.
 func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	t.Helper()
-	t.Parallel()
 	defer checkGrainBudget(t)()
 	if target == "wasi" && os.Getenv("ADAMIC_TEST_WASI") != "1" {
 		t.Skip("set ADAMIC_TEST_WASI=1")
@@ -132,182 +131,452 @@ func runDecodeASCIIUnit(t *testing.T, target string, index int) {
 	t.Log(string(output))
 }
 
-func TestDecodeASCIIUnit00(t *testing.T) { runDecodeASCIIUnit(t, "native", 0) }
-
-func TestDecodeASCIIUnit01(t *testing.T) { runDecodeASCIIUnit(t, "native", 1) }
-
-func TestDecodeASCIIUnit02(t *testing.T) { runDecodeASCIIUnit(t, "native", 2) }
-
-func TestDecodeASCIIUnit03(t *testing.T) { runDecodeASCIIUnit(t, "native", 3) }
-
-func TestDecodeASCIIUnit04(t *testing.T) { runDecodeASCIIUnit(t, "native", 4) }
-
-func TestDecodeASCIIUnit05(t *testing.T) { runDecodeASCIIUnit(t, "native", 5) }
-
-func TestDecodeASCIIUnit06(t *testing.T) { runDecodeASCIIUnit(t, "native", 6) }
-
-func TestDecodeASCIIUnit07(t *testing.T) { runDecodeASCIIUnit(t, "native", 7) }
-
-func TestDecodeASCIIUnit08(t *testing.T) { runDecodeASCIIUnit(t, "native", 8) }
-
-func TestDecodeASCIIUnit09(t *testing.T) { runDecodeASCIIUnit(t, "native", 9) }
-
-func TestDecodeASCIIUnit10(t *testing.T) { runDecodeASCIIUnit(t, "native", 10) }
-
-func TestDecodeASCIIUnit11(t *testing.T) { runDecodeASCIIUnit(t, "native", 11) }
-
-func TestDecodeASCIIUnit12(t *testing.T) { runDecodeASCIIUnit(t, "native", 12) }
-
-func TestDecodeASCIIUnit13(t *testing.T) { runDecodeASCIIUnit(t, "native", 13) }
-
-func TestDecodeASCIIUnit14(t *testing.T) { runDecodeASCIIUnit(t, "native", 14) }
-
-func TestDecodeASCIIUnit15(t *testing.T) { runDecodeASCIIUnit(t, "native", 15) }
-
-func TestDecodeASCIIUnit16(t *testing.T) { runDecodeASCIIUnit(t, "native", 16) }
-
-func TestDecodeASCIIUnit17(t *testing.T) { runDecodeASCIIUnit(t, "native", 17) }
-
-func TestDecodeASCIIUnit18(t *testing.T) { runDecodeASCIIUnit(t, "native", 18) }
-
-func TestDecodeASCIIUnit19(t *testing.T) { runDecodeASCIIUnit(t, "native", 19) }
-
-func TestDecodeASCIIUnit20(t *testing.T) { runDecodeASCIIUnit(t, "native", 20) }
-
-func TestDecodeASCIIUnit21(t *testing.T) { runDecodeASCIIUnit(t, "native", 21) }
-
-func TestDecodeASCIIUnit22(t *testing.T) { runDecodeASCIIUnit(t, "native", 22) }
-
-func TestDecodeASCIIUnit23(t *testing.T) { runDecodeASCIIUnit(t, "native", 23) }
-
-func TestDecodeASCIIUnit24(t *testing.T) { runDecodeASCIIUnit(t, "native", 24) }
-
-func TestDecodeASCIIUnit25(t *testing.T) { runDecodeASCIIUnit(t, "native", 25) }
-
-func TestDecodeASCIIUnit26(t *testing.T) { runDecodeASCIIUnit(t, "native", 26) }
-
-func TestDecodeASCIIUnit27(t *testing.T) { runDecodeASCIIUnit(t, "native", 27) }
-
-func TestDecodeASCIIUnit28(t *testing.T) { runDecodeASCIIUnit(t, "native", 28) }
-
-func TestDecodeASCIIUnit29(t *testing.T) { runDecodeASCIIUnit(t, "native", 29) }
-
-func TestDecodeASCIIUnit30(t *testing.T) { runDecodeASCIIUnit(t, "native", 30) }
-
-func TestDecodeASCIIUnit31(t *testing.T) { runDecodeASCIIUnit(t, "native", 31) }
-
-func TestDecodeASCIIUnit32(t *testing.T) { runDecodeASCIIUnit(t, "native", 32) }
-
-func TestDecodeASCIIUnit33(t *testing.T) { runDecodeASCIIUnit(t, "native", 33) }
-
-func TestDecodeASCIIUnit34(t *testing.T) { runDecodeASCIIUnit(t, "native", 34) }
-
-func TestDecodeASCIIUnit35(t *testing.T) { runDecodeASCIIUnit(t, "native", 35) }
-
-func TestDecodeASCIIUnit36(t *testing.T) { runDecodeASCIIUnit(t, "native", 36) }
-
-func TestDecodeASCIIUnit37(t *testing.T) { runDecodeASCIIUnit(t, "native", 37) }
-
-func TestDecodeASCIIUnit38(t *testing.T) { runDecodeASCIIUnit(t, "native", 38) }
-
-func TestDecodeASCIIUnit39(t *testing.T) { runDecodeASCIIUnit(t, "native", 39) }
-
-func TestDecodeASCIIUnit40(t *testing.T) { runDecodeASCIIUnit(t, "native", 40) }
-
-func TestDecodeASCIIUnit41(t *testing.T) { runDecodeASCIIUnit(t, "native", 41) }
-
-func TestDecodeASCIIUnit42(t *testing.T) { runDecodeASCIIUnit(t, "native", 42) }
-
-func TestDecodeASCIIUnit43(t *testing.T) { runDecodeASCIIUnit(t, "native", 43) }
-
-func TestDecodeASCIIUnit44(t *testing.T) { runDecodeASCIIUnit(t, "native", 44) }
-
-func TestDecodeASCIIWASIUnit00(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 0) }
-
-func TestDecodeASCIIWASIUnit01(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 1) }
-
-func TestDecodeASCIIWASIUnit02(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 2) }
-
-func TestDecodeASCIIWASIUnit03(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 3) }
-
-func TestDecodeASCIIWASIUnit04(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 4) }
-
-func TestDecodeASCIIWASIUnit05(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 5) }
-
-func TestDecodeASCIIWASIUnit06(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 6) }
-
-func TestDecodeASCIIWASIUnit07(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 7) }
-
-func TestDecodeASCIIWASIUnit08(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 8) }
-
-func TestDecodeASCIIWASIUnit09(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 9) }
-
-func TestDecodeASCIIWASIUnit10(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 10) }
-
-func TestDecodeASCIIWASIUnit11(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 11) }
-
-func TestDecodeASCIIWASIUnit12(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 12) }
-
-func TestDecodeASCIIWASIUnit13(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 13) }
-
-func TestDecodeASCIIWASIUnit14(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 14) }
-
-func TestDecodeASCIIWASIUnit15(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 15) }
-
-func TestDecodeASCIIWASIUnit16(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 16) }
-
-func TestDecodeASCIIWASIUnit17(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 17) }
-
-func TestDecodeASCIIWASIUnit18(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 18) }
-
-func TestDecodeASCIIWASIUnit19(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 19) }
-
-func TestDecodeASCIIWASIUnit20(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 20) }
-
-func TestDecodeASCIIWASIUnit21(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 21) }
-
-func TestDecodeASCIIWASIUnit22(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 22) }
-
-func TestDecodeASCIIWASIUnit23(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 23) }
-
-func TestDecodeASCIIWASIUnit24(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 24) }
-
-func TestDecodeASCIIWASIUnit25(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 25) }
-
-func TestDecodeASCIIWASIUnit26(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 26) }
-
-func TestDecodeASCIIWASIUnit27(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 27) }
-
-func TestDecodeASCIIWASIUnit28(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 28) }
-
-func TestDecodeASCIIWASIUnit29(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 29) }
-
-func TestDecodeASCIIWASIUnit30(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 30) }
-
-func TestDecodeASCIIWASIUnit31(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 31) }
-
-func TestDecodeASCIIWASIUnit32(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 32) }
-
-func TestDecodeASCIIWASIUnit33(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 33) }
-
-func TestDecodeASCIIWASIUnit34(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 34) }
-
-func TestDecodeASCIIWASIUnit35(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 35) }
-
-func TestDecodeASCIIWASIUnit36(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 36) }
-
-func TestDecodeASCIIWASIUnit37(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 37) }
-
-func TestDecodeASCIIWASIUnit38(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 38) }
-
-func TestDecodeASCIIWASIUnit39(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 39) }
-
-func TestDecodeASCIIWASIUnit40(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 40) }
-
-func TestDecodeASCIIWASIUnit41(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 41) }
-
-func TestDecodeASCIIWASIUnit42(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 42) }
-
-func TestDecodeASCIIWASIUnit43(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 43) }
-
-func TestDecodeASCIIWASIUnit44(t *testing.T) { runDecodeASCIIUnit(t, "wasi", 44) }
+func TestDecodeASCIIUnit00(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 0)
+}
+
+func TestDecodeASCIIUnit01(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 1)
+}
+
+func TestDecodeASCIIUnit02(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 2)
+}
+
+func TestDecodeASCIIUnit03(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 3)
+}
+
+func TestDecodeASCIIUnit04(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 4)
+}
+
+func TestDecodeASCIIUnit05(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 5)
+}
+
+func TestDecodeASCIIUnit06(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 6)
+}
+
+func TestDecodeASCIIUnit07(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 7)
+}
+
+func TestDecodeASCIIUnit08(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 8)
+}
+
+func TestDecodeASCIIUnit09(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 9)
+}
+
+func TestDecodeASCIIUnit10(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 10)
+}
+
+func TestDecodeASCIIUnit11(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 11)
+}
+
+func TestDecodeASCIIUnit12(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 12)
+}
+
+func TestDecodeASCIIUnit13(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 13)
+}
+
+func TestDecodeASCIIUnit14(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 14)
+}
+
+func TestDecodeASCIIUnit15(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 15)
+}
+
+func TestDecodeASCIIUnit16(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 16)
+}
+
+func TestDecodeASCIIUnit17(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 17)
+}
+
+func TestDecodeASCIIUnit18(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 18)
+}
+
+func TestDecodeASCIIUnit19(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 19)
+}
+
+func TestDecodeASCIIUnit20(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 20)
+}
+
+func TestDecodeASCIIUnit21(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 21)
+}
+
+func TestDecodeASCIIUnit22(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 22)
+}
+
+func TestDecodeASCIIUnit23(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 23)
+}
+
+func TestDecodeASCIIUnit24(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 24)
+}
+
+func TestDecodeASCIIUnit25(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 25)
+}
+
+func TestDecodeASCIIUnit26(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 26)
+}
+
+func TestDecodeASCIIUnit27(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 27)
+}
+
+func TestDecodeASCIIUnit28(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 28)
+}
+
+func TestDecodeASCIIUnit29(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 29)
+}
+
+func TestDecodeASCIIUnit30(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 30)
+}
+
+func TestDecodeASCIIUnit31(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 31)
+}
+
+func TestDecodeASCIIUnit32(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 32)
+}
+
+func TestDecodeASCIIUnit33(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 33)
+}
+
+func TestDecodeASCIIUnit34(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 34)
+}
+
+func TestDecodeASCIIUnit35(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 35)
+}
+
+func TestDecodeASCIIUnit36(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 36)
+}
+
+func TestDecodeASCIIUnit37(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 37)
+}
+
+func TestDecodeASCIIUnit38(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 38)
+}
+
+func TestDecodeASCIIUnit39(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 39)
+}
+
+func TestDecodeASCIIUnit40(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 40)
+}
+
+func TestDecodeASCIIUnit41(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 41)
+}
+
+func TestDecodeASCIIUnit42(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 42)
+}
+
+func TestDecodeASCIIUnit43(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 43)
+}
+
+func TestDecodeASCIIUnit44(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "native", 44)
+}
+
+func TestDecodeASCIIWASIUnit00(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 0)
+}
+
+func TestDecodeASCIIWASIUnit01(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 1)
+}
+
+func TestDecodeASCIIWASIUnit02(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 2)
+}
+
+func TestDecodeASCIIWASIUnit03(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 3)
+}
+
+func TestDecodeASCIIWASIUnit04(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 4)
+}
+
+func TestDecodeASCIIWASIUnit05(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 5)
+}
+
+func TestDecodeASCIIWASIUnit06(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 6)
+}
+
+func TestDecodeASCIIWASIUnit07(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 7)
+}
+
+func TestDecodeASCIIWASIUnit08(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 8)
+}
+
+func TestDecodeASCIIWASIUnit09(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 9)
+}
+
+func TestDecodeASCIIWASIUnit10(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 10)
+}
+
+func TestDecodeASCIIWASIUnit11(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 11)
+}
+
+func TestDecodeASCIIWASIUnit12(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 12)
+}
+
+func TestDecodeASCIIWASIUnit13(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 13)
+}
+
+func TestDecodeASCIIWASIUnit14(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 14)
+}
+
+func TestDecodeASCIIWASIUnit15(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 15)
+}
+
+func TestDecodeASCIIWASIUnit16(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 16)
+}
+
+func TestDecodeASCIIWASIUnit17(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 17)
+}
+
+func TestDecodeASCIIWASIUnit18(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 18)
+}
+
+func TestDecodeASCIIWASIUnit19(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 19)
+}
+
+func TestDecodeASCIIWASIUnit20(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 20)
+}
+
+func TestDecodeASCIIWASIUnit21(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 21)
+}
+
+func TestDecodeASCIIWASIUnit22(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 22)
+}
+
+func TestDecodeASCIIWASIUnit23(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 23)
+}
+
+func TestDecodeASCIIWASIUnit24(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 24)
+}
+
+func TestDecodeASCIIWASIUnit25(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 25)
+}
+
+func TestDecodeASCIIWASIUnit26(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 26)
+}
+
+func TestDecodeASCIIWASIUnit27(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 27)
+}
+
+func TestDecodeASCIIWASIUnit28(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 28)
+}
+
+func TestDecodeASCIIWASIUnit29(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 29)
+}
+
+func TestDecodeASCIIWASIUnit30(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 30)
+}
+
+func TestDecodeASCIIWASIUnit31(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 31)
+}
+
+func TestDecodeASCIIWASIUnit32(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 32)
+}
+
+func TestDecodeASCIIWASIUnit33(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 33)
+}
+
+func TestDecodeASCIIWASIUnit34(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 34)
+}
+
+func TestDecodeASCIIWASIUnit35(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 35)
+}
+
+func TestDecodeASCIIWASIUnit36(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 36)
+}
+
+func TestDecodeASCIIWASIUnit37(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 37)
+}
+
+func TestDecodeASCIIWASIUnit38(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 38)
+}
+
+func TestDecodeASCIIWASIUnit39(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 39)
+}
+
+func TestDecodeASCIIWASIUnit40(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 40)
+}
+
+func TestDecodeASCIIWASIUnit41(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 41)
+}
+
+func TestDecodeASCIIWASIUnit42(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 42)
+}
+
+func TestDecodeASCIIWASIUnit43(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 43)
+}
+
+func TestDecodeASCIIWASIUnit44(t *testing.T) {
+	t.Parallel()
+	runDecodeASCIIUnit(t, "wasi", 44)
+}
