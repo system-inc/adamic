@@ -1,0 +1,6 @@
+interface Node { name: string; }
+interface Dog { name: 'dog'; }
+function rename<TNode extends Node>(holder: { readonly node: TNode }): void { holder.node.name = 'cat'; }
+const dog: Dog = { name: 'dog' };
+rename({ node: dog });
+console.log(dog.name);
