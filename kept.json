@@ -1,0 +1,25 @@
+{
+ "github.com/system-inc/adamic/bridge/tsgo": [
+  "TestProduct_Oracle"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/estree": [
+  "TestProduct_AcceptanceClassNative",
+  "TestProduct_DeepMutantsLowered2",
+  "TestProduct_DeepMutantsNative2",
+  "TestProduct_SyntaxMutantsSetup_000",
+  "TestProduct_ThreePortLowered0",
+  "TestProduct_scalar_edges_sanitized_native"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/lint": [
+  "TestProduct_RulesAgreeCapture"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/typeaware": [
+  "TestProduct_corpus_lowered",
+  "TestProduct_six_oracle",
+  "TestProduct_type_symbol_truth",
+  "TestProduct_typeaware_lowered",
+  "TestProduct_volume_agreement_apparent_shape",
+  "TestProduct_volume_agreement_call_returns_native",
+  "TestProduct_volume_guard_strict_this_native"
+ ]
+}
