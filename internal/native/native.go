@@ -127,7 +127,7 @@ func Build(source string, output string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
-	arguments := append(Flags(options), "-I", filepath.Dir(library), "-o", output)
+	arguments := append(sourceFlags(source, options), "-I", filepath.Dir(library), "-o", output)
 	if !options.Request {
 		arguments = append(arguments, filepath.Join(directory, "main.c"))
 	}
