@@ -4,9 +4,13 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"go/ast"
+	"go/parser"
+	"go/token"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -50,7 +54,59 @@ func programCoreLeaks(t *testing.T, code, binary, mode string, build func(string
 	}
 	return report
 }
-func TestProgramRegionCore(t *testing.T) {
+
+var programRegionCoreOptions = []native.Options{
+	{ProgramRegion: true, Sanitize: true, Count: true},
+	{ProgramRegion: true, Sanitize: true, Slabs: true, Count: true},
+	{ProgramRegion: true, Count: true},
+}
+
+func TestProgramRegionCoreASan(t *testing.T)      { programRegionCoreUnit(t, 0) }
+func TestProgramRegionCoreASanSlabs(t *testing.T) { programRegionCoreUnit(t, 1) }
+func TestProgramRegionCoreCounted(t *testing.T)   { programRegionCoreUnit(t, 2) }
+func TestProgramRegionCoreUnion(t *testing.T) {
+	file, err := parser.ParseFile(token.NewFileSet(), "program_region_core_test.go", nil, 0)
+	if err != nil {
+		t.Fatal(err)
+	}
+	seen := map[int]bool{}
+	for _, declaration := range file.Decls {
+		function, ok := declaration.(*ast.FuncDecl)
+		if !ok || !strings.HasPrefix(function.Name.Name, "TestProgramRegionCore") || function.Name.Name == "TestProgramRegionCoreUnion" || function.Name.Name == "TestProgramRegionCoreMutants" {
+			continue
+		}
+		if function.Body == nil || len(function.Body.List) != 1 {
+			t.Fatalf("unexpected unit body %s", function.Name.Name)
+		}
+		expression, ok := function.Body.List[0].(*ast.ExprStmt)
+		if !ok {
+			t.Fatal("unit must call core helper")
+		}
+		call, ok := expression.X.(*ast.CallExpr)
+		if !ok || len(call.Args) != 2 {
+			t.Fatal("unit must supply one option index")
+		}
+		helper, ok := call.Fun.(*ast.Ident)
+		if !ok || helper.Name != "programRegionCoreUnit" {
+			t.Fatal("unexpected unit helper")
+		}
+		literal, ok := call.Args[1].(*ast.BasicLit)
+		if !ok {
+			t.Fatal("option index must be literal")
+		}
+		index, err := strconv.Atoi(literal.Value)
+		if err != nil || index < 0 || index >= len(programRegionCoreOptions) || seen[index] {
+			t.Fatalf("duplicate or invalid option index %s", literal.Value)
+		}
+		seen[index] = true
+	}
+	if len(seen) != len(programRegionCoreOptions) {
+		t.Fatal("core option inventory changed without updating top-level units")
+	}
+}
+func programRegionCoreUnit(t *testing.T, index int) {
+	t.Helper()
+	options := programRegionCoreOptions[index]
 	// Not parallel: compile and compare the opt-in allocator variants and mutations in bounded subprocesses.
 	code := programCoreCode(t)
 	node := programCoreRun(nil, "node", "--input-type=commonjs", "-e",
@@ -59,63 +115,56 @@ func TestProgramRegionCore(t *testing.T) {
 	if node.ExitCode != 0 || len(node.Stderr) != 0 {
 		t.Fatalf("Node: exit %d stderr %s", node.ExitCode, node.Stderr)
 	}
-	for _, options := range []native.Options{
-		{ProgramRegion: true, Sanitize: true, Count: true},
-		{ProgramRegion: true, Sanitize: true, Slabs: true, Count: true},
-		{ProgramRegion: true, Count: true},
-	} {
-		t.Run(fmt.Sprintf("asan=%t-slabs=%t", options.Sanitize, options.Slabs), func(t *testing.T) {
-			binary := filepath.Join(t.TempDir(), "program-region")
-			if err := native.Build(code, binary, options); err != nil {
-				t.Fatal(err)
+
+	binary := filepath.Join(t.TempDir(), "program-region")
+	if err := native.Build(code, binary, options); err != nil {
+		t.Fatal(err)
+	}
+	for _, mode := range []string{"end", "exit"} {
+		run := programCoreRun([]string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary, mode)
+		if run.ExitCode != 0 {
+			t.Fatalf("%s: exit %d stderr %s", mode, run.ExitCode, run.Stderr)
+		}
+		if !bytes.Equal(run.Stdout, node.Stdout) {
+			t.Fatalf("Node differs: native %q Node %q", run.Stdout, node.Stdout)
+		}
+		if report := leakcheck.Unbalanced(run); report != "" {
+			t.Fatal(report)
+		}
+		counts := leakcheck.CountsLine.FindSubmatch(run.Stderr)
+		if len(counts) != 7 {
+			t.Fatalf("missing counts: %s", run.Stderr)
+		}
+		if string(counts[1]) != "11" || string(counts[2]) != "7" || string(counts[6]) != "4" {
+			t.Fatalf("unexpected membership: %s", run.Stderr)
+		}
+		t.Logf("%s %s", mode, strings.TrimSpace(string(run.Stderr)))
+	}
+	// ASan malloc owns individual storage, so it is the independent Linux leak proof.
+	if options.Sanitize && !options.Slabs {
+		if report := programCoreLeaks(t, code, binary, "end", func(code, output string) error {
+			return native.Build(code, output, native.Options{ProgramRegion: true, Count: true})
+		}); report != "" {
+			t.Fatal(report)
+		}
+		if report := programCoreLeaks(t, code, binary, "exit", func(code, output string) error {
+			return native.Build(code, output, native.Options{ProgramRegion: true, Count: true})
+		}); report != "" {
+			t.Fatal(report)
+		}
+		for _, mode := range []string{"share", "share-cell", "cached-adoption", "weak-before-adoption", "weak-cell-before-adoption"} {
+			refused := programCoreRun([]string{"ASAN_OPTIONS=detect_leaks=0"}, binary, mode)
+			message := "Program region members cannot cross into parallel work"
+			if mode == "cached-adoption" {
+				message = "Program adoption must precede canonical caching"
 			}
-			for _, mode := range []string{"end", "exit"} {
-				run := programCoreRun([]string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary, mode)
-				if run.ExitCode != 0 {
-					t.Fatalf("%s: exit %d stderr %s", mode, run.ExitCode, run.Stderr)
-				}
-				if !bytes.Equal(run.Stdout, node.Stdout) {
-					t.Fatalf("Node differs: native %q Node %q", run.Stdout, node.Stdout)
-				}
-				if report := leakcheck.Unbalanced(run); report != "" {
-					t.Fatal(report)
-				}
-				counts := leakcheck.CountsLine.FindSubmatch(run.Stderr)
-				if len(counts) != 7 {
-					t.Fatalf("missing counts: %s", run.Stderr)
-				}
-				if string(counts[1]) != "11" || string(counts[2]) != "7" || string(counts[6]) != "4" {
-					t.Fatalf("unexpected membership: %s", run.Stderr)
-				}
-				t.Logf("%s %s", mode, strings.TrimSpace(string(run.Stderr)))
+			if strings.HasPrefix(mode, "weak-") {
+				message = "Program adoption needs a fresh counted allocation"
 			}
-			// ASan malloc owns individual storage, so it is the independent Linux leak proof.
-			if options.Sanitize && !options.Slabs {
-				if report := programCoreLeaks(t, code, binary, "end", func(code, output string) error {
-					return native.Build(code, output, native.Options{ProgramRegion: true, Count: true})
-				}); report != "" {
-					t.Fatal(report)
-				}
-				if report := programCoreLeaks(t, code, binary, "exit", func(code, output string) error {
-					return native.Build(code, output, native.Options{ProgramRegion: true, Count: true})
-				}); report != "" {
-					t.Fatal(report)
-				}
-				for _, mode := range []string{"share", "share-cell", "cached-adoption", "weak-before-adoption", "weak-cell-before-adoption"} {
-					refused := programCoreRun([]string{"ASAN_OPTIONS=detect_leaks=0"}, binary, mode)
-					message := "Program region members cannot cross into parallel work"
-					if mode == "cached-adoption" {
-						message = "Program adoption must precede canonical caching"
-					}
-					if strings.HasPrefix(mode, "weak-") {
-						message = "Program adoption needs a fresh counted allocation"
-					}
-					if refused.ExitCode != 70 || !strings.Contains(string(refused.Stderr), message) || strings.Contains(string(refused.Stderr), "ERROR: AddressSanitizer") {
-						t.Fatalf("%s: exit %d stderr %s", mode, refused.ExitCode, refused.Stderr)
-					}
-				}
+			if refused.ExitCode != 70 || !strings.Contains(string(refused.Stderr), message) || strings.Contains(string(refused.Stderr), "ERROR: AddressSanitizer") {
+				t.Fatalf("%s: exit %d stderr %s", mode, refused.ExitCode, refused.Stderr)
 			}
-		})
+		}
 	}
 }
 
