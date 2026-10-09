@@ -44,6 +44,9 @@ type Program struct {
 	// Functions are the module's function declarations, callable from anywhere in it.
 	Functions []Function
 
+	// Exports names the entry module's exported functions by their source names.
+	Exports []Export
+
 	// Classes carry nominal identity, prefix field layouts and method slots. IDs are one-based.
 	Classes       []Class
 	MethodTargets map[int][]int
@@ -95,6 +98,13 @@ type NonNullCheckCounts struct {
 type NonNullCheck struct {
 	Where, Expression string
 	Proven            bool
+}
+
+// Export is an entry function, or a function value held in a global (Function is -1).
+type Export struct {
+	Name     string
+	Function int
+	Local    int
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.

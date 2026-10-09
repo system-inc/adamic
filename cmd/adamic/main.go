@@ -3,6 +3,7 @@
 //	adamic types <file.a|file.ts>...        check, and print every declaration's proven type
 //	adamic c <file.a|file.ts>               print the program as C
 //	adamic js <file.a|file.ts>              print the program as JavaScript
+//	adamic worker <entry.a> --out <dir>    generate a Cloudflare Worker
 //	adamic build <file.a|file.ts> -o <out>  compile it to a native binary
 //
 // build --count makes a binary that counts its allocations, frees, retains and releases and writes
@@ -26,6 +27,7 @@ import (
 const usage = `usage:
   adamic types <file.a|file.ts>...
   adamic c <file.a|file.ts> [--explain-checks]
+  adamic worker <entry.a> --out <directory> [--wasm <name>[,<name>...]]
   adamic js <file.a|file.ts> [--explain-checks]
   adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]`
 
@@ -60,6 +62,8 @@ func run(arguments []string) int {
 		arguments = filtered
 	}
 	switch {
+	case len(arguments) >= 2 && arguments[0] == "worker":
+		return workerCommand(arguments[1:])
 	case len(arguments) >= 2 && arguments[0] == "types":
 		program, code := check(arguments[1:])
 		if program == nil {

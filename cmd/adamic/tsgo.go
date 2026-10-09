@@ -10,6 +10,10 @@ import (
 )
 
 func build(path, output string, arguments []string) int {
+	return buildWithExports(path, output, arguments, false)
+}
+
+func buildWithExports(path, output string, arguments []string, entryFunctions bool) int {
 	options := native.Options{}
 	archive := ""
 	explain := false
@@ -75,7 +79,7 @@ func build(path, output string, arguments []string) int {
 	handler := -1
 	var exports []native.ABIExport
 	if options.Target == "wasm32-wasi" {
-		program, exports, code = compileExports(path, names)
+		program, exports, code = compileExportsWith(path, names, entryFunctions)
 		if program != nil && len(exports) == 0 && !reactor {
 			// An export alias is outside the per-function crossing set (docs/wasm-abi.md), but an
 			// aliased handleRequest still selects the request ABI, as it did before those exports.

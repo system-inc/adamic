@@ -92,6 +92,11 @@ func crossingType(c *checker.Checker, t *checker.Type, path string, depth int) (
 }
 
 func exportSignatures(program *load.Program, names []string) ([]native.ABIExport, error) {
+	return exportSignaturesWith(program, names, false)
+}
+
+// Workers may select private entry declarations without changing the public build ABI.
+func exportSignaturesWith(program *load.Program, names []string, entryFunctions bool) ([]native.ABIExport, error) {
 	entry := program.Files()[0]
 	c, release := program.Checker(context.Background(), entry)
 	defer release()
@@ -107,7 +112,16 @@ func exportSignatures(program *load.Program, names []string) ([]native.ABIExport
 		}
 		return exports, nil
 	}
-	for _, symbol := range c.GetExportsOfModule(module) {
+	symbols := c.GetExportsOfModule(module)
+	if entryFunctions {
+		symbols = nil
+		for _, statement := range entry.Statements.Nodes {
+			if statement.Kind == ast.KindFunctionDeclaration && statement.Name() != nil {
+				symbols = append(symbols, c.GetSymbolAtLocation(statement.Name()))
+			}
+		}
+	}
+	for _, symbol := range symbols {
 		named := wanted[symbol.Name]
 		if len(names) > 0 && !named {
 			continue
@@ -172,11 +186,15 @@ func exportSignatures(program *load.Program, names []string) ([]native.ABIExport
 }
 
 func compileExports(path string, names []string) (*ir.Program, []native.ABIExport, int) {
+	return compileExportsWith(path, names, false)
+}
+
+func compileExportsWith(path string, names []string, entryFunctions bool) (*ir.Program, []native.ABIExport, int) {
 	checked, code := check([]string{path})
 	if checked == nil {
 		return nil, nil, code
 	}
-	exports, err := exportSignatures(checked, names)
+	exports, err := exportSignaturesWith(checked, names, entryFunctions)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "adamic: "+err.Error())
 		return nil, nil, 1

@@ -1,0 +1,3 @@
+{"method":"GET","url":"https://worker.test/a%2Fb/%E4%B8%96?z=last&a=one+two&a=%E4%B8%96%F0%9F%8C%8D&empty=&bad=%FF","headers":[["X-Repeated","one"],["x-repeated","two"],["A-First","first"]]}
+{"method":"POST","url":"https://worker.test/echo?q=%252F","headers":[["Content-Type","text/plain"]],"body":"héllo 世界 🌍\n"}
+{"method":"POST","url":"https://worker.test/empty","headers":[],"body":""}
