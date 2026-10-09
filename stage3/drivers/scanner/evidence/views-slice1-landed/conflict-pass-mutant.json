@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "status": "pass",
+  "requested_refs": [
+    "origin/codex/records-maplike-next",
+    "origin/codex/maplike-records",
+    "origin/library/area-on-next"
+  ],
+  "output": "/workspace/scratch/scanner-rehearsal-retry",
+  "phases": [],
+  "merges": [
+    {
+      "requested": "origin/codex/records-maplike-next",
+      "sha": "8c013f1cf3ec69fe80e60501740c2c45e1d1114c",
+      "exit": 1,
+      "conflicts": [
+        "internal/lower/refusals.go",
+        "internal/oracle/counts.md",
+        "stage3/fixtures/objects/status.json"
+      ]
+    },
+    {
+      "requested": "origin/codex/maplike-records",
+      "sha": "cabe36b00e287e959eaf1f3d78f289d1489cfdef",
+      "exit": 1,
+      "conflicts": [
+        "internal/lower/refusals.go",
+        "internal/native/emit_objects.go",
+        "internal/native/fields.go",
+        "internal/native/runtime/adamic.h",
+        "internal/native/runtime/library_language.c",
+        "internal/native/runtime/library_object.c",
+        "internal/native/runtime/object.c",
+        "internal/native/runtime/union.c",
+        "internal/oracle/counts.md",
+        "stage3/fixtures/objects/status.json"
+      ]
+    },
+    {
+      "requested": "origin/library/area-on-next",
+      "sha": "fa270a53fcc7b595cb58fd952222e83f27d7d18b",
+      "exit": 1,
+      "conflicts": [
+        "docs/namespaces.md",
+        "internal/flow/flow_test.go",
+        "internal/ir/ir.go",
+        "internal/javascript/javascript.go",
+        "internal/lower/expression.go",
+        "internal/lower/generic.go",
+        "internal/lower/library_string.go",
+        "internal/lower/refusals.go",
+        "internal/lower/regexp.go",
+        "internal/native/runtime/library_object.c",
+        "internal/native/runtime/object.c",
+        "internal/native/runtime/union.c",
+        "internal/oracle/counts.md",
+        "stage1/cohere/yaml/gaps_test.go",
+        "stage3/fixtures/cycles/status.json",
+        "stage3/fixtures/host/status.json"
+      ]
+    }
+  ],
+  "scanner": [
+    {
+      "split": 0,
+      "exit": 0,
+      "report": {
+        "build_exit": 0,
+        "node_exit": 0,
+        "native_exit": 0,
+        "native_diff_exit": 0,
+        "native_byte_mutant_diff_exit": 1,
+        "comparison_control_exit": 0,
+        "end_mutant_diff_exit": 1
+      },
+      "full_tree_diff_exit": 0
+    },
+    {
+      "split": 1,
+      "exit": 0,
+      "report": {
+        "build_exit": 0,
+        "node_exit": 0,
+        "native_exit": 0,
+        "native_diff_exit": 0,
+        "native_byte_mutant_diff_exit": 1,
+        "comparison_control_exit": 0,
+        "end_mutant_diff_exit": 1
+      },
+      "full_tree_diff_exit": 0
+    }
+  ],
+  "ordered_stops": [],
+  "base": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "scratch_branch": "scratch/scanner-run-1de048991df1",
+  "scratch_tree": "/workspace/scratch/scanner-main-next-combined/compiler-tree",
+  "resolved_refs": [
+    {
+      "requested": "origin/main",
+      "sha": "d72728e570fe09d91cf55b37b564dbad0fefc24d"
+    },
+    {
+      "requested": "origin/codex/records-maplike-next",
+      "sha": "8c013f1cf3ec69fe80e60501740c2c45e1d1114c"
+    },
+    {
+      "requested": "origin/area/library",
+      "sha": "bb9bb3f9f3da1eeb4ca487a499f29f5d9c0bb921"
+    }
+  ],
+  "wall_seconds": 7.498,
+  "compiler": {
+    "exit": 0
+  }
+}

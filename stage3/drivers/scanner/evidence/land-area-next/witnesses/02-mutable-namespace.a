@@ -1,0 +1,2 @@
+export namespace Debug { export let isDebugging = false; }
+console.log("ok");

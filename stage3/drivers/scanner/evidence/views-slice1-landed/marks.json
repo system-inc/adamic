@@ -1,0 +1,351 @@
+[
+  {
+    "checkpoint": "corePublic.ts:9:5",
+    "owner": "records-maplike #rhjc4x4",
+    "probe": "01-index",
+    "main": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        1
+      ],
+      "awaits": "records-maplike #rhjc4x4"
+    },
+    "combined": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        1
+      ],
+      "awaits": "records-maplike #rhjc4x4"
+    }
+  },
+  {
+    "checkpoint": "debug.ts:8:5",
+    "owner": "compiler area-stack group 1",
+    "probe": "02-mutable-namespace",
+    "main": {
+      "mark": "gone in isolated control; pending real scanner verification",
+      "node_exit": 0,
+      "build_exit": 0,
+      "native_exit": 0,
+      "diff_exit": 0,
+      "mutant_diff_exit": 1,
+      "ordered_stops": [],
+      "awaits": "real scanner traversal after clean records integration, without throwing discovery placeholders"
+    },
+    "combined": {
+      "mark": "gone in isolated control; pending real scanner verification",
+      "node_exit": 0,
+      "build_exit": 0,
+      "native_exit": 0,
+      "diff_exit": 0,
+      "mutant_diff_exit": 1,
+      "ordered_stops": [],
+      "awaits": "real scanner traversal after clean records integration, without throwing discovery placeholders"
+    }
+  },
+  {
+    "checkpoint": "debug.ts:15:14",
+    "owner": "compiler #b5w3ycg",
+    "probe": "03-error-cast",
+    "main": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        2
+      ],
+      "awaits": "compiler #b5w3ycg"
+    },
+    "combined": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        2
+      ],
+      "awaits": "compiler #b5w3ycg"
+    }
+  },
+  {
+    "checkpoint": "diagnosticInformationMap.generated.ts:13:34",
+    "owner": "compiler #b5w3ycg",
+    "probe": "04-diagnostic-cast",
+    "main": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        3
+      ],
+      "awaits": "compiler #b5w3ycg"
+    },
+    "combined": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        3
+      ],
+      "awaits": "compiler #b5w3ycg"
+    }
+  },
+  {
+    "checkpoint": "scanner.ts:3497:67",
+    "owner": "compiler #b5w3ycg",
+    "probe": "07-string-cast",
+    "main": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        5
+      ],
+      "awaits": "compiler #b5w3ycg"
+    },
+    "combined": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        5
+      ],
+      "awaits": "compiler #b5w3ycg"
+    }
+  },
+  {
+    "checkpoint": "utilities.ts:65:22",
+    "owner": "runtime #4gkdjsz",
+    "probe": "05-uint16",
+    "main": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        4
+      ],
+      "awaits": "runtime #4gkdjsz"
+    },
+    "combined": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        4
+      ],
+      "awaits": "runtime #4gkdjsz"
+    }
+  },
+  {
+    "checkpoint": "scanner.ts:1269:28",
+    "owner": "compiler #cvhj5fk",
+    "probe": "06-enum-slot",
+    "main": {
+      "mark": "still there in isolated control; scanner checkpoint not reached",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [],
+      "awaits": "compiler #cvhj5fk"
+    },
+    "combined": {
+      "mark": "still there in isolated control; scanner checkpoint not reached",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [],
+      "awaits": "compiler #cvhj5fk"
+    }
+  },
+  {
+    "checkpoint": "core.ts:107:20",
+    "owner": "compiler stricter options #k881crd",
+    "probe": "08-array",
+    "main": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        6
+      ],
+      "awaits": "compiler stricter options #k881crd"
+    },
+    "combined": {
+      "mark": "still there",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [
+        6
+      ],
+      "awaits": "compiler stricter options #k881crd"
+    }
+  },
+  {
+    "checkpoint": "utilities.ts:13:17",
+    "owner": "compiler area-stack",
+    "probe": "09-generic-return",
+    "main": {
+      "mark": "gone in isolated control; pending real scanner verification",
+      "node_exit": 0,
+      "build_exit": 0,
+      "native_exit": 0,
+      "diff_exit": 0,
+      "mutant_diff_exit": 1,
+      "ordered_stops": [],
+      "awaits": "real scanner traversal after clean records integration, without throwing discovery placeholders"
+    },
+    "combined": {
+      "mark": "gone in isolated control; pending real scanner verification",
+      "node_exit": 0,
+      "build_exit": 0,
+      "native_exit": 0,
+      "diff_exit": 0,
+      "mutant_diff_exit": 1,
+      "ordered_stops": [],
+      "awaits": "real scanner traversal after clean records integration, without throwing discovery placeholders"
+    }
+  },
+  {
+    "checkpoint": "scanner.ts:113:5",
+    "owner": "compiler area-stack",
+    "probe": "11-computed-field",
+    "main": {
+      "mark": "gone in isolated control; pending real scanner verification",
+      "node_exit": 0,
+      "build_exit": 0,
+      "native_exit": 0,
+      "diff_exit": 0,
+      "mutant_diff_exit": 1,
+      "ordered_stops": [],
+      "awaits": "real scanner traversal after clean records integration, without throwing discovery placeholders"
+    },
+    "combined": {
+      "mark": "gone in isolated control; pending real scanner verification",
+      "node_exit": 0,
+      "build_exit": 0,
+      "native_exit": 0,
+      "diff_exit": 0,
+      "mutant_diff_exit": 1,
+      "ordered_stops": [],
+      "awaits": "real scanner traversal after clean records integration, without throwing discovery placeholders"
+    }
+  },
+  {
+    "checkpoint": "scanner.ts:432:59",
+    "owner": "compiler #d9eemrs",
+    "probe": "13-entries",
+    "main": {
+      "mark": "gone in isolated control; pending real scanner verification",
+      "node_exit": 0,
+      "build_exit": 0,
+      "native_exit": 0,
+      "diff_exit": 0,
+      "mutant_diff_exit": 1,
+      "ordered_stops": [],
+      "awaits": "real scanner traversal after clean records integration, without throwing discovery placeholders"
+    },
+    "combined": {
+      "mark": "gone in isolated control; pending real scanner verification",
+      "node_exit": 0,
+      "build_exit": 0,
+      "native_exit": 0,
+      "diff_exit": 0,
+      "mutant_diff_exit": 1,
+      "ordered_stops": [],
+      "awaits": "real scanner traversal after clean records integration, without throwing discovery placeholders"
+    }
+  },
+  {
+    "checkpoint": "scanner.ts:4097:24",
+    "owner": "compiler #9wc5q5j",
+    "probe": "17-placeholder",
+    "main": {
+      "mark": "still there in isolated control; scanner checkpoint not reached",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [],
+      "awaits": "compiler #9wc5q5j"
+    },
+    "combined": {
+      "mark": "still there in isolated control; scanner checkpoint not reached",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [],
+      "awaits": "compiler #9wc5q5j"
+    }
+  },
+  {
+    "checkpoint": "Error.captureStackTrace",
+    "owner": "library #jj9z3qn",
+    "probe": "16-capture",
+    "main": {
+      "mark": "still there in isolated control; scanner checkpoint not reached",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [],
+      "awaits": "library #jj9z3qn"
+    },
+    "combined": {
+      "mark": "still there in isolated control; scanner checkpoint not reached",
+      "node_exit": 0,
+      "build_exit": 1,
+      "native_exit": null,
+      "diff_exit": null,
+      "mutant_diff_exit": null,
+      "ordered_stops": [],
+      "awaits": "library #jj9z3qn"
+    }
+  }
+]

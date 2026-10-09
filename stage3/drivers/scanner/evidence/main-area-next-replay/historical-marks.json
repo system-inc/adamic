@@ -1,0 +1,143 @@
+{
+  "requested_task": "#whkxbc7",
+  "task_list_available": false,
+  "identity_verified": false,
+  "provisional_reference": "stage3/drivers/scanner/evidence/land-area-next/stops.json, the 15-item list used by earlier stop 10/12/14 instructions",
+  "marks": [
+    {
+      "reference_order": 1,
+      "reference_location": "corePublic.ts:9:5",
+      "owner": "area/compiler: records",
+      "mark": "isolated admission control now passes and matches Node; output mutant caught; no whole-scanner correctness claim",
+      "current_order": null,
+      "probe": "01-index",
+      "probe_status": "probe-admitted-and-matches-Node"
+    },
+    {
+      "reference_order": 2,
+      "reference_location": "debug.ts:8:5",
+      "owner": "area/compiler: namespaces",
+      "mark": "remains: unchanged first stop",
+      "current_order": 1,
+      "probe": "02-mutable-namespace",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 3,
+      "reference_location": "debug.ts:15:14",
+      "owner": "area/compiler / stage3 adaptation: cast proof and source typing",
+      "mark": "remains: current ordered stop 2; behind placeholders",
+      "current_order": 2,
+      "probe": "03-error-cast",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 4,
+      "reference_location": "diagnosticInformationMap.generated.ts:13:34",
+      "owner": "area/compiler / stage3 adaptation: cast proof and source typing",
+      "mark": "remains: current ordered stop 3; behind placeholders",
+      "current_order": 3,
+      "probe": "04-diagnostic-cast",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 5,
+      "reference_location": "utilities.ts:65:22",
+      "owner": "area/compiler and area/library: typed arrays",
+      "mark": "remains: current ordered stop 4; behind placeholders",
+      "current_order": 4,
+      "probe": "05-uint16",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 6,
+      "reference_location": "scanner.ts:1269:28",
+      "owner": "area/compiler: enum proof",
+      "mark": "old isolated probe still blocked; original scanner checkpoint not established by this traversal",
+      "current_order": null,
+      "probe": "06-enum-slot",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 7,
+      "reference_location": "scanner.ts:3497:67",
+      "owner": "area/compiler / stage3 adaptation: UTF16 typing",
+      "mark": "remains: current ordered stop 5; behind placeholders",
+      "current_order": 5,
+      "probe": "07-string-cast",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 8,
+      "reference_location": "core.ts:107:20",
+      "owner": "area/compiler: aliased constructors",
+      "mark": "remains: current ordered stop 6; behind placeholders",
+      "current_order": 6,
+      "probe": "08-array",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 9,
+      "reference_location": "utilities.ts:13:17",
+      "owner": "area/compiler: nullable generic returns",
+      "mark": "remains: current ordered stop 7; behind placeholders",
+      "current_order": 7,
+      "probe": "09-generic-return",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 10,
+      "reference_location": "scanner.ts:608:87",
+      "owner": "stage3/adapt/42-scanner-any",
+      "mark": "scanner site adapted in prior accepted units; the original any probe remains intentionally refused",
+      "current_order": null,
+      "probe": "10-any",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 11,
+      "reference_location": "scanner.ts:113:5",
+      "owner": "area/compiler: computed fields",
+      "mark": "isolated admission control now passes and matches Node; output mutant caught; no whole-scanner correctness claim",
+      "current_order": null,
+      "probe": "11-computed-field",
+      "probe_status": "probe-admitted-and-matches-Node"
+    },
+    {
+      "reference_order": 12,
+      "reference_location": "scanner.ts:100:23",
+      "owner": "stage3/adapt/42-scanner-any",
+      "mark": "scanner site adapted in prior accepted units; the original any probe remains intentionally refused",
+      "current_order": null,
+      "probe": "12-map-any",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 13,
+      "reference_location": "scanner.ts:432:59",
+      "owner": "area/compiler and area/library: entries on named records",
+      "mark": "old isolated probe still blocked; original scanner checkpoint not established by this traversal",
+      "current_order": null,
+      "probe": "13-entries",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 14,
+      "reference_location": "driver/main.a:13:42",
+      "owner": "stage3/drivers/scanner",
+      "mark": "scanner site adapted in prior accepted units; the original any probe remains intentionally refused",
+      "current_order": null,
+      "probe": "14-any-callback",
+      "probe_status": "probe-still-blocked"
+    },
+    {
+      "reference_order": 15,
+      "reference_location": "generated/main.c:7923:9",
+      "owner": "area/compiler: never/string emission",
+      "mark": "old isolated probe still blocked; original scanner checkpoint not established by this traversal",
+      "current_order": null,
+      "probe": "15-never-string",
+      "probe_status": "probe-still-blocked"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/discovery/adapted/src/compiler/corePublic.ts",
+    "file": "corePublic.ts",
+    "line": 9,
+    "column": 5,
+    "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+    "order": 1,
+    "build_exit": 1,
+    "scope": "first unchanged stop",
+    "witness": {
+      "file": "discovery/witness-01-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+      "catalogue_origin": "native3/01-index"
+    },
+    "placeholder": "index-signature removal with throwing marker; later record observations are dependent"
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/discovery/adapted/src/compiler/debug.ts",
+    "file": "debug.ts",
+    "line": 14,
+    "column": 14,
+    "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "order": 2,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-02-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "catalogue_origin": "native3/04-cast"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/discovery/adapted/src/compiler/diagnosticInformationMap.generated.ts",
+    "file": "diagnosticInformationMap.generated.ts",
+    "line": 13,
+    "column": 34,
+    "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "order": 3,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-03-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "catalogue_origin": "native3/04-cast"
+    },
+    "placeholder": "typed throwing diagnostic factory; later casts are placeholder-dependent"
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/discovery/adapted/src/compiler/utilities.ts",
+    "file": "utilities.ts",
+    "line": 65,
+    "column": 22,
+    "message": "stage 0 can't lower typed array element type Uint16Array yet",
+    "order": 4,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-04-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "stage 0 can't lower typed array element type Uint16Array yet",
+      "catalogue_origin": "land-area-next/05-uint16"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/discovery/adapted/src/compiler/scanner.ts",
+    "file": "scanner.ts",
+    "line": 3510,
+    "column": 67,
+    "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+    "order": 5,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-05-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "catalogue_origin": "native3/04-cast"
+    },
+    "placeholder": "typed throwing UTF16 worker"
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/discovery/adapted/src/compiler/core.ts",
+    "file": "core.ts",
+    "line": 107,
+    "column": 20,
+    "message": "stage 0 can't lower new an Identifier yet",
+    "order": 6,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": {
+      "file": "discovery/witness-06-00.a",
+      "node_exit": 0,
+      "build_exit": 1,
+      "message": "stage 0 can't lower new an Identifier yet",
+      "catalogue_origin": "native3/11-array"
+    },
+    "placeholder": "smallest enclosing function body throws; signature retained/inferred"
+  },
+  {
+    "path": "/workspace/scratch/scanner-rehearsal-retry/discovery/adapted/src/compiler/scanner.ts",
+    "file": "scanner.ts",
+    "line": 778,
+    "column": 15,
+    "message": "stage 0 can't lower destructuring a string yet",
+    "order": 7,
+    "build_exit": 1,
+    "scope": "behind throwing discovery placeholders",
+    "witness": null,
+    "continuation": "stopped: no freshly verified Node witness for this diagnostic"
+  }
+]

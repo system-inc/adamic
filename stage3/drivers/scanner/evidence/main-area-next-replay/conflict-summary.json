@@ -1,0 +1,269 @@
+{
+  "version": 1,
+  "status": "merge-conflict",
+  "requested_refs": [
+    "origin/main",
+    "origin/codex/records-maplike-next",
+    "origin/area/library"
+  ],
+  "output": "/workspace/scratch/scanner-main-next-combined",
+  "phases": [
+    {
+      "name": "fetch",
+      "command": [
+        "git",
+        "fetch",
+        "origin",
+        "+refs/heads/*:refs/remotes/origin/*"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "fetch.stdout",
+      "stderr": "fetch.stderr",
+      "exit": 0,
+      "wall_seconds": 3.375
+    },
+    {
+      "name": "main-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "origin/main^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "main-ref.stdout",
+      "stderr": "main-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "ref-00",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "origin/main^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "ref-00.stdout",
+      "stderr": "ref-00.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "ref-01",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "origin/codex/records-maplike-next^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "ref-01.stdout",
+      "stderr": "ref-01.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "ref-02",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "origin/area/library^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "ref-02.stdout",
+      "stderr": "ref-02.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "worktree",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "-b",
+        "scratch/scanner-run-1de048991df1",
+        "/workspace/scratch/scanner-main-next-combined/compiler-tree",
+        "d72728e570fe09d91cf55b37b564dbad0fefc24d"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "worktree.stdout",
+      "stderr": "worktree.stderr",
+      "exit": 0,
+      "wall_seconds": 2.622
+    },
+    {
+      "name": "merge-00",
+      "command": [
+        "git",
+        "merge",
+        "--no-edit",
+        "d72728e570fe09d91cf55b37b564dbad0fefc24d"
+      ],
+      "cwd": "/workspace/scratch/scanner-main-next-combined/compiler-tree",
+      "stdout": "merge-00.stdout",
+      "stderr": "merge-00.stderr",
+      "exit": 0,
+      "wall_seconds": 0.016
+    },
+    {
+      "name": "merge-01",
+      "command": [
+        "git",
+        "merge",
+        "--no-edit",
+        "8c013f1cf3ec69fe80e60501740c2c45e1d1114c"
+      ],
+      "cwd": "/workspace/scratch/scanner-main-next-combined/compiler-tree",
+      "stdout": "merge-01.stdout",
+      "stderr": "merge-01.stderr",
+      "exit": 0,
+      "wall_seconds": 0.617
+    },
+    {
+      "name": "merge-02",
+      "command": [
+        "git",
+        "merge",
+        "--no-edit",
+        "bb9bb3f9f3da1eeb4ca487a499f29f5d9c0bb921"
+      ],
+      "cwd": "/workspace/scratch/scanner-main-next-combined/compiler-tree",
+      "stdout": "merge-02.stdout",
+      "stderr": "merge-02.stderr",
+      "exit": 1,
+      "wall_seconds": 0.466
+    },
+    {
+      "name": "merge-02-conflicts",
+      "command": [
+        "git",
+        "diff",
+        "--name-only",
+        "--diff-filter=U"
+      ],
+      "cwd": "/workspace/scratch/scanner-main-next-combined/compiler-tree",
+      "stdout": "merge-02-conflicts.stdout",
+      "stderr": "merge-02-conflicts.stderr",
+      "exit": 0,
+      "wall_seconds": 0.269
+    },
+    {
+      "name": "merge-02-abort",
+      "command": [
+        "git",
+        "merge",
+        "--abort"
+      ],
+      "cwd": "/workspace/scratch/scanner-main-next-combined/compiler-tree",
+      "stdout": "merge-02-abort.stdout",
+      "stderr": "merge-02-abort.stderr",
+      "exit": 0,
+      "wall_seconds": 0.114
+    }
+  ],
+  "merges": [
+    {
+      "requested": "origin/main",
+      "sha": "d72728e570fe09d91cf55b37b564dbad0fefc24d",
+      "exit": 0,
+      "conflicts": []
+    },
+    {
+      "requested": "origin/codex/records-maplike-next",
+      "sha": "8c013f1cf3ec69fe80e60501740c2c45e1d1114c",
+      "exit": 0,
+      "conflicts": []
+    },
+    {
+      "requested": "origin/area/library",
+      "sha": "bb9bb3f9f3da1eeb4ca487a499f29f5d9c0bb921",
+      "exit": 1,
+      "conflicts": [
+        "internal/flow/build.go",
+        "internal/flow/flow_test.go",
+        "internal/fresh/fresh.go",
+        "internal/ir/ir.go",
+        "internal/javascript/javascript.go",
+        "internal/load/load.go",
+        "internal/load/node_library.go",
+        "internal/load/source_fs.go",
+        "internal/lower/cast.go",
+        "internal/lower/cast_proof.go",
+        "internal/lower/control.go",
+        "internal/lower/exceptions.go",
+        "internal/lower/expression.go",
+        "internal/lower/functions.go",
+        "internal/lower/generic.go",
+        "internal/lower/invariance.go",
+        "internal/lower/library_array_predicate.go",
+        "internal/lower/library_json_stringify.go",
+        "internal/lower/library_math_number.go",
+        "internal/lower/library_node_buffer.go",
+        "internal/lower/library_node_fs_file.go",
+        "internal/lower/library_node_fs_file_test.go",
+        "internal/lower/library_node_test.go",
+        "internal/lower/library_object.go",
+        "internal/lower/library_string.go",
+        "internal/lower/lower_test.go",
+        "internal/lower/modules.go",
+        "internal/lower/object.go",
+        "internal/lower/refusals.go",
+        "internal/lower/regexp_test.go",
+        "internal/lower/statements.go",
+        "internal/native/class_accessors.go",
+        "internal/native/emit_expressions.go",
+        "internal/native/emit_functions.go",
+        "internal/native/emit_objects.go",
+        "internal/native/fields.go",
+        "internal/native/library.go",
+        "internal/native/native.go",
+        "internal/native/runtime/adamic.h",
+        "internal/native/runtime/class_static.c",
+        "internal/native/runtime/heap.c",
+        "internal/native/runtime/node_fs_file.c",
+        "internal/native/runtime/node_fs_file.h",
+        "internal/native/runtime/regexp.h",
+        "internal/oracle/counts.md",
+        "internal/oracle/node_fs_file_test.go",
+        "internal/oracle/oracle_test.go",
+        "internal/oracle/testdata/node_fs_file_close.a",
+        "internal/oracle/testdata/optional_widening_refused/node_fs_file_buffer.a",
+        "review/unknown-narrowing/require_pending.a",
+        "stage1/cohere/yaml/GAPS.md",
+        "stage1/cohere/yaml/gaps_test.go",
+        "stage3/fixtures/cycles/status.json",
+        "stage3/fixtures/host/status.json",
+        "stage3/fixtures/objects/status.json",
+        "stage3/fixtures/predicates/status.json"
+      ]
+    }
+  ],
+  "scanner": [],
+  "ordered_stops": [],
+  "base": "d72728e570fe09d91cf55b37b564dbad0fefc24d",
+  "scratch_branch": "scratch/scanner-run-1de048991df1",
+  "scratch_tree": "/workspace/scratch/scanner-main-next-combined/compiler-tree",
+  "resolved_refs": [
+    {
+      "requested": "origin/main",
+      "sha": "d72728e570fe09d91cf55b37b564dbad0fefc24d"
+    },
+    {
+      "requested": "origin/codex/records-maplike-next",
+      "sha": "8c013f1cf3ec69fe80e60501740c2c45e1d1114c"
+    },
+    {
+      "requested": "origin/area/library",
+      "sha": "bb9bb3f9f3da1eeb4ca487a499f29f5d9c0bb921"
+    }
+  ],
+  "wall_seconds": 7.498,
+  "validation": {
+    "valid": true,
+    "errors": []
+  }
+}

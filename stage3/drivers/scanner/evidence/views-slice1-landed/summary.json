@@ -1,0 +1,115 @@
+{
+  "classification": "landed-main measurement and integration attempt",
+  "status": "scanner-blocked",
+  "milestone": false,
+  "main": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "attempted_stack": {
+    "base": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+    "merges": [
+      {
+        "ref": "origin/codex/records-maplike-next",
+        "sha": "8c013f1cf3ec69fe80e60501740c2c45e1d1114c",
+        "exit": 1,
+        "conflicts": [
+          "internal/lower/refusals.go",
+          "internal/oracle/counts.md",
+          "stage3/fixtures/objects/status.json"
+        ]
+      },
+      {
+        "ref": "origin/codex/maplike-records",
+        "sha": "cabe36b00e287e959eaf1f3d78f289d1489cfdef",
+        "exit": 1,
+        "conflicts": [
+          "internal/lower/refusals.go",
+          "internal/native/emit_objects.go",
+          "internal/native/fields.go",
+          "internal/native/runtime/adamic.h",
+          "internal/native/runtime/library_language.c",
+          "internal/native/runtime/library_object.c",
+          "internal/native/runtime/object.c",
+          "internal/native/runtime/union.c",
+          "internal/oracle/counts.md",
+          "stage3/fixtures/objects/status.json"
+        ]
+      },
+      {
+        "ref": "origin/library/area-on-next",
+        "sha": "fa270a53fcc7b595cb58fd952222e83f27d7d18b",
+        "exit": 1,
+        "conflicts": [
+          "docs/namespaces.md",
+          "internal/flow/flow_test.go",
+          "internal/ir/ir.go",
+          "internal/javascript/javascript.go",
+          "internal/lower/expression.go",
+          "internal/lower/generic.go",
+          "internal/lower/library_string.go",
+          "internal/lower/refusals.go",
+          "internal/lower/regexp.go",
+          "internal/native/runtime/library_object.c",
+          "internal/native/runtime/object.c",
+          "internal/native/runtime/union.c",
+          "internal/oracle/counts.md",
+          "stage1/cohere/yaml/gaps_test.go",
+          "stage3/fixtures/cycles/status.json",
+          "stage3/fixtures/host/status.json"
+        ]
+      }
+    ],
+    "accepted": [
+      "031a1259bc7973934792dc6cb1bd4074fc2204b9"
+    ],
+    "selection": "Tried requested records-maplike-next and newer descendant maplike-records (contains 8c013f1c, not rebased onto 031a1259) before library."
+  },
+  "measurements": {
+    "main": {
+      "summary": "main-summary.json",
+      "integrated_sha": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+      "status": "scanner-blocked",
+      "first_stop": {
+        "path": "/workspace/scratch/scanner-views-landed-main-retry/discovery/adapted/src/compiler/corePublic.ts",
+        "file": "corePublic.ts",
+        "line": 9,
+        "column": 5,
+        "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+        "order": 1,
+        "build_exit": 1,
+        "scope": "first unchanged stop",
+        "witness": {
+          "file": "discovery/witness-01-00.a",
+          "node_exit": 0,
+          "build_exit": 1,
+          "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+          "catalogue_origin": "native3/01-index"
+        },
+        "placeholder": "index-signature removal with throwing marker; later record observations are dependent"
+      }
+    },
+    "combined": {
+      "summary": "combined-summary.json",
+      "integrated_sha": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+      "status": "scanner-blocked",
+      "first_stop": {
+        "path": "/workspace/scratch/scanner-views-landed-combined/discovery/adapted/src/compiler/corePublic.ts",
+        "file": "corePublic.ts",
+        "line": 9,
+        "column": 5,
+        "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+        "order": 1,
+        "build_exit": 1,
+        "scope": "first unchanged stop",
+        "witness": {
+          "file": "discovery/witness-01-00.a",
+          "node_exit": 0,
+          "build_exit": 1,
+          "message": "Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added",
+          "catalogue_origin": "native3/01-index"
+        },
+        "placeholder": "index-signature removal with throwing marker; later record observations are dependent"
+      }
+    }
+  },
+  "marks": "marks.json",
+  "pending": "Any isolated admission or behind-placeholder result awaits clean integration and actual scanner execution. No scratch branch lands whole."
+}

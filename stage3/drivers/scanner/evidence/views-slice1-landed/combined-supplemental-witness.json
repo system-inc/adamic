@@ -1,0 +1,10 @@
+{
+  "source": "const {length} = \"token\"; console.log(length.toString());\n",
+  "name": "18-string-destructure",
+  "node_exit": 0,
+  "node_stdout": "5\n",
+  "node_stderr": "",
+  "build_exit": 1,
+  "build_stdout": "",
+  "build_stderr": "adamic: /workspace/scratch/scanner-views-landed-combined/historical-controls/18-string-destructure.a:1:7: stage 0 can't lower destructuring a string yet\n"
+}

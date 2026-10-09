@@ -1,0 +1,334 @@
+{
+  "version": 1,
+  "status": "failed",
+  "requested_refs": [
+    "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+    "64c59784b61239a6429a4aa02478b8bb70fe17c3",
+    "711312292569ca30e0ac075f600da9bdba926def"
+  ],
+  "output": "/workspace/scratch/scanner-rehearsal-run",
+  "phases": [
+    {
+      "name": "fetch",
+      "command": [
+        "git",
+        "fetch",
+        "origin",
+        "+refs/heads/*:refs/remotes/origin/*"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "fetch.stdout",
+      "stderr": "fetch.stderr",
+      "exit": 0,
+      "wall_seconds": 1.419
+    },
+    {
+      "name": "main-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "origin/main^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "main-ref.stdout",
+      "stderr": "main-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "ref-00",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "ref-00.stdout",
+      "stderr": "ref-00.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "ref-01",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "64c59784b61239a6429a4aa02478b8bb70fe17c3^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "ref-01.stdout",
+      "stderr": "ref-01.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "ref-02",
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "711312292569ca30e0ac075f600da9bdba926def^{commit}"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "ref-02.stdout",
+      "stderr": "ref-02.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "worktree",
+      "command": [
+        "git",
+        "worktree",
+        "add",
+        "-b",
+        "scratch/scanner-run-2a9054b3464d",
+        "/workspace/scratch/scanner-rehearsal-run/compiler-tree",
+        "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "worktree.stdout",
+      "stderr": "worktree.stderr",
+      "exit": 0,
+      "wall_seconds": 2.171
+    },
+    {
+      "name": "merge-00",
+      "command": [
+        "git",
+        "merge",
+        "--no-edit",
+        "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8"
+      ],
+      "cwd": "/workspace/scratch/scanner-rehearsal-run/compiler-tree",
+      "stdout": "merge-00.stdout",
+      "stderr": "merge-00.stderr",
+      "exit": 0,
+      "wall_seconds": 0.008
+    },
+    {
+      "name": "merge-01",
+      "command": [
+        "git",
+        "merge",
+        "--no-edit",
+        "64c59784b61239a6429a4aa02478b8bb70fe17c3"
+      ],
+      "cwd": "/workspace/scratch/scanner-rehearsal-run/compiler-tree",
+      "stdout": "merge-01.stdout",
+      "stderr": "merge-01.stderr",
+      "exit": 0,
+      "wall_seconds": 0.917
+    },
+    {
+      "name": "merge-02",
+      "command": [
+        "git",
+        "merge",
+        "--no-edit",
+        "711312292569ca30e0ac075f600da9bdba926def"
+      ],
+      "cwd": "/workspace/scratch/scanner-rehearsal-run/compiler-tree",
+      "stdout": "merge-02.stdout",
+      "stderr": "merge-02.stderr",
+      "exit": 0,
+      "wall_seconds": 0.265
+    },
+    {
+      "name": "integrated-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/scratch/scanner-rehearsal-run/compiler-tree",
+      "stdout": "integrated-ref.stdout",
+      "stderr": "integrated-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-pin",
+      "command": [
+        "git",
+        "ls-tree",
+        "HEAD",
+        "cohere"
+      ],
+      "cwd": "/workspace/scratch/scanner-rehearsal-run/compiler-tree",
+      "stdout": "cohere-pin.stdout",
+      "stderr": "cohere-pin.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-init-local",
+      "command": [
+        "git",
+        "init",
+        "/workspace/scratch/scanner-rehearsal-run/compiler-tree/cohere"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "cohere-init-local.stdout",
+      "stderr": "cohere-init-local.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-shared-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/adamic/cohere",
+      "stdout": "cohere-shared-ref.stdout",
+      "stderr": "cohere-shared-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.002
+    },
+    {
+      "name": "cohere-shared-git",
+      "command": [
+        "git",
+        "rev-parse",
+        "--absolute-git-dir"
+      ],
+      "cwd": "/workspace/adamic/cohere",
+      "stdout": "cohere-shared-git.stdout",
+      "stderr": "cohere-shared-git.stderr",
+      "exit": 0,
+      "wall_seconds": 0.001
+    },
+    {
+      "name": "cohere-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "7945d102a6c18dd36adf9114a758ce646e8b2359"
+      ],
+      "cwd": "/workspace/scratch/scanner-rehearsal-run/compiler-tree/cohere",
+      "stdout": "cohere-checkout.stdout",
+      "stderr": "cohere-checkout.stderr",
+      "exit": 0,
+      "wall_seconds": 0.415
+    },
+    {
+      "name": "cohere-typescript-pin",
+      "command": [
+        "git",
+        "ls-tree",
+        "HEAD",
+        "TypeScript"
+      ],
+      "cwd": "/workspace/scratch/scanner-rehearsal-run/compiler-tree/cohere",
+      "stdout": "cohere-typescript-pin.stdout",
+      "stderr": "cohere-typescript-pin.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-typescript-init-local",
+      "command": [
+        "git",
+        "init",
+        "/workspace/scratch/scanner-rehearsal-run/compiler-tree/cohere/TypeScript"
+      ],
+      "cwd": "/workspace/adamic",
+      "stdout": "cohere-typescript-init-local.stdout",
+      "stderr": "cohere-typescript-init-local.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-typescript-shared-ref",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/workspace/adamic/cohere/TypeScript",
+      "stdout": "cohere-typescript-shared-ref.stdout",
+      "stderr": "cohere-typescript-shared-ref.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-typescript-shared-git",
+      "command": [
+        "git",
+        "rev-parse",
+        "--absolute-git-dir"
+      ],
+      "cwd": "/workspace/adamic/cohere/TypeScript",
+      "stdout": "cohere-typescript-shared-git.stdout",
+      "stderr": "cohere-typescript-shared-git.stderr",
+      "exit": 0,
+      "wall_seconds": 0.004
+    },
+    {
+      "name": "cohere-typescript-checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "d92d9bfee114c80be2c375d72edae966176e3a4f"
+      ],
+      "cwd": "/workspace/scratch/scanner-rehearsal-run/compiler-tree/cohere/TypeScript",
+      "stdout": "cohere-typescript-checkout.stdout",
+      "stderr": "cohere-typescript-checkout.stderr",
+      "exit": 128,
+      "wall_seconds": 1.017
+    }
+  ],
+  "merges": [
+    {
+      "requested": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+      "sha": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+      "exit": 0,
+      "conflicts": []
+    },
+    {
+      "requested": "64c59784b61239a6429a4aa02478b8bb70fe17c3",
+      "sha": "64c59784b61239a6429a4aa02478b8bb70fe17c3",
+      "exit": 0,
+      "conflicts": []
+    },
+    {
+      "requested": "711312292569ca30e0ac075f600da9bdba926def",
+      "sha": "711312292569ca30e0ac075f600da9bdba926def",
+      "exit": 0,
+      "conflicts": []
+    }
+  ],
+  "scanner": [],
+  "ordered_stops": [],
+  "base": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "scratch_branch": "scratch/scanner-run-2a9054b3464d",
+  "scratch_tree": "/workspace/scratch/scanner-rehearsal-run/compiler-tree",
+  "resolved_refs": [
+    {
+      "requested": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+      "sha": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8"
+    },
+    {
+      "requested": "64c59784b61239a6429a4aa02478b8bb70fe17c3",
+      "sha": "64c59784b61239a6429a4aa02478b8bb70fe17c3"
+    },
+    {
+      "requested": "711312292569ca30e0ac075f600da9bdba926def",
+      "sha": "711312292569ca30e0ac075f600da9bdba926def"
+    }
+  ],
+  "integrated_sha": "f9ddfcfe6a7e6d465f314123b4ac2967df7c0a9c",
+  "error": "cohere-typescript-checkout exited 128; see cohere-typescript-checkout.stderr/.stdout",
+  "wall_seconds": 6.266,
+  "validation": {
+    "valid": true,
+    "errors": []
+  }
+}

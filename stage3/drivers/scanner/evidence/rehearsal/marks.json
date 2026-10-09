@@ -1,0 +1,80 @@
+[
+  {
+    "checkpoint": "corePublic.ts:9:5",
+    "owner": "records-maplike #rhjc4x4",
+    "mark": "still there",
+    "evidence": "Actual first stop in both modes; records skipped after 3 conflicts."
+  },
+  {
+    "checkpoint": "debug.ts:8:5",
+    "owner": "compiler area-stack group 1",
+    "mark": "gone in admission control; pending scanner verification",
+    "evidence": "02 passes, Node/native ok; awaits clean records integration and actual namespace state execution."
+  },
+  {
+    "checkpoint": "debug.ts:15:14",
+    "owner": "compiler #b5w3ycg",
+    "mark": "still there",
+    "evidence": "Ordered stop 2 at debug.ts:14:14; casts topic skipped."
+  },
+  {
+    "checkpoint": "diagnosticInformationMap.generated.ts:13:34",
+    "owner": "compiler #b5w3ycg",
+    "mark": "still there",
+    "evidence": "Ordered stop 3; casts topic skipped."
+  },
+  {
+    "checkpoint": "scanner.ts:3497:67",
+    "owner": "compiler #b5w3ycg",
+    "mark": "still there",
+    "evidence": "Ordered stop 5 at scanner.ts:3510:67; casts topic skipped."
+  },
+  {
+    "checkpoint": "utilities.ts:65:22",
+    "owner": "runtime #4gkdjsz",
+    "mark": "still there",
+    "evidence": "Ordered stop 4, Uint16Array; awaits runtime support."
+  },
+  {
+    "checkpoint": "scanner.ts:1269:28",
+    "owner": "compiler #cvhj5fk",
+    "mark": "still there in isolated control",
+    "evidence": "06 refused; actual scanner checkpoint not reached. Assignment-proofs skipped."
+  },
+  {
+    "checkpoint": "core.ts:107:20",
+    "owner": "compiler stricter options #k881crd",
+    "mark": "still there",
+    "evidence": "Ordered stop 6; stricter-options topic skipped."
+  },
+  {
+    "checkpoint": "utilities.ts:13:17",
+    "owner": "compiler area-stack",
+    "mark": "gone in control; pending scanner verification",
+    "evidence": "09 executes generic return and matches Node x. Awaits real scanner traversal past earlier stops."
+  },
+  {
+    "checkpoint": "scanner.ts:113:5",
+    "owner": "compiler area-stack",
+    "mark": "gone in admission control; pending scanner verification",
+    "evidence": "11 admits and prints ok; no field read is exercised. Awaits actual field behavior and full scanner."
+  },
+  {
+    "checkpoint": "scanner.ts:432:59",
+    "owner": "compiler #d9eemrs",
+    "mark": "gone in control; pending scanner verification",
+    "evidence": "13 executes entries count and matches Node 1 despite skipped entries topic. Actual scanner record provenance awaits clean records integration and traversal."
+  },
+  {
+    "checkpoint": "scanner.ts:4097:24",
+    "owner": "compiler #9wc5q5j",
+    "mark": "still there in isolated control",
+    "evidence": "17 Node prints 0; build refuses undefined! assertion. Awaits placeholder property initialization support; merged topic does not close this control."
+  },
+  {
+    "checkpoint": "Error.captureStackTrace",
+    "owner": "library #jj9z3qn",
+    "mark": "still there in isolated control",
+    "evidence": "16 Node prints ok; build cannot lower ErrorConstructor.captureStackTrace. Awaits clean library integration (61 conflicts)."
+  }
+]
