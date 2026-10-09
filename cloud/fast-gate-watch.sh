@@ -567,7 +567,11 @@ borrowableBox() {
 # (cloud/pool-job.sh), goes to the boxes.
 poolTip() {
   local branch=$1 sha=$2
-  [[ ${branch} == codex/* || ${branch} == devtools/* || ${branch} == cloud/land-* ]] || isFront "${branch}" || return 1
+  # The pool's fast gate runs Go tests only (covers go-tests), and push-main refuses that for a landing, which needs
+  # build, vet, smoke and census (integration, Oct 9 04:34Z). So landings and the star stay on the boxes until the pool
+  # runs a fast gate's whole plan; side work goes to the pool.
+  [[ ${branch} == codex/* || ${branch} == devtools/* ]] || return 1
+  isFront "${branch}" && return 1
   ! grep -qx "${sha}" "${state}/pool-void" 2> /dev/null
 }
 # One pick from the ranked list: the tip with the lowest position * 100 + rank + extra that a free slot can
