@@ -1,0 +1,21 @@
+{
+  "old_commit": "485dcd21",
+  "refreshed_commit": "ce90d1a0",
+  "identical_changed_lines": true,
+  "changed_lines": [
+    "-\t\t\tif stored, known := l.representation(l.checker.GetTypeOfSymbol(field)); known && stored.IsMaybe() && of == stored.Present() {",
+    "-\t\t\t\t// Read the declared representation before trusting the narrowing. A call or an",
+    "-\t\t\t\t// alias write may have restored undefined, just as for a narrowed variable.",
+    "-\t\t\t\tif censusFieldSlotless(stored) {",
+    "-\t\t\t\t\treturn nil, l.notYet(node, \"a narrowed boolean | undefined field; copy the field into a local and narrow that local instead\")",
+    "-\t\t\t\t}",
+    "-\t\t\t\tread := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: stored, Optional: optional, Class: l.classOf(node)})",
+    "-\t\t\t\tif l.acceptsUndefined(node) {",
+    "-\t\t\t\t\treturn read, nil",
+    "-\t\t\t\t}",
+    "-\t\t\t\treturn ir.Unwrap{Value: read}, nil",
+    "-\t\t\t}",
+    "+"
+  ],
+  "sha256": "c1fe580860b3179b2cd03f8ad8fb4adf6da1f4ae59a6ca78b2d9b556063e4184"
+}

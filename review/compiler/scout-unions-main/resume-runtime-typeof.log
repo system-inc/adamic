@@ -1,0 +1,22 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:774: stdout differs
+        node:   exit 0, stdout "string\nsource\nobject\nnull\nundefined\nundefined\n", stderr ""
+        native: exit 0, stdout "string\nsource\nobject\nnull\nobject\nundefined\n", stderr ""
+    oracle_test.go:603: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_tsc_nullish_content.a (0.73s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.782s
+FAIL

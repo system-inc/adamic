@@ -1,0 +1,8 @@
+interface Holder { value: string | number | undefined; }
+function replace(holder: Holder): void { holder.value = 23; }
+function observeString(value: string): string { return typeof value; }
+const holder: Holder = {value: 'text'};
+if (typeof holder.value === 'string') {
+    replace(holder);
+    console.log(observeString(holder.value));
+}

@@ -1,0 +1,12 @@
+=== RUN   TestNullableObjectStorageArray
+=== PAUSE TestNullableObjectStorageArray
+=== CONT  TestNullableObjectStorageArray
+    scout_string_number_test.go:36: gate cache node hit
+    scout_string_number_test.go:36: want explicit storage view stop, got <nil>
+--- FAIL: TestNullableObjectStorageArray (0.13s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.145s
+FAIL
