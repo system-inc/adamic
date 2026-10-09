@@ -58,7 +58,8 @@ func TestTimersAgainstNode(t *testing.T) {
 		t.Fatal(err)
 	}
 	released := filepath.Join(t.TempDir(), "timers-release")
-	if err := native.Build(code, released, native.Options{Release: true}); err != nil {
+	// The stack's optimized build; slice 4 adds the shipped release (Options.Release, ThinLTO).
+	if err := native.Build(code, released, native.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	for _, mode := range []string{"order", "interval", "cancel", "cancel-self", "foreign", "unref", "unref-live", "deadlines", "graph", "arity", "host"} {
