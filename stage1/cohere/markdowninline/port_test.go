@@ -149,12 +149,13 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	return ""
 }
 
-// Shards hash each repository-relative corpus path or fixed generated index,
-// together with its mode, into a static bucket. ADAMIC_TEST_SHARD=i/n selects
-// ordinal % n == i; unset runs all. The gate uses -run ^TestMarkdownInline$/^shard-NNNN$.
-// Build products use internal/buildcache; the Go overlay bridge builds once.
-func TestMarkdownInline(t *testing.T) {
-	t.Parallel()
+type inlineCorpusData struct {
+	paths, texts        []string
+	files, generatedEnd int
+	selected            map[string]bool
+}
+
+func collectInlineCorpus(t *testing.T) inlineCorpusData {
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -238,7 +239,7 @@ func TestMarkdownInline(t *testing.T) {
 	for _, code := range []rune{0x10100, 0x1039f, 0x1f600, 0x1e95f, 0x10ffff} {
 		texts = append(texts, string(code)+"_a a_"+string(code), string(code)+"*a a*"+string(code))
 	}
-	runInlineShards(t, paths, texts, files, generatedEnd, selected)
+	return inlineCorpusData{paths, texts, files, generatedEnd, selected}
 }
 func write(t *testing.T, path string, b []byte) {
 	t.Helper()

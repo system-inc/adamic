@@ -43,7 +43,11 @@ func inlineBuild(t *testing.T, in buildcache.Inputs, build func(string) error) s
 }
 func inlineOverlayBuild(t *testing.T) string {
 	t.Helper()
-	dir := t.TempDir()
+	dir, err := os.MkdirTemp("", "markdowninline-overlay-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	inlineSharedOverlayDir = dir
 	start := time.Now()
 	if err := buildInlineGoBridge(dir); err != nil {
 		t.Fatalf("Go overlay bridge: %v", err)
@@ -304,7 +308,7 @@ func inlineNativeRun(t *testing.T, sanitized, fast string, args ...string) run {
 		return run{}
 	}
 }
-func runInlineShards(t *testing.T, paths, texts []string, files, generatedEnd int, selected map[string]bool) {
+func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEnd int, selected map[string]bool) func(*testing.T, int) {
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
@@ -414,126 +418,123 @@ func runInlineShards(t *testing.T, paths, texts []string, files, generatedEnd in
 	if library == "" {
 		t.Log("external library not checked: set ADAMIC_MARKDOWNINLINE_LIBRARY")
 	}
-	// Each gate-addressable unit contains only its cases. No nested parallel unit
-	// hides time from the shard's own census line.
-	for ordinal, shard := range shards {
+	// Each top-level test runs only its own stable bucket.
+	return func(t *testing.T, ordinal int) {
 		if ordinal%boxes != box {
-			continue
+			t.Skip("ADAMIC_TEST_SHARD selects another bucket")
 		}
+		shard := shards[ordinal]
 		dir := t.TempDir()
-		name := fmt.Sprintf("shard-%04d", ordinal)
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-			t.Logf("%s: %d cases", shard.content, len(shard.ids))
-			if len(shard.ids) == 0 && ordinal != 0 {
-				return
+		t.Logf("%s: %d cases", shard.content, len(shard.ids))
+		if len(shard.ids) == 0 && ordinal != 0 {
+			return
+		}
+		cases := filepath.Join(dir, "cases.txt")
+		write(t, cases, inlineInput(texts, shard.ids))
+		want := execute(t, nil, goBinary, cases)
+		clean(t, "Go", want)
+		compare := func(side string, r run) {
+			clean(t, side, r)
+			if err := inlineDifference(t.Name()+" "+side, shard.ids, r.stdout, want.stdout); err != nil {
+				t.Fatal(err)
 			}
-			cases := filepath.Join(dir, "cases.txt")
-			write(t, cases, inlineInput(texts, shard.ids))
-			want := execute(t, nil, goBinary, cases)
-			clean(t, "Go", want)
-			compare := func(side string, r run) {
-				clean(t, side, r)
-				if err := inlineDifference(t.Name()+" "+side, shard.ids, r.stdout, want.stdout); err != nil {
-					t.Fatal(err)
-				}
+		}
+		compare("native", inlineNativeRun(t, sanitized, fast, "--batch", cases))
+		compare("Node", onNode(t, filepath.Join(nodeDir, "main.mjs"), "--batch", cases))
+		compare("JavaScript backend", onNode(t, filepath.Join(lowerDir, "program.mjs"), "--batch", cases))
+		if library != "" {
+			compare("Prettier", execute(t, nil, "node", "testdata/library.mjs", library, cases))
+		}
+		owns := false
+		for _, id := range shard.ids {
+			if id == target {
+				owns = true
 			}
-			compare("native", inlineNativeRun(t, sanitized, fast, "--batch", cases))
-			compare("Node", onNode(t, filepath.Join(nodeDir, "main.mjs"), "--batch", cases))
-			compare("JavaScript backend", onNode(t, filepath.Join(lowerDir, "program.mjs"), "--batch", cases))
-			if library != "" {
-				compare("Prettier", execute(t, nil, "node", "testdata/library.mjs", library, cases))
+		}
+		if owns {
+			r := inlineNativeRun(t, filepath.Join(mutantNativeDir, "port"), mutantFast, "--batch", cases)
+			clean(t, "planted mutant", r)
+			err := inlineDifference(t.Name(), shard.ids, r.stdout, want.stdout)
+			if err == nil {
+				t.Fatal("planted mutant survived")
 			}
-			owns := false
-			for _, id := range shard.ids {
-				if id == target {
-					owns = true
-				}
+			a, b := bytes.Split(r.stdout, []byte("\n")), bytes.Split(want.stdout, []byte("\n"))
+			differences := 0
+			if len(a) != len(b) {
+				t.Fatal("planted mutant changed row count")
 			}
-			if owns {
-				r := inlineNativeRun(t, filepath.Join(mutantNativeDir, "port"), mutantFast, "--batch", cases)
-				clean(t, "planted mutant", r)
-				err := inlineDifference(t.Name(), shard.ids, r.stdout, want.stdout)
-				if err == nil {
-					t.Fatal("planted mutant survived")
-				}
-				a, b := bytes.Split(r.stdout, []byte("\n")), bytes.Split(want.stdout, []byte("\n"))
-				differences := 0
-				if len(a) != len(b) {
-					t.Fatal("planted mutant changed row count")
-				}
-				for row := range b {
-					if !bytes.Equal(a[row], b[row]) {
-						differences++
-						if row >= len(shard.ids) || shard.ids[row] != target {
-							t.Fatalf("mutant changed foreign case %d", row)
-						}
+			for row := range b {
+				if !bytes.Equal(a[row], b[row]) {
+					differences++
+					if row >= len(shard.ids) || shard.ids[row] != target {
+						t.Fatalf("mutant changed foreign case %d", row)
 					}
 				}
-				if differences != 1 {
-					t.Fatalf("planted mutant changed %d cases", differences)
-				}
-				t.Logf("planted mutant caught exactly once: %v", err)
 			}
-			for _, id := range shard.ids {
-				if id%len(inlineModes) != 0 || id/len(inlineModes) >= files {
-					continue
-				}
-				text := texts[id/len(inlineModes)]
-				raw := filepath.Join(dir, "raw.md")
+			if differences != 1 {
+				t.Fatalf("planted mutant changed %d cases", differences)
+			}
+			t.Logf("planted mutant caught exactly once: %v", err)
+		}
+		for _, id := range shard.ids {
+			if id%len(inlineModes) != 0 || id/len(inlineModes) >= files {
+				continue
+			}
+			text := texts[id/len(inlineModes)]
+			raw := filepath.Join(dir, "raw.md")
+			write(t, raw, []byte(text))
+			single := filepath.Join(dir, "single.txt")
+			write(t, single, inlineInput(texts, []int{id}))
+			answer := execute(t, nil, goBinary, single)
+			clean(t, "Go raw", answer)
+			decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(answer.stdout), "\n"))
+			r := inlineNativeRun(t, sanitized, fast, raw, "w")
+			clean(t, "raw", r)
+			equal(t, "raw", r.stdout, []byte(decoded))
+		}
+		if ordinal == 0 {
+			for _, text := range []string{"", "a", "a\n", "a\r\n\n", "😀*x*", "\\_"} {
+				raw := filepath.Join(dir, "raw-extra.md")
 				write(t, raw, []byte(text))
-				single := filepath.Join(dir, "single.txt")
-				write(t, single, inlineInput(texts, []int{id}))
+				single := filepath.Join(dir, "raw-extra.txt")
+				write(t, single, []byte("w"+inlineEncoder.Replace(text)+"\n"))
 				answer := execute(t, nil, goBinary, single)
-				clean(t, "Go raw", answer)
+				clean(t, "Go raw witness", answer)
 				decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(answer.stdout), "\n"))
 				r := inlineNativeRun(t, sanitized, fast, raw, "w")
-				clean(t, "raw", r)
-				equal(t, "raw", r.stdout, []byte(decoded))
+				clean(t, "raw witness", r)
+				equal(t, "raw witness", r.stdout, []byte(decoded))
 			}
-			if ordinal == 0 {
-				for _, text := range []string{"", "a", "a\n", "a\r\n\n", "😀*x*", "\\_"} {
-					raw := filepath.Join(dir, "raw-extra.md")
-					write(t, raw, []byte(text))
-					single := filepath.Join(dir, "raw-extra.txt")
-					write(t, single, []byte("w"+inlineEncoder.Replace(text)+"\n"))
-					answer := execute(t, nil, goBinary, single)
-					clean(t, "Go raw witness", answer)
-					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(answer.stdout), "\n"))
-					r := inlineNativeRun(t, sanitized, fast, raw, "w")
-					clean(t, "raw witness", r)
-					equal(t, "raw witness", r.stdout, []byte(decoded))
-				}
-			}
+		}
 
-			// Original mutants use a single small full generated witness set in shard 0.
-			if ordinal == 0 {
-				var ids []int
-				for text := files; text < generatedEnd; text++ {
-					if len(texts[text]) <= 128 {
-						for mode := range len(inlineModes) {
-							ids = append(ids, text*len(inlineModes)+mode)
-						}
-					}
-				}
-				probe := filepath.Join(dir, "mutants.txt")
-				write(t, probe, inlineInput(texts, ids))
-				answer := execute(t, nil, goBinary, probe)
-				clean(t, "Go mutant witnesses", answer)
-				for _, m := range mutants {
-					for _, r := range []run{inlineNativeRun(t, m.binary, m.fast, "--batch", probe), onNode(t, m.node, "--batch", probe)} {
-						clean(t, m.name, r)
-						if err := inlineDifference(t.Name()+" "+m.name, ids, r.stdout, answer.stdout); err == nil {
-							t.Fatalf("%s survived", m.name)
-						} else {
-							t.Log(err)
-						}
+		// Original mutants use a single small full generated witness set in shard 0.
+		if ordinal == 0 {
+			var ids []int
+			for text := files; text < generatedEnd; text++ {
+				if len(texts[text]) <= 128 {
+					for mode := range len(inlineModes) {
+						ids = append(ids, text*len(inlineModes)+mode)
 					}
 				}
 			}
-		})
+			probe := filepath.Join(dir, "mutants.txt")
+			write(t, probe, inlineInput(texts, ids))
+			answer := execute(t, nil, goBinary, probe)
+			clean(t, "Go mutant witnesses", answer)
+			for _, m := range mutants {
+				for _, r := range []run{inlineNativeRun(t, m.binary, m.fast, "--batch", probe), onNode(t, m.node, "--batch", probe)} {
+					clean(t, m.name, r)
+					if err := inlineDifference(t.Name()+" "+m.name, ids, r.stdout, answer.stdout); err == nil {
+						t.Fatalf("%s survived", m.name)
+					} else {
+						t.Log(err)
+					}
+				}
+			}
+		}
 	}
 }
+
 func TestMarkdownInlineShardUnion(t *testing.T) {
 	expected := map[int]bool{0: true, 1: true, 2: true}
 	if err := inlineUnion([]inlineShard{{ids: []int{0, 1}}, {ids: []int{2}}}, expected); err != nil {
@@ -612,4 +613,32 @@ func TestMarkdownInlineShardAssignmentStable(t *testing.T) {
 			}
 		}
 	}
+}
+
+func TestMarkdownInlineUnion(t *testing.T) {
+	data := collectInlineCorpus(t)
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	names := make([]string, data.files)
+	for i, path := range data.paths {
+		name, err := filepath.Rel(root, path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		names[i] = filepath.ToSlash(name)
+	}
+	shards := enumerateInlineShards(names, data.texts, data.files)
+	if len(shards) != testMarkdownInlineShards {
+		t.Fatal("shard count differs from census constant")
+	}
+	expected := make(map[int]bool, len(data.texts)*len(inlineModes))
+	for id := range len(data.texts) * len(inlineModes) {
+		expected[id] = true
+	}
+	if err := inlineUnion(shards, expected); err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("live union: %d cases, each id exactly once; %d shards", len(expected), len(shards))
 }
