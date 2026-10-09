@@ -73,3 +73,40 @@ Go overlays leave production files untouched. Each command uses `-count=1 -timeo
 `timeout 150 go test ./internal/oracle -run "^TestCountsAreRecorded$" -count=1 -timeout 90s -args -update-counts` passes in 78.876 s. This is the existing repository-wide count recorder, not a new or touched test leaf. It adds only hidden_boundary_generic_tnode.a, hidden_boundary_generic_tnode_constraints.a, hidden_boundary_never_array.a and hidden_boundary_never_array_observations.a. All new or touched lower and fixture leaves are below 60 s.
 
 No overload-result, visitor, optional array access or method destructuring changes were taken. No current census was run; later steps remain outside this turn. No whole packages or full gate were run.
+
+## Current main merged
+
+Merged origin/main 8171b317 in a5e1cf681358c8d4fc3d45f650d5ea2fa4f3491b without conflicts. Its changes are confined to stage1/cohere/lint tests; neither these product files nor the two tested packages changed. Both targeted commands were repeated on the merged tip and pass. All eleven mutant overlays still target the same product source bytes.
+
+| Merged-tip test | Seconds |
+| --- | ---: |
+| TestHiddenTNodeConstraintObjectUnion | 0.080 |
+| TestHiddenTNodeConstraintNumber | 0.090 |
+| TestHiddenTNodeConstraintMutationRemainsNotYet | 0.090 |
+| TestHiddenTNodeConstraintUnknown | 0.110 |
+| TestHiddenTNodeConstraintBoolean | 0.060 |
+| TestHiddenTNodeConstraintStructuralLength | 0.070 |
+| TestHiddenTNodeConstraintUnconstrained | 0.080 |
+| TestHiddenTNodeConstraintObject | 0.060 |
+| TestHiddenTNodeConstraintString | 0.050 |
+| TestHiddenTNodeConstraintArrayLayout | 0.060 |
+| TestHiddenTNodeConstraintAny | 0.090 |
+| TestHiddenTNodeGenericValueRemainsNotYet | 0.090 |
+| TestRepresentationClockSourceCheckedTypes | 0.070 |
+| TestHiddenNeverArrayRejectsWritableWidening | 0.110 |
+| TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_generic_tnode_mutation.a | 0.080 |
+| TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_generic_tnode_value.a | 0.090 |
+| TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_generic_tnode.a | 0.520 |
+| TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a | 0.450 |
+| TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array_observations.a | 0.550 |
+| TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a | 0.480 |
+
+Required lane command: `git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -`.
+
+Initial output:
+
+```text
+lane checks 1.8 s: gofmt and tools on 7 Go files, t.Parallel on 2 test packages; vet 2 packages
+```
+
+The same lane command is repeated after this evidence commit, before push.
