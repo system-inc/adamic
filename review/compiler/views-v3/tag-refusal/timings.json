@@ -1,0 +1,36 @@
+[
+  {
+    "test": "TestNarrowedUnionObjectTagPassing",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNarrowedUnionObjectTagPassing$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "wall_seconds": 15.017,
+    "cold_runtime_cache": true
+  },
+  {
+    "test": "TestNarrowedUnionObjectTagMisfit",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestNarrowedUnionObjectTagMisfit$",
+      "-count=1",
+      "-json",
+      "-timeout",
+      "90s"
+    ],
+    "exit": 0,
+    "wall_seconds": 14.106,
+    "cold_runtime_cache": true
+  }
+]
