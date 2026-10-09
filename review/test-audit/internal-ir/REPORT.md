@@ -394,7 +394,7 @@ Evidence: test-audit/internal-ir, review/test-audit/internal-ir/.
 | P08 | internal/lower/lower.go:20 | `func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {` to `return &ir.Program{}, nil` | TestCallTargetsIncludeEveryDescendant |
 | P09 | internal/ir/call_targets.go:101 | `func (p *Program) ClosureReadsArgumentsCount(call CallClosure) bool {` to `return false` | TestClosureArgumentsCountTargets |
 
-S01 is a setup construction probe: call_targets_guard_test.go:27 renames the allowlisted spreadArguments reader to missingReader. TestCallTargetReaders fails at line 169 on the now-unapproved actual reader, and at line 185 on the stale entry. It is excluded from production kills.
+S01 is a setup construction probe: call_targets_guard_test.go:27 renames the allowlisted spreadArguments reader to missingReader. TestCallTargetReaders fails at line 169 on the now-unapproved actual reader, and at line 182 on the stale entry. It is excluded from production kills.
 
 Survivors:
 - M07, unguarded: witness-clean.log prints unknown all-throwing effect true; witness-M07.log prints false.

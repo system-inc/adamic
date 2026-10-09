@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/tmp/u022-audit.py", line 86, in <module>
+    (root/'internal/ir'/f).write_text(changed)
+                                       ^^^^^^^^
+RuntimeError: switch vet failed
