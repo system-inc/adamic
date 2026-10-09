@@ -1,0 +1,25 @@
+// Zero-filled byte flags; count and sum every prime, repeated with fresh arrays.
+function sieve(limit: number): number {
+    const composite = new Uint8Array(limit + 1);
+    for(let prime = 2; prime * prime <= limit; prime++) {
+        if(composite[prime] !== 1) {
+            for(let multiple = prime * prime; multiple <= limit; multiple += prime) {
+                composite[multiple] = 1;
+            }
+        }
+    }
+    let count = 0;
+    let sum = 0;
+    for(let candidate = 2; candidate <= limit; candidate++) {
+        if(composite[candidate] !== 1) {
+            count++;
+            sum += candidate;
+        }
+    }
+    return count + sum;
+}
+let checksum = 0;
+for(let iteration = 0; iteration < 10; iteration++) {
+    checksum += sieve(2000000 + iteration);
+}
+console.log(`${checksum}`);
