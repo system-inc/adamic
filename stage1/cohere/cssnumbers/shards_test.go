@@ -6,12 +6,12 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strconv"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
@@ -202,7 +202,7 @@ func selectedNumbersUnits(t *testing.T, units []numbersUnit) []numbersUnit {
 }
 
 // Every non-Go product uses the shared cache, including temporary mutants.
-// Go overlay builds stay private until GoBuild supports them; products are immutable.
+// Go overlay recipes also use buildcache.Product; products are immutable.
 type numbersInputs struct {
 	Name      string
 	Files     []string
@@ -216,17 +216,16 @@ func numbersProduct(t *testing.T, inputs numbersInputs, build func(dir string) e
 	return buildcache.Product(t, keyed, build)
 }
 
-// Go builds have no hand-listed key. Keep their private callback until GoBuild
-// supports these oracle overlays; it is invoked once per parent.
+// Go overlay builds use the same content-addressed cache as the other products.
 func numbersGoProduct(t *testing.T, name string, build func(dir string) error) string {
 	t.Helper()
-	dir := numbersTopTempDir(t)
-	start := time.Now()
-	if err := build(dir); err != nil {
-		t.Fatalf("Go build %s: %v", name, err)
+	inputs := buildcache.Inputs{
+		Name:      "cssnumbers " + name,
+		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/cssnumbers/testdata", "stage1/cohere/cssnumbers/port_test.go"},
+		Flags:     []string{"go build", "cmd/adamic_stage_one/main.go", "overlay=internal/format/css/adamic_stage_one.go,cmd/adamic_stage_one/main.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")},
+		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
 	}
-	t.Logf("Go build %s %.6fs (private, awaiting GoBuild)", name, time.Since(start).Seconds())
-	return dir
+	return buildcache.Product(t, inputs, build)
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
@@ -304,9 +303,11 @@ func buildNumbersProgram(t *testing.T, name, main string) numbersProgram {
 
 func numbersClangToolchain(t *testing.T) string {
 	t.Helper()
-	version := numbersExecute(t, nil, "clang", "--version")
-	clean(t, "clang version", version)
-	return strings.TrimSpace(string(version.stdout))
+	output, err := numbersSetupCommand(t, "clang", "--version").Output()
+	if err != nil {
+		t.Fatal(err)
+	}
+	return strings.TrimSpace(string(output))
 }
 
 func buildNumbersNative(t *testing.T, name string, program numbersProgram, sanitize bool) string {
@@ -505,13 +506,21 @@ func TestCSSNumbersPlantedDisagreement(t *testing.T) {
 
 // Oracle answers are immutable inputs; throughput still executes every original round.
 func numbersOracleAnswers(t *testing.T, name, command string, arguments []string, data []byte, identity string) run {
+	return numbersOracleAnswersWithCommand(t, name, command, arguments, data, identity, numbersCommand)
+}
+
+func numbersSetupOracleAnswers(t *testing.T, name, command string, arguments []string, data []byte, identity string) run {
+	return numbersOracleAnswersWithCommand(t, name, command, arguments, data, identity, numbersSetupCommand)
+}
+
+func numbersOracleAnswersWithCommand(t *testing.T, name, command string, arguments []string, data []byte, identity string, makeCommand func(*testing.T, string, ...string) *exec.Cmd) run {
 	t.Helper()
 	dir := numbersProduct(t, numbersInputs{Name: name + " oracle answers", Files: []string{"testdata/library.mjs"}, Flags: []string{identity, fmt.Sprintf("input-sha256=%x", sha256.Sum256(data))}, Toolchain: buildcache.Tool("node", "--version")}, func(dir string) error {
 		path := filepath.Join(dir, "input.txt")
 		if err := os.WriteFile(path, data, 0644); err != nil {
 			return err
 		}
-		cmd := numbersCommand(t, command, append(append([]string{}, arguments...), path)...)
+		cmd := makeCommand(t, command, append(append([]string{}, arguments...), path)...)
 		var stdout, stderr bytes.Buffer
 		cmd.Stdout, cmd.Stderr = &stdout, &stderr
 		if err := childguard.Run(cmd, childguard.Options{}); err != nil || stderr.Len() != 0 {

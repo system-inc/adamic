@@ -17,6 +17,18 @@ import (
 func stringsCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	return stringsCommandContext(t, ctx, cancel, name, arguments...)
+}
+
+// Shared setup has no deadline; cancellation still kills the process group.
+func stringsSetupCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithCancel(context.Background())
+	return stringsCommandContext(t, ctx, cancel, name, arguments...)
+}
+
+func stringsCommandContext(t *testing.T, ctx context.Context, cancel context.CancelFunc, name string, arguments ...string) *exec.Cmd {
+	t.Helper()
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
