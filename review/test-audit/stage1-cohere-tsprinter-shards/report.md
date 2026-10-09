@@ -288,7 +288,7 @@ Source restored; evidence pushed on the requested audit branch without a PR or m
     "oracle_kind": "self",
     "kills": [],
     "unique_kills": [],
-    "last_proven_fail": "W2: See complete failure output in W2.log",
+    "last_proven_fail": "W2: expected exactly TestStatementsAgainstGoAndPrettier_002 to catch planted disagreement: exit 0 stdout === RUN   TestStatementsAgainstGoAndPrettier_000",
     "verdict": "witness",
     "subsumed_by": [],
     "mutants_in_matrix": 14,
@@ -308,7 +308,7 @@ Source restored; evidence pushed on the requested audit branch without a PR or m
       "TestTSCShardPlantedDisagreement",
       "TestTSCShardUnionRejectsMissingAndRepeated"
     ],
-    "evidence": "run-matrix.py [W2]; command in W2.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; See complete failure output in W2.log",
+    "evidence": "run-matrix.py [W2]; command in W2.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; expected exactly TestStatementsAgainstGoAndPrettier_002 to catch planted disagreement: exit 0 stdout === RUN   TestStatementsAgainstGoAndPrettier_000",
     "samples": [
       1.592,
       1.656,
@@ -440,7 +440,7 @@ Source restored; evidence pushed on the requested audit branch without a PR or m
     "unique_kills": [
       "M1"
     ],
-    "last_proven_fail": "M3: See complete failure output in M3.log",
+    "last_proven_fail": "M3: leaks: shard-002 expressions/case-000505 /workspace/adamic/stage3/drivers/tsc/corpus/080_builtinIterator/builtinIterator.ts:874:KindBinaryExpression: line 123: \"ok\\tMath.random() < .5;\\\\n\", Go cohere \"ok\\tMath.random() < 0.5;\\\\n\"",
     "verdict": "sacred",
     "subsumed_by": [],
     "mutants_in_matrix": 9,
@@ -466,7 +466,7 @@ Source restored; evidence pushed on the requested audit branch without a PR or m
       "TestTSCShardPlantedDisagreement",
       "TestTSCShardUnionRejectsMissingAndRepeated"
     ],
-    "evidence": "run-matrix.py [M3]; command in M3.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; See complete failure output in M3.log",
+    "evidence": "run-matrix.py [M3]; command in M3.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; leaks: shard-002 expressions/case-000505 /workspace/adamic/stage3/drivers/tsc/corpus/080_builtinIterator/builtinIterator.ts:874:KindBinaryExpression: line 123: \"ok\\tMath.random() < .5;\\\\n\", Go cohere \"ok\\tMath.random() < 0.5;\\\\n\"",
     "samples": [
       6.165,
       6.137,

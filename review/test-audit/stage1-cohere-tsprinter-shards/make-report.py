@@ -18,7 +18,7 @@ def failure(regex,id):
   if test not in failed or not re.search(regex,test):continue
   if e.get('Action')=='output' and re.search(r'\.go:\d+: ',out):
    msg=re.sub(r'^\s*[^\n]*?\.go:\d+: ','',out).splitlines()[0]
-   if any(w in msg for w in ['want','accepted','transport:','line 1:','assignment','selected','caught','repeated']):messages.append(msg)
+   if any(w in msg for w in ['want','accepted','transport:','line ','expected exactly','assignment','selected','caught','repeated']):messages.append(msg)
  return messages[-1] if messages else 'See complete failure output in '+id+'.log'
 files=['shards_test.go']*3+['statements_printer_units_test.go']+['statements_shards_test.go']*4+['statements_printer_units_test.go','tsc_printer_units_test.go','tsc_corpus_split_test.go','tsc_units_test.go','tsc_units_test.go']
 proofs=['S1','W1','S2',None,'S3','S4','W2','W3','M4','M3','W4','W4','W5']
