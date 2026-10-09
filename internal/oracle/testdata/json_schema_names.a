@@ -1,0 +1,21 @@
+// The JavaScript backend hoists each JSON schema into a module constant named adamicJsonSchema_N.
+// User bindings with those exact names must not collide with them.
+import { decodeJson, encodeJson } from 'adamic';
+
+interface Point {
+	readonly x: number;
+	readonly y: number;
+}
+
+const adamicJsonSchema_0 = 'user constant';
+let adamicJsonSchema_1 = 3;
+function adamicJsonSchema_2(): string {
+	return 'user function';
+}
+
+const decoded = decodeJson<Point>('{"x":1,"y":2}');
+if (decoded.kind === 'Ok') {
+	console.log(encodeJson<Point>(decoded.value));
+}
+adamicJsonSchema_1 += 1;
+console.log(`${adamicJsonSchema_0} ${adamicJsonSchema_1} ${adamicJsonSchema_2()}`);

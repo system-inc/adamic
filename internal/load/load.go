@@ -112,10 +112,16 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 		roots = append(roots, root)
 	}
 	roots = append(roots, preludePath)
+	// Apple's binding files, for the apple/ modules the program imports (apple.go).
+	apple, err := appleRoots(fs, roots[:len(paths)], normalizedOverlay)
+	if err != nil {
+		return nil, err
+	}
+	roots = append(roots, apple...)
 
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
-	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
+	fileSystem := cachedvfs.From(&appleFS{FS: &regexpLibraryFS{FS: bundled.WrapFS(fs)}})
 	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
 	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 	program := compiler.NewProgram(compiler.ProgramOptions{
@@ -166,6 +172,17 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 // Files is the program's own source files, in the order Load was given them: no prelude, no lib.
 func (p *Program) Files() []*ast.SourceFile {
 	return p.files
+}
+
+// AppleFiles is the program's binding files for Apple's frameworks: the apple/ modules it loaded.
+func (p *Program) AppleFiles() []*ast.SourceFile {
+	files := []*ast.SourceFile{}
+	for _, sourceFile := range p.compiler.GetSourceFiles() {
+		if IsApple(sourceFile) {
+			files = append(files, sourceFile)
+		}
+	}
+	return files
 }
 
 // Checker returns the checker that owns a file, and the function that releases it.

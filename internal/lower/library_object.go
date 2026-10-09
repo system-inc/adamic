@@ -100,6 +100,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		case "freeze":
 			call.Returns = ir.Object
 		case "keys":
+			if l.decodedResultValue(written[0]) {
+				return ir.ObjectKeys{Object: value}, true, nil
+			}
 			call.Returns = ir.Array
 		case "values", "entries":
 			result := l.checker.GetTypeAtLocation(node)

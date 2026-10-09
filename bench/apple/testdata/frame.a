@@ -1,0 +1,61 @@
+// frame.a: what a frame of SwiftUI costs from Adamic, for bench/apple/run.go to time beside the same
+// loop in Swift (frame.swift): the supplements list, its rows a class of their own, rendered and
+// laid out again, as setting a State does. The first argument says how many frames.
+
+import { programArguments } from 'adamic';
+import { Window } from 'apple/appkit/window';
+import { Host } from 'apple/swiftui/host';
+import { horizontalStack, image, list, navigationStack, section, spacer, text, type View } from 'apple/swiftui/views';
+
+interface Supplement {
+	readonly name: string;
+	readonly dose: string;
+	readonly symbol: string;
+	readonly timing: 'Morning' | 'Evening';
+}
+
+const supplements: readonly Supplement[] = [
+	{ name: 'Creatine', dose: '5 g', symbol: 'bolt.fill', timing: 'Morning' },
+	{ name: 'Vitamin D', dose: '2000 IU', symbol: 'sun.max.fill', timing: 'Morning' },
+	{ name: 'Magnesium', dose: '400 mg', symbol: 'moon.fill', timing: 'Evening' },
+];
+
+class SupplementRow implements View {
+	readonly supplement: Supplement;
+
+	constructor(supplement: Supplement) {
+		this.supplement = supplement;
+	}
+
+	body(): View {
+		return horizontalStack({ spacing: 10 }, [image(this.supplement.symbol).foregroundColor('Accent'), text(this.supplement.name), spacer(), text(this.supplement.dose).foregroundColor('Secondary')]);
+	}
+}
+
+class SupplementsView implements View {
+	readonly frame: number;
+
+	constructor(frame: number) {
+		this.frame = frame;
+	}
+
+	rows(timing: 'Morning' | 'Evening'): readonly View[] {
+		return supplements.filter((supplement) => supplement.timing === timing).map((supplement) => new SupplementRow(supplement));
+	}
+
+	body(): View {
+		return navigationStack(list([section('Morning', this.rows('Morning')), section(`Evening ${this.frame}`, this.rows('Evening'))]).navigationTitle('Stack'));
+	}
+}
+
+const frames = Number.parseInt(programArguments()[0] ?? '0', 10);
+const host = new Host(new SupplementsView(0));
+const window = new Window({ contentRectangle: { x: 0, y: 0, width: 360, height: 480 }, styleMask: ['Titled'], backing: 'Buffered', defer: true });
+window.contentView = host.view();
+let rows = host.listRows();
+for (let frame = 1; frame <= frames; frame++) {
+	host.render(new SupplementsView(frame));
+	rows += host.listRows();
+}
+console.log(`frames ${frames}: ${rows}`);
+window.close();
