@@ -20,13 +20,18 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if of, known := l.viewRepresentation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
 		return viewUnionContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
 	}
+	// The owning adapter supplies complete standalone array contracts. V2's
+	// placeholder remains only for unavailable adapters and union-arm dispatch.
+	if l.checker.IsArrayType(target) && viewArrayContractHook != nil {
+		return viewArrayContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+	}
 	if l.checker.IsArrayType(target) || checker.IsTupleType(target) {
 		return l.unionAggregateContract(node, target)
 	}
 	if l.callableViewContract(target) {
 		family = "callable"
 	}
-	if l.checker.IsArrayType(target) {
+	if l.checker.IsArrayType(target) && viewArrayContractHook == nil {
 		family = "array"
 	}
 	if of, known := l.representation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
@@ -142,6 +147,9 @@ func (l *lowering) checkLazyViewReads() error {
 				}
 			}
 		}
+	}
+	if err := l.activateViewArrayReads(graph, viewed, unknown); err != nil {
+		return err
 	}
 	// Wider interfaces and instantiated helpers can give the same member a
 	// different checker type id. Field-name fallback retains the refusal until
