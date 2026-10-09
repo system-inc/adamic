@@ -1144,6 +1144,9 @@ func slotless(valueType ir.Type) bool {
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
+	if value, handled, err := l.functionApply(node); handled {
+		return value, err
+	}
 	if direct := l.nestedSibling(callee); direct >= 0 {
 		arguments := []ir.Expression{}
 		for _, argument := range call.Arguments.Nodes {
@@ -1437,19 +1440,8 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 			position++
 		}
 	}
-	if len(spread) == 0 && len(signatures) == 1 {
-		for index := len(arguments); index < len(signatures[0].Parameters()); index++ {
-			parameter := signatures[0].Parameters()[index]
-			if len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil {
-				break
-			}
-			if takes, known := l.representation(l.checker.GetTypeOfSymbol(parameter)); known {
-				arguments = append(arguments, fit(ir.Undefined{}, takes))
-			} else {
-				return nil, l.notYet(node, "a function value parameter without a runtime representation")
-			}
-		}
-	}
+	// Preserve only supplied arguments in the IR. Backends pad parameter storage
+	// separately, without turning omitted arguments into present zeros or counts.
 	for _, argument := range arguments {
 		if censusCallableSlotless(argument.Type()) {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")

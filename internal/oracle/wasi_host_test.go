@@ -117,6 +117,10 @@ func TestWASIHostRuntimeRefusals(t *testing.T) {
 	} {
 		t.Run(probe.suffix, func(t *testing.T) {
 			source := fmt.Sprintf("#include \"adamic.h\"\n#define MEMBER %s ## %s\nint main(void) { adamic_string path = ADAMIC_STRING(\"unused\"), flag = ADAMIC_STRING(\"w\"); adamic_start(0, NULL); (void)MEMBER(%s); return 0; }\n", probe.prefix, probe.suffix, probe.arguments)
+			if probe.suffix == "mkdtemp" {
+				// The runtime exports temporary-directory operations only in its host feature.
+				source = "#define ADAMIC_NODE_HOST 1\n" + source
+			}
 			binary := filepath.Join(t.TempDir(), "runtime-refusal.wasm")
 			buildWASI(t, source, binary)
 			actual := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/wasi.mjs"), binary)

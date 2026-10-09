@@ -1,0 +1,4 @@
+class Gauge { read(value: number = 9): string { return `${arguments.length}:${value}`; } }
+interface View { read(value?: number): string; }
+function observe(view: View): void { console.log(view.read()); console.log(view.read(undefined)); console.log(view.read(0)); }
+observe(new Gauge());

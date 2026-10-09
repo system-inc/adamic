@@ -1,7 +1,9 @@
 package oracle
 
 import (
+	"errors"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"path/filepath"
@@ -102,4 +104,21 @@ func TestScout22PrototypeLifetimes(t *testing.T) {
 			t.Fatal(difference)
 		}
 	}
+}
+
+// These .a witnesses pin an intentional sound-subset refusal, while the tests
+// above exercise their .ts forms against Node with proven heap lifetimes.
+func assertPrototypeFixtureRefusal(t *testing.T, path string, err error) bool {
+	switch path {
+	case "internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_links.a",
+		"internal/oracle/testdata/scout22_prototype_refused/scout22_prototype_lifetimes.a":
+	default:
+		return false
+	}
+	var refusal *lower.Refused
+	if !errors.As(err, &refusal) || refusal.What != "changing prototypes after creation" || refusal.Fix != "outside the .a sound subset; use a .ts program with proven heap lifetimes" {
+		t.Fatalf("want explicit .a prototype refusal, got %v", err)
+	}
+	t.Logf("intentional .a prototype refusal: %v", refusal)
+	return true
 }

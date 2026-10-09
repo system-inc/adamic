@@ -802,6 +802,9 @@ func TestNativeAgreesWithNode(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := lowered(t, path)
+			if assertPrototypeFixtureRefusal(t, fixture.path, err) {
+				return
+			}
 			if refusedAdamicNonNullFixture(fixture.path) {
 				assertAdamicNonNullRefusal(t, err)
 				return
