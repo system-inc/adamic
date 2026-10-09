@@ -1,0 +1,625 @@
+[
+  {
+    "test": "TestArgumentsLengthTypeScriptSource",
+    "package": "internal/oracle",
+    "file": "internal/oracle/arguments_length_test.go:34",
+    "seconds": 0.476,
+    "oracle": "Original .ts source on Node decides stdout, stderr, and exit; native, release and JavaScript are compared; sanitizer/leak checks also run.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01"
+    ],
+    "unique_kills": [
+      "M01"
+    ],
+    "last_proven_fail": "M01: arguments_length_test.go:59: release: stdout differs; Node \"plain\\n1\\n\", compiled \"plain\\n2\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01",
+      "P02",
+      "P03"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthTypeScriptSource|TestArgumentsLengthWrongSlotMutant|TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCastFlushesOutput|TestUncheckableCastAdmission|TestCheckedCastRunsNoCatchOrFinally|TestCheckedCastFailureContract|TestCheckedCastMutants)$; arguments_length_test.go:59: release: stdout differs; Node \"plain\\n1\\n\", compiled \"plain\\n2\\n\"",
+    "entry_probe_passes": {
+      "P01": false,
+      "P02": false,
+      "P03": false
+    },
+    "unique_kill_scope": "bounded selected rows only"
+  },
+  {
+    "test": "TestArgumentsLengthWrongSlotMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/arguments_length_test.go:71",
+    "seconds": 0.252,
+    "oracle": "Original Node output versus a deliberately wrong native slot, plus self-written clean-run and stdout-diff expectations.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: arguments_length_test.go:104: Node failed to catch the wrong-slot mutant: \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthWrongSlotMutant|TestCheckedCastMutants|TestGateCacheAtomicEvidence)$; arguments_length_test.go:104: Node failed to catch the wrong-slot mutant: \"\"",
+    "entry_probe_passes": {},
+    "witness_kills": [
+      "W01"
+    ],
+    "ignored_production_failures": [
+      "M01"
+    ],
+    "unique_kill_scope": null
+  },
+  {
+    "test": "TestGateCacheGeneratedC",
+    "package": "internal/oracle",
+    "file": "internal/oracle/cache_test.go:462",
+    "seconds": 0.23,
+    "oracle": "Self-written expected puts output proves changed generated C invalidates cached evidence.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S01: cache_test.go:476: changed generated C served stale stdout \"before\\n\", want \"after\\n\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P04",
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached)$; cache_test.go:476: changed generated C served stale stdout \"before\\n\", want \"after\\n\"",
+    "entry_probe_passes": {
+      "P04": false,
+      "P05": false
+    },
+    "setup_kills": [
+      "S01"
+    ],
+    "setup_matrix_mutants": 5,
+    "unique_kill_scope": null
+  },
+  {
+    "test": "TestGateCacheToolchains",
+    "package": "internal/oracle",
+    "file": "internal/oracle/cache_test.go:481",
+    "seconds": 0.044,
+    "oracle": "Self-written old/new values for mocked runtime and Node identities.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S02: cache_test.go:500: runtime changed but served \"old\", want \"new\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P04",
+      "P05",
+      "P06"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached)$; cache_test.go:500: runtime changed but served \"old\", want \"new\"",
+    "entry_probe_passes": {
+      "P04": false,
+      "P05": false,
+      "P06": false
+    },
+    "setup_kills": [
+      "S02"
+    ],
+    "setup_matrix_mutants": 5,
+    "unique_kill_scope": null
+  },
+  {
+    "test": "TestGateCacheNodeInputs",
+    "package": "internal/oracle",
+    "file": "internal/oracle/cache_test.go:507",
+    "seconds": 0.224,
+    "oracle": "Self-written key inequality for source/JavaScript bytes and an edited imported module.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S03: cache_test.go:512: Node input change did not invalidate observation",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P06",
+      "P07"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached)$; cache_test.go:512: Node input change did not invalidate observation",
+    "entry_probe_passes": {
+      "P06": false,
+      "P07": false
+    },
+    "setup_kills": [
+      "S03"
+    ],
+    "setup_matrix_mutants": 5,
+    "unique_kill_scope": null
+  },
+  {
+    "test": "TestGateCacheAtomicEvidence",
+    "package": "internal/oracle",
+    "file": "internal/oracle/cache_test.go:533",
+    "seconds": 0.013,
+    "oracle": "Self-written byte, exit, leak, exactly-once, corruption, and replay-comparison assertions.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S04: cache_test.go:550: same key executed 32 times, want one",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached)$; cache_test.go:547: same key executed 32 times, want one; scratch assertion line 547 maps to origin/main line 550 after three lines were deleted",
+    "entry_probe_passes": {
+      "P05": false,
+      "P08": true
+    },
+    "setup_kills": [
+      "S04"
+    ],
+    "setup_matrix_mutants": 5,
+    "unique_kill_scope": null,
+    "raw_failing_output": "S04: cache_test.go:547: same key executed 32 times, want one"
+  },
+  {
+    "test": "TestGateCacheUncached",
+    "package": "internal/oracle",
+    "file": "internal/oracle/cache_test.go:565",
+    "seconds": 0.008,
+    "oracle": "Self-written fresh-versus-cached strings and preservation of old evidence after bypass.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S05: cache_test.go:573: uncached run reused \"cached\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P09"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached)$; cache_test.go:573: uncached run reused \"cached\"",
+    "entry_probe_passes": {
+      "P08": true,
+      "P09": false
+    },
+    "setup_kills": [
+      "S04",
+      "S05"
+    ],
+    "setup_matrix_mutants": 5,
+    "unique_kill_scope": null
+  },
+  {
+    "test": "TestCallTarget family",
+    "package": "internal/oracle",
+    "file": "internal/oracle/call_targets_guards_test.go:8",
+    "seconds": 0.444,
+    "oracle": "Original source on Node compared byte-for-byte with both backends, plus self-written Node stdout preconditions.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01",
+      "P02",
+      "P03"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "All four bounded production runs completed; no failure in this row.",
+    "entry_probe_passes": {
+      "P01": false,
+      "P02": false,
+      "P03": false
+    },
+    "members": [
+      "TestCallTargetThrowAgreesWithNode",
+      "TestDirectClosureCallAgreesWithNode"
+    ],
+    "member_files": [
+      "internal/oracle/call_targets_guards_test.go:8",
+      "internal/oracle/call_targets_guards_test.go:13"
+    ],
+    "unique_kill_scope": null,
+    "limitation": "Survived the fixed four-mutant menu; this does not claim that every possible production fault survives."
+  },
+  {
+    "test": "TestCheckedCastFlushesOutput",
+    "package": "internal/oracle",
+    "file": "internal/oracle/cast_test.go:33",
+    "seconds": 0.127,
+    "oracle": "Self-written exit 70, exact stdout flush and panic text. Node executes generated JavaScript, rather than supplying an independent source answer.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02",
+      "M04"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M04: cast_test.go:43: JavaScript: panic must flush 340009 bytes, got 340011, exit 0 stderr \"\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedCastRunsNoCatchOrFinally"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01",
+      "P02",
+      "P03"
+    ],
+    "subsumer_seconds": 0.137,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthTypeScriptSource|TestArgumentsLengthWrongSlotMutant|TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCastFlushesOutput|TestUncheckableCastAdmission|TestCheckedCastRunsNoCatchOrFinally|TestCheckedCastFailureContract|TestCheckedCastMutants)$; cast_test.go:43: JavaScript: panic must flush 340009 bytes, got 340011, exit 0 stderr \"\"",
+    "entry_probe_passes": {
+      "P01": false,
+      "P02": false,
+      "P03": false
+    },
+    "subsumption_basis": "2 production mutants; hint, not deletion",
+    "unique_kill_scope": null
+  },
+  {
+    "test": "TestUncheckableCastAdmission",
+    "package": "internal/oracle",
+    "file": "internal/oracle/cast_test.go:50",
+    "seconds": 0.04,
+    "oracle": "Self-written Refused type and no-unchecked-cast label. Node is diagnostic only after erroneous admission; the test fails unconditionally then.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M02: cast_test.go:72: uncheckable cast admitted: Node exit 0 stdout \"wrongwrong1\\n\"; native exit 70 stdout \"\" stderr \"adamic: panic: field read failed: cast({ kind: Kind.B, n: 'wrong'.repeat(2) }).n is not a number; expected number, found string\\n\"; exit codes differ",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedCastFlushesOutput"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.127,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthTypeScriptSource|TestArgumentsLengthWrongSlotMutant|TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCastFlushesOutput|TestUncheckableCastAdmission|TestCheckedCastRunsNoCatchOrFinally|TestCheckedCastFailureContract|TestCheckedCastMutants)$; cast_test.go:72: uncheckable cast admitted: Node exit 0 stdout \"wrongwrong1\\n\"; native exit 70 stdout \"\" stderr \"adamic: panic: field read failed: cast({ kind: Kind.B, n: 'wrong'.repeat(2) }).n is not a number; expected number, found string\\n\"; exit codes differ",
+    "entry_probe_passes": {
+      "P01": false
+    },
+    "subsumption_basis": "1 production mutants; hint, not deletion",
+    "unique_kill_scope": null
+  },
+  {
+    "test": "TestCheckedCastRunsNoCatchOrFinally",
+    "package": "internal/oracle",
+    "file": "internal/oracle/cast_test.go:75",
+    "seconds": 0.137,
+    "oracle": "Self-written exit 70/stdout and absence of a handler-created marker. Node executes generated JavaScript.",
+    "oracle_kind": "self",
+    "kills": [
+      "M02",
+      "M04"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M04: cast_test.go:97: panic failed: exit 0 stdout \"casting\\n2\\nfinally\\n\" stderr \"\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedCastFlushesOutput"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01",
+      "P03"
+    ],
+    "subsumer_seconds": 0.127,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthTypeScriptSource|TestArgumentsLengthWrongSlotMutant|TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCastFlushesOutput|TestUncheckableCastAdmission|TestCheckedCastRunsNoCatchOrFinally|TestCheckedCastFailureContract|TestCheckedCastMutants)$; cast_test.go:97: panic failed: exit 0 stdout \"casting\\n2\\nfinally\\n\" stderr \"\"",
+    "entry_probe_passes": {
+      "P01": false,
+      "P03": false
+    },
+    "subsumption_basis": "2 production mutants; hint, not deletion",
+    "unique_kill_scope": null
+  },
+  {
+    "test": "TestCheckedCastFailureContract",
+    "package": "internal/oracle",
+    "file": "internal/oracle/cast_test.go:138",
+    "seconds": 0.257,
+    "oracle": "Self-written exit 70, stdout and panic messages, plus original Node source must finish with exit zero.",
+    "oracle_kind": [
+      "self",
+      "external-run"
+    ],
+    "kills": [
+      "M02",
+      "M04"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M04: cast_test.go:148: JavaScript: exit 0, stdout \"casting\\n2\\n\", stderr \"\"; want panic/70 and \"adamic: panic: cast failed: this A | B is not a A\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedCastFlushesOutput"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P01",
+      "P02",
+      "P03"
+    ],
+    "subsumer_seconds": 0.127,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthTypeScriptSource|TestArgumentsLengthWrongSlotMutant|TestGateCacheGeneratedC|TestGateCacheToolchains|TestGateCacheNodeInputs|TestGateCacheAtomicEvidence|TestGateCacheUncached|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCastFlushesOutput|TestUncheckableCastAdmission|TestCheckedCastRunsNoCatchOrFinally|TestCheckedCastFailureContract|TestCheckedCastMutants)$; cast_test.go:148: JavaScript: exit 0, stdout \"casting\\n2\\n\", stderr \"\"; want panic/70 and \"adamic: panic: cast failed: this A | B is not a A\\n\"",
+    "entry_probe_passes": {
+      "P01": false,
+      "P02": false,
+      "P03": false
+    },
+    "subsumption_basis": "2 production mutants; hint, not deletion",
+    "unique_kill_scope": null
+  },
+  {
+    "test": "TestCheckedCastMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/cast_test.go:160",
+    "seconds": 0.373,
+    "oracle": "Built-in native mutants compared with original Node for successful casts and Adamic JavaScript for checked failures.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: cast_test.go:245: mutant not caught",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestArgumentsLengthTypeScriptSource",
+      "TestArgumentsLengthWrongSlotMutant",
+      "TestGateCacheGeneratedC",
+      "TestGateCacheToolchains",
+      "TestGateCacheNodeInputs",
+      "TestGateCacheAtomicEvidence",
+      "TestGateCacheUncached",
+      "TestCallTarget family",
+      "TestCheckedCastFlushesOutput",
+      "TestUncheckableCastAdmission",
+      "TestCheckedCastRunsNoCatchOrFinally",
+      "TestCheckedCastFailureContract",
+      "TestCheckedCastMutants"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLengthWrongSlotMutant|TestCheckedCastMutants|TestGateCacheAtomicEvidence)$; cast_test.go:245: mutant not caught",
+    "entry_probe_passes": {},
+    "witness_kills": [
+      "W01"
+    ],
+    "ignored_production_failures": [
+      "M02",
+      "M04"
+    ],
+    "unique_kill_scope": null
+  }
+]

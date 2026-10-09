@@ -1,0 +1,4 @@
+[
+  "^(TestArgumentsLength.*|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCast.*|TestUncheckableCastAdmission|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted)$",
+  "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^(nested_mutual[.]a|statements_small_throw[.]a|cast_.*|large_output[.]a|output_then_panic[.]a|interleaved[.]a)$"
+]

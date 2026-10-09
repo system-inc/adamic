@@ -1,0 +1,29 @@
+--- a/internal/native/exceptions.go
++++ b/internal/native/exceptions.go
+@@ -151,7 +151,7 @@
+ 	e.handlers = e.handlers[:len(e.handlers)-1]
+ 	if statement.HasFinally {
+ 		e.line("{")
+-		e.nested(statement.Finally, nil)
++		/* finalizer statement omitted */
+ 		e.line("}")
+ 	}
+ 	e.line("goto %s;", done)
+@@ -188,7 +188,7 @@
+ 			e.handlers = e.handlers[:len(e.handlers)-1]
+ 			rethrown = caughtHandler.jumped
+ 			e.line("{")
+-			e.nested(statement.Finally, nil)
++			/* finalizer statement omitted */
+ 			e.line("}")
+ 		}
+ 		e.line("goto %s;", done)
+@@ -206,7 +206,7 @@
+ 		e.line("adamic_thrown = NULL;")
+ 		e.hold(pending)
+ 		e.line("{")
+-		e.nested(statement.Finally, nil)
++		/* finalizer statement omitted */
+ 		e.line("}")
+ 		e.line("adamic_thrown = %s;", pending)
+ 		e.line("%s = NULL;", pending)
