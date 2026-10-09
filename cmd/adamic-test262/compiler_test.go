@@ -33,6 +33,7 @@ func TestCompilerWorkerMatchesSubprocess(t *testing.T) {
 }
 
 func TestCompilerHangHelper(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_TEST262_HANG_HELPER") != "1" {
 		return
 	}

@@ -3,6 +3,8 @@ package fixtures
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
+	"encoding/binary"
 	"encoding/json"
 	"errors"
 	"flag"
@@ -14,6 +16,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
@@ -142,7 +145,20 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 	return transformed
 }
 
-func TestFixtures(t *testing.T) {
+func TestFixturesAssertions(t *testing.T)      { testFixtureDirectory(t, "assertions") }
+func TestFixturesCycles(t *testing.T)          { testFixtureDirectory(t, "cycles") }
+func TestFixturesEnums(t *testing.T)           { testFixtureDirectory(t, "enums") }
+func TestFixturesHost(t *testing.T)            { testFixtureDirectory(t, "host") }
+func TestFixturesNamespaces(t *testing.T)      { testFixtureDirectory(t, "namespaces") }
+func TestFixturesNestedFunctions(t *testing.T) { testFixtureDirectory(t, "nested-functions") }
+func TestFixturesObjects(t *testing.T)         { testFixtureDirectory(t, "objects") }
+func TestFixturesPredicates(t *testing.T)      { testFixtureDirectory(t, "predicates") }
+func TestFixturesRecords(t *testing.T)         { testFixtureDirectory(t, "records") }
+func TestFixturesRunner(t *testing.T)          { testFixtureDirectory(t, "runner") }
+func TestFixturesTaste(t *testing.T)           { testFixtureDirectory(t, "taste") }
+
+func testFixtureDirectory(t *testing.T, directory string) {
+	t.Helper()
 	t.Parallel()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
@@ -152,20 +168,9 @@ func TestFixtures(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	statuses, err := filepath.Glob(filepath.Join(root, "*", "status.json"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(statuses) == 0 {
-		t.Fatal("no fixture status.json files found")
-	}
-	// These helpers live in oracle's test files. Build their small exported test
-	// hook once, then run one process per compiling fixture in parallel.
-	hook := filepath.Join(t.TempDir(), "oracle.test")
-	built := execute(t, repository, nil, "go", "test", "-c", "-o", hook, "./internal/oracle")
-	if built.Exit != 0 {
-		t.Fatalf("building oracle hook: %s%s", built.Stdout, built.Stderr)
-	}
+	statuses := []string{filepath.Join(root, directory, "status.json")}
+	hook := fixtureOracleHook(t, repository)
+	shard, count := fixtureShard(t)
 	transformedRunner := transformedNodeRunner(t, repository)
 	for _, status := range statuses {
 		t.Run(filepath.Base(filepath.Dir(status)), func(t *testing.T) {
@@ -255,6 +260,11 @@ func TestFixtures(t *testing.T) {
 				case "Checker", "Refused", "NotYet", "Compiles", "CheckedStop":
 				default:
 					t.Fatalf("invalid outcome: %q", entry.Stage0.Outcome)
+				}
+				name := filepath.Base(filepath.Dir(status)) + "/" + entry.File
+				selected := fixtureShardIndex(name, count) == shard
+				if !selected {
+					continue
 				}
 				t.Run(entry.File, func(t *testing.T) {
 					t.Parallel()
@@ -355,6 +365,33 @@ func TestFixtures(t *testing.T) {
 	}
 }
 
+var oracleHookOnce sync.Once
+var oracleHookResult behavior
+
+func fixtureOracleHook(t *testing.T, repository string) string {
+	t.Helper()
+	oracleHookOnce.Do(func() {
+		oracleHookResult = execute(t, repository, nil, "python3", "stage3/fixtures/build-hook.py", "--prepare")
+	})
+	if oracleHookResult.Exit != 0 || strings.TrimSpace(oracleHookResult.Stdout) == "" {
+		t.Fatalf("preparing or fetching oracle hook: %s%s", oracleHookResult.Stdout, oracleHookResult.Stderr)
+	}
+	return strings.TrimSpace(oracleHookResult.Stdout)
+}
+
+// Not parallel: prepare before this package's parallel fixture workers. The
+// gate can dispatch this named build unit separately; each directory test prepares
+// on demand when it is dispatched alone on a fresh worker.
+func TestPrepareFixtureOracleHook(t *testing.T) {
+	repository, err := filepath.Abs("../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	started := time.Now()
+	fixtureOracleHook(t, repository)
+	t.Logf("keyed oracle hook preparation/fetch: %s", time.Since(started))
+}
+
 func TestFixturePaths(t *testing.T) {
 	t.Parallel()
 	for _, test := range []struct {
@@ -374,4 +411,65 @@ func TestFixturePaths(t *testing.T) {
 			}
 		})
 	}
+}
+
+// Indices are zero based, as in the gate. Invalid selectors must never turn an
+// intended run into a successful empty run.
+func fixtureShard(t *testing.T) (int, int) {
+	t.Helper()
+	text := os.Getenv("ADAMIC_TEST_SHARD")
+	if text == "" {
+		return 0, 1
+	}
+	parts := strings.Split(text, "/")
+	if len(parts) != 2 {
+		t.Fatalf("invalid ADAMIC_TEST_SHARD %q: want i/n", text)
+	}
+	index, indexError := strconv.Atoi(parts[0])
+	count, countError := strconv.Atoi(parts[1])
+	if indexError != nil || countError != nil || count < 1 || index < 0 || index >= count {
+		t.Fatalf("invalid ADAMIC_TEST_SHARD %q: require 0 <= i < n", text)
+	}
+	return index, count
+}
+
+func TestFixtureShardManifest(t *testing.T) {
+	t.Parallel()
+	statuses, err := filepath.Glob(filepath.Join(*fixtureRoot, "*", "status.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(statuses) == 0 {
+		t.Fatal("no fixture status.json files found")
+	}
+	_, count := fixtureShard(t)
+	seen := map[string]bool{}
+	for _, status := range statuses {
+		data, err := os.ReadFile(status)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var entries []fixture
+		if err := json.Unmarshal(data, &entries); err != nil {
+			t.Fatal(err)
+		}
+		for _, entry := range entries {
+			name := filepath.Base(filepath.Dir(status)) + "/" + entry.File
+			if seen[name] || !validFixturePath(entry.File) {
+				t.Fatalf("invalid or duplicate fixture %q", name)
+			}
+			seen[name] = true
+			t.Logf("%s shard=%d/%d", name, fixtureShardIndex(name, count), count)
+		}
+	}
+	if len(seen) == 0 {
+		t.Fatal("empty fixture shard manifest")
+	}
+}
+
+// Assignment depends only on the full fixture identity, so -run selection and
+// scheduling cannot move a fixture into a different shard.
+func fixtureShardIndex(name string, count int) int {
+	digest := sha256.Sum256([]byte(name))
+	return int(binary.BigEndian.Uint64(digest[:8]) % uint64(count))
 }
