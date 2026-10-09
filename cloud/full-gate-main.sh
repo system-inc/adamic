@@ -107,21 +107,21 @@ claimBox() {
     echo "$$ $1" > "${boxClaims}/${box}/holder"
     return 0
   fi
-  read -r pid holder < "${boxClaims}/${box}/holder" 2> /dev/null || { echo "$$ $1" > "${boxClaims}/${box}/holder"; return 0; }
+  { read -r pid holder < "${boxClaims}/${box}/holder"; } 2> /dev/null || { echo "$$ $1" > "${boxClaims}/${box}/holder"; return 0; }
   [ "${pid}" = $$ ] && { echo "$$ $1" > "${boxClaims}/${box}/holder"; return 0; }
   kill -0 "${pid}" 2> /dev/null && return 1
   echo "$$ $1" > "${boxClaims}/${box}/holder"
 }
 releaseBox() {
   local pid rest
-  read -r pid rest < "${boxClaims}/${box}/holder" 2> /dev/null || return 0
+  { read -r pid rest < "${boxClaims}/${box}/holder"; } 2> /dev/null || return 0
   [ "${pid}" = $$ ] || return 0
   rm -f "${boxClaims}/${box}/holder"
   rmdir "${boxClaims}/${box}" 2> /dev/null || true
 }
 boxFree() {
   local pid rest
-  read -r pid rest < "${boxClaims}/${box}/holder" 2> /dev/null || return 0
+  { read -r pid rest < "${boxClaims}/${box}/holder"; } 2> /dev/null || return 0
   [ "${pid}" = $$ ] || ! kill -0 "${pid}" 2> /dev/null
 }
 # ADAMIC_FULL_GATE_RUN_TO_END=1: a parity proof, run to the end after its first failure (run.py --run-to-end).

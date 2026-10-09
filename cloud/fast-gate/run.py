@@ -408,9 +408,11 @@ class Gate:
         # Never more runnable threads than the box has cores (@system_adamic, Oct 9 00:11Z: -p of half the CPUs, each
         # test binary on every core, put Home at load 178 and the Threadripper at 81 to 145, and a wall-clock stall
         # guard failed V1 on it): a package's test binary gets GOMAXPROCS cores, and -p packages run at once, so the
-        # two multiply to about the box. ADAMIC_FULL_GATE_PACKAGES overrides the package count.
+        # two multiply to about the box. ADAMIC_FULL_GATE_PACKAGES overrides the package count. cores/4 packages (16 at
+        # GOMAXPROCS 4 on 64 cores, @system_adamic, Oct 9 01:22Z): cores/8 peaked at load 29.2 on the Threadripper
+        # (6b2c73f9, 50.5 min), half the box idle; back to cores/8 if a whole gate's peak crosses the core count.
         cpus = len(os.sched_getaffinity(0)) if hasattr(os, "sched_getaffinity") else (os.cpu_count() or 1)
-        packagesAtOnce = int(os.environ.get("ADAMIC_FULL_GATE_PACKAGES", max(1, cpus // 8)))
+        packagesAtOnce = int(os.environ.get("ADAMIC_FULL_GATE_PACKAGES", max(1, cpus // 4)))
         threadsEach = max(2, cpus // packagesAtOnce)
         self.result["parallelism"] = {"cpus": cpus, "packages_at_once": packagesAtOnce, "gomaxprocs_each": threadsEach}
         wasi = None
