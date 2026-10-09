@@ -15,6 +15,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -347,8 +348,28 @@ func shardsAgreeTopLevel(t *testing.T, index int) {
 	shardsAgreeUnit(t, oracle, binary, units[index], "", "")
 }
 
+// The unit's earlier deadline still wins. Kill a whole child process group,
+// including compiler descendants, rather than leaving them after cancellation.
+func shardsAgreeChild(ctx context.Context, name string, args ...string) *exec.Cmd {
+	cmd := exec.CommandContext(ctx, name, args...)
+	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	cmd.Cancel = func() error {
+		if cmd.Process == nil {
+			return nil
+		}
+		err := syscall.Kill(-cmd.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	return cmd
+}
+
 func shardsAgreeCommand(ctx context.Context, binary string, args ...string) ([]byte, error) {
-	cmd := exec.CommandContext(ctx, binary, args...)
+	ctx, cancel := context.WithTimeout(ctx, 90*time.Second)
+	defer cancel()
+	cmd := shardsAgreeChild(ctx, binary, args...)
 	output, err := os.CreateTemp(sharedDirectory, "shardsagree-stdout-")
 	if err != nil {
 		return nil, err
@@ -602,7 +623,7 @@ func TestShardsAgreeDisagreement(t *testing.T) {
 		t.Run(kind, func(t *testing.T) {
 			ctx, cancel := context.WithTimeout(context.Background(), shardsAgreeDeadline)
 			defer cancel()
-			cmd := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestShardsAgreeDisagreement$", "-test.v", "-test.timeout=75s")
+			cmd := shardsAgreeChild(ctx, os.Args[0], "-test.run=^TestShardsAgreeDisagreement$", "-test.v", "-test.timeout=75s")
 			for _, value := range os.Environ() {
 				if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") {
 					cmd.Env = append(cmd.Env, value)
