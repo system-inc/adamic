@@ -1,0 +1,11 @@
+FIRST FAILURE (a-check, at 31.4 s):
+a-check failed for 8 files:
+notes/host-promises-typeof/unsupported_console_arity.a: type error, expected checked (notes/host-promises-typeof/unsupported_console_arity.a:1:56: error TS2554: Expected 1 arguments, but got 2.)
+notes/host-promises-typeof/unsupported_console_number.a: type error, expected checked (notes/host-promises-typeof/unsupported_console_number.a:1:49: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.)
+notes/host-promises-typeof/unsupported_typeof_method_comparison.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree/notes/host-promises-typeof/unsupported_typeof_method_comparison.a:3:23: Adamic 0.1 refuses a method read as a value (f would lose its object, and this with it); call )
+notes/host-promises-typeof/unsupported_typeof_method_stored.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree/notes/host-promises-typeof/unsupported_typeof_method_stored.a:3:21: Adamic 0.1 refuses a method read as a value (f would lose its object, and this with it); call it i)
+notes/host-promises-typeof/unsupported_typeof_method_switch.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree/notes/host-promises-typeof/unsupported_typeof_method_switch.a:3:16: Adamic 0.1 refuses a method read as a value (f would lose its object, and this with it); call it i)
+notes/host-promises-typeof/unsupported_typeof_method_template.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree/notes/host-promises-typeof/unsupported_typeof_method_template.a:3:23: Adamic 0.1 refuses a method read as a value (f would lose its object, and this with it); call it)
+notes/host-promises-typeof/unsupported_unawaited.a: refused, expected checked (adamic: /home/ahra/fast-gate/tree/notes/host-promises-typeof/unsupported_unawaited.a:2:1: Adamic 0.1 refuses an unawaited async task; await the call or return its Promise; detached tasks have no owner)
+prototypes/async/oracle.a: type error, expected checked (prototypes/async/oracle.a:10:36: error TS2304: Cannot find name 'setTimeout'.)
+(box load 38.4 on 64 cores at first failure)
