@@ -135,7 +135,7 @@ if [ -n "$fastGate" ]; then
 		echo "refused: ${fastGate} has no ${gateKind}.json" >&2
 		exit 1
 	fi
-	if ! verdict=$(GATE_KIND="$gateKind" python3 - "$sha" "$statusLine" "$fastGate" "$fastJSON" <<'VERDICT'
+	if ! verdict=$(GATE_KIND="$gateKind" RERUN_MERGE="$(dirname "${BASH_SOURCE[0]}")/rerun_merge.py" python3 - "$sha" "$statusLine" "$fastGate" "$fastJSON" <<'VERDICT'
 import json, os, subprocess, sys
 sha, status, log = sys.argv[1], sys.argv[2], sys.argv[3]
 with open(sys.argv[4]) as fastFile:
@@ -205,6 +205,24 @@ if kind == "full" and fast.get("runner") == "pool":
                 break
         if not boxGreen:
             problems.append("its sha is one the boxes spot-check (a fifth, by the sha), and no green box whole gate of it is on origin yet")
+# A rerun on a run's kept verdicts (Kirk, Oct 8 21:17 MDT; #hpjftdj): after a test killed at 90 s is fixed, only it
+# reruns, plus the units whose input hash its change moved, and the base run's other verdicts stand. rerun_merge.py
+# holds the rule; the base record is the gate-logs ref the rerun names.
+if fast.get("rerun_of"):
+    import importlib.util
+    merge = importlib.util.spec_from_file_location("rerun_merge", os.environ.get("RERUN_MERGE", "cloud/integration/rerun_merge.py"))
+    rerunMerge = importlib.util.module_from_spec(merge)
+    merge.loader.exec_module(rerunMerge)
+    baseRecord = None
+    if subprocess.run(["git", "fetch", "-q", "origin", fast["rerun_of"]], capture_output=True).returncode == 0:
+        try:
+            baseRecord = json.loads(subprocess.run(["git", "show", "FETCH_HEAD:full.json"], capture_output=True, text=True).stdout)
+        except ValueError:
+            pass
+    if baseRecord is None:
+        problems.append("its base run %s has no readable full.json on origin" % fast["rerun_of"])
+    else:
+        problems.extend(rerunMerge.problems(baseRecord, fast, rerunMerge.descends(baseRecord.get("sha", ""), sha)))
 # A scoped run (ADAMIC_LINT_RULES, cohere's rule-only batches) skips lint's corpus-wide tests by name,
 # so it never lands anything (cohere, #60hxabf). Since developer tools' 796e9810 the gate refuses to
 # start with it set and records "scoped_env"; a log from before that records nothing, and no gate
