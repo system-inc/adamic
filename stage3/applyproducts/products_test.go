@@ -1,10 +1,15 @@
 package applyproducts
 
 import (
+	"context"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"os"
 	"path/filepath"
+	"strconv"
+	"strings"
+	"syscall"
 	"testing"
+	"time"
 )
 
 func TestProduct_Stage3Adapted10(t *testing.T) { t.Parallel(); Product(t, 0) }
@@ -94,3 +99,31 @@ func TestStage3Adapted10TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(
 func TestStage3Adapted40TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 1) }
 func TestStage3Adapted70TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 2) }
 func TestStage3Adapted99TracksInputs(t *testing.T) { t.Parallel(); tracksInputs(t, 3) }
+
+func TestProductDeadlineKillsDescendants(t *testing.T) {
+	t.Parallel()
+	repository, err := root()
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
+	defer cancel()
+	script := "import subprocess,time; child=subprocess.Popen(['node','-e','setInterval(()=>{},1000)']); print(child.pid,flush=True); time.sleep(30)"
+	output, err := workerCommand(ctx, repository, "-c", script).CombinedOutput()
+	if err == nil || ctx.Err() == nil {
+		t.Fatalf("worker did not reach its hard deadline: %v", err)
+	}
+	pid, err := strconv.Atoi(strings.TrimSpace(string(output)))
+	if err != nil {
+		t.Fatalf("worker did not report its real child: %q", output)
+	}
+	defer syscall.Kill(pid, syscall.SIGKILL)
+	// A zombie has exited and cannot run; its adopted parent may reap it later.
+	status, readErr := os.ReadFile("/proc/" + strconv.Itoa(pid) + "/stat")
+	if readErr == nil && strings.Contains(string(status), ") Z ") {
+		return
+	}
+	if syscall.Kill(pid, 0) != syscall.ESRCH {
+		t.Fatal("deadline left the worker's child running")
+	}
+}

@@ -263,13 +263,24 @@ def step_worker(directory, through, previous):
 
 def go_product():
     result = subprocess.check_output(
-        ['go', 'run', './stage3/applyproducts/fetch'], cwd=stage.parent, text=True)
+        ['go', 'run', './stage3/applyproducts/fetch'], cwd=stage.parent,
+        env=dict(os.environ, GOWORK='off'), text=True)
     return Path(result.strip())
 
 
 def fetch_product(out, cache):
     product = go_product()
     restore_product(str(product / 'products'), product_key(), out)
+    # Existing lane and adaptation proofs read this parser-cache path. Expose
+    # the immutable parser from the same fetched product, without npm setup.
+    cache.mkdir(parents=True, exist_ok=True)
+    api = cache / 'api'
+    if not api.exists() or api.is_symlink():
+        with tempfile.TemporaryDirectory(prefix='stage3-api-', dir=cache) as scratch:
+            alias = Path(scratch) / 'api'
+            alias.symlink_to(product / 'api', target_is_directory=True)
+            os.replace(alias, api)
+    return product
 
 
 def main():
@@ -309,8 +320,7 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     if args.build_product:
         cache.mkdir(parents=True, exist_ok=True)
-        product = go_product()
-        restore_product(str(product / 'products'), key, out)
+        product = fetch_product(out, cache)
         if store.startswith(('http://', 'https://', 'file://')):
             parser.error('--build-product requires a local product store')
         Path(store).mkdir(parents=True, exist_ok=True)

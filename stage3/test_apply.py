@@ -187,6 +187,24 @@ class ProductTests(unittest.TestCase):
             self.assertEqual((output / 'input.a').read_text(), 'const value = 1;')
             self.assertEqual((output / 'patch-set.md').read_text(), 'generated table')
 
+    def test_fetch_exposes_prepared_parser(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            scratch = Path(scratch)
+            store = self.product(scratch)
+            prepared = scratch / 'prepared'
+            prepared.mkdir()
+            shutil.move(store, prepared / 'products')
+            parser = prepared / 'api'
+            parser.mkdir()
+            (parser / 'package.json').write_text('prepared stock parser')
+            cache = scratch / 'cache'
+            with mock.patch.object(APPLY, 'go_product', return_value=prepared), mock.patch.object(
+                    APPLY, 'product_key', return_value='test-key'):
+                APPLY.fetch_product(scratch / 'output', cache)
+            self.assertTrue((cache / 'api').is_symlink(), 'prepared parser was not exposed')
+            self.assertEqual((cache / 'api/package.json').read_text(), 'prepared stock parser')
+            self.assertEqual((scratch / 'output/input.a').read_text(), 'const value = 1;')
+
     def test_payload_mutant_is_rejected(self):
         with tempfile.TemporaryDirectory() as scratch:
             scratch = Path(scratch)

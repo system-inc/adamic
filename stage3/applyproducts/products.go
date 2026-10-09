@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"syscall"
 	"testing"
 	"time"
 
@@ -71,8 +72,7 @@ func resolve(repository string, index int, get lookup) (string, error) {
 	return get(key, func(directory string) error {
 		ctx, cancel := context.WithTimeout(context.Background(), 80*time.Second)
 		defer cancel()
-		command := exec.CommandContext(ctx, "python3", "stage3/apply.py", "--step-worker", directory, boundaries[index], previous)
-		command.Dir = repository
+		command := workerCommand(ctx, repository, "stage3/apply.py", "--step-worker", directory, boundaries[index], previous)
 		// npm's cache location is not an input. Each cold product uses its own cache.
 		command.Env = append(os.Environ(), "npm_config_cache="+filepath.Join(directory, "npm-cache"))
 		output, err := command.CombinedOutput()
@@ -81,6 +81,21 @@ func resolve(repository string, index int, get lookup) (string, error) {
 		}
 		return nil
 	}), nil
+}
+
+func workerCommand(ctx context.Context, repository string, arguments ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, "python3", arguments...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 5 * time.Second
+	command.Dir = repository
+	return command
 }
 
 // Product is the single recipe used by each declaration and by fetches.
