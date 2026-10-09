@@ -347,7 +347,7 @@ class LandingTests(unittest.TestCase):
         self.assertLanded(self.push('--test-only', beside, 'beside'), moved, beside)
 
 
-    def publish(self, sha, name, record, failing=(), kind='fast', jsonOnly=False, extra=None, outputs=None):
+    def publish(self, sha, name, record, failing=(), kind='fast', jsonOnly=False, extra=None, outputs=None, rawEvents=None):
         # A gate-logs record on origin: status.txt, its json and a test record, in a commit of their own.
         tree = Path(self.tmp.name) / ('record-' + name + sha[:6])
         tree.mkdir()
@@ -364,6 +364,7 @@ class LandingTests(unittest.TestCase):
             for (package, test), lines in (outputs or {}).items():
                 events += [{'Action': 'output', 'Package': 'github.com/system-inc/adamic/' + package, 'Test': test, 'Output': line} for line in lines]
             events.append({'Action': 'pass', 'Package': 'github.com/system-inc/adamic/other', 'Test': 'TestFine'})
+            events += list(rawEvents or [])
             (tree / 'test.jsonl.gz').write_bytes(gzip.compress('\n'.join(json.dumps(event) for event in events).encode()))
         index = str(Path(self.tmp.name) / ('index-' + name))
         environment = dict(os.environ, GIT_INDEX_FILE=index, **identity)
@@ -425,6 +426,20 @@ class LandingTests(unittest.TestCase):
         landed = self.assertLanded(self.push('--fast-gate', ruledRecord, '--main-reds', main, '--infra-red', 'code TestRuled=#t4b9j71 timing kill', ruled, 'ruled'),
                                    now, ruled)
         self.assertIn("ruled infra, not the candidate's: code TestRuled=#t4b9j71 timing kill", git(self.repository, 'log', '-1', '--format=%B', landed))
+        # A package watchdog panic names no failed test, only the package; the panic line names its owner, and that name
+        # is what --infra-red rules (the trio's lint TestCompilerAndStage1Agree_6484, Oct 9).
+        now = self.main_now()
+        watchdog = self.change(now, 'other/e.go', 'package other\n\n// watchdog\n', 'watchdog')
+        package = 'github.com/system-inc/adamic/lint'
+        watchdogRecord = self.publish(watchdog, 'watchdog', {'sha': watchdog, 'base': now, 'finished': True, 'skip': 0, 'packages': ['other'], 'fail': 2, 'pass': 10,
+                                      'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                                      'steps_seconds': {stage: 5 for stage in ('build', 'vet', 'tests', 'smoke', 'census')},
+                                      'stages_exit': dict({stage: 0 for stage in ('build', 'vet', 'smoke', 'census')}, tests=1),
+                                      'planned_stages': ['build', 'vet', 'tests', 'smoke', 'census']}, failing=[known],
+                                      rawEvents=[{'Action': 'output', 'Package': package, 'Output': 'panic: TestShard_6484: own work exceeded 90s\n'},
+                                              {'Action': 'fail', 'Package': package}])
+        self.assertIn('new reds against main: lint TestShard_6484', self.push('--fast-gate', watchdogRecord, '--main-reds', main, watchdog, 'watchdog').stderr)
+        self.assertLanded(self.push('--fast-gate', watchdogRecord, '--main-reds', main, '--infra-red', 'lint TestShard_6484=#8ezaf5t', watchdog, 'watchdog'), now, watchdog)
         # Alone, without a main record: only the ruled name is excused.
         now = self.main_now()
         alone = self.change(now, 'other/d.go', 'package other\n\n// alone\n', 'alone')

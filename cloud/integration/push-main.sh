@@ -303,7 +303,7 @@ json.dump(first, open(path, "w"))
 		fi
 		# The candidate's failing top-level tests, from every record it lands on, against main's.
 		known=$(RULED_REDS="$(printf '%s\n' ${ruledReds[@]+"${ruledReds[@]}"} | sed 's/=.*//')" python3 - "$fastJSON" "origin/${fastGate%% + *}" "origin/${mainReds}" ${alsoGates[@]+"${alsoGates[@]/#/origin/}"} 2>&1 <<'MAINREDS'
-import gzip, json, subprocess, sys
+import gzip, json, re, subprocess, sys
 path, mainRef, records = sys.argv[1], sys.argv[3], [sys.argv[2]] + sys.argv[4:]
 def failing(ref):
     raw = subprocess.run(["git", "show", ref + ":test.jsonl.gz"], capture_output=True).stdout
@@ -314,14 +314,26 @@ def failing(ref):
             if record and "failed_tests" in json.loads(record):
                 return {entry.split("/adamic/")[-1] for entry in json.loads(record)["failed_tests"] or [] if "/" not in entry.split()[-1]}
         return None
-    names = set()
+    names, failedPackages, panics = set(), set(), {}
     for line in gzip.decompress(raw).decode(errors="replace").splitlines():
         try:
             event = json.loads(line)
         except ValueError:
             continue
+        package = (event.get("Package") or "").split("/adamic/")[-1]
         if event.get("Action") == "fail" and event.get("Test") and "/" not in event["Test"]:
-            names.add(event["Package"].split("/adamic/")[-1] + " " + event["Test"])
+            names.add(package + " " + event["Test"])
+        elif event.get("Action") == "fail" and not event.get("Test"):
+            failedPackages.add(package)
+        elif event.get("Action") == "output":
+            # A package watchdog panics in a timer goroutine and takes the binary down: go test names no failed test,
+            # only the package. The panic line names the test that owned the clock ("panic: TestX_6484: own work ...").
+            owner = re.match(r"panic: (Test[A-Za-z0-9_]+)\b", (event.get("Output") or "").strip())
+            if owner:
+                panics.setdefault(package, set()).add(owner.group(1))
+    for package in failedPackages:
+        if not any(name.startswith(package + " ") for name in names):
+            names |= {package + " " + test for test in panics.get(package, ())} or {package + " (package)"}
     return names
 import os
 ruled = {line.strip() for line in os.environ.get("RULED_REDS", "").splitlines() if line.strip()}
@@ -360,8 +372,9 @@ def outputOf(ref, package, test):
         except ValueError:
             continue
         name = event.get("Test") or ""
-        if event.get("Action") == "output" and event.get("Package", "").endswith("/" + package) and (name == test or name.startswith(test + "/")):
-            lines.append(event.get("Output", ""))
+        output = event.get("Output", "")
+        if event.get("Action") == "output" and event.get("Package", "").endswith("/" + package) and (name == test or name.startswith(test + "/") or test + ":" in output):
+            lines.append(output)
     return lines
 for name in sorted(ruled & ours):
     package, test = name.split(" ", 1)
