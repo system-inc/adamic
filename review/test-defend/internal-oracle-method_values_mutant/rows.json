@@ -1,0 +1,102 @@
+[
+  {
+    "test": "TestModuleNamespaceReadsMatchNode",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNativeAgreesWithNode family",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/lower/load_time_reads.go:88",
+        "change": "module provider order: flip bound",
+        "rows_failed": [
+          "TestImportCycleLoadTimeReads",
+          "TestModuleNamespaceReadinessMutants",
+          "TestModuleNamespaceReadsMatchNode",
+          "TestNativeAgreesWithNode"
+        ]
+      },
+      {
+        "mutant": "D02",
+        "file_line": "internal/lower/module_namespace.go:16",
+        "change": "module namespace library exclusion: flip condition",
+        "rows_failed": [
+          "TestModuleNamespaceLiveBindingMutant",
+          "TestModuleNamespaceReadinessMutants",
+          "TestModuleNamespaceReadsMatchNode",
+          "TestNativeAgreesWithNode"
+        ]
+      },
+      {
+        "mutant": "D03",
+        "file_line": "internal/lower/load_time_reads.go:102",
+        "change": "module runtime readiness: flip proven condition",
+        "rows_failed": [
+          "TestImportCycleLoadTimeReads",
+          "TestModuleNamespaceReadinessMutants",
+          "TestModuleNamespaceReadsMatchNode",
+          "TestNativeAgreesWithNode"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/method-defend/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(Test.*Namespace.*|TestImportCycle.*)$; D01-0.log: module_namespace_reads_test.go:36: native: exit codes differ"
+  },
+  {
+    "test": "TestNamespaceLiveExportBoundary",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestNativeAgreesWithNode family",
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D04",
+        "file_line": "internal/lower/namespaces.go:502",
+        "change": "namespace completion: change ready constant",
+        "rows_failed": [
+          "TestNamespaceLiveExportBoundary",
+          "TestNamespaceSemanticMutants",
+          "TestNamespaceStateMutants",
+          "TestNativeAgreesWithNode",
+          "TestParserCallableNamespace",
+          "TestParserCallableNamespaceMutant",
+          "TestParserNamespaceReceiver",
+          "TestParserNamespaceReceiverMutant"
+        ]
+      },
+      {
+        "mutant": "D05",
+        "file_line": "internal/lower/namespaces.go:432",
+        "change": "qualified read result: off-by-one parameter bound",
+        "rows_failed": [
+          "TestNamespaceLiveExportBoundary",
+          "TestNamespaceRuledMutants",
+          "TestNamespaceSemanticMutants",
+          "TestNativeAgreesWithNode",
+          "TestParserCallableNamespace",
+          "TestParserCallableNamespaceMutant",
+          "TestParserNamespaceReceiver"
+        ]
+      },
+      {
+        "mutant": "D06",
+        "file_line": "internal/lower/namespaces.go:83",
+        "change": "namespace member binding scope: flip condition",
+        "rows_failed": [
+          "TestNamespaceLiveExportBoundary",
+          "TestNamespaceRuledMutants",
+          "TestNamespaceSemanticMutants",
+          "TestNamespaceStateMutants",
+          "TestNativeAgreesWithNode",
+          "TestParserCallableNamespace",
+          "TestParserCallableNamespaceMutant",
+          "TestParserNamespaceReceiver",
+          "TestParserNamespaceReceiverMutant"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/method-defend/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(Test.*Namespace.*|TestImportCycle.*)$; D05-0.log: namespace_live_export_boundary_test.go:23: stdout differs"
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/load_time_reads.go",
+    "line": 102,
+    "old": "!l.provenModuleReads[node] && l.checked(local)",
+    "new": "l.provenModuleReads[node] && l.checked(local)",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/module_namespace.go",
+    "line": 17,
+    "old": "\t\t\treturn true",
+    "new": "\t\t\treturn false",
+    "menu": "change constant"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/namespaces.go",
+    "line": 400,
+    "old": "Value: ir.BooleanConstant{Value: false}})",
+    "new": "Value: ir.BooleanConstant{Value: true}})",
+    "menu": "change constant"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/namespaces.go",
+    "line": 502,
+    "old": "body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})",
+    "new": "body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: false}})",
+    "menu": "change constant"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/locals.go",
+    "line": 49,
+    "old": "l.result.Locals[local].NamespaceVar && declaration.Initializer() == nil",
+    "new": "l.result.Locals[local].NamespaceVar && declaration.Initializer() != nil",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/locals.go",
+    "line": 273,
+    "old": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables",
+    "new": "a narrowed union member whose object tag cannot be checked with instanceof; keep differently held object kinds in separately typed variables",
+    "menu": "change constant"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/locals.go",
+    "line": 279,
+    "old": "Operator: ir.Equal, Left: ir.TypeOf{Value: held}",
+    "new": "Operator: ir.NotEqual, Left: ir.TypeOf{Value: held}",
+    "menu": "change option"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/locals.go",
+    "line": 256,
+    "old": "name = \"number\"",
+    "new": "name = \"string\"",
+    "menu": "change constant"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/locals.go",
+    "line": 272,
+    "old": "known && held != narrowed && (held == ir.Object",
+    "new": "known && held == narrowed && (held == ir.Object",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/namespaces.go",
+    "line": 432,
+    "old": "b.read(b.parameters[len(checks)])",
+    "new": "b.read(b.parameters[len(checks)-1])",
+    "menu": "off-by-one bound"
+  }
+]

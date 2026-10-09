@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces.go
++++ b/internal/lower/namespaces.go
+@@ -80,7 +80,7 @@
+ 		if declaration.Kind == ast.KindVariableDeclaration {
+ 			parent = parent.Parent.Parent
+ 		}
+-		if parent != nil && (parent.Kind == ast.KindModuleBlock || module && parent.Kind == ast.KindSourceFile) {
++		if parent != nil && (parent.Kind != ast.KindModuleBlock || module && parent.Kind == ast.KindSourceFile) {
+ 			return true
+ 		}
+ 	}

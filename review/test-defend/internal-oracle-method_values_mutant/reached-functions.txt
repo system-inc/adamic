@@ -1,0 +1,426 @@
+internal/javascript/arguments_length.go:9 func (e *emitter) callValues(arguments []ir.Expression, spread []bool) string
+internal/javascript/javascript.go:1214 func number(value float64) string
+internal/javascript/javascript.go:1230 func quote(text string) string
+internal/javascript/javascript.go:1268 func (e *emitter) allocateEnvironment(cells []int)
+internal/javascript/javascript.go:24 func JavaScript(program *ir.Program) string
+internal/javascript/javascript.go:264 func (e *emitter) line(format string, arguments ...any)
+internal/javascript/javascript.go:272 func (e *emitter) name(local int) string
+internal/javascript/javascript.go:278 func Name(program *ir.Program, local int) string
+internal/javascript/javascript.go:287 func (e *emitter) ready(local int) string
+internal/javascript/javascript.go:297 func readyName(local int) string
+internal/javascript/javascript.go:301 func functionName(program *ir.Program, function int) string
+internal/javascript/javascript.go:327 func (e *emitter) variable(local int) string
+internal/javascript/javascript.go:354 func (e *emitter) statements(statements []ir.Statement)
+internal/javascript/javascript.go:361 func (e *emitter) mark(at *ir.Statement, part int) string
+internal/javascript/javascript.go:369 func (e *emitter) markLine(at *ir.Statement, part int)
+internal/javascript/javascript.go:383 func (e *emitter) nested(statements []ir.Statement)
+internal/javascript/javascript.go:389 func (e *emitter) declare(local int, value string)
+internal/javascript/javascript.go:403 func (e *emitter) statement(at *ir.Statement)
+internal/javascript/javascript.go:44 func JavaScriptWith(program *ir.Program, options Options) string
+internal/javascript/javascript.go:588 func (e *emitter) temporary() string
+internal/javascript/javascript.go:693 func (e *emitter) value(expression ir.Expression) string
+internal/javascript/taste.go:33 func (e *emitter) effects(expression ir.Effects) string
+internal/javascript/view_unions_read.go:8 func init()
+internal/lower/arguments_length.go:122 func (l *lowering) resolveCountTypes(modules []*ast.SourceFile)
+internal/lower/arguments_length.go:18 func (l *lowering) isArgumentsLength(node *ast.Node) bool
+internal/lower/arguments_length.go:205 func (l *lowering) fitCallArguments(function int, arguments []ir.Expression, spread []bool)
+internal/lower/arguments_length.go:226 func (l *lowering) resolveStructuralMethodThunks(modules []*ast.SourceFile)
+internal/lower/arguments_length.go:67 func (l *lowering) callArguments(nodes []*ast.Node) ([]ir.Expression, []bool, error)
+internal/lower/assignments.go:12 func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error)
+internal/lower/borrow.go:18 func borrow(program *ir.Program)
+internal/lower/borrow.go:38 func findAssigned(statements []ir.Statement, assigned map[int]bool)
+internal/lower/cast.go:79 func (l *lowering) literalConstant(literal *checker.Type) (ir.Expression, ir.Type, bool)
+internal/lower/census_small.go:110 func censusFieldSlotless(of ir.Type) bool
+internal/lower/census_small.go:115 func (l *lowering) censusImplementation(declaration *ast.Node) *ast.Node
+internal/lower/census_small.go:137 func (l *lowering) censusOverloads(implementation *ast.Node) error
+internal/lower/census_small.go:273 func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expression) (ir.Expression, error)
+internal/lower/census_small.go:333 func censusCallableSlotless(of ir.Type) bool
+internal/lower/census_small.go:411 func (l *lowering) censusNeverRestSignature(signature *checker.Signature) bool
+internal/lower/class.go:312 func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error)
+internal/lower/class.go:511 func plainPropertyName(property *ast.Node) string
+internal/lower/class.go:570 func (l *lowering) noteOmittedOptionals(modules []*ast.SourceFile)
+internal/lower/class.go:584 func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node)
+internal/lower/class.go:681 func (l *lowering) classOf(access *ast.Node) int
+internal/lower/class_accessors.go:13 func accessorMember(node *ast.Node) bool
+internal/lower/class_accessors.go:132 func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/class_accessors.go:207 func (l *lowering) finishAccessors() error
+internal/lower/class_accessors.go:349 func accessorSymbol(symbol *ast.Symbol) bool
+internal/lower/class_accessors.go:367 func (l *lowering) checkAccessorSpreads() error
+internal/lower/class_accessors.go:408 func (l *lowering) noteAccessorNames(modules []*ast.SourceFile)
+internal/lower/class_accessors.go:53 func (l *lowering) superAccessor(target *ast.Node, valueNode *ast.Node) (ir.Expression, bool, error)
+internal/lower/class_features.go:65 func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/class_generic_calls.go:14 func (l *lowering) classGenericCall(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/class_inheritance.go:507 func (l *lowering) finishClassCalls()
+internal/lower/class_inheritance.go:527 func (l *lowering) noteInheritance(modules []*ast.SourceFile)
+internal/lower/class_inheritance.go:546 func (l *lowering) classViewRefusal(node *ast.Node) error
+internal/lower/class_inheritance.go:672 func (l *lowering) fieldName(name *ast.Node) string
+internal/lower/class_inheritance.go:690 func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.Type]bool) *checker.Type
+internal/lower/class_inheritance.go:938 func literalParts(node *ast.Node) []*ast.Node
+internal/lower/class_inheritance.go:945 func (l *lowering) nominalLiteralTarget(proven *checker.Type) bool
+internal/lower/class_static.go:337 func (l *lowering) isStaticType(proven *checker.Type) bool
+internal/lower/class_static.go:477 func (l *lowering) staticProperty(node *ast.Node) error
+internal/lower/class_static.go:550 func (l *lowering) staticClassRead(node *ast.Node) (ir.Expression, bool)
+internal/lower/class_static_private.go:21 func (l *lowering) privateStaticReceiver(name *ast.Node, object ir.Expression, write bool) ir.Expression
+internal/lower/class_static_private.go:8 func (l *lowering) privateStaticMember(name *ast.Node) *ast.Node
+internal/lower/class_super.go:180 func (l *lowering) conditionalSuper(node *ast.Node) ([]ir.Statement, bool, error)
+internal/lower/counters.go:353 func findDeclared(statements []ir.Statement, declared map[int]ir.Expression)
+internal/lower/counters.go:363 func eachBlock(statements []ir.Statement, visit func(ir.Block))
+internal/lower/counters.go:373 func eachNested(statement ir.Statement, visit func([]ir.Statement))
+internal/lower/counters.go:38 func counters(program *ir.Program)
+internal/lower/cycles.go:126 func (f *cycleFinder) made(proven *checker.Type, where *ast.Node)
+internal/lower/cycles.go:146 func (f *cycleFinder) shape(proven *checker.Type, where *ast.Node)
+internal/lower/cycles.go:161 func (f *cycleFinder) use(proven *checker.Type, where *ast.Node)
+internal/lower/cycles.go:206 func declaredAt(field *ast.Symbol, otherwise *ast.Node) *ast.Node
+internal/lower/cycles.go:216 func (f *cycleFinder) template(proven *checker.Type) bool
+internal/lower/cycles.go:232 func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol
+internal/lower/cycles.go:246 func (f *cycleFinder) isFunction(proven *checker.Type) bool
+internal/lower/cycles.go:251 func (f *cycleFinder) weak(proven *checker.Type) bool
+internal/lower/cycles.go:258 func (f *cycleFinder) slotsOf(holder *checker.Type) error
+internal/lower/cycles.go:352 func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool
+internal/lower/cycles.go:463 func (f *cycleFinder) related(one *checker.Type, other *checker.Type) bool
+internal/lower/cycles.go:473 func literalMethod(property *ast.Symbol) bool
+internal/lower/cycles.go:63 func (l *lowering) findCycles(modules []*ast.SourceFile) error
+internal/lower/entries_records.go:152 func (l *lowering) enumerationDescriptorRefusal(node *ast.Node) error
+internal/lower/entries_records.go:187 func (l *lowering) entriesStringIndexed(receiver *ast.Node) bool
+internal/lower/entries_records.go:198 func (l *lowering) enumerationIndexedWriteRefusal(node *ast.Node) error
+internal/lower/entries_records.go:82 func (l *lowering) entriesRecordLiteral(literal *ast.Node) bool
+internal/lower/enum_flags.go:213 func (l *lowering) flagMemberWidened(node *ast.Node, contextual *checker.Type) *widening
+internal/lower/enum_flags.go:228 func (l *lowering) flagValueSymbol(node *ast.Node) *ast.Symbol
+internal/lower/enum_flags.go:80 func (l *lowering) flagTarget(proven *checker.Type) *ast.Symbol
+internal/lower/enum_initialization.go:9 func (l *lowering) enumInitialization(modules []*ast.SourceFile) error
+internal/lower/enum_never.go:28 func (l *lowering) enumNeverIdentity(node *ast.Node, seen map[*ast.Node]bool) *ast.Symbol
+internal/lower/enums.go:115 func (l *lowering) enumIdentity(proven *checker.Type) *ast.Symbol
+internal/lower/enums.go:129 func (l *lowering) enumMember(node *ast.Node) *ast.Node
+internal/lower/enums.go:141 func (l *lowering) enumObject(node *ast.Node) *ast.Node
+internal/lower/enums.go:15 func (l *lowering) enumAssignable(from, to *checker.Type) bool
+internal/lower/enums.go:235 func (l *lowering) enumExpression(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/enums.go:353 func (l *lowering) enumRefusal(node *ast.Node) error
+internal/lower/enums.go:43 func (l *lowering) openNumericEnumType(proven *checker.Type) bool
+internal/lower/enums.go:70 func (l *lowering) numericEnum(symbol *ast.Symbol) bool
+internal/lower/enums.go:85 func enumObjectSymbol(proven *checker.Type) *ast.Symbol
+internal/lower/enums.go:95 func (l *lowering) enumObjectView(node *ast.Node) error
+internal/lower/evolving_local.go:12 func (l *lowering) evolvingObject(name *ast.Node) *checker.Type
+internal/lower/exceptions.go:140 func (l *lowering) exceptions() error
+internal/lower/exceptions.go:177 func (l *lowering) throwsOut(statements []ir.Statement) bool
+internal/lower/exceptions.go:331 func walk(value any, visit func(node any) bool)
+internal/lower/exceptions.go:340 func walkValue(value reflect.Value, visit func(node any) bool)
+internal/lower/expression.go:1075 func slotless(valueType ir.Type) bool
+internal/lower/expression.go:1080 func (l *lowering) call(node *ast.Node) (ir.Expression, error)
+internal/lower/expression.go:1146 func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error)
+internal/lower/expression.go:1200 func (l *lowering) closure(node *ast.Node) (ir.Expression, error)
+internal/lower/expression.go:1219 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error)
+internal/lower/expression.go:1286 func (l *lowering) optionalCall(call *ast.Node) error
+internal/lower/expression.go:1300 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error)
+internal/lower/expression.go:15 func (l *lowering) typeOf(node *ast.Node) (ir.Type, error)
+internal/lower/expression.go:159 func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool
+internal/lower/expression.go:172 func (l *lowering) includesUndefined(proven *checker.Type) bool
+internal/lower/expression.go:184 func (l *lowering) includesNull(proven *checker.Type) bool
+internal/lower/expression.go:198 func (l *lowering) expression(node *ast.Node) (ir.Expression, error)
+internal/lower/expression.go:279 func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool
+internal/lower/expression.go:344 func (l *lowering) tupleSeenAsArray(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) (*checker.Type, *checker.Type)
+internal/lower/expression.go:395 func (l *lowering) present(proven *checker.Type) *checker.Type
+internal/lower/expression.go:424 func (l *lowering) kept(proven *checker.Type) (ir.Type, bool)
+internal/lower/expression.go:43 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool)
+internal/lower/expression.go:445 func (l *lowering) weakTarget(proven *checker.Type) *checker.Type
+internal/lower/expression.go:467 func (l *lowering) value(node *ast.Node) (ir.Expression, error)
+internal/lower/expression.go:478 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error)
+internal/lower/expression.go:676 func fit(value ir.Expression, to ir.Type) ir.Expression
+internal/lower/expression.go:712 func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error)
+internal/lower/expression.go:809 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error)
+internal/lower/expression.go:928 func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression
+internal/lower/expression.go:936 func (l *lowering) template(node *ast.Node) (ir.Expression, error)
+internal/lower/functions.go:11 func (l *lowering) functionBody(declaration *ast.Node) error
+internal/lower/functions.go:197 func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error
+internal/lower/functions.go:44 func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error
+internal/lower/functions.go:60 func (l *lowering) signature(index int, declaration *ast.Node, this int) error
+internal/lower/input.go:16 func (l *lowering) input(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/instantiate.go:52 func (l *lowering) concrete(proven *checker.Type) *checker.Type
+internal/lower/interface_cast.go:278 func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression
+internal/lower/invariance.go:320 func (l *lowering) structured(proven *checker.Type) bool
+internal/lower/invariance.go:326 func (l *lowering) withoutUndefined(proven *checker.Type) *checker.Type
+internal/lower/invariance.go:334 func (l *lowering) definedMembers(proven *checker.Type) []*checker.Type
+internal/lower/invariance.go:351 func isClassInstance(proven *checker.Type) bool
+internal/lower/invariance.go:365 func viewSite(node *ast.Node) bool
+internal/lower/invariance.go:404 func (l *lowering) refuseWidening(node *ast.Node) error
+internal/lower/invariance.go:45 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening
+internal/lower/invariance.go:524 func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening
+internal/lower/invariance.go:576 func (l *lowering) freshValue(node *ast.Node) bool
+internal/lower/invariance.go:601 func (l *lowering) isExpression(node *ast.Node) bool
+internal/lower/invariance.go:608 func (l *lowering) impliedTarget(node *ast.Node) *checker.Type
+internal/lower/invariance.go:651 func destructuringTarget(node *ast.Node) *ast.Node
+internal/lower/invariance.go:694 func (l *lowering) genericFunction(node *ast.Node) bool
+internal/lower/iteration.go:18 func (l *lowering) methodName(node *ast.Node) (string, bool)
+internal/lower/iteration.go:427 func (l *lowering) userMethodCall(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/iteration_origin.go:30 func (l *lowering) iterationShapeFits(shape, view *checker.Type) bool
+internal/lower/iteration_origin.go:51 func (l *lowering) erasedLiteralMethod(node *ast.Node) error
+internal/lower/iteration_origin.go:64 func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name string) error
+internal/lower/library_array.go:145 func (l *lowering) libraryArrayBuilder(arguments []ir.Expression) *libraryArrayBuilder
+internal/lower/library_array.go:152 func (b *libraryArrayBuilder) local(name string, of ir.Type) int
+internal/lower/library_array.go:157 func (b *libraryArrayBuilder) read(local int) ir.Expression
+internal/lower/library_array.go:165 func (b *libraryArrayBuilder) finish(name string, result ir.Expression) ir.Expression
+internal/lower/library_array.go:425 func (l *lowering) libraryArrayMethodName(node *ast.Node) string
+internal/lower/library_array.go:445 func (l *lowering) libraryArrayObservation(node *ast.Node) (ir.Expression, bool)
+internal/lower/library_array.go:465 func (l *lowering) libraryArrayObservedMethod(node *ast.Node) bool
+internal/lower/library_array_predicate.go:11 func (l *lowering) isArrayPredicateCall(node *ast.Node) bool
+internal/lower/library_array_predicate.go:126 func (l *lowering) arrayPredicateObservedType(node *ast.Node) *checker.Type
+internal/lower/library_array_predicate.go:21 func (l *lowering) arrayIsArray(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/library_array_predicate.go:70 func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool
+internal/lower/library_array_predicate.go:94 func (l *lowering) arrayPredicateType(node *ast.Node) *checker.Type
+internal/lower/library_globals.go:11 func (l *lowering) libraryGlobalValue(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/library_map_set.go:220 func (l *lowering) libraryIteratorElement(node *ast.Node) (ir.Type, bool)
+internal/lower/library_map_set.go:466 func (f *cycleFinder) libraryIteratorMade(node *ast.Node)
+internal/lower/library_map_set.go:495 func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error
+internal/lower/library_math_number.go:17 func (l *lowering) libraryMathNumberProperty(node *ast.Node) (ir.Expression, bool)
+internal/lower/library_math_number.go:186 func (l *lowering) libraryNumberBoundMethod(node *ast.Node) bool
+internal/lower/library_math_number.go:35 func (l *lowering) numberPrototype(node *ast.Node) bool
+internal/lower/library_math_number.go:69 func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/library_method_values.go:106 func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/library_method_values.go:162 func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/library_method_values.go:17 func (l *lowering) libraryMethod(node *ast.Node, seen map[*ast.Symbol]bool) (libraryMethod, bool)
+internal/lower/library_method_values.go:540 func (l *lowering) libraryEmptyMap(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/library_method_values.go:71 func (l *lowering) libraryMethodReadAllowed(node *ast.Node) bool
+internal/lower/library_node.go:15 func RegisterNodeLibraryMembers(names ...string)
+internal/lower/library_node.go:21 func (l *lowering) nodeLibraryMember(node *ast.Node) string
+internal/lower/library_node.go:63 func (l *lowering) nodeLibraryRefusal(node *ast.Node) error
+internal/lower/library_node_buffer.go:107 func (l *lowering) nodeBufferView(from, to *checker.Type) bool
+internal/lower/library_node_buffer.go:135 func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/library_node_buffer.go:14 func nodeBufferModule(symbol *ast.Symbol) string
+internal/lower/library_node_buffer.go:34 func (l *lowering) nodeBufferSymbol(node *ast.Node, name string) bool
+internal/lower/library_node_buffer.go:38 func (l *lowering) nodeBufferType(proven *checker.Type, name string) bool
+internal/lower/library_node_buffer.go:48 func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error
+internal/lower/library_node_buffer.go:94 func (l *lowering) nodeBufferReadArgument(node *ast.Node) bool
+internal/lower/library_node_fs_buffer.go:11 func init()
+internal/lower/library_node_fs_buffer.go:18 func (l *lowering) nodeFSFileBufferArgument(node *ast.Node) bool
+internal/lower/library_node_fs_file.go:11 func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/library_node_fs_file.go:442 func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool
+internal/lower/library_node_fs_file.go:477 func init()
+internal/lower/library_node_host.go:10 func (l *lowering) nodeHost(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/library_node_host.go:57 func init()
+internal/lower/library_regex_callback_shape.go:69 func (l *lowering) regexCallbackIntrinsicView(node *ast.Node) bool
+internal/lower/library_regexp_replace.go:70 func (l *lowering) regexReplacementArgument(node *ast.Node) bool
+internal/lower/library_string.go:14 func (l *lowering) stringPrototypeMethod(node *ast.Node) (string, bool)
+internal/lower/library_string.go:28 func (l *lowering) stringMethodObservation(node *ast.Node) bool
+internal/lower/library_string.go:371 func (l *lowering) stringReadOnlyArgument(node *ast.Node) bool
+internal/lower/library_string.go:388 func (l *lowering) refuseStringWidening(node *ast.Node) error
+internal/lower/library_string.go:98 func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/literal_callable_branch.go:10 func (l *lowering) literalCallableBranch(node *ast.Node) *ast.Node
+internal/lower/load_time_reads.go:101 func (l *lowering) checkedModuleRead(node *ast.Node, local int) bool
+internal/lower/load_time_reads.go:22 func (cohereRuleRunner) RunRule(program *compiler.Program, typeChecker *checker.Checker, files []*ast.SourceFile, name string) ([]Finding, error)
+internal/lower/load_time_reads.go:32 func (l *lowering) loadTimeReads(files []*ast.SourceFile) error
+internal/lower/load_time_reads.go:44 func (l *lowering) proveModuleReads(files []*ast.SourceFile)
+internal/lower/locals.go:111 func (l *lowering) declareLocal(name *ast.Node) (int, error)
+internal/lower/locals.go:12 func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error)
+internal/lower/locals.go:153 func (l *lowering) noteLocal(local int, proven *checker.Type, node *ast.Node)
+internal/lower/locals.go:165 func (l *lowering) symbol(node *ast.Node) *ast.Symbol
+internal/lower/locals.go:178 func (l *lowering) local(identifier *ast.Node) (int, bool)
+internal/lower/locals.go:195 func (l *lowering) touch(local int)
+internal/lower/locals.go:224 func (l *lowering) checked(local int) bool
+internal/lower/locals.go:228 func (l *lowering) constant(value string) int
+internal/lower/locals.go:241 func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error)
+internal/lower/logical_assignment.go:9 func logicalAssignment(kind ast.Kind) bool
+internal/lower/lower.go:20 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error)
+internal/lower/module_namespace.go:10 func (l *lowering) moduleNamespace(node *ast.Node) bool
+internal/lower/module_namespace.go:23 func (l *lowering) moduleNamespaceRefusal(node *ast.Node) error
+internal/lower/modules.go:14 func (l *lowering) moduleOrder(entry *ast.SourceFile) ([]*ast.SourceFile, error)
+internal/lower/modules.go:189 func runtimeModuleStatement(statement *ast.Node) bool
+internal/lower/modules.go:27 func esmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast.SourceFile, bool)
+internal/lower/modules.go:75 func (l *lowering) declareModule(statements []*ast.Node) error
+internal/lower/namespace_callable.go:5 func (l *lowering) namespaceMergedFunction(node *ast.Node) bool
+internal/lower/namespace_receiver_scope.go:7 func namespaceOwnThis(declaration *ast.Node) bool
+internal/lower/namespaces.go:117 func (l *lowering) namespaceValueNode(node *ast.Node) bool
+internal/lower/namespaces.go:135 func (l *lowering) namespaceRefusal(node *ast.Node) error
+internal/lower/namespaces.go:19 func namespaceRuntime(declaration *ast.Node) bool
+internal/lower/namespaces.go:245 func (l *lowering) namespaceInitialization(modules []*ast.SourceFile) error
+internal/lower/namespaces.go:344 func (l *lowering) namespaceCallable(callee *ast.Node) *ast.Node
+internal/lower/namespaces.go:389 func (l *lowering) namespaceReadyLocal(declaration *ast.Node) int
+internal/lower/namespaces.go:404 func (l *lowering) namespaceReadyReads(node *ast.Node, writing bool) []ir.Expression
+internal/lower/namespaces.go:41 func namespaceDeclarations(statements []*ast.Node) []*ast.Node
+internal/lower/namespaces.go:426 func (l *lowering) namespaceReadyValue(node *ast.Node, value ir.Expression) ir.Expression
+internal/lower/namespaces.go:437 func (l *lowering) namespaceReadyCall(node *ast.Node, value ir.Expression) ir.Expression
+internal/lower/namespaces.go:454 func namespaceVariable(list *ast.Node) bool
+internal/lower/namespaces.go:458 func (l *lowering) namespaceBody(node *ast.Node) ([]ir.Statement, error)
+internal/lower/namespaces.go:525 func (l *lowering) namespaceReadyStatements(node *ast.Node, writing bool) []ir.Statement
+internal/lower/namespaces.go:53 func (l *lowering) namespaceDeclaration(node *ast.Node) *ast.Node
+internal/lower/namespaces.go:66 func (l *lowering) namespaceMember(node *ast.Node) bool
+internal/lower/namespaces.go:8 func namespaceStatements(declaration *ast.Node) []*ast.Node
+internal/lower/namespaces.go:90 func (l *lowering) namespaceExpression(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/namespaces_call_graph.go:147 func (l *lowering) namespaceRuntimeEnum(node *ast.Node) *ast.Node
+internal/lower/namespaces_call_graph.go:24 func (g *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node
+internal/lower/namespaces_call_graph.go:28 func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode
+internal/lower/namespaces_returns.go:11 func (l *lowering) namespaceReturnAssignment(expression *ast.Node) ([]ir.Statement, bool, error)
+internal/lower/narrowed.go:24 func (l *lowering) narrowedAway(node *ast.Node) bool
+internal/lower/narrowed.go:47 func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression
+internal/lower/nested_functions.go:12 func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
+internal/lower/nested_functions.go:146 func (l *lowering) nestedSibling(node *ast.Node) int
+internal/lower/nested_functions.go:203 func (l *lowering) nestedReference(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/nested_functions.go:249 func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int)
+internal/lower/non_null.go:105 func (l *lowering) checkedAssertionSource(node *ast.Node) bool
+internal/lower/object.go:162 func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type
+internal/lower/object.go:17 func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error)
+internal/lower/object.go:2077 func (l *lowering) tupleWhereArrayGoes(value *checker.Type, target *checker.Type, depth int) bool
+internal/lower/object.go:341 func (l *lowering) property(node *ast.Node) (ir.Expression, error)
+internal/lower/object.go:576 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression
+internal/lower/object.go:646 func (l *lowering) isLibraryGlobal(node *ast.Node, name string) bool
+internal/lower/object.go:673 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/optional_indexing_map.go:10 func (l *lowering) optionalMapGet(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/optional_intrinsic.go:12 func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/optional_join.go:10 func (l *lowering) isOptionalJoin(node *ast.Node) bool
+internal/lower/optional_widening.go:111 func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optionalWidening
+internal/lower/optional_widening.go:131 func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening
+internal/lower/optional_widening.go:17 func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string]bool, visited map[[2]*checker.Type]bool) *optionalWidening
+internal/lower/optional_widening.go:189 func (l *lowering) refuseOptionalWidening(node *ast.Node) error
+internal/lower/optional_widening.go:200 func (l *lowering) optionalNodeHostCall(call *ast.Node) bool
+internal/lower/parameter_properties.go:8 func parameterProperty(node *ast.Node) bool
+internal/lower/predicates.go:475 func (l *lowering) predicateArguments(node *ast.Node) error
+internal/lower/prelude.go:11 func (l *lowering) console(call *ast.Node) (ir.Statement, error)
+internal/lower/prelude.go:32 func (l *lowering) isPanicCall(expression *ast.Node) bool
+internal/lower/prelude.go:39 func (l *lowering) isPreludeFunction(callee *ast.Node, name string) bool
+internal/lower/prelude.go:49 func (l *lowering) isConsole(callee *ast.Node) bool
+internal/lower/prelude.go:59 func (l *lowering) consoleStream(callee *ast.Node) (ir.Stream, error)
+internal/lower/prelude.go:79 func isPreludeConsole(symbol *ast.Symbol) bool
+internal/lower/prototype.go:13 func (l *lowering) memberSymbol(node *ast.Node) *ast.Symbol
+internal/lower/prototype.go:25 func (l *lowering) libraryMember(node *ast.Node) bool
+internal/lower/prototype.go:269 func (l *lowering) exactPlainObject(node *ast.Node) bool
+internal/lower/prototype.go:31 func (l *lowering) inheritedLibraryMember(node *ast.Node) bool
+internal/lower/prototype.go:35 func (l *lowering) inheritedLibrarySymbol(symbol *ast.Symbol) bool
+internal/lower/prototype.go:49 func (l *lowering) librarySymbol(symbol *ast.Symbol) bool
+internal/lower/prototype.go:77 func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (ir.Expression, bool, error)
+internal/lower/prototype.go:81 func (l *lowering) objectPrototypeCallArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error)
+internal/lower/readiness.go:13 func sourceExpression(node *ast.Node) string
+internal/lower/readiness.go:20 func (l *lowering) uninitializedInitializer(node *ast.Node) bool
+internal/lower/readiness.go:250 func readinessStatement(statement ir.Statement, program *ir.Program, fields map[string]bool, ready []bool, fieldSlots map[fieldReadiness]int) ir.Statement
+internal/lower/readiness.go:353 func readinessObject(value ir.Expression) (int, bool)
+internal/lower/readiness.go:384 func assertionInitializer(node *ast.Node) bool
+internal/lower/readiness.go:389 func (l *lowering) lazyAssertionInitializer(node *ast.Node) bool
+internal/lower/readiness.go:42 func (l *lowering) uninitializedDeclaration(node *ast.Node) bool
+internal/lower/readiness.go:55 func readiness(program *ir.Program)
+internal/lower/refusals.go:240 func called(node *ast.Node) bool
+internal/lower/refusals.go:39 func (l *lowering) refuse(module *ast.SourceFile) error
+internal/lower/regexp.go:123 func (l *lowering) regexBuiltin(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/regexp.go:277 func (l *lowering) regexGroups(node *ast.Node) bool
+internal/lower/regexp.go:290 func (l *lowering) regexUnsupportedUse(node *ast.Node) error
+internal/lower/statements.go:119 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error)
+internal/lower/statements.go:13 func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error)
+internal/lower/statements.go:198 func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error)
+internal/lower/statements.go:29 func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error)
+internal/lower/switch_bindings.go:10 func (l *lowering) initializeLocal(local int, value ir.Expression) []ir.Statement
+internal/lower/tsgo.go:15 func (l *lowering) tsgo(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/typed_arrays.go:21 func (l *lowering) typedArrayKind(proven *checker.Type) ir.Type
+internal/lower/typed_arrays.go:292 func (l *lowering) typedArraySetArgument(node *ast.Node) bool
+internal/lower/typed_arrays.go:31 func (l *lowering) typedArrayUnsupported(node *ast.Node) error
+internal/lower/typed_arrays.go:72 func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, error)
+internal/lower/typed_arrays.go:9 func typedArrayName(kind ir.Type) string
+internal/lower/unknown.go:11 func dynamicObjectType(proven *checker.Type) bool
+internal/lower/unknown.go:136 func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) error
+internal/lower/view_adapters.go:17 func init()
+internal/lower/view_adapters.go:9 func unavailableViewFamily(family string) viewContractHook
+internal/lower/view_lazy.go:93 func (l *lowering) checkLazyViewReads() error
+internal/lower/view_unions_untagged.go:170 func (l *lowering) completeUntaggedRecursiveContracts()
+internal/lower/view_unions_untagged.go:254 func (l *lowering) certifyUntaggedCallableProducers()
+internal/native/arguments_length.go:12 func (e *emitter) closureArguments(call ir.CallClosure) (string, string)
+internal/native/arguments_length.go:177 func (e *emitter) packedClosureCall(call ir.CallClosure, closure, packed, count string) string
+internal/native/arguments_length.go:30 func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, count string) string
+internal/native/borrow.go:108 func eachOperand(expression ir.Expression, visit func(ir.Expression))
+internal/native/borrow.go:138 func (e *emitter) lentArgument(call ir.Call, index int) (string, bool)
+internal/native/borrow.go:241 func (e *emitter) borrowChain(expression ir.Expression) bool
+internal/native/borrow.go:29 func (e *emitter) value(expression ir.Expression) string
+internal/native/borrow.go:54 func lendable(valueType ir.Type) bool
+internal/native/borrow.go:66 func consumes(expression ir.Expression) bool
+internal/native/borrow.go:79 func pure(expression ir.Expression) bool
+internal/native/borrow.go:93 func pureKind(expression ir.Expression) bool
+internal/native/class_features.go:19 func (e *emitter) prepareClassShapes()
+internal/native/class_inheritance.go:12 func (e *emitter) classDeclarations(builder *strings.Builder)
+internal/native/class_inheritance.go:46 func (e *emitter) callCode(call ir.Call, arguments []string) string
+internal/native/devirtualize.go:10 func (e *emitter) exactReceiverClass(value ir.Expression) int
+internal/native/devirtualize.go:58 func (e *emitter) exactReceiverMethod(receiver ir.Expression, name string) (int, bool)
+internal/native/element_borrow.go:100 func assignedLocals(body []ir.Statement) map[int]bool
+internal/native/element_borrow.go:117 func changingFunctions(program *ir.Program) map[int]bool
+internal/native/element_borrow.go:133 func changes(program *ir.Program, changing map[int]bool, list []ir.Statement) bool
+internal/native/element_borrow.go:156 func unchanging(program *ir.Program, changing map[int]bool, expression ir.Expression) bool
+internal/native/element_borrow.go:24 func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool)
+internal/native/emit.go:22 func C(program *ir.Program) string
+internal/native/emit.go:247 func (e *emitter) line(format string, arguments ...any)
+internal/native/emit.go:253 func (e *emitter) temporary() string
+internal/native/emit.go:26 func cProgram(program *ir.Program, handler int) string
+internal/native/emit_branches.go:118 func unwrap(expression string) string
+internal/native/emit_expressions.go:13 func (e *emitter) evaluate(expression ir.Expression) string
+internal/native/emit_expressions.go:732 func (e *emitter) binary(operator ir.Operator, operandType ir.Type, left string, right string) string
+internal/native/emit_functions.go:10 func (e *emitter) functionName(function int) string
+internal/native/emit_functions.go:129 func (e *emitter) returnStatement(statement ir.Return)
+internal/native/emit_functions.go:14 func (e *emitter) signature(function int) string
+internal/native/emit_functions.go:193 func (e *emitter) arguments(call ir.Call) []string
+internal/native/emit_functions.go:292 func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string
+internal/native/emit_functions.go:50 func (e *emitter) functionBody(function ir.Function)
+internal/native/emit_locals.go:11 func (e *emitter) localName(local int) string
+internal/native/emit_locals.go:138 func (e *emitter) declareLocal(local int, value string, owned bool)
+internal/native/emit_locals.go:188 func (e *emitter) cellSlot(local int) string
+internal/native/emit_locals.go:196 func (e *emitter) cellReference(local int) string
+internal/native/emit_locals.go:20 func readyName(local int) string
+internal/native/emit_locals.go:212 func (e *emitter) allocateEnvironment(cells []int)
+internal/native/emit_locals.go:28 func (e *emitter) store(local int, value string, owned bool)
+internal/native/emit_locals.go:63 func (e *emitter) checkReady(local int)
+internal/native/emit_locals.go:65 func (e *emitter) localReady(local int) string
+internal/native/emit_locals.go:75 func (e *emitter) checkReadyRead(local int, expression string)
+internal/native/emit_locals.go:89 func (e *emitter) read(read ir.Read) string
+internal/native/emit_objects.go:118 func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string
+internal/native/emit_objects.go:226 func (e *emitter) shape(fields []ir.Field) string
+internal/native/emit_objects.go:237 func (e *emitter) literalShape(literal ir.ObjectLiteral) string
+internal/native/emit_objects.go:250 func (e *emitter) shapeOf(fieldNames []string, fieldTypes []ir.Type) string
+internal/native/emit_objects.go:256 func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods []ir.Method) string
+internal/native/emit_objects.go:419 func (e *emitter) cache() string
+internal/native/emit_objects.go:427 func (e *emitter) dynamicProperties() bool
+internal/native/emit_objects.go:447 func (e *emitter) fieldTypesNeeded() bool
+internal/native/emit_ownership.go:102 func (e *emitter) own(valueType ir.Type, value string) string
+internal/native/emit_ownership.go:12 func (e *emitter) releaseScopes(depth int)
+internal/native/emit_ownership.go:33 func (e *emitter) end()
+internal/native/emit_ownership.go:45 func (e *emitter) releaseGlobals()
+internal/native/emit_ownership.go:58 func (e *emitter) snapshot(valueType ir.Type, value string) string
+internal/native/emit_ownership.go:82 func (e *emitter) kept(value string) string
+internal/native/emit_ownership.go:92 func (e *emitter) taken(value string) bool
+internal/native/emit_statements.go:29 func (e *emitter) block(statements []ir.Statement, after func())
+internal/native/emit_statements.go:352 func (e *emitter) nested(statements []ir.Statement, after func())
+internal/native/emit_statements.go:43 func (e *emitter) decide(condition ir.Expression) string
+internal/native/emit_statements.go:55 func (e *emitter) statementAt(at *ir.Statement)
+internal/native/emit_statements.go:64 func (e *emitter) statement(statement ir.Statement)
+internal/native/emit_strings.go:14 func (e *emitter) appendsTo(statement ir.Assign) ([]ir.Expression, bool)
+internal/native/emit_values.go:38 func member(valueType ir.Type) string
+internal/native/emit_values.go:52 func zero(valueType ir.Type) string
+internal/native/emit_values.go:70 func cNumber(value float64) string
+internal/native/emit_values.go:9 func cType(valueType ir.Type) string
+internal/native/exceptions.go:86 func (e *emitter) closureThrown(holds ...string)
+internal/native/library.go:102 func readRuntime(sources fs.FS, root string) ([]runtimeFile, error)
+internal/native/library.go:121 func runtimeKey(files []runtimeFile, flags []string, compiler string, version string) string
+internal/native/library.go:143 func cachedRuntime(files []runtimeFile, flags []string, compiler string, version string, cache string) (string, error)
+internal/native/library.go:212 func RuntimeLinkFlags(library string) []string
+internal/native/library.go:219 func slicesContain(values []string, wanted string) bool
+internal/native/library.go:28 func RuntimeLibrary(directory string, options Options) (string, error)
+internal/native/library.go:32 func RuntimeLibraryForSource(directory string, source string, options Options) (string, error)
+internal/native/library.go:46 func featureFlags(source string) []string
+internal/native/library.go:56 func runtimeLibrary(directory string, options Options, extraFlags []string) (string, error)
+internal/native/native.go:110 func Build(source string, output string, options Options) error
+internal/native/native.go:26 func cString(value string) string
+internal/native/native.go:78 func Flags(options Options) []string
+internal/native/region.go:250 func (plan *regionPlan) feedsRegion(statement ir.Statement) bool
+internal/native/region.go:299 func (e *emitter) regionVariants(function int) []bool
+internal/native/region.go:313 func (e *emitter) regionFor(call ir.Call) string
+internal/native/region.go:347 func (e *emitter) regionStatement(at *ir.Statement) bool
+internal/native/region.go:382 func (plan *regionPlan) regionTarget(call ir.Call) int
+internal/native/region.go:43 func planRegions(program *ir.Program) *regionPlan
+internal/native/reuse.go:351 func variableRead(expression ir.Expression) (ir.Read, bool)
+internal/native/reuse.go:408 func evaluated(instruction *flow.Instruction) any
+internal/native/reuse.go:419 func forEachInstruction(graph *flow.Function, visit func(*flow.Instruction))
+internal/native/reuse.go:428 func spreadsOf(node any) []ir.ObjectLiteral
+internal/native/reuse.go:453 func walk(node any, visit func(ir.Expression))
+internal/native/reuse.go:459 func walkStatement(node any, visit func(ir.Expression), statements func([]ir.Statement))
+internal/native/reuse.go:502 func walkExpressions(program *ir.Program, visit func(ir.Expression))
+internal/native/reuse.go:526 func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool)
+internal/native/reuse.go:61 func planReuse(program *ir.Program, lending map[int]bool) *reusePlan
+internal/native/reuse.go:663 func (e *emitter) handedOver(arguments []string)
+internal/native/reuse.go:675 func arraysTaken(program *ir.Program, node any) []int
+internal/native/reuse.go:780 func (plan *reusePlan) callConsumes(program *ir.Program, call ir.Call, position int) bool
+internal/native/slots.go:13 func slotted(valueType ir.Type, value string) string
+internal/native/slots.go:24 func unslotted(valueType ir.Type, member string) string
+internal/native/target.go:10 func ValidateOptions(options Options) error
+internal/native/target.go:37 func compilerName(options Options) string
+internal/native/taste.go:101 func (e *emitter) effects(expression ir.Effects) string
+internal/native/view_unions_read.go:8 func init()

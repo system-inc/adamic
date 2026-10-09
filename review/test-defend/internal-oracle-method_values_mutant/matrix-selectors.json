@@ -1,0 +1,5 @@
+[
+  "^(Test.*Namespace.*|TestImportCycle.*)$",
+  "^TestNativeAgreesWithNode$/^(internal|stage3)$/^(oracle|namespace-live-export|namespace-init-sys|fixtures)$/^(testdata|live[.]a|realpath-control[.]a|cwd-control[.]a|namespaces)$/^(library_method_values.*|module_namespace_reads|namespaces.*|e4eec87_f2.*|narrowed_union_valid[.]a|08_parser_jsdoc_nested[.]a)$",
+  "^TestNativeAgreesWithNode$/^stage3$/^namespaces$/^shapes$/"
+]

@@ -1,0 +1,44 @@
+[
+  [
+    "D01",
+    "internal/lower/load_time_reads.go",
+    "index < positions[file]",
+    "index > positions[file]",
+    "module provider order: flip bound"
+  ],
+  [
+    "D02",
+    "internal/lower/module_namespace.go",
+    "!load.IsLibrary(declaration.AsSourceFile())",
+    "load.IsLibrary(declaration.AsSourceFile())",
+    "module namespace library exclusion: flip condition"
+  ],
+  [
+    "D03",
+    "internal/lower/load_time_reads.go",
+    "return !l.provenModuleReads[node] && l.checked(local)",
+    "return l.provenModuleReads[node] && l.checked(local)",
+    "module runtime readiness: flip proven condition"
+  ],
+  [
+    "D04",
+    "internal/lower/namespaces.go",
+    "body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: true}})",
+    "body = append(body, ir.Assign{Local: l.namespaceReadyLocal(node), Value: ir.BooleanConstant{Value: false}})",
+    "namespace completion: change ready constant"
+  ],
+  [
+    "D05",
+    "internal/lower/namespaces.go",
+    "b.parameters[len(checks)]",
+    "b.parameters[len(checks)-1]",
+    "qualified read result: off-by-one parameter bound"
+  ],
+  [
+    "D06",
+    "internal/lower/namespaces.go",
+    "parent.Kind == ast.KindModuleBlock || module",
+    "parent.Kind != ast.KindModuleBlock || module",
+    "namespace member binding scope: flip condition"
+  ]
+]
