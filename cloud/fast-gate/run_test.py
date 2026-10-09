@@ -2269,6 +2269,8 @@ elif sys.argv[2] == 'upload':
                 self.assertFalse(directory.startswith(gate.arguments.out + os.sep))
         self.assertNotEqual(first.buildStoreEnvironment, second.buildStoreEnvironment)
 
+    # The kill walks /proc for the unit's session: without it the sleeper is never killed and the drain waits it out.
+    @unittest.skipUnless(sys.platform == "linux", "requires Linux /proc sessions")
     def test_drain_wall_deadlines_kill_processes(self):
         self.publisher()
         for name in ("audit", "upload"):
@@ -2279,11 +2281,12 @@ elif sys.argv[2] == 'upload':
             original = gate.spawn
             def spawn(command, *args):
                 return original([sys.executable, "-c", "import time; time.sleep(600)"], *args)
-            with mock.patch.object(gate, "spawn", spawn), mock.patch.object(run, "unitKillSeconds", 0.05), mock.patch("builtins.print"):
+            with mock.patch.object(gate, "spawn", spawn), mock.patch.object(run, "unitKillSeconds", 1), mock.patch("builtins.print"):
                 gate.cacheDrain(name)
             row = gate.result["cache_drain_units"][-1]
             self.assertNotEqual(row["exit"], 0)
-            self.assertIn("killed at 90 s", row["detail"])
+            # The detail names the deadline that applied (18960baa), here the patched one.
+            self.assertIn("%s killed at 1 s" % name, row["detail"])
             self.assertTrue(all(process.poll() is not None for process in gate.processes))
             self.assertEqual(gate.failure is not None, name == "audit")
             self.assertEqual(gate.exits[name] == 0, name == "upload")
