@@ -29,6 +29,8 @@ state = Path(os.environ.get('ADAMIC_FAST_GATE_WATCH_STATE', os.path.expanduser('
 watchLog = Path(os.environ.get('ADAMIC_FAST_GATE_WATCH_LOG', os.path.expanduser('~/Projects/system/adamic-gate-logs/fast-gate-watch.log')))
 ahraDirectory = os.environ.get('ADAMIC_FAST_GATE_AHRA_DIR', '/Users/kirkouimet/Projects/ahra')
 queuedLimit = int(os.environ.get('ADAMIC_STAR_QUEUED_SECONDS', '60'))
+# A whole gate of main runs about 50 minutes on Home; past an hour the loop is stuck, not busy.
+busyLimit = int(os.environ.get('ADAMIC_MAIN_BUSY_SECONDS', '3600'))
 fullLog = Path(os.environ.get('ADAMIC_FULL_GATE_LOG', os.path.expanduser('~/Projects/system/adamic-gate-logs/full-gate-main.log')))
 mainReds = os.environ.get('ADAMIC_MAIN_REDS', '')  # a file standing in for cloud/merge-tree's, in tests
 verdictLine = re.compile(r'^(\d\d:\d\d:\d\d) done (\S+): (green|red): ([0-9a-f]{40})\b(.*)$')
@@ -382,6 +384,23 @@ def mainHead():
     return mainHeadCache['sha']
 
 
+def busyWith(log, now):
+    """The main the full-gate loop is gating right now ('<sha12> on <box> since <hh:mm:ss>'): its latest 'full gate of main <sha>' line with no 'finished:'
+    after it, started (by the line's UTC clock) less than busyLimit ago. Empty when the loop is idle or stuck."""
+    for index in range(len(log) - 1, -1, -1):
+        match = re.match(r'^(\d\d):(\d\d):(\d\d) full gate of main ([0-9a-f]{40})\b.*? on (\S+)$', log[index])
+        if not match:
+            continue
+        if any(re.match(r'^\d\d:\d\d:\d\d finished:', line) for line in log[index + 1:]):
+            return ''
+        day = now - now % 86400
+        started = day + int(match.group(1)) * 3600 + int(match.group(2)) * 60 + int(match.group(3))
+        if started > now:
+            started -= 86400
+        return '%s on %s since %s' % (match.group(4)[:12], match.group(5), log[index][:8]) if now - started < busyLimit else ''
+    return ''
+
+
 def checkConfirmation(now):
     """A main that moved must have its whole gate started within a minute (@system_adamic, Oct 8: 54cbc125
     landed at about 20:59Z with the full-gate loop still paused, and nothing confirmed it until a hand found it).
@@ -389,8 +408,15 @@ def checkConfirmation(now):
     head = mainHead()
     if not head:
         return 'main head unknown', None, None, []
-    if any(head in line for line in lines(fullLog) if 'full gate of' in line):
+    log = lines(fullLog)
+    if any(head in line for line in log if 'full gate of' in line):
         return 'main %s confirming' % head[:12], None, None, []
+    # The loop gates one main at a time, so a main that lands mid-run waits for it (Oct 9 03:13Z: 745dc0bb paged 64 s
+    # after landing while the loop was three minutes into e69fcba7). Quiet while that run is unfinished and younger than
+    # busyLimit; a run past it, or a loop that isn't running anything, still pages.
+    busy = busyWith(log, now)
+    if busy:
+        return 'main %s queued behind a running main gate, %s' % (head[:12], busy), None, None, []
     seen = state / 'main-head-first-seen'
     fields = (lines(seen) or [''])[0].split()
     if len(fields) != 2 or fields[0] != head:

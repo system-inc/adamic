@@ -322,5 +322,25 @@ esac
         self.assertFalse((self.root / 'main-confirm-alarmed').exists())
 
 
+    def test_a_main_queued_behind_a_running_main_gate_is_quiet_until_the_run_is_too_old(self):
+        # Oct 9 03:13Z: 745dc0bb paged 64 s after landing while Home was three minutes into e69fcba7's whole gate.
+        head, running = '7' * 40, 'e' * 40
+        (self.root / 'main-head').write_text(head + '\n')
+        (self.root / 'main-head-first-seen').write_text('%s %d\n' % (head, self.now - 120))
+        started = time.strftime('%H:%M:%S', time.gmtime(self.now - 180))
+        (self.root / 'full.log').write_text('%s full gate of main %s (tools t) on home\n' % (started, running))
+        self.assertEqual(self.check(), [], 'queued behind a running main gate is not a page')
+        # The run finished: nothing is running, so the head waiting is a page again.
+        with open(self.root / 'full.log', 'a') as handle:
+            handle.write('%s finished: green: %s full gate in 180 s\n' % (time.strftime('%H:%M:%S', time.gmtime(self.now - 90)), running))
+        self.assertIn('no whole gate has started', self.check()[0])
+        # A run older than the busy limit is a stuck loop, not a queue.
+        (self.root / 'main-confirm-alarmed').unlink(missing_ok=True)
+        (self.root / 'sends').unlink()
+        old = time.strftime('%H:%M:%S', time.gmtime(self.now - 4000))
+        (self.root / 'full.log').write_text('%s full gate of main %s (tools t) on home\n' % (old, running))
+        self.assertIn('no whole gate has started', self.check()[0])
+
+
 if __name__ == '__main__':
     unittest.main()
