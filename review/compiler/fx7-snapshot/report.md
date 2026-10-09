@@ -1,5 +1,5 @@
 Built the runtime zero snapshot and compiler reference-tag retain guard for task #aecx10a, item 143.
-Commit: see branch compiler/fx7-snapshot.
+Implementation commit: d3d2e838 on branch compiler/fx7-snapshot.
 Focused Node differential, call-target and view checks pass; counts and lane receipts are accompanying logs.
 Both fixes pass alone; both mutants fail native comparison under release and sanitizer builds.
 No whole-package gate or full gate was run; integration owns that gate.
@@ -31,3 +31,5 @@ New test durations: lower boolean 0.27s, lower number 0.26s; oracle boolean 1.31
 Roadmap contribution: item 143's runtime and compiler checked-view snapshot correctness, with independent failure evidence. The brief supplies task #aecx10a and item 143, but no separate numbered roadmap step.
 
 Counts refresh passed (58.552s) after installing stage3/api pinned dependencies with `timeout 120 npm ci --prefix stage3/api`. Two existing fixtures lose one retain of undefined each; the two new rows are recorded. Current origin/main was fast-forwarded before committing.
+
+Lane checks passed: `lane checks 5.3 s: gofmt and tools on 4 Go files, t.Parallel on 3 test packages; vet 3 packages`. The checkout fetched only main by default, so the lane branch remote-tracking refs were populated with explicit refspecs before running the prescribed command. No PR was opened.
