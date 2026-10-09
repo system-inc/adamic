@@ -1,0 +1,4 @@
+FIRST FAILURE (census, at 1.7 s):
+compiler dependency census: undeclared compiler consumers: review/compiler/lowering-chain/member-3-mutants/drop-mapper.go. Declare each in cloud/fast-gate/compiler-dependencies.json in this branch: its package, then the compiler packages it exercises (entries there add to the gate tools' map).
+(box load 7.9 on 64 cores at first failure)
+red: afba800ed3dcdf459c8dd144000e79fc553c07c3 fast gate, first failure at census after 1.7 s (; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 7.9 on 64 cores at start, load 7.9 on 64 cores at first failure, load 7.9 on 64 cores at end; deferred to full gate: 0 tests; branch cloud/land-lowering-chain-afba800e, session none), 0 fail, 0 pass
