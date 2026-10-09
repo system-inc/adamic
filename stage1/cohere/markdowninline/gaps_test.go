@@ -34,3 +34,5 @@ func TestDelimiterExpressionMatchesNode(t *testing.T) {
 	equal(t, "backend delimiter expression", backend.stdout, answer.stdout)
 	leaks(t, lowered, binary)
 }
+
+// The third canary of tools 26226fda selects this package (developer tools, Oct 9).

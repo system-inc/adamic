@@ -47,3 +47,5 @@ func TestNoReaderCallingConvention(t *testing.T) {
 		})
 	}
 }
+
+// The third canary of tools 26226fda selects this package (developer tools, Oct 9).
