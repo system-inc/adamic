@@ -1,0 +1,21 @@
+[
+  {
+    "test": "TestLibraryMethodValueBoundaries",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestLibraryMethodValues",
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/library_method_values.go:251",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/library_method_values.go:251",
+        "change": "Drop the delayed-fill guard for new array receivers.",
+        "rows_failed": [
+          "TestLibraryMethodValueBoundaries"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/library-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; library_method_values_test.go:54: want delayed fill of an array with holes, got stage 0 cannot lower an array of any yet"
+  }
+]

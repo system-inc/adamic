@@ -1,0 +1,191 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/library_for_in.go",
+    "line": 16,
+    "old": "l.checker.IsArrayType(proven) || checker.IsTupleType(proven)",
+    "new": "!l.checker.IsArrayType(proven) && !checker.IsTupleType(proven)",
+    "kind": "expr",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/library_for_in.go",
+    "line": 22,
+    "old": "!l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{})",
+    "new": "l.plainEnumerableObject(statement.Expression, map[*ast.Symbol]bool{})",
+    "kind": "expr",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/library_for_in.go",
+    "line": 144,
+    "old": "safe = false",
+    "new": "safe = true",
+    "kind": "stmt",
+    "operator": "change constant"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/library_globals.go",
+    "line": 20,
+    "old": "parent.Kind == ast.KindTypeOfExpression",
+    "new": "parent.Kind != ast.KindTypeOfExpression",
+    "kind": "expr",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/library_function_expressions.go",
+    "line": 22,
+    "old": "parameter.Name().Text() == \"this\"",
+    "new": "parameter.Name().Text() == \"that\"",
+    "kind": "expr",
+    "operator": "change constant"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/library_map_set.go",
+    "line": 31,
+    "old": "element != otherElement",
+    "new": "element == otherElement",
+    "kind": "expr",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/library_map_set.go",
+    "line": 164,
+    "old": "ast.SkipParentheses(arguments[0]).Kind != ast.KindArrowFunction",
+    "new": "ast.SkipParentheses(arguments[0]).Kind == ast.KindArrowFunction",
+    "kind": "expr",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/library_map_set.go",
+    "line": 371,
+    "old": "!known || held != element",
+    "new": "!known || held == element",
+    "kind": "expr",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/library_map_set.go",
+    "line": 495,
+    "old": "func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {",
+    "new": "return nil",
+    "kind": "entry",
+    "operator": "return early"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/library_method_values.go",
+    "line": 31,
+    "old": "declaration.Parent.Flags&ast.NodeFlagsConst == 0",
+    "new": "declaration.Parent.Flags&ast.NodeFlagsConst != 0",
+    "kind": "expr",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/library_method_values.go",
+    "line": 127,
+    "old": "!constMethodInitializer(node)",
+    "new": "constMethodInitializer(node)",
+    "kind": "expr",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/library_method_values.go",
+    "line": 190,
+    "old": "if hasSpread(node) {",
+    "new": "if !hasSpread(node) {",
+    "kind": "condition",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/library_method_values.go",
+    "line": 202,
+    "old": "len(written) != 1 || ast.SkipParentheses(written[0]).Kind != ast.KindArrayLiteralExpression",
+    "new": "len(written) != 2 || ast.SkipParentheses(written[0]).Kind != ast.KindArrayLiteralExpression",
+    "kind": "expr",
+    "operator": "change bound"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/library_method_values.go",
+    "line": 467,
+    "old": "receiver.Type() != ir.String || l.mayBeUndefined(written[0])",
+    "new": "receiver.Type() != ir.String || !l.mayBeUndefined(written[0])",
+    "kind": "expr",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/library_method_values.go",
+    "line": 241,
+    "old": "if l.mayBeUndefined(receiver) {",
+    "new": "if !l.mayBeUndefined(receiver) {",
+    "kind": "condition",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/library_method_values.go",
+    "line": 505,
+    "old": "if value.Type() != ir.Number {",
+    "new": "if value.Type() == ir.Number {",
+    "kind": "condition",
+    "operator": "flip condition"
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/library_node_buffer.go",
+    "line": 142,
+    "old": "args[0].Text() != \"sha256\"",
+    "new": "args[0].Text() != \"sha1\"",
+    "kind": "expr",
+    "operator": "change constant"
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/library_node_buffer.go",
+    "line": 175,
+    "old": "args[0].Text() != \"hex\"",
+    "new": "args[0].Text() != \"base64\"",
+    "kind": "expr",
+    "operator": "change constant"
+  },
+  {
+    "id": "M19",
+    "file": "internal/lower/library_node_buffer.go",
+    "line": 110,
+    "old": "\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}\n\nfunc (l *lowering) nodeBufferEncoding",
+    "new": "\t\t\treturn true\n\t\t}\n\t}\n\treturn true\n}\n\nfunc (l *lowering) nodeBufferEncoding",
+    "kind": "block",
+    "operator": "change constant"
+  },
+  {
+    "id": "M20",
+    "file": "internal/lower/library_method_values.go",
+    "line": 432,
+    "old": "arguments = append(arguments, reads[1])",
+    "new": "arguments = append(arguments, reads[0])",
+    "kind": "stmt",
+    "operator": "change constant index"
+  },
+  {
+    "id": "P01",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "new": "return nil, nil",
+    "kind": "entry",
+    "operator": "empty-answer probe"
+  }
+]

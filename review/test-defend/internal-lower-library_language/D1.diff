@@ -1,0 +1,14 @@
+diff --git a/internal/lower/library_method_values.go b/internal/lower/library_method_values.go
+index 0a226f31..30060e78 100644
+--- a/internal/lower/library_method_values.go
++++ b/internal/lower/library_method_values.go
+@@ -248,9 +248,6 @@ func (l *lowering) libraryMethodCall(node *ast.Node) (ir.Expression, bool, error
+ 		case "indexOf", "includes", "lastIndexOf":
+ 			value, handled, err = l.libraryArrayMethodArguments(node, receiver, method.name, written)
+ 		case "slice", "join", "at", "push", "reverse", "concat", "fill", "splice":
+-			if ast.SkipParentheses(receiver).Kind == ast.KindNewExpression && method.name == "fill" {
+-				return nil, true, l.notYet(node, "delayed fill of an array with holes; write the direct filled construction")
+-			}
+ 			value, handled, err = l.arrayMethodArguments(node, receiver, method.name, written)
+ 		}
+ 	case "String.prototype":
