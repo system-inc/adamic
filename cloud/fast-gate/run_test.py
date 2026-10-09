@@ -1579,7 +1579,7 @@ class StoppedPublish(unittest.TestCase):
             os.mkdir(cloud)
             shutil.copy(os.path.join(os.path.dirname(__file__), "../fast-gate.sh"), cloud)
             with open(os.path.join(cloud, "fast-gate-classify.sh"), "w") as handle:
-                handle.write('gateBase() { echo "main ' + 'a'*40 + '"; }\nclassify() { echo B; }\n')
+                handle.write('gateBase() { echo "main ' + 'a'*40 + '"; }\nclassify() { echo B; }\ngateMerge() { echo "same $1"; }\n')
             bindir = os.path.join(root, "bin")
             os.mkdir(bindir)
             fixture = os.path.join(root, "fixture")
