@@ -18,7 +18,7 @@ assert products and all(line.split()[3]=='hit' for line in products)
 coverage=dict(old_products=old_names,new_products={product:'TestProduct_'+suffix for suffix,product in pairs},old_bridge_checks=36,new_bridge_checks=36,registered_bridge_checks_unchanged=subprocess.run(['git','diff','--quiet','c9df51ed','HEAD','--','bridge/tsgo/registered_units_test.go']).returncode==0,merged_product_fetches=len(products),merged_product_misses=0)
 (e/'coverage.json').write_text(json.dumps(coverage,indent=2)+'\n')
 s='''Nineteen bridge artifacts now have TestProduct units and a shared buildcache.Product recipe; the convention is documented.
-The doc commit is a44c7eae, the test implementation is 73f480a9, and the main merge is 20f1ed30.
+The doc commit is a44c7eae, the test implementation is 73f480a9, and the main merges are 20f1ed30 and 140ebf83.
 All nineteen products, nineteen input guards, sample bridge checks and measured compiler-corpus checks pass within 60 seconds.
 Nineteen omitted-input mutants serve stale products and fail; removing one registered product fails the count assertion.
 No production code, oracle fixtures, gate implementation or shared-store implementation changed; other compiler-corpus leaves were not rerun.
@@ -26,7 +26,7 @@ No production code, oracle fixtures, gate implementation or shared-store impleme
 This serves step 79 and task #sykbpks: builds have their own units instead of making a bridge observation carry cold setup.
 The first commit contains only the requested docs/test-products.md convention, preserving its words and restoring markdown.
 All implementation changes are in _test.go. Every branch commit is the allowed doc, tests, review evidence or a merge of main.
-Main b5245943 was merged without conflicts; it changed unrelated estree and printer tests.
+Main b5245943 and cd0ecb04 were merged without conflicts; they changed unrelated estree, printer, regexp, lint and YAML tests.
 
 The same bridgeProduct recipe serves all nineteen product tests and every bridge consumer. There are no sync.Once builders.
 Every product test calls t.Parallel first, has no subtests and only fetches its product. Product keys contain sorted source,
@@ -82,10 +82,10 @@ s+='''
 Commands and exact output are in results.json, individual JSON logs, run.py and consumers.py.
 The merged-tip check runs only TestProduct_, TestBridgeProductInput_, and the three coverage/cache tests;
 all pass and all real product fetches are hits. No whole package tests or full gate ran. No fixture was added,
-so internal/oracle/counts.md is unchanged. The other twenty-three compiler-corpus leaf selections, other platforms,
+so internal/oracle/counts.md is unchanged. The other eighteen compiler-corpus leaf selections, other platforms,
 a completely empty Go action cache and shared-store transport are not covered by this unit.
 
-Setup: Go ready 0.009 s, Node ready 0.034 s, submodules ready 0.072 s, markdown dependencies 0.076 s,
+Setup: Go ready 0.025 s, Node ready 0.027 s, submodules ready 0.072 s, markdown dependencies 0.076 s,
 clang ready 0.187 s, Go build ready 38.870 s, setup complete 39.166 s. setup.txt holds its exact lines.
 nproc is 5; cpu.max is 400000/100000, a four-CPU quota. Go 1.27.1, clang 20.1.8, Node 24.19.0.
 Old regenerable Go cache files and this unit's superseded products were cleared to provide disk space.
