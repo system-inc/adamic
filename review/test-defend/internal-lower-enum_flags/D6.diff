@@ -1,0 +1,11 @@
+--- a/internal/lower/cast_proof.go
++++ b/internal/lower/cast_proof.go
+@@ -102,7 +102,7 @@
+ 	}
+ 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
+ 	target := l.concrete(l.checker.GetTypeAtLocation(node))
+-	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: castRepair}
++	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: func() string { if source.Flags()&checker.TypeFlagsStringLike != 0 && l.enumIdentity(target) != nil && !l.numericEnum(l.enumIdentity(target)) { return "" }; return castRepair }()}
+ 	inner := ast.SkipParentheses(as.Expression)
+ 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
+ 		return castProof{}, refused

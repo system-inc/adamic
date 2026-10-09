@@ -1,0 +1,7 @@
+{
+  "base": "6eef5ae586af0354d3032d36535e54cefb2da43a",
+  "nproc": 5,
+  "go": "go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "setup": "warm env.sh reused, no setup run"
+}

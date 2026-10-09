@@ -1,0 +1,200 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/enums.go",
+    "line": 160,
+    "before": "ir.NumberConstant{Value: value}, nil",
+    "after": "ir.NumberConstant{Value: value + 1}, nil",
+    "menu": "change constant",
+    "probe": false
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/enums.go",
+    "line": 202,
+    "before": "set(key, ir.StringConstant{Index: l.constant(member.Name().Text())})",
+    "after": "set(key, ir.StringConstant{Index: l.constant(\"\")})",
+    "menu": "change constant",
+    "probe": false
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/enums.go",
+    "line": 193,
+    "before": "\t\tset(member.Name().Text(), value)\n",
+    "after": "",
+    "menu": "drop statement",
+    "probe": false
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/enums.go",
+    "line": 175,
+    "before": "\t\tif position, exists := positions[name]; exists {\n\t\t\tfields[position].Value = value\n\t\t\treturn\n\t\t}\n",
+    "after": "",
+    "menu": "drop whole duplicate-key block",
+    "probe": false
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/enums.go",
+    "line": 157,
+    "before": "if math.IsNaN(value) || math.IsInf(value, 0) {",
+    "after": "if true || math.IsNaN(value) || math.IsInf(value, 0) {",
+    "menu": "flip condition",
+    "probe": false
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/enums.go",
+    "line": 70,
+    "before": "func (l *lowering) numericEnum(symbol *ast.Symbol) bool {",
+    "after": "func (l *lowering) numericEnum(symbol *ast.Symbol) bool {\n if true { return false }",
+    "menu": "return early",
+    "probe": false
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/enums.go",
+    "line": 50,
+    "before": "if proven == whole {",
+    "after": "if false && proven == whole {",
+    "menu": "flip condition",
+    "probe": false
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/enums.go",
+    "line": 35,
+    "before": "return !l.openNumericEnumType(from) && from.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.checker.IsTypeAssignableTo(from, to)",
+    "after": "return true",
+    "menu": "change constant",
+    "probe": false
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/enums.go",
+    "line": 39,
+    "before": "return from.Flags()&checker.TypeFlagsEnumLike != 0 && l.enumIdentity(from) == l.enumIdentity(to) && l.checker.IsTypeAssignableTo(from, to)",
+    "after": "return true",
+    "menu": "change constant",
+    "probe": false
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/enum_never.go",
+    "line": 28,
+    "before": "func (l *lowering) enumNeverIdentity(node *ast.Node, seen map[*ast.Node]bool) *ast.Symbol {",
+    "after": "func (l *lowering) enumNeverIdentity(node *ast.Node, seen map[*ast.Node]bool) *ast.Symbol {\n if true { return nil }",
+    "menu": "return early",
+    "probe": false
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/enum_never.go",
+    "line": 73,
+    "before": "declaration.Parent.Flags&ast.NodeFlagsConst != 0",
+    "after": "declaration.Parent.Flags&ast.NodeFlagsConst == 0",
+    "menu": "flip condition",
+    "probe": false
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/enum_never.go",
+    "line": 110,
+    "before": "Name: \"enum_never\",",
+    "after": "Name: \"enum_unreachable\",",
+    "menu": "change constant",
+    "probe": false
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/enums.go",
+    "line": 474,
+    "before": "func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {",
+    "after": "func (l *lowering) enumDefaultUnreachable(node *ast.Node) bool {\n if true { return false }",
+    "menu": "return early",
+    "probe": false
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/enum_flags.go",
+    "line": 48,
+    "before": "number.Float() == value",
+    "after": "number.Float() != value",
+    "menu": "flip condition",
+    "probe": false
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/enum_flags.go",
+    "line": 68,
+    "before": "bit <= 30",
+    "after": "bit < 30",
+    "menu": "off-by-one bound",
+    "probe": false
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/enum_flags.go",
+    "line": 107,
+    "before": "return l.flagDomainSeen(binary.Left, target, seen) || l.flagDomainSeen(binary.Right, target, seen)",
+    "after": "return l.flagDomainSeen(binary.Left, target, seen) && l.flagDomainSeen(binary.Right, target, seen)",
+    "menu": "flip condition",
+    "probe": false
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "line": 152,
+    "before": "\treturn declaration\n",
+    "after": "\treturn nil\n",
+    "menu": "return early",
+    "probe": false
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "line": 32,
+    "before": "g.walks++",
+    "after": "g.walks += 2",
+    "menu": "change constant",
+    "probe": false
+  },
+  {
+    "id": "M19",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "line": 99,
+    "before": "if declaration := g.lowering.namespaceRuntimeEnum(node); declaration != nil {\n\t\t\t\tentry.reads[declaration] = node\n\t\t\t}",
+    "after": "if declaration := g.lowering.namespaceRuntimeEnum(node); declaration != nil {\n\t\t\t}",
+    "menu": "drop statement",
+    "probe": false
+  },
+  {
+    "id": "M20",
+    "file": "internal/lower/namespaces.go",
+    "line": 364,
+    "before": "case ast.KindFunctionDeclaration:\n\t\t\tif declaration.Body() != nil {\n\t\t\t\treturn declaration",
+    "after": "case ast.KindFunctionDeclaration:\n\t\t\tif declaration.Body() != nil {\n\t\t\t\treturn nil",
+    "menu": "return early",
+    "probe": false
+  },
+  {
+    "id": "P_LOWER",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "before": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "after": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n if true { return nil, nil }",
+    "menu": "empty answer",
+    "probe": true
+  },
+  {
+    "id": "P_REACH",
+    "file": "internal/lower/namespaces_call_graph.go",
+    "line": 24,
+    "before": "func (g *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node {",
+    "after": "func (g *namespaceCallGraph) reach(function *ast.Node) map[*ast.Node]*ast.Node {\n if true { return nil }",
+    "menu": "empty answer",
+    "probe": true
+  }
+]

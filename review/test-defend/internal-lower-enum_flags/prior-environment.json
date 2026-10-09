@@ -1,0 +1,35 @@
+{
+  "origin_main": "8171b3173bdbfce1f7982d3c4f731279307ece37",
+  "nproc": 5,
+  "go": "go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "warm_env": "/workspace/adamic-tools/env.sh",
+  "setup_skipped": true,
+  "npm_command": "npm ci --prefix stage3/api",
+  "npm_reported_seconds": 0.461,
+  "npm_wall_seconds": null,
+  "baseline_command": "timeout 95 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+  "baseline_binary_seconds": 27.345,
+  "baseline_wall_seconds": null,
+  "isolated_timing_wall_seconds": 97.69572268199772,
+  "standalone_validation_seconds": 12.248525925002468,
+  "switch_build": {
+    "command": "timeout 90 go test -c -o /tmp/u031/switched.test ./internal/lower/",
+    "seconds": 9.353909129000385,
+    "exit": 0
+  },
+  "invalid_matrix_wall_seconds": 260.1914065700039,
+  "invalid_matrix_excluded": true,
+  "unit_skips": [],
+  "production_matrix_wall_seconds": 583.7132104199991,
+  "production_matrix_binary_seconds": 543.313,
+  "probe_wall_seconds": 65.10499797599186,
+  "probe_binary_seconds": 29.997,
+  "restored_wall_seconds": 29.412174329001573,
+  "restored_binary_seconds": 27.057,
+  "baseline_skips": [
+    "TestOriginalCycleLedger",
+    "TestOptionalWideningCensus",
+    "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+  ]
+}

@@ -1,0 +1,11 @@
+--- a/internal/lower/enums.go
++++ b/internal/lower/enums.go
+@@ -157,7 +157,7 @@
+ 		if math.IsNaN(value) || math.IsInf(value, 0) {
+ 			return nil, l.notYet(member, "a non-finite enum member")
+ 		}
+-		return ir.NumberConstant{Value: value}, nil
++		if initializer := member.AsEnumMember().Initializer; initializer != nil && initializer.Kind == ast.KindNumericLiteral && strings.HasPrefix(initializer.Text(), "0x") { return ir.NumberConstant{Value: value + 1}, nil }; return ir.NumberConstant{Value: value}, nil
+ 	}
+ 	if value, ok := constant.(string); ok {
+ 		return ir.StringConstant{Index: l.constant(value)}, nil

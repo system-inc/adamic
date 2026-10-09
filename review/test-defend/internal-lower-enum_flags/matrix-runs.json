@@ -1,0 +1,271 @@
+{
+  "D1-apply": {
+    "exit": 0,
+    "wall_seconds": 0.002180378003686201,
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-defend/internal-lower-enum_flags/D1.diff"
+    ]
+  },
+  "D1-vet": {
+    "exit": 0,
+    "wall_seconds": 0.6278452429978643,
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "D1": {
+    "exit": 1,
+    "wall_seconds": 49.11233973799972,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "D2-apply": {
+    "exit": 0,
+    "wall_seconds": 0.001980738998099696,
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-defend/internal-lower-enum_flags/D2.diff"
+    ]
+  },
+  "D2-vet": {
+    "exit": 0,
+    "wall_seconds": 0.5013503169975593,
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "D2": {
+    "exit": 1,
+    "wall_seconds": 49.857699391002825,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "D3-apply": {
+    "exit": 0,
+    "wall_seconds": 0.001909357997647021,
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-defend/internal-lower-enum_flags/D3.diff"
+    ]
+  },
+  "D3-vet": {
+    "exit": 0,
+    "wall_seconds": 0.6727337479969719,
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "D4-apply": {
+    "exit": 0,
+    "wall_seconds": 0.002337589001399465,
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-defend/internal-lower-enum_flags/D4.diff"
+    ]
+  },
+  "D4-vet": {
+    "exit": 0,
+    "wall_seconds": 0.5890887830028078,
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "D4": {
+    "exit": 1,
+    "wall_seconds": 48.406484162005654,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "D5-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0019063039944740012,
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-defend/internal-lower-enum_flags/D5.diff"
+    ]
+  },
+  "D5-vet": {
+    "exit": 0,
+    "wall_seconds": 0.531999000995711,
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "D5": {
+    "exit": 1,
+    "wall_seconds": 48.50936317099695,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "D6-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0023115709991543554,
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-defend/internal-lower-enum_flags/D6.diff"
+    ]
+  },
+  "D6-vet": {
+    "exit": 0,
+    "wall_seconds": 0.5326156950031873,
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "D6": {
+    "exit": 1,
+    "wall_seconds": 48.895224968997354,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "D7-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0022582919991691597,
+    "command": [
+      "git",
+      "apply",
+      "--check",
+      "/workspace/adamic/review/test-defend/internal-lower-enum_flags/D7.diff"
+    ]
+  },
+  "D7-vet": {
+    "exit": 0,
+    "wall_seconds": 0.5670634999987669,
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ]
+  },
+  "D7": {
+    "exit": 1,
+    "wall_seconds": 49.77216371800023,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "D3-inactive": {
+    "exit": 0,
+    "wall_seconds": 47.54738754600112,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  },
+  "D3": {
+    "exit": 1,
+    "wall_seconds": 47.8621314829943,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/lower/",
+      "-run",
+      "."
+    ]
+  }
+}
