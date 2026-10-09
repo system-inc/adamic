@@ -79,7 +79,7 @@ func TestGoBuildKeysArgumentsAndEnvironment(t *testing.T) {
 
 // GoBuild builds the same bytes from any checkout path, so a product another machine published audits clean: the cgo
 // package, copied into two module directories at different paths and built with GoBuild's flags, is byte-identical.
-func TestGoBuildIsReproducibleAcrossCheckoutPaths(t *testing.T) {
+func TestGoBuildIsReproducibleAcrossCheckoutPathsAndCommits(t *testing.T) {
 	root, err := repositoryRoot()
 	if err != nil {
 		t.Fatal(err)
@@ -96,6 +96,13 @@ func TestGoBuildIsReproducibleAcrossCheckoutPaths(t *testing.T) {
 			os.WriteFile(filepath.Join(module, file), content, 0o644)
 		}
 		os.WriteFile(filepath.Join(module, "go.mod"), []byte("module example.com/reproducible\n\ngo 1.21\n"), 0o644)
+		// Each checkout is its own repository at its own commit, as two gate trees are: Go stamps a binary built in a
+		// repository with the commit unless -buildvcs=false.
+		for _, git := range [][]string{{"init", "-q"}, {"add", "."}, {"-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "commit " + name}} {
+			if output, err := exec.Command("git", append([]string{"-C", module}, git...)...).CombinedOutput(); err != nil {
+				t.Fatalf("git %v: %v\n%s", git, err, output)
+			}
+		}
 		command := exec.Command("go", append(append([]string{"build"}, reproducible(nil)...), "-o", filepath.Join(module, "out"), "./withc")...)
 		command.Dir = module
 		command.Env = append(os.Environ(), "GOWORK=off", "GOFLAGS=")
@@ -109,10 +116,10 @@ func TestGoBuildIsReproducibleAcrossCheckoutPaths(t *testing.T) {
 		sums = append(sums, fmt.Sprintf("%x", sha256.Sum256(content)))
 	}
 	if sums[0] != sums[1] {
-		t.Fatalf("two checkout paths built %s and %s", sums[0], sums[1])
+		t.Fatalf("two checkout paths at two commits built %s and %s", sums[0], sums[1])
 	}
 	arguments := reproducible([]string{"-buildmode=c-archive"})
-	if !slices.Equal(arguments, []string{"-trimpath", "-ldflags=-buildid=", "-buildmode=c-archive"}) {
+	if !slices.Equal(arguments, []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false", "-buildmode=c-archive"}) {
 		t.Fatalf("arguments %v", arguments)
 	}
 	defer func() {

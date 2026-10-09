@@ -39,14 +39,16 @@ func GoBuild(t testing.TB, output, pkg string, arguments []string, environment .
 	return filepath.Join(directory, output)
 }
 
-// reproducible adds what makes a build's bytes independent of where the checkout sits: without them a cgo product
-// differs between two checkout paths in Go's build ID alone (measured Oct 9), so a product fetched by another machine
-// would fail the audit. Pure Go is already path-independent; -trimpath and an empty build ID make cgo so too.
+// reproducible adds what makes a build's bytes independent of where the checkout sits and which commit it's at:
+// without -trimpath and an empty build ID a cgo product differs between two checkout paths in Go's build ID alone
+// (measured Oct 9). Without -buildvcs=false every binary built in the repository stamps the commit (vcs.revision, 40
+// hex), which the key leaves out on purpose, so two commits with the same inputs shared a key and differed in those
+// bytes: floor1's audit rebuild of bridge/tsgo/oracle called it poisoning (Oct 9 04:52Z, same size, other bytes).
 func reproducible(arguments []string) []string {
-	kept := []string{"-trimpath", "-ldflags=-buildid="}
+	kept := []string{"-trimpath", "-ldflags=-buildid=", "-buildvcs=false"}
 	for _, argument := range arguments {
-		if argument == "-trimpath" || strings.HasPrefix(argument, "-ldflags") {
-			panic("buildcache.GoBuild sets -trimpath and -ldflags itself, for a product that's the same from any checkout path")
+		if argument == "-trimpath" || strings.HasPrefix(argument, "-ldflags") || strings.HasPrefix(argument, "-buildvcs") {
+			panic("buildcache.GoBuild sets -trimpath, -ldflags and -buildvcs itself, for a product that's the same from any checkout path and commit")
 		}
 	}
 	return append(kept, arguments...)
