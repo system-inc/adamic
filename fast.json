@@ -1,0 +1,14 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "2d460c30b199906819258e1894d34b178f339c6e",
+  "branch": "area/compiler",
+  "base": "7b18d0576930caca4e22ce2eef92fcf563af52d0",
+  "complete": true,
+  "darwin": "not run (pool is Linux only)"
+}
