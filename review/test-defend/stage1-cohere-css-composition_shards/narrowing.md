@@ -1,0 +1,1 @@
+The clean 388-member raw-parser family exceeded 90 seconds with no test assertion failure. The already-started D1 broad-family retry was explicitly stopped with SIGTERM to its owned timeout process group, to replace it with 100-member batches. Its partial rows remain incomplete; only completed batch results support verdicts.

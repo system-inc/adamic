@@ -1,0 +1,26 @@
+[
+  {
+    "mutant": "C1",
+    "file": "stage1/cohere/css/input.ts",
+    "old": "const middle = Math.floor((low + high + 1) / 2);",
+    "new": "const middle = low + 1;",
+    "change": "Change search midpoint policy to advance one line at a time, preserving answers while growing work.",
+    "file_line": "stage1/cohere/css/input.ts:63"
+  },
+  {
+    "mutant": "D1",
+    "file": "stage1/cohere/css/main.ts",
+    "old": "args[2] === 'repeat' ? 10 : 1",
+    "new": "args[2] === 'repeat' ? 9 : 1",
+    "change": "Off by one: nine repeat rounds instead of ten.",
+    "file_line": "stage1/cohere/css/main.ts:59"
+  },
+  {
+    "mutant": "D2",
+    "file": "stage1/cohere/css/main.ts",
+    "old": "nodes += (result.parser.nodes[0] ?? panic('missing root')).children.length;",
+    "new": "",
+    "change": "Drop child-count accumulation while preserving full-tree output.",
+    "file_line": "stage1/cohere/css/main.ts:70"
+  }
+]

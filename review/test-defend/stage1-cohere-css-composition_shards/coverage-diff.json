@@ -1,0 +1,32 @@
+{
+  "compiler_exclusive_blocks": 4426,
+  "compiler_caveat": "Compiler coverage includes cache-miss work. These are not TypeScript port-exclusive lines.",
+  "runtime": {
+    "throughput_entry": "main.ts",
+    "subsumer_entry": "compose_main.ts",
+    "throughput_branch": {
+      "original_file_line": "stage1/cohere/css/main.ts:59",
+      "transformed_offsets": [
+        1397,
+        1401
+      ],
+      "source": "? 10",
+      "count_per_Node_run": 11
+    },
+    "subsumer_branch": {
+      "original_file_line": "stage1/cohere/css/compose_main.ts:59",
+      "transformed_offsets": [
+        1403,
+        1407
+      ],
+      "source": "? 10",
+      "count_per_Node_run": 0
+    },
+    "exclusive_target_lines": [
+      "stage1/cohere/css/main.ts:59 repeat branch",
+      "stage1/cohere/css/main.ts:74 count output",
+      "stage1/cohere/css/main.ts:75 aggregate checksum"
+    ],
+    "comparison": "Separate entry drivers. Shared parser/Input implementation also reaches different histories: ten repeats versus once per partition."
+  }
+}

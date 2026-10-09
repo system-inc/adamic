@@ -1,0 +1,11 @@
+--- a/stage1/cohere/css/input.ts
++++ b/stage1/cohere/css/input.ts
+@@ -60,7 +60,7 @@
+         let low = 0;
+         let high = this.lines.length - 1;
+         while(low < high) {
+-            const middle = Math.floor((low + high + 1) / 2);
++            const middle = low + 1;
+             if(offset < (this.lines[middle] ?? panic('missing line'))) {
+                 high = middle - 1;
+             }

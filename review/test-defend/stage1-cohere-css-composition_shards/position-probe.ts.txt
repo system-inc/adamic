@@ -1,0 +1,14 @@
+import { Input as Before } from './input-before.ts';
+import { Input as After } from '/workspace/adamic/stage1/cohere/css/input.ts';
+const text = 'x\n'.repeat(10000);
+const before = new Before(text);
+const after = new After(text);
+for (let i=0;i<=text.length;i++) {
+ const a=before.position(i), b=after.position(i);
+ if(a.offset!==b.offset||a.line!==b.line||a.column!==b.column) throw new Error('position differs at '+i);
+}
+for(const [name,input] of [['binary',before],['linear',after]]) {
+ const start=process.hrtime.bigint();let sum=0;
+ for(let i=0;i<1000;i++)sum+=input.position(text.length).line;
+ console.log(name+' checksum='+sum+' ns='+String(process.hrtime.bigint()-start));
+}

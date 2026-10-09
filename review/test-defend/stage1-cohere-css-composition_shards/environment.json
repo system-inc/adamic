@@ -1,0 +1,14 @@
+{
+  "TMPDIR": "/tmp/adamic-gate",
+  "GOTOOLCHAIN": "auto",
+  "ADAMIC_CSS_BENCH": "1",
+  "ADAMIC_CSS_LIBRARY": "/tmp/defend-css/library",
+  "ADAMIC_CSS_PRINTER_LIBRARY": "/tmp/defend-css/library",
+  "ADAMIC_CSS_FIXTURES": "/tmp/defend-css/fixtures",
+  "ADAMIC_NATIVE_SPLIT": "1",
+  "ADAMIC_NATIVE_JOBS": "4",
+  "nproc": "5",
+  "go": "go version go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "fixture_commit": "cb4b33fba24a8428d00e54be85fc886288a374ea"
+}

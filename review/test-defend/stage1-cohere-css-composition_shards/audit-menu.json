@@ -1,0 +1,57 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/css/parser.ts",
+    "old": "        parser.parse();\n",
+    "new": "",
+    "kind": "drop statement",
+    "change": "drop parser.parse invocation; constructor root still returned",
+    "entry": "compose_main.ts",
+    "rows": [
+      "TestCompositionMatchesGo family",
+      "TestCSSThroughput",
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "line": 703
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/css/compose.ts",
+    "old": "node.setBoolean('import', true);",
+    "new": "node.setBoolean('import', false);",
+    "kind": "change constant",
+    "change": "clear composed import marker",
+    "entry": "compose_main.ts",
+    "rows": [
+      "TestCompositionMatchesGo family",
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "line": 252
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/css/tree.ts",
+    "old": "return quote(node.literalValue);",
+    "new": "return quote('');",
+    "kind": "change constant",
+    "change": "render literal tree nodes as empty strings",
+    "entry": "compose_main.ts",
+    "rows": [
+      "TestCompositionMatchesGo family"
+    ],
+    "line": 146
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/css/print_doc.ts",
+    "old": "n.kind === 'indent' ? 1 : -1",
+    "new": "n.kind === 'indent' ? 0 : -1",
+    "kind": "change constant",
+    "change": "drop document indentation increment",
+    "entry": "print_main.ts",
+    "rows": [
+      "TestCSSPrinterOptimizedMatchesGo"
+    ],
+    "line": 132
+  }
+]
