@@ -1,0 +1,24 @@
+File: profile-after
+Build ID: 7eb219460f8f7271c86fefd18db4c35cf7fb2aab
+Type: cpu
+Time: 2026-10-08 10:49:51 UTC
+Duration: 6.87s, Total samples = 8910ms (129.65%)
+Showing nodes accounting for 4070ms, 45.68% of 8910ms total
+Dropped 519 nodes (cum <= 44.55ms)
+Showing top 15 nodes out of 287
+      flat  flat%   sum%        cum   cum%
+     730ms  8.19%  8.19%     1940ms 21.77%  github.com/system-inc/adamic/internal/lower.(*lowering).erasedMethodField.func1
+     620ms  6.96% 15.15%      760ms  8.53%  runtime.tryDeferToSpanScan
+     450ms  5.05% 20.20%     2860ms 32.10%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+     310ms  3.48% 23.68%      310ms  3.48%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+     260ms  2.92% 26.60%      410ms  4.60%  internal/runtime/maps.(*Iter).Next
+     250ms  2.81% 29.41%     1170ms 13.13%  runtime.scanObject
+     210ms  2.36% 31.76%     2820ms 31.65%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+     200ms  2.24% 34.01%     2720ms 30.53%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+     190ms  2.13% 36.14%      190ms  2.13%  internal/runtime/gc/scan.scanSpanPackedAVX512
+     190ms  2.13% 38.27%      190ms  2.13%  internal/runtime/maps.memHashAES
+     180ms  2.02% 40.29%      230ms  2.58%  runtime.findObject
+     170ms  1.91% 42.20%      180ms  2.02%  runtime.typePointers.next
+     110ms  1.23% 43.43%      230ms  2.58%  runtime.mallocgcSmallScanNoHeaderSC5
+     100ms  1.12% 44.56%      160ms  1.80%  runtime.mallocgcSmallNoScanSC7
+     100ms  1.12% 45.68%      100ms  1.12%  runtime.memclrNoHeapPointers

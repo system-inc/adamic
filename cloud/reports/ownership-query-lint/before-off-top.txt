@@ -1,0 +1,24 @@
+File: profile-before
+Build ID: 794c13e5847b4692d72a103156c5b85e118469df
+Type: cpu
+Time: 2026-10-08 10:49:37 UTC
+Duration: 6.74s, Total samples = 8930ms (132.49%)
+Showing nodes accounting for 3830ms, 42.89% of 8930ms total
+Dropped 492 nodes (cum <= 44.65ms)
+Showing top 15 nodes out of 285
+      flat  flat%   sum%        cum   cum%
+     640ms  7.17%  7.17%      870ms  9.74%  runtime.tryDeferToSpanScan
+     630ms  7.05% 14.22%     1700ms 19.04%  github.com/system-inc/adamic/internal/lower.(*lowering).erasedMethodField.func1
+     430ms  4.82% 19.04%     2630ms 29.45%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+     300ms  3.36% 22.40%      510ms  5.71%  internal/runtime/maps.(*Iter).Next
+     270ms  3.02% 25.42%      270ms  3.02%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+     260ms  2.91% 28.33%     1220ms 13.66%  runtime.scanObject
+     190ms  2.13% 30.46%      280ms  3.14%  runtime.findObject
+     170ms  1.90% 32.36%     2610ms 29.23%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+     150ms  1.68% 34.04%     2500ms 28.00%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+     140ms  1.57% 35.61%      140ms  1.57%  internal/runtime/maps.(*groupReference).key (inline)
+     140ms  1.57% 37.18%      140ms  1.57%  internal/runtime/maps.memHashAES
+     140ms  1.57% 38.75%      140ms  1.57%  runtime.spanClass.sizeclass (inline)
+     130ms  1.46% 40.20%      130ms  1.46%  internal/runtime/gc/scan.scanSpanPackedAVX512
+     120ms  1.34% 41.55%      240ms  2.69%  runtime.mallocgcSmallScanNoHeaderSC5
+     120ms  1.34% 42.89%      240ms  2.69%  runtime.scanObjectsSmall

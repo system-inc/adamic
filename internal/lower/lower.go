@@ -12,17 +12,24 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/flow"
+	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"os"
 	"path/filepath"
 )
 
+// Options gates the ownership query until its validation gate is complete.
+type Options struct {
+	ProgramRegion      bool
+	OwnershipQuery     bool
+	ownershipAgreement bool
+}
+
 // Lower lowers a checked program from one entry, in ESM evaluation order.
-type Options struct{ ProgramRegion bool }
 
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
-	return LowerWithOptions(ctx, program, Options{ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1"})
+	return LowerWithOptions(ctx, program, Options{ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
 }
 func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
 	files := program.Files()
@@ -34,20 +41,23 @@ func LowerWithOptions(ctx context.Context, program *load.Program, options Option
 	defer release()
 	var plan *programMembership
 	if options.ProgramRegion {
-		discovery, err := lowerChecked(program, typeChecker, entry, nil, true)
+		discovery, err := lowerCheckedWithOptions(program, typeChecker, entry, nil, true, options)
 		if err != nil {
 			return nil, err
 		}
 		plan = discovery.programPlan
 	}
-	built, err := lowerChecked(program, typeChecker, entry, plan, false)
+	built, err := lowerCheckedWithOptions(program, typeChecker, entry, plan, false, options)
 	if err != nil {
 		return nil, err
 	}
 	return built.result, nil
 }
 func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool) (*lowering, error) {
-	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, programPlan: plan, programDiscovery: discovery}
+	return lowerCheckedWithOptions(program, typeChecker, entry, plan, discovery, Options{})
+}
+func lowerCheckedWithOptions(program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery bool, options Options) (*lowering, error) {
+	lowering := &lowering{program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, programPlan: plan, programDiscovery: discovery, moveAgreement: options.ownershipAgreement}
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types
@@ -120,6 +130,16 @@ func lowerChecked(program *load.Program, typeChecker *checker.Checker, entry *as
 		}
 	}
 	readiness(lowering.result)
+	// Demand was recorded while emitting parallelMap; programs without moves
+	// must not pay for another walk over their IR.
+	if !discovery && options.OwnershipQuery && lowering.hasMovedParallelMap {
+		for _, transfer := range fresh.QueryOwnershipTransfers(lowering.result) {
+			if transfer.Answer.Verdict != fresh.Proven {
+				where := lowering.moveSites[transfer.Site-1]
+				return nil, lowering.moveRefused(where, "cannot move "+movePath(where.AsCallExpression().Arguments.Nodes[0])+": whole reachable ownership is not proven (ownership query "+transfer.Answer.Verdict.String()+": "+fmt.Sprint(transfer.Answer.Evidence)+")")
+			}
+		}
+	}
 	borrow(lowering.result)
 	counters(lowering.result)
 	return lowering, nil
@@ -135,6 +155,10 @@ type lowering struct {
 	checker                 *checker.Checker
 	result                  *ir.Program
 	sourceIdentities        map[*ast.Node]ir.SourceIdentity
+	parallelMoveDemand      map[parallelMoveSite]bool
+	hasMovedParallelMap     bool
+	moveSites               []*ast.Node
+	moveAgreement           bool
 
 	// cyclicModules keeps unresolved reads checked throughout a cyclic graph.
 	cyclicModules     bool

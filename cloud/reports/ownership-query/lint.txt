@@ -1,0 +1,24 @@
+goos: linux
+goarch: amd64
+pkg: github.com/system-inc/adamic/internal/lower
+cpu: INTEL(R) XEON(R) PLATINUM 8573C
+BenchmarkOwnershipQueryLowering/off-5         	       1	2520704425 ns/op	711414296 B/op	 8741055 allocs/op
+--- BENCH: BenchmarkOwnershipQueryLowering/off-5
+    ownership_query_test.go:84: functions=760 locals=3215
+BenchmarkOwnershipQueryLowering/off-5         	       1	2462876761 ns/op	711412512 B/op	 8741045 allocs/op
+--- BENCH: BenchmarkOwnershipQueryLowering/off-5
+    ownership_query_test.go:84: functions=760 locals=3215
+BenchmarkOwnershipQueryLowering/off-5         	       1	3097171950 ns/op	711463088 B/op	 8741031 allocs/op
+--- BENCH: BenchmarkOwnershipQueryLowering/off-5
+    ownership_query_test.go:84: functions=760 locals=3215
+BenchmarkOwnershipQueryLowering/on-5          	       1	2923960097 ns/op	711412240 B/op	 8742659 allocs/op
+--- BENCH: BenchmarkOwnershipQueryLowering/on-5
+    ownership_query_test.go:84: functions=760 locals=3215
+BenchmarkOwnershipQueryLowering/on-5          	       1	3029188286 ns/op	711519328 B/op	 8742658 allocs/op
+--- BENCH: BenchmarkOwnershipQueryLowering/on-5
+    ownership_query_test.go:84: functions=760 locals=3215
+BenchmarkOwnershipQueryLowering/on-5          	       1	2823241848 ns/op	711518144 B/op	 8742637 allocs/op
+--- BENCH: BenchmarkOwnershipQueryLowering/on-5
+    ownership_query_test.go:84: functions=760 locals=3215
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	17.875s

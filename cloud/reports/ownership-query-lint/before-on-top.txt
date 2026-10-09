@@ -1,0 +1,24 @@
+File: profile-before
+Build ID: 794c13e5847b4692d72a103156c5b85e118469df
+Type: cpu
+Time: 2026-10-08 10:49:44 UTC
+Duration: 6.80s, Total samples = 8850ms (130.08%)
+Showing nodes accounting for 3680ms, 41.58% of 8850ms total
+Dropped 517 nodes (cum <= 44.25ms)
+Showing top 15 nodes out of 293
+      flat  flat%   sum%        cum   cum%
+     610ms  6.89%  6.89%     1710ms 19.32%  github.com/system-inc/adamic/internal/lower.(*lowering).erasedMethodField.func1
+     510ms  5.76% 12.66%      780ms  8.81%  runtime.tryDeferToSpanScan
+     460ms  5.20% 17.85%     2600ms 29.38%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+     310ms  3.50% 21.36%      440ms  4.97%  internal/runtime/maps.(*Iter).Next
+     230ms  2.60% 23.95%      290ms  3.28%  runtime.findObject
+     220ms  2.49% 26.44%      220ms  2.49%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+     200ms  2.26% 28.70%      970ms 10.96%  runtime.scanObject
+     190ms  2.15% 30.85%      190ms  2.15%  internal/runtime/gc/scan.scanSpanPackedAVX512
+     170ms  1.92% 32.77%     2590ms 29.27%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+     160ms  1.81% 34.58%     1110ms 12.54%  github.com/system-inc/adamic/internal/fresh.(*value).merge
+     160ms  1.81% 36.38%      160ms  1.81%  runtime.spanClass.sizeclass (inline)
+     140ms  1.58% 37.97%      140ms  1.58%  internal/runtime/maps.memHashAES
+     110ms  1.24% 39.21%     2520ms 28.47%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+     110ms  1.24% 40.45%      130ms  1.47%  runtime.typePointers.next
+     100ms  1.13% 41.58%     1550ms 17.51%  github.com/system-inc/adamic/internal/fresh.(*analysis).run
