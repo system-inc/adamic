@@ -2,6 +2,7 @@ package comments
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -9,7 +10,9 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
+	"time"
 )
 
 const testCommentMutantsShards = 5
@@ -176,7 +179,17 @@ func TestCommentMutantsPlantedFailure(t *testing.T) {
 	}
 	for shard := 0; shard < testCommentMutantsShards; shard++ {
 		name := fmt.Sprintf("TestCommentMutants_%03d", shard)
-		command := exec.Command(binary, "-test.run=^"+name+"$", "-test.timeout=75s", "-test.v")
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		command := exec.CommandContext(ctx, binary, "-test.run=^"+name+"$", "-test.timeout=75s", "-test.v")
+		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+		command.Cancel = func() error {
+			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+			if err == syscall.ESRCH {
+				return os.ErrProcessDone
+			}
+			return err
+		}
+		command.WaitDelay = time.Second
 		for _, value := range os.Environ() {
 			if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(value, "ADAMIC_COMMENT_MUTANT_SURVIVOR_PROBE=") {
 				command.Env = append(command.Env, value)
@@ -184,6 +197,7 @@ func TestCommentMutantsPlantedFailure(t *testing.T) {
 		}
 		command.Env = append(command.Env, "ADAMIC_COMMENT_MUTANT_SURVIVOR_PROBE=1")
 		output, err := command.CombinedOutput()
+		cancel()
 		if shard == 2 {
 			if err == nil || !bytes.Contains(output, []byte("compiled semantic mutant survived")) || !bytes.Contains(output, []byte("--- FAIL: "+name)) {
 				t.Fatalf("%s did not catch planted survivor: %v\n%s", name, err, output)
