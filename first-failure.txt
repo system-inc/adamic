@@ -1,0 +1,12 @@
+FIRST FAILURE (products, at 471.6 s):
+github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompleteSuggestionNative
+=== RUN   TestProduct_CompleteSuggestionNative
+=== PAUSE TestProduct_CompleteSuggestionNative
+=== CONT  TestProduct_CompleteSuggestionNative
+    complete_suggestion_serialization_shards_test.go:195: build complete-suggestion-lowered-false e21c507396b2 hit 14.94
+    complete_suggestion_products_test.go:33: build complete-suggestion-native b8a88a791abf miss 74.84
+    complete_suggestion_products_test.go:32: TestProduct_CompleteSuggestionNative: 75.064s
+    complete_suggestion_products_test.go:32: build product unit exceeds 60s budget
+--- FAIL: TestProduct_CompleteSuggestionNative (75.06s)
+
+(box load 8.0 on 64 cores at first failure)
