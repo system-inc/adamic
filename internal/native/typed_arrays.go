@@ -8,6 +8,8 @@ import (
 
 func typedArrayKind(kind ir.Type) string {
 	switch kind {
+	case ir.Uint16Array:
+		return "adamic_typed_array_uint16"
 	case ir.Uint8Array:
 		return "adamic_typed_array_uint8"
 	case ir.Int32Array:

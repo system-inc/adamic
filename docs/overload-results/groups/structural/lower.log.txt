@@ -1,0 +1,14 @@
+=== RUN   TestOverloadStructuralResults
+--- PASS: TestOverloadStructuralResults (0.05s)
+=== RUN   TestOverloadStructuralRefuses
+=== RUN   TestOverloadStructuralRefuses/missing_Block_field
+=== RUN   TestOverloadStructuralRefuses/shared_wider_result
+=== RUN   TestOverloadStructuralRefuses/reverse_readonly_variance
+=== RUN   TestOverloadStructuralRefuses/writable_variance
+--- PASS: TestOverloadStructuralRefuses (0.37s)
+    --- PASS: TestOverloadStructuralRefuses/missing_Block_field (0.10s)
+    --- PASS: TestOverloadStructuralRefuses/shared_wider_result (0.09s)
+    --- PASS: TestOverloadStructuralRefuses/reverse_readonly_variance (0.09s)
+    --- PASS: TestOverloadStructuralRefuses/writable_variance (0.09s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.429s

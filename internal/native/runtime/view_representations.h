@@ -1,11 +1,5 @@
 #ifndef ADAMIC_VIEW_REPRESENTATIONS_H
 #define ADAMIC_VIEW_REPRESENTATIONS_H
-/* Views fallback: use the returned slot, never the cache. This macro does not
-   define a second inline function when runtime supplies adamic_slot_index.
-   Runtime's inline can replace this fallback when the stacks are integrated. */
-#ifndef adamic_slot_index
-#define adamic_slot_index(object, slot) ((size_t)((slot) - (object)->slots))
-#endif
 /* Must match internal/ir/ir.go. Semantic null/undefined tags do not change
    the counted-reference slot layout. Typed-array storage remains a reference. */
 enum adamic_view_representation {

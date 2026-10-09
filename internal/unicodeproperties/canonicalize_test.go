@@ -6,9 +6,11 @@ import (
 	"context"
 	"fmt"
 	"os/exec"
+	"runtime"
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 )
@@ -194,16 +196,33 @@ func TestCanonicalizeLegacyNode(t *testing.T) {
 	reportDisagreements(t, disagreements)
 }
 
-// Not parallel: one Node process per batch, for the same reason as the legacy
-// check. Every non-trivial class is scanned as new RegExp('^\\u{X}$', 'iu')
-// and again with iv, over every code point. Singletons (the code points in no
-// class) are partitioned twice, into blocks of 1024 and into strides. Any two
-// distinct code points fall in different groups of at least one partition, so
-// a match Node would make and the tables would not is an extra hit on that
-// group's scan. The other way, a pair the tables claim and Node does not, is
-// reported by the class scan.
+// Each leaf owns at most sixteen complete scans; Go's parallel subtests are
+// the gate's scheduling units. No Node pool or cross-shard result cache hides
+// work inside a long parent. Every scan still visits every Unicode code point.
 func TestCanonicalizeUnicodeNode(t *testing.T) {
-	const codePoints = 0x110000
+	lines := unicodeCanonicalizeLines()
+	shards := unicodeCanonicalizeShards(lines)
+	if err := checkUnicodeShardCoverage(lines, shards); err != nil {
+		t.Fatal(err)
+	}
+	for _, shard := range shards {
+		t.Run(shard.name(), func(t *testing.T) {
+			t.Parallel()
+			examined, disagreements, err := runUnicodeBatch(shard.input)
+			if err != nil {
+				t.Fatal(err)
+			}
+			want := (shard.end - shard.start) * 0x110000
+			if examined != want {
+				t.Fatalf("checked %d code points, want %d", examined, want)
+			}
+			t.Logf("%d complete scans, %d code points, disagreements %d", shard.end-shard.start, examined, len(disagreements))
+			reportDisagreements(t, disagreements)
+		})
+	}
+}
+
+func unicodeCanonicalizeLines() []string {
 	var lines []string
 	for index, canon := range unicodeClassCanon {
 		members := unicodeClass[index]
@@ -223,29 +242,121 @@ func TestCanonicalizeUnicodeNode(t *testing.T) {
 		lines = append(lines, "GROUP iu "+formatCodePoints(group))
 	}
 
-	const batchSize = 80
-	var (
-		examined      int
-		disagreements []string
-		checked       int
-	)
-	for start := 0; start < len(lines); start += batchSize {
-		end := start + batchSize
-		if end > len(lines) {
-			end = len(lines)
+	return lines
+}
+
+// Results are collected by input index, never completion order. Workers cannot call Fatal:
+// they return errors, and the test reports the first failed batch in input order after joining.
+type unicodeNodeResult struct {
+	index         int
+	examined      int
+	disagreements []string
+	err           error
+}
+
+func unicodeNodeBatches(lines []string, batchSize, workers int, run func(string) (int, []string, error)) ([]unicodeNodeResult, error) {
+	if batchSize < 0 || workers < 0 {
+		return nil, fmt.Errorf("negative Unicode batch size or worker count")
+	}
+	if len(lines) == 0 {
+		return nil, nil
+	}
+	if batchSize == 0 {
+		batchSize = len(lines)
+	}
+	limit := runtime.GOMAXPROCS(0)
+	if workers == 0 || workers > limit {
+		workers = limit
+	}
+	batchCount := (len(lines)-1)/batchSize + 1
+	if workers > batchCount {
+		workers = batchCount
+	}
+	jobs := make(chan int)
+	completed := make(chan unicodeNodeResult, workers)
+	var group sync.WaitGroup
+	for worker := 0; worker < workers; worker++ {
+		group.Add(1)
+		go func() {
+			defer group.Done()
+			for index := range jobs {
+				start := index * batchSize
+				end := min(start+batchSize, len(lines))
+				input := strings.Join(lines[start:end], "\n") + "\n"
+				examined, disagreements, err := run(input)
+				completed <- unicodeNodeResult{index, examined, disagreements, err}
+			}
+		}()
+	}
+	go func() {
+		for index := 0; index < batchCount; index++ {
+			jobs <- index
 		}
-		batch := lines[start:end]
-		got, bad := runUnicodeBatch(t, strings.Join(batch, "\n")+"\n")
-		examined += got
-		checked += len(batch)
-		disagreements = append(disagreements, bad...)
+		close(jobs)
+		group.Wait()
+		close(completed)
+	}()
+	results := make([]unicodeNodeResult, batchCount)
+	runs := make([]int, batchCount)
+	for result := range completed {
+		runs[result.index]++
+		results[result.index] = result
 	}
-	fmt.Printf("unicode canonicalize: %d class scans (iu and iv) + %d singleton groups, %d code points examined, disagreements %d\n",
-		len(unicodeClass)*2, len(blocks)+len(strides), examined, len(disagreements))
-	if checked != len(lines) || examined != len(lines)*codePoints {
-		t.Fatalf("checked %d lines and %d code points, want %d lines and %d code points", checked, examined, len(lines), len(lines)*codePoints)
+	for index, result := range results {
+		if runs[index] != 1 {
+			return nil, fmt.Errorf("Unicode batch %d ran %d times, want 1", index, runs[index])
+		}
+		if result.err != nil {
+			return nil, fmt.Errorf("Unicode batch %d: %w", index, result.err)
+		}
+		want := min(batchSize, len(lines)-index*batchSize) * 0x110000
+		if result.examined != want {
+			return nil, fmt.Errorf("Unicode batch %d examined %d code points, want %d", index, result.examined, want)
+		}
 	}
-	reportDisagreements(t, disagreements)
+	return results, nil
+}
+
+// Not parallel: temporarily controls GOMAXPROCS to prove the worker cap and output ordering.
+func TestUnicodeNodeBatchOrderAndLimit(t *testing.T) {
+	previous := runtime.GOMAXPROCS(2)
+	defer runtime.GOMAXPROCS(previous)
+	firstStarted := make(chan struct{})
+	secondFinished := make(chan struct{})
+	var mutex sync.Mutex
+	active, peak := 0, 0
+	run := func(input string) (int, []string, error) {
+		mutex.Lock()
+		active++
+		peak = max(peak, active)
+		mutex.Unlock()
+		switch input {
+		case "0\n":
+			close(firstStarted)
+			<-secondFinished
+		case "1\n":
+			<-firstStarted
+		case "2\n":
+			// This worker has already sent batch 1, so batch 0 completes later.
+			close(secondFinished)
+		}
+		mutex.Lock()
+		active--
+		mutex.Unlock()
+		return 0x110000, []string{strings.TrimSuffix(input, "\n")}, nil
+	}
+	results, err := unicodeNodeBatches([]string{"0", "1", "2", "3", "4", "5"}, 1, 20, run)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if peak != 2 {
+		t.Fatalf("peak workers %d, want GOMAXPROCS=2", peak)
+	}
+	for index, result := range results {
+		if result.index != index || len(result.disagreements) != 1 || result.disagreements[0] != strconv.Itoa(index) {
+			t.Fatalf("batch %d reported out of order: %+v", index, result)
+		}
+	}
 }
 
 func unicodeSingletonGroups() (blocks, strides [][]uint32) {
@@ -508,14 +619,28 @@ for (const line of lines) {
 console.log("TOTAL " + checked);
 `
 
-func runUnicodeBatch(t *testing.T, input string) (int, []string) {
-	t.Helper()
-	output := runNode(t, unicodeScanScript, input, 4*time.Minute)
-	return parseBatch(t, output, 0x110000)
+func runUnicodeBatch(input string) (int, []string, error) {
+	// Preserve the original deadline for 80-line batches. Larger measurement batches
+	// need proportionally more time, bounded by the gate's thirty-minute deadline.
+	batches := max(1, (strings.Count(input, "\n")+79)/80)
+	timeout := min(30*time.Minute, time.Duration(batches)*4*time.Minute)
+	output, err := runNodeOutput(unicodeScanScript, input, timeout)
+	if err != nil {
+		return 0, nil, err
+	}
+	return parseBatchOutput(output, 0x110000)
 }
 
 func parseBatch(t *testing.T, output string, perPattern int) (int, []string) {
 	t.Helper()
+	examined, problems, err := parseBatchOutput(output, perPattern)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return examined, problems
+}
+
+func parseBatchOutput(output string, perPattern int) (int, []string, error) {
 	var problems []string
 	checked := -1
 	scanner := bufio.NewScanner(strings.NewReader(output))
@@ -526,26 +651,34 @@ func parseBatch(t *testing.T, output string, perPattern int) (int, []string) {
 		case strings.HasPrefix(line, "TOTAL "):
 			value, err := strconv.Atoi(strings.TrimPrefix(line, "TOTAL "))
 			if err != nil {
-				t.Fatalf("total %q", line)
+				return 0, nil, fmt.Errorf("total %q", line)
 			}
 			checked = value
 		case strings.HasPrefix(line, "BAD "):
 			problems = append(problems, line)
 		default:
-			t.Fatalf("node line %q", line)
+			return 0, nil, fmt.Errorf("node line %q", line)
 		}
 	}
 	if err := scanner.Err(); err != nil {
-		t.Fatal(err)
+		return 0, nil, err
 	}
 	if checked < 0 {
-		t.Fatalf("node did not report a total\n%s", output)
+		return 0, nil, fmt.Errorf("node did not report a total\n%s", output)
 	}
-	return checked * perPattern, problems
+	return checked * perPattern, problems, nil
 }
 
 func runNode(t *testing.T, script, input string, timeout time.Duration) string {
 	t.Helper()
+	output, err := runNodeOutput(script, input, timeout)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return output
+}
+
+func runNodeOutput(script, input string, timeout time.Duration) (string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	command := exec.CommandContext(ctx, "node", "--eval", script)
@@ -558,9 +691,9 @@ func runNode(t *testing.T, script, input string, timeout time.Duration) string {
 		if len(tail) > 800 {
 			tail = tail[len(tail)-800:]
 		}
-		t.Fatalf("node: %v\n%s\n%s", err, stderr.String(), tail)
+		return "", fmt.Errorf("node: %v\n%s\n%s", err, stderr.String(), tail)
 	}
-	return stdout.String()
+	return stdout.String(), nil
 }
 
 func reportDisagreements(t *testing.T, disagreements []string) {

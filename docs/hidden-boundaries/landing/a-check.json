@@ -1,0 +1,269 @@
+{
+  "a_check": {
+    "internal/lower/testdata/overload-results/evaluate-liar.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/lower/testdata/overload-results/liar.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/lower/testdata/overload-results/parameter-liar.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/lower/testdata/overload-structural/block-factory-liar.a": {
+      "outcome": "refused",
+      "expected": "refused result.kind",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/block-factory-liar.a:6:1: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result Body at result.kind; readonly covariance requires string to fit \"Block\"; prove every return for this overl"
+    },
+    "internal/lower/testdata/overload-structural/block-liar.a": {
+      "outcome": "refused",
+      "expected": "refused result.statements",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/block-liar.a:2:177: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result ConciseBody at result.statements; required field is absent from Expression; prove every return for this overload"
+    },
+    "internal/lower/testdata/overload-structural/evaluator-reverse-liar.a": {
+      "outcome": "refused",
+      "expected": "refused result.value",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/evaluator-reverse-liar.a:2:48: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly c"
+    },
+    "internal/lower/testdata/overload-structural/evaluator-shared-liar.a": {
+      "outcome": "refused",
+      "expected": "refused result.value",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/evaluator-shared-liar.a:2:112: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly c"
+    },
+    "internal/lower/testdata/overload-structural/evaluator-writable.a": {
+      "outcome": "refused",
+      "expected": "refused parameter input",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/evaluator-writable.a:2:57: Adamic 0.1 refuses overload 1 of evaluate parameter input cannot be served by implementation parameter input; make the implementation accept every value admitted by this overload, without mutable widenin"
+    },
+    "internal/lower/testdata/overload-structural/factory-liar.a": {
+      "outcome": "refused",
+      "expected": "refused result.value",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/factory-liar.a:5:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | n"
+    },
+    "internal/lower/testdata/overload-structural/factory-literal-liar.a": {
+      "outcome": "refused",
+      "expected": "refused result.value",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/factory-literal-liar.a:5:1: Adamic 0.1 refuses overload 1 of evaluate result Result<\"safe\"> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | numbe"
+    },
+    "internal/lower/testdata/overload-structural/factory-storage.a": {
+      "outcome": "refused",
+      "expected": "refused result.value",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/factory-storage.a:6:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | number> cannot be served by implementation result Other | Result<string | number> at result.value; required field is absent from Other; prove "
+    },
+    "internal/lower/testdata/overload-structural/factory-writable.a": {
+      "outcome": "refused",
+      "expected": "refused result.value",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/factory-writable.a:5:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string> at result.value; writable invariance (reverse direction) requires string "
+    },
+    "internal/lower/testdata/overload-structural/fields-mixed.a": {
+      "outcome": "refused",
+      "expected": "refused result.value without a single storage representation",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/fields-mixed.a:10:16: Adamic 0.1 refuses an overload result field at result.value without a single storage representation; narrow the result to a member before reading the field; matching storage does not replace the overload retu"
+    },
+    "internal/lower/testdata/overload-structural/visitor-domain-liar.a": {
+      "outcome": "refused",
+      "expected": "refused visitor argument path",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/visitor-domain-liar.a:6:2: Adamic 0.1 refuses overload 1 of visitNodes visitor argument path is unproven at /workspace/adamic/internal/lower/testdata/overload-structural/visitor-domain-liar.a:6:2: original-array input must fit TIn"
+    },
+    "internal/lower/testdata/overload-structural/visitor-domain.a": {
+      "outcome": "refused",
+      "expected": "refused visitor argument path",
+      "first": "adamic: /workspace/adamic/internal/lower/testdata/overload-structural/visitor-domain.a:6:30: Adamic 0.1 refuses overload 1 of visitNodes visitor argument path is unproven at /workspace/adamic/internal/lower/testdata/overload-structural/visitor-domain.a:6:30: original-array input must fit TIn and exc"
+    },
+    "internal/oracle/testdata/hidden_boundary_generic_tnode.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/hidden_boundary_generic_tnode_constraints.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/hidden_boundary_never_array.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/hidden_boundary_never_array_observations.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a:3:79: stage 0 can't lower assigning a field of a union of differently held members yet"
+    },
+    "internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a:3:36: stage 0 can't lower a generic function as a value yet"
+    },
+    "internal/oracle/testdata/overload_callback_served.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_field_hatch/kind-liar.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_field_hatch/kind-liar.a:8:1: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result ConciseBody at result.kind; readonly covariance requires SyntaxKind to fit SyntaxKind.Block; prove every return f"
+    },
+    "internal/oracle/testdata/overload_field_hatch/kind-valid.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_field_hatch/kind-valid.a:8:1: Adamic 0.1 refuses overload 1 of transform result Block cannot be served by implementation result ConciseBody at result.kind; readonly covariance requires SyntaxKind to fit SyntaxKind.Block; prove every return "
+    },
+    "internal/oracle/testdata/overload_field_hatch/value-liar.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_field_hatch/value-liar.a:6:2: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly covariance r"
+    },
+    "internal/oracle/testdata/overload_field_hatch/value-undefined.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_field_hatch/value-undefined.a:6:2: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly covaria"
+    },
+    "internal/oracle/testdata/overload_field_hatch/value-valid.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_field_hatch/value-valid.a:6:2: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly covariance "
+    },
+    "internal/oracle/testdata/overload_results_binding.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_results_evaluate.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_results_parameter.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_results_scalar.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_results_transform.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_structural_block.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_structural_evaluator.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_structural_factory.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_structural_fields.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_values/module-liar.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/module-liar.a:4:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | numbe"
+    },
+    "internal/oracle/testdata/overload_values/module-valid.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/module-valid.a:4:1: Adamic 0.1 refuses overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefined> at result.value; readonly covariance requires string | numb"
+    },
+    "internal/oracle/testdata/overload_values/narrow-liar.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/narrow-liar.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefin"
+    },
+    "internal/oracle/testdata/overload_values/narrow-valid.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/narrow-valid.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefi"
+    },
+    "internal/oracle/testdata/overload_values/order-liar.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/order-liar.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefine"
+    },
+    "internal/oracle/testdata/overload_values/order-valid.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/order-valid.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undefin"
+    },
+    "internal/oracle/testdata/overload_values/proven.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_values/returned-liar.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/returned-liar.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | undef"
+    },
+    "internal/oracle/testdata/overload_values/returned-valid.a": {
+      "outcome": "refused",
+      "expected": "refused overload 1",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_values/returned-valid.a:7:9: Adamic 0.1 refuses an indirect value of an overload requires a per-overload proof: overload 1 of evaluate result Result<string | undefined> cannot be served by implementation result Result<string | number | unde"
+    },
+    "internal/oracle/testdata/overload_visitors/default-liar.a": {
+      "outcome": "refused",
+      "expected": "refused visitor argument path",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_visitors/default-liar.a:9:54: Adamic 0.1 refuses overload 1 of visit visitor argument path is unproven at /workspace/adamic/internal/oracle/testdata/overload_visitors/default-liar.a:9:54: original-array input must fit T and exclude undefine"
+    },
+    "internal/oracle/testdata/overload_visitors/helper-liar.a": {
+      "outcome": "refused",
+      "expected": "refused visitor argument path",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_visitors/helper-liar.a:8:2: Adamic 0.1 refuses overload 1 of visit visitor argument path is unproven at /workspace/adamic/internal/oracle/testdata/overload_visitors/helper-liar.a:8:2: original-array input must fit T and exclude undefined; c"
+    },
+    "internal/oracle/testdata/overload_visitors/helper.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_visitors/instantiations.a": {
+      "outcome": "refused",
+      "expected": "refused visitor argument path",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_visitors/instantiations.a:7:71: Adamic 0.1 refuses overload 1 of visit visitor argument path is unproven at /workspace/adamic/internal/oracle/testdata/overload_visitors/instantiations.a:7:71: original-array input must fit T and exclude unde"
+    },
+    "internal/oracle/testdata/overload_visitors/original-liar.a": {
+      "outcome": "refused",
+      "expected": "refused visitor argument path",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_visitors/original-liar.a:9:2: Adamic 0.1 refuses overload 1 of visit visitor argument path is unproven at /workspace/adamic/internal/oracle/testdata/overload_visitors/original-liar.a:9:2: original-array input must fit T and exclude undefine"
+    },
+    "internal/oracle/testdata/overload_visitors/original.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "internal/oracle/testdata/overload_visitors/overloaded-helper-liar.a": {
+      "outcome": "refused",
+      "expected": "refused visitor argument path",
+      "first": "adamic: /workspace/adamic/internal/oracle/testdata/overload_visitors/overloaded-helper-liar.a:9:2: Adamic 0.1 refuses overload 1 of worker visitor argument path is unproven at /workspace/adamic/internal/oracle/testdata/overload_visitors/overloaded-helper-liar.a:9:2: original-array input must fit T a"
+    },
+    "internal/oracle/testdata/overload_visitors/overloaded-helper.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  }
+}

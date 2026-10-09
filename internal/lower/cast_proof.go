@@ -178,7 +178,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		}
 		from, fromKnown := l.representation(source)
 		to, toKnown := l.representation(target)
-		if fromKnown && toKnown && from == ir.Object && to == ir.Object && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) && l.widened(target, source, map[[2]*checker.Type]bool{}) == nil && len(l.checker.GetIndexInfosOfType(target)) == 0 {
+		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && fromKnown && toKnown && from == ir.Object && to == ir.Object && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) && l.widened(target, source, map[[2]*checker.Type]bool{}) == nil && len(l.checker.GetIndexInfosOfType(target)) == 0 {
 			return castProof{structuralView: true}, nil
 		}
 

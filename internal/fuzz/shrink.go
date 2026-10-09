@@ -17,6 +17,11 @@ import (
 // that now fails some other way, is simply not kept. try runs one candidate at a time.
 func Shrink(program *Program, key string, try func(*Program) Outcome) *Program {
 	reduced := reduce(&programTree{program: program.Clone()}, func(candidate Reducible) bool {
+		// A move refusal's comments alone would make any accepted empty program
+		// look like the same compiler regression. Keep the actual task boundary.
+		if program.RefusalFix != "" && !strings.Contains(candidate.Source(), "parallelMap(") {
+			return false
+		}
 		outcome := try(candidate.(*programTree).program)
 		return outcome.Verdict == Finding && outcome.Key == key
 	}, 1, 3000)
@@ -314,6 +319,9 @@ func WriteFinding(path string, program *Program, seed uint64, without []string, 
 		return err
 	}
 	command := fmt.Sprintf("go run ./cmd/adamic-fuzz -seed %d -count 1", seed)
+	if program.Feature == "moves" {
+		command += " -only-moves"
+	}
 	if len(without) > 0 {
 		command += " -without " + strings.Join(without, ",")
 	}
