@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "unit",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "c8d591deeae7420a2045a571f5f88e261d66ca83",
+  "branch": "cloud/land-train-4-views-v3-2e10854c-f91994f0",
+  "base": "f91994f019703ba25d2918cf529c0e0b0c05d93c",
+  "unplanned_packages_not_run": 4,
+  "complete": true,
+  "darwin": "not run (pool is Linux only)"
+}
