@@ -175,3 +175,13 @@ Environment corrections: one initial mutation invocation used the box default Go
 Not covered: new rest-parameter or overloaded-callback admissions, tuple-to-array conversion, or array-to-structural callable readers. The attempted rest probe hits the existing function-relation refusal before this adapter and was not admitted. No protected compiler orchestration file or native runtime file changed. Evidence contains no compilable Go source.
 
 The concrete conservative choice is to keep unsupported representation conversions refused, with an element-type annotation as the fix. No open language ruling is required for the represented cases. Current-main merge and committed lane-check output follow.
+
+The adaptation commit is `fc02927ba`; merge `c40c1af07` incorporates current main `c1aa2c9bf`. On that merged tip, the exact targeted package commands above passed again: 110 top-level results, zero failures and zero skips, including two additional main IR controls. Largest top-level wall duration: 5.261 seconds on four CPUs. Individual durations are in `merged-results.json`. All 36 changed `.a` files passed the gate’s a-check rules; zero failures.
+
+The required lane command ran after the merge was committed. Its output:
+
+```text
+lane checks 4.6 s: gofmt and tools on 7 Go files, t.Parallel on 4 test packages; vet 4 packages
+```
+
+`go build ./...` also passed on the merged tip; output is in `merged-build.log`. Counts add 35 rows against the merged main with no existing row moved.
