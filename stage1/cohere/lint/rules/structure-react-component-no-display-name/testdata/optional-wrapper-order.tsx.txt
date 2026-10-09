@@ -1,0 +1,7 @@
+import React from 'react';
+Optional.displayName = 'Optional';
+const Optional = React?.memo(() => null);
+Optional.displayName = 'exempt';
+Parenthesized.displayName = 'Parenthesized';
+const Parenthesized = (React)?.forwardRef(() => null);
+Parenthesized.displayName = 'exempt';

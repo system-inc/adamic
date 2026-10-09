@@ -15,16 +15,16 @@ rule has no options. The exact policy description is copied into `messages.a`.
 `upstreamTest: Test` captures both dedicated tests and the absent-optional-node
 shared guard, filtered by exact rule name by the existing capture harness.
 
-Go cohere is the oracle. **56 captured upstream cases** and **five owned witnesses**
+Go cohere is the oracle. **56 captured upstream cases** and **six owned witnesses**
 passed, with selected and all-rule witness runs, plus the inherited corner corpus.
 Every witness was separately required to produce a Go finding. Go, source Node,
-emitted JavaScript and ASan/UBSan native output matched **535,030 bytes**; process
-wall 195.312 seconds. See `evidence/selected.log.gz`.
+emitted JavaScript and ASan/UBSan native output matched **538,210 bytes**; process
+wall 469.090 seconds. See `evidence/selected.log.gz`.
 
 The `display-name-wrapper-exemption-lost` mutant removes the wrapper exemption.
 It compiles and runs; Node and emitted JavaScript disagree with Go, and sanitized
-native matches mutated Node's **519,170 bytes**, so native also disagrees with Go.
-See `evidence/mutant.log.gz`; process wall 62.858 seconds.
+native matches mutated Node's **522,885 bytes**, so native also disagrees with Go.
+See `evidence/mutant.log.gz`; process wall 87.530 seconds.
 
 `testdata/wrapper-order.tsx.txt` names the declaration-order boundary: an assignment
 before a wrapper binding reports even though running that source would hit the
@@ -40,6 +40,7 @@ Commands, test output redirected to files:
 go run ./cmd/lint-registry
 python3 stage1/cohere/lint/rules/structure-react-component-no-display-name/testdata/check.py
 python3 stage1/cohere/lint/rules/structure-react-component-no-display-name/testdata/check.py mutant
+export WASI_SYSROOT=/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot
 python3 stage1/cohere/lint/rules/structure-react-component-no-display-name/testdata/gate.py
 ```
 
@@ -48,3 +49,19 @@ source is unchanged. The added top-level selected test calls `t.Parallel()`.
 Plain logs remain in `/tmp`; completed logs are preserved as deterministic gzip.
 The full gate requires committed stage-1 sources, so the source checkpoint is
 local until the unit's full evidence is ready. No partial unit is pushed.
+
+The first full-run launcher stopped before tests because bare setup had not exported
+WASI_SYSROOT. The installed SDK existed; supplying its sysroot explicitly allowed
+the one actual full package invocation to start. No test was omitted for this.
+
+An extra optional-wrapper probe found a real missed Go finding: assignment above
+`const Field = React?.memo(...)`. The shared React projection uses child 1 for a
+property's name, which is the QuestionDotToken for optional members. The rule's
+AST adapter now uses the existing `context.property` accessor for that named
+field before calling the unchanged shared predicates. No helper is reimplemented
+or edited. `testdata/optional-wrapper-order.tsx.txt` also checks a parenthesized
+React receiver. The failing probe is `evidence/optional-projection-refused.txt`.
+The initial full run was stopped after this new evidence; its partial log and
+metrics are archived as `evidence/before-projection-fix-*`, not counted as a
+finished gate. The corrected selected parity and semantic mutant passed on all backends, including
+the optional-member witness. The full gate is rerun on this corrected source.

@@ -1,0 +1,21 @@
+=== RUN   TestDisplayNameOptionalWrapperProbe
+=== PAUSE TestDisplayNameOptionalWrapperProbe
+=== CONT  TestDisplayNameOptionalWrapperProbe
+    lint_test.go:1082: optional namespaced wrapper: case 0 line 2: port "fixed\timport React from 'react';\\u000aField.displayName = 'Field';\\u000aconst Field = React?.memo(() => null);\\u000a", Go "/tmp/adamic-gate/TestDisplayNameOptionalWrapperProbe1794506148/001/optional.tsx:2:1"
+        Go context:
+        case 0
+        /tmp/adamic-gate/TestDisplayNameOptionalWrapperProbe1794506148/001/optional.tsx:2:1
+          structure/react-component-no-display-name  This assigns displayName by hand. A function component already carries its own name and DevTools reads it, so the assignment is a second copy of the name that a rename does not update: rename the component and the tree still shows the old label, with nothing failing. The one case that needs it is a wrapper returning an anonymous component, and that is exempt.
+
+        range 27 54 noDisplayNameAssignment 			27 54
+        fixed	import React from 'react';\u000aField.displayName = 'Field';\u000aconst Field = React?.memo(() => null);\u000a
+--- FAIL: TestDisplayNameOptionalWrapperProbe (74.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	74.489s
+FAIL
+Traceback (most recent call last):
+  File "/tmp/s13-display-probe.py", line 20, in <module>
+    subprocess.run(['go','test','-overlay='+str(overlay),'./stage1/cohere/lint','-run','^TestDisplayNameOptionalWrapperProbe$','-v','-count=1','-timeout=60m'],cwd=root,check=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['go', 'test', '-overlay=/tmp/adamic-gate/display-name-probe-gj4a3vmy/overlay.json', './stage1/cohere/lint', '-run', '^TestDisplayNameOptionalWrapperProbe$', '-v', '-count=1', '-timeout=60m']' returned non-zero exit status 1.

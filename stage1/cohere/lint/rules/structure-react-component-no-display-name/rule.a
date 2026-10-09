@@ -23,6 +23,14 @@ export class Rule {
     constructor(context: RuleContext) { this.context = context; }
     prepare(root: number): void {
         this.react = project(this.context.parser.nodes);
+        // Optional accesses carry a QuestionDotToken before their name. Use the
+        // shared accessor for Go's Name field rather than a child offset.
+        for(let index = 0; index < this.react.length; index++) {
+            const member = this.react[index];
+            if(member !== undefined && member.kind === 'PropertyAccessExpression') {
+                this.react[index] = { ...member, name: this.context.property(index) };
+            }
+        }
         for(const node of this.context.parser.nodes) {
             const functionLike = ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(node.kind);
             const parameters: number[] = [];

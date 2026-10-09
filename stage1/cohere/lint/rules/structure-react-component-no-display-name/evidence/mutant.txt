@@ -1,0 +1,37 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== CONT  TestMutants
+=== RUN   TestMutants/display-name-wrapper-exemption-lost
+=== PAUSE TestMutants/display-name-wrapper-exemption-lost
+=== CONT  TestMutants/display-name-wrapper-exemption-lost
+    lint_test.go:1000: checker compilation phases: load=744.530231ms lower=23.609539368s C=2.322934457s JavaScript=1.403467705s
+    lint_test.go:1006: display-name-wrapper-exemption-lost caught on Node: case 92 line 4632: port "/tmp/adamic-gate/TestMutantsdisplay-name-wrapper-exemption-lost2233736763/023/structure-react-component-no-display-name-4.tsx:4:1", Go "/tmp/adamic-gate/TestMutantsdisplay-name-wrapper-exemption-lost2233736763/023/structure-react-component-no-display-name-4.tsx:5:1"
+        Go context:
+        case 92
+        /tmp/adamic-gate/TestMutantsdisplay-name-wrapper-exemption-lost2233736763/023/structure-react-component-no-display-name-4.tsx:2:1
+          structure/react-component-no-display-name  This assigns displayName by hand. A function component already carries its own name and DevTools reads it, so the assignment is a second copy of the name that a rename does not update: rename the component and the tree still shows the old label, with nothing failing. The one case that needs it is a wrapper returning an anonymous component, and that is exempt.
+
+        range 27 60 noDisplayNameAssignment 			27 60
+        /tmp/adamic-gate/TestMutantsdisplay-name-wrapper-exemption-lost2233736763/023/structure-react-component-no-display-name-4.tsx:5:1
+          structure/react-component-no-display-name  This assigns displayName by hand. A function component already carries its own name and DevTools reads it, so the assignment is a second copy of the name that a rename does not update: rename the component and the tree still shows the old label, with nothing failing. The one case that needs it is a wrapper returning an anonymous component, and that is exempt.
+
+        range 137 180 noDisplayNameAssignment 			137 180
+        fixed	import React from 'react';\u000aOptional.displayName = 'Optional';\u000aconst Optional = React?.memo(() => null);\u000aOptional.displayName = 'exempt';\u000aParenthesized.displayName = 'Parenthesized';\u000aconst Parenthesized = (React)?.forwardRef(() => null);\u000aParenthesized.displayName = 'exempt';\u000a
+    lint_test.go:1006: display-name-wrapper-exemption-lost caught on emitted JavaScript: case 92 line 4632: port "/tmp/adamic-gate/TestMutantsdisplay-name-wrapper-exemption-lost2233736763/023/structure-react-component-no-display-name-4.tsx:4:1", Go "/tmp/adamic-gate/TestMutantsdisplay-name-wrapper-exemption-lost2233736763/023/structure-react-component-no-display-name-4.tsx:5:1"
+        Go context:
+        case 92
+        /tmp/adamic-gate/TestMutantsdisplay-name-wrapper-exemption-lost2233736763/023/structure-react-component-no-display-name-4.tsx:2:1
+          structure/react-component-no-display-name  This assigns displayName by hand. A function component already carries its own name and DevTools reads it, so the assignment is a second copy of the name that a rename does not update: rename the component and the tree still shows the old label, with nothing failing. The one case that needs it is a wrapper returning an anonymous component, and that is exempt.
+
+        range 27 60 noDisplayNameAssignment 			27 60
+        /tmp/adamic-gate/TestMutantsdisplay-name-wrapper-exemption-lost2233736763/023/structure-react-component-no-display-name-4.tsx:5:1
+          structure/react-component-no-display-name  This assigns displayName by hand. A function component already carries its own name and DevTools reads it, so the assignment is a second copy of the name that a rename does not update: rename the component and the tree still shows the old label, with nothing failing. The one case that needs it is a wrapper returning an anonymous component, and that is exempt.
+
+        range 137 180 noDisplayNameAssignment 			137 180
+        fixed	import React from 'react';\u000aOptional.displayName = 'Optional';\u000aconst Optional = React?.memo(() => null);\u000aOptional.displayName = 'exempt';\u000aParenthesized.displayName = 'Parenthesized';\u000aconst Parenthesized = (React)?.forwardRef(() => null);\u000aParenthesized.displayName = 'exempt';\u000a
+    lint_test.go:155: checker native mutant build: 18.875753343s
+    lint_test.go:1014: sanitized native canary structure/react-component-no-display-name equals mutated Node: 522885 bytes
+--- PASS: TestMutants (15.37s)
+    --- PASS: TestMutants/display-name-wrapper-exemption-lost (71.94s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	87.530s
