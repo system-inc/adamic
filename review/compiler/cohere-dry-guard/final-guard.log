@@ -1,0 +1,72 @@
+=== RUN   TestCohereMirrors
+=== PAUSE TestCohereMirrors
+=== RUN   TestUnlistedMirrorHeader
+=== PAUSE TestUnlistedMirrorHeader
+=== RUN   TestUnlistedTestMirrorHeader
+=== PAUSE TestUnlistedTestMirrorHeader
+=== RUN   TestUnlistedMirrorRule
+=== PAUSE TestUnlistedMirrorRule
+=== RUN   TestAssembledMirrorRule
+=== PAUSE TestAssembledMirrorRule
+=== RUN   TestStaleMirrorHeader
+=== PAUSE TestStaleMirrorHeader
+=== RUN   TestMissingMirrorFile
+=== PAUSE TestMissingMirrorFile
+=== RUN   TestStaleMirrorRule
+=== PAUSE TestStaleMirrorRule
+=== RUN   TestUnlistedAdamicMirrorHeader
+=== PAUSE TestUnlistedAdamicMirrorHeader
+=== RUN   TestUnlistedTestMirrorRule
+=== PAUSE TestUnlistedTestMirrorRule
+=== RUN   TestUnlistedCoreMirrorRule
+=== PAUSE TestUnlistedCoreMirrorRule
+=== RUN   TestStaleEvidenceMirrorRule
+=== PAUSE TestStaleEvidenceMirrorRule
+=== CONT  TestCohereMirrors
+=== CONT  TestStaleMirrorRule
+=== CONT  TestAssembledMirrorRule
+=== CONT  TestMissingMirrorFile
+=== CONT  TestStaleMirrorHeader
+=== NAME  TestAssembledMirrorRule
+    mirrors_test.go:583: caught assembled rule: scratch.go: emits cohere rule adamic/invariant-mutable without a mirror entry; consume the rule by reference or add this file/id with its decision and retiring task to cohere-mirrors.json
+--- PASS: TestAssembledMirrorRule (26.64s)
+=== CONT  TestStaleEvidenceMirrorRule
+=== NAME  TestStaleMirrorHeader
+    mirrors_test.go:584: caught stale header: internal/flow/effects.go: stale lift mirror ; remove its cohere-mirrors.json entry because its provenance or diagnostic no longer exists
+--- PASS: TestStaleMirrorHeader (26.68s)
+=== CONT  TestUnlistedTestMirrorRule
+=== NAME  TestStaleMirrorRule
+    mirrors_test.go:586: caught stale rule: internal/lower/cast_proof.go: stale rule mirror adamic/no-unchecked-cast; remove its cohere-mirrors.json entry because its provenance or diagnostic no longer exists
+--- PASS: TestStaleMirrorRule (26.90s)
+=== CONT  TestUnlistedCoreMirrorRule
+=== NAME  TestMissingMirrorFile
+    mirrors_test.go:585: caught missing file: internal/flow/effects.go: stale lift mirror ; remove its cohere-mirrors.json entry because its provenance or diagnostic no longer exists
+--- PASS: TestMissingMirrorFile (27.08s)
+=== CONT  TestUnlistedAdamicMirrorHeader
+--- PASS: TestCohereMirrors (28.37s)
+=== CONT  TestUnlistedTestMirrorHeader
+=== NAME  TestUnlistedTestMirrorRule
+    mirrors_test.go:590: caught test rule: scratch_test.go: emits cohere rule adamic/invariant-mutable without a mirror entry; consume the rule by reference or add this file/id with its decision and retiring task to cohere-mirrors.json
+--- PASS: TestUnlistedTestMirrorRule (18.62s)
+=== CONT  TestUnlistedMirrorRule
+=== NAME  TestUnlistedCoreMirrorRule
+    mirrors_test.go:591: caught core rule: scratch.go: emits cohere rule no-debugger without a mirror entry; consume the rule by reference or add this file/id with its decision and retiring task to cohere-mirrors.json
+--- PASS: TestUnlistedCoreMirrorRule (18.60s)
+=== CONT  TestUnlistedMirrorHeader
+=== NAME  TestUnlistedAdamicMirrorHeader
+    mirrors_test.go:588: caught adamic header: scratch.a: cohere source provenance is unlisted; record its decision in cohere-mirrors.json
+--- PASS: TestUnlistedAdamicMirrorHeader (18.47s)
+=== NAME  TestStaleEvidenceMirrorRule
+    mirrors_test.go:593: caught stale evidence: internal/lower/refusals.go: stale rule mirror @typescript-eslint/ban-ts-comment; remove its cohere-mirrors.json entry because its provenance or diagnostic no longer exists
+--- PASS: TestStaleEvidenceMirrorRule (19.32s)
+=== NAME  TestUnlistedTestMirrorHeader
+    mirrors_test.go:581: caught test header: scratch_test.go: cohere source provenance is unlisted; consume cohere by reference, or record the existing mirror's decision and retiring task in cohere-mirrors.json
+--- PASS: TestUnlistedTestMirrorHeader (17.68s)
+=== NAME  TestUnlistedMirrorHeader
+    mirrors_test.go:580: caught header: scratch.go: cohere source provenance is unlisted; consume cohere by reference, or record the existing mirror's decision and retiring task in cohere-mirrors.json
+--- PASS: TestUnlistedMirrorHeader (2.74s)
+=== NAME  TestUnlistedMirrorRule
+    mirrors_test.go:582: caught rule: scratch.go: emits cohere rule adamic/invariant-mutable without a mirror entry; consume the rule by reference or add this file/id with its decision and retiring task to cohere-mirrors.json
+--- PASS: TestUnlistedMirrorRule (2.94s)
+PASS
+ok  	github.com/system-inc/adamic/internal/dry	48.259s

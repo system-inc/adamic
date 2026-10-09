@@ -1,0 +1,5 @@
+--- FAIL: TestCohereMirrors (1.96s)
+    mirrors_test.go:38: internal/dry_guard_mutant.go: cohere source provenance is unlisted; consume cohere by reference, or record the existing mirror's decision and retiring task in cohere-mirrors.json
+FAIL
+FAIL	github.com/system-inc/adamic/internal/dry	1.967s
+FAIL

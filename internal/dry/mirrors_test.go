@@ -553,6 +553,10 @@ func mirrorMutant(t *testing.T, mutation string) {
 		if err := os.Remove(filepath.Join(root, entries[0].Path)); err != nil {
 			t.Fatal(err)
 		}
+	case "stale evidence":
+		expected = "internal/lower/refusals.go:"
+		action = "stale rule mirror @typescript-eslint/ban-ts-comment"
+		write("internal/lower/refusals.go", []byte("package retired\n"))
 	case "stale rule":
 		expected = "internal/lower/cast_proof.go:"
 		action = "stale rule mirror adamic/no-unchecked-cast"
@@ -585,3 +589,5 @@ func TestUnlistedAdamicMirrorHeader(t *testing.T) { t.Parallel(); mirrorMutant(t
 
 func TestUnlistedTestMirrorRule(t *testing.T) { t.Parallel(); mirrorMutant(t, "test rule") }
 func TestUnlistedCoreMirrorRule(t *testing.T) { t.Parallel(); mirrorMutant(t, "core rule") }
+
+func TestStaleEvidenceMirrorRule(t *testing.T) { t.Parallel(); mirrorMutant(t, "stale evidence") }

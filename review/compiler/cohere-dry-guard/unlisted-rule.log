@@ -1,0 +1,5 @@
+--- FAIL: TestCohereMirrors (1.92s)
+    mirrors_test.go:38: internal/dry_guard_mutant.go: emits cohere rule adamic/invariant-mutable without a mirror entry; consume the rule by reference or add this file/id with its decision and retiring task to cohere-mirrors.json
+FAIL
+FAIL	github.com/system-inc/adamic/internal/dry	1.929s
+FAIL

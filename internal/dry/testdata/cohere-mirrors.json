@@ -207,5 +207,15 @@
     "decision": "delete",
     "reason": "Existing compiler refusal uses the upstream rule judgment; replace it by reference while retaining lowering obligations.",
     "retiring_task": "#xjdce2d"
+  },
+  {
+    "path": "internal/lower/refusals.go",
+    "kind": "rule",
+    "rule_id": "@typescript-eslint/ban-ts-comment",
+    "counterpart": "cohere/internal/lint/rules/typescript/ban_ts_comment.go",
+    "decision": "delete",
+    "reason": "The local directive refusal repeats cohere suppression policy without emitting its rule ID. Consume the policy judgment by reference.",
+    "retiring_task": "#xjdce2d",
+    "evidence": "remove it and fix the type error"
   }
 ]

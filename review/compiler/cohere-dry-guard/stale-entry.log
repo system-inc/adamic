@@ -1,0 +1,5 @@
+--- FAIL: TestCohereMirrors (1.90s)
+    mirrors_test.go:38: internal/flow/effects.go: stale lift mirror ; remove its cohere-mirrors.json entry because its provenance or diagnostic no longer exists
+FAIL
+FAIL	github.com/system-inc/adamic/internal/dry	1.900s
+FAIL
