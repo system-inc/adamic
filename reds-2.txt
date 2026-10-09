@@ -1,0 +1,10 @@
+run adamic-gate-phases-20261009T054639-666ef541: void, 0 tests in 60 units, 4 failed, 1 units broken, 0 killed over budget
+BROKEN phase-wasi-internal-oracle-testdata-stack-overflow-a: the stage broke (exited true, code 2, last output "loom-phase: the instance's disk filled (no space left on device): Loom's fault, not the change's")
+FAIL phase-catalog-1 (stage)
+    red: 279494c64a62915fa30589645cd9cf684069fb74 full gate, first failure at catalog/01 shared-slice-append after 347.9 s, cancelled after first failure (catalog=347.9s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 2.3 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-2 (stage)
+    red: 279494c64a62915fa30589645cd9cf684069fb74 full gate, first failure at catalog/02 liveness-throw after 246.9 s, cancelled after first failure (catalog=246.9s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 6.8 on 5 cores at start, load 1.1 on 5 cores at first failure, load 1.1 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-3 (stage)
+    red: 279494c64a62915fa30589645cd9cf684069fb74 full gate, first failure at catalog/03 defined-lent after 382.5 s, cancelled after first failure (catalog=382.5s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 4.2 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-12 (stage)
+    red: 279494c64a62915fa30589645cd9cf684069fb74 full gate, first failure at catalog/12 refuse-suppression-directives after 357.5 s, cancelled after first failure (catalog=357.5s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 2.6 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass

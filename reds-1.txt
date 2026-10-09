@@ -1,0 +1,11 @@
+run adamic-gate-pilot-again-20261009T061123-b2260ede: red, 1842 tests in 1 units, 2 failed, 0 units broken, 0 killed over budget
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestDotARename_Setup (tests-96)
+    dot_a_rename_split_test.go:270: P0: setup exceeded 90s: context deadline exceeded
+    dot_a_rename_split_test.go:244: union: 1/1 cases exactly once
+    dot_a_rename_split_test.go:246: build dot-a-rename-oracle 1750af4af402 miss 3.99
+    dot_a_rename_split_test.go:246: build dot-a-rename-renamed-source ec4b7194caec miss 1.18
+    dot_a_rename_split_test.go:246: build dot-a-rename-original-lowered 30ffca6c466c miss 83.32
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-96)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	200.976s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	0.009s

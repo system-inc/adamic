@@ -1,0 +1,27 @@
+{
+  "target": "279494c64a62915fa30589645cd9cf684069fb74",
+  "jobs": 1,
+  "total_wall_seconds": 360.90578721600104,
+  "load_before": "7.11 5.57 3.29 1/371 372173",
+  "load_after": "1.01 2.36 2.54 1/360 373146",
+  "entries": [
+    {
+      "number": 11,
+      "made_against": "d772b5c990de4304de990e723835f19ebb613641",
+      "target": "279494c64a62915fa30589645cd9cf684069fb74",
+      "worktree": "/tmp/loom-units/loom-unit-4232533795/workspace/loom-out/phase/catalog-units/00-2ddxxkrx/adamic-catalog-worktree-t5rm_t5r/entry-11",
+      "setup_seconds": 12.147813001000031,
+      "ok": true,
+      "check_seconds": 346.1286331150004,
+      "cleanup_seconds": 0.4176283529995999,
+      "wall_seconds": 360.8858725280006,
+      "load_before": "7.11 5.57 3.29 1/372 372183",
+      "load_after": "1.01 2.36 2.54 1/361 373146",
+      "messages": [
+        "11 refuse-definite-assignment: applies-and-fails-as-recorded",
+        "11 made against=d772b5c990de4304de990e723835f19ebb613641",
+        "11 wall=360.886s setup=12.148s check=346.129s cleanup=0.418s load=7.11 5.57 3.29 1/372 372183 -> 1.01 2.36 2.54 1/361 373146"
+      ]
+    }
+  ]
+}

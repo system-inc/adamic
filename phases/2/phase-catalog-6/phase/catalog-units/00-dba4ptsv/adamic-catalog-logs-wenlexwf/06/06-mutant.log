@@ -1,0 +1,67 @@
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/regions_constructor_capture.a (0.41s)
+        oracle_test.go:758: the release build: exit codes differ
+            sanitized: exit 1, stdout "", stderr "=================================================================\n==94316==ERROR: AddressSanitizer: heap-use-after-free on address 0x7dadc9de0148 at pc 0x5581ea189605 bp 0x7ffc4d9edb20 sp 0x7ffc4d9edb18\nREAD of size 8 at 0x7dadc9de0148 thread T0\n    #0 0x5581ea189604 in adamic_function_4_closure /tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/adamic-build-3388819991/main.c:157:106\n    #1 0x5581ea188af7 in main /tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/adamic-build-3388819991/main.c:180:37\n    #2 0x7f9dcaacaca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f9dcaacad64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x5581ea0a2460 in _start (/tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/TestNativeAgreesWithNodeinternaloracletestdataregions_constr808755980/002/program+0x5b460)\n\n0x7dadc9de0148 is located 72 bytes inside of 4128-byte region [0x7dadc9de0100,0x7dadc9de1120)\nfreed by thread T0 here:\n    #0 0x5581ea144fd6 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3\n    #1 0x5581ea1d33b4 in adamic_region_end /home/agent/.cache/adamic/runtime/.build-827503063/region.c:88:3\n\npreviously allocated by thread T0 here:\n    #0 0x5581ea145274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x5581ea1d2e62 in adamic_object_new_in /home/agent/.cache/adamic/runtime/.build-827503063/region.c:48:32\n\nSUMMARY: AddressSanitizer: heap-use-after-free /tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/adamic-build-3388819991/main.c:157:106 in adamic_function_4_closure\nShadow bytes around the buggy address:\n  0x7dadc9ddfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7dadc9ddff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7dadc9ddff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7dadc9de0000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7dadc9de0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n=>0x7dadc9de0100: fd fd fd fd fd fd fd fd fd[fd]fd fd fd fd fd fd\n  0x7dadc9de0180: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd\n  0x7dadc9de0200: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd\n  0x7dadc9de0280: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd\n  0x7dadc9de0300: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd\n  0x7dadc9de0380: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==94316==ABORTING\n"
+            release:   exit 0, stdout "8\ncounter5\n9\ncounter12\n", stderr ""
+        oracle_test.go:774: exit codes differ
+            node:   exit 0, stdout "8\ncounter5\n9\ncounter12\n", stderr ""
+            native: exit 1, stdout "", stderr "=================================================================\n==94316==ERROR: AddressSanitizer: heap-use-after-free on address 0x7dadc9de0148 at pc 0x5581ea189605 bp 0x7ffc4d9edb20 sp 0x7ffc4d9edb18\nREAD of size 8 at 0x7dadc9de0148 thread T0\n    #0 0x5581ea189604 in adamic_function_4_closure /tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/adamic-build-3388819991/main.c:157:106\n    #1 0x5581ea188af7 in main /tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/adamic-build-3388819991/main.c:180:37\n    #2 0x7f9dcaacaca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #3 0x7f9dcaacad64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x5581ea0a2460 in _start (/tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/TestNativeAgreesWithNodeinternaloracletestdataregions_constr808755980/002/program+0x5b460)\n\n0x7dadc9de0148 is located 72 bytes inside of 4128-byte region [0x7dadc9de0100,0x7dadc9de1120)\nfreed by thread T0 here:\n    #0 0x5581ea144fd6 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3\n    #1 0x5581ea1d33b4 in adamic_region_end /home/agent/.cache/adamic/runtime/.build-827503063/region.c:88:3\n\npreviously allocated by thread T0 here:\n    #0 0x5581ea145274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x5581ea1d2e62 in adamic_object_new_in /home/agent/.cache/adamic/runtime/.build-827503063/region.c:48:32\n\nSUMMARY: AddressSanitizer: heap-use-after-free /tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/adamic-build-3388819991/main.c:157:106 in adamic_function_4_closure\nShadow bytes around the buggy address:\n  0x7dadc9ddfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7dadc9ddff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7dadc9ddff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7dadc9de0000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7dadc9de0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n=>0x7dadc9de0100: fd fd fd fd fd fd fd fd fd[fd]fd fd fd fd fd fd\n  0x7dadc9de0180: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd\n  0x7dadc9de0200: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd\n  0x7dadc9de0280: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd\n  0x7dadc9de0300: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd\n  0x7dadc9de0380: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==94316==ABORTING\n"
+        oracle_test.go:787: leaks:
+            exit 1
+            =================================================================
+            ==94323==ERROR: AddressSanitizer: heap-use-after-free on address 0x7df6451e0148 at pc 0x5595cca21605 bp 0x7ffd9981a960 sp 0x7ffd9981a958
+            READ of size 8 at 0x7df6451e0148 thread T0
+                #0 0x5595cca21604 in adamic_function_4_closure /tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/adamic-build-3388819991/main.c:157:106
+                #1 0x5595cca20af7 in main /tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/adamic-build-3388819991/main.c:180:37
+                #2 0x7fe645f38ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+                #3 0x7fe645f38d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+                #4 0x5595cc93a460 in _start (/tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/TestNativeAgreesWithNodeinternaloracletestdataregions_constr808755980/002/program+0x5b460)
+            
+            0x7df6451e0148 is located 72 bytes inside of 4128-byte region [0x7df6451e0100,0x7df6451e1120)
+            freed by thread T0 here:
+                #0 0x5595cc9dcfd6 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3
+                #1 0x5595cca6b3b4 in adamic_region_end /home/agent/.cache/adamic/runtime/.build-827503063/region.c:88:3
+            
+            previously allocated by thread T0 here:
+                #0 0x5595cc9dd274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+                #1 0x5595cca6ae62 in adamic_object_new_in /home/agent/.cache/adamic/runtime/.build-827503063/region.c:48:32
+            
+            SUMMARY: AddressSanitizer: heap-use-after-free /tmp/loom-units/loom-unit-1961367706/workspace/loom-out/phase/catalog-units/00-dba4ptsv/adamic-build-3388819991/main.c:157:106 in adamic_function_4_closure
+            Shadow bytes around the buggy address:
+              0x7df6451dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+              0x7df6451dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+              0x7df6451dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+              0x7df6451e0000: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+              0x7df6451e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+            =>0x7df6451e0100: fd fd fd fd fd fd fd fd fd[fd]fd fd fd fd fd fd
+              0x7df6451e0180: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+              0x7df6451e0200: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+              0x7df6451e0280: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+              0x7df6451e0300: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+              0x7df6451e0380: fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd fd
+            Shadow byte legend (one shadow byte represents 8 application bytes):
+              Addressable:           00
+              Partially addressable: 01 02 03 04 05 06 07 
+              Heap left redzone:       fa
+              Freed heap region:       fd
+              Stack left redzone:      f1
+              Stack mid redzone:       f2
+              Stack right redzone:     f3
+              Stack after return:      f5
+              Stack use after scope:   f8
+              Global redzone:          f9
+              Global init order:       f6
+              Poisoned by user:        f7
+              Container overflow:      fc
+              Array cookie:            ac
+              Intra object redzone:    bb
+              ASan internal:           fe
+              Left alloca redzone:     ca
+              Right alloca redzone:    cb
+            ==94323==ABORTING
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.449s
+FAIL

@@ -1,0 +1,79 @@
+run adamic-gate-pilot-20261009T054640-a52c051f: void, 23587 tests in 143 units, 22 failed, 1 units broken, 0 killed over budget
+BROKEN tests-59: exited 1 with no failed test (last output "loom-pilot: tests took 385 s in all")
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware (package) (tests-06)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/typeaware	90.095s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestRulesAgree (tests-15)
+    rules_agree_shards_test.go:154: build lint-rules-agree-lowered a962f78650b7 miss 65.69
+    lint_test.go:327: TestRulesAgree (setup lowered): 65.715s
+    lint_test.go:329: cooked: setup over 60s budget
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-89)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json	461.195s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/json	11.438s
+FAIL github.com/system-inc/adamic/internal/oracle TestNarrowedUnionObjectTagRefusal (tests-115)
+    narrowed_union_test.go:87: want refusal naming the path and fix, got <nil>
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutantsUnion (tests-131)
+    acceptance_mutants_split_test.go:304: shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutants_000 (tests-131)
+    acceptance_mutants_split_test.go:275: shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutants_001 (tests-131)
+    acceptance_mutants_split_test.go:276: shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutants_Setup (tests-131)
+    acceptance_mutants_split_test.go:182: shared setup exceeded 90s: context deadline exceeded
+    acceptance_mutants_split_test.go:120: build estree-acceptance-mutants-go-oracle fb2211c0a210 miss 2.84
+    acceptance_mutants_split_test.go:130: build estree-acceptance-mutant-lowered-catch-initializer 53d77e7ed08e miss 39.66
+    acceptance_mutants_split_test.go:130: build estree-acceptance-mutant-native-catch-initializer cd7a78afcf6f miss 32.46
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_000 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:443: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_001 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:444: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_002 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:445: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_003 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:446: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_004 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:447: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_005 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:448: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_006 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:449: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_007 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:450: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_008 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:451: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_009 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:452: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_010 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:453: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_011 (tests-131)
+    three_port_mutants_split_test.go:68: shard union: 234 pairs, 234 distinct ids, 3 mutants x 78 cases
+    three_port_mutants_split_test.go:454: build three-port-mutants-setup-v1: run TestThreePortMutants_Setup before shards; a leaf never prepares shared state
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestThreePortMutants_Setup (tests-131)
+    three_port_mutants_split_test.go:368: shared setup child:
+    three_port_mutants_split_test.go:330: build three-port-mutants-go-oracle-v1 e43528e9e45d miss 6.07
+    three_port_mutants_split_test.go:322: build three-port-mutant-lowered-logical-rebalance 6e3945fa6549 miss 39.87
+    three_port_mutants_split_test.go:322: build three-port-mutant-lowered-member-computed 4fb435fa1247 miss 40.78
+    three_port_mutants_split_test.go:322: build three-port-mutant-lowered-merged-jsdoc-value 37fb0d417dab miss 41.53
+    three_port_mutants_split_test.go:322: build three-port-mutant-native-logical-rebalance 279ccfcbde97 miss 37.62
+    three_port_mutants_split_test.go:322: build three-port-mutant-native-member-computed 7be438a2289f miss 42.91
+    three_port_mutants_split_test.go:370: cooked: TestThreePortMutants_Setup exceeded 90s deadline
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks (package) (tests-131)
+    panic: cooked: TestMarkdownTableLayout_Setup exceeded 90s: context deadline exceeded
+    table_layout_shards_test.go:63: build markdown_table_lowered c50c84245386 miss 68.29
+    table_layout_shards_test.go:63: build markdown_table_Go_list e978b667ceeb hit 3.18
+    table_layout_shards_test.go:63: build markdown_table_Go_document bd25ebafd328 hit 2.98
+    table_layout_shards_test.go:200: build markdown_table_native_false 192f9fb20e23 miss 17.89
+    goroutine 1 [running]:
+    github.com/system-inc/adamic/stage1/cohere/markdownblocks.init.0()
+    /tmp/adamic/stage1/cohere/markdownblocks/table_layout_setup_test.go:60 +0x40e
