@@ -16,6 +16,7 @@ func parserAheadCounts(t *testing.T) []string {
 		rows = append(rows, counted(t, "stage3/parser-ahead/rulings/"+name+".a", false, nil, false, false))
 	}
 	rows = append(rows, counted(t, "stage3/parser-ahead/node-array/fields.a", false, nil, false, false))
+	rows = append(rows, counted(t, "stage3/parser-ahead/rulings/null-placeholder-pending.a", false, nil, false, false))
 	return rows
 }
 

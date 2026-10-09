@@ -62,7 +62,7 @@ func TSGoC(program *ir.Program) (string, error) {
 				}
 				runtimeName += "_in"
 			}
-			body := "\tADAMIC_CHECK_STACK();\n\t"
+			body := "\tADAMIC_CHECK_STACK_NAMED(" + cString(function.Name) + ");\n\t"
 			if function.Returns != 0 {
 				body += "return "
 			}

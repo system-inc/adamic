@@ -1,3 +1,7 @@
+Historical report for 3c6f863d. Placeholder pending marks below are superseded by
+[parser-next Unit A](../parser-next/UNIT-A.md), which records the delivered
+c8f858b9 recheck on rehearsal 678d94f9. Program-region lifetime remains pending.
+
 Built: construction presence, V8 first-write key order, inline NodeArray extras, honest undefined observations and checked scalar uses toward step 24.
 Commits: rebased contracts onto rehearsal 3d0620c6; preserved published b95d352b through ancestry commit 8ee2057f; delivery SHA is reported after push.
 Commands and outputs: focused source oracles, native ASan/UBSan/leaks, JavaScript, counts recording, a-check and go vet pass; logs are in ../evidence.

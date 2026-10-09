@@ -1051,23 +1051,27 @@ _Noreturn void adamic_stack_overflow(void);
 // Even a function using only Wasm locals must advance the linear stack. Otherwise
 // its engine call stack can trap before this check sees any movement. The volatile
 // endpoints preserve a 64-byte frame, including in optimized recursive functions.
-#define ADAMIC_CHECK_STACK() \
+#define ADAMIC_CHECK_STACK_MESSAGE(message) \
 	do { \
 		volatile unsigned char adamic_stack_frame[64]; \
 		adamic_stack_frame[0] = 0; \
 		adamic_stack_frame[63] = 0; \
 		if ((uintptr_t)adamic_stack_frame < adamic_stack_limit) { \
-			adamic_stack_overflow(); \
+			adamic_panic(message, sizeof(message) - 1); \
 		} \
 	} while (0)
 #else
-#define ADAMIC_CHECK_STACK() \
+#define ADAMIC_CHECK_STACK_MESSAGE(message) \
 	do { \
 		if ((uintptr_t)__builtin_frame_address(0) < adamic_stack_limit) { \
-			adamic_stack_overflow(); \
+			adamic_panic(message, sizeof(message) - 1); \
 		} \
 	} while (0)
 #endif
+
+// Names are compile-time string literals; the guard allocates nothing.
+#define ADAMIC_CHECK_STACK() ADAMIC_CHECK_STACK_MESSAGE("RangeError: Maximum call stack size exceeded")
+#define ADAMIC_CHECK_STACK_NAMED(name) ADAMIC_CHECK_STACK_MESSAGE("RangeError: Maximum call stack size exceeded in " name)
 
 // adamic_unreachable ends a function the checker proved always returns. Reaching it is a compiler
 // bug, and it says so rather than returning garbage.

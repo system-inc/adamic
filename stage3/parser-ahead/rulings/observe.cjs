@@ -11,7 +11,7 @@ const expected={
 };
 function run(text){const module=require('node:module');const code=module.stripTypeScriptTypes(text,{mode:'transform'});return cp.spawnSync(process.execPath,['--input-type=module','-e',code],{encoding:'utf8'});}
 for(const name of Object.keys(expected)){const actual=run(fs.readFileSync(path.join(directory,name),'utf8'));if(actual.status!==0||actual.stdout!==expected[name]||actual.stderr)throw Error(JSON.stringify({name,...actual}));rows.push({name,stdout:actual.stdout,exit:actual.status,native:'TestParserConstructionSource and TestParserConstructionNullPlaceholderDelivered; placeholder pending cleared'});}
-const use=run(fs.readFileSync(path.join(directory,'factory-use.a'),'utf8'));if(use.status!==1||use.stdout!=='true\n'||!use.stderr.includes('TypeError'))throw Error('unsafe declared-T source use changed');rows.push({name:'factory-use.a',stdout:use.stdout,exit:use.status,stderr:'TypeError observed; Adamic must check the declared-T use at exit 70',native:'pending'});
+const use=run(fs.readFileSync(path.join(directory,'factory-use.a'),'utf8'));if(use.status!==1||use.stdout!=='true\n'||!use.stderr.includes('TypeError'))throw Error('unsafe declared-T source use changed');rows.push({name:'factory-use.a',stdout:use.stdout,exit:use.status,stderr:'TypeError observed; Adamic must check the declared-T use at exit 70',native:'TestParserConstructionUseCheck; declared-T consumption pinned at exit 70'});
 // Source prediction mutants, deliberately not native runtime mutants.
 const mutants=[
  ['synthesized-key','own-key-order.a',"return {kind:1} as FactoryNode;","return {kind:1,alpha:undefined,beta:undefined,'2':undefined,'10':undefined} as unknown as FactoryNode;"],
