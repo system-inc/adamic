@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T04:49:55.406090822Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T04:49:55.413725626Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece"}
+{"Time":"2026-10-09T04:49:55.413836439Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"=== RUN   TestBridgeUnitsCoverEveryPiece\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:49:55.413869598Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"    coverage_test.go:70: query coverage count: /workspace/adamic/bridge/tsgo/testdata/sample.ts: 161, want 162\n","OutputType":"error"}
+{"Time":"2026-10-09T04:49:55.413881125Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Output":"--- FAIL: TestBridgeUnitsCoverEveryPiece (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:49:55.413883669Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnitsCoverEveryPiece","Elapsed":0}
+{"Time":"2026-10-09T04:49:55.413893103Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:49:55.414107905Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:49:55.414149737Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.008}
