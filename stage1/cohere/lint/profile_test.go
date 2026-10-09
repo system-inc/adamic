@@ -289,24 +289,57 @@ func TestCommentFoldMutant(t *testing.T) {
 		}
 	}
 }
+
+const testPositionIndexMutantShards = 1
+
+// ADAMIC_TEST_SHARD=i/n selects a shard; unset runs all. All generated cases
+// form one corpus range, preserving the original existential mutant check on
+// every runtime. Build products are prepared once before parallel work.
 func TestPositionIndexMutant(t *testing.T) {
 	t.Parallel()
-	path := manifest(t, generated(t))
-	want := execute(t, "", goOracle(t), "--manifest", path).output
+	setup := time.Now()
+	rows := generated(t)
 	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;", "rules/no-warning-comments/rule.ts")
-	binary := buildPort(t, directory, true)
-	for _, side := range []struct {
-		name string
-		run  execution
-	}{
-		{"Node", node(t, directory, path, false)},
-		{"emitted JavaScript", emittedNode(t, directory, path, false)},
-		{"native", execute(t, "", binary, "--manifest", path)},
-	} {
-		if diff := difference(side.run.output, want); diff == "" {
-			t.Fatalf("position mutant survived on %s", side.name)
-		} else {
-			t.Logf("position mutant caught on %s: %s", side.name, diff)
+	buildStart := time.Now()
+	started := time.Now()
+	oracle := goOracle(t)
+	t.Logf("position Go oracle build: %s", time.Since(started))
+	started = time.Now()
+	built := checkerCompile(t, directory)
+	t.Logf("position lowered program build: %s", time.Since(started))
+	started = time.Now()
+	archive := ""
+	if built.bridge {
+		archive = checkerArchive(t, true)
+	}
+	t.Logf("position sanitized checker archive build: %s", time.Since(started))
+	started = time.Now()
+	binary := checkerBinary(t, built.c, archive, true)
+	t.Logf("position sanitized native build: %s", time.Since(started))
+	started = time.Now()
+	module := emittedJavaScript(t, directory)
+	t.Logf("position emitted JavaScript product: %s", time.Since(started))
+	buildTime := time.Since(buildStart)
+	assignments := profileAssignments(t, rows, testPositionIndexMutantShards)
+	t.Logf("setup with builds=%s without builds=%s", time.Since(setup), time.Since(setup)-buildTime)
+	for i, cases := range assignments {
+		if !profileSelected(t, i, len(assignments)) {
+			continue
 		}
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+			t.Parallel()
+			path := manifest(t, cases)
+			want := execute(t, "", oracle, "--manifest", path).output
+			for _, side := range []struct {
+				name string
+				run  execution
+			}{
+				{"Node", node(t, directory, path, false)},
+				{"emitted JavaScript", runJavaScript(t, module, path, false)},
+				{"native", execute(t, "", binary, "--manifest", path)},
+			} {
+				positionMutantCheck(t, side.name, side.run.output, want)
+			}
+		})
 	}
 }
