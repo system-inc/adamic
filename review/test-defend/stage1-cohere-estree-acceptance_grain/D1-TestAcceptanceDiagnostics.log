@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T16:03:10.463537299Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T16:03:10.472910185Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics"}
+{"Time":"2026-10-09T16:03:10.47309741Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"=== RUN   TestAcceptanceDiagnostics\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:03:43.078880352Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"    acceptance_test.go:49: 8 Go refusals explicitly refused before deadline on all builds\n"}
+{"Time":"2026-10-09T16:03:43.080974306Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"--- PASS: TestAcceptanceDiagnostics (32.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:03:43.081063099Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Elapsed":32.61}
+{"Time":"2026-10-09T16:03:43.081208871Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:03:43.085920054Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t32.622s\n"}
+{"Time":"2026-10-09T16:03:43.085991414Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":32.622}

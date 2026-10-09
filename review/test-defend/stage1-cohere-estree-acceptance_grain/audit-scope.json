@@ -1,0 +1,142 @@
+[
+  {
+    "test": "TestProduct_AcceptanceOracle",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_grain_test.go:135"
+    ]
+  },
+  {
+    "test": "TestProduct_AcceptanceCatchLowered",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_grain_test.go:136"
+    ]
+  },
+  {
+    "test": "TestProduct_AcceptanceCatchNative",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_grain_test.go:140"
+    ]
+  },
+  {
+    "test": "TestProduct_AcceptanceClassLowered",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_grain_test.go:144"
+    ]
+  },
+  {
+    "test": "TestProduct_AcceptanceClassNative",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_grain_test.go:148"
+    ]
+  },
+  {
+    "test": "TestAcceptanceMutants_000",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_grain_test.go:223"
+    ]
+  },
+  {
+    "test": "TestAcceptanceMutants_001",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_grain_test.go:224"
+    ]
+  },
+  {
+    "test": "TestAcceptanceMutantsUnion",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_grain_test.go:226"
+    ]
+  },
+  {
+    "test": "TestAcceptanceMutantsPlanted_000",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_grain_test.go:278"
+    ]
+  },
+  {
+    "test": "TestAcceptanceMutantsPlanted_001",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_grain_test.go:279"
+    ]
+  },
+  {
+    "test": "TestAcceptanceGrammar",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_test.go:17"
+    ]
+  },
+  {
+    "test": "TestAcceptanceDiagnostics",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_test.go:31"
+    ]
+  },
+  {
+    "test": "TestAcceptanceDiagnosticControl",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/acceptance_test.go:53"
+    ]
+  },
+  {
+    "test": "TestRepositoryAgreement",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/corpus_test.go:14"
+    ]
+  },
+  {
+    "test": "TestCorpusNativeRefusals",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/corpus_test.go:81"
+    ]
+  },
+  {
+    "test": "TestDeadlineChild",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/deadlines_test.go:21"
+    ]
+  },
+  {
+    "test": "TestDeepMutants_Setup",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/deep_mutants_product_shards_test.go:215"
+    ]
+  },
+  {
+    "test": "TestDeepMutants_000",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/deep_mutants_product_shards_test.go:286"
+    ]
+  },
+  {
+    "test": "TestDeepMutants_001",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/deep_mutants_product_shards_test.go:287"
+    ]
+  },
+  {
+    "test": "TestDeepMutants_002",
+    "listed": true,
+    "location": [
+      "stage1/cohere/estree/deep_mutants_product_shards_test.go:288"
+    ]
+  }
+]

@@ -1,0 +1,139 @@
+{
+  "TestAcceptanceDiagnosticControl": {
+    "failed": [
+      "TestAcceptanceDiagnosticControl"
+    ],
+    "passed": [],
+    "binary_seconds": 50.617,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestAcceptanceDiagnosticControl$"
+    ],
+    "wall_seconds": 54.21705716299766
+  },
+  "TestAcceptanceDiagnostics": {
+    "failed": [],
+    "passed": [
+      "TestAcceptanceDiagnostics"
+    ],
+    "binary_seconds": 32.622,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestAcceptanceDiagnostics$"
+    ],
+    "wall_seconds": 34.948895574001654
+  },
+  "TestAcceptanceGrammar": {
+    "failed": [],
+    "passed": [
+      "TestAcceptanceGrammar"
+    ],
+    "binary_seconds": 24.334,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestAcceptanceGrammar$"
+    ],
+    "wall_seconds": 27.923009328998887
+  },
+  "TestGeneratedAgreement": {
+    "failed": [],
+    "passed": [
+      "TestGeneratedAgreement"
+    ],
+    "binary_seconds": 22.239,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestGeneratedAgreement$"
+    ],
+    "wall_seconds": 26.355347220000112
+  },
+  "TestRecoveredExpressions": {
+    "failed": [],
+    "passed": [
+      "TestRecoveredExpressions"
+    ],
+    "binary_seconds": 44.505,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredExpressions$"
+    ],
+    "wall_seconds": 47.530326203002915
+  },
+  "new_products": {
+    "passed": [
+      "TestProduct_DeepMutantsIR1",
+      "TestProduct_UnattachedDecoratorIR",
+      "TestProduct_DeepMutantsIR0",
+      "TestProduct_SyntaxMutantIR_001",
+      "TestProduct_SyntaxMutantIR_002",
+      "TestProduct_SyntaxMutantIR_000",
+      "TestProduct_DeepMutantsIR2",
+      "TestProduct_UnattachedDecoratorLowered",
+      "TestProduct_SyntaxMutantsSetup_002",
+      "TestProduct_UnattachedDecoratorNative",
+      "TestProduct_SyntaxMutantNative_000",
+      "TestProduct_SyntaxMutantsSetup_000",
+      "TestProduct_SyntaxMutantsSetup_001"
+    ],
+    "failed": [],
+    "binary_seconds": 64.517,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestProduct_DeepMutantsIR0|TestProduct_DeepMutantsIR1|TestProduct_DeepMutantsIR2|TestProduct_SyntaxMutantIR_000|TestProduct_SyntaxMutantIR_001|TestProduct_SyntaxMutantIR_002|TestProduct_SyntaxMutantNative_000|TestProduct_SyntaxMutantsSetup_000|TestProduct_SyntaxMutantsSetup_001|TestProduct_SyntaxMutantsSetup_002|TestProduct_UnattachedDecoratorIR|TestProduct_UnattachedDecoratorLowered|TestProduct_UnattachedDecoratorNative)$"
+    ]
+  }
+}

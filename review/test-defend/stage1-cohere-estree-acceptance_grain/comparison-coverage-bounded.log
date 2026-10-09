@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T15:59:42.072326209Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T15:59:42.084826648Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics"}
+{"Time":"2026-10-09T15:59:42.08501462Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"=== RUN   TestAcceptanceDiagnostics\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:00:12.848359732Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"    acceptance_test.go:49: 8 Go refusals explicitly refused before deadline on all builds\n"}
+{"Time":"2026-10-09T16:00:12.85032091Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"--- PASS: TestAcceptanceDiagnostics (30.77s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:00:12.850330858Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Elapsed":30.77}
+{"Time":"2026-10-09T16:00:12.850452495Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement"}
+{"Time":"2026-10-09T16:00:12.850467225Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"=== RUN   TestGeneratedAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:00:42.146470419Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"    estree_test.go:195: 78 generated files: 120355 identical bytes on Go, source Node, sanitized native, emitted JS\n"}
+{"Time":"2026-10-09T16:00:42.148203681Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Output":"--- PASS: TestGeneratedAgreement (29.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:00:42.148225186Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestGeneratedAgreement","Elapsed":29.3}
+{"Time":"2026-10-09T16:00:42.148244484Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:00:42.17719489Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"coverage: 30.0% of statements in github.com/system-inc/adamic/internal/lower, github.com/system-inc/adamic/internal/native\n"}
+{"Time":"2026-10-09T16:00:42.202110668Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t60.124s\tcoverage: 30.0% of statements in github.com/system-inc/adamic/internal/lower, github.com/system-inc/adamic/internal/native\n"}
+{"Time":"2026-10-09T16:00:42.202235982Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":60.13}

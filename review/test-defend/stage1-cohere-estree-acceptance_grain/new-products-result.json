@@ -1,0 +1,18 @@
+{
+  "exit": 0,
+  "wall_seconds": 66.33126430799894,
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/estree/",
+    "-run",
+    "^(TestProduct_DeepMutantsIR0|TestProduct_DeepMutantsIR1|TestProduct_DeepMutantsIR2|TestProduct_SyntaxMutantIR_000|TestProduct_SyntaxMutantIR_001|TestProduct_SyntaxMutantIR_002|TestProduct_SyntaxMutantNative_000|TestProduct_SyntaxMutantsSetup_000|TestProduct_SyntaxMutantsSetup_001|TestProduct_SyntaxMutantsSetup_002|TestProduct_UnattachedDecoratorIR|TestProduct_UnattachedDecoratorLowered|TestProduct_UnattachedDecoratorNative)$"
+  ],
+  "cache": "/tmp/estree-defense/cache/D1"
+}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/convert.ts
++++ b/stage1/cohere/estree/convert.ts
+@@ -1549,7 +1549,7 @@
+             return this.create(id, keywordType);
+         }
+         const unary = unaryTypes.get(node.kind);
+-        if(unary !== undefined) {
++        if(unary !== undefined && !(node.kind === 'AwaitExpression' && this.kind(parent) === 'PrefixUnaryExpression' && this.ts(parent).operator === 'PlusPlusToken')) {
+             const result = this.create(id, unary[0] ?? panic('missing unary type'));
+             this.set(result, unary[1] ?? panic('missing unary key'), this.converted(first, false, id));
+             return result;

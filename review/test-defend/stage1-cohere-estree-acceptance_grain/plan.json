@@ -1,0 +1,39 @@
+{
+  "code_under_test": "Adamic ESTree port Converter.convert unary dispatch on an AwaitExpression nested in a prefix increment",
+  "oracle": "live Go cohere refusal plus self-written 0 Program substring for validation-disabled Node/native control",
+  "difference": "Only diagnostic control disables syntax validation for ++await 42; ordinary refusal stops before conversion; valid await/update agreement rows use valid operands.",
+  "mutants": [
+    {
+      "id": "D1",
+      "menu": "flip a condition",
+      "file_line": "stage1/cohere/estree/convert.ts:1552",
+      "original": "if(unary !== undefined) {",
+      "changed": "if(unary !== undefined && !(node.kind === 'AwaitExpression' && this.kind(parent) === 'PrefixUnaryExpression' && this.ts(parent).operator === 'PlusPlusToken')) {",
+      "aim": "Flip unary-dispatch eligibility specifically for awaited prefix increment. Existing final conversion panic becomes reachable; no new statement or test/oracle/harness edit."
+    }
+  ],
+  "bounded_rows": [
+    "TestAcceptanceDiagnosticControl",
+    "TestAcceptanceDiagnostics",
+    "TestAcceptanceGrammar",
+    "TestGeneratedAgreement",
+    "TestRecoveredExpressions"
+  ],
+  "matrix_batches": [
+    [
+      "TestAcceptanceDiagnosticControl"
+    ],
+    [
+      "TestAcceptanceDiagnostics"
+    ],
+    [
+      "TestAcceptanceGrammar"
+    ],
+    [
+      "TestGeneratedAgreement"
+    ],
+    [
+      "TestRecoveredExpressions"
+    ]
+  ]
+}

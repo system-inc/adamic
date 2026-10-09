@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T16:07:36.305006398Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T16:07:36.315247956Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnosticControl"}
+{"Time":"2026-10-09T16:07:36.315362203Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnosticControl","Output":"=== RUN   TestAcceptanceDiagnosticControl\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:08:02.708898022Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnosticControl","Output":"    acceptance_test.go:65: native: disabled syntax validation accepts Go-refused update operand; acceptance check catches it\n"}
+{"Time":"2026-10-09T16:08:02.709285755Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnosticControl","Output":"    acceptance_test.go:65: Node: disabled syntax validation accepts Go-refused update operand; acceptance check catches it\n"}
+{"Time":"2026-10-09T16:08:02.711369556Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnosticControl","Output":"--- PASS: TestAcceptanceDiagnosticControl (26.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:08:02.71139529Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnosticControl","Elapsed":26.4}
+{"Time":"2026-10-09T16:08:02.711479609Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T16:08:02.714036125Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t26.408s\n"}
+{"Time":"2026-10-09T16:08:02.714101949Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":26.409}

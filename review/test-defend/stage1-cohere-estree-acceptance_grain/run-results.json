@@ -1,0 +1,97 @@
+[
+  {
+    "row": "TestAcceptanceDiagnosticControl",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestAcceptanceDiagnosticControl$"
+    ],
+    "cache": "/tmp/estree-defense/cache/D1",
+    "exit": 1,
+    "wall_seconds": 54.21705716299766
+  },
+  {
+    "row": "TestAcceptanceDiagnostics",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestAcceptanceDiagnostics$"
+    ],
+    "cache": "/tmp/estree-defense/cache/D1",
+    "exit": 0,
+    "wall_seconds": 34.948895574001654
+  },
+  {
+    "row": "TestAcceptanceGrammar",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestAcceptanceGrammar$"
+    ],
+    "cache": "/tmp/estree-defense/cache/D1",
+    "exit": 0,
+    "wall_seconds": 27.923009328998887
+  },
+  {
+    "row": "TestGeneratedAgreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestGeneratedAgreement$"
+    ],
+    "cache": "/tmp/estree-defense/cache/D1",
+    "exit": 0,
+    "wall_seconds": 26.355347220000112
+  },
+  {
+    "row": "TestRecoveredExpressions",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestRecoveredExpressions$"
+    ],
+    "cache": "/tmp/estree-defense/cache/D1",
+    "exit": 0,
+    "wall_seconds": 47.530326203002915
+  }
+]

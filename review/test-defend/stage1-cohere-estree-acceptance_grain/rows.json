@@ -1,0 +1,69 @@
+[
+  {
+    "test": "TestAcceptanceDiagnosticControl",
+    "package": "stage1/cohere/estree",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 stage1/cohere/estree/convert.ts:1552",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/estree/convert.ts:1552",
+        "change": "Flip unary dispatch eligibility for an AwaitExpression beneath prefix ++; existing conversion panic becomes reachable.",
+        "rows_failed": [
+          "TestAcceptanceDiagnosticControl"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_NATIVE_SPLIT=1 ADAMIC_BUILD_CACHE_DIR=/tmp/estree-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/estree/ -run '^TestAcceptanceDiagnosticControl$' > D1-TestAcceptanceDiagnosticControl.log 2>&1; acceptance_test.go:61: exit status 70; adamic: panic: ESTree conversion not yet represented: AwaitExpression at 2",
+    "bounded": true,
+    "matrix_rows": [
+      "TestAcceptanceDiagnosticControl",
+      "TestAcceptanceDiagnostics",
+      "TestAcceptanceGrammar",
+      "TestGeneratedAgreement",
+      "TestProduct_DeepMutantsIR0",
+      "TestProduct_DeepMutantsIR1",
+      "TestProduct_DeepMutantsIR2",
+      "TestProduct_SyntaxMutantIR_000",
+      "TestProduct_SyntaxMutantIR_001",
+      "TestProduct_SyntaxMutantIR_002",
+      "TestProduct_SyntaxMutantNative_000",
+      "TestProduct_SyntaxMutantsSetup_000",
+      "TestProduct_SyntaxMutantsSetup_001",
+      "TestProduct_SyntaxMutantsSetup_002",
+      "TestProduct_UnattachedDecoratorIR",
+      "TestProduct_UnattachedDecoratorLowered",
+      "TestProduct_UnattachedDecoratorNative",
+      "TestRecoveredExpressions"
+    ],
+    "rows_passed": [
+      "TestAcceptanceDiagnostics",
+      "TestAcceptanceGrammar",
+      "TestGeneratedAgreement",
+      "TestProduct_DeepMutantsIR0",
+      "TestProduct_DeepMutantsIR1",
+      "TestProduct_DeepMutantsIR2",
+      "TestProduct_SyntaxMutantIR_000",
+      "TestProduct_SyntaxMutantIR_001",
+      "TestProduct_SyntaxMutantIR_002",
+      "TestProduct_SyntaxMutantNative_000",
+      "TestProduct_SyntaxMutantsSetup_000",
+      "TestProduct_SyntaxMutantsSetup_001",
+      "TestProduct_SyntaxMutantsSetup_002",
+      "TestProduct_UnattachedDecoratorIR",
+      "TestProduct_UnattachedDecoratorLowered",
+      "TestProduct_UnattachedDecoratorNative",
+      "TestRecoveredExpressions"
+    ],
+    "outside_matrix": "unknown, full package cooked at 90.027 seconds",
+    "code_under_test": "Adamic ESTree TypeScript port Converter.convert",
+    "oracle": "Go cohere refuses the source; validation-disabled Node/native must succeed and output a self-written 0 Program substring",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "witness_limitation": "The row does not invoke the refusal checker, so this defense proves its positive control assertion can fail, not its logged claim that the refusal comparison catches the built-in mutant."
+  }
+]

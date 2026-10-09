@@ -1,0 +1,22 @@
+{
+  "audit_tests": 233,
+  "current_tests": 245,
+  "added": [
+    "TestProduct_DeepMutantsIR0",
+    "TestProduct_DeepMutantsIR1",
+    "TestProduct_DeepMutantsIR2",
+    "TestProduct_SyntaxMutantIR_000",
+    "TestProduct_SyntaxMutantIR_001",
+    "TestProduct_SyntaxMutantIR_002",
+    "TestProduct_SyntaxMutantNative_000",
+    "TestProduct_SyntaxMutantsSetup_000",
+    "TestProduct_SyntaxMutantsSetup_001",
+    "TestProduct_SyntaxMutantsSetup_002",
+    "TestProduct_UnattachedDecoratorIR",
+    "TestProduct_UnattachedDecoratorLowered",
+    "TestProduct_UnattachedDecoratorNative"
+  ],
+  "vanished": [
+    "TestProduct_SyntaxMutantsSetup"
+  ]
+}

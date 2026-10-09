@@ -1,0 +1,3 @@
+stage1/cohere/estree/acceptance_test.go:32:	sources := []string{"++await 42;", "++delete foo.bar;", "--ANY1--;", "type T = A | () => B;", "new obj?.member();", "import { 'a' } from 'm';", "import A from 'm' assert {type:'json'};", "super<T>();"}
+stage1/cohere/estree/acceptance_test.go:54:	list := manifest(t, []string{"++await 42;"})
+stage1/cohere/estree/acceptance_test.go:59:	main := mutantPort(t, "pipeline.ts", "if(syntax !== '')", "if(false)")

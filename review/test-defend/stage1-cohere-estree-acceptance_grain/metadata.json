@@ -1,0 +1,14 @@
+{
+  "base": "955e3eb92b9cd04aca420974d1006048b4615d51",
+  "nproc": 5,
+  "disk_before": {
+    "tmp_free": "2.1 GB",
+    "workspace_free": "15 GB"
+  },
+  "disk_after": {
+    "tmp_free": "5.3 GB",
+    "tmp_capacity": "8.8 GB",
+    "workspace_free": "15 GB"
+  },
+  "setup": "warm env.sh"
+}

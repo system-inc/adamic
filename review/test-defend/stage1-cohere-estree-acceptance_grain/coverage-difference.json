@@ -1,0 +1,7 @@
+{
+  "go_exclusive_control_blocks": [],
+  "go_scope": "host compiler builders, not port execution",
+  "port_exclusive_control_ranges": [],
+  "v8_mapping": "Separate source transforms: control copy rewrites ../../typescript imports to absolute paths; comparison uses original imports. Masks map to each exact transformed source before comparing corresponding source lines. Go coverage measures host builders. Comparisons include the completed clean runs plus partial cooked observations.",
+  "semantic_difference": "Shared Converter.convert dispatch handles AwaitExpression beneath prefix ++ only when the control disables syntax validation. Refusal checks stop before conversion; valid await/update samples use valid operands."
+}
