@@ -1,0 +1,33 @@
+{"Time":"2026-10-09T14:09:50.936923464Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T14:09:50.944316175Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof"}
+{"Time":"2026-10-09T14:09:50.944399498Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof","Output":"=== RUN   TestNumericEnumNeverProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:50.944432025Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof","Output":"=== PAUSE TestNumericEnumNeverProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:50.94443539Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof"}
+{"Time":"2026-10-09T14:09:50.944438946Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof"}
+{"Time":"2026-10-09T14:09:50.944443703Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof","Output":"=== CONT  TestNumericEnumNeverProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:50.944447859Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/member"}
+{"Time":"2026-10-09T14:09:50.944450122Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/member","Output":"=== RUN   TestNumericEnumNeverProof/member\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:50.977914354Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/member","Output":"--- PASS: TestNumericEnumNeverProof/member (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:50.978004286Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/member","Elapsed":0.03}
+{"Time":"2026-10-09T14:09:50.978060349Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/parameter"}
+{"Time":"2026-10-09T14:09:50.97806804Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/parameter","Output":"=== RUN   TestNumericEnumNeverProof/parameter\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:51.011011966Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/parameter","Output":"--- PASS: TestNumericEnumNeverProof/parameter (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:51.01105512Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/parameter","Elapsed":0.03}
+{"Time":"2026-10-09T14:09:51.011063141Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/combination"}
+{"Time":"2026-10-09T14:09:51.011065745Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/combination","Output":"=== RUN   TestNumericEnumNeverProof/combination\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:51.03860498Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/combination","Output":"--- PASS: TestNumericEnumNeverProof/combination (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:51.038692308Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/combination","Elapsed":0.03}
+{"Time":"2026-10-09T14:09:51.038701662Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/array_read"}
+{"Time":"2026-10-09T14:09:51.038705297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/array_read","Output":"=== RUN   TestNumericEnumNeverProof/array_read\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:51.066681325Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/array_read","Output":"--- PASS: TestNumericEnumNeverProof/array_read (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:51.066730638Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/array_read","Elapsed":0.03}
+{"Time":"2026-10-09T14:09:51.066738029Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/closed_return"}
+{"Time":"2026-10-09T14:09:51.066742806Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/closed_return","Output":"=== RUN   TestNumericEnumNeverProof/closed_return\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:51.099161974Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/closed_return","Output":"--- PASS: TestNumericEnumNeverProof/closed_return (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:51.099211017Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/closed_return","Elapsed":0.03}
+{"Time":"2026-10-09T14:09:51.099225418Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof","Output":"--- PASS: TestNumericEnumNeverProof (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:51.099228773Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof","Elapsed":0.15}
+{"Time":"2026-10-09T14:09:51.099231447Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:09:51.102533464Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"coverage: 11.7% of statements in github.com/system-inc/adamic/internal/lower\n"}
+{"Time":"2026-10-09T14:09:51.123433702Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.185s\tcoverage: 11.7% of statements in github.com/system-inc/adamic/internal/lower\n"}
+{"Time":"2026-10-09T14:09:51.123484667Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.187}

@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -26,7 +26,7 @@
+ }
+ 
+ func (g *namespaceCallGraph) discover(function *ast.Node) *namespaceCallNode {
+-	if cached := g.functions[function]; cached != nil {
++	if cached := g.functions[function]; cached != nil && (cached.active || len(cached.reaches) != 1) {
+ 		return cached
+ 	}
+ 	g.walks++

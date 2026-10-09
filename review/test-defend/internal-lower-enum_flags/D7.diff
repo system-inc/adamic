@@ -1,0 +1,11 @@
+--- a/internal/lower/assignments.go
++++ b/internal/lower/assignments.go
+@@ -11,7 +11,7 @@
+ // assignment lowers =, and the compound assignments, to a local.
+ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
+ 	binary := node.AsBinaryExpression()
+-	operator, isCompound := compoundAssignments[binary.OperatorToken.Kind]
++	operator, isCompound := func() (ast.Kind, bool) { operator, ok := compoundAssignments[binary.OperatorToken.Kind]; if operator == ast.KindLessThanLessThanToken && l.flagEnum(l.enumIdentity(l.checker.GetTypeAtLocation(binary.Left))) { return ast.KindGreaterThanGreaterThanToken, ok }; return operator, ok }()
+ 	if binary.OperatorToken.Kind != ast.KindEqualsToken && !isCompound {
+ 		return nil, l.notYet(node, describe(node)+" as a statement")
+ 	}

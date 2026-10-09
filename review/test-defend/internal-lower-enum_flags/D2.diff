@@ -1,0 +1,11 @@
+--- a/internal/lower/namespaces_call_graph.go
++++ b/internal/lower/namespaces_call_graph.go
+@@ -137,7 +137,7 @@
+ 			}
+ 		}
+ 		for _, member := range component {
+-			member.reaches = reaches
++			if member == entry || len(component) != 2 { member.reaches = reaches }
+ 		}
+ 	}
+ 	return entry
