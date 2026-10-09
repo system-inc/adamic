@@ -443,9 +443,9 @@
   {
     "file": "internal/oracle/program_region_test.go",
     "test": "programRegionLowered",
-    "id": "TestCountsAreRecorded,TestProgramRegionCapturedCell,TestProgramRegionConstructor,TestProgramRegionCountedMapperStorage,TestProgramRegionExtraMemberMutant,TestProgramRegionFieldOnlyAdoptionMutant,TestProgramRegionGraphParent,TestProgramRegionGraphRelations,TestProgramRegionGraphSymbols,TestProgramRegionHost14AgreesWithNode,TestProgramRegionMemberMapperStorage,TestProgramRegionMillion,TestProgramRegionMissingMemberMutant,TestProgramRegionOptionalStorage,TestProgramRegionOwnership,TestProgramRegionTscNodesAgreeWithNode,TestProgramRegionWeakParent,TestProgramRegionWeakRelations,TestProgramRegionWeakSymbols:0eada7362516bd18ce410b2b5a9067d3d8da9e9c41299468011554b376fc9432",
-    "line": 29,
-    "condition": "errors.As(err, &refused)",
+    "id": "TestCountsAreRecorded,TestProgramRegionCapturedCell,TestProgramRegionConstructor,TestProgramRegionCountedMapperStorage,TestProgramRegionExtraMemberMutant,TestProgramRegionFieldOnlyAdoptionMutant,TestProgramRegionGraphParent,TestProgramRegionGraphRelations,TestProgramRegionGraphSymbols,TestProgramRegionHost14AgreesWithNode,TestProgramRegionMemberMapperStorage,TestProgramRegionMillion,TestProgramRegionMissingMemberMutant,TestProgramRegionOptionalStorage,TestProgramRegionOwnership,TestProgramRegionTscNodesAgreeWithNode,TestProgramRegionWeakParent,TestProgramRegionWeakRelations,TestProgramRegionWeakSymbols:ee58b8cc1b97fb28319412a474a3738f8699be277b503e0958db5c043d5b4944",
+    "line": 27,
+    "condition": "errors.As(err, &refused) && filepath.Base(path) == \"14_getCurrentDirectory.a\" && refused.What == \"the non-null assertion !\"",
     "reads": [],
     "callers": [
       "TestCountsAreRecorded",
@@ -475,9 +475,9 @@
   {
     "file": "internal/oracle/program_region_test.go",
     "test": "programRegionLowered",
-    "id": "TestCountsAreRecorded,TestProgramRegionCapturedCell,TestProgramRegionConstructor,TestProgramRegionCountedMapperStorage,TestProgramRegionExtraMemberMutant,TestProgramRegionFieldOnlyAdoptionMutant,TestProgramRegionGraphParent,TestProgramRegionGraphRelations,TestProgramRegionGraphSymbols,TestProgramRegionHost14AgreesWithNode,TestProgramRegionMemberMapperStorage,TestProgramRegionMillion,TestProgramRegionMissingMemberMutant,TestProgramRegionOptionalStorage,TestProgramRegionOwnership,TestProgramRegionTscNodesAgreeWithNode,TestProgramRegionWeakParent,TestProgramRegionWeakRelations,TestProgramRegionWeakSymbols:0eada7362516bd18ce410b2b5a9067d3d8da9e9c41299468011554b376fc9432",
-    "line": 31,
-    "condition": "errors.As(err, &refused)",
+    "id": "TestCountsAreRecorded,TestProgramRegionCapturedCell,TestProgramRegionConstructor,TestProgramRegionCountedMapperStorage,TestProgramRegionExtraMemberMutant,TestProgramRegionFieldOnlyAdoptionMutant,TestProgramRegionGraphParent,TestProgramRegionGraphRelations,TestProgramRegionGraphSymbols,TestProgramRegionHost14AgreesWithNode,TestProgramRegionMemberMapperStorage,TestProgramRegionMillion,TestProgramRegionMissingMemberMutant,TestProgramRegionOptionalStorage,TestProgramRegionOwnership,TestProgramRegionTscNodesAgreeWithNode,TestProgramRegionWeakParent,TestProgramRegionWeakRelations,TestProgramRegionWeakSymbols:95336d13c8eb34fc059e99e03d7d1c6f60130f67268c6afcd654bbc10ae8f65f",
+    "line": 30,
+    "condition": "errors.As(err, &refused) && filepath.Base(path) == \"optional.a\" && filepath.Base(filepath.Dir(path)) == \"program_region\" && refused.What == \"delete\"",
     "reads": [],
     "callers": [
       "TestCountsAreRecorded",

@@ -23,14 +23,13 @@ func programRegionLowered(t *testing.T, path string, enabled bool) *ir.Program {
 	}
 	program, err := lower.LowerWithOptions(context.Background(), source, lower.Options{ProgramRegion: enabled})
 	var refused *lower.Refused
-	if errors.As(err, &refused) {
-		switch {
-		case filepath.Base(path) == "14_getCurrentDirectory.a" && refused.What == "the non-null assertion !":
-			t.Skip("pending non-null assertion lowering: host fixture 14")
-		case filepath.Base(path) == "optional.a" && filepath.Base(filepath.Dir(path)) == "program_region" && refused.What == "delete":
-			t.Skip("pending delete on optional fields: program_region/optional.a")
-		}
+	if errors.As(err, &refused) && filepath.Base(path) == "14_getCurrentDirectory.a" && refused.What == "the non-null assertion !" {
+		t.Skip("pending non-null assertion lowering: host fixture 14")
 	}
+	if errors.As(err, &refused) && filepath.Base(path) == "optional.a" && filepath.Base(filepath.Dir(path)) == "program_region" && refused.What == "delete" {
+		t.Skip("pending delete on optional fields: program_region/optional.a")
+	}
+
 	if err != nil {
 		t.Fatal(err)
 	}
