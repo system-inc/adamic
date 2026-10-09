@@ -195,7 +195,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		if statement.Element.IsReference() {
 			value = retained(value)
 		}
-		e.line("adamic_array_set(%s, %s, (adamic_value){.%s = %s});", array, index, member(statement.Element), slotted(statement.Element, value))
+		setter := "adamic_array_set"
+		if e.hasArrayHoles() {
+			setter = "adamic_array_holes_set"
+		}
+		e.line("%s(%s, %s, (adamic_value){.%s = %s});", setter, array, index, member(statement.Element), slotted(statement.Element, value))
 		e.end()
 	case ir.SetProperty:
 		if statement.Record {

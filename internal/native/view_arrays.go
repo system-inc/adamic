@@ -22,6 +22,8 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	}
 	storage := ir.Type(0)
 	switch expression := expression.(type) {
+	case ir.ArrayHoles:
+		storage = expression.Element
 	case ir.ArrayLiteral:
 		storage = expression.Element
 	case ir.ArrayMap:

@@ -415,7 +415,13 @@ typedef struct adamic_array {
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
+	struct adamic_map *sparse;
 } adamic_array;
+
+adamic_array *adamic_array_holes(double length, bool references);
+bool adamic_array_is_range_error(const adamic_object *value);
+adamic_value *adamic_array_holes_at(const adamic_array *array, double index);
+void adamic_array_holes_set(adamic_array *array, double index, adamic_value value);
 
 // Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
 // subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.
