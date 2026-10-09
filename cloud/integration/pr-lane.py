@@ -7,11 +7,19 @@ push-main's refusal on it once and leaves it open. A new push to the branch is t
 
 push-main lands the head itself or a merge holding it, so GitHub marks the pull request merged.
 
+A merge made on GitHub anyway can't be refused (every node pushes as the same admin account, so a
+required check binds push-main too or nobody), so each run also reads every commit GitHub put on main's
+first-parent line since the last run and tells integration and @system_adamic at once when one changed
+anything the lane wouldn't take.
+
 usage (launchd com.adamic.pr-lane runs it every minute, from the merge tree): cloud/integration/pr-lane.py
 """
-import json, os, subprocess, sys
+import json, os, re, subprocess, sys
 
 repository = "system-inc/adamic"
+ahra = os.path.expanduser("~/Projects/ahra")
+# push-main.sh's testOnlyPattern.
+testOnlyPaths = re.compile(r"(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/)")
 directory = os.path.dirname(os.path.abspath(__file__))
 state = os.path.expanduser("~/.adamic-pr-lane")
 os.makedirs(state, exist_ok=True)
@@ -19,6 +27,30 @@ os.makedirs(state, exist_ok=True)
 
 def run(*arguments):
     return subprocess.run(arguments, capture_output=True, text=True)
+
+
+def audit():
+    # Every commit GitHub made on main's first-parent line since the last audit, checked by the lane's rule.
+    run("git", "fetch", "-q", "origin", "main")
+    main = run("git", "rev-parse", "origin/main").stdout.strip()
+    marker = os.path.join(state, "audited")
+    since = open(marker).read().strip() if os.path.exists(marker) else ""
+    if since and run("git", "merge-base", "--is-ancestor", since, main).returncode == 0:
+        for line in run("git", "log", "--first-parent", "--format=%H %cn", f"{since}..{main}").stdout.splitlines():
+            sha, committer = line.split(" ", 1)
+            if committer != "GitHub":
+                continue
+            outside = [path for path in run("git", "diff", "--name-only", f"{sha}^1", sha).stdout.split() if not testOnlyPaths.search(path)]
+            if outside:
+                note = f"A pull request merged on GitHub put non-test paths on main with no gate: {sha[:8]} ({run('git', 'log', '-1', '--format=%s', sha).stdout.strip()[:120]}): {' '.join(outside[:5])}. Revert or gate it; pull requests land only through pr-lane.py."
+                for recipient in ("system_adamic_integration", "system_adamic"):
+                    subprocess.run(["./node_modules/.bin/ahra", "os", "send", recipient, note], cwd=ahra, capture_output=True)
+                print(f"alarm {sha[:8]}: {' '.join(outside[:5])}")
+    with open(marker, "w") as handle:
+        handle.write(main)
+
+
+audit()
 
 
 listed = run("gh", "pr", "list", "--repo", repository, "--base", "main", "--state", "open", "--json", "number,headRefName,headRefOid,title,isDraft")
