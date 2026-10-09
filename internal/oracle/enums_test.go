@@ -127,16 +127,17 @@ func TestEnumCleanupMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	code := native.C(program)
+	// Match main's final cleanup indentation, excluding nested uncaught exits.
 	release := ""
 	for index, local := range program.Locals {
 		if local.Global && local.Name == "Kind" {
-			release = fmt.Sprintf("adamic_release(adamic_global_%d_Kind);", index)
+			release = fmt.Sprintf("\n\tadamic_release(adamic_global_%d_Kind);\n\tadamic_global_%d_Kind = NULL;", index, index)
 		}
 	}
 	if release == "" || strings.Count(code, release) != 1 {
 		t.Fatal("enum cleanup site not unique")
 	}
-	code = strings.Replace(code, release, "", 1)
+	code = strings.Replace(code, release, release[strings.Index(release, ";\n")+1:], 1)
 	binary := filepath.Join(t.TempDir(), "mutant")
 	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)

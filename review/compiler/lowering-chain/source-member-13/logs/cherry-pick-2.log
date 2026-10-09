@@ -1,0 +1,36 @@
+[compiler/placeholder-nonnull-main 0131f51f3] Preserve placeholder initialization and reset machinery
+ Date: Thu Oct 8 21:41:29 2026 +0000
+ 15 files changed, 181 insertions(+), 10 deletions(-)
+ create mode 100644 internal/lower/placeholder.go
+ create mode 100644 internal/oracle/placeholder_nonnull_test.go
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_field.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_local.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_scanner.a
+Auto-merging cmd/adamic/checks_test.go
+Auto-merging internal/ir/ir.go
+CONFLICT (content): Merge conflict in internal/ir/ir.go
+Auto-merging internal/javascript/javascript.go
+CONFLICT (content): Merge conflict in internal/javascript/javascript.go
+Auto-merging internal/javascript/readiness.go
+Auto-merging internal/lower/expression.go
+Auto-merging internal/lower/object.go
+Auto-merging internal/lower/readiness.go
+Auto-merging internal/lower/refusals.go
+Auto-merging internal/native/emit_objects.go
+Auto-merging internal/native/emit_statements.go
+Auto-merging internal/native/reuse.go
+Auto-merging internal/native/view_fields.go
+CONFLICT (content): Merge conflict in internal/native/view_fields.go
+Auto-merging internal/oracle/counts.md
+CONFLICT (content): Merge conflict in internal/oracle/counts.md
+Auto-merging internal/oracle/view_fields_test.go
+CONFLICT (content): Merge conflict in internal/oracle/view_fields_test.go
+Auto-merging stage3/fixtures/assertions/status.json
+error: could not apply b2528aea7... Preserve placeholder nullish values and check every typed use
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"

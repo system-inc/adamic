@@ -1,0 +1,269 @@
+{
+  "branch": "compiler/generics-scout-main",
+  "source": "48391dcf",
+  "tests": [
+    {
+      "test": "TestStep16GenericOutcomes/01_identity",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/02_optional_return",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/03_callback_return",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/04_function_value",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/05_nested_class",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/06_polymorphic_recursion",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/07_generic_cast",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/08_readonly_view",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/09_recursive_optional",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16IdentityMutant",
+      "result": "pass",
+      "seconds": 0.73,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16OptionalResultMutant",
+      "result": "pass",
+      "seconds": 0.77,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/01_identity.a",
+      "result": "pass",
+      "seconds": 0.72,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/10_identifier_multimap",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/09_recursive_optional.a",
+      "result": "pass",
+      "seconds": 0.78,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/04_function_value.a",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/11_indexed_result",
+      "result": "pass",
+      "seconds": 0.19,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/12_mixed_indexed_result",
+      "result": "pass",
+      "seconds": 0.2,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/13_constrained_local",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/14_optional_literal_union.a",
+      "result": "pass",
+      "seconds": 0.64,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/14_optional_literal_union",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes/15_array_callback",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestStep16GenericOutcomes",
+      "result": "pass",
+      "seconds": 1.45,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/10_identifier_multimap.a",
+      "result": "pass",
+      "seconds": 0.69,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/15_array_callback.a",
+      "result": "pass",
+      "seconds": 0.79,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/05_nested_class.a",
+      "result": "pass",
+      "seconds": 0.72,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/03_callback_return.a",
+      "result": "pass",
+      "seconds": 0.51,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/fixtures/generics/02_optional_return.a",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-4-retry-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-4-retry-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "stage3/fixtures/generics/01_identity.a",
+        "after": [
+          "3",
+          "3",
+          "3",
+          "7",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/generics/02_optional_return.a",
+        "after": [
+          "5",
+          "5",
+          "3",
+          "9",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/generics/03_callback_return.a",
+        "after": [
+          "8",
+          "8",
+          "3",
+          "11",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/generics/05_nested_class.a",
+        "after": [
+          "8",
+          "8",
+          "5",
+          "16",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/generics/09_recursive_optional.a",
+        "after": [
+          "3",
+          "3",
+          "1",
+          "4",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/generics/10_identifier_multimap.a",
+        "after": [
+          "11",
+          "11",
+          "29",
+          "38",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/generics/14_optional_literal_union.a",
+        "after": [
+          "3",
+          "3",
+          "0",
+          "3",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/generics/15_array_callback.a",
+        "after": [
+          "18",
+          "18",
+          "7",
+          "27",
+          "4",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 992
+  }
+}

@@ -1,0 +1,12 @@
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_value
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_value1639900427/001/a.a]: stdout "3\n", exit result exit status 1
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_value1639900427/001/generated.mjs]: stdout "3\n", exit result exit status 1
+    import_cycle_ready_test.go:130: [/tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_value1639900427/001/native]: stdout "3\n0\n", exit result <nil>
+    import_cycle_ready_test.go:130: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_value1639900427/001/native: got "3\n0\n", want "3\n" (error <nil>)
+    import_cycle_ready_test.go:130: expected exit 1, got <nil>
+--- FAIL: TestUndecidedCycleReadsUseReadyChecks (0.28s)
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/early_value (0.28s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.290s
+FAIL

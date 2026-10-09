@@ -1,0 +1,5 @@
+--- FAIL: TestProjectReferencesTransitive (0.48s)
+    project_references_test.go:40: transitive configured source leaf/unused.ts was dropped
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.491s
+FAIL

@@ -1,0 +1,2 @@
+// Generalized rethrow from program.ts:2854; currently only Error may originate a throw.
+try { throw undefined; } catch (error: unknown) { console.log(typeof error); }

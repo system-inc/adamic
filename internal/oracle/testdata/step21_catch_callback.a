@@ -1,0 +1,12 @@
+// Reduced from program.ts:398 and :2844: a callback fails, a catch recovers.
+function readFile(index: number): string {
+    if (index === 1) throw new Error(`read${index}`);
+    return `text${index}`;
+}
+function read(action: () => string): string {
+    try { return action(); }
+    catch (error) { return error instanceof Error ? error.message : 'unexpected'; }
+}
+for (const index of [0, 1, 2]) console.log(read(() => readFile(index)));
+// utilitiesPublic.ts:738: the catch does not need a binding.
+try { readFile(1); } catch { console.log('fallback'); }

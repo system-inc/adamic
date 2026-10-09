@@ -1,0 +1,12 @@
+// Source validation and recovery run before the typed structural use.
+interface Config { readonly option: { readonly enabled: boolean }; }
+function convertJsonOption(value: any): Config {
+    if (typeof value !== 'boolean') {
+        console.log("Compiler option 'compileOnSave' requires a value of type boolean.");
+        return { option: { enabled: false } };
+    }
+    const raw: any = { option: { enabled: value } };
+    return raw;
+}
+console.log(String(convertJsonOption(true).option.enabled));
+console.log(String(convertJsonOption('wrong').option.enabled));

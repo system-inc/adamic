@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:19:44.645521842Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:44.702199505Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle"}
+{"Time":"2026-10-09T18:19:44.702296679Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle","Output":"=== RUN   TestGeneratorDestructuredParameterCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.702320593Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle","Output":"=== PAUSE TestGeneratorDestructuredParameterCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.702323165Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle"}
+{"Time":"2026-10-09T18:19:44.70232566Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle"}
+{"Time":"2026-10-09T18:19:44.702327396Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle","Output":"=== CONT  TestGeneratorDestructuredParameterCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.951119579Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle","Output":"--- PASS: TestGeneratorDestructuredParameterCycle (0.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.955064523Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle","Elapsed":0.25}
+{"Time":"2026-10-09T18:19:44.955093662Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.978558227Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.333}

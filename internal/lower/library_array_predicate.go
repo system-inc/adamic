@@ -57,7 +57,8 @@ func (l *lowering) arrayPredicateMembers(proven *checker.Type, array bool) *chec
 		if member.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter) != 0 {
 			return
 		}
-		if l.checker.IsArrayType(member) == array {
+		_, _, nodeArray := l.nodeArrayLayoutOf(member)
+		if (l.checker.IsArrayType(member) || nodeArray) == array {
 			members = append(members, member)
 		}
 	}
@@ -82,6 +83,9 @@ func (l *lowering) arrayPredicateDomain(proven *checker.Type) bool {
 	}
 	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter|checker.TypeFlagsIntersection) != 0 || checker.IsTupleType(proven) {
 		return false
+	}
+	if _, _, known := l.nodeArrayLayoutOf(proven); known {
+		return true
 	}
 	if l.checker.IsArrayType(proven) {
 		return true

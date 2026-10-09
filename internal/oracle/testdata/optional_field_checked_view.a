@@ -1,0 +1,39 @@
+interface Source { readonly kind: string; slot?: number; flag?: boolean; text?: string }
+interface View { readonly kind: 'record'; slot?: number; flag?: boolean; text?: string }
+function readSlot(record: View): string { return String(record.slot); }
+function readFlag(record: View): string { return String(record.flag); }
+function readText(record: View): string { return String(record.text); }
+const source: Source = { kind: 'record' };
+const view = source as View;
+console.log(readSlot(view) + ":" + readFlag(view) + ":" + readText(view));
+view.slot = 0;
+view.flag = false;
+const text = 'stored'.repeat(2);
+view.text = text;
+view.text = view.text;
+console.log(readSlot(view) + ":" + String(source.slot) + ":" + readFlag(view) + ":" + readText(view));
+console.log(Object.keys(source).join(','));
+delete source.slot;
+console.log(readSlot(view) + ":" + Object.keys(view).join(','));
+view.slot = 2;
+console.log(readSlot(view) + ":" + Object.keys(source).join(','));
+const copy: Source = { ...source };
+const copied = copy as View;
+copied.slot = 3;
+console.log(readSlot(copied) + ":" + readSlot(view) + ":" + Object.keys(copy).join(','));
+const fixed = { kind: 'record', slot: 1, flag: true, text: 'first' };
+const base: { readonly kind: string } = fixed;
+const fixedView = base as View;
+fixedView.slot = 0;
+fixedView.flag = false;
+console.log(String(fixed.slot) + ':' + String(fixed.flag));
+function receiver(): View { console.log('receiver'); return view; }
+function value(): number { console.log('value'); return 4; }
+receiver().slot = value();
+console.log(readSlot(view));
+const boxed: { kind: string; slot: number | string; flag: boolean | string } = { kind: 'record', slot: 'first', flag: 'first' };
+const boxedBase: { readonly kind: string } = boxed;
+const boxedView = boxedBase as View;
+boxedView.slot = 5;
+boxedView.flag = false;
+console.log(readSlot(boxedView) + ':' + readFlag(boxedView));

@@ -1,0 +1,7 @@
+function make(): Generator<string,string,undefined> {
+ const values=['captured'];
+ return (function* (): Generator<string,string,undefined> {yield values[0] ?? 'missing';return 'done';})();
+}
+const g=make();console.log(`${g.next().value}`);console.log(`${g.next().value}`);
+const owner={label:'receiver', *items(): Generator<string,string,undefined> {yield this.label;return 'done';}};
+const h=owner.items();console.log(`${h.next().value}`);console.log(`${h.next().value}`);

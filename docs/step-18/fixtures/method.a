@@ -1,0 +1,7 @@
+// Reduced from TypeScript builder.ts:528, chain.repopulateInfo?.().
+interface Chain { readonly repopulateInfo?: () => string }
+function run(chain: Chain): void {
+	console.log(chain.repopulateInfo?.() ?? 'absent');
+}
+run({});
+run({ repopulateInfo: (): string => `filled${1}` });

@@ -1,0 +1,97 @@
+{"Time":"2026-10-09T05:03:45.358687836Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T05:03:45.367608338Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityClang"}
+{"Time":"2026-10-09T05:03:45.36766922Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityClang","Output":"=== RUN   TestLongUnicodePortabilityClang\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367690572Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityClang","Output":"=== PAUSE TestLongUnicodePortabilityClang\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367693566Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityClang"}
+{"Time":"2026-10-09T05:03:45.36769586Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-09T05:03:45.367697852Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== RUN   TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367700537Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== PAUSE TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367702029Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-09T05:03:45.367703912Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodeLiteralByteCoverage"}
+{"Time":"2026-10-09T05:03:45.367705404Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodeLiteralByteCoverage","Output":"=== RUN   TestLongUnicodeLiteralByteCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367707487Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodeLiteralByteCoverage","Output":"=== PAUSE TestLongUnicodeLiteralByteCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367709049Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodeLiteralByteCoverage"}
+{"Time":"2026-10-09T05:03:45.367893456Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityClang"}
+{"Time":"2026-10-09T05:03:45.367899796Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityClang","Output":"=== RUN   TestConstantPortabilityClang\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367904332Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityClang","Output":"=== PAUSE TestConstantPortabilityClang\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367906235Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityClang"}
+{"Time":"2026-10-09T05:03:45.367909009Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityGCC"}
+{"Time":"2026-10-09T05:03:45.367911183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityGCC","Output":"=== RUN   TestConstantPortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367914458Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityGCC","Output":"=== PAUSE TestConstantPortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.36791598Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityGCC"}
+{"Time":"2026-10-09T05:03:45.367933897Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongStringBytesMutant"}
+{"Time":"2026-10-09T05:03:45.367941729Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongStringBytesMutant","Output":"=== RUN   TestLongStringBytesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367946295Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongStringBytesMutant","Output":"=== PAUSE TestLongStringBytesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.367947888Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongStringBytesMutant"}
+{"Time":"2026-10-09T05:03:45.368456762Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticNumberInitializerMutant"}
+{"Time":"2026-10-09T05:03:45.368464814Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticNumberInitializerMutant","Output":"=== RUN   TestStaticNumberInitializerMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.368469651Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticNumberInitializerMutant","Output":"=== PAUSE TestStaticNumberInitializerMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.368471374Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticNumberInitializerMutant"}
+{"Time":"2026-10-09T05:03:45.368473868Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticBooleanInitializerMutant"}
+{"Time":"2026-10-09T05:03:45.36847572Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticBooleanInitializerMutant","Output":"=== RUN   TestStaticBooleanInitializerMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.368478725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticBooleanInitializerMutant","Output":"=== PAUSE TestStaticBooleanInitializerMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.368480477Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticBooleanInitializerMutant"}
+{"Time":"2026-10-09T05:03:45.370578237Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityClang"}
+{"Time":"2026-10-09T05:03:45.370587421Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityClang","Output":"=== CONT  TestLongUnicodePortabilityClang\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.370624116Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityGCC"}
+{"Time":"2026-10-09T05:03:45.370627191Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityGCC","Output":"=== CONT  TestConstantPortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.370681482Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticNumberInitializerMutant"}
+{"Time":"2026-10-09T05:03:45.370684036Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticNumberInitializerMutant","Output":"=== CONT  TestStaticNumberInitializerMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.370946099Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodeLiteralByteCoverage"}
+{"Time":"2026-10-09T05:03:45.370954722Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodeLiteralByteCoverage","Output":"=== CONT  TestLongUnicodeLiteralByteCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.371326871Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityClang"}
+{"Time":"2026-10-09T05:03:45.371334563Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityClang","Output":"=== CONT  TestConstantPortabilityClang\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.400602353Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityGCC","Output":"--- PASS: TestConstantPortabilityGCC (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.400654701Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityGCC","Elapsed":0.03}
+{"Time":"2026-10-09T05:03:45.400677065Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticBooleanInitializerMutant"}
+{"Time":"2026-10-09T05:03:45.40068034Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticBooleanInitializerMutant","Output":"=== CONT  TestStaticBooleanInitializerMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.406105855Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityClang","Output":"--- PASS: TestConstantPortabilityClang (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.406130662Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestConstantPortabilityClang","Elapsed":0.03}
+{"Time":"2026-10-09T05:03:45.406135439Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC"}
+{"Time":"2026-10-09T05:03:45.406137803Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"=== CONT  TestLongUnicodePortabilityGCC\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.410196246Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticNumberInitializerMutant","Output":"    constants_portability_test.go:32: mutant caught with -Werror absent: 1 [-Wpedantic] warnings\n"}
+{"Time":"2026-10-09T05:03:45.410599161Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticNumberInitializerMutant","Output":"--- PASS: TestStaticNumberInitializerMutant (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.410609186Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticNumberInitializerMutant","Elapsed":0.04}
+{"Time":"2026-10-09T05:03:45.410612571Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongStringBytesMutant"}
+{"Time":"2026-10-09T05:03:45.410614614Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongStringBytesMutant","Output":"=== CONT  TestLongStringBytesMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.42799648Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticBooleanInitializerMutant","Output":"    constants_portability_test.go:37: mutant caught with -Werror absent: 1 [-Wpedantic] warnings\n"}
+{"Time":"2026-10-09T05:03:45.428381878Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticBooleanInitializerMutant","Output":"--- PASS: TestStaticBooleanInitializerMutant (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.460467368Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStaticBooleanInitializerMutant","Elapsed":0.03}
+{"Time":"2026-10-09T05:03:45.46051488Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodeLiteralByteCoverage","Output":"    c_portability_oracle_test.go:51: long literals cover all 115 valid high UTF-8 bytes\n"}
+{"Time":"2026-10-09T05:03:45.460525726Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodeLiteralByteCoverage","Output":"--- PASS: TestLongUnicodeLiteralByteCoverage (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.663226442Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodeLiteralByteCoverage","Elapsed":0.09}
+{"Time":"2026-10-09T05:03:45.663278129Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongStringBytesMutant","Output":"    constants_portability_test.go:27: mutant caught with -Werror absent: 4200 [-Woverflow] warnings\n"}
+{"Time":"2026-10-09T05:03:45.663523448Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongStringBytesMutant","Output":"--- PASS: TestLongStringBytesMutant (0.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.81689796Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongStringBytesMutant","Elapsed":0.25}
+{"Time":"2026-10-09T05:03:45.816939943Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityClang","Output":"    c_portability_oracle_test.go:20: clang: both backends match Node; ASan, UBSan and leak detection clean\n"}
+{"Time":"2026-10-09T05:03:45.817884231Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"    c_portability_oracle_test.go:25: gcc: both backends match Node; ASan, UBSan and leak detection clean\n"}
+{"Time":"2026-10-09T05:03:45.818060555Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityClang","Output":"--- PASS: TestLongUnicodePortabilityClang (0.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.818178372Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityClang","Elapsed":0.45}
+{"Time":"2026-10-09T05:03:45.818182438Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Output":"--- PASS: TestLongUnicodePortabilityGCC (0.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.818265553Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestLongUnicodePortabilityGCC","Elapsed":0.41}
+{"Time":"2026-10-09T05:03:45.818267997Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:45.82133757Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.462s\n"}
+{"Time":"2026-10-09T05:03:45.821368547Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.463}
+{"Time":"2026-10-09T05:03:47.627173384Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T05:03:47.641007494Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode"}
+{"Time":"2026-10-09T05:03:47.641053253Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"=== RUN   TestNativeAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:47.641062637Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"=== PAUSE TestNativeAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:47.64106496Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode"}
+{"Time":"2026-10-09T05:03:47.642004961Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode"}
+{"Time":"2026-10-09T05:03:47.642009218Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"=== CONT  TestNativeAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:47.654044116Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a"}
+{"Time":"2026-10-09T05:03:47.65407366Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a","Output":"=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:47.654095323Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a","Output":"=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:47.654097776Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a"}
+{"Time":"2026-10-09T05:03:47.674953597Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a"}
+{"Time":"2026-10-09T05:03:47.674976331Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a","Output":"=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:48.204174901Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a","Output":"--- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a (0.53s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:48.204252988Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a","Elapsed":0.53}
+{"Time":"2026-10-09T05:03:48.204260069Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Output":"--- PASS: TestNativeAgreesWithNode (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:48.204348091Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestNativeAgreesWithNode","Elapsed":0.03}
+{"Time":"2026-10-09T05:03:48.204351796Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:03:48.204365988Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=3\n"}
+{"Time":"2026-10-09T05:03:48.204373259Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T05:03:48.204379889Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T05:03:48.207241745Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.580s\n"}
+{"Time":"2026-10-09T05:03:48.207255456Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.58}

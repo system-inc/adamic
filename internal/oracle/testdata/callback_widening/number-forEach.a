@@ -1,0 +1,1 @@
+[1,2,3].forEach((x: number | string): void => {console.log(`${x}`);});

@@ -1,0 +1,80 @@
+{"Time":"2026-10-09T17:57:37.003396025Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:57:37.016421624Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen"}
+{"Time":"2026-10-09T17:57:37.016514351Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"=== RUN   TestNumericEnumsAreOpen\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.016539325Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"=== PAUSE TestNumericEnumsAreOpen\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.016542214Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen"}
+{"Time":"2026-10-09T17:57:37.016545068Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof"}
+{"Time":"2026-10-09T17:57:37.016559734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof","Output":"=== RUN   TestNumericEnumNeverProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.016562564Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof","Output":"=== PAUSE TestNumericEnumNeverProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.016564534Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof"}
+{"Time":"2026-10-09T17:57:37.016566851Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises"}
+{"Time":"2026-10-09T17:57:37.016568725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises","Output":"=== RUN   TestNumericEnumLiteralPromises\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.016572161Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises","Output":"=== PAUSE TestNumericEnumLiteralPromises\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.016574187Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises"}
+{"Time":"2026-10-09T17:57:37.016576128Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen"}
+{"Time":"2026-10-09T17:57:37.016577766Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"=== CONT  TestNumericEnumsAreOpen\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.016583434Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"    enums_open_test.go:23: singleton\n"}
+{"Time":"2026-10-09T17:57:37.016586373Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises"}
+{"Time":"2026-10-09T17:57:37.016587944Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises","Output":"=== CONT  TestNumericEnumLiteralPromises\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.018042992Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/member_tag"}
+{"Time":"2026-10-09T17:57:37.018101895Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/member_tag","Output":"=== RUN   TestNumericEnumLiteralPromises/member_tag\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.01810918Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof"}
+{"Time":"2026-10-09T17:57:37.018111698Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof","Output":"=== CONT  TestNumericEnumNeverProof\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.01811586Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/member"}
+{"Time":"2026-10-09T17:57:37.018123674Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/member","Output":"=== RUN   TestNumericEnumNeverProof/member\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.305084909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/member_tag","Output":"--- PASS: TestNumericEnumLiteralPromises/member_tag (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.305149855Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/member_tag","Elapsed":0.29}
+{"Time":"2026-10-09T17:57:37.305243402Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/narrowed_member"}
+{"Time":"2026-10-09T17:57:37.305247854Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/narrowed_member","Output":"=== RUN   TestNumericEnumLiteralPromises/narrowed_member\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.305325524Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/member","Output":"--- PASS: TestNumericEnumNeverProof/member (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.305332322Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/member","Elapsed":0.29}
+{"Time":"2026-10-09T17:57:37.305458981Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/parameter"}
+{"Time":"2026-10-09T17:57:37.305463317Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/parameter","Output":"=== RUN   TestNumericEnumNeverProof/parameter\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.459490099Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/parameter","Output":"--- PASS: TestNumericEnumNeverProof/parameter (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.459539895Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/parameter","Elapsed":0.15}
+{"Time":"2026-10-09T17:57:37.45961056Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/combination"}
+{"Time":"2026-10-09T17:57:37.459614093Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/combination","Output":"=== RUN   TestNumericEnumNeverProof/combination\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.470526873Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/narrowed_member","Output":"--- PASS: TestNumericEnumLiteralPromises/narrowed_member (0.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.470564196Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/narrowed_member","Elapsed":0.17}
+{"Time":"2026-10-09T17:57:37.470571798Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/plain_literal"}
+{"Time":"2026-10-09T17:57:37.470575529Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/plain_literal","Output":"=== RUN   TestNumericEnumLiteralPromises/plain_literal\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.531570341Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/combination","Output":"--- PASS: TestNumericEnumNeverProof/combination (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.531614868Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/combination","Elapsed":0.07}
+{"Time":"2026-10-09T17:57:37.531631904Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/array_read"}
+{"Time":"2026-10-09T17:57:37.531636034Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/array_read","Output":"=== RUN   TestNumericEnumNeverProof/array_read\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.534469282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/plain_literal","Output":"--- PASS: TestNumericEnumLiteralPromises/plain_literal (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.534499507Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/plain_literal","Elapsed":0.06}
+{"Time":"2026-10-09T17:57:37.534506012Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/indexed_subset"}
+{"Time":"2026-10-09T17:57:37.534509505Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/indexed_subset","Output":"=== RUN   TestNumericEnumLiteralPromises/indexed_subset\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.555337458Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"    enums_open_test.go:23: member_tags\n"}
+{"Time":"2026-10-09T17:57:37.622683358Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/array_read","Output":"--- PASS: TestNumericEnumNeverProof/array_read (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.622712581Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/array_read","Elapsed":0.09}
+{"Time":"2026-10-09T17:57:37.62271959Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/closed_return"}
+{"Time":"2026-10-09T17:57:37.622725795Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/closed_return","Output":"=== RUN   TestNumericEnumNeverProof/closed_return\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.622729371Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/indexed_subset","Output":"--- PASS: TestNumericEnumLiteralPromises/indexed_subset (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.622732791Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/indexed_subset","Elapsed":0.08}
+{"Time":"2026-10-09T17:57:37.622735354Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/subset_member"}
+{"Time":"2026-10-09T17:57:37.622737351Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/subset_member","Output":"=== RUN   TestNumericEnumLiteralPromises/subset_member\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.672281604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/subset_member","Output":"--- PASS: TestNumericEnumLiteralPromises/subset_member (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.672311827Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/subset_member","Elapsed":0.05}
+{"Time":"2026-10-09T17:57:37.672318479Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/open_tag"}
+{"Time":"2026-10-09T17:57:37.672322196Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/open_tag","Output":"=== RUN   TestNumericEnumLiteralPromises/open_tag\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.682929432Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/closed_return","Output":"--- PASS: TestNumericEnumNeverProof/closed_return (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.682953211Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof/closed_return","Elapsed":0.07}
+{"Time":"2026-10-09T17:57:37.682960294Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof","Output":"--- PASS: TestNumericEnumNeverProof (0.67s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.718927251Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumNeverProof","Elapsed":0.67}
+{"Time":"2026-10-09T17:57:37.718954222Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/open_tag","Output":"--- PASS: TestNumericEnumLiteralPromises/open_tag (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.71896465Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises/open_tag","Elapsed":0.05}
+{"Time":"2026-10-09T17:57:37.71897647Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises","Output":"--- PASS: TestNumericEnumLiteralPromises (0.70s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:37.820362372Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumLiteralPromises","Elapsed":0.7}
+{"Time":"2026-10-09T17:57:37.820396773Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"    enums_open_test.go:23: coalesce\n"}
+{"Time":"2026-10-09T17:57:38.046085908Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"    enums_open_test.go:23: arithmetic\n"}
+{"Time":"2026-10-09T17:57:38.252601089Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"    enums_open_test.go:23: signed_flags\n"}
+{"Time":"2026-10-09T17:57:38.433830971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"    enums_open_test.go:23: cast\n"}
+{"Time":"2026-10-09T17:57:38.627128377Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"    enums_open_test.go:23: containers\n"}
+{"Time":"2026-10-09T17:57:38.831269273Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"    enums_open_test.go:23: optional_object\n"}
+{"Time":"2026-10-09T17:57:39.034237454Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Output":"--- PASS: TestNumericEnumsAreOpen (2.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:39.03430096Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNumericEnumsAreOpen","Elapsed":2.02}
+{"Time":"2026-10-09T17:57:39.034308931Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:39.036558519Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t2.033s\n"}
+{"Time":"2026-10-09T17:57:39.036601549Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":2.033}

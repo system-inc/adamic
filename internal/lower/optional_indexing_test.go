@@ -18,8 +18,8 @@ func TestOptionalIndexingKeepsIndexSignaturesRefused(t *testing.T) {
 func TestOptionalIndexingKeepsUnsupportedStorageNotYet(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, reason string }{
-		{"typed ordinary property continuation", "function pick(values: readonly [Uint8Array] | undefined): number | undefined { return values?.[0].length; }\n", "an optional chain longer than one step"},
-		{"string numeric key", "function pick(values: readonly number[] | undefined): number | undefined { return values?.[\"0\"]; }\n", "an optional index that isn't a number"},
+		{"typed ordinary property continuation", "function pick(values: readonly [Uint8Array] | undefined): number | undefined { return values?.[0].length; }\n", "an optional chain index without array or string storage"},
+		{"string numeric key", "function pick(values: readonly number[] | undefined): number | undefined { return values?.[\"0\"]; }\n", "an optional chain index that is not a number"},
 		{"sparse literal", "const values: (number | undefined)[] = [, 7];\nconsole.log(`${values?.[0]}`);\n", "in an array literal"},
 		{"open record", "function pick(record: Record<string, number> | undefined, key: string): number | undefined { return record?.[key]; }\n", "?.[] on anything but a tuple, at a position written out"},
 		{"index after ordinary continuation", "interface Holder { readonly values: readonly (readonly string[])[]; }\nfunction pick(holder: Holder | undefined): string | undefined { return holder?.values[0]?.[0]; }\n", ""},

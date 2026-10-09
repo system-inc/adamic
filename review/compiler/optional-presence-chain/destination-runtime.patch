@@ -1,0 +1,83 @@
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
+index d89f48e0..f34a1f4c 100644
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -413,7 +413,10 @@ typedef struct adamic_shape_types {
+ 	const int *types;
+ 	struct adamic_shape_types *next;
+ } adamic_shape_types;
++// Shape metadata reserves bit 8 for declared optional storage; low bytes are ir.Type.
++int adamic_shape_storage(const adamic_shape *shape, size_t index);
+ int adamic_shape_type(const adamic_shape *shape, size_t index);
++bool adamic_object_optional_storage(const adamic_object *object, size_t index);
+ extern adamic_heap adamic_null;
+ void adamic_register_shape_types(adamic_shape_types *metadata);
+ bool adamic_has_property(const adamic_heap *object, const char *name);
+diff --git a/internal/native/runtime/object.c b/internal/native/runtime/object.c
+index 7d6b577e..eca3c822 100644
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -279,7 +279,7 @@ adamic_object *adamic_object_copy_reserving_checked(const adamic_object *source,
+ 	for (size_t index = 0; index < count; index++) {
+ 		names[index] = base->names[index];
+ 		references[index] = base->references[index];
+-		types[index] = source->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)base)->types[index] : adamic_shape_type(base, index);
++		types[index] = source->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)base)->types[index] : adamic_shape_storage(base, index);
+ 	}
+ 	for (size_t index = 0; index < extra; index++) {
+ 		bool found = false;
+@@ -289,7 +289,7 @@ adamic_object *adamic_object_copy_reserving_checked(const adamic_object *source,
+ 		if (!found) {
+ 			names[count] = reserved->names[index];
+ 			references[count] = reserved->references[index];
+-		types[count++] = adamic_shape_type(reserved, index);
++		types[count++] = adamic_shape_storage(reserved, index);
+ 		}
+ 	}
+ 	*shape = (adamic_shape){count, names, references, base == NULL ? NULL : base->methods};
+@@ -438,7 +438,7 @@ void adamic_object_view_store(adamic_object *object, const char *name, adamic_sl
+         incoming = boolean.present ? 2 : 13;
+         value.boolean = boolean.boolean;
+     } else if (wanted == 3 && value.reference == NULL) incoming = 13;
+-    bool fits = (actual == 3 && incoming == 13) || (actual == incoming && actual >= 1 && actual <= 3) || (actual == 7 && (incoming == 1 || incoming == 13)) || (actual == 9 && (incoming == 2 || incoming == 13)) || (actual == 10 && (incoming == 1 || incoming == 2 || incoming == 3 || incoming == 13));
++    bool fits = (actual == 3 && incoming == 13 && adamic_object_optional_storage(object, cache->index)) || (actual == incoming && actual >= 1 && actual <= 3) || (actual == 7 && (incoming == 1 || incoming == 13)) || (actual == 9 && (incoming == 2 || incoming == 13)) || (actual == 10 && (incoming == 1 || incoming == 2 || incoming == 3 || incoming == 13));
+     if (!fits) {
+         const char *expected = slot == NULL ? "missing storage" : view_storage_name(actual);
+         const char *found = view_storage_name(incoming);
+diff --git a/internal/native/runtime/union.c b/internal/native/runtime/union.c
+index 92e46f65..f9969c1a 100644
+--- a/internal/native/runtime/union.c
++++ b/internal/native/runtime/union.c
+@@ -97,13 +97,22 @@ void adamic_register_shape_types(adamic_shape_types *metadata) {
+ 	shape_types = metadata;
+ }
+ 
+-int adamic_shape_type(const adamic_shape *shape, size_t index) {
++int adamic_shape_storage(const adamic_shape *shape, size_t index) {
+ 	for (const adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
+ 		if (entry->shape == shape) return entry->types[index];
+ 	}
+ 	return 0;
+ }
+ 
++int adamic_shape_type(const adamic_shape *shape, size_t index) {
++	return adamic_shape_storage(shape, index) & 255;
++}
++
++bool adamic_object_optional_storage(const adamic_object *object, size_t index) {
++	int storage = object->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)object->shape)->types[index] : adamic_shape_storage(object->shape, index);
++	return (storage & 256) != 0;
++}
++
+ static bool named(const char *name, const char *const *names, size_t count) {
+ 	for (size_t index = 0; index < count; index++) {
+ 		if (strcmp(name, names[index]) == 0) return true;
+@@ -178,7 +187,7 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
+ 	}
+ 	{
+ 		// These are ir.Type's scalar representations, written by the emitter.
+-		switch (object->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)object->shape)->types[index] : adamic_shape_type(object->shape, index)) {
++		switch (object->dynamic_shape ? ((const struct adamic_dynamic_shape *)(const void *)object->shape)->types[index] & 255 : adamic_shape_type(object->shape, index)) {
+ 		case 1: return adamic_box_number(slot.number);
+ 		case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+ 		case 7: {

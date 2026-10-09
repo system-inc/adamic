@@ -33,6 +33,11 @@ func RuntimeLibraryForSource(directory string, source string, options Options) (
 	return runtimeLibrary(directory, options, featureFlags(source))
 }
 
+// SourceFlags returns compiler flags matching the runtime features in emitted C.
+func SourceFlags(source string, options Options) []string {
+	return sourceFlags(source, options)
+}
+
 // sourceFlags compiles anything built for one program's emitted C: its runtime library, a split
 // unit, the checker-archive build. It is the one home for those flags, so a new build path that
 // starts from Flags(options) alone meets adamic.h's layouts without the program's features.
@@ -158,16 +163,8 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		return "", fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(temporary)
-	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
-		if slicesContain(flags, "-D"+feature+"=1") {
-			files = append([]runtimeFile(nil), files...)
-			for i := range files {
-				if files[i].name == "adamic.h" {
-					files[i].contents = append([]byte("#define "+feature+" 1\n"), files[i].contents...)
-				}
-			}
-		}
-	}
+	// Keep header bytes unchanged. Inserting the runtime's feature defines here would
+	// silently override a program requesting fewer features and hide a link mismatch.
 
 	// Headers live beside the archive, from the same snapshot that produced its objects.
 	if err := os.Chmod(temporary, 0o755); err != nil {

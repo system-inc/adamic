@@ -1,0 +1,23 @@
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+    counts_test.go:148: | internal/oracle/testdata/047cb0d_f_maybe.a | 11 | 11 | 8 | 20 | 5 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/047cb0d_f_maybe_ref.a | 13 | 13 | 16 | 31 | 7 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/57f2d04_find_last_shrinks.a | 8 | 5 | 8 | 13 | 8 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/57f2d04_find_last_shrinks2.a | 8 | 5 | 8 | 13 | 8 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/search_shrink_findIndex_checked.a | 10 | 8 | 5 | 13 | 6 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/search_shrink_findLastIndex_maybe.a | 10 | 10 | 5 | 16 | 6 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/search_shrink_find_maybe.a | 13 | 13 | 10 | 24 | 6 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/search_shrink_findLast_maybe.a | 9 | 9 | 7 | 17 | 6 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/search_shrink_find_checked.a | 10 | 8 | 5 | 13 | 6 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/search_shrink_unknown.a | 14 | 14 | 9 | 25 | 6 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/search_shrink_boolean.a | 9 | 9 | 7 | 19 | 4 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/search_shrink_default.a | 10 | 10 | 4 | 15 | 4 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/search_shrink_omitted.a | 4 | 4 | 4 | 9 | 3 | 0 |
+    counts_test.go:148: | internal/oracle/testdata/search_shrink_found.a | 15 | 15 | 12 | 32 | 8 | 0 |
+--- PASS: TestCountsAreRecorded (6.67s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	6.736s

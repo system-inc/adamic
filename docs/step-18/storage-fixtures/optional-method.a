@@ -1,0 +1,18 @@
+interface Reporter { report?: ((value: number) => string) | undefined }
+class Report {
+    readonly label: string;
+    constructor(label: string) { this.label = label; }
+    report(value: number): string { return `${this.label}:${value}`; }
+}
+let effects = 0;
+function argument(): number { effects += 1; console.log('argument'); return effects; }
+function optional(value: Reporter | undefined): void { console.log(value?.report?.(argument()) ?? 'absent'); }
+optional(undefined);
+optional({});
+optional(new Report(`class${1}`));
+optional({report: undefined});
+const nested = { label: `literal${2}`, report(value: number): string { return `${this.label}:${value}`; } };
+function chain(value: {b: typeof nested} | undefined): void { console.log(value?.b.report(argument()) ?? 'absent'); }
+chain(undefined);
+chain({b: nested});
+console.log(`${effects}`);

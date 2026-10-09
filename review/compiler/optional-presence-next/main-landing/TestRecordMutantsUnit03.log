@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T18:22:15.702728506Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T18:22:15.716562647Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03"}
+{"Time":"2026-10-09T18:22:15.716667Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03","Output":"=== RUN   TestRecordMutantsUnit03\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:22:15.716699842Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03","Output":"=== PAUSE TestRecordMutantsUnit03\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:22:15.716702523Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03"}
+{"Time":"2026-10-09T18:22:15.716707293Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03"}
+{"Time":"2026-10-09T18:22:15.716709179Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03","Output":"=== CONT  TestRecordMutantsUnit03\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:22:15.716711402Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03/overwrite-key-leaked"}
+{"Time":"2026-10-09T18:22:15.71671652Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03/overwrite-key-leaked","Output":"=== RUN   TestRecordMutantsUnit03/overwrite-key-leaked\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:22:26.747446146Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03/overwrite-key-leaked","Output":"    record_test.go:244: caught by LeakSanitizer\n"}
+{"Time":"2026-10-09T18:22:26.747591507Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03/overwrite-key-leaked","Output":"--- PASS: TestRecordMutantsUnit03/overwrite-key-leaked (11.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:22:26.747597371Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03/overwrite-key-leaked","Elapsed":11.03}
+{"Time":"2026-10-09T18:22:26.747612198Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03","Output":"--- PASS: TestRecordMutantsUnit03 (11.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:22:26.747614618Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit03","Elapsed":11.03}
+{"Time":"2026-10-09T18:22:26.747617281Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:22:26.76555027Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":11.063}

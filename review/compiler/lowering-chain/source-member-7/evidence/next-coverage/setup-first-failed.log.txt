@@ -1,0 +1,21 @@
+v24.19.0
+setup: node ready (0.020s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.025s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.010s
+setup: markdown dependencies ready (0.069s)
+setup: submodules ready (0.076s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.169s)
+# github.com/system-inc/adamic/internal/lower
+internal/lower/expression.go:550:1: syntax error: unexpected <<, expected case or default or }
+internal/lower/expression.go:551:49: syntax error: unexpected :, expected := or = or comma
+internal/lower/expression.go:611:1: syntax error: unexpected ==, expected }
+internal/lower/expression.go:636:24: syntax error: unexpected ), expected name
+internal/lower/expression.go:640:104: syntax error: unexpected ) after top level declaration
+internal/lower/refusals.go:86:1: syntax error: unexpected <<, expected }
+internal/lower/refusals.go:87:3: syntax error: unexpected keyword if at end of statement
+internal/lower/refusals.go:107:1: syntax error: unexpected ==, expected }
+internal/lower/refusals.go:110:1: syntax error: unexpected >>, expected }
+internal/lower/refusals.go:112:3: syntax error: non-declaration statement outside function body
+internal/lower/refusals.go:112:3: too many errors

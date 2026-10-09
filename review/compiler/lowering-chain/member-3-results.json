@@ -1,0 +1,203 @@
+{
+  "branch": "compiler/generic-body-relations",
+  "source": "2cc109e5",
+  "tests": [
+    {
+      "test": "TestGenericBodyRelationsCensus",
+      "result": "skip",
+      "seconds": 0,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsWitness",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsIndexedReturnMapper",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsThisRead",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsReadonlyBound",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/initializer",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/assignment",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/return",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/field_initializer",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/different_binder",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/nested",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/key_parameter",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/array_initializer",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/destructuring_initializer",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/destructuring_assignment",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/object_initializer",
+      "result": "pass",
+      "seconds": 0.02,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/index_signature",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/mapped_keys",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/element_assignment",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/increment",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/compound_assignment",
+      "result": "pass",
+      "seconds": 0.02,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse/alias",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsRefuse",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsMaybeBind",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/generic_body_indexed.a",
+      "result": "pass",
+      "seconds": 0.49,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/generic_body_read.a",
+      "result": "pass",
+      "seconds": 0.49,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-3-tests.jsonl"
+    },
+    {
+      "test": "TestGenericBodyRelationsCensus",
+      "result": "skip",
+      "seconds": 0,
+      "log": "member-3-census-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "internal/oracle/testdata/generic_body_read.a",
+        "after": [
+          "10",
+          "10",
+          "0",
+          "10",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generic_body_indexed.a",
+        "after": [
+          "2",
+          "2",
+          "0",
+          "2",
+          "2",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 1049
+  }
+}

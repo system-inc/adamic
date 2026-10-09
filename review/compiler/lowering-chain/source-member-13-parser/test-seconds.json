@@ -1,0 +1,182 @@
+[
+  {
+    "test": "TestParserNodeArrayLayout",
+    "seconds": 0.0
+  },
+  {
+    "test": "TestParserFactoryCompletionWrongPayloadAssertion",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestParserNodeArraySchemaFailsClosed",
+    "seconds": 0.0
+  },
+  {
+    "test": "TestParserNodeArrayPresence",
+    "seconds": 0.0
+  },
+  {
+    "test": "TestParserFactoryCompletionEarlyReturn",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestParserFactoryCompletionLoopMayNotRun",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestParserFactoryCompletionBeforeEscape",
+    "seconds": 0.29
+  },
+  {
+    "test": "TestParserFactoryCompletionBeforeReturn",
+    "seconds": 0.3
+  },
+  {
+    "test": "TestParserFactoryCompletionShortCircuit",
+    "seconds": 0.21
+  },
+  {
+    "test": "TestParserFactoryCompletionOneBranch",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestParserFactoryCompletionCaptured",
+    "seconds": 0.22
+  },
+  {
+    "test": "TestParserFactoryCompletionBothBranches",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestParserFactoryReadBeforeCompletion",
+    "seconds": 0.31
+  },
+  {
+    "test": "TestParserFactoryCompletionAlias",
+    "seconds": 0.25
+  },
+  {
+    "test": "TestParserConstructionBackendNodeArrayLength",
+    "seconds": 0.68
+  },
+  {
+    "test": "TestParserConstructionBackendOwnKeyOrder",
+    "seconds": 0.72
+  },
+  {
+    "test": "TestParserConstructionBackendNodeArrayJson",
+    "seconds": 0.77
+  },
+  {
+    "test": "TestParserConstructionBackendNodeArrayKeys",
+    "seconds": 0.77
+  },
+  {
+    "test": "TestParserConstructionRuntimeMutantSynthesizedKey",
+    "seconds": 8.8
+  },
+  {
+    "test": "TestParserConstructionRuntimeMutantArrayExtrasInJSON",
+    "seconds": 8.83
+  },
+  {
+    "test": "TestParserConstructionRuntimeMutantDeclarationOrder",
+    "seconds": 8.55
+  },
+  {
+    "test": "TestParserStackGuardMutant",
+    "seconds": 0.75
+  },
+  {
+    "test": "TestParserSpeculationMisfit",
+    "seconds": 1.06
+  },
+  {
+    "test": "TestParserConstructionUnsetUse",
+    "seconds": 1.11
+  },
+  {
+    "test": "TestParserConstructionNullPlaceholderDelivered",
+    "seconds": 1.14
+  },
+  {
+    "test": "TestParserConstructionSourceFactoryUnset",
+    "seconds": 0.92
+  },
+  {
+    "test": "TestParserConstructionSourceNodeArrayUnset",
+    "seconds": 0.88
+  },
+  {
+    "test": "TestParserConstructionSourceNodeArrayLength",
+    "seconds": 0.99
+  },
+  {
+    "test": "TestParserConstructionSourceNodeArrayJson",
+    "seconds": 1.02
+  },
+  {
+    "test": "TestParserConstructionSourceNodeArrayKeys",
+    "seconds": 0.9
+  },
+  {
+    "test": "TestParserConstructionSourceOwnKeyOrder",
+    "seconds": 1.0
+  },
+  {
+    "test": "TestParserSpeculationSourcesTruthinessRewind",
+    "seconds": 0.9
+  },
+  {
+    "test": "TestParserSpeculationSourcesNamedTryparse",
+    "seconds": 0.97
+  },
+  {
+    "test": "TestParserSpeculationSourcesArrowTryparse",
+    "seconds": 0.72
+  },
+  {
+    "test": "TestParserAheadNodeArraySourcePresence",
+    "seconds": 0.53
+  },
+  {
+    "test": "TestParserAheadCounts",
+    "seconds": 3.79
+  },
+  {
+    "test": "TestParserAheadNodeArraySourceFields",
+    "seconds": 1.02
+  },
+  {
+    "test": "TestParserAheadFactoryBoundariesEscaped",
+    "seconds": 0.9
+  },
+  {
+    "test": "TestParserAheadFactoryCompleteControl",
+    "seconds": 1.45
+  },
+  {
+    "test": "TestParserSpeculationSourcesNamedLookahead",
+    "seconds": 0.89
+  },
+  {
+    "test": "TestParserStackPathological",
+    "seconds": 1.16
+  },
+  {
+    "test": "TestParserStackTinyLimit",
+    "seconds": 0.86
+  },
+  {
+    "test": "TestParserAheadFactoryBoundariesComplete",
+    "seconds": 0.69
+  },
+  {
+    "test": "TestParserSpeculationRewindMutant",
+    "seconds": 0.61
+  },
+  {
+    "test": "TestParserStackLegal",
+    "seconds": 0.91
+  }
+]

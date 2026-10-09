@@ -1,0 +1,163 @@
+[
+  {
+    "mutant": "error-spread",
+    "caught": true,
+    "exit": 1,
+    "seconds": 2.529,
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-parallel",
+      "4",
+      "-overlay",
+      "/workspace/adamic/review/compiler/lowering-chain/member-17-mutants/error-spread/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestMiscompile2A(ErrorSpread|ErrorSubclassSpread)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "maybe-setter",
+    "caught": true,
+    "exit": 1,
+    "seconds": 14.516,
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-parallel",
+      "4",
+      "-overlay",
+      "/workspace/adamic/review/compiler/lowering-chain/member-17-mutants/maybe-setter/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestMiscompile2AMaybeSetter$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "long-name",
+    "caught": true,
+    "exit": 1,
+    "seconds": 16.569,
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-parallel",
+      "4",
+      "-overlay",
+      "/workspace/adamic/review/compiler/lowering-chain/member-17-mutants/long-name/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestMiscompile2ALongName$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "computed-name",
+    "caught": true,
+    "exit": 1,
+    "seconds": 19.804,
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-parallel",
+      "4",
+      "-overlay",
+      "/workspace/adamic/review/compiler/lowering-chain/member-17-mutants/computed-name/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestMiscompile2A(DerivedSymbol|OverrideSource)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "constructor-capture",
+    "caught": true,
+    "exit": 1,
+    "seconds": 24.479,
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-parallel",
+      "4",
+      "-overlay",
+      "/workspace/adamic/review/compiler/lowering-chain/member-17-mutants/constructor-capture/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestMiscompile2A(ConstructorArrow|ConstructorNumberArrow)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "optional-error",
+    "caught": true,
+    "exit": 1,
+    "seconds": 74.945,
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-parallel",
+      "4",
+      "-overlay",
+      "/workspace/adamic/review/compiler/lowering-chain/member-17-mutants/optional-error/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestMiscompile2A(OptionalError|MarkerUndefined)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "error-own-message",
+    "caught": true,
+    "exit": 1,
+    "seconds": 23.571,
+    "command": [
+      "go",
+      "test",
+      "-p",
+      "1",
+      "-parallel",
+      "4",
+      "-overlay",
+      "/workspace/adamic/review/compiler/lowering-chain/member-17-mutants/error-own-message/overlay.json",
+      "./internal/native",
+      "-run",
+      "^TestErrorUndefinedMessageHasNoOwnProperty$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ]
+  }
+]

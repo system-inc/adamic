@@ -1,0 +1,49 @@
+=== RUN   TestParserFactoryCompletionBeforeReturn
+=== PAUSE TestParserFactoryCompletionBeforeReturn
+=== RUN   TestParserFactoryCompletionAlias
+=== PAUSE TestParserFactoryCompletionAlias
+=== RUN   TestParserFactoryCompletionBothBranches
+=== PAUSE TestParserFactoryCompletionBothBranches
+=== RUN   TestParserFactoryCompletionOneBranch
+=== PAUSE TestParserFactoryCompletionOneBranch
+=== RUN   TestParserFactoryCompletionBeforeEscape
+=== PAUSE TestParserFactoryCompletionBeforeEscape
+=== RUN   TestParserFactoryCompletionWrongPayloadAssertion
+=== PAUSE TestParserFactoryCompletionWrongPayloadAssertion
+=== RUN   TestParserFactoryCompletionEarlyReturn
+=== PAUSE TestParserFactoryCompletionEarlyReturn
+=== RUN   TestParserFactoryCompletionLoopMayNotRun
+=== PAUSE TestParserFactoryCompletionLoopMayNotRun
+=== RUN   TestParserFactoryCompletionCaptured
+=== PAUSE TestParserFactoryCompletionCaptured
+=== RUN   TestParserFactoryCompletionShortCircuit
+=== PAUSE TestParserFactoryCompletionShortCircuit
+=== RUN   TestParserFactoryReadBeforeCompletion
+=== PAUSE TestParserFactoryReadBeforeCompletion
+=== CONT  TestParserFactoryCompletionBeforeReturn
+=== CONT  TestParserFactoryCompletionEarlyReturn
+=== CONT  TestParserFactoryCompletionWrongPayloadAssertion
+=== CONT  TestParserFactoryCompletionOneBranch
+=== CONT  TestParserFactoryCompletionBeforeEscape
+--- PASS: TestParserFactoryCompletionBeforeReturn (0.13s)
+=== CONT  TestParserFactoryCompletionBothBranches
+=== NAME  TestParserFactoryCompletionOneBranch
+    factory_completion_test.go:30: summary {Required:[end kind pos text] BeforeEscape:map[end:true kind:true pos:true text:true] Escapes:[{Node:0x24ee4d3cfc20 Missing:[]}] Reads:[] Unknown:false}, want text proven false, unknown false
+--- FAIL: TestParserFactoryCompletionOneBranch (0.22s)
+=== CONT  TestParserFactoryCompletionAlias
+--- PASS: TestParserFactoryCompletionEarlyReturn (0.23s)
+=== CONT  TestParserFactoryCompletionShortCircuit
+--- PASS: TestParserFactoryCompletionWrongPayloadAssertion (0.24s)
+=== CONT  TestParserFactoryReadBeforeCompletion
+--- PASS: TestParserFactoryCompletionBeforeEscape (0.23s)
+=== CONT  TestParserFactoryCompletionCaptured
+--- PASS: TestParserFactoryCompletionBothBranches (0.19s)
+=== CONT  TestParserFactoryCompletionLoopMayNotRun
+--- PASS: TestParserFactoryCompletionAlias (0.12s)
+--- PASS: TestParserFactoryReadBeforeCompletion (0.15s)
+--- PASS: TestParserFactoryCompletionShortCircuit (0.17s)
+--- PASS: TestParserFactoryCompletionCaptured (0.16s)
+--- PASS: TestParserFactoryCompletionLoopMayNotRun (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.456s
+FAIL

@@ -1,0 +1,12 @@
+=== RUN   TestParserStackGuardCost
+    parser_stack_test.go:172: stack/benchmark: 36 measured paired release process runs after 4 warmups; guarded median 264.182164ms, removed median 258.39077ms, change 2.24%; includes process launch
+    parser_stack_test.go:172: speculation/named-lookahead: 36 measured paired release process runs after 4 warmups; guarded median 775.845µs, removed median 785.07µs, change -1.18%; includes process launch
+    parser_stack_test.go:172: speculation/named-tryparse: 36 measured paired release process runs after 4 warmups; guarded median 863.925µs, removed median 920.38µs, change -6.13%; includes process launch
+    parser_stack_test.go:172: speculation/arrow-tryparse: 36 measured paired release process runs after 4 warmups; guarded median 827.138µs, removed median 889.256µs, change -6.99%; includes process launch
+    parser_stack_test.go:172: speculation/truthiness-rewind: 36 measured paired release process runs after 4 warmups; guarded median 805.951µs, removed median 860.806µs, change -6.37%; includes process launch
+--- PASS: TestParserStackGuardCost (22.90s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=5
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	22.909s

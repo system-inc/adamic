@@ -1,0 +1,675 @@
+{
+  "branch": "compiler/generators-main",
+  "source": "6f0ebd1520af6483be34bb089b70cc504c723e94",
+  "tests": [
+    {
+      "test": "TestGeneratorReentrant",
+      "result": "pass",
+      "seconds": 1.07,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorThrow",
+      "result": "pass",
+      "seconds": 1.42,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorChecker",
+      "result": "pass",
+      "seconds": 1.59,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorParameterBorrowMutant",
+      "result": "pass",
+      "seconds": 1.68,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorMapIterator",
+      "result": "pass",
+      "seconds": 1.23,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCaptures",
+      "result": "pass",
+      "seconds": 1.79,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDefaultError",
+      "result": "pass",
+      "seconds": 2.1,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorOwned",
+      "result": "pass",
+      "seconds": 2.57,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorRegExpIteratorResultCompatibility",
+      "result": "pass",
+      "seconds": 1.95,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorRegExpTreeResultCompatibility",
+      "result": "pass",
+      "seconds": 0.87,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorBasic",
+      "result": "pass",
+      "seconds": 1.73,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCycleFrame",
+      "result": "pass",
+      "seconds": 0.2,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCancellation",
+      "result": "pass",
+      "seconds": 2.97,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDelegateThrow",
+      "result": "pass",
+      "seconds": 3.18,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCompletions",
+      "result": "pass",
+      "seconds": 2.63,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorFirstReference",
+      "result": "pass",
+      "seconds": 1.72,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorLocalBorrowMutant",
+      "result": "pass",
+      "seconds": 2.01,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDelegate",
+      "result": "pass",
+      "seconds": 6.45,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorClose",
+      "result": "pass",
+      "seconds": 1.33,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDefaults",
+      "result": "pass",
+      "seconds": 1.72,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorNextPromiseNeedsResumeProof",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDestructuredParameterCycle",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorEmptyBodyUsesOwnedFrame",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorOpaqueReceiverRemainsExplicit",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorProtocolReplacementRemainsExplicit",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorNestedFrameCaptureRemainsExplicit",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorPrimitiveThrowRemainsExplicit",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestAsyncGeneratorsAreRefusedEvenWithoutYield",
+      "result": "pass",
+      "seconds": 0.23,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorClose",
+      "result": "pass",
+      "seconds": 0.32,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorOwned",
+      "result": "pass",
+      "seconds": 0.33,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorBasic",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorChecker",
+      "result": "pass",
+      "seconds": 0.39,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorReentrant",
+      "result": "pass",
+      "seconds": 0.22,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDefaults",
+      "result": "pass",
+      "seconds": 0.26,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDelegateThrow",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorThrow",
+      "result": "pass",
+      "seconds": 0.25,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCompletions",
+      "result": "pass",
+      "seconds": 0.25,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCancellation",
+      "result": "pass",
+      "seconds": 0.32,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorFirstReference",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDefaultError",
+      "result": "pass",
+      "seconds": 0.2,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorMapIterator",
+      "result": "pass",
+      "seconds": 0.22,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCaptures",
+      "result": "pass",
+      "seconds": 0.22,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDelegate",
+      "result": "pass",
+      "seconds": 1.05,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorBasic",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDefaultError",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorOwned",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorChecker",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorReentrant",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDelegateThrow",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorClose",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDefaults",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorThrow",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDelegate",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCancellation",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorFirstReference",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorMapIterator",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCompletions",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCaptures",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestCallTargetReaders",
+      "result": "pass",
+      "seconds": 1.16,
+      "log": "member-16-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorReentrant",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorClose",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorBasic",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorOwned",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorThrow",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDelegateThrow",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDelegate",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDefaults",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCancellation",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorMapIterator",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorFirstReference",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCaptures",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorChecker",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorCompletions",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestGeneratorDefaultError",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-16-fresh-tests.jsonl"
+    },
+    {
+      "test": "TestArtifactInputsAndReuse",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-16-native-tests.jsonl"
+    },
+    {
+      "test": "TestRegExpIteratorResultShape",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-16-native-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "internal/oracle/testdata/generators/basic.a",
+        "after": [
+          "30",
+          "30",
+          "85",
+          "101",
+          "14",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/cancellation.a",
+        "after": [
+          "23",
+          "23",
+          "65",
+          "74",
+          "14",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/throw.a",
+        "after": [
+          "16",
+          "16",
+          "75",
+          "74",
+          "12",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/defaults.a",
+        "after": [
+          "29",
+          "29",
+          "104",
+          "107",
+          "21",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/close.a",
+        "after": [
+          "27",
+          "27",
+          "57",
+          "59",
+          "13",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/delegate.a",
+        "after": [
+          "89",
+          "89",
+          "316",
+          "332",
+          "51",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/delegate_throw.a",
+        "after": [
+          "28",
+          "28",
+          "158",
+          "151",
+          "22",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/reentrant.a",
+        "after": [
+          "14",
+          "14",
+          "53",
+          "54",
+          "11",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/owned.a",
+        "after": [
+          "32",
+          "32",
+          "132",
+          "130",
+          "21",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/captures.a",
+        "after": [
+          "31",
+          "31",
+          "95",
+          "95",
+          "24",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/default_error.a",
+        "after": [
+          "13",
+          "13",
+          "31",
+          "30",
+          "12",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/map_iterator.a",
+        "after": [
+          "24",
+          "24",
+          "95",
+          "103",
+          "15",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/checker.a",
+        "after": [
+          "20",
+          "20",
+          "104",
+          "93",
+          "16",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/first_reference.a",
+        "after": [
+          "17",
+          "17",
+          "73",
+          "72",
+          "12",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/generators/completions.a",
+        "after": [
+          "59",
+          "59",
+          "166",
+          "175",
+          "38",
+          "0"
+        ]
+      }
+    ],
+    "changed": [
+      {
+        "row": "internal/oracle/testdata/regexp.a",
+        "before": [
+          "437",
+          "437",
+          "382",
+          "417",
+          "58",
+          "0"
+        ],
+        "after": [
+          "437",
+          "437",
+          "383",
+          "418",
+          "58",
+          "0"
+        ],
+        "reason": "Conflicts: ir.go retains SourceLength and Generator metadata; iteration.go retains dynamic cached ordinary iterator dispatch, truthy done reads, destructuring type metadata and adds generator next/return with explicit undefined input. Generator close bypasses the zero-argument ordinary protocol adapter after ASan exposed a stack read; freshness treats accessor-capable iterator nodes conservatively as calls. counts.md seeded from ours and regenerated once. Existing regexp rows change because boxed iterator values now own reads, as measured by the source lane; every extra changed row is audited separately. Source generator and native test-split evidence moved under this branch. Focused generator Node comparisons in both backends with sanitizers, analyses and call-target readers pass; cancellation finally omission overlay caught; native artifact reuse and regexp result shape controls pass. Vet passes."
+      },
+      {
+        "row": "internal/fresh/testdata/regexp_tree.ts",
+        "before": [
+          "91",
+          "91",
+          "81",
+          "85",
+          "35",
+          "0"
+        ],
+        "after": [
+          "91",
+          "91",
+          "85",
+          "89",
+          "35",
+          "0"
+        ],
+        "reason": "Conflicts: ir.go retains SourceLength and Generator metadata; iteration.go retains dynamic cached ordinary iterator dispatch, truthy done reads, destructuring type metadata and adds generator next/return with explicit undefined input. Generator close bypasses the zero-argument ordinary protocol adapter after ASan exposed a stack read; freshness treats accessor-capable iterator nodes conservatively as calls. counts.md seeded from ours and regenerated once. Existing regexp rows change because boxed iterator values now own reads, as measured by the source lane; every extra changed row is audited separately. Source generator and native test-split evidence moved under this branch. Focused generator Node comparisons in both backends with sanitizers, analyses and call-target readers pass; cancellation finally omission overlay caught; native artifact reuse and regexp result shape controls pass. Vet passes."
+      }
+    ],
+    "removed": [],
+    "rows": 1256
+  }
+}

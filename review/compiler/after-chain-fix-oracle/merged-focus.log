@@ -1,0 +1,126 @@
+=== RUN   TestRuledBackendOutcomes
+=== PAUSE TestRuledBackendOutcomes
+=== RUN   TestTerminalStackStop
+=== PAUSE TestTerminalStackStop
+=== RUN   TestCheckedJSONNextRefusals
+=== PAUSE TestCheckedJSONNextRefusals
+=== RUN   TestEnumInitializationUnknownPinned
+=== PAUSE TestEnumInitializationUnknownPinned
+=== RUN   TestGenericBodyRelationsMaybeBind
+=== PAUSE TestGenericBodyRelationsMaybeBind
+=== RUN   TestParserConstructionUnsetUse
+=== PAUSE TestParserConstructionUnsetUse
+=== RUN   TestParserNamespaceClassRegistrationMutant
+=== PAUSE TestParserNamespaceClassRegistrationMutant
+=== RUN   TestParserStackTinyLimit
+=== PAUSE TestParserStackTinyLimit
+=== RUN   TestParserStackGuardMutant
+=== PAUSE TestParserStackGuardMutant
+=== RUN   TestWASIAgreesWithNode
+=== PAUSE TestWASIAgreesWithNode
+=== RUN   TestWASIRuledWeakStopMutant
+=== PAUSE TestWASIRuledWeakStopMutant
+=== RUN   TestWASIRuledStackStopMutant
+=== PAUSE TestWASIRuledStackStopMutant
+=== CONT  TestRuledBackendOutcomes
+=== CONT  TestParserNamespaceClassRegistrationMutant
+=== CONT  TestEnumInitializationUnknownPinned
+=== CONT  TestParserConstructionUnsetUse
+=== CONT  TestWASIAgreesWithNode
+=== RUN   TestEnumInitializationUnknownPinned/unknown-before
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-before
+=== RUN   TestEnumInitializationUnknownPinned/unknown-callback
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-callback
+=== RUN   TestEnumInitializationUnknownPinned/unknown-property
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-property
+=== CONT  TestEnumInitializationUnknownPinned/unknown-before
+=== RUN   TestWASIAgreesWithNode/shard-000
+=== PAUSE TestWASIAgreesWithNode/shard-000
+=== RUN   TestWASIAgreesWithNode/shard-001
+=== PAUSE TestWASIAgreesWithNode/shard-001
+=== RUN   TestWASIAgreesWithNode/shard-002
+=== PAUSE TestWASIAgreesWithNode/shard-002
+=== RUN   TestWASIAgreesWithNode/shard-003
+=== PAUSE TestWASIAgreesWithNode/shard-003
+=== RUN   TestWASIAgreesWithNode/shard-004
+=== PAUSE TestWASIAgreesWithNode/shard-004
+=== RUN   TestWASIAgreesWithNode/shard-005
+=== PAUSE TestWASIAgreesWithNode/shard-005
+=== RUN   TestWASIAgreesWithNode/shard-006
+=== PAUSE TestWASIAgreesWithNode/shard-006
+=== RUN   TestWASIAgreesWithNode/shard-007
+=== PAUSE TestWASIAgreesWithNode/shard-007
+=== CONT  TestGenericBodyRelationsMaybeBind
+--- PASS: TestGenericBodyRelationsMaybeBind (0.33s)
+=== CONT  TestEnumInitializationUnknownPinned/unknown-property
+=== NAME  TestParserConstructionUnsetUse
+    parser_construction_test.go:88: undefined presence observation is accepted; declared string use stops naming field, factory and use
+--- PASS: TestParserConstructionUnsetUse (1.54s)
+=== CONT  TestEnumInitializationUnknownPinned/unknown-callback
+--- PASS: TestRuledBackendOutcomes (1.62s)
+=== CONT  TestCheckedJSONNextRefusals
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_alias_write
+    checked_json_next_test.go:132: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_dictionary_alias_write1077968680/001/boundary.ts:5:1: stage 0 can't lower a write through a checked JSON view alias yet
+--- PASS: TestCheckedJSONNextRefusals (0.19s)
+    --- PASS: TestCheckedJSONNextRefusals/json_dictionary_alias_write (0.19s)
+=== CONT  TestWASIRuledStackStopMutant
+=== CONT  TestTerminalStackStop
+=== CONT  TestWASIRuledWeakStopMutant
+=== NAME  TestParserNamespaceClassRegistrationMutant
+    parser_namespaces_test.go:175: native missing constructor registration stopped: {stdout:[67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] stderr:[] exitCode:0}
+    parser_namespaces_test.go:175: javascript missing constructor registration stopped: {stdout:[67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] stderr:[] exitCode:0}
+--- PASS: TestParserNamespaceClassRegistrationMutant (2.21s)
+=== CONT  TestParserStackGuardMutant
+    parser_stack_test.go:123: removed guard compiles and executes: exit 1, AddressSanitizer: stack-overflow
+--- PASS: TestParserStackGuardMutant (0.58s)
+=== CONT  TestParserStackTinyLimit
+--- PASS: TestEnumInitializationUnknownPinned (0.00s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-property (1.49s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-before (1.82s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-callback (1.29s)
+=== CONT  TestWASIAgreesWithNode/shard-000
+    wasi_test.go:31: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== CONT  TestWASIAgreesWithNode/shard-004
+    wasi_test.go:31: WASI shard setup (Node identity, three native runtime archives): 0.000s
+--- PASS: TestTerminalStackStop (1.06s)
+=== CONT  TestWASIAgreesWithNode/shard-007
+    wasi_test.go:31: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+=== NAME  TestWASIRuledWeakStopMutant
+    wasi_test.go:188: WASI mutant caught by stdout differs: exit 70 stdout "before!\n" stderr "adamic: panic: a weak reference was read after what it pointed to was freed\n"
+--- PASS: TestWASIRuledWeakStopMutant (1.07s)
+=== CONT  TestWASIAgreesWithNode/shard-006
+    wasi_test.go:31: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== NAME  TestWASIRuledStackStopMutant
+    wasi_test.go:201: WASI mutant caught by stderr differs: exit 70 stdout "" stderr "adamic: panic: RangeError: Maximum call stack size exceeded in wrongDepth\n"
+--- PASS: TestWASIRuledStackStopMutant (1.09s)
+=== CONT  TestWASIAgreesWithNode/shard-005
+    wasi_test.go:31: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== CONT  TestWASIAgreesWithNode/shard-002
+    wasi_test.go:31: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+=== CONT  TestWASIAgreesWithNode/shard-003
+    wasi_test.go:31: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== CONT  TestWASIAgreesWithNode/shard-001
+    wasi_test.go:31: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+--- PASS: TestParserStackTinyLimit (0.38s)
+--- PASS: TestWASIAgreesWithNode (0.00s)
+    --- PASS: TestWASIAgreesWithNode/shard-000 (0.03s)
+    --- PASS: TestWASIAgreesWithNode/shard-007 (0.06s)
+    --- PASS: TestWASIAgreesWithNode/shard-001 (0.03s)
+    --- PASS: TestWASIAgreesWithNode/shard-005 (0.10s)
+    --- PASS: TestWASIAgreesWithNode/shard-006 (0.12s)
+    --- PASS: TestWASIAgreesWithNode/shard-003 (0.08s)
+    --- PASS: TestWASIAgreesWithNode/shard-004 (0.05s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a (0.35s)
+    --- PASS: TestWASIAgreesWithNode/shard-002 (0.02s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a (0.34s)
+PASS
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=22
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.485s

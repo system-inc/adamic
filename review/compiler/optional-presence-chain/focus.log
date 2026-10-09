@@ -1,0 +1,252 @@
+=== RUN   TestObjectRefusalsExplainSoundness
+=== PAUSE TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectUnprovenShapesStayNotYet
+=== PAUSE TestObjectUnprovenShapesStayNotYet
+=== RUN   TestObjectHasOwnInterface
+=== PAUSE TestObjectHasOwnInterface
+=== RUN   TestOptionalAssignHiddenKeys
+=== PAUSE TestOptionalAssignHiddenKeys
+=== RUN   TestOptionalDeletionRequiresPlainStorage
+=== PAUSE TestOptionalDeletionRequiresPlainStorage
+=== RUN   TestUnknownAbsentSpreadPresence
+=== PAUSE TestUnknownAbsentSpreadPresence
+=== CONT  TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== CONT  TestOptionalAssignHiddenKeys
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== CONT  TestObjectHasOwnInterface
+=== CONT  TestObjectUnprovenShapesStayNotYet
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_Object.hasOwn(Child,_'first');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_Object.hasOwn(Child,_'first');
+=== RUN   TestObjectUnprovenShapesStayNotYet/const_source_=_{_get_value():_number_{_return_1;_}_};_const_alias:_{readonly_value?:number}_=_source;_Object.hasOwn(alias,_'value');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/const_source_=_{_get_value():_number_{_return_1;_}_};_const_alias:_{readonly_value?:number}_=_source;_Object.hasOwn(alias,_'value');
+=== RUN   TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_const_view:_{readonly_first:number}_=_Child;_Object.hasOwn(view,_'first');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_const_view:_{readonly_first:number}_=_Child;_Object.hasOwn(view,_'first');
+=== CONT  TestOptionalDeletionRequiresPlainStorage
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== CONT  TestUnknownAbsentSpreadPresence
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== RUN   TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== PAUSE TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== RUN   TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== PAUSE TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== PAUSE TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+--- PASS: TestUnknownAbsentSpreadPresence (0.40s)
+=== CONT  TestObjectUnprovenShapesStayNotYet/const_source_=_{_get_value():_number_{_return_1;_}_};_const_alias:_{readonly_value?:number}_=_source;_Object.hasOwn(alias,_'value');
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+--- PASS: TestObjectHasOwnInterface (0.43s)
+=== CONT  TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_const_view:_{readonly_first:number}_=_Child;_Object.hasOwn(view,_'first');
+=== CONT  TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_Object.hasOwn(Child,_'first');
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+--- PASS: TestOptionalAssignHiddenKeys (0.62s)
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+--- PASS: TestOptionalDeletionRequiresPlainStorage (0.64s)
+=== CONT  TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+--- PASS: TestObjectUnprovenShapesStayNotYet (0.00s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2}); (0.40s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/const_source_=_{_get_value():_number_{_return_1;_}_};_const_alias:_{readonly_value?:number}_=_source;_Object.hasOwn(alias,_'value'); (0.20s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other'); (0.20s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_const_view:_{readonly_first:number}_=_Child;_Object.hasOwn(view,_'first'); (0.24s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/class_Parent_{_static_first_=_1;_}_class_Child_extends_Parent_{}_Object.hasOwn(Child,_'first'); (0.21s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_} (0.21s)
+=== CONT  TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== CONT  TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+--- PASS: TestObjectRefusalsExplainSoundness (0.01s)
+    --- PASS: TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared'); (0.25s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'}); (0.24s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'}); (0.32s)
+    --- PASS: TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view); (0.20s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'}); (0.25s)
+    --- PASS: TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'}); (0.23s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1}); (0.32s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5}); (0.31s)
+    --- PASS: TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]); (0.30s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{}); (0.29s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value'); (0.23s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.getPrototypeOf({value:1}); (0.27s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1}); (0.26s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}}); (0.19s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.697s
+=== RUN   TestUniformFieldsMatchNode
+=== PAUSE TestUniformFieldsMatchNode
+=== RUN   TestRuntimeFieldLayoutsAreIncluded
+=== PAUSE TestRuntimeFieldLayoutsAreIncluded
+=== RUN   TestRegexProgramsKeepCheckedFieldReads
+=== PAUSE TestRegexProgramsKeepCheckedFieldReads
+=== RUN   TestOptionalWriteReservedSlotMatchesNode
+=== PAUSE TestOptionalWriteReservedSlotMatchesNode
+=== CONT  TestUniformFieldsMatchNode
+=== CONT  TestRegexProgramsKeepCheckedFieldReads
+=== CONT  TestOptionalWriteReservedSlotMatchesNode
+=== CONT  TestRuntimeFieldLayoutsAreIncluded
+    fields_test.go:177: 35 runtime layouts included
+--- PASS: TestRuntimeFieldLayoutsAreIncluded (0.01s)
+--- PASS: TestRegexProgramsKeepCheckedFieldReads (7.94s)
+--- PASS: TestOptionalWriteReservedSlotMatchesNode (8.02s)
+--- PASS: TestUniformFieldsMatchNode (8.02s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	8.056s
+=== RUN   TestLiteralOptionalOracleCatchesMutant
+=== PAUSE TestLiteralOptionalOracleCatchesMutant
+=== RUN   TestOptionalFieldCopyState
+=== PAUSE TestOptionalFieldCopyState
+=== RUN   TestOptionalFieldWriteCatchesDroppedSlot
+=== PAUSE TestOptionalFieldWriteCatchesDroppedSlot
+=== RUN   TestOptionalFieldPresenceCatchesMutants
+=== PAUSE TestOptionalFieldPresenceCatchesMutants
+=== RUN   TestOptionalFieldConstructionCatchesDroppedReservation
+=== PAUSE TestOptionalFieldConstructionCatchesDroppedReservation
+=== RUN   TestOptionalFieldAliasCatchesStaticEnumeration
+=== PAUSE TestOptionalFieldAliasCatchesStaticEnumeration
+=== RUN   TestOptionalFieldCheckedViewPending
+    optional_field_write_test.go:211: checked-view optional-field conversion remains pending; landed views-v1 admits required scalar writes, not optional slots
+--- SKIP: TestOptionalFieldCheckedViewPending (11.51s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestLiteralOptionalOracleCatchesMutant
+=== CONT  TestOptionalFieldConstructionCatchesDroppedReservation
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestOptionalFieldAliasCatchesStaticEnumeration
+=== CONT  TestOptionalFieldWriteCatchesDroppedSlot
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a
+=== CONT  TestOptionalFieldPresenceCatchesMutants
+=== NAME  TestOptionalFieldAliasCatchesStaticEnumeration
+    optional_field_write_test.go:190: Node caught static enumeration, sanitize=false: "false\n[first]\nfalse\ntrue\n[first]\ntrue\n"
+=== NAME  TestOptionalFieldWriteCatchesDroppedSlot
+    optional_field_write_test.go:56: Node caught dropped absent slot: missing-field stop, exit 70
+--- PASS: TestOptionalFieldWriteCatchesDroppedSlot (0.58s)
+=== CONT  TestOptionalFieldCopyState
+=== RUN   TestOptionalFieldCopyState/baseline
+=== RUN   TestOptionalFieldPresenceCatchesMutants/initially_present
+=== NAME  TestOptionalFieldAliasCatchesStaticEnumeration
+    optional_field_write_test.go:190: Node caught static enumeration, sanitize=true: "false\n[first]\nfalse\ntrue\n[first]\ntrue\n"
+--- PASS: TestOptionalFieldAliasCatchesStaticEnumeration (0.86s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a
+=== NAME  TestOptionalFieldCopyState/baseline
+    optional_field_layout_test.go:98: native: clang failed: exit status 1
+        /usr/bin/ld: /home/agent/.cache/adamic/runtime/c40bab3620889167991ac8058f65dc3f6f781a98f772797aaabcfd52733dca09/runtime.a(object.o): in function `adamic_object_view_union_snapshot':
+        object.c:(.text+0xcf0): multiple definition of `adamic_object_view_union_snapshot'; /tmp/adamic-gate/main-b3aded.o:main.c:(.text+0xcf0): first defined here
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+        
+=== RUN   TestOptionalFieldCopyState/drop_presence_on_checked_copy
+    optional_field_layout_test.go:98: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3342899480/main.c:57:4: error: expected expression
+           57 |                         else adamic_object_publish(object, index);
+              |                         ^
+        1 error generated.
+        
+=== RUN   TestOptionalFieldCopyState/drop_readiness_on_checked_copy
+=== NAME  TestOptionalFieldPresenceCatchesMutants/initially_present
+    optional_field_write_test.go:103: Node caught incorrect field presence or insertion order by stdout
+=== RUN   TestOptionalFieldPresenceCatchesMutants/layout_order_instead_of_write_order
+=== NAME  TestLiteralOptionalOracleCatchesMutant
+    literal_optional_test.go:79: Node caught restored required-field lookup: missing-field panic, exit 70
+--- PASS: TestLiteralOptionalOracleCatchesMutant (1.18s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a
+=== NAME  TestOptionalFieldCopyState/drop_readiness_on_checked_copy
+    optional_field_layout_test.go:98: native: clang failed: exit status 1
+        /usr/bin/ld: /home/agent/.cache/adamic/runtime/c40bab3620889167991ac8058f65dc3f6f781a98f772797aaabcfd52733dca09/runtime.a(object.o): in function `adamic_object_view_union_snapshot':
+        object.c:(.text+0xcf0): multiple definition of `adamic_object_view_union_snapshot'; /tmp/adamic-gate/main-aecd9b.o:main.c:(.text+0xcd0): first defined here
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+        
+=== RUN   TestOptionalFieldCopyState/drop_representation_on_checked_copy
+    optional_field_layout_test.go:98: native: clang failed: exit status 1
+        /usr/bin/ld: /home/agent/.cache/adamic/runtime/c40bab3620889167991ac8058f65dc3f6f781a98f772797aaabcfd52733dca09/runtime.a(object.o): in function `adamic_object_view_union_snapshot':
+        object.c:(.text+0xcf0): multiple definition of `adamic_object_view_union_snapshot'; /tmp/adamic-gate/main-81e3ad.o:main.c:(.text+0xcd0): first defined here
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+        
+=== RUN   TestOptionalFieldCopyState/overlap_presence_and_readiness
+=== NAME  TestOptionalFieldPresenceCatchesMutants/layout_order_instead_of_write_order
+    optional_field_write_test.go:103: Node caught incorrect field presence or insertion order by stdout
+=== RUN   TestOptionalFieldPresenceCatchesMutants/delete_does_not_remove
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a
+=== NAME  TestOptionalFieldCopyState/overlap_presence_and_readiness
+    optional_field_layout_test.go:98: native: clang failed: exit status 1
+        /usr/bin/ld: /home/agent/.cache/adamic/runtime/c40bab3620889167991ac8058f65dc3f6f781a98f772797aaabcfd52733dca09/runtime.a(object.o): in function `adamic_object_view_union_snapshot':
+        object.c:(.text+0xcf0): multiple definition of `adamic_object_view_union_snapshot'; /tmp/adamic-gate/main-613ee6.o:main.c:(.text+0xcb0): first defined here
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+        
+--- FAIL: TestOptionalFieldCopyState (1.21s)
+    --- FAIL: TestOptionalFieldCopyState/baseline (0.32s)
+    --- FAIL: TestOptionalFieldCopyState/drop_presence_on_checked_copy (0.10s)
+    --- FAIL: TestOptionalFieldCopyState/drop_readiness_on_checked_copy (0.27s)
+    --- FAIL: TestOptionalFieldCopyState/drop_representation_on_checked_copy (0.29s)
+    --- FAIL: TestOptionalFieldCopyState/overlap_presence_and_readiness (0.23s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a
+    oracle_test.go:769: Lower: /workspace/adamic/internal/oracle/testdata/optional_field_unknown.a:6:46: stage 0 can't lower a dynamic getter or method read, or a nullable field (runtime dispatch, slot tags and narrowed rereads) yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a
+=== NAME  TestOptionalFieldPresenceCatchesMutants/delete_does_not_remove
+    optional_field_write_test.go:103: Node caught incorrect field presence or insertion order by stdout
+--- PASS: TestOptionalFieldPresenceCatchesMutants (1.77s)
+    --- PASS: TestOptionalFieldPresenceCatchesMutants/initially_present (0.54s)
+    --- PASS: TestOptionalFieldPresenceCatchesMutants/layout_order_instead_of_write_order (0.42s)
+    --- PASS: TestOptionalFieldPresenceCatchesMutants/delete_does_not_remove (0.47s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a
+=== NAME  TestOptionalFieldConstructionCatchesDroppedReservation
+    optional_field_write_test.go:135: Node caught dropped spread reservation: missing-field stop, exit 70
+--- PASS: TestOptionalFieldConstructionCatchesDroppedReservation (16.49s)
+--- FAIL: TestNativeAgreesWithNode (0.27s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_write.a (0.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_copy.a (0.73s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_unknown.a (0.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_alias_variants.a (0.77s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_presence.a (0.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_construction.a (30.90s)
+FAIL
+gate cache: native hits=0 misses=17
+gate cache: node hits=0 misses=19
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	44.455s
+FAIL

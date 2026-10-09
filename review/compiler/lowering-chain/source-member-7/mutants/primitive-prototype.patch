@@ -1,0 +1,11 @@
+--- internal/lower/unknown.go
++++ internal/lower/unknown.go
+@@ -76,7 +76,7 @@
+ 	}
+ 	// Primitive prototypes are observable even through any. Their methods do
+ 	// not have native dynamic callable descriptors; never report them absent.
+-	if name != "length" {
++	if false {
+ 		for _, primitive := range []*checker.Type{l.checker.GetNumberType(), l.checker.GetStringType(), l.checker.GetBooleanType()} {
+ 			if l.checker.GetPropertyOfType(primitive, name) != nil {
+ 				return nil, l.notYet(node, "a dynamic primitive prototype property (callable descriptors)")

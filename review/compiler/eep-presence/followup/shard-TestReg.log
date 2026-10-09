@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:38:44.900452402Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:38:44.914278623Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T17:38:44.914371682Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== RUN   TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:44.914409792Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== PAUSE TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:44.914413561Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T17:38:44.914417813Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode"}
+{"Time":"2026-10-09T17:38:44.914421472Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode","Output":"=== RUN   TestRegExpSourceNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:44.914425349Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode","Output":"=== PAUSE TestRegExpSourceNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:44.914428307Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode"}
+{"Time":"2026-10-09T17:38:44.914432823Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T17:38:44.914435586Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== CONT  TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:44.935564896Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode"}
+{"Time":"2026-10-09T17:38:44.935600443Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode","Output":"=== CONT  TestRegExpSourceNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:45.044325048Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode","Output":"--- PASS: TestRegExpSourceNode (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:45.361755556Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode","Elapsed":0.11}
+{"Time":"2026-10-09T17:38:45.361870558Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"--- PASS: TestRegExpNativeRefusals (0.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:45.361887926Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Elapsed":0.45}
+{"Time":"2026-10-09T17:38:45.361892915Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:38:45.370636032Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.470s\n"}
+{"Time":"2026-10-09T17:38:45.370684849Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.47}

@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T18:17:00.436247814Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:17:00.507604488Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParameterPropertyWitness"}
+{"Time":"2026-10-09T18:17:00.507702992Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParameterPropertyWitness","Output":"=== RUN   TestAgreementParameterPropertyWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:00.539150664Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParameterPropertyWitness","Output":"=== PAUSE TestAgreementParameterPropertyWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:00.539194009Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParameterPropertyWitness"}
+{"Time":"2026-10-09T18:17:00.539200016Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParseIntRadixWitness"}
+{"Time":"2026-10-09T18:17:00.539229638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParseIntRadixWitness","Output":"=== RUN   TestAgreementParseIntRadixWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:00.539239486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParseIntRadixWitness","Output":"=== PAUSE TestAgreementParseIntRadixWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:00.539242544Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParseIntRadixWitness"}
+{"Time":"2026-10-09T18:17:00.539245864Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParameterPropertyWitness"}
+{"Time":"2026-10-09T18:17:00.539249675Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParameterPropertyWitness","Output":"=== CONT  TestAgreementParameterPropertyWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:00.539274696Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParseIntRadixWitness"}
+{"Time":"2026-10-09T18:17:00.539277946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParseIntRadixWitness","Output":"=== CONT  TestAgreementParseIntRadixWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:01.748862962Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParseIntRadixWitness","Output":"--- PASS: TestAgreementParseIntRadixWitness (1.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:01.749557072Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParseIntRadixWitness","Elapsed":1.21}
+{"Time":"2026-10-09T18:17:01.749640899Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParameterPropertyWitness","Output":"--- PASS: TestAgreementParameterPropertyWitness (1.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:01.749647769Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementParameterPropertyWitness","Elapsed":1.21}
+{"Time":"2026-10-09T18:17:01.749651217Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:17:01.764048003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t1.325s\n"}
+{"Time":"2026-10-09T18:17:01.764135849Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.328}

@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T18:21:40.971739527Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:41.002729154Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode"}
+{"Time":"2026-10-09T18:21:41.002840681Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode","Output":"=== RUN   TestRegExpSourceNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:41.00288081Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode","Output":"=== PAUSE TestRegExpSourceNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:41.002884585Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode"}
+{"Time":"2026-10-09T18:21:41.002893045Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSlashClassSourceAgreesWithNode"}
+{"Time":"2026-10-09T18:21:41.002899871Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSlashClassSourceAgreesWithNode","Output":"=== RUN   TestRegExpSlashClassSourceAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:41.00290462Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSlashClassSourceAgreesWithNode","Output":"=== PAUSE TestRegExpSlashClassSourceAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:41.002907598Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSlashClassSourceAgreesWithNode"}
+{"Time":"2026-10-09T18:21:41.002910871Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode"}
+{"Time":"2026-10-09T18:21:41.00291354Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode","Output":"=== CONT  TestRegExpSourceNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:41.002916732Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSlashClassSourceAgreesWithNode"}
+{"Time":"2026-10-09T18:21:41.002919273Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSlashClassSourceAgreesWithNode","Output":"=== CONT  TestRegExpSlashClassSourceAgreesWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:41.075753235Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode","Output":"--- PASS: TestRegExpSourceNode (0.08s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:41.972781477Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSourceNode","Elapsed":0.08}
+{"Time":"2026-10-09T18:21:41.972836118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSlashClassSourceAgreesWithNode","Output":"--- PASS: TestRegExpSlashClassSourceAgreesWithNode (0.97s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:41.972848861Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpSlashClassSourceAgreesWithNode","Elapsed":0.97}
+{"Time":"2026-10-09T18:21:41.972853327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:41.979136732Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.007}

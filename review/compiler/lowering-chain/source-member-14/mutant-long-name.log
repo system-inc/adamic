@@ -1,0 +1,13 @@
+=== RUN   TestMiscompile2ALongName
+=== PAUSE TestMiscompile2ALongName
+=== CONT  TestMiscompile2ALongName
+    miscompile_2a_test.go:49: gate cache node miss
+    miscompile_2a_test.go:49: Node: exit=0 stdout="2\n"
+    miscompile_2a_test.go:49: want path-bearing stop "property name longer than 4095 bytes", got <nil>
+--- FAIL: TestMiscompile2ALongName (0.64s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.818s
+FAIL

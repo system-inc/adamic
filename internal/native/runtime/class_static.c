@@ -14,6 +14,7 @@ adamic_value *adamic_object_write_field(adamic_object *object, const char *name,
     if (object->class == NULL || !object->class->is_static) {
         adamic_value *slot = adamic_object_field(object, name, cache);
         adamic_object_initialized(object)[cache->index] = 1;
+        adamic_object_publish(object, cache->index);
         return slot;
     }
     adamic_value *slot = adamic_object_find(object, name, cache);

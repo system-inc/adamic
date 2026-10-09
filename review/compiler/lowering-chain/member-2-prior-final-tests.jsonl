@@ -1,0 +1,31 @@
+{"Time":"2026-10-09T05:01:25.028006432Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T05:01:25.037400153Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie"}
+{"Time":"2026-10-09T05:01:25.037477249Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie","Output":"=== RUN   TestStep18StorageTypeLie\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.038162437Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie","Output":"=== PAUSE TestStep18StorageTypeLie\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.038176128Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie"}
+{"Time":"2026-10-09T05:01:25.038179713Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18DetachedMethod"}
+{"Time":"2026-10-09T05:01:25.038181576Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18DetachedMethod","Output":"=== RUN   TestStep18DetachedMethod\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.03818429Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18DetachedMethod","Output":"=== PAUSE TestStep18DetachedMethod\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.038186133Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18DetachedMethod"}
+{"Time":"2026-10-09T05:01:25.03819103Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie"}
+{"Time":"2026-10-09T05:01:25.038192743Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie","Output":"=== CONT  TestStep18StorageTypeLie\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.038197139Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie/.a"}
+{"Time":"2026-10-09T05:01:25.038198942Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie/.a","Output":"=== RUN   TestStep18StorageTypeLie/.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.038202327Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18DetachedMethod"}
+{"Time":"2026-10-09T05:01:25.03820391Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18DetachedMethod","Output":"=== CONT  TestStep18DetachedMethod\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.090708822Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie/.a","Output":"--- PASS: TestStep18StorageTypeLie/.a (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.090802252Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie/.a","Elapsed":0.05}
+{"Time":"2026-10-09T05:01:25.090886799Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie/.ts"}
+{"Time":"2026-10-09T05:01:25.090891256Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie/.ts","Output":"=== RUN   TestStep18StorageTypeLie/.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.24145673Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18DetachedMethod","Output":"--- PASS: TestStep18DetachedMethod (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.462033596Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18DetachedMethod","Elapsed":0.2}
+{"Time":"2026-10-09T05:01:25.462075438Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie/.ts","Output":"--- PASS: TestStep18StorageTypeLie/.ts (0.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.462098553Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie/.ts","Elapsed":0.37}
+{"Time":"2026-10-09T05:01:25.462115739Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie","Output":"--- PASS: TestStep18StorageTypeLie (0.42s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.462119525Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestStep18StorageTypeLie","Elapsed":0.42}
+{"Time":"2026-10-09T05:01:25.462122629Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T05:01:25.462125904Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=1\n"}
+{"Time":"2026-10-09T05:01:25.462128428Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=3\n"}
+{"Time":"2026-10-09T05:01:25.462130802Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T05:01:25.464691841Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.436s\n"}
+{"Time":"2026-10-09T05:01:25.464723579Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.437}

@@ -1,0 +1,6 @@
+// Reduced from TypeScript checker.ts:8066, cleanup?.().
+function run(cleanup: (() => void) | undefined): void {
+	cleanup?.();
+}
+run(undefined);
+run((): void => { console.log('cleanup'); });

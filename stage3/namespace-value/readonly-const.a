@@ -1,0 +1,4 @@
+// a-check: type error TS2540
+namespace State { export const value = 1; }
+const held = State;
+held.value = 2;

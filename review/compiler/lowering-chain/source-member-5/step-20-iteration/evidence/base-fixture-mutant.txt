@@ -1,0 +1,13 @@
+=== RUN   TestStep20IterationOutcomes
+=== RUN   TestStep20IterationOutcomes/accessor_binding.a
+    step20_iteration_test.go:49: gate cache node hit
+    step20_iteration_test.go:65: accessor_binding.a: NotYet a for...of destructuring an object
+    step20_iteration_test.go:68: outcome changed: want NotYet "for...of over an object", got NotYet "a for...of destructuring an object"
+--- FAIL: TestStep20IterationOutcomes (0.89s)
+    --- FAIL: TestStep20IterationOutcomes/accessor_binding.a (0.89s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.111s
+FAIL

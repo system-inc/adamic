@@ -1,0 +1,15 @@
+branch-union caught
+omit-escape-missing caught
+erase-earlier-read caught
+trust-assertion caught
+slot-pos caught
+slot-end caught
+slot-hasTrailingComma caught
+slot-transformFlags caught
+drop-unset-use caught
+drop-speculation-check caught
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/step24-parser-main/mutants.py", line 21, in <module>
+    data=(root/file).read_text();assert data.count(before)==1,(name,data.count(before))
+                                        ^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('disable-tiny-stack', 0)

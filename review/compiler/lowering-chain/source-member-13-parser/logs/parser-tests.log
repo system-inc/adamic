@@ -1,0 +1,234 @@
+=== RUN   TestParserFactoryCompletionBeforeReturn
+=== PAUSE TestParserFactoryCompletionBeforeReturn
+=== RUN   TestParserFactoryCompletionAlias
+=== PAUSE TestParserFactoryCompletionAlias
+=== RUN   TestParserFactoryCompletionBothBranches
+=== PAUSE TestParserFactoryCompletionBothBranches
+=== RUN   TestParserFactoryCompletionOneBranch
+=== PAUSE TestParserFactoryCompletionOneBranch
+=== RUN   TestParserFactoryCompletionBeforeEscape
+=== PAUSE TestParserFactoryCompletionBeforeEscape
+=== RUN   TestParserFactoryCompletionWrongPayloadAssertion
+=== PAUSE TestParserFactoryCompletionWrongPayloadAssertion
+=== RUN   TestParserFactoryCompletionEarlyReturn
+=== PAUSE TestParserFactoryCompletionEarlyReturn
+=== RUN   TestParserFactoryCompletionLoopMayNotRun
+=== PAUSE TestParserFactoryCompletionLoopMayNotRun
+=== RUN   TestParserFactoryCompletionCaptured
+=== PAUSE TestParserFactoryCompletionCaptured
+=== RUN   TestParserFactoryCompletionShortCircuit
+=== PAUSE TestParserFactoryCompletionShortCircuit
+=== RUN   TestParserFactoryReadBeforeCompletion
+=== PAUSE TestParserFactoryReadBeforeCompletion
+=== RUN   TestParserNodeArrayLayout
+=== PAUSE TestParserNodeArrayLayout
+=== RUN   TestParserNodeArrayPresence
+=== PAUSE TestParserNodeArrayPresence
+=== RUN   TestParserNodeArraySchemaFailsClosed
+=== PAUSE TestParserNodeArraySchemaFailsClosed
+=== CONT  TestParserFactoryCompletionBeforeReturn
+=== CONT  TestParserFactoryCompletionLoopMayNotRun
+=== CONT  TestParserNodeArrayLayout
+=== CONT  TestParserFactoryCompletionEarlyReturn
+--- PASS: TestParserNodeArrayLayout (0.00s)
+=== CONT  TestParserFactoryCompletionShortCircuit
+=== CONT  TestParserNodeArraySchemaFailsClosed
+--- PASS: TestParserNodeArraySchemaFailsClosed (0.00s)
+=== CONT  TestParserFactoryReadBeforeCompletion
+--- PASS: TestParserFactoryCompletionBeforeReturn (0.12s)
+=== CONT  TestParserFactoryCompletionOneBranch
+--- PASS: TestParserFactoryReadBeforeCompletion (0.14s)
+=== CONT  TestParserFactoryCompletionWrongPayloadAssertion
+--- PASS: TestParserFactoryCompletionEarlyReturn (0.19s)
+=== CONT  TestParserFactoryCompletionBeforeEscape
+--- PASS: TestParserFactoryCompletionOneBranch (0.10s)
+=== CONT  TestParserNodeArrayPresence
+--- PASS: TestParserNodeArrayPresence (0.00s)
+=== CONT  TestParserFactoryCompletionCaptured
+--- PASS: TestParserFactoryCompletionLoopMayNotRun (0.23s)
+=== CONT  TestParserFactoryCompletionBothBranches
+--- PASS: TestParserFactoryCompletionShortCircuit (0.24s)
+=== CONT  TestParserFactoryCompletionAlias
+--- PASS: TestParserFactoryCompletionBeforeEscape (0.07s)
+--- PASS: TestParserFactoryCompletionWrongPayloadAssertion (0.12s)
+--- PASS: TestParserFactoryCompletionCaptured (0.06s)
+--- PASS: TestParserFactoryCompletionAlias (0.08s)
+--- PASS: TestParserFactoryCompletionBothBranches (0.09s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.346s
+=== RUN   TestParserConstructionBackends
+=== RUN   TestParserConstructionBackends/own-key-order.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"beta\":21,\"alpha\":3}\n"; independent IR test; source lowering covered by oracle.TestParserConstructionSource
+=== RUN   TestParserConstructionBackends/node-array-keys.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "0,1\nfalse\n0,1,end,pos,transformFlags,hasTrailingComma\ntrue\n"; independent IR test; source lowering covered by oracle.TestParserConstructionSource
+=== RUN   TestParserConstructionBackends/node-array-json.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "[1,2]\n"; independent IR test; source lowering covered by oracle.TestParserConstructionSource
+=== RUN   TestParserConstructionBackends/node-array-length.a
+    parser_construction_test.go:189: Node, native ASan/UBSan/leaks, JavaScript agree: "2\n2\n2\n"; independent IR test; source lowering covered by oracle.TestParserConstructionSource
+--- PASS: TestParserConstructionBackends (7.15s)
+    --- PASS: TestParserConstructionBackends/own-key-order.a (6.20s)
+    --- PASS: TestParserConstructionBackends/node-array-keys.a (0.31s)
+    --- PASS: TestParserConstructionBackends/node-array-json.a (0.35s)
+    --- PASS: TestParserConstructionBackends/node-array-length.a (0.29s)
+=== RUN   TestParserConstructionRuntimeMutants
+=== RUN   TestParserConstructionRuntimeMutants/synthesized_key
+    parser_construction_test.go:206: Node disagreement caught runtime mutant: got "2,10,kind,alpha,beta\ntrue\n2,10,kind,alpha,beta\n2,10,kind,alpha,beta\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"alpha\":3,\"beta\":21}\n", Node "kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"beta\":21,\"alpha\":3}\n"
+=== RUN   TestParserConstructionRuntimeMutants/declaration_order
+    parser_construction_test.go:206: Node disagreement caught runtime mutant: got "kind\nfalse\n2,10,kind,alpha,beta\n2,10,kind,alpha,beta\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"alpha\":3,\"beta\":21}\n", Node "kind\nfalse\n2,10,kind,beta,alpha\n2,10,kind,beta,alpha\ntrue\n{\"2\":2,\"10\":10,\"kind\":1,\"beta\":21,\"alpha\":3}\n"
+=== RUN   TestParserConstructionRuntimeMutants/array_extras_in_JSON
+    parser_construction_test.go:206: Node disagreement caught runtime mutant: got "[1,2,-1]\n", Node "[1,2]\n"
+--- PASS: TestParserConstructionRuntimeMutants (19.05s)
+    --- PASS: TestParserConstructionRuntimeMutants/synthesized_key (7.06s)
+    --- PASS: TestParserConstructionRuntimeMutants/declaration_order (5.99s)
+    --- PASS: TestParserConstructionRuntimeMutants/array_extras_in_JSON (5.99s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	26.208s
+=== RUN   TestParserAheadCounts
+=== PAUSE TestParserAheadCounts
+=== RUN   TestParserAheadFactoryBoundaries
+=== PAUSE TestParserAheadFactoryBoundaries
+=== RUN   TestParserAheadFactoryCompleteControl
+=== PAUSE TestParserAheadFactoryCompleteControl
+=== RUN   TestParserAheadNodeArraySource
+=== PAUSE TestParserAheadNodeArraySource
+=== RUN   TestParserConstructionSourceFactoryUnset
+=== PAUSE TestParserConstructionSourceFactoryUnset
+=== RUN   TestParserConstructionSourceOwnKeyOrder
+=== PAUSE TestParserConstructionSourceOwnKeyOrder
+=== RUN   TestParserConstructionSourceNodeArrayKeys
+=== PAUSE TestParserConstructionSourceNodeArrayKeys
+=== RUN   TestParserConstructionSourceNodeArrayJson
+=== PAUSE TestParserConstructionSourceNodeArrayJson
+=== RUN   TestParserConstructionSourceNodeArrayLength
+=== PAUSE TestParserConstructionSourceNodeArrayLength
+=== RUN   TestParserConstructionSourceNodeArrayUnset
+=== PAUSE TestParserConstructionSourceNodeArrayUnset
+=== RUN   TestParserConstructionUnsetUse
+=== PAUSE TestParserConstructionUnsetUse
+=== RUN   TestParserConstructionNullPlaceholderDelivered
+=== PAUSE TestParserConstructionNullPlaceholderDelivered
+=== RUN   TestParserProgramRegionLifetime
+=== PAUSE TestParserProgramRegionLifetime
+=== RUN   TestParserSpeculationSourcesNamedLookahead
+=== PAUSE TestParserSpeculationSourcesNamedLookahead
+=== RUN   TestParserSpeculationSourcesNamedTryparse
+=== PAUSE TestParserSpeculationSourcesNamedTryparse
+=== RUN   TestParserSpeculationSourcesArrowTryparse
+=== PAUSE TestParserSpeculationSourcesArrowTryparse
+=== RUN   TestParserSpeculationSourcesTruthinessRewind
+=== PAUSE TestParserSpeculationSourcesTruthinessRewind
+=== RUN   TestParserSpeculationMisfit
+=== PAUSE TestParserSpeculationMisfit
+=== RUN   TestParserSpeculationRewindMutant
+=== PAUSE TestParserSpeculationRewindMutant
+=== RUN   TestParserStackLegal
+=== PAUSE TestParserStackLegal
+=== RUN   TestParserStackPathological
+=== PAUSE TestParserStackPathological
+=== RUN   TestParserStackTinyLimit
+=== PAUSE TestParserStackTinyLimit
+=== RUN   TestParserStackGuardMutant
+=== PAUSE TestParserStackGuardMutant
+=== RUN   TestParserStackGuardCost
+    parser_stack_test.go:128: set ADAMIC_MEASURE_STACK_GUARD=1 for the local cost record
+--- SKIP: TestParserStackGuardCost (0.00s)
+=== CONT  TestParserAheadCounts
+=== CONT  TestParserProgramRegionLifetime
+    parser_construction_test.go:119: awaits compiler/program-region-lowering: parser trees in the Program region
+=== CONT  TestParserSpeculationRewindMutant
+--- SKIP: TestParserProgramRegionLifetime (0.00s)
+=== CONT  TestParserStackPathological
+=== CONT  TestParserStackGuardMutant
+=== CONT  TestParserStackTinyLimit
+=== NAME  TestParserStackGuardMutant
+    parser_stack_test.go:122: removed guard compiles and executes: exit 1, AddressSanitizer: stack-overflow
+--- PASS: TestParserStackGuardMutant (6.10s)
+=== CONT  TestParserStackLegal
+--- PASS: TestParserStackTinyLimit (6.11s)
+=== CONT  TestParserConstructionSourceNodeArrayKeys
+=== NAME  TestParserStackLegal
+    parser_stack_test.go:54: 859 nested parentheses: source Node, native sanitizers/leaks and JavaScript print 859|1719
+--- PASS: TestParserStackLegal (3.89s)
+=== CONT  TestParserConstructionNullPlaceholderDelivered
+=== NAME  TestParserSpeculationRewindMutant
+    parser_speculation_test.go:121: skipped scanner-position rewind caught by Node stdout in both backends
+--- PASS: TestParserSpeculationRewindMutant (10.09s)
+=== CONT  TestParserConstructionUnsetUse
+=== NAME  TestParserStackPathological
+    parser_stack_test.go:74: source Node outcome: exit 70, stderr "adamic: panic: RangeError: Maximum call stack size exceeded in parseNested\n"; native named guard pinned separately
+--- PASS: TestParserStackPathological (10.09s)
+=== CONT  TestParserConstructionSourceNodeArrayUnset
+=== NAME  TestParserConstructionSourceNodeArrayKeys
+    parser_construction_test.go:22: source Node, native sanitizers, leak check and JavaScript agree; delivered placeholder machinery
+--- PASS: TestParserConstructionSourceNodeArrayKeys (4.02s)
+=== CONT  TestParserConstructionSourceNodeArrayLength
+=== NAME  TestParserConstructionUnsetUse
+    parser_construction_test.go:88: undefined presence observation is accepted; declared string use stops naming field, factory and use
+--- PASS: TestParserConstructionUnsetUse (0.48s)
+=== CONT  TestParserConstructionSourceNodeArrayJson
+--- PASS: TestParserConstructionNullPlaceholderDelivered (0.68s)
+=== CONT  TestParserSpeculationSourcesArrowTryparse
+=== NAME  TestParserConstructionSourceNodeArrayUnset
+    parser_construction_test.go:37: source Node, native sanitizers, leak check and JavaScript agree; delivered placeholder machinery
+--- PASS: TestParserConstructionSourceNodeArrayUnset (0.68s)
+=== CONT  TestParserSpeculationMisfit
+=== NAME  TestParserConstructionSourceNodeArrayLength
+    parser_construction_test.go:32: source Node, native sanitizers, leak check and JavaScript agree; delivered placeholder machinery
+--- PASS: TestParserConstructionSourceNodeArrayLength (0.74s)
+=== CONT  TestParserSpeculationSourcesTruthinessRewind
+=== NAME  TestParserConstructionSourceNodeArrayJson
+    parser_construction_test.go:27: source Node, native sanitizers, leak check and JavaScript agree; delivered placeholder machinery
+--- PASS: TestParserConstructionSourceNodeArrayJson (0.62s)
+=== CONT  TestParserAheadNodeArraySource
+=== RUN   TestParserAheadNodeArraySource/fields
+=== NAME  TestParserSpeculationSourcesArrowTryparse
+    parser_speculation_test.go:41: Node stdout "parsed\n1\n"; native sanitizers/leaks and JavaScript agree
+--- PASS: TestParserSpeculationSourcesArrowTryparse (0.55s)
+=== CONT  TestParserConstructionSourceOwnKeyOrder
+--- PASS: TestParserSpeculationMisfit (0.55s)
+=== CONT  TestParserConstructionSourceFactoryUnset
+=== NAME  TestParserSpeculationSourcesTruthinessRewind
+    parser_speculation_test.go:46: Node stdout "absent\n11|7|3|false\nfalsy|11\nfalsy|11\nfalsy|11\nfalsy|11\nfalsy|11\nfalsy|11\nfalsy|11\ntruthy|12\ntruthy|12\ntruthy|12\ntruthy|12\n"; native sanitizers/leaks and JavaScript agree
+--- PASS: TestParserSpeculationSourcesTruthinessRewind (0.58s)
+=== CONT  TestParserAheadFactoryCompleteControl
+--- PASS: TestParserAheadCounts (11.80s)
+=== CONT  TestParserAheadFactoryBoundaries
+=== RUN   TestParserAheadFactoryBoundaries/complete
+=== NAME  TestParserConstructionSourceFactoryUnset
+    parser_construction_test.go:12: source Node, native sanitizers, leak check and JavaScript agree; delivered placeholder machinery
+--- PASS: TestParserConstructionSourceFactoryUnset (0.52s)
+=== CONT  TestParserSpeculationSourcesNamedTryparse
+=== NAME  TestParserAheadNodeArraySource/fields
+    parser_ahead_test.go:113: all four NodeArray metadata fields match source Node; delivered placeholder machinery
+=== RUN   TestParserAheadNodeArraySource/presence
+=== NAME  TestParserConstructionSourceOwnKeyOrder
+    parser_construction_test.go:17: source Node, native sanitizers, leak check and JavaScript agree; delivered placeholder machinery
+--- PASS: TestParserConstructionSourceOwnKeyOrder (0.69s)
+=== CONT  TestParserSpeculationSourcesNamedLookahead
+=== NAME  TestParserAheadNodeArraySource/presence
+    parser_ahead_test.go:119: pending: source Node contract only; fixed array metadata and presence lowering are absent
+--- PASS: TestParserAheadNodeArraySource (0.95s)
+    --- PASS: TestParserAheadNodeArraySource/fields (0.70s)
+    --- PASS: TestParserAheadNodeArraySource/presence (0.25s)
+=== NAME  TestParserAheadFactoryBoundaries/complete
+    parser_ahead_test.go:36: base factory source matches both backends; delivered placeholder machinery
+=== RUN   TestParserAheadFactoryBoundaries/escaped
+=== NAME  TestParserAheadFactoryCompleteControl
+    parser_ahead_test.go:84: factory payload mutant caught in native and JavaScript by source Node stdout
+--- PASS: TestParserAheadFactoryCompleteControl (0.85s)
+=== NAME  TestParserSpeculationSourcesNamedLookahead
+    parser_speculation_test.go:31: Node stdout "true\n0|0\n"; native sanitizers/leaks and JavaScript agree
+--- PASS: TestParserSpeculationSourcesNamedLookahead (0.51s)
+=== NAME  TestParserSpeculationSourcesNamedTryparse
+    parser_speculation_test.go:36: Node stdout "keyword\nabsent\n1\n"; native sanitizers/leaks and JavaScript agree
+--- PASS: TestParserSpeculationSourcesNamedTryparse (0.62s)
+=== NAME  TestParserAheadFactoryBoundaries/escaped
+    parser_ahead_test.go:36: base factory source matches both backends; delivered placeholder machinery
+--- PASS: TestParserAheadFactoryBoundaries (0.86s)
+    --- PASS: TestParserAheadFactoryBoundaries/complete (0.49s)
+    --- PASS: TestParserAheadFactoryBoundaries/escaped (0.37s)
+PASS
+gate cache: native hits=0 misses=13
+gate cache: node hits=0 misses=42
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	12.669s

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T17:57:02.896317165Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:57:02.906251446Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase"}
+{"Time":"2026-10-09T17:57:02.906336234Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase","Output":"=== RUN   TestNamespaceTypesErase\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:02.906366248Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase","Output":"=== PAUSE TestNamespaceTypesErase\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:02.906369699Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase"}
+{"Time":"2026-10-09T17:57:02.906373859Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase"}
+{"Time":"2026-10-09T17:57:02.906376371Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase","Output":"=== CONT  TestNamespaceTypesErase\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:03.12378379Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase","Output":"--- PASS: TestNamespaceTypesErase (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:03.123832693Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase","Elapsed":0.22}
+{"Time":"2026-10-09T17:57:03.123856106Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:03.126260185Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.230s\n"}
+{"Time":"2026-10-09T17:57:03.126302796Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.23}

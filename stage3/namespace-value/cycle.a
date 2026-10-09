@@ -1,0 +1,4 @@
+// a-check: refused adamic/cycle-capable
+namespace State { export const self: typeof State = State; }
+const held = State;
+console.log(String(held === State));

@@ -1,0 +1,71 @@
+=== RUN   TestParserAheadFactoryBoundaries
+=== RUN   TestParserAheadFactoryBoundaries/complete
+    parser_ahead_test.go:18: gate cache node miss
+    parser_ahead_test.go:27: gate cache node miss
+    parser_ahead_test.go:35: base factory source matches both backends; rehearsal pending codex/placeholder-nonnull
+=== RUN   TestParserAheadFactoryBoundaries/escaped
+    parser_ahead_test.go:18: gate cache node miss
+    parser_ahead_test.go:27: gate cache node miss
+    parser_ahead_test.go:35: base factory source matches both backends; rehearsal pending codex/placeholder-nonnull
+--- PASS: TestParserAheadFactoryBoundaries (13.17s)
+    --- PASS: TestParserAheadFactoryBoundaries/complete (12.53s)
+    --- PASS: TestParserAheadFactoryBoundaries/escaped (0.64s)
+=== RUN   TestParserAheadFactoryCompleteControl
+    parser_ahead_test.go:46: gate cache node miss
+    parser_ahead_test.go:55: gate cache node miss
+    parser_ahead_test.go:74: gate cache node miss
+    parser_ahead_test.go:82: factory payload mutant caught in native and JavaScript by source Node stdout
+--- PASS: TestParserAheadFactoryCompleteControl (0.80s)
+=== RUN   TestParserAheadNodeArraySource
+=== RUN   TestParserAheadNodeArraySource/fields
+    parser_ahead_test.go:95: gate cache node miss
+    parser_ahead_test.go:102: gate cache node miss
+    parser_ahead_test.go:110: all four NodeArray metadata fields match source Node; rehearsal pending codex/placeholder-nonnull
+=== RUN   TestParserAheadNodeArraySource/presence
+    parser_ahead_test.go:95: gate cache node miss
+    parser_ahead_test.go:116: pending: source Node contract only; fixed array metadata and presence lowering are absent
+--- PASS: TestParserAheadNodeArraySource (0.64s)
+    --- PASS: TestParserAheadNodeArraySource/fields (0.46s)
+    --- PASS: TestParserAheadNodeArraySource/presence (0.18s)
+=== RUN   TestParserConstructionSource
+=== RUN   TestParserConstructionSource/factory-unset
+    parser_construction_test.go:18: gate cache node miss
+    parser_construction_test.go:27: gate cache node miss
+    parser_construction_test.go:35: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+=== RUN   TestParserConstructionSource/own-key-order
+    parser_construction_test.go:18: gate cache node miss
+    parser_construction_test.go:27: gate cache node miss
+    parser_construction_test.go:35: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+=== RUN   TestParserConstructionSource/node-array-keys
+    parser_construction_test.go:18: gate cache node miss
+    parser_construction_test.go:27: gate cache node miss
+    parser_construction_test.go:35: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+=== RUN   TestParserConstructionSource/node-array-json
+    parser_construction_test.go:18: gate cache node miss
+    parser_construction_test.go:27: gate cache node miss
+    parser_construction_test.go:35: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+=== RUN   TestParserConstructionSource/node-array-length
+    parser_construction_test.go:18: gate cache node miss
+    parser_construction_test.go:27: gate cache node miss
+    parser_construction_test.go:35: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+=== RUN   TestParserConstructionSource/node-array-unset
+    parser_construction_test.go:18: gate cache node miss
+    parser_construction_test.go:27: gate cache node miss
+    parser_construction_test.go:35: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+--- PASS: TestParserConstructionSource (2.51s)
+    --- PASS: TestParserConstructionSource/factory-unset (0.37s)
+    --- PASS: TestParserConstructionSource/own-key-order (0.38s)
+    --- PASS: TestParserConstructionSource/node-array-keys (0.43s)
+    --- PASS: TestParserConstructionSource/node-array-json (0.40s)
+    --- PASS: TestParserConstructionSource/node-array-length (0.46s)
+    --- PASS: TestParserConstructionSource/node-array-unset (0.46s)
+=== RUN   TestParserConstructionUnsetUse
+    parser_construction_test.go:45: gate cache node miss
+    parser_construction_test.go:56: gate cache node miss
+    parser_construction_test.go:61: undefined presence observation is accepted; declared string use stops naming field, factory and use
+--- PASS: TestParserConstructionUnsetUse (0.36s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=24
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	17.492s

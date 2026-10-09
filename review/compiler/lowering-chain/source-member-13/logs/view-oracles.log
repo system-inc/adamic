@@ -1,0 +1,110 @@
+=== RUN   TestRequiredViewFieldPrimitive
+=== PAUSE TestRequiredViewFieldPrimitive
+=== RUN   TestRequiredViewFieldOperandOnce
+=== PAUSE TestRequiredViewFieldOperandOnce
+=== RUN   TestNarrowedFieldUsesSharedReadiness
+=== PAUSE TestNarrowedFieldUsesSharedReadiness
+=== RUN   TestViewFieldInheritedStaticReadiness
+=== PAUSE TestViewFieldInheritedStaticReadiness
+=== RUN   TestDefaultTaggedSourceViews
+=== PAUSE TestDefaultTaggedSourceViews
+=== CONT  TestRequiredViewFieldPrimitive
+=== RUN   TestRequiredViewFieldPrimitive/number
+=== PAUSE TestRequiredViewFieldPrimitive/number
+=== RUN   TestRequiredViewFieldPrimitive/boolean
+=== PAUSE TestRequiredViewFieldPrimitive/boolean
+=== RUN   TestRequiredViewFieldPrimitive/string
+=== PAUSE TestRequiredViewFieldPrimitive/string
+=== RUN   TestRequiredViewFieldPrimitive/wrong_string
+=== PAUSE TestRequiredViewFieldPrimitive/wrong_string
+=== RUN   TestRequiredViewFieldPrimitive/missing
+=== PAUSE TestRequiredViewFieldPrimitive/missing
+=== RUN   TestRequiredViewFieldPrimitive/uninitialized
+=== PAUSE TestRequiredViewFieldPrimitive/uninitialized
+=== RUN   TestRequiredViewFieldPrimitive/wrong_type
+=== PAUSE TestRequiredViewFieldPrimitive/wrong_type
+=== CONT  TestRequiredViewFieldPrimitive/number
+=== CONT  TestDefaultTaggedSourceViews
+=== RUN   TestDefaultTaggedSourceViews/default-staged
+=== PAUSE TestDefaultTaggedSourceViews/default-staged
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-string
+=== PAUSE TestDefaultTaggedSourceViews/default-boxed-string
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-write
+=== PAUSE TestDefaultTaggedSourceViews/default-boxed-write
+=== RUN   TestDefaultTaggedSourceViews/default-destructure
+=== PAUSE TestDefaultTaggedSourceViews/default-destructure
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-type
+=== PAUSE TestDefaultTaggedSourceViews/default-wrong-type
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-boolean
+=== PAUSE TestDefaultTaggedSourceViews/default-wrong-boolean
+=== RUN   TestDefaultTaggedSourceViews/default-literal
+=== PAUSE TestDefaultTaggedSourceViews/default-literal
+=== RUN   TestDefaultTaggedSourceViews/default-read-before-set
+=== PAUSE TestDefaultTaggedSourceViews/default-read-before-set
+=== CONT  TestDefaultTaggedSourceViews/default-staged
+=== CONT  TestRequiredViewFieldPrimitive/uninitialized
+=== CONT  TestRequiredViewFieldPrimitive/missing
+=== CONT  TestRequiredViewFieldPrimitive/wrong_string
+=== CONT  TestRequiredViewFieldPrimitive/string
+=== CONT  TestRequiredViewFieldPrimitive/boolean
+=== NAME  TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:75: drop field check mutant caught by pinned exit/message, with valid C
+=== CONT  TestDefaultTaggedSourceViews/default-read-before-set
+=== CONT  TestDefaultTaggedSourceViews/default-literal
+=== NAME  TestRequiredViewFieldPrimitive/uninitialized
+    view_fields_test.go:87: drop initialization tracking mutant caught by pinned exit/message
+=== CONT  TestDefaultTaggedSourceViews/default-wrong-boolean
+=== CONT  TestDefaultTaggedSourceViews/default-wrong-type
+=== CONT  TestDefaultTaggedSourceViews/default-destructure
+=== CONT  TestDefaultTaggedSourceViews/default-boxed-write
+=== CONT  TestDefaultTaggedSourceViews/default-boxed-string
+=== CONT  TestRequiredViewFieldOperandOnce
+=== CONT  TestViewFieldInheritedStaticReadiness
+=== CONT  TestNarrowedFieldUsesSharedReadiness
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/identifier
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/number
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== CONT  TestRequiredViewFieldPrimitive/wrong_type
+=== CONT  TestNarrowedFieldUsesSharedReadiness/identifier
+--- PASS: TestRequiredViewFieldOperandOnce (2.27s)
+=== CONT  TestNarrowedFieldUsesSharedReadiness/number
+=== NAME  TestDefaultTaggedSourceViews/default-boxed-write
+    view_fields_test.go:209: exit codes differ; got oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x3c, 0x77, 0x72, 0x69, 0x74, 0x65, 0x3e, 0x2e, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x20, 0x69, 0x73, 0x20, 0x6e, 0x6f, 0x74, 0x20, 0x61, 0x20, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x3b, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x69, 0x73, 0x68, 0xa}, exitCode:70}
+--- FAIL: TestDefaultTaggedSourceViews (0.00s)
+    --- PASS: TestDefaultTaggedSourceViews/default-staged (1.60s)
+    --- PASS: TestDefaultTaggedSourceViews/default-read-before-set (1.41s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-boolean (1.28s)
+    --- PASS: TestDefaultTaggedSourceViews/default-literal (1.49s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-type (1.86s)
+    --- PASS: TestDefaultTaggedSourceViews/default-destructure (2.28s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-string (1.75s)
+    --- FAIL: TestDefaultTaggedSourceViews/default-boxed-write (2.36s)
+=== CONT  TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+--- PASS: TestViewFieldInheritedStaticReadiness (1.81s)
+=== CONT  TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== NAME  TestRequiredViewFieldPrimitive/wrong_type
+    view_fields_test.go:75: drop field check mutant caught by pinned exit/message, with valid C
+--- PASS: TestRequiredViewFieldPrimitive (0.00s)
+    --- PASS: TestRequiredViewFieldPrimitive/missing (1.11s)
+    --- PASS: TestRequiredViewFieldPrimitive/wrong_string (1.13s)
+    --- PASS: TestRequiredViewFieldPrimitive/number (1.58s)
+    --- PASS: TestRequiredViewFieldPrimitive/uninitialized (1.79s)
+    --- PASS: TestRequiredViewFieldPrimitive/boolean (1.11s)
+    --- PASS: TestRequiredViewFieldPrimitive/string (1.22s)
+    --- PASS: TestRequiredViewFieldPrimitive/wrong_type (1.74s)
+--- PASS: TestNarrowedFieldUsesSharedReadiness (0.00s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number-uninitialized (0.93s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier (1.62s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized (0.66s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number (1.43s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=35
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	6.802s
+FAIL

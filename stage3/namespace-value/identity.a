@@ -1,0 +1,7 @@
+namespace State { export let value = 1; }
+function retain(): typeof State { return State; }
+const first = State;
+const second = retain();
+console.log(String(first === second));
+first.value = 9;
+console.log(String(second.value));

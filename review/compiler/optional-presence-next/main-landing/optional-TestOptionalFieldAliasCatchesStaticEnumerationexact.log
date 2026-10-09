@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T18:16:11.004347959Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T18:16:11.063868446Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldAliasCatchesStaticEnumeration"}
+{"Time":"2026-10-09T18:16:11.063974133Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldAliasCatchesStaticEnumeration","Output":"=== RUN   TestOptionalFieldAliasCatchesStaticEnumeration\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:16:11.064014017Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldAliasCatchesStaticEnumeration","Output":"=== PAUSE TestOptionalFieldAliasCatchesStaticEnumeration\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:16:11.064017818Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldAliasCatchesStaticEnumeration"}
+{"Time":"2026-10-09T18:16:11.064022288Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldAliasCatchesStaticEnumeration"}
+{"Time":"2026-10-09T18:16:11.064025168Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldAliasCatchesStaticEnumeration","Output":"=== CONT  TestOptionalFieldAliasCatchesStaticEnumeration\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:16:13.39316488Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldAliasCatchesStaticEnumeration","Output":"    optional_field_write_test.go:188: Node caught static enumeration, sanitize=false: \"false\\n[first]\\nfalse\\ntrue\\n[first]\\ntrue\\n\"\n"}
+{"Time":"2026-10-09T18:16:14.961273693Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldAliasCatchesStaticEnumeration","Output":"    optional_field_write_test.go:188: Node caught static enumeration, sanitize=true: \"false\\n[first]\\nfalse\\ntrue\\n[first]\\ntrue\\n\"\n"}
+{"Time":"2026-10-09T18:16:14.961336428Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldAliasCatchesStaticEnumeration","Output":"--- PASS: TestOptionalFieldAliasCatchesStaticEnumeration (3.90s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:16:14.961341422Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldAliasCatchesStaticEnumeration","Elapsed":3.9}
+{"Time":"2026-10-09T18:16:14.961365965Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:16:14.961376137Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T18:16:14.961379997Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T18:16:14.96138279Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T18:16:14.962908961Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t3.956s\n"}
+{"Time":"2026-10-09T18:16:14.962950161Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":3.959}

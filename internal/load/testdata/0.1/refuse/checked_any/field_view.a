@@ -1,0 +1,2 @@
+function read(box: { value: any }): number { return box.value; }
+console.log(String(read({ value: 14 })));

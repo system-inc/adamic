@@ -1,0 +1,7 @@
+--- FAIL: TestParserRepresentationProbes (0.00s)
+    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)
+    --- FAIL: TestParserRepresentationProbes/gaps/10_multiple_push.ts (0.30s)
+        gaps_test.go:75: closed callable probe first byte difference at 1 (lengths 2/4)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	0.313s
+FAIL

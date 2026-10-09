@@ -1,0 +1,6 @@
+// Reduced from performance.ts:189, system?.cpuProfilingEnabled?.().
+interface System { readonly cpuProfilingEnabled?: () => boolean }
+function enabled(system: System | undefined): boolean {
+	return system?.cpuProfilingEnabled?.() ?? false;
+}
+console.log(`${enabled(undefined)} ${enabled({})} ${enabled({ cpuProfilingEnabled: (): boolean => true })}`);

@@ -1,0 +1,11 @@
+--- a/stage3/checked-any/probe/classification.go
++++ b/stage3/checked-any/probe/classification.go
+@@ -10,7 +10,7 @@
+ 
+ func insideDeclaration(reason, source string, first, last int) bool {
+ 	position := diagnosticPosition.FindStringSubmatch(reason)
+-	if len(position) != 4 || position[1] != source {
++	if len(position) != 4 || false {
+ 		return false
+ 	}
+ 	line, err := strconv.Atoi(position[2])

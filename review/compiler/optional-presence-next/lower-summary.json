@@ -1,0 +1,14 @@
+{
+  "shards": 237,
+  "tests": 344,
+  "verdicts": {
+    "pass": 341,
+    "skip": 3
+  },
+  "max_seconds": 24.305,
+  "skips": [
+    "TestGenericBodyRelationsCensus",
+    "TestOptionalWideningCensus",
+    "TestOriginalCycleLedger"
+  ]
+}

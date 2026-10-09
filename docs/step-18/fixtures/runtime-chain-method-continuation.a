@@ -1,0 +1,20 @@
+// Derived from checker.ts:6910's receiver callback and moduleNameResolver.ts:3103's continuation.
+interface Content { readonly words: readonly string[] }
+interface Reader { read?(n: number): Content }
+class Reading {
+	readonly label: string = `bound${1}`;
+	read(n: number): Content { return { words: [`${this.label}:${n}`] }; }
+}
+let current: Reader | undefined = undefined;
+let argumentsRun = 0;
+let indices = 0;
+function argument(): number { argumentsRun += 1; current = undefined; return argumentsRun; }
+function index(): number { indices += 1; return 0; }
+function probe(reader: Reader | undefined): string {
+	current = reader;
+	return current?.read?.(argument()).words[index()] ?? 'absent';
+}
+console.log(probe(undefined));
+console.log(probe({}));
+console.log(probe(new Reading()));
+console.log(`${argumentsRun} ${indices} ${current === undefined}`);

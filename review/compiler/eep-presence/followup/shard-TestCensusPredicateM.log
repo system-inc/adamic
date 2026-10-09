@@ -1,0 +1,6 @@
+{"ImportPath":"github.com/system-inc/adamic/internal/lower.test","Action":"build-output","Output":"# github.com/system-inc/adamic/internal/lower.test\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/lower.test","Action":"build-output","Output":"/workspace/adamic-tools/go/pkg/tool/linux_amd64/link: mapping output file failed: no space left on device\n"}
+{"ImportPath":"github.com/system-inc/adamic/internal/lower.test","Action":"build-fail"}
+{"Time":"2026-10-09T17:31:55.383196412Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:31:55.383330012Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower [build failed]\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:31:55.3833527Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0,"FailedBuild":"github.com/system-inc/adamic/internal/lower.test"}

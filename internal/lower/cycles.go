@@ -101,6 +101,9 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 			return err
 		}
 	}
+	if err := finder.generatorFrames(); err != nil {
+		return err
+	}
 	for local, declared := range l.result.Locals {
 		if !declared.Captured || declared.Global {
 			continue
@@ -175,6 +178,9 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 		return
 	}
 	f.seen = append(f.seen, proven)
+	if base := f.l.readonlyArrayView(proven); base != nil {
+		f.use(f.l.checker.GetElementTypeOfArrayType(base), where)
+	}
 	flags := proven.Flags()
 	if flags&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
 		for _, member := range proven.Types() {
@@ -244,7 +250,7 @@ func (f *cycleFinder) fields(proven *checker.Type) []*ast.Symbol {
 // as a field of the instance type and isn't one a program can set; seen as an object, that prototype
 // read as a mutable field reaching back, and every class made with new was refused.
 func (f *cycleFinder) isFunction(proven *checker.Type) bool {
-	return len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
+	return f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || (len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 && (!f.l.isStaticType(proven) || len(f.l.staticGlobals) == 0))
 }
 
 // weak reports whether a slot's type is a Weak<Target>, which holds nothing.
@@ -390,12 +396,15 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 		if target.proven != nil && f.related(proven, target.proven) {
 			return true
 		}
+		if base := f.l.readonlyArrayView(proven); base != nil {
+			queue = append(queue, cycleNode{proven: f.l.checker.GetElementTypeOfArrayType(base)})
+		}
 		switch {
 		case f.l.isLibraryType(proven, "MapIterator", "SetIterator"):
 			queue = append(queue, f.libraryIteratorCaptures(proven)...)
 		case f.isFunction(proven):
 			// Construct signatures can hide constructor objects behind an interface.
-			if len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
+			if f.l.isLibraryType(proven, "Function") || len(f.l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0 {
 				for symbol := range f.l.statics {
 					actual := f.l.checker.GetTypeOfSymbol(symbol)
 					if f.l.checker.IsTypeAssignableTo(actual, proven) {

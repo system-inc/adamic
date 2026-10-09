@@ -1,0 +1,12 @@
+namespace State {
+    export let value = 1;
+    export function assign(): number { const result = (value = 6); return result; }
+}
+let calls = 0;
+function receiver(): typeof State { calls += 1; return State; }
+function rhs(): number { console.log("rhs"); return 3; }
+receiver().value += rhs();
+console.log(String(calls));
+console.log(String(State.value));
+console.log(String(State.assign()));
+console.log(String(State.value));

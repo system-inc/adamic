@@ -1,0 +1,15 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_builtin_narrow_terminal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_builtin_narrow_terminal.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_builtin_narrow_terminal.a
+    oracle_test.go:771: want the inserted check to fire natively (exit 70) where the source on Node runs on: native 0, Node 0
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/step21_builtin_narrow_terminal.a (0.42s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.451s
+FAIL

@@ -29,7 +29,7 @@ func TestTscNamespaceDeclarationShapes(t *testing.T) {
 		{"Debug.log", ""},
 		{"Parser", overloadReason},
 		{"IncrementalParser", overloadReason},
-		{"tracingEnabled", "no runtime container is emitted"},
+		{"tracingEnabled", ""},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()

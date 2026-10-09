@@ -1,0 +1,115 @@
+=== RUN   TestCensusRestMutableElements
+    census_small_test.go:74: rest element relation: /tmp/adamic-gate/TestCensusRestMutableElements186849678/001/main.a:8:9: Adamic 0.1 refuses a value of type DogHouse seen as House, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+--- PASS: TestCensusRestMutableElements (1.06s)
+=== RUN   TestInheritanceCycleFinderIncludesInheritedFields
+=== PAUSE TestInheritanceCycleFinderIncludesInheritedFields
+=== RUN   TestIteratorGapsAreExplicit
+=== PAUSE TestIteratorGapsAreExplicit
+=== RUN   TestIteratorViewsCannotHideReturn
+=== PAUSE TestIteratorViewsCannotHideReturn
+=== RUN   TestIteratorViewsCannotEraseReceivers
+=== PAUSE TestIteratorViewsCannotEraseReceivers
+=== RUN   TestIteratorDestructuringDoesNotLieAboutExhaustion
+=== PAUSE TestIteratorDestructuringDoesNotLieAboutExhaustion
+=== RUN   TestLiteralMethodCapturesCannotMakeCycles
+=== PAUSE TestLiteralMethodCapturesCannotMakeCycles
+=== RUN   TestLiteralMethodViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodViewsDoNotLoseThis
+=== RUN   TestIteratorDescriptorReasons
+=== PAUSE TestIteratorDescriptorReasons
+=== RUN   TestGenericIteratorViewsPreserveNativeArguments
+=== PAUSE TestGenericIteratorViewsPreserveNativeArguments
+=== RUN   TestIteratorMapperIndexHasNumberRepresentation
+=== PAUSE TestIteratorMapperIndexHasNumberRepresentation
+=== RUN   TestIteratorSymbolKeysAreNotStringKeys
+=== PAUSE TestIteratorSymbolKeysAreNotStringKeys
+=== RUN   TestNestedFunctionCycleIsRefused
+=== PAUSE TestNestedFunctionCycleIsRefused
+=== RUN   TestNestedEnvironmentCycleIncludesDisjointSlots
+=== PAUSE TestNestedEnvironmentCycleIncludesDisjointSlots
+=== RUN   TestNestedCallbackCycleIsRefused
+--- PASS: TestNestedCallbackCycleIsRefused (0.33s)
+=== CONT  TestInheritanceCycleFinderIncludesInheritedFields
+=== CONT  TestIteratorDescriptorReasons
+=== RUN   TestIteratorDescriptorReasons/required_boolean_done
+=== PAUSE TestIteratorDescriptorReasons/required_boolean_done
+=== RUN   TestIteratorDescriptorReasons/represented_value_field
+=== PAUSE TestIteratorDescriptorReasons/represented_value_field
+=== RUN   TestIteratorDescriptorReasons/optional_iterator_method
+=== PAUSE TestIteratorDescriptorReasons/optional_iterator_method
+=== RUN   TestIteratorDescriptorReasons/arguments_or_overloads
+=== PAUSE TestIteratorDescriptorReasons/arguments_or_overloads
+=== CONT  TestIteratorDestructuringDoesNotLieAboutExhaustion
+=== RUN   TestIteratorDescriptorReasons/declare_or_abstract_class_field
+=== PAUSE TestIteratorDescriptorReasons/declare_or_abstract_class_field
+=== RUN   TestIteratorDescriptorReasons/replacing_an_iterator_protocol
+=== PAUSE TestIteratorDescriptorReasons/replacing_an_iterator_protocol
+=== RUN   TestIteratorDescriptorReasons/object_spread
+=== PAUSE TestIteratorDescriptorReasons/object_spread
+=== CONT  TestIteratorViewsCannotHideReturn
+=== CONT  TestNestedEnvironmentCycleIncludesDisjointSlots
+=== CONT  TestIteratorViewsCannotEraseReceivers
+--- PASS: TestIteratorDestructuringDoesNotLieAboutExhaustion (0.86s)
+=== CONT  TestNestedFunctionCycleIsRefused
+--- PASS: TestIteratorViewsCannotHideReturn (0.97s)
+=== CONT  TestIteratorSymbolKeysAreNotStringKeys
+--- PASS: TestInheritanceCycleFinderIncludesInheritedFields (1.08s)
+=== CONT  TestGenericIteratorViewsPreserveNativeArguments
+--- PASS: TestIteratorViewsCannotEraseReceivers (1.12s)
+=== CONT  TestIteratorMapperIndexHasNumberRepresentation
+--- PASS: TestNestedEnvironmentCycleIncludesDisjointSlots (1.25s)
+=== CONT  TestLiteralMethodCapturesCannotMakeCycles
+--- PASS: TestIteratorSymbolKeysAreNotStringKeys (0.44s)
+=== CONT  TestLiteralMethodViewsDoNotLoseThis
+--- PASS: TestNestedFunctionCycleIsRefused (1.41s)
+=== CONT  TestIteratorGapsAreExplicit
+=== RUN   TestIteratorGapsAreExplicit/interface_Step_{value:number;done?:boolean}_const_source={_[Symbol.iterator](){return{next():Step{return{value:1};}}}};for(const_value_of_source){console.log(`${value}`);break;}
+=== PAUSE TestIteratorGapsAreExplicit/interface_Step_{value:number;done?:boolean}_const_source={_[Symbol.iterator](){return{next():Step{return{value:1};}}}};for(const_value_of_source){console.log(`${value}`);break;}
+=== RUN   TestIteratorGapsAreExplicit/interface_Step_{value:number;done:boolean}_function_closing():{return():Step}|undefined{return_undefined;}_const_source={[Symbol.iterator](){return{...closing(),next():Step{return{value:1,done:false};}}}};for(const_value_of_source){break;}
+=== PAUSE TestIteratorGapsAreExplicit/interface_Step_{value:number;done:boolean}_function_closing():{return():Step}|undefined{return_undefined;}_const_source={[Symbol.iterator](){return{...closing(),next():Step{return{value:1,done:false};}}}};for(const_value_of_source){break;}
+=== RUN   TestIteratorGapsAreExplicit/interface_Source_{[Symbol.iterator]():{next():{value:number;done:boolean}}}_function_consume(source:Source):void_{for(const_value_of_source){break;}}_consume({[Symbol.iterator](){return{next(){return{value:1,done:false};}}}});
+=== PAUSE TestIteratorGapsAreExplicit/interface_Source_{[Symbol.iterator]():{next():{value:number;done:boolean}}}_function_consume(source:Source):void_{for(const_value_of_source){break;}}_consume({[Symbol.iterator](){return{next(){return{value:1,done:false};}}}});
+=== RUN   TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next:()=>({value:1,done:false}),return:()=>({value:0,done:true})};}};const_iterator=source[Symbol.iterator]();iterator.next=():{value:number;done:boolean}=>({value:2,done:true});for(const_value_of_source){break;}
+=== PAUSE TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next:()=>({value:1,done:false}),return:()=>({value:0,done:true})};}};const_iterator=source[Symbol.iterator]();iterator.next=():{value:number;done:boolean}=>({value:2,done:true});for(const_value_of_source){break;}
+=== RUN   TestIteratorGapsAreExplicit/class_Result_{declare_value:number;declare_done:boolean;}_const_source={[Symbol.iterator](){return{next(){return_new_Result();}}}};for(const_value_of_source){break;}
+=== PAUSE TestIteratorGapsAreExplicit/class_Result_{declare_value:number;declare_done:boolean;}_const_source={[Symbol.iterator](){return{next(){return_new_Result();}}}};for(const_value_of_source){break;}
+=== RUN   TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_copy={...source};for(const_value_of_copy){break;}
+=== PAUSE TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_copy={...source};for(const_value_of_copy){break;}
+=== RUN   TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_kept:(number|undefined)[]=[...source];
+=== PAUSE TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_kept:(number|undefined)[]=[...source];
+=== CONT  TestIteratorDescriptorReasons/required_boolean_done
+--- PASS: TestGenericIteratorViewsPreserveNativeArguments (1.28s)
+=== CONT  TestIteratorDescriptorReasons/declare_or_abstract_class_field
+--- PASS: TestIteratorMapperIndexHasNumberRepresentation (1.26s)
+=== CONT  TestIteratorDescriptorReasons/optional_iterator_method
+--- PASS: TestLiteralMethodCapturesCannotMakeCycles (1.27s)
+=== CONT  TestIteratorDescriptorReasons/arguments_or_overloads
+=== CONT  TestIteratorDescriptorReasons/object_spread
+=== CONT  TestIteratorDescriptorReasons/replacing_an_iterator_protocol
+=== CONT  TestIteratorDescriptorReasons/represented_value_field
+=== CONT  TestIteratorGapsAreExplicit/interface_Step_{value:number;done?:boolean}_const_source={_[Symbol.iterator](){return{next():Step{return{value:1};}}}};for(const_value_of_source){console.log(`${value}`);break;}
+--- PASS: TestLiteralMethodViewsDoNotLoseThis (1.60s)
+=== CONT  TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_kept:(number|undefined)[]=[...source];
+=== CONT  TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_copy={...source};for(const_value_of_copy){break;}
+=== CONT  TestIteratorGapsAreExplicit/class_Result_{declare_value:number;declare_done:boolean;}_const_source={[Symbol.iterator](){return{next(){return_new_Result();}}}};for(const_value_of_source){break;}
+=== CONT  TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next:()=>({value:1,done:false}),return:()=>({value:0,done:true})};}};const_iterator=source[Symbol.iterator]();iterator.next=():{value:number;done:boolean}=>({value:2,done:true});for(const_value_of_source){break;}
+--- PASS: TestIteratorDescriptorReasons (0.00s)
+    --- PASS: TestIteratorDescriptorReasons/required_boolean_done (0.50s)
+    --- PASS: TestIteratorDescriptorReasons/optional_iterator_method (0.51s)
+    --- PASS: TestIteratorDescriptorReasons/arguments_or_overloads (0.40s)
+    --- PASS: TestIteratorDescriptorReasons/declare_or_abstract_class_field (0.57s)
+    --- PASS: TestIteratorDescriptorReasons/represented_value_field (0.24s)
+    --- PASS: TestIteratorDescriptorReasons/replacing_an_iterator_protocol (0.33s)
+    --- PASS: TestIteratorDescriptorReasons/object_spread (0.62s)
+=== CONT  TestIteratorGapsAreExplicit/interface_Source_{[Symbol.iterator]():{next():{value:number;done:boolean}}}_function_consume(source:Source):void_{for(const_value_of_source){break;}}_consume({[Symbol.iterator](){return{next(){return{value:1,done:false};}}}});
+=== CONT  TestIteratorGapsAreExplicit/interface_Step_{value:number;done:boolean}_function_closing():{return():Step}|undefined{return_undefined;}_const_source={[Symbol.iterator](){return{...closing(),next():Step{return{value:1,done:false};}}}};for(const_value_of_source){break;}
+--- PASS: TestIteratorGapsAreExplicit (0.00s)
+    --- PASS: TestIteratorGapsAreExplicit/interface_Step_{value:number;done?:boolean}_const_source={_[Symbol.iterator](){return{next():Step{return{value:1};}}}};for(const_value_of_source){console.log(`${value}`);break;} (0.33s)
+    --- PASS: TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next:()=>({value:1,done:false}),return:()=>({value:0,done:true})};}};const_iterator=source[Symbol.iterator]();iterator.next=():{value:number;done:boolean}=>({value:2,done:true});for(const_value_of_source){break;} (0.27s)
+    --- PASS: TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_copy={...source};for(const_value_of_copy){break;} (0.43s)
+    --- PASS: TestIteratorGapsAreExplicit/const_source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const_kept:(number|undefined)[]=[...source]; (0.59s)
+    --- PASS: TestIteratorGapsAreExplicit/interface_Step_{value:number;done:boolean}_function_closing():{return():Step}|undefined{return_undefined;}_const_source={[Symbol.iterator](){return{...closing(),next():Step{return{value:1,done:false};}}}};for(const_value_of_source){break;} (0.24s)
+    --- PASS: TestIteratorGapsAreExplicit/interface_Source_{[Symbol.iterator]():{next():{value:number;done:boolean}}}_function_consume(source:Source):void_{for(const_value_of_source){break;}}_consume({[Symbol.iterator](){return{next(){return{value:1,done:false};}}}}); (0.36s)
+    --- PASS: TestIteratorGapsAreExplicit/class_Result_{declare_value:number;declare_done:boolean;}_const_source={[Symbol.iterator](){return{next(){return_new_Result();}}}};for(const_value_of_source){break;} (0.59s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	5.442s

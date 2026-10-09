@@ -1,0 +1,15 @@
+=== RUN   TestStep21Uncaught
+=== PAUSE TestStep21Uncaught
+=== CONT  TestStep21Uncaught
+=== RUN   TestStep21Uncaught/step21_object_uncaught
+=== PAUSE TestStep21Uncaught/step21_object_uncaught
+=== CONT  TestStep21Uncaught/step21_object_uncaught
+    step21_exceptions_test.go:219: uncaught lifetime check: exit 70 stderr "adamic: panic: a union holding an object was written as a string\n"
+--- FAIL: TestStep21Uncaught (0.00s)
+    --- FAIL: TestStep21Uncaught/step21_object_uncaught (12.05s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	12.061s
+FAIL

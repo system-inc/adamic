@@ -116,7 +116,7 @@ func TestSmallStacksStillPanic(t *testing.T) {
 					arguments = append(append([]string{"-c", script, name}, arguments...), setting.arguments...)
 					return executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, "/bin/sh", arguments...)
 				}
-				want := run{stdout: []byte("start\n"), stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded\n"), exitCode: 70}
+				want := run{stdout: []byte("start\n"), stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded in sum\n"), exitCode: 70}
 				if kibibytes >= 1024 {
 					node := limited("node", "--disable-warning=ExperimentalWarning", repository+"/oracle/node.mjs", path)
 					if difference := disagreement(want, node); difference != "" {

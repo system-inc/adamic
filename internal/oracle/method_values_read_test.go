@@ -32,11 +32,11 @@ func TestLibraryMethodAliasReadMutant(t *testing.T) {
 	}
 	result, binary := natively(t, program)
 	source := onNode(t, path)
-	if source.exitCode != 70 || result.exitCode != 0 || disagreement(source, result) != "exit codes differ" {
+	if source.exitCode != 1 || result.exitCode != 0 || disagreement(source, result) != "exit codes differ" {
 		t.Fatalf("want Node's temporal dead zone to catch an otherwise finishing mutant: node %d stderr %s; native %d stderr %s", source.exitCode, source.stderr, result.exitCode, result.stderr)
 	}
 	if report := leaks(t, program, binary); report != "" {
 		t.Fatal(report)
 	}
-	t.Log("caught by Node's uncaught ReferenceError, with the exit-70 convention unchanged")
+	t.Log("caught by Node's uncaught ReferenceError, with exit 1")
 }

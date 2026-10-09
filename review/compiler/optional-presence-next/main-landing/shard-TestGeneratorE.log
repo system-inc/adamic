@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:19:45.446759981Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:45.507174368Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame"}
+{"Time":"2026-10-09T18:19:45.50727054Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame","Output":"=== RUN   TestGeneratorEmptyBodyUsesOwnedFrame\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.507305517Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame","Output":"=== PAUSE TestGeneratorEmptyBodyUsesOwnedFrame\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.507309657Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame"}
+{"Time":"2026-10-09T18:19:45.507313854Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame"}
+{"Time":"2026-10-09T18:19:45.507316586Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame","Output":"=== CONT  TestGeneratorEmptyBodyUsesOwnedFrame\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.86317948Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame","Output":"--- PASS: TestGeneratorEmptyBodyUsesOwnedFrame (0.35s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.863254955Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame","Elapsed":0.35}
+{"Time":"2026-10-09T18:19:45.863282284Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:45.86333109Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.417}

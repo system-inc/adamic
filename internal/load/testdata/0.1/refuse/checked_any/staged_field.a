@@ -1,0 +1,3 @@
+class Box { value: number = undefined!; }
+function read(config: any): number { return config.value; }
+console.log(String(read(new Box())));

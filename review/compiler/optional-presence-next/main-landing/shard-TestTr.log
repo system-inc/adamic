@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:21:53.334637796Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:53.369915578Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTracingNamespaceEscapeLowers"}
+{"Time":"2026-10-09T18:21:53.369966057Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTracingNamespaceEscapeLowers","Output":"=== RUN   TestTracingNamespaceEscapeLowers\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:53.369999316Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTracingNamespaceEscapeLowers","Output":"=== PAUSE TestTracingNamespaceEscapeLowers\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:53.370003445Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTracingNamespaceEscapeLowers"}
+{"Time":"2026-10-09T18:21:53.370009385Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTracingNamespaceEscapeLowers"}
+{"Time":"2026-10-09T18:21:53.370012435Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTracingNamespaceEscapeLowers","Output":"=== CONT  TestTracingNamespaceEscapeLowers\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:53.557972564Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTracingNamespaceEscapeLowers","Output":"--- PASS: TestTracingNamespaceEscapeLowers (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:53.558027024Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestTracingNamespaceEscapeLowers","Elapsed":0.19}
+{"Time":"2026-10-09T18:21:53.558045188Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:53.565570781Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.231}

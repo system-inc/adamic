@@ -1,0 +1,53 @@
+[
+  {
+    "name": "TestUndecidedCycleReadsUseReadyChecks",
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestUndecidedCycleReadsUseReadyChecks$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 16.927
+  },
+  {
+    "name": "TestOptionalIndexingMapShapeRefused",
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalIndexingMapShapeRefused$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 4.359
+  },
+  {
+    "name": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "command": [
+      "go",
+      "test",
+      "-buildvcs=false",
+      "./internal/lower",
+      "-run",
+      "^TestOptionalIndexingKeepsUnsupportedStorageNotYet$",
+      "-count=1",
+      "-timeout",
+      "80s",
+      "-v"
+    ],
+    "status": 0,
+    "seconds": 6.584
+  }
+]

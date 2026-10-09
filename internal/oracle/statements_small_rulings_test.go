@@ -17,7 +17,6 @@ func TestStatementsSmallRulings(t *testing.T) {
 	}{
 		{"template", ">=1.2.3\n", "a template interpolating an object, an array, a map, a function or undefined", false},
 		{"nonnull", "2\n", "the non-null assertion !", true},
-		{"structural_error", "false\n", "throwing an Error that isn't made where it's thrown or caught by the catch around it", false},
 		{"capture", "7\n", "a function value that captures the variable its own initializer declares", false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

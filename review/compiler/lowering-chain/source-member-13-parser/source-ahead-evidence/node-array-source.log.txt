@@ -1,0 +1,15 @@
+=== RUN   TestParserAheadNodeArraySource
+=== RUN   TestParserAheadNodeArraySource/fields
+    parser_ahead_test.go:95: gate cache node miss
+    parser_ahead_test.go:103: pending: source Node contract only; fixed array metadata and presence lowering are absent
+=== RUN   TestParserAheadNodeArraySource/presence
+    parser_ahead_test.go:95: gate cache node miss
+    parser_ahead_test.go:103: pending: source Node contract only; fixed array metadata and presence lowering are absent
+--- PASS: TestParserAheadNodeArraySource (0.32s)
+    --- PASS: TestParserAheadNodeArraySource/fields (0.18s)
+    --- PASS: TestParserAheadNodeArraySource/presence (0.14s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.327s

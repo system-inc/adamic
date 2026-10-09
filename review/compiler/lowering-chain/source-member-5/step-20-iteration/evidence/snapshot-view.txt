@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_stress.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_stress.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_stress.a
+    oracle_test.go:770: stdout differs
+        node:   exit 0, stdout "node:1\nnode:2\nnode:4\nnode:1\nnode:2\nnode:4\nnode:9\nnode:5\nnode:6\ncalls:1\nnode:7\nnode:9\n", stderr ""
+        native: exit 0, stdout "node:1\nnode:2\nnode:1\nnode:2\nnode:9\nnode:5\nnode:6\ncalls:1\nnode:7\nnode:9\n", stderr ""
+    oracle_test.go:776: JavaScript backend: stdout differs
+        node:    exit 0, stdout "node:1\nnode:2\nnode:4\nnode:1\nnode:2\nnode:4\nnode:9\nnode:5\nnode:6\ncalls:1\nnode:7\nnode:9\n", stderr ""
+        backend: exit 0, stdout "node:1\nnode:2\nnode:1\nnode:2\nnode:9\nnode:5\nnode:6\ncalls:1\nnode:7\nnode:9\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.06s)
+    --- FAIL: TestNativeAgreesWithNode/stage3/fixtures/iteration/array_view_stress.a (5.12s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.297s
+FAIL

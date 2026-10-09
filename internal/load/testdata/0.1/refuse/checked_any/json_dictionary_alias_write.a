@@ -1,0 +1,6 @@
+interface NumericConfig { [key: string]: number; }
+function convert(raw: any): NumericConfig { return raw; }
+const raw: any = { alpha: 1 };
+const checked = convert(raw);
+raw.alpha = "wrong";
+console.log("passed");

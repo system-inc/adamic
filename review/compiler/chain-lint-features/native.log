@@ -1,0 +1,26 @@
+=== RUN   TestRuntimeKeyIncludesEveryInput
+=== PAUSE TestRuntimeKeyIncludesEveryInput
+=== RUN   TestRuntimeKeyKeepsBoundaries
+=== PAUSE TestRuntimeKeyKeepsBoundaries
+=== RUN   TestRuntimeCacheKeepsCountFlags
+=== PAUSE TestRuntimeCacheKeepsCountFlags
+=== RUN   TestRuntimeCacheRebuildsChangedSources
+=== PAUSE TestRuntimeCacheRebuildsChangedSources
+=== RUN   TestRuntimeCacheConcurrentBuilders
+=== PAUSE TestRuntimeCacheConcurrentBuilders
+=== RUN   TestRuntimeCacheConcurrentProcesses
+=== PAUSE TestRuntimeCacheConcurrentProcesses
+=== CONT  TestRuntimeKeyIncludesEveryInput
+=== CONT  TestRuntimeCacheConcurrentProcesses
+=== CONT  TestRuntimeCacheConcurrentBuilders
+=== CONT  TestRuntimeCacheRebuildsChangedSources
+=== CONT  TestRuntimeCacheKeepsCountFlags
+--- PASS: TestRuntimeCacheConcurrentProcesses (0.39s)
+=== CONT  TestRuntimeKeyKeepsBoundaries
+--- PASS: TestRuntimeKeyKeepsBoundaries (0.00s)
+--- PASS: TestRuntimeKeyIncludesEveryInput (0.41s)
+--- PASS: TestRuntimeCacheRebuildsChangedSources (0.70s)
+--- PASS: TestRuntimeCacheConcurrentBuilders (2.56s)
+--- PASS: TestRuntimeCacheKeepsCountFlags (11.49s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	11.519s

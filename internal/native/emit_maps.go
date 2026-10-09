@@ -58,7 +58,10 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 		holds = append(holds, value+".reference")
 	}
 	holds = append(holds, iterator)
-	if visit.Returns.IsReference() {
+	if visit.Returns == 0 {
+		e.discardClosureResult(ir.CallClosure{}, callback, "", "", call, holds...)
+		e.closureThrown(holds...)
+	} else if visit.Returns.IsReference() {
 		// A callback's result comes back owned, and forEach has no use for it.
 		e.line("adamic_value %s = %s;", answer, call)
 		e.closureThrown(holds...)

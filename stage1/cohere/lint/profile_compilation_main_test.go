@@ -191,7 +191,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 		variant := inputs
 		variant.Name = "lint-profile-" + kind
 		options := native.Options{Count: kind == "counted", Jobs: 1}
-		variant.Flags = append(append([]string{}, inputs.Flags...), native.Flags(options)...)
+		variant.Flags = append(append([]string{}, inputs.Flags...), native.SourceFlags(string(source), options)...)
 		if kind == "profiled" {
 			variant.Flags = append(variant.Flags, "-g", "-lm")
 		}
@@ -202,38 +202,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 				if kind != "profiled" {
 					return native.Build(string(source), filepath.Join(dir, kind), options)
 				}
-				if err := os.WriteFile(filepath.Join(dir, "main.c"), source, 0644); err != nil {
-					return err
-				}
-				entries, err := os.ReadDir(filepath.Join(repository, "internal/native/runtime"))
-				if err != nil {
-					return err
-				}
-				units := []string{filepath.Join(dir, "main.c")}
-				for _, entry := range entries {
-					if !strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h") {
-						continue
-					}
-					data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime", entry.Name()))
-					if err != nil {
-						return err
-					}
-					path := filepath.Join(dir, entry.Name())
-					if err := os.WriteFile(path, data, 0644); err != nil {
-						return err
-					}
-					if strings.HasSuffix(path, ".c") {
-						units = append(units, path)
-					}
-				}
-				flags := append(native.Flags(options), "-g", "-o", filepath.Join(dir, kind))
-				flags = append(flags, units...)
-				flags = append(flags, "-lm")
-				command := exec.CommandContext(context.Background(), "clang", flags...)
-				if output, err := command.CombinedOutput(); err != nil {
-					return fmt.Errorf("profile clang: %w\n%s", err, output)
-				}
-				return nil
+				return compilationProfileBuild(string(source), filepath.Join(dir, kind), options)
 			})
 			data, err := os.ReadFile(filepath.Join(product, kind))
 			if err == nil {
@@ -382,4 +351,24 @@ func compilationOracle(t *testing.T) string {
 	inputs.Flags = append(inputs.Flags, "overlay=full-live-registry")
 	product := buildcache.Product(t, inputs, func(dir string) error { _, err := goOracleIn(packageDirectory, dir); return err })
 	return filepath.Join(product, "oracle")
+}
+
+// The profile linker uses the same feature set as the emitted program.
+func compilationProfileBuild(source, output string, options native.Options) error {
+	library, err := native.RuntimeLibraryForSource("", source, options)
+	if err != nil {
+		return err
+	}
+	path := filepath.Join(filepath.Dir(output), "main.c")
+	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+		return err
+	}
+	flags := append(native.SourceFlags(source, options), "-g", "-I", filepath.Dir(library), "-o", output, path)
+	flags = append(flags, native.RuntimeLinkFlags(library)...)
+	flags = append(flags, "-lm")
+	command := exec.CommandContext(context.Background(), "clang", flags...)
+	if result, err := command.CombinedOutput(); err != nil {
+		return fmt.Errorf("profile clang: %w\n%s", err, result)
+	}
+	return nil
 }

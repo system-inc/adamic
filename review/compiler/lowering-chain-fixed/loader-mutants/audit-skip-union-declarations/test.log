@@ -1,0 +1,8 @@
+=== RUN   TestProjectReferencesTypesUnionDuplicateSkipped
+=== PAUSE TestProjectReferencesTypesUnionDuplicateSkipped
+=== CONT  TestProjectReferencesTypesUnionDuplicateSkipped
+    project_references_test.go:198: want ordinary duplicate declarations, got &{ProjectErrors:[] Sites:[] RemainingSites:[]}
+--- FAIL: TestProjectReferencesTypesUnionDuplicateSkipped (0.77s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.780s
+FAIL

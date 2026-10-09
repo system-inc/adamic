@@ -1,0 +1,212 @@
+[
+  {
+    "path": "docs/step-18/fixtures/method.a",
+    "base": "| docs/step-18/fixtures/method.a | 5 | 5 | 3 | 8 | 4 | 0 |",
+    "chain": "| docs/step-18/fixtures/method.a | 5 | 5 | 3 | 8 | 4 | 0 |",
+    "merged": "| docs/step-18/fixtures/method.a | 5 | 5 | 3 | 8 | 4 | 0 |",
+    "measured": "| docs/step-18/fixtures/method.a | 5 | 5 | 4 | 8 | 4 | 0 |"
+  },
+  {
+    "path": "docs/step-18/fixtures/runtime-bound-method-arguments.a",
+    "base": "| docs/step-18/fixtures/runtime-bound-method-arguments.a | 21 | 21 | 11 | 32 | 12 | 0 |",
+    "chain": "| docs/step-18/fixtures/runtime-bound-method-arguments.a | 21 | 21 | 11 | 32 | 12 | 0 |",
+    "merged": "| docs/step-18/fixtures/runtime-bound-method-arguments.a | 21 | 21 | 11 | 32 | 12 | 0 |",
+    "measured": "| docs/step-18/fixtures/runtime-bound-method-arguments.a | 21 | 21 | 13 | 32 | 12 | 0 |"
+  },
+  {
+    "path": "docs/step-18/fixtures/runtime-bound-methods.a",
+    "base": "| docs/step-18/fixtures/runtime-bound-methods.a | 15 | 15 | 9 | 25 | 5 | 0 |",
+    "chain": "| docs/step-18/fixtures/runtime-bound-methods.a | 15 | 15 | 9 | 25 | 5 | 0 |",
+    "merged": "| docs/step-18/fixtures/runtime-bound-methods.a | 15 | 15 | 9 | 25 | 5 | 0 |",
+    "measured": "| docs/step-18/fixtures/runtime-bound-methods.a | 15 | 15 | 11 | 25 | 5 | 0 |"
+  },
+  {
+    "path": "docs/step-18/fixtures/runtime-chain-callable.a",
+    "base": "| docs/step-18/fixtures/runtime-chain-callable.a | 14 | 14 | 27 | 39 | 5 | 0 |",
+    "chain": "| docs/step-18/fixtures/runtime-chain-callable.a | 14 | 14 | 27 | 39 | 5 | 0 |",
+    "merged": "| docs/step-18/fixtures/runtime-chain-callable.a | 14 | 14 | 27 | 39 | 5 | 0 |",
+    "measured": "| docs/step-18/fixtures/runtime-chain-callable.a | 14 | 14 | 28 | 39 | 5 | 0 |"
+  },
+  {
+    "path": "docs/step-18/fixtures/runtime-chain-method-continuation.a",
+    "base": "| docs/step-18/fixtures/runtime-chain-method-continuation.a | 11 | 11 | 25 | 39 | 6 | 0 |",
+    "chain": "| docs/step-18/fixtures/runtime-chain-method-continuation.a | 11 | 11 | 25 | 39 | 6 | 0 |",
+    "merged": "| docs/step-18/fixtures/runtime-chain-method-continuation.a | 11 | 11 | 25 | 39 | 6 | 0 |",
+    "measured": "| docs/step-18/fixtures/runtime-chain-method-continuation.a | 11 | 11 | 26 | 39 | 6 | 0 |"
+  },
+  {
+    "path": "docs/step-18/fixtures/runtime-discarded-reference.a",
+    "base": "| docs/step-18/fixtures/runtime-discarded-reference.a | 13 | 13 | 10 | 27 | 5 | 0 |",
+    "chain": "| docs/step-18/fixtures/runtime-discarded-reference.a | 13 | 13 | 10 | 27 | 5 | 0 |",
+    "merged": "| docs/step-18/fixtures/runtime-discarded-reference.a | 13 | 13 | 10 | 27 | 5 | 0 |",
+    "measured": "| docs/step-18/fixtures/runtime-discarded-reference.a | 13 | 13 | 11 | 27 | 5 | 0 |"
+  },
+  {
+    "path": "docs/step-18/fixtures/two-guards.a",
+    "base": "| docs/step-18/fixtures/two-guards.a | 4 | 4 | 8 | 12 | 4 | 0 |",
+    "chain": "| docs/step-18/fixtures/two-guards.a | 4 | 4 | 8 | 12 | 4 | 0 |",
+    "merged": "| docs/step-18/fixtures/two-guards.a | 4 | 4 | 8 | 12 | 4 | 0 |",
+    "measured": "| docs/step-18/fixtures/two-guards.a | 4 | 4 | 9 | 12 | 4 | 0 |"
+  },
+  {
+    "path": "docs/step-18/storage-fixtures/optional-method.a",
+    "base": "| docs/step-18/storage-fixtures/optional-method.a | 16 | 16 | 34 | 50 | 6 | 0 |",
+    "chain": "| docs/step-18/storage-fixtures/optional-method.a | 16 | 16 | 34 | 50 | 6 | 0 |",
+    "merged": "| docs/step-18/storage-fixtures/optional-method.a | 16 | 16 | 34 | 50 | 6 | 0 |",
+    "measured": "| docs/step-18/storage-fixtures/optional-method.a | 16 | 16 | 35 | 50 | 6 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/047cb0d_f_maybe.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/047cb0d_f_maybe.a | 11 | 11 | 8 | 20 | 5 | 0 |",
+    "merged": "| internal/oracle/testdata/047cb0d_f_maybe.a | 11 | 11 | 8 | 20 | 5 | 0 |",
+    "measured": "| internal/oracle/testdata/047cb0d_f_maybe.a | 11 | 11 | 8 | 20 | 5 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/047cb0d_f_maybe_ref.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/047cb0d_f_maybe_ref.a | 13 | 13 | 16 | 31 | 7 | 0 |",
+    "merged": "| internal/oracle/testdata/047cb0d_f_maybe_ref.a | 13 | 13 | 16 | 31 | 7 | 0 |",
+    "measured": "| internal/oracle/testdata/047cb0d_f_maybe_ref.a | 13 | 13 | 16 | 31 | 7 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/57f2d04_find_last_shrinks.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/57f2d04_find_last_shrinks.a | 8 | 5 | 8 | 13 | 8 | 0 |",
+    "merged": "| internal/oracle/testdata/57f2d04_find_last_shrinks.a | 8 | 5 | 8 | 13 | 8 | 0 |",
+    "measured": "| internal/oracle/testdata/57f2d04_find_last_shrinks.a | 8 | 5 | 8 | 13 | 8 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/57f2d04_find_last_shrinks2.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/57f2d04_find_last_shrinks2.a | 8 | 5 | 8 | 13 | 8 | 0 |",
+    "merged": "| internal/oracle/testdata/57f2d04_find_last_shrinks2.a | 8 | 5 | 8 | 13 | 8 | 0 |",
+    "measured": "| internal/oracle/testdata/57f2d04_find_last_shrinks2.a | 8 | 5 | 8 | 13 | 8 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-find.a",
+    "base": "| internal/oracle/testdata/callback_widening/number-find.a | 8 | 8 | 8 | 14 | 5 | 0 |",
+    "chain": "| internal/oracle/testdata/callback_widening/number-find.a | 6 | 6 | 2 | 8 | 3 | 0 |",
+    "merged": "| internal/oracle/testdata/callback_widening/number-find.a | 6 | 6 | 2 | 8 | 3 | 0 |",
+    "measured": "| internal/oracle/testdata/callback_widening/number-find.a | 6 | 6 | 2 | 8 | 3 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-findIndex.a",
+    "base": "| internal/oracle/testdata/callback_widening/number-findIndex.a | 10 | 10 | 8 | 16 | 6 | 0 |",
+    "chain": "| internal/oracle/testdata/callback_widening/number-findIndex.a | 8 | 8 | 2 | 10 | 4 | 0 |",
+    "merged": "| internal/oracle/testdata/callback_widening/number-findIndex.a | 8 | 8 | 2 | 10 | 4 | 0 |",
+    "measured": "| internal/oracle/testdata/callback_widening/number-findIndex.a | 8 | 8 | 2 | 10 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-findLast.a",
+    "base": "| internal/oracle/testdata/callback_widening/number-findLast.a | 10 | 10 | 8 | 16 | 6 | 0 |",
+    "chain": "| internal/oracle/testdata/callback_widening/number-findLast.a | 8 | 8 | 2 | 10 | 4 | 0 |",
+    "merged": "| internal/oracle/testdata/callback_widening/number-findLast.a | 8 | 8 | 2 | 10 | 4 | 0 |",
+    "measured": "| internal/oracle/testdata/callback_widening/number-findLast.a | 8 | 8 | 2 | 10 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-find.a",
+    "base": "| internal/oracle/testdata/callback_widening/object-find.a | 9 | 9 | 17 | 22 | 7 | 0 |",
+    "chain": "| internal/oracle/testdata/callback_widening/object-find.a | 7 | 7 | 9 | 14 | 5 | 0 |",
+    "merged": "| internal/oracle/testdata/callback_widening/object-find.a | 7 | 7 | 9 | 14 | 5 | 0 |",
+    "measured": "| internal/oracle/testdata/callback_widening/object-find.a | 7 | 7 | 9 | 14 | 5 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/class_features_private.a",
+    "base": "| internal/oracle/testdata/class_features_private.a | 47 | 47 | 29 | 57 | 15 | 0 |",
+    "chain": "| internal/oracle/testdata/class_features_private.a | 47 | 47 | 29 | 57 | 15 | 0 |",
+    "merged": "| internal/oracle/testdata/class_features_private.a | 47 | 47 | 29 | 57 | 15 | 0 |",
+    "measured": "| internal/oracle/testdata/class_features_private.a | 46 | 46 | 29 | 57 | 15 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/library_for_in.a",
+    "base": "| internal/oracle/testdata/library_for_in.a | 79 | 79 | 130 | 118 | 65 | 0 |",
+    "chain": "| internal/oracle/testdata/library_for_in.a | 79 | 79 | 130 | 118 | 65 | 0 |",
+    "merged": "| internal/oracle/testdata/library_for_in.a | 79 | 79 | 130 | 118 | 65 | 0 |",
+    "measured": "| internal/oracle/testdata/library_for_in.a | 74 | 74 | 121 | 112 | 60 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/node_buffer_digest_twice.a | 5 | 5 | 7 | 10 | 3 | 0 |",
+    "merged": "| internal/oracle/testdata/node_buffer_digest_twice.a | 5 | 5 | 7 | 10 | 3 | 0 |",
+    "measured": "| internal/oracle/testdata/node_buffer_digest_twice.a | 5 | 5 | 7 | 10 | 3 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/pow_fractional.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/pow_fractional.a | 6 | 6 | 0 | 6 | 3 | 0 |",
+    "merged": "| internal/oracle/testdata/pow_fractional.a | 6 | 6 | 0 | 6 | 3 | 0 |",
+    "measured": "| internal/oracle/testdata/pow_fractional.a | 6 | 6 | 0 | 6 | 3 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/search_shrink_boolean.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/search_shrink_boolean.a | 9 | 9 | 7 | 19 | 4 | 0 |",
+    "merged": "| internal/oracle/testdata/search_shrink_boolean.a | 9 | 9 | 7 | 19 | 4 | 0 |",
+    "measured": "| internal/oracle/testdata/search_shrink_boolean.a | 9 | 9 | 7 | 19 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/search_shrink_default.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/search_shrink_default.a | 10 | 10 | 4 | 15 | 4 | 0 |",
+    "merged": "| internal/oracle/testdata/search_shrink_default.a | 10 | 10 | 4 | 15 | 4 | 0 |",
+    "measured": "| internal/oracle/testdata/search_shrink_default.a | 10 | 10 | 4 | 15 | 4 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/search_shrink_findIndex_checked.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/search_shrink_findIndex_checked.a | 10 | 8 | 5 | 13 | 6 | 0 |",
+    "merged": "| internal/oracle/testdata/search_shrink_findIndex_checked.a | 10 | 8 | 5 | 13 | 6 | 0 |",
+    "measured": "| internal/oracle/testdata/search_shrink_findIndex_checked.a | 10 | 8 | 5 | 13 | 6 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/search_shrink_findLastIndex_maybe.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/search_shrink_findLastIndex_maybe.a | 10 | 10 | 5 | 16 | 6 | 0 |",
+    "merged": "| internal/oracle/testdata/search_shrink_findLastIndex_maybe.a | 10 | 10 | 5 | 16 | 6 | 0 |",
+    "measured": "| internal/oracle/testdata/search_shrink_findLastIndex_maybe.a | 10 | 10 | 5 | 16 | 6 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/search_shrink_findLast_maybe.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/search_shrink_findLast_maybe.a | 9 | 9 | 7 | 17 | 6 | 0 |",
+    "merged": "| internal/oracle/testdata/search_shrink_findLast_maybe.a | 9 | 9 | 7 | 17 | 6 | 0 |",
+    "measured": "| internal/oracle/testdata/search_shrink_findLast_maybe.a | 9 | 9 | 7 | 17 | 6 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/search_shrink_find_checked.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/search_shrink_find_checked.a | 10 | 8 | 5 | 13 | 6 | 0 |",
+    "merged": "| internal/oracle/testdata/search_shrink_find_checked.a | 10 | 8 | 5 | 13 | 6 | 0 |",
+    "measured": "| internal/oracle/testdata/search_shrink_find_checked.a | 10 | 8 | 5 | 13 | 6 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/search_shrink_find_maybe.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/search_shrink_find_maybe.a | 13 | 13 | 10 | 24 | 6 | 0 |",
+    "merged": "| internal/oracle/testdata/search_shrink_find_maybe.a | 13 | 13 | 10 | 24 | 6 | 0 |",
+    "measured": "| internal/oracle/testdata/search_shrink_find_maybe.a | 13 | 13 | 10 | 24 | 6 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/search_shrink_found.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/search_shrink_found.a | 15 | 15 | 12 | 32 | 8 | 0 |",
+    "merged": "| internal/oracle/testdata/search_shrink_found.a | 15 | 15 | 12 | 32 | 8 | 0 |",
+    "measured": "| internal/oracle/testdata/search_shrink_found.a | 15 | 15 | 12 | 32 | 8 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/search_shrink_omitted.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/search_shrink_omitted.a | 4 | 4 | 4 | 9 | 3 | 0 |",
+    "merged": "| internal/oracle/testdata/search_shrink_omitted.a | 4 | 4 | 4 | 9 | 3 | 0 |",
+    "measured": "| internal/oracle/testdata/search_shrink_omitted.a | 4 | 4 | 4 | 9 | 3 | 0 |"
+  },
+  {
+    "path": "internal/oracle/testdata/search_shrink_unknown.a",
+    "base": null,
+    "chain": "| internal/oracle/testdata/search_shrink_unknown.a | 14 | 14 | 9 | 25 | 6 | 0 |",
+    "merged": "| internal/oracle/testdata/search_shrink_unknown.a | 14 | 14 | 9 | 25 | 6 | 0 |",
+    "measured": "| internal/oracle/testdata/search_shrink_unknown.a | 14 | 14 | 9 | 25 | 6 | 0 |"
+  }
+]

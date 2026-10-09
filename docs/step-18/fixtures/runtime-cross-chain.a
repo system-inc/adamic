@@ -1,0 +1,15 @@
+// Derived from builder.ts:528's callback and moduleNameResolver.ts:3103's result chain.
+interface Content { readonly contents: { readonly packageJsonContent: string } }
+interface Package { readonly read: (argument: string) => Content }
+let calls = 0;
+let current: Package | undefined = {
+	read: (argument: string): Content => ({ contents: { packageJsonContent: argument } }),
+};
+function clear(): string {
+	calls += 1;
+	current = undefined;
+	return `selected${calls}`;
+}
+console.log(current?.read(clear()).contents.packageJsonContent ?? 'absent');
+console.log(current?.read(clear()).contents.packageJsonContent ?? 'absent');
+console.log(`${calls} ${current === undefined}`);

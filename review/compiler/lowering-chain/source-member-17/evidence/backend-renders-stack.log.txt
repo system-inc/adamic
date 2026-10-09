@@ -1,0 +1,72 @@
+=== RUN   TestStep21Uncaught
+=== PAUSE TestStep21Uncaught
+=== CONT  TestStep21Uncaught
+=== RUN   TestStep21Uncaught/step21_dynamic_uncaught
+=== PAUSE TestStep21Uncaught/step21_dynamic_uncaught
+=== RUN   TestStep21Uncaught/step21_object_uncaught
+=== PAUSE TestStep21Uncaught/step21_object_uncaught
+=== RUN   TestStep21Uncaught/exceptions_uncaught
+=== PAUSE TestStep21Uncaught/exceptions_uncaught
+=== RUN   TestStep21Uncaught/closures_throw_uncaught
+=== PAUSE TestStep21Uncaught/closures_throw_uncaught
+=== CONT  TestStep21Uncaught/step21_dynamic_uncaught
+=== CONT  TestStep21Uncaught/exceptions_uncaught
+=== CONT  TestStep21Uncaught/closures_throw_uncaught
+=== CONT  TestStep21Uncaught/step21_object_uncaught
+    step21_exceptions_test.go:219: JavaScript uncaught renderer wrote stderr: 
+        node:internal/modules/run_main:107
+            triggerUncaughtException(
+            ^
+        { message: 'payload1' }
+        
+        Node.js v24.19.0
+=== NAME  TestStep21Uncaught/step21_dynamic_uncaught
+    step21_exceptions_test.go:219: JavaScript uncaught renderer wrote stderr: 
+        node:internal/modules/run_main:107
+            triggerUncaughtException(
+            ^
+        undefined
+        (Use `node --trace-uncaught ...` to show where the exception was thrown)
+        
+        Node.js v24.19.0
+=== NAME  TestStep21Uncaught/exceptions_uncaught
+    step21_exceptions_test.go:219: JavaScript uncaught renderer wrote stderr: file:///tmp/adamic-gate/TestStep21Uncaughtexceptions_uncaught2039681255/003/program.mjs:94
+        		throw new Error((local_0_label + " failed"));
+        		      ^
+        
+        Error: the job failed
+            at function_0_inner (file:///tmp/adamic-gate/TestStep21Uncaughtexceptions_uncaught2039681255/003/program.mjs:94:9)
+            at function_1_outer (file:///tmp/adamic-gate/TestStep21Uncaughtexceptions_uncaught2039681255/003/program.mjs:102:10)
+            at file:///tmp/adamic-gate/TestStep21Uncaughtexceptions_uncaught2039681255/003/program.mjs:109:20
+            at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+            at async node:internal/modules/esm/loader:643:26
+            at async file:///workspace/adamic/oracle/node.mjs:36:1
+        
+        Node.js v24.19.0
+=== NAME  TestStep21Uncaught/closures_throw_uncaught
+    step21_exceptions_test.go:219: JavaScript uncaught renderer wrote stderr: file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught428859104/003/program.mjs:120
+        			throw new Error((local_4_item + " is too loud"));
+        			      ^
+        
+        Error: item3 is too loud
+            at AdamicClosure.function_2_closure [as code] (file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught428859104/003/program.mjs:120:10)
+            at adamicCall (file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught428859104/003/program.mjs:52:49)
+            at adamicMap (file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught428859104/003/program.mjs:61:15)
+            at function_1_shout (file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught428859104/003/program.mjs:110:10)
+            at file:///tmp/adamic-gate/TestStep21Uncaughtclosures_throw_uncaught428859104/003/program.mjs:128:13
+            at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+            at async node:internal/modules/esm/loader:643:26
+            at async file:///workspace/adamic/oracle/node.mjs:36:1
+        
+        Node.js v24.19.0
+--- FAIL: TestStep21Uncaught (0.00s)
+    --- FAIL: TestStep21Uncaught/step21_object_uncaught (0.56s)
+    --- FAIL: TestStep21Uncaught/step21_dynamic_uncaught (0.58s)
+    --- FAIL: TestStep21Uncaught/exceptions_uncaught (0.58s)
+    --- FAIL: TestStep21Uncaught/closures_throw_uncaught (0.59s)
+FAIL
+gate cache: native hits=0 misses=8
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.603s
+FAIL

@@ -1,0 +1,7 @@
+--- FAIL: TestProjectLoaderStandaloneNodeKeepsPrelude (0.06s)
+    project_loader_test.go:158: standalone Node rebuild lost prelude: /tmp/adamic-gate/TestProjectLoaderStandaloneNodeKeepsPrelude1527207456/001/main.a:1:152: error TS2584: Cannot find name 'console'. Do you need to change your target library? Try changing the 'lib' compiler option to include 'dom'.
+        /tmp/adamic-gate/TestProjectLoaderStandaloneNodeKeepsPrelude1527207456/001/main.a:1:28: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+        /tmp/adamic-gate/TestProjectLoaderStandaloneNodeKeepsPrelude1527207456/001/main.a:1:68: error TS2307: Cannot find module 'adamic' or its corresponding type declarations.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.074s
+FAIL

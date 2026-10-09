@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T20:00:30.792292766Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T20:00:30.846320731Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestUnrepresentedPrototypeCallsAreNotYet"}
+{"Time":"2026-10-09T20:00:30.846404827Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestUnrepresentedPrototypeCallsAreNotYet","Output":"=== RUN   TestUnrepresentedPrototypeCallsAreNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:30.856929618Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestUnrepresentedPrototypeCallsAreNotYet","Output":"=== PAUSE TestUnrepresentedPrototypeCallsAreNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:30.85695224Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestUnrepresentedPrototypeCallsAreNotYet"}
+{"Time":"2026-10-09T20:00:30.856956038Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestUnrepresentedPrototypeCallsAreNotYet"}
+{"Time":"2026-10-09T20:00:30.856958411Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestUnrepresentedPrototypeCallsAreNotYet","Output":"=== CONT  TestUnrepresentedPrototypeCallsAreNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:32.577700458Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestUnrepresentedPrototypeCallsAreNotYet","Output":"--- PASS: TestUnrepresentedPrototypeCallsAreNotYet (1.72s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:32.58727775Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestUnrepresentedPrototypeCallsAreNotYet","Elapsed":1.72}
+{"Time":"2026-10-09T20:00:32.58737645Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T20:00:32.593994068Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.802}

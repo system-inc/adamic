@@ -1,0 +1,11 @@
+function normalize(raw: any): string | null | undefined {
+    if (raw === null) return null;
+    if (typeof raw === "string") return raw;
+    if (raw === undefined) return undefined;
+    console.log(String("diagnostic: expected a string, null or undefined"));
+    return undefined;
+}
+console.log(String(normalize(null) === null));
+console.log(String(normalize(undefined) === undefined));
+console.log(String(normalize("value")));
+console.log(String(normalize(14) === undefined));

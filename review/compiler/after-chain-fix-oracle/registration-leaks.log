@@ -1,0 +1,11 @@
+=== RUN   TestParserNamespaceClassRegistrationMutant
+=== PAUSE TestParserNamespaceClassRegistrationMutant
+=== CONT  TestParserNamespaceClassRegistrationMutant
+    parser_namespaces_test.go:175: javascript missing constructor registration stopped: {stdout:[67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] stderr:[] exitCode:0}
+    parser_namespaces_test.go:175: native missing constructor registration stopped: {stdout:[67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] stderr:[] exitCode:0}
+--- PASS: TestParserNamespaceClassRegistrationMutant (0.67s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.679s

@@ -1,0 +1,5 @@
+--- FAIL: TestProjectLoaderReferenceSources (0.53s)
+    project_loader_test.go:38: /tmp/adamic-gate/TestProjectLoaderReferenceSources1015923339/001/app/main.ts:1:23: error TS6305: Output file '/tmp/adamic-gate/TestProjectLoaderReferenceSources1015923339/001/out/dependency/value.d.ts' has not been built from source file '/tmp/adamic-gate/TestProjectLoaderReferenceSources1015923339/001/dependency/value.ts'.
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.545s
+FAIL

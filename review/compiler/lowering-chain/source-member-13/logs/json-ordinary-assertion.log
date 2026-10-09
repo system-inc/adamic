@@ -1,0 +1,23 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+    oracle_test.go:774: exit codes differ
+        node:   exit 0, stdout "{\"nullValue\":null}\n{\"nested\":{\"nullValue\":null}}\n", stderr ""
+        native: exit 70, stdout "", stderr "adamic: panic: non-null assertion failed at /workspace/adamic/internal/oracle/testdata/placeholder_nonnull_null_json.a:1:41: null! is null or undefined\n"
+    oracle_test.go:780: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "{\"nullValue\":null}\n{\"nested\":{\"nullValue\":null}}\n", stderr ""
+        backend: exit 70, stdout "", stderr "adamic: panic: non-null assertion failed at /workspace/adamic/internal/oracle/testdata/placeholder_nonnull_null_json.a:1:41: null! is null or undefined\n"
+    oracle_test.go:787: leaks:
+        exit 70
+        adamic: panic: non-null assertion failed at /workspace/adamic/internal/oracle/testdata/placeholder_nonnull_null_json.a:1:41: null! is null or undefined
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a (0.39s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.420s
+FAIL

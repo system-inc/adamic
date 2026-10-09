@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T18:20:35.007490233Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:20:35.090388497Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase"}
+{"Time":"2026-10-09T18:20:35.090484711Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase","Output":"=== RUN   TestMixedUnionContractPhantomBrandUsesPrimitiveBase\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.09053493Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase","Output":"=== PAUSE TestMixedUnionContractPhantomBrandUsesPrimitiveBase\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.09053905Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase"}
+{"Time":"2026-10-09T18:20:35.090545274Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined"}
+{"Time":"2026-10-09T18:20:35.090547826Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined","Output":"=== RUN   TestMixedUnionContractPhantomVoidIsUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.090551468Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined","Output":"=== PAUSE TestMixedUnionContractPhantomVoidIsUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.090553947Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined"}
+{"Time":"2026-10-09T18:20:35.090556945Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase"}
+{"Time":"2026-10-09T18:20:35.090559467Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase","Output":"=== CONT  TestMixedUnionContractPhantomBrandUsesPrimitiveBase\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.091457604Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined"}
+{"Time":"2026-10-09T18:20:35.091474558Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined","Output":"=== CONT  TestMixedUnionContractPhantomVoidIsUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.33443258Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase","Output":"--- PASS: TestMixedUnionContractPhantomBrandUsesPrimitiveBase (0.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.337967912Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomBrandUsesPrimitiveBase","Elapsed":0.24}
+{"Time":"2026-10-09T18:20:35.338046031Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined","Output":"--- PASS: TestMixedUnionContractPhantomVoidIsUndefined (0.25s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.338056129Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractPhantomVoidIsUndefined","Elapsed":0.25}
+{"Time":"2026-10-09T18:20:35.338059648Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.345683684Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.338}

@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:56:33.412055252Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:56:33.611135222Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot"}
+{"Time":"2026-10-09T19:56:33.611236375Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot","Output":"=== RUN   TestEnumReverseMappingUsesSingleSlot\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:33.61127289Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot","Output":"=== PAUSE TestEnumReverseMappingUsesSingleSlot\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:33.611276843Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot"}
+{"Time":"2026-10-09T19:56:33.611280695Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot"}
+{"Time":"2026-10-09T19:56:33.611283558Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot","Output":"=== CONT  TestEnumReverseMappingUsesSingleSlot\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:35.452930117Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot","Output":"--- PASS: TestEnumReverseMappingUsesSingleSlot (1.84s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:35.45306486Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestEnumReverseMappingUsesSingleSlot","Elapsed":1.84}
+{"Time":"2026-10-09T19:56:35.453092893Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:35.533882025Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":2.122}

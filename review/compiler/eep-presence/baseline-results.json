@@ -1,0 +1,597 @@
+[
+  {
+    "name": "eep1m5z-93122fa_t_t5",
+    "source": "review/compiler/eep-presence/eep1m5z-93122fa_t_t5.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5.a"
+      ],
+      "exit": 0,
+      "seconds": 0.317,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5-native"
+      ],
+      "exit": 0,
+      "seconds": 6.361,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5-native"
+      ],
+      "exit": 70,
+      "seconds": 0.005,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 9.913,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.009,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5.a"
+      ],
+      "exit": 0,
+      "seconds": 0.114,
+      "stdout": "generated JavaScript: eep1m5z-93122fa_t_t5.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_t5.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.165,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v1",
+    "source": "review/compiler/eep-presence/eep1m5z-93122fa_t_v1.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1.a"
+      ],
+      "exit": 0,
+      "seconds": 0.175,
+      "stdout": "2 -1\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1-native"
+      ],
+      "exit": 0,
+      "seconds": 0.217,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1-native"
+      ],
+      "exit": 70,
+      "seconds": 0.004,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.371,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.008,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1.a"
+      ],
+      "exit": 0,
+      "seconds": 0.064,
+      "stdout": "generated JavaScript: eep1m5z-93122fa_t_v1.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v1.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.065,
+      "stdout": "2 -1\n",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v2",
+    "source": "review/compiler/eep-presence/eep1m5z-93122fa_t_v2.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2.a"
+      ],
+      "exit": 0,
+      "seconds": 0.165,
+      "stdout": "2 3\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2-native"
+      ],
+      "exit": 0,
+      "seconds": 0.217,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2-native"
+      ],
+      "exit": 70,
+      "seconds": 0.004,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.376,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.008,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2.a"
+      ],
+      "exit": 0,
+      "seconds": 0.116,
+      "stdout": "generated JavaScript: eep1m5z-93122fa_t_v2.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v2.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.114,
+      "stdout": "2 3\n",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-93122fa_t_v5",
+    "source": "review/compiler/eep-presence/eep1m5z-93122fa_t_v5.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5.a"
+      ],
+      "exit": 0,
+      "seconds": 0.166,
+      "stdout": "2\n2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5-native"
+      ],
+      "exit": 0,
+      "seconds": 0.272,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5-native"
+      ],
+      "exit": 70,
+      "seconds": 0.004,
+      "stdout": "2\n",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.368,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.017,
+      "stdout": "2\n",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5.a"
+      ],
+      "exit": 0,
+      "seconds": 0.118,
+      "stdout": "generated JavaScript: eep1m5z-93122fa_t_v5.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-93122fa_t_v5.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.115,
+      "stdout": "2\n2\n",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-classfeat_method_view",
+    "source": "review/compiler/eep-presence/eep1m5z-classfeat_method_view.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view.a"
+      ],
+      "exit": 0,
+      "seconds": 0.167,
+      "stdout": "worker one1\nlazy\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view-native"
+      ],
+      "exit": 0,
+      "seconds": 0.265,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view-native"
+      ],
+      "exit": 70,
+      "seconds": 0.005,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.367,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.008,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view.a"
+      ],
+      "exit": 0,
+      "seconds": 0.116,
+      "stdout": "generated JavaScript: eep1m5z-classfeat_method_view.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-classfeat_method_view.mjs"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z-classfeat_static_virtual",
+    "source": "review/compiler/eep-presence/eep1m5z-classfeat_static_virtual.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual.a"
+      ],
+      "exit": 1,
+      "seconds": 0.164,
+      "stdout": "",
+      "stderr": "file:///tmp/eep-presence/eep1m5z-classfeat_static_virtual.a:13\n        return this.label.toUpperCase();\n                          ^\n\nTypeError: Cannot read properties of undefined (reading 'toUpperCase')\n    at Derived.n (file:///tmp/eep-presence/eep1m5z-classfeat_static_virtual.a:13:27)\n    at Derived.m (file:///tmp/eep-presence/eep1m5z-classfeat_static_virtual.a:6:26)\n    at <static_initializer> (file:///tmp/eep-presence/eep1m5z-classfeat_static_virtual.a:10:25)\n    at file:///tmp/eep-presence/eep1m5z-classfeat_static_virtual.a:9:23\n    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)\n    at async node:internal/modules/esm/loader:643:26\n    at async file:///workspace/adamic/oracle/node.mjs:82:1\n\nNode.js v24.19.0\n"
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual-native"
+      ],
+      "exit": 0,
+      "seconds": 0.373,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual-native"
+      ],
+      "exit": 70,
+      "seconds": 0.002,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.484,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.022,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual.a"
+      ],
+      "exit": 0,
+      "seconds": 0.187,
+      "stdout": "generated JavaScript: eep1m5z-classfeat_static_virtual.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z-classfeat_static_virtual.mjs"
+      ],
+      "exit": 1,
+      "seconds": 0.064,
+      "stdout": "",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  },
+  {
+    "name": "eep1m5z",
+    "source": "review/compiler/eep-presence/eep1m5z.a.txt",
+    "node": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z.a"
+      ],
+      "exit": 0,
+      "seconds": 0.327,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "native_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-native"
+      ],
+      "exit": 0,
+      "seconds": 0.609,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-native"
+      ],
+      "exit": 70,
+      "seconds": 0.004,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "sanitized_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "build",
+        "/tmp/eep-presence/eep1m5z.a",
+        "-o",
+        "/tmp/eep-presence/eep1m5z-sanitized",
+        "--sanitize"
+      ],
+      "exit": 0,
+      "seconds": 0.85,
+      "stdout": "",
+      "stderr": ""
+    },
+    "sanitized": {
+      "command": [
+        "/tmp/eep-presence/eep1m5z-sanitized"
+      ],
+      "exit": 70,
+      "seconds": 0.009,
+      "stdout": "",
+      "stderr": "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    },
+    "js_compile": {
+      "command": [
+        "/tmp/eep-adamic",
+        "js",
+        "/tmp/eep-presence/eep1m5z.a"
+      ],
+      "exit": 0,
+      "seconds": 0.114,
+      "stdout": "generated JavaScript: eep1m5z.js-compile.out.log",
+      "stderr": ""
+    },
+    "js": {
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "oracle/node.mjs",
+        "/tmp/eep-presence/eep1m5z.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.17,
+      "stdout": "1 2\n",
+      "stderr": ""
+    },
+    "classification": "STILL WRONG"
+  }
+]

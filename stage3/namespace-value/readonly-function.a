@@ -1,0 +1,5 @@
+// a-check: refused namespace function member
+namespace State { export function read(): number { return 1; } }
+const held = State;
+held.read = (): number => 2;
+console.log(String(held.read()));

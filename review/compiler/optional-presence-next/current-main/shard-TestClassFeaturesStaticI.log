@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:56:03.662321687Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:56:03.757994296Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle"}
+{"Time":"2026-10-09T19:56:03.758070254Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"=== RUN   TestClassFeaturesStaticInterfaceCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:03.758103723Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"=== PAUSE TestClassFeaturesStaticInterfaceCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:03.75810618Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle"}
+{"Time":"2026-10-09T19:56:03.758112492Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle"}
+{"Time":"2026-10-09T19:56:03.758114241Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"=== CONT  TestClassFeaturesStaticInterfaceCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:04.06104497Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Output":"--- PASS: TestClassFeaturesStaticInterfaceCycle (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:04.061109911Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassFeaturesStaticInterfaceCycle","Elapsed":0.3}
+{"Time":"2026-10-09T19:56:04.061126206Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:04.06396726Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.402}

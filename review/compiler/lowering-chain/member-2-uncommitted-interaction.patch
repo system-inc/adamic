@@ -1,0 +1,36 @@
+diff --git a/internal/oracle/step18_storage_test.go b/internal/oracle/step18_storage_test.go
+index 0e8480407..017873740 100644
+--- a/internal/oracle/step18_storage_test.go
++++ b/internal/oracle/step18_storage_test.go
+@@ -1,6 +1,7 @@
+ package oracle
+ 
+ import (
++	"bytes"
+ 	"errors"
+ 	"os"
+ 	"path/filepath"
+@@ -63,9 +64,8 @@ func TestStep18StorageTypeLie(t *testing.T) {
+ 				t.Fatal(err)
+ 			}
+ 			node := onNode(t, path)
+-			wantNode := run{stdout: []byte("arguments\n"), stderr: []byte("adamic: panic: TypeError: host.callback is not a function\n"), exitCode: 70}
+-			if difference := disagreement(wantNode, node); difference != "" {
+-				t.Fatalf("Node order changed: %s; got %#v", difference, node)
++			if node.exitCode != 1 || !bytes.Equal(node.stdout, []byte("arguments\n")) || !bytes.Contains(node.stderr, []byte("TypeError: host.callback is not a function")) {
++				t.Fatalf("Node argument order or TypeError changed: exit %d stdout %q stderr %q", node.exitCode, node.stdout, node.stderr)
+ 			}
+ 
+ 			want := run{stdout: []byte("arguments\n"), stderr: []byte("adamic: panic: TypeError: optional call value is not callable\n"), exitCode: 70}
+@@ -88,9 +88,8 @@ func TestStep18DetachedMethod(t *testing.T) {
+ 		t.Fatal(err)
+ 	}
+ 	source := onNode(t, path)
+-	want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: TypeError: Cannot read properties of undefined (reading 'label')\n"), exitCode: 70}
+-	if difference := disagreement(want, source); difference != "" {
+-		t.Fatalf("Node: %s; got %#v", difference, source)
++	if source.exitCode != 1 || !bytes.Equal(source.stdout, []byte("before\n")) || !bytes.Contains(source.stderr, []byte("TypeError: Cannot read properties of undefined (reading 'label')")) {
++		t.Fatalf("Node detached method changed: exit %d stdout %q stderr %q", source.exitCode, source.stdout, source.stderr)
+ 	}
+ 	program, err := lowered(t, path)
+ 	var refused *lower.Refused

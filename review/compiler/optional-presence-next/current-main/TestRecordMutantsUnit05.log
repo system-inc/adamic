@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T19:59:07.392776647Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T19:59:07.484393885Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05"}
+{"Time":"2026-10-09T19:59:07.484467683Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05","Output":"=== RUN   TestRecordMutantsUnit05\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:07.48451124Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05","Output":"=== PAUSE TestRecordMutantsUnit05\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:07.48451477Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05"}
+{"Time":"2026-10-09T19:59:07.484518179Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05"}
+{"Time":"2026-10-09T19:59:07.484520604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05","Output":"=== CONT  TestRecordMutantsUnit05\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:07.484524105Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05/own-slot-null-read"}
+{"Time":"2026-10-09T19:59:07.484530151Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05/own-slot-null-read","Output":"=== RUN   TestRecordMutantsUnit05/own-slot-null-read\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:12.598571475Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05/own-slot-null-read","Output":"    record_test.go:244: caught by runtime error: member access within null pointer\n"}
+{"Time":"2026-10-09T19:59:12.598818516Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05/own-slot-null-read","Output":"--- PASS: TestRecordMutantsUnit05/own-slot-null-read (5.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:12.598836549Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05/own-slot-null-read","Elapsed":5.12}
+{"Time":"2026-10-09T19:59:12.5989163Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05","Output":"--- PASS: TestRecordMutantsUnit05 (5.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:12.598922695Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit05","Elapsed":5.12}
+{"Time":"2026-10-09T19:59:12.598926908Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:12.633961028Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":5.241}

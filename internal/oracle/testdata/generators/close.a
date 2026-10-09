@@ -1,0 +1,8 @@
+function* closing(): Generator<number, number, undefined> {
+ try {yield 1;yield 2;} finally {console.log('closed');}
+ return 3;
+}
+for (const value of closing()) {console.log(`${value}`);break;}
+function drop(): void {const g=closing();console.log(`${g.next().value}`);}
+drop();
+console.log('dropped');

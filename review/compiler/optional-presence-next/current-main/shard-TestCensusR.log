@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T19:55:56.243792833Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:55:56.302622902Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements"}
+{"Time":"2026-10-09T19:55:56.302708477Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Output":"=== RUN   TestCensusRestMutableElements\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:56.302755242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Output":"=== PAUSE TestCensusRestMutableElements\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:56.302758942Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements"}
+{"Time":"2026-10-09T19:55:56.302764792Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements"}
+{"Time":"2026-10-09T19:55:56.302767348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Output":"=== CONT  TestCensusRestMutableElements\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:56.54313946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Output":"    census_small_test.go:74: rest element relation: /workspace/scratch/eep-temp/TestCensusRestMutableElements2461620810/001/main.a:8:9: Adamic 0.1 refuses a value of type DogHouse seen as House, which can write Animal where Dog is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)\n"}
+{"Time":"2026-10-09T19:55:56.543235378Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Output":"--- PASS: TestCensusRestMutableElements (0.21s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:56.54324108Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestCensusRestMutableElements","Elapsed":0.21}
+{"Time":"2026-10-09T19:55:56.543260629Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:56.551121984Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.307}

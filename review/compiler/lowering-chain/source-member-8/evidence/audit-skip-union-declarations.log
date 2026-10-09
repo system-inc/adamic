@@ -1,0 +1,5 @@
+--- FAIL: TestProjectReferencesTypesUnionDuplicateSkipped (0.92s)
+    project_references_test.go:198: want ordinary duplicate declarations, got &{ProjectErrors:[] Sites:[] RemainingSites:[]}
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.932s
+FAIL

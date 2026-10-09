@@ -1,0 +1,1 @@
+console.log([1,2,3].filter((x: number | string): boolean => (typeof x === 'number' ? x : 0) !== 2).map(x => `${x}`).join(","));

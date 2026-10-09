@@ -1,0 +1,5 @@
+--- FAIL: TestProjectReferencesDiamond (0.24s)
+    project_references_test.go:69: duplicate checking root /tmp/adamic-gate/TestProjectReferencesDiamond629092965/001/app/main.ts
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.247s
+FAIL

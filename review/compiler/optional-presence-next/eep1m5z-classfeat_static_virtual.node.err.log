@@ -1,0 +1,14 @@
+file:///workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:13
+        return this.label.toUpperCase();
+                          ^
+
+TypeError: Cannot read properties of undefined (reading 'toUpperCase')
+    at Derived.n (file:///workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:13:27)
+    at Derived.m (file:///workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:6:26)
+    at <static_initializer> (file:///workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:10:25)
+    at file:///workspace/scratch/optional-presence-next/eep1m5z-classfeat_static_virtual.a:9:23
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async file:///workspace/adamic/oracle/node.mjs:82:1
+
+Node.js v24.19.0

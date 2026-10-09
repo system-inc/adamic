@@ -1,0 +1,23 @@
+--- FAIL: TestUndecidedCycleReadsUseReadyChecks (10.20s)
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/early_value (1.32s)
+        import_cycle_ready_test.go:107: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_value272733636/001/native: got "", want "adamic: panic: ReferenceError: Cannot access 'value' before initialization\n" (error exit status 1)
+        import_cycle_ready_test.go:107: expected exit 70, got exit status 1
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/indirect_value (1.37s)
+        import_cycle_ready_test.go:107: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksindirect_value2233776967/001/native: got "", want "adamic: panic: ReferenceError: Cannot access 'value' before initialization\n" (error exit status 1)
+        import_cycle_ready_test.go:107: expected exit 70, got exit status 1
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/early_plain_class (1.18s)
+        import_cycle_ready_test.go:107: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_plain_class558837419/001/native: got "", want "adamic: panic: ReferenceError: Cannot access 'Box' before initialization\n" (error exit status 1)
+        import_cycle_ready_test.go:107: expected exit 70, got exit status 1
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/early_extends (1.46s)
+        import_cycle_ready_test.go:107: /tmp/adamic-gate/TestUndecidedCycleReadsUseReadyChecksearly_extends2569471667/001/native: got "", want "adamic: panic: ReferenceError: Cannot access 'Base' before initialization\n" (error exit status 1)
+        import_cycle_ready_test.go:107: expected exit 70, got exit status 1
+--- FAIL: TestOptionalIndexingMapShapeRefused (0.29s)
+    optional_indexing_boundary_test.go:18: got <nil>, want structural Map receiver boundary
+--- FAIL: TestOptionalIndexingKeepsUnsupportedStorageNotYet (0.80s)
+    --- FAIL: TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation (0.28s)
+        optional_indexing_test.go:37: got /tmp/adamic-gate/TestOptionalIndexingKeepsUnsupportedStorageNotYettyped_ordinary2535290186/001/main.a:1:87: stage 0 can't lower an optional chain index without array or string storage yet, want NotYet containing "an optional chain longer than one step"
+    --- FAIL: TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key (0.11s)
+        optional_indexing_test.go:37: got /tmp/adamic-gate/TestOptionalIndexingKeepsUnsupportedStorageNotYetstring_numeric3950782426/001/main.a:1:83: stage 0 can't lower an optional chain index that is not a number yet, want NotYet containing "an optional index that isn't a number"
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	11.042s
+FAIL

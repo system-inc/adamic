@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:57:01.952764958Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:57:02.057385642Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame"}
+{"Time":"2026-10-09T19:57:02.057497247Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame","Output":"=== RUN   TestGeneratorEmptyBodyUsesOwnedFrame\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:02.057542141Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame","Output":"=== PAUSE TestGeneratorEmptyBodyUsesOwnedFrame\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:02.05754582Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame"}
+{"Time":"2026-10-09T19:57:02.057549455Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame"}
+{"Time":"2026-10-09T19:57:02.057551978Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame","Output":"=== CONT  TestGeneratorEmptyBodyUsesOwnedFrame\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:02.378548994Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame","Output":"--- PASS: TestGeneratorEmptyBodyUsesOwnedFrame (0.32s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:02.379231Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorEmptyBodyUsesOwnedFrame","Elapsed":0.32}
+{"Time":"2026-10-09T19:57:02.379279893Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:02.392712327Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.44}

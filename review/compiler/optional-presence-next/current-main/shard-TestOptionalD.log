@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:59:14.843720496Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:59:14.950097279Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalDeletionRequiresPlainStorage"}
+{"Time":"2026-10-09T19:59:14.950181703Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalDeletionRequiresPlainStorage","Output":"=== RUN   TestOptionalDeletionRequiresPlainStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:14.950244284Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalDeletionRequiresPlainStorage","Output":"=== PAUSE TestOptionalDeletionRequiresPlainStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:14.95024902Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalDeletionRequiresPlainStorage"}
+{"Time":"2026-10-09T19:59:14.950253286Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalDeletionRequiresPlainStorage"}
+{"Time":"2026-10-09T19:59:14.950256183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalDeletionRequiresPlainStorage","Output":"=== CONT  TestOptionalDeletionRequiresPlainStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:15.842766622Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalDeletionRequiresPlainStorage","Output":"--- PASS: TestOptionalDeletionRequiresPlainStorage (0.89s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:15.842830032Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOptionalDeletionRequiresPlainStorage","Elapsed":0.89}
+{"Time":"2026-10-09T19:59:15.842848125Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:59:15.850297348Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.007}

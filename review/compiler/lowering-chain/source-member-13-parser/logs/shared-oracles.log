@@ -1,0 +1,231 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestPlaceholderUseCheckBeforeUse
+=== PAUSE TestPlaceholderUseCheckBeforeUse
+=== RUN   TestPlaceholderUseCheckSavedLeak
+=== PAUSE TestPlaceholderUseCheckSavedLeak
+=== RUN   TestPlaceholderUseCheckNullBeforeUse
+=== PAUSE TestPlaceholderUseCheckNullBeforeUse
+=== RUN   TestPlaceholderUseCheckNullSavedLeak
+=== PAUSE TestPlaceholderUseCheckNullSavedLeak
+=== RUN   TestPlaceholderUseCheckAssignmentResult
+=== PAUSE TestPlaceholderUseCheckAssignmentResult
+=== RUN   TestPlaceholderUseCheckReturnAssignment
+=== PAUSE TestPlaceholderUseCheckReturnAssignment
+=== RUN   TestPlaceholderUseCheckAliasReset
+=== PAUSE TestPlaceholderUseCheckAliasReset
+=== RUN   TestPlaceholderNonliteralAssertionStillChecks
+=== PAUSE TestPlaceholderNonliteralAssertionStillChecks
+=== RUN   TestPlaceholderFlowMutantBeforeUse
+=== PAUSE TestPlaceholderFlowMutantBeforeUse
+=== RUN   TestPlaceholderFlowMutantSavedLeak
+=== PAUSE TestPlaceholderFlowMutantSavedLeak
+=== RUN   TestPlaceholderFlowMutantNullBeforeUse
+=== PAUSE TestPlaceholderFlowMutantNullBeforeUse
+=== RUN   TestPlaceholderFlowMutantNullSavedLeak
+=== PAUSE TestPlaceholderFlowMutantNullSavedLeak
+=== RUN   TestPlaceholderFlowMutantAssignmentResult
+=== PAUSE TestPlaceholderFlowMutantAssignmentResult
+=== RUN   TestPlaceholderFlowMutantReturnAssignment
+=== PAUSE TestPlaceholderFlowMutantReturnAssignment
+=== RUN   TestPlaceholderFlowMutantAliasReset
+=== PAUSE TestPlaceholderFlowMutantAliasReset
+=== RUN   TestPlaceholderNullTagMutant
+=== PAUSE TestPlaceholderNullTagMutant
+=== RUN   TestPlaceholderSpreadReadinessMutant
+=== PAUSE TestPlaceholderSpreadReadinessMutant
+=== RUN   TestLongArgumentsLeaveTheStackItsLimit
+=== PAUSE TestLongArgumentsLeaveTheStackItsLimit
+=== RUN   TestSmallStacksStillPanic
+=== PAUSE TestSmallStacksStillPanic
+=== RUN   TestNarrowedFieldUsesSharedReadiness
+=== PAUSE TestNarrowedFieldUsesSharedReadiness
+=== RUN   TestDefaultTaggedSourceViews
+=== PAUSE TestDefaultTaggedSourceViews
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestPlaceholderFlowMutantNullBeforeUse
+=== CONT  TestPlaceholderUseCheckReturnAssignment
+=== CONT  TestPlaceholderFlowMutantSavedLeak
+=== CONT  TestPlaceholderFlowMutantBeforeUse
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/stack_tail_call.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/stack_tail_call.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/stack_forever.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/stack_forever.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/entries_checked_misfit.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/entries_checked_misfit.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/entries_record_misfit.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/entries_record_misfit.a
+=== RUN   TestNativeAgreesWithNode/stage3/parser-next/speculation/named-lookahead.a
+=== PAUSE TestNativeAgreesWithNode/stage3/parser-next/speculation/named-lookahead.a
+=== RUN   TestNativeAgreesWithNode/stage3/parser-next/speculation/named-tryparse.a
+=== PAUSE TestNativeAgreesWithNode/stage3/parser-next/speculation/named-tryparse.a
+=== RUN   TestNativeAgreesWithNode/stage3/parser-next/speculation/arrow-tryparse.a
+=== PAUSE TestNativeAgreesWithNode/stage3/parser-next/speculation/arrow-tryparse.a
+=== RUN   TestNativeAgreesWithNode/stage3/parser-next/speculation/truthiness-rewind.a
+=== PAUSE TestNativeAgreesWithNode/stage3/parser-next/speculation/truthiness-rewind.a
+=== RUN   TestNativeAgreesWithNode/stage3/parser-next/speculation/misfit.a
+=== PAUSE TestNativeAgreesWithNode/stage3/parser-next/speculation/misfit.a
+=== RUN   TestNativeAgreesWithNode/stage3/parser-next/stack/legal.a
+=== PAUSE TestNativeAgreesWithNode/stage3/parser-next/stack/legal.a
+=== RUN   TestNativeAgreesWithNode/stage3/parser-next/stack/benchmark.a
+=== PAUSE TestNativeAgreesWithNode/stage3/parser-next/stack/benchmark.a
+=== RUN   TestNativeAgreesWithNode/stage3/parser-next/stack/pathological.a
+=== PAUSE TestNativeAgreesWithNode/stage3/parser-next/stack/pathological.a
+=== CONT  TestPlaceholderSpreadReadinessMutant
+--- PASS: TestPlaceholderUseCheckReturnAssignment (0.74s)
+=== CONT  TestDefaultTaggedSourceViews
+=== RUN   TestDefaultTaggedSourceViews/default-staged
+=== PAUSE TestDefaultTaggedSourceViews/default-staged
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-string
+=== PAUSE TestDefaultTaggedSourceViews/default-boxed-string
+=== RUN   TestDefaultTaggedSourceViews/default-boxed-write
+=== PAUSE TestDefaultTaggedSourceViews/default-boxed-write
+=== RUN   TestDefaultTaggedSourceViews/default-destructure
+=== PAUSE TestDefaultTaggedSourceViews/default-destructure
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-type
+=== PAUSE TestDefaultTaggedSourceViews/default-wrong-type
+=== RUN   TestDefaultTaggedSourceViews/default-wrong-boolean
+=== PAUSE TestDefaultTaggedSourceViews/default-wrong-boolean
+=== RUN   TestDefaultTaggedSourceViews/default-literal
+=== PAUSE TestDefaultTaggedSourceViews/default-literal
+=== RUN   TestDefaultTaggedSourceViews/default-read-before-set
+=== PAUSE TestDefaultTaggedSourceViews/default-read-before-set
+=== CONT  TestNarrowedFieldUsesSharedReadiness
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/identifier
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/number
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== CONT  TestSmallStacksStillPanic
+=== RUN   TestSmallStacksStillPanic/1024_KiB
+=== PAUSE TestSmallStacksStillPanic/1024_KiB
+=== RUN   TestSmallStacksStillPanic/512_KiB
+=== PAUSE TestSmallStacksStillPanic/512_KiB
+=== RUN   TestSmallStacksStillPanic/256_KiB
+=== PAUSE TestSmallStacksStillPanic/256_KiB
+=== CONT  TestLongArgumentsLeaveTheStackItsLimit
+=== RUN   TestLongArgumentsLeaveTheStackItsLimit/arguments
+=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/arguments
+=== RUN   TestLongArgumentsLeaveTheStackItsLimit/arguments_alone
+=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/arguments_alone
+=== RUN   TestLongArgumentsLeaveTheStackItsLimit/environment
+=== PAUSE TestLongArgumentsLeaveTheStackItsLimit/environment
+=== CONT  TestPlaceholderUseCheckNullBeforeUse
+=== NAME  TestPlaceholderFlowMutantNullBeforeUse
+    placeholder_nonnull_test.go:139: drop flow check lets unset through: exit 0 stdout "before\nset\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantNullBeforeUse (0.82s)
+=== CONT  TestPlaceholderUseCheckAssignmentResult
+=== NAME  TestPlaceholderFlowMutantBeforeUse
+    placeholder_nonnull_test.go:129: drop flow check lets unset through: exit 0 stdout "before\nunset\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantBeforeUse (0.87s)
+=== CONT  TestPlaceholderUseCheckNullSavedLeak
+=== NAME  TestPlaceholderFlowMutantSavedLeak
+    placeholder_nonnull_test.go:134: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantSavedLeak (0.93s)
+=== CONT  TestPlaceholderFlowMutantReturnAssignment
+--- PASS: TestPlaceholderUseCheckNullBeforeUse (0.55s)
+=== CONT  TestPlaceholderNullTagMutant
+--- PASS: TestPlaceholderUseCheckAssignmentResult (0.54s)
+=== CONT  TestPlaceholderFlowMutantAliasReset
+--- PASS: TestPlaceholderUseCheckNullSavedLeak (0.56s)
+=== CONT  TestPlaceholderUseCheckSavedLeak
+=== NAME  TestPlaceholderSpreadReadinessMutant
+    placeholder_nonnull_test.go:298: copy readiness mutant caught by Node exit 0: native and JavaScript exit 70
+--- PASS: TestPlaceholderSpreadReadinessMutant (1.27s)
+=== CONT  TestPlaceholderUseCheckBeforeUse
+=== NAME  TestPlaceholderFlowMutantReturnAssignment
+    placeholder_nonnull_test.go:154: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantReturnAssignment (1.12s)
+=== CONT  TestPlaceholderFlowMutantAssignmentResult
+--- PASS: TestPlaceholderUseCheckSavedLeak (0.68s)
+=== CONT  TestPlaceholderFlowMutantNullSavedLeak
+--- PASS: TestPlaceholderUseCheckBeforeUse (0.73s)
+=== CONT  TestPlaceholderNonliteralAssertionStillChecks
+=== NAME  TestPlaceholderNullTagMutant
+    placeholder_nonnull_test.go:249: null collapsed to undefined caught by Node: stdout "false|true|true|false\nfalse|true\nfalse|false\n"
+--- PASS: TestPlaceholderNullTagMutant (0.93s)
+=== CONT  TestPlaceholderUseCheckAliasReset
+=== NAME  TestPlaceholderFlowMutantAliasReset
+    placeholder_nonnull_test.go:159: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantAliasReset (1.13s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/stack_tail_call.a
+--- PASS: TestPlaceholderNonliteralAssertionStillChecks (0.44s)
+=== CONT  TestNativeAgreesWithNode/stage3/parser-next/stack/pathological.a
+=== NAME  TestPlaceholderFlowMutantAssignmentResult
+    placeholder_nonnull_test.go:149: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantAssignmentResult (0.77s)
+=== CONT  TestNativeAgreesWithNode/stage3/parser-next/stack/benchmark.a
+--- PASS: TestPlaceholderUseCheckAliasReset (0.63s)
+=== CONT  TestNativeAgreesWithNode/stage3/parser-next/stack/legal.a
+=== NAME  TestPlaceholderFlowMutantNullSavedLeak
+    placeholder_nonnull_test.go:144: drop flow check lets unset through: exit 0 stdout "present\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantNullSavedLeak (0.83s)
+=== CONT  TestNativeAgreesWithNode/stage3/parser-next/speculation/misfit.a
+=== CONT  TestNativeAgreesWithNode/stage3/parser-next/speculation/truthiness-rewind.a
+=== CONT  TestNativeAgreesWithNode/stage3/parser-next/speculation/arrow-tryparse.a
+=== CONT  TestNativeAgreesWithNode/stage3/parser-next/speculation/named-tryparse.a
+=== CONT  TestNativeAgreesWithNode/stage3/parser-next/speculation/named-lookahead.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/entries_record_misfit.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/entries_checked_misfit.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/stack_forever.a
+=== CONT  TestDefaultTaggedSourceViews/default-staged
+=== CONT  TestDefaultTaggedSourceViews/default-wrong-type
+=== CONT  TestDefaultTaggedSourceViews/default-destructure
+=== CONT  TestDefaultTaggedSourceViews/default-boxed-write
+=== CONT  TestDefaultTaggedSourceViews/default-boxed-string
+=== CONT  TestDefaultTaggedSourceViews/default-read-before-set
+--- PASS: TestNativeAgreesWithNode (0.22s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/stack_tail_call.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/stage3/parser-next/stack/pathological.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/stage3/parser-next/stack/legal.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/stage3/parser-next/speculation/misfit.a (0.80s)
+    --- PASS: TestNativeAgreesWithNode/stage3/parser-next/speculation/truthiness-rewind.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/stage3/parser-next/speculation/arrow-tryparse.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/stage3/parser-next/speculation/named-tryparse.a (0.76s)
+    --- PASS: TestNativeAgreesWithNode/stage3/parser-next/speculation/named-lookahead.a (0.75s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/entries_record_misfit.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/entries_checked_misfit.a (0.63s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/stack_forever.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/stage3/parser-next/stack/benchmark.a (2.78s)
+=== CONT  TestDefaultTaggedSourceViews/default-wrong-boolean
+=== CONT  TestDefaultTaggedSourceViews/default-literal
+=== CONT  TestNarrowedFieldUsesSharedReadiness/identifier
+=== CONT  TestNarrowedFieldUsesSharedReadiness/number
+=== CONT  TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== CONT  TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+--- PASS: TestDefaultTaggedSourceViews (0.00s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-type (0.50s)
+    --- PASS: TestDefaultTaggedSourceViews/default-staged (0.73s)
+    --- PASS: TestDefaultTaggedSourceViews/default-destructure (0.86s)
+    --- PASS: TestDefaultTaggedSourceViews/default-read-before-set (0.53s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-write (0.85s)
+    --- PASS: TestDefaultTaggedSourceViews/default-boxed-string (0.87s)
+    --- PASS: TestDefaultTaggedSourceViews/default-wrong-boolean (0.49s)
+    --- PASS: TestDefaultTaggedSourceViews/default-literal (0.57s)
+=== CONT  TestSmallStacksStillPanic/1024_KiB
+=== CONT  TestSmallStacksStillPanic/256_KiB
+=== CONT  TestSmallStacksStillPanic/512_KiB
+=== CONT  TestLongArgumentsLeaveTheStackItsLimit/arguments
+--- PASS: TestNarrowedFieldUsesSharedReadiness (0.00s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier (0.73s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized (0.50s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number (0.63s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number-uninitialized (0.57s)
+=== CONT  TestLongArgumentsLeaveTheStackItsLimit/environment
+=== CONT  TestLongArgumentsLeaveTheStackItsLimit/arguments_alone
+--- PASS: TestSmallStacksStillPanic (0.00s)
+    --- PASS: TestSmallStacksStillPanic/1024_KiB (0.62s)
+    --- PASS: TestSmallStacksStillPanic/256_KiB (0.55s)
+    --- PASS: TestSmallStacksStillPanic/512_KiB (0.57s)
+--- PASS: TestLongArgumentsLeaveTheStackItsLimit (0.00s)
+    --- PASS: TestLongArgumentsLeaveTheStackItsLimit/arguments (0.72s)
+    --- PASS: TestLongArgumentsLeaveTheStackItsLimit/environment (0.82s)
+    --- PASS: TestLongArgumentsLeaveTheStackItsLimit/arguments_alone (0.67s)
+PASS
+gate cache: native hits=0 misses=38
+gate cache: node hits=0 misses=76
+gate cache: probe hits=0 misses=6
+ok  	github.com/system-inc/adamic/internal/oracle	7.615s

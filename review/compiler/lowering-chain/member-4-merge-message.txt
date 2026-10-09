@@ -1,0 +1,10 @@
+Merge compiler/generics-scout-main 48391dcf
+
+Resolve counts.md by regenerating once, keeping every row from both sides. Keep member 3 ruled body proofs and update the three later expectations to their exact Refused outcomes. Their unchanged Node controls still print 2. Preserve both retained semantic mutants.
+
+Pinned diagnostics:
+stage3/fixtures/generics/11_indexed_result.a:1:68: Adamic 0.1 refuses generic body return into slot T["value"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+stage3/fixtures/generics/12_mixed_indexed_result.a:1:87: Adamic 0.1 refuses generic body return into slot U | T["value"] | undefined from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+stage3/fixtures/generics/13_constrained_local.a:2:11: Adamic 0.1 refuses generic body initializer into slot T["value"] from source 2 is not proven for every allowed type argument; checker constraint: T extends { readonly value: number; }; U (unconstrained); read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)
+
+Move incoming evidence to review. Mark the three touched tests parallel. All final fixtures, mutants, exact refusal checks and counts pass.

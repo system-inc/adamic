@@ -1,0 +1,19 @@
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== PAUSE TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== CONT  TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation
+    optional_indexing_test.go:37: got /tmp/adamic-gate/TestOptionalIndexingKeepsUnsupportedStorageNotYettyped_ordinary2887908074/001/main.a:1:87: stage 0 can't lower an optional chain index without array or string storage yet, want NotYet containing "an optional chain longer than one step"
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key
+    optional_indexing_test.go:37: got /tmp/adamic-gate/TestOptionalIndexingKeepsUnsupportedStorageNotYetstring_numeric2518656863/001/main.a:1:83: stage 0 can't lower an optional chain index that is not a number yet, want NotYet containing "an optional index that isn't a number"
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation
+--- FAIL: TestOptionalIndexingKeepsUnsupportedStorageNotYet (0.88s)
+    --- FAIL: TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation (0.20s)
+    --- FAIL: TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key (0.16s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal (0.18s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record (0.14s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation (0.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.917s
+FAIL

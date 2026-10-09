@@ -1,0 +1,1671 @@
+=== RUN   TestRecordsAgainstNode
+=== PAUSE TestRecordsAgainstNode
+=== RUN   TestRecordMutantsUnit00
+=== PAUSE TestRecordMutantsUnit00
+=== RUN   TestRecordMutantsUnit01
+=== PAUSE TestRecordMutantsUnit01
+=== CONT  TestRecordsAgainstNode
+=== CONT  TestRecordMutantsUnit01
+=== RUN   TestRecordMutantsUnit01/uint32-max-as-index
+=== CONT  TestRecordMutantsUnit00
+=== RUN   TestRecordMutantsUnit00/indices-in-insertion-order
+=== RUN   TestRecordsAgainstNode/semantics
+    record_test.go:75: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+=== NAME  TestRecordMutantsUnit01/uint32-max-as-index
+    record_test.go:237: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+=== RUN   TestRecordsAgainstNode/prototypes
+=== NAME  TestRecordMutantsUnit01/uint32-max-as-index
+    record_test.go:244: caught by Node
+--- PASS: TestRecordMutantsUnit01 (1.08s)
+    --- PASS: TestRecordMutantsUnit01/uint32-max-as-index (1.08s)
+=== NAME  TestRecordsAgainstNode/prototypes
+    record_test.go:75: adamic: counts: allocations 22 frees 22 retains 15 releases 39 peak 5 regions 0
+=== RUN   TestRecordsAgainstNode/reads
+    record_test.go:75: adamic: counts: allocations 27 frees 27 retains 3 releases 28 peak 5 regions 0
+=== NAME  TestRecordMutantsUnit00/indices-in-insertion-order
+    record_test.go:237: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+=== RUN   TestRecordsAgainstNode/references
+=== NAME  TestRecordMutantsUnit00/indices-in-insertion-order
+    record_test.go:244: caught by Node
+--- PASS: TestRecordMutantsUnit00 (1.38s)
+    --- PASS: TestRecordMutantsUnit00/indices-in-insertion-order (1.38s)
+=== NAME  TestRecordsAgainstNode/references
+    record_test.go:75: adamic: counts: allocations 350024 frees 350024 retains 10005 releases 50025 peak 300000 regions 0
+=== RUN   TestRecordsAgainstNode/iteration
+    record_test.go:75: adamic: counts: allocations 19 frees 19 retains 10 releases 18 peak 12 regions 0
+=== RUN   TestRecordsAgainstNode/numeric
+    record_test.go:75: adamic: counts: allocations 350004 frees 350004 retains 100001 releases 350002 peak 100005 regions 0
+=== RUN   TestRecordsAgainstNode/workload-1000000
+    record_test.go:75: adamic: counts: allocations 3500004 frees 3500004 retains 500001 releases 3000002 peak 1000003 regions 0
+=== RUN   TestRecordsAgainstNode/bench-1000
+    record_test.go:75: adamic: counts: allocations 3504 frees 3504 retains 501 releases 3002 peak 1003 regions 0
+=== NAME  TestRecordsAgainstNode
+    record_test.go:89: Object.getOwnPropertyNames(Object.prototype) on Node v24.19.0: constructor, __defineGetter__, __defineSetter__, hasOwnProperty, __lookupGetter__, __lookupSetter__, isPrototypeOf, propertyIsEnumerable, toString, valueOf, __proto__, toLocaleString
+=== RUN   TestRecordsAgainstNode/missing-get/constructor
+=== RUN   TestRecordsAgainstNode/missing-has/constructor
+=== RUN   TestRecordsAgainstNode/missing-get/__defineGetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__defineGetter__
+=== RUN   TestRecordsAgainstNode/missing-get/__defineSetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__defineSetter__
+=== RUN   TestRecordsAgainstNode/missing-get/hasOwnProperty
+=== RUN   TestRecordsAgainstNode/missing-has/hasOwnProperty
+=== RUN   TestRecordsAgainstNode/missing-get/__lookupGetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__lookupGetter__
+=== RUN   TestRecordsAgainstNode/missing-get/__lookupSetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__lookupSetter__
+=== RUN   TestRecordsAgainstNode/missing-get/isPrototypeOf
+=== RUN   TestRecordsAgainstNode/missing-has/isPrototypeOf
+=== RUN   TestRecordsAgainstNode/missing-get/propertyIsEnumerable
+=== RUN   TestRecordsAgainstNode/missing-has/propertyIsEnumerable
+=== RUN   TestRecordsAgainstNode/missing-get/toString
+=== RUN   TestRecordsAgainstNode/missing-has/toString
+=== RUN   TestRecordsAgainstNode/missing-get/valueOf
+=== RUN   TestRecordsAgainstNode/missing-has/valueOf
+=== RUN   TestRecordsAgainstNode/missing-get/__proto__
+=== RUN   TestRecordsAgainstNode/missing-has/__proto__
+=== RUN   TestRecordsAgainstNode/missing-get/toLocaleString
+=== RUN   TestRecordsAgainstNode/missing-has/toLocaleString
+=== RUN   TestRecordsAgainstNode/proto-assignment
+--- PASS: TestRecordsAgainstNode (29.05s)
+    --- PASS: TestRecordsAgainstNode/semantics (0.22s)
+    --- PASS: TestRecordsAgainstNode/prototypes (0.14s)
+    --- PASS: TestRecordsAgainstNode/reads (0.15s)
+    --- PASS: TestRecordsAgainstNode/references (1.74s)
+    --- PASS: TestRecordsAgainstNode/iteration (0.24s)
+    --- PASS: TestRecordsAgainstNode/numeric (4.55s)
+    --- PASS: TestRecordsAgainstNode/workload-1000000 (20.46s)
+    --- PASS: TestRecordsAgainstNode/bench-1000 (0.25s)
+    --- PASS: TestRecordsAgainstNode/missing-get/constructor (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/constructor (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__defineGetter__ (0.02s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__defineGetter__ (0.02s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__defineSetter__ (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__defineSetter__ (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-get/hasOwnProperty (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/hasOwnProperty (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__lookupGetter__ (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__lookupGetter__ (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__lookupSetter__ (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__lookupSetter__ (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-get/isPrototypeOf (0.03s)
+    --- PASS: TestRecordsAgainstNode/missing-has/isPrototypeOf (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-get/propertyIsEnumerable (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/propertyIsEnumerable (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-get/toString (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/toString (0.02s)
+    --- PASS: TestRecordsAgainstNode/missing-get/valueOf (0.04s)
+    --- PASS: TestRecordsAgainstNode/missing-has/valueOf (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__proto__ (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__proto__ (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-get/toLocaleString (0.01s)
+    --- PASS: TestRecordsAgainstNode/missing-has/toLocaleString (0.01s)
+    --- PASS: TestRecordsAgainstNode/proto-assignment (0.02s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	29.204s
+=== RUN   TestCheckedJSONNextRefusals
+=== PAUSE TestCheckedJSONNextRefusals
+=== RUN   TestEnumInitializationUnknownPinned
+=== PAUSE TestEnumInitializationUnknownPinned
+=== RUN   TestGenericBodyRelationsMaybeBind
+=== PAUSE TestGenericBodyRelationsMaybeBind
+=== RUN   TestParserConstructionUnsetUse
+=== PAUSE TestParserConstructionUnsetUse
+=== RUN   TestParserNamespaceClassRegistrationMutant
+=== PAUSE TestParserNamespaceClassRegistrationMutant
+=== RUN   TestParserStackTinyLimit
+=== PAUSE TestParserStackTinyLimit
+=== RUN   TestWASIAgreesWithNode
+=== PAUSE TestWASIAgreesWithNode
+=== CONT  TestCheckedJSONNextRefusals
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_alias_write
+=== CONT  TestParserNamespaceClassRegistrationMutant
+=== CONT  TestWASIAgreesWithNode
+=== CONT  TestParserStackTinyLimit
+=== CONT  TestParserConstructionUnsetUse
+=== RUN   TestWASIAgreesWithNode/shard-002
+=== PAUSE TestWASIAgreesWithNode/shard-002
+=== RUN   TestWASIAgreesWithNode/shard-004
+=== PAUSE TestWASIAgreesWithNode/shard-004
+=== CONT  TestGenericBodyRelationsMaybeBind
+=== NAME  TestCheckedJSONNextRefusals/json_dictionary_alias_write
+    checked_json_next_test.go:132: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_dictionary_alias_write3751542360/001/boundary.ts:5:1: stage 0 can't lower a write through a checked JSON view alias yet
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_nul_key
+--- PASS: TestGenericBodyRelationsMaybeBind (0.48s)
+=== CONT  TestEnumInitializationUnknownPinned
+=== RUN   TestEnumInitializationUnknownPinned/unknown-before
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-before
+=== RUN   TestEnumInitializationUnknownPinned/unknown-callback
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-callback
+=== RUN   TestEnumInitializationUnknownPinned/unknown-property
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-property
+=== CONT  TestWASIAgreesWithNode/shard-002
+    wasi_test.go:31: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== RUN   TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/call-result.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/call-result.a
+=== RUN   TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/runtime-bound-method-arguments.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/runtime-bound-method-arguments.a
+=== RUN   TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/runtime-chain-parentheses.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/runtime-chain-parentheses.a
+=== RUN   TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/size.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/size.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/load/testdata/0.1/compile/01_hello.ts
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/load/testdata/0.1/compile/01_hello.ts
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/load/testdata/0.1/compile/09_tree.ts
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/load/testdata/0.1/compile/09_tree.ts
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/047cb0d_n_element_method.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/047cb0d_n_element_method.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/arguments_length.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/arguments_length.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/arguments_length_static_constructor.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/arguments_length_static_constructor.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/array_literal_empty_last.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/array_literal_empty_last.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_argument.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_argument.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_coverage_method.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_coverage_method.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_reassigned.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_reassigned.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_element_super_move.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_element_super_move.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_reassigned.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_reassigned.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/library-map.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/library-map.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/number-findLast.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/number-findLast.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/number-reduce.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/number-reduce.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/object-forEach.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/object-forEach.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/optional-object-map.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/optional-object-map.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/cast_enum_const_numeric_fails.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/cast_enum_const_numeric_fails.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/cast_subunion_const_numeric_fails.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/cast_subunion_const_numeric_fails.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_boolean_operators.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_boolean_operators.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_overload_contracts.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_overload_contracts.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_unary_numeric.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_unary_numeric.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_features_static_private.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_features_static_private.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_inheritance_memory.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_inheritance_memory.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_oct6_parameters.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_oct6_parameters.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/classes.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/classes.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/closures_throw.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/closures_throw.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/conditions_null.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/conditions_null.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/conditions_string.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/conditions_string.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/devirtualize.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/devirtualize.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/devirtualize_receivers.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/devirtualize_receivers.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/element_access_tuple.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/element_access_tuple.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/entries_record_alias.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/entries_record_alias.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/enums_modules/main.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/enums_modules/main.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/enums_open_never_index.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/enums_open_never_index.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/fallthrough_nested.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/fallthrough_nested.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/find_index_shrinks.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/find_index_shrinks.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/function_values_boundary.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/function_values_boundary.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generators/basic.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generators/basic.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generators/delegate.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generators/delegate.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generic_body_read.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generic_body_read.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/host_empty_object_slots.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/host_empty_object_slots.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/host_scanner_never.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/host_scanner_never.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/imported_const_cases/numeric.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/imported_const_cases/numeric.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/integer_format.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/integer_format.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/json_stringify_options.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/json_stringify_options.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_array_copy_within.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_array_copy_within.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_array_spliced.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_array_spliced.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_function_expressions.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_function_expressions.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_map_set_iterator_number_hash.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_map_set_iterator_number_hash.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_math_number_math.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_math_number_math.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_object_freeze_assign.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_object_freeze_assign.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_string_conversion.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_string_conversion.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/long_literals.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/long_literals.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/map_foreach_fnexpr.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/map_foreach_fnexpr.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/map_foreach_numbers.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/map_foreach_numbers.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/maybe_collections.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/maybe_collections.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_codes.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_codes.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_number_statics.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_number_statics.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_codepointat.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_codepointat.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_padend.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_padend.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_touppercase.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_touppercase.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/module_namespace_reads/early.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/module_namespace_reads/early.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespace_class_registration.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespace_class_registration.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_map_before.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_map_before.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_parser_state.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_parser_state.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_unready.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_unready.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/native-arguments-length-value.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/native-arguments-length-value.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nbody_slot_kinds.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nbody_slot_kinds.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_callback_levels.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_callback_levels.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_mixed.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_mixed.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_returned.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_returned.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/new_expression_class_value.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/new_expression_class_value.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/node_buffer_random.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/node_buffer_random.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_catch.ts
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_catch.ts
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_definite_field.ts
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_definite_field.ts
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_lazy_static.ts
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_lazy_static.ts
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_static_initialized.ts
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_static_initialized.ts
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_uninitialized_exception.ts
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_uninitialized_exception.ts
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_union.ts
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_union.ts
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/normalize_coverage_stream.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/normalize_coverage_stream.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/notyet_element_access/sorted.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/notyet_element_access/sorted.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/number_parsing.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/number_parsing.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/omitted_object.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/omitted_object.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/omitted_string.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/omitted_string.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/optional_indexing_array.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/optional_indexing_array.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/optional_widening_class.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/optional_widening_class.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/overload_inference_contracts.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/overload_inference_contracts.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/override_same_representation.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/override_same_representation.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/parameter_properties_ownership.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/parameter_properties_ownership.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/proven_satisfies.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/proven_satisfies.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_cycle_closures.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_cycle_closures.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_replace.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_replace.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_split.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_split.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/representation_clock_source.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/representation_clock_source.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/reuse_lent_global.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/reuse_lent_global.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/route_targets_bound_method.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/route_targets_bound_method.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/scanner_nested_overload.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/scanner_nested_overload.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/search_shrink_findLast_maybe.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/search_shrink_findLast_maybe.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/set_foreach_arrays.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/set_foreach_arrays.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/set_foreach_named_objects.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/set_foreach_named_objects.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/shared_slices.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/shared_slices.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/spread_calls.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/spread_calls.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/statements_small_prefix.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/statements_small_prefix.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/step21_finally_callback.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/step21_finally_callback.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/step21_rethrow.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/step21_rethrow.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/string_build_join.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/string_build_join.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/string_views_characters.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/string_views_characters.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/strings.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/strings.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/sweeps/regexp_methods.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/sweeps/regexp_methods.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/switch_case_declarations/shared.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/switch_case_declarations/shared.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/taste_optional_join.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/taste_optional_join.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/taste_void.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/taste_void.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/tuple_values.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/tuple_values.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/typed_arrays_stop.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/typed_arrays_stop.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/typeof_null_slots.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/typeof_null_slots.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/unknown_narrowing.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/unknown_narrowing.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/visits.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/visits.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/weak_miscompiles/9984394_view_method_parameter.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/weak_miscompiles/9984394_view_method_parameter.a
+=== RUN   TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/write_stdout_order.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/write_stdout_order.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/drivers/scanner/probes/nested-sibling-callback.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/drivers/scanner/probes/nested-sibling-callback.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/fixtures/enums/01_token_range.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/fixtures/enums/01_token_range.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/fixtures/generics/10_identifier_multimap.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/fixtures/generics/10_identifier_multimap.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration-dispatch/close_throw_break.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration-dispatch/close_throw_break.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration-dispatch/value_throw.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration-dispatch/value_throw.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration/test262_array_views.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration/test262_array_views.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/fixtures/nested-functions/06_parser_token_state.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/fixtures/nested-functions/06_parser_token_state.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/fixtures/self-compare/sweep.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/fixtures/self-compare/sweep.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/fixtures/taste/12_symbol_links.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/fixtures/taste/12_symbol_links.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/fixtures/taste/20_jsdoc_terminate.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/fixtures/taste/20_jsdoc_terminate.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/namespace-parser-stops/native-namespace-class.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/namespace-parser-stops/native-namespace-class.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/namespace-value/prototype-presence.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/namespace-value/prototype-presence.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/namespaces/shapes/BinaryExpressionState.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/namespaces/shapes/BinaryExpressionState.a
+=== RUN   TestWASIAgreesWithNode/shard-002/stage3/parser-next/speculation/named-tryparse.a
+=== PAUSE TestWASIAgreesWithNode/shard-002/stage3/parser-next/speculation/named-tryparse.a
+=== CONT  TestWASIAgreesWithNode/shard-004
+    wasi_test.go:31: WASI shard setup (Node identity, three native runtime archives): 0.000s
+=== RUN   TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/element.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/element.a
+=== RUN   TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/runtime-bound-methods.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/runtime-bound-methods.a
+=== RUN   TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/runtime-cross-chain.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/runtime-cross-chain.a
+=== RUN   TestWASIAgreesWithNode/shard-004/docs/step-18/storage-fixtures/field.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/docs/step-18/storage-fixtures/field.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/load/testdata/0.1/compile/03_shapes.ts
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/load/testdata/0.1/compile/03_shapes.ts
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/047cb0d_f_maybe.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/047cb0d_f_maybe.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/047cb0d_n_numparam.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/047cb0d_n_numparam.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/57f2d04_find_last_shrinks2.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/57f2d04_find_last_shrinks2.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/arguments_length_extended.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/arguments_length_extended.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/arguments_length_value.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/arguments_length_value.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/array_literal_empty_union.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/array_literal_empty_union.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_coverage_bounded.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_coverage_bounded.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_coverage_return.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_coverage_return.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_unknown.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_unknown.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_element_virtual_move.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_element_virtual_move.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/call_targets_closure.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/call_targets_closure.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-arguments.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-arguments.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-generic-map.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-generic-map.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-sort.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-sort.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/object-generic.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/object-generic.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/case_mapping.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/case_mapping.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/cast_enum_numeric.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/cast_enum_numeric.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/cast_subunion_fails.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/cast_subunion_fails.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/census_never_rest_marker.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/census_never_rest_marker.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/census_predicate_marker.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/census_predicate_marker.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_as_interface.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_as_interface.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_identity.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_identity.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_instance_key_consume.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_instance_key_consume.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/closure_convention_host24.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/closure_convention_host24.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/collections.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/collections.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/conditions_object.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/conditions_object.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/devirtualize_accessors.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/devirtualize_accessors.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/entries_checked_boxed.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/entries_checked_boxed.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/entries_scanner.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/entries_scanner.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/enums_open.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/enums_open.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/enums_open_never_update.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/enums_open_never_update.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/fallthrough_probe.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/fallthrough_probe.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/fresh_calls.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/fresh_calls.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/function_values_diagnostic.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/function_values_diagnostic.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generators/captures.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generators/captures.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generators/first_reference.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generators/first_reference.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generic_instance_key_typeof.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generic_instance_key_typeof.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/host_map_iterator_probe.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/host_map_iterator_probe.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/host_unknown_error_code.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/host_unknown_error_code.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/imported_const_cases/string.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/imported_const_cases/string.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/invariance_readonly.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/invariance_readonly.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/json_stringify_scalars.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/json_stringify_scalars.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_array_flat.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_array_flat.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_fnexpr_loops.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_fnexpr_loops.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_globals_typeof.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_globals_typeof.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_map_set_keys.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_map_set_keys.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_method_values.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_method_values.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_object_has_own.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_object_has_own.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_string_indices.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_string_indices.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/literal_optional_shapes.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/literal_optional_shapes.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/loops.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/loops.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/map_foreach_keys.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/map_foreach_keys.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/map_iteration.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/map_iteration.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/maybe_numbers.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/maybe_numbers.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_empty_alias_tdz.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_empty_alias_tdz.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_object_statics.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_object_statics.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_endswith.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_endswith.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_repeat.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_repeat.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_trimend.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_trimend.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/module_namespace_reads/initialized.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/module_namespace_reads/initialized.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces_nested.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces_nested.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces_safe_initialization.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces_safe_initialization.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/narrowed_fields.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/narrowed_fields.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nbody_base_writes.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nbody_base_writes.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nbody_static_collision.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nbody_static_collision.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_captures.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_captures.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_owned_parameter.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_owned_parameter.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_tdz_write.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_tdz_write.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/new_expression_uint16_notyet.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/new_expression_uint16_notyet.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/node_buffer_utf8.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/node_buffer_utf8.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_checked_let_initializer.ts
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_checked_let_initializer.ts
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_field.ts
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_field.ts
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_literal_return.ts
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_literal_return.ts
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_uninitialized.ts
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_uninitialized.ts
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_uninitialized_interface.ts
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_uninitialized_interface.ts
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/normalize.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/normalize.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/normalize_long_marks.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/normalize_long_marks.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/notyet_library_object_entries_const.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/notyet_library_object_entries_const.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/object_prototype.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/object_prototype.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/omitted_reader_direct.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/omitted_reader_direct.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_after_call_79.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_after_call_79.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_indexing_map.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_indexing_map.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_widening_fresh.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_widening_fresh.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/overload_mutate_map.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/overload_mutate_map.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/panic.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/panic.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/params_namespaces_dotted.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/params_namespaces_dotted.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_before_use.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_before_use.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/predicate_refusals/representation_controls.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/predicate_refusals/representation_controls.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/radix_range.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/radix_range.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_cycle_fields.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_cycle_fields.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_replace/arguments.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_replace/arguments.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_unicode.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_unicode.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/return_panic_fires.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/return_panic_fires.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/reuse_spread_method.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/reuse_spread_method.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/route_targets_recursive.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/route_targets_recursive.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/search_from_sweep.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/search_from_sweep.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/search_shrink_find_maybe.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/search_shrink_find_maybe.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/set_foreach_fnexpr.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/set_foreach_fnexpr.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/set_foreach_objects.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/set_foreach_objects.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/sort_releases.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/sort_releases.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/spread_undefined.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/spread_undefined.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/statements_small_throw.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/statements_small_throw.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/step21_library_failures.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/step21_library_failures.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/step21_soundness_terminal.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/step21_soundness_terminal.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/string_build_repeat.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/string_build_repeat.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/string_views_lifetime.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/string_views_lifetime.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/structural_statics_generic.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/structural_statics_generic.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/syntax_module_declarations.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/syntax_module_declarations.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/taste_star/class.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/taste_star/class.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/throw_in_writes.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/throw_in_writes.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typed_arrays_float64array.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typed_arrays_float64array.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typed_arrays_views.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typed_arrays_views.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typeof_string_literal.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typeof_string_literal.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/unused_parameters.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/unused_parameters.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_find.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_find.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/weak_miscompiles/held_union.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/weak_miscompiles/held_union.a
+=== RUN   TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/writes_in_try.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/writes_in_try.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/enum-init-reach/callable-selection.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/enum-init-reach/callable-selection.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/enums/03_jsdoc_range.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/enums/03_jsdoc_range.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/generics/01_identity.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/generics/01_identity.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/generics/15_array_callback.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/generics/15_array_callback.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/iteration-dispatch/done_throw.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/iteration-dispatch/done_throw.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/iteration/array_view_weak.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/iteration/array_view_weak.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/namespaces/08_parser_jsdoc_nested.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/namespaces/08_parser_jsdoc_nested.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/03_diagnostic_file.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/03_diagnostic_file.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/14_relative_complement.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/14_relative_complement.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/23_labels_finally.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/23_labels_finally.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/namespace-value/effects.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/namespace-value/effects.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/namespace-value/returned.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/namespace-value/returned.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/namespaces/shapes/JsxNames.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/namespaces/shapes/JsxNames.a
+=== RUN   TestWASIAgreesWithNode/shard-004/stage3/parser-next/stack/benchmark.a
+=== PAUSE TestWASIAgreesWithNode/shard-004/stage3/parser-next/stack/benchmark.a
+=== CONT  TestEnumInitializationUnknownPinned/unknown-before
+=== NAME  TestCheckedJSONNextRefusals/json_dictionary_nul_key
+    checked_json_next_test.go:132: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_dictionary_nul_key2396755298/001/boundary.ts:3:28: stage 0 can't lower a NUL key in a checked JSON dictionary (native own-key metadata) yet
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_proto_key
+    checked_json_next_test.go:132: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_dictionary_proto_key2567121360/001/boundary.ts:3:20: stage 0 can't lower a prototype setter in a checked JSON dictionary yet
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_computed_key
+    checked_json_next_test.go:132: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_dictionary_computed_key501528989/001/boundary.ts:3:20: stage 0 can't lower a computed key in a checked JSON dictionary (own-key metadata) yet
+=== RUN   TestCheckedJSONNextRefusals/json_symbol_contract
+    checked_json_next_test.go:132: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_symbol_contract2490870358/001/boundary.ts:2:45: stage 0 can't lower a symbol field in a checked JSON contract yet
+=== RUN   TestCheckedJSONNextRefusals/callable
+    checked_json_next_test.go:132: /tmp/adamic-gate/TestCheckedJSONNextRefusalscallable2600899528/001/boundary.ts:1:44: stage 0 can't lower a call to an Identifier yet
+=== RUN   TestCheckedJSONNextRefusals/json_callable_contract
+    checked_json_next_test.go:132: /tmp/adamic-gate/TestCheckedJSONNextRefusalsjson_callable_contract1123265230/001/boundary.ts:2:45: stage 0 can't lower checked JSON callable contract () => number (requires verified parameter and result behavior) yet
+=== RUN   TestCheckedJSONNextRefusals/json_maplike_pending
+--- PASS: TestParserStackTinyLimit (2.41s)
+=== CONT  TestEnumInitializationUnknownPinned/unknown-property
+=== NAME  TestCheckedJSONNextRefusals/json_maplike_pending
+    checked_json_next_test.go:130: awaits compiler/records-maplike: any-valued own-key storage
+--- PASS: TestCheckedJSONNextRefusals (2.99s)
+    --- PASS: TestCheckedJSONNextRefusals/json_dictionary_alias_write (0.36s)
+    --- PASS: TestCheckedJSONNextRefusals/json_dictionary_nul_key (0.55s)
+    --- PASS: TestCheckedJSONNextRefusals/json_dictionary_proto_key (0.20s)
+    --- PASS: TestCheckedJSONNextRefusals/json_dictionary_computed_key (0.23s)
+    --- PASS: TestCheckedJSONNextRefusals/json_symbol_contract (0.29s)
+    --- PASS: TestCheckedJSONNextRefusals/callable (0.22s)
+    --- PASS: TestCheckedJSONNextRefusals/json_callable_contract (0.26s)
+    --- SKIP: TestCheckedJSONNextRefusals/json_maplike_pending (0.88s)
+=== CONT  TestEnumInitializationUnknownPinned/unknown-callback
+=== NAME  TestParserConstructionUnsetUse
+    parser_construction_test.go:88: undefined presence observation is accepted; declared string use stops naming field, factory and use
+--- PASS: TestParserConstructionUnsetUse (2.99s)
+=== CONT  TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/call-result.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_unready.a
+=== NAME  TestParserNamespaceClassRegistrationMutant
+    parser_namespaces_test.go:175: native missing constructor registration stopped: {stdout:[67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] stderr:[] exitCode:0}
+    parser_namespaces_test.go:175: javascript missing constructor registration stopped: {stdout:[67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] stderr:[] exitCode:0}
+--- PASS: TestParserNamespaceClassRegistrationMutant (4.63s)
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/parser-next/speculation/named-tryparse.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/namespaces/shapes/BinaryExpressionState.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/namespace-value/prototype-presence.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/namespace-parser-stops/native-namespace-class.a
+--- PASS: TestEnumInitializationUnknownPinned (0.00s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-before (2.86s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-property (2.74s)
+    --- PASS: TestEnumInitializationUnknownPinned/unknown-callback (2.77s)
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/fixtures/taste/20_jsdoc_terminate.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/fixtures/taste/12_symbol_links.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/fixtures/self-compare/sweep.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration/test262_array_views.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/fixtures/nested-functions/06_parser_token_state.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration-dispatch/value_throw.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration-dispatch/close_throw_break.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/fixtures/generics/10_identifier_multimap.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/fixtures/enums/01_token_range.a
+=== CONT  TestWASIAgreesWithNode/shard-002/stage3/drivers/scanner/probes/nested-sibling-callback.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/write_stdout_order.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/weak_miscompiles/9984394_view_method_parameter.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/visits.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/unknown_narrowing.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/typeof_null_slots.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/typed_arrays_stop.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/tuple_values.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/taste_void.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/taste_optional_join.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/switch_case_declarations/shared.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/sweeps/regexp_methods.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/strings.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/string_views_characters.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/string_build_join.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/step21_rethrow.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/step21_finally_callback.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/statements_small_prefix.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/spread_calls.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/shared_slices.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/set_foreach_named_objects.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/set_foreach_arrays.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/search_shrink_findLast_maybe.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/scanner_nested_overload.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/route_targets_bound_method.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/reuse_lent_global.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/representation_clock_source.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_split.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_replace.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_cycle_closures.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/proven_satisfies.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/parameter_properties_ownership.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/override_same_representation.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/overload_inference_contracts.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/optional_widening_class.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/optional_indexing_array.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/omitted_string.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/omitted_object.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/number_parsing.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/notyet_element_access/sorted.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/normalize_coverage_stream.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_union.ts
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_uninitialized_exception.ts
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_static_initialized.ts
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_lazy_static.ts
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_definite_field.ts
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_catch.ts
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/node_buffer_random.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/new_expression_class_value.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_returned.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_mixed.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_callback_levels.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nbody_slot_kinds.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/native-arguments-length-value.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/entries_record_alias.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_parser_state.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_map_before.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespace_class_registration.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/module_namespace_reads/early.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_touppercase.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_padend.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_codepointat.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_number_statics.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_codes.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/maybe_collections.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/map_foreach_numbers.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/map_foreach_fnexpr.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/long_literals.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/lint_runtime_search_boundaries.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_string_conversion.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_object_freeze_assign.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_math_number_math.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_map_set_iterator_number_hash.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_function_expressions.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_array_spliced.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_array_copy_within.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/json_stringify_options.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/integer_format.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/imported_const_cases/numeric.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/host_scanner_never.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/host_empty_object_slots.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generic_body_read.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generators/delegate.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generators/basic.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/function_values_boundary.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/find_index_shrinks.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/fallthrough_nested.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/enums_open_never_index.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/enums_modules/main.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/object-forEach.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/element_access_tuple.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/devirtualize_receivers.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/devirtualize.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/conditions_string.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/conditions_null.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/closures_throw.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/classes.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_oct6_parameters.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_inheritance_memory.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_features_static_private.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_unary_numeric.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_overload_contracts.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_boolean_operators.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/cast_subunion_const_numeric_fails.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/cast_enum_const_numeric_fails.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/optional-object-map.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/array_literal_empty_last.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/number-reduce.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/number-findLast.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/library-map.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_reassigned.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_element_super_move.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_reassigned.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_coverage_method.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_argument.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/load/testdata/0.1/compile/09_tree.ts
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/arguments_length_static_constructor.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/arguments_length.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/047cb0d_n_element_method.a
+=== CONT  TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/size.a
+=== CONT  TestWASIAgreesWithNode/shard-002/internal/load/testdata/0.1/compile/01_hello.ts
+=== CONT  TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/runtime-chain-parentheses.a
+=== CONT  TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/runtime-bound-method-arguments.a
+=== CONT  TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/element.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/parser-next/stack/benchmark.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/namespaces/shapes/JsxNames.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/namespace-value/returned.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/namespace-value/effects.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/23_labels_finally.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/14_relative_complement.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/03_diagnostic_file.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/namespaces/08_parser_jsdoc_nested.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/iteration/array_view_weak.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/iteration-dispatch/done_throw.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/generics/15_array_callback.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/generics/01_identity.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/enums/03_jsdoc_range.a
+=== CONT  TestWASIAgreesWithNode/shard-004/stage3/fixtures/enum-init-reach/callable-selection.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/writes_in_try.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/weak_miscompiles/held_union.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_find.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/unused_parameters.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typeof_string_literal.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typed_arrays_views.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typed_arrays_float64array.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/throw_in_writes.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/taste_star/class.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/syntax_module_declarations.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/structural_statics_generic.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/string_views_lifetime.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/string_build_repeat.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/step21_soundness_terminal.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/step21_library_failures.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/statements_small_throw.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/spread_undefined.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/sort_releases.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/set_foreach_objects.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/set_foreach_fnexpr.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/search_shrink_find_maybe.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/search_from_sweep.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/route_targets_recursive.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/reuse_spread_method.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/return_panic_fires.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_unicode.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_replace/arguments.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_cycle_fields.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/radix_range.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/predicate_refusals/representation_controls.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_before_use.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/params_namespaces_dotted.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/panic.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/overload_mutate_map.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_widening_fresh.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_indexing_map.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_after_call_79.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/omitted_reader_direct.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/object_prototype.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/notyet_library_object_entries_const.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/normalize_long_marks.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/normalize.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_uninitialized_interface.ts
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_uninitialized.ts
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_literal_return.ts
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_field.ts
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_checked_let_initializer.ts
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/node_buffer_utf8.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/new_expression_uint16_notyet.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_tdz_write.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_owned_parameter.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_captures.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nbody_static_collision.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nbody_base_writes.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/narrowed_fields.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces_safe_initialization.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces_nested.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/module_namespace_reads/initialized.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_trimend.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_repeat.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_endswith.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_object_statics.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_empty_alias_tdz.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/maybe_numbers.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/map_iteration.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/map_foreach_keys.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/loops.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/literal_optional_shapes.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_string_indices.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_object_has_own.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_method_values.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_map_set_keys.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_globals_typeof.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_fnexpr_loops.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_array_flat.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/json_stringify_scalars.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/invariance_readonly.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/imported_const_cases/string.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/host_unknown_error_code.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/host_map_iterator_probe.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generic_instance_key_typeof.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generators/first_reference.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generators/captures.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/function_values_diagnostic.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/fresh_calls.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/fallthrough_probe.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/enums_open_never_update.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/enums_open.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/entries_scanner.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/entries_checked_boxed.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/devirtualize_accessors.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/conditions_object.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/collections.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/closure_convention_host24.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_oct6_subclass_holder.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_instance_key_consume.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_identity.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_as_interface.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/census_predicate_marker.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/census_never_rest_marker.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/cast_subunion_fails.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/cast_enum_numeric.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/case_mapping.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/object-generic.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-sort.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-generic-map.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-arguments.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/call_targets_closure.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_element_virtual_move.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_unknown.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_coverage_return.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_coverage_bounded.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/array_literal_empty_union.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/arguments_length_value.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/arguments_length_extended.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/57f2d04_find_last_shrinks2.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/047cb0d_n_numparam.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/047cb0d_f_maybe.a
+=== CONT  TestWASIAgreesWithNode/shard-004/internal/load/testdata/0.1/compile/03_shapes.ts
+=== CONT  TestWASIAgreesWithNode/shard-004/docs/step-18/storage-fixtures/field.a
+=== CONT  TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/runtime-cross-chain.a
+=== CONT  TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/runtime-bound-methods.a
+--- PASS: TestWASIAgreesWithNode (0.04s)
+    --- PASS: TestWASIAgreesWithNode/shard-002 (0.16s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/call-result.a (1.83s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_unready.a (1.76s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/parser-next/speculation/named-tryparse.a (1.42s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/namespaces/shapes/BinaryExpressionState.a (1.47s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/namespace-value/prototype-presence.a (1.58s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/namespace-parser-stops/native-namespace-class.a (1.31s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/fixtures/taste/20_jsdoc_terminate.a (1.48s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/fixtures/taste/12_symbol_links.a (1.24s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/fixtures/self-compare/sweep.a (1.41s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration/test262_array_views.a (1.32s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/fixtures/nested-functions/06_parser_token_state.a (1.40s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration-dispatch/value_throw.a (1.38s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/fixtures/iteration-dispatch/close_throw_break.a (1.41s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/fixtures/generics/10_identifier_multimap.a (1.28s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/fixtures/enums/12_diagnostic_reverse_lookup.a (1.06s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/weak_miscompiles/9984394_view_method_parameter.a (0.16s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/fixtures/enums/01_token_range.a (1.31s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/stage3/drivers/scanner/probes/nested-sibling-callback.a (0.92s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/write_stdout_order.a (1.03s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/typed_arrays_stop.a (1.00s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/unknown_narrowing.a (1.55s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/typeof_null_slots.a (1.41s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/visits.a (2.15s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/taste_void.a (1.30s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/tuple_values.a (2.29s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/switch_case_declarations/shared.a (1.66s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/taste_optional_join.a (1.88s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/strings.a (1.07s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/string_views_characters.a (1.02s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/step21_rethrow.a (1.10s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/step21_finally_callback.a (1.32s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/string_build_join.a (1.90s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/statements_small_prefix.a (1.40s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/spread_calls.a (1.45s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/sweeps/regexp_methods.a (4.20s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/set_foreach_named_objects.a (1.33s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/set_foreach_arrays.a (1.54s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/shared_slices.a (2.10s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/search_shrink_findLast_maybe.a (1.33s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/scanner_nested_overload.a (1.18s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/route_targets_bound_method.a (1.37s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/reuse_lent_global.a (1.40s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_split.a (1.15s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/representation_clock_source.a (1.36s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_replace.a (1.30s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/regexp_cycle_closures.a (1.33s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_null_typeof.a (0.96s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/proven_satisfies.a (1.40s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a (1.44s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a (1.30s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/placeholder_nonnull_alias_reset.a (1.20s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/parameter_properties_ownership.a (1.16s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/overload_inference_contracts.a (1.08s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/override_same_representation.a (1.49s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/optional_widening_class.a (1.08s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/omitted_string.a (1.08s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/omitted_object.a (1.08s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/number_parsing.a (0.93s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/optional_indexing_array.a (1.57s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/notyet_element_access/sorted.a (1.09s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_uninitialized_exception.ts (0.95s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_union.ts (1.04s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_static_initialized.ts (1.24s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_lazy_static.ts (1.21s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/normalize_coverage_stream.a (2.20s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_definite_field.ts (1.00s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/non_null_catch.ts (1.16s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/new_expression_class_value.a (1.12s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_returned.a (0.98s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_mixed.a (0.97s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/node_buffer_random.a (1.69s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nested_callback_levels.a (0.82s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/nbody_slot_kinds.a (0.64s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_map_before.a (0.53s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespaces_parser_state.a (0.70s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a (0.15s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/namespace_class_registration.a (0.67s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/entries_record_alias.a (0.92s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_touppercase.a (0.62s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_padend.a (0.68s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_string_codepointat.a (0.68s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/module_namespace_reads/early.a (1.16s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_number_statics.a (0.79s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/method_coverage_codes.a (0.76s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/map_foreach_numbers.a (1.04s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/map_foreach_fnexpr.a (0.60s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/long_literals.a (0.77s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/lint_runtime_search_boundaries.a (0.86s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_string_conversion.a (0.86s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_object_freeze_assign.a (0.95s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_math_number_math.a (0.91s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_map_set_iterator_number_hash.a (1.14s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_function_expressions.a (1.10s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_array_spliced.a (1.17s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/library_array_copy_within.a (0.91s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/json_stringify_options.a (0.94s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/imported_const_cases/numeric.a (1.02s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/host_scanner_never.a (0.80s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/integer_format.a (1.26s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/host_empty_object_slots.a (0.90s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generic_body_read.a (0.99s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/function_values_boundary.a (1.00s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generators/basic.a (1.67s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/find_index_shrinks.a (0.89s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/fallthrough_nested.a (0.96s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/enums_open_never_index.a (1.03s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/generators/delegate.a (4.04s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/enums_modules/main.a (1.05s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/object-forEach.a (0.87s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/element_access_tuple.a (0.77s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a (0.92s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/devirtualize_receivers.a (1.03s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/devirtualize.a (1.00s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/conditions_string.a (0.93s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/conditions_null.a (0.92s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/classes.a (0.80s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_oct6_parameters.a (0.89s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_inheritance_memory.a (0.95s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/class_features_static_private.a (1.16s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_unary_numeric.a (0.95s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_overload_contracts.a (0.75s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/census_boolean_operators.a (0.66s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/cast_subunion_const_numeric_fails.a (0.79s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/cast_enum_const_numeric_fails.a (0.91s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/native-arguments-length-value.a (17.70s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/maybe_collections.a (16.43s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/optional-object-map.a (1.05s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/number-reduce.a (0.73s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/closures_throw.a (5.70s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/array_literal_empty_last.a (1.19s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/number-findLast.a (0.87s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/callback_widening/library-map.a (0.89s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_reassigned.a (0.97s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_element_super_move.a (0.96s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_reassigned.a (0.85s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_coverage_method.a (1.10s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/borrow_chain_argument.a (1.16s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/load/testdata/0.1/compile/09_tree.ts (1.21s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/arguments_length_static_constructor.a (1.09s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/arguments_length.a (1.06s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/4ddd17f_weak_single_narrowed.a (1.09s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/oracle/testdata/047cb0d_n_element_method.a (0.82s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/internal/load/testdata/0.1/compile/01_hello.ts (0.95s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/size.a (0.96s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/runtime-chain-parentheses.a (0.98s)
+        --- PASS: TestWASIAgreesWithNode/shard-002/docs/step-18/fixtures/runtime-bound-method-arguments.a (1.03s)
+    --- PASS: TestWASIAgreesWithNode/shard-004 (0.11s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/element.a (0.88s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/namespaces/shapes/JsxNames.a (0.94s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/namespace-value/returned.a (1.02s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/23_labels_finally.a (0.79s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/namespace-value/effects.a (1.00s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/parser-next/stack/benchmark.a (1.93s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/14_relative_complement.a (1.02s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/taste/03_diagnostic_file.a (0.99s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/nested-functions/08_checker_symbol_recursion.a (1.00s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/namespaces/08_parser_jsdoc_nested.a (0.96s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/iteration/array_view_weak.a (1.00s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/generics/15_array_callback.a (0.94s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/iteration-dispatch/done_throw.a (1.16s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/generics/01_identity.a (0.75s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_find.a (0.09s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/enums/03_jsdoc_range.a (0.84s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/stage3/fixtures/enum-init-reach/callable-selection.a (0.56s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/writes_in_try.a (0.57s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/weak_miscompiles/held_union.a (0.51s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/unused_parameters.a (0.55s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typeof_string_literal.a (0.50s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typed_arrays_views.a (0.67s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/typed_arrays_float64array.a (0.68s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/throw_in_writes.a (0.70s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/syntax_module_declarations.a (0.67s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/taste_star/class.a (0.80s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a (0.51s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/structural_statics_generic.a (0.55s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/string_views_lifetime.a (0.54s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/string_build_repeat.a (0.70s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/step21_soundness_terminal.a (0.67s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/step21_library_failures.a (0.60s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/statements_small_throw.a (0.51s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/spread_undefined.a (0.61s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/sort_releases.a (0.63s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/search_shrink_find_maybe.a (0.49s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/set_foreach_objects.a (0.83s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/set_foreach_fnexpr.a (0.82s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/search_from_sweep.a (0.78s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/reuse_spread_method.a (0.91s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/route_targets_recursive.a (1.05s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/return_panic_fires.a (0.98s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_unicode.a (1.35s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/radix_range.a (0.93s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/predicate_refusals/representation_controls.a (1.06s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_cycle_fields.a (1.64s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_null_equality.a (0.80s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_return_assignment.a (1.18s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/placeholder_nonnull_before_use.a (1.21s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/overload_mutate_map.a (0.84s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/panic.a (0.96s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/params_namespaces_dotted.a (1.56s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_widening_fresh.a (0.91s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_after_call_79.a (1.02s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/optional_indexing_map.a (1.19s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/omitted_reader_direct.a (0.98s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/notyet_library_object_entries_const.a (0.89s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/normalize_long_marks.a (0.95s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/object_prototype.a (1.41s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/normalize.a (0.95s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_uninitialized_interface.ts (0.80s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_uninitialized.ts (0.72s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_literal_return.ts (0.93s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/new_expression_uint16_notyet.a (0.09s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_field.ts (0.91s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/non_null_checked_let_initializer.ts (0.81s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_tdz_write.a (0.78s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_owned_parameter.a (0.76s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nested_captures.a (0.92s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/node_buffer_utf8.a (1.90s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nbody_base_writes.a (0.75s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/nbody_static_collision.a (1.21s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/narrowed_fields.a (0.81s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces_safe_initialization.a (1.33s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a (0.12s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/module_namespace_reads/initialized.a (0.99s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces_nested.a (1.88s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/namespaces.a (1.88s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_trimend.a (0.99s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_repeat.a (1.07s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_string_endswith.a (1.28s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_object_statics.a (1.09s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/method_coverage_empty_alias_tdz.a (1.09s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/maybe_numbers.a (1.33s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/map_iteration.a (0.98s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/map_foreach_keys.a (0.82s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/loops.a (0.71s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/literal_optional_shapes.a (0.76s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_string_indices.a (0.57s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_object_has_own.a (0.80s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_method_values.a (1.31s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_globals_typeof.a (0.80s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_map_set_keys.a (0.93s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_fnexpr_loops.a (0.87s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/library_array_flat.a (0.75s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/invariance_readonly.a (0.68s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/json_stringify_scalars.a (0.82s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/imported_const_cases/string.a (0.61s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/host_map_iterator_probe.a (0.66s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/host_unknown_error_code.a (0.82s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generic_instance_key_typeof.a (0.80s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/function_values_diagnostic.a (1.10s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/fresh_calls.a (1.27s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generators/first_reference.a (1.98s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/generators/captures.a (1.79s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/fallthrough_probe.a (0.54s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/enums_open_never_update.a (0.45s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/enums_open.a (0.46s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/entries_scanner.a (0.44s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/entries_checked_boxed.a (0.57s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/e4eec87_u03_discriminated_undefined.a (0.44s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/e4eec87_f1_alias_narrowed.a (0.56s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/devirtualize_accessors.a (0.48s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/conditions_object.a (0.45s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/d96d304_try_stack.a (0.51s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_instance_key_consume.a (0.43s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_oct6_subclass_holder.a (0.55s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/regexp_replace/arguments.a (18.46s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/collections.a (1.13s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_identity.a (0.43s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/census_predicate_marker.a (0.33s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/census_never_rest_marker.a (0.41s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/cast_subunion_fails.a (0.47s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/cast_enum_numeric.a (0.39s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/class_as_interface.a (0.95s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/case_mapping.a (0.49s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/object-generic.a (0.47s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-sort.a (0.43s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-generic-map.a (0.46s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/callback_widening/number-arguments.a (0.41s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/call_targets_closure.a (0.48s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_element_virtual_move.a (0.54s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_unknown.a (0.47s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_coverage_return.a (0.50s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/borrow_chain_coverage_bounded.a (0.42s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/array_literal_empty_union.a (0.46s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/arguments_length_value.a (0.49s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/57f2d04_find_last_shrinks2.a (0.54s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/047cb0d_n_numparam.a (0.46s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/047cb0d_f_maybe.a (0.44s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/load/testdata/0.1/compile/03_shapes.ts (0.45s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/runtime-cross-chain.a (0.46s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/docs/step-18/storage-fixtures/field.a (0.52s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/docs/step-18/fixtures/runtime-bound-methods.a (0.37s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/closure_convention_host24.a (9.04s)
+        --- PASS: TestWASIAgreesWithNode/shard-004/internal/oracle/testdata/arguments_length_extended.a (7.55s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=326
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	79.979s
+=== RUN   TestFreshCorpusRemainder
+=== PAUSE TestFreshCorpusRemainder
+=== CONT  TestFreshCorpusRemainder
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/047cb0d_f_maybe.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/047cb0d_f_maybe_ref.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/4ddd17f_weak_single_narrowed.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/57f2d04_find_last_shrinks.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/57f2d04_find_last_shrinks2.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/backend_stop_catches.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/call_spread_array.a
+    corpus_coverage_test.go:82: 12 writes, 12 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/d96d304_try_stack.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/generic_body_indexed.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/generic_body_read.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/inherited_fields_guard.a
+    corpus_coverage_test.go:82: 2 writes, 2 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/json_shorthand.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/long_unicode_literals.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_namespace_catch.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_regex_fields.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_tdz_catch.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_193.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_79.a
+    corpus_coverage_test.go:82: 2 writes, 2 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_propagation.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_required.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_variants.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_alias_reset.a
+    corpus_coverage_test.go:82: 3 writes, 3 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_assignment_result.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_before_use.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_field.a
+    corpus_coverage_test.go:82: 8 writes, 8 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_local.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace.a
+    corpus_coverage_test.go:82: 6 writes, 3 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace_before_use.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_before_use.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_coalesce.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_copy.a
+    corpus_coverage_test.go:82: 11 writes, 6 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_equality.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_json.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_loose.a
+    corpus_coverage_test.go:82: 3 writes, 3 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_optional.a
+    corpus_coverage_test.go:82: 1 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_saved_leak.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_truthiness.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_typeof.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_observe.a
+    corpus_coverage_test.go:82: 9 writes, 6 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_return_assignment.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_saved_leak.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_scanner.a
+    corpus_coverage_test.go:82: 1 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_boolean.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_default.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findIndex_checked.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findLastIndex_maybe.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findLast_maybe.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_find_checked.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_find_maybe.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_found.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_omitted.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_unknown.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_builtin_narrow_terminal.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_catch_callback.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_dynamic.a
+    corpus_coverage_test.go:82: 2 writes, 2 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_dynamic_uncaught.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_error_subclasses.a
+    corpus_coverage_test.go:82: 7 writes, 7 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_finally_callback.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_finally_completion.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_library_failures.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_library_host.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_library_types.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_liveness.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_object_uncaught.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_region_payload.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_rethrow.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_saved_error.a
+    corpus_coverage_test.go:82: 4 writes, 4 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_soundness_terminal.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== NAME  TestFreshCorpusRemainder
+    corpus_coverage_test.go:85: remainder ran 68 programs
+--- PASS: TestFreshCorpusRemainder (15.31s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/047cb0d_f_maybe.a (0.18s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/047cb0d_f_maybe_ref.a (0.20s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/4ddd17f_weak_single_narrowed.a (0.13s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/57f2d04_find_last_shrinks.a (0.19s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/57f2d04_find_last_shrinks2.a (0.18s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/backend_stop_catches.a (0.27s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/call_spread_array.a (0.39s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/d96d304_try_stack.a (0.14s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/generic_body_indexed.a (0.22s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/generic_body_read.a (0.24s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/inherited_fields_guard.a (0.26s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/json_shorthand.a (0.20s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/long_unicode_literals.a (0.12s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_namespace_catch.a (0.13s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_regex_fields.a (0.27s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_tdz_catch.a (0.24s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_193.a (0.30s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_79.a (0.26s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_propagation.a (0.31s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_required.a (0.28s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_variants.a (0.20s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_alias_reset.a (0.25s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_assignment_result.a (0.27s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_before_use.a (0.15s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_field.a (0.12s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_local.a (0.21s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace.a (0.27s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace_before_use.a (0.32s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_before_use.a (0.24s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_coalesce.a (0.14s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_copy.a (0.31s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_equality.a (0.18s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_json.a (0.20s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_loose.a (0.20s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_optional.a (0.21s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_saved_leak.a (0.21s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_truthiness.a (0.17s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_typeof.a (0.12s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_observe.a (0.17s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_return_assignment.a (0.10s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_saved_leak.a (0.19s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_scanner.a (0.15s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_boolean.a (0.19s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_default.a (0.15s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findIndex_checked.a (0.12s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findLastIndex_maybe.a (0.27s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findLast_maybe.a (0.12s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_find_checked.a (0.23s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_find_maybe.a (0.18s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_found.a (0.12s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_omitted.a (0.19s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_unknown.a (0.21s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_builtin_narrow_terminal.a (0.20s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_catch_callback.a (0.11s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_dynamic.a (0.27s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_dynamic_uncaught.a (0.23s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_error_subclasses.a (0.21s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_finally_callback.a (0.22s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_finally_completion.a (0.16s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_library_failures.a (0.24s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_library_host.a (1.40s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_library_types.a (0.23s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_liveness.a (0.18s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_object_uncaught.a (0.21s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_region_payload.a (0.14s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_rethrow.a (0.25s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_saved_error.a (0.25s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_soundness_terminal.a (0.19s)
+PASS
+ok  	github.com/system-inc/adamic/internal/fresh	15.331s
+=== RUN   TestParserRepresentationProbes
+    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)
+=== PAUSE TestParserRepresentationProbes
+=== CONT  TestParserRepresentationProbes
+=== RUN   TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== PAUSE TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== RUN   TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== PAUSE TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== RUN   TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== PAUSE TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== RUN   TestParserRepresentationProbes/gaps/14_missing_path_key.ts
+=== PAUSE TestParserRepresentationProbes/gaps/14_missing_path_key.ts
+=== RUN   TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+=== PAUSE TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+=== RUN   TestParserRepresentationProbes/gaps/5_conditional_panic.ts
+=== PAUSE TestParserRepresentationProbes/gaps/5_conditional_panic.ts
+=== RUN   TestParserRepresentationProbes/gaps/7_postfix_property.ts
+=== PAUSE TestParserRepresentationProbes/gaps/7_postfix_property.ts
+=== RUN   TestParserRepresentationProbes/gaps/8_generic_callback_result.ts
+=== PAUSE TestParserRepresentationProbes/gaps/8_generic_callback_result.ts
+=== RUN   TestParserRepresentationProbes/gaps/9_mixed_path_names.ts
+=== PAUSE TestParserRepresentationProbes/gaps/9_mixed_path_names.ts
+=== RUN   TestParserRepresentationProbes/gaps/10_multiple_push.ts
+=== PAUSE TestParserRepresentationProbes/gaps/10_multiple_push.ts
+=== RUN   TestParserRepresentationProbes/gaps/11_function_expression.ts
+=== PAUSE TestParserRepresentationProbes/gaps/11_function_expression.ts
+=== RUN   TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts
+=== PAUSE TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts
+=== RUN   TestParserRepresentationProbes/gaps/15_string_or.ts
+=== PAUSE TestParserRepresentationProbes/gaps/15_string_or.ts
+=== RUN   TestParserRepresentationProbes/gaps/16_array_shift.ts
+=== PAUSE TestParserRepresentationProbes/gaps/16_array_shift.ts
+=== RUN   TestParserRepresentationProbes/gaps/17_long_optional_chain.ts
+=== PAUSE TestParserRepresentationProbes/gaps/17_long_optional_chain.ts
+=== CONT  TestParserRepresentationProbes/gaps/1_recursive_state.ts
+=== CONT  TestParserRepresentationProbes/gaps/9_mixed_path_names.ts
+=== CONT  TestParserRepresentationProbes/gaps/15_string_or.ts
+=== CONT  TestParserRepresentationProbes/gaps/8_generic_callback_result.ts
+=== CONT  TestParserRepresentationProbes/gaps/7_postfix_property.ts
+=== CONT  TestParserRepresentationProbes/gaps/17_long_optional_chain.ts
+=== CONT  TestParserRepresentationProbes/gaps/16_array_shift.ts
+=== CONT  TestParserRepresentationProbes/gaps/5_conditional_panic.ts
+=== CONT  TestParserRepresentationProbes/gaps/4_structural_ranges.ts
+=== CONT  TestParserRepresentationProbes/gaps/14_missing_path_key.ts
+=== CONT  TestParserRepresentationProbes/gaps/3_recursive_callable.ts
+=== CONT  TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts
+=== CONT  TestParserRepresentationProbes/gaps/11_function_expression.ts
+=== CONT  TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts
+=== CONT  TestParserRepresentationProbes/gaps/10_multiple_push.ts
+--- PASS: TestParserRepresentationProbes (0.01s)
+    --- PASS: TestParserRepresentationProbes/gaps/9_mixed_path_names.ts (0.60s)
+    --- PASS: TestParserRepresentationProbes/gaps/7_postfix_property.ts (0.93s)
+    --- PASS: TestParserRepresentationProbes/gaps/8_generic_callback_result.ts (0.99s)
+    --- PASS: TestParserRepresentationProbes/gaps/16_array_shift.ts (0.74s)
+    --- PASS: TestParserRepresentationProbes/gaps/15_string_or.ts (2.19s)
+    --- PASS: TestParserRepresentationProbes/gaps/4_structural_ranges.ts (0.73s)
+    --- PASS: TestParserRepresentationProbes/gaps/1_recursive_state.ts (2.51s)
+    --- PASS: TestParserRepresentationProbes/gaps/17_long_optional_chain.ts (2.00s)
+    --- PASS: TestParserRepresentationProbes/gaps/2_state_arrow_cycle.ts (0.79s)
+    --- PASS: TestParserRepresentationProbes/gaps/5_conditional_panic.ts (2.40s)
+    --- PASS: TestParserRepresentationProbes/gaps/3_recursive_callable.ts (1.99s)
+    --- PASS: TestParserRepresentationProbes/gaps/11_function_expression.ts (2.15s)
+    --- PASS: TestParserRepresentationProbes/gaps/12_conditional_empty_array.ts (2.20s)
+    --- PASS: TestParserRepresentationProbes/gaps/10_multiple_push.ts (2.18s)
+    --- PASS: TestParserRepresentationProbes/gaps/14_missing_path_key.ts (4.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	6.917s
+=== RUN   TestGapStandsWhereGapsMdSays
+=== PAUSE TestGapStandsWhereGapsMdSays
+=== RUN   TestBigintGapStandsWhereGapsMdSays
+=== PAUSE TestBigintGapStandsWhereGapsMdSays
+=== CONT  TestGapStandsWhereGapsMdSays
+=== CONT  TestBigintGapStandsWhereGapsMdSays
+--- PASS: TestBigintGapStandsWhereGapsMdSays (0.65s)
+=== NAME  TestGapStandsWhereGapsMdSays
+    scanner_products_test.go:50: build scanner-go-oracle efebc3d117c0 hit 4.73
+    scanner_products_test.go:50: build scanner-native 5d730eefcd0c hit 5.79
+--- PASS: TestGapStandsWhereGapsMdSays (12.42s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	12.497s
+=== RUN   TestFixtureDirectoriesHaveTopLevelTests
+=== PAUSE TestFixtureDirectoriesHaveTopLevelTests
+=== CONT  TestFixtureDirectoriesHaveTopLevelTests
+    units_test.go:132: TestFixturesAssertions directory=assertions fixtures=20
+    units_test.go:132: TestFixturesAssignmentProofs directory=assignment-proofs fixtures=6
+    units_test.go:132: TestFixturesCycles directory=cycles fixtures=10
+    units_test.go:132: TestFixturesEnums directory=enums fixtures=13
+    units_test.go:132: TestFixturesHost directory=host fixtures=25
+    units_test.go:132: TestFixturesNamespaces directory=namespaces fixtures=12
+    units_test.go:132: TestFixturesNestedFunctions directory=nested-functions fixtures=11
+    units_test.go:132: TestFixturesObjects directory=objects fixtures=25
+    units_test.go:132: TestFixturesPredicates directory=predicates fixtures=11
+    units_test.go:132: TestFixturesRecords directory=records fixtures=19
+    units_test.go:132: TestFixturesRunner directory=runner fixtures=3
+    units_test.go:132: TestFixturesSelfCompare directory=self-compare fixtures=3
+    units_test.go:132: TestFixturesTaste directory=taste fixtures=24
+    units_test.go:141: union: 13 directories, 182 fixtures
+--- PASS: TestFixtureDirectoriesHaveTopLevelTests (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/fixtures	0.083s

@@ -1,0 +1,199 @@
+{
+  "storage": [
+    {
+      "name": "receiver-lost",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+      "log": "review/compiler/optional-calls-main/mutants/storage/receiver-lost.log.gz"
+    },
+    {
+      "name": "nullish-slot-tags-rejected",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+      "log": "review/compiler/optional-calls-main/mutants/storage/nullish-slot-tags-rejected.log.gz"
+    },
+    {
+      "name": "field-reselected",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+      "log": "review/compiler/optional-calls-main/mutants/storage/field-reselected.log.gz"
+    },
+    {
+      "name": "arguments-before-guard",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/field.a",
+      "log": "review/compiler/optional-calls-main/mutants/storage/arguments-before-guard.log.gz"
+    },
+    {
+      "name": "noncallable-no-loud-stop",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18StorageTypeLie/.ts",
+      "log": "review/compiler/optional-calls-main/mutants/storage/noncallable-no-loud-stop.log.gz"
+    },
+    {
+      "name": "noncallable-stop-before-arguments",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18StorageTypeLie/.ts",
+      "log": "review/compiler/optional-calls-main/mutants/storage/noncallable-stop-before-arguments.log.gz"
+    },
+    {
+      "name": "adamic-noncallable-admitted",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18StorageTypeLie/.a",
+      "log": "review/compiler/optional-calls-main/mutants/storage/adamic-noncallable-admitted.log.gz"
+    },
+    {
+      "name": "nullish-chain-arguments",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/optional-method.a",
+      "log": "review/compiler/optional-calls-main/mutants/storage/nullish-chain-arguments.log.gz"
+    },
+    {
+      "name": "getter-twice",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/getter.a",
+      "log": "review/compiler/optional-calls-main/mutants/storage/getter-twice.log.gz"
+    },
+    {
+      "name": "getter-throw-delayed",
+      "caught": true,
+      "exit": 1,
+      "test": "TestNativeAgreesWithNode/docs/step-18/storage-fixtures/getter-throw.a",
+      "log": "review/compiler/optional-calls-main/mutants/storage/getter-throw-delayed.log.gz"
+    },
+    {
+      "name": "receiver-contract-erased",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18CallableReceiverContract",
+      "log": "review/compiler/optional-calls-main/mutants/storage/receiver-contract-erased.log.gz"
+    },
+    {
+      "name": "unknown-detached-admitted",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18UnknownDetachedCallable",
+      "log": "review/compiler/optional-calls-main/mutants/storage/unknown-detached-admitted.log.gz"
+    },
+    {
+      "name": "detached-getter-origin-erased",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18DetachedCallableOrigins",
+      "log": "review/compiler/optional-calls-main/mutants/storage/detached-getter-origin-erased.log.gz"
+    },
+    {
+      "name": "detached-silently-bound",
+      "caught": true,
+      "exit": 1,
+      "test": "TestStep18DetachedMethod",
+      "log": "review/compiler/optional-calls-main/mutants/storage/detached-silently-bound.log.gz"
+    }
+  ],
+  "optionalAfterCall": [
+    {
+      "mutant": "check-optional-receiver",
+      "caught": true,
+      "exit": 1,
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-lnsyt216/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestOptionalAfterCall79$",
+        "-count=1",
+        "-timeout",
+        "60s",
+        "-v"
+      ],
+      "log": "review/compiler/optional-calls-main/mutants/optionalAfterCall/check-optional-receiver.log.gz"
+    },
+    {
+      "mutant": "javascript-required-panic",
+      "caught": true,
+      "exit": 1,
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-l_8asz8l/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestOptionalAfterCallRequired$",
+        "-count=1",
+        "-timeout",
+        "60s",
+        "-v"
+      ],
+      "log": "review/compiler/optional-calls-main/mutants/optionalAfterCall/javascript-required-panic.log.gz"
+    },
+    {
+      "mutant": "native-required-panic",
+      "caught": true,
+      "exit": 1,
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-o9wa0eg_/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestOptionalAfterCallRequired$",
+        "-count=1",
+        "-timeout",
+        "60s",
+        "-v"
+      ],
+      "log": "review/compiler/optional-calls-main/mutants/optionalAfterCall/native-required-panic.log.gz"
+    },
+    {
+      "mutant": "drop-flow-throw-edge",
+      "caught": true,
+      "exit": 1,
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-phoihrct/overlay.json",
+        "./internal/flow",
+        "-run",
+        "^TestOptionalAfterCallFlowEdges$",
+        "-count=1",
+        "-timeout",
+        "60s",
+        "-v"
+      ],
+      "log": "review/compiler/optional-calls-main/mutants/optionalAfterCall/drop-flow-throw-edge.log.gz"
+    },
+    {
+      "mutant": "drop-required-propagation",
+      "caught": true,
+      "exit": 1,
+      "command": [
+        "go",
+        "test",
+        "-overlay",
+        "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-32aa4pfg/overlay.json",
+        "./internal/oracle",
+        "-run",
+        "^TestOptionalAfterCallPropagation$",
+        "-count=1",
+        "-timeout",
+        "60s",
+        "-v"
+      ],
+      "log": "review/compiler/optional-calls-main/mutants/optionalAfterCall/drop-required-propagation.log.gz"
+    }
+  ]
+}

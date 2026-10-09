@@ -1,0 +1,244 @@
+{
+  "branch": "compiler/miscompile-fxspptb-2a",
+  "source": "373f0055ac30e7e600b3ef783b7fba84cc37ebad",
+  "tests": [
+    {
+      "test": "TestTypeAwareTopShardPlantedFailure",
+      "result": "pass",
+      "seconds": 0.02,
+      "log": "member-14-typeaware-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AConstructorArrow",
+      "result": "pass",
+      "seconds": 13.81,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AUndefinedError",
+      "result": "pass",
+      "seconds": 14.13,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestCallTargetThrowAgreesWithNode",
+      "result": "pass",
+      "seconds": 14.17,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AErrorSubclassSpread",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AConstructorNumberArrow",
+      "result": "pass",
+      "seconds": 0.17,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AMaybeSetter",
+      "result": "pass",
+      "seconds": 0.22,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AOverrideSource",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2ADerivedSymbol",
+      "result": "pass",
+      "seconds": 0.16,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2ALongName",
+      "result": "pass",
+      "seconds": 0.16,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AErrorSpread",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AOptionalError",
+      "result": "pass",
+      "seconds": 0.36,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AMarkerUndefined",
+      "result": "pass",
+      "seconds": 6.47,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AMarker",
+      "result": "pass",
+      "seconds": 20.81,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestMiscompile2AControls",
+      "result": "pass",
+      "seconds": 7.32,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestDirectClosureCallAgreesWithNode",
+      "result": "pass",
+      "seconds": 10.4,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestRuntimeFieldLayoutsAreIncluded",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestErrorUndefinedMessageHasNoOwnProperty",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestCallMayThrowUsesReachableTargets",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestDirectClosureTargetsUseEncodedIndex",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-14-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a",
+      "result": "pass",
+      "seconds": 0.88,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/error_undefined_message.a",
+      "result": "pass",
+      "seconds": 0.92,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_override_source.a",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a",
+      "result": "pass",
+      "seconds": 5.04,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/controls.a",
+      "result": "pass",
+      "seconds": 5.01,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestSharedProductPublication",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-14-extra-tests.jsonl"
+    },
+    {
+      "test": "TestSixBuildCallbackUsesProductDirectory",
+      "result": "pass",
+      "seconds": 0.01,
+      "log": "member-14-extra-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "internal/oracle/testdata/miscompile_2a/controls.a",
+        "after": [
+          "39",
+          "39",
+          "37",
+          "58",
+          "13",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a",
+        "after": [
+          "3",
+          "3",
+          "6",
+          "5",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/miscompile_2a/error_undefined_message.a",
+        "after": [
+          "9",
+          "9",
+          "15",
+          "15",
+          "3",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 1206
+  }
+}

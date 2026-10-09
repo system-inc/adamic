@@ -1,0 +1,9 @@
+namespace State {
+    export let value = 1;
+    export function advance(): void { value += 1; }
+}
+function inspect(state: typeof State): number {
+    State.advance();
+    return state.value;
+}
+console.log(String(inspect(State)));

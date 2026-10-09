@@ -1,0 +1,7 @@
+function test<T extends { readonly value: number }>(source: T): T['value'] {
+	const value: T['value'] = source.value;
+	console.log(`${value}`);
+	return value;
+}
+console.log(`${test<{ readonly value: 1 }>({ value: 1 })}`);
+console.log(`${test<{ readonly value: 2 }>({ value: 2 })}`);

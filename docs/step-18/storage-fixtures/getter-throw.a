@@ -1,0 +1,15 @@
+class Host {
+    get callback(): ((value: string) => string) | undefined {
+        console.log('getter');
+        throw new Error('getter failed');
+    }
+}
+function argument(): string { console.log('wrong: argument'); return 'value'; }
+try {
+    const host = new Host();
+    host.callback?.(argument());
+    console.log('wrong: after call');
+} catch (error) {
+    if (error instanceof Error) console.log(error.message);
+}
+console.log('after');

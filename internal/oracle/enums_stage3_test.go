@@ -41,7 +41,7 @@ func TestStage3EnumBoundaries(t *testing.T) {
 		name, rule string
 		checker    bool
 	}{
-		{"06_set_node_flags.a", "invariant-mutable", false},
+		{"06_set_node_flags.a", "generic-body-relations", false},
 		{"08_debug_format_enum.a", "TS2532", true},
 		{"11_format_syntax_kind.a", "TS2532", true},
 	} {

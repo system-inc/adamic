@@ -1,0 +1,2453 @@
+{
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "inventory_commit": "ea1b2359",
+  "ledger_commit": "855bcfaa",
+  "source_hashes_verified": 80,
+  "sites": 271,
+  "compiler_exit": 1,
+  "emitted_c_bytes": 0,
+  "verified_checked_sites_in_whole_entry": 0,
+  "independent_site_lowering": "not measured; project loader returned no program",
+  "first_project_stop": "/tmp/checked-any-stock/src/compiler/binder.ts:1109:17: error TS2412: Type 'undefined' is not assignable to type 'FlowNode' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+  "records": [
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1919,
+      "column": 25,
+      "kind": "any_declaration",
+      "text": "emitSignature",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2133,
+      "column": 17,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2940,
+      "column": 76,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 3614,
+      "column": 17,
+      "kind": "any_declaration",
+      "text": "diagnosticMessage",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 4361,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "seenSymbols",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 4840,
+      "column": 33,
+      "kind": "any_declaration",
+      "text": "diagnosticDetails",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6834,
+      "column": 40,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 9099,
+      "column": 17,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10953,
+      "column": 77,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 11585,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "propType",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 12094,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "type",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 12480,
+      "column": 74,
+      "kind": "any_declaration",
+      "text": "declaration: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 12480,
+      "column": 87,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15334,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15531,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "objectType",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 19773,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20306,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "type",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20312,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "type",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20318,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "type",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20325,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "type",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 20898,
+      "column": 25,
+      "kind": "any_declaration",
+      "text": "constraint",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 22649,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "needsOriginalSource",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 22918,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "canonical",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 23721,
+      "column": 29,
+      "kind": "any_declaration",
+      "text": "targetKeys",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25273,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "target",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25589,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "lengthType",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 26532,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "type",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 29405,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "flowType",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32515,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "first",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32515,
+      "column": 20,
+      "kind": "any_declaration",
+      "text": "last",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 35089,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "diagnosticMessage",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 35759,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "type",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42803,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "typeArgumentPosition",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 48671,
+      "column": 17,
+      "kind": "any_declaration",
+      "text": "resolvedModule",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 51466,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2267,
+      "column": 101,
+      "kind": "any_declaration",
+      "text": "config?: any;",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2267,
+      "column": 110,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2277,
+      "column": 82,
+      "kind": "any_declaration",
+      "text": "config?: any;",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2277,
+      "column": 91,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2300,
+      "column": 12,
+      "kind": "any_declaration",
+      "text": "e",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2430,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "value: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2430,
+      "column": 16,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2467,
+      "column": 84,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2606,
+      "column": 72,
+      "kind": "any_declaration",
+      "text": "value: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2606,
+      "column": 79,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3013,
+      "column": 44,
+      "kind": "any_declaration",
+      "text": "json: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3013,
+      "column": 50,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3038,
+      "column": 28,
+      "kind": "any_declaration",
+      "text": "x: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3038,
+      "column": 31,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3060,
+      "column": 5,
+      "kind": "any_declaration",
+      "text": "json: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3060,
+      "column": 11,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3075,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "raw",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3099,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "raw",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3300,
+      "column": 38,
+      "kind": "any_declaration",
+      "text": "value: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3300,
+      "column": 45,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3354,
+      "column": 43,
+      "kind": "any_declaration",
+      "text": "raw: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3354,
+      "column": 48,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3377,
+      "column": 5,
+      "kind": "any_declaration",
+      "text": "raw: any;",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3377,
+      "column": 10,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3406,
+      "column": 5,
+      "kind": "any_declaration",
+      "text": "json: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3406,
+      "column": 11,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3420,
+      "column": 18,
+      "kind": "any_declaration",
+      "text": "raw: json || convertToObject(sourceFile!, errors)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3461,
+      "column": 19,
+      "kind": "any_declaration",
+      "text": "extendsRaw = extendedConfig.raw",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3497,
+      "column": 5,
+      "kind": "any_declaration",
+      "text": "json: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3497,
+      "column": 11,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3514,
+      "column": 14,
+      "kind": "any_declaration",
+      "text": "raw: json",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3599,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "value: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3599,
+      "column": 16,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3608,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "currentOption",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3725,
+      "column": 45,
+      "kind": "any_declaration",
+      "text": "jsonOption: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3725,
+      "column": 57,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3733,
+      "column": 48,
+      "kind": "any_declaration",
+      "text": "jsonOptions: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3733,
+      "column": 61,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3739,
+      "column": 48,
+      "kind": "any_declaration",
+      "text": "jsonOptions: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3739,
+      "column": 61,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3752,
+      "column": 47,
+      "kind": "any_declaration",
+      "text": "jsonOptions: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3752,
+      "column": 60,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3765,
+      "column": 47,
+      "kind": "any_declaration",
+      "text": "jsonOptions: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3765,
+      "column": 60,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3771,
+      "column": 44,
+      "kind": "any_declaration",
+      "text": "jsonOptions: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3771,
+      "column": 57,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3775,
+      "column": 81,
+      "kind": "any_declaration",
+      "text": "jsonOptions: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3775,
+      "column": 94,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3776,
+      "column": 81,
+      "kind": "any_declaration",
+      "text": "jsonOptions: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3776,
+      "column": 94,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3777,
+      "column": 81,
+      "kind": "any_declaration",
+      "text": "jsonOptions: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3777,
+      "column": 94,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3803,
+      "column": 5,
+      "kind": "any_declaration",
+      "text": "value: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3803,
+      "column": 12,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3835,
+      "column": 83,
+      "kind": "any_declaration",
+      "text": "value: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3835,
+      "column": 90,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3880,
+      "column": 22,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3886,
+      "column": 4,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3887,
+      "column": 32,
+      "kind": "any_declaration",
+      "text": "v",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 4276,
+      "column": 41,
+      "kind": "any_declaration",
+      "text": "value: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 4276,
+      "column": 48,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 437,
+      "column": 136,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 736,
+      "column": 50,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 759,
+      "column": 28,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 764,
+      "column": 18,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 810,
+      "column": 120,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1066,
+      "column": 119,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1067,
+      "column": 36,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1479,
+      "column": 11,
+      "kind": "any_declaration",
+      "text": "result: any = {}",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1479,
+      "column": 19,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1482,
+      "column": 37,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1496,
+      "column": 35,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1499,
+      "column": 24,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1499,
+      "column": 46,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1505,
+      "column": 24,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1505,
+      "column": 45,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1516,
+      "column": 23,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1522,
+      "column": 40,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1778,
+      "column": 49,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1783,
+      "column": 46,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 2220,
+      "column": 19,
+      "kind": "any_declaration",
+      "text": "substitutionDistance = s1[i - 1].toLowerCase() === s2[j - 1].toLowerCase()\r\n                ? (previous[j - 1] + 0.1)\r\n                : (previous[j - 1] + 2)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 2223,
+      "column": 19,
+      "kind": "any_declaration",
+      "text": "dist = c1 === s2.charCodeAt(j - 1)\r\n                ? previous[j - 1]\r\n                : Math.min(/*delete*/ previous[j] + 1, /*insert*/ current[j - 1] + 1, /*substitute*/ substitutionDistance)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 2242,
+      "column": 11,
+      "kind": "any_declaration",
+      "text": "res = previous[s2.length]",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 2593,
+      "column": 25,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 170,
+      "column": 31,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 190,
+      "column": 23,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 376,
+      "column": 19,
+      "kind": "any_declaration",
+      "text": "text = Function.prototype.toString.call(func)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 643,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "commonSourceDirectory",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1017,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "sourceMapUrlPos",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1274,
+      "column": 53,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 488,
+      "column": 25,
+      "kind": "any_declaration",
+      "text": "literal",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 515,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "parameterName",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 626,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 646,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 702,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 804,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 1070,
+      "column": 17,
+      "kind": "any_declaration",
+      "text": "newProp",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 1221,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/factory/emitHelpers.ts",
+      "line": 650,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "args",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/factory/emitHelpers.ts",
+      "line": 662,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "args",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 22,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 6145,
+      "column": 43,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 7068,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "modifierArray",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 954,
+      "column": 69,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1781,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "extensions",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1847,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1859,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "alternateResult",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 2340,
+      "column": 24,
+      "kind": "any_declaration",
+      "text": "t",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 2625,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "mainExport",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 2847,
+      "column": 28,
+      "kind": "any_declaration",
+      "text": "elem",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 799,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "result",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1105,
+      "column": 33,
+      "kind": "any_declaration",
+      "text": "e",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1154,
+      "column": 11,
+      "kind": "any_declaration",
+      "text": "packageJsonContent = cachedPackageJson?.contents.packageJsonContent || tryParseJson(host.readFile(packageJsonPath)!)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1155,
+      "column": 11,
+      "kind": "any_declaration",
+      "text": "imports = packageJsonContent?.imports",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1256,
+      "column": 54,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1305,
+      "column": 19,
+      "kind": "any_declaration",
+      "text": "mainFileRelative = packageJsonContent?.typings || packageJsonContent?.types || packageJsonContent?.main || \"index.js\"",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1253,
+      "column": 78,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1653,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "statements",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1653,
+      "column": 25,
+      "kind": "any_declaration",
+      "text": "endOfFileToken",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1663,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "expression",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 5583,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "colonToken",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 7101,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "variableDeclaration",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8018,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "decorator",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8018,
+      "column": 24,
+      "kind": "any_declaration",
+      "text": "modifier",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8164,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "members",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8278,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "members",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8292,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "statements",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 8317,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "name",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 9199,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "linkEnd",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 9694,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "parameters",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10207,
+      "column": 25,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10208,
+      "column": 40,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "line": 646,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "normalized",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 404,
+      "column": 16,
+      "kind": "any_declaration",
+      "text": "e",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 439,
+      "column": 16,
+      "kind": "any_declaration",
+      "text": "e",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 542,
+      "column": 15,
+      "kind": "any_declaration",
+      "text": "newValue = originalReadFile.call(host, fileName)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 577,
+      "column": 15,
+      "kind": "any_declaration",
+      "text": "newValue = originalFileExists.call(host, fileName)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 609,
+      "column": 19,
+      "kind": "any_declaration",
+      "text": "newValue = originalDirectoryExists.call(host, directory)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1950,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "realpath: host.realpath?.bind(host)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2847,
+      "column": 16,
+      "kind": "any_declaration",
+      "text": "e",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3284,
+      "column": 130,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4054,
+      "column": 21,
+      "kind": "any_declaration",
+      "text": "outputDts",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4379,
+      "column": 81,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4902,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "directoryExists",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 209,
+      "column": 8,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 215,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "data: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 215,
+      "column": 15,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 216,
+      "column": 8,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 449,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "packageDirLength",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 563,
+      "column": 46,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1084,
+      "column": 15,
+      "kind": "any_declaration",
+      "text": "data = resolutionHost.beforeResolveSingleModuleNameWithoutWatching?.(moduleResolutionCache)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 404,
+      "column": 25,
+      "kind": "any_declaration",
+      "text": "x: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 404,
+      "column": 28,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 408,
+      "column": 25,
+      "kind": "any_declaration",
+      "text": "x: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 408,
+      "column": 28,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 424,
+      "column": 15,
+      "kind": "any_declaration",
+      "text": "parsed = JSON.parse(text)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 27,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 207,
+      "column": 46,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "line": 208,
+      "column": 41,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 429,
+      "column": 25,
+      "kind": "any_declaration",
+      "text": "currentModifiedTime",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 463,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "pollScheduled: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 463,
+      "column": 24,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 516,
+      "column": 22,
+      "kind": "any_declaration",
+      "text": "param1: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 516,
+      "column": 30,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 516,
+      "column": 50,
+      "kind": "any_declaration",
+      "text": "param3: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 516,
+      "column": 58,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 617,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "timerToUpdateChildWatches: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 617,
+      "column": 36,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 831,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "hasChanges",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1276,
+      "column": 20,
+      "kind": "any_declaration",
+      "text": "e",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1440,
+      "column": 37,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1440,
+      "column": 74,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1440,
+      "column": 82,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 19,
+      "kind": "any_declaration",
+      "text": "timeoutId: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1441,
+      "column": 30,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1472,
+      "column": 15,
+      "kind": "any_declaration",
+      "text": "_os = require(\"os\")",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1525,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "newLine: _os.EOL",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1552,
+      "column": 28,
+      "kind": "any_declaration",
+      "text": "e",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1594,
+      "column": 203,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1609,
+      "column": 51,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1619,
+      "column": 30,
+      "kind": "any_declaration",
+      "text": "module: require(modulePath)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1621,
+      "column": 24,
+      "kind": "any_declaration",
+      "text": "error",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1622,
+      "column": 72,
+      "kind": "any_declaration",
+      "text": "error",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 65,
+      "column": 20,
+      "kind": "any_declaration",
+      "text": "e",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 231,
+      "column": 19,
+      "kind": "any_declaration",
+      "text": "objectFlags = (type as any).objectFlags",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 231,
+      "column": 42,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 317,
+      "column": 17,
+      "kind": "any_declaration",
+      "text": "intrinsicName: (type as any).intrinsicName",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 317,
+      "column": 41,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "line": 338,
+      "column": 116,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "line": 704,
+      "column": 13,
+      "kind": "any_declaration",
+      "text": "typeNode",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 624,
+      "column": 77,
+      "kind": "any_declaration",
+      "text": "_all",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 624,
+      "column": 83,
+      "kind": "any_declaration",
+      "text": "_number",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 624,
+      "column": 92,
+      "kind": "any_declaration",
+      "text": "_digits",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 624,
+      "column": 101,
+      "kind": "any_declaration",
+      "text": "decimal",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 624,
+      "column": 110,
+      "kind": "any_declaration",
+      "text": "hex",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 624,
+      "column": 115,
+      "kind": "any_declaration",
+      "text": "word",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 424,
+      "column": 5,
+      "kind": "any_declaration",
+      "text": "timerToBuildInvalidatedProject: any;",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 424,
+      "column": 37,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 992,
+      "column": 34,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 993,
+      "column": 33,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1355,
+      "column": 64,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1474,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "referenceStatuses",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1663,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "existingRoot",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 7705,
+      "column": 5,
+      "kind": "any_declaration",
+      "text": "raw?: any;",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 7705,
+      "column": 11,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10320,
+      "column": 49,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 7793,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "result = tryParseJson(jsonText)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 7809,
+      "column": 45,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 36,
+      "kind": "any_declaration",
+      "text": "dst: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 41,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 46,
+      "kind": "any_declaration",
+      "text": "src: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8147,
+      "column": 51,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8553,
+      "column": 39,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8554,
+      "column": 41,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8555,
+      "column": 51,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8556,
+      "column": 52,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8557,
+      "column": 45,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8559,
+      "column": 39,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8903,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "res",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 603,
+      "column": 82,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 221,
+      "column": 49,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 830,
+      "column": 15,
+      "kind": "any_declaration",
+      "text": "result = originalGetSourceFile.call(compilerHost, ...args)",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 862,
+      "column": 91,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 109,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "buildInfo",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 150,
+      "column": 88,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 151,
+      "column": 61,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 37,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 74,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 169,
+      "column": 82,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 171,
+      "column": 19,
+      "kind": "any_declaration",
+      "text": "timeoutId: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 171,
+      "column": 30,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 443,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "timerToUpdateProgram: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 443,
+      "column": 31,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 444,
+      "column": 9,
+      "kind": "any_declaration",
+      "text": "timerToInvalidateFailedLookupResolutions: any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 444,
+      "column": 51,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 555,
+      "column": 75,
+      "kind": "explicit_any",
+      "text": "any",
+      "reason": "This ledger obligation is an any token or declaration, not an as-cast.",
+      "status": "project_checker_stopped_before_lowering"
+    }
+  ]
+}

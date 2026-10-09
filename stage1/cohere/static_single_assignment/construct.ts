@@ -361,9 +361,7 @@ class SingleAssignmentBuilder<F, B, P> {
             if(!this.graph.endsInReturn(block)) {
                 continue;
             }
-            // Not `?.definitions.get(binding)`: stage 0 can't lower a call through ?. yet (gap 2).
-            const state = this.states.get(this.graph.id(block));
-            const renamed = state === undefined ? undefined : state.definitions.get(binding);
+            const renamed = this.states.get(this.graph.id(block))?.definitions.get(binding);
             if(renamed !== undefined) {
                 this.graph.setReturns(this.fn, this.graph.withIdentifier(returns, renamed));
                 return;

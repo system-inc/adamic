@@ -1,0 +1,26 @@
+go version go1.27.1 linux/amd64
+v24.19.0
+setup: go ready (0.024s)
+setup: node ready (0.025s)
+setup: submodules ready (0.064s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.008s
+setup: markdown dependencies ready (0.071s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.158s)
+# github.com/system-inc/adamic/internal/javascript
+internal/javascript/javascript.go:471:1: syntax error: unexpected <<, expected }
+internal/javascript/javascript.go:473:5: syntax error: unexpected keyword else at end of statement
+internal/javascript/javascript.go:475:1: syntax error: unexpected ==, expected }
+internal/javascript/javascript.go:477:1: syntax error: unexpected >>, expected }
+# github.com/system-inc/adamic/internal/native
+internal/native/emit_statements.go:155:1: syntax error: unexpected <<, expected }
+internal/native/emit_statements.go:157:5: syntax error: unexpected keyword else at end of statement
+internal/native/emit_statements.go:159:1: syntax error: unexpected ==, expected }
+internal/native/emit_statements.go:161:1: syntax error: unexpected >>, expected }
+internal/native/emit_statements.go:332:3: syntax error: non-declaration statement outside function body
+# github.com/system-inc/adamic/internal/lower
+internal/lower/refusals.go:104:1: syntax error: unexpected <<, expected }
+internal/lower/refusals.go:105:3: syntax error: unexpected keyword if at end of statement
+internal/lower/refusals.go:106:1: syntax error: unexpected ==, expected }
+internal/lower/refusals.go:110:1: syntax error: unexpected >>, expected }
+internal/lower/refusals.go:114:3: syntax error: non-declaration statement outside function body

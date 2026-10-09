@@ -1,0 +1,21 @@
+[
+  {
+    "mutant": "skip-finally",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/lowering-chain/member-16-mutants/skip-finally/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestGeneratorCancellation$",
+      "-timeout",
+      "60s",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "witness": "stdout differs"
+  }
+]

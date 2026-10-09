@@ -1,0 +1,274 @@
+=== RUN   TestPlaceholderTypedBoundaryAssignmentResult
+=== PAUSE TestPlaceholderTypedBoundaryAssignmentResult
+=== RUN   TestPlaceholderTypedBoundaryReturnAssignment
+=== PAUSE TestPlaceholderTypedBoundaryReturnAssignment
+=== RUN   TestPlaceholderTypedBoundaryAliasReset
+=== PAUSE TestPlaceholderTypedBoundaryAliasReset
+=== RUN   TestPlaceholderTypedBoundaryArgument
+=== PAUSE TestPlaceholderTypedBoundaryArgument
+=== RUN   TestPlaceholderTypedBoundarySavedCopy
+=== PAUSE TestPlaceholderTypedBoundarySavedCopy
+=== RUN   TestPlaceholderTypedBoundaryProperty
+=== PAUSE TestPlaceholderTypedBoundaryProperty
+=== RUN   TestPlaceholderTypedBoundaryCall
+=== PAUSE TestPlaceholderTypedBoundaryCall
+=== RUN   TestPlaceholderTypedBoundaryReturn
+=== PAUSE TestPlaceholderTypedBoundaryReturn
+=== RUN   TestPlaceholderTypedBoundaryTypedLocal
+=== PAUSE TestPlaceholderTypedBoundaryTypedLocal
+=== RUN   TestPlaceholderTypedBoundaryOrdinaryField
+=== PAUSE TestPlaceholderTypedBoundaryOrdinaryField
+=== RUN   TestPlaceholderTypedBoundaryArrayElement
+=== PAUSE TestPlaceholderTypedBoundaryArrayElement
+=== RUN   TestPlaceholderTypedBoundaryOptionalArrayElement
+=== PAUSE TestPlaceholderTypedBoundaryOptionalArrayElement
+=== RUN   TestPlaceholderTypedBoundaryElementWrite
+=== PAUSE TestPlaceholderTypedBoundaryElementWrite
+=== RUN   TestPlaceholderTypedBoundaryOptionalReceiver
+=== PAUSE TestPlaceholderTypedBoundaryOptionalReceiver
+=== RUN   TestPlaceholderTypedBoundaryOptionalParameterLaterTUse
+=== PAUSE TestPlaceholderTypedBoundaryOptionalParameterLaterTUse
+=== RUN   TestPlaceholderTypedBoundaryPresence
+=== PAUSE TestPlaceholderTypedBoundaryPresence
+=== RUN   TestPlaceholderTypedBoundaryDominatingWrite
+=== PAUSE TestPlaceholderTypedBoundaryDominatingWrite
+=== RUN   TestPlaceholderTypedBoundarySavedAfterWrite
+=== PAUSE TestPlaceholderTypedBoundarySavedAfterWrite
+=== RUN   TestPlaceholderTypedBoundaryPlaceholderFieldCopy
+=== PAUSE TestPlaceholderTypedBoundaryPlaceholderFieldCopy
+=== RUN   TestPlaceholderWeakSlotStaysNotYet
+=== PAUSE TestPlaceholderWeakSlotStaysNotYet
+=== CONT  TestPlaceholderTypedBoundaryAssignmentResult
+=== CONT  TestPlaceholderWeakSlotStaysNotYet
+=== CONT  TestPlaceholderTypedBoundaryPlaceholderFieldCopy
+=== CONT  TestPlaceholderTypedBoundaryOrdinaryField
+=== CONT  TestPlaceholderTypedBoundarySavedAfterWrite
+--- PASS: TestPlaceholderTypedBoundaryOrdinaryField (0.21s)
+=== CONT  TestPlaceholderTypedBoundaryDominatingWrite
+--- PASS: TestPlaceholderTypedBoundarySavedAfterWrite (0.22s)
+--- PASS: TestPlaceholderWeakSlotStaysNotYet (0.23s)
+=== CONT  TestPlaceholderTypedBoundaryOptionalParameterLaterTUse
+=== CONT  TestPlaceholderTypedBoundaryPresence
+--- PASS: TestPlaceholderTypedBoundaryAssignmentResult (0.24s)
+=== CONT  TestPlaceholderTypedBoundaryOptionalReceiver
+--- PASS: TestPlaceholderTypedBoundaryPlaceholderFieldCopy (0.33s)
+=== CONT  TestPlaceholderTypedBoundaryElementWrite
+--- PASS: TestPlaceholderTypedBoundaryDominatingWrite (0.13s)
+=== CONT  TestPlaceholderTypedBoundaryOptionalArrayElement
+--- PASS: TestPlaceholderTypedBoundaryOptionalReceiver (0.11s)
+=== CONT  TestPlaceholderTypedBoundaryArrayElement
+--- PASS: TestPlaceholderTypedBoundaryOptionalParameterLaterTUse (0.14s)
+=== CONT  TestPlaceholderTypedBoundarySavedCopy
+--- PASS: TestPlaceholderTypedBoundaryPresence (0.20s)
+=== CONT  TestPlaceholderTypedBoundaryTypedLocal
+--- PASS: TestPlaceholderTypedBoundaryOptionalArrayElement (0.12s)
+=== CONT  TestPlaceholderTypedBoundaryReturn
+--- PASS: TestPlaceholderTypedBoundaryArrayElement (0.15s)
+=== CONT  TestPlaceholderTypedBoundaryCall
+--- PASS: TestPlaceholderTypedBoundaryElementWrite (0.17s)
+=== CONT  TestPlaceholderTypedBoundaryProperty
+--- PASS: TestPlaceholderTypedBoundarySavedCopy (0.15s)
+=== CONT  TestPlaceholderTypedBoundaryAliasReset
+--- PASS: TestPlaceholderTypedBoundaryTypedLocal (0.12s)
+=== CONT  TestPlaceholderTypedBoundaryArgument
+=== CONT  TestPlaceholderTypedBoundaryReturnAssignment
+--- PASS: TestPlaceholderTypedBoundaryReturn (0.17s)
+--- PASS: TestPlaceholderTypedBoundaryCall (0.13s)
+--- PASS: TestPlaceholderTypedBoundaryProperty (0.14s)
+--- PASS: TestPlaceholderTypedBoundaryAliasReset (0.12s)
+--- PASS: TestPlaceholderTypedBoundaryArgument (0.10s)
+--- PASS: TestPlaceholderTypedBoundaryReturnAssignment (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.717s
+=== RUN   TestLiteralDefaultPlaceholderAgreesWithNode
+=== PAUSE TestLiteralDefaultPlaceholderAgreesWithNode
+=== RUN   TestPlaceholderUseCheckBeforeUse
+=== PAUSE TestPlaceholderUseCheckBeforeUse
+=== RUN   TestPlaceholderUseCheckSavedLeak
+=== PAUSE TestPlaceholderUseCheckSavedLeak
+=== RUN   TestPlaceholderUseCheckNullBeforeUse
+=== PAUSE TestPlaceholderUseCheckNullBeforeUse
+=== RUN   TestPlaceholderUseCheckNullSavedLeak
+=== PAUSE TestPlaceholderUseCheckNullSavedLeak
+=== RUN   TestPlaceholderUseCheckAssignmentResult
+=== PAUSE TestPlaceholderUseCheckAssignmentResult
+=== RUN   TestPlaceholderUseCheckReturnAssignment
+=== PAUSE TestPlaceholderUseCheckReturnAssignment
+=== RUN   TestPlaceholderUseCheckAliasReset
+=== PAUSE TestPlaceholderUseCheckAliasReset
+=== RUN   TestPlaceholderNonliteralAssertionStillChecks
+=== PAUSE TestPlaceholderNonliteralAssertionStillChecks
+=== RUN   TestPlaceholderFlowMutantBeforeUse
+=== PAUSE TestPlaceholderFlowMutantBeforeUse
+=== RUN   TestPlaceholderFlowMutantSavedLeak
+=== PAUSE TestPlaceholderFlowMutantSavedLeak
+=== RUN   TestPlaceholderFlowMutantNullBeforeUse
+=== PAUSE TestPlaceholderFlowMutantNullBeforeUse
+=== RUN   TestPlaceholderFlowMutantNullSavedLeak
+=== PAUSE TestPlaceholderFlowMutantNullSavedLeak
+=== RUN   TestPlaceholderFlowMutantAssignmentResult
+=== PAUSE TestPlaceholderFlowMutantAssignmentResult
+=== RUN   TestPlaceholderFlowMutantReturnAssignment
+=== PAUSE TestPlaceholderFlowMutantReturnAssignment
+=== RUN   TestPlaceholderFlowMutantAliasReset
+=== PAUSE TestPlaceholderFlowMutantAliasReset
+=== RUN   TestPlaceholderNullTagMutant
+=== PAUSE TestPlaceholderNullTagMutant
+=== RUN   TestPlaceholderSpreadReadinessMutant
+=== PAUSE TestPlaceholderSpreadReadinessMutant
+=== CONT  TestLiteralDefaultPlaceholderAgreesWithNode
+=== CONT  TestPlaceholderFlowMutantBeforeUse
+=== CONT  TestPlaceholderFlowMutantReturnAssignment
+=== CONT  TestPlaceholderFlowMutantAssignmentResult
+=== CONT  TestPlaceholderFlowMutantNullSavedLeak
+=== NAME  TestLiteralDefaultPlaceholderAgreesWithNode
+    non_null_impossible_test.go:108: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantReturnAssignment
+    placeholder_nonnull_test.go:154: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantBeforeUse
+    placeholder_nonnull_test.go:129: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantAssignmentResult
+    placeholder_nonnull_test.go:149: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantNullSavedLeak
+    placeholder_nonnull_test.go:144: gate cache node miss
+=== NAME  TestLiteralDefaultPlaceholderAgreesWithNode
+    non_null_impossible_test.go:110: gate cache node miss
+--- PASS: TestLiteralDefaultPlaceholderAgreesWithNode (0.96s)
+=== CONT  TestPlaceholderFlowMutantNullBeforeUse
+=== NAME  TestPlaceholderFlowMutantReturnAssignment
+    placeholder_nonnull_test.go:154: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantAssignmentResult
+    placeholder_nonnull_test.go:149: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantReturnAssignment
+    placeholder_nonnull_test.go:154: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantReturnAssignment (1.05s)
+=== CONT  TestPlaceholderFlowMutantSavedLeak
+=== NAME  TestPlaceholderFlowMutantNullSavedLeak
+    placeholder_nonnull_test.go:144: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantBeforeUse
+    placeholder_nonnull_test.go:129: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantAssignmentResult
+    placeholder_nonnull_test.go:149: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantAssignmentResult (1.10s)
+=== CONT  TestPlaceholderNullTagMutant
+=== NAME  TestPlaceholderFlowMutantNullSavedLeak
+    placeholder_nonnull_test.go:144: drop flow check lets unset through: exit 0 stdout "present\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantNullSavedLeak (1.14s)
+=== CONT  TestPlaceholderSpreadReadinessMutant
+=== NAME  TestPlaceholderFlowMutantBeforeUse
+    placeholder_nonnull_test.go:129: drop flow check lets unset through: exit 0 stdout "before\nunset\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantBeforeUse (1.15s)
+=== CONT  TestPlaceholderFlowMutantAliasReset
+=== NAME  TestPlaceholderNullTagMutant
+    placeholder_nonnull_test.go:220: gate cache node miss
+=== NAME  TestPlaceholderSpreadReadinessMutant
+    placeholder_nonnull_test.go:263: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantNullBeforeUse
+    placeholder_nonnull_test.go:139: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantSavedLeak
+    placeholder_nonnull_test.go:134: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantAliasReset
+    placeholder_nonnull_test.go:159: gate cache node miss
+=== NAME  TestPlaceholderFlowMutantNullBeforeUse
+    placeholder_nonnull_test.go:139: gate cache node miss
+    placeholder_nonnull_test.go:139: drop flow check lets unset through: exit 0 stdout "before\nset\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantNullBeforeUse (0.60s)
+=== CONT  TestPlaceholderUseCheckAssignmentResult
+=== NAME  TestPlaceholderFlowMutantSavedLeak
+    placeholder_nonnull_test.go:134: gate cache node miss
+=== NAME  TestPlaceholderUseCheckAssignmentResult
+    placeholder_nonnull_test.go:48: gate cache node hit
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestPlaceholderFlowMutantSavedLeak
+    placeholder_nonnull_test.go:134: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantSavedLeak (0.60s)
+=== CONT  TestPlaceholderNonliteralAssertionStillChecks
+=== NAME  TestPlaceholderNullTagMutant
+    placeholder_nonnull_test.go:239: gate cache node miss
+=== NAME  TestPlaceholderNonliteralAssertionStillChecks
+    placeholder_nonnull_test.go:111: gate cache node miss
+=== NAME  TestPlaceholderNullTagMutant
+    placeholder_nonnull_test.go:249: null collapsed to undefined caught by Node: stdout "false|true|true|false\nfalse|true\nfalse|false\n"
+--- PASS: TestPlaceholderNullTagMutant (0.65s)
+=== CONT  TestPlaceholderUseCheckAliasReset
+=== NAME  TestPlaceholderFlowMutantAliasReset
+    placeholder_nonnull_test.go:159: gate cache node miss
+=== NAME  TestPlaceholderUseCheckAliasReset
+    placeholder_nonnull_test.go:58: gate cache node hit
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestPlaceholderNonliteralAssertionStillChecks
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestPlaceholderFlowMutantAliasReset
+    placeholder_nonnull_test.go:159: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutantAliasReset (0.69s)
+=== CONT  TestPlaceholderUseCheckReturnAssignment
+=== NAME  TestPlaceholderUseCheckAssignmentResult
+    placeholder_nonnull_test.go:48: gate cache node miss
+=== NAME  TestPlaceholderUseCheckReturnAssignment
+    placeholder_nonnull_test.go:53: gate cache node hit
+    oracle_test.go:596: gate cache native miss
+--- PASS: TestPlaceholderUseCheckAssignmentResult (0.36s)
+=== CONT  TestPlaceholderUseCheckNullBeforeUse
+    placeholder_nonnull_test.go:38: gate cache node hit
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestPlaceholderNonliteralAssertionStillChecks
+    placeholder_nonnull_test.go:116: gate cache node miss
+--- PASS: TestPlaceholderNonliteralAssertionStillChecks (0.42s)
+=== CONT  TestPlaceholderUseCheckNullSavedLeak
+=== NAME  TestPlaceholderUseCheckAliasReset
+    placeholder_nonnull_test.go:58: gate cache node miss
+=== NAME  TestPlaceholderUseCheckReturnAssignment
+    placeholder_nonnull_test.go:53: gate cache node miss
+=== NAME  TestPlaceholderUseCheckNullSavedLeak
+    placeholder_nonnull_test.go:43: gate cache node hit
+    oracle_test.go:596: gate cache native miss
+--- PASS: TestPlaceholderUseCheckAliasReset (0.38s)
+=== CONT  TestPlaceholderUseCheckSavedLeak
+--- PASS: TestPlaceholderUseCheckReturnAssignment (0.32s)
+=== CONT  TestPlaceholderUseCheckBeforeUse
+=== NAME  TestPlaceholderUseCheckNullBeforeUse
+    placeholder_nonnull_test.go:38: gate cache node miss
+=== NAME  TestPlaceholderSpreadReadinessMutant
+    placeholder_nonnull_test.go:294: gate cache node miss
+--- PASS: TestPlaceholderUseCheckNullBeforeUse (0.30s)
+=== NAME  TestPlaceholderUseCheckSavedLeak
+    placeholder_nonnull_test.go:33: gate cache node hit
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestPlaceholderUseCheckBeforeUse
+    placeholder_nonnull_test.go:28: gate cache node hit
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestPlaceholderSpreadReadinessMutant
+    placeholder_nonnull_test.go:298: copy readiness mutant caught by Node exit 0: native and JavaScript exit 70
+--- PASS: TestPlaceholderSpreadReadinessMutant (1.11s)
+=== NAME  TestPlaceholderUseCheckNullSavedLeak
+    placeholder_nonnull_test.go:43: gate cache node miss
+--- PASS: TestPlaceholderUseCheckNullSavedLeak (0.32s)
+=== NAME  TestPlaceholderUseCheckBeforeUse
+    placeholder_nonnull_test.go:28: gate cache node miss
+=== NAME  TestPlaceholderUseCheckSavedLeak
+    placeholder_nonnull_test.go:33: gate cache node miss
+--- PASS: TestPlaceholderUseCheckBeforeUse (0.27s)
+--- PASS: TestPlaceholderUseCheckSavedLeak (0.31s)
+PASS
+gate cache: native hits=0 misses=8
+gate cache: node hits=7 misses=29
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.458s
+=== RUN   TestPlaceholderExplainChecksOutput
+=== PAUSE TestPlaceholderExplainChecksOutput
+=== CONT  TestPlaceholderExplainChecksOutput
+=== RUN   TestPlaceholderExplainChecksOutput/c
+=== PAUSE TestPlaceholderExplainChecksOutput/c
+=== RUN   TestPlaceholderExplainChecksOutput/js
+=== PAUSE TestPlaceholderExplainChecksOutput/js
+=== RUN   TestPlaceholderExplainChecksOutput/build
+=== PAUSE TestPlaceholderExplainChecksOutput/build
+=== CONT  TestPlaceholderExplainChecksOutput/c
+=== CONT  TestPlaceholderExplainChecksOutput/build
+=== CONT  TestPlaceholderExplainChecksOutput/js
+--- PASS: TestPlaceholderExplainChecksOutput (0.00s)
+    --- PASS: TestPlaceholderExplainChecksOutput/js (0.14s)
+    --- PASS: TestPlaceholderExplainChecksOutput/c (0.17s)
+    --- PASS: TestPlaceholderExplainChecksOutput/build (0.59s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic	0.627s

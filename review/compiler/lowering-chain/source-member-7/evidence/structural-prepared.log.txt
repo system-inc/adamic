@@ -1,0 +1,7 @@
+=== RUN   TestCheckedAnyUnsupportedContracts
+=== RUN   TestCheckedAnyUnsupportedContracts/json_unprepared
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsjson_unprepared2249851051/001/boundary.ts:3:24: stage 0 can't lower checked JSON contract without a prepared dynamic binding yet
+--- PASS: TestCheckedAnyUnsupportedContracts (0.05s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/json_unprepared (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.056s

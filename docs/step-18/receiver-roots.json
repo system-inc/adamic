@@ -1,0 +1,66 @@
+{
+  "base": "4885cec5",
+  "before_sha256": "78d243cb4f2faac3ee3a7e0fa800f939fbcd270eea9dd48ce1b7b48ca3047904",
+  "after_sha256": "a2ca7312153947e0bc6436182f1a1948a5a83bac28d33f2fcc185a4f52765ec3",
+  "files": 79,
+  "checker_metadata_identical": true,
+  "measurement": "checker-rejected; no usable IR; exact local roots only, never whole-program acceptance or hidden-byte retirement",
+  "rows": [
+    {
+      "reason": "?. to a number, which would be number | undefined",
+      "before": 3,
+      "after": 3,
+      "disappeared": [],
+      "new": []
+    },
+    {
+      "reason": "?.[] on a value",
+      "before": 6,
+      "after": 6,
+      "disappeared": [],
+      "new": []
+    },
+    {
+      "reason": "a call through ?. (an optional call)",
+      "before": 103,
+      "after": 103,
+      "disappeared": [],
+      "new": []
+    },
+    {
+      "reason": "an optional chain longer than one step",
+      "before": 11,
+      "after": 11,
+      "disappeared": [],
+      "new": []
+    },
+    {
+      "reason": "an optional method call requiring a saved receiver",
+      "before": 1,
+      "after": 0,
+      "disappeared": [
+        {
+          "base_root": {
+            "measurement": "measured on a checker-rejected program",
+            "unit": "checker.ts:6769:9",
+            "phase": "lowering",
+            "kind": "NotYet",
+            "where": "checker.ts:6910:21",
+            "reason": "an optional method call requiring a saved receiver",
+            "text": "checker.ts:6910:21: stage 0 can't lower an optional method call requiring a saved receiver yet"
+          },
+          "barriers_at_same_position": [],
+          "barriers_at_same_line": []
+        }
+      ],
+      "new": []
+    },
+    {
+      "reason": "optional chaining to .size on a value",
+      "before": 20,
+      "after": 20,
+      "disappeared": [],
+      "new": []
+    }
+  ]
+}

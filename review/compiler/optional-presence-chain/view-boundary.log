@@ -1,0 +1,9 @@
+=== RUN   TestOptionalFieldCheckedViewPending
+    optional_field_write_test.go:201: gate cache node miss
+    optional_field_write_test.go:212: awaits compiler/optional-presence-chain: checked-view optional-field conversion after V1
+--- SKIP: TestOptionalFieldCheckedViewPending (0.19s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.200s

@@ -1,0 +1,10 @@
+=== RUN   TestCSSProfileArtifacts
+    profile_test.go:21: set ADAMIC_CSS_PROFILE_DIR
+--- SKIP: TestCSSProfileArtifacts (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/css	0.007s
+=== RUN   TestProfileArtifacts
+    profile_test.go:20: set ADAMIC_SCANNER_PROFILE_DIR to a scratch directory
+--- SKIP: TestProfileArtifacts (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/scanner	0.007s

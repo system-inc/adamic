@@ -1,0 +1,103 @@
+{
+  "scope": "single selected replay unit only, not a whole-corpus hidden census",
+  "source_file": "core.ts",
+  "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+  "source_identity": "same persistent adaptation used in both replays; selected declaration and body spans identical and match stock TypeScript",
+  "selected_unit": "core.ts:220:1",
+  "unit_span": [
+    7486,
+    7865
+  ],
+  "before_commit": "6a1f8791546d99c0bafb6c9b2e2568babb75a88b",
+  "after_copier_commit": "9a02e97c",
+  "repair_source": "d2651d953fa572193604eb636446b09d822877af",
+  "arithmetic_source": "ec0b16c04f3bbdfbaf3932ab01307f90b08156fd",
+  "before": {
+    "status": "panic",
+    "boundary_ranges": [
+      [
+        7486,
+        7865
+      ]
+    ],
+    "independently_examined_ranges": [],
+    "hidden_ranges": [
+      [
+        7486,
+        7865
+      ]
+    ],
+    "hidden_bytes": 379,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "phase": "lowering",
+        "kind": "panic",
+        "where": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "reason": "latent state copy: unexported IR field argumentFacts",
+        "text": "latent state copy: unexported IR field argumentFacts"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "reason": "unit panic; continued at next declaration",
+        "text": "latent state copy: unexported IR field argumentFacts",
+        "start": 7486,
+        "end": 7865
+      }
+    ]
+  },
+  "after": {
+    "status": "attempted",
+    "boundary_ranges": [
+      [
+        7641,
+        7865
+      ]
+    ],
+    "independently_examined_ranges": [
+      [
+        7486,
+        7641
+      ]
+    ],
+    "hidden_ranges": [
+      [
+        7641,
+        7865
+      ]
+    ],
+    "hidden_bytes": 224,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:62",
+        "reason": "a value of type T",
+        "text": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:62: stage 0 can't lower a value of type T yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/tmp/generics-scout-adapted/src/compiler/core.ts:220:62: stage 0 can't lower a value of type T yet",
+        "start": 7641,
+        "end": 7865
+      }
+    ]
+  },
+  "revealed_bytes": 155,
+  "newly_hidden_bytes": 0,
+  "compiler_implementation_revealed_bytes": 0,
+  "whole_corpus_revealed_bytes": null,
+  "next_stop": "core.ts:220:62: NotYet a value of type T"
+}

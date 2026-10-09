@@ -1,0 +1,6 @@
+=== RUN   TestRefusalMustBeInsideDeclaration
+    classification_test.go:17: entry.ts:9:4: refused: inside=true want false
+--- FAIL: TestRefusalMustBeInsideDeclaration (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/checked-any/probe	0.007s
+FAIL

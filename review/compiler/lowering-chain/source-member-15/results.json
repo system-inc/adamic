@@ -1,0 +1,768 @@
+{
+  "task": "#1xxqbrk",
+  "cpu_affinity": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "gomaxprocs": 4,
+  "test_units": [
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberEvery",
+      "status": "pass",
+      "go_seconds": 0.62,
+      "wall_seconds": 0.617
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberToSorted",
+      "status": "pass",
+      "go_seconds": 0.63,
+      "wall_seconds": 0.628
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberNamedSort",
+      "status": "pass",
+      "go_seconds": 0.66,
+      "wall_seconds": 0.663
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberGenericMap",
+      "status": "pass",
+      "go_seconds": 0.67,
+      "wall_seconds": 0.668
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberFindIndex",
+      "status": "pass",
+      "go_seconds": 0.53,
+      "wall_seconds": 1.142
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberFindLast",
+      "status": "pass",
+      "go_seconds": 0.55,
+      "wall_seconds": 1.18
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningLibraryMap",
+      "status": "pass",
+      "go_seconds": 0.54,
+      "wall_seconds": 1.211
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberThrow",
+      "status": "pass",
+      "go_seconds": 0.59,
+      "wall_seconds": 1.257
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberCapture",
+      "status": "pass",
+      "go_seconds": 0.55,
+      "wall_seconds": 1.76
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningOptionalNumberMap",
+      "status": "pass",
+      "go_seconds": 0.5,
+      "wall_seconds": 1.76
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberReduceAccumulator",
+      "status": "pass",
+      "go_seconds": 0.58,
+      "wall_seconds": 1.765
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberIndex",
+      "status": "pass",
+      "go_seconds": 0.58,
+      "wall_seconds": 1.79
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningUnrepresentedParameter",
+      "status": "pass",
+      "go_seconds": 0.21,
+      "wall_seconds": 1.906
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningOptionalObjectMap",
+      "status": "pass",
+      "go_seconds": 0.57,
+      "wall_seconds": 2.325
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNullableObjectMap",
+      "status": "pass",
+      "go_seconds": 0.57,
+      "wall_seconds": 2.337
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningObjectEvery",
+      "status": "pass",
+      "go_seconds": 0.57,
+      "wall_seconds": 2.359
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningObjectSort",
+      "status": "pass",
+      "go_seconds": 0.61,
+      "wall_seconds": 2.511
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningObjectReduce",
+      "status": "pass",
+      "go_seconds": 0.56,
+      "wall_seconds": 2.899
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningObjectSome",
+      "status": "pass",
+      "go_seconds": 0.59,
+      "wall_seconds": 2.919
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningObjectMap",
+      "status": "pass",
+      "go_seconds": 0.57,
+      "wall_seconds": 2.926
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningObjectGeneric",
+      "status": "pass",
+      "go_seconds": 0.54,
+      "wall_seconds": 3.055
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningObjectForEach",
+      "status": "pass",
+      "go_seconds": 0.49,
+      "wall_seconds": 3.391
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningObjectFind",
+      "status": "pass",
+      "go_seconds": 0.54,
+      "wall_seconds": 3.455
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningObjectFilter",
+      "status": "pass",
+      "go_seconds": 0.56,
+      "wall_seconds": 3.484
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningBooleanMap",
+      "status": "pass",
+      "go_seconds": 0.53,
+      "wall_seconds": 3.586
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningStringMap",
+      "status": "pass",
+      "go_seconds": 0.53,
+      "wall_seconds": 3.924
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberMap",
+      "status": "pass",
+      "go_seconds": 0.54,
+      "wall_seconds": 4.026
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberArguments",
+      "status": "pass",
+      "go_seconds": 0.58,
+      "wall_seconds": 4.039
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberSort",
+      "status": "pass",
+      "go_seconds": 0.55,
+      "wall_seconds": 4.133
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberSome",
+      "status": "pass",
+      "go_seconds": 0.51,
+      "wall_seconds": 4.437
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberReduce",
+      "status": "pass",
+      "go_seconds": 0.55,
+      "wall_seconds": 4.58
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningObjectGenericMap",
+      "status": "pass",
+      "go_seconds": 0.55,
+      "wall_seconds": 4.593
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberForEach",
+      "status": "pass",
+      "go_seconds": 0.52,
+      "wall_seconds": 4.962
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberGeneric",
+      "status": "pass",
+      "go_seconds": 0.53,
+      "wall_seconds": 5.068
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberFilter",
+      "status": "pass",
+      "go_seconds": 0.48,
+      "wall_seconds": 5.079
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "test": "TestCallbackWideningNumberFind",
+      "status": "pass",
+      "go_seconds": 0.5,
+      "wall_seconds": 5.079
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningObjectEvery",
+      "status": "pass",
+      "go_seconds": 0.09,
+      "wall_seconds": 0.093
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberIndex",
+      "status": "pass",
+      "go_seconds": 0.09,
+      "wall_seconds": 0.096
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningLibraryMap",
+      "status": "pass",
+      "go_seconds": 0.1,
+      "wall_seconds": 0.102
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberGenericMap",
+      "status": "pass",
+      "go_seconds": 0.11,
+      "wall_seconds": 0.107
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningObjectSome",
+      "status": "pass",
+      "go_seconds": 0.07,
+      "wall_seconds": 0.162
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningObjectMap",
+      "status": "pass",
+      "go_seconds": 0.06,
+      "wall_seconds": 0.169
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningObjectReduce",
+      "status": "pass",
+      "go_seconds": 0.07,
+      "wall_seconds": 0.17
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningObjectSort",
+      "status": "pass",
+      "go_seconds": 0.09,
+      "wall_seconds": 0.183
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningObjectFind",
+      "status": "pass",
+      "go_seconds": 0.04,
+      "wall_seconds": 0.214
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningObjectForEach",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.219
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningObjectGeneric",
+      "status": "pass",
+      "go_seconds": 0.06,
+      "wall_seconds": 0.225
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningObjectFilter",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.236
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberFindIndex",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.268
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberForEach",
+      "status": "pass",
+      "go_seconds": 0.04,
+      "wall_seconds": 0.268
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberFindLast",
+      "status": "pass",
+      "go_seconds": 0.04,
+      "wall_seconds": 0.276
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberGeneric",
+      "status": "pass",
+      "go_seconds": 0.06,
+      "wall_seconds": 0.277
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningStringMap",
+      "status": "pass",
+      "go_seconds": 0.04,
+      "wall_seconds": 0.308
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningOptionalNumberMap",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.309
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNullableObjectMap",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.309
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningOptionalObjectMap",
+      "status": "pass",
+      "go_seconds": 0.04,
+      "wall_seconds": 0.311
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberArguments",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.357
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberFind",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.358
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberFilter",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.361
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningBooleanMap",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.365
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberSome",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.39
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberToSorted",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.392
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberThrow",
+      "status": "pass",
+      "go_seconds": 0.04,
+      "wall_seconds": 0.4
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningObjectGenericMap",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.408
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberReduceAccumulator",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.425
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberReduce",
+      "status": "pass",
+      "go_seconds": 0.04,
+      "wall_seconds": 0.437
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberEvery",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.441
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberSort",
+      "status": "pass",
+      "go_seconds": 0.05,
+      "wall_seconds": 0.455
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberNamedSort",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.464
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberMap",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.468
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/fresh",
+      "test": "TestCallbackWideningNumberCapture",
+      "status": "pass",
+      "go_seconds": 0.03,
+      "wall_seconds": 0.468
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningLibraryMap",
+      "status": "pass",
+      "go_seconds": 0.24,
+      "wall_seconds": 0.243
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningObjectEvery",
+      "status": "pass",
+      "go_seconds": 0.24,
+      "wall_seconds": 0.244
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberIndex",
+      "status": "pass",
+      "go_seconds": 0.25,
+      "wall_seconds": 0.249
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningOptionalObjectMap",
+      "status": "pass",
+      "go_seconds": 0.27,
+      "wall_seconds": 0.274
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNullableObjectMap",
+      "status": "pass",
+      "go_seconds": 0.19,
+      "wall_seconds": 0.431
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningOptionalNumberMap",
+      "status": "pass",
+      "go_seconds": 0.21,
+      "wall_seconds": 0.451
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningBooleanMap",
+      "status": "pass",
+      "go_seconds": 0.18,
+      "wall_seconds": 0.456
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningStringMap",
+      "status": "pass",
+      "go_seconds": 0.21,
+      "wall_seconds": 0.458
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberArguments",
+      "status": "pass",
+      "go_seconds": 0.2,
+      "wall_seconds": 0.629
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberGenericMap",
+      "status": "pass",
+      "go_seconds": 0.19,
+      "wall_seconds": 0.642
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningObjectGenericMap",
+      "status": "pass",
+      "go_seconds": 0.21,
+      "wall_seconds": 0.667
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningObjectSort",
+      "status": "pass",
+      "go_seconds": 0.22,
+      "wall_seconds": 0.677
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningObjectSome",
+      "status": "pass",
+      "go_seconds": 0.18,
+      "wall_seconds": 0.812
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningObjectReduce",
+      "status": "pass",
+      "go_seconds": 0.19,
+      "wall_seconds": 0.833
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningObjectMap",
+      "status": "pass",
+      "go_seconds": 0.2,
+      "wall_seconds": 0.868
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningObjectGeneric",
+      "status": "pass",
+      "go_seconds": 0.22,
+      "wall_seconds": 0.893
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningObjectForEach",
+      "status": "pass",
+      "go_seconds": 0.19,
+      "wall_seconds": 1.01
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningObjectFind",
+      "status": "pass",
+      "go_seconds": 0.21,
+      "wall_seconds": 1.045
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningObjectFilter",
+      "status": "pass",
+      "go_seconds": 0.24,
+      "wall_seconds": 1.105
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberSome",
+      "status": "pass",
+      "go_seconds": 0.23,
+      "wall_seconds": 1.126
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberToSorted",
+      "status": "pass",
+      "go_seconds": 0.2,
+      "wall_seconds": 1.204
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberThrow",
+      "status": "pass",
+      "go_seconds": 0.23,
+      "wall_seconds": 1.277
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberSort",
+      "status": "pass",
+      "go_seconds": 0.22,
+      "wall_seconds": 1.326
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberReduceAccumulator",
+      "status": "pass",
+      "go_seconds": 0.21,
+      "wall_seconds": 1.34
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberReduce",
+      "status": "pass",
+      "go_seconds": 0.2,
+      "wall_seconds": 1.406
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberFindIndex",
+      "status": "pass",
+      "go_seconds": 0.2,
+      "wall_seconds": 1.474
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberGeneric",
+      "status": "pass",
+      "go_seconds": 0.22,
+      "wall_seconds": 1.553
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberForEach",
+      "status": "pass",
+      "go_seconds": 0.22,
+      "wall_seconds": 1.56
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberFindLast",
+      "status": "pass",
+      "go_seconds": 0.17,
+      "wall_seconds": 1.58
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberNamedSort",
+      "status": "pass",
+      "go_seconds": 0.2,
+      "wall_seconds": 1.677
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberMap",
+      "status": "pass",
+      "go_seconds": 0.21,
+      "wall_seconds": 1.76
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberFind",
+      "status": "pass",
+      "go_seconds": 0.21,
+      "wall_seconds": 1.806
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberFilter",
+      "status": "pass",
+      "go_seconds": 0.25,
+      "wall_seconds": 1.814
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberEvery",
+      "status": "pass",
+      "go_seconds": 0.17,
+      "wall_seconds": 1.852
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "test": "TestCallbackWideningNumberCapture",
+      "status": "pass",
+      "go_seconds": 0.17,
+      "wall_seconds": 1.929
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestCallbackAdapterTargets",
+      "status": "pass",
+      "go_seconds": 0,
+      "wall_seconds": 0.0
+    },
+    {
+      "package": "github.com/system-inc/adamic/internal/ir",
+      "test": "TestClosureTargetsBoundOnlyProvenValues",
+      "status": "pass",
+      "go_seconds": 0,
+      "wall_seconds": 0.0
+    }
+  ]
+}

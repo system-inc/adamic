@@ -1,0 +1,58 @@
+=== RUN   TestProjectReferencesConflictingOptions
+=== PAUSE TestProjectReferencesConflictingOptions
+=== CONT  TestProjectReferencesConflictingOptions
+=== RUN   TestProjectReferencesConflictingOptions/strictNullChecks
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsstrictNullChecks279390122/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsstrictNullChecks279390122/001/dependency/tsconfig.json: compiler option strictNullChecks differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/strictFunctionTypes
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsstrictFunctionTypes3467081664/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsstrictFunctionTypes3467081664/001/dependency/tsconfig.json: compiler option strictFunctionTypes differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/strictBindCallApply
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsstrictBindCallApply1472502701/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsstrictBindCallApply1472502701/001/dependency/tsconfig.json: compiler option strictBindCallApply differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/strictPropertyInitialization
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsstrictPropertyInitializa3693895080/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsstrictPropertyInitializa3693895080/001/dependency/tsconfig.json: compiler option strictPropertyInitialization differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsstrictBuiltinIteratorRet2979566668/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsstrictBuiltinIteratorRet2979566668/001/dependency/tsconfig.json: compiler option strictBuiltinIteratorReturn differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/useUnknownInCatchVariables
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsuseUnknownInCatchVariabl395510271/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsuseUnknownInCatchVariabl395510271/001/dependency/tsconfig.json: compiler option useUnknownInCatchVariables differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/noImplicitAny
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsnoImplicitAny2161418968/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsnoImplicitAny2161418968/001/dependency/tsconfig.json: compiler option noImplicitAny differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/noImplicitThis
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsnoImplicitThis1783356774/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsnoImplicitThis1783356774/001/dependency/tsconfig.json: compiler option noImplicitThis differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsnoUncheckedIndexedAccess319310099/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsnoUncheckedIndexedAccess319310099/001/dependency/tsconfig.json: compiler option noUncheckedIndexedAccess differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsexactOptionalPropertyTyp2147195609/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsexactOptionalPropertyTyp2147195609/001/dependency/tsconfig.json: compiler option exactOptionalPropertyTypes differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/target
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionstarget818500190/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionstarget818500190/001/dependency/tsconfig.json: compiler option target differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/module
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsmodule3721373194/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsmodule3721373194/001/dependency/tsconfig.json: compiler option module differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/lib
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionslib1088346859/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionslib1088346859/001/dependency/tsconfig.json: compiler option lib differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/paths
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionspaths223153587/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionspaths223153587/001/dependency/tsconfig.json: compiler option paths differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsnoUncheckedSideEffectImp1774275220/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsnoUncheckedSideEffectImp1774275220/001/dependency/tsconfig.json: compiler option noUncheckedSideEffectImports differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsforceConsistentCasingInF197884849/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsforceConsistentCasingInF197884849/001/dependency/tsconfig.json: compiler option forceConsistentCasingInFileNames differs; separate checker ownership is required", got <nil>
+=== RUN   TestProjectReferencesConflictingOptions/deduplicatePackages
+    project_references_test.go:114: want "load: project reference options conflict: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsdeduplicatePackages2459678357/001/app/tsconfig.json references /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesConflictingOptionsdeduplicatePackages2459678357/001/dependency/tsconfig.json: compiler option deduplicatePackages differs; separate checker ownership is required", got <nil>
+--- FAIL: TestProjectReferencesConflictingOptions (3.97s)
+    --- FAIL: TestProjectReferencesConflictingOptions/strictNullChecks (0.24s)
+    --- FAIL: TestProjectReferencesConflictingOptions/strictFunctionTypes (0.24s)
+    --- FAIL: TestProjectReferencesConflictingOptions/strictBindCallApply (0.23s)
+    --- FAIL: TestProjectReferencesConflictingOptions/strictPropertyInitialization (0.23s)
+    --- FAIL: TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn (0.22s)
+    --- FAIL: TestProjectReferencesConflictingOptions/useUnknownInCatchVariables (0.23s)
+    --- FAIL: TestProjectReferencesConflictingOptions/noImplicitAny (0.22s)
+    --- FAIL: TestProjectReferencesConflictingOptions/noImplicitThis (0.26s)
+    --- FAIL: TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess (0.24s)
+    --- FAIL: TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes (0.24s)
+    --- FAIL: TestProjectReferencesConflictingOptions/target (0.24s)
+    --- FAIL: TestProjectReferencesConflictingOptions/module (0.22s)
+    --- FAIL: TestProjectReferencesConflictingOptions/lib (0.22s)
+    --- FAIL: TestProjectReferencesConflictingOptions/paths (0.25s)
+    --- FAIL: TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports (0.23s)
+    --- FAIL: TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames (0.24s)
+    --- FAIL: TestProjectReferencesConflictingOptions/deduplicatePackages (0.21s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	3.972s
+FAIL

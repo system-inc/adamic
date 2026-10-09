@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T17:54:43.062426777Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T17:54:43.105660276Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewRequiredString"}
+{"Time":"2026-10-09T17:54:43.105786514Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewRequiredString","Output":"=== RUN   TestOptionalFieldCheckedViewRequiredString\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:43.105820217Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewRequiredString","Output":"=== PAUSE TestOptionalFieldCheckedViewRequiredString\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:43.105823774Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewRequiredString"}
+{"Time":"2026-10-09T17:54:43.10582773Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewRequiredString"}
+{"Time":"2026-10-09T17:54:43.105830395Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewRequiredString","Output":"=== CONT  TestOptionalFieldCheckedViewRequiredString\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:44.813685874Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewRequiredString","Output":"    optional_field_view_test.go:364: Node stores undefined; both backends stop before storing into required string storage with the pinned exit-70 diagnostic\n"}
+{"Time":"2026-10-09T17:54:44.814591791Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewRequiredString","Output":"--- PASS: TestOptionalFieldCheckedViewRequiredString (1.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:44.814636134Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestOptionalFieldCheckedViewRequiredString","Elapsed":1.71}
+{"Time":"2026-10-09T17:54:44.814690905Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:54:44.814705131Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T17:54:44.814709666Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T17:54:44.81471282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T17:54:44.81914451Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.752s\n"}
+{"Time":"2026-10-09T17:54:44.819183926Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":1.7570000000000001}

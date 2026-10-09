@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:37:22.084274946Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:37:22.108596336Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature"}
+{"Time":"2026-10-09T17:37:22.108695128Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"=== RUN   TestOverrideOptionalNumberRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:37:22.108733713Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"=== PAUSE TestOverrideOptionalNumberRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:37:22.108737555Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature"}
+{"Time":"2026-10-09T17:37:22.108741897Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature"}
+{"Time":"2026-10-09T17:37:22.108744918Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"=== RUN   TestOverrideOptionalRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:37:22.108749228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"=== PAUSE TestOverrideOptionalRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:37:22.10875197Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature"}
+{"Time":"2026-10-09T17:37:22.108754919Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature"}
+{"Time":"2026-10-09T17:37:22.10875765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"=== CONT  TestOverrideOptionalNumberRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:37:22.108762985Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature"}
+{"Time":"2026-10-09T17:37:22.108765306Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"=== CONT  TestOverrideOptionalRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:37:22.211645462Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"--- PASS: TestOverrideOptionalNumberRefusesNativeSignature (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:37:22.222125335Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Elapsed":0.1}
+{"Time":"2026-10-09T17:37:22.222230146Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"--- PASS: TestOverrideOptionalRefusesNativeSignature (0.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:37:22.222240641Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Elapsed":0.11}
+{"Time":"2026-10-09T17:37:22.22224438Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:37:22.224737363Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.140s\n"}
+{"Time":"2026-10-09T17:37:22.224788872Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.141}

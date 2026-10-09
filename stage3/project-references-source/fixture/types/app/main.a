@@ -1,0 +1,4 @@
+import type { EntryNumber } from '../packages/entry.a';
+import { value } from '../dependency/value.a';
+const result: EntryNumber = value;
+console.log(`${result}`);

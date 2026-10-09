@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_host.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_host.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_host.a
+    oracle_test.go:776: exit codes differ
+        node:   exit 0, stdout "64\nError: Digest already called\nERR_CRYPTO_HASH_FINALIZED\nError: Digest already called\nERR_CRYPTO_HASH_FINALIZED\nError: ENOENT: no such file or directory, open '/adamic-step21-no-file'\nTypeError: The argument 'path' must be a string, Uint8Array, or URL without null bytes. Received '/adamic\\x00step21'\n", stderr ""
+        native: exit 70, stdout "64\n", stderr "adamic: panic: Digest already called\n"
+    oracle_test.go:789: leaks:
+        exit 70
+        adamic: panic: Digest already called
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_host.a (12.52s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	12.539s
+FAIL

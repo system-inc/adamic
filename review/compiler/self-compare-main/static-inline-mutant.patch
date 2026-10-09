@@ -1,0 +1,11 @@
+--- a/internal/native/units.go
++++ b/internal/native/units.go
+@@ -215,7 +215,7 @@
+ 			continue
+ 		}
+ 		// Every using translation unit needs the definition of a static inline helper.
+-		if d.function && d.tokens[0].text == "static" && d.tokens[1].text == "inline" {
++		if false {
+ 			header.WriteString(rewrite(d.tokens) + "\n")
+ 			continue
+ 		}

@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T07:09:25.441492712Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T07:09:25.450205811Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSpread"}
+{"Time":"2026-10-09T07:09:25.450282356Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSpread","Output":"=== RUN   TestMiscompile2AErrorSpread\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:09:25.450650279Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSpread","Output":"=== PAUSE TestMiscompile2AErrorSpread\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:09:25.450659743Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSpread"}
+{"Time":"2026-10-09T07:09:25.450662968Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSubclassSpread"}
+{"Time":"2026-10-09T07:09:25.450665001Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSubclassSpread","Output":"=== RUN   TestMiscompile2AErrorSubclassSpread\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:09:25.450667595Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSubclassSpread","Output":"=== PAUSE TestMiscompile2AErrorSubclassSpread\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:09:25.450669548Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSubclassSpread"}
+{"Time":"2026-10-09T07:09:25.450673434Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSpread"}
+{"Time":"2026-10-09T07:09:25.450675086Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSpread","Output":"=== CONT  TestMiscompile2AErrorSpread\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:09:25.450677219Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSubclassSpread"}
+{"Time":"2026-10-09T07:09:25.450679022Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSubclassSpread","Output":"=== CONT  TestMiscompile2AErrorSubclassSpread\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:09:25.62623852Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSpread","Output":"    miscompile_2a_test.go:37: Node: exit=0 stdout=\"no name no message\\n\"\n"}
+{"Time":"2026-10-09T07:09:25.626468725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSubclassSpread","Output":"    miscompile_2a_test.go:70: Node: exit=0 stdout=\"no name no message\\n\"\n"}
+{"Time":"2026-10-09T07:09:25.668467456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSpread","Output":"    miscompile_2a_test.go:37: want path-bearing stop \"object spread of Error storage\", got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T07:09:25.668595719Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSpread","Output":"--- FAIL: TestMiscompile2AErrorSpread (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:09:25.669679356Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSpread","Elapsed":0.22}
+{"Time":"2026-10-09T07:09:25.669710473Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSubclassSpread","Output":"    miscompile_2a_test.go:70: want path-bearing stop \"object spread of Error storage\", got /workspace/adamic/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a:1:11: stage 0 can't lower a computed class base; name the base class directly yet\n","OutputType":"error"}
+{"Time":"2026-10-09T07:09:25.669743383Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSubclassSpread","Output":"--- FAIL: TestMiscompile2AErrorSubclassSpread (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:09:25.669745786Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestMiscompile2AErrorSubclassSpread","Elapsed":0.22}
+{"Time":"2026-10-09T07:09:25.66974828Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:09:25.669750453Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T07:09:25.669752386Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T07:09:25.669754359Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T07:09:25.673037071Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.231s\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:09:25.673061297Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.232}

@@ -1,0 +1,197 @@
+=== RUN   TestCallbackWideningNumberFind
+=== PAUSE TestCallbackWideningNumberFind
+=== RUN   TestCallbackWideningNumberForEach
+=== PAUSE TestCallbackWideningNumberForEach
+=== RUN   TestCallbackWideningObjectFind
+=== PAUSE TestCallbackWideningObjectFind
+=== RUN   TestCallbackWideningObjectForEach
+=== PAUSE TestCallbackWideningObjectForEach
+=== RUN   TestCallbackWideningNumberFindLast
+=== PAUSE TestCallbackWideningNumberFindLast
+=== RUN   TestCallbackWideningNumberFindIndex
+=== PAUSE TestCallbackWideningNumberFindIndex
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestSearchShrinkNumberElementMaybe
+=== PAUSE TestSearchShrinkNumberElementMaybe
+=== RUN   TestSearchShrinkReferenceElementMaybe
+=== PAUSE TestSearchShrinkReferenceElementMaybe
+=== RUN   TestSearchShrinkFindLastIndexChecked
+=== PAUSE TestSearchShrinkFindLastIndexChecked
+=== RUN   TestSearchShrinkFindLastChecked
+=== PAUSE TestSearchShrinkFindLastChecked
+=== RUN   TestSearchShrinkFindIndexChecked
+=== PAUSE TestSearchShrinkFindIndexChecked
+=== RUN   TestSearchShrinkFindLastIndexMaybe
+=== PAUSE TestSearchShrinkFindLastIndexMaybe
+=== RUN   TestSearchShrinkFindMaybe
+=== PAUSE TestSearchShrinkFindMaybe
+=== RUN   TestSearchShrinkFindLastMaybe
+=== PAUSE TestSearchShrinkFindLastMaybe
+=== RUN   TestSearchShrinkFindChecked
+=== PAUSE TestSearchShrinkFindChecked
+=== RUN   TestSearchShrinkUnknown
+=== PAUSE TestSearchShrinkUnknown
+=== RUN   TestSearchShrinkBoolean
+=== PAUSE TestSearchShrinkBoolean
+=== RUN   TestSearchShrinkDefault
+=== PAUSE TestSearchShrinkDefault
+=== RUN   TestSearchShrinkOmitted
+=== PAUSE TestSearchShrinkOmitted
+=== RUN   TestSearchShrinkFound
+=== PAUSE TestSearchShrinkFound
+=== RUN   TestSearchShrinkMutantSkipCheck
+=== PAUSE TestSearchShrinkMutantSkipCheck
+=== RUN   TestSearchShrinkMutantOldStop
+=== PAUSE TestSearchShrinkMutantOldStop
+=== CONT  TestSearchShrinkFindLastIndexMaybe
+=== CONT  TestCallbackWideningNumberFind
+=== CONT  TestSearchShrinkDefault
+=== CONT  TestCallbackWideningNumberFindIndex
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/maybe_booleans.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/maybe_booleans.a
+=== CONT  TestCallbackWideningNumberFindLast
+--- PASS: TestCallbackWideningNumberFindLast (22.29s)
+=== CONT  TestCallbackWideningObjectForEach
+--- PASS: TestCallbackWideningNumberFind (22.48s)
+=== CONT  TestCallbackWideningObjectFind
+=== NAME  TestSearchShrinkDefault
+    search_shrink_test.go:100: sanitized: exit=0 stdout="1\n2\n9\n-1\n" stderr=""
+    search_shrink_test.go:100: release: exit=0 stdout="1\n2\n9\n-1\n" stderr=""
+    search_shrink_test.go:100: javascript: exit=0 stdout="1\n2\n9\n-1\n" stderr=""
+    search_shrink_test.go:100: Node: exit=0 stdout="1\n2\n9\n-1\n"
+--- PASS: TestSearchShrinkDefault (22.65s)
+=== CONT  TestCallbackWideningNumberForEach
+=== NAME  TestSearchShrinkFindLastIndexMaybe
+    search_shrink_test.go:70: sanitized: exit=0 stdout="2 3\n1 hole\n1\n" stderr=""
+    search_shrink_test.go:70: release: exit=0 stdout="2 3\n1 hole\n1\n" stderr=""
+    search_shrink_test.go:70: javascript: exit=0 stdout="2 3\n1 hole\n1\n" stderr=""
+    search_shrink_test.go:70: Node: exit=0 stdout="2 3\n1 hole\n1\n"
+--- PASS: TestSearchShrinkFindLastIndexMaybe (22.71s)
+=== CONT  TestSearchShrinkMutantSkipCheck
+--- PASS: TestCallbackWideningNumberFindIndex (22.75s)
+=== CONT  TestSearchShrinkMutantOldStop
+--- PASS: TestCallbackWideningObjectForEach (1.47s)
+=== CONT  TestSearchShrinkFindLastIndexChecked
+=== NAME  TestSearchShrinkMutantSkipCheck
+    search_shrink_test.go:152: native caught skip-check by exit code: exit=0 stdout="0 1\n1 2\n2 0\n-1\n" stderr=""
+    search_shrink_test.go:152: javascript caught skip-check by exit code: exit=0 stdout="0 1\n1 2\n2 hole\n2\n" stderr=""
+--- PASS: TestSearchShrinkMutantSkipCheck (1.19s)
+=== CONT  TestSearchShrinkFindIndexChecked
+--- PASS: TestCallbackWideningObjectFind (1.49s)
+=== CONT  TestSearchShrinkFindLastChecked
+=== NAME  TestSearchShrinkMutantOldStop
+    search_shrink_test.go:157: native caught old-stop by exit code: exit=70 stdout="1\n2\n" stderr="adamic: panic: findIndex: the array shrank while it was being searched\n"
+    search_shrink_test.go:157: javascript caught old-stop by exit code: exit=70 stdout="1\n2\n" stderr="adamic: panic: findIndex: the array shrank while it was being searched\n"
+--- PASS: TestSearchShrinkMutantOldStop (1.31s)
+=== CONT  TestSearchShrinkFound
+--- PASS: TestCallbackWideningNumberForEach (1.54s)
+=== CONT  TestSearchShrinkFindChecked
+=== NAME  TestSearchShrinkFindIndexChecked
+    search_shrink_test.go:65: sanitized: exit=70 stdout="0 1\n1 2\n" stderr="adamic: panic: findIndex: index 2 is undefined; element type number does not admit undefined\n"
+    search_shrink_test.go:65: release: exit=70 stdout="0 1\n1 2\n" stderr="adamic: panic: findIndex: index 2 is undefined; element type number does not admit undefined\n"
+    search_shrink_test.go:65: javascript: exit=70 stdout="0 1\n1 2\n" stderr="adamic: panic: findIndex: index 2 is undefined; element type number does not admit undefined\n"
+    search_shrink_test.go:65: Node: exit=0 stdout="0 1\n1 2\n2 hole\n2\n"
+--- PASS: TestSearchShrinkFindIndexChecked (1.09s)
+=== CONT  TestSearchShrinkBoolean
+=== NAME  TestSearchShrinkFindLastIndexChecked
+    search_shrink_test.go:55: release: exit=70 stdout="3 dd\n" stderr="adamic: panic: findLastIndex: index 2 is undefined; element type string does not admit undefined\n"
+    search_shrink_test.go:55: javascript: exit=70 stdout="3 dd\n" stderr="adamic: panic: findLastIndex: index 2 is undefined; element type string does not admit undefined\n"
+    search_shrink_test.go:55: sanitized: exit=70 stdout="3 dd\n" stderr="adamic: panic: findLastIndex: index 2 is undefined; element type string does not admit undefined\n"
+    search_shrink_test.go:55: Node: exit=0 stdout="3 dd\n2 undefined\n1 undefined\n0 dd\n-1\n"
+--- PASS: TestSearchShrinkFindLastIndexChecked (1.37s)
+=== CONT  TestSearchShrinkUnknown
+=== NAME  TestSearchShrinkFindLastChecked
+    search_shrink_test.go:60: sanitized: exit=70 stdout="3 dd\n" stderr="adamic: panic: findLast: index 2 is undefined; element type string does not admit undefined\n"
+    search_shrink_test.go:60: release: exit=70 stdout="3 dd\n" stderr="adamic: panic: findLast: index 2 is undefined; element type string does not admit undefined\n"
+    search_shrink_test.go:60: javascript: exit=70 stdout="3 dd\n" stderr="adamic: panic: findLast: index 2 is undefined; element type string does not admit undefined\n"
+    search_shrink_test.go:60: Node: exit=0 stdout="3 dd\n2 undefined\n1 undefined\n0 dd\nnone\n"
+--- PASS: TestSearchShrinkFindLastChecked (1.28s)
+=== CONT  TestSearchShrinkOmitted
+=== NAME  TestSearchShrinkFound
+    search_shrink_test.go:110: sanitized: exit=0 stdout="1\nheldheld\n0\n0\n" stderr=""
+    search_shrink_test.go:110: release: exit=0 stdout="1\nheldheld\n0\n0\n" stderr=""
+    search_shrink_test.go:110: javascript: exit=0 stdout="1\nheldheld\n0\n0\n" stderr=""
+    search_shrink_test.go:110: Node: exit=0 stdout="1\nheldheld\n0\n0\n"
+--- PASS: TestSearchShrinkFound (1.24s)
+=== CONT  TestSearchShrinkFindLastMaybe
+=== NAME  TestSearchShrinkFindChecked
+    search_shrink_test.go:85: sanitized: exit=70 stdout="0 1\n1 2\n" stderr="adamic: panic: find: index 2 is undefined; element type number does not admit undefined\n"
+    search_shrink_test.go:85: release: exit=70 stdout="0 1\n1 2\n" stderr="adamic: panic: find: index 2 is undefined; element type number does not admit undefined\n"
+    search_shrink_test.go:85: javascript: exit=70 stdout="0 1\n1 2\n" stderr="adamic: panic: find: index 2 is undefined; element type number does not admit undefined\n"
+    search_shrink_test.go:85: Node: exit=0 stdout="0 1\n1 2\n2 hole\nnone\n"
+--- PASS: TestSearchShrinkFindChecked (1.39s)
+=== CONT  TestSearchShrinkFindMaybe
+=== NAME  TestSearchShrinkBoolean
+    search_shrink_test.go:95: sanitized: exit=0 stdout="0 true\n1 false\n2 hole\nnone\n" stderr=""
+    search_shrink_test.go:95: release: exit=0 stdout="0 true\n1 false\n2 hole\nnone\n" stderr=""
+    search_shrink_test.go:95: javascript: exit=0 stdout="0 true\n1 false\n2 hole\nnone\n" stderr=""
+    search_shrink_test.go:95: Node: exit=0 stdout="0 true\n1 false\n2 hole\nnone\n"
+--- PASS: TestSearchShrinkBoolean (1.79s)
+=== CONT  TestSearchShrinkReferenceElementMaybe
+=== NAME  TestSearchShrinkFindLastMaybe
+    search_shrink_test.go:80: sanitized: exit=0 stdout="2 3\n1 hole\nnone\n" stderr=""
+    search_shrink_test.go:80: release: exit=0 stdout="2 3\n1 hole\nnone\n" stderr=""
+    search_shrink_test.go:80: javascript: exit=0 stdout="2 3\n1 hole\nnone\n" stderr=""
+    search_shrink_test.go:80: Node: exit=0 stdout="2 3\n1 hole\nnone\n"
+--- PASS: TestSearchShrinkFindLastMaybe (2.23s)
+=== CONT  TestSearchShrinkNumberElementMaybe
+=== NAME  TestSearchShrinkFindMaybe
+    search_shrink_test.go:75: release: exit=0 stdout="0 1\n1 2\n2 hole\nnone\n" stderr=""
+    search_shrink_test.go:75: javascript: exit=0 stdout="0 1\n1 2\n2 hole\nnone\n" stderr=""
+    search_shrink_test.go:75: sanitized: exit=0 stdout="0 1\n1 2\n2 hole\nnone\n" stderr=""
+    search_shrink_test.go:75: Node: exit=0 stdout="0 1\n1 2\n2 hole\nnone\n"
+--- PASS: TestSearchShrinkFindMaybe (2.04s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a
+=== NAME  TestSearchShrinkOmitted
+    search_shrink_test.go:105: sanitized: exit=0 stdout="visited\nvisited\nvisited\n-1\n" stderr=""
+    search_shrink_test.go:105: release: exit=0 stdout="visited\nvisited\nvisited\n-1\n" stderr=""
+    search_shrink_test.go:105: javascript: exit=0 stdout="visited\nvisited\nvisited\n-1\n" stderr=""
+    search_shrink_test.go:105: Node: exit=0 stdout="visited\nvisited\nvisited\n-1\n"
+--- PASS: TestSearchShrinkOmitted (2.50s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a
+=== NAME  TestSearchShrinkUnknown
+    search_shrink_test.go:90: sanitized: exit=0 stdout="0 11\n1 12\n2 -1\nnone\n" stderr=""
+    search_shrink_test.go:90: release: exit=0 stdout="0 11\n1 12\n2 -1\nnone\n" stderr=""
+    search_shrink_test.go:90: javascript: exit=0 stdout="0 11\n1 12\n2 -1\nnone\n" stderr=""
+    search_shrink_test.go:90: Node: exit=0 stdout="0 11\n1 12\n2 -1\nnone\n"
+--- PASS: TestSearchShrinkUnknown (2.87s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a
+=== NAME  TestSearchShrinkNumberElementMaybe
+    search_shrink_test.go:45: sanitized: exit=0 stdout="1\n2\nhole\n-1\n" stderr=""
+    search_shrink_test.go:45: release: exit=0 stdout="1\n2\nhole\n-1\n" stderr=""
+    search_shrink_test.go:45: javascript: exit=0 stdout="1\n2\nhole\n-1\n" stderr=""
+    search_shrink_test.go:45: Node: exit=0 stdout="1\n2\nhole\n-1\n"
+--- PASS: TestSearchShrinkNumberElementMaybe (1.98s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a
+=== NAME  TestSearchShrinkReferenceElementMaybe
+    search_shrink_test.go:50: release: exit=0 stdout="1\n2\nhole\n-1\n" stderr=""
+    search_shrink_test.go:50: javascript: exit=0 stdout="1\n2\nhole\n-1\n" stderr=""
+    search_shrink_test.go:50: sanitized: exit=0 stdout="1\n2\nhole\n-1\n" stderr=""
+    search_shrink_test.go:50: Node: exit=0 stdout="1\n2\nhole\n-1\n"
+--- PASS: TestSearchShrinkReferenceElementMaybe (3.00s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/visits.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/maybe_booleans.a
+--- PASS: TestNativeAgreesWithNode (0.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/find_shrinks.a (2.42s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/find_index_shrinks.a (2.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_find_last.a (2.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/map_shrinks.a (1.77s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/maybe_booleans.a (1.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/visits.a (2.43s)
+PASS
+gate cache: native hits=0 misses=15
+gate cache: node hits=0 misses=56
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	32.248s

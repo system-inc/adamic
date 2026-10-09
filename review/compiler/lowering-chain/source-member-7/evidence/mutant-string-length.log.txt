@@ -1,0 +1,13 @@
+=== RUN   TestCheckedAny
+=== RUN   TestCheckedAny/string_length
+    checked_any_test.go:23: gate cache node hit
+    checked_any_test.go:44: gate cache node hit
+    checked_any_test.go:50: native stdout differs: got {stdout:[53 10 49 10] stderr:[] exitCode:0} want {stdout:[51 10 49 10] stderr:[] exitCode:0}
+--- FAIL: TestCheckedAny (11.75s)
+    --- FAIL: TestCheckedAny/string_length (11.75s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	11.760s
+FAIL

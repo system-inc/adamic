@@ -1,0 +1,18 @@
+// Derived from checker.ts:6910's guarded method, retaining default/rest/count dispatch.
+interface Reader { read?(value?: number, ...words: string[]): string }
+class Reading {
+	readonly label: string;
+	constructor(label: string) { this.label = label; }
+	read(value = 4, ...words: string[]): string {
+		return `${this.label}:${value}:${words.join(',')}:${arguments.length}`;
+	}
+}
+let spreads = 0;
+function words(): string[] { spreads += 1; return [`word${spreads}`]; }
+function invoke(reader: Reader): void {
+	console.log(reader.read?.() ?? 'absent');
+	console.log(reader.read?.(undefined, ...words()) ?? 'absent');
+}
+invoke({});
+invoke(new Reading(`reader${1}`));
+console.log(`${spreads}`);

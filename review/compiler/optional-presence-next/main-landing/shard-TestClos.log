@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:19:08.193905455Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:08.211595578Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation"}
+{"Time":"2026-10-09T18:19:08.211670691Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation","Output":"=== RUN   TestClosedFrameInputRejectsMutation\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:08.211708399Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation","Output":"=== PAUSE TestClosedFrameInputRejectsMutation\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:08.211711144Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation"}
+{"Time":"2026-10-09T18:19:08.211713538Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation"}
+{"Time":"2026-10-09T18:19:08.211715206Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation","Output":"=== CONT  TestClosedFrameInputRejectsMutation\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:08.750070993Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation","Output":"--- PASS: TestClosedFrameInputRejectsMutation (0.54s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:08.750124808Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation","Elapsed":0.54}
+{"Time":"2026-10-09T18:19:08.750138976Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:08.763245998Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.569}

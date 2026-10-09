@@ -1,0 +1,36 @@
+interface RecordValue { first?: number | undefined; }
+// The literal binding must declare its field optional for TypeScript to admit delete.
+const direct: RecordValue = { first: 0 };
+const observer: RecordValue = direct;
+delete direct.first;
+console.log(String('first' in observer));
+console.log('[' + Object.keys(observer).join(',') + ']');
+console.log(String(Object.hasOwn(observer, 'first')));
+const record = { first: 0 as number | undefined };
+const optional: RecordValue = record;
+delete optional.first;
+console.log('[' + Object.entries(record).map(pair => pair[0] + ':' + String(pair[1])).join(',') + ']');
+console.log('[' + Object.values(record).map(value => String(value)).join(',') + ']');
+const copy = { ...record };
+console.log('[' + Object.keys(copy).join(',') + ']');
+console.log(String('first' in copy));
+optional.first = undefined;
+console.log(String(Object.hasOwn(optional, 'first')));
+console.log('[' + Object.entries(record).map(pair => pair[0] + ':' + String(pair[1])).join(',') + ']');
+console.log('[' + Object.values(record).map(value => String(value)).join(',') + ']');
+const after = { ...record };
+console.log('[' + Object.keys(after).join(',') + ']');
+console.log(String('first' in after));
+const empty: RecordValue = {};
+console.log(String(Object.hasOwn(empty, 'first')));
+empty.first = undefined;
+console.log(String(Object.hasOwn(empty, 'first')));
+
+const ordered = { first: 0 as number | undefined, second: 1 as number | undefined };
+const orderAlias: RecordValue = ordered;
+delete orderAlias.first;
+orderAlias.first = undefined;
+console.log(Object.keys(ordered).join(','));
+console.log(Object.entries(ordered).map(pair => pair[0] + ':' + String(pair[1])).join(','));
+const orderedCopy = { ...ordered };
+console.log(Object.keys(orderedCopy).join(','));

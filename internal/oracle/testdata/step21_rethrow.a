@@ -1,0 +1,26 @@
+// Reduced from program.ts:2844 and sys.ts:1549: recover selected errors, rethrow others.
+function work(index: number): string {
+    try {
+        if (index > 0) throw new Error(`cancel${index}`);
+        return `ok${index}`;
+    } catch (error) {
+        if (error instanceof Error && error.message === 'cancel1') return 'recovered';
+        throw error;
+    }
+}
+for (const index of [0, 1, 2]) {
+    try { console.log(work(index)); }
+    catch (error) { if (error instanceof Error) console.log(error.message); }
+}
+// Rethrow must preserve identity and a dynamically allocated message.
+let original: Error | undefined = undefined;
+try {
+    try { throw new Error(`identity${3}`); }
+    catch (error) {
+        if (error instanceof Error) original = error;
+        throw error;
+    }
+} catch (error) {
+    console.log(`${error === original}`);
+    if (error instanceof Error) console.log(error.message);
+}

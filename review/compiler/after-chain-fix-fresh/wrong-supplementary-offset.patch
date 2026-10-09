@@ -1,0 +1,3 @@
+stage1/typescript/scanner/main.ts
+- offsets.push(bytes, bytes + 4);
++ offsets.push(bytes, bytes + 3);

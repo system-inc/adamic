@@ -1,0 +1,3 @@
+function convertJsonOption(value: any): readonly number[] { return value; }
+const list = convertJsonOption(['wrong']);
+console.log(String(list[0] ?? 0));

@@ -1,0 +1,34 @@
+=== RUN   TestParserFactoryCompletion
+=== RUN   TestParserFactoryCompletion/before_return
+=== RUN   TestParserFactoryCompletion/alias
+=== RUN   TestParserFactoryCompletion/both_branches
+=== RUN   TestParserFactoryCompletion/one_branch
+=== RUN   TestParserFactoryCompletion/before_escape
+=== RUN   TestParserFactoryCompletion/wrong_payload_assertion
+=== RUN   TestParserFactoryCompletion/early_return
+=== RUN   TestParserFactoryCompletion/loop_may_not_run
+=== RUN   TestParserFactoryCompletion/captured
+=== RUN   TestParserFactoryCompletion/short_circuit
+--- PASS: TestParserFactoryCompletion (0.27s)
+    --- PASS: TestParserFactoryCompletion/before_return (0.03s)
+    --- PASS: TestParserFactoryCompletion/alias (0.03s)
+    --- PASS: TestParserFactoryCompletion/both_branches (0.02s)
+    --- PASS: TestParserFactoryCompletion/one_branch (0.02s)
+    --- PASS: TestParserFactoryCompletion/before_escape (0.03s)
+    --- PASS: TestParserFactoryCompletion/wrong_payload_assertion (0.03s)
+    --- PASS: TestParserFactoryCompletion/early_return (0.02s)
+    --- PASS: TestParserFactoryCompletion/loop_may_not_run (0.03s)
+    --- PASS: TestParserFactoryCompletion/captured (0.03s)
+    --- PASS: TestParserFactoryCompletion/short_circuit (0.03s)
+=== RUN   TestParserFactoryReadBeforeCompletion
+--- PASS: TestParserFactoryReadBeforeCompletion (0.03s)
+=== RUN   TestParserFactoryBindingHoisting
+--- PASS: TestParserFactoryBindingHoisting (0.02s)
+=== RUN   TestParserNodeArrayLayout
+--- PASS: TestParserNodeArrayLayout (0.00s)
+=== RUN   TestParserNodeArrayPresence
+--- PASS: TestParserNodeArrayPresence (0.00s)
+=== RUN   TestParserNodeArraySchemaFailsClosed
+--- PASS: TestParserNodeArraySchemaFailsClosed (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.332s

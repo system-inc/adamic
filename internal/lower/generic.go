@@ -17,10 +17,9 @@ const maximumGenericDepth = 32
 // distinct set of checker type identities, as a generic class is (instantiate). Within it,
 // each type parameter is what this call made it.
 //
-// The checker resolves the call's signature with its type arguments substituted, but doesn't export
-// the mapping itself, so it's read back the way it was made: each declared parameter's type, and the
-// result's, against the resolved signature's, through arrays and tuples. A type parameter that can't
-// be read back that way is left unmapped, and the body says not yet wherever it needs to know it.
+// Use the resolved signature's checker mapper, including arguments occurring only
+// inside indexed types. Read-back inference is a fallback for signatures without
+// a mapper. Unresolved parameters remain unmapped and are refused when needed.
 func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (int, error) {
 	resolved := l.checker.GetResolvedSignature(call)
 	target := l.checker.GetSignatureFromDeclaration(declaration)
@@ -28,14 +27,29 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 		return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
 	}
 	concreteTypes := map[*checker.Type]*checker.Type{}
-	// Class-generic calls supply this callee's resolved mapper. Ordinary recursive
-	// calls must infer their own arguments: the outer mapper can still describe the
-	// same declaration's previous instantiation, as nest<T>([item], depth - 1) does.
+	// The resolved signature carries this call's exact type arguments, including
+	// parameters used only in indexed accesses. Read-back inference alone cannot
+	// recover T from a return T["value"]. Apply the caller's mapper afterwards.
+	// classGenericCall has already installed this callee's resolved mapper,
+	// including the caller's substitutions. Do not apply the raw signature
+	// again: a nested call's raw arguments still mention the caller's binder.
 	if l.genericUsesClasses(declaration, map[*ast.Node]bool{}) {
 		for _, parameter := range declaration.TypeParameters() {
 			declaredType := l.checker.GetTypeAtLocation(parameter.Name())
 			concrete := l.concrete(declaredType)
 			if concrete != declaredType && concrete.Flags()&checker.TypeFlagsTypeParameter == 0 {
+				concreteTypes[declaredType] = concrete
+			}
+		}
+	}
+	if mapper := genericSignatureMapper(resolved); mapper != nil {
+		for _, parameter := range declaration.TypeParameters() {
+			declaredType := l.checker.GetTypeAtLocation(parameter.Name())
+			if _, known := concreteTypes[declaredType]; known {
+				continue
+			}
+			concrete := l.concrete(instantiateType(l.checker, declaredType, mapper))
+			if concrete != declaredType {
 				concreteTypes[declaredType] = concrete
 			}
 		}

@@ -1,0 +1,11 @@
+=== RUN   TestEnumCleanupMutant
+=== PAUSE TestEnumCleanupMutant
+=== CONT  TestEnumCleanupMutant
+    enums_test.go:151: gate cache node miss
+    enums_test.go:154: skipped enum cleanup caught only by LeakSanitizer; Node stdout unchanged
+--- PASS: TestEnumCleanupMutant (7.55s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.555s

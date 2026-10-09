@@ -1,0 +1,3 @@
+// Reduced from debug.ts:197-203, omitting stack capture and debugger.
+const saved = new Error(`saved${1}`);
+try { throw saved; } catch (error) { if (error instanceof Error) console.log(error.message); }

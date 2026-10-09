@@ -1,0 +1,9 @@
+interface Step {value: string; done: boolean;}
+class Cursor {
+ index = 0;
+ reads = 0;
+ get next(): () => Step {this.reads += 1; console.log(`get next:${this.reads}`); return (): Step => {this.index += 1; console.log(`step:${this.index}`); return {value: `yield:${this.index}`,done: false};};}
+ get return(): () => Step {console.log('get return'); return (): Step => {console.log(`close:${this.index}`); return {value:'completion',done:true};};}
+}
+const source = {[Symbol.iterator](): Cursor {return new Cursor();}};
+for(const value of source) {console.log(value);break;}

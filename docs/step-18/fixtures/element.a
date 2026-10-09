@@ -1,0 +1,7 @@
+// Reduced from TypeScript checker.ts:7440, labeledElementDeclarations?.[i].
+function pick(labeledElementDeclarations: readonly string[] | undefined, i: number): string {
+	return labeledElementDeclarations?.[i] ?? 'absent';
+}
+console.log(pick(undefined, 0));
+console.log(pick(['first'], 0));
+console.log(pick(['first'], 9));

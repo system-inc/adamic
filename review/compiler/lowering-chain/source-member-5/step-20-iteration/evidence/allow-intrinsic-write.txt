@@ -1,0 +1,12 @@
+=== RUN   TestStep20IntrinsicIteratorWrites
+=== PAUSE TestStep20IntrinsicIteratorWrites
+=== CONT  TestStep20IntrinsicIteratorWrites
+=== RUN   TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a
+=== PAUSE TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a
+=== CONT  TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a
+    step20_intrinsic_test.go:39: want ruled intrinsic iterator refusal, got /workspace/adamic/stage3/fixtures/iteration/intrinsic_iterator_alias.a:2:5: stage 0 can't lower a value of type unique symbol yet
+--- FAIL: TestStep20IntrinsicIteratorWrites (0.01s)
+    --- FAIL: TestStep20IntrinsicIteratorWrites/intrinsic_iterator_alias.a (0.26s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.308s
+FAIL

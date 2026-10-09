@@ -1,0 +1,1513 @@
+{
+  "branch": "compiler/checked-any",
+  "source": "57ea02f8",
+  "tests": [
+    {
+      "test": "TestCheckedJSONPreservesIdentityAndOperandWrites/identity",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONPreservesIdentityAndOperandWrites/operand_write",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONPreservesIdentityAndOperandWrites",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONRecordRemainsUnsupported",
+      "result": "pass",
+      "seconds": 6.23,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONCycleStopsAtDepth",
+      "result": "pass",
+      "seconds": 6.23,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONCycleStopsAtDepth",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestTasteRepresentationLimitsStayExplicit/union_scalar_field",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestTasteRepresentationLimitsStayExplicit/evolving_different_objects",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestTasteRepresentationLimitsStayExplicit/explicit_any",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestTasteRepresentationLimitsStayExplicit/computed_enum",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestTasteRepresentationLimitsStayExplicit/enum_prototype",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestTasteRepresentationLimitsStayExplicit/merged_enum",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestTasteRepresentationLimitsStayExplicit",
+      "result": "pass",
+      "seconds": 0.31,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestArrayPredicateCannotInventAnElementContract",
+      "result": "pass",
+      "seconds": 0.37,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\\0b'_in_{}));",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestUnknownReflectionRefusals",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNextRefusals/json_dictionary_alias_write",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNextRefusals/json_dictionary_nul_key",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts/callable",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts/prototype",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNextRefusals/json_dictionary_proto_key",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNextRefusals/json_dictionary_computed_key",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts/array_view",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts/field_view",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNextRefusals/json_symbol_contract",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNextRefusals/callable",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts/json_alias_write",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts/json_alias_update",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNextRefusals/json_callable_contract",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts/json_iteration",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts/json_reflection",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts/json_array_method",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts/json_unprepared",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAnyUnsupportedContracts",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNextRefusals/json_maplike_pending",
+      "result": "skip",
+      "seconds": 6.83,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNextRefusals",
+      "result": "pass",
+      "seconds": 7.15,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_recursive",
+      "result": "pass",
+      "seconds": 7.42,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_object",
+      "result": "pass",
+      "seconds": 6.99,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/property",
+      "result": "pass",
+      "seconds": 7.48,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/property_misfit",
+      "result": "pass",
+      "seconds": 0.49,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_recursive_misfit",
+      "result": "pass",
+      "seconds": 0.67,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_object_misfit",
+      "result": "pass",
+      "seconds": 0.72,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/parameter",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_list",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_depth_misfit",
+      "result": "pass",
+      "seconds": 0.67,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/parameter_misfit",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_dictionary",
+      "result": "pass",
+      "seconds": 0.48,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_list_misfit",
+      "result": "pass",
+      "seconds": 0.66,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/arithmetic",
+      "result": "pass",
+      "seconds": 0.45,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_validated",
+      "result": "pass",
+      "seconds": 0.5,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/arithmetic_misfit",
+      "result": "pass",
+      "seconds": 0.54,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_dictionary_misfit",
+      "result": "pass",
+      "seconds": 0.7,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/structural",
+      "result": "pass",
+      "seconds": 0.39,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/boolean",
+      "result": "pass",
+      "seconds": 0.45,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_nullable",
+      "result": "pass",
+      "seconds": 0.48,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_literal",
+      "result": "pass",
+      "seconds": 0.42,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/transport",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_nullable_misfit",
+      "result": "pass",
+      "seconds": 0.68,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_literal_misfit",
+      "result": "pass",
+      "seconds": 0.66,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/validated",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_nullable_validated",
+      "result": "pass",
+      "seconds": 0.46,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_literal_result",
+      "result": "pass",
+      "seconds": 0.43,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/config_validated",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_nullable_array",
+      "result": "pass",
+      "seconds": 0.48,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_literal_result_misfit",
+      "result": "pass",
+      "seconds": 0.67,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/property_null_misfit",
+      "result": "pass",
+      "seconds": 0.71,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_nullable_array_misfit",
+      "result": "pass",
+      "seconds": 0.7,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_boolean_list",
+      "result": "pass",
+      "seconds": 0.6,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/string_length",
+      "result": "pass",
+      "seconds": 0.66,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_optional",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext/json_dictionary_order_misfit",
+      "result": "pass",
+      "seconds": 0.83,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSONNext",
+      "result": "pass",
+      "seconds": 13.56,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/assertion",
+      "result": "pass",
+      "seconds": 0.57,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_recovery",
+      "result": "pass",
+      "seconds": 0.46,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/assertion_misfit",
+      "result": "pass",
+      "seconds": 0.5,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_domain_misfit",
+      "result": "pass",
+      "seconds": 0.73,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/stale_misfit",
+      "result": "pass",
+      "seconds": 0.51,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_union",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny/config_diagnostics",
+      "result": "pass",
+      "seconds": 0.51,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedAny",
+      "result": "pass",
+      "seconds": 15.33,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_union_misfit",
+      "result": "pass",
+      "seconds": 0.64,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_nested_list",
+      "result": "pass",
+      "seconds": 0.41,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_nested_list_misfit",
+      "result": "pass",
+      "seconds": 0.59,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_boxed_list",
+      "result": "pass",
+      "seconds": 0.37,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a",
+      "result": "pass",
+      "seconds": 11.38,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/stock_decode_entities",
+      "result": "pass",
+      "seconds": 6.74,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON/json_nul_literal",
+      "result": "pass",
+      "seconds": 0.36,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedJSON",
+      "result": "pass",
+      "seconds": 23.78,
+      "log": "member-7-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedOwnClassData/good",
+      "result": "pass",
+      "seconds": 0.22,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedOwnClassData/wrong",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedOwnClassData",
+      "result": "pass",
+      "seconds": 0.37,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal/good",
+      "result": "pass",
+      "seconds": 0.13,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceFlows/helper/good",
+      "result": "pass",
+      "seconds": 0.57,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedRecursive/good",
+      "result": "pass",
+      "seconds": 0.62,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal/wrong",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal/nested",
+      "result": "pass",
+      "seconds": 0.14,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal/empty",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal/mixed",
+      "result": "pass",
+      "seconds": 0.14,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal",
+      "result": "pass",
+      "seconds": 0.65,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceFlows/helper/wrong",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedRecursive/absent",
+      "result": "pass",
+      "seconds": 0.55,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/good",
+      "result": "pass",
+      "seconds": 1.13,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceFlows/generic/good",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedOptionalCallableControl",
+      "result": "pass",
+      "seconds": 0.65,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedRecursive/wrong",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/wrong",
+      "result": "pass",
+      "seconds": 0.58,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedRecursive/nested",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedRecursive",
+      "result": "pass",
+      "seconds": 2.26,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedCallableUnion/good-number",
+      "result": "pass",
+      "seconds": 0.61,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/nested",
+      "result": "pass",
+      "seconds": 0.6,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceFlows/callback/good",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/absent",
+      "result": "pass",
+      "seconds": 0.17,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedCallableUnion/good-string",
+      "result": "pass",
+      "seconds": 0.55,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceFlows/callback/wrong",
+      "result": "pass",
+      "seconds": 0.49,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/option-element/good",
+      "result": "pass",
+      "seconds": 0.57,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedCallableUnion/wrong",
+      "result": "pass",
+      "seconds": 0.54,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceFlows/stored/good",
+      "result": "pass",
+      "seconds": 0.5,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/option-element/wrong",
+      "result": "pass",
+      "seconds": 0.46,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedCallableUnion/nested",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedCallableUnion",
+      "result": "pass",
+      "seconds": 2.26,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceFlows/stored/wrong",
+      "result": "pass",
+      "seconds": 0.49,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceFlows",
+      "result": "pass",
+      "seconds": 4.16,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/option-element/nested",
+      "result": "pass",
+      "seconds": 0.5,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/option-element/absent",
+      "result": "pass",
+      "seconds": 0.13,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/structural/good",
+      "result": "pass",
+      "seconds": 0.45,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/structural/wrong",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/structural/nested",
+      "result": "pass",
+      "seconds": 0.42,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch/structural/absent",
+      "result": "pass",
+      "seconds": 0.16,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedSourceDispatch",
+      "result": "pass",
+      "seconds": 5.83,
+      "log": "member-7-view-tests.jsonl"
+    },
+    {
+      "test": "TestRefusalMustBeInsideDeclaration",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-7-probe-tests.jsonl"
+    },
+    {
+      "test": "TestUnobservedUseNamesItsOutsideRequirement",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-7-probe-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "checked .ts copy: checked_any/property.a",
+        "after": [
+          "1",
+          "1",
+          "4",
+          "4",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/property_misfit.a",
+        "after": [
+          "3",
+          "0",
+          "1",
+          "0",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/parameter.a",
+        "after": [
+          "2",
+          "2",
+          "0",
+          "2",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/parameter_misfit.a",
+        "after": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/arithmetic.a",
+        "after": [
+          "2",
+          "2",
+          "0",
+          "2",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/arithmetic_misfit.a",
+        "after": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/boolean.a",
+        "after": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/transport.a",
+        "after": [
+          "1",
+          "1",
+          "2",
+          "3",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/validated.a",
+        "after": [
+          "1",
+          "1",
+          "2",
+          "3",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/config_validated.a",
+        "after": [
+          "5",
+          "5",
+          "13",
+          "18",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/property_null_misfit.a",
+        "after": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/string_length.a",
+        "after": [
+          "5",
+          "5",
+          "2",
+          "7",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/assertion.a",
+        "after": [
+          "2",
+          "2",
+          "0",
+          "2",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/assertion_misfit.a",
+        "after": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/stale_misfit.a",
+        "after": [
+          "2",
+          "0",
+          "3",
+          "3",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/config_diagnostics.a",
+        "after": [
+          "6",
+          "6",
+          "6",
+          "12",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_object.a",
+        "after": [
+          "9",
+          "9",
+          "31",
+          "38",
+          "5",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_object_misfit.a",
+        "after": [
+          "2",
+          "0",
+          "5",
+          "2",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_list.a",
+        "after": [
+          "8",
+          "8",
+          "1",
+          "10",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_list_misfit.a",
+        "after": [
+          "1",
+          "0",
+          "3",
+          "1",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_validated.a",
+        "after": [
+          "4",
+          "4",
+          "8",
+          "16",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/structural.a",
+        "after": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_literal.a",
+        "after": [
+          "2",
+          "2",
+          "16",
+          "16",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_literal_misfit.a",
+        "after": [
+          "2",
+          "0",
+          "6",
+          "3",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_literal_result.a",
+        "after": [
+          "3",
+          "3",
+          "0",
+          "3",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_literal_result_misfit.a",
+        "after": [
+          "2",
+          "0",
+          "0",
+          "0",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_boolean_list.a",
+        "after": [
+          "1",
+          "1",
+          "1",
+          "9",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_optional.a",
+        "after": [
+          "7",
+          "7",
+          "2",
+          "11",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_recovery.a",
+        "after": [
+          "2",
+          "2",
+          "4",
+          "6",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_domain_misfit.a",
+        "after": [
+          "2",
+          "0",
+          "0",
+          "0",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_union.a",
+        "after": [
+          "2",
+          "2",
+          "12",
+          "12",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_union_misfit.a",
+        "after": [
+          "1",
+          "0",
+          "3",
+          "1",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_nested_list.a",
+        "after": [
+          "3",
+          "3",
+          "25",
+          "27",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_nested_list_misfit.a",
+        "after": [
+          "5",
+          "1",
+          "5",
+          "3",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_boxed_list.a",
+        "after": [
+          "9",
+          "9",
+          "6",
+          "18",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/stock_decode_entities.a",
+        "after": [
+          "36",
+          "36",
+          "76",
+          "77",
+          "35",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_nul_literal.a",
+        "after": [
+          "2",
+          "2",
+          "6",
+          "8",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_recursive.a",
+        "after": [
+          "11",
+          "11",
+          "7",
+          "20",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_recursive_misfit.a",
+        "after": [
+          "4",
+          "2",
+          "8",
+          "7",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_depth_misfit.a",
+        "after": [
+          "146",
+          "64",
+          "145",
+          "145",
+          "82",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_dictionary.a",
+        "after": [
+          "5",
+          "5",
+          "5",
+          "12",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_dictionary_misfit.a",
+        "after": [
+          "3",
+          "2",
+          "5",
+          "5",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_nullable.a",
+        "after": [
+          "14",
+          "14",
+          "63",
+          "82",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_nullable_misfit.a",
+        "after": [
+          "3",
+          "1",
+          "2",
+          "3",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_nullable_validated.a",
+        "after": [
+          "1",
+          "1",
+          "4",
+          "7",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_nullable_array.a",
+        "after": [
+          "7",
+          "7",
+          "9",
+          "21",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_nullable_array_misfit.a",
+        "after": [
+          "1",
+          "0",
+          "4",
+          "2",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "checked .ts copy: checked_any/json_dictionary_order_misfit.a",
+        "after": [
+          "10",
+          "5",
+          "7",
+          "6",
+          "6",
+          "0"
+        ]
+      }
+    ],
+    "changed": [
+      {
+        "row": "internal/oracle/testdata/nested_destructured.a",
+        "before": [
+          "13",
+          "13",
+          "7",
+          "17",
+          "6",
+          "0"
+        ],
+        "after": [
+          "13",
+          "13",
+          "8",
+          "18",
+          "6",
+          "0"
+        ],
+        "reason": "Keep genericBodyRefusal plus all checked-any guards in refusals.go; retain IteratorField, IteratorMethod and CheckedJSON dispatch. Resolve counts conflict by generation. Checked .ts fitting programs match Node in both backends with sanitizers; point-of-use removal mutants caught. Two class-data count rows deliberately retire for the ruled explicit-any refusal; five uncounted array probes change NotYet to exact Refused. All seven Node controls remain byte-identical. Two existing nested_destructured and switch neighbors rows gain a retain/release pair for tag-preserving boxed string transport."
+      },
+      {
+        "row": "internal/oracle/testdata/switch_case_declarations/neighbors.a",
+        "before": [
+          "18",
+          "18",
+          "20",
+          "35",
+          "4",
+          "0"
+        ],
+        "after": [
+          "18",
+          "18",
+          "21",
+          "36",
+          "4",
+          "0"
+        ],
+        "reason": "Keep genericBodyRefusal plus all checked-any guards in refusals.go; retain IteratorField, IteratorMethod and CheckedJSON dispatch. Resolve counts conflict by generation. Checked .ts fitting programs match Node in both backends with sanitizers; point-of-use removal mutants caught. Two class-data count rows deliberately retire for the ruled explicit-any refusal; five uncounted array probes change NotYet to exact Refused. All seven Node controls remain byte-identical. Two existing nested_destructured and switch neighbors rows gain a retain/release pair for tag-preserving boxed string transport."
+      }
+    ],
+    "removed": [
+      {
+        "row": "stage3/interface-downcasts/untagged/fixtures/class-data-good.a",
+        "before": [
+          "4",
+          "4",
+          "8",
+          "12",
+          "4",
+          "0"
+        ],
+        "reason": "Ruled explicit-any refusal at 1:98 replaces the earlier executable .a view proof; unchanged Node prints true."
+      },
+      {
+        "row": "stage3/interface-downcasts/untagged/fixtures/class-data-wrong.a",
+        "before": [
+          "3",
+          "0",
+          "7",
+          "5",
+          "3",
+          "0"
+        ],
+        "reason": "Ruled explicit-any refusal at 1:98 replaces the earlier executable .a view proof; unchanged Node prints true."
+      }
+    ],
+    "rows": 1142
+  }
+}

@@ -1,0 +1,8 @@
+=== RUN   TestOptionalDeletionRequiresPlainStorage
+=== PAUSE TestOptionalDeletionRequiresPlainStorage
+=== CONT  TestOptionalDeletionRequiresPlainStorage
+    optional_fields_test.go:33: plain storage boundary: <nil>
+--- FAIL: TestOptionalDeletionRequiresPlainStorage (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.097s
+FAIL

@@ -1,0 +1,52 @@
+=== RUN   TestParserFactoryCompletionBeforeReturn
+=== PAUSE TestParserFactoryCompletionBeforeReturn
+=== RUN   TestParserFactoryCompletionAlias
+=== PAUSE TestParserFactoryCompletionAlias
+=== RUN   TestParserFactoryCompletionBothBranches
+=== PAUSE TestParserFactoryCompletionBothBranches
+=== RUN   TestParserFactoryCompletionOneBranch
+=== PAUSE TestParserFactoryCompletionOneBranch
+=== RUN   TestParserFactoryCompletionBeforeEscape
+=== PAUSE TestParserFactoryCompletionBeforeEscape
+=== RUN   TestParserFactoryCompletionWrongPayloadAssertion
+=== PAUSE TestParserFactoryCompletionWrongPayloadAssertion
+=== RUN   TestParserFactoryCompletionEarlyReturn
+=== PAUSE TestParserFactoryCompletionEarlyReturn
+=== RUN   TestParserFactoryCompletionLoopMayNotRun
+=== PAUSE TestParserFactoryCompletionLoopMayNotRun
+=== RUN   TestParserFactoryCompletionCaptured
+=== PAUSE TestParserFactoryCompletionCaptured
+=== RUN   TestParserFactoryCompletionShortCircuit
+=== PAUSE TestParserFactoryCompletionShortCircuit
+=== RUN   TestParserFactoryReadBeforeCompletion
+=== PAUSE TestParserFactoryReadBeforeCompletion
+=== CONT  TestParserFactoryCompletionBeforeReturn
+=== CONT  TestParserFactoryCompletionEarlyReturn
+=== CONT  TestParserFactoryCompletionBothBranches
+=== CONT  TestParserFactoryCompletionOneBranch
+=== CONT  TestParserFactoryCompletionWrongPayloadAssertion
+    factory_completion_test.go:40: summary {Required:[end kind pos text] BeforeEscape:map[end:true kind:true pos:true text:true] Escapes:[{Node:0xfe1a5c054d0 Missing:[text]}] Reads:[] Unknown:false}, want text proven false, unknown false
+--- FAIL: TestParserFactoryCompletionWrongPayloadAssertion (0.19s)
+=== CONT  TestParserFactoryCompletionAlias
+=== NAME  TestParserFactoryCompletionOneBranch
+    factory_completion_test.go:30: summary {Required:[end kind pos text] BeforeEscape:map[end:true kind:true pos:true text:true] Escapes:[{Node:0xfe1a56fa990 Missing:[text]}] Reads:[] Unknown:false}, want text proven false, unknown false
+--- FAIL: TestParserFactoryCompletionOneBranch (0.20s)
+=== CONT  TestParserFactoryCompletionBeforeEscape
+--- PASS: TestParserFactoryCompletionBothBranches (0.21s)
+=== CONT  TestParserFactoryCompletionShortCircuit
+--- PASS: TestParserFactoryCompletionBeforeReturn (0.23s)
+=== CONT  TestParserFactoryReadBeforeCompletion
+=== NAME  TestParserFactoryCompletionEarlyReturn
+    factory_completion_test.go:45: summary {Required:[end kind pos text] BeforeEscape:map[end:true kind:true pos:true text:true] Escapes:[{Node:0xfe1a5beb4d0 Missing:[text]} {Node:0xfe1a5beb518 Missing:[]}] Reads:[] Unknown:false}, want text proven false, unknown false
+--- FAIL: TestParserFactoryCompletionEarlyReturn (0.25s)
+=== CONT  TestParserFactoryCompletionCaptured
+--- PASS: TestParserFactoryCompletionAlias (0.12s)
+=== CONT  TestParserFactoryCompletionLoopMayNotRun
+--- PASS: TestParserFactoryCompletionBeforeEscape (0.15s)
+--- PASS: TestParserFactoryReadBeforeCompletion (0.12s)
+--- PASS: TestParserFactoryCompletionShortCircuit (0.18s)
+--- PASS: TestParserFactoryCompletionCaptured (0.15s)
+--- PASS: TestParserFactoryCompletionLoopMayNotRun (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.427s
+FAIL

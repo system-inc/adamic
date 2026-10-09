@@ -1,0 +1,9 @@
+// Reduced and specialized from core.ts:437, flatMapIterator.
+function* flatMapIterator(iter: number[]): Generator<number, void, unknown> {
+    for (const value of iter) {
+        yield* [value, value + 1];
+    }
+}
+for (const value of flatMapIterator([3])) {
+    console.log(`${value}`);
+}

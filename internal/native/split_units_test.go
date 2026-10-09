@@ -373,7 +373,7 @@ func TestRetainedSplitCoverage(t *testing.T) {
 		t.Fatal("random regex units must partition all 10000 cases into 40 units of 250")
 	}
 	t.Run("shard_union", func(t *testing.T) {
-		for _, pieces := range []int{90, 40, 18, 36, 2, 6} {
+		for _, pieces := range []int{90, 40, 18, 39, 2, 6} {
 			for count := 1; count <= 100; count++ {
 				seen := make([]int, pieces)
 				for index := 0; index < count; index++ {
@@ -401,10 +401,10 @@ func TestRetainedSplitCoverage(t *testing.T) {
 		}
 	})
 	t.Run("WASI", func(t *testing.T) {
-		if len(wasiFixtures) != 35 {
-			t.Fatalf("got %d WASI fixtures, want 35", len(wasiFixtures))
+		if len(wasiFixtures) != 38 {
+			t.Fatalf("got %d WASI fixtures, want 38", len(wasiFixtures))
 		}
-		want := "a7207f91f36f405d152fc3e2be706f49eecd3dbd916c0c7f5f0ae3303a56497a"
+		want := "efadf45774749479cdcaf1073bbd3dca6964f56681d12da0fa702141cd022190"
 		if got := fmt.Sprintf("%x", sha256.Sum256([]byte(strings.Join(wasiFixtures, "\n")))); got != want {
 			t.Fatalf("WASI fixture membership changed: %s", got)
 		}
@@ -437,7 +437,7 @@ func TestRetainedTopLevelCoverage(t *testing.T) {
 		{"regexp_test.go", "TestRegExpBytecodeRandomNodeUnit", "runRegExpBytecodeRandomNodeUnit", 40},
 		{"record_test.go", "TestRecordMutantsUnit", "runRecordMutantUnit", 6},
 		{"units_tsgo_test.go", "TestSplitTSGoAgreesUnit", "runSplitTSGoAgreesUnit", 2},
-		{"wasm_test.go", "TestWASIUnit", "runWASIUnit", 36},
+		{"wasm_test.go", "TestWASIUnit", "runWASIUnit", 39},
 	} {
 		file, err := parser.ParseFile(token.NewFileSet(), plan.file, nil, 0)
 		if err != nil {

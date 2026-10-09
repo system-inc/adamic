@@ -1,0 +1,11 @@
+--- a/stage3/checked-any/probe/classification.go
++++ b/stage3/checked-any/probe/classification.go
+@@ -14,7 +14,7 @@
+ 		return false
+ 	}
+ 	line, err := strconv.Atoi(position[2])
+-	return err == nil && line >= first && line <= last
++	return err == nil && line >= first-10 && line <= last+10
+ }
+ 
+ // A lowered type or transport does not establish the check at a later consumer.

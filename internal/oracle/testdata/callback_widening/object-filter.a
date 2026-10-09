@@ -1,0 +1,2 @@
+interface Item {readonly id:number;}
+console.log([{id:1},{id:2},{id:3}].filter((x: Item | number): boolean => (typeof x === 'number' ? x : x.id) !== 2).map(x => `${x.id}`).join(","));

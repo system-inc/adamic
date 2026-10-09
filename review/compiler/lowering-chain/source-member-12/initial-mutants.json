@@ -1,0 +1,39 @@
+[
+  {
+    "mutant": "method-views",
+    "exit": 1,
+    "caught": true,
+    "markers": [
+      "both backends unexpectedly admit the pinned view NotYet",
+      "release: exit=0 stdout=\"t1 none",
+      "release: stdout differs",
+      "AddressSanitizer"
+    ],
+    "log": "mutant-method-views.log",
+    "tests": "^TestWeakDifferential(ViewMethodParameter|ViewMethod)$"
+  },
+  {
+    "mutant": "union-liveness",
+    "exit": 1,
+    "caught": true,
+    "markers": [
+      "release: exit codes differ",
+      "sanitized: exit codes differ",
+      "runtime error: member access within null pointer"
+    ],
+    "log": "mutant-union-liveness.log",
+    "tests": "^TestWeakDifferentialUnionNarrowed$"
+  },
+  {
+    "mutant": "weak-filter",
+    "exit": 1,
+    "caught": true,
+    "markers": [
+      "both backends unexpectedly admit the pinned filter NotYet",
+      "AddressSanitizer: heap-buffer-overflow",
+      "sanitized: exit codes differ"
+    ],
+    "log": "mutant-weak-filter.log",
+    "tests": "^TestWeakDifferential(Each|Find|Map|Reduce|Some|Sort)$"
+  }
+]

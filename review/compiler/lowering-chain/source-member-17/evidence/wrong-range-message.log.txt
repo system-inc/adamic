@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_failures.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_failures.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_failures.a
+    oracle_test.go:776: stdout differs
+        node:   exit 0, stdout "RangeError: Invalid count value: -1.5 true\nRangeError: Invalid count value: Infinity true\nxx\nRangeError: toFixed() digits argument must be between 0 and 100\nRangeError: toFixed() digits argument must be between 0 and 100\n1.25\nRangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.\ntext1\nRangeError: Invalid typed array length: -1.5\n2\nRangeError: offset is out of bounds\n", stderr ""
+        native: exit 0, stdout "RangeError: Wrong count: -1.5 true\nRangeError: Wrong count: Infinity true\nxx\nRangeError: toFixed() digits argument must be between 0 and 100\nRangeError: toFixed() digits argument must be between 0 and 100\n1.25\nRangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.\ntext1\nRangeError: Invalid typed array length: -1.5\n2\nRangeError: offset is out of bounds\n", stderr ""
+    oracle_test.go:782: JavaScript backend: stdout differs
+        node:    exit 0, stdout "RangeError: Invalid count value: -1.5 true\nRangeError: Invalid count value: Infinity true\nxx\nRangeError: toFixed() digits argument must be between 0 and 100\nRangeError: toFixed() digits argument must be between 0 and 100\n1.25\nRangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.\ntext1\nRangeError: Invalid typed array length: -1.5\n2\nRangeError: offset is out of bounds\n", stderr ""
+        backend: exit 0, stdout "RangeError: Wrong count: -1.5 true\nRangeError: Wrong count: Infinity true\nxx\nRangeError: toFixed() digits argument must be between 0 and 100\nRangeError: toFixed() digits argument must be between 0 and 100\n1.25\nRangeError: The normalization form should be one of NFC, NFD, NFKC, NFKD.\ntext1\nRangeError: Invalid typed array length: -1.5\n2\nRangeError: offset is out of bounds\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_failures.a (0.48s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.504s
+FAIL

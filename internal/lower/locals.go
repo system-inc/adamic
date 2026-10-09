@@ -16,6 +16,13 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 	statements := []ir.Statement{}
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
 		name := declaration.Name()
+		if body, handled, err := l.namespaceObjectVariable(declaration); handled {
+			if err != nil {
+				return nil, err
+			}
+			statements = append(statements, body...)
+			continue
+		}
 		if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
 			// const [a, b] = tuple, and const { x, y } = object (collections.go).
 			destructured, err := l.destructure(name, declaration.AsVariableDeclaration().Initializer)
@@ -51,25 +58,15 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		}
 		if l.uninitializedDeclaration(declaration) {
 			l.result.Locals[local].Uninitialized = true
-			statements = append(statements, ir.Declare{Local: local, Uninitialized: true})
+			initializer := declaration.AsVariableDeclaration().Initializer
+			declaration := ir.Declare{Local: local, Uninitialized: true}
+			if l.result.Locals[local].Placeholder != "" {
+				declaration.Value = l.placeholderInitialValue(initializer, l.result.Locals[local].Type)
+			}
+			statements = append(statements, declaration)
 			continue
 		}
 
-		if initializer := declaration.AsVariableDeclaration().Initializer; l.lazyAssertionInitializer(initializer) {
-			prefix, present, value, err := l.lazyAssertion(initializer, l.result.Locals[local].Type)
-			if err != nil {
-				return nil, err
-			}
-			if known, ok := present.(ir.BooleanConstant); ok && known.Value && len(prefix) == 0 {
-				statements = append(statements, ir.Declare{Local: local, Value: value})
-				continue
-			}
-			l.result.Locals[local].Uninitialized = true
-			l.result.Locals[local].InitializerExpression = sourceExpression(initializer)
-			statements = append(statements, prefix...)
-			statements = append(statements, ir.Declare{Local: local, Uninitialized: true}, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: local, Value: value}}})
-			continue
-		}
 		var value ir.Expression
 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
 			if l.initializing == nil {
@@ -114,6 +111,9 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return 0, l.notYet(name, "the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
+	if l.caught[symbol] {
+		valueType = ir.Union
+	}
 	inferred := l.evolvingObject(name)
 	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
 		var err error
@@ -124,6 +124,16 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 			valueType = ir.Object
 		}
 	}
+	if origin := l.placeholderOrigin(name); origin != "" {
+		valueType = placeholderStorage(valueType)
+	}
+	unsetField := ""
+	if declaration := name.Parent; declaration != nil && declaration.Kind == ast.KindVariableDeclaration && declaration.Type() == nil && declaration.Initializer() != nil && declaration.Parent.Flags&ast.NodeFlagsConst != 0 {
+		unsetField = l.savedFactoryOrigin(declaration.Initializer(), map[*ast.Symbol]bool{})
+		if unsetField != "" {
+			valueType = ir.Union
+		}
+	}
 	if l.locals == nil {
 		l.locals = map[*ast.Symbol]int{}
 	}
@@ -132,7 +142,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return local, nil
 	}
 	l.locals[symbol] = len(l.result.Locals)
-	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex})
+	l.result.Locals = append(l.result.Locals, ir.Local{UnsetField: unsetField, Name: name.Text(), Type: valueType, Function: l.functionIndex, Placeholder: l.placeholderOrigin(name), Uninitialized: l.placeholderOrigin(name) != "" && (name.Parent.Kind != ast.KindParameter || l.uninitializedInitializer(name.Parent.AsParameterDeclaration().Initializer))})
 	proven := l.checker.GetTypeAtLocation(name)
 	if inferred != nil {
 		proven = inferred
@@ -180,8 +190,12 @@ func (l *lowering) local(identifier *ast.Node) (int, bool) {
 	local, isLocal := l.locals[symbol]
 	if isLocal {
 		l.touch(local)
-		if declared := l.result.Locals[local]; declared.Captured && slotless(declared.Type) && l.unlowerable == nil {
-			// A cell holds one adamic_value, and number | undefined needs two words. Lower says so once
+		if declared := l.result.Locals[local]; declared.Placeholder != "" && declared.Captured && declared.Preallocated && declared.Ready == 0 && l.unlowerable == nil {
+			l.unlowerable = l.notYet(identifier, "an unset-capable capture before its declaration without a separate declaration-readiness cell")
+		}
+		if declared := l.result.Locals[local]; declared.Captured && slotless(declared.Type) && !(declared.Placeholder != "" && declared.Type == ir.Union) && l.unlowerable == nil {
+			// A placeholder union is one counted heap reference, which a cell already holds.
+			// Other slotless shapes retain their existing capture refusal. Lower says so once
 			// it's done, since the capture is found here, where nothing can return an error.
 			l.unlowerable = l.notYet(identifier, "a "+typeName(declared.Type)+" variable a function value captures")
 		}
@@ -239,7 +253,19 @@ func (l *lowering) constant(value string) int {
 
 // localRead preserves checker narrowing for both private and qualified singleton reads.
 func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
+	if value, handled, err := l.namespaceExportRead(node); handled {
+		if err == nil {
+			value = l.placeholderRead(node, value, l.placeholderReadOrigin(node))
+		}
+		return value, err
+	}
+	if origin := l.result.Locals[local].Placeholder; origin != "" {
+		return l.placeholderRead(node, ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Unset: true}, origin), nil
+	}
 	read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.result.Locals[local].NamespaceState || l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
+	if origin := l.result.Locals[local].UnsetField; origin != "" {
+		return l.unsetSpecialization(node, read, l.checker.GetTypeOfSymbol(l.symbol(node)), origin)
+	}
 	if l.result.Locals[local].Type == ir.Union {
 		// Where the checker has narrowed it to fewer members held one way, it's read as that.
 		parent := node.Parent
@@ -248,6 +274,9 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 		}
 		observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
 		if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
+			if l.checker.GetTypeOfSymbol(l.symbol(node)).Flags()&checker.TypeFlagsAny != 0 {
+				return l.checkedAnyType(node, read, l.arrayPredicateObservedType(node))
+			}
 			// Calls and captured writes can invalidate the checker's narrowing. Check the
 			// held member before casting it, with ordinary IR shared by both backends.
 			name := "object"
@@ -277,6 +306,27 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 			b := l.libraryArrayBuilder([]ir.Expression{read})
 			held := b.read(b.parameters[0])
 			matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
+			if narrowed == ir.Object && l.isLibraryType(l.checker.GetTypeAtLocation(node), "Error", "RangeError", "TypeError") {
+				identity := -1
+				for index, builtin := range []string{"Error", "RangeError", "TypeError"} {
+					if l.isLibraryType(l.checker.GetTypeAtLocation(node), builtin) {
+						identity = -index - 1
+						break
+					}
+				}
+				matches = ir.InstanceOf{Value: held, Class: identity}
+			} else if narrowed == ir.Object && isClassInstance(l.checker.GetTypeAtLocation(node)) {
+				proven := l.checker.GetTypeAtLocation(node)
+				declaration := l.classes[proven.Symbol()]
+				if declaration == nil {
+					return nil, l.notYet(node, "an unknown narrowed to an unrepresented nominal class")
+				}
+				instance, err := l.instantiate(declaration, proven, node)
+				if err != nil {
+					return nil, err
+				}
+				matches = ir.InstanceOf{Value: held, Class: instance.class}
+			}
 			if narrowed == ir.Array {
 				matches = ir.ArrayIsArray{Value: held}
 			}

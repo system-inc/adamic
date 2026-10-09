@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:58:45.749877406Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:58:45.760679934Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons"}
+{"Time":"2026-10-09T17:58:45.760759588Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"=== RUN   TestPrototypeMethodsAreRefusedWithReasons\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:45.760783434Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"=== PAUSE TestPrototypeMethodsAreRefusedWithReasons\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:45.760786175Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons"}
+{"Time":"2026-10-09T17:58:45.760789185Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeHazardsBehindObjectViewsAreNotYet"}
+{"Time":"2026-10-09T17:58:45.760791597Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeHazardsBehindObjectViewsAreNotYet","Output":"=== RUN   TestPrototypeHazardsBehindObjectViewsAreNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:45.760796043Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeHazardsBehindObjectViewsAreNotYet","Output":"=== PAUSE TestPrototypeHazardsBehindObjectViewsAreNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:45.760798072Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeHazardsBehindObjectViewsAreNotYet"}
+{"Time":"2026-10-09T17:58:45.760800115Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons"}
+{"Time":"2026-10-09T17:58:45.760801769Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"=== CONT  TestPrototypeMethodsAreRefusedWithReasons\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:45.763070528Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeHazardsBehindObjectViewsAreNotYet"}
+{"Time":"2026-10-09T17:58:45.76309017Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeHazardsBehindObjectViewsAreNotYet","Output":"=== CONT  TestPrototypeHazardsBehindObjectViewsAreNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:46.334938199Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"--- PASS: TestPrototypeMethodsAreRefusedWithReasons (0.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:46.35957066Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Elapsed":0.57}
+{"Time":"2026-10-09T17:58:46.359627606Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeHazardsBehindObjectViewsAreNotYet","Output":"--- PASS: TestPrototypeHazardsBehindObjectViewsAreNotYet (0.60s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:46.359635234Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeHazardsBehindObjectViewsAreNotYet","Elapsed":0.6}
+{"Time":"2026-10-09T17:58:46.35963786Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:46.363634805Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.613s\n"}
+{"Time":"2026-10-09T17:58:46.363679564Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.614}

@@ -1,0 +1,17 @@
+{
+  "base_exception_roots": {},
+  "catch_unknown": {
+    "diagnostics": 8,
+    "file_roots": 5,
+    "witnesses": [
+      "src/compiler/commandLineParser.ts:2301",
+      "src/compiler/program.ts:406",
+      "src/compiler/program.ts:441",
+      "src/compiler/sys.ts:1280",
+      "src/compiler/sys.ts:1553",
+      "src/compiler/tracing.ts:66",
+      "src/compiler/transformers/jsx.ts:187"
+    ]
+  },
+  "hidden_exception_reasons": []
+}

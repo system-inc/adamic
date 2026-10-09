@@ -1,0 +1,212 @@
+=== RUN   TestFreshCorpusRemainder
+=== PAUSE TestFreshCorpusRemainder
+=== CONT  TestFreshCorpusRemainder
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/047cb0d_f_maybe.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/047cb0d_f_maybe_ref.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/4ddd17f_weak_single_narrowed.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/57f2d04_find_last_shrinks.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/57f2d04_find_last_shrinks2.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/backend_stop_catches.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/call_spread_array.a
+    corpus_coverage_test.go:82: 12 writes, 12 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/d96d304_try_stack.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/generic_body_indexed.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/generic_body_read.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/inherited_fields_guard.a
+    corpus_coverage_test.go:82: 2 writes, 2 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/json_shorthand.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/long_unicode_literals.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_namespace_catch.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_regex_fields.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_tdz_catch.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_193.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_79.a
+    corpus_coverage_test.go:82: 2 writes, 2 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_propagation.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_required.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_variants.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_alias_reset.a
+    corpus_coverage_test.go:82: 3 writes, 3 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_assignment_result.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_before_use.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_field.a
+    corpus_coverage_test.go:82: 8 writes, 8 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_local.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace.a
+    corpus_coverage_test.go:82: 6 writes, 3 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace_before_use.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_before_use.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_coalesce.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_copy.a
+    corpus_coverage_test.go:82: 11 writes, 6 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_equality.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_json.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_loose.a
+    corpus_coverage_test.go:82: 3 writes, 3 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_optional.a
+    corpus_coverage_test.go:82: 1 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_saved_leak.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_truthiness.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_typeof.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_observe.a
+    corpus_coverage_test.go:82: 9 writes, 6 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_return_assignment.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_saved_leak.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_scanner.a
+    corpus_coverage_test.go:82: 1 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_boolean.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_default.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findIndex_checked.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findLastIndex_maybe.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findLast_maybe.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_find_checked.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_find_maybe.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_found.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_omitted.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/search_shrink_unknown.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_builtin_narrow_terminal.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_catch_callback.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_dynamic.a
+    corpus_coverage_test.go:82: 2 writes, 2 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_dynamic_uncaught.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_error_subclasses.a
+    corpus_coverage_test.go:82: 7 writes, 7 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_finally_callback.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_finally_completion.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_library_failures.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_library_host.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_library_types.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_liveness.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_object_uncaught.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_region_payload.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_rethrow.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_saved_error.a
+    corpus_coverage_test.go:82: 4 writes, 4 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_soundness_terminal.a
+    corpus_coverage_test.go:82: 0 writes, 0 proven not to close a cycle
+=== NAME  TestFreshCorpusRemainder
+    corpus_coverage_test.go:85: remainder ran 68 programs
+--- PASS: TestFreshCorpusRemainder (2.06s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/047cb0d_f_maybe.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/047cb0d_f_maybe_ref.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/4ddd17f_weak_single_narrowed.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/57f2d04_find_last_shrinks.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/57f2d04_find_last_shrinks2.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/backend_stop_catches.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/call_spread_array.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/d96d304_try_stack.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/generic_body_indexed.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/generic_body_read.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/inherited_fields_guard.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/json_shorthand.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/long_unicode_literals.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_namespace_catch.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_regex_fields.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/lowering_chain_tdz_catch.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_193.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_79.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_propagation.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_required.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/optional_after_call_variants.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_alias_reset.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_assignment_result.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_before_use.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_field.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_local.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace_before_use.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_before_use.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_coalesce.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_copy.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_equality.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_json.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_loose.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_optional.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_saved_leak.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_truthiness.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_null_typeof.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_observe.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_return_assignment.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_saved_leak.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_scanner.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_boolean.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_default.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findIndex_checked.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findLastIndex_maybe.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_findLast_maybe.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_find_checked.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_find_maybe.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_found.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_omitted.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/search_shrink_unknown.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_builtin_narrow_terminal.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_catch_callback.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_dynamic.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_dynamic_uncaught.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_error_subclasses.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_finally_callback.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_finally_completion.a (0.02s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_library_failures.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_library_host.a (0.24s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_library_types.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_liveness.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_object_uncaught.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_region_payload.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_rethrow.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_saved_error.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_soundness_terminal.a (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/fresh	2.065s

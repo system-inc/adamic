@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:21:21.586567935Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:21.602612954Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionLoopMayNotRun"}
+{"Time":"2026-10-09T18:21:21.602676196Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionLoopMayNotRun","Output":"=== RUN   TestParserFactoryCompletionLoopMayNotRun\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:21.602704114Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionLoopMayNotRun","Output":"=== PAUSE TestParserFactoryCompletionLoopMayNotRun\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:21.602707582Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionLoopMayNotRun"}
+{"Time":"2026-10-09T18:21:21.602710757Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionLoopMayNotRun"}
+{"Time":"2026-10-09T18:21:21.602713092Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionLoopMayNotRun","Output":"=== CONT  TestParserFactoryCompletionLoopMayNotRun\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:21.770317999Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionLoopMayNotRun","Output":"--- PASS: TestParserFactoryCompletionLoopMayNotRun (0.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:21.770367194Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryCompletionLoopMayNotRun","Elapsed":0.17}
+{"Time":"2026-10-09T18:21:21.7703802Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:21.778246733Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.192}

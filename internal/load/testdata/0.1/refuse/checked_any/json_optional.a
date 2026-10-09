@@ -1,0 +1,4 @@
+interface Config { readonly limit?: number; }
+function convertToObject(value: any): Config { return value; }
+console.log(String(convertToObject({}).limit ?? 14));
+console.log(String(convertToObject({limit: 15}).limit ?? 14));

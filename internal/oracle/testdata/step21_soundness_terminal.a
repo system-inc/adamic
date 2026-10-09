@@ -1,0 +1,9 @@
+// A call can invalidate tsc narrowing. Adamic's inserted check is terminal,
+// even inside a source catch/finally; the JS backend carries the same check.
+let value: number | string = 1;
+function change(): void { value = `changed${1}`; }
+try {
+    if (typeof value === 'number') { change(); console.log(`${value + 1}`); }
+} catch { console.log('caught'); }
+finally { console.log('finally'); }
+console.log('after');

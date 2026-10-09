@@ -1,0 +1,287 @@
+{
+  "branch": "compiler/project-references-main",
+  "source": "e2aa3750c4eae75f673672419ad524f182d6343d",
+  "tests": [
+    {
+      "test": "TestProjectReferencesCycle",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesSharedPrelude",
+      "result": "pass",
+      "seconds": 0.22,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesCompatibleOptions",
+      "result": "pass",
+      "seconds": 0.8,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/strictNullChecks",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/strictFunctionTypes",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/strictBindCallApply",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/strictPropertyInitialization",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/strictBuiltinIteratorReturn",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesDiamond",
+      "result": "pass",
+      "seconds": 0.81,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/useUnknownInCatchVariables",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/noImplicitAny",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/noImplicitThis",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/noUncheckedIndexedAccess",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/exactOptionalPropertyTypes",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/target",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/module",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/lib",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/paths",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/noUncheckedSideEffectImports",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/forceConsistentCasingInFileNames",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions/deduplicatePackages",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesConflictingOptions",
+      "result": "pass",
+      "seconds": 0.01,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestNodeLibraryUsesPinnedDeclarations",
+      "result": "pass",
+      "seconds": 1.36,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesAudit",
+      "result": "pass",
+      "seconds": 1.21,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesTransitiveTypes",
+      "result": "pass",
+      "seconds": 3,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectLoaderOwnershipAndNoCheck/noCheck",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectLoaderOwnershipAndNoCheck/mixed",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectLoaderOwnershipAndNoCheck",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesTransitive",
+      "result": "pass",
+      "seconds": 0.66,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectLoaderStandaloneNodeKeepsPrelude",
+      "result": "pass",
+      "seconds": 0.37,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectLoaderNodeImportsKeepReferenceRoots",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectLoaderHostConsoleAndCompositeEntries",
+      "result": "pass",
+      "seconds": 0.79,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesTypesUnionDuplicateSkipped",
+      "result": "pass",
+      "seconds": 5.2,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesTypesUnion",
+      "result": "pass",
+      "seconds": 4.91,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectReferencesTypesUnionDuplicate",
+      "result": "pass",
+      "seconds": 4.99,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestNodeLibraryRejectsDifferentVersion",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectLoaderOptionAuditFailsClosed",
+      "result": "pass",
+      "seconds": 0.58,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestNodeLibraryKeepsOfficialConsoleSignatures",
+      "result": "pass",
+      "seconds": 0.28,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestProjectLoaderReferenceSources",
+      "result": "pass",
+      "seconds": 0.64,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/project-references-source/fixture/two/app/main.a",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/stage3/project-references-source/fixture/chain/app/main-print.a",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-8-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-8-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "stage3/project-references-source/fixture/two/app/main.a",
+        "after": [
+          "2",
+          "2",
+          "0",
+          "2",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/project-references-source/fixture/chain/app/main-print.a",
+        "after": [
+          "2",
+          "2",
+          "0",
+          "2",
+          "2",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 1144
+  }
+}

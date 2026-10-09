@@ -151,10 +151,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/predicates/10_nullish.a:6:5: Adamic 0.1 refuses a type predicate whose return is not proven (the body's true narrowing does not match null | undefined); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
-    }
+    "stage0": {"outcome": "Refused", "what": "stage3/fixtures/predicates/10_nullish.a:5:31: Adamic 0.1 refuses explicit any in .a; use unknown and validate it before a typed use"}
   },
   {
     "file": "11_empty_assert.a",

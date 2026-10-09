@@ -26,35 +26,37 @@ func TestIteratorGapsAreExplicit(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSource(t, source)
 			var gap *NotYet
-			if !errors.As(err, &gap) {
-				t.Fatalf("got %v, want an explicit iterator NotYet", err)
+			if strings.Contains(source, "class Result") || strings.Contains(source, "const kept:") {
+				if !errors.As(err, &gap) {
+					t.Fatalf("got %v, want an explicit iterator NotYet", err)
+				}
+			} else if err != nil {
+				t.Fatalf("dynamic protocol refused: %v", err)
 			}
 		})
 	}
 }
 
-func TestIteratorViewsCannotHideReturn(t *testing.T) {
+func TestIteratorViewsDispatchHiddenReturn(t *testing.T) {
 	t.Parallel()
 	source := `function plain(){return{[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};}
  function closing(){return{[Symbol.iterator](){return{next(){return{value:1,done:false};},return(){return{value:0,done:true};}}}};}
  function consume(value:ReturnType<typeof plain>):void{for(const item of value){break;}}
  consume(closing());`
 	_, err := lowerSource(t, source)
-	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, "hide a return") {
-		t.Fatalf("got %v, want a hidden-return refusal", err)
+	if err != nil {
+		t.Fatalf("dynamic iterator view refused: %v", err)
 	}
 }
 
-func TestIteratorViewsCannotEraseReceivers(t *testing.T) {
+func TestIteratorViewsDispatchReceivers(t *testing.T) {
 	t.Parallel()
 	source := `const source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};
  class Other{[Symbol.iterator](){return{next(){return{value:1,done:false};}}}}
  function consume(value:typeof source):void{for(const item of value){break;}}const other=new Other();consume(other);`
 	_, err := lowerSource(t, source)
-	var gap *NotYet
-	if !errors.As(err, &gap) || !strings.Contains(gap.What, "receiver convention") {
-		t.Fatalf("got %v, want an erased-receiver refusal", err)
+	if err != nil {
+		t.Fatalf("dynamic iterator view refused: %v", err)
 	}
 }
 
@@ -67,13 +69,13 @@ func TestIteratorDestructuringDoesNotLieAboutExhaustion(t *testing.T) {
 	}
 }
 
-func TestGeneratorsAreRefusedEvenWithoutYield(t *testing.T) {
+func TestAsyncGeneratorsAreRefusedEvenWithoutYield(t *testing.T) {
 	t.Parallel()
-	for _, source := range []string{"function* empty(){return 1;} empty();", "const empty=function*(){return 1;};empty();", "const source={*empty(){return 1;}};source.empty();"} {
+	for _, source := range []string{"async function* empty(){return 1;} empty();", "const empty=async function*(){return 1;};empty();", "const source={async *empty(){return 1;}};source.empty();"} {
 		_, err := lowerSource(t, source)
 		var refused *Refused
-		if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "suspended frames") {
-			t.Errorf("got %v, want the generator ownership refusal", err)
+		if !errors.As(err, &refused) || refused.What != "an async generator function" {
+			t.Errorf("got %v, want the async generator ownership refusal", err)
 		}
 	}
 }
@@ -105,13 +107,7 @@ func TestLiteralMethodSignatureViewsDoNotLoseThis(t *testing.T) {
 func TestIteratorDescriptorReasons(t *testing.T) {
 	t.Parallel()
 	probes := []struct{ source, reason string }{
-		{"interface Step{value:number;done?:boolean} const source={[Symbol.iterator](){return{next():Step{return{value:1};}}}};for(const value of source){break;}", "required boolean done"},
-		{"interface Step{value?:number;done:boolean} const source={[Symbol.iterator](){return{next():Step{return{done:false};}}}};for(const value of source){break;}", "represented value field"},
-		{"interface Step{value:number;done:boolean} function closing():{return():Step}|undefined{return undefined;} const source={[Symbol.iterator](){return{...closing(),next():Step{return{value:1,done:false};}}}};for(const value of source){break;}", "optional iterator method"},
-		{"class Iterator{next(unused=1):{value:number;done:boolean}{return{value:1,done:false};}[Symbol.iterator]():Iterator{return this;}}for(const value of new Iterator()){break;}", "arguments or overloads"},
 		{"class Result{declare value:number;declare done:boolean;}const source={[Symbol.iterator](){return{next(){return new Result();}}}};for(const value of source){break;}", "declare or abstract class field"},
-		{"const source={[Symbol.iterator](){return{next:()=>({value:1,done:false})};}};const iterator=source[Symbol.iterator]();iterator.next=():{value:number;done:boolean}=>({value:2,done:true});for(const value of source){break;}", "replacing an iterator protocol"},
-		{"const source={[Symbol.iterator](){return{next(){return{value:1,done:false};}}}};const copy={...source};for(const value of copy){break;}", "object spread"},
 	}
 	for _, probe := range probes {
 		t.Run(probe.reason, func(t *testing.T) {
@@ -199,5 +195,37 @@ func TestIteratorSymbolKeysAreNotStringKeys(t *testing.T) {
 	var gap *NotYet
 	if !errors.As(err, &gap) || !strings.Contains(gap.What, "symbol-key storage") {
 		t.Fatalf("got %v, want explicit symbol-key storage refusal", err)
+	}
+}
+
+func TestIteratorBuiltInStorageViewsArePending(t *testing.T) {
+	t.Parallel()
+	for _, storage := range []string{"const storage:number[]=[1,2];", "const storage:readonly [number,number]=[1,2];", "const storage=new Set([1,2]).values();"} {
+		t.Run(storage, func(t *testing.T) {
+			_, err := lowerSource(t, storage+`function consume(source:Iterable<number>):void {for(const value of source){console.log(String(value));}} consume(storage);`)
+			var gap *NotYet
+			if !errors.As(err, &gap) || !strings.Contains(err.Error(), "protocol adapter") {
+				t.Fatalf("got %v, want a storage adapter stop", err)
+			}
+		})
+	}
+}
+
+func TestIteratorOptionalCloseResultMustBeObject(t *testing.T) {
+	t.Parallel()
+	source := `interface Step {value:number;done:boolean;} interface Cursor {next():Step;return?:()=>Step|undefined;} const cursor:Cursor={next():Step{return {value:1,done:false};},return():Step|undefined{return undefined;}};const source={[Symbol.iterator]():Cursor{return cursor;}};for(const value of source){break;}`
+	_, err := lowerSource(t, source)
+	var gap *NotYet
+	if !errors.As(err, &gap) || !strings.Contains(err.Error(), "represented object") {
+		t.Fatalf("got %v, want an object result stop", err)
+	}
+}
+
+func TestIteratorDeclaredNextHasNoRuntimeMethod(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `interface Step {value:number;done:boolean;} class Cursor {declare next:()=>Step;} const source={[Symbol.iterator]():Cursor{return new Cursor();}};for(const value of source){break;}`)
+	var gap *NotYet
+	if !errors.As(err, &gap) || !strings.Contains(err.Error(), "declare") {
+		t.Fatalf("got %v, want an absent method stop", err)
 	}
 }

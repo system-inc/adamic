@@ -1,0 +1,138 @@
+[
+  {
+    "path": "stage3/namespace-value/qualified-live.a",
+    "sha256": "6545371e2fe0048954881c5202db99f1d0e62c90105024c8463e2efabc5b4927",
+    "typescript": "6.0.3",
+    "stdout": "2\n7\ntrue\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/tracing-qualified.a",
+    "sha256": "445bf3896f0b05ecda6d8d753427bb0d7b904fe6900b6f25c00a9a806cdae050",
+    "typescript": "6.0.3",
+    "stdout": "1,3\nparse\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/stored.a",
+    "sha256": "aabc837d43b814a35e916c11379f92435dd850975a4bf2f0087c77ea525f76a3",
+    "typescript": "6.0.3",
+    "stdout": "2\n7\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/passed.a",
+    "sha256": "ab3e699555bfc4da487aa921c49efbf4031aa38a929393c49d623e89190326fa",
+    "typescript": "6.0.3",
+    "stdout": "2\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/returned.a",
+    "sha256": "ac8cade961792742e308f645d86c86919f468fce495fe899eb4e49f13233e95f",
+    "typescript": "6.0.3",
+    "stdout": "2\n7\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/identity.a",
+    "sha256": "9079e134e89aa4f8b81f374b190afb68d629cead0fd80834bb42193ed7d91b40",
+    "typescript": "6.0.3",
+    "stdout": "true\n9\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/staged.a",
+    "sha256": "3cb3b64567d52b3142aeeb37f8a5bbdd7e4cc5addd88cdb1e8ae98b3c0017074",
+    "typescript": "6.0.3",
+    "stdout": "\nfalse\nfalse\nundefined\nundefined\nundefined\nfirst\nfalse\nfalse\nundefined\nundefined\nundefined\nfirst,later\ntrue\ntrue\nnumber\n2\nundefined\nfirst,later,read\ntrue\ntrue\nnumber\n2\nfunction\n2\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/merged.a",
+    "sha256": "c87ba5b0a08a139983d303943e452d0faa3a2739973b76e9528c6e5990aea71c",
+    "typescript": "6.0.3",
+    "stdout": "true\nz,read\nz,read,a,advance\n3\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/structural-view.a",
+    "sha256": "a4d8fe10241722842ee8af297efa0192c41bb996f889847009eb5e7e05a2c1c9",
+    "typescript": "6.0.3",
+    "stdout": "1\n8\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/order.a",
+    "sha256": "0cf8c7bde7c6ad90221cb7545034621d61d7723f1b7473d75e057aae5f9fdb44",
+    "typescript": "6.0.3",
+    "stdout": "z,a\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/effects.a",
+    "sha256": "62360fafbe30700fba0977a5a085685ed6c88c0cd1b764a8dbb2c65d470846f0",
+    "typescript": "6.0.3",
+    "stdout": "rhs\n1\n4\n6\n6\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/prototype-presence.a",
+    "sha256": "a19bf6f3cdeb718898e42d99db204ed62df82eaf3081e3e9831e3185374a015d",
+    "typescript": "6.0.3",
+    "stdout": "true\nfalse\nvalue\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/imports/main.a",
+    "sha256": "09b26861947b7bdfb970c71d730c9ec9ca521607d00e5849fdbb80df2cde0b2d",
+    "typescript": "6.0.3",
+    "stdout": "true\nz,a\n3\n4\n7\ntrue\nz,a\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/wider-reference.a",
+    "sha256": "72ca292d39c3ff4d84939e4699759443c64a80480f04f8c056588d35aae8c050",
+    "typescript": "6.0.3",
+    "stdout": "3\n3\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/erased-block.a",
+    "sha256": "ffde61606f94d5fd9af1902015da5ab6331a30120e64e05f0b67bc118016fdc1",
+    "typescript": "6.0.3",
+    "stdout": "undefined\nundefined\nobject\nvalue\n3\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/namespace-value/wider-const.a",
+    "sha256": "86662b371443bd0281f0c729b5fec46f02a0404be873195f8376ed553ce3a6f3",
+    "typescript": "6.0.3",
+    "stdout": "2\n",
+    "stderr": "",
+    "exit": 0
+  },
+  {
+    "path": "stage3/fixtures/namespaces/10_tracing_escape.a",
+    "sha256": "8a56e590b101a98f7bbe93f39357b1162f87b49fcb3959910c63100601dfcf3a",
+    "typescript": "6.0.3",
+    "stdout": "1,3\nparse\n",
+    "stderr": "",
+    "exit": 0
+  }
+]

@@ -172,7 +172,8 @@ func splitDeclarations(source string) ([]cDeclaration, error) {
 	return declarations, nil
 }
 
-// splitC gives every generated static symbol one external definition. Token replacement never
+// splitC gives generated static symbols external definitions, except inline helpers whose
+// definitions stay in the shared header with static linkage. Token replacement never
 // touches literal bytes. The fixed namespace cannot collide with runtime API names. Existing
 // program-wide indexes distinguish symbols; no whole-program content hash invalidates all units.
 func splitC(source string) (string, []compilationUnit, error) {
@@ -210,6 +211,11 @@ func splitC(source string) (string, []compilationUnit, error) {
 	defined := map[string]bool{}
 	for _, d := range declarations {
 		if d.name == "" {
+			header.WriteString(rewrite(d.tokens) + "\n")
+			continue
+		}
+		// Every using translation unit needs the definition of a static inline helper.
+		if d.function && d.tokens[0].text == "static" && d.tokens[1].text == "inline" {
 			header.WriteString(rewrite(d.tokens) + "\n")
 			continue
 		}

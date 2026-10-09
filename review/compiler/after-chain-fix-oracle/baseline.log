@@ -1,0 +1,79 @@
+=== RUN   TestCheckedJSONNextRefusals
+=== PAUSE TestCheckedJSONNextRefusals
+=== RUN   TestEnumInitializationUnknownPinned
+=== PAUSE TestEnumInitializationUnknownPinned
+=== RUN   TestGenericBodyRelationsMaybeBind
+=== PAUSE TestGenericBodyRelationsMaybeBind
+=== RUN   TestParserConstructionUnsetUse
+=== PAUSE TestParserConstructionUnsetUse
+=== RUN   TestParserNamespaceClassRegistrationMutant
+=== PAUSE TestParserNamespaceClassRegistrationMutant
+=== RUN   TestParserStackTinyLimit
+=== PAUSE TestParserStackTinyLimit
+=== CONT  TestCheckedJSONNextRefusals
+=== CONT  TestParserConstructionUnsetUse
+=== CONT  TestGenericBodyRelationsMaybeBind
+=== CONT  TestEnumInitializationUnknownPinned
+=== RUN   TestEnumInitializationUnknownPinned/unknown-before
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-before
+=== RUN   TestEnumInitializationUnknownPinned/unknown-callback
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-callback
+=== RUN   TestEnumInitializationUnknownPinned/unknown-property
+=== PAUSE TestEnumInitializationUnknownPinned/unknown-property
+=== RUN   TestCheckedJSONNextRefusals/json_dictionary_alias_write
+=== CONT  TestParserStackTinyLimit
+=== CONT  TestParserNamespaceClassRegistrationMutant
+=== NAME  TestGenericBodyRelationsMaybeBind
+    generic_body_relations_test.go:38: want dependent return refusal, got /workspace/adamic/internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a:7:33: Adamic 0.1 refuses explicit any in .a; use unknown and validate it before a typed use
+--- FAIL: TestGenericBodyRelationsMaybeBind (0.08s)
+=== CONT  TestEnumInitializationUnknownPinned/unknown-before
+--- FAIL: TestCheckedJSONNextRefusals (0.09s)
+    --- FAIL: TestCheckedJSONNextRefusals/json_dictionary_alias_write (0.09s)
+panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+[signal SIGSEGV: segmentation violation code=0x1 addr=0x4 pc=0x811ab2]
+
+goroutine 21 [running]:
+testing.tRunner.func1.2({0x1eee540, 0x2002b20})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1eee540?, 0x2002b20?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfSymbol(0x37c5fa73b508?, 0x37c5f9890001?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:16880 +0x12
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetTypeOfSymbol(0x37c5f9e02a00?, 0x37c5fa869bf0?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/exports.go:196 +0x13
+github.com/system-inc/adamic/internal/lower.(*lowering).notePlaceholderSlots.func1(0x37c5fa33cea0)
+	/workspace/adamic/internal/lower/placeholder.go:182 +0x43e
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ExpressionStatement).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1588
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x37c5f989b378?, 0x37c5f989b8b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8734 +0x106a
+github.com/system-inc/adamic/internal/lower.(*lowering).notePlaceholderSlots.func1(0x37c5f9ba5280)
+	/workspace/adamic/internal/lower/placeholder.go:218 +0xcdf
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x37c5fa350e08, 0x37c5f989b8b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0xdeeb2f?, 0x37c5f989b8b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).notePlaceholderSlots.func1(0x37c5fa350e08)
+	/workspace/adamic/internal/lower/placeholder.go:218 +0xcdf
+github.com/system-inc/adamic/internal/lower.(*lowering).notePlaceholderSlots(0x37c5f9e02a00)
+	/workspace/adamic/internal/lower/placeholder.go:222 +0x27f
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse(0x37c5f9e02a00, 0x37c5fa350e08)
+	/workspace/adamic/internal/lower/refusals.go:39 +0x32
+github.com/system-inc/adamic/internal/lower.Lower({0x1f954a0?, 0x2087060?}, 0x37c5fa30f410)
+	/workspace/adamic/internal/lower/lower.go:47 +0x411
+github.com/system-inc/adamic/internal/oracle.TestCheckedJSONNextRefusals.func1(0x37c5f9619688)
+	/workspace/adamic/internal/oracle/checked_json_next_test.go:107 +0x2c6
+testing.tRunner(0x37c5f9619688, 0x37c5f929c1c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 13
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	0.124s
+FAIL

@@ -65,6 +65,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		return err
 	}
 	function := l.result.Functions[index]
+	function.SourceLength = sourceFunctionLength(declaration)
 	if this >= 0 && declaration.Kind != ast.KindConstructor {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
@@ -104,6 +105,13 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			function.Returns = valueType
 		}
 	}
+	if isGenerator(declaration) {
+		types, err := l.generatorTypes(declaration)
+		if err != nil {
+			return err
+		}
+		function.Generator, function.Returns = types, ir.Object
+	}
 	outerIndexForParameters := l.functionIndex
 	l.functionIndex = index
 	defer func() { l.functionIndex = outerIndexForParameters }()
@@ -115,9 +123,16 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	patterns := []patterned{}
 	for position, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
+		if this >= 0 && ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
+			continue
+		}
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
 			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: index})
+			if function.Generator != nil {
+				// The retained whole parameter owns even fields not bound by the pattern.
+				l.noteLocal(incoming, l.checker.GetTypeAtLocation(parameter), parameter)
+			}
 			function.Parameters = append(function.Parameters, incoming)
 			patterns = append(patterns, patterned{pattern: name, parameter: parameter, incoming: incoming})
 			continue
@@ -195,6 +210,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 
 // lowerBody lowers the body of the function at index, whose signature is written.
 func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error {
+	if err := l.genericBodyWitness(declaration); err != nil {
+		return err
+	}
 	if declaration.Body() == nil {
 		return l.notYet(declaration, "a function without a body")
 	}
@@ -207,6 +225,9 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		outerClosures := l.closures
 		l.closures = nil
 		defer func() { l.closures = outerClosures }()
+	}
+	if function.Generator != nil && !function.Generator.Lowering {
+		return l.generatorBody(index, declaration, this, defaults, patterns)
 	}
 	body := declaration.Body()
 	outer, outerThis, outerIndex := l.function, l.this, l.functionIndex
@@ -244,23 +265,10 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		if l.uninitializedInitializer(parameter.initializer) {
 			l.result.Locals[parameter.local].Uninitialized = true
 			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
-			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: incoming}}, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
+			prologue = append(prologue, ir.Declare{Local: parameter.local, Value: l.placeholderInitialValue(parameter.initializer, l.result.Locals[parameter.local].Type), Uninitialized: true}, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: incoming}}, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
 			continue
 		}
 
-		if l.lazyAssertionInitializer(parameter.initializer) {
-			prefix, present, value, lazyErr := l.lazyAssertion(parameter.initializer, l.result.Locals[parameter.local].Type)
-			if lazyErr != nil {
-				err = lazyErr
-				break
-			}
-			l.result.Locals[parameter.local].Uninitialized = true
-			l.result.Locals[parameter.local].InitializerExpression = sourceExpression(parameter.initializer)
-			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
-			fallback := append(prefix, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: value}}})
-			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.IsUndefined{Value: incoming}, Then: fallback, Else: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
-			continue
-		}
 		var fallback ir.Expression
 		if fallback, err = l.expression(parameter.initializer); err != nil {
 			break
@@ -316,6 +324,9 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	function.Environment = l.result.Functions[index].Environment
 	function.ForwardedNestedParent = l.result.Functions[index].ForwardedNestedParent
 	function.ReferenceParents = l.result.Functions[index].ReferenceParents
+	if function.Generator != nil {
+		function.Generator.Prologue = len(function.Body) + len(prologue)
+	}
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
 	l.finishNestedEnvironment(&function, index)

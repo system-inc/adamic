@@ -1,0 +1,36 @@
+// A failed required read leaves a function, while optional reads remain harmless.
+interface Link {
+    readonly label: string;
+    readonly next: Link | undefined;
+}
+function readRequired(): string {
+    let chain: Link | undefined = { label: `made ${1}`, next: undefined };
+    const drop = (): void => { chain = chain?.next; };
+    drop();
+    return chain.label;
+}
+try {
+    console.log(readRequired());
+} catch (error) {
+    if (error instanceof Error) {
+        console.log(`${error.name}: ${error.message}`);
+    }
+} finally {
+    console.log('finished');
+}
+
+// An exceptional assignment must preserve the old owner for the catch.
+function preserve(): void {
+    let chain: Link | undefined = { label: `made ${2}`, next: undefined };
+    const drop = (): void => { chain = chain?.next; };
+    let original = { text: `kept ${3}` };
+    drop();
+    try {
+        original = { ...original, text: chain.label };
+    } catch (error) {
+        if (error instanceof Error) {
+            console.log(`${error.name} ${original.text}`);
+        }
+    }
+}
+preserve();

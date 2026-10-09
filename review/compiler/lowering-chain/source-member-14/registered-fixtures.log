@@ -1,0 +1,78 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_override_source.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_override_source.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/controls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/controls.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/controls.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_override_source.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a
+    oracle_test.go:747: not yet: /workspace/adamic/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a:2:16: stage 0 can't lower object spread of Error storage with non-enumerable properties; copy the desired fields explicitly yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a
+    oracle_test.go:747: not yet: /workspace/adamic/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a:3:2: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_override_source.a
+    oracle_test.go:747: not yet: /workspace/adamic/internal/oracle/testdata/miscompile_2a/iterators_override_source.a:15:38: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a
+    oracle_test.go:747: not yet: /workspace/adamic/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a:4:2: stage 0 can't lower a setter with an optional numeric input; use a plain optional numeric field until accessor thunks support two-word arguments yet
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a
+    oracle_test.go:753: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/controls.a
+    oracle_test.go:753: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a
+    oracle_test.go:753: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/controls.a
+    oracle_test.go:753: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/controls.a
+    oracle_test.go:596: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a
+    oracle_test.go:747: not yet: /workspace/adamic/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a:1:62: stage 0 can't lower new Error with a possibly undefined message; use message ?? '' yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a
+    oracle_test.go:747: not yet: /workspace/adamic/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a:1:42: stage 0 can't lower a property name longer than 4095 bytes; shorten the name until native metadata supports long strings yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/controls.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a
+    oracle_test.go:747: not yet: /workspace/adamic/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a:4:25: stage 0 can't lower object spread of Error storage with non-enumerable properties; copy the desired fields explicitly yet
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/controls.a
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.16s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a (1.29s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a (1.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/iterators_override_source.a (1.42s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a (0.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a (0.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a (0.26s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/census_never_rest_marker.a (22.74s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/miscompile_2a/controls.a (23.12s)
+PASS
+gate cache: native hits=4 misses=2
+gate cache: node hits=4 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	23.354s
