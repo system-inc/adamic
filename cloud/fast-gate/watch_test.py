@@ -1056,6 +1056,11 @@ class WatchTests(unittest.TestCase):
         self.assertEqual(w.read('pool-starts').count('codex/test0 '), 1, 'the pool job was moved, not raced')
         return w, sha
 
+    def poolAnswering(self, w, sha):
+        """The race's pool job is running with a unit placed, so a canary may yield its box run (#yieldRaceForCanary)."""
+        (w.root / 'loom-jobs' / (sha + '.running')).write_text('')
+        (w.root / 'loom-jobs' / (sha + '.placed')).write_text('1 5\n')
+
     def test_a_box_that_answers_the_race_first_stops_the_pool_job(self):
         # #04gypqe (@system_adamic, Oct 9: never cancel a run to move it; race it).
         w, sha = self.race()
@@ -1067,6 +1072,7 @@ class WatchTests(unittest.TestCase):
 
     def test_a_canary_with_no_box_slot_takes_a_race_s_and_the_pool_job_answers_alone(self):
         w, sha = self.race(mainCanary=1800)
+        self.poolAnswering(w, sha)
         w.put('canary', 'hold')
         # The half-hourly canary is half an hour on; the box race started well inside its ceiling of that (#89ma1vf).
         for started in (w.state / 'running-started').iterdir():
@@ -1081,6 +1087,35 @@ class WatchTests(unittest.TestCase):
         # The pool job runs on, and its verdict is the tip's own.
         w.put('pool-mode', 'green')
         w.wait(lambda: 'done codex/test0: green: %s' % sha in w.read('output'))
+
+    def test_a_race_whose_pool_job_places_nothing_never_yields_to_a_canary(self):
+        # Loom, Oct 9 23:20Z: c2 28107975's race lost its box slot to the half-hourly canary while its pool job had 0 units
+        # running on a pool of one asking worker, so nothing answered for it.
+        for placed in (None, '0 316\n'):
+            with self.subTest(placed=placed):
+                w, sha = self.race(mainCanary=1800)
+                if placed is not None:
+                    (w.root / 'loom-jobs' / (sha + '.running')).write_text('')
+                    (w.root / 'loom-jobs' / (sha + '.placed')).write_text(placed)
+                for started in (w.state / 'running-started').iterdir():
+                    started.write_text('2700\n')
+                w.put('clock', '2800')
+                time.sleep(1.5)
+                self.assertNotIn("box race on box0: a canary takes its slot", w.read('output'))
+                self.assertEqual(w.read('stops'), '')
+                self.assertTrue((w.state / 'racing' / sha).exists(), 'the box run races on')
+
+    def test_the_front_landing_s_race_never_yields_to_a_canary(self):
+        # Loom, Oct 9 23:20Z: the front landing's race never yields, even with its pool job answering.
+        w, sha = self.race(mainCanary=1800)
+        self.poolAnswering(w, sha)
+        (w.state / 'front').write_text('# ruled to land first\ncodex/test* # the front landing\ncodex/other*\n')
+        for started in (w.state / 'running-started').iterdir():
+            started.write_text('2700\n')
+        w.put('clock', '2800')
+        time.sleep(1.5)
+        self.assertNotIn("box race on box0: a canary takes its slot", w.read('output'))
+        self.assertEqual(w.read('stops'), '')
 
     def test_a_pool_that_answers_the_race_first_stops_the_box_run_and_its_partial_red_is_no_verdict(self):
         w, sha = self.race()
@@ -1133,6 +1168,7 @@ class WatchTests(unittest.TestCase):
         # #ew97ec2 (Oct 9): stop-gate.sh failed silently, the run went on to a green, and its race-lost mark dropped the green.
         with self.subTest(stopper='yieldRaceForCanary'):
             w, sha = self.race(mainCanary=1800)
+            self.poolAnswering(w, sha)
             w.put('ssh-fails', '')
             for started in (w.state / 'running-started').iterdir():
                 started.write_text('2700\n')

@@ -478,6 +478,21 @@ endRace() {
 # With no box slot for a canary, the cheapest box work yields it: a box race, whose tip's pool job answers alone (Oct 9
 # 10:55Z: two stars held their boxes whole and a race the third, so the stage canary waited on all three). One at a time;
 # the freed slot reaps before the canaries pick theirs, so the canary takes it ahead of the queue.
+#
+# Two races never yield (Loom, Oct 9 23:20Z, after c2 28107975 waited 5,622 s for a box slot and lost it to the
+# half-hourly canary ten minutes later, its pool job holding 0 running units on a pool of one asking worker): the front
+# landing's, whose branch matches the front file's first line, and any race whose pool job isn't answering, with no
+# .running job or no unit placed in its .placed count. A canary then waits for a slot between races.
+raceYields() {
+  local branch=$1 sha=$2 jobs=${LOOM_FAST_JOBS:-${HOME}/.loom/jobs/fast} front placed
+  front=$(grep -v '^#' "${state}/front" 2> /dev/null | awk 'NF { print $1; exit }')
+  # The glob is the front file's own pattern, matched unquoted on purpose.
+  # shellcheck disable=SC2053
+  [ -n "${front}" ] && [[ ${branch} == ${front} ]] && return 1
+  [ -f "${jobs}/${sha}.running" ] || return 1
+  read -r placed _ < "${jobs}/${sha}.placed" 2> /dev/null
+  [[ ${placed} =~ ^[0-9]+$ ]] && [ "${placed}" -gt 0 ]
+}
 yieldRaceForCanary() {
   local file pid branch sha slot box rest
   [ -s "${state}/canary-yield" ] && kill -0 "$(cat "${state}/canary-yield")" 2> /dev/null && return 0
@@ -486,6 +501,7 @@ yieldRaceForCanary() {
     pid=$(basename "${file}")
     read -r branch sha slot box rest < "${file}"
     [ "${box:-threadripper}" != pool ] && [ -f "${state}/racing/${sha}" ] && [ ! -f "${state}/stopped-running/${pid}" ] || continue
+    raceYields "${branch}" "${sha}" || continue
     # The race ends, the run is marked lost and the yield recorded only once the stop took (#ew97ec2): on a failed stop
     # the run races on unchanged, and the next race may yield instead.
     stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "a canary of main takes the slot; the pool job answers alone" || continue
