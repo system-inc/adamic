@@ -92,12 +92,16 @@ func (l *lowering) checkedViewMembers(node, source *ast.Node, value ir.Expressio
 			continue
 		}
 		prototype := false
+		staticStorage := false
 		for _, declaration := range field.Declarations {
+			staticStorage = staticStorage || declaration.Kind == ast.KindPropertyDeclaration && ast.HasSyntacticModifier(declaration, ast.ModifierFlagsStatic)
 			if declaration.Kind == ast.KindMethodDeclaration || declaration.Kind == ast.KindMethodSignature || declaration.Name() != nil && declaration.Name().Kind == ast.KindPrivateIdentifier {
 				prototype = true
 			}
 		}
-		if prototype {
+		// Constructor built-ins such as prototype are checker properties, not
+		// represented own data slots. Declared static fields keep parent lookup.
+		if prototype || l.isStaticType(receiver) && !staticStorage {
 			continue
 		}
 		of, known := l.representation(l.checker.GetTypeOfSymbol(field))
