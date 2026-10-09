@@ -51,7 +51,11 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("\tcontinue;")
 	}
 	e.line("}")
-	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	if visit.ViewRead.View != "" {
+		e.line("adamic_value %s = %s;", element, e.viewArrayElementSlot(visit.ViewRead, source, "(double)"+index))
+	} else {
+		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	}
 	if references {
 		e.line("adamic_retain(%s.reference);", element)
 	}
@@ -143,7 +147,11 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	e.line("if (%s >= %s->length) {", index, source)
 	e.line("\tcontinue;")
 	e.line("}")
-	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	if reduce.ViewRead.View != "" {
+		e.line("adamic_value %s = %s;", element, e.viewArrayElementSlot(reduce.ViewRead, source, "(double)"+index))
+	} else {
+		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	}
 	if reduce.Element.IsReference() {
 		e.line("adamic_retain(%s.reference);", element)
 	}

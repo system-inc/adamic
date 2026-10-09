@@ -1,0 +1,5 @@
+--- a/internal/lower/locals.go
++++ b/internal/lower/locals.go
+@@ -264 +264 @@
+-			if name == "object" && narrowed != ir.Array {
++			if name == "object" {
