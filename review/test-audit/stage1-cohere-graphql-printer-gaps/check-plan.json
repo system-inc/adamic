@@ -1,0 +1,30 @@
+[
+  {
+    "id": "W01",
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "change": "printerShardDisagreement returns nil at entry",
+    "kind": "weaken comparison",
+    "line": 256
+  },
+  {
+    "id": "S01",
+    "file": "stage1/cohere/graphql/printer/gaps_test.go",
+    "change": "whitespaceShards allocation bound adds one",
+    "kind": "off-by-one construction bound",
+    "line": 154
+  },
+  {
+    "id": "S02",
+    "file": "stage1/cohere/graphql/printer/gaps_test.go",
+    "change": "drop entire case-assignment loop",
+    "kind": "drop construction loop",
+    "line": 158
+  },
+  {
+    "id": "P02",
+    "file": "stage1/cohere/graphql/printer/gaps_test.go",
+    "change": "whitespaceShards returns nil at entry",
+    "kind": "empty construction probe",
+    "line": 153
+  }
+]

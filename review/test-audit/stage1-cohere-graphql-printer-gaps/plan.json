@@ -1,0 +1,26 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/class.go",
+    "line": 741,
+    "before": "last = statement.End()",
+    "after": "last = 0",
+    "menu": "change constant"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/class.go",
+    "line": 765,
+    "before": "node.Pos() >= l.unsetUntil",
+    "after": "node.Pos() < l.unsetUntil",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/class.go",
+    "line": 769,
+    "before": "if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && (field.Declarations[0].Kind == ast.KindPropertyDeclaration || parameterProperty(field.Declarations[0])) {\n\t\t\treturn nil\n\t\t}",
+    "after": "if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && (field.Declarations[0].Kind == ast.KindPropertyDeclaration || parameterProperty(field.Declarations[0])) {\n\t\t}",
+    "menu": "drop statement"
+  }
+]

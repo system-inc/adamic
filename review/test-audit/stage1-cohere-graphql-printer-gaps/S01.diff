@@ -1,0 +1,11 @@
+--- a/stage1/cohere/graphql/printer/gaps_test.go
++++ b/stage1/cohere/graphql/printer/gaps_test.go
+@@ -151,7 +151,7 @@
+ }
+ 
+ func whitespaceShards(cases []printerCase) []printerShard {
+-	shards := make([]printerShard, testPrinterWhitespaceGapShards)
++	shards := make([]printerShard, testPrinterWhitespaceGapShards+1)
+ 	for i := range shards {
+ 		shards[i].mode = "defaults"
+ 	}

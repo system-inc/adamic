@@ -1,0 +1,182 @@
+[
+  {
+    "test": "TestPrinterConstructorGap",
+    "run": 0,
+    "status": 0,
+    "wall": 20.765500596000493,
+    "seconds": 0.382,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^TestPrinterConstructorGap$"
+    ]
+  },
+  {
+    "test": "TestPrinterConstructorGap",
+    "run": 1,
+    "status": 0,
+    "wall": 4.944853656001214,
+    "seconds": 1.081,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^TestPrinterConstructorGap$"
+    ]
+  },
+  {
+    "test": "TestPrinterConstructorGap",
+    "run": 2,
+    "status": 0,
+    "wall": 6.30911795800057,
+    "seconds": 0.458,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^TestPrinterConstructorGap$"
+    ]
+  },
+  {
+    "test": "TestPrinterWhitespacePlantedDisagreement",
+    "run": 0,
+    "status": 0,
+    "wall": 4.7916519999998854,
+    "seconds": 0.201,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^TestPrinterWhitespacePlantedDisagreement$"
+    ]
+  },
+  {
+    "test": "TestPrinterWhitespacePlantedDisagreement",
+    "run": 1,
+    "status": 0,
+    "wall": 3.219574224000098,
+    "seconds": 0.201,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^TestPrinterWhitespacePlantedDisagreement$"
+    ]
+  },
+  {
+    "test": "TestPrinterWhitespacePlantedDisagreement",
+    "run": 2,
+    "status": 0,
+    "wall": 3.253875787002471,
+    "seconds": 0.155,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^TestPrinterWhitespacePlantedDisagreement$"
+    ]
+  },
+  {
+    "test": "TestPrinterWhitespaceShardGrowth",
+    "run": 0,
+    "status": 0,
+    "wall": 2.1244498640007805,
+    "seconds": 0.009,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^TestPrinterWhitespaceShardGrowth$"
+    ]
+  },
+  {
+    "test": "TestPrinterWhitespaceShardGrowth",
+    "run": 1,
+    "status": 0,
+    "wall": 2.118969172999641,
+    "seconds": 0.009,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^TestPrinterWhitespaceShardGrowth$"
+    ]
+  },
+  {
+    "test": "TestPrinterWhitespaceShardGrowth",
+    "run": 2,
+    "status": 0,
+    "wall": 2.0348624320031377,
+    "seconds": 0.008,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^TestPrinterWhitespaceShardGrowth$"
+    ]
+  }
+]

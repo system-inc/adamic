@@ -1,0 +1,10 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -767,7 +767,6 @@
+ 	}
+ 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
+ 		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && (field.Declarations[0].Kind == ast.KindPropertyDeclaration || parameterProperty(field.Declarations[0])) {
+-			return nil
+ 		}
+ 	}
+ 	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}

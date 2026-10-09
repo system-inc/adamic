@@ -1,0 +1,11 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -762,7 +762,7 @@
+ 		}
+ 		return &Refused{Where: l.program.Where(node), What: "this escaping a base constructor before derived fields are initialized", Fix: "use this only to read or write initialized base fields; call methods and publish the object after construction"}
+ 	}
+-	if l.unsetUntil == 0 || node.Pos() >= l.unsetUntil {
++	if l.unsetUntil == 0 || node.Pos() < l.unsetUntil {
+ 		return nil
+ 	}
+ 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {

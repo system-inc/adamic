@@ -1,0 +1,82 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/class.go",
+    "line": 741,
+    "change": "last = statement.End() -> last = 0",
+    "kind": "change constant",
+    "failed_rows": [
+      "TestPrinterConstructorGap"
+    ]
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/class.go",
+    "line": 765,
+    "change": "node.Pos() >= l.unsetUntil -> node.Pos() < l.unsetUntil",
+    "kind": "flip condition",
+    "failed_rows": [
+      "TestPrinterConstructorGap"
+    ]
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/class.go",
+    "line": 770,
+    "change": "drop return nil from ordinary-field exception",
+    "kind": "drop statement",
+    "failed_rows": []
+  },
+  {
+    "id": "W01",
+    "file": "stage1/cohere/graphql/printer/shards_test.go",
+    "line": 256,
+    "change": "printerShardDisagreement returns nil at entry",
+    "kind": "weaken comparison",
+    "failed_rows": [
+      "TestPrinterWhitespacePlantedDisagreement"
+    ]
+  },
+  {
+    "id": "S01",
+    "file": "stage1/cohere/graphql/printer/gaps_test.go",
+    "line": 154,
+    "change": "whitespaceShards allocation bound adds one",
+    "kind": "off-by-one construction bound",
+    "failed_rows": [
+      "TestPrinterWhitespaceShardGrowth"
+    ]
+  },
+  {
+    "id": "S02",
+    "file": "stage1/cohere/graphql/printer/gaps_test.go",
+    "line": 158,
+    "change": "drop entire case-assignment loop",
+    "kind": "drop construction loop",
+    "failed_rows": [
+      "TestPrinterWhitespaceShardGrowth",
+      "TestPrinterWhitespacePlantedDisagreement"
+    ]
+  },
+  {
+    "id": "P02",
+    "file": "stage1/cohere/graphql/printer/gaps_test.go",
+    "line": 153,
+    "change": "whitespaceShards returns nil at entry",
+    "kind": "empty construction probe",
+    "failed_rows": [
+      "TestPrinterWhitespaceShardGrowth",
+      "TestPrinterWhitespacePlantedDisagreement"
+    ]
+  },
+  {
+    "id": "P01",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "change": "Lower returns nil, nil at entry",
+    "kind": "empty-answer probe",
+    "failed_rows": [
+      "TestPrinterConstructorGap"
+    ]
+  }
+]

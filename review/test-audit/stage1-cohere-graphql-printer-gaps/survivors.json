@@ -1,0 +1,13 @@
+[
+  {
+    "id": "M03",
+    "before": "nestedInner.ts:5:29",
+    "after": "nestedConstructor.ts:6:9",
+    "evidence": [
+      "control.log",
+      "M03.log"
+    ],
+    "equivalent": false,
+    "bounded": true
+  }
+]

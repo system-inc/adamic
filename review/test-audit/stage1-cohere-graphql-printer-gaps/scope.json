@@ -1,0 +1,27 @@
+{
+  "base": "a467d1a1571c43e0f01fc4efcb43890280e4a1ac",
+  "rows": [
+    "TestPrinterConstructorGap",
+    "TestPrinterWhitespacePlantedDisagreement",
+    "TestPrinterWhitespaceShardGrowth"
+  ],
+  "bounded": true,
+  "lowering_inventory": "reached-lowering-functions.txt",
+  "harness_reach": {
+    "TestPrinterWhitespacePlantedDisagreement": [
+      "whitespaceCaseID",
+      "whitespaceOwner",
+      "whitespaceShards",
+      "printerShardDisagreement",
+      "firstDifference"
+    ],
+    "TestPrinterWhitespaceShardGrowth": [
+      "whitespaceCaseID",
+      "whitespaceOwner",
+      "whitespaceShards",
+      "printerShardUnion"
+    ]
+  },
+  "nproc": 5,
+  "setup_seconds": 0
+}

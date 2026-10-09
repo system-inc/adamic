@@ -1,0 +1,11 @@
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -738,7 +738,7 @@
+ 		target := ast.SkipParentheses(assignment.AsBinaryExpression().Left)
+ 		if target.Kind == ast.KindPropertyAccessExpression && ast.SkipParentheses(target.AsPropertyAccessExpression().Expression).Kind == ast.KindThisKeyword && unset[target.Name().Text()] {
+ 			delete(unset, target.Name().Text())
+-			last = statement.End()
++			last = 0
+ 		}
+ 	}
+ 	if len(unset) > 0 {

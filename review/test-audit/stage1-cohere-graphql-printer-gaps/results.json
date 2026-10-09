@@ -1,0 +1,94 @@
+[
+  {
+    "test": "TestPrinterConstructorGap",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/gaps_test.go",
+    "seconds": 0.458,
+    "oracle": "Node executes the fixture and checks exit 0 and ready\\n; Lower must return self-written Refused.What substring. Refused.Where is not checked: M03 passes with a different refusal location.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02"
+    ],
+    "last_proven_fail": "M02: gaps_test.go:34: gap changed; update GAPS.md and remove workaround: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterConstructorGap",
+      "TestPrinterWhitespacePlantedDisagreement",
+      "TestPrinterWhitespaceShardGrowth"
+    ],
+    "evidence": "ADAMIC_MUTANT=M02 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$' > M02.log 2>&1; gaps_test.go:34: gap changed; update GAPS.md and remove workaround: <nil>"
+  },
+  {
+    "test": "TestPrinterWhitespacePlantedDisagreement",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/gaps_test.go",
+    "seconds": 0.201,
+    "oracle": "Self-written expected owner, planted case ID and exactly one disagreement. Node transports synthetic answers; it is not a semantic printer oracle.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: gaps_test.go:195: 0 shards caught planted disagreement, want 1",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterConstructorGap",
+      "TestPrinterWhitespacePlantedDisagreement",
+      "TestPrinterWhitespaceShardGrowth"
+    ],
+    "evidence": "timeout 120 go test -overlay /workspace/u097-tmp/verify/W01/overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$' > W01.log 2>&1; gaps_test.go:195: 0 shards caught planted disagreement, want 1",
+    "witness_kills": [
+      "W01"
+    ]
+  },
+  {
+    "test": "TestPrinterWhitespaceShardGrowth",
+    "package": "stage1/cohere/graphql/printer",
+    "file": "stage1/cohere/graphql/printer/gaps_test.go",
+    "seconds": 0.009,
+    "oracle": "Self-written fixed shard count, complete union with unchanged cases, and unchanged owner after growth.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S01: gaps_test.go:205: growth changed shard count",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestPrinterConstructorGap",
+      "TestPrinterWhitespacePlantedDisagreement",
+      "TestPrinterWhitespaceShardGrowth"
+    ],
+    "evidence": "timeout 120 go test -overlay /workspace/u097-tmp/verify/S01/overlay.json -json -count=1 -timeout 90s ./stage1/cohere/graphql/printer/ -run '^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$' > S01.log 2>&1; gaps_test.go:205: growth changed shard count",
+    "setup_kills": [
+      "S01",
+      "S02"
+    ]
+  }
+]

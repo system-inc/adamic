@@ -1,0 +1,216 @@
+[
+  {
+    "id": "M01",
+    "vet_status": 0,
+    "vet_wall": 0.7798284089985827,
+    "vet_command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u097-tmp/verify/M01/overlay.json",
+      "./internal/lower/"
+    ],
+    "apply_status": 0,
+    "apply_error": ""
+  },
+  {
+    "id": "M02",
+    "vet_status": 0,
+    "vet_wall": 0.6320471250000992,
+    "vet_command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u097-tmp/verify/M02/overlay.json",
+      "./internal/lower/"
+    ],
+    "apply_status": 0,
+    "apply_error": ""
+  },
+  {
+    "id": "M03",
+    "vet_status": 0,
+    "vet_wall": 0.6407244490001176,
+    "vet_command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u097-tmp/verify/M03/overlay.json",
+      "./internal/lower/"
+    ],
+    "apply_status": 0,
+    "apply_error": ""
+  },
+  {
+    "id": "P01",
+    "vet_status": 0,
+    "vet_wall": 0.6717431449978903,
+    "vet_command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u097-tmp/verify/P01/overlay.json",
+      "./internal/lower/"
+    ],
+    "apply_status": 0,
+    "apply_error": ""
+  },
+  {
+    "id": "W01",
+    "vet_status": 0,
+    "vet_wall": 7.321071449001465,
+    "vet_command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u097-tmp/verify/W01/overlay.json",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "apply_status": 0,
+    "apply_error": "",
+    "status": 1,
+    "wall": 6.72999822699785,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/u097-tmp/verify/W01/overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$"
+    ],
+    "failed_rows": [
+      "TestPrinterWhitespacePlantedDisagreement"
+    ],
+    "seconds": 0.19
+  },
+  {
+    "id": "S01",
+    "vet_status": 0,
+    "vet_wall": 0.19011579499783693,
+    "vet_command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u097-tmp/verify/S01/overlay.json",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "apply_status": 0,
+    "apply_error": "",
+    "status": 1,
+    "wall": 6.470041006999963,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/u097-tmp/verify/S01/overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$"
+    ],
+    "failed_rows": [
+      "TestPrinterWhitespaceShardGrowth"
+    ],
+    "seconds": 0.231
+  },
+  {
+    "id": "S02",
+    "vet_status": 0,
+    "vet_wall": 0.21464113599722623,
+    "vet_command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u097-tmp/verify/S02/overlay.json",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "apply_status": 0,
+    "apply_error": "",
+    "status": 1,
+    "wall": 6.156723297001008,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/u097-tmp/verify/S02/overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$"
+    ],
+    "failed_rows": [
+      "TestPrinterWhitespaceShardGrowth",
+      "TestPrinterWhitespacePlantedDisagreement"
+    ],
+    "seconds": 0.172
+  },
+  {
+    "id": "P02",
+    "vet_status": 0,
+    "vet_wall": 0.1883579089990235,
+    "vet_command": [
+      "timeout",
+      "90",
+      "go",
+      "vet",
+      "-overlay",
+      "/workspace/u097-tmp/verify/P02/overlay.json",
+      "./stage1/cohere/graphql/printer/"
+    ],
+    "apply_status": 0,
+    "apply_error": "",
+    "status": 1,
+    "wall": 6.301624436000566,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/u097-tmp/verify/P02/overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$"
+    ],
+    "failed_rows": [
+      "TestPrinterWhitespaceShardGrowth",
+      "TestPrinterWhitespacePlantedDisagreement"
+    ],
+    "seconds": 0.14
+  }
+]

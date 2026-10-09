@@ -1,0 +1,13 @@
+--- a/stage1/cohere/graphql/printer/gaps_test.go
++++ b/stage1/cohere/graphql/printer/gaps_test.go
+@@ -155,10 +155,6 @@
+ 	for i := range shards {
+ 		shards[i].mode = "defaults"
+ 	}
+-	for _, item := range cases {
+-		owner := whitespaceOwner(item.id)
+-		shards[owner].cases = append(shards[owner].cases, item)
+-	}
+ 	return shards
+ }
+ 

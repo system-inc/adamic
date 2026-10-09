@@ -1,0 +1,17 @@
+stage1/cohere/graphql/printer/helpers_test.go:51:func lowered(t *testing.T, path string) *ir.Program {
+stage1/cohere/graphql/printer/helpers_test.go:57:	result, err := lower.Lower(context.Background(), program)
+stage1/cohere/graphql/printer/shards_test.go:130:		program := lowered(t, path)
+stage1/cohere/graphql/printer/shards_test.go:164:func preparePrinterProducts(t *testing.T, path string) printerProducts {
+stage1/cohere/graphql/printer/printer_test.go:127:	products := preparePrinterProducts(t, path)
+stage1/cohere/graphql/printer/grain_mutant_test.go:58:func printerMutantLowered(t *testing.T, number int) string {
+stage1/cohere/graphql/printer/grain_mutant_test.go:68:		return printerCompiledProduct(t, printerMutantLowered(t, number), native.Options{Sanitize: true})
+stage1/cohere/graphql/printer/grain_mutant_test.go:126:func TestProduct_GraphQLMutantLowered000(t *testing.T)   { t.Parallel(); printerMutantLowered(t, 0) }
+stage1/cohere/graphql/printer/grain_mutant_test.go:127:func TestProduct_GraphQLMutantLowered001(t *testing.T)   { t.Parallel(); printerMutantLowered(t, 1) }
+stage1/cohere/graphql/printer/grain_mutant_test.go:128:func TestProduct_GraphQLMutantLowered002(t *testing.T)   { t.Parallel(); printerMutantLowered(t, 2) }
+stage1/cohere/graphql/printer/grain_asgo_test.go:104:func printerAsGoLowered(t *testing.T) string {
+stage1/cohere/graphql/printer/grain_asgo_test.go:115:		lowered := printerAsGoLowered(t)
+stage1/cohere/graphql/printer/grain_asgo_test.go:131:	product := printerProducts{source: printerAsGoSource(t), backend: printerAsGoLowered(t) + "/program.mjs", sanitized: printerAsGoNative(t, true)}
+stage1/cohere/graphql/printer/grain_asgo_test.go:156:func TestProduct_GraphQLPrinterLowered(t *testing.T)   { t.Parallel(); printerAsGoLowered(t) }
+stage1/cohere/graphql/printer/performance_test.go:45:	products := preparePrinterProducts(t, port)
+stage1/cohere/graphql/printer/gaps_test.go:31:	_, err = lower.Lower(context.Background(), program)
+stage1/cohere/graphql/printer/gaps_test.go:103:	products := preparePrinterProducts(t, printerDirectory(t, "", "", ""))

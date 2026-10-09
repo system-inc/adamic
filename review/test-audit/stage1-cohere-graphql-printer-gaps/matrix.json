@@ -1,0 +1,158 @@
+[
+  {
+    "id": "control",
+    "status": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$"
+    ],
+    "env": {
+      "ADAMIC_MUTANT": "control",
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/u097-products/control"
+    },
+    "wall": 13.688373903998581,
+    "seconds": 0.164,
+    "rows_run": [
+      "TestPrinterConstructorGap",
+      "TestPrinterWhitespacePlantedDisagreement",
+      "TestPrinterWhitespaceShardGrowth"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "M01",
+    "status": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$"
+    ],
+    "env": {
+      "ADAMIC_MUTANT": "M01",
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/u097-products/M01"
+    },
+    "wall": 2.47843999700126,
+    "seconds": 0.186,
+    "rows_run": [
+      "TestPrinterConstructorGap",
+      "TestPrinterWhitespacePlantedDisagreement",
+      "TestPrinterWhitespaceShardGrowth"
+    ],
+    "failed_rows": [
+      "TestPrinterConstructorGap"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "M02",
+    "status": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$"
+    ],
+    "env": {
+      "ADAMIC_MUTANT": "M02",
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/u097-products/M02"
+    },
+    "wall": 2.3985505330019805,
+    "seconds": 0.182,
+    "rows_run": [
+      "TestPrinterConstructorGap",
+      "TestPrinterWhitespacePlantedDisagreement",
+      "TestPrinterWhitespaceShardGrowth"
+    ],
+    "failed_rows": [
+      "TestPrinterConstructorGap"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "M03",
+    "status": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$"
+    ],
+    "env": {
+      "ADAMIC_MUTANT": "M03",
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/u097-products/M03"
+    },
+    "wall": 2.496196713000245,
+    "seconds": 0.2,
+    "rows_run": [
+      "TestPrinterConstructorGap",
+      "TestPrinterWhitespacePlantedDisagreement",
+      "TestPrinterWhitespaceShardGrowth"
+    ],
+    "failed_rows": [],
+    "cooked": false
+  },
+  {
+    "id": "P01",
+    "status": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/graphql/printer/",
+      "-run",
+      "^(TestPrinterConstructorGap|TestPrinterWhitespacePlantedDisagreement|TestPrinterWhitespaceShardGrowth)$"
+    ],
+    "env": {
+      "ADAMIC_MUTANT": "P01",
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/u097-products/P01"
+    },
+    "wall": 2.5202608360013983,
+    "seconds": 0.218,
+    "rows_run": [
+      "TestPrinterConstructorGap",
+      "TestPrinterWhitespacePlantedDisagreement",
+      "TestPrinterWhitespaceShardGrowth"
+    ],
+    "failed_rows": [
+      "TestPrinterConstructorGap"
+    ],
+    "cooked": false
+  }
+]

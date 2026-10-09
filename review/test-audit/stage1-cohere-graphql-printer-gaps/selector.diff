@@ -1,0 +1,56 @@
+diff --git a/internal/lower/class.go b/internal/lower/class.go
+index 0c955352..9ed8b76a 100644
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -738,7 +738,11 @@ func lastFieldAssignment(declaration *ast.Node, constructor *ast.Node) int {
+ 		target := ast.SkipParentheses(assignment.AsBinaryExpression().Left)
+ 		if target.Kind == ast.KindPropertyAccessExpression && ast.SkipParentheses(target.AsPropertyAccessExpression().Expression).Kind == ast.KindThisKeyword && unset[target.Name().Text()] {
+ 			delete(unset, target.Name().Text())
+-			last = statement.End()
++			if auditSelected("M01") {
++				last = 0
++			} else {
++				last = statement.End()
++			}
+ 		}
+ 	}
+ 	if len(unset) > 0 {
+@@ -762,12 +766,14 @@ func (l *lowering) useOfThis(node *ast.Node) error {
+ 		}
+ 		return &Refused{Where: l.program.Where(node), What: "this escaping a base constructor before derived fields are initialized", Fix: "use this only to read or write initialized base fields; call methods and publish the object after construction"}
+ 	}
+-	if l.unsetUntil == 0 || node.Pos() >= l.unsetUntil {
++	if l.unsetUntil == 0 || (node.Pos() >= l.unsetUntil) != auditSelected("M02") {
+ 		return nil
+ 	}
+ 	if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
+ 		if field := l.checker.GetSymbolAtLocation(parent.Name()); field != nil && len(field.Declarations) > 0 && (field.Declarations[0].Kind == ast.KindPropertyDeclaration || parameterProperty(field.Declarations[0])) {
+-			return nil
++			if !auditSelected("M03") {
++				return nil
++			}
+ 		}
+ 	}
+ 	return &Refused{Where: l.program.Where(node), What: "this escaping a constructor before every field is set (stored, passed, or a method called on it, which could read a field that holds undefined while its type says otherwise)", Fix: "assign every field first, then use this"}
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..36e786f7 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditSelected("P01") {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+--- /dev/null
++++ b/internal/lower/audit_selector.go
+@@ -0,0 +1,5 @@
++package lower
++
++import "os"
++
++func auditSelected(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
