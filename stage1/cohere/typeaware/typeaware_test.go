@@ -2,6 +2,8 @@ package typeaware
 
 import (
 	"bytes"
+	"context"
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	goast "go/ast"
@@ -18,6 +20,9 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/corpusfiles"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 const compilerCommit = "050880ce59e30b356b686bd3144efe24f875ebc8"
@@ -31,6 +36,7 @@ type harness struct {
 	t                     *testing.T
 	repository, directory string
 	next                  int
+	parallel              bool
 }
 
 func (h *harness) run(name string, command *exec.Cmd) result {
@@ -52,9 +58,17 @@ func (h *harness) run(name string, command *exec.Cmd) result {
 	defer report.Close()
 	command.Stdout = out
 	command.Stderr = report
+	if h.parallel {
+		environment := command.Env
+		if environment == nil {
+			environment = os.Environ()
+		}
+		command.Env = append(environment, "GOMAXPROCS=1")
+	}
 	started := time.Now()
 	runError := command.Run()
 	elapsed := time.Since(started)
+	h.t.Logf("phase command %s %.6fs", name, elapsed.Seconds())
 	stdout, err := os.ReadFile(out.Name())
 	if err != nil {
 		h.t.Fatal(err)
@@ -100,8 +114,23 @@ func (h *harness) overlay(name, path, from, to string) string {
 }
 func (h *harness) archive(name, overlay string, sanitize bool) string {
 	h.t.Helper()
+	if overlay == "" {
+		path, err := sharedProduct(fmt.Sprintf("checker sanitize=%t", sanitize), func(directory string) (string, error) {
+			archive := filepath.Join(directory, "checker.a")
+			command := exec.Command("go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
+			command.Dir = h.repository
+			if sanitize {
+				command.Env = append(os.Environ(), "CC=clang", "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
+			}
+			return archive, buildProduct(h.t, name, command, directory)
+		})
+		if err != nil {
+			h.t.Fatal(err)
+		}
+		return path
+	}
 	path := filepath.Join(h.directory, name+".a")
-	args := []string{"build", "-buildmode=c-archive", "-o", path}
+	args := []string{"build", "-p=1", "-buildmode=c-archive", "-o", path}
 	if overlay != "" {
 		args = append(args, "-overlay", overlay)
 	}
@@ -113,14 +142,65 @@ func (h *harness) archive(name, overlay string, sanitize bool) string {
 	h.must(name, cmd)
 	return path
 }
-func (h *harness) build(stage0, name, entry, archive string, sanitize bool) string {
+
+// build uses the same load, lowering and TSGo emission pipeline as stage zero.
+// Only the completed C string is shared, because emission mutates its IR.
+func (h *harness) build(_ string, name, entry, archive string, sanitize bool) string {
 	h.t.Helper()
 	path := filepath.Join(h.directory, name)
-	args := []string{"build", entry, "-o", path, "--tsgo", archive}
-	if sanitize {
-		args = append(args, "--sanitize")
+	source, err := sharedProduct("C "+entry, func(_ string) (string, error) {
+		started := time.Now()
+		loaded, err := load.Load([]string{entry})
+		h.t.Logf("phase load %s %.6fs", name, time.Since(started).Seconds())
+		if err != nil {
+			return "", err
+		}
+		loaded.EnableTSGo()
+		started = time.Now()
+		program, err := lower.Lower(context.Background(), loaded)
+		h.t.Logf("phase lowering %s %.6fs", name, time.Since(started).Seconds())
+		if err != nil {
+			return "", err
+		}
+		started = time.Now()
+		source, err := native.TSGoC(program)
+		h.t.Logf("phase emission %s %.6fs", name, time.Since(started).Seconds())
+		return source, err
+	})
+	if err != nil {
+		h.t.Fatal(err)
 	}
-	h.must(name, exec.Command(stage0, args...))
+	compile := func(output string) error {
+		started := time.Now()
+		err := native.BuildTSGo(source, output, archive, native.Options{Sanitize: sanitize})
+		h.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
+		return err
+	}
+	// Only unchanged repository programs can be reused by another test. A mutant
+	// runs once and stays in its child directory, avoiding a retained binary copy.
+	if !strings.HasPrefix(entry, h.repository+string(os.PathSeparator)) || !strings.HasPrefix(archive, productDirectory+string(os.PathSeparator)) {
+		if err := compile(path); err != nil {
+			h.t.Fatal(err)
+		}
+		return path
+	}
+	key := fmt.Sprintf("binary %x %s sanitize=%t", sha256.Sum256([]byte(source)), archive, sanitize)
+	binary, err := sharedProduct(key, func(directory string) (string, error) {
+		binary := filepath.Join(directory, "native")
+		return binary, compile(binary)
+	})
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	// Callers may remove their binaries. Give them copies, preserving the product.
+	data, err := os.ReadFile(binary)
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	if err := os.WriteFile(path, data, 0755); err != nil {
+		h.t.Fatal(err)
+	}
+
 	return path
 }
 func firstDifference(a, b []byte) int {
@@ -150,7 +230,8 @@ func summary(data []byte) string {
 	return lines[len(lines)-1]
 }
 
-// Not parallel: native builds, sanitizer subprocesses and timings share a machine.
+// Not parallel: agreement and optional throughput controls run without competing
+// with another suite. Independent mutants run in parallel after their controls.
 // The optional external corpus is never fetched by a test.
 func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
@@ -168,8 +249,8 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	traceGroup(t)
+	stage0 := h.stage0()
 	normal := h.archive("checker", "", false)
 	sanitized := h.archive("checker-asan", "", true)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/main.ts")
@@ -252,36 +333,40 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 		t.Fatal("unlinked type-parts call was accepted")
 	}
 
-	// Asking the unary expression's type rather than its operand still compiles
-	// and finishes; the independent production-rule findings must disagree.
-	original := filepath.Join(repository, "stage1/cohere/typeaware/unary_minus.ts")
-	text, err := os.ReadFile(original)
-	if err != nil {
-		t.Fatal(err)
-	}
-	anchor := "this.parser.node(node.children[0] ?? panic('minus without operand'))"
-	if strings.Count(string(text), anchor) != 1 {
-		t.Fatal("wrong-node anchor changed")
-	}
-	// Preserve imports by making both mutant sources next to one another in scratch
-	// and replacing their relative dependencies with absolute source paths.
-	mutant := strings.Replace(string(text), anchor, "this.parser.node(index)", 1)
-	mutant = strings.ReplaceAll(mutant, "../../typescript", filepath.Join(repository, "stage1/typescript"))
-	mutant = strings.ReplaceAll(mutant, "../lint", filepath.Join(repository, "stage1/cohere/lint"))
-	h.write("wrong-node.ts", mutant)
-	mainText, err := os.ReadFile(entry)
-	if err != nil {
-		t.Fatal(err)
-	}
-	mainSource := strings.ReplaceAll(string(mainText), "../../typescript", filepath.Join(repository, "stage1/typescript"))
-	mainSource = strings.Replace(mainSource, "./unary_minus.ts", "./wrong-node.ts", 1)
-	mutantEntry := h.write("wrong-main.ts", mainSource)
-	wrong := h.build(stage0, "wrong-node", mutantEntry, normal, true)
-	observed := h.must("wrong-node-run", exec.Command(wrong, config, manifest))
-	if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
-		t.Fatal("wrong-node mutant was not caught by findings alone")
-	}
-	t.Logf("wrong-node type mutant: cohere byte oracle catches byte %d; %s", firstDifference(observed.stdout, truth.stdout), summary(observed.stdout))
+	t.Run("wrong-node", func(t *testing.T) {
+		t.Parallel()
+		h := h.child(t)
+		// Asking the unary expression's type rather than its operand still compiles
+		// and finishes; the independent production-rule findings must disagree.
+		original := filepath.Join(repository, "stage1/cohere/typeaware/unary_minus.ts")
+		text, err := os.ReadFile(original)
+		if err != nil {
+			t.Fatal(err)
+		}
+		anchor := "this.parser.node(node.children[0] ?? panic('minus without operand'))"
+		if strings.Count(string(text), anchor) != 1 {
+			t.Fatal("wrong-node anchor changed")
+		}
+		// Preserve imports by making both mutant sources next to one another in scratch
+		// and replacing their relative dependencies with absolute source paths.
+		mutant := strings.Replace(string(text), anchor, "this.parser.node(index)", 1)
+		mutant = strings.ReplaceAll(mutant, "../../typescript", filepath.Join(repository, "stage1/typescript"))
+		mutant = strings.ReplaceAll(mutant, "../lint", filepath.Join(repository, "stage1/cohere/lint"))
+		h.write("wrong-node.ts", mutant)
+		mainText, err := os.ReadFile(entry)
+		if err != nil {
+			t.Fatal(err)
+		}
+		mainSource := strings.ReplaceAll(string(mainText), "../../typescript", filepath.Join(repository, "stage1/typescript"))
+		mainSource = strings.Replace(mainSource, "./unary_minus.ts", "./wrong-node.ts", 1)
+		mutantEntry := h.write("wrong-main.ts", mainSource)
+		wrong := h.build(stage0, "wrong-node", mutantEntry, normal, true)
+		observed := h.must("wrong-node-run", exec.Command(wrong, config, manifest))
+		if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
+			t.Fatal("wrong-node mutant was not caught by findings alone")
+		}
+		t.Logf("wrong-node type mutant: cohere byte oracle catches byte %d; %s", firstDifference(observed.stdout, truth.stdout), summary(observed.stdout))
+	})
 
 	probe := h.write("cost-probe.ts", "-1;\n")
 	releasedEntry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/released.ts")
@@ -291,14 +376,19 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 		t.Fatalf("released query escaped: %v %s", stale.err, stale.stderr)
 	}
 	t.Log("released program queried: native panic 70 with invalid or released checker handle")
-	staleOverlay := h.overlay("stale", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
-	staleArchive := h.archive("stale-checker", staleOverlay, false)
-	staleBinary := h.build(stage0, "stale-native", releasedEntry, staleArchive, false)
-	stale = h.must("stale-mutant-run", exec.Command(staleBinary, config, probe))
-	if len(stale.stderr) != 0 {
-		t.Fatal("stale mutant did not finish cleanly")
-	}
-	t.Log("released registry deletion mutant: stale-query expectation catches exit 0 instead of 70")
+
+	t.Run("stale-registry", func(t *testing.T) {
+		t.Parallel()
+		h := h.child(t)
+		staleOverlay := h.overlay("stale", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
+		staleArchive := h.archive("stale-checker", staleOverlay, false)
+		staleBinary := h.build(stage0, "stale-native", releasedEntry, staleArchive, false)
+		stale := h.must("stale-mutant-run", exec.Command(staleBinary, config, probe))
+		if len(stale.stderr) != 0 {
+			t.Fatal("stale mutant did not finish cleanly")
+		}
+		t.Log("released registry deletion mutant: stale-query expectation catches exit 0 instead of 70")
+	})
 
 	// Bad frame mutants must fail explicitly before any finding can be invented.
 	for _, change := range []struct{ name, value, message string }{
@@ -306,15 +396,20 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 		{"missing-header", "x", "invalid checker type frame"},
 		{"bad-length", "1\n-1\n", "invalid checker type length or flags"},
 	} {
-		quoted := strconv.Quote(change.value)
-		overlay := h.overlay(change.name, "bridge/tsgo/archive/main.go", "*parts = buffer(answer)", "_ = answer; *parts = buffer("+quoted+")")
-		archive := h.archive(change.name+"-checker", overlay, false)
-		malformed := h.build(stage0, change.name+"-native", entry, archive, false)
-		got := h.run(change.name+"-run", exec.Command(malformed, config, manifest))
-		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
-			t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
-		}
-		t.Logf("%s mutant: panic 70, %s", change.name, change.message)
+		t.Run(change.name, func(t *testing.T) {
+			t.Parallel()
+			h := h.child(t)
+
+			quoted := strconv.Quote(change.value)
+			overlay := h.overlay(change.name, "bridge/tsgo/archive/main.go", "*parts = buffer(answer)", "_ = answer; *parts = buffer("+quoted+")")
+			archive := h.archive(change.name+"-checker", overlay, false)
+			malformed := h.build(stage0, change.name+"-native", entry, archive, false)
+			got := h.run(change.name+"-run", exec.Command(malformed, config, manifest))
+			if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
+				t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
+			}
+			t.Logf("%s mutant: panic 70, %s", change.name, change.message)
+		})
 	}
 
 	// A kind/span mismatch cannot silently select a neighboring or enclosing node.
@@ -330,14 +425,19 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("no exact Identifier node")) {
 		t.Fatalf("exact lookup mismatch escaped: %v %s", got.err, got.stderr)
 	}
-	ignoredKind := h.overlay("ignored-kind", "bridge/tsgo/checker/program.go", `strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind`, `kind != ""`)
-	ignoredArchive := h.archive("ignored-kind-checker", ignoredKind, false)
-	ignoredBinary := h.build(stage0, "ignored-kind-native", badSource, ignoredArchive, false)
-	ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, config, probe, "2"))
-	if len(ignored.stderr) != 0 {
-		t.Fatal("kind-guard mutant did not finish cleanly")
-	}
-	t.Log("exact kind guard mutant: mismatch-refusal expectation catches exit 0")
+
+	t.Run("ignored-kind", func(t *testing.T) {
+		t.Parallel()
+		h := h.child(t)
+		ignoredKind := h.overlay("ignored-kind", "bridge/tsgo/checker/program.go", `strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind`, `kind != ""`)
+		ignoredArchive := h.archive("ignored-kind-checker", ignoredKind, false)
+		ignoredBinary := h.build(stage0, "ignored-kind-native", badSource, ignoredArchive, false)
+		ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, config, probe, "2"))
+		if len(ignored.stderr) != 0 {
+			t.Fatal("kind-guard mutant did not finish cleanly")
+		}
+		t.Log("exact kind guard mutant: mismatch-refusal expectation catches exit 0")
+	})
 
 	probeManifest := h.write("probe.manifest", probe+"\n")
 	for round := 1; round <= 3; round++ {

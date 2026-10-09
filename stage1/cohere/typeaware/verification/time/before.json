@@ -1,0 +1,1354 @@
+{
+  "phases": {
+    "checker_archive": {
+      "count": 29,
+      "sum_seconds": 443.867644,
+      "invocations": [
+        {
+          "name": "checker",
+          "seconds": 170.573182
+        },
+        {
+          "name": "checker-asan",
+          "seconds": 14.503744
+        },
+        {
+          "name": "checker",
+          "seconds": 10.959207
+        },
+        {
+          "name": "checker",
+          "seconds": 4.749607
+        },
+        {
+          "name": "checker-asan",
+          "seconds": 2.929096
+        },
+        {
+          "name": "declaration-source-checker",
+          "seconds": 16.58118
+        },
+        {
+          "name": "type-name-checker",
+          "seconds": 16.197277
+        },
+        {
+          "name": "raw-shape-constraint-checker",
+          "seconds": 14.516918
+        },
+        {
+          "name": "assignability-direction-checker",
+          "seconds": 13.394735
+        },
+        {
+          "name": "resolved-signature-checker",
+          "seconds": 35.766252
+        },
+        {
+          "name": "retained-handle-checker",
+          "seconds": 8.866127
+        },
+        {
+          "name": "facts-length-checker",
+          "seconds": 7.337708
+        },
+        {
+          "name": "facts-empty-bad-checker",
+          "seconds": 12.601009
+        },
+        {
+          "name": "facts-integer-bad-checker",
+          "seconds": 8.773936
+        },
+        {
+          "name": "facts-length-bad-checker",
+          "seconds": 8.728708
+        },
+        {
+          "name": "facts-version-bad-checker",
+          "seconds": 7.000629
+        },
+        {
+          "name": "checker",
+          "seconds": 3.169694
+        },
+        {
+          "name": "wrong-kind-checker",
+          "seconds": 3.781882
+        },
+        {
+          "name": "unknown-question-checker",
+          "seconds": 4.808083
+        },
+        {
+          "name": "checker",
+          "seconds": 3.015328
+        },
+        {
+          "name": "checker-asan",
+          "seconds": 2.979241
+        },
+        {
+          "name": "stale-checker",
+          "seconds": 6.161915
+        },
+        {
+          "name": "empty-frame-checker",
+          "seconds": 8.053372
+        },
+        {
+          "name": "missing-header-checker",
+          "seconds": 15.216351
+        },
+        {
+          "name": "bad-length-checker",
+          "seconds": 8.159678
+        },
+        {
+          "name": "ignored-kind-checker",
+          "seconds": 13.122279
+        },
+        {
+          "name": "checker",
+          "seconds": 2.54909
+        },
+        {
+          "name": "checker-asan",
+          "seconds": 4.050797
+        },
+        {
+          "name": "assignable-types-checker",
+          "seconds": 15.320619
+        }
+      ]
+    },
+    "clang": {
+      "count": 43,
+      "sum_seconds": 559.0396939999999,
+      "invocations": [
+        {
+          "name": "volume",
+          "seconds": 11.567046
+        },
+        {
+          "name": "binding-slot",
+          "seconds": 13.819674
+        },
+        {
+          "name": "scope-containment",
+          "seconds": 11.561688
+        },
+        {
+          "name": "first-binding",
+          "seconds": 11.874615
+        },
+        {
+          "name": "volume-asan",
+          "seconds": 57.782931
+        },
+        {
+          "name": "missing-binding",
+          "seconds": 12.400582
+        },
+        {
+          "name": "suite-asan",
+          "seconds": 28.776267
+        },
+        {
+          "name": "suite",
+          "seconds": 10.114219
+        },
+        {
+          "name": "declaration-source-suite",
+          "seconds": 10.341573
+        },
+        {
+          "name": "wrong-node",
+          "seconds": 10.208129
+        },
+        {
+          "name": "last-declaration",
+          "seconds": 9.726588
+        },
+        {
+          "name": "nullable-default",
+          "seconds": 9.698224
+        },
+        {
+          "name": "union-members",
+          "seconds": 9.987629
+        },
+        {
+          "name": "type-name-suite",
+          "seconds": 9.500008
+        },
+        {
+          "name": "raw-shape-constraint-suite",
+          "seconds": 9.709914
+        },
+        {
+          "name": "assignability-direction-suite",
+          "seconds": 18.237823
+        },
+        {
+          "name": "resolved-signature-suite",
+          "seconds": 10.315191
+        },
+        {
+          "name": "released-inspect",
+          "seconds": 5.085519
+        },
+        {
+          "name": "retained-handle",
+          "seconds": 5.299559
+        },
+        {
+          "name": "facts-length",
+          "seconds": 32.781707
+        },
+        {
+          "name": "facts-empty-bad",
+          "seconds": 9.795648
+        },
+        {
+          "name": "facts-integer-bad",
+          "seconds": 9.570652
+        },
+        {
+          "name": "facts-length-bad",
+          "seconds": 9.638037
+        },
+        {
+          "name": "facts-version-bad",
+          "seconds": 9.809573
+        },
+        {
+          "name": "facts-cost",
+          "seconds": 5.580906
+        },
+        {
+          "name": "request",
+          "seconds": 4.814622
+        },
+        {
+          "name": "released-name",
+          "seconds": 4.954481
+        },
+        {
+          "name": "wrong-kind",
+          "seconds": 6.011141
+        },
+        {
+          "name": "unknown-question",
+          "seconds": 6.46048
+        },
+        {
+          "name": "native-asan",
+          "seconds": 26.029072
+        },
+        {
+          "name": "native",
+          "seconds": 9.112703
+        },
+        {
+          "name": "wrong-node",
+          "seconds": 30.2191
+        },
+        {
+          "name": "released",
+          "seconds": 5.490439
+        },
+        {
+          "name": "stale-native",
+          "seconds": 5.265998
+        },
+        {
+          "name": "empty-frame-native",
+          "seconds": 12.846302
+        },
+        {
+          "name": "missing-header-native",
+          "seconds": 9.303488
+        },
+        {
+          "name": "bad-length-native",
+          "seconds": 9.244988
+        },
+        {
+          "name": "query-cost",
+          "seconds": 5.140741
+        },
+        {
+          "name": "bad-kind",
+          "seconds": 4.864361
+        },
+        {
+          "name": "ignored-kind-native",
+          "seconds": 5.825594
+        },
+        {
+          "name": "volume",
+          "seconds": 13.333218
+        },
+        {
+          "name": "volume-asan",
+          "seconds": 43.678965
+        },
+        {
+          "name": "assignable-types-native",
+          "seconds": 13.260299
+        }
+      ]
+    },
+    "compiler_mutant_tests": {
+      "count": 3,
+      "sum_seconds": 20.829861,
+      "invocations": [
+        {
+          "name": "index-kind-compiler-node-test",
+          "seconds": 7.031327
+        },
+        {
+          "name": "root-kind-compiler-node-test",
+          "seconds": 6.652069
+        },
+        {
+          "name": "index-end-compiler-node-test",
+          "seconds": 7.146465
+        }
+      ]
+    },
+    "emission": {
+      "count": 43,
+      "sum_seconds": 561.789123,
+      "invocations": [
+        {
+          "name": "volume",
+          "seconds": 27.043281
+        },
+        {
+          "name": "binding-slot",
+          "seconds": 29.644599
+        },
+        {
+          "name": "scope-containment",
+          "seconds": 27.749547
+        },
+        {
+          "name": "first-binding",
+          "seconds": 34.2031
+        },
+        {
+          "name": "volume-asan",
+          "seconds": 36.008798
+        },
+        {
+          "name": "missing-binding",
+          "seconds": 44.485295
+        },
+        {
+          "name": "suite-asan",
+          "seconds": 12.923313
+        },
+        {
+          "name": "suite",
+          "seconds": 14.196402
+        },
+        {
+          "name": "declaration-source-suite",
+          "seconds": 12.885387
+        },
+        {
+          "name": "wrong-node",
+          "seconds": 14.352265
+        },
+        {
+          "name": "last-declaration",
+          "seconds": 12.825121
+        },
+        {
+          "name": "nullable-default",
+          "seconds": 13.121456
+        },
+        {
+          "name": "union-members",
+          "seconds": 13.203217
+        },
+        {
+          "name": "type-name-suite",
+          "seconds": 13.264108
+        },
+        {
+          "name": "raw-shape-constraint-suite",
+          "seconds": 13.23084
+        },
+        {
+          "name": "assignability-direction-suite",
+          "seconds": 13.803881
+        },
+        {
+          "name": "resolved-signature-suite",
+          "seconds": 13.197425
+        },
+        {
+          "name": "released-inspect",
+          "seconds": 0.000504
+        },
+        {
+          "name": "retained-handle",
+          "seconds": 0.000322
+        },
+        {
+          "name": "facts-length",
+          "seconds": 13.875147
+        },
+        {
+          "name": "facts-empty-bad",
+          "seconds": 13.717533
+        },
+        {
+          "name": "facts-integer-bad",
+          "seconds": 13.984669
+        },
+        {
+          "name": "facts-length-bad",
+          "seconds": 13.354882
+        },
+        {
+          "name": "facts-version-bad",
+          "seconds": 17.074357
+        },
+        {
+          "name": "facts-cost",
+          "seconds": 0.000556
+        },
+        {
+          "name": "request",
+          "seconds": 0.00101
+        },
+        {
+          "name": "released-name",
+          "seconds": 0.000597
+        },
+        {
+          "name": "wrong-kind",
+          "seconds": 0.001053
+        },
+        {
+          "name": "unknown-question",
+          "seconds": 0.001645
+        },
+        {
+          "name": "native-asan",
+          "seconds": 9.006967
+        },
+        {
+          "name": "native",
+          "seconds": 9.538072
+        },
+        {
+          "name": "wrong-node",
+          "seconds": 9.27514
+        },
+        {
+          "name": "released",
+          "seconds": 0.001215
+        },
+        {
+          "name": "stale-native",
+          "seconds": 0.000841
+        },
+        {
+          "name": "empty-frame-native",
+          "seconds": 12.491897
+        },
+        {
+          "name": "missing-header-native",
+          "seconds": 10.98906
+        },
+        {
+          "name": "bad-length-native",
+          "seconds": 8.797014
+        },
+        {
+          "name": "query-cost",
+          "seconds": 0.000483
+        },
+        {
+          "name": "bad-kind",
+          "seconds": 0.000389
+        },
+        {
+          "name": "ignored-kind-native",
+          "seconds": 0.00043
+        },
+        {
+          "name": "volume",
+          "seconds": 27.661322
+        },
+        {
+          "name": "volume-asan",
+          "seconds": 29.366497
+        },
+        {
+          "name": "assignable-types-native",
+          "seconds": 26.509486
+        }
+      ]
+    },
+    "load": {
+      "count": 43,
+      "sum_seconds": 5.192502,
+      "invocations": [
+        {
+          "name": "volume",
+          "seconds": 0.171744
+        },
+        {
+          "name": "binding-slot",
+          "seconds": 0.125614
+        },
+        {
+          "name": "scope-containment",
+          "seconds": 0.132626
+        },
+        {
+          "name": "first-binding",
+          "seconds": 0.131196
+        },
+        {
+          "name": "volume-asan",
+          "seconds": 0.429023
+        },
+        {
+          "name": "missing-binding",
+          "seconds": 0.451603
+        },
+        {
+          "name": "suite-asan",
+          "seconds": 0.124802
+        },
+        {
+          "name": "suite",
+          "seconds": 0.135841
+        },
+        {
+          "name": "declaration-source-suite",
+          "seconds": 0.114926
+        },
+        {
+          "name": "wrong-node",
+          "seconds": 0.103169
+        },
+        {
+          "name": "last-declaration",
+          "seconds": 0.101479
+        },
+        {
+          "name": "nullable-default",
+          "seconds": 0.115762
+        },
+        {
+          "name": "union-members",
+          "seconds": 0.119898
+        },
+        {
+          "name": "type-name-suite",
+          "seconds": 0.126037
+        },
+        {
+          "name": "raw-shape-constraint-suite",
+          "seconds": 0.096863
+        },
+        {
+          "name": "assignability-direction-suite",
+          "seconds": 0.094444
+        },
+        {
+          "name": "resolved-signature-suite",
+          "seconds": 0.192735
+        },
+        {
+          "name": "released-inspect",
+          "seconds": 0.055587
+        },
+        {
+          "name": "retained-handle",
+          "seconds": 0.049488
+        },
+        {
+          "name": "facts-length",
+          "seconds": 0.105808
+        },
+        {
+          "name": "facts-empty-bad",
+          "seconds": 0.157122
+        },
+        {
+          "name": "facts-integer-bad",
+          "seconds": 0.114061
+        },
+        {
+          "name": "facts-length-bad",
+          "seconds": 0.115861
+        },
+        {
+          "name": "facts-version-bad",
+          "seconds": 0.103266
+        },
+        {
+          "name": "facts-cost",
+          "seconds": 0.059203
+        },
+        {
+          "name": "request",
+          "seconds": 0.056346
+        },
+        {
+          "name": "released-name",
+          "seconds": 0.051871
+        },
+        {
+          "name": "wrong-kind",
+          "seconds": 0.052443
+        },
+        {
+          "name": "unknown-question",
+          "seconds": 0.061285
+        },
+        {
+          "name": "native-asan",
+          "seconds": 0.133182
+        },
+        {
+          "name": "native",
+          "seconds": 0.108057
+        },
+        {
+          "name": "wrong-node",
+          "seconds": 0.093627
+        },
+        {
+          "name": "released",
+          "seconds": 0.082649
+        },
+        {
+          "name": "stale-native",
+          "seconds": 0.064143
+        },
+        {
+          "name": "empty-frame-native",
+          "seconds": 0.098771
+        },
+        {
+          "name": "missing-header-native",
+          "seconds": 0.136172
+        },
+        {
+          "name": "bad-length-native",
+          "seconds": 0.100517
+        },
+        {
+          "name": "query-cost",
+          "seconds": 0.077277
+        },
+        {
+          "name": "bad-kind",
+          "seconds": 0.043688
+        },
+        {
+          "name": "ignored-kind-native",
+          "seconds": 0.038797
+        },
+        {
+          "name": "volume",
+          "seconds": 0.142831
+        },
+        {
+          "name": "volume-asan",
+          "seconds": 0.190583
+        },
+        {
+          "name": "assignable-types-native",
+          "seconds": 0.132105
+        }
+      ]
+    },
+    "lowering": {
+      "count": 43,
+      "sum_seconds": 64.560965,
+      "invocations": [
+        {
+          "name": "volume",
+          "seconds": 3.486321
+        },
+        {
+          "name": "binding-slot",
+          "seconds": 3.491499
+        },
+        {
+          "name": "scope-containment",
+          "seconds": 3.716851
+        },
+        {
+          "name": "first-binding",
+          "seconds": 3.307369
+        },
+        {
+          "name": "volume-asan",
+          "seconds": 7.882353
+        },
+        {
+          "name": "missing-binding",
+          "seconds": 5.551717
+        },
+        {
+          "name": "suite-asan",
+          "seconds": 1.348661
+        },
+        {
+          "name": "suite",
+          "seconds": 1.302262
+        },
+        {
+          "name": "declaration-source-suite",
+          "seconds": 1.220719
+        },
+        {
+          "name": "wrong-node",
+          "seconds": 1.273777
+        },
+        {
+          "name": "last-declaration",
+          "seconds": 1.205416
+        },
+        {
+          "name": "nullable-default",
+          "seconds": 1.244983
+        },
+        {
+          "name": "union-members",
+          "seconds": 1.326515
+        },
+        {
+          "name": "type-name-suite",
+          "seconds": 1.27442
+        },
+        {
+          "name": "raw-shape-constraint-suite",
+          "seconds": 1.213167
+        },
+        {
+          "name": "assignability-direction-suite",
+          "seconds": 1.269942
+        },
+        {
+          "name": "resolved-signature-suite",
+          "seconds": 1.410605
+        },
+        {
+          "name": "released-inspect",
+          "seconds": 0.001158
+        },
+        {
+          "name": "retained-handle",
+          "seconds": 0.000594
+        },
+        {
+          "name": "facts-length",
+          "seconds": 1.213783
+        },
+        {
+          "name": "facts-empty-bad",
+          "seconds": 1.455135
+        },
+        {
+          "name": "facts-integer-bad",
+          "seconds": 1.344215
+        },
+        {
+          "name": "facts-length-bad",
+          "seconds": 1.286226
+        },
+        {
+          "name": "facts-version-bad",
+          "seconds": 1.298133
+        },
+        {
+          "name": "facts-cost",
+          "seconds": 0.002976
+        },
+        {
+          "name": "request",
+          "seconds": 0.002279
+        },
+        {
+          "name": "released-name",
+          "seconds": 0.001027
+        },
+        {
+          "name": "wrong-kind",
+          "seconds": 0.002152
+        },
+        {
+          "name": "unknown-question",
+          "seconds": 0.003014
+        },
+        {
+          "name": "native-asan",
+          "seconds": 0.889161
+        },
+        {
+          "name": "native",
+          "seconds": 1.017555
+        },
+        {
+          "name": "wrong-node",
+          "seconds": 0.983831
+        },
+        {
+          "name": "released",
+          "seconds": 0.003974
+        },
+        {
+          "name": "stale-native",
+          "seconds": 0.001441
+        },
+        {
+          "name": "empty-frame-native",
+          "seconds": 0.779257
+        },
+        {
+          "name": "missing-header-native",
+          "seconds": 1.252718
+        },
+        {
+          "name": "bad-length-native",
+          "seconds": 0.781232
+        },
+        {
+          "name": "query-cost",
+          "seconds": 0.000929
+        },
+        {
+          "name": "bad-kind",
+          "seconds": 0.000909
+        },
+        {
+          "name": "ignored-kind-native",
+          "seconds": 0.000927
+        },
+        {
+          "name": "volume",
+          "seconds": 3.6611
+        },
+        {
+          "name": "volume-asan",
+          "seconds": 3.636625
+        },
+        {
+          "name": "assignable-types-native",
+          "seconds": 3.414037
+        }
+      ]
+    },
+    "other_builds": {
+      "count": 6,
+      "sum_seconds": 65.410682,
+      "invocations": [
+        {
+          "name": "volume-oracle-build",
+          "seconds": 28.044683
+        },
+        {
+          "name": "oracle-build",
+          "seconds": 14.950421
+        },
+        {
+          "name": "facts-cost-go-build",
+          "seconds": 5.631167
+        },
+        {
+          "name": "decoder-build",
+          "seconds": 0.883586
+        },
+        {
+          "name": "oracle-build",
+          "seconds": 8.914171
+        },
+        {
+          "name": "volume-oracle-build",
+          "seconds": 6.986654
+        }
+      ]
+    },
+    "runs": {
+      "count": 98,
+      "sum_seconds": 6.764981,
+      "invocations": [
+        {
+          "name": "controls-go",
+          "seconds": 0.038788
+        },
+        {
+          "name": "controls-go",
+          "seconds": 0.068728
+        },
+        {
+          "name": "controls-native",
+          "seconds": 0.074458
+        },
+        {
+          "name": "binding-slot-run",
+          "seconds": 0.050157
+        },
+        {
+          "name": "scope-containment-run",
+          "seconds": 0.045299
+        },
+        {
+          "name": "first-binding-run",
+          "seconds": 0.048072
+        },
+        {
+          "name": "controls-asan-go",
+          "seconds": 0.319531
+        },
+        {
+          "name": "controls-asan-native",
+          "seconds": 0.473199
+        },
+        {
+          "name": "missing-binding-run",
+          "seconds": 0.028846
+        },
+        {
+          "name": "source-filter",
+          "seconds": 0.052956
+        },
+        {
+          "name": "six-generated-go",
+          "seconds": 0.059143
+        },
+        {
+          "name": "six-generated-native",
+          "seconds": 0.349444
+        },
+        {
+          "name": "six-nonstrict-go",
+          "seconds": 0.026946
+        },
+        {
+          "name": "six-nonstrict-native",
+          "seconds": 0.045211
+        },
+        {
+          "name": "six-cross-file-go",
+          "seconds": 0.028481
+        },
+        {
+          "name": "six-cross-file-native",
+          "seconds": 0.042715
+        },
+        {
+          "name": "declaration-source-run",
+          "seconds": 0.026914
+        },
+        {
+          "name": "inspect-unlinked",
+          "seconds": 0.107673
+        },
+        {
+          "name": "wrong-node-run",
+          "seconds": 0.088843
+        },
+        {
+          "name": "last-declaration-run",
+          "seconds": 0.08488
+        },
+        {
+          "name": "nullable-default-run",
+          "seconds": 0.091969
+        },
+        {
+          "name": "union-members-run",
+          "seconds": 0.084116
+        },
+        {
+          "name": "type-name-run",
+          "seconds": 0.187982
+        },
+        {
+          "name": "raw-shape-constraint-run",
+          "seconds": 0.086891
+        },
+        {
+          "name": "assignability-direction-run",
+          "seconds": 0.122012
+        },
+        {
+          "name": "resolved-signature-run",
+          "seconds": 0.088338
+        },
+        {
+          "name": "released-inspect-run",
+          "seconds": 0.02327
+        },
+        {
+          "name": "retained-handle-run",
+          "seconds": 0.021666
+        },
+        {
+          "name": "facts-length-run",
+          "seconds": 0.267811
+        },
+        {
+          "name": "facts-empty-bad-run",
+          "seconds": 0.045783
+        },
+        {
+          "name": "facts-integer-bad-run",
+          "seconds": 0.037728
+        },
+        {
+          "name": "facts-length-bad-run",
+          "seconds": 0.041117
+        },
+        {
+          "name": "facts-version-bad-run",
+          "seconds": 0.038524
+        },
+        {
+          "name": "facts-cost-assignable-1-native",
+          "seconds": 0.056714
+        },
+        {
+          "name": "facts-cost-assignable-1-go",
+          "seconds": 0.07251
+        },
+        {
+          "name": "facts-cost-declarations-1-native",
+          "seconds": 0.070316
+        },
+        {
+          "name": "facts-cost-declarations-1-go",
+          "seconds": 0.109186
+        },
+        {
+          "name": "facts-cost-signature-1-native",
+          "seconds": 0.176233
+        },
+        {
+          "name": "facts-cost-signature-1-go",
+          "seconds": 0.14267
+        },
+        {
+          "name": "facts-cost-raw-type-1-native",
+          "seconds": 0.072854
+        },
+        {
+          "name": "facts-cost-raw-type-1-go",
+          "seconds": 0.06268
+        },
+        {
+          "name": "facts-cost-nullable-1-native",
+          "seconds": 0.151062
+        },
+        {
+          "name": "facts-cost-nullable-1-go",
+          "seconds": 0.148015
+        },
+        {
+          "name": "facts-cost-union-1-native",
+          "seconds": 0.136206
+        },
+        {
+          "name": "facts-cost-union-1-go",
+          "seconds": 0.125825
+        },
+        {
+          "name": "facts-cost-signature-shape-1-native",
+          "seconds": 0.068574
+        },
+        {
+          "name": "facts-cost-signature-shape-1-go",
+          "seconds": 0.061002
+        },
+        {
+          "name": "facts-cost-raw-shape-1-native",
+          "seconds": 0.053567
+        },
+        {
+          "name": "facts-cost-raw-shape-1-go",
+          "seconds": 0.051062
+        },
+        {
+          "name": "facts-cost-type-shape-1-native",
+          "seconds": 0.086901
+        },
+        {
+          "name": "facts-cost-type-shape-1-go",
+          "seconds": 0.079599
+        },
+        {
+          "name": "facts-cost-options-1-native",
+          "seconds": 0.039092
+        },
+        {
+          "name": "facts-cost-options-1-go",
+          "seconds": 0.027956
+        },
+        {
+          "name": "decoder-valid",
+          "seconds": 0.011951
+        },
+        {
+          "name": "empty",
+          "seconds": 0.005837
+        },
+        {
+          "name": "length-negative",
+          "seconds": 0.007041
+        },
+        {
+          "name": "length-short",
+          "seconds": 0.005957
+        },
+        {
+          "name": "trailing",
+          "seconds": 0.006948
+        },
+        {
+          "name": "version",
+          "seconds": 0.005368
+        },
+        {
+          "name": "question",
+          "seconds": 0.006268
+        },
+        {
+          "name": "not-integer",
+          "seconds": 0.00579
+        },
+        {
+          "name": "rounded-integer",
+          "seconds": 0.005637
+        },
+        {
+          "name": "noncanonical-integer",
+          "seconds": 0.004871
+        },
+        {
+          "name": "negative-natural",
+          "seconds": 0.00501
+        },
+        {
+          "name": "bad-boolean",
+          "seconds": 0.005708
+        },
+        {
+          "name": "zero-id",
+          "seconds": 0.00493
+        },
+        {
+          "name": "negative-tuple",
+          "seconds": 0.006803
+        },
+        {
+          "name": "missing-root",
+          "seconds": 0.005164
+        },
+        {
+          "name": "missing-constraint",
+          "seconds": 0.004974
+        },
+        {
+          "name": "missing-element",
+          "seconds": 0.004813
+        },
+        {
+          "name": "duplicate-id",
+          "seconds": 0.005641
+        },
+        {
+          "name": "missing-link-17",
+          "seconds": 0.005387
+        },
+        {
+          "name": "missing-link-18",
+          "seconds": 0.007174
+        },
+        {
+          "name": "request-valid",
+          "seconds": 0.026921
+        },
+        {
+          "name": "released-name-run",
+          "seconds": 0.025969
+        },
+        {
+          "name": "wrong-kind-refused",
+          "seconds": 0.034317
+        },
+        {
+          "name": "wrong-kind-mutant-run",
+          "seconds": 0.042673
+        },
+        {
+          "name": "unknown-question-refused",
+          "seconds": 0.034617
+        },
+        {
+          "name": "unknown-question-mutant-run",
+          "seconds": 0.023004
+        },
+        {
+          "name": "generated-go",
+          "seconds": 0.029984
+        },
+        {
+          "name": "generated-native",
+          "seconds": 0.060636
+        },
+        {
+          "name": "unlinked",
+          "seconds": 0.397647
+        },
+        {
+          "name": "parts-unlinked",
+          "seconds": 0.079624
+        },
+        {
+          "name": "wrong-node-run",
+          "seconds": 0.180993
+        },
+        {
+          "name": "released-run",
+          "seconds": 0.024154
+        },
+        {
+          "name": "stale-mutant-run",
+          "seconds": 0.020825
+        },
+        {
+          "name": "empty-frame-run",
+          "seconds": 0.032143
+        },
+        {
+          "name": "missing-header-run",
+          "seconds": 0.023503
+        },
+        {
+          "name": "bad-length-run",
+          "seconds": 0.02163
+        },
+        {
+          "name": "bad-kind-run",
+          "seconds": 0.021724
+        },
+        {
+          "name": "ignored-kind-run",
+          "seconds": 0.042344
+        },
+        {
+          "name": "query-cost-native-1",
+          "seconds": 0.079526
+        },
+        {
+          "name": "query-cost-go-1",
+          "seconds": 0.085429
+        },
+        {
+          "name": "controls-go",
+          "seconds": 0.048204
+        },
+        {
+          "name": "controls-native",
+          "seconds": 0.057695
+        },
+        {
+          "name": "controls-asan-go",
+          "seconds": 0.040422
+        },
+        {
+          "name": "controls-asan-native",
+          "seconds": 0.170047
+        },
+        {
+          "name": "assignable-types-run",
+          "seconds": 0.050163
+        }
+      ]
+    },
+    "stage0_build": {
+      "count": 7,
+      "sum_seconds": 68.347937,
+      "invocations": [
+        {
+          "name": "stage0",
+          "seconds": 3.608501
+        },
+        {
+          "name": "stage0",
+          "seconds": 30.250341
+        },
+        {
+          "name": "stage0",
+          "seconds": 8.121799
+        },
+        {
+          "name": "stage0",
+          "seconds": 5.945194
+        },
+        {
+          "name": "stage0",
+          "seconds": 3.245263
+        },
+        {
+          "name": "stage0",
+          "seconds": 8.12761
+        },
+        {
+          "name": "stage0",
+          "seconds": 9.049229
+        }
+      ]
+    }
+  },
+  "outcome": "timeout",
+  "package_wall_seconds": [
+    "1800.053"
+  ],
+  "tests": [
+    [
+      "PASS",
+      "TestVolumeProfileAgreementAndMutants",
+      "522.90"
+    ],
+    [
+      "PASS",
+      "TestShadowIndexMissingBinding",
+      "104.16"
+    ],
+    [
+      "PASS",
+      "TestSixRuleAgreementAndMutants",
+      "656.17"
+    ],
+    [
+      "PASS",
+      "TestFactsDecoderGuards",
+      "6.96"
+    ],
+    [
+      "PASS",
+      "TestInspectRequestRefusals",
+      "37.71"
+    ],
+    [
+      "PASS",
+      "TestTypeAwareAgreementAndMutants",
+      "265.22"
+    ]
+  ]
+}
