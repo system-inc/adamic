@@ -45,6 +45,7 @@ var base = Inputs{Name: "port", Files: []string{"source", "flags.txt"}, Flags: [
 
 // Every input that can change a product changes its key: drop any of them from the hash and its subtest fails.
 func TestEveryInputChangesTheKey(t *testing.T) {
+	t.Parallel()
 	changed := map[string]func(t *testing.T, root string) Inputs{
 		"name":         func(t *testing.T, root string) Inputs { in := base; in.Name = "port2"; return in },
 		"flag":         func(t *testing.T, root string) Inputs { in := base; in.Flags = []string{"-DADAMIC_TSGO"}; return in },
@@ -74,6 +75,7 @@ func TestEveryInputChangesTheKey(t *testing.T) {
 	}
 	for name, change := range changed {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			root := repository(t)
 			before := key(t, root, base)
 			if after := key(t, root, change(t, root)); after == before {
@@ -82,6 +84,7 @@ func TestEveryInputChangesTheKey(t *testing.T) {
 		})
 	}
 	t.Run("nothing changed", func(t *testing.T) {
+		t.Parallel()
 		root := repository(t)
 		before := key(t, root, base)
 		later := time.Now().Add(time.Hour)
@@ -93,6 +96,7 @@ func TestEveryInputChangesTheKey(t *testing.T) {
 		}
 	})
 	t.Run("outside the repository", func(t *testing.T) {
+		t.Parallel()
 		root := repository(t)
 		for _, name := range []string{"/etc/hosts", "../escape"} {
 			in := base
@@ -113,14 +117,12 @@ func cached(t *testing.T) (string, string) {
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", cache)
 	t.Setenv("ADAMIC_BUILD_LOG", log)
 	t.Setenv("ADAMIC_BUILD_CACHE", "")
-	// The real store is never reached from a test; the store's own tests serve one.
-	t.Setenv("ADAMIC_BUILD_STORE", "off")
-	t.Setenv("ADAMIC_BUILD_STORE_TOKEN", filepath.Join(t.TempDir(), "no-token"))
 	return cache, log
 }
 
 var thisPackage = Inputs{Name: "buildcache test", Files: []string{"internal/buildcache/buildcache.go"}}
 
+// Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
 func TestABuildRunsOncePerKey(t *testing.T) {
 	_, log := cached(t)
 	var builds int
@@ -142,6 +144,7 @@ func TestABuildRunsOncePerKey(t *testing.T) {
 	}
 }
 
+// Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
 func TestAFailedBuildPublishesNothing(t *testing.T) {
 	cache, _ := cached(t)
 	failure := errors.New("clang failed")
@@ -164,6 +167,7 @@ func TestAFailedBuildPublishesNothing(t *testing.T) {
 	}
 }
 
+// Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
 func TestUncachedModeBuildsEveryTime(t *testing.T) {
 	cached(t)
 	t.Setenv("ADAMIC_BUILD_CACHE", "off")
@@ -176,6 +180,7 @@ func TestUncachedModeBuildsEveryTime(t *testing.T) {
 	}
 }
 
+// Not parallel: cached calls t.Setenv for ADAMIC_BUILD_CACHE_DIR, ADAMIC_BUILD_LOG and ADAMIC_BUILD_CACHE.
 func TestParallelCallersBuildOnce(t *testing.T) {
 	cached(t)
 	var builds atomic.Int32
@@ -207,6 +212,7 @@ func TestParallelCallersBuildOnce(t *testing.T) {
 	}
 }
 
+// Not parallel: Tool writes the package-level tools map.
 func TestToolNamesItselfOnce(t *testing.T) {
 	if value := Tool("go", "version"); !strings.HasPrefix(value, "go version: go version go") {
 		t.Fatalf("Tool reported %q", value)

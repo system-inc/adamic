@@ -12,6 +12,7 @@ import (
 )
 
 func TestClockGenericReturnsT01Shapes(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct {
 		name, shape string
 		supported   bool
@@ -24,6 +25,7 @@ func TestClockGenericReturnsT01Shapes(t *testing.T) {
 		{"nested callable", `{ readonly field: () => string }`, false},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			source := `interface Base<T> { readonly token: T; } function make(): (Base<"="> & ` + probe.shape + `) | undefined { return undefined; } console.log(typeof make());`
 			_, err := lowerSource(t, source)
 			if probe.supported {
@@ -40,6 +42,7 @@ func TestClockGenericReturnsT01Shapes(t *testing.T) {
 		})
 	}
 	t.Run("null remains distinct", func(t *testing.T) {
+		t.Parallel()
 		_, err := lowerSource(t, `interface Base<T> { readonly token: T; }
 function make(): (Base<"="> & { readonly left: { readonly text: string } }) | undefined | null { return null; }
 console.log(typeof make());`)
@@ -55,6 +58,7 @@ console.log(typeof make());`)
 // string part for type arguments made the checker dereference nil (x1 of views slice 1,
 // notyet_element_access/paths.a); the proof now declines it and lowering stops normally.
 func TestClockGenericReturnsT01DeclinesBrandedPrimitives(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`type Path = string & { __pathBrand: void }; function read(values: readonly Path[], index: number): Path | undefined { return values[index]; } console.log(typeof read([], 0));`,
 		`type Count = number & { __countBrand: void }; function read(values: readonly Count[], index: number): Count | undefined { return values[index]; } console.log(typeof read([], 0));`,
@@ -70,6 +74,7 @@ func TestClockGenericReturnsT01DeclinesBrandedPrimitives(t *testing.T) {
 // Reject null at the signature proof itself. A later body or call refusal must
 // not hide a mutant which merges null with the missing object representation.
 func TestClockGenericReturnsT01RejectsNullBeforeBody(t *testing.T) {
+	t.Parallel()
 	path := filepath.Join(t.TempDir(), "probe.a")
 	source := `interface Base<T> { readonly token: T; }
 function make(): (Base<"="> & { readonly left: { readonly text: string } }) | undefined | null { return null; }
@@ -107,6 +112,7 @@ console.log(typeof make());`
 // An index signature must be rejected by this proof even when the body returns
 // undefined and later passes independently refuse the erased index shape.
 func TestClockGenericReturnsT01RejectsIndexBeforeBody(t *testing.T) {
+	t.Parallel()
 	path := filepath.Join(t.TempDir(), "probe.a")
 	source := `interface Base<T> { readonly token: T; }
 function make(): (Base<"="> & { readonly [key: string]: unknown; readonly left: { readonly text: string } }) | undefined { return undefined; }
