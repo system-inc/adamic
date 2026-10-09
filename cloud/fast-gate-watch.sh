@@ -241,20 +241,39 @@ dispatch() {
     echo "${box}" > "${state}/reserved-running/${pid}"
   fi
 }
-# Every pool job's tier at Loom, from the waterfall (@system_adamic, Oct 9 13:05Z, #12dg93f; a job with none sat at tier 0
-# behind side work for an hour): the star, the front file's first line, at 40; the rest of the front and every tip a wave 0
-# or 1 step's artifacts name (wave-globs, from cloud/first-step-branches.sh --waves) at 30; everything else at 10, and so
-# is a tip the pool already voided, so no retry sits ahead of a wave-0 candidate (Loom, Oct 9 09:41Z). Main's whole gate,
-# at 20, isn't this watcher's to send. cloud/pool-job.sh refuses a job without one.
+# Every pool job's tier at Loom, from the waterfall (@system_adamic, Oct 9 13:05Z and 13:33Z, #12dg93f; a job with none sat
+# at tier 0 behind side work for an hour): the star at 40, waves 0 and 1 at 30, everything else at 10. A candidate's tier
+# is its commits' "Task: #<id>" trailers' (over the commits main lacks), read against wave-tiers (cloud/first-step-branches.sh
+# --waves, refreshed with the roadmap's every five minutes). With no trailer, the front file (its first line the star) and
+# then a wave step's git artifact globs stand in, and the artifact match pages that step's owner once to add the trailer.
+# Main's whole gate, at 20, isn't this watcher's to send. cloud/pool-job.sh refuses a job without a tier.
 poolTier() {
-  local branch=$1 sha=$2 wave glob
+  local branch=$1 sha=$2 tier kind value task tasks best=""
+  tasks=$(git -C "${here}" log --format='%(trailers:key=Task,valueonly)' "${sha}" --not refs/remotes/origin/main 2> /dev/null | grep -oE '#[0-9a-z]+' | tr -d '#' | sort -u)
+  if [ -n "${tasks}" ]; then
+    while read -r tier kind value task; do
+      [ "${kind}" = task ] && echo "${tasks}" | grep -qx "${value}" && { [ -z "${best}" ] || [ "${tier}" -gt "${best}" ]; } && best=${tier}
+    done < <(cat "${state}/wave-tiers" 2> /dev/null)
+    echo "${best:-10}"
+    return
+  fi
   isFront "${branch}" && [ "$(frontLine "${branch}")" = 1 ] && { echo 40; return; }
   isFront "${branch}" && { echo 30; return; }
-  grep -qx "${sha}" "${state}/pool-void-tries" 2> /dev/null && { echo 10; return; }
-  while read -r wave glob; do
-    [ -n "${glob}" ] && [[ ${branch} == ${glob} ]] && { echo 30; return; }
-  done < <(cat "${state}/wave-globs" 2> /dev/null)
+  while read -r tier kind value task; do
+    if [ "${kind}" = branch ] && [[ ${branch} == ${value} ]]; then
+      grep -qx "${sha}" "${state}/trailer-paged" 2> /dev/null || {
+        echo "${sha}" >> "${state}/trailer-paged"
+        (notifyStorm "${branch} ${sha:0:12} went to Loom's pool at tier ${tier} only through #${task}'s artifacts: none of its commits carries a 'Task: #${task}' trailer, which is how the pool reads a candidate's wave. Add the trailer to the candidate's commits." "$(taskOwner "${task}")" &)
+      }
+      echo "${tier}"
+      return
+    fi
+  done < <(cat "${state}/wave-tiers" 2> /dev/null)
   echo 10
+}
+# A task's owner's username, from its card, or developer tools when it has none.
+taskOwner() {
+  (cd "${ADAMIC_FAST_GATE_AHRA_DIR:-/Users/kirkouimet/Projects/ahra}" && ahra tasks show "$1" 2> /dev/null) | sed -nE 's/^owner +@([a-z0-9_]+).*/\1/p' | head -1 | grep . || echo system_adamic_developer_tools
 }
 # Staged rollout of the gate tools (@system_adamic, Oct 8, after three deploy incidents; gate the gate, Oct 9 10:21Z):
 # with a box named in ${state}/canary-box, new box tools run one gate only, a canary of main's tip on that box, while
@@ -998,8 +1017,8 @@ while true; do
       mv "${state}/first-step-globs.tmp" "${state}/first-step-globs"
      bash "${here}/cloud/first-step-branches.sh" --all > "${state}/step-globs.tmp" &&
       mv "${state}/step-globs.tmp" "${state}/step-globs"
-     bash "${here}/cloud/first-step-branches.sh" --waves > "${state}/wave-globs.tmp" &&
-      mv "${state}/wave-globs.tmp" "${state}/wave-globs") &
+     bash "${here}/cloud/first-step-branches.sh" --waves > "${state}/wave-tiers.tmp" &&
+      mv "${state}/wave-tiers.tmp" "${state}/wave-tiers") &
     firstStepPid=$!
     firstStepRefresh=${now}
   fi

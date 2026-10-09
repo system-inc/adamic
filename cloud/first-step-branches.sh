@@ -7,17 +7,25 @@
 set -uo pipefail
 mode=${1:-}
 cd "${ADAMIC_FAST_GATE_AHRA_DIR:-/Users/kirkouimet/Projects/ahra}" || exit 1
-# With --waves, "<wave> <glob>" for every open step of system_adamic's waterfall in waves 0 and 1, one line per branch
-# glob its artifacts declare (git:<repository>:<glob>): the watcher stamps a pool job's tier from them (#12dg93f). A
-# step that declares no git artifact has no branch to match, so its tips take the lowest tier.
+# With --waves, the pool tiers system_adamic's waterfall gives (#12dg93f), as "<tier> task <id>" and "<tier> branch <glob>
+# <id>" lines: the star (the critical path's head) at 40 and every other open step of waves 0 and 1 at 30, by task id for
+# a candidate whose commits carry a "Task: #<id>" trailer, and by the git:<repository>:<glob> artifacts it declares for
+# one with no trailer (@system_adamic, Oct 9 13:33Z).
 if [ "${mode}" = --waves ]; then
   ahra tasks waterfall system_adamic --json | python3 -c '
 import json, sys
-for node in json.load(sys.stdin)["nodes"]:
-    if node.get("wave") in (0, 1) and node.get("status") not in ("Done", "Cancelled", "Failed"):
-        for artifact in node.get("artifacts") or []:
-            if artifact.startswith("git:"):
-                print(node["wave"], artifact.rsplit(":", 1)[1])
+waterfall = json.load(sys.stdin)
+star = (waterfall.get("criticalPath") or [None])[0]
+for node in waterfall["nodes"]:
+    if node.get("status") in ("Done", "Cancelled", "Failed"):
+        continue
+    tier = 40 if node["id"] == star else 30 if node.get("wave") in (0, 1) else None
+    if tier is None:
+        continue
+    print(tier, "task", node["id"])
+    for artifact in node.get("artifacts") or []:
+        if artifact.startswith("git:"):
+            print(tier, "branch", artifact.rsplit(":", 1)[1], node["id"])
 '
   exit
 fi

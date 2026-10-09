@@ -88,9 +88,8 @@ while [ ! -f "${jobs}/${sha}.verdict" ]; do
     fi
   fi
   if [ "${waited}" -ge "${limit}" ]; then
-    # Nobody reads this job's verdict once its waiter leaves, so it leaves Loom's queue too: 65 jobs sat there with no
-    # waiter (Oct 9 13:30Z), among them hidden-boundaries 7fddff4b, whose waiter gave up at 13:01Z.
-    printf '%s\n' "its waiter gave up after ${limit} s with no verdict" > "${jobs}/${sha}.cancel"
+    # The job stays at Loom: its record still publishes and lands the candidate though no waiter reads it (hidden-boundaries
+    # 7fddff4b was running on the pool when its cancel, written for a waiter that had given up, stopped it; Oct 9 13:35Z).
     echo "void: ${sha} the pool gave no verdict in ${limit} s"
     exit 1
   fi
