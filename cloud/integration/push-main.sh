@@ -470,6 +470,17 @@ if [ "$testOnly" = yes ]; then
 		echo "refused: not test-only against main ${old:0:8}: $(printf '%s' "$nonTest" | head -n 5 | paste -sd ' ' -)" >&2
 		exit 1
 	fi
+	# Its history, not only its tree (@system_adamic, Oct 9 04:59Z): a commit beyond main that touches anything
+	# but tests would be recorded as merged even where the merge drops its changes, and a later plain merge of
+	# its branch then silently deletes them (cohere's estree split carried buildcache-shared 2afbfa75 this way).
+	# The lane never filters files out of a merge; the worker cherry-picks its test commits onto main instead.
+	for commit in $(git rev-list --reverse --topo-order --no-merges "${old}..${gated}"); do
+		outside=$(git diff-tree --no-commit-id --name-only -r "$commit" | grep -v -E "$testOnlyPattern" | grep . || true)
+		if [ -n "$outside" ]; then
+			echo "refused: carries non-test history: ${commit:0:8} ($(git log -1 --format=%s "$commit" | cut -c1-60)) changes $(printf '%s' "$outside" | head -n 3 | paste -sd ' ' -); cherry-pick the test commits onto main instead" >&2
+			exit 1
+		fi
+	done
 	# A harness change can hide a check that can't fail, so it lands only with its mutant evidence.
 	harness=$(printf '%s\n' "$changed" | grep -E '^stage3/(fixtures|meter)/' | grep -v -E '(_test\.go$|/testdata/)' | grep . || true)
 	if [ -n "$harness" ] && ! printf '%s\n' "$changed" | grep -q -i 'mutant'; then

@@ -110,6 +110,13 @@ class LandingTests(unittest.TestCase):
         self.assertIn("runs timeout, which cloud/fast-gate/tools.txt doesn't declare", self.push('--test-only', tool, 'tool').stderr)
         messy = self.change(new, 'code/messy_test.go', 'package code\nvar  x = 1\n', 'messy')
         self.assertIn("code/messy_test.go isn't gofmt-formatted", self.push('--test-only', messy, 'messy').stderr)
+        # A branch whose net diff is tests but whose history changes code is refused by that commit: landing it
+        # would record the code commit as merged with its change dropped (cohere's estree split, Oct 9).
+        code = self.change(new, 'code/a.go', 'package code\n\n// carried\n', 'a code change')
+        undone = self.change(code, 'code/a.go', git(self.repository, 'show', new + ':code/a.go') + '\n', 'undo it')
+        carried = self.change(undone, 'code/carried_test.go', 'package code\n', 'a test on top')
+        refused = self.push('--test-only', carried, 'carried')
+        self.assertIn('carries non-test history: %s' % code[:8], refused.stderr)
 
     def test_a_candidate_built_ahead_lands_over_the_landing_commit_below_it(self):
         lower = self.change(self.main, 'code/a.go', 'package code\n\n// lower\n', 'lower')
