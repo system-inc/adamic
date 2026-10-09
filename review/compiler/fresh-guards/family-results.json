@@ -1,0 +1,34 @@
+[
+  {
+    "label": "M18-family-mutant",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "TestFreshWrites|TestFreshCorpus",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 1,
+    "seconds": 14.334401891001107
+  },
+  {
+    "label": "M18-family-restored",
+    "command": [
+      "go",
+      "test",
+      "./internal/fresh",
+      "-run",
+      "TestFreshWrites|TestFreshCorpus",
+      "-count=1",
+      "-parallel=4",
+      "-timeout=90s",
+      "-json"
+    ],
+    "exit": 0,
+    "seconds": 14.9236524500011
+  }
+]

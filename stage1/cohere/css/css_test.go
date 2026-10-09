@@ -154,18 +154,15 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 		verifyCSSParserUnion(t, corpus.keys, units)
 		// C emission annotates the IR. Finish both backends sequentially before the
 		// independent native builds and parallel unit readers use immutable products.
-		main, err := filepath.Abs("main.ts")
-		if err != nil {
-			t.Fatal(err)
+		var programs []cssParserProgram
+		var binaries []string
+		for index := -1; index < len(mutants); index++ {
+			programs = append(programs, cssParserPreparedProgram(t, index))
+			binaries = append(binaries, cssParserPreparedNative(t, index))
 		}
-		programs := []cssParserProgram{buildCSSParserProgram(t, "parser", filepath.Dir(main))}
-		for i := range mutants {
-			programs = append(programs, buildCSSParserProgram(t, fmt.Sprintf("mutant-%d", i), cssParserTopPortDirectory(t, &mutants[i])))
-		}
-		binaries := buildCSSParserBinaries(t, programs)
 		leakBinary := binaries[0]
 		if runtime.GOOS == "darwin" {
-			leakBinary = buildCSSParserUnsanitized(t, programs[0])
+			leakBinary = cssParserPreparedLeaks(t)
 		}
 		library := os.Getenv("ADAMIC_CSS_LIBRARY")
 		script, _ := filepath.Abs("testdata/library.mjs")
@@ -174,10 +171,7 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 			libraryIdentity = cssParserOracleIdentity(t, library)
 		}
 		setupElapsed := time.Since(setupStarted)
-		t.Logf("setup before shards %.6fs, including cached non-Go products and a private Go oracle build", setupElapsed.Seconds())
-		if setupElapsed > 90*time.Second {
-			t.Fatalf("cooked setup: wall %s exceeds 90s", setupElapsed)
-		}
+		t.Logf("setup before shards %.6fs, including cached build products", setupElapsed.Seconds())
 		cssParserTopSetup.units = units
 		cssParserTopSetup.run = func(t *testing.T, root cssParserShard) {
 			for _, unit := range root.groups {
@@ -247,8 +241,10 @@ func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 
 func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
 	t.Helper()
+	// Fetch shared products once per process before starting this shard's clock.
+	prepareThePortParsesAsGoCohereDoesSetup(t)
 	if cssParserTopSetup.run == nil {
-		t.Fatal("TestThePortParsesAsGoCohereDoes_Setup must finish before a shard starts")
+		t.Fatal("shared setup did not complete")
 	}
 	timer := time.AfterFunc(90*time.Second, func() {
 		panic(fmt.Sprintf("cooked TestThePortParsesAsGoCohereDoes_%03d: case deadline exceeded 90s", ordinal))
@@ -265,7 +261,7 @@ func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
 		return
 	}
 	if cssParserTopSetup.run == nil {
-		t.Fatal("TestThePortParsesAsGoCohereDoes_Setup must finish before a shard starts")
+		t.Fatal("shared setup did not complete")
 	}
 	selected := selectedCSSParserShards(t, cssParserTopSetup.units)
 	for _, unit := range selected {

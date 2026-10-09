@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:09:50.345458013Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-09T09:09:50.35283358Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus"}
+{"Time":"2026-10-09T09:09:50.35292154Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"=== RUN   TestUsageExitStatus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:09:50.352949541Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"=== PAUSE TestUsageExitStatus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:09:50.352952455Z","Action":"pause","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus"}
+{"Time":"2026-10-09T09:09:50.352959095Z","Action":"cont","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus"}
+{"Time":"2026-10-09T09:09:50.352961699Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"=== CONT  TestUsageExitStatus\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:09:50.359438334Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"    command_guards_test.go:17: bad usage: got exit 1, stdout \"\", stderr \"usage:\\n  adamic types \u003cfile.a|file.ts\u003e...\\n  adamic c \u003cfile.a|file.ts\u003e [--explain-checks]\\n  adamic js \u003cfile.a|file.ts\u003e [--explain-checks]\\n  adamic build [--target wasm32-wasi] \u003cfile.a|file.ts\u003e -o \u003cout\u003e [--count] [--sanitize] [--tsgo \u003carchive\u003e] [--explain-checks]\\n\"; want exit 2 and usage text\n","OutputType":"error"}
+{"Time":"2026-10-09T09:09:50.359487537Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Output":"--- FAIL: TestUsageExitStatus (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:09:50.359495389Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestUsageExitStatus","Elapsed":0.01}
+{"Time":"2026-10-09T09:09:50.359517922Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:09:50.359565497Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic\t0.014s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:09:50.359582462Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":0.014}
