@@ -18,21 +18,21 @@
 === PAUSE TestAgreementParseIntRadixWitness
 === CONT  TestAgreementRejectsWrongLoweredOutput
 === CONT  TestAgreementInheritedFieldWitness
-=== CONT  TestAgreementStaticInitializerWitness
-=== CONT  TestAgreementEnumConstantWitness
 === CONT  TestAgreementAcceptsExpectedPanic
---- PASS: TestAgreementRejectsWrongLoweredOutput (0.27s)
+=== CONT  TestAgreementEnumConstantWitness
+=== CONT  TestAgreementStaticInitializerWitness
+--- PASS: TestAgreementAcceptsExpectedPanic (0.24s)
+=== CONT  TestAgreementParseIntRadixWitness
+--- PASS: TestAgreementRejectsWrongLoweredOutput (0.26s)
 === CONT  TestAgreementAcceptsComputedAnswer
 --- PASS: TestAgreementInheritedFieldWitness (0.27s)
-=== CONT  TestAgreementRejectsEmptyAnswer
---- PASS: TestAgreementAcceptsExpectedPanic (0.28s)
 === CONT  TestAgreementParameterPropertyWitness
---- PASS: TestAgreementEnumConstantWitness (0.28s)
-=== CONT  TestAgreementParseIntRadixWitness
---- PASS: TestAgreementStaticInitializerWitness (0.29s)
---- PASS: TestAgreementRejectsEmptyAnswer (0.14s)
---- PASS: TestAgreementAcceptsComputedAnswer (0.18s)
---- PASS: TestAgreementParseIntRadixWitness (0.18s)
---- PASS: TestAgreementParameterPropertyWitness (0.19s)
+--- PASS: TestAgreementStaticInitializerWitness (0.28s)
+=== CONT  TestAgreementRejectsEmptyAnswer
+--- PASS: TestAgreementEnumConstantWitness (0.37s)
+--- PASS: TestAgreementRejectsEmptyAnswer (0.18s)
+--- PASS: TestAgreementAcceptsComputedAnswer (0.20s)
+--- PASS: TestAgreementParseIntRadixWitness (0.24s)
+--- PASS: TestAgreementParameterPropertyWitness (0.23s)
 PASS
-ok  	github.com/system-inc/adamic/internal/lower	0.484s
+ok  	github.com/system-inc/adamic/internal/lower	0.505s

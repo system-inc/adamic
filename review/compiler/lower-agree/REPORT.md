@@ -28,46 +28,50 @@ New leaf timings:
 
 | Test | Seconds |
 | --- | --- |
-| TestAgreementRejectsWrongLoweredOutput | 0.27 |
+| TestAgreementAcceptsExpectedPanic | 0.24 |
+| TestAgreementRejectsWrongLoweredOutput | 0.26 |
 | TestAgreementInheritedFieldWitness | 0.27 |
-| TestAgreementAcceptsExpectedPanic | 0.28 |
-| TestAgreementEnumConstantWitness | 0.28 |
-| TestAgreementStaticInitializerWitness | 0.29 |
-| TestAgreementRejectsEmptyAnswer | 0.14 |
-| TestAgreementAcceptsComputedAnswer | 0.18 |
-| TestAgreementParseIntRadixWitness | 0.18 |
-| TestAgreementParameterPropertyWitness | 0.19 |
+| TestAgreementStaticInitializerWitness | 0.28 |
+| TestAgreementEnumConstantWitness | 0.37 |
+| TestAgreementRejectsEmptyAnswer | 0.18 |
+| TestAgreementAcceptsComputedAnswer | 0.20 |
+| TestAgreementParseIntRadixWitness | 0.24 |
+| TestAgreementParameterPropertyWitness | 0.23 |
 
-Helper file result: ok  	github.com/system-inc/adamic/internal/lower	0.484s
+Helper file result: ok  	github.com/system-inc/adamic/internal/lower	0.505s
 
 Migrated and collision-renamed leaves:
 
-- TestUndecidedCycleReadsUseReadyChecks: 2.30s
-- TestClassStaticInitializerCallIsEmitted: 0.08s
-- TestFSOpenStringFlagsLower: 0.83s
-- TestFSRemoveDefaultRetryDelayLowers: 0.84s
-- TestFSStatThrowsByDefault: 0.77s
-- TestFSExistsOperation: 0.86s
-- TestIndirectPredicateOverloadIsPending: 0.03s
-- TestClassStaticSideEffectMatchesNode: 0.32s
-- TestPredicateOverloadRuntime: 6.53s
+- TestUndecidedCycleReadsUseReadyChecks: 1.89s
+- TestClassStaticInitializerCallIsEmitted: 0.07s
+- TestClassStaticSideEffectMatchesNode: 0.46s
+- TestIndirectPredicateOverloadIsPending: 0.08s
+- TestFSStatThrowsByDefault: 0.64s
+- TestFSOpenStringFlagsLower: 0.74s
+- TestFSExistsOperation: 0.75s
+- TestFSRemoveDefaultRetryDelayLowers: 0.43s
+- TestPredicateOverloadRuntime: 6.42s
 
-Focused migration selection result: ok  	github.com/system-inc/adamic/internal/lower	8.843s
+Focused migration selection result: ok  	github.com/system-inc/adamic/internal/lower	8.324s
 
 Mutant evidence:
 
 | Mutant | Catching test | Observation |
 | --- | --- | --- |
-| skip-stdout | TestAgreementRejectsWrongLoweredOutput | agree_test.go:168: planted wrong output was not caught by stdout comparison: "" |
-| accept-empty | TestAgreementRejectsEmptyAnswer | agree_test.go:176: silent row was not refused by empty-answer probe: "" |
-| enum-plus-one | TestAgreementEnumConstantWitness | agree_test.go:192: JavaScript backend stdout = "8\n", source Node = "7\n" |
-| drop-base-fields | TestAgreementInheritedFieldWitness | agree_test.go:197: JavaScript backend stdout = "7:11:own,#base@1\n", source Node = "7:11:own\n" |
-| drop-parameter-store | TestAgreementParameterPropertyWitness | agree_test.go:202: JavaScript backend stdout = "0\n", source Node = "7\n" |
-| drop-static-initializer | TestAgreementStaticInitializerWitness | agree_test.go:207: JavaScript backend stdout = "done\n", source Node = "static side effect\ndone\n" |
-| swap-parseInt-radix | TestAgreementParseIntRadixWitness | agree_test.go:212: JavaScript backend stdout = "10,10,10\n", source Node = "10,NaN,2\n" |
+| skip-stdout | TestAgreementRejectsWrongLoweredOutput | agree_test.go:172: planted wrong output was not caught by stdout comparison: "" |
+| accept-empty | TestAgreementRejectsEmptyAnswer | agree_test.go:180: silent row was not refused by empty-answer probe: "" |
+| enum-plus-one | TestAgreementEnumConstantWitness | agree_test.go:196: JavaScript backend stdout = "8\n", source Node = "7\n" |
+| drop-base-fields | TestAgreementInheritedFieldWitness | agree_test.go:201: JavaScript backend stdout = "7:11:own,#base@1\n", source Node = "7:11:own\n" |
+| drop-parameter-store | TestAgreementParameterPropertyWitness | agree_test.go:206: JavaScript backend stdout = "0\n", source Node = "7\n" |
+| drop-static-initializer | TestAgreementStaticInitializerWitness | agree_test.go:211: JavaScript backend stdout = "done\n", source Node = "static side effect\ndone\n" |
+| swap-parseInt-radix | TestAgreementParseIntRadixWitness | agree_test.go:216: JavaScript backend stdout = "10,10,10\n", source Node = "10,NaN,2\n" |
 
 Evidence provenance: enum_flags M01 changes enum constants by +1; class_inheritance M02 drops inherited fields; parameter_properties M03 returns before stores; library_language M20 passes the input string as parseInt's radix. These diffs were read from origin/test-audit branches without merging their code. Static initializer omission follows review/compiler/class-static-guard/M15.diff, adapted to current source. The two helper diffs are generated against agree_test.go. All are non-compilable .diff evidence.
 
 Observation versus inference: an initial public-field inheritance row survived the exact base-fields mutant; initial-public-base-mutant.log preserves that result. JavaScript uses property names for public reads, so the final witness observes inherited #private field enumeration instead. The final mutant printed 7:11:own,#base@1 where Node printed 7:11:own. All five final survivor witnesses fail stdout comparison rather than clang or a structural snapshot. No claim is made about the remaining acceptance rows until later units migrate them.
 
 Integration adjustment: landed main introduced fs_method_guards_test.go with another lowersAndAgreesWithNode taking four arguments. Merging it produced a redeclaration and argument-count build failure. The requested two-argument API cannot coexist with that declaration. The minimal conservative resolution renames only that existing filesystem helper and its four calls to fsLoweringAgreesWithNode; its implementation and behavior stay intact. This extra test-only file edit resolves a real integration collision rather than expanding the acceptance-row migration. All four renamed leaves were run. Their first run lacked stage3/api/node_modules/@types/node 25.3.3; timeout 120 npm ci in stage3/api installed the pinned declarations (three packages in 989ms), after which the focused selection passed. initial-missing-node-types.log and initial-lane-collision.log retain the failures. No production source changed in this merge or resolution.
+
+Final main snapshot: merged landed test-only main 6c60da09 in 592e0a8f, with no conflict or production change, and re-greened both focused selections. Earlier implementation and integration commits are b2e71ac1, 85b15c0c and 7be079fd. The last evidence commit SHA is in the delivery response.
+
+Lane output: lane checks 1.6 s: gofmt and tools on 5 Go files, t.Parallel on 1 test packages; vet 1 packages

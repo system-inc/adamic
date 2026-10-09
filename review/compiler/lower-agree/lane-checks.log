@@ -1,2 +1,1 @@
-go vet: vet: internal/lower/fs_method_guards_test.go:50:6: lowersAndAgreesWithNode redeclared in this block
-if main already fails vet in one of these packages, the lane won't refuse it there
+lane checks 1.6 s: gofmt and tools on 5 Go files, t.Parallel on 1 test packages; vet 1 packages
