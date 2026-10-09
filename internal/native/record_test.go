@@ -66,7 +66,7 @@ func TestRecordsAgainstNode(t *testing.T) {
 	if err := Build(recordHarness(t), binary, Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
-	for _, arguments := range [][]string{{"semantics"}, {"prototypes"}, {"reads"}, {"references"}, {"iteration"}, {"numeric"}, {"workload", "1000000"}, {"bench", "1000"}} {
+	for _, arguments := range [][]string{{"semantics"}, {"prototypes"}, {"reads"}, {"references"}, {"iteration"}, {"numeric"}, {"two-indices"}, {"workload", "1000000"}, {"bench", "1000"}} {
 		t.Run(strings.Join(arguments, "-"), func(t *testing.T) {
 			stdout, stderr, err := recordRun(binary, arguments...)
 			if err != nil {
