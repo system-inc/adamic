@@ -1,0 +1,74 @@
+run adamic-verify-20261009T102942-8c1d124b: void, 6167 tests in 82 units, 3 failed, 46 units broken, 0 killed over budget
+BROKEN tests-02: no results (exited false, last output "loom-pilot: github.com/system-inc/adamic/stage1/cohere/estree exited 1")
+BROKEN tests-04: no results (exited false, last output "loom-runner: still running after 150 s")
+BROKEN tests-07: no results (exited false, last output "")
+BROKEN tests-09: no results (exited false, last output "loom-runner: still running after 420 s")
+BROKEN tests-11: no results (exited false, last output "loom-runner: still running after 690 s")
+BROKEN tests-04-r2: no results (exited false, last output "loom-pilot: 2d4574f87219 slot ? cpus ? tree 8e9b07ff41865ab0612e1b86384804980ffe7e9e setup 2 s, 2 packages at a time")
+BROKEN tests-04-r3: no results (exited false, last output "")
+BROKEN tests-04-r4: no results (exited false, last output "")
+BROKEN tests-04-r5: no results (exited false, last output "")
+BROKEN tests-04-r6: no results (exited false, last output "")
+BROKEN tests-04-r7: no results (exited false, last output "")
+BROKEN tests-04-r8: no results (exited false, last output "")
+BROKEN tests-04-r9: no results (exited false, last output "")
+BROKEN tests-07-r1: no results (exited false, last output "")
+BROKEN tests-07-r2: no results (exited false, last output "")
+BROKEN tests-07-r3: no results (exited false, last output "")
+BROKEN tests-07-r4: no results (exited false, last output "")
+BROKEN tests-07-r5: no results (exited false, last output "")
+BROKEN tests-07-r6: no results (exited false, last output "")
+BROKEN tests-07-r7: no results (exited false, last output "")
+BROKEN tests-07-r8: no results (exited false, last output "")
+BROKEN tests-07-r9: no results (exited false, last output "")
+BROKEN tests-07-r10: no results (exited false, last output "")
+BROKEN tests-07-r11: no results (exited false, last output "")
+BROKEN tests-07-r12: no results (exited false, last output "")
+BROKEN tests-07-r13: no results (exited false, last output "")
+BROKEN tests-07-r14: no results (exited false, last output "")
+BROKEN tests-07-r15: no results (exited false, last output "")
+BROKEN tests-07-r16: no results (exited false, last output "")
+BROKEN tests-07-r17: no results (exited false, last output "")
+BROKEN tests-07-r18: no results (exited false, last output "")
+BROKEN tests-07-r19: no results (exited false, last output "")
+BROKEN tests-07-r20: no results (exited false, last output "")
+BROKEN tests-07-r21: no results (exited false, last output "")
+BROKEN tests-07-r22: no results (exited false, last output "")
+BROKEN tests-07-r23: no results (exited false, last output "")
+BROKEN tests-07-r24: no results (exited false, last output "")
+BROKEN tests-07-r25: no results (exited false, last output "")
+BROKEN tests-07-r26: no results (exited false, last output "")
+BROKEN tests-07-r27: no results (exited false, last output "")
+BROKEN tests-07-r28: no results (exited false, last output "")
+BROKEN tests-07-r29: no results (exited false, last output "")
+BROKEN tests-07-r30: no results (exited false, last output "")
+BROKEN tests-07-r31: no results (exited false, last output "")
+BROKEN tests-07-r32: no results (exited false, last output "")
+BROKEN tests-07-r33: no results (exited false, last output "")
+FAIL github.com/system-inc/adamic/stage1/cohere/lint TestWitnessScriptKind (tests-03)
+    witness_script_kind_shards_test.go:86: build witness-script-kind-lowered-no-debugger-v1 ac36e9f1f06f miss 15.08
+    witness_script_kind_shards_test.go:88: build witness-script-kind-lowered-no-debugger-v1 ac36e9f1f06f hit 1.16
+    witness_script_kind_shards_test.go:88: build witness-script-kind-native-no-debugger-v1: native: compiling unit functions_0009.c: exit status 1
+    In file included from functions_0009.c:1:
+    ./units.h:882:14: error: inline function 'adamic_unit_adamic_same_number' is not defined [-Werror,-Wundefined-inline]
+    882 | inline _Bool adamic_unit_adamic_same_number(double left, double right);
+    |              ^
+    functions_0009.c:58:95: note: used here
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestLossyInputControl (tests-06)
+    lossy_input_control_products_test.go:24: build scalar-edges-go-oracle d57a6fe9eb41 miss 10.56
+    lossy_input_control_products_test.go:26: build three-port-mutant-lowered-lossy-input-control b29524b3eb54 miss 27.30
+    lossy_input_control_products_test.go:28: build three-port-mutant-lowered-lossy-input-control b29524b3eb54 hit 1.13
+    lossy_input_control_products_test.go:28: build three-port-mutant-native-lossy-input-control: native: compiling unit functions_0012.c: exit status 1
+    In file included from functions_0012.c:1:
+    ./units.h:2092:14: error: inline function 'adamic_unit_adamic_same_number' is not defined [-Werror,-Wundefined-inline]
+    2092 | inline _Bool adamic_unit_adamic_same_number(double left, double right);
+    |              ^
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtureDirectoriesHaveTopLevelTests (tests-02-r3)
+    units_test.go:130: TestFixturesAssertions directory=assertions fixtures=20
+    units_test.go:130: TestFixturesCycles directory=cycles fixtures=10
+    units_test.go:130: TestFixturesEnums directory=enums fixtures=13
+    units_test.go:130: TestFixturesHost directory=host fixtures=25
+    units_test.go:130: TestFixturesNamespaces directory=namespaces fixtures=12
+    units_test.go:130: TestFixturesNestedFunctions directory=nested-functions fixtures=11
+    units_test.go:130: TestFixturesObjects directory=objects fixtures=25
+    units_test.go:130: TestFixturesPredicates directory=predicates fixtures=11
