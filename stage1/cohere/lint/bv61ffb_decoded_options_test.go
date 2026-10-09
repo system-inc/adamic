@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"flag"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -13,11 +12,11 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"runtime"
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -206,16 +205,13 @@ func decodedOptionsInputs(t *testing.T, name string) buildcache.Inputs {
 	return buildcache.Inputs{Name: name, Files: files, Flags: []string{"Sanitize=true", "Target=native", "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "GOOS=" + runtime.GOOS, "GOARCH=" + runtime.GOARCH, "source-root=" + packageDirectory, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}, Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
 }
 
-// A nonempty setup path marks the child that owns the setup test. The parent
-// runs it before m.Run, reads its immutable results, then starts leaf timers.
-const decodedOptionsSetupPath = "ADAMIC_DECODED_OPTIONS_SETUP_PATH"
-
 type decodedOptionsProducts struct {
 	Directory, Changed, Module, ChangedModule, Binary, Oracle, Manifest string
 	Want                                                                []byte
 }
 
 var decodedOptionsReady *decodedOptionsProducts
+var decodedOptionsOnce sync.Once
 
 func decodedOptionsCommand(ctx context.Context, directory, name string, args ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, args...)
@@ -232,78 +228,24 @@ func decodedOptionsCommand(ctx context.Context, directory, name string, args ...
 	return command
 }
 
-func decodedOptionsBeforeTests() error {
-	// TestMain is called before testing parses flags; list-only invocations must
-	// remain build-free, and unrelated filtered tests must not fetch our products.
-	flag.Parse()
-	if os.Getenv(decodedOptionsSetupPath) != "" || flag.Lookup("test.list").Value.String() != "" {
-		return nil
-	}
-	filter, err := regexp.Compile(flag.Lookup("test.run").Value.String())
-	if err != nil {
-		return err
-	}
-	selected := filter.MatchString("TestDecodedOptionsAndMutant_Setup")
-	for shard := range testDecodedOptionsAndMutantShards {
-		selected = selected || filter.MatchString(fmt.Sprintf("TestDecodedOptionsAndMutant_%03d", shard))
-	}
-	if !selected {
-		return nil
-	}
-	return decodedOptionsInitialize()
-}
+// Retained for TestMain compatibility. Each selected leaf owns preparation.
+func decodedOptionsBeforeTests() error { return nil }
 
-func decodedOptionsInitialize() error {
-	path := filepath.Join(sharedDirectory, "decoded-options-setup.json")
-	deadline := time.Now().Add(90 * time.Second)
-	ctx, cancel := context.WithDeadline(context.Background(), deadline)
-	defer cancel()
-	command := decodedOptionsCommand(ctx, "", os.Args[0], "-test.run=^TestDecodedOptionsAndMutant_Setup$", "-test.timeout=0", "-test.v")
-	command.Env = append(os.Environ(), decodedOptionsSetupPath+"="+path, "ADAMIC_DECODED_OPTIONS_SETUP_DEADLINE="+strconv.FormatInt(deadline.UnixNano(), 10))
-	var output bytes.Buffer
-	command.Stdout, command.Stderr = &output, &output
-	err := command.Run()
-	// Prefix child test markers so test2json never reports duplicate setup tests.
-	for _, line := range strings.Split(strings.TrimSuffix(output.String(), "\n"), "\n") {
-		fmt.Printf("decoded-options setup: %s\n", line)
+func decodedOptionsPrepare(t *testing.T) *decodedOptionsProducts {
+	t.Helper()
+	decodedOptionsOnce.Do(func() { decodedOptionsSetupTest(t) })
+	if decodedOptionsReady == nil {
+		t.Fatal("decoded-options product preparation failed")
 	}
-	if err != nil {
-		if ctx.Err() != nil {
-			return fmt.Errorf("cooked: TestDecodedOptionsAndMutant_Setup exceeded 90s: %w", ctx.Err())
-		}
-		return fmt.Errorf("decoded-option setup: %w", err)
-	}
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return err
-	}
-	var ready decodedOptionsProducts
-	if err := json.Unmarshal(data, &ready); err != nil {
-		return err
-	}
-	decodedOptionsReady = &ready
-	return nil
+	return decodedOptionsReady
 }
 
 func decodedOptionsSetupTest(t *testing.T) {
 	t.Helper()
-	path := os.Getenv(decodedOptionsSetupPath)
-	if path == "" {
-		if decodedOptionsReady == nil {
-			if err := decodedOptionsInitialize(); err != nil {
-				t.Fatal(err)
-			}
-		}
-		return
-	}
 	started := time.Now()
-	deadline, err := strconv.ParseInt(os.Getenv("ADAMIC_DECODED_OPTIONS_SETUP_DEADLINE"), 10, 64)
-	if err != nil {
-		t.Fatal(err)
-	}
-	// Cancel nested compiler groups before the outer setup group is killed.
-	ctx, cancel := context.WithDeadline(context.Background(), time.Unix(0, deadline).Add(-250*time.Millisecond))
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
+	path := filepath.Join(sharedDirectory, "decoded-options-setup.json")
 	// Both original and mutant source copies live in the content-addressed
 	// product, rather than in a setup test's TempDir.
 	lowered := decodedOptionsSetupLowered(t, false)
@@ -324,8 +266,8 @@ func decodedOptionsSetupTest(t *testing.T) {
 		_, err := decodedOptionsGoOracle(ctx, output)
 		return err
 	})
-	// The fixture and manifest belong to the parent TestMain's directory. They
-	// survive the setup child and are cleaned up by the parent after all leaves.
+	// The fixture and manifest belong to TestMain's directory and remain valid
+	// after the shard that prepares them finishes, until the process exits.
 	fixture := filepath.Join(filepath.Dir(path), "catch.ts")
 	if err := os.WriteFile(fixture, []byte("try { work(); } catch(e) {}\n"), 0644); err != nil {
 		t.Fatal(err)
@@ -341,14 +283,8 @@ func decodedOptionsSetupTest(t *testing.T) {
 		Binary: filepath.Join(nativeProduct, "scanner"), Oracle: filepath.Join(oracleProduct, "oracle"), Manifest: manifestPath,
 	}
 	ready.Want = decodedOptionsExecute(t, ctx, ready.Oracle, "--manifest", manifestPath)
-	data, err := json.Marshal(ready)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(path, data, 0644); err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("TestDecodedOptionsAndMutant_Setup: %s; all shared state ready before shard deadlines", time.Since(started))
+	decodedOptionsReady = &ready
+	t.Logf("decoded-options shared preparation: %s; own-work deadline starts afterward", time.Since(started))
 }
 
 // This is the same overlay and full live-rule oracle as goOracleIn, with
@@ -467,10 +403,7 @@ func decodedOptionsExecute(t *testing.T, ctx context.Context, name string, args 
 
 func decodedOptionsShard(t *testing.T, shard int) {
 	t.Helper()
-	s := decodedOptionsReady
-	if s == nil {
-		t.Fatal("shared setup must finish before a shard starts; no lazy builds are allowed")
-	}
+	s := decodedOptionsPrepare(t)
 	// No build, registry generation, oracle preparation, or lock acquisition is
 	// allowed below this boundary. Each leaf owns only its case deadline.
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
@@ -512,8 +445,8 @@ func decodedOptionsShard(t *testing.T, shard int) {
 	}
 }
 
-// Setup runs in a separately bounded child before the parent starts m.Run.
+// Optional preparation probe. No shard requires this test to run first.
 func TestDecodedOptionsAndMutant_Setup(t *testing.T) {
 	t.Parallel()
-	decodedOptionsSetupTest(t)
+	decodedOptionsPrepare(t)
 }
