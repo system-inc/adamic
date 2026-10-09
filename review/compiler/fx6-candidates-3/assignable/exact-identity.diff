@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -262,7 +262,7 @@
+ 			if !function.Closure || function.Receiver {
+ 				continue
+ 			}
+-			if l.checker.IsTypeAssignableTo(producer.proven, target) && l.untaggedCallableABI(producer.function, *contract) {
++			if checker.Checker_isTypeIdenticalTo(l.checker, producer.proven, target) && l.untaggedCallableABI(producer.function, *contract) {
+ 				contract.Functions = append(contract.Functions, producer.function)
+ 			}
+ 		}
