@@ -1,0 +1,66 @@
+let trace = '';
+class Meter {
+    #value = 1;
+    get value(): number { trace += 'g'; return this.#value; }
+    set value(value: number) { trace += 's'; this.#value = value; }
+}
+class DoubleMeter extends Meter {
+    get value(): number { trace += 'G'; return super.value * 2; }
+    set value(value: number) { trace += 'S'; super.value = value / 2; }
+}
+function adjust(meter: Meter): number { meter.value += 4; return meter.value; }
+const meter = new DoubleMeter();
+console.log(`${adjust(meter)}`);
+console.log(trace);
+let captured = 3;
+const literal = {
+    get amount(): number { trace += 'r'; return captured; },
+    set amount(value: number) { trace += 'w'; captured = value; },
+    label: 'literal'
+};
+literal.amount += 2;
+console.log(`${literal.amount}/${captured}/${trace}`);
+console.log(Object.keys(literal).join(','));
+const copied = { ...literal };
+console.log(`${copied.amount}/${copied.label}/${Object.keys(copied).join(',')}`);
+class Fallible {
+    get text(): string { throw new Error(`getter${1}`); }
+    set text(value: string) { throw new Error(`setter${value}`); }
+}
+const fallible = new Fallible();
+try { console.log(fallible.text); } catch (error) { if (error instanceof Error) console.log(error.message); }
+try { fallible.text = `input${2}`; } catch (error) { if (error instanceof Error) console.log(error.message); }
+let numericTrace = '';
+const numeric = {
+    get '10'(): number { numericTrace += 'b'; return 10; },
+    get '2'(): number { numericTrace += 'a'; return 2; },
+    label: 'numeric'
+};
+console.log(Object.keys(numeric).join(','));
+const numericCopy = { ...numeric };
+console.log(`${Object.keys(numericCopy).join(',')}/${numericTrace}`);
+const ownReceiver = {
+    stored: 1,
+    get amount(): number { return this.stored; },
+    set amount(value: number) { this.stored = value; }
+};
+ownReceiver.amount += 2;
+console.log(`${ownReceiver.stored}/${ownReceiver.amount}`);
+let mutationTrace = '';
+class Switching {
+    #stored: number;
+    constructor(value: number) { this.#stored = value; }
+    get value(): number {
+        const value = this.#stored;
+        selected = replacement;
+        return value;
+    }
+    set value(value: number) {
+        mutationTrace += `${this.#stored}/${value}`;
+        this.#stored = value;
+    }
+}
+let selected: { value: number } = new Switching(1);
+const replacement = new Switching(9);
+selected.value += 2;
+console.log(mutationTrace);

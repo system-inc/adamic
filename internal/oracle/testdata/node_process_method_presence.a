@@ -1,0 +1,24 @@
+import * as fs from "node:fs";
+import process from "node:process";
+import { performance } from "node:perf_hooks";
+console.log(`${!!process.nextTick}`);
+console.log(`${!process.nextTick}`);
+if (!!process.nextTick) { console.log("if"); }
+let count = 0;
+while (!!process.nextTick && count < 1) { count++; }
+do { count++; } while (!!process.nextTick && count < 2);
+for (; !!process.nextTick && count < 3; count++) { console.log("for"); }
+console.log(`${count}`);
+console.log(!!process.nextTick ? "present" : "absent");
+console.log(`${!!(false || process.nextTick)}`);
+console.log(`${!!(true && process.nextTick)}`);
+console.log(`${process.nextTick !== undefined}`);
+console.log(`${process.nextTick === null}`);
+console.log(`${!!process.cwd}`);
+console.log(`${!!process.memoryUsage}`);
+console.log(`${!!performance.now}`);
+console.log(`${!!performance.mark}`);
+console.log(`${!!performance.measure}`);
+console.log(`${!!performance.clearMarks}`);
+console.log(`${!!performance.clearMeasures}`);
+console.log(`${!!fs.realpathSync.native}`);

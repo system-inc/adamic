@@ -1,0 +1,16 @@
+// a-check: checked
+// compiler/checker.ts:15787-15793: intersect declaration identities by deleting inside Set.forEach.
+interface Node { readonly kind: number }
+const first: Node = { kind: 1 };
+const second: Node = { kind: 2 };
+const third: Node = { kind: 3 };
+const equalShape: Node = { kind: 1 };
+const commonDeclarations = new Set<Node>([first, second, third]);
+const declarations: readonly Node[] = [equalShape, second, third];
+commonDeclarations.forEach(declaration => {
+    if (!declarations.includes(declaration)) {
+        commonDeclarations.delete(declaration);
+    }
+});
+console.log(`${commonDeclarations.size}`);
+for (const declaration of commonDeclarations) console.log(`${declaration.kind}`);

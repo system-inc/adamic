@@ -1,0 +1,7 @@
+// Exact null and undefined keep distinct SameValue results without losing operand effects.
+console.log(`${Object.is(undefined, null)} ${Object.is(null, undefined)}`);
+console.log(`${Object.is(null, null)} ${Object.is(undefined, undefined)}`);
+let calls = 0;
+function tick(): number { calls += 1; return calls; }
+console.log(`${Object.is(null, tick())} ${Object.is(tick(), null)} ${calls}`);
+console.log(`${Object.is(null, '')} ${Object.is(null, false)} ${Object.is(null, {})}`);

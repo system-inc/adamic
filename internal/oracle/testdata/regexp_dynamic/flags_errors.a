@@ -1,0 +1,16 @@
+import { programArguments } from 'adamic';
+function make(pattern: string, flags: string): RegExp { return new RegExp(pattern, flags); }
+const pattern = programArguments()[0] ?? 'a/b\n';
+const flags = programArguments()[1] ?? 'ugim';
+const regex = make(pattern, flags);
+console.log(`${regex.source} ${regex.flags} ${regex.unicode} ${regex.ignoreCase}`);
+for (const bad of ['\0[', '?', '[', '(?<x>a)(?<x>b)', '\\u{100000000000000000000001}']) {
+ try { make(bad, 'u'); } catch (error) {
+  if (error instanceof Error) console.log(`${error.name}: ${error.message}`);
+ }
+}
+try { make('a', 'uu'); } catch (error) {
+ if (error instanceof Error) console.log(`${error.name}: ${error.message}`);
+}
+console.log(`${make('(?<℘>a)', 'u').test('a')}`);
+console.log(`${make('a\0b', 'u').test('a\0b')}`);

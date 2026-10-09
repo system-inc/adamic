@@ -1,0 +1,34 @@
+[
+  {
+    "file": "02_readFile_utf16le.a",
+    "node": "Agrees",
+    "native": "Checker",
+    "javascript": "Checker",
+    "native_diagnostic": "stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n",
+    "javascript_diagnostic": "stage3/fixtures/host/02_readFile_utf16le.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/02_readFile_utf16le.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+  },
+  {
+    "file": "03_readFile_utf16be.a",
+    "node": "Agrees",
+    "native": "Checker",
+    "javascript": "Checker",
+    "native_diagnostic": "stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n",
+    "javascript_diagnostic": "stage3/fixtures/host/03_readFile_utf16be.a:25:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\nstage3/fixtures/host/03_readFile_utf16be.a:26:13: error TS2322: Type 'number | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'.\n"
+  },
+  {
+    "file": "21_createHash.a",
+    "node": "Agrees",
+    "native": "NotYet",
+    "javascript": "NotYet",
+    "native_diagnostic": "adamic: /workspace/scratch/buffer-crypto-proof/stage3/fixtures/host/21_createHash.a:30:5: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet\n",
+    "javascript_diagnostic": "adamic: /workspace/scratch/buffer-crypto-proof/stage3/fixtures/host/21_createHash.a:30:5: stage 0 can't lower rmSync: fs option literals containing evaluated expressions; bind a plain options object first yet\n"
+  },
+  {
+    "file": "22_createHash_fallback.a",
+    "node": "Agrees",
+    "native": "NotYet",
+    "javascript": "NotYet",
+    "native_diagnostic": "adamic: /workspace/scratch/buffer-crypto-proof/stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet\n",
+    "javascript_diagnostic": "adamic: /workspace/scratch/buffer-crypto-proof/stage3/fixtures/host/22_createHash_fallback.a:17:7: stage 0 can't lower a value of type undefined yet\n"
+  }
+]

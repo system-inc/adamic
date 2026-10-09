@@ -1,0 +1,17 @@
+import { mkdtempSync, rmSync, mkdirSync } from 'node:fs';
+import { cwd, chdir } from 'node:process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+const before = cwd();
+const root = mkdtempSync(tmpdir() + '/adamic-nodehost-');
+try {
+    mkdirSync(root + '/child');
+    chdir(root);
+    const saved = cwd();
+    console.log(`cwd ${saved === root} ${cwd() === saved}`);
+    chdir('child');
+    console.log(`child ${cwd() === join(saved, 'child')}`);
+    console.log(`saved ${saved === root}`);
+    console.log(join('a\0b', '..', 'c/', '', './d', '../'));
+    try { chdir('missing'); } catch(error) { if(error instanceof Error) console.log(error.message.replace(root, '<root>').replace(root, '<root>')); }
+} finally { chdir(before); rmSync(root, {recursive:true, force:true}); }
