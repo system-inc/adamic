@@ -20,5 +20,19 @@
   "switch_c_validation_exit": 0,
   "switch_c_validation_command": "clang -std=c11 -Wall -Wextra -Werror -pedantic -O1 -g -fsanitize=address,undefined -DADAMIC_TSGO -Iinternal/native/runtime -Ibridge/tsgo/archive -fsyntax-only internal/native/runtime/tsgo.c",
   "restored_production": true,
-  "elapsed_budget_note": "Approximately 28 minutes including setup checks, cold timeout, 108 timing commands, switch repairs, bounded matrix and witness runs."
+  "elapsed_budget_note": "Approximately 30 minutes; 20-minute target exceeded. Measured operation times are reported individually.",
+  "restored_checks": [
+    {
+      "label": "restored-sample",
+      "wall_seconds": 7.644597048998548,
+      "binary_seconds": 5.462,
+      "exit": 0
+    },
+    {
+      "label": "restored-corpus",
+      "wall_seconds": 4.501464885001042,
+      "binary_seconds": 2.537,
+      "exit": 0
+    }
+  ]
 }

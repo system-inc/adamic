@@ -70,7 +70,7 @@
     "package": "bridge/tsgo",
     "file": "bridge/tsgo/registered_units_test.go",
     "seconds": 0.901,
-    "oracle": "actual AddressSanitizer/LeakSanitizer execution and expected diagnostic substring",
+    "oracle": "actual AddressSanitizer/LeakSanitizer execution and expected diagnostic substring; matches a generic marker, not the allocation site",
     "oracle_kind": [
       "external-run",
       "self"
@@ -240,7 +240,7 @@
     "package": "bridge/tsgo",
     "file": "bridge/tsgo/registered_units_test.go",
     "seconds": 0.981,
-    "oracle": "actual AddressSanitizer/LeakSanitizer execution and expected diagnostic substring",
+    "oracle": "actual AddressSanitizer/LeakSanitizer execution and expected diagnostic substring; matches a generic marker, not the allocation site",
     "oracle_kind": [
       "external-run",
       "self"
@@ -348,7 +348,7 @@
     "package": "bridge/tsgo",
     "file": "bridge/tsgo/registered_units_test.go",
     "seconds": 0.985,
-    "oracle": "actual AddressSanitizer/LeakSanitizer execution and expected diagnostic substring",
+    "oracle": "actual AddressSanitizer/LeakSanitizer execution and expected diagnostic substring; matches a generic marker, not the allocation site",
     "oracle_kind": [
       "external-run",
       "self"
@@ -454,7 +454,7 @@
     "package": "bridge/tsgo",
     "file": "bridge/tsgo/registered_units_test.go",
     "seconds": 1.015,
-    "oracle": "actual AddressSanitizer/LeakSanitizer execution and expected diagnostic substring",
+    "oracle": "actual AddressSanitizer/LeakSanitizer execution and expected diagnostic substring; matches a generic marker, not the allocation site",
     "oracle_kind": [
       "external-run",
       "self"
