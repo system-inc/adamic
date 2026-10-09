@@ -10,6 +10,10 @@ func init() { checkedViewReadAdapter = readUnionView }
 // Registration alone is not admission. Each handled read carries a complete
 // contract and runs the selector before returning any payload to its caller.
 func readUnionView(e *emitter, property ir.Property) (string, bool) {
+	return readUnionViewAt(e, property, "")
+}
+
+func readUnionViewAt(e *emitter, property ir.Property, object string) (string, bool) {
 	id := property.ViewContract
 	if id <= 0 || int(id) > len(e.program.ViewContracts) {
 		return "", false
@@ -23,7 +27,9 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
 	}
 	e.declarations = append(e.declarations, "#include \"view_unions_mixed.h\"")
 	e.declarations = append(e.declarations, "#include \"view_callables_contract.h\"")
-	object := e.value(property.Object)
+	if object == "" {
+		object = e.value(property.Object)
+	}
 	snapshot := e.temporary()
 	e.line("adamic_view_union_value %s = adamic_object_view_union_snapshot(%s, %s, &%s, %s, %s, false);", snapshot, object, cString(property.Name), e.cache(), cString(property.View), cString(contract.Name))
 	// An unknown physical slot cannot be interpreted or counted as a reference.

@@ -6,22 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// A read of a structural object checks its own heap kind. Register every descendant
-// field too: returning or aliasing that object must not lose the checks on its reads.
-// Interface descendants share the same data checks, including inherited fields.
-
-func viewDataType(target *checker.Type) bool {
-	if target.Flags()&checker.TypeFlagsUnion != 0 {
-		for _, member := range target.Types() {
-			if !viewDataType(member) {
-				return false
-			}
-		}
-		return true
-	}
-	return target.Flags()&checker.TypeFlagsUndefined != 0 || interfaceScalar(target) || target.Flags()&checker.TypeFlagsObject != 0
-}
-
+// The array adapter on compiler/views-v4 uses this interface classification.
 func viewInterfaceType(target *checker.Type) bool {
 	if target.ObjectFlags()&checker.ObjectFlagsInterface != 0 {
 		return true

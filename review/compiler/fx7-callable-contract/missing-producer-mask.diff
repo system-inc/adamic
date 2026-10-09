@@ -1,0 +1,11 @@
+--- a/internal/native/view_unions_callable_producers.go
++++ b/internal/native/view_unions_callable_producers.go
+@@ -91,7 +91,7 @@
+ 			}
+ 			for i, child := range contract.Parameters {
+ 				parameters[i] = e.program.ViewContracts[child-1].Of
+-				masks[i] = e.program.ViewContracts[child-1].RepresentationMask
++				masks[i] = 0
+ 			}
+ 		}
+ 		result := unionCallableProducerResult(function.Returns)

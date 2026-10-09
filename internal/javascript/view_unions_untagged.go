@@ -90,8 +90,8 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
   if(contract.Kind===6) return value===null;
   if(contract.Kind===7) return value===undefined;
   if(contract.Kind===4){for(const member of contract.Members || []){if(matches(value,member,depth+1)) return true;}return false;}
-  if(contract.Kind!==2 || value===null || typeof value!=='object' || (!contract.FixedTuple && Array.isArray(value)) || value instanceof Map) return false;
-  if(contract.FixedTuple && (!Array.isArray(value) || value.length !== contract.Tuple.length)) return false;
+  if(contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !adamicTupleObjects.has(value)) || value instanceof Map) return false;
+  if(contract.FixedTuple && (!Array.isArray(value) || !adamicTupleObjects.has(value) || value.length !== contract.Tuple.length)) return false;
   const fields=contract.Fields || [];
   const ownKind=fields.find(field=>field.Name==='kind' && !field.Optional && contracts[field.Contract-1]?.Kind===1 && [1,2,3].includes(contracts[field.Contract-1]?.Of));
   if(ownKind){const actual=slot(value,'kind');return actual!==undefined && matches(actual.value,ownKind.Contract,depth+1);}
@@ -128,18 +128,20 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, 
 			continue
 		}
 		parameters := make([]ir.Type, len(contract.Parameters))
+		masks := make([]uint16, len(parameters)+1)
 		known := true
 		for i, parameter := range contract.Parameters {
 			parameters[i] = e.program.ViewContracts[parameter-1].Of
+			masks[i] = e.program.ViewContracts[parameter-1].RepresentationMask
 			known = known && parameters[i] != 0
 		}
 		result := e.program.ViewContracts[contract.Result-1].Of
 		if !known || result == 0 {
 			continue
 		}
-		choices = append(choices, unionCallableSignature(parameters, result, root.Name))
+		choices = append(choices, unionCallableSignature(parameters, result, root.Name, masks))
 	}
-	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>recorded!==undefined && recorded.result===expected.result && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>value!==0 && value===expected.parameters[index])) || choices[0];})(" + recorded + ")"
+	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>adamicViewCallableSignaturesMatch(recorded,expected)) || choices[0];})(" + recorded + ")"
 }
 
 func (e *emitter) untaggedCallableRecorded(property ir.Property, recorded, expected string) string {

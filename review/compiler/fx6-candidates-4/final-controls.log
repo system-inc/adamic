@@ -1,0 +1,65 @@
+=== RUN   TestCheckedCastWithoutReadSummary
+=== PAUSE TestCheckedCastWithoutReadSummary
+=== CONT  TestCheckedCastWithoutReadSummary
+--- PASS: TestCheckedCastWithoutReadSummary (0.72s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.742s
+=== RUN   TestCallableContractP18
+=== PAUSE TestCallableContractP18
+=== RUN   TestCallableContractP20
+=== PAUSE TestCallableContractP20
+=== RUN   TestCallableContractWideProducer
+=== PAUSE TestCallableContractWideProducer
+=== RUN   TestCallableContractReceiverBinding
+=== PAUSE TestCallableContractReceiverBinding
+=== RUN   TestCallableContractReceiverEvaluatedOnce
+=== PAUSE TestCallableContractReceiverEvaluatedOnce
+=== RUN   TestCallableContractChecksBeforeArguments
+=== PAUSE TestCallableContractChecksBeforeArguments
+=== RUN   TestCallableContractSpreadRefused
+=== PAUSE TestCallableContractSpreadRefused
+=== RUN   TestCallableContractPlainSpread
+=== PAUSE TestCallableContractPlainSpread
+=== RUN   TestFX7CheckedCastFieldTypes
+=== PAUSE TestFX7CheckedCastFieldTypes
+=== RUN   TestTupleRecognitionP68
+=== PAUSE TestTupleRecognitionP68
+=== RUN   TestTupleRecognitionP69
+=== PAUSE TestTupleRecognitionP69
+=== RUN   TestTupleRecognitionOrdinaryArray
+=== PAUSE TestTupleRecognitionOrdinaryArray
+=== RUN   TestTupleRecognitionRejectsArrayObjectView
+=== PAUSE TestTupleRecognitionRejectsArrayObjectView
+=== CONT  TestCallableContractP18
+=== CONT  TestCallableContractPlainSpread
+=== CONT  TestTupleRecognitionP69
+=== CONT  TestTupleRecognitionP68
+=== CONT  TestCallableContractSpreadRefused
+--- PASS: TestCallableContractSpreadRefused (0.13s)
+=== CONT  TestTupleRecognitionRejectsArrayObjectView
+    tuple_recognition_test.go:74: backend 0 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+    tuple_recognition_test.go:74: backend 1 exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value matches no member of Named | readonly [string, number]; expected Named | readonly [string, number], found array\n"
+--- PASS: TestTupleRecognitionRejectsArrayObjectView (0.61s)
+=== CONT  TestTupleRecognitionOrdinaryArray
+--- PASS: TestCallableContractP18 (1.04s)
+=== CONT  TestCallableContractReceiverBinding
+--- PASS: TestTupleRecognitionP68 (1.12s)
+=== CONT  TestCallableContractChecksBeforeArguments
+--- PASS: TestTupleRecognitionP69 (1.15s)
+=== CONT  TestCallableContractReceiverEvaluatedOnce
+--- PASS: TestCallableContractPlainSpread (1.21s)
+=== CONT  TestCallableContractWideProducer
+=== NAME  TestCallableContractChecksBeforeArguments
+    callable_contract_retention_test.go:86: backend 0: exit 70 stdout "before\n" stderr "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"; Node stdout "before\nargument\n99\n"
+    callable_contract_retention_test.go:86: backend 1: exit 70 stdout "before\n" stderr "adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"; Node stdout "before\nargument\n99\n"
+--- PASS: TestCallableContractChecksBeforeArguments (0.48s)
+=== CONT  TestCallableContractP20
+--- PASS: TestTupleRecognitionOrdinaryArray (0.90s)
+=== CONT  TestFX7CheckedCastFieldTypes
+--- PASS: TestCallableContractReceiverBinding (0.97s)
+--- PASS: TestCallableContractWideProducer (0.96s)
+--- PASS: TestCallableContractReceiverEvaluatedOnce (1.03s)
+--- PASS: TestFX7CheckedCastFieldTypes (0.70s)
+--- PASS: TestCallableContractP20 (0.81s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.433s

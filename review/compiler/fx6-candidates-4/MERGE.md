@@ -1,0 +1,7 @@
+Merged candidate 3 d8ca3f0c with wrong-aborts 636b7397. The specific branch recipe takes precedence over the generic main-start and unlanded-member rules.
+
+Only conflict: internal/javascript/view_unions_read.go, readUnionViewAt narrowing map. Candidate 3 supplies Number, Boolean, MaybeNumber and MaybeBoolean guards and excludes arrays from Object. Wrong-aborts replaces the Object guard with adamicViewObject(v), preserving represented tuples while rejecting arbitrary arrays. Kept all candidate 3 scalar guards and wrong-aborts Object predicate; all other map entries and fixed-tuple/null/undefined guards survive. Native reads and counts auto-merged. CheckedCast.CheckedFields metadata admission remains in emit_objects.go. All fixtures from both parents remain.
+
+Clean overlaps inspected: internal/native/view_unions_read.go keeps candidate 3 maybe-scalar checks and wrong-aborts callable certification before exposure. internal/native/view_unions_untagged.go keeps producer registry admission plus wrong-aborts selected producer certification. The JavaScript callable and untagged paths keep the corresponding certificates and tuple-marker membership. Counts preserve all member rows. No side was chosen wholesale.
+
+Follow-up fixture activation: named item-146 p17, p26, p33, p34 and p35 pass source Node and all backend oracle legs with pending sidecars bypassed. Removed exactly those five stale sidecars and registered their counts; this adds five rows and changes no existing row. This is a fixture activation, not a production disagreement fix.

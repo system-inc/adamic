@@ -35,7 +35,9 @@ func TestUnsupportedViewMapMember(t *testing.T) {
 
 func TestUnsupportedViewCallableMember(t *testing.T) {
 	t.Parallel()
-	assertUnsupportedView(t, unsupportedViewSource(t, "p21"), "value", "Target", "main.a:11:14")
+	// Fixed scalar callable unions are supported now; object results still lack a checked ABI.
+	source := strings.Replace(unsupportedViewSource(t, "p21"), "type Target = ((value: number) => number) | ((value: string | number) => number);", "type Target = ((value: number) => { result: number }) | ((value: string | number) => { result: number });", 1)
+	assertUnsupportedView(t, source, "value", "Target", "main.a:11:14")
 }
 
 func TestUnsupportedViewUnreadMember(t *testing.T) {
@@ -49,5 +51,13 @@ func TestSupportedViewMembersAgree(t *testing.T) {
 	source := unsupportedViewSource(t, "control")
 	lowersAndAgreesWithNode(t, source)
 	// Native slot representation is the failure that the original probes expose.
+	lowersAndAgreesWithNodeNative(t, source)
+}
+
+func TestSupportedCallableViewMember(t *testing.T) {
+	t.Parallel()
+	source := unsupportedViewSource(t, "p21")
+	lowersAndAgreesWithNode(t, source)
+	// The native call must preserve the supported scalar callable union ABI.
 	lowersAndAgreesWithNodeNative(t, source)
 }

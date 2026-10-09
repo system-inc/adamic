@@ -26,12 +26,6 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if l.callableViewContract(target) {
 		family = "callable"
 	}
-	if l.checker.IsArrayType(target) {
-		family = "array"
-	}
-	if of, known := l.representation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
-		family = "union"
-	}
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
 		if err == nil {
@@ -226,10 +220,6 @@ func viewAggregate(value ir.Expression) bool {
 		return true
 	}
 	return false
-}
-
-func (l *lowering) lazyReadRefusal(node *ast.Node, field, family string) error {
-	return &Refused{Where: l.program.Where(node), What: "checked view read of field " + field + " with unsupported " + family + " contract", Fix: "prove or implement the " + family + " contract before reading this field"}
 }
 
 // Every member must have a complete checked lowering, even if it is never read.

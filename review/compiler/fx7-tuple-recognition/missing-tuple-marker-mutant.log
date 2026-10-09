@@ -1,0 +1,14 @@
+=== RUN   TestTupleRecognitionP68
+=== PAUSE TestTupleRecognitionP68
+=== RUN   TestTupleRecognitionP69
+=== PAUSE TestTupleRecognitionP69
+=== CONT  TestTupleRecognitionP68
+=== CONT  TestTupleRecognitionP69
+    tuple_recognition_test.go:32: JavaScript backend stdout = "", source Node = "first:1\n"
+--- FAIL: TestTupleRecognitionP69 (0.59s)
+=== NAME  TestTupleRecognitionP68
+    tuple_recognition_test.go:24: JavaScript backend stdout = "", source Node = "first:1\n"
+--- FAIL: TestTupleRecognitionP68 (0.77s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.995s
+FAIL

@@ -101,7 +101,7 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 	e.line("(void)adamic_view_untagged_plain_select((const adamic_object *)%s, %s, %d, %d, %s, %s);", object, name, len(rows), property.ViewContract, cString(property.View), cString(property.ViewType))
 }
 
-// Preserve the existing shared-discriminant dispatch.
+// Select field-based membership when no common literal discriminant exists.
 func untaggedObjectUnion(contracts []ir.ViewContract, contract ir.ViewContract) bool {
 	return len(contract.Members) != 0 && !ir.ViewUnionHasDiscriminant(contracts, contract)
 }
@@ -123,25 +123,25 @@ func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, 
 			continue
 		}
 		parameters := make([]ir.Type, len(contract.Parameters))
+		masks := make([]uint16, len(parameters)+1)
 		result := e.program.ViewContracts[contract.Result-1].Of
 		if result == 0 {
 			continue
 		}
-		tests := []string{recorded + " != NULL", fmt.Sprintf("%s->arity == %d", recorded, len(parameters)), fmt.Sprintf("%s->result == %d", recorded, result)}
 		known := true
 		for i, parameter := range contract.Parameters {
 			parameters[i] = e.program.ViewContracts[parameter-1].Of
+			masks[i] = e.program.ViewContracts[parameter-1].RepresentationMask
 			known = known && parameters[i] != 0
-			tests = append(tests, fmt.Sprintf("%s->parameters != NULL && %s->parameters[%d] == %d", recorded, recorded, i, parameters[i]))
 		}
 		if !known {
 			continue
 		}
-		expected := e.unionCallableSignature(parameters, result, root.Name)
+		expected := e.unionCallableSignature(parameters, result, root.Name, masks)
 		if first == "NULL" {
 			first = expected
 		}
-		choices = append(choices, "("+strings.Join(tests, " && ")+") ? "+expected+" : ")
+		choices = append(choices, "adamic_view_callable_signatures_match("+recorded+", "+expected+") ? "+expected+" : ")
 	}
 	return "(" + strings.Join(choices, "") + first + ")"
 }

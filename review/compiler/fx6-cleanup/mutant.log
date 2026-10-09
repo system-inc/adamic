@@ -1,0 +1,20 @@
+=== RUN   TestViewDiagnosticP17
+=== PAUSE TestViewDiagnosticP17
+=== RUN   TestViewDiagnosticP48
+=== PAUSE TestViewDiagnosticP48
+=== RUN   TestViewDiagnosticP64
+=== PAUSE TestViewDiagnosticP64
+=== CONT  TestViewDiagnosticP17
+=== CONT  TestViewDiagnosticP64
+=== CONT  TestViewDiagnosticP48
+    view_diagnostics_test.go:32: want collection refusal with source location 6:9, got : Adamic 0.1 refuses checked view read of field values with unsupported collection contract; prove or implement the collection contract before reading this field
+--- FAIL: TestViewDiagnosticP48 (0.05s)
+=== NAME  TestViewDiagnosticP17
+    view_diagnostics_test.go:27: want collection refusal with source location 6:16, got : Adamic 0.1 refuses checked view read of field values with unsupported collection contract; prove or implement the collection contract before reading this field
+--- FAIL: TestViewDiagnosticP17 (0.05s)
+=== NAME  TestViewDiagnosticP64
+    view_diagnostics_test.go:37: want collection refusal with source location 7:16, got : Adamic 0.1 refuses checked view read of field values with unsupported collection contract; prove or implement the collection contract before reading this field
+--- FAIL: TestViewDiagnosticP64 (0.06s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.066s
+FAIL

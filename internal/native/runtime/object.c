@@ -153,6 +153,8 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 
 adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *declared, bool absent) {
     adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+    // Current callers pass false; a future optional reader can request undefined
+    // for a missing own slot. Required reads use the readiness failure below.
     if (object != NULL && slot == NULL && absent) {
         return (adamic_view_union_value){adamic_view_union_undefined, {0}};
     }
