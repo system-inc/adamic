@@ -458,11 +458,6 @@ dropRequest() {
     green | red) grep -vx "${sha}" "${requests}" > "${requests}.tmp"; mv "${requests}.tmp" "${requests}" ;;
   esac
 }
-# A whole gate started by hand (cloud/full-gate-main.sh <sha>, on Home unless told otherwise) owns Home: Home's loop
-# neither runs nor lends while one runs.
-oneOffRunning() {
-  [ "${box}" = home ] && pgrep -f "full-gate-main\.sh [0-9a-f]{40}" > /dev/null 2>&1
-}
 
 [ "${ADAMIC_FULL_GATE_LIBRARY:-}" = 1 ] && return 0
 if [ -n "${once}" ]; then
@@ -470,7 +465,9 @@ if [ -n "${once}" ]; then
   exit
 fi
 while true; do
-  if oneOffRunning || ! boxFree; then
+  # A whole gate started by hand holds its own box's claim like any run, so it holds only that box (Oct 9 00:52Z: the
+  # older check held Home idle 22 minutes for a hand-started run on the Threadripper).
+  if ! boxFree; then
     sleep 60
     continue
   fi
