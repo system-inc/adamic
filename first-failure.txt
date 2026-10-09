@@ -1,0 +1,6 @@
+FIRST FAILURE (tests, at 103.9 s):
+github.com/system-inc/adamic/stage3/fixtures TestFixtures/real/generic-optional-return/main.a/stage0
+=== RUN   TestFixtures/real/generic-optional-return/main.a/stage0
+    fixtures_test.go:349: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/real/generic-optional-return/main.a:7:68: stage 0 can't lower an array of never yet}
+--- FAIL: TestFixtures/real/generic-optional-return/main.a/stage0 (0.00s)
+
