@@ -1,0 +1,13 @@
+=== RUN   TestProgramCanonicalConstructorBoundary
+=== PAUSE TestProgramCanonicalConstructorBoundary
+=== CONT  TestProgramCanonicalConstructorBoundary
+=== RUN   TestProgramCanonicalConstructorBoundary/canonical.a
+    program_canonical_constructor_test.go:29: selected constructor closure must remain refused at the canonical boundary, got <nil>
+=== RUN   TestProgramCanonicalConstructorBoundary/canonical_counted.a
+    program_canonical_constructor_test.go:29: selected constructor closure must remain refused at the canonical boundary, got <nil>
+--- FAIL: TestProgramCanonicalConstructorBoundary (0.10s)
+    --- FAIL: TestProgramCanonicalConstructorBoundary/canonical.a (0.06s)
+    --- FAIL: TestProgramCanonicalConstructorBoundary/canonical_counted.a (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.114s
+FAIL
