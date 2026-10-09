@@ -1,0 +1,31 @@
+{"Time":"2026-10-09T10:58:18.917775593Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:58:18.924051753Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair"}
+{"Time":"2026-10-09T10:58:18.924103039Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Output":"=== RUN   TestClassWrongOutputKeysRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.924153574Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Output":"=== PAUSE TestClassWrongOutputKeysRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.924156248Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair"}
+{"Time":"2026-10-09T10:58:18.924160033Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair"}
+{"Time":"2026-10-09T10:58:18.924161836Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Output":"=== RUN   TestClassWrongOutputPrivateRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.92416429Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Output":"=== PAUSE TestClassWrongOutputPrivateRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.924165942Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair"}
+{"Time":"2026-10-09T10:58:18.924167975Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors"}
+{"Time":"2026-10-09T10:58:18.924169457Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Output":"=== RUN   TestDefiniteAssignmentSoundNeighbors\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.924172482Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Output":"=== PAUSE TestDefiniteAssignmentSoundNeighbors\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.924174134Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors"}
+{"Time":"2026-10-09T10:58:18.924177379Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair"}
+{"Time":"2026-10-09T10:58:18.924179001Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Output":"=== CONT  TestClassWrongOutputKeysRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.924297447Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors"}
+{"Time":"2026-10-09T10:58:18.924299309Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Output":"=== CONT  TestDefiniteAssignmentSoundNeighbors\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.924418736Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair"}
+{"Time":"2026-10-09T10:58:18.924422191Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Output":"=== CONT  TestClassWrongOutputPrivateRepair\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.977924132Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Output":"    class_wrong_output_test.go:58: lowering returned no executable output\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:18.979104137Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Output":"--- FAIL: TestClassWrongOutputPrivateRepair (0.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.980195251Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputPrivateRepair","Elapsed":0.05}
+{"Time":"2026-10-09T10:58:18.980222942Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Output":"    definite_assignment_test.go:59: lowering returned no executable output\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:18.980229392Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Output":"--- FAIL: TestDefiniteAssignmentSoundNeighbors (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.980487334Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestDefiniteAssignmentSoundNeighbors","Elapsed":0.06}
+{"Time":"2026-10-09T10:58:18.980490789Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Output":"    class_wrong_output_test.go:48: lowering returned no executable output\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:18.98052517Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Output":"--- FAIL: TestClassWrongOutputKeysRepair (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.980607652Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClassWrongOutputKeysRepair","Elapsed":0.06}
+{"Time":"2026-10-09T10:58:18.980610456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.982283691Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.064s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:18.982297031Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.065}
