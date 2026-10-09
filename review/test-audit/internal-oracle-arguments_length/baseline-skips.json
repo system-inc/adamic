@@ -1,62 +1,62 @@
 [
   {
     "test": "TestWASIShardPlantedFixture",
-    "output": "--- SKIP: TestWASIShardPlantedFixture (0.00s)"
+    "reason": "wasi_shards_test.go:135: set ADAMIC_ORACLE_WASI=1"
   },
   {
     "test": "TestWASIAgreesWithNode",
-    "output": "--- SKIP: TestWASIAgreesWithNode (0.00s)"
+    "reason": "wasi_test.go:20: set ADAMIC_ORACLE_WASI=1 to run the WASI oracle"
   },
   {
     "test": "TestWASIOracleCatchesMutants",
-    "output": "--- SKIP: TestWASIOracleCatchesMutants (0.00s)"
+    "reason": "wasi_test.go:92: set ADAMIC_ORACLE_WASI=1"
   },
   {
     "test": "TestWASIRunnerCatchesMutants",
-    "output": "--- SKIP: TestWASIRunnerCatchesMutants (0.00s)"
+    "reason": "wasi_test.go:115: set ADAMIC_ORACLE_WASI=1"
   },
   {
     "test": "TestWASIEmission",
-    "output": "--- SKIP: TestWASIEmission (0.00s)"
+    "reason": "wasi_test.go:146: set ADAMIC_ORACLE_WASI=1"
   },
   {
     "test": "TestStage3FixtureHook",
-    "output": "--- SKIP: TestStage3FixtureHook (0.00s)"
+    "reason": "stage3_hook_test.go:15: called only by the Stage 3 fixture runner"
   },
   {
     "test": "TestCheckedViewUntaggedArrayPending/good",
-    "output": "--- SKIP: TestCheckedViewUntaggedArrayPending/good (0.07s)"
+    "reason": "checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)"
   },
   {
     "test": "TestEntriesAcceptance",
-    "output": "--- SKIP: TestEntriesAcceptance (0.00s)"
+    "reason": "entries_acceptance_test.go:37: awaits codex/step12-entries-fixtures: typescript's Object.entries acceptance programs (8d864f9c), stage3/fixtures/entries"
   },
   {
     "test": "TestCheckedViewUntaggedArrayPending/empty",
-    "output": "--- SKIP: TestCheckedViewUntaggedArrayPending/empty (0.03s)"
+    "reason": "checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)"
   },
   {
     "test": "TestCheckedViewUntaggedArrayPending/nested",
-    "output": "--- SKIP: TestCheckedViewUntaggedArrayPending/nested (0.03s)"
+    "reason": "checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)"
   },
   {
     "test": "TestCheckedViewUntaggedArrayPending/mixed",
-    "output": "--- SKIP: TestCheckedViewUntaggedArrayPending/mixed (0.05s)"
+    "reason": "checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)"
   },
   {
     "test": "TestCheckedViewUntaggedArrayPending/wrong",
-    "output": "--- SKIP: TestCheckedViewUntaggedArrayPending/wrong (0.04s)"
+    "reason": "checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)"
   },
   {
     "test": "TestCheckedViewObjectPrimitiveSource/comment-boolean",
-    "output": "--- SKIP: TestCheckedViewObjectPrimitiveSource/comment-boolean (0.00s)"
+    "reason": "checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)"
   },
   {
     "test": "TestCheckedViewObjectPrimitiveSource/comment-good",
-    "output": "--- SKIP: TestCheckedViewObjectPrimitiveSource/comment-good (0.00s)"
+    "reason": "checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)"
   },
   {
     "test": "TestCheckedViewObjectPrimitiveSource/comment-flags-wrong",
-    "output": "--- SKIP: TestCheckedViewObjectPrimitiveSource/comment-flags-wrong (0.00s)"
+    "reason": "checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)"
   }
 ]
