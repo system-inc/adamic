@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T154022-5439790f",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "2aff1aa50c33c6b702c0966763a859b7cfa76aeb",
+  "branch": "devtools/split-oracle-TestNativeAgreesWithNode",
+  "base": "92d196011e78208b45b3768dcf2c8c88e7ec132d",
+  "candidate": "2aff1aa50c33c6b702c0966763a859b7cfa76aeb",
+  "gated": "91d2ed8a72e7e3c3ca9e43bfda3fd9d242049bc9",
+  "unplanned_packages_not_run": 55
+}
