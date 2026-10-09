@@ -1,0 +1,26 @@
+{
+ "github.com/system-inc/adamic/stage1/cohere/gitignore": [
+  "TestPathAnswersAsGosPathPackage"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/json": [
+  "TestAdditionalJSONBoundaries",
+  "TestCachedWidthMutantIsCaught",
+  "TestCorpusPinBeforeSampling",
+  "TestDocumentedStageZeroGaps",
+  "TestExternalComparisonCatchesThreePrinterMutants",
+  "TestPortMatchesGoCohere",
+  "TestRepositoryCorpusMutants",
+  "TestRepositoryLandingWithoutPinEdit",
+  "TestSingleFileStdoutDriver",
+  "TestThreePortMutantsAreCaught",
+  "TestUpstreamRepositoryCorpusParity"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/markdowninline": [
+  "TestDelimiterExpressionMatchesNode",
+  "TestMarkdownInline"
+ ],
+ "github.com/system-inc/adamic/stage3/fixtures": [
+  "TestFixtures",
+  "TestTransformedNodeRunnerGuard"
+ ]
+}
