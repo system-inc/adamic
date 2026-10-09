@@ -14,6 +14,7 @@ import (
 // Import-cycles 779ff9d closed the type-only import cycle gap. Keep Node and
 // sanitized native output as the positive witness of that ruling.
 func TestTypeOnlyImportCycleCompiles(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs("testdata/type_import_cycle/entry.a")
 	if err != nil {
 		t.Fatal(err)
