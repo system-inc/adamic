@@ -162,9 +162,13 @@ func summary(data []byte) string {
 	return lines[len(lines)-1]
 }
 
-// Not parallel: native builds, sanitizer subprocesses and timings share a machine.
 // The optional external corpus is never fetched by a test.
+// Products are prepared once. ADAMIC_TEST_SHARD=i/n selects zero-based parallel
+// check shards; unset runs every complete corpus and mutant check.
+const testTypeAwareAgreementAndMutantsShards = 21
+
 func TestTypeAwareAgreementAndMutants(t *testing.T) {
+	started := time.Now()
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -179,9 +183,9 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	h := &harness{t: t, repository: repository, directory: directory}
+	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
 	stage0 := filepath.Join(directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
+	stage0 = h.sixBuildProduct("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
 	normal := h.archive("checker", "", false)
 	sanitized := h.archive("checker-asan", "", true)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/main.ts")
@@ -196,8 +200,25 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	overlay := h.write("oracle-overlay.json", string(data))
 	cmd := exec.Command("go", "build", "-overlay", overlay, "-o", oracle, virtual)
 	cmd.Dir = filepath.Join(repository, "cohere")
-	h.must("oracle-build", cmd)
+	oracle = h.sixBuildProduct("oracle-build", cmd)
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
+	var generatedPathsForUnion []string
+	var shards []sixShard
+	var expected []string
+	rounds := 1
+	if os.Getenv("ADAMIC_TYPEAWARE_BENCH") == "1" {
+		rounds = 3
+	}
+	finish := func(compiler []string, benchmark bool) {
+		unsplit := typeAwareUnsplitIDs(generatedPathsForUnion, compiler, rounds, benchmark)
+		if err := sixUnion(unsplit, []sixShard{{name: "original-work", ids: expected}}); err != nil {
+			t.Fatal(err)
+		}
+		sixRunShards(t, h, unsplit, shards, os.Getenv("ADAMIC_TEST_SHARD"), testTypeAwareAgreementAndMutantsShards)
+	}
+	add := func(name string, ids []string, run func(*harness)) {
+		shards = append(shards, sixShard{name: name, ids: ids, run: run})
+	}
 
 	// Extract the production rule's table sources without duplicating its verdicts.
 	sourceFile := filepath.Join(repository, "cohere/internal/lint/rules/typescript/no_unsafe_unary_minus_test.go")
@@ -241,28 +262,46 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	helper := h.write("helper.ts", "export const text: string = 'x';\n")
 	paths = append(paths, h.write("import.ts", "import { text } from './helper.js'; -text;\n"), helper)
 	manifest := h.write("generated.manifest", strings.Join(paths, "\n")+"\n")
-	truth := h.compare("generated", oracle, binary, config, manifest)
-	if !bytes.Contains(truth.stdout, []byte("is false instead.")) || !bytes.Contains(truth.stdout, []byte("is string instead.")) {
-		t.Fatal("nonempty union/string controls missing")
-	}
-	var generatedFindings, generatedQueries int
-	fmt.Sscanf(summary(truth.stdout), "findings %d queries %d", &generatedFindings, &generatedQueries)
-	if generatedFindings < 20 || generatedQueries < 35 {
-		t.Fatalf("generated coverage too small: %s", summary(truth.stdout))
-	}
-	t.Logf("generated coverage: %d files", len(paths))
+	truth := h.must("generated-go", exec.Command(oracle, config, manifest))
+	generatedPaths := append([]string(nil), paths...)
+	generatedPathsForUnion = generatedPaths
+	expected = append(expected, sixIDs("agreement/generated", generatedPaths)...)
+	add("agreement/generated", sixIDs("agreement/generated", generatedPaths), func(h *harness) {
+		t := h.t
+		truth := h.compare("generated", oracle, binary, config, manifest)
+		if err := sixFindingUnion(truth.stdout, generatedPaths); err != nil {
+			t.Fatal(err)
+		}
+		if !bytes.Contains(truth.stdout, []byte("is false instead.")) || !bytes.Contains(truth.stdout, []byte("is string instead.")) {
+			t.Fatal("nonempty union/string controls missing")
+		}
+		var generatedFindings, generatedQueries int
+		fmt.Sscanf(summary(truth.stdout), "findings %d queries %d", &generatedFindings, &generatedQueries)
+		if generatedFindings < 20 || generatedQueries < 35 {
+			t.Fatalf("generated coverage too small: %s", summary(truth.stdout))
+		}
+		t.Logf("generated coverage: %d files", len(generatedPaths))
 
+	})
 	// No bridge calls can reach an ordinary backend without explicit linkage.
-	refusal := h.run("unlinked", exec.Command(stage0, "build", entry, "-o", filepath.Join(directory, "unlinked")))
-	if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
-		t.Fatal("unlinked type-parts call was accepted")
-	}
+	expected = append(expected, "refusal/unlinked")
+	add("refusal/unlinked", []string{"refusal/unlinked"}, func(h *harness) {
+		t := h.t
+		refusal := h.run("unlinked", exec.Command(stage0, "build", entry, "-o", filepath.Join(directory, "unlinked")))
+		if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
+			t.Fatal("unlinked type-parts call was accepted")
+		}
+	})
 
 	partsOnly := h.write("parts-unlinked.ts", "import { tsgoTypeParts } from 'adamic'; console.log(tsgoTypeParts(1, 'source.ts', 0, 1, 'Identifier'));\n")
-	refusal = h.run("parts-unlinked", exec.Command(stage0, "build", partsOnly, "-o", filepath.Join(directory, "parts-unlinked")))
-	if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
-		t.Fatal("unlinked type-parts call was accepted")
-	}
+	expected = append(expected, "refusal/parts-unlinked")
+	add("refusal/parts-unlinked", []string{"refusal/parts-unlinked"}, func(h *harness) {
+		t := h.t
+		refusal := h.run("parts-unlinked", exec.Command(stage0, "build", partsOnly, "-o", filepath.Join(directory, "parts-unlinked")))
+		if refusal.err == nil || !bytes.Contains(refusal.stderr, []byte("unlinked typescript-go library call")) {
+			t.Fatal("unlinked type-parts call was accepted")
+		}
+	})
 
 	// Asking the unary expression's type rather than its operand still compiles
 	// and finishes; the independent production-rule findings must disagree.
@@ -289,28 +328,40 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	mainSource = strings.Replace(mainSource, "./unary_minus.ts", "./wrong-node.ts", 1)
 	mutantEntry := h.write("wrong-main.ts", mainSource)
 	wrong := h.build(stage0, "wrong-node", mutantEntry, normal, true)
-	observed := h.must("wrong-node-run", exec.Command(wrong, config, manifest))
-	if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
-		t.Fatal("wrong-node mutant was not caught by findings alone")
-	}
-	t.Logf("wrong-node type mutant: cohere byte oracle catches byte %d; %s", firstDifference(observed.stdout, truth.stdout), summary(observed.stdout))
+	expected = append(expected, sixIDs("mutant/wrong-node", generatedPaths)...)
+	add("mutant/wrong-node", sixIDs("mutant/wrong-node", generatedPaths), func(h *harness) {
+		t := h.t
+		observed := h.must("wrong-node-run", exec.Command(wrong, config, manifest))
+		if len(observed.stderr) != 0 || bytes.Equal(observed.stdout, truth.stdout) {
+			t.Fatal("wrong-node mutant was not caught by findings alone")
+		}
+		t.Logf("wrong-node type mutant: cohere byte oracle catches byte %d; %s", firstDifference(observed.stdout, truth.stdout), summary(observed.stdout))
+	})
 
 	probe := h.write("cost-probe.ts", "-1;\n")
 	releasedEntry := filepath.Join(repository, "stage1/cohere/typeaware/testdata/released.ts")
 	released := h.build(stage0, "released", releasedEntry, normal, false)
-	stale := h.run("released-run", exec.Command(released, config, probe))
-	if code, ok := stale.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || string(stale.stderr) != "adamic: panic: invalid or released checker handle\n" {
-		t.Fatalf("released query escaped: %v %s", stale.err, stale.stderr)
-	}
-	t.Log("released program queried: native panic 70 with invalid or released checker handle")
+	expected = append(expected, []string{"refusal/released"}...)
+	add("refusal/released", []string{"refusal/released"}, func(h *harness) {
+		t := h.t
+		stale := h.run("released-run", exec.Command(released, config, probe))
+		if code, ok := stale.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || string(stale.stderr) != "adamic: panic: invalid or released checker handle\n" {
+			t.Fatalf("released query escaped: %v %s", stale.err, stale.stderr)
+		}
+		t.Log("released program queried: native panic 70 with invalid or released checker handle")
+	})
 	staleOverlay := h.overlay("stale", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant retains released roots.")
 	staleArchive := h.archive("stale-checker", staleOverlay, false)
 	staleBinary := h.build(stage0, "stale-native", releasedEntry, staleArchive, false)
-	stale = h.must("stale-mutant-run", exec.Command(staleBinary, config, probe))
-	if len(stale.stderr) != 0 {
-		t.Fatal("stale mutant did not finish cleanly")
-	}
-	t.Log("released registry deletion mutant: stale-query expectation catches exit 0 instead of 70")
+	expected = append(expected, []string{"mutant/stale"}...)
+	add("mutant/stale", []string{"mutant/stale"}, func(h *harness) {
+		t := h.t
+		stale := h.must("stale-mutant-run", exec.Command(staleBinary, config, probe))
+		if len(stale.stderr) != 0 {
+			t.Fatal("stale mutant did not finish cleanly")
+		}
+		t.Log("released registry deletion mutant: stale-query expectation catches exit 0 instead of 70")
+	})
 
 	// Bad frame mutants must fail explicitly before any finding can be invented.
 	for _, change := range []struct{ name, value, message string }{
@@ -322,11 +373,16 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 		overlay := h.overlay(change.name, "bridge/tsgo/archive/main.go", "*parts = buffer(answer)", "_ = answer; *parts = buffer("+quoted+")")
 		archive := h.archive(change.name+"-checker", overlay, false)
 		malformed := h.build(stage0, change.name+"-native", entry, archive, false)
-		got := h.run(change.name+"-run", exec.Command(malformed, config, manifest))
-		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
-			t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
-		}
-		t.Logf("%s mutant: panic 70, %s", change.name, change.message)
+		expected = append(expected, sixIDs("mutant/"+change.name, generatedPaths)...)
+		add("mutant/"+change.name, sixIDs("mutant/"+change.name, generatedPaths), func(h *harness) {
+			t := h.t
+			got := h.run(change.name+"-run", exec.Command(malformed, config, manifest))
+			if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte(change.message)) {
+				t.Fatalf("%s escaped: %v %s", change.name, got.err, got.stderr)
+			}
+			t.Logf("%s mutant: panic 70, %s", change.name, change.message)
+		})
+
 	}
 
 	// A kind/span mismatch cannot silently select a neighboring or enclosing node.
@@ -338,71 +394,119 @@ func TestTypeAwareAgreementAndMutants(t *testing.T) {
 	}
 	badSource := h.write("bad-kind.ts", strings.Replace(string(costText), "'PrefixUnaryExpression'", "'Identifier'", 1))
 	bad := h.build(stage0, "bad-kind", badSource, normal, false)
-	got := h.run("bad-kind-run", exec.Command(bad, config, probe, "2"))
-	if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("no exact Identifier node")) {
-		t.Fatalf("exact lookup mismatch escaped: %v %s", got.err, got.stderr)
-	}
+	expected = append(expected, []string{"refusal/bad-kind"}...)
+	add("refusal/bad-kind", []string{"refusal/bad-kind"}, func(h *harness) {
+		t := h.t
+		got := h.run("bad-kind-run", exec.Command(bad, config, probe, "2"))
+		if code, ok := got.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Contains(got.stderr, []byte("no exact Identifier node")) {
+			t.Fatalf("exact lookup mismatch escaped: %v %s", got.err, got.stderr)
+		}
+	})
 	ignoredKind := h.overlay("ignored-kind", "bridge/tsgo/checker/program.go", `strings.TrimPrefix(candidate.Kind.String(), "Kind") == kind`, `kind != ""`)
 	ignoredArchive := h.archive("ignored-kind-checker", ignoredKind, false)
 	ignoredBinary := h.build(stage0, "ignored-kind-native", badSource, ignoredArchive, false)
-	ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, config, probe, "2"))
-	if len(ignored.stderr) != 0 {
-		t.Fatal("kind-guard mutant did not finish cleanly")
-	}
-	t.Log("exact kind guard mutant: mismatch-refusal expectation catches exit 0")
+	expected = append(expected, []string{"mutant/ignored-kind"}...)
+	add("mutant/ignored-kind", []string{"mutant/ignored-kind"}, func(h *harness) {
+		t := h.t
+		ignored := h.must("ignored-kind-run", exec.Command(ignoredBinary, config, probe, "2"))
+		if len(ignored.stderr) != 0 {
+			t.Fatal("kind-guard mutant did not finish cleanly")
+		}
+		t.Log("exact kind guard mutant: mismatch-refusal expectation catches exit 0")
+	})
 
 	probeManifest := h.write("probe.manifest", probe+"\n")
 	for round := 1; round <= 3; round++ {
-		if round > 1 && os.Getenv("ADAMIC_TYPEAWARE_BENCH") != "1" {
-			break
+
+		id := fmt.Sprintf("cost/query-%d", round)
+		ids := []string{id}
+		if round > rounds {
+			ids = nil
 		}
-		cmd := exec.Command(cost, config, probe, "10000")
-		cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
-		nativeCost := h.must(fmt.Sprintf("query-cost-native-%d", round), cmd)
-		direct := h.must(fmt.Sprintf("query-cost-go-%d", round), exec.Command(oracle, config, probeManifest, "--query-cost", "10000"))
-		if !bytes.Equal(nativeCost.stdout, direct.stdout) {
-			t.Fatal("query-cost result differs from direct Go")
-		}
-		t.Logf("query cost round %d native: %s; direct Go: %s; same output=%s", round, strings.TrimSpace(string(nativeCost.stderr)), strings.TrimSpace(string(direct.stderr)), strings.TrimSpace(string(direct.stdout)))
+		expected = append(expected, ids...)
+		add(id, ids, func(h *harness) {
+			if round > rounds {
+				h.t.Skip("set ADAMIC_TYPEAWARE_BENCH=1")
+			}
+			t := h.t
+			cmd := exec.Command(cost, config, probe, "10000")
+			cmd.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
+			nativeCost := h.must(fmt.Sprintf("query-cost-native-%d", round), cmd)
+			direct := h.must(fmt.Sprintf("query-cost-go-%d", round), exec.Command(oracle, config, probeManifest, "--query-cost", "10000"))
+			if !bytes.Equal(nativeCost.stdout, direct.stdout) {
+				t.Fatal("query-cost result differs from direct Go")
+			}
+			t.Logf("query cost round %d native: %s; direct Go: %s; same output=%s", round, strings.TrimSpace(string(nativeCost.stderr)), strings.TrimSpace(string(direct.stderr)), strings.TrimSpace(string(direct.stdout)))
+		})
+
 	}
 
 	corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if corpus == "" {
 		t.Log("compiler corpus skipped: set ADAMIC_TYPESCRIPT_SOURCE (#xq2ecw6)")
-		return
 	}
-	paths = corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
+	paths = nil
+	if corpus != "" {
+		paths = corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
+	}
 	sort.Strings(paths)
 	compilerManifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
 	compilerConfig := filepath.Join(corpus, "src/compiler/tsconfig.json")
 	t.Logf("compiler corpus: %d files, original compiler tsconfig", len(paths))
-	h.compare("compiler", oracle, binary, compilerConfig, compilerManifest)
-	if os.Getenv("ADAMIC_TYPEAWARE_BENCH") == "1" {
+	expected = append(expected, sixIDs("agreement/compiler", paths)...)
+	add("agreement/compiler", sixIDs("agreement/compiler", paths), func(h *harness) {
+		if len(paths) == 0 {
+			h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE")
+		}
+		truth := h.compare("compiler", oracle, binary, compilerConfig, compilerManifest)
+		if err := sixFindingUnion(truth.stdout, paths); err != nil {
+			h.t.Fatal(err)
+		}
+	})
+	{
 		for _, corpus := range []struct{ name, config, manifest string }{{"compiler", compilerConfig, compilerManifest}, {"generated", config, manifest}} {
 			for round := 1; round <= 3; round++ {
-				// Alternate order to avoid always assigning one implementation the warm cache.
-				binaries := []string{oracle, optimized}
-				if round%2 == 0 {
-					binaries[0], binaries[1] = binaries[1], binaries[0]
+				files := generatedPaths
+				if corpus.name == "compiler" {
+					files = paths
 				}
-				var expected []byte
-				for _, binary := range binaries {
-					command := exec.Command(binary, corpus.config, corpus.manifest, "--count")
-					command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
-					r := h.must(fmt.Sprintf("bench-%s-%d-%s", corpus.name, round, filepath.Base(binary)), command)
-					if expected != nil && !bytes.Equal(expected, r.stdout) {
-						t.Fatal("timed finding counts differ")
-					}
-					expected = r.stdout
-					var findings, queries int
-					if _, err := fmt.Sscanf(string(r.stdout), "findings %d queries %d", &findings, &queries); err != nil {
-						t.Fatal(err)
-					}
-					t.Logf("%s round %d %s: %.6fs %.2f findings/s findings=%d queries=%d; %s", corpus.name, round, filepath.Base(binary), r.elapsed.Seconds(), float64(findings)/r.elapsed.Seconds(), findings, queries, strings.TrimSpace(string(r.stderr)))
+				name := fmt.Sprintf("bench/%s-%d", corpus.name, round)
+				ids := sixIDs(name, files)
+				if rounds != 3 || len(paths) == 0 {
+					ids = nil
 				}
+				expected = append(expected, ids...)
+				add(name, ids, func(h *harness) {
+					if rounds != 3 || len(paths) == 0 {
+						h.t.Skip("set ADAMIC_TYPESCRIPT_SOURCE and ADAMIC_TYPEAWARE_BENCH=1")
+					}
+					t := h.t
+					// Alternate order to avoid always assigning one implementation the warm cache.
+					binaries := []string{oracle, optimized}
+					if round%2 == 0 {
+						binaries[0], binaries[1] = binaries[1], binaries[0]
+					}
+					var expected []byte
+					for _, binary := range binaries {
+						command := exec.Command(binary, corpus.config, corpus.manifest, "--count")
+						command.Env = append(os.Environ(), "ADAMIC_TSGO_TIMING=1")
+						r := h.must(fmt.Sprintf("bench-%s-%d-%s", corpus.name, round, filepath.Base(binary)), command)
+						if expected != nil && !bytes.Equal(expected, r.stdout) {
+							t.Fatal("timed finding counts differ")
+						}
+						expected = r.stdout
+						var findings, queries int
+						if _, err := fmt.Sscanf(string(r.stdout), "findings %d queries %d", &findings, &queries); err != nil {
+							t.Fatal(err)
+						}
+						t.Logf("%s round %d %s: %.6fs %.2f findings/s findings=%d queries=%d; %s", corpus.name, round, filepath.Base(binary), r.elapsed.Seconds(), float64(findings)/r.elapsed.Seconds(), findings, queries, strings.TrimSpace(string(r.stderr)))
+					}
+				})
+
 			}
 		}
 	}
+	finish(paths, rounds == 3 && len(paths) != 0)
 }
 
 func TestPinnedTypeFlags(t *testing.T) {
@@ -411,4 +515,22 @@ func TestPinnedTypeFlags(t *testing.T) {
 	if actual != 334017 {
 		t.Fatalf("update Adamic's mask and rerun cohere oracle: flags=%d", actual)
 	}
+}
+
+func typeAwareUnsplitIDs(generated, compiler []string, rounds int, benchmark bool) []string {
+	ids := []string{"refusal/unlinked", "refusal/parts-unlinked", "refusal/released", "mutant/stale", "refusal/bad-kind", "mutant/ignored-kind"}
+	for _, name := range []string{"agreement/generated", "mutant/wrong-node", "mutant/empty-frame", "mutant/missing-header", "mutant/bad-length"} {
+		ids = append(ids, sixIDs(name, generated)...)
+	}
+	for round := 1; round <= rounds; round++ {
+		ids = append(ids, fmt.Sprintf("cost/query-%d", round))
+	}
+	ids = append(ids, sixIDs("agreement/compiler", compiler)...)
+	if benchmark {
+		for round := 1; round <= 3; round++ {
+			ids = append(ids, sixIDs(fmt.Sprintf("bench/compiler-%d", round), compiler)...)
+			ids = append(ids, sixIDs(fmt.Sprintf("bench/generated-%d", round), generated)...)
+		}
+	}
+	return ids
 }
