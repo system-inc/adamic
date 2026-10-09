@@ -1,0 +1,13 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..c330043c 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -704,7 +704,7 @@ func (e *emitter) value(expression ir.Expression) string {
+ 		return e.nodeFSFile(expression)
+ 	case ir.RegExpNew:
+ 		if expression.Arguments != nil {
+-			return "new RegExp(" + e.values(expression.Arguments) + ")"
++			return "new RegExp(" + e.values([]ir.Expression{expression.Arguments[1], expression.Arguments[0]}) + ")"
+ 		}
+ 		r := e.program.Regexps[expression.Index]
+ 		return "new RegExp(" + quote(r.Pattern) + ", " + quote(r.Flags) + ")"

@@ -1,0 +1,95 @@
+{
+  "base": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "nproc": 5,
+  "code_under_test": {
+    "port": [
+      "fixedPatterns (patterns.a:2)"
+    ],
+    "lowering": [
+      "Lower",
+      "regexConstant",
+      "constantPattern",
+      "joinPatternStrings",
+      "regexBuiltin",
+      "escapeRegexSource",
+      "regexGroups",
+      "regexUnsupportedUse",
+      "regexRuntimeProperty"
+    ],
+    "construction": [
+      "inventory.main",
+      "WalkDir callback",
+      "AST definition collector",
+      "eval",
+      "AST call collector"
+    ],
+    "shapes": [
+      "107 static and runtime fixture entry programs; observe helper is harness"
+    ],
+    "option": "optionPattern is not called by this test"
+  },
+  "menu": {
+    "M1": [
+      "internal/lower/regexp.go",
+      39,
+      "change nonconstant-pattern diagnostic constant"
+    ],
+    "S1": [
+      "stage1/cohere/lint/regex/testdata/inventory.go",
+      102,
+      "Compile -> CompileBROKEN"
+    ],
+    "S2": [
+      "stage1/cohere/lint/regex/testdata/inventory.go",
+      68,
+      "depth > 20 -> depth > 0"
+    ],
+    "S3": [
+      "stage1/cohere/lint/regex/testdata/inventory.go",
+      108,
+      "source line + 1"
+    ],
+    "W1": [
+      "stage1/cohere/lint/regex/regex_test.go",
+      86,
+      "make both expected/actual byte comparisons always agree"
+    ],
+    "W2": [
+      "stage1/cohere/lint/regex/testdata/shapes/gate.go",
+      153,
+      "source Node comparison actual against actual"
+    ],
+    "P1": [
+      "stage1/cohere/lint/regex/patterns.a",
+      2,
+      "fixedPatterns returns []"
+    ],
+    "P2": [
+      "internal/lower/lower.go",
+      20,
+      "Lower returns nil,nil at entry"
+    ],
+    "M2": [
+      "stage1/cohere/lint/regex/patterns.a",
+      6,
+      "ignore case gui -> gu"
+    ],
+    "M3": [
+      "stage1/cohere/lint/regex/patterns.a",
+      26,
+      "quantifier {2,3} -> {2,2}"
+    ],
+    "M4": [
+      "stage1/cohere/lint/regex/patterns.a",
+      28,
+      "vowel class [AEIOUY] -> [aeiouy]"
+    ],
+    "P3": [
+      "stage1/cohere/lint/regex/testdata/inventory.go",
+      28,
+      "main returns with no output"
+    ]
+  },
+  "oracle": "Go cohere, source Node, stored fixtures and named refusal strings; sites.json self census snapshot",
+  "frozen_before_runs": true
+}

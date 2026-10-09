@@ -1,0 +1,862 @@
+{
+  "dynamic_constructor": "import { programArguments } from 'adamic';\nconst pattern = programArguments()[0] ?? 'TODO';\nconsole.log(`${new RegExp(pattern, 'u').test('TODO')}`);\n",
+  "shape_entries": [
+    {
+      "file": "plain/000.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/000_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/001.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/001_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "i/002.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "i/002_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/003.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/003_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/004.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/004_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/005.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/005_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/006.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/006_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/007.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/007_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/008.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/008_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/009.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/009_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/010.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/010_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/011.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/011_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/012.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/012_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/013.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/013_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/014.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/014_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/015.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/015_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/016.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/016_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/017.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/017_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/018.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/018_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/019.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/019_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/020.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/020_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/021.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/021_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/022.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/022_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/023.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/023_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "i/024.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "i/024_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/025.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/025_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/026.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/026_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/027.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/027_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/028.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/028_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/029.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/029_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "i/030.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "i/030_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/031.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/031_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/032.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/032_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/033.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/033_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/034.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/034_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/035.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/035_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/036.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/036_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/037.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/037_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/038.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/038_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/039.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/039_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/040.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/040_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/041.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/041_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "s/042.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "s/042_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/043.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/043_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/044.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/044_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/045.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/045_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/046.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/046_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/047.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/047_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/048.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/048_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/049.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/049_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/050.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/050_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/051.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/051_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/052.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/052_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/053.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/053_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/054.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/054_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/055.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/055_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/056.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/056_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "m/057.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "m/057_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/058.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/058_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/059.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/059_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/060.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/060_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/061.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/061_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/062.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/062_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/063.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/063_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/064.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/064_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/065.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/065_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/066.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/066_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/067.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/067_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/068.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/068_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/069.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/069_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/070.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/070_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/071.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/071_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/072.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/072_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/073.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/073_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/074.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/074_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/075.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/075_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/076.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/076_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/077.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/077_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/078.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/078_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/079.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/079_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/080.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/080_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/081.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/081_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/082.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/082_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/083.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/083_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/084.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/084_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/085.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/085_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/086.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/086_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/087.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/087_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/088.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/088_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/089.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/089_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/090.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/090_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/091.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/091_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/092.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/092_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/093.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/093_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/094.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/094_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/095.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/095_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/096.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/096_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/097.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/097_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/098.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/098_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/099.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/099_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/100.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/100_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/101.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/101_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/102.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/102_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/103.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/103_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/104.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "plain/104_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/105.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "dynamic/105_runtime.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "i/106.a",
+      "identifier_flags_constructor": true
+    },
+    {
+      "file": "i/106_runtime.a",
+      "identifier_flags_constructor": true
+    }
+  ],
+  "all_shape_flags_identifiers": true
+}

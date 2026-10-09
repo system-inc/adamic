@@ -1,0 +1,77 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/lower/regexp.go",
+    "file_line": "internal/lower/regexp.go:38",
+    "from": "if !ok {\n\t\t\t\treturn nil, l.notYet(args[0], \"RegExp with a nonconstant pattern\")",
+    "to": "if !ok && (len(args) < 2 || args[1].Kind != ast.KindStringLiteral) {\n\t\t\t\treturn nil, l.notYet(args[0], \"RegExp with a nonconstant pattern\")",
+    "change": "Flip nonconstant-pattern refusal off when constructor flags are a string literal.",
+    "package": "./internal/lower/",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/regex/",
+      "-run",
+      "."
+    ],
+    "build_cache_dir": "/tmp/defend-lint-regex/cache/D1",
+    "seconds": 59.154,
+    "exit": 1,
+    "rows_failed": [
+      "TestDynamicPatternGap"
+    ],
+    "rows_passed": [
+      "TestFixedPatterns",
+      "TestInventoryMatchesPinnedSource",
+      "TestOptionDialectGap",
+      "TestShapeFixtures"
+    ],
+    "failure_output": [
+      "regex_test.go:128: expected named native gap, got <nil>"
+    ]
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/javascript/javascript.go",
+    "file_line": "internal/javascript/javascript.go:707",
+    "from": "\"new RegExp(\" + e.values(expression.Arguments) + \")\"",
+    "to": "\"new RegExp(\" + e.values([]ir.Expression{expression.Arguments[1], expression.Arguments[0]}) + \")\"",
+    "change": "Swap constructor pattern and flags in JavaScript emission.",
+    "package": "./internal/javascript/",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/regex/",
+      "-run",
+      "."
+    ],
+    "build_cache_dir": "/tmp/defend-lint-regex/cache/D2",
+    "seconds": 18.837,
+    "exit": 1,
+    "rows_failed": [
+      "TestShapeFixtures"
+    ],
+    "rows_passed": [
+      "TestDynamicPatternGap",
+      "TestFixedPatterns",
+      "TestInventoryMatchesPinnedSource",
+      "TestOptionDialectGap"
+    ],
+    "failure_output": [
+      "shapes_test.go:45: per-shape fixture comparison failed: exit status 1",
+      "node: exit status 70: adamic: panic: SyntaxError: Invalid flags supplied to RegExp constructor 'PaginationInput(?![\\s\\S])'"
+    ]
+  }
+]

@@ -1,0 +1,44 @@
+[
+  {
+    "test": "TestDynamicPatternGap",
+    "package": "stage1/cohere/lint/regex",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestShapeFixtures"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/regexp.go:38",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/regexp.go:38",
+        "change": "Flip nonconstant-pattern refusal off when constructor flags are a string literal.",
+        "rows_failed": [
+          "TestDynamicPatternGap"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lint-regex/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/regex/ -run . > D1.log 2>&1; regex_test.go:128: expected named native gap, got <nil>; other rows passed: TestFixedPatterns, TestInventoryMatchesPinnedSource, TestOptionDialectGap, TestShapeFixtures"
+  },
+  {
+    "test": "TestShapeFixtures",
+    "package": "stage1/cohere/lint/regex",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestDynamicPatternGap"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/javascript/javascript.go:707",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/javascript/javascript.go:707",
+        "change": "Swap constructor pattern and flags in JavaScript emission.",
+        "rows_failed": [
+          "TestShapeFixtures"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lint-regex/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/regex/ -run . > D2.log 2>&1; shapes_test.go:45: per-shape fixture comparison failed: exit status 1; node: exit status 70: adamic: panic: SyntaxError: Invalid flags supplied to RegExp constructor 'PaginationInput(?![\\s\\S])'; other rows passed: TestDynamicPatternGap, TestFixedPatterns, TestInventoryMatchesPinnedSource, TestOptionDialectGap"
+  }
+]

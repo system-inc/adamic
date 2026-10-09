@@ -1,0 +1,13 @@
+diff --git a/internal/lower/regexp.go b/internal/lower/regexp.go
+index b6715a74..64a53543 100644
+--- a/internal/lower/regexp.go
++++ b/internal/lower/regexp.go
+@@ -35,7 +35,7 @@ func (l *lowering) regexConstant(node *ast.Node) (ir.Expression, error) {
+ 		if len(args) > 0 {
+ 			var ok bool
+ 			pattern, ok = l.constantPattern(args[0], 0)
+-			if !ok {
++			if !ok && (len(args) < 2 || args[1].Kind != ast.KindStringLiteral) {
+ 				return nil, l.notYet(args[0], "RegExp with a nonconstant pattern")
+ 			}
+ 		}

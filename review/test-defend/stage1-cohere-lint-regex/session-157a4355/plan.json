@@ -1,0 +1,20 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/lower/regexp.go",
+    "file_line": "internal/lower/regexp.go:38",
+    "from": "if !ok {\n\t\t\t\treturn nil, l.notYet(args[0], \"RegExp with a nonconstant pattern\")",
+    "to": "if !ok && (len(args) < 2 || args[1].Kind != ast.KindStringLiteral) {\n\t\t\t\treturn nil, l.notYet(args[0], \"RegExp with a nonconstant pattern\")",
+    "change": "Flip nonconstant-pattern refusal off when constructor flags are a string literal.",
+    "package": "./internal/lower/"
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/javascript/javascript.go",
+    "file_line": "internal/javascript/javascript.go:707",
+    "from": "\"new RegExp(\" + e.values(expression.Arguments) + \")\"",
+    "to": "\"new RegExp(\" + e.values([]ir.Expression{expression.Arguments[1], expression.Arguments[0]}) + \")\"",
+    "change": "Swap constructor pattern and flags in JavaScript emission.",
+    "package": "./internal/javascript/"
+  }
+]
