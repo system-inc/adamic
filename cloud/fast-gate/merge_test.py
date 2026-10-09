@@ -6,6 +6,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import tempfile
+import time
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -161,6 +162,27 @@ fi
                                 env=env, capture_output=True, text=True, timeout=60)
         job = jobs / (sha + '.json')
         return result, (json.loads(job.read_text()) if job.exists() else None)
+
+    def test_a_pool_job_waiting_for_admission_neither_races_nor_voids_until_loom_admits_it(self):
+        # Loom's admission control (@system_adamic, Oct 9 17:23Z): both clocks start at <sha>.running, not at enqueue.
+        sha = self.candidate('codex/admitted', {'feature.go': 'package feature // admitted\n'})
+        shutil.copy(ROOT / 'cloud' / 'pool-job.sh', self.here / 'cloud' / 'pool-job.sh')
+        jobs, fast = self.root / 'jobs', self.root / 'fastbin'
+        fast.mkdir()
+        (fast / 'sleep').write_text('#!/bin/bash\n/bin/sleep 0.02\n')
+        (fast / 'sleep').chmod(0o755)
+        env = dict(os.environ, LOOM_FAST_JOBS=str(jobs), ADAMIC_POOL_TAKE_SECONDS='30', ADAMIC_POOL_JOB_SECONDS='60',
+                   ADAMIC_FAST_GATE_WATCH_STATE=str(self.root / 'watch'), PATH=str(fast) + ':' + os.environ['PATH'])
+        waiter = subprocess.Popen(['bash', str(self.here / 'cloud' / 'pool-job.sh'), sha, '--branch', 'codex/admitted', '--tools', 'tools',
+                                   '--priority', '10'], env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+        self.addCleanup(waiter.kill)
+        time.sleep(1.5)
+        self.assertIsNone(waiter.poll(), waiter.stdout.read() if waiter.poll() is not None else '')
+        self.assertFalse((self.root / 'watch' / 'race-wanted' / sha).exists(), 'raced while waiting for admission')
+        (jobs / (sha + '.running')).write_text('admitted\n')
+        output = waiter.communicate(timeout=30)[0]
+        self.assertTrue((self.root / 'watch' / 'race-wanted' / sha).exists(), output)
+        self.assertIn('void: %s the pool gave no verdict in 60 s' % sha, output)
 
     def test_the_pool_job_names_the_merge_and_answers_a_conflict_itself(self):
         sha = self.candidate('codex/feature', {'feature.go': 'package feature // more\n'})

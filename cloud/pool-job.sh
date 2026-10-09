@@ -103,7 +103,10 @@ while [ ! -f "${jobs}/${sha}.verdict" ]; do
     exit 1
   fi
   sleep 10 & wait $!
-  waited=$((waited + 10))
+  # Both clocks start when Loom admits the job (<sha>.running), not at enqueue (Loom's admission control, ruled by
+  # @system_adamic Oct 9 17:23Z): a job waiting its turn at Loom neither races a box nor voids.
+  [ -n "${admitted:-}" ] || [ ! -e "${jobs}/${sha}.running" ] || admitted=1
+  [ -z "${admitted:-}" ] || waited=$((waited + 10))
 done
 head -1 "${jobs}/${sha}.verdict"
 record=$(sed -n 's/^record: //p' "${jobs}/${sha}.verdict" | head -1)
