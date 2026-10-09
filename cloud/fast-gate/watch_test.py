@@ -465,6 +465,29 @@ class WatchTests(unittest.TestCase):
         self.assertFalse((w.state / 'void-window').exists() and (w.state / 'void-window').read_text().strip())
         self.assertNotIn(sha, (w.state / 'queue').read_text())
 
+    def test_a_stopped_gate_whose_waiter_hangs_is_reaped_after_two_minutes(self):
+        # lint-08 825fc611's waiter hung on its ssh for 84 minutes after its stop, holding Workshop's slot (Oct 9).
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        holder = subprocess.Popen(['bash', '-c', 'sleep 30 & wait'])
+        self.addCleanup(holder.kill)
+        sha = '8' * 40
+        (w.state / 'running' / str(holder.pid)).write_text('cloud/land-hung %s B box0 B x %s\n' % (sha, w.state / 'logs/hung.log'))
+        (w.state / 'skip').write_text('cloud/land-hung %s\n' % sha)
+        w.wait(lambda: 'stopped cloud/land-hung %s: on the skip list' % sha in w.read('output'))
+        time.sleep(.5)
+        self.assertIsNone(holder.poll(), 'reaped before its two minutes')
+        w.put('clock', '1119')
+        time.sleep(.5)
+        self.assertIsNone(holder.poll(), 'reaped at 119 s')
+        w.put('clock', '1120')
+        w.wait(lambda: 'reaped a stopped gate' in w.read('output'))
+        holder.wait(timeout=5)
+        w.wait(lambda: 'before a verdict, as asked: not a void' in w.read('output'))
+        self.assertNotIn(sha, (w.state / 'queue').read_text())
+
     def test_a_landing_borrows_a_small_slot_ahead_of_small_worker_tips(self):
         # No tips on origin, so the queue holds exactly these two; one small slot and no area slot.
         w = Watcher(0)

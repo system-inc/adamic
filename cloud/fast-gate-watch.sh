@@ -225,14 +225,34 @@ stopGate() {
   if [ "${box}" = pool ]; then
     local jobs=${LOOM_FAST_JOBS:-${HOME}/.loom/jobs/fast}
     [ -d "${jobs}" ] && printf '%s\n' "${reason}" > "${jobs}/${sha}.cancel"
-    kill -TERM "${pid}" 2> /dev/null && touch "${state}/stopped-running/${pid}"
+    kill -TERM "${pid}" 2> /dev/null && date -u +%s > "${state}/stopped-running/${pid}"
     return 0
   fi
   if bash "${here}/cloud/stop-gate.sh" "${box}" "${sha}" "${reason}"; then
-    touch "${state}/stopped-running/${pid}"
+    date -u +%s > "${state}/stopped-running/${pid}"
     return 0
   fi
   return 1
+}
+# A stopped gate's local waiter can outlive its box run, hung on an ssh whose far side is gone, and its running file keeps
+# the slot: lint-08 825fc611's held Workshop from 07:42Z to 09:06Z (Oct 9) while the star waited for that box, and floor1's
+# held Server's B for 25 minutes. Two minutes after its stop (time enough to publish what it had), the waiter and its
+# children are killed, and the reap below handles it like any stopped gate. A marker from before stops wrote their time
+# starts its clock now.
+reapStopped() {
+  local marker pid since now
+  now=$(date -u +%s)
+  for marker in "${state}"/stopped-running/*; do
+    [ -f "${marker}" ] || continue
+    pid=$(basename "${marker}")
+    kill -0 "${pid}" 2> /dev/null || continue
+    since=$(cat "${marker}" 2> /dev/null)
+    [[ ${since} =~ ^[0-9]+$ ]] || { echo "${now}" > "${marker}"; continue; }
+    [ $((now - since)) -ge 120 ] || continue
+    pkill -TERM -P "${pid}" 2> /dev/null
+    kill -TERM "${pid}" 2> /dev/null
+    echo "$(date -u +%H:%M:%S) reaped a stopped gate's waiter ${pid} ($(cut -d' ' -f1,2 "${state}/running/${pid}" 2> /dev/null)): alive $((now - since)) s after its stop"
+  done
 }
 # Integration's skip list names tips that won't land (superseded candidates), and skip-globs whole families: one
 # still running there is stopped, so its slot goes to work that can (integration asked twice by hand, Oct 8; three
@@ -811,6 +831,7 @@ while true; do
   stopStaleRed
   stopSkipped
   stopSuperseded
+  reapStopped
   publishEarlyRed
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
