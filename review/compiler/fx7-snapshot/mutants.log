@@ -1,0 +1,4 @@
+runtime-alone exit 0 expected 0
+compiler-alone exit 0 expected 0
+runtime-mutant exit 1 expected 1
+compiler-mutant exit 1 expected 1

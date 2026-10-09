@@ -1,0 +1,15 @@
+=== RUN   TestViewSnapshotMaybeBoolean
+=== PAUSE TestViewSnapshotMaybeBoolean
+=== CONT  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:32: gate cache node hit
+    view_snapshot_test.go:32: Node: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:32: gate cache node hit
+    view_snapshot_test.go:32: native-sanitized: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:32: javascript: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:32: native: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+--- PASS: TestViewSnapshotMaybeBoolean (0.35s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.360s

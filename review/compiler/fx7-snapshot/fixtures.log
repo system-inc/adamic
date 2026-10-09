@@ -1,0 +1,57 @@
+=== RUN   TestViewSnapshotMaybeBoolean
+=== PAUSE TestViewSnapshotMaybeBoolean
+=== RUN   TestViewSnapshotMaybeNumber
+=== PAUSE TestViewSnapshotMaybeNumber
+=== CONT  TestViewSnapshotMaybeBoolean
+=== CONT  TestViewSnapshotMaybeNumber
+--- PASS: TestViewSnapshotMaybeNumber (0.43s)
+--- PASS: TestViewSnapshotMaybeBoolean (0.45s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.463s
+=== RUN   TestViewSnapshotMaybeBoolean
+=== PAUSE TestViewSnapshotMaybeBoolean
+=== RUN   TestViewSnapshotMaybeNumber
+=== PAUSE TestViewSnapshotMaybeNumber
+=== CONT  TestViewSnapshotMaybeBoolean
+=== CONT  TestViewSnapshotMaybeNumber
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:32: gate cache node miss
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:37: gate cache node miss
+    view_snapshot_test.go:37: Node: exit=0 stdout="7\n0\nundefined\n" stderr=""
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:32: Node: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+=== NAME  TestViewSnapshotMaybeNumber
+    view_snapshot_test.go:37: gate cache node miss
+    view_snapshot_test.go:37: native: exit=0 stdout="7\n0\nundefined\n" stderr=""
+    view_snapshot_test.go:37: native-sanitized: exit=0 stdout="7\n0\nundefined\n" stderr=""
+    view_snapshot_test.go:37: javascript: exit=0 stdout="7\n0\nundefined\n" stderr=""
+--- PASS: TestViewSnapshotMaybeNumber (0.86s)
+=== NAME  TestViewSnapshotMaybeBoolean
+    view_snapshot_test.go:32: gate cache node miss
+    view_snapshot_test.go:32: native: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:32: native-sanitized: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+    view_snapshot_test.go:32: javascript: exit=0 stdout="true / true\nfalse / false\nfalse / undefined\n" stderr=""
+--- PASS: TestViewSnapshotMaybeBoolean (1.31s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.335s
+=== RUN   TestViewSnapshotPayloadOwnership
+=== PAUSE TestViewSnapshotPayloadOwnership
+=== CONT  TestViewSnapshotPayloadOwnership
+    view_snapshot_test.go:49: exit status 1: 
+        =================================================================
+        ==6248==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 58 byte(s) in 1 object(s) allocated from:
+            #0 0x55949a98c274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55949a9e23cf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1283377908/heap.c:196:10
+            #2 0x7ff4ee50fca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+        
+        SUMMARY: AddressSanitizer: 58 byte(s) leaked in 1 allocation(s).
+--- FAIL: TestViewSnapshotPayloadOwnership (0.20s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.212s
+FAIL
