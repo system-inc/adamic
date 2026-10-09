@@ -1,0 +1,13 @@
+run adamic-verify-20261009T060307-75b9c7bc: void, 0 tests in 12 units, 0 failed, 12 units broken, 0 killed over budget
+BROKEN tests-00: no results (exited false, last output "")
+BROKEN tests-01: no results (exited false, last output "loom-pilot: c4391d1c1b9c slot ? cpus ? tree 57cc3e8204a048a406dc9039c4c0df4f21224eaf setup 1 s, 2 packages at a time")
+BROKEN tests-02: no results (exited false, last output "")
+BROKEN tests-03: no results (exited false, last output "loom-pilot: 957c63584be7 slot ? cpus ? tree 57cc3e8204a048a406dc9039c4c0df4f21224eaf setup 3 s, 2 packages at a time")
+BROKEN tests-04: no results (exited true, last output "5.4G\t/tmp/loom-home")
+BROKEN tests-05: no results (exited false, last output "")
+BROKEN tests-06: no results (exited false, last output "loom-pilot: a09fc5beb3db slot ? cpus ? tree 57cc3e8204a048a406dc9039c4c0df4f21224eaf setup 1 s, 2 packages at a time")
+BROKEN tests-07: no results (exited false, last output "")
+BROKEN tests-08: no results (exited false, last output "loom-pilot: 2d4574f87219 slot ? cpus ? tree 57cc3e8204a048a406dc9039c4c0df4f21224eaf setup 3 s, 2 packages at a time")
+BROKEN tests-09: no results (exited false, last output "")
+BROKEN tests-10: no results (exited false, last output "loom-pilot: f2df57880b0e slot ? cpus ? tree 57cc3e8204a048a406dc9039c4c0df4f21224eaf setup 2 s, 2 packages at a time")
+BROKEN tests-11: no results (exited false, last output "")
