@@ -1,0 +1,26 @@
+{
+  "failed_witness_subcases": [
+    "TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case",
+    "TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case",
+    "TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y",
+    "TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text",
+    "TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__",
+    "TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=",
+    "TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range",
+    "TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8",
+    "TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y",
+    "TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8",
+    "TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped",
+    "TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped",
+    "TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end",
+    "TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index",
+    "TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind",
+    "TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case",
+    "TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN",
+    "TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8"
+  ],
+  "passed_positive_subcases": [
+    "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+    "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser"
+  ]
+}

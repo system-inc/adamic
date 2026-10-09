@@ -1,0 +1,11 @@
+--- a/stage1/cohere/values/nodes.ts
++++ b/stage1/cohere/values/nodes.ts
+@@ -170,7 +170,7 @@
+ 
+ // nodes.go: newNumber, Node with type 'number' and unit from its options, or "".
+ export function newNumber(value: string, source: Source, sourceIndex: number, unit: string): ValueNode {
+-	return new ValueNode('number', 'number', value, source, sourceIndex, unit, false, -1);
++	return new ValueNode('number', 'number', value, source, sourceIndex, '', false, -1);
+ }
+ 
+ // nodes.go: newFunc, Container with type 'func', unbalanced starting at -1 so the parser knows no parens

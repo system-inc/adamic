@@ -1,0 +1,71 @@
+Static declaration inventory, not a proof of dynamic reach. Main count-only functions are not reached by default tests. Compiler entry Lower, native C/Build, emitter.stringCall.
+values.ts:21 export function parse(value: string, loose: boolean): Parsed {
+tokenize.ts:77 function atEnd(css: string, index: number): boolean {
+tokenize.ts:98 function wordEnd(css: string, index: number): boolean {
+tokenize.ts:132 function wordEndNum(css: string, index: number): boolean {
+tokenize.ts:167 export function alphaNum(code: number): boolean {
+tokenize.ts:172 function unicodeRange(code: number): boolean {
+tokenize.ts:179 function regexLastIndex(css: string, from: number, matches: (css: string, index: number) => boolean): number {
+tokenize.ts:190 function indexOfFrom(css: string, search: string, from: number): number {
+tokenize.ts:197 export function tokenize(input: string, loose: boolean): Tokenized {
+parser.ts:41 function tokenSource(token: Token): Source {
+parser.ts:47 function commentDelimiters(value: string): string {
+parser.ts:61 function isDigit(text: string, index: number): boolean {
+parser.ts:68 function rNumber(text: string): number {
+parser.ts:106 function rNoFollow(word: string): boolean {
+parser.ts:117 function isHex(value: string): boolean {
+parser.ts:123 function isColor(value: string): boolean {
+parser.ts:142 function replaceFirst(value: string, search: string): string {
+parser.ts:154 // cache needs to be an array for values with more than 1 level of function nesting
+parser.ts:172 constructor(loose: boolean, tokens: readonly Token[]) {
+parser.ts:188 #tokenAt(index: number): Token | undefined {
+parser.ts:194 #currToken(): Token {
+parser.ts:198 #nextToken(): Token | undefined {
+parser.ts:202 #prevToken(): Token | undefined {
+parser.ts:207 #error(message: string, token: Token): void {
+parser.ts:212 #typeError(key: string): void {
+parser.ts:217 #childrenOf(container: ValueNode): ValueNode[] {
+parser.ts:222 #nextId(): number {
+parser.ts:228 #last(): ValueNode | undefined {
+parser.ts:233 #newNode(node: ValueNode): void {
+parser.ts:243 #colon(): void {
+parser.ts:252 #comma(): void {
+parser.ts:261 #comment(): void {
+parser.ts:277 #space(): void {
+parser.ts:300 #unicodeRange(): void {
+parser.ts:309 #string(): void {
+parser.ts:332 #splitWord(): void {
+parser.ts:397 #word(): void {
+parser.ts:402 #operator(): void {
+parser.ts:450 // if we're not in a function and someone has doubled up on operators,
+parser.ts:497 #parenOpen(): void {
+parser.ts:568 #parenClose(): void {
+parser.ts:594 #parseTokens(): void {
+parser.ts:634 #tree(node: ValueNode): ValueTree {
+parser.ts:643 #loop(): Parsed {
+parser.ts:666 parse(): Parsed {
+nodes.ts:36 constructor(line: number, column: number) {
+nodes.ts:47 constructor(start: Position, end: Position) {
+nodes.ts:77 constructor(type: string, shape: Shape, value: string, source: Source | undefined, sourceIndex: number, unit: string, flag: boolean, id: number) {
+nodes.ts:94 constructor(node: ValueNode, nodes: readonly ValueTree[]) {
+nodes.ts:102 export function keysOf(shape: Shape): readonly string[] {
+nodes.ts:128 export function hasNodes(shape: Shape): boolean {
+nodes.ts:133 export function newRoot(id: number): ValueNode {
+nodes.ts:138 export function newValue(id: number): ValueNode {
+nodes.ts:144 export function leaf(type: string, value: string, source: Source, sourceIndex: number): ValueNode {
+nodes.ts:149 export function newWord(value: string, source: Source, sourceIndex: number, isHex: boolean, isColor: boolean): ValueNode {
+nodes.ts:157 export function newParen(value: string, source: Source, sourceIndex: number): ValueNode {
+nodes.ts:162 export function newComment(value: string, inline: boolean, source: Source, sourceIndex: number): ValueNode {
+nodes.ts:167 export function newAtWord(value: string, source: Source, sourceIndex: number, id: number): ValueNode {
+nodes.ts:172 export function newNumber(value: string, source: Source, sourceIndex: number, unit: string): ValueNode {
+nodes.ts:178 export function newFunc(value: string, source: Source, sourceIndex: number, id: number): ValueNode {
+nodes.ts:185 export function newString(value: string, source: Source, sourceIndex: number, quoted: boolean): ValueNode {
+main.ts:28 // undefined for that, but stage 0 writes `return undefined` from a function returning string | undefined
+main.ts:30 function escapeOf(character: string): string {
+main.ts:51 function quote(text: string): string {
+main.ts:66 function position(at: Position): string {
+main.ts:70 function source(of: Source): string {
+main.ts:75 function field(node: ValueNode, key: string): string {
+main.ts:109 function render(tree: ValueTree, depth: number, lines: string[]): void {
+main.ts:125 function count(tree: ValueTree): number {
+main.ts:134 function unescape(field: string): string {

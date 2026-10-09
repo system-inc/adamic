@@ -1,0 +1,11 @@
+--- a/internal/native/emit_strings.go
++++ b/internal/native/emit_strings.go
+@@ -65,7 +65,7 @@
+ 		return e.own(ir.Array, fmt.Sprintf("adamic_string_split(%s, %s)", value, arguments[0]))
+ 	case "indexOf":
+ 		if len(arguments) == 2 {
+-			return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_index_of_from(%s, %s, %s)", value, arguments[0], arguments[1]))
++			return e.snapshot(ir.Number, fmt.Sprintf("adamic_string_index_of_from(%s, %s, %s)", value, arguments[0], "0.0"))
+ 		}
+ 		return fmt.Sprintf("adamic_string_index_of(%s, %s)", value, arguments[0])
+ 	case "lastIndexOf":

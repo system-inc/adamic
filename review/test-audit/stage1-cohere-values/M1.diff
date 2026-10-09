@@ -1,0 +1,11 @@
+--- a/stage1/cohere/values/tokenize.ts
++++ b/stage1/cohere/values/tokenize.ts
+@@ -198,7 +198,7 @@
+ 	const tokens: Token[] = [];
+ 	const css = input;
+ 	const length = css.length;
+-	let offset = -1;
++	let offset = 0;
+ 	let line = 1;
+ 	let pos = 0;
+ 	let parentCount = 0;

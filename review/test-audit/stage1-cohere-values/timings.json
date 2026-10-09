@@ -1,0 +1,16 @@
+{
+  "nproc": 5,
+  "setup": "warm env, cloud/setup.sh skipped",
+  "npm": {
+    "wall": 1.8971379050017276,
+    "exit": 0
+  },
+  "builds": {
+    "M1-build": 2.3161529270000756,
+    "M2-build": 2.0378082400020503,
+    "M3-build": 2.0401783640008944,
+    "P1-build": 1.8494287309986248
+  },
+  "run_wall": 726.923239020005,
+  "all_recorded_wall": 737.0424054200084
+}

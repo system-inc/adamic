@@ -1,0 +1,441 @@
+[
+  {
+    "name": "TestThePortParsesAsGoCohereDoes-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestThePortParsesAsGoCohereDoes$'",
+    "wall": 28.887563747000968,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 27.038
+  },
+  {
+    "name": "TestThePortParsesAsGoCohereDoes-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestThePortParsesAsGoCohereDoes$'",
+    "wall": 28.147058642996853,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 26.395
+  },
+  {
+    "name": "TestThePortParsesAsGoCohereDoes-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestThePortParsesAsGoCohereDoes$'",
+    "wall": 31.287119933000213,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 29.426
+  },
+  {
+    "name": "TestEachGapStandsWhereGapsMdSaysItDoes-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$'",
+    "wall": 5.264365643000929,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.625
+  },
+  {
+    "name": "TestEachGapStandsWhereGapsMdSaysItDoes-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$'",
+    "wall": 2.8634381349984324,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.658
+  },
+  {
+    "name": "TestEachGapStandsWhereGapsMdSaysItDoes-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$'",
+    "wall": 3.510547079000389,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.664
+  },
+  {
+    "name": "M1-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/values/main.ts -o /tmp/u148/M1 --sanitize",
+    "wall": 2.3161529270000756,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "M1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 31.58498543099995,
+    "exit": 1,
+    "fail": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 28.825
+  },
+  {
+    "name": "M2-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/values/main.ts -o /tmp/u148/M2 --sanitize",
+    "wall": 2.0378082400020503,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "M2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 29.093839676002972,
+    "exit": 1,
+    "fail": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 27.186
+  },
+  {
+    "name": "M3-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/values/main.ts -o /tmp/u148/M3 --sanitize",
+    "wall": 2.0401783640008944,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "M3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 28.784466264998628,
+    "exit": 1,
+    "fail": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 27.053
+  },
+  {
+    "name": "M4-vet",
+    "command": "timeout 90 go vet ./internal/native/",
+    "wall": 0.41247624500101665,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "M4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 34.50583068500055,
+    "exit": 1,
+    "fail": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "elapsed": 28.259
+  },
+  {
+    "name": "P1-build",
+    "command": "timeout 90 go run ./cmd/adamic build stage1/cohere/values/main.ts -o /tmp/u148/P1 --sanitize",
+    "wall": 1.8494287309986248,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "P1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 22.430532626996865,
+    "exit": 1,
+    "fail": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 17.669
+  },
+  {
+    "name": "W1-vet",
+    "command": "timeout 90 go vet ./stage1/cohere/values/",
+    "wall": 0.21341003999987151,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "W1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 35.061233699001605,
+    "exit": 1,
+    "fail": [
+      "TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case",
+      "TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y",
+      "TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8",
+      "TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text",
+      "TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case",
+      "TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range",
+      "TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case",
+      "TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end",
+      "TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=",
+      "TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8",
+      "TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8",
+      "TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped",
+      "TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped",
+      "TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__",
+      "TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y",
+      "TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index",
+      "TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN",
+      "TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 28.516
+  },
+  {
+    "name": "restored",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 29.866155626001273,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 28.077
+  },
+  {
+    "name": "TestThePortParsesAsGoCohereDoes-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestThePortParsesAsGoCohereDoes$'",
+    "wall": 30.08415481799966,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 28.243
+  },
+  {
+    "name": "TestThePortParsesAsGoCohereDoes-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestThePortParsesAsGoCohereDoes$'",
+    "wall": 39.91853804299899,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 37.733
+  },
+  {
+    "name": "TestThePortParsesAsGoCohereDoes-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestThePortParsesAsGoCohereDoes$'",
+    "wall": 45.030731184000615,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 38.926
+  },
+  {
+    "name": "TestEachGapStandsWhereGapsMdSaysItDoes-1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$'",
+    "wall": 3.3293330919987056,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 1.013
+  },
+  {
+    "name": "TestEachGapStandsWhereGapsMdSaysItDoes-2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$'",
+    "wall": 3.276357189999544,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.853
+  },
+  {
+    "name": "TestEachGapStandsWhereGapsMdSaysItDoes-3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run '^TestEachGapStandsWhereGapsMdSaysItDoes$'",
+    "wall": 3.699801983002544,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.887
+  },
+  {
+    "name": "M1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 39.29572303700115,
+    "exit": 1,
+    "fail": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 37.5
+  },
+  {
+    "name": "M2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 41.451254471998254,
+    "exit": 1,
+    "fail": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 38.83
+  },
+  {
+    "name": "M3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 45.28745793800044,
+    "exit": 1,
+    "fail": [
+      "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 39.945
+  },
+  {
+    "name": "M4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 39.773940846003825,
+    "exit": 1,
+    "fail": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes"
+    ],
+    "elapsed": 36.824
+  },
+  {
+    "name": "P2-vet",
+    "command": "timeout 90 go vet ./internal/lower/",
+    "wall": 0.35382239400496474,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "P2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 15.886962835000304,
+    "exit": 1,
+    "fail": [
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/3_case_constant.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/4_private_method.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/1_index_of_position.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/2_boolean_or_undefined_field.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes/gaps/5_empty_array_default.ts",
+      "TestEachGapStandsWhereGapsMdSaysItDoes",
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 9.76
+  },
+  {
+    "name": "gap-coverage",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/lower,./internal/native -coverprofile=review/test-audit/stage1-cohere-values/gap.cover ./stage1/cohere/values/ -run \"^TestEachGapStandsWhereGapsMdSaysItDoes$\"",
+    "wall": 8.711227109000902,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 0.88
+  },
+  {
+    "name": "port-coverage",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run \"^TestThePortParsesAsGoCohereDoes$/^natively\"",
+    "wall": 10.408696698999847,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 8.373
+  },
+  {
+    "name": "coverage-functions",
+    "command": "go tool cover -func=review/test-audit/stage1-cohere-values/gap.cover",
+    "wall": 0.4065027119941078,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "P2-apply",
+    "command": "git read-tree a7448d73cd17f16362b6cbc5c5c111080da64e43 && git apply --cached --check review/test-audit/stage1-cohere-values/P2.diff",
+    "wall": 0.07473657099762931,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "M3-apply",
+    "command": "git read-tree a7448d73cd17f16362b6cbc5c5c111080da64e43 && git apply --cached --check review/test-audit/stage1-cohere-values/M3.diff",
+    "wall": 0.052732281998032704,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "P1-apply",
+    "command": "git read-tree a7448d73cd17f16362b6cbc5c5c111080da64e43 && git apply --cached --check review/test-audit/stage1-cohere-values/P1.diff",
+    "wall": 0.12542561800364638,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "M2-apply",
+    "command": "git read-tree a7448d73cd17f16362b6cbc5c5c111080da64e43 && git apply --cached --check review/test-audit/stage1-cohere-values/M2.diff",
+    "wall": 0.05794446900108596,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "W1-apply",
+    "command": "git read-tree a7448d73cd17f16362b6cbc5c5c111080da64e43 && git apply --cached --check review/test-audit/stage1-cohere-values/W1.diff",
+    "wall": 0.056130675999156665,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "M1-apply",
+    "command": "git read-tree a7448d73cd17f16362b6cbc5c5c111080da64e43 && git apply --cached --check review/test-audit/stage1-cohere-values/M1.diff",
+    "wall": 0.06946494200383313,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "M4-apply",
+    "command": "git read-tree a7448d73cd17f16362b6cbc5c5c111080da64e43 && git apply --cached --check review/test-audit/stage1-cohere-values/M4.diff",
+    "wall": 0.05295218899846077,
+    "exit": 0,
+    "fail": [],
+    "elapsed": null
+  },
+  {
+    "name": "final-restored",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 36.4594050720043,
+    "exit": 0,
+    "fail": [],
+    "elapsed": 33.506
+  },
+  {
+    "name": "P1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 22.502388993998466,
+    "exit": 1,
+    "fail": [
+      "TestThePortParsesAsGoCohereDoes/natively_and_on_Node,_as_Go_cohere",
+      "TestThePortParsesAsGoCohereDoes/as_postcss-values-parser",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 17.013
+  },
+  {
+    "name": "W1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run .",
+    "wall": 30.520128518997808,
+    "exit": 1,
+    "fail": [
+      "TestThePortParsesAsGoCohereDoes/catches_the_strict_calc_check_ignoring_case",
+      "TestThePortParsesAsGoCohereDoes/catches_the_tokenizer's_url_argument_ignoring_case",
+      "TestThePortParsesAsGoCohereDoes/catches_alphaNum's_uppercase_stopping_at_Y",
+      "TestThePortParsesAsGoCohereDoes/catches_--_a_word_only_before_more_text",
+      "TestThePortParsesAsGoCohereDoes/catches_alphaNum_taking__",
+      "TestThePortParsesAsGoCohereDoes/catches_a_word_ending_at_=",
+      "TestThePortParsesAsGoCohereDoes/catches_?_not_in_a_unicode_range",
+      "TestThePortParsesAsGoCohereDoes/catches_isColor's_digits_stopping_at_8",
+      "TestThePortParsesAsGoCohereDoes/catches_alphaNum's_lowercase_stopping_at_y",
+      "TestThePortParsesAsGoCohereDoes/catches_alphaNum's_digits_stopping_at_8",
+      "TestThePortParsesAsGoCohereDoes/catches_U+001F_written_unescaped",
+      "TestThePortParsesAsGoCohereDoes/catches_DEL_written_unescaped",
+      "TestThePortParsesAsGoCohereDoes/catches_a_number's_unit_taken_off_its_end",
+      "TestThePortParsesAsGoCohereDoes/catches_an_operator's_sourceIndex_its_index",
+      "TestThePortParsesAsGoCohereDoes/catches_a_space_compared_with_the_comma_token's_kind",
+      "TestThePortParsesAsGoCohereDoes/catches_the_url_argument_check_ignoring_case",
+      "TestThePortParsesAsGoCohereDoes/catches_next_starting_at_0,_not_NaN",
+      "TestThePortParsesAsGoCohereDoes/catches_unicodeRange's_digits_stopping_at_8",
+      "TestThePortParsesAsGoCohereDoes"
+    ],
+    "elapsed": 28.436
+  }
+]

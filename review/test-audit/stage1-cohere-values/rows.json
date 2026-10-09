@@ -1,0 +1,61 @@
+[
+  {
+    "test": "TestThePortParsesAsGoCohereDoes",
+    "package": "stage1/cohere/values",
+    "file": "stage1/cohere/values/values_test.go",
+    "seconds": 37.733,
+    "oracle": "Go cohere and postcss-values-parser 2.0.1 run on Node; full serialized trees and refusal text, plus sanitizer/leak success",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "last_proven_fail": "M3: values_test.go:68: native and Go cohere differ: line 948: \"    comment inline=false raws={after:\\\"\\\",before:\\\" \\\"} source={end:{column:13,line:1},start:{column:5,line:1}} sourceIndex=4 value=\\\" one */\\\"\", Go cohere \"    comment inline=false raws={after:\\\"\\\",before:\\\" \\\"} source={end:{column:13,line:1},start:{column:5,line:1}} sourceIndex=4 value=\\\" one \\\"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_VALUES_LIBRARY=/tmp/u148-library ADAMIC_BUILD_CACHE_DIR=/tmp/u148/cache/replay-M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run . > review/test-audit/stage1-cohere-values/M3.log 2>&1; values_test.go:68: native and Go cohere differ: line 948: \"    comment inline=false raws={after:\\\"\\\",before:\\\" \\\"} source={end:{column:13,line:1},start:{column:5,line:1}} sourceIndex=4 value=\\\" one */\\\"\", Go cohere \"    comment inline=false raws={after:\\\"\\\",before:\\\" \\\"} source={end:{column:13,line:1},start:{column:5,line:1}} sourceIndex=4 value=\\\" one \\\"\""
+  },
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "package": "stage1/cohere/values",
+    "file": "stage1/cohere/values/gaps_test.go",
+    "seconds": 0.887,
+    "oracle": "Node executes all five fixtures and validates handwritten stdout; native output matches that stdout; one exact NotYet.What label is self-written",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4: gaps_test.go:80: natively: exit 0, stdout \"1\\n\", stderr \"\"; Node prints \"3\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_VALUES_LIBRARY=/tmp/u148-library ADAMIC_BUILD_CACHE_DIR=/tmp/u148/cache/replay-M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/values/ -run . > review/test-audit/stage1-cohere-values/M4.log 2>&1; gaps_test.go:80: natively: exit 0, stdout \"1\\n\", stderr \"\"; Node prints \"3\\n\""
+  }
+]

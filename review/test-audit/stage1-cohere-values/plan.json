@@ -1,0 +1,35 @@
+{
+  "base": "a7448d73cd17f16362b6cbc5c5c111080da64e43",
+  "code": "TypeScript values parser port; compiler lowering/native emission for gap fixtures",
+  "oracle": "Go cohere, upstream postcss-values-parser 2.0.1, Node; hand-written gap refusal label",
+  "mutants": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/values/tokenize.ts",
+      "line": 201,
+      "change": "let offset = -1; -> let offset = 0;",
+      "menu": "change constant"
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/values/nodes.ts",
+      "line": 173,
+      "change": "sourceIndex, unit, false, -1); -> sourceIndex, '', false, -1);",
+      "menu": "change option"
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/values/parser.ts",
+      "line": 51,
+      "change": "pair === '/*' || pair === '*/' -> pair === '/*' || pair === '**'",
+      "menu": "change constant"
+    },
+    {
+      "id": "M4",
+      "file": "internal/native/emit_strings.go",
+      "line": 68,
+      "change": "\"adamic_string_index_of_from(%s, %s, %s)\", value, arguments[0], arguments[1] -> \"adamic_string_index_of_from(%s, %s, %s)\", value, arguments[0], \"0.0\"",
+      "menu": "change option"
+    }
+  ]
+}
