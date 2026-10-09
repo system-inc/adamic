@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/pathObserve.ts
++++ b/stage1/cohere/markdownblocks/pathObserve.ts
+@@ -70,6 +70,7 @@
+     ].join('|');
+ }
+ export function observePath(path: AstPath): string {
++    return '';
+     const rows = [pathSnapshot(path)];
+     rows.push(path.call(pathSnapshot, [pathProperty('children')]));
+     rows.push(path.call(pathSnapshot, [pathProperty('children'), pathIndex(-1)]));

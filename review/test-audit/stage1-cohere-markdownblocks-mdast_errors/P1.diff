@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/mdastCompile.ts
++++ b/stage1/cohere/markdownblocks/mdastCompile.ts
+@@ -617,6 +617,7 @@
+         return length;
+     }
+     compile(): MdastArena {
++        return this.arena;
+         const root = this.arena.add('root', true, false);
+         this.stack.push(root);
+         const lists: number[] = [];

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/preprocess.ts
++++ b/stage1/cohere/markdownblocks/preprocess.ts
+@@ -36,7 +36,7 @@
+                 column += end - start;
+             }
+             if(code === 0) {
+-                chunks.push({ isText: false, text: '', code: 65533 });
++                chunks.push({ isText: false, text: '', code: 65534 });
+                 column++;
+             }
+             else if(code === 9) {

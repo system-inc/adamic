@@ -1,0 +1,275 @@
+[
+  {
+    "id": "TestMdastMalformedEvents_Setup-1",
+    "test": "TestMdastMalformedEvents_Setup",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup)$",
+    "exit": 0,
+    "wall": 6.086385003000032
+  },
+  {
+    "id": "TestMdastMalformedEvents_Setup-2",
+    "test": "TestMdastMalformedEvents_Setup",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup)$",
+    "exit": 0,
+    "wall": 6.270714107999083
+  },
+  {
+    "id": "TestMdastMalformedEvents_Setup-3",
+    "test": "TestMdastMalformedEvents_Setup",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup)$",
+    "exit": 0,
+    "wall": 5.626533681001092
+  },
+  {
+    "id": "TestMdastIdentifierWitnesses-1",
+    "test": "TestMdastIdentifierWitnesses",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastIdentifierWitnesses)$",
+    "exit": 0,
+    "wall": 8.222902323001108
+  },
+  {
+    "id": "TestMdastIdentifierWitnesses-2",
+    "test": "TestMdastIdentifierWitnesses",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastIdentifierWitnesses)$",
+    "exit": 0,
+    "wall": 8.480263483999806
+  },
+  {
+    "id": "TestMdastIdentifierWitnesses-3",
+    "test": "TestMdastIdentifierWitnesses",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastIdentifierWitnesses)$",
+    "exit": 0,
+    "wall": 8.331725840998843
+  },
+  {
+    "id": "TestNativeMdastConstruction-1",
+    "test": "TestNativeMdastConstruction",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestNativeMdastConstruction)$",
+    "exit": 0,
+    "wall": 36.64272249900023
+  },
+  {
+    "id": "TestNativeMdastConstruction-2",
+    "test": "TestNativeMdastConstruction",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestNativeMdastConstruction)$",
+    "exit": 0,
+    "wall": 35.83632263800064
+  },
+  {
+    "id": "TestNativeMdastConstruction-3",
+    "test": "TestNativeMdastConstruction",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestNativeMdastConstruction)$",
+    "exit": 0,
+    "wall": 37.78213923900148
+  },
+  {
+    "id": "TestOptionalStringInitializationWitness-1",
+    "test": "TestOptionalStringInitializationWitness",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestOptionalStringInitializationWitness)$",
+    "exit": 0,
+    "wall": 2.6467579740001383
+  },
+  {
+    "id": "TestOptionalStringInitializationWitness-2",
+    "test": "TestOptionalStringInitializationWitness",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestOptionalStringInitializationWitness)$",
+    "exit": 0,
+    "wall": 2.48748404700018
+  },
+  {
+    "id": "TestOptionalStringInitializationWitness-3",
+    "test": "TestOptionalStringInitializationWitness",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestOptionalStringInitializationWitness)$",
+    "exit": 0,
+    "wall": 2.3568469700003334
+  },
+  {
+    "id": "TestMarkdownAstPath-1",
+    "test": "TestMarkdownAstPath",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownAstPath)$",
+    "exit": 0,
+    "wall": 62.533340177000355
+  },
+  {
+    "id": "TestMarkdownAstPath-2",
+    "test": "TestMarkdownAstPath",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownAstPath)$",
+    "exit": 0,
+    "wall": 63.84131779800009
+  },
+  {
+    "id": "TestMarkdownAstPath-3",
+    "test": "TestMarkdownAstPath",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownAstPath)$",
+    "exit": 0,
+    "wall": 62.14207089200136
+  },
+  {
+    "id": "TestMarkdownParserPrefixes-1",
+    "test": "TestMarkdownParserPrefixes",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownParserPrefixes)$",
+    "exit": 0,
+    "wall": 4.290399027000603
+  },
+  {
+    "id": "TestMarkdownParserPrefixes-2",
+    "test": "TestMarkdownParserPrefixes",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownParserPrefixes)$",
+    "exit": 0,
+    "wall": 4.260864990999835
+  },
+  {
+    "id": "TestMarkdownParserPrefixes-3",
+    "test": "TestMarkdownParserPrefixes",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownParserPrefixes)$",
+    "exit": 0,
+    "wall": 4.339960066999993
+  },
+  {
+    "id": "TestWholeDocumentOraclePreflightMutants-1",
+    "test": "TestWholeDocumentOraclePreflightMutants",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightMutants)$",
+    "exit": 0,
+    "wall": 4.204726236999704
+  },
+  {
+    "id": "TestWholeDocumentOraclePreflightMutants-2",
+    "test": "TestWholeDocumentOraclePreflightMutants",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightMutants)$",
+    "exit": 0,
+    "wall": 4.118630364000637
+  },
+  {
+    "id": "TestWholeDocumentOraclePreflightMutants-3",
+    "test": "TestWholeDocumentOraclePreflightMutants",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightMutants)$",
+    "exit": 0,
+    "wall": 4.231421500999204
+  },
+  {
+    "id": "TestMarkdownQuoteLayoutNative-1",
+    "test": "TestMarkdownQuoteLayoutNative",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative)$",
+    "exit": 0,
+    "wall": 6.1627030430008745
+  },
+  {
+    "id": "TestMarkdownQuoteLayoutNative-2",
+    "test": "TestMarkdownQuoteLayoutNative",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative)$",
+    "exit": 0,
+    "wall": 6.560643283999525
+  },
+  {
+    "id": "TestMarkdownQuoteLayoutNative-3",
+    "test": "TestMarkdownQuoteLayoutNative",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative)$",
+    "exit": 0,
+    "wall": 6.251002754999718
+  },
+  {
+    "id": "TestMarkdownQuoteLayout_Setup-1",
+    "test": "TestMarkdownQuoteLayout_Setup",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayout_Setup)$",
+    "exit": 0,
+    "wall": 6.015735943001346
+  },
+  {
+    "id": "TestMarkdownQuoteLayout_Setup-2",
+    "test": "TestMarkdownQuoteLayout_Setup",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayout_Setup)$",
+    "exit": 0,
+    "wall": 6.12549881799896
+  },
+  {
+    "id": "TestMarkdownQuoteLayout_Setup-3",
+    "test": "TestMarkdownQuoteLayout_Setup",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayout_Setup)$",
+    "exit": 0,
+    "wall": 6.107686527000624
+  },
+  {
+    "id": "TestSampleRetainsFixedMarkdownInputs-1",
+    "test": "TestSampleRetainsFixedMarkdownInputs",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestSampleRetainsFixedMarkdownInputs)$",
+    "exit": 0,
+    "wall": 2.144232988999647
+  },
+  {
+    "id": "TestSampleRetainsFixedMarkdownInputs-2",
+    "test": "TestSampleRetainsFixedMarkdownInputs",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestSampleRetainsFixedMarkdownInputs)$",
+    "exit": 0,
+    "wall": 2.2567541919997893
+  },
+  {
+    "id": "TestSampleRetainsFixedMarkdownInputs-3",
+    "test": "TestSampleRetainsFixedMarkdownInputs",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestSampleRetainsFixedMarkdownInputs)$",
+    "exit": 0,
+    "wall": 2.1314301380007237
+  },
+  {
+    "id": "TestGeneratedLayoutSelection-1",
+    "test": "TestGeneratedLayoutSelection",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestGeneratedLayoutSelection)$",
+    "exit": 0,
+    "wall": 1.9999635469994246
+  },
+  {
+    "id": "TestGeneratedLayoutSelection-2",
+    "test": "TestGeneratedLayoutSelection",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestGeneratedLayoutSelection)$",
+    "exit": 0,
+    "wall": 1.96065721100058
+  },
+  {
+    "id": "TestGeneratedLayoutSelection-3",
+    "test": "TestGeneratedLayoutSelection",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestGeneratedLayoutSelection)$",
+    "exit": 0,
+    "wall": 1.900898073999997
+  },
+  {
+    "id": "TestWholeDocumentOraclePreflightFamily-1",
+    "test": "TestWholeDocumentOraclePreflight family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightUnion|TestWholeDocumentOraclePreflight_000|TestWholeDocumentOraclePreflight_001|TestWholeDocumentOraclePreflight_002|TestWholeDocumentOraclePreflight_003)$",
+    "exit": 0,
+    "wall": 5.263214426999184
+  },
+  {
+    "id": "TestWholeDocumentOraclePreflightFamily-2",
+    "test": "TestWholeDocumentOraclePreflight family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightUnion|TestWholeDocumentOraclePreflight_000|TestWholeDocumentOraclePreflight_001|TestWholeDocumentOraclePreflight_002|TestWholeDocumentOraclePreflight_003)$",
+    "exit": 0,
+    "wall": 5.332066487999327
+  },
+  {
+    "id": "TestWholeDocumentOraclePreflightFamily-3",
+    "test": "TestWholeDocumentOraclePreflight family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightUnion|TestWholeDocumentOraclePreflight_000|TestWholeDocumentOraclePreflight_001|TestWholeDocumentOraclePreflight_002|TestWholeDocumentOraclePreflight_003)$",
+    "exit": 0,
+    "wall": 5.192872825999075
+  },
+  {
+    "id": "TestMarkdownQuoteLayoutFamily-1",
+    "test": "TestMarkdownQuoteLayout family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutUnion|TestMarkdownQuoteLayout_000|TestMarkdownQuoteLayout_001|TestMarkdownQuoteLayout_002|TestMarkdownQuoteLayout_003|TestMarkdownQuoteLayout_004|TestMarkdownQuoteLayout_005|TestMarkdownQuoteLayout_006|TestMarkdownQuoteLayout_007|TestMarkdownQuoteLayout_008|TestMarkdownQuoteLayout_009|TestMarkdownQuoteLayout_010|TestMarkdownQuoteLayout_011)$",
+    "exit": 0,
+    "wall": 16.36130070299987
+  },
+  {
+    "id": "TestMarkdownQuoteLayoutFamily-2",
+    "test": "TestMarkdownQuoteLayout family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutUnion|TestMarkdownQuoteLayout_000|TestMarkdownQuoteLayout_001|TestMarkdownQuoteLayout_002|TestMarkdownQuoteLayout_003|TestMarkdownQuoteLayout_004|TestMarkdownQuoteLayout_005|TestMarkdownQuoteLayout_006|TestMarkdownQuoteLayout_007|TestMarkdownQuoteLayout_008|TestMarkdownQuoteLayout_009|TestMarkdownQuoteLayout_010|TestMarkdownQuoteLayout_011)$",
+    "exit": 0,
+    "wall": 18.688787416000196
+  },
+  {
+    "id": "TestMarkdownQuoteLayoutFamily-3",
+    "test": "TestMarkdownQuoteLayout family",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutUnion|TestMarkdownQuoteLayout_000|TestMarkdownQuoteLayout_001|TestMarkdownQuoteLayout_002|TestMarkdownQuoteLayout_003|TestMarkdownQuoteLayout_004|TestMarkdownQuoteLayout_005|TestMarkdownQuoteLayout_006|TestMarkdownQuoteLayout_007|TestMarkdownQuoteLayout_008|TestMarkdownQuoteLayout_009|TestMarkdownQuoteLayout_010|TestMarkdownQuoteLayout_011)$",
+    "exit": 0,
+    "wall": 17.935933115000807
+  }
+]

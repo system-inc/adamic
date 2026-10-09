@@ -1,0 +1,603 @@
+[
+  {
+    "test": "TestMdastMalformedEvents_Setup",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/mdast_errors_test.go:5",
+    "seconds": 3.782,
+    "oracle": "Build/readiness success of suite-owned malformed-event products; no runtime comparison in this row.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "G1 support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/G1-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/G1.log 2>&1; support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "members": [
+      "TestMdastMalformedEvents_Setup"
+    ],
+    "timing_samples": [
+      3.782,
+      4.16,
+      3.422
+    ],
+    "entry_probe_results": {
+      "P10": {
+        "TestMdastMalformedEvents_Setup": "pass"
+      }
+    },
+    "construction_kills": [
+      "G1"
+    ]
+  },
+  {
+    "test": "TestMdastIdentifierWitnesses",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/mdast_gap_test.go:12",
+    "seconds": 6.309,
+    "oracle": "Actual Go cohere mdast and pinned Node fork, recorded Go/fork witness snapshots, and native/source/backend comparison with Go. Known casing disagreement is retained.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1 support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNativeMdastConstruction"
+    ],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 34.608,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup|TestMdastIdentifierWitnesses|TestNativeMdastConstruction)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M1.log 2>&1; support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "members": [
+      "TestMdastIdentifierWitnesses"
+    ],
+    "timing_samples": [
+      6.309,
+      6.35,
+      6.145
+    ],
+    "entry_probe_results": {
+      "P1": {
+        "TestMdastMalformedEvents_Setup": "pass",
+        "TestMdastIdentifierWitnesses": "fail",
+        "TestNativeMdastConstruction": "fail"
+      }
+    },
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestNativeMdastConstruction",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/mdast_test.go:16",
+    "seconds": 34.608,
+    "oracle": "Actual Go cohere mdast construction and pinned Node fork; full canonical tree bytes compared with native/source/backend, plus sanitizer/leak checks.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1 mdast_test.go:128: native stage1/cohere/markdownblocks/GAPS.md byte66851 got\"  }\\\\\\\\\\\\\\\\n  10 |   const getIndex = ((): ((id: string) => number) => {\\\\\\\\\\\\\\\\n```\\\\\\\\\\\\\\\\n\\\"\\\\\\\\n````\\\\\\\\n\\\\nroot\\\\t-1\\\\tfalse\\\\tfalse\\\\t\\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t-\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t1,1,0,837,1,63219\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\nh\" want\"  }\\\\\\\\\\\\\\\\n  10 |   const getIndex = ((): ((id: string) => number) => {\\\\\\\\\\\\\\\\n```\\\\\\\\\\\\\\\\n\\\"\\\\\\\\n````\\\\\\\\n\\\\nroot\\\\t162\\\\tfalse\\\\tfalse\\\\t\\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t-\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t1,1,0,837,1,63219\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMdastIdentifierWitnesses"
+    ],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 6.309,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMdastIdentifierWitnesses",
+      "TestMdastMalformedEvents_Setup",
+      "TestNativeMdastConstruction"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup|TestMdastIdentifierWitnesses|TestNativeMdastConstruction)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M1.log 2>&1; mdast_test.go:128: native stage1/cohere/markdownblocks/GAPS.md byte66851 got\"  }\\\\\\\\\\\\\\\\n  10 |   const getIndex = ((): ((id: string) => number) => {\\\\\\\\\\\\\\\\n```\\\\\\\\\\\\\\\\n\\\"\\\\\\\\n````\\\\\\\\n\\\\nroot\\\\t-1\\\\tfalse\\\\tfalse\\\\t\\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t-\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t1,1,0,837,1,63219\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\nh\" want\"  }\\\\\\\\\\\\\\\\n  10 |   const getIndex = ((): ((id: string) => number) => {\\\\\\\\\\\\\\\\n```\\\\\\\\\\\\\\\\n\\\"\\\\\\\\n````\\\\\\\\n\\\\nroot\\\\t162\\\\tfalse\\\\tfalse\\\\t\\\\t0\\\\tfalse\\\\t-\\\\tfalse\\\\t-\\\\t-\\\\t-\\\\t\\\\t-\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t1,1,0,837,1,63219\\\\t-\\\\t-\\\\t\\\\t\\\\t\\\\t\\\\n\"",
+    "members": [
+      "TestNativeMdastConstruction"
+    ],
+    "timing_samples": [
+      34.608,
+      33.75,
+      35.246
+    ],
+    "entry_probe_results": {
+      "P1": {
+        "TestMdastMalformedEvents_Setup": "pass",
+        "TestMdastIdentifierWitnesses": "fail",
+        "TestNativeMdastConstruction": "fail"
+      }
+    },
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestOptionalStringInitializationWitness",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/optional_gap_test.go:10",
+    "seconds": 0.33,
+    "oracle": "Original source on Node decides missing; handwritten missing label is also checked, then native/backend output compared with Node.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P5"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestOptionalStringInitializationWitness"
+    ],
+    "evidence": "Three clean timings and P5.log; no production mutation claim.",
+    "members": [
+      "TestOptionalStringInitializationWitness"
+    ],
+    "timing_samples": [
+      0.334,
+      0.33,
+      0.317
+    ],
+    "entry_probe_results": {
+      "P5": {
+        "TestOptionalStringInitializationWitness": "fail"
+      }
+    },
+    "cannot_judge_reason": "No compiler initialization mutant was included in the fixed four-native-mutant menu. Mutating the optional-string source would change the Node oracle fixture; Lower was only empty-probed. This row remains unaudited for production worthiness and truth."
+  },
+  {
+    "test": "TestMarkdownAstPath",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/path_test.go:17",
+    "seconds": 60.292,
+    "oracle": "Actual Go AstPath and pinned Node fork observations; full path bytes, plus handwritten key-gap values.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2"
+    ],
+    "unique_kills": [
+      "M2"
+    ],
+    "last_proven_fail": "M2 support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "verdict": "slow-worthy",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownAstPath"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownAstPath)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M2.log 2>&1; support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "members": [
+      "TestMarkdownAstPath"
+    ],
+    "timing_samples": [
+      60.292,
+      61.872,
+      60.083
+    ],
+    "entry_probe_results": {
+      "P2": {
+        "TestMarkdownAstPath": "fail"
+      }
+    }
+  },
+  {
+    "test": "TestMarkdownParserPrefixes",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/prefix_test.go:16",
+    "seconds": 2.142,
+    "oracle": "Actual Go micromark preprocessing/prefix primitives; native/source/backend exact bytes compared with Go.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [
+      "M3"
+    ],
+    "last_proven_fail": "M3 support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownParserPrefixes"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownParserPrefixes)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M3.log 2>&1; support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "members": [
+      "TestMarkdownParserPrefixes"
+    ],
+    "timing_samples": [
+      2.16,
+      2.101,
+      2.142
+    ],
+    "entry_probe_results": {
+      "P3": {
+        "TestMarkdownParserPrefixes": "fail"
+      }
+    }
+  },
+  {
+    "test": "TestWholeDocumentOraclePreflightMutants",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/preflight_shards_test.go:416",
+    "seconds": 2.069,
+    "oracle": "Pinned Node fork output; row expects prebuilt Go mutants to disagree. W2 disables the witnessed difference check.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2 preflight_shards_test.go:334: TestWholeDocumentOraclePreflight_Setup (setup) 1.083361s",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWholeDocumentOraclePreflightMutants"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/W2-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightMutants)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/W2.log 2>&1; preflight_shards_test.go:334: TestWholeDocumentOraclePreflight_Setup (setup) 1.083361s",
+    "members": [
+      "TestWholeDocumentOraclePreflightMutants"
+    ],
+    "timing_samples": [
+      1.994,
+      2.069,
+      2.147
+    ],
+    "entry_probe_results": {},
+    "witness_kills": [
+      "W2"
+    ]
+  },
+  {
+    "test": "TestMarkdownQuoteLayoutNative",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go:64",
+    "seconds": 4.22,
+    "oracle": "Suite-owned native-product readiness; returned products are ignored by the top-level row.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "G2 quote_layout_shards_test.go:93: quote native setup failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownQuoteLayout family",
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/G2-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative|TestMarkdownQuoteLayout_Setup)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/G2.log 2>&1; quote_layout_shards_test.go:93: quote native setup failed",
+    "members": [
+      "TestMarkdownQuoteLayoutNative"
+    ],
+    "timing_samples": [
+      4.22,
+      4.359,
+      4.101
+    ],
+    "entry_probe_results": {
+      "P11": {
+        "TestMarkdownQuoteLayoutNative": "pass"
+      }
+    },
+    "construction_kills": [
+      "G2"
+    ]
+  },
+  {
+    "test": "TestMarkdownQuoteLayout_Setup",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go:102",
+    "seconds": 4.144,
+    "oracle": "Suite-owned quote readiness; returned products are ignored by the top-level row.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "G2 quote_layout_shards_test.go:93: quote native setup failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownQuoteLayout family",
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/G2-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative|TestMarkdownQuoteLayout_Setup)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/G2.log 2>&1; quote_layout_shards_test.go:93: quote native setup failed",
+    "members": [
+      "TestMarkdownQuoteLayout_Setup"
+    ],
+    "timing_samples": [
+      4.068,
+      4.144,
+      4.197
+    ],
+    "entry_probe_results": {
+      "P12": {
+        "TestMarkdownQuoteLayout_Setup": "pass"
+      }
+    },
+    "construction_kills": [
+      "G2"
+    ]
+  },
+  {
+    "test": "TestSampleRetainsFixedMarkdownInputs",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/sample_test.go:119",
+    "seconds": 0.008,
+    "oracle": "Handwritten selected labels, counts and numeric-answer bytes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "G3 support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P6",
+      "P7",
+      "P8"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestGeneratedLayoutSelection",
+      "TestSampleRetainsFixedMarkdownInputs"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/G3-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestSampleRetainsFixedMarkdownInputs|TestGeneratedLayoutSelection)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/G3.log 2>&1; support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)",
+    "members": [
+      "TestSampleRetainsFixedMarkdownInputs"
+    ],
+    "timing_samples": [
+      0.008,
+      0.008,
+      0.007
+    ],
+    "entry_probe_results": {
+      "P6": {
+        "TestSampleRetainsFixedMarkdownInputs": "fail",
+        "TestGeneratedLayoutSelection": "fail"
+      },
+      "P7": {
+        "TestSampleRetainsFixedMarkdownInputs": "fail",
+        "TestGeneratedLayoutSelection": "fail"
+      },
+      "P8": {
+        "TestSampleRetainsFixedMarkdownInputs": "fail"
+      }
+    },
+    "construction_kills": [
+      "G3"
+    ]
+  },
+  {
+    "test": "TestGeneratedLayoutSelection",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/sample_test.go:153",
+    "seconds": 0.008,
+    "oracle": "Handwritten generated/control selection and numeric index expectations.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "G3 sample_test.go:160: indexed corpus/control: []",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P6",
+      "P7",
+      "P9"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestGeneratedLayoutSelection",
+      "TestSampleRetainsFixedMarkdownInputs"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/G3-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestSampleRetainsFixedMarkdownInputs|TestGeneratedLayoutSelection)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/G3.log 2>&1; sample_test.go:160: indexed corpus/control: []",
+    "members": [
+      "TestGeneratedLayoutSelection"
+    ],
+    "timing_samples": [
+      0.009,
+      0.008,
+      0.007
+    ],
+    "entry_probe_results": {
+      "P6": {
+        "TestSampleRetainsFixedMarkdownInputs": "fail",
+        "TestGeneratedLayoutSelection": "fail"
+      },
+      "P7": {
+        "TestSampleRetainsFixedMarkdownInputs": "fail",
+        "TestGeneratedLayoutSelection": "fail"
+      },
+      "P9": {
+        "TestGeneratedLayoutSelection": "fail"
+      }
+    },
+    "construction_kills": [
+      "G3"
+    ]
+  },
+  {
+    "test": "TestWholeDocumentOraclePreflight family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/preflight_shards_test.go:341",
+    "seconds": 3.263,
+    "oracle": "Go cohere versus pinned Node fork, self-recorded auto gaps, union coverage and a planted off-output mismatch; W1 weakens the guarded comparison.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1 preflight_shards_test.go:334: TestWholeDocumentOraclePreflight_Setup (setup) 1.118368s",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestWholeDocumentOraclePreflight family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u128/W1-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightUnion|TestWholeDocumentOraclePreflight_000|TestWholeDocumentOraclePreflight_001|TestWholeDocumentOraclePreflight_002|TestWholeDocumentOraclePreflight_003)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/W1.log 2>&1; preflight_shards_test.go:334: TestWholeDocumentOraclePreflight_Setup (setup) 1.118368s",
+    "members": [
+      "TestWholeDocumentOraclePreflightUnion",
+      "TestWholeDocumentOraclePreflight_000",
+      "TestWholeDocumentOraclePreflight_001",
+      "TestWholeDocumentOraclePreflight_002",
+      "TestWholeDocumentOraclePreflight_003"
+    ],
+    "timing_samples": [
+      3.308,
+      3.263,
+      2.986
+    ],
+    "entry_probe_results": {},
+    "witness_kills": [
+      "W1"
+    ],
+    "weakened_check_passes": [
+      "TestWholeDocumentOraclePreflight_001",
+      "TestWholeDocumentOraclePreflight_002",
+      "TestWholeDocumentOraclePreflight_003"
+    ]
+  },
+  {
+    "test": "TestMarkdownQuoteLayout family",
+    "package": "stage1/cohere/markdownblocks",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go:135",
+    "seconds": 15.759,
+    "oracle": "Go cohere layout, pinned Node Markdown/doc printers and full output bytes; union coverage and planted mismatch use self expectations. W3 tests the built-in disagreement guard.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4 quote_layout_shards_test.go:113: TestMarkdownQuoteLayout_Setup: 62.972s",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P4"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMarkdownQuoteLayout family",
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative|TestMarkdownQuoteLayout_Setup|TestMarkdownQuoteLayoutUnion|TestMarkdownQuoteLayout_000|TestMarkdownQuoteLayout_001|TestMarkdownQuoteLayout_002|TestMarkdownQuoteLayout_003|TestMarkdownQuoteLayout_004|TestMarkdownQuoteLayout_005|TestMarkdownQuoteLayout_006|TestMarkdownQuoteLayout_007|TestMarkdownQuoteLayout_008|TestMarkdownQuoteLayout_009|TestMarkdownQuoteLayout_010|TestMarkdownQuoteLayout_011)$ > /workspace/adamic/review/test-audit/stage1-cohere-markdownblocks-mdast_errors/M4.log 2>&1; quote_layout_shards_test.go:113: TestMarkdownQuoteLayout_Setup: 62.972s",
+    "members": [
+      "TestMarkdownQuoteLayoutUnion",
+      "TestMarkdownQuoteLayout_000",
+      "TestMarkdownQuoteLayout_001",
+      "TestMarkdownQuoteLayout_002",
+      "TestMarkdownQuoteLayout_003",
+      "TestMarkdownQuoteLayout_004",
+      "TestMarkdownQuoteLayout_005",
+      "TestMarkdownQuoteLayout_006",
+      "TestMarkdownQuoteLayout_007",
+      "TestMarkdownQuoteLayout_008",
+      "TestMarkdownQuoteLayout_009",
+      "TestMarkdownQuoteLayout_010",
+      "TestMarkdownQuoteLayout_011"
+    ],
+    "timing_samples": [
+      14.443,
+      16.747,
+      15.759
+    ],
+    "entry_probe_results": {
+      "P4": {
+        "TestMarkdownQuoteLayoutNative": "pass",
+        "TestMarkdownQuoteLayout_Setup": "pass",
+        "TestMarkdownQuoteLayoutUnion": "pass",
+        "TestMarkdownQuoteLayout_000": "fail",
+        "TestMarkdownQuoteLayout_001": "fail",
+        "TestMarkdownQuoteLayout_002": "fail",
+        "TestMarkdownQuoteLayout_003": "fail",
+        "TestMarkdownQuoteLayout_004": "fail",
+        "TestMarkdownQuoteLayout_005": "fail",
+        "TestMarkdownQuoteLayout_006": "fail",
+        "TestMarkdownQuoteLayout_007": "fail",
+        "TestMarkdownQuoteLayout_008": "fail",
+        "TestMarkdownQuoteLayout_009": "fail",
+        "TestMarkdownQuoteLayout_010": "fail",
+        "TestMarkdownQuoteLayout_011": "fail"
+      }
+    },
+    "witness_kills": [
+      "W3"
+    ],
+    "probe_not_called_by": [
+      "TestMarkdownQuoteLayoutUnion"
+    ]
+  }
+]

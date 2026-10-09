@@ -1,0 +1,204 @@
+[
+  {
+    "id": "M1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup|TestMdastIdentifierWitnesses|TestNativeMdastConstruction)$",
+    "exit": 1,
+    "wall": 18.315598607998254,
+    "matrix_rows": [
+      "TestMdastMalformedEvents_Setup",
+      "TestMdastIdentifierWitnesses",
+      "TestNativeMdastConstruction"
+    ],
+    "cache": null
+  },
+  {
+    "id": "M2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownAstPath)$",
+    "exit": 1,
+    "wall": 26.226084563999393,
+    "matrix_rows": [
+      "TestMarkdownAstPath"
+    ],
+    "cache": null
+  },
+  {
+    "id": "M3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownParserPrefixes)$",
+    "exit": 1,
+    "wall": 2.9976782970006752,
+    "matrix_rows": [
+      "TestMarkdownParserPrefixes"
+    ],
+    "cache": null
+  },
+  {
+    "id": "M4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative|TestMarkdownQuoteLayout_Setup|TestMarkdownQuoteLayoutUnion|TestMarkdownQuoteLayout_000|TestMarkdownQuoteLayout_001|TestMarkdownQuoteLayout_002|TestMarkdownQuoteLayout_003|TestMarkdownQuoteLayout_004|TestMarkdownQuoteLayout_005|TestMarkdownQuoteLayout_006|TestMarkdownQuoteLayout_007|TestMarkdownQuoteLayout_008|TestMarkdownQuoteLayout_009|TestMarkdownQuoteLayout_010|TestMarkdownQuoteLayout_011)$",
+    "exit": 1,
+    "wall": 71.51909097499993,
+    "matrix_rows": [
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup",
+      "TestMarkdownQuoteLayoutUnion",
+      "TestMarkdownQuoteLayout_000",
+      "TestMarkdownQuoteLayout_001",
+      "TestMarkdownQuoteLayout_002",
+      "TestMarkdownQuoteLayout_003",
+      "TestMarkdownQuoteLayout_004",
+      "TestMarkdownQuoteLayout_005",
+      "TestMarkdownQuoteLayout_006",
+      "TestMarkdownQuoteLayout_007",
+      "TestMarkdownQuoteLayout_008",
+      "TestMarkdownQuoteLayout_009",
+      "TestMarkdownQuoteLayout_010",
+      "TestMarkdownQuoteLayout_011"
+    ],
+    "cache": null
+  },
+  {
+    "id": "P1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup|TestMdastIdentifierWitnesses|TestNativeMdastConstruction)$",
+    "exit": 1,
+    "wall": 14.510884527000599,
+    "matrix_rows": [
+      "TestMdastMalformedEvents_Setup",
+      "TestMdastIdentifierWitnesses",
+      "TestNativeMdastConstruction"
+    ],
+    "cache": null
+  },
+  {
+    "id": "P2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownAstPath)$",
+    "exit": 1,
+    "wall": 13.120158128000185,
+    "matrix_rows": [
+      "TestMarkdownAstPath"
+    ],
+    "cache": null
+  },
+  {
+    "id": "P3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownParserPrefixes)$",
+    "exit": 1,
+    "wall": 2.7211108900010004,
+    "matrix_rows": [
+      "TestMarkdownParserPrefixes"
+    ],
+    "cache": null
+  },
+  {
+    "id": "P4",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative|TestMarkdownQuoteLayout_Setup|TestMarkdownQuoteLayoutUnion|TestMarkdownQuoteLayout_000|TestMarkdownQuoteLayout_001|TestMarkdownQuoteLayout_002|TestMarkdownQuoteLayout_003|TestMarkdownQuoteLayout_004|TestMarkdownQuoteLayout_005|TestMarkdownQuoteLayout_006|TestMarkdownQuoteLayout_007|TestMarkdownQuoteLayout_008|TestMarkdownQuoteLayout_009|TestMarkdownQuoteLayout_010|TestMarkdownQuoteLayout_011)$",
+    "exit": 1,
+    "wall": 71.35890442599884,
+    "matrix_rows": [
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup",
+      "TestMarkdownQuoteLayoutUnion",
+      "TestMarkdownQuoteLayout_000",
+      "TestMarkdownQuoteLayout_001",
+      "TestMarkdownQuoteLayout_002",
+      "TestMarkdownQuoteLayout_003",
+      "TestMarkdownQuoteLayout_004",
+      "TestMarkdownQuoteLayout_005",
+      "TestMarkdownQuoteLayout_006",
+      "TestMarkdownQuoteLayout_007",
+      "TestMarkdownQuoteLayout_008",
+      "TestMarkdownQuoteLayout_009",
+      "TestMarkdownQuoteLayout_010",
+      "TestMarkdownQuoteLayout_011"
+    ],
+    "cache": null
+  },
+  {
+    "id": "W1",
+    "command": "timeout 120 go test -overlay=/tmp/u128/W1-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightUnion|TestWholeDocumentOraclePreflight_000|TestWholeDocumentOraclePreflight_001|TestWholeDocumentOraclePreflight_002|TestWholeDocumentOraclePreflight_003)$",
+    "exit": 1,
+    "wall": 8.69117708199883,
+    "matrix_rows": [
+      "TestWholeDocumentOraclePreflightUnion",
+      "TestWholeDocumentOraclePreflight_000",
+      "TestWholeDocumentOraclePreflight_001",
+      "TestWholeDocumentOraclePreflight_002",
+      "TestWholeDocumentOraclePreflight_003"
+    ],
+    "cache": null
+  },
+  {
+    "id": "W2",
+    "command": "timeout 120 go test -overlay=/tmp/u128/W2-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestWholeDocumentOraclePreflightMutants)$",
+    "exit": 1,
+    "wall": 8.251304350000282,
+    "matrix_rows": [
+      "TestWholeDocumentOraclePreflightMutants"
+    ],
+    "cache": null
+  },
+  {
+    "id": "W3",
+    "command": "timeout 120 go test -overlay=/tmp/u128/W3-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative|TestMarkdownQuoteLayout_Setup|TestMarkdownQuoteLayoutUnion|TestMarkdownQuoteLayout_000|TestMarkdownQuoteLayout_001|TestMarkdownQuoteLayout_002|TestMarkdownQuoteLayout_003|TestMarkdownQuoteLayout_004|TestMarkdownQuoteLayout_005|TestMarkdownQuoteLayout_006|TestMarkdownQuoteLayout_007|TestMarkdownQuoteLayout_008|TestMarkdownQuoteLayout_009|TestMarkdownQuoteLayout_010|TestMarkdownQuoteLayout_011)$",
+    "exit": 1,
+    "wall": 20.621802435000063,
+    "matrix_rows": [
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup",
+      "TestMarkdownQuoteLayoutUnion",
+      "TestMarkdownQuoteLayout_000",
+      "TestMarkdownQuoteLayout_001",
+      "TestMarkdownQuoteLayout_002",
+      "TestMarkdownQuoteLayout_003",
+      "TestMarkdownQuoteLayout_004",
+      "TestMarkdownQuoteLayout_005",
+      "TestMarkdownQuoteLayout_006",
+      "TestMarkdownQuoteLayout_007",
+      "TestMarkdownQuoteLayout_008",
+      "TestMarkdownQuoteLayout_009",
+      "TestMarkdownQuoteLayout_010",
+      "TestMarkdownQuoteLayout_011"
+    ],
+    "cache": null
+  },
+  {
+    "id": "G2",
+    "command": "timeout 120 go test -overlay=/tmp/u128/G2-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMarkdownQuoteLayoutNative|TestMarkdownQuoteLayout_Setup)$",
+    "exit": 1,
+    "wall": 75.18921985599991,
+    "matrix_rows": [
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup"
+    ],
+    "cache": "/tmp/u128/cache/G2"
+  },
+  {
+    "id": "G3",
+    "command": "timeout 120 go test -overlay=/tmp/u128/G3-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestSampleRetainsFixedMarkdownInputs|TestGeneratedLayoutSelection)$",
+    "exit": 1,
+    "wall": 8.670775984999636,
+    "matrix_rows": [
+      "TestSampleRetainsFixedMarkdownInputs",
+      "TestGeneratedLayoutSelection"
+    ],
+    "cache": "/tmp/u128/cache/G3"
+  },
+  {
+    "id": "G1",
+    "command": "timeout 120 go test -overlay=/tmp/u128/G1-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestMdastMalformedEvents_Setup)$",
+    "exit": 1,
+    "wall": 9.679439373001514,
+    "matrix_rows": [
+      "TestMdastMalformedEvents_Setup"
+    ],
+    "cache": "/tmp/u128/cache/G1"
+  },
+  {
+    "id": "P5",
+    "command": "timeout 120 go test -overlay=/tmp/u128/P5-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/markdownblocks/ -run ^(TestOptionalStringInitializationWitness)$",
+    "exit": 1,
+    "wall": 12.405014513999049,
+    "matrix_rows": [
+      "TestOptionalStringInitializationWitness"
+    ],
+    "cache": "/tmp/u128/cache/P5"
+  }
+]

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/sample_test.go
++++ b/stage1/cohere/markdownblocks/sample_test.go
+@@ -48,7 +48,7 @@
+ 	}
+ 	checkedFiles := len(selected)
+ 	for index, input := range inputs[files:] {
+-		if included[gatesample.GeneratedKey(index)] {
++		if included[gatesample.GeneratedKey(index)] && false {
+ 			selected = append(selected, input)
+ 		}
+ 	}

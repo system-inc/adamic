@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/quotes.ts
++++ b/stage1/cohere/markdownblocks/quotes.ts
+@@ -25,6 +25,7 @@
+     ].includes(kind);
+ }
+ export function printQuote(arena: DocumentArena, children: readonly ListBlockInterface[]): number {
++    return 0;
+     const parts: number[] = [];
+     for(let index = 0; index < children.length; index++) {
+         const child = children[index] ?? panic('quote child');

@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T12:52:45.479166135Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T12:52:45.487460577Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses"}
+{"Time":"2026-10-09T12:52:45.487582407Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses","Output":"=== RUN   TestMdastIdentifierWitnesses\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:52:45.487615776Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses","Output":"    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)\n"}
+{"Time":"2026-10-09T12:52:45.487621925Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses","Output":"=== PAUSE TestMdastIdentifierWitnesses\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:52:45.487623788Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses"}
+{"Time":"2026-10-09T12:52:45.487626011Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses"}
+{"Time":"2026-10-09T12:52:45.487627653Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses","Output":"=== CONT  TestMdastIdentifierWitnesses\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:52:51.827721481Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses","Output":"    mdast_gap_test.go:89: Three full-tree Go/fork casing disagreements retained; native/source/backend hold Go, sanitizers and leaks pass\n"}
+{"Time":"2026-10-09T12:52:51.828148641Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses","Output":"--- PASS: TestMdastIdentifierWitnesses (6.34s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:52:51.828154941Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestMdastIdentifierWitnesses","Elapsed":6.34}
+{"Time":"2026-10-09T12:52:51.828177454Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:52:51.830044215Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t6.350s\n"}
+{"Time":"2026-10-09T12:52:51.830072056Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":6.351}

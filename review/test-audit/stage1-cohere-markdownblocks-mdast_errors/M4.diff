@@ -1,0 +1,9 @@
+--- a/stage1/cohere/markdownblocks/quotes.ts
++++ b/stage1/cohere/markdownblocks/quotes.ts
+@@ -41,5 +41,5 @@
+         }
+         parts.push(child.doc);
+     }
+-    return arena.concat([arena.text('> '), arena.align('> ', arena.concat(parts))]);
++    return arena.concat([arena.text('# '), arena.align('> ', arena.concat(parts))]);
+ }

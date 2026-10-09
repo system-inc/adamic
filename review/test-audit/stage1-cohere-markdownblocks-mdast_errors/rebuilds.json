@@ -1,0 +1,67 @@
+{
+  "M1": [
+    "malformed_events_independent_test.go:252: build markdownblocks-malformed-events-go-errors f8c02657bc6a hit 1.41",
+    "malformed_events_independent_test.go:85: build markdownblocks-malformed-events-lowered 28ae095f9c00 miss 3.18",
+    "malformed_events_independent_test.go:85: build markdownblocks-malformed-events-native 9c96a5052153 miss 5.24"
+  ],
+  "M2": [],
+  "M3": [],
+  "M4": [
+    "quote_layout_shards_test.go:218: build markdown-quote-layout-lowered 598551add71b miss 35.73",
+    "quote_layout_shards_test.go:272: build markdown-quote-layout-go-lists 0aa5b62d224e hit 1.15",
+    "quote_layout_shards_test.go:272: build markdown-quote-layout-go-layout 90bb94785c33 hit 1.15",
+    "quote_layout_shards_test.go:628: build markdown-quote-layout-native-false 02b4257e753d miss 6.79",
+    "quote_layout_shards_test.go:628: build markdown-quote-layout-native-true eb579641abb2 miss 24.93"
+  ],
+  "P1": [
+    "malformed_events_independent_test.go:252: build markdownblocks-malformed-events-go-errors f8c02657bc6a hit 1.44",
+    "malformed_events_independent_test.go:85: build markdownblocks-malformed-events-lowered 3c10b0d90533 miss 3.03",
+    "malformed_events_independent_test.go:85: build markdownblocks-malformed-events-native 2e1181e8584c miss 5.41"
+  ],
+  "P2": [],
+  "P3": [],
+  "P4": [
+    "quote_layout_shards_test.go:218: build markdown-quote-layout-lowered 31b0c5bf6cf1 miss 35.77",
+    "quote_layout_shards_test.go:272: build markdown-quote-layout-go-lists 0aa5b62d224e hit 1.19",
+    "quote_layout_shards_test.go:272: build markdown-quote-layout-go-layout 90bb94785c33 hit 1.19",
+    "quote_layout_shards_test.go:628: build markdown-quote-layout-native-false 1d41f0a78864 miss 6.97",
+    "quote_layout_shards_test.go:628: build markdown-quote-layout-native-true f104b8390f6e miss 24.43"
+  ],
+  "W1": [
+    "preflight_shards_test.go:61: build markdownblocks-whole-document-preflight-go-products ef6ec33d8ed2 hit 1.07"
+  ],
+  "W2": [
+    "preflight_shards_test.go:61: build markdownblocks-whole-document-preflight-go-products ef6ec33d8ed2 hit 1.06"
+  ],
+  "W3": [
+    "quote_layout_shards_test.go:218: build markdown-quote-layout-lowered bfef504866f0 hit 0.98",
+    "quote_layout_shards_test.go:272: build markdown-quote-layout-go-lists 0aa5b62d224e hit 1.10",
+    "quote_layout_shards_test.go:272: build markdown-quote-layout-go-layout 90bb94785c33 hit 1.24",
+    "quote_layout_shards_test.go:628: build markdown-quote-layout-native-true be990a8a8255 hit 1.09",
+    "quote_layout_shards_test.go:628: build markdown-quote-layout-native-false d873406fd3a8 hit 1.11"
+  ],
+  "G2": [
+    "quote_layout_shards_test.go:218: build markdown-quote-layout-lowered bfef504866f0 miss 35.98",
+    "quote_layout_shards_test.go:272: build markdown-quote-layout-go-lists 0aa5b62d224e miss 1.49",
+    "quote_layout_shards_test.go:272: build markdown-quote-layout-go-layout 90bb94785c33 miss 1.43",
+    "quote_layout_shards_test.go:628: build markdown-quote-layout-native-false d873406fd3a8 miss 7.58",
+    "quote_layout_shards_test.go:628: build markdown-quote-layout-native-true be990a8a8255 miss 29.83"
+  ],
+  "G3": [],
+  "G1": [
+    "malformed_events_independent_test.go:252: build markdownblocks-malformed-events-go-errors: Go errors: exit status 2",
+    "usage: go build [-o output] [build flags] [packages]"
+  ],
+  "P5": [],
+  "P6": [],
+  "P7": [],
+  "P8": [],
+  "P9": [],
+  "P10": [],
+  "P11": [
+    "quote_layout_shards_test.go:219: build markdown-quote-layout-lowered bfef504866f0 hit 1.06",
+    "quote_layout_shards_test.go:273: build markdown-quote-layout-go-lists 0aa5b62d224e hit 1.36",
+    "quote_layout_shards_test.go:273: build markdown-quote-layout-go-layout 90bb94785c33 hit 2.02"
+  ],
+  "P12": []
+}

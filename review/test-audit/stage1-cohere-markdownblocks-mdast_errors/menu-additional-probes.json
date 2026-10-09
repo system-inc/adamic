@@ -1,0 +1,81 @@
+[
+  {
+    "id": "P6",
+    "file": "stage1/cohere/markdownblocks/sample_test.go",
+    "line": 35,
+    "old": "func selectedMarkdownInputs(inputs []auditInput, files int, selection gatesample.Selection) ([]auditInput, int) {",
+    "new": "func selectedMarkdownInputs(inputs []auditInput, files int, selection gatesample.Selection) ([]auditInput, int) {\n\tif true { return nil, 0 }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestSampleRetainsFixedMarkdownInputs",
+      "TestGeneratedLayoutSelection"
+    ]
+  },
+  {
+    "id": "P7",
+    "file": "stage1/cohere/markdownblocks/sample_test.go",
+    "line": 58,
+    "old": "func sampledNumericInputs(inputs [][]uint16, names []string, corpus []auditInput, selection gatesample.Selection) ([][]uint16, []string, []int) {",
+    "new": "func sampledNumericInputs(inputs [][]uint16, names []string, corpus []auditInput, selection gatesample.Selection) ([][]uint16, []string, []int) {\n\tif true { return nil, nil, nil }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestSampleRetainsFixedMarkdownInputs",
+      "TestGeneratedLayoutSelection"
+    ]
+  },
+  {
+    "id": "P8",
+    "file": "stage1/cohere/markdownblocks/sample_test.go",
+    "line": 104,
+    "old": "func selectedNumericAnswers(t *testing.T, answer run, rows []int, total int) run {",
+    "new": "func selectedNumericAnswers(t *testing.T, answer run, rows []int, total int) run {\n\tif true { return run{} }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestSampleRetainsFixedMarkdownInputs"
+    ]
+  },
+  {
+    "id": "P9",
+    "file": "stage1/cohere/markdownblocks/sample_test.go",
+    "line": 16,
+    "old": "func selectMarkdownFiles(t *testing.T, root string, inputs []auditInput, files, stride int) gatesample.Selection {",
+    "new": "func selectMarkdownFiles(t *testing.T, root string, inputs []auditInput, files, stride int) gatesample.Selection {\n\tif true { return gatesample.Selection{} }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestGeneratedLayoutSelection"
+    ]
+  },
+  {
+    "id": "P10",
+    "file": "stage1/cohere/markdownblocks/malformed_events_independent_test.go",
+    "line": 238,
+    "old": "func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {",
+    "new": "func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {\n\tif true { return malformedEventsProductSet{} }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestMdastMalformedEvents_Setup"
+    ]
+  },
+  {
+    "id": "P11",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 69,
+    "old": "func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLayoutProducts {",
+    "new": "func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLayoutProducts {\n\tif true { return quoteLayoutProducts{} }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestMarkdownQuoteLayoutNative"
+    ]
+  },
+  {
+    "id": "P12",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 107,
+    "old": "func quoteLayoutReady(t *testing.T) quoteLayoutProducts {",
+    "new": "func quoteLayoutReady(t *testing.T) quoteLayoutProducts {\n\tif true { return quoteLayoutProducts{} }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestMarkdownQuoteLayout_Setup"
+    ]
+  }
+]

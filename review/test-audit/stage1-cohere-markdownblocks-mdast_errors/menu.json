@@ -1,0 +1,298 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/markdownblocks/mdastCompile.ts",
+    "line": 620,
+    "old": "const root = this.arena.add('root', true, false);",
+    "new": "const root = this.arena.add('root', false, false);",
+    "kind": "change constant",
+    "members": [
+      "TestMdastMalformedEvents_Setup",
+      "TestMdastIdentifierWitnesses",
+      "TestNativeMdastConstruction"
+    ]
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/markdownblocks/astPath.ts",
+    "line": 82,
+    "old": "return this.stack.length === 1;",
+    "new": "return this.stack.length === 0;",
+    "kind": "change constant",
+    "members": [
+      "TestMarkdownAstPath"
+    ]
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/markdownblocks/preprocess.ts",
+    "line": 39,
+    "old": "code: 65533",
+    "new": "code: 65534",
+    "kind": "change constant",
+    "members": [
+      "TestMarkdownParserPrefixes"
+    ]
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/markdownblocks/quotes.ts",
+    "line": 44,
+    "old": "arena.text('> ')",
+    "new": "arena.text('# ')",
+    "kind": "change constant",
+    "members": [
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup",
+      "TestMarkdownQuoteLayoutUnion",
+      "TestMarkdownQuoteLayout_000",
+      "TestMarkdownQuoteLayout_001",
+      "TestMarkdownQuoteLayout_002",
+      "TestMarkdownQuoteLayout_003",
+      "TestMarkdownQuoteLayout_004",
+      "TestMarkdownQuoteLayout_005",
+      "TestMarkdownQuoteLayout_006",
+      "TestMarkdownQuoteLayout_007",
+      "TestMarkdownQuoteLayout_008",
+      "TestMarkdownQuoteLayout_009",
+      "TestMarkdownQuoteLayout_010",
+      "TestMarkdownQuoteLayout_011"
+    ]
+  },
+  {
+    "id": "P1",
+    "file": "stage1/cohere/markdownblocks/mdastCompile.ts",
+    "line": 619,
+    "old": "compile(): MdastArena {",
+    "new": "compile(): MdastArena {\n        return this.arena;",
+    "kind": "empty entry",
+    "members": [
+      "TestMdastMalformedEvents_Setup",
+      "TestMdastIdentifierWitnesses",
+      "TestNativeMdastConstruction"
+    ]
+  },
+  {
+    "id": "P2",
+    "file": "stage1/cohere/markdownblocks/pathObserve.ts",
+    "line": 72,
+    "old": "export function observePath(path: AstPath): string {",
+    "new": "export function observePath(path: AstPath): string {\n    return '';",
+    "kind": "empty entry",
+    "members": [
+      "TestMarkdownAstPath"
+    ]
+  },
+  {
+    "id": "P3",
+    "file": "stage1/cohere/markdownblocks/preprocess.ts",
+    "line": 7,
+    "old": "export function preprocess(value: string): ChunkInterface[] {",
+    "new": "export function preprocess(value: string): ChunkInterface[] {\n    return [];",
+    "kind": "empty entry",
+    "members": [
+      "TestMarkdownParserPrefixes"
+    ]
+  },
+  {
+    "id": "P4",
+    "file": "stage1/cohere/markdownblocks/quotes.ts",
+    "line": 27,
+    "old": "export function printQuote(arena: DocumentArena, children: readonly ListBlockInterface[]): number {",
+    "new": "export function printQuote(arena: DocumentArena, children: readonly ListBlockInterface[]): number {\n    return 0;",
+    "kind": "empty entry",
+    "members": [
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup",
+      "TestMarkdownQuoteLayoutUnion",
+      "TestMarkdownQuoteLayout_000",
+      "TestMarkdownQuoteLayout_001",
+      "TestMarkdownQuoteLayout_002",
+      "TestMarkdownQuoteLayout_003",
+      "TestMarkdownQuoteLayout_004",
+      "TestMarkdownQuoteLayout_005",
+      "TestMarkdownQuoteLayout_006",
+      "TestMarkdownQuoteLayout_007",
+      "TestMarkdownQuoteLayout_008",
+      "TestMarkdownQuoteLayout_009",
+      "TestMarkdownQuoteLayout_010",
+      "TestMarkdownQuoteLayout_011"
+    ]
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/markdownblocks/preflight_shards_test.go",
+    "line": 260,
+    "old": "if !bytes.Equal([]byte(actual.Off), []byte(expected.Off)) {",
+    "new": "if false {",
+    "kind": "weaken witnessed comparison",
+    "members": [
+      "TestWholeDocumentOraclePreflightUnion",
+      "TestWholeDocumentOraclePreflight_000",
+      "TestWholeDocumentOraclePreflight_001",
+      "TestWholeDocumentOraclePreflight_002",
+      "TestWholeDocumentOraclePreflight_003"
+    ]
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/markdownblocks/preflight_shards_test.go",
+    "line": 451,
+    "old": "if actual.Off != nodeAnswers[index].Off {",
+    "new": "if false {",
+    "kind": "weaken witnessed comparison",
+    "members": [
+      "TestWholeDocumentOraclePreflightMutants"
+    ]
+  },
+  {
+    "id": "W3",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 172,
+    "old": "return bytes.Equal(actual, expected)",
+    "new": "return true",
+    "kind": "weaken witnessed comparison",
+    "members": [
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup",
+      "TestMarkdownQuoteLayoutUnion",
+      "TestMarkdownQuoteLayout_000",
+      "TestMarkdownQuoteLayout_001",
+      "TestMarkdownQuoteLayout_002",
+      "TestMarkdownQuoteLayout_003",
+      "TestMarkdownQuoteLayout_004",
+      "TestMarkdownQuoteLayout_005",
+      "TestMarkdownQuoteLayout_006",
+      "TestMarkdownQuoteLayout_007",
+      "TestMarkdownQuoteLayout_008",
+      "TestMarkdownQuoteLayout_009",
+      "TestMarkdownQuoteLayout_010",
+      "TestMarkdownQuoteLayout_011"
+    ]
+  },
+  {
+    "id": "G2",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 81,
+    "old": "products.sanitized = filepath.Join(dir, \"port\")",
+    "new": "products.sanitized = \"\"",
+    "kind": "drop constructed product value",
+    "members": [
+      "TestMarkdownQuoteLayoutNative",
+      "TestMarkdownQuoteLayout_Setup"
+    ]
+  },
+  {
+    "id": "G3",
+    "file": "stage1/cohere/markdownblocks/sample_test.go",
+    "line": 51,
+    "old": "if included[gatesample.GeneratedKey(index)] {",
+    "new": "if included[gatesample.GeneratedKey(index)] && false {",
+    "kind": "drop generated input condition",
+    "members": [
+      "TestSampleRetainsFixedMarkdownInputs",
+      "TestGeneratedLayoutSelection"
+    ]
+  },
+  {
+    "id": "G1",
+    "file": "stage1/cohere/markdownblocks/malformed_events_independent_test.go",
+    "line": 374,
+    "old": "\"-overlay=\"+overlayPath, \"-o\", filepath.Join(dir, \"go-errors\")",
+    "new": "\"-overlay=\"+overlayPath, \"-invalid-output-flag\", filepath.Join(dir, \"go-errors\")",
+    "kind": "change construction build option",
+    "members": [
+      "TestMdastMalformedEvents_Setup"
+    ]
+  },
+  {
+    "id": "P5",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tif true { return nil, nil }",
+    "kind": "empty Lower entry",
+    "members": [
+      "TestOptionalStringInitializationWitness"
+    ]
+  },
+  {
+    "id": "P6",
+    "file": "stage1/cohere/markdownblocks/sample_test.go",
+    "line": 35,
+    "old": "func selectedMarkdownInputs(inputs []auditInput, files int, selection gatesample.Selection) ([]auditInput, int) {",
+    "new": "func selectedMarkdownInputs(inputs []auditInput, files int, selection gatesample.Selection) ([]auditInput, int) {\n\tif true { return nil, 0 }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestSampleRetainsFixedMarkdownInputs",
+      "TestGeneratedLayoutSelection"
+    ]
+  },
+  {
+    "id": "P7",
+    "file": "stage1/cohere/markdownblocks/sample_test.go",
+    "line": 58,
+    "old": "func sampledNumericInputs(inputs [][]uint16, names []string, corpus []auditInput, selection gatesample.Selection) ([][]uint16, []string, []int) {",
+    "new": "func sampledNumericInputs(inputs [][]uint16, names []string, corpus []auditInput, selection gatesample.Selection) ([][]uint16, []string, []int) {\n\tif true { return nil, nil, nil }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestSampleRetainsFixedMarkdownInputs",
+      "TestGeneratedLayoutSelection"
+    ]
+  },
+  {
+    "id": "P8",
+    "file": "stage1/cohere/markdownblocks/sample_test.go",
+    "line": 104,
+    "old": "func selectedNumericAnswers(t *testing.T, answer run, rows []int, total int) run {",
+    "new": "func selectedNumericAnswers(t *testing.T, answer run, rows []int, total int) run {\n\tif true { return run{} }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestSampleRetainsFixedMarkdownInputs"
+    ]
+  },
+  {
+    "id": "P9",
+    "file": "stage1/cohere/markdownblocks/sample_test.go",
+    "line": 16,
+    "old": "func selectMarkdownFiles(t *testing.T, root string, inputs []auditInput, files, stride int) gatesample.Selection {",
+    "new": "func selectMarkdownFiles(t *testing.T, root string, inputs []auditInput, files, stride int) gatesample.Selection {\n\tif true { return gatesample.Selection{} }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestGeneratedLayoutSelection"
+    ]
+  },
+  {
+    "id": "P10",
+    "file": "stage1/cohere/markdownblocks/malformed_events_independent_test.go",
+    "line": 238,
+    "old": "func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {",
+    "new": "func malformedEventsSharedSetup(t *testing.T) malformedEventsProductSet {\n\tif true { return malformedEventsProductSet{} }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestMdastMalformedEvents_Setup"
+    ]
+  },
+  {
+    "id": "P11",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 69,
+    "old": "func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLayoutProducts {",
+    "new": "func quoteLayoutNativeSetup(t *testing.T, products quoteLayoutProducts) quoteLayoutProducts {\n\tif true { return quoteLayoutProducts{} }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestMarkdownQuoteLayoutNative"
+    ]
+  },
+  {
+    "id": "P12",
+    "file": "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    "line": 107,
+    "old": "func quoteLayoutReady(t *testing.T) quoteLayoutProducts {",
+    "new": "func quoteLayoutReady(t *testing.T) quoteLayoutProducts {\n\tif true { return quoteLayoutProducts{} }",
+    "kind": "empty construction entry",
+    "members": [
+      "TestMarkdownQuoteLayout_Setup"
+    ]
+  }
+]

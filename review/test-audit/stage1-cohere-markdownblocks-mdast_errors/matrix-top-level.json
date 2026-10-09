@@ -1,0 +1,122 @@
+{
+  "M1": {
+    "TestMdastMalformedEvents_Setup": "pass",
+    "TestMdastIdentifierWitnesses": "fail",
+    "TestNativeMdastConstruction": "fail"
+  },
+  "M2": {
+    "TestMarkdownAstPath": "fail"
+  },
+  "M3": {
+    "TestMarkdownParserPrefixes": "fail"
+  },
+  "M4": {
+    "TestMarkdownQuoteLayoutNative": "pass",
+    "TestMarkdownQuoteLayout_Setup": "pass",
+    "TestMarkdownQuoteLayoutUnion": "pass",
+    "TestMarkdownQuoteLayout_000": "fail",
+    "TestMarkdownQuoteLayout_001": "fail",
+    "TestMarkdownQuoteLayout_002": "fail",
+    "TestMarkdownQuoteLayout_003": "fail",
+    "TestMarkdownQuoteLayout_004": "fail",
+    "TestMarkdownQuoteLayout_005": "fail",
+    "TestMarkdownQuoteLayout_006": "fail",
+    "TestMarkdownQuoteLayout_007": "fail",
+    "TestMarkdownQuoteLayout_008": "fail",
+    "TestMarkdownQuoteLayout_009": "fail",
+    "TestMarkdownQuoteLayout_010": "fail",
+    "TestMarkdownQuoteLayout_011": "fail"
+  },
+  "P1": {
+    "TestMdastMalformedEvents_Setup": "pass",
+    "TestMdastIdentifierWitnesses": "fail",
+    "TestNativeMdastConstruction": "fail"
+  },
+  "P2": {
+    "TestMarkdownAstPath": "fail"
+  },
+  "P3": {
+    "TestMarkdownParserPrefixes": "fail"
+  },
+  "P4": {
+    "TestMarkdownQuoteLayoutNative": "pass",
+    "TestMarkdownQuoteLayout_Setup": "pass",
+    "TestMarkdownQuoteLayoutUnion": "pass",
+    "TestMarkdownQuoteLayout_000": "fail",
+    "TestMarkdownQuoteLayout_001": "fail",
+    "TestMarkdownQuoteLayout_002": "fail",
+    "TestMarkdownQuoteLayout_003": "fail",
+    "TestMarkdownQuoteLayout_004": "fail",
+    "TestMarkdownQuoteLayout_005": "fail",
+    "TestMarkdownQuoteLayout_006": "fail",
+    "TestMarkdownQuoteLayout_007": "fail",
+    "TestMarkdownQuoteLayout_008": "fail",
+    "TestMarkdownQuoteLayout_009": "fail",
+    "TestMarkdownQuoteLayout_010": "fail",
+    "TestMarkdownQuoteLayout_011": "fail"
+  },
+  "W1": {
+    "TestWholeDocumentOraclePreflightUnion": "fail",
+    "TestWholeDocumentOraclePreflight_000": "fail",
+    "TestWholeDocumentOraclePreflight_001": "pass",
+    "TestWholeDocumentOraclePreflight_002": "pass",
+    "TestWholeDocumentOraclePreflight_003": "pass"
+  },
+  "W2": {
+    "TestWholeDocumentOraclePreflightMutants": "fail"
+  },
+  "W3": {
+    "TestMarkdownQuoteLayoutNative": "pass",
+    "TestMarkdownQuoteLayout_Setup": "pass",
+    "TestMarkdownQuoteLayoutUnion": "fail",
+    "TestMarkdownQuoteLayout_000": "fail",
+    "TestMarkdownQuoteLayout_001": "fail",
+    "TestMarkdownQuoteLayout_002": "fail",
+    "TestMarkdownQuoteLayout_003": "fail",
+    "TestMarkdownQuoteLayout_004": "fail",
+    "TestMarkdownQuoteLayout_005": "fail",
+    "TestMarkdownQuoteLayout_006": "fail",
+    "TestMarkdownQuoteLayout_007": "fail",
+    "TestMarkdownQuoteLayout_008": "fail",
+    "TestMarkdownQuoteLayout_009": "fail",
+    "TestMarkdownQuoteLayout_010": "fail",
+    "TestMarkdownQuoteLayout_011": "fail"
+  },
+  "G2": {
+    "TestMarkdownQuoteLayoutNative": "fail",
+    "TestMarkdownQuoteLayout_Setup": "fail"
+  },
+  "G3": {
+    "TestSampleRetainsFixedMarkdownInputs": "fail",
+    "TestGeneratedLayoutSelection": "fail"
+  },
+  "G1": {
+    "TestMdastMalformedEvents_Setup": "fail"
+  },
+  "P5": {
+    "TestOptionalStringInitializationWitness": "fail"
+  },
+  "P6": {
+    "TestSampleRetainsFixedMarkdownInputs": "fail",
+    "TestGeneratedLayoutSelection": "fail"
+  },
+  "P7": {
+    "TestSampleRetainsFixedMarkdownInputs": "fail",
+    "TestGeneratedLayoutSelection": "fail"
+  },
+  "P8": {
+    "TestSampleRetainsFixedMarkdownInputs": "fail"
+  },
+  "P9": {
+    "TestGeneratedLayoutSelection": "fail"
+  },
+  "P10": {
+    "TestMdastMalformedEvents_Setup": "pass"
+  },
+  "P11": {
+    "TestMarkdownQuoteLayoutNative": "pass"
+  },
+  "P12": {
+    "TestMarkdownQuoteLayout_Setup": "pass"
+  }
+}

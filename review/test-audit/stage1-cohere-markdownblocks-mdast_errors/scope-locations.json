@@ -1,0 +1,118 @@
+{
+  "TestMdastMalformedEvents_Setup": [
+    "stage1/cohere/markdownblocks/mdast_errors_test.go",
+    5
+  ],
+  "TestMdastIdentifierWitnesses": [
+    "stage1/cohere/markdownblocks/mdast_gap_test.go",
+    12
+  ],
+  "TestNativeMdastConstruction": [
+    "stage1/cohere/markdownblocks/mdast_test.go",
+    16
+  ],
+  "TestOptionalStringInitializationWitness": [
+    "stage1/cohere/markdownblocks/optional_gap_test.go",
+    10
+  ],
+  "TestMarkdownAstPath": [
+    "stage1/cohere/markdownblocks/path_test.go",
+    17
+  ],
+  "TestMarkdownParserPrefixes": [
+    "stage1/cohere/markdownblocks/prefix_test.go",
+    16
+  ],
+  "TestWholeDocumentOraclePreflightMutants": [
+    "stage1/cohere/markdownblocks/preflight_shards_test.go",
+    416
+  ],
+  "TestMarkdownQuoteLayoutNative": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    64
+  ],
+  "TestMarkdownQuoteLayout_Setup": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    102
+  ],
+  "TestSampleRetainsFixedMarkdownInputs": [
+    "stage1/cohere/markdownblocks/sample_test.go",
+    119
+  ],
+  "TestGeneratedLayoutSelection": [
+    "stage1/cohere/markdownblocks/sample_test.go",
+    153
+  ],
+  "TestWholeDocumentOraclePreflightUnion": [
+    "stage1/cohere/markdownblocks/preflight_shards_test.go",
+    341
+  ],
+  "TestWholeDocumentOraclePreflight_000": [
+    "stage1/cohere/markdownblocks/preflight_shards_test.go",
+    397
+  ],
+  "TestWholeDocumentOraclePreflight_001": [
+    "stage1/cohere/markdownblocks/preflight_shards_test.go",
+    401
+  ],
+  "TestWholeDocumentOraclePreflight_002": [
+    "stage1/cohere/markdownblocks/preflight_shards_test.go",
+    405
+  ],
+  "TestWholeDocumentOraclePreflight_003": [
+    "stage1/cohere/markdownblocks/preflight_shards_test.go",
+    409
+  ],
+  "TestMarkdownQuoteLayoutUnion": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    135
+  ],
+  "TestMarkdownQuoteLayout_000": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    190
+  ],
+  "TestMarkdownQuoteLayout_001": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    191
+  ],
+  "TestMarkdownQuoteLayout_002": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    192
+  ],
+  "TestMarkdownQuoteLayout_003": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    193
+  ],
+  "TestMarkdownQuoteLayout_004": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    194
+  ],
+  "TestMarkdownQuoteLayout_005": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    195
+  ],
+  "TestMarkdownQuoteLayout_006": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    196
+  ],
+  "TestMarkdownQuoteLayout_007": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    197
+  ],
+  "TestMarkdownQuoteLayout_008": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    198
+  ],
+  "TestMarkdownQuoteLayout_009": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    199
+  ],
+  "TestMarkdownQuoteLayout_010": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    200
+  ],
+  "TestMarkdownQuoteLayout_011": [
+    "stage1/cohere/markdownblocks/quote_layout_shards_test.go",
+    201
+  ]
+}

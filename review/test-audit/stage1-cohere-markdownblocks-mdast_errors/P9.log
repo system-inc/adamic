@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T13:06:25.502880204Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks"}
+{"Time":"2026-10-09T13:06:25.510156627Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestGeneratedLayoutSelection"}
+{"Time":"2026-10-09T13:06:25.510249934Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestGeneratedLayoutSelection","Output":"=== RUN   TestGeneratedLayoutSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:06:25.510277956Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestGeneratedLayoutSelection","Output":"    sample_test.go:161: indexed corpus/control: [{true generated/repeated } {false generated/control } {true generated/repeated }]\n","OutputType":"error"}
+{"Time":"2026-10-09T13:06:25.510295532Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestGeneratedLayoutSelection","Output":"--- FAIL: TestGeneratedLayoutSelection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:06:25.510301861Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Test":"TestGeneratedLayoutSelection","Elapsed":0}
+{"Time":"2026-10-09T13:06:25.510319127Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:06:25.510581123Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/markdownblocks\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:06:25.510604198Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/markdownblocks","Elapsed":0.008}

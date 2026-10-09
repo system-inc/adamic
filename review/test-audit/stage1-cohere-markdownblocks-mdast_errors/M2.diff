@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/astPath.ts
++++ b/stage1/cohere/markdownblocks/astPath.ts
+@@ -79,7 +79,7 @@
+         return this.isInArray() && this.index() === this.arrayLength(this.siblings()) - 1;
+     }
+     isRoot(): boolean {
+-        return this.stack.length === 1;
++        return this.stack.length === 0;
+     }
+     root(): number {
+         const frame = this.at(0);

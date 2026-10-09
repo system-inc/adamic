@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/malformed_events_independent_test.go
++++ b/stage1/cohere/markdownblocks/malformed_events_independent_test.go
+@@ -371,7 +371,7 @@
+ 		if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+ 			return err
+ 		}
+-		command := malformedEventsCommand(ctx, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-errors"), mainPath)
++		command := malformedEventsCommand(ctx, "go", "build", "-overlay="+overlayPath, "-invalid-output-flag", filepath.Join(dir, "go-errors"), mainPath)
+ 		command.Dir = cohere
+ 		if output, err := command.CombinedOutput(); err != nil {
+ 			return fmt.Errorf("Go errors: %w\n%s", err, output)
