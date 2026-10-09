@@ -1,14 +1,14 @@
 # Chain slice 6
 
 Built four own-net members on main, with catchable initialization throws and matching lint/runtime features.
-Member commits: de2f1819, 1e9199d2, 090163eb, 250a56be; owning repairs and the main merge remain in history.
+Member commits: df93806d, bab6155e, d10e3e00, cd0b8e5f; each includes its owning repairs.
 Lower: 277 pass, two existing skips; own fixtures, feature matrix, reader guard, counts and lane checks pass.
 49 mutant cases were caught; each case and catcher is listed below with evidence.
 Not covered: literal all-admission Node agreement, WASI execution, other platforms or the full gate.
 
 ## Extraction and dependencies
 
-Initial main: 5e33a17b186a8a2218d27b69b21e2de5acc5b750. Current main merged: 98008bbba2881939e07a9d74031994102a3bbe36. The chain head f5236b48 was inspected, never merged. No other slice was merged or copied. The source plan, refined ranges and complete source histories are preserved in ../chain-slice-6/.
+Initial main: 5e33a17b186a8a2218d27b69b21e2de5acc5b750. Final main parent: 98008bbba2881939e07a9d74031994102a3bbe36. The chain head f5236b48 was inspected, never merged. No other slice was merged or copied. The source plan, refined ranges and complete source histories are preserved in ../chain-slice-6/.
 
 | Member | Source SHA | Fork point | Decision | Dependency evidence | Tasks served |
 | --- | --- | --- | --- | --- | --- |
@@ -42,7 +42,7 @@ Build/test commands source /workspace/adamic-tools/env.sh, unset GOCACHEPROG, an
 | Reader guard | go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -json -timeout 90s: final repair pass 0.715 s. Stale throwsOut allowlist renamed with compiler ownership. | readers-final-repairs.jsonl |
 | Counts | go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -json -timeout 180s -args -update-counts: pass 99.910 s. Two earlier 90-second attempts expired without writing; table wrote once successfully. Maximum individual counts leaf 3.21 s. | counts-final.jsonl |
 | Attribution | All 126 changed rows: 104 existing changes and 22 new registrations, zero removed rows. Existing changes have generated main/slice C diffs. New inherited-fields registration produces identical C on main. | counts-attribution.json, counts-diffs/ |
-| Lane | Required fetch/show lane-checks pipeline passed formatting, tools, parallel analyzer and a-check. Its vet budget expired; separate go vet on all changed test packages passed. Final lane also includes cmd/adamic request repair. | lane-checks.log, lane-checks-final.log, vet.log, vet-final.log |
+| Lane | Required fetch/show lane-checks pipeline passed formatting, tools, parallel analyzer and a-check. Its vet budget expired; separate go vet on all changed test packages passed. Final lane: 69 Go files, 13 test packages, five a-check files and vet on all 13 packages; 11.2 s. | lane-checks.log, lane-checks-final.log, vet.log, vet-final.log |
 | WASI request | go test ./cmd/adamic -run '^TestWASIRequestThrows$' -count=1 -json -timeout 90s: compiles and skips; WASI execution opt-in/SDK not configured. | request-wasi-optin.jsonl |
 
 Test seconds are in test-seconds.json; largest member leaf observed 38.58 s. No new test leaf exceeds 60 s. The counts aggregate writer is an existing test. Unsuccessful setup, stale allowlist and missing-type attempts are retained and not credited as passes.
@@ -127,3 +127,5 @@ For @system_adamic_runtime, own runtime files changed against current main:
 - internal/native/runtime/sort_undefined.c
 
 Runtime clearance and integration acceptance remain pending. Delivery branch: compiler/chain-slice-6. No PR and no main/area push.
+
+Owning repairs were folded into one commit per member on current main. The tested tree is unchanged: 65191d9656fb6dbcfcefd550e94d692eb4aecd24 before and after history consolidation. See ../chain-slice-6/history-proof.json.
