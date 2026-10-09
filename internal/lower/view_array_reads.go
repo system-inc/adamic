@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -9,7 +10,7 @@ import (
 // final pass enables it only in a program containing an admitted array view.
 func (l *lowering) markViewArrayRead(node *ast.Node, read ir.ArrayIndex) ir.ArrayIndex {
 	array := node.AsElementAccessExpression().Expression
-	element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(array))))
+	element := l.untaggedArrayElement(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(array))))
 	if element != nil {
 		element = l.concrete(element)
 		_, _ = l.viewContract(node, element)
@@ -33,7 +34,7 @@ func markProgramViewArrayRead(program *ir.Program, read ir.ArrayIndex) ir.ArrayI
 }
 
 func (l *lowering) viewArrayUse(node, array *ast.Node, of ir.Type, required bool) ir.ArrayViewRead {
-	element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(array))))
+	element := l.untaggedArrayElement(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(array))))
 	if element == nil {
 		return ir.ArrayViewRead{}
 	}
@@ -70,4 +71,26 @@ func (l *lowering) viewArrayString(node, span *ast.Node, value ir.Expression) (i
 	held := ir.Read{Local: local, Of: ir.Array}
 	join.Array = held
 	return ir.Effects{Body: []ir.Statement{ir.Declare{Local: local, Value: value}}, Result: ir.Conditional{Condition: ir.Truthy{Value: held}, WhenTrue: join, WhenNot: ir.StringConstant{Index: l.constant("undefined")}, Of: ir.String}}, nil
+}
+
+// A joined logical element type cannot choose an arbitrary physical member.
+// Same-storage object arms can share checked reads; scalar/reference conversion
+// still needs a boxing adapter and keeps the existing refusal.
+func (l *lowering) sameArrayMemberStorage(target *checker.Type) bool {
+	if target.Flags()&checker.TypeFlagsUnion == 0 {
+		return true
+	}
+	held := ir.Type(0)
+	for _, member := range target.Types() {
+		element := l.viewArrayElementType(member)
+		if element == nil {
+			return false
+		}
+		storage, known := l.kept(element)
+		if !known || held != 0 && storage != held {
+			return false
+		}
+		held = storage
+	}
+	return held != 0
 }
