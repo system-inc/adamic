@@ -2374,6 +2374,8 @@ class Gate:
                 errors.append(str(error))
         for field in ("units", "test_outcomes", "product_units", "cache_drain_units"):
             for row in self.result.get(field, []):
+                # The unit's name as input_hashes.py's command derives it, so a ledger row can be rehashed on another tree.
+                row.setdefault("unit", ("%s %s" % (row["package"], row.get("test", ""))).strip())
                 attach(row, {"packages": [row["package"]], "paths": []})
         phases = []
         for phase in self.planned:
