@@ -53,16 +53,16 @@ console.log(typeof make());`)
 
 // A branded primitive is an intersection whose parts aren't all type references. Asking the
 // string part for type arguments made the checker dereference nil (x1 of views slice 1,
-// notyet_element_access/paths.a); the proof now declines it and lowering stops normally.
-func TestClockGenericReturnsT01DeclinesBrandedPrimitives(t *testing.T) {
+// notyet_element_access/paths.a). The intersection view proof still declines it;
+// independent phantom-primitive representation now lowers it as its scalar base.
+func TestClockGenericReturnsT01SupportsPhantomPrimitives(t *testing.T) {
 	for _, source := range []string{
 		`type Path = string & { __pathBrand: void }; function read(values: readonly Path[], index: number): Path | undefined { return values[index]; } console.log(typeof read([], 0));`,
 		`type Count = number & { __countBrand: void }; function read(values: readonly Count[], index: number): Count | undefined { return values[index]; } console.log(typeof read([], 0));`,
 	} {
 		_, err := lowerSource(t, source)
-		var stop *NotYet
-		if !errors.As(err, &stop) {
-			t.Fatalf("want an explicit NotYet for a branded primitive result, got %v", err)
+		if err != nil {
+			t.Fatalf("phantom primitive result did not lower: %v", err)
 		}
 	}
 }

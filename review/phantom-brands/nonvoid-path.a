@@ -1,0 +1,3 @@
+// a-check: refused a primitive brand member __pathBrand whose type is not void
+// TypeScript 6.0.3, types.ts:23. The original member type remains unchanged.
+export type Path = string & { __pathBrand: any };

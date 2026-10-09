@@ -101,6 +101,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
+	if l.phantomCast(source, target) {
+		return castProof{}, nil
+	}
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: castRepair}
 	inner := ast.SkipParentheses(as.Expression)
 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
