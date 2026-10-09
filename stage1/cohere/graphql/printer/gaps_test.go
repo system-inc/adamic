@@ -41,6 +41,7 @@ const testPrinterWhitespaceGapShards = 5
 // A fixed set of shards hashes the repository-relative JSON path and entry index.
 // Adding entries preserves every existing assignment. ADAMIC_TEST_SHARD=i/n
 // selects indices modulo n equal to i; unset runs all. Builds are shared inputs.
+// Not parallel: printerBuild writes the shared buildcache directory and native.Build writes the shared adamic/runtime cache.
 func TestPrinterWhitespaceGap(t *testing.T) {
 	library := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
 	if library == "" {
@@ -160,6 +161,7 @@ func whitespaceShards(cases []printerCase) []printerShard {
 }
 
 func TestPrinterWhitespacePlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	var whole []printerCase
 	for i := range 5 {
 		whole = append(whole, printerCase{id: whitespaceCaseID(i), want: "error\trefused"})
@@ -193,6 +195,7 @@ func TestPrinterWhitespacePlantedDisagreement(t *testing.T) {
 }
 
 func TestPrinterWhitespaceShardGrowth(t *testing.T) {
+	t.Parallel()
 	original := []printerCase{{id: whitespaceCaseID(0)}, {id: whitespaceCaseID(1)}}
 	grown := append(append([]printerCase(nil), original...), printerCase{id: whitespaceCaseID(2)})
 	before, after := whitespaceShards(original), whitespaceShards(grown)
