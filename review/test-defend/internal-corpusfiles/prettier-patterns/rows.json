@@ -1,0 +1,30 @@
+[
+  {
+    "test": "TestProvisionedPrettierFixtures",
+    "package": "internal/corpusfiles",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestConvertedPackageContracts"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D01 internal/corpusfiles/files.go:72",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "internal/corpusfiles/files.go:72",
+        "change": "Off-by-one matcher bound: patterns becomes patterns[:max(1, len(patterns)-1)].",
+        "rows_failed": [
+          "TestProvisionedPrettierFixtures"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_CSS_FIXTURES=/tmp/defendcorpus/prettier ADAMIC_BUILD_CACHE_DIR=/tmp/defendcorpus/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/corpusfiles/ -run . > D01.log 2>&1; files_test.go:170: corpus-files: /tmp/defendcorpus/prettier root tests/format/less: no tracked files match [\"*.css\" \"*.scss\" \"*.less\"]",
+    "rows_passed": [
+      "TestDeterministicRootsPatternsAndMissingGit",
+      "TestMissingAndEmptyRoots",
+      "TestSparseCheckoutCannotShrinkCorpus",
+      "TestConvertedPackageContracts"
+    ],
+    "bounded": false
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/corpusfiles/files.go
++++ b/internal/corpusfiles/files.go
+@@ -69,7 +69,7 @@
+ }
+ 
+ func matches(name string, patterns []string) bool {
+-	for _, pattern := range patterns {
++	for _, pattern := range patterns[:max(1, len(patterns)-1)] {
+ 		if ok, _ := path.Match(strings.ToLower(pattern), strings.ToLower(path.Base(name))); ok {
+ 			return true
+ 		}

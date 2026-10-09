@@ -1,0 +1,12 @@
+{
+  "starting_commit": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "mutants": [
+    {
+      "id": "D01",
+      "file_line": "internal/corpusfiles/files.go:72",
+      "menu": "off-by-one bound",
+      "change": "iterate patterns[:max(1, len(patterns)-1)] instead of patterns",
+      "aim": "omit the last alternative in heterogeneous multi-pattern selection, preserving singleton behavior"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "D01": {
+    "outcomes": {
+      "TestDeterministicRootsPatternsAndMissingGit": "pass",
+      "TestMissingAndEmptyRoots": "pass",
+      "TestSparseCheckoutCannotShrinkCorpus": "pass",
+      "TestProvisionedPrettierFixtures": "fail",
+      "TestConvertedPackageContracts": "pass"
+    },
+    "failure_lines": [
+      "files_test.go:170: corpus-files: /tmp/defendcorpus/prettier root tests/format/less: no tracked files match [\"*.css\" \"*.scss\" \"*.less\"]"
+    ],
+    "bounded": false,
+    "binary_seconds": 0.512
+  }
+}
