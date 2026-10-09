@@ -16,7 +16,6 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -148,214 +147,208 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	return ""
 }
 
-func TestCSSNumbers(t *testing.T) {
-	t.Parallel()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	var texts []string
-	paths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"internal/format/css/testdata/prettier", "internal/lint/rules/tailwind"}, []string{"*.css", "*.scss", "*.less"})
-	for _, path := range paths {
-		data, err := os.ReadFile(path)
+// TestCSSNumbers_NNN are top-level parallel units. ADAMIC_TEST_SHARD=i/n
+// selects stable ordinals modulo n locally; unset runs every unit. The gate uses
+// -run '^TestCSSNumbers_NNN$'. Every original side and sanitizer/leak check stays.
+// Contiguous ranges are fixed by cohere commit 7945d102a6c18dd36adf9114a758ce646e8b2359
+// and the generated grammar in enumerateNumbers.
+
+func runCSSNumbersShard(t *testing.T, ordinal int) {
+	t.Helper()
+	started := time.Now()
+	defer func() {
+		if elapsed := time.Since(started); elapsed > 60*time.Second {
+			t.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
+		}
+	}()
+	numbersTopSetup.once.Do(func() {
+		corpus := enumerateNumbers(t)
+		units := numbersUnits(corpus)
+		if len(units) != testCSSNumbersShards {
+			t.Fatalf("enumerated %d shards, declared %d", len(units), testCSSNumbersShards)
+		}
+		verifyNumbersUnion(t, corpus, units)
+		root, err := filepath.Abs(repository)
 		if err != nil {
 			t.Fatal(err)
 		}
-		texts = append(texts, string(data))
-	}
-	files := len(texts)
-	alphabet := []string{"a", "0", "1", ".", "e", "-", "\"", "\\"}
-	var generate func(string, int)
-	generate = func(s string, n int) {
-		texts = append(texts, s)
-		if n > 0 {
-			for _, c := range alphabet {
-				generate(s+c, n-1)
-			}
-		}
-	}
-	generate("", 5)
-	texts = append(texts, "\r\t\u2028\u2029", strings.Repeat("'😀\\\"x' ", 10000), "'never closed\\", `"\'"`, "\x00'null'")
-	for _, mantissa := range []string{"0", "01", ".0", ".00100", "1.", "1.000", "12.34000"} {
-		for _, exponent := range []string{"", "e0", "E+000", "e-000", "e+001", "e-002", "E00020", "e+", "e-"} {
-			for _, unit := range strings.Split("|n|EM|Q|HZ|kHZ|px|cQmAX|unknown|foo|é|Σ|İ", "|") {
-				for _, prefix := range []string{"", "a", "$x", "@foo", "-", "+", "😀", "'", "\""} {
-					texts = append(texts, prefix+mantissa+exponent+unit)
-				}
-			}
-		}
-	}
-	for _, unit := range strings.Split("em|rem|ex|rex|cap|rcap|ch|rch|ic|ric|lh|rlh|vw|svw|lvw|dvw|vh|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax|cm|mm|Q|in|pt|pc|px|deg|grad|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx|x|cqw|cqh|cqi|cqb|cqmin|cqmax|fr", "|") {
-		texts = append(texts, ".1000E+002"+strings.ToUpper(unit))
-	}
-	texts = append(texts, "'1.000px'", "1.000unknown", "a1.000px", "😀1.000px", strings.Repeat(".000100E-002KHZ ", 10000))
-	var input strings.Builder
-	encode := strings.NewReplacer(`\`, `\\`, "\n", `\n`, "\r", `\r`, "\t", `\t`)
-	for _, text := range texts {
-		for _, preference := range []string{"d", "s"} {
-			input.WriteString(preference + encode.Replace(text) + "\n")
-		}
-	}
-	cases := filepath.Join(dir, "cases.txt")
-	write(t, cases, []byte(input.String()))
-	manifest, _ := json.MarshalIndent(paths, "", "  ")
-	if keep := os.Getenv("ADAMIC_CSSNUMBERS_KEEP"); keep != "" {
-		write(t, keep, []byte(input.String()))
-		write(t, keep+".files.json", manifest)
-	}
-	bridge, _ := filepath.Abs("testdata/bridge.go")
-	driver, _ := filepath.Abs("testdata/go_driver.go")
-	cohere := filepath.Join(root, "cohere")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{
-		filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
-		filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
-	}})
-	overlayPath := filepath.Join(dir, "overlay.json")
-	write(t, overlayPath, overlay)
-	goBinary := filepath.Join(dir, "go-printer")
-	command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", goBinary, filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
-	command.Dir = cohere
-	if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
-		t.Fatalf("Go bridge: %v\n%s", err, output)
-	}
-	want := execute(t, nil, goBinary, cases)
-	clean(t, "Go", want)
-	main, _ := filepath.Abs("main.ts")
-	program := lowered(t, main)
-	got, binary := natively(t, program, "--batch", cases)
-	for _, side := range []struct {
-		name   string
-		result run
-	}{{"native", got}, {"Node", onNode(t, main, "--batch", cases)}, {"JavaScript backend", onJavaScriptBackend(t, program, "--batch", cases)}} {
-		clean(t, side.name, side.result)
-		equal(t, side.name, side.result.stdout, want.stdout)
-	}
-	if report := leaks(t, program, binary, "--batch", cases); report != "" {
-		t.Fatal(report)
-	}
-	library := os.Getenv("ADAMIC_CSSNUMBERS_LIBRARY")
-	script, _ := filepath.Abs("testdata/library.mjs")
-	if library != "" {
-		answer := execute(t, nil, "node", script, library, cases)
-		clean(t, "Prettier", answer)
-		equal(t, "Prettier", answer.stdout, want.stdout)
-	} else {
-		t.Log("external library not checked: set ADAMIC_CSSNUMBERS_LIBRARY")
-	}
-	// Raw stdout must preserve empty input and terminal newlines, independently of batch escaping.
-	rawTexts := append(append([]string{}, texts[:files]...), "", "a", "a\n", "a\r\n\n", "'😀'", "\"\\'\"")
-	for _, text := range rawTexts {
-		path := filepath.Join(dir, "raw.css")
-		write(t, path, []byte(text))
-		for _, single := range []bool{false, true} {
-			args := []string{path}
-			if single {
-				args = append(args, "--single")
-			}
-			singleCase := filepath.Join(dir, "single.txt")
-			pref := "d"
-			if single {
-				pref = "s"
-			}
-			write(t, singleCase, []byte(pref+encode.Replace(text)+"\n"))
-			expected := execute(t, nil, goBinary, singleCase)
-			clean(t, "Go raw", expected)
-			decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
-			for _, r := range []run{execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, args...), onNode(t, main, args...)} {
-				clean(t, "raw", r)
-				equal(t, "raw", r.stdout, []byte(decoded))
-			}
-		}
-	}
-	for _, mutation := range []struct{ name, from, to string }{
-		{"quoted numbers", "quotedEnd >= 0", "quotedEnd < -1"},
-		{"unknown unit", "unit !== ''", "unit === ''"},
-		{"word prefix", "!match.hasWordPart", "match.hasWordPart || !match.hasWordPart"},
-	} {
-		t.Run(mutation.name, func(t *testing.T) {
-			parent := t.TempDir()
-			scratch := filepath.Join(parent, "cssnumbers")
-			if err := os.Mkdir(scratch, 0755); err != nil {
-				t.Fatal(err)
-			}
-			if err := os.Mkdir(filepath.Join(parent, "cssstrings"), 0755); err != nil {
-				t.Fatal(err)
-			}
-			dependency, err := os.ReadFile("../cssstrings/strings.ts")
+		dir := numbersTopTempDir(t)
+		cases := filepath.Join(dir, "cases.txt")
+		write(t, cases, numbersInput(corpus.texts))
+		if keep := os.Getenv("ADAMIC_CSSNUMBERS_KEEP"); keep != "" {
+			write(t, keep, numbersInput(corpus.texts))
+			manifest, err := json.MarshalIndent(corpus.paths, "", "  ")
 			if err != nil {
 				t.Fatal(err)
 			}
-			write(t, filepath.Join(parent, "cssstrings/strings.ts"), dependency)
-			source, err := os.ReadFile("numbers.ts")
+			write(t, keep+".files.json", manifest)
+		}
+		bridge, _ := filepath.Abs("testdata/bridge.go")
+		driver, _ := filepath.Abs("testdata/go_driver.go")
+		cohere := filepath.Join(root, "cohere")
+		oracleDir := numbersGoProduct(t, "Go oracle", func(dir string) error {
+			overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+				filepath.Join(cohere, "internal/format/css/adamic_stage_one.go"): bridge,
+				filepath.Join(cohere, "cmd/adamic_stage_one/main.go"):            driver,
+			}})
 			if err != nil {
-				t.Fatal(err)
+				return err
 			}
-			if strings.Count(string(source), mutation.from) != 1 {
-				t.Fatal("mutant must change one site")
+			overlayPath := filepath.Join(dir, "overlay.json")
+			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+				return err
 			}
-			write(t, filepath.Join(scratch, "numbers.ts"), []byte(strings.Replace(string(source), mutation.from, mutation.to, 1)))
-			source, err = os.ReadFile("main.ts")
-			if err != nil {
-				t.Fatal(err)
+			command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
+			command.Dir = cohere
+			if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
+				return fmt.Errorf("Go bridge: %w\n%s", err, output)
 			}
-			mutatedMain := filepath.Join(scratch, "main.ts")
-			write(t, mutatedMain, source)
-			mutated := lowered(t, mutatedMain)
-			for _, r := range []run{nativelyRun(t, mutated, "--batch", cases), onNode(t, mutatedMain, "--batch", cases)} {
-				clean(t, "mutant", r)
-				if bytes.Equal(r.stdout, want.stdout) {
-					t.Fatal("mutant survived")
-				}
-				a, b := strings.Split(string(r.stdout), "\n"), strings.Split(string(want.stdout), "\n")
-				for i := range b {
-					if i >= len(a) {
-						t.Logf("caught by missing output case %d", i)
-						break
-					}
-					if a[i] != b[i] {
-						offset := 0
-						for offset < len(a[i]) && offset < len(b[i]) && a[i][offset] == b[i][offset] {
-							offset++
-						}
-						start := max(0, offset-20)
-						t.Logf("caught by output case %d, byte %d: got %q want %q", i, offset,
-							a[i][start:min(len(a[i]), offset+40)], b[i][start:min(len(b[i]), offset+40)])
-						break
-					}
-				}
-			}
+			return nil
 		})
-	}
-	fast := filepath.Join(dir, "native-fast")
-	if err := native.Build(native.C(program), fast, native.Options{}); err != nil {
-		t.Fatal(err)
-	}
-	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	measurements := []struct {
-		name    string
-		command string
-		args    []string
-	}{{"Go", goBinary, []string{cases}}, {"native", fast, []string{"--batch", cases}}, {"Node", "node", []string{"--disable-warning=ExperimentalWarning", runner, main, "--batch", cases}}}
-	if library != "" {
-		measurements = append(measurements, struct {
-			name    string
-			command string
-			args    []string
-		}{"Prettier", "node", []string{script, library, cases}})
-	}
-	for _, side := range measurements {
-		var elapsed time.Duration
-		for round := 0; round < 3; round++ {
-			start := time.Now()
-			answer := execute(t, nil, side.command, side.args...)
-			elapsed += time.Since(start)
-			clean(t, side.name, answer)
-			equal(t, side.name, answer.stdout, want.stdout)
+		goBinary := filepath.Join(oracleDir, "go-printer")
+		main, _ := filepath.Abs("main.ts")
+		build := buildNumbersProgram(t, "port", main)
+		sanitized := buildNumbersNative(t, "sanitized", build, true)
+		fast := buildNumbersNative(t, "native-fast", build, false)
+		// macOS's leaks tool needs the unsanitized product; Linux reuses sanitized.
+		mutants := make(map[string]numbersProgram)
+		mutantBinaries := make(map[string]string)
+		for _, mutation := range numbersMutations {
+			mutated := prepareNumbersMutant(t, mutation)
+			product := buildNumbersProgram(t, mutation.name, mutated)
+			mutants[mutation.name] = product
+			mutantBinaries[mutation.name] = buildNumbersNative(t, mutation.name+"-sanitized", product, true)
 		}
-		t.Logf("throughput %s %.1f texts/s, 3 process runs %.6fs (startup, input, escaping, output included; build excluded)", side.name, float64(len(texts)*2*3)/elapsed.Seconds(), elapsed.Seconds())
+		library := os.Getenv("ADAMIC_CSSNUMBERS_LIBRARY")
+		script, _ := filepath.Abs("testdata/library.mjs")
+		goIdentity := numbersOracleIdentity(t, goBinary)
+		libraryIdentity := ""
+		if library != "" {
+			libraryIdentity = numbersOracleIdentity(t, library)
+		}
+		if library == "" {
+			t.Log("external library not checked: set ADAMIC_CSSNUMBERS_LIBRARY")
+		}
+		numbersTopSetup.units = units
+		numbersTopSetup.run = func(t *testing.T, unit numbersUnit) {
+			t.Logf("%s: %s range [%d,%d), side %s, %d case IDs", unit.name, unit.kind, unit.lo, unit.hi, unit.side, len(unit.ids))
+			start := time.Now()
+			defer func() {
+				if elapsed := time.Since(start); elapsed > 60*time.Second {
+					t.Errorf("invalid test unit %s: wall %s exceeds 60s", unit.name, elapsed)
+				}
+			}()
+			switch unit.kind {
+			case "batch":
+				path := filepath.Join(t.TempDir(), "cases.txt")
+				write(t, path, numbersInput(corpus.texts[unit.lo:unit.hi]))
+				want := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts[unit.lo:unit.hi]), goIdentity)
+				clean(t, "Go", want)
+				for _, side := range []struct {
+					name   string
+					result run
+				}{
+					{"native", execute(t, numbersSanitizerEnvironment(false), sanitized, "--batch", path)},
+					{"Node", onNode(t, main, "--batch", path)},
+					{"JavaScript backend", onNode(t, build.javascript, "--batch", path)},
+				} {
+					clean(t, side.name, side.result)
+					checkNumbersOutput(t, unit, side.name, side.result.stdout, want.stdout)
+				}
+				numbersLeaks(t, sanitized, fast, "--batch", path)
+				if library != "" {
+					answer := numbersOracleAnswers(t, "Prettier", "node", []string{script, library}, numbersInput(corpus.texts[unit.lo:unit.hi]), libraryIdentity)
+					clean(t, "Prettier", answer)
+					checkNumbersOutput(t, unit, "Prettier", answer.stdout, want.stdout)
+				}
+			case "raw":
+				path := filepath.Join(t.TempDir(), "raw.css")
+				text := corpus.raw[unit.lo]
+				write(t, path, []byte(text))
+				for _, single := range []bool{false, true} {
+					args := []string{path}
+					pref := "d"
+					if single {
+						args = append(args, "--single")
+						pref = "s"
+					}
+					singleCase := filepath.Join(t.TempDir(), "single.txt")
+					write(t, singleCase, []byte(pref+numbersEncode.Replace(text)+"\n"))
+					expected := numbersOracleAnswers(t, "Go", goBinary, nil, []byte(pref+numbersEncode.Replace(text)+"\n"), goIdentity)
+					clean(t, "Go raw", expected)
+					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
+					for _, r := range []run{execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...), onNode(t, main, args...)} {
+						clean(t, "raw", r)
+						equal(t, "raw "+pref, r.stdout, []byte(decoded))
+					}
+				}
+			case "mutant":
+				want := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts), goIdentity)
+				clean(t, "Go", want)
+				mutation := numbersMutations[unit.lo]
+				for _, r := range []run{
+					execute(t, numbersSanitizerEnvironment(false), mutantBinaries[mutation.name], "--batch", cases),
+					onNode(t, mutants[mutation.name].main, "--batch", cases),
+				} {
+					clean(t, "mutant", r)
+					if bytes.Equal(r.stdout, want.stdout) {
+						t.Fatal("mutant survived")
+					}
+					a, b := strings.Split(string(r.stdout), "\n"), strings.Split(string(want.stdout), "\n")
+					for i := range b {
+						if i >= len(a) || a[i] != b[i] {
+							t.Logf("mutant %s caught by %s holding batch case %d", mutation.name, unit.name, i)
+							break
+						}
+					}
+				}
+			case "throughput":
+				want := numbersOracleAnswers(t, "Go", goBinary, nil, numbersInput(corpus.texts), goIdentity)
+				clean(t, "Go", want)
+				side := unit.side
+				command := goBinary
+				args := []string{cases}
+				switch side {
+				case "native":
+					command = fast
+					args = []string{"--batch", cases}
+				case "Node":
+					runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
+					command = "node"
+					args = []string{"--disable-warning=ExperimentalWarning", runner, main, "--batch", cases}
+				case "Prettier":
+					if library == "" {
+						t.Log("external library not checked: set ADAMIC_CSSNUMBERS_LIBRARY")
+						return
+					}
+					command = "node"
+					args = []string{script, library, cases}
+				}
+				var elapsed time.Duration
+				for round := 0; round < 3; round++ {
+					start := time.Now()
+					answer := execute(t, nil, command, args...)
+					elapsed += time.Since(start)
+					clean(t, side, answer)
+					equal(t, side, answer.stdout, want.stdout)
+				}
+				t.Logf("throughput %s %.1f texts/s, 3 process runs %.6fs (startup, input, escaping, output included; build excluded)", side, float64(len(corpus.texts)*2*3)/elapsed.Seconds(), elapsed.Seconds())
+			default:
+				t.Fatalf("unknown unit %q", unit.kind)
+			}
+		}
+	})
+	if numbersTopSetup.run == nil {
+		t.Fatal("shared setup did not complete")
 	}
-	t.Logf("corpus: %d repository/submodule files, %d generated texts, %d preference cases; all byte-identical", files, len(texts)-files, len(texts)*2)
+	selected := selectedNumbersUnits(t, numbersTopSetup.units)
+	for _, unit := range selected {
+		if unit.name == numbersTopSetup.units[ordinal].name {
+			numbersTopSetup.run(t, unit)
+			return
+		}
+	}
+	t.Skip("excluded by ADAMIC_TEST_SHARD")
 }
 func write(t *testing.T, path string, b []byte) {
 	t.Helper()

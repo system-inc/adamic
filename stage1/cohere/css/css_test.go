@@ -121,92 +121,133 @@ func askedCases(t *testing.T) (string, string) {
 	}
 	return cases, string(data)
 }
-func TestThePortParsesAsGoCohereDoes(t *testing.T) {
-	cases, answers := askedCases(t)
-	directory := portDirectory(t, nil)
-	program := lowered(t, filepath.Join(directory, "main.ts"))
-	t.Run("Go agreement", func(t *testing.T) {
-		nativeRun, sanitized := natively(t, program, cases)
-		for _, side := range []struct {
-			name   string
-			result run
-		}{{"native", nativeRun}, {"Node", onNode(t, filepath.Join(directory, "main.ts"), cases)}, {"JS backend", onJavaScriptBackend(t, program, cases)}} {
-			if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
-				t.Fatalf("%s: exit %d, %s", side.name, side.result.exitCode, side.result.stderr)
-			}
-			if difference := firstDifference(string(side.result.stdout), answers); difference != "" {
-				t.Errorf("%s: %s", side.name, difference)
-			}
+
+// TestThePortParsesAsGoCohereDoes_NNN are top-level parallel units. ADAMIC_TEST_SHARD=i/n
+// selects stable ordinals modulo n locally; unset runs every unit. The gate uses
+// -run '^TestThePortParsesAsGoCohereDoes_NNN$'. Every original side and sanitizer/leak check stays.
+
+func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
+	t.Helper()
+	started := time.Now()
+	defer func() {
+		if elapsed := time.Since(started); elapsed > 60*time.Second {
+			t.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
 		}
-		if report := leaks(t, program, sanitized, cases); report != "" {
-			t.Errorf("leaks: %s", report)
+	}()
+	if os.Getenv("ADAMIC_CSS_PARSER_DISAGREEMENT_PROBE") == "1" {
+		cssParserTopProbe(t, ordinal)
+		return
+	}
+	cssParserTopSetup.once.Do(func() {
+		setupStarted := time.Now()
+		corpus := cssParserTopCorpus(t)
+		units := cssParserShards(corpus.keys)
+		if len(units) != testThePortParsesAsGoCohereDoesShards {
+			t.Fatalf("enumerated %d shards, declared %d; provide the complete pinned ADAMIC_CSS_FIXTURES corpus", len(units), testThePortParsesAsGoCohereDoesShards)
 		}
-		if !t.Failed() {
-			t.Logf("%d cases agree with Go, leak clean", strings.Count(answers, "\n")/2)
-		}
-	})
-	t.Run("PostCSS", func(t *testing.T) {
-		library := os.Getenv("ADAMIC_CSS_LIBRARY")
-		if library == "" {
-			t.Skip("set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory")
-		}
-		script, _ := filepath.Abs("testdata/library.mjs")
-		result := execute(t, nil, "node", script, library, cases)
-		if result.exitCode != 0 {
-			t.Fatalf("library: %s", result.stderr)
-		}
-		inputs, err := os.ReadFile(cases)
+		verifyCSSParserUnion(t, corpus.keys, units)
+		// C emission annotates the IR. Finish both backends sequentially before the
+		// independent native builds and parallel unit readers use immutable products.
+		main, err := filepath.Abs("main.ts")
 		if err != nil {
 			t.Fatal(err)
 		}
-		lines := strings.Split(strings.TrimSuffix(string(inputs), "\n"), "\n")
-		goLines := strings.Split(strings.TrimSuffix(answers, "\n"), "\n")
-		jsLines := strings.Split(strings.TrimSuffix(string(result.stdout), "\n"), "\n")
-		if len(goLines) != len(jsLines) {
-			t.Fatalf("library printed %d lines, Go %d", len(jsLines), len(goLines))
+		programs := []cssParserProgram{buildCSSParserProgram(t, "parser", filepath.Dir(main))}
+		for i := range mutants {
+			programs = append(programs, buildCSSParserProgram(t, fmt.Sprintf("mutant-%d", i), cssParserTopPortDirectory(t, &mutants[i])))
 		}
-		gaps := 0
-		for index, line := range lines {
-			if goLines[index*2] != jsLines[index*2] {
-				t.Fatalf("case marker differs at %d", index)
-			}
-			goAnswer, jsAnswer := goLines[index*2+1], jsLines[index*2+1]
-			if goAnswer == jsAnswer {
-				continue
-			}
-			// The original library splits the astral character after its high
-			// surrogate; cohere's input.slice keeps the whole character on the left.
-			if line[2:] == `\\😀|a` &&
-				goAnswer == `error {"column":1,"endColumn":4,"endLine":1,"endOffset":5,"line":1,"name":"CssSyntaxError","offset":0,"reason":"Unknown word \\😀"}` &&
-				jsAnswer == `error {"column":1,"endColumn":3,"endLine":1,"endOffset":4,"line":1,"name":"CssSyntaxError","offset":0,"reason":"Unknown word \\\ud83d"}` {
-				gaps++
-				continue
-			}
-			t.Errorf("case %d %q: unrecorded library difference: %s", index, line, firstDifference(jsAnswer, goAnswer))
+		binaries := buildCSSParserBinaries(t, programs[:1])
+		leakBinary := binaries[0]
+		if runtime.GOOS == "darwin" {
+			leakBinary = buildCSSParserUnsanitized(t, programs[0])
 		}
-		t.Logf("PostCSS: %d exact agreements, %d occurrences of the proved surrogate gap", len(lines)-gaps, gaps)
-
-	})
-	for _, mutation := range mutants {
-		t.Run("catches "+mutation.name, func(t *testing.T) {
-			directory := portDirectory(t, &mutation)
-			program := lowered(t, filepath.Join(directory, "main.ts"))
-			for _, side := range []struct {
-				name   string
-				result run
-			}{{"native", nativelyRun(t, program, cases)}, {"Node", onNode(t, filepath.Join(directory, "main.ts"), cases)}} {
-				if side.result.exitCode != 0 {
-					t.Fatalf("%s: mutant must terminate: %s", side.name, side.result.stderr)
-				}
-				difference := firstDifference(string(side.result.stdout), answers)
-				if difference == "" {
-					t.Errorf("%s: mutant survived", side.name)
+		library := os.Getenv("ADAMIC_CSS_LIBRARY")
+		script, _ := filepath.Abs("testdata/library.mjs")
+		libraryIdentity := ""
+		if library != "" {
+			libraryIdentity = cssParserOracleIdentity(t, library)
+		}
+		setupElapsed := time.Since(setupStarted)
+		t.Logf("setup before shards %.6fs, including cached non-Go products and a private Go oracle build", setupElapsed.Seconds())
+		if setupElapsed > 60*time.Second {
+			t.Fatalf("invalid test setup: wall %s exceeds 60s", setupElapsed)
+		}
+		cssParserTopSetup.units = units
+		cssParserTopSetup.run = func(t *testing.T, root cssParserShard) {
+			for _, unit := range root.groups {
+				started := time.Now()
+				defer func() {
+					if elapsed := time.Since(started); elapsed > 60*time.Second {
+						t.Errorf("invalid test unit %s: wall %s exceeds 60s", unit.name, elapsed)
+					}
+				}()
+				t.Logf("%s: %s, %d stable case IDs, mutant %d", unit.name, unit.kind, len(unit.cases), unit.mutation)
+				if unit.kind == "agreement" {
+					shardCases, want := writeCSSParserSlice(t, corpus, unit.cases)
+					for _, side := range []struct {
+						name   string
+						result run
+					}{
+						{"native", execute(t, cssParserASAN(false), binaries[0], shardCases)},
+						{"Node", onNode(t, programs[0].main, shardCases)},
+						{"JS backend", onNode(t, programs[0].javascript, shardCases)},
+					} {
+						if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
+							t.Fatalf("%s: exit %d, %s", side.name, side.result.exitCode, side.result.stderr)
+						}
+						if difference := cssParserDifference(unit, string(side.result.stdout), want); difference != "" {
+							t.Errorf("%s: %s", side.name, difference)
+						}
+					}
+					checkCSSParserLeaks(t, binaries[0], leakBinary, shardCases)
+					if library == "" {
+						t.Skip("set ADAMIC_CSS_LIBRARY to the pinned npm scratch directory")
+					}
+					postCSS := cachedCSSParserPostCSSAnswers(t, script, library, shardCases, libraryIdentity)
+					slice := make([]string, len(unit.cases))
+					for i, index := range unit.cases {
+						slice[i] = corpus.inputs[index]
+					}
+					checkCSSParserPostCSS(t, unit, slice, want, postCSS)
 				} else {
-					t.Logf("%s caught: %s", side.name, difference)
+					// Fetch this mutant product once and share the immutable binary
+					// between its two original side checks for this complete case range.
+					mutantBinary := buildCSSParserBinaries(t, programs[unit.mutation+1:unit.mutation+2])[0]
+					shardCases, want := writeCSSParserSlice(t, corpus, unit.cases)
+					witness := cssParserMutantWitness(unit.mutation)
+					for _, side := range []struct {
+						name   string
+						result run
+					}{
+						{"native", execute(t, cssParserASAN(false), mutantBinary, shardCases)},
+						{"Node", onNode(t, programs[unit.mutation+1].main, shardCases)},
+					} {
+						if side.result.exitCode != 0 {
+							t.Fatalf("%s: mutant must terminate: %s", side.name, side.result.stderr)
+						}
+						if difference := cssParserDifference(unit, string(side.result.stdout), want); difference == "" {
+							if cssParserContainsCase(unit.cases, witness) {
+								t.Errorf("%s: mutant survived witness case %d in %s", side.name, witness, unit.name)
+							}
+						} else {
+							t.Logf("%s mutant %s caught by %s: %s", side.name, mutants[unit.mutation].name, unit.name, difference)
+						}
+					}
 				}
 			}
-		})
+		}
+	})
+	if cssParserTopSetup.run == nil {
+		t.Fatal("shared setup did not complete")
 	}
+	selected := selectedCSSParserShards(t, cssParserTopSetup.units)
+	for _, unit := range selected {
+		if unit.name == cssParserTopSetup.units[ordinal].name {
+			cssParserTopSetup.run(t, unit)
+			return
+		}
+	}
+	t.Skip("excluded by ADAMIC_TEST_SHARD")
 }
 
 // firstDifference says where two outputs first differ, line by line, or "" when they don't.
