@@ -55,6 +55,9 @@ type entry struct {
 	Sampled           bool         `json:"sampled"`
 }
 type report struct {
+	CorpusFilter          string             `json:"corpus_filter"`
+	Shard                 string             `json:"shard"`
+	CompleteCorpus        bool               `json:"complete_corpus"`
 	Phases                map[string]float64 `json:"phase_seconds"`
 	Workers               int                `json:"workers"`
 	Classification        string             `json:"classification"`
@@ -168,6 +171,8 @@ func run(args []string) error {
 	generator := flags.String("manifest-generator", "", "generator path at head")
 	generatorRevision := flags.String("manifest-generator-revision", "", "generator source revision, defaults to head")
 	corpusDir := flags.String("corpus", "", "ad hoc corpus directory relative to head")
+	corpusFilter := flags.String("corpus-filter", "", "comma-separated corpus names; diff is always included")
+	shard := flags.String("shard", "", "partition non-diff inputs as i/N, 1-based")
 	budget := flags.Float64("budget", 0, "runtime budget in seconds; 0 means all, witnesses always run")
 	asJSON := flags.Bool("json", false, "emit JSON to stdout")
 	limit := flags.Duration("timeout", 10*time.Second, "per-runtime command timeout")
@@ -218,9 +223,12 @@ func run(args []string) error {
 		return err
 	}
 	defer git(root, "worktree", "remove", "--force", headTree)
+	result.Phases["checkout"] = time.Since(phaseStarted).Seconds()
+	provisionStarted := time.Now()
 	if err = prepareCheckout(headTree); err != nil {
 		return err
 	}
+	result.Phases["provision"] = time.Since(provisionStarted).Seconds()
 	result.Phases["checkout_and_provision"] = time.Since(phaseStarted).Seconds()
 	phaseStarted = time.Now()
 	build := func(sha, name, supplied string) (string, error) {
@@ -336,6 +344,11 @@ func run(args []string) error {
 	}
 	result.DiffCount = len(result.Diff)
 	m.Corpora = append([]corpus{{Name: "diff", Programs: result.Diff}}, m.Corpora...)
+	m.Corpora, result.CompleteCorpus, err = selectCorpora(m.Corpora, *corpusFilter, *shard)
+	if err != nil {
+		return err
+	}
+	result.CorpusFilter, result.Shard = *corpusFilter, *shard
 	result.Corpora = m.Corpora
 	result.SamplingSeed = result.Head
 	result.BudgetSeconds = *budget
@@ -426,6 +439,9 @@ func run(args []string) error {
 	result.SamplingSize = len(selected)
 	result.BudgetUsedSeconds = time.Since(started).Seconds()
 	result.Phases["runtime"] = result.BudgetUsedSeconds
+	if !result.CompleteCorpus && result.Verdict == "pass" {
+		result.Verdict = "partial"
+	}
 	result.Phases["total"] = time.Since(startedAll).Seconds()
 	if *asJSON {
 		if err = json.NewEncoder(os.Stdout).Encode(result); err != nil {

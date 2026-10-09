@@ -1,0 +1,11 @@
+--- main.go
++++ main.go
+@@ -439,7 +439,7 @@
+ 	result.SamplingSize = len(selected)
+ 	result.BudgetUsedSeconds = time.Since(started).Seconds()
+ 	result.Phases["runtime"] = result.BudgetUsedSeconds
+-	if !result.CompleteCorpus && result.Verdict == "pass" {
++	if false && result.Verdict == "pass" {
+ 		result.Verdict = "partial"
+ 	}
+ 	result.Phases["total"] = time.Since(startedAll).Seconds()

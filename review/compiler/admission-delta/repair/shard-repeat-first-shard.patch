@@ -1,0 +1,11 @@
+--- select.go
++++ select.go
+@@ -52,7 +52,7 @@
+ 		part := corpus{Name: c.Name, Programs: []program{}}
+ 		for _, p := range c.Programs {
+ 			digest := sha256.Sum256([]byte(p.Path))
+-			if int(binary.LittleEndian.Uint64(digest[:8])%uint64(count)) == index-1 {
++			if int(binary.LittleEndian.Uint64(digest[:8])%uint64(count)) == 0 {
+ 				part.Programs = append(part.Programs, p)
+ 			}
+ 		}

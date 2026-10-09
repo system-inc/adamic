@@ -1,0 +1,74 @@
+=== RUN   TestCommandHelper
+=== PAUSE TestCommandHelper
+=== RUN   TestNewAdmissionMismatch
+=== PAUSE TestNewAdmissionMismatch
+=== RUN   TestHeadInputIsolation
+=== PAUSE TestHeadInputIsolation
+=== RUN   TestManifestMismatch
+=== PAUSE TestManifestMismatch
+=== RUN   TestNewlyRefusedIsInformational
+=== PAUSE TestNewlyRefusedIsInformational
+=== RUN   TestEmptyCorpus
+=== PAUSE TestEmptyCorpus
+=== RUN   TestCompilerTimeoutIsError
+=== PAUSE TestCompilerTimeoutIsError
+=== RUN   TestBuildRevisions
+=== PAUSE TestBuildRevisions
+=== RUN   TestDiffCoverage
+=== PAUSE TestDiffCoverage
+=== RUN   TestDiffSamplingIsMandatory
+=== PAUSE TestDiffSamplingIsMandatory
+=== RUN   TestClassification
+=== PAUSE TestClassification
+=== RUN   TestOutputsAgree
+=== PAUSE TestOutputsAgree
+=== RUN   TestSampling
+=== PAUSE TestSampling
+=== RUN   TestNodeDeclarationsArePinned
+=== PAUSE TestNodeDeclarationsArePinned
+=== RUN   TestShardPartitionKeepsDiff
+=== PAUSE TestShardPartitionKeepsDiff
+=== RUN   TestShardCommandScope
+=== PAUSE TestShardCommandScope
+=== RUN   TestCompilerCacheIncludesSHA
+=== PAUSE TestCompilerCacheIncludesSHA
+=== RUN   TestParallelLoweringOnly
+=== PAUSE TestParallelLoweringOnly
+=== CONT  TestCommandHelper
+--- PASS: TestCommandHelper (0.00s)
+=== CONT  TestParallelLoweringOnly
+=== CONT  TestDiffSamplingIsMandatory
+--- PASS: TestDiffSamplingIsMandatory (0.00s)
+=== CONT  TestCompilerCacheIncludesSHA
+=== CONT  TestEmptyCorpus
+=== CONT  TestNodeDeclarationsArePinned
+--- PASS: TestCompilerCacheIncludesSHA (0.00s)
+=== CONT  TestSampling
+--- PASS: TestSampling (0.00s)
+=== CONT  TestOutputsAgree
+--- PASS: TestOutputsAgree (0.00s)
+=== CONT  TestClassification
+--- PASS: TestClassification (0.00s)
+=== CONT  TestBuildRevisions
+=== CONT  TestHeadInputIsolation
+--- PASS: TestNodeDeclarationsArePinned (0.00s)
+=== CONT  TestShardCommandScope
+--- PASS: TestParallelLoweringOnly (0.01s)
+=== CONT  TestShardPartitionKeepsDiff
+--- PASS: TestShardPartitionKeepsDiff (0.00s)
+=== CONT  TestCompilerTimeoutIsError
+--- PASS: TestEmptyCorpus (0.08s)
+=== CONT  TestManifestMismatch
+--- PASS: TestCompilerTimeoutIsError (0.11s)
+=== CONT  TestNewlyRefusedIsInformational
+--- PASS: TestHeadInputIsolation (0.12s)
+=== CONT  TestNewAdmissionMismatch
+--- PASS: TestShardCommandScope (0.13s)
+=== CONT  TestDiffCoverage
+--- PASS: TestManifestMismatch (0.09s)
+--- PASS: TestNewlyRefusedIsInformational (0.07s)
+--- PASS: TestDiffCoverage (0.12s)
+--- PASS: TestNewAdmissionMismatch (0.17s)
+--- PASS: TestBuildRevisions (0.32s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.322s

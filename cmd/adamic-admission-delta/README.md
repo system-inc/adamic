@@ -14,8 +14,8 @@ go run ./cmd/adamic-admission-delta --base origin/main --head HEAD \
 ```
 
 Use `--base-binary /path/to/base-adamic --head-binary /path/to/head-adamic`
-with the corresponding `--base` and `--head` source revisions to skip compiler
-runtime compiler builds. A supplied compiler gets a cached lowering companion
+with the corresponding `--base` and `--head` source revisions to skip runtime
+compiler builds. A supplied compiler gets a cached lowering companion
 from its revision, or use `--base-lower-binary` / `--head-lower-binary` for
 companions that implement `admission-lower <path>`. Otherwise each compiler
 builds in its own detached checkout with its pinned submodules.
@@ -54,7 +54,16 @@ Remaining paths are sorted then shuffled using a SHA-256-derived seed from head.
 Zero budget selects all programs. `sampling_seed`, `sampling_size`, `omitted`,
 `budget_seconds`, and actual `budget_used_seconds` describe the selection.
 
-`verdict` is `pass`, `sampled`, or `fail`. `sampled` exits zero but explicitly
+`--corpus-filter diff` runs the entire revision diff alone. A comma-separated
+list selects other named corpora, always retaining the whole diff.
+`--shard i/N` partitions non-diff inputs deterministically by SHA-256 of their
+path, with 1-based shard indices. All shards retain the entire diff, so their
+union covers the full generated corpora while every unit checks changed inputs.
+JSON records `corpus_filter`, `shard`, and `complete_corpus`. Filtered and
+multi-shard runs report `partial` when otherwise passing, preventing a
+measurement unit from masquerading as a complete gate.
+
+`verdict` is `pass`, `partial`, `sampled`, or `fail`. `sampled` exits zero but explicitly
 means the entire admission delta has not been proven. A mismatch or compiler
 error exits nonzero. Unrun observations and `agree` are null; `sampled` is false
 on an unrun program. `admitted: 0` is explicit for equal admission sets.

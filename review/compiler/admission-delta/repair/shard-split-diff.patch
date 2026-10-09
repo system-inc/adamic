@@ -1,0 +1,11 @@
+--- select.go
++++ select.go
+@@ -42,7 +42,7 @@
+ 	}
+ 	selected := []corpus{}
+ 	for _, c := range corpora {
+-		if c.Name == "diff" {
++		if c.Name == "disabled-diff" {
+ 			selected = append(selected, c)
+ 			continue
+ 		}
