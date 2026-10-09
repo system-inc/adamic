@@ -1,0 +1,17 @@
+[
+  {
+    "test": "TestDecodeASCIIUnit26",
+    "mutant_over_base": 0.833093925211992,
+    "mutant_over_base2": 1.2404015316154402
+  },
+  {
+    "test": "TestPortMatchesGoCohere_123",
+    "mutant_over_base": 0.8476887582740531,
+    "mutant_over_base2": 0.8764927227547036
+  },
+  {
+    "test": "TestFileDriver_Setup",
+    "mutant_over_base": 1.0054760387089297,
+    "mutant_over_base2": 1.0398837348675538
+  }
+]

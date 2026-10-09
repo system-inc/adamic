@@ -1,0 +1,83 @@
+[
+  {
+    "test": "TestDecodeASCIIUnit26",
+    "side": "base",
+    "exit": 0,
+    "seconds": 43.162,
+    "peak_rss_mb": 1992.531,
+    "signal": null,
+    "line": null
+  },
+  {
+    "test": "TestDecodeASCIIUnit26",
+    "side": "mutant",
+    "exit": 0,
+    "seconds": 35.958,
+    "peak_rss_mb": 1992.926,
+    "signal": null,
+    "line": null
+  },
+  {
+    "test": "TestDecodeASCIIUnit26",
+    "side": "base2",
+    "exit": 0,
+    "seconds": 28.989,
+    "peak_rss_mb": 1991.379,
+    "signal": null,
+    "line": null
+  },
+  {
+    "test": "TestPortMatchesGoCohere_123",
+    "side": "base",
+    "exit": 0,
+    "seconds": 72.818,
+    "peak_rss_mb": 1997.957,
+    "signal": null,
+    "line": null
+  },
+  {
+    "test": "TestPortMatchesGoCohere_123",
+    "side": "mutant",
+    "exit": 0,
+    "seconds": 61.727,
+    "peak_rss_mb": 1995.59,
+    "signal": null,
+    "line": null
+  },
+  {
+    "test": "TestPortMatchesGoCohere_123",
+    "side": "base2",
+    "exit": 0,
+    "seconds": 70.425,
+    "peak_rss_mb": 1996.012,
+    "signal": null,
+    "line": null
+  },
+  {
+    "test": "TestFileDriver_Setup",
+    "side": "base",
+    "exit": 0,
+    "seconds": 69.028,
+    "peak_rss_mb": 1989.645,
+    "signal": null,
+    "line": null
+  },
+  {
+    "test": "TestFileDriver_Setup",
+    "side": "mutant",
+    "exit": 0,
+    "seconds": 69.406,
+    "peak_rss_mb": 1988.285,
+    "signal": null,
+    "line": null
+  },
+  {
+    "test": "TestFileDriver_Setup",
+    "side": "base2",
+    "exit": 0,
+    "seconds": 66.744,
+    "peak_rss_mb": 1989.332,
+    "signal": null,
+    "line": null
+  }
+]
