@@ -32,15 +32,17 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 	return nil, nil
 }
 
-// view is the shared entry point. Checking by field name throughout the program is
-// conservative: aliases and function boundaries cannot lose a checked read.
-// More precise view propagation and erasure can reduce that set without trusting casts.
+// view registers contracts by field name across aliases and function boundaries.
+// Each read syntax must carry the checked member boundary or be refused.
 func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		return l.legacyView(node, value, target)
 	}
 	fields, err := l.viewSchema(node, target)
 	if err != nil {
+		return nil, err
+	}
+	if err := l.refuseViewElementReads(fields); err != nil {
 		return nil, err
 	}
 	if l.result.CheckedFields == nil {
@@ -404,6 +406,9 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 	}
 	if found != nil {
 		return nil, found
+	}
+	if err := l.refuseViewElementReads(fields); err != nil {
+		return nil, err
 	}
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}

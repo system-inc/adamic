@@ -1,0 +1,10 @@
+--- a/internal/lower/element_access_fields.go
++++ b/internal/lower/element_access_fields.go
+@@ -134,6 +134,7 @@
+ // Until finite reads share the checked member boundary, refuse every matching
+ // object read in the program, including aliases and reads lowered before the cast.
+ func (l *lowering) refuseViewElementReads(fields map[string]bool) error {
++ fields = nil // mutant: route element reads around the refusal
+ 	modules, err := l.moduleOrder(l.program.Files()[0])
+ 	if err != nil {
+ 		return err
