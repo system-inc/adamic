@@ -40,20 +40,46 @@ func TestFixtureDirectoriesHaveTopLevelTests(t *testing.T) {
 			if !ok || function.Recv != nil || !strings.HasPrefix(function.Name.Name, "TestFixtures") || function.Body == nil {
 				continue
 			}
-			// A unit is a direct call with a literal directory. It cannot hide
-			// the directory in a subtest, conditional, or generated dispatch.
-			if len(function.Body.List) != 1 {
-				t.Errorf("%s must call testFixtureDirectory directly", function.Name.Name)
+			// Each unit makes its parallel contract visible to the lane analyzer,
+			// then calls the helper directly with its own parameter and directory.
+			if len(function.Type.Params.List) != 1 || len(function.Type.Params.List[0].Names) != 1 || len(function.Body.List) != 2 {
+				t.Errorf("%s must call its test parameter's Parallel() then testFixtureDirectory directly", function.Name.Name)
 				continue
 			}
-			statement, ok := function.Body.List[0].(*ast.ExprStmt)
+			parameter := function.Type.Params.List[0].Names[0].Name
+			parallelStatement, ok := function.Body.List[0].(*ast.ExprStmt)
+			if !ok {
+				t.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
+				continue
+			}
+			parallelCall, ok := parallelStatement.X.(*ast.CallExpr)
+			if !ok || len(parallelCall.Args) != 0 || parallelCall.Ellipsis.IsValid() {
+				t.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
+				continue
+			}
+			parallel, ok := parallelCall.Fun.(*ast.SelectorExpr)
+			if !ok || parallel.Sel.Name != "Parallel" {
+				t.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
+				continue
+			}
+			receiver, ok := parallel.X.(*ast.Ident)
+			if !ok || receiver.Name != parameter {
+				t.Errorf("%s must call its test parameter's Parallel() first", function.Name.Name)
+				continue
+			}
+			statement, ok := function.Body.List[1].(*ast.ExprStmt)
 			if !ok {
 				t.Errorf("%s must call testFixtureDirectory directly", function.Name.Name)
 				continue
 			}
 			call, ok := statement.X.(*ast.CallExpr)
-			if !ok || len(call.Args) != 2 {
+			if !ok || len(call.Args) != 2 || call.Ellipsis.IsValid() {
 				t.Errorf("%s must call testFixtureDirectory directly", function.Name.Name)
+				continue
+			}
+			argument, ok := call.Args[0].(*ast.Ident)
+			if !ok || argument.Name != parameter {
+				t.Errorf("%s must pass its own test parameter to testFixtureDirectory", function.Name.Name)
 				continue
 			}
 			helper, ok := call.Fun.(*ast.Ident)

@@ -9,13 +9,15 @@
     },
     {
       "file": "src/compiler/commandLineParser.ts",
-      "before": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Diagnostic[],\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any ",
-      "after": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any "
+      "before": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Diagnostic[],\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): AdamicJsonRecoveryObject ",
+      "after": "function convertConfigFileToObject(\r\n    sourceFile: JsonSourceFile,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): AdamicJsonRecoveryObject ",
+      "count": 1
     },
     {
       "file": "src/compiler/commandLineParser.ts",
-      "before": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Diagnostic[],\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any ",
-      "after": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): any "
+      "before": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Diagnostic[],\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): AdamicJsonRecoveryValue | undefined ",
+      "after": "export function convertToJson(\r\n    sourceFile: JsonSourceFile,\r\n    rootExpression: Expression | undefined,\r\n    errors: Pick<DiagnosticWithLocation[], \"push\">,\r\n    returnValue: boolean,\r\n    jsonConversionNotifier: JsonConversionNotifier | undefined,\r\n): AdamicJsonRecoveryValue | undefined ",
+      "count": 1
     }
   ],
   "owners": [

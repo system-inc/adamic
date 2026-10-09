@@ -17,8 +17,11 @@ builder.ts:564 TS2322. Widening that private helper reveals three further
 assignments to DiagnosticMessageChain.next. The existing public diagnostic
 contract cannot accept reusable chain entries. No compensating cast is allowed.
 The proposal, checker output and counterexample are evidence, not an applied
-source change. This part is blocked pending a truthful builder contract or an
-approved runtime repair. The unchanged sameMap remains on the blocker list.
+source change. The new [four-site analysis](TRUTHFUL-SITES.md) follows private
+widening through the public messageText boundary, with a fixture and a mutant
+for each site. No gate-passing truthful type-only repair was found without a
+public contract change or an additional ownership/runtime proof. sameMap
+remains unchanged; no hiding assertion is added.
 
 Validation: stage3/apply.sh and the complete stage3/oracle through stage3/lane
 pass identically to main: 106,366 passing, the same one sanctioned API baseline
@@ -36,3 +39,11 @@ See [unit evidence](../../drivers/parser/evidence/front32/README.md) for command
 full checker logs and both proposal patches. The failed first contract check
 used the already widened scratch draft as the supposed old-signature source;
 rerunning on the production tree correctly tests and catches that mutant.
+
+Current-main unit (89ac4a8c): both complete lanes PASS with 106366 passing,
+one identical sanctioned API failure, zero pending. The two public API .d.ts
+artifacts and ten JavaScript artifacts are byte-identical; API diffs also match.
+Four new per-site signature mutants are caught; the boundary fixture prints
+four false rows, and 32 local lane tests pass. The sameMap draft remains
+unapplied. Results and rejected type-only patches are under
+[evidence/same-map](evidence/same-map/README.md).
