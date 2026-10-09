@@ -495,6 +495,10 @@ class Gate:
         try:
             packages, unowned = self.touched(changed)
         except ValueError as error:
+            if str(error).startswith("reads census"):
+                self.fail("census", "%s. Declare each as a line in cloud/fast-gate/executors.txt in this branch: "
+                          "reads <reader package> <path or glob> (lines there add to the gate tools' reads)." % error)
+                return
             if not str(error).startswith("compiler dependency census"):
                 raise
             # A red the change can fix itself, never a gate-tool crash (developer tools, Oct 9).
@@ -850,14 +854,9 @@ class Gate:
                 fields = line.split()
                 if fields[:2] == ["mode", "report"]:
                     enforce = False  # record uncovered paths without failing, until the rulings are in
-                elif fields and fields[0] == "reads":
-                    # "reads <package> <glob> paths": the test reads which paths exist, not what they hold
-                    # (gitignore walks the whole tree), so only an added or deleted path changes its input.
-                    if len(fields) not in (3, 4) or (len(fields) == 4 and fields[3] != "paths"):
-                        raise ValueError("invalid reads line %d: %s" % (number, line.strip()))
-                    readers.append((number, fields[1], fields[2], len(fields) == 4))
-                elif fields and not fields[0].startswith("#") and fields[0] != "mode":
+                elif fields and not fields[0].startswith("#") and fields[0] not in ("mode", "reads"):
                     rules.append((fields[0], fields[1]))
+        readers = self.readsRules()
         # "a-check-exempt <glob>" lines aren't executors: they name .a files that aren't Adamic programs.
         exempt = [glob for name, glob in rules if name == "a-check-exempt"]
         rules = [rule for rule in rules if rule[0] != "a-check-exempt"]
@@ -1436,6 +1435,7 @@ class Gate:
                     else:
                         testEmbedded.add(path)
         dependencies = self.compilerDependencies(directories, changed)
+        self.readsCensus(changed, directories, testEmbedded)
         for package, inputs in dependencies.items():
             for dependency in inputs:
                 reverse.setdefault(module + "/" + dependency, set()).add(module + "/" + package)
@@ -1577,6 +1577,63 @@ class Gate:
             raise ValueError("compiler dependency census: undeclared compiler consumers: " + ", ".join(missing))
         self.result["compiler_dependency_map"] = {"root": root, "path": name}
         return packages
+
+    def readsRules(self):
+        """Every reads line, the tools' executors.txt first and then the gated tree's: a branch that adds a test
+        reading another package's files declares it itself, and a reads line only ever adds tests."""
+        rules, seen = [], set()
+        for root in (self.arguments.tools, vars(self.arguments).get("tree")):
+            path = root and os.path.realpath(os.path.join(root, "cloud/fast-gate/executors.txt"))
+            if not path or path in seen or not os.path.exists(path):
+                continue
+            seen.add(path)
+            rules.extend(readsLines(path))
+        return rules
+
+    def readsCensus(self, changed, directories, testEmbedded):
+        """A Go source naming another package's test inputs by path (a testdata path, a _test.go file, a file its
+        tests embed) needs a reads line for its package, or an edit to what it reads never reruns it: on Oct 9, 67
+        such reads were selected by nothing (#sn4dm2n). Only sources this change adds or edits are read, so a read
+        already on the base never reds another change's gate. Building a package reads no testdata, so a bare
+        package path is no read."""
+        tree = self.arguments.tree
+        files = self.git(tree, "ls-files").splitlines()
+        tops = {path.split("/", 1)[0] for path in files if "/" in path}
+        rules = [(package, pattern) for _, package, pattern, _ in self.readsRules()]
+        def ownerOf(path):
+            directory = path
+            while directory not in ("", "."):
+                if directory in directories:
+                    return directory
+                directory = os.path.dirname(directory)
+            return None
+        def testInput(path):
+            return "testdata" in path.split("/") or path.endswith("_test.go") or path in testEmbedded
+        undeclared = []
+        for path in changed:
+            if not path.endswith(".go") or path.startswith("cohere/") or not os.path.isfile(os.path.join(tree, path)):
+                continue
+            reader = ownerOf(os.path.dirname(path))
+            if reader is None:
+                continue
+            with open(os.path.join(tree, path), errors="replace") as handle:
+                source = handle.read()
+            for text in sorted(set(pathLiterals(source))):
+                text = text.strip().rstrip("/")
+                if text.startswith("../"):
+                    target = os.path.normpath(os.path.join(reader, text))
+                elif text.split("/", 1)[0] in tops:
+                    target = os.path.normpath(text)
+                else:
+                    continue
+                owner = ownerOf(target)
+                if target.startswith("..") or "*" in target or owner in (None, reader) or not testInput(target):
+                    continue
+                inputs = [name for name in files if (name == target or name.startswith(target + "/")) and testInput(name)]
+                if any(not any(package == reader and fnmatch.fnmatchcase(name, pattern) for package, pattern in rules) for name in inputs):
+                    undeclared.append("%s reads %s (%s)" % (reader, target, path))
+        if undeclared:
+            raise ValueError("reads census: undeclared cross-package test reads: " + "; ".join(undeclared))
 
     def selectOracle(self):
         """What a change to internal/oracle has to run, when it only adds or edits fixtures: each changed
@@ -2885,6 +2942,35 @@ def smokePattern(entries):
 
 def git(directory, *arguments):
     return subprocess.run(["git", "-C", directory] + list(arguments), capture_output=True, text=True, check=True).stdout.strip()
+
+
+def readsLines(path):
+    """The reads lines of an executors.txt: (line, package, glob, paths only)."""
+    lines = []
+    with open(path) as handle:
+        for number, line in enumerate(handle, 1):
+            fields = line.split()
+            if fields and fields[0] == "reads":
+                # "reads <package> <glob> paths": the test reads which paths exist, not what they hold
+                # (gitignore walks the whole tree), so only an added or deleted path changes its input.
+                if len(fields) not in (3, 4) or (len(fields) == 4 and fields[3] != "paths"):
+                    raise ValueError("invalid reads line %d: %s" % (number, line.strip()))
+                lines.append((number, fields[1], fields[2], len(fields) == 4))
+    return lines
+
+
+def pathLiterals(source):
+    """The paths a Go source spells out: each string literal holding a slash, and each filepath.Join or path.Join
+    with its literal arguments joined (filepath.Join(root, "internal", "oracle", "testdata") names
+    internal/oracle/testdata). A path built from variables alone stays unseen."""
+    for match in re.finditer(r'(?:filepath|path)\.Join\(([^()]*)\)', source):
+        parts = [re.fullmatch(r'\s*"([^"\\]*)"\s*', part) for part in match.group(1).split(",")]
+        if any(parts):
+            yield "/".join(part.group(1) for part in parts if part)
+    for match in re.finditer(r'"((?:[^"\\\n]|\\.)*)"|`([^`]*)`', source):
+        text = match.group(1) if match.group(1) is not None else match.group(2)
+        if "/" in text and "\n" not in text and len(text) < 300:
+            yield text
 
 
 if __name__ == "__main__":

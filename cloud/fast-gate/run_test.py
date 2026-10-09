@@ -2069,6 +2069,64 @@ class ReverseDependencies(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "census.*stage3/drivers/new/run.py"):
             self.gate.touched(["internal/load/load.go", "stage3/drivers/new/run.py"])
 
+    def plantRead(self, literal):
+        # middle's test names outer's testdata by path, as internal/flow's corpus units name the oracle's.
+        for name, source in (("outer/testdata/input.ts", "input\n"),
+                             ("middle/reader_test.go", 'package middle\nvar corpus = []string{%s}\n' % literal)):
+            path = os.path.join(self.tree, name)
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            with open(path, "w") as handle:
+                handle.write(source)
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+
+    def readsLine(self, line):
+        path = os.path.join(self.tree, "cloud/fast-gate/executors.txt")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "a") as handle:
+            handle.write(line + "\n")
+
+    def test_reads_census_rejects_an_undeclared_cross_package_read(self):
+        # Relative to the package, and from the repository root; a mutant that misses either fails once.
+        for literal in ('"../outer/testdata/input.ts"', '"outer/testdata"'):
+            self.plantRead(literal)
+            with self.assertRaisesRegex(ValueError, "reads census.*middle reads outer/testdata.*middle/reader_test.go"):
+                self.gate.touched(["middle/reader_test.go"])
+
+    def test_reads_census_sees_a_joined_path(self):
+        self.plantRead('filepath.Join(root, "outer", "testdata", "input.ts")')
+        with self.assertRaisesRegex(ValueError, "reads census.*middle reads outer/testdata/input.ts"):
+            self.gate.touched(["middle/reader_test.go"])
+
+    def test_reads_census_accepts_a_declared_read(self):
+        # The branch declares it in its own executors.txt; the gate tools' map lacks it.
+        tools = tempfile.TemporaryDirectory()
+        self.addCleanup(tools.cleanup)
+        self.gate.arguments.tools = tools.name
+        self.plantRead('"../outer/testdata/input.ts"')
+        self.readsLine("reads middle outer/testdata/*")
+        try:
+            packages, _ = self.gate.touched(["middle/reader_test.go"])
+        except ValueError as error:
+            self.fail(error)
+        self.assertEqual(packages, [run.module + "/middle"])
+
+    def test_reads_census_leaves_a_read_on_the_base_alone(self):
+        # Only what the change adds or edits can red it: an undeclared read already on main is another change's.
+        self.plantRead('"../outer/testdata/input.ts"')
+        try:
+            packages, _ = self.gate.touched(["middle/source.go"])
+        except ValueError as error:
+            self.fail(error)
+        self.assertIn(run.module + "/middle", packages)
+
+    def test_reads_census_ignores_a_package_built_by_path(self):
+        # Building outer reads its Go files, never its testdata.
+        self.plantRead('"../outer"')
+        try:
+            self.gate.touched(["middle/reader_test.go"])
+        except ValueError as error:
+            self.fail(error)
+
     def test_invalid_map_fails_closed(self):
         self.declare({"stage1/gaps": ["internal/missing"]})
         with self.assertRaisesRegex(ValueError, "invalid compiler dependencies"):
@@ -2182,6 +2240,12 @@ class ReverseDependencyMutants(unittest.TestCase):
             ("invalid dependencies accepted", 'value not in directories', 'False', "test_invalid_map_fails_closed"),
             ("affected tests deferred", 'self.deferred = {}', 'pass', "test_opaque_gap_and_whole_oracle_are_selected"),
             ("fixture ancestry removed", 'while owner is None and ancestor not in', 'while False and ancestor not in', "test_embedding_and_fixture_ownership_survive"),
+            ("reads census disabled", 'if undeclared:', 'if False:', "test_reads_census_rejects_an_undeclared_cross_package_read"),
+            ("reads census skips relative paths", 'if text.startswith("../"):', 'if False:', "test_reads_census_rejects_an_undeclared_cross_package_read"),
+            ("reads census blind to joins", 'yield "/".join(part.group(1) for part in parts if part)', 'pass', "test_reads_census_sees_a_joined_path"),
+            ("branch reads lines ignored", 'for root in (self.arguments.tools, vars(self.arguments).get("tree")):', 'for root in (self.arguments.tools,):', "test_reads_census_accepts_a_declared_read"),
+            ("reads census on the base", 'for path in changed:\n            if not path.endswith(".go")', 'for path in self.git(tree, "ls-files").splitlines():\n            if not path.endswith(".go")', "test_reads_census_leaves_a_read_on_the_base_alone"),
+            ("package paths read as testdata", 'or not testInput(target):', ':', "test_reads_census_ignores_a_package_built_by_path"),
         ]
         for name, before, after, test in mutants:
             with self.subTest(mutant=name):
@@ -2189,7 +2253,8 @@ class ReverseDependencyMutants(unittest.TestCase):
                 namespace = dict(run.__dict__)
                 exec(compile(original.replace(before, after), run.__file__, "exec"), namespace)
                 mutated = namespace["Gate"]
-                with mock.patch.object(run.Gate, "touched", mutated.touched), mock.patch.object(run.Gate, "compilerDependencies", mutated.compilerDependencies):
+                with mock.patch.object(run.Gate, "touched", mutated.touched), mock.patch.object(run.Gate, "compilerDependencies", mutated.compilerDependencies), \
+                        mock.patch.object(run.Gate, "readsCensus", mutated.readsCensus), mock.patch.object(run.Gate, "readsRules", mutated.readsRules):
                     result = unittest.TestResult()
                     ReverseDependencies(test).run(result)
                 self.assertEqual(len(result.errors), 0, result.errors)
