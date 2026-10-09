@@ -124,7 +124,12 @@ dispatch() {
     # Loom's side pool runs it with the good tools' selection (cloud/pool-job.sh): never a canary for new tools, so its
     # token names the good tools and a pool green promotes nothing.
     token="$(cat "${state}/tools-good"):pool"
-    bash "${here}/cloud/pool-job.sh" "${sha}" --branch "${branch}" --tools "$(cat "${state}/tools-good")" $(isFront "${branch}" && echo --priority 30) > "${log}" 2>&1 &
+    # The star at Loom's priority 30; a tip the pool already voided back at 10, the everything-else tier, so no retry
+    # sits ahead of a wave-0 candidate (Loom, Oct 9 09:41Z).
+    local priority=""
+    grep -qx "${sha}" "${state}/pool-void-tries" 2> /dev/null && priority="--priority 10"
+    isFront "${branch}" && priority="--priority 30"
+    bash "${here}/cloud/pool-job.sh" "${sha}" --branch "${branch}" --tools "$(cat "${state}/tools-good")" ${priority} > "${log}" 2>&1 &
   else
     ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
   fi

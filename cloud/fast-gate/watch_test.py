@@ -737,6 +737,9 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: [x.endswith('queued again for the pool once more') for x in w.read('output').splitlines() if side in x][:1] == [True])
         w.wait(lambda: any(side in x and x.endswith('queued again for the boxes') for x in w.read('output').splitlines()))
         self.assertEqual(w.read('pool-starts').count('codex/side '), 2)
+        side = [line for line in w.read('pool-args').splitlines() if 'codex/side' in line]
+        self.assertNotIn('--priority', side[0])
+        self.assertIn('--priority 10', side[1], 'a retry sits ahead of fresh work')
         self.assertFalse((w.state / 'void-window').exists() and (w.state / 'void-window').read_text().strip())
         w.put('mode', 'pass')
         w.wait(lambda: 'codex/side 0' in w.read('starts'))
