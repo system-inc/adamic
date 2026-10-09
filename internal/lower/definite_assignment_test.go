@@ -52,9 +52,10 @@ func TestDefiniteAssignmentSoundNeighbors(t *testing.T) {
 		"class Box { n: number; constructor() { this.n = 2; } }\nconsole.log(`${new Box().n + 1}`);\n",
 		"// This mentions ts-ignore in prose.\nconsole.log('@ts-ignore');\n",
 	} {
-		_, err := lowerSource(t, source)
+		program, err := lowerSource(t, source)
 		if err != nil {
-			t.Errorf("sound neighbor: %v", err)
+			t.Fatalf("sound neighbor: %v", err)
 		}
+		requireLoweredOutput(t, program)
 	}
 }
