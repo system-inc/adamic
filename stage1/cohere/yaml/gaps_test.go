@@ -16,6 +16,7 @@ import (
 )
 
 func TestLexerGaps(t *testing.T) {
+	t.Parallel()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
@@ -24,6 +25,7 @@ func TestLexerGaps(t *testing.T) {
 		{"multiplePush.ts", "2\n", "push with other than one value"},
 	} {
 		t.Run(gap.file, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join("gaps", gap.file))
 			if err != nil {
 				t.Fatal(err)
@@ -47,6 +49,7 @@ func TestLexerGaps(t *testing.T) {
 }
 
 func TestStructuralPositionRefusal(t *testing.T) {
+	t.Parallel()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
@@ -70,53 +73,15 @@ func TestStructuralPositionRefusal(t *testing.T) {
 	t.Log(err)
 }
 
-func TestClosedLexerPresenceGapsMatchNode(t *testing.T) {
-	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for _, name := range []string{"stringPresence.ts", "valuePresence.ts"} {
-		t.Run(name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join("gaps", name))
-			if err != nil {
-				t.Fatal(err)
-			}
-			expected := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, path)
-			if string(expected) != "false\n" {
-				t.Fatalf("Node: %q", expected)
-			}
-			program, err := load.Load([]string{path})
-			if err != nil {
-				t.Fatal(err)
-			}
-			lowered, err := lower.Lower(context.Background(), program)
-			if err != nil {
-				t.Fatal(err)
-			}
-			directory := t.TempDir()
-			binary := filepath.Join(directory, "presence")
-			if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
-				t.Fatal(err)
-			}
-			actual := run(t, "", []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
-			if string(actual) != string(expected) {
-				t.Fatalf("native: %q, Node: %q", actual, expected)
-			}
-			emitted := filepath.Join(directory, "presence.mjs")
-			if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
-				t.Fatal(err)
-			}
-			actual = run(t, "", nil, "node", runner, emitted)
-			if string(actual) != string(expected) {
-				t.Fatalf("JavaScript: %q, Node: %q", actual, expected)
-			}
-		})
-	}
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
+func TestClosedStringPresenceGap(t *testing.T) {
+	closedGap(t, "gaps/stringPresence.ts", "false\n")
 }
 
 // TestClosedLexerGaps keeps the lexer gaps compiler/area-next closed: each proving program now lowers, and
 // must print what Node prints from native under the sanitizers and from emitted JavaScript. The port's
 // workarounds for them still stand; retiring each one is its own change against the corpus.
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestClosedLexerGaps(t *testing.T) {
 	for _, gap := range []struct{ file, output string }{
 		{"assignmentValue.ts", "1\n"},
@@ -127,6 +92,7 @@ func TestClosedLexerGaps(t *testing.T) {
 		{"prefixIncrement.ts", "1\n"},
 		{"emptyAlternative.ts", "1\n"},
 	} {
+		// Not parallel: native.Build writes the shared adamic/runtime or adamic/units cache.
 		t.Run(gap.file, func(t *testing.T) {
 			closedGap(t, filepath.Join("gaps", gap.file), gap.output)
 		})
@@ -180,4 +146,9 @@ func closedGap(t *testing.T, file, output string) {
 			t.Fatalf("%s: %q, Node %q", side.name, side.output, expected)
 		}
 	}
+}
+
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
+func TestClosedValuePresenceGap(t *testing.T) {
+	closedGap(t, "gaps/valuePresence.ts", "false\n")
 }

@@ -9,6 +9,7 @@ import (
 )
 
 func TestRegExpNativeRefusals(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		"const regex = /a/; regex.exec = (input: string): RegExpExecArray | null => null;",
 		"const regex = /a/; const copy = {...regex};",
@@ -23,6 +24,7 @@ func TestRegExpNativeRefusals(t *testing.T) {
 }
 
 func TestRegExpSourceNode(t *testing.T) {
+	t.Parallel()
 	cases := [][2]string{{"", ""}, {"[/]", ""}, {"[[/]/", ""}, {"[[a]--[b]]/", "v"}, {"\\[/", ""}, {"\\/", ""}, {"\\\\/", ""}, {"[\\]/]", ""}, {"(?<x>/)", ""}, {"\\\n", ""}, {"\r\n", "u"}, {"\u2028\u2029", ""}, {"K🌍", "iu"}}
 	data, err := json.Marshal(cases)
 	if err != nil {

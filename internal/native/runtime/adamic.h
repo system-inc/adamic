@@ -315,6 +315,7 @@ typedef struct adamic_object {
 	// NULL prototype pointer otherwise denotes the ordinary intrinsic prototype.
 	bool null_prototype;
 	bool frozen;
+	bool tuple;
 	bool sealed;
 	bool nonextensible;
 	// captureStackTrace owns one non-enumerable string outside the fixed shape.
@@ -325,6 +326,12 @@ typedef struct adamic_object {
 
 void adamic_error_capture_stack(adamic_object *target);
 adamic_string *adamic_error_read_stack(const adamic_object *target);
+// Reserve the insertion-order tail as well as both per-slot byte tails.
+// The base has no order accessor yet; c1 uses this same allocation size.
+static inline size_t adamic_object_size(size_t count) {
+    return sizeof(adamic_object) + count * (sizeof(adamic_value) + sizeof(size_t) + 2);
+}
+
 // Initialized bits follow slots in the same allocation, indexed by the actual shape.
 static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
 	return (unsigned char *)(void *)(object->slots + object->shape->count);

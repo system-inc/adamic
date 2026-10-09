@@ -371,6 +371,7 @@ func parseRanges(output string) (map[string][]Range, error) {
 }
 
 func TestNodeStringProperties(t *testing.T) {
+	t.Parallel()
 	var input strings.Builder
 	total := 0
 	for _, name := range []string{

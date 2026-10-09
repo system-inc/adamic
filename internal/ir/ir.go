@@ -208,6 +208,12 @@ const (
 	// a map's value); reading one is WeakTarget, and keeping one is WeakOf.
 	Weak
 
+	// Semantic slot tags reserve null and undefined independently of storage.
+	NullRepresentation
+	UndefinedRepresentation
+	// Record is reserved for the dictionary slice; V2 does not admit it.
+	Record
+
 	// Typed arrays hold numbers in one flat buffer of the element width.
 	Uint8Array
 	Int32Array

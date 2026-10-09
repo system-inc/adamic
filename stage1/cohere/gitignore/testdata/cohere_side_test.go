@@ -94,6 +94,7 @@ type adamicGlob struct {
 // written as it in the answers, so the two can be compared byte for byte.
 const adamicRoot = "/repository"
 
+// Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicPortCases(t *testing.T) {
 	requestPath := os.Getenv("ADAMIC_PORT_REQUEST")
 	if requestPath == "" {

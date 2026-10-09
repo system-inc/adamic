@@ -16,8 +16,8 @@ import (
 // known) and one the proof knows how to judge: a write it can't place would keep every slot of its
 // kind refused, and an IR node it doesn't know would keep every slot refused, both silently stricter
 // than they need be. A new IR node shows up here first.
-func TestEveryWriteIsRecordedAndKnown(t *testing.T) {
-	t.Parallel()
+func freshPrograms(t *testing.T) []string {
+	t.Helper()
 	var paths []string
 	for _, pattern := range []string{
 		"../../dedication/dedication.a",
@@ -36,40 +36,43 @@ func TestEveryWriteIsRecordedAndKnown(t *testing.T) {
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
 	}
+	return paths
+}
+
+func checkFreshProgram(t *testing.T, path string) {
+	t.Helper()
 	writes, proven := 0, 0
-	for _, path := range paths {
-		// These process probes test runtime IR, not source lowering, and do not
-		// import the Node declarations. Their dedicated oracle tests remain active.
-		if filepath.Base(path) == "node_process_directory_mutation.a" || filepath.Base(path) == "node_process_environment_mutation.a" {
-			continue
+	// Runtime-only process probes are checked by their dedicated oracle tests.
+	if filepath.Base(path) == "node_process_directory_mutation.a" || filepath.Base(path) == "node_process_environment_mutation.a" {
+		return
+	}
+	absolute, err := filepath.Abs(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := load.Load([]string{absolute})
+	if err != nil {
+		t.Fatalf("%s: Load: %v", path, err)
+	}
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		// The oracle's fixtures that stage 0 refuses on purpose.
+		t.Logf("Lower declined: %v", err)
+		return
+	}
+	for _, write := range fresh.ProveWrites(lowered) {
+		writes++
+		if write.Proven {
+			proven++
 		}
-		absolute, err := filepath.Abs(path)
-		if err != nil {
-			t.Fatal(err)
+		if write.Kind == fresh.WriteUnknown {
+			t.Errorf("%s: %s", path, write.Why)
 		}
-		program, err := load.Load([]string{absolute})
-		if err != nil {
-			t.Fatalf("%s: Load: %v", path, err)
-		}
-		lowered, err := lower.Lower(context.Background(), program)
-		if err != nil {
-			// The oracle's fixtures that stage 0 refuses on purpose.
-			continue
-		}
-		for _, write := range fresh.ProveWrites(lowered) {
-			writes++
-			if write.Proven {
-				proven++
-			}
-			if write.Kind == fresh.WriteUnknown {
-				t.Errorf("%s: %s", path, write.Why)
-			}
-			if write.Site == 0 && write.Kind != fresh.WriteUnknown {
-				t.Errorf("%s: a write lowering didn't record, in function %d", path, write.Function)
-			}
+		if write.Site == 0 && write.Kind != fresh.WriteUnknown {
+			t.Errorf("%s: a write lowering didn't record, in function %d", path, write.Function)
 		}
 	}
-	t.Logf("%d writes in %d programs, %d proven not to close a cycle", writes, len(paths), proven)
+	t.Logf("%d writes, %d proven not to close a cycle", writes, proven)
 }
 
 // Methods use outside parameters, so passing a confined node must let it escape

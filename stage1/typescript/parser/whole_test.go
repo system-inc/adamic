@@ -21,6 +21,7 @@ func wholeNode(t *testing.T, directory, manifest string, count bool) execution {
 	return execute(t, "", "node", args...)
 }
 func TestWholeCompilerAgrees(t *testing.T) {
+	t.Parallel()
 	manifest, files := compilerManifest(t)
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", manifest, "--whole")

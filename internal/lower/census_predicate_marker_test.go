@@ -6,6 +6,7 @@ import (
 )
 
 func TestCensusPredicateMarkerKeepsProofBoundaries(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`function isText(value: string | undefined): value is string { return true; }
 const marker: (...args: never[]) => void = isText; console.log(typeof marker);`,
@@ -22,6 +23,7 @@ const marker: (...args: never[]) => void = isText; console.log(typeof marker);`,
 }
 
 func TestCensusPredicateMarkerCallStaysNotYet(t *testing.T) {
+	t.Parallel()
 	_, err := lowerSource(t, `function isText(value: string | number): value is string { return typeof value === 'string'; }
 const marker: (...args: never[]) => void = isText;
 marker();`)

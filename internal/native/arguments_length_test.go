@@ -11,6 +11,7 @@ import (
 )
 
 func TestNoReaderCallingConvention(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct {
 		file    string
 		counted bool
@@ -20,6 +21,7 @@ func TestNoReaderCallingConvention(t *testing.T) {
 		{"arguments_length_unrelated_type.a", true},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
 			checked, err := load.Load([]string{filepath.Join("..", "oracle", "testdata", probe.file)})
 			if err != nil {
 				t.Fatal(err)

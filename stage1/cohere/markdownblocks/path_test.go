@@ -13,6 +13,7 @@ import (
 )
 
 // Parallel execution reserves memory: this compares full per-node path observations and sanitized mutant output.
+// Not parallel: ADAMIC_PATH_KEEP export directory and shared markdownMemory budget; existing helper controls parallel execution.
 func TestMarkdownAstPath(t *testing.T) {
 	parallelMarkdownMemory(t, 5)
 	root, err := filepath.Abs(repository)

@@ -239,7 +239,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			cache = e.cache()
 		}
 		if e.program.CheckedFields[statement.Name] {
-			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
+			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, fieldRepresentation(statement.Value), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
 		}
 		if e.fieldTypesNeeded() {
 			e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), cache)
@@ -268,7 +268,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("%s->%s = %s;", slot, member(statement.Value.Type()), slotted(statement.Value.Type(), value))
 		}
 		if e.fieldTypesNeeded() {
-			e.line("adamic_object_set_slot_type(%s, %s, %d);", object, slot, statement.Value.Type())
+			e.line("adamic_object_set_slot_type(%s, %s, %d);", object, slot, fieldRepresentation(statement.Value))
 		}
 		if converted {
 			e.line("}")

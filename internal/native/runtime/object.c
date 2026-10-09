@@ -1,13 +1,14 @@
 // object.c: plain objects, each carrying its shape.
 
 #include "adamic.h"
+#include "view_unions_mixed.h"
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 adamic_object *adamic_object_new(const adamic_shape *shape) {
-	adamic_object *object = adamic_allocate(sizeof *object + shape->count * (sizeof object->slots[0] + 2), adamic_kind_object);
+	adamic_object *object = adamic_allocate(adamic_object_size(shape->count), adamic_kind_object);
 	object->shape = shape;
 	object->class = NULL;
 	object->prototype = NULL;
@@ -17,6 +18,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	object->nonextensible = false;
 	object->has_captured_stack = false;
 	object->captured_stack.reference = NULL;
+	object->tuple = false;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);
@@ -174,12 +176,12 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 		return slot;
 	}
 	if (slot != NULL && object->class != NULL && object->class->is_static) {
-		size_t flag = object->class->static_flags[(size_t)(slot - object->slots)];
+		size_t flag = object->class->static_flags[adamic_slot_index(object, slot)];
 		if (flag != 0 && object->slots[flag - 1].number == 0 && object->class->static_parent != 0) {
 			return adamic_object_read_mode(object->slots[object->class->static_parent - 1].reference, name, cache, expression, expected, owner);
 		}
 	}
-	if (slot == NULL || !adamic_object_initialized(object)[(size_t)(slot - object->slots)]) {
+	if (slot == NULL || !adamic_object_initialized(object)[adamic_slot_index(object, slot)]) {
 		size_t capacity = strlen(name) + strlen(expression) + (expected == NULL ? 0 : strlen(expected)) + 100;
 		char *message = malloc(capacity);
 		if (message == NULL) {
@@ -191,6 +193,36 @@ static adamic_value *adamic_object_read_mode(const adamic_object *object, const 
 	}
 	if (owner != NULL) { *owner = object; }
 	return slot;
+}
+
+adamic_view_union_value adamic_object_view_union_snapshot(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *declared, bool absent) {
+    adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+    if (object != NULL && slot == NULL && absent) {
+        return (adamic_view_union_value){adamic_view_union_undefined, {.reference = NULL}};
+    }
+    const adamic_object *owner = NULL;
+    slot = adamic_object_read_mode(object, name, cache, expression, declared, &owner);
+    size_t index = adamic_slot_index(owner, slot);
+    unsigned char storage = adamic_object_field_types(owner)[index];
+    adamic_view_union_value value = {adamic_view_union_unknown, *slot};
+    if (storage == adamic_rep_number) { value.kind = adamic_view_union_number; }
+    else if (storage == adamic_rep_boolean) { value.kind = adamic_view_union_boolean; }
+    else if (storage == adamic_rep_maybe_number) {
+        adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
+        value.kind = number.present ? adamic_view_union_number : adamic_view_union_undefined;
+        value.payload.number = number.number;
+    } else if (storage == adamic_rep_maybe_boolean) {
+        adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
+        value.kind = boolean.present ? adamic_view_union_boolean : adamic_view_union_undefined;
+        value.payload.boolean = boolean.boolean;
+    } else if (storage == adamic_rep_null) { value.kind = adamic_view_union_null; }
+    else if (storage == adamic_rep_undefined) { value.kind = adamic_view_union_undefined; }
+    else if ((storage >= adamic_rep_string && storage <= adamic_rep_map) || storage == adamic_rep_closure || storage == adamic_rep_union || storage == adamic_rep_weak) {
+        value = adamic_view_union_heap(slot->reference);
+        adamic_view_union_kind expected = storage == adamic_rep_string ? adamic_view_union_string : storage == adamic_rep_object || storage == adamic_rep_weak ? adamic_view_union_object : storage == adamic_rep_array ? adamic_view_union_array : storage == adamic_rep_map ? adamic_view_union_map : storage == adamic_rep_closure ? adamic_view_union_function : value.kind;
+        if (value.kind != adamic_view_union_undefined && value.kind != expected) { value.kind = adamic_view_union_unknown; }
+    }
+    return value;
 }
 
 adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression) {
@@ -263,8 +295,10 @@ void adamic_view_literal_failure(const char *expression, const char *expected, u
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
 	adamic_value *slot = adamic_object_optional_field(object, name, cache);
 	if (slot != NULL) {
+		size_t index = adamic_slot_index(object, slot);
 		unsigned char actual = adamic_object_slot_type(object, slot);
-		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
+		bool reference_write = (wanted >= 3 && wanted <= 6) || wanted == 8 || wanted == 10;
+		if (actual == wanted || (actual == 13 && reference_write && slot != &object->captured_stack && object->shape->references[index]) || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);
 }

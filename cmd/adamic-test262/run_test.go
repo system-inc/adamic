@@ -12,6 +12,7 @@ import (
 	"time"
 )
 
+// Not parallel: changes runtime.GOMAXPROCS and saturates all CPUs in the saturated subtest.
 func TestProgramCPUDeadline(t *testing.T) {
 	if runtime.GOOS != "linux" && runtime.GOOS != "darwin" {
 		t.Skip("CPU limits require Linux or macOS")
@@ -38,6 +39,7 @@ int main(int argc, char **argv) {
 		t.Fatalf("build CPU helper: %v\n%s", err, output)
 	}
 	t.Run("spin", func(t *testing.T) {
+		t.Parallel()
 		start := time.Now()
 		result := runProgram(time.Second, nil, binary)
 		if !result.TimedOut || result.Exit != -1 || result.Signal != "" {
@@ -47,6 +49,7 @@ int main(int argc, char **argv) {
 			t.Fatal("spinning child reached the wall backstop instead of the CPU limit")
 		}
 	})
+	// Not parallel: changes runtime.GOMAXPROCS and saturates all CPUs.
 	t.Run("saturated", func(t *testing.T) {
 		previous := runtime.GOMAXPROCS(2 * runtime.NumCPU())
 		defer runtime.GOMAXPROCS(previous)

@@ -85,7 +85,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return l.objectIntersection(proven)
 	}
 	switch {
-	case flags&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
+	case flags&(checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsNumberLike != 0:
 		return ir.Number, true
@@ -109,20 +109,23 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
-			// A nullable object reference uses NULL. Null and undefined together need distinct tags.
-			if l.includesUndefined(proven) {
-				return 0, false
-			}
+			// Preserve a single nullable reference ABI. Differently stored members use
+			// compiler union boxes, which keep primitive and null tags distinct.
 			var reference ir.Type
+			boxed := l.includesUndefined(proven)
 			for _, member := range proven.Types() {
-				if member.Flags()&checker.TypeFlagsNull != 0 {
+				if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
 					continue
 				}
 				held, known := l.representation(member)
-				if !known || !held.IsReference() || held == ir.Union || held == ir.Weak || (reference != 0 && (held != ir.String || reference != ir.String)) {
+				if !known || held == ir.Weak {
 					return 0, false
 				}
+				boxed = boxed || !held.IsReference() || held == ir.Union || (reference != 0 && reference != held)
 				reference = held
+			}
+			if boxed {
+				return ir.Union, true
 			}
 			return reference, reference != 0
 		}

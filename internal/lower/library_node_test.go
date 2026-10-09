@@ -12,6 +12,7 @@ import (
 )
 
 func TestNodeLibraryNamesUnimplementedMembers(t *testing.T) {
+	t.Parallel()
 	for _, one := range []struct{ source, name string }{
 		{`import {copyFileSync as copy} from 'node:fs'; copy('x','y');`, "node:fs.copyFileSync"},
 		{`import * as fs from 'node:fs'; fs.readFile('x',()=>{});`, "node:fs.readFile"},
@@ -23,6 +24,7 @@ func TestNodeLibraryNamesUnimplementedMembers(t *testing.T) {
 		{`import {readFile} from 'node:fs'; const saved=readFile;`, "node:fs.readFile"},
 	} {
 		t.Run(one.name, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, one.source)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, one.name) {
@@ -33,6 +35,7 @@ func TestNodeLibraryNamesUnimplementedMembers(t *testing.T) {
 }
 
 func TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`import type {Stats} from 'node:fs'; type Size=Pick<Stats,'size'>; console.log('okay');`,
 		`import type {Stats} from 'node:fs'; function existsSync(path:string):boolean {return path==='x';} console.log(existsSync('x')?'yes':'no');`,
@@ -44,6 +47,7 @@ func TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames(t *testing.T) {
 }
 
 func TestNodeLibraryDistinguishesReceiverOwners(t *testing.T) {
+	t.Parallel()
 	file := filepath.Join(t.TempDir(), "main.a")
 	source := `import type {Stats,Dirent} from 'node:fs'; function stats(value:Stats):void{value.isFile();} function dirent(value:Dirent):void{value.isFile();}`
 	if err := os.WriteFile(file, []byte(source), 0600); err != nil {
@@ -77,6 +81,7 @@ func TestNodeLibraryDistinguishesReceiverOwners(t *testing.T) {
 // refuseWidening, which once read a QualifiedName's Text and panicked. A cast the relation proves
 // lowers; a downcast that claims optional fields Error lacks is refused, with its reason, not a crash.
 func TestNodeLibraryQualifiedTypeAssertion(t *testing.T) {
+	t.Parallel()
 	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const make = (): NodeJS.ErrnoException => ({ name: 'E', message: 'm' }); const error = make() as NodeJS.ErrnoException; console.log(error === error ? 'checked' : 'no');`); err != nil {
 		t.Fatal(err)
 	}
