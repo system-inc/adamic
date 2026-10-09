@@ -55,10 +55,9 @@ func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
 	suggestionAlongsideUnion(t)
 }
 
-// Not parallel: prepares shared witness-script-kind products before parallel leaves.
-// Not parallel: initializes shared witness-script-kind state before its parallel shards.
 func TestWitnessScriptKind(t *testing.T) {
-	witnessScriptKindSetup(t)
+	t.Parallel()
+	witnessScriptKindRequireReady(t)
 	witnessScriptKindUnion(t)
-	t.Logf("TestWitnessScriptKind (setup): %s", strings.Join(witnessScriptKindState.keys, ", "))
+	t.Logf("TestWitnessScriptKind (union): %s", strings.Join(witnessScriptKindState.Keys, ", "))
 }
