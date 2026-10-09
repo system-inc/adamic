@@ -57,9 +57,9 @@ func deepMutations() []portMutation {
 // including every source-Node and sanitized-native check. ADAMIC_TEST_SHARD=i/n
 // selects zero-based shard indices modulo n; unset runs all three. Non-Go products
 // are fetched by hash through internal/buildcache.
-func TestDeepMutants(t *testing.T) {
+func TestDeepMutantsUnion(t *testing.T) {
 	cases, mutations := deepMutantCases(), deepMutations()
-	runMutantShards(t, cases, mutations, mutantShardPlan(t, cases, mutations, testDeepMutantsShards))
+	mutantShardPlan(t, cases, mutations, testDeepMutantsShards)
 }
 
 func TestDeepMutantShardProof(t *testing.T) {

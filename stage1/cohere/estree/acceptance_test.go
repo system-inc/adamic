@@ -48,9 +48,9 @@ func acceptanceMutations() []portMutation {
 // TestAcceptanceMutants runs all 22 mutant/case pairs on source Node and
 // sanitized native. ADAMIC_TEST_SHARD=i/n selects zero-based shard indices
 // modulo n; unset runs both. Shared products are prepared once per invocation.
-func TestAcceptanceMutants(t *testing.T) {
+func TestAcceptanceMutantsUnion(t *testing.T) {
 	cases, mutations := acceptanceGrammar(), acceptanceMutations()
-	runMutantShards(t, cases, mutations, mutantShardPlan(t, cases, mutations, testAcceptanceMutantsShards))
+	mutantShardPlan(t, cases, mutations, testAcceptanceMutantsShards)
 }
 
 func TestAcceptanceMutantShardProof(t *testing.T) {

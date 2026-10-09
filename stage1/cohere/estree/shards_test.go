@@ -212,9 +212,9 @@ func checkMutantCase(pair mutantCase, want, source, native []byte) error {
 // TestThreePortMutants covers every generated case on both mutant ports, with
 // ASan/UBSan and the existing leak/stderr checks on every shard. ADAMIC_TEST_SHARD
 // i/n selects zero-based shard indices modulo n; unset runs all. The gate can
-// independently select TestThreePortMutants/shard-NNN with -run.
-func TestThreePortMutants(t *testing.T) {
-	runMutantShards(t, generated(), threePortMutations(), threePortShards(t))
+// independently select the top-level TestThreePortMutants_NNN tests with -run.
+func TestThreePortMutantsUnion(t *testing.T) {
+	threePortShards(t)
 }
 
 func runMutantShards(t *testing.T, cases []string, mutations []portMutation, shards []mutantShard) {
@@ -277,31 +277,7 @@ func TestThreePortMutantShardProof(t *testing.T) {
 
 func proveMutantShards(t *testing.T, mutations []portMutation, shards []mutantShard) {
 	t.Helper()
-	parent := t.Name()
-	if value := os.Getenv("ADAMIC_ESTREE_PLANTED_MUTANT"); value != "" {
-		m, err := strconv.Atoi(value)
-		if err != nil || m < 0 || m >= len(mutations) {
-			t.Fatal("invalid planted mutant")
-		}
-		for _, shard := range shards {
-			t.Run(shard.name, func(t *testing.T) {
-				t.Parallel()
-				for _, pair := range shard.cases {
-					want, source, native := []byte("oracle"), []byte("oracle"), []byte("oracle")
-					if pair.witness {
-						source, native = []byte("mutant"), []byte("mutant")
-					}
-					if pair.mutant == m && pair.witness {
-						native = want
-					}
-					if err := checkMutantCase(pair, want, source, native); err != nil {
-						t.Fatal(err)
-					}
-				}
-			})
-		}
-		return
-	}
+	parent := strings.Replace(t.Name(), "MutantShardProof", "Mutants", 1)
 	executable, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
@@ -312,11 +288,11 @@ func proveMutantShards(t *testing.T, mutations []portMutation, shards []mutantSh
 			for _, shard := range shards {
 				for _, pair := range shard.cases {
 					if pair.mutant == m && pair.witness {
-						expected, caseID = shard.name, pair.index
+						expected, caseID = parent+"_"+strings.TrimPrefix(shard.name, "shard-"), pair.index
 					}
 				}
 			}
-			command := exec.Command(executable, "-test.run=^"+parent+"$", "-test.v", "-test.count=1")
+			command := exec.Command(executable, "-test.run=^"+parent+"_[0-9]{3}$", "-test.v", "-test.count=1", "-test.timeout=75s")
 			command.Env = append(os.Environ(), fmt.Sprintf("ADAMIC_ESTREE_PLANTED_MUTANT=%d", m))
 			output, err := command.CombinedOutput()
 			exit, ok := err.(*exec.ExitError)
@@ -326,13 +302,13 @@ func proveMutantShards(t *testing.T, mutations []portMutation, shards []mutantSh
 			failed, passed := 0, 0
 			for _, line := range strings.Split(string(output), "\n") {
 				line = strings.TrimSpace(line)
-				if strings.HasPrefix(line, "--- FAIL: "+parent+"/shard-") {
+				if strings.HasPrefix(line, "--- FAIL: "+parent+"_") {
 					failed++
-					if !strings.HasPrefix(line, "--- FAIL: "+parent+"/"+expected+" (") {
+					if !strings.HasPrefix(line, "--- FAIL: "+expected+" (") {
 						t.Fatalf("wrong shard caught failure: %s", line)
 					}
 				}
-				if strings.HasPrefix(line, "--- PASS: "+parent+"/shard-") {
+				if strings.HasPrefix(line, "--- PASS: "+parent+"_") {
 					passed++
 				}
 			}
