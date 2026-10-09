@@ -132,7 +132,6 @@ func jsonUpstreamTopShard(t *testing.T, target int) {
 	if err := gatesample.Validate(); err != nil {
 		t.Fatal(err)
 	}
-	t.Parallel()
 	if os.Getenv("ADAMIC_JSON_PRETTIER") == "" {
 		t.Skip("set ADAMIC_JSON_PRETTIER for the separate upstream report")
 	}

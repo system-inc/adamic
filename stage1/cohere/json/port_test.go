@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -209,7 +210,6 @@ func comparisonError(name string, result run, expected string, cases []textCase)
 	return fmt.Errorf("%s output length %d, Go %d", name, len(result.stdout), len(expected))
 }
 func jsonPortTopShard(t *testing.T, target int) {
-	t.Parallel()
 	parentStart := time.Now()
 	cases, shards := jsonTopCorpus(t)
 	enumeratedUnits := len(shards) + 3*len(shards) // agreement plus three benchmark rounds
