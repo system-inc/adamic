@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T08:03:54.821503427Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-09T08:03:54.828875631Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown"}
+{"Time":"2026-10-09T08:03:54.829026978Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Output":"=== RUN   TestFutureBufferOperationRemainsUnknown\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:54.82904851Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Output":"=== PAUSE TestFutureBufferOperationRemainsUnknown\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:54.829050884Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown"}
+{"Time":"2026-10-09T08:03:54.829053327Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown"}
+{"Time":"2026-10-09T08:03:54.82905512Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Output":"=== CONT  TestFutureBufferOperationRemainsUnknown\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:54.829059747Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Output":"    guards_test.go:53: an unrecognized buffer operation must keep its unknown write, got []\n","OutputType":"error"}
+{"Time":"2026-10-09T08:03:54.82906866Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Output":"--- FAIL: TestFutureBufferOperationRemainsUnknown (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:54.829070753Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestFutureBufferOperationRemainsUnknown","Elapsed":0}
+{"Time":"2026-10-09T08:03:54.829080839Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:54.829143002Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"FAIL\tgithub.com/system-inc/adamic/internal/fresh\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:03:54.829152546Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.008}
