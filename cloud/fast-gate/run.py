@@ -1335,6 +1335,12 @@ class Gate:
         fast.json as deferred_run_by_request."""
         text = self.git(self.arguments.tree, "log", "--format=%(trailers:key=Gate-runs,valueonly)", "%s..%s" % (self.arguments.base, self.arguments.sha))
         self.requested = {}
+        # Where each requested name came from: "trailer" when the change named it itself, "deferred-list" when only
+        # "Gate-runs: deferred" brought it in with the rest of the shared list. A name the tree has nothing of reads
+        # stale only from the list; one the change named is red, since a typo must never pass (@system_adamic's ruling
+        # on 1939bbc6, Oct 9). A name with no origin recorded is treated as the change's own: red, never stale.
+        self.requestedOrigins = {}
+        listed = {importPath: set(names) for importPath, names in self.deferred.items()}
         for line in text.splitlines():
             fields = line.split()
             if fields == ["deferred"]:
@@ -1344,16 +1350,25 @@ class Gate:
                 self.result["deferred_all_requested"] = True
                 for importPath, names in self.deferred.items():
                     self.requested.setdefault(importPath, set()).update(names)
+                    for name in names:
+                        self.requestedOrigins.setdefault(importPath, {}).setdefault(name, "deferred-list")
                     self.result.setdefault("deferred_run_by_request", []).extend(importPath + " " + name for name in sorted(names))
                 self.deferred = {}
                 continue
             if len(fields) != 2:
                 continue
             importPath = module + "/" + fields[0].strip("/")
+            if fields[1] in listed.get(importPath, set()):
+                # Named by the change itself, before or after a "Gate-runs: deferred" in the same range.
+                self.requestedOrigins.setdefault(importPath, {})[fields[1]] = "trailer"
             if fields[1] in self.deferred.get(importPath, set()):
                 self.deferred[importPath].discard(fields[1])
                 self.requested.setdefault(importPath, set()).add(fields[1])
                 self.result.setdefault("deferred_run_by_request", []).append(importPath + " " + fields[1])
+
+    def requestedOrigin(self, importPath, name):
+        """"deferred-list" or "trailer" (runRequested's requestedOrigins); a name with none recorded is the change's own."""
+        return getattr(self, "requestedOrigins", {}).get(importPath, {}).get(name, "trailer")
 
     def requestedRan(self):
         """Every requested deferred test ran to a verdict rather than skipping (a skipped or missing one
@@ -1376,9 +1391,12 @@ class Gate:
                 members = requestedMembers(tests, name)
                 if members is None:
                     results[key] = familyOutcome(outcomes, importPath, name)
-                elif not members:
+                elif not members and self.requestedOrigin(importPath, name) == "deferred-list":
                     results[key] = "stale"
                     stale.append(key)
+                elif not members:
+                    # Named by the change itself and absent from the tree: a typo or a removed test, red.
+                    results[key] = "absent"
                 else:
                     results[key] = familyVerdict(outcomes, importPath, members)
                     if list(members) != [name]:
@@ -1401,7 +1419,8 @@ class Gate:
             # lacks is the package's run, not one test's verdict.
             self.result["deferred_packages_absent_from_log"] = absent
         if unproven:
-            self.fail("deferred", "requested deferred tests that didn't run to a verdict:\n" + "\n".join(unproven) +
+            self.fail("deferred", "requested deferred tests that didn't run to a verdict:\n" + "\n".join(
+                row + (" (requested test absent from the tree)" if results[test] == "absent" else "") for test, row in zip(unprovenTests, unproven)) +
                       "".join("\nthe log holds no test of %s at all, its products aside" % package for package in absent))
 
     def smokeList(self):
@@ -1848,8 +1867,14 @@ class Gate:
             if importPath in getattr(self, "onlyTests", {}):
                 names = [name for name in names if inFamily(name, self.onlyTests[importPath])]
                 if not names:
-                    # A package gated only for requested names its -test.list has no test or shard of runs nothing, and
-                    # the names read stale in the record and the status line (requestedRan), never as a silent pass.
+                    # A package gated only for requested names its -test.list has no test or shard of runs nothing. A name
+                    # the change named itself in a Gate-runs trailer is red, as a1633d8a made it: a typo must never pass.
+                    # Names only "Gate-runs: deferred" brought in from the shared list read stale in the record and the
+                    # status line (requestedRan), never as a silent pass.
+                    own = sorted(name for name in self.onlyTests[importPath] if self.requestedOrigin(importPath, name) != "deferred-list")
+                    if own:
+                        self.fail("requested", "requested tests ran: 0 in %s: %s match no test in its -test.list (requested test absent from the tree)" % (importPath, ", ".join(own)))
+                        return
                     self.result.setdefault("split_tests", {})[importPath] = 0
                     return
             selection = getattr(self, "oracleSelection", {"whole": True}) if importPath == oracle else {"whole": True}

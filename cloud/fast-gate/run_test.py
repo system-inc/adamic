@@ -437,17 +437,32 @@ class FailClosed(unittest.TestCase):
         self.assertEqual(result["stages_exit"].get("census"), 0)
         self.assertTrue(os.path.exists(os.path.join(gate.arguments.out, "census.log")))
 
-    def test_a_package_gated_for_requested_tests_runs_their_family_and_a_name_it_lists_nothing_of_is_stale(self):
-        # A requested name selects itself and its split's shards, never an empty pass (@system_adamic, Oct 9 11:01Z, after
-        # Loom's unit ran "no tests to run" and passed). A name the package's -test.list has neither the test nor a shard
-        # of is a stale deferred-list entry (hidden-boundaries 64a5179f, Oct 9 16:36Z): not the candidate's red, and
-        # named in the record and the status line, never read as passed.
+    def test_a_package_gated_for_requested_tests_runs_their_family_and_reds_when_it_selects_none(self):
+        # A requested name selects itself and its split's shards; one that selects nothing is red, never an empty pass
+        # (@system_adamic, Oct 9 11:01Z, after Loom's unit ran "no tests to run" and passed).
         with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"q": {"TestOne"}})):
             gate, status, result = self.gate()
         self.assertIsNone(gate.failure, status)
         self.assertEqual(result["split_tests"].get("q"), 1)
-        self.assertEqual(result["deferred_run_results"], {"q TestOne": "pass"})
         with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"q": {"TestNoSuchFamily"}})):
+            gate, status, result = self.gate()
+        self.assertIn("first failure at requested", status)
+        self.assertIn("requested tests ran: 0 in q: TestNoSuchFamily", gate.failure["detail"])
+
+    def test_a_deferred_list_name_its_package_lists_nothing_of_is_stale_and_a_trailer_named_one_is_red(self):
+        # A name only "Gate-runs: deferred" brought in from the shared list, which the package's -test.list has neither
+        # the test nor a shard of, is a stale list entry (hidden-boundaries 64a5179f, Oct 9 16:36Z): not the candidate's
+        # red, named in the record and the status line, never read as passed. The same name named by the change's own
+        # trailer stays red (@system_adamic's ruling on 1939bbc6): a typo must never pass.
+        def requests(origin):
+            return lambda gate: (setattr(gate, "requested", {"q": {"TestNoSuchFamily"}}),
+                                 setattr(gate, "requestedOrigins", {"q": {"TestNoSuchFamily": origin}}))
+
+        with mock.patch.object(run.Gate, "runRequested", requests("trailer")):
+            gate, status, result = self.gate()
+        self.assertIn("first failure at requested", status)
+        self.assertIn("requested tests ran: 0 in q: TestNoSuchFamily match no test in its -test.list (requested test absent from the tree)", gate.failure["detail"])
+        with mock.patch.object(run.Gate, "runRequested", requests("deferred-list")):
             gate, status, result = self.gate()
         self.assertTrue(status.startswith("green:"), status)
         self.assertEqual(result["split_tests"].get("q"), 0)
@@ -485,7 +500,8 @@ class FailClosed(unittest.TestCase):
         # The census phase resolves against the tree's test sources (wasm_test.go here holds TestWASI): one stale name
         # beside one that never ran reds for the one that never ran alone, and the line names the stale one as well.
         native = run.module + "/internal/native"
-        with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {native: {"TestWASI", "TestGone"}})):
+        with mock.patch.object(run.Gate, "runRequested", lambda gate: (setattr(gate, "requested", {native: {"TestWASI", "TestGone"}}),
+                                                                      setattr(gate, "requestedOrigins", {native: {"TestWASI": "deferred-list", "TestGone": "deferred-list"}}))):
             gate, status, result = self.gate(extra={"phase": "census", "census": self.poolLog()})
         self.assertEqual(result["deferred_run_results"], {native + " TestWASI": "missing", native + " TestGone": "stale"})
         self.assertIn("first failure at deferred (1 requested deferred tests unproven: native TestWASI missing)", status)
@@ -1133,6 +1149,33 @@ class DeferredSplitFamilies(unittest.TestCase):
         gate, results, lint = self.judge([], sources=constrained)
         self.assertEqual(results[lint + " TestNodeTableIsLinkOnly"], "missing")
         self.assertEqual(gate.result["deferred_stale"], [lint + " TestShardsAgree"])
+
+    def test_a_stale_deferred_list_name_warns_while_one_the_change_named_in_a_trailer_reds(self):
+        # @system_adamic's ruling on 1939bbc6 (Oct 9): only an entry of the shared list that "Gate-runs: deferred" brought
+        # in reads stale; a name the change itself requests in a Gate-runs trailer and the tree has nothing of is red,
+        # whichever order the trailers come in.
+        for trailers in ("deferred\nGate-runs: stage1/cohere/lint TestNodeTableIsLinkOnly",
+                         "stage1/cohere/lint TestNodeTableIsLinkOnly\nGate-runs: deferred"):
+            with self.subTest(trailers=trailers):
+                gate, native, lint = self.gate(trailers)
+                os.makedirs(os.path.join(gate.arguments.tree, "stage1/cohere/lint"))
+                with open(os.path.join(gate.arguments.tree, "stage1/cohere/lint/shards_test.go"), "w") as handle:
+                    handle.write("package lint\n\nfunc TestShardsAgree_000(t *testing.T) {}\n")
+                gate.deferred = {lint: {"TestShardsAgree", "TestNodeTableIsLinkOnly", "TestJsxLintTrees"}}
+                gate.runRequested()
+                self.assertEqual(gate.requestedOrigins[lint], {"TestShardsAgree": "deferred-list", "TestJsxLintTrees": "deferred-list",
+                                                               "TestNodeTableIsLinkOnly": "trailer"})
+                with open(os.path.join(gate.arguments.out, "test.jsonl"), "w") as handle:
+                    handle.write(json.dumps({"Action": "pass", "Package": lint, "Test": "TestShardsAgree_000"}) + "\n")
+                with mock.patch("builtins.print"):
+                    gate.requestedRan()
+                results = gate.result["deferred_run_results"]
+                self.assertEqual(results, {lint + " TestShardsAgree": "pass", lint + " TestJsxLintTrees": "stale",
+                                           lint + " TestNodeTableIsLinkOnly": "absent"})
+                self.assertEqual(gate.result["deferred_stale"], [lint + " TestJsxLintTrees"])
+                self.assertEqual(gate.failure["step"], "deferred")
+                self.assertIn(lint + " TestNodeTableIsLinkOnly: absent (requested test absent from the tree)", gate.failure["detail"])
+                self.assertNotIn("TestJsxLintTrees", gate.failure["detail"])
 
     def test_the_source_inventory_follows_go_s_file_name_constraints(self):
         tree = tempfile.mkdtemp()
