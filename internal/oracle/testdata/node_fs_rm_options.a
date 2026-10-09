@@ -1,6 +1,7 @@
 import { mkdtempSync, rmSync, writeFileSync, existsSync } from 'node:fs';
 // Each omission must keep Node's default; force omission uses an existing tree.
-const root = mkdtempSync('rm-options-');
+// WASI starts at /; use a writable absolute prefix for the unique directory.
+const root = mkdtempSync('/tmp/rm-options-');
 writeFileSync(root + '/no-recursive', 'x');
 rmSync(root + '/no-recursive', { force: true, maxRetries: 0, retryDelay: 100 });
 console.log(`no-recursive=${existsSync(root + '/no-recursive')}`);

@@ -12,6 +12,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 const rmOptionsFixture = "internal/oracle/testdata/node_fs_rm_options.a"
@@ -131,5 +132,36 @@ func TestNodeFSRmOptionsCounts(t *testing.T) {
 	}
 	if !strings.Contains(string(recorded), row+"\n") {
 		t.Fatalf("rm options counts not recorded: %s", row)
+	}
+}
+
+func TestNodeFSRmOptionsAgreesWithNode(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, rmOptionsFixture))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	want := "no-recursive=false\nno-force=false\nno-retries=false\nno-delay=false\nempty-options=false\nno-options=false\nError\nSystemError\nremoved\n"
+	if truth.exitCode != 0 || len(truth.stderr) != 0 || string(truth.stdout) != want {
+		t.Fatalf("Node: %+v", truth)
+	}
+	sanitized, binary := natively(t, program)
+	results := map[string]run{"native release": released(t, program), "native sanitized": sanitized, "JavaScript": onJavaScriptBackend(t, program)}
+	if os.Getenv("ADAMIC_ORACLE_WASI") == "1" {
+		results["wasm32-wasi"] = onWASI(t, native.C(program))
+	}
+	for backend, got := range results {
+		t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+		if difference := disagreement(truth, got); difference != "" {
+			t.Errorf("%s: %s", backend, difference)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
 	}
 }
