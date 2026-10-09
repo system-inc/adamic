@@ -1,0 +1,146 @@
+[
+  {
+    "mutant": "M2",
+    "test": "TestCallTargetReaders",
+    "seconds": 2.2412155499999926,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M2 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetReaders$",
+    "failed": []
+  },
+  {
+    "mutant": "M2",
+    "test": "TestViewUnionDiscriminantOverlaps",
+    "seconds": 1.8144639849999749,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M2 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestViewUnionDiscriminantOverlaps$",
+    "failed": []
+  },
+  {
+    "mutant": "M2",
+    "test": "TestPrimitiveViewMembers",
+    "seconds": 1.760681513999998,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M2 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestPrimitiveViewMembers$",
+    "failed": []
+  },
+  {
+    "mutant": "M2",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "seconds": 1.8728088370000933,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M2 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureTargetsBoundOnlyProvenValues$",
+    "failed": []
+  },
+  {
+    "mutant": "M2",
+    "test": "TestClosureArgumentsCountTargets",
+    "seconds": 1.8401287220000313,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M2 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureArgumentsCountTargets$",
+    "failed": []
+  },
+  {
+    "mutant": "M2",
+    "test": "TestArgumentLayouts",
+    "seconds": 1.7039277920000586,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M2 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestArgumentLayouts$",
+    "failed": []
+  },
+  {
+    "mutant": "M3",
+    "test": "TestCallTargetReaders",
+    "seconds": 2.643814576000068,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M3 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetReaders$",
+    "failed": []
+  },
+  {
+    "mutant": "M3",
+    "test": "TestViewUnionDiscriminantOverlaps",
+    "seconds": 1.9181251259999499,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M3 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestViewUnionDiscriminantOverlaps$",
+    "failed": []
+  },
+  {
+    "mutant": "M3",
+    "test": "TestPrimitiveViewMembers",
+    "seconds": 1.6848667560000194,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M3 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestPrimitiveViewMembers$",
+    "failed": []
+  },
+  {
+    "mutant": "M3",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.7517407730000514,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M3 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$",
+    "failed": []
+  },
+  {
+    "mutant": "M3",
+    "test": "TestClosureArgumentsCountTargets",
+    "seconds": 1.7785976109998956,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M3 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureArgumentsCountTargets$",
+    "failed": []
+  },
+  {
+    "mutant": "M3",
+    "test": "TestArgumentLayouts",
+    "seconds": 1.8190679439999258,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M3 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestArgumentLayouts$",
+    "failed": []
+  },
+  {
+    "mutant": "M4",
+    "test": "TestCallTargetReaders",
+    "seconds": 2.4339424659999622,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M4 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetReaders$",
+    "failed": []
+  },
+  {
+    "mutant": "M4",
+    "test": "TestViewUnionDiscriminantOverlaps",
+    "seconds": 1.652701529000069,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M4 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestViewUnionDiscriminantOverlaps$",
+    "failed": []
+  },
+  {
+    "mutant": "M4",
+    "test": "TestPrimitiveViewMembers",
+    "seconds": 1.6543656669999791,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M4 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestPrimitiveViewMembers$",
+    "failed": []
+  },
+  {
+    "mutant": "M4",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.706034735000003,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M4 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$",
+    "failed": []
+  },
+  {
+    "mutant": "M4",
+    "test": "TestClosureArgumentsCountTargets",
+    "seconds": 1.762092703999997,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M4 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureArgumentsCountTargets$",
+    "failed": []
+  },
+  {
+    "mutant": "M4",
+    "test": "TestArgumentLayouts",
+    "seconds": 1.6760719159999553,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M4 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestArgumentLayouts$",
+    "failed": []
+  }
+]

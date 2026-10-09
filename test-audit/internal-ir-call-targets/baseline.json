@@ -1,0 +1,26 @@
+[
+  {
+    "name": "package",
+    "seconds": 20.154184902999987,
+    "exit": 0,
+    "command": "go test -count=1 -timeout 90s ./internal/ir/ -run ."
+  },
+  {
+    "name": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.768113607000032,
+    "exit": 0,
+    "command": "go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$"
+  },
+  {
+    "name": "TestClosureTargetsBoundOnlyProvenValues",
+    "seconds": 1.7428992699999526,
+    "exit": 0,
+    "command": "go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureTargetsBoundOnlyProvenValues$"
+  },
+  {
+    "name": "coverage",
+    "seconds": 4.793742968999936,
+    "exit": 0,
+    "command": "go test -count=1 -timeout 90s ./internal/ir/ -run ^(TestCallTargetsIncludeEveryDescendant|TestClosureTargetsBoundOnlyProvenValues)$ -coverpkg=./internal/ir -coverprofile=/tmp/call-targets-audit/coverage.out"
+  }
+]

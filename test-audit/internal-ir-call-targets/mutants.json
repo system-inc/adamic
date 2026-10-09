@@ -1,0 +1,58 @@
+[
+  [
+    "M1",
+    "internal/ir/call_targets.go",
+    10,
+    "if call.Virtual != 0 {",
+    "if false {"
+  ],
+  [
+    "M2",
+    "internal/ir/call_targets.go",
+    17,
+    "return []int{call.Function}",
+    "return []int{call.Function + 1}"
+  ],
+  [
+    "M3",
+    "internal/ir/call_targets.go",
+    69,
+    "return FunctionTargets{Functions: []int{value.Function}}",
+    "return FunctionTargets{Functions: []int{value.Function + 1}}"
+  ],
+  [
+    "M4",
+    "internal/ir/call_targets.go",
+    72,
+    "return FunctionTargets{Functions: []int{target - 1}}",
+    "return FunctionTargets{Functions: []int{target}}"
+  ],
+  [
+    "M5",
+    "internal/ir/call_targets.go",
+    82,
+    "if targets.Unknown {",
+    "if targets.Unknown { return false;"
+  ],
+  [
+    "M6",
+    "internal/ir/call_targets.go",
+    46,
+    "return FunctionTargets{Functions: []int{call.Direct - 1}}",
+    "return FunctionTargets{Functions: []int{call.Direct}}"
+  ],
+  [
+    "M7",
+    "internal/ir/call_targets.go",
+    20,
+    "func (p *Program) CallMayThrow(call Call) bool {",
+    "func (p *Program) CallMayThrow(call Call) bool { return false;"
+  ],
+  [
+    "M8",
+    "internal/ir/argument_slots.go",
+    41,
+    "p.FixedArgumentSlots = fixed",
+    "p.FixedArgumentSlots = fixed + 1"
+  ]
+]

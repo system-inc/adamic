@@ -1,0 +1,11 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -14,7 +14,7 @@
+ 		}
+ 		return targets
+ 	}
+-	return []int{call.Function}
++	return []int{call.Function + 1}
+ }
+ 
+ func (p *Program) CallMayThrow(call Call) bool {

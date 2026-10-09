@@ -1,0 +1,11 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -66,7 +66,7 @@
+ 	}
+ 	switch value := value.(type) {
+ 	case MakeClosure:
+-		return FunctionTargets{Functions: []int{value.Function}}
++		return FunctionTargets{Functions: []int{value.Function + 1}}
+ 	case Read:
+ 		if target := p.Locals[value.Local].ConstantClosure; target != 0 {
+ 			return FunctionTargets{Functions: []int{target - 1}}

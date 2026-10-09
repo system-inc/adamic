@@ -1,0 +1,200 @@
+[
+  {
+    "mutant": "M1",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.8340570589999743,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M1 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$",
+    "failed": [
+      "TestCallTargetsIncludeEveryDescendant"
+    ]
+  },
+  {
+    "mutant": "M1",
+    "test": "package",
+    "seconds": 22.903411181000024,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M1 go test -count=1 -timeout 90s ./internal/ir/ -run .",
+    "failed": [
+      "TestCallTargetsIncludeEveryDescendant"
+    ]
+  },
+  {
+    "mutant": "M2",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.6967807680000533,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M2 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$",
+    "failed": [
+      "TestCallTargetsIncludeEveryDescendant"
+    ]
+  },
+  {
+    "mutant": "M2",
+    "test": "package",
+    "seconds": 1.903590826000027,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M2 go test -count=1 -timeout 90s ./internal/ir/ -run .",
+    "failed": [
+      "TestCallTargetsIncludeEveryDescendant"
+    ]
+  },
+  {
+    "mutant": "M3",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.8976961879999408,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M3 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$",
+    "failed": []
+  },
+  {
+    "mutant": "M3",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "seconds": 1.7119029709999722,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M3 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureTargetsBoundOnlyProvenValues$",
+    "failed": [
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ]
+  },
+  {
+    "mutant": "M3",
+    "test": "package",
+    "seconds": 1.769977874999995,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M3 go test -count=1 -timeout 90s ./internal/ir/ -run .",
+    "failed": [
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ]
+  },
+  {
+    "mutant": "M4",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.757433209999931,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M4 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$",
+    "failed": []
+  },
+  {
+    "mutant": "M4",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "seconds": 1.769437645000039,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M4 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureTargetsBoundOnlyProvenValues$",
+    "failed": [
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ]
+  },
+  {
+    "mutant": "M4",
+    "test": "package",
+    "seconds": 1.9384941650000655,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M4 go test -count=1 -timeout 90s ./internal/ir/ -run .",
+    "failed": [
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ]
+  },
+  {
+    "mutant": "M5",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.798086954999917,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M5 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$",
+    "failed": []
+  },
+  {
+    "mutant": "M5",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "seconds": 1.7338292990000355,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M5 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureTargetsBoundOnlyProvenValues$",
+    "failed": [
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ]
+  },
+  {
+    "mutant": "M5",
+    "test": "package",
+    "seconds": 2.3158108599999423,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M5 go test -count=1 -timeout 90s ./internal/ir/ -run .",
+    "failed": [
+      "TestClosureTargetsBoundOnlyProvenValues"
+    ]
+  },
+  {
+    "mutant": "M6",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.7317167909999398,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M6 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$",
+    "failed": []
+  },
+  {
+    "mutant": "M6",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "seconds": 1.7609530080000013,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M6 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureTargetsBoundOnlyProvenValues$",
+    "failed": []
+  },
+  {
+    "mutant": "M6",
+    "test": "package",
+    "seconds": 2.320456285000091,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M6 go test -count=1 -timeout 90s ./internal/ir/ -run .",
+    "failed": []
+  },
+  {
+    "mutant": "M7",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.7425229240000135,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M7 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$",
+    "failed": []
+  },
+  {
+    "mutant": "M7",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "seconds": 1.792775084999903,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M7 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureTargetsBoundOnlyProvenValues$",
+    "failed": []
+  },
+  {
+    "mutant": "M7",
+    "test": "package",
+    "seconds": 2.4664871560000847,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M7 go test -count=1 -timeout 90s ./internal/ir/ -run .",
+    "failed": []
+  },
+  {
+    "mutant": "M8",
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "seconds": 1.764715185,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M8 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$",
+    "failed": []
+  },
+  {
+    "mutant": "M8",
+    "test": "TestClosureTargetsBoundOnlyProvenValues",
+    "seconds": 1.7345452959999648,
+    "exit": 0,
+    "command": "ADAMIC_MUTANT=M8 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureTargetsBoundOnlyProvenValues$",
+    "failed": []
+  },
+  {
+    "mutant": "M8",
+    "test": "package",
+    "seconds": 2.3425649799999064,
+    "exit": 1,
+    "command": "ADAMIC_MUTANT=M8 go test -count=1 -timeout 90s ./internal/ir/ -run .",
+    "failed": [
+      "TestArgumentLayouts"
+    ]
+  }
+]

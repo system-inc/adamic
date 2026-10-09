@@ -1,0 +1,11 @@
+--- a/internal/ir/argument_slots.go
++++ b/internal/ir/argument_slots.go
+@@ -38,7 +38,7 @@
+ 			}
+ 		}
+ 	}
+-	p.FixedArgumentSlots = fixed
++	p.FixedArgumentSlots = fixed + 1
+ }
+ 
+ type ArgumentLayout struct {

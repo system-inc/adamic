@@ -1,0 +1,95 @@
+diff --git a/internal/ir/argument_slots.go b/internal/ir/argument_slots.go
+index 9a995030..c3cce9ed 100644
+--- a/internal/ir/argument_slots.go
++++ b/internal/ir/argument_slots.go
+@@ -1,5 +1,7 @@
+ package ir
+ 
++import "os"
++
+ // RestArguments names a collected tail separately from fixed parameter slots.
+ // A fixed-arity function and a rest function can inhabit the same function type.
+ type RestArguments struct {
+@@ -39,6 +41,9 @@ func (p *Program) PrepareArgumentSlots() {
+ 		}
+ 	}
+ 	p.FixedArgumentSlots = fixed
++	if os.Getenv("ADAMIC_MUTANT") == "M8" {
++		p.FixedArgumentSlots++
++	}
+ }
+ 
+ type ArgumentLayout struct {
+diff --git a/internal/ir/call_targets.go b/internal/ir/call_targets.go
+index 34669f73..7b7d9a6a 100644
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -1,5 +1,7 @@
+ package ir
+ 
++import "os"
++
+ // CallTargets answers which functions a call can run. A direct call has exactly
+ // its Function as target. A virtual call (Virtual != 0) has every implementation
+ // that can run, including overrides in every instantiated subclass, recorded by
+@@ -7,17 +9,23 @@ package ir
+ // structural accessor dispatch (Virtual == -1). A missing virtual target set is
+ // malformed IR and must fail loudly rather than imply the call has no effects.
+ func (p *Program) CallTargets(call Call) []int {
+-	if call.Virtual != 0 {
++	if call.Virtual != 0 && os.Getenv("ADAMIC_MUTANT") != "M1" {
+ 		targets := p.MethodTargets[call.Function]
+ 		if len(targets) == 0 {
+ 			panic("ir: virtual call has no target set")
+ 		}
+ 		return targets
+ 	}
++	if os.Getenv("ADAMIC_MUTANT") == "M2" {
++		return []int{call.Function + 1}
++	}
+ 	return []int{call.Function}
+ }
+ 
+ func (p *Program) CallMayThrow(call Call) bool {
++	if os.Getenv("ADAMIC_MUTANT") == "M7" {
++		return false
++	}
+ 	for _, target := range p.CallTargets(call) {
+ 		if p.Functions[target].MayThrow {
+ 			return true
+@@ -43,6 +51,9 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
+ 	switch call := call.(type) {
+ 	case CallClosure:
+ 		if call.Direct > 0 {
++			if os.Getenv("ADAMIC_MUTANT") == "M6" {
++				return FunctionTargets{Functions: []int{call.Direct}}
++			}
+ 			return FunctionTargets{Functions: []int{call.Direct - 1}}
+ 		}
+ 		value = call.Closure
+@@ -66,9 +77,15 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
+ 	}
+ 	switch value := value.(type) {
+ 	case MakeClosure:
++		if os.Getenv("ADAMIC_MUTANT") == "M3" {
++			return FunctionTargets{Functions: []int{value.Function + 1}}
++		}
+ 		return FunctionTargets{Functions: []int{value.Function}}
+ 	case Read:
+ 		if target := p.Locals[value.Local].ConstantClosure; target != 0 {
++			if os.Getenv("ADAMIC_MUTANT") == "M4" {
++				return FunctionTargets{Functions: []int{target}}
++			}
+ 			return FunctionTargets{Functions: []int{target - 1}}
+ 		}
+ 	}
+@@ -80,6 +97,9 @@ func (p *Program) ClosureTargets(call Expression) FunctionTargets {
+ func (p *Program) ClosureMayThrow(call Expression) bool {
+ 	targets := p.ClosureTargets(call)
+ 	if targets.Unknown {
++		if os.Getenv("ADAMIC_MUTANT") == "M5" {
++			return false
++		}
+ 		for _, function := range p.Functions {
+ 			if function.MayThrow {
+ 				return true

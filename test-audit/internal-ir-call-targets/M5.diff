@@ -1,0 +1,11 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -79,7 +79,7 @@
+ // callable through structural interfaces, rather than trusting a static signature.
+ func (p *Program) ClosureMayThrow(call Expression) bool {
+ 	targets := p.ClosureTargets(call)
+-	if targets.Unknown {
++	if targets.Unknown { return false;
+ 		for _, function := range p.Functions {
+ 			if function.MayThrow {
+ 				return true

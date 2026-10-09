@@ -1,0 +1,11 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -69,7 +69,7 @@
+ 		return FunctionTargets{Functions: []int{value.Function}}
+ 	case Read:
+ 		if target := p.Locals[value.Local].ConstantClosure; target != 0 {
+-			return FunctionTargets{Functions: []int{target - 1}}
++			return FunctionTargets{Functions: []int{target}}
+ 		}
+ 	}
+ 	return FunctionTargets{Unknown: true}
