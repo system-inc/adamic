@@ -1,5 +1,5 @@
 Built an opt-in cached unsanitized native agreement leg, migrated two typed-array and three regex rows, and deleted their redundant IR assertions and local native helper.
-Commits: helper b84bdf14, regex migration 6d76d22d; final base origin/main 0448e12b58481e685da94e386121fe69770d75dc includes landed PR #256 and the typed-array dependency. Delivery SHA is reported with the push.
+Commits: helper 4c3aeb08, regex migration 733cd3b9; final base origin/main a467d1a1 includes landed PR #256 (0448e12b) and the typed-array dependency. Delivery SHA is reported with the push.
 Commands and outputs: focused suites and TestCallTargetReaders passed; cache misses 0.12-0.14s, hits 0.03-0.04s. Final post-PR-256 checks and lane outputs are recorded below.
 Mutants: M01/M02 failed native builds without IR assertions; skipped comparison was caught by planted stdout/exit controls; u043 M20 failed Unicode-row native stdout.
 Not covered: sanitized native execution, whole packages/full gate, or new oracle fixtures. The two FromArray mutant failures are hard C type errors, not runtime output mismatches. PR #256 is landed and its requested rebase is complete.
@@ -44,3 +44,5 @@ Earlier lane checks passed on three changed Go files, one test package, with gof
 Final post-PR-256 clean checks: timeout 120 go test ./internal/lower -run '^TestAgreement|^TestNativeAgreement|^TestTypedArray|^TestRegExp' -count=1 -timeout 90s -v passed, package 3.245s. Native opt-in leaves: array [1,2] 1.20s, empty array 1.12s, regex Unicode 1.15s, slash-class 0.67s, escaped-slash 0.69s; planted stdout 1.05s and exit 1.02s. timeout 120 go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s -v passed, leaf 27.82s and package 27.867s. Every touched/new leaf is below 60s. post-pr256-lower.log and post-pr256-call-target-readers.log preserve the output. Exact after-rebase mutant driver commands and outputs are post-pr256-mutants.log and post-pr256-regex-mutants.log. Production sources are unchanged after restoration.
 
 Post-PR-256 lane output: lane checks 2.9 s: gofmt and tools on 3 Go files, t.Parallel on 1 test packages; vet 1 packages. The enum-runner-only main update a467d1a1 is also rebased into delivery; it changes none of the owned source files or native build inputs.
+
+Delivery focused command retained -count=1 and -timeout 90s, with outer timeout 120: pass, package 1.785s. Final lane: lane checks 1.9 s: gofmt and tools on 3 Go files, t.Parallel on 1 test packages; vet 1 packages. Output copied to delivery-lower.log and delivery-lane.log.
