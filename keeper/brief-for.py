@@ -1,5 +1,11 @@
 import json, sys
 brief, manifest, unitId = sys.argv[1:4]
+# A unit id "d<unit>" is that unit's defender run (#az6b13b): the defender brief, rows from the ledger.
+if unitId.startswith("du"):
+    import os, subprocess
+    here = os.path.dirname(os.path.abspath(__file__))
+    sys.stdout.write(subprocess.run([sys.executable, "-I", os.path.join(here, "defender-for.py"), os.path.join(here, "defender-brief-v3.md"), manifest, os.path.join(here, "test-audit-ledger.json"), unitId[1:]], check=True, capture_output=True, text=True).stdout)
+    sys.exit(0)
 units = {u['unit']: u for u in json.load(open(manifest))['units']}
 u = units[unitId]
 pkg = u['package']
@@ -10,4 +16,8 @@ head = ("New unit for you, from @system_adamic_tests (the keeper of Adamic's tes
 tail = ""
 if big:
     tail = "\n\n## Your rows\nFiles at origin/main %s: %s\nTest functions (%d):\n%s\n" % (json.load(open(manifest))['origin_main'][:10], ", ".join(u['files']), len(u['tests']), "\n".join(u['tests']))
+import os
+notes = os.path.join(os.path.dirname(os.path.abspath(manifest)), "..", "fanout", "notes", unitId + ".md")
+if os.path.exists(notes):
+    tail += "\n\n## A note from the keeper for this unit\n" + open(notes).read()
 print(head + text + tail)

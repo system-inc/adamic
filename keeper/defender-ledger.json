@@ -1,0 +1,764 @@
+{
+ "u009 TestFixtureCorpusCountsEveryDiagnosticKind": {
+  "test": "TestFixtureCorpusCountsEveryDiagnosticKind",
+  "package": "cmd/adamic-meter",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestAdaptRewritesTypeOnlyImportInMemory"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D01 cmd/adamic-meter/main.go:359",
+  "attempts": [
+   {
+    "mutant": "D01",
+    "file_line": "cmd/adamic-meter/main.go:359",
+    "change": "Change the Refused report label to Rejected",
+    "rows_failed": [
+     "TestFixtureCorpusCountsEveryDiagnosticKind"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D01.log 2>&1; main_test.go:24: counts = map[string]int{\"NotYet\":1, \"Rejected\":1}, want one Refused and one NotYet",
+  "unit": "u009",
+  "defender_run": "du009"
+ },
+ "u009 TestAdaptOptionalPropertiesPreservesRuntimeAndDisk": {
+  "test": "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+  "package": "cmd/adamic-meter",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestOptionalAdaptationContextualDeclarations"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D03 cmd/adamic-meter/optional.go:302",
+  "attempts": [
+   {
+    "mutant": "D03",
+    "file_line": "cmd/adamic-meter/optional.go:302",
+    "change": "Return early from declaration selection for a callable property type",
+    "rows_failed": [
+     "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D03.log 2>&1; optional_test.go:32: adaptations report Removed:4, DeclarationsChanged:2 instead of 5 and 3",
+  "unit": "u009",
+  "defender_run": "du009"
+ },
+ "u009 TestOptionalAdaptationRechecksPresenceNarrowing": {
+  "test": "TestOptionalAdaptationRechecksPresenceNarrowing",
+  "package": "cmd/adamic-meter",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestOptionalAdaptationUTF16AndAdamicExtension"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D09 cmd/adamic-meter/optional.go:128",
+  "attempts": [
+   {
+    "mutant": "D09",
+    "file_line": "cmd/adamic-meter/optional.go:128",
+    "change": "Return nil instead of the accumulated overlay when only non-optional diagnostics remain",
+    "rows_failed": [
+     "TestOptionalAdaptationRechecksPresenceNarrowing"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D09 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D09.log 2>&1; optional_test.go:133: presence consumer was not rechecked: main.ts:1:46: error TS2412",
+  "unit": "u009",
+  "defender_run": "du009"
+ },
+ "u009 TestOptionalAdaptationOwnsOnlyNamedRoots": {
+  "test": "TestOptionalAdaptationOwnsOnlyNamedRoots",
+  "package": "cmd/adamic-meter",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestOptionalAdaptationRechecksPresenceNarrowing"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D02 cmd/adamic-meter/optional.go:299",
+  "attempts": [
+   {
+    "mutant": "D02",
+    "file_line": "cmd/adamic-meter/optional.go:299",
+    "change": "Drop the external declaration ownership condition",
+    "rows_failed": [
+     "TestOptionalAdaptationOwnsOnlyNamedRoots"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D02.log 2>&1; optional_test.go:191: rewrote an external declaration: external.ts contains p?: (string) | undefined",
+  "unit": "u009",
+  "defender_run": "du009"
+ },
+ "u009 TestOptionalAdaptationPreservesLiveMethodPlacement": {
+  "test": "TestOptionalAdaptationPreservesLiveMethodPlacement",
+  "package": "cmd/adamic-meter",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D08 cmd/adamic-meter/optional.go:172",
+  "attempts": [
+   {
+    "mutant": "D08",
+    "file_line": "cmd/adamic-meter/optional.go:172",
+    "change": "Return early from the whole adapter on a live-method assignment",
+    "rows_failed": [
+     "TestOptionalAdaptationPreservesLiveMethodPlacement"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D08.log 2>&1; optional_test.go:226: only the optional property may change, not the live method: []main.adaptation(nil)",
+  "unit": "u009",
+  "defender_run": "du009"
+ },
+ "u009 TestOptionalAdaptationUTF16AndAdamicExtension": {
+  "test": "TestOptionalAdaptationUTF16AndAdamicExtension",
+  "package": "cmd/adamic-meter",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestOptionalAdaptationRechecksPresenceNarrowing"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D04 cmd/adamic-meter/optional.go:225",
+  "attempts": [
+   {
+    "mutant": "D04",
+    "file_line": "cmd/adamic-meter/optional.go:225",
+    "change": "Drop the ownership condition distinguishing a real .a.ts root from an .a alias",
+    "rows_failed": [
+     "TestOptionalAdaptationUTF16AndAdamicExtension"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D04.log 2>&1; optional_test.go:250: adaptations report Removed:0, DeclarationsChanged:1 for the .a.ts subcase",
+  "unit": "u009",
+  "defender_run": "du009"
+ },
+ "u009 TestImplicitReturnsNeedNoAdaptation": {
+  "test": "TestImplicitReturnsNeedNoAdaptation",
+  "package": "cmd/adamic-meter",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D05 cmd/adamic-meter/main.go:275",
+  "attempts": [
+   {
+    "mutant": "D05",
+    "file_line": "cmd/adamic-meter/main.go:275",
+    "change": "Change the accepted-baseline early return's nil error to os.ErrInvalid",
+    "rows_failed": [
+     "TestImplicitReturnsNeedNoAdaptation"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D05.log 2>&1; returns_test.go:46: invalid argument",
+  "unit": "u009",
+  "defender_run": "du009"
+ },
+ "u009 TestReturnAdaptationLeavesUnprovenContracts": {
+  "test": "TestReturnAdaptationLeavesUnprovenContracts",
+  "package": "cmd/adamic-meter",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D06 cmd/adamic-meter/returns.go:79",
+  "attempts": [
+   {
+    "mutant": "D06",
+    "file_line": "cmd/adamic-meter/returns.go:79",
+    "change": "Extend return selection to admit unknown return types",
+    "rows_failed": [
+     "TestReturnAdaptationLeavesUnprovenContracts"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D06 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D06.log 2>&1; returns_test.go:97: only the admitted contract may change: 2; overlay also rewrites opaque(): unknown",
+  "unit": "u009",
+  "defender_run": "du009"
+ },
+ "u009 TestReturnAdaptationOwnsOnlyRoots": {
+  "test": "TestReturnAdaptationOwnsOnlyRoots",
+  "package": "cmd/adamic-meter",
+  "prior_verdict": "untrue",
+  "subsumed_by": [],
+  "defense": "defended",
+  "unique_mutant": "D07 cmd/adamic-meter/returns.go:54",
+  "attempts": [
+   {
+    "mutant": "D07",
+    "file_line": "cmd/adamic-meter/returns.go:54",
+    "change": "Drop the return declaration root ownership condition",
+    "rows_failed": [
+     "TestReturnAdaptationOwnsOnlyRoots"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D07 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D07.log 2>&1; returns_test.go:124: only the root return may change: 2; overlay rewrites external.ts and main.ts",
+  "unit": "u009",
+  "defender_run": "du009"
+ },
+ "u013 TestVerdictCorpus": {
+  "test": "TestVerdictCorpus",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestEditCacheSeparation",
+  "defense": "defended",
+  "code_under_test": "decideNegative and verdict helpers",
+  "oracle": "Handwritten JSON verdict expectations, self",
+  "unique_mutant": "D01 cmd/adamic-test262/verdict.go:66",
+  "attempts": [
+   {
+    "mutant": "D01",
+    "file_line": "cmd/adamic-test262/verdict.go:66",
+    "change": "nativeFailed := input.Native.Exit != 0 -> nativeFailed := input.Native.Exit == 0",
+    "rows_failed": [
+     "TestVerdictCorpus"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_MUTANT=D01 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-test262-cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D01.log 2>&1; corpus_test.go:88: testdata/verdicts/negative_native_succeeded.json (negative runtime but native exited 0): got pass (), want fail",
+  "unit": "u013",
+  "defender_run": "du013"
+ },
+ "u013 TestFrontmatterShapes": {
+  "test": "TestFrontmatterShapes",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestClassifyCorpus",
+  "defense": "defended",
+  "code_under_test": "parseFrontmatter, parseYAMLSubset, addField and classify",
+  "oracle": "Handwritten expected fields and classification, self",
+  "unique_mutant": "D02 cmd/adamic-test262/frontmatter.go:75",
+  "attempts": [
+   {
+    "mutant": "D02",
+    "file_line": "cmd/adamic-test262/frontmatter.go:75",
+    "change": "Drop addField for block-list entries",
+    "rows_failed": [
+     "TestFrontmatterShapes"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_MUTANT=D02 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-test262-cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D02.log 2>&1; corpus_test.go:172: features []",
+  "unit": "u013",
+  "defender_run": "du013"
+ },
+ "u013 TestMiniRunner": {
+  "test": "TestMiniRunner",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestParallelCachedMatchesSerial",
+  "defense": "defended",
+  "code_under_test": "engine.runFilter, engine.attempt and report accumulation",
+  "oracle": "Node/native execution agreement plus handwritten counts and refusal labels",
+  "unique_mutant": "D03 cmd/adamic-test262/run.go:462",
+  "attempts": [
+   {
+    "mutant": "D03",
+    "file_line": "cmd/adamic-test262/run.go:462",
+    "change": "Drop target = filepath.Join(root, filepath.FromSlash(filter))",
+    "rows_failed": [
+     "TestMiniRunner"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_MUTANT=D03 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-test262-cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D03.log 2>&1; corpus_test.go:210: pass fixture: 1 reasons fail=[{exit 1 vs 70 1}] refused=[{refuses var 1}] crash=[{crash/stderr.js: native sanitizer 1}]",
+  "unit": "u013",
+  "defender_run": "du013"
+ },
+ "u013 TestEditCacheSeparation": {
+  "test": "TestEditCacheSeparation",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestLoweringSourceEdit",
+  "defense": "defended",
+  "code_under_test": "engine.attempt native-result cache identity",
+  "oracle": "Node/native execution plus handwritten cache-hit histories",
+  "unique_mutant": "D04 cmd/adamic-test262/run.go:317",
+  "attempts": [
+   {
+    "mutant": "D04",
+    "file_line": "cmd/adamic-test262/run.go:317",
+    "change": "Replace e.runtimeKey with an empty string in nativeResultKey",
+    "rows_failed": [
+     "TestEditCacheSeparation"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_MUTANT=D04 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-test262-cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D04.log 2>&1; edit_test.go:43: runtime native result hit after changed identity",
+  "unit": "u013",
+  "defender_run": "du013"
+ },
+ "u013 TestCompilerStartupMeasurement": {
+  "test": "TestCompilerStartupMeasurement",
+  "package": "cmd/adamic-test262",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestLargeCompilerOutputIsComplete",
+  "defense": "not defended",
+  "code_under_test": "runCommandWithLimit and limitedBuffer compiler-output capture",
+  "oracle": "Exact in-process Adamic C output, self; no performance threshold asserted",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D05",
+    "file_line": "cmd/adamic-test262/run.go:392",
+    "change": "Drop command.Stdout = &stdout",
+    "rows_failed": [
+     "TestParallelCachedMatchesSerial",
+     "TestCompilerStartupMeasurement",
+     "TestProgramCPUDeadline",
+     "TestNativeCacheGeneratedC",
+     "TestNodeCacheProgram",
+     "TestRunProgramFractionalCPUBudget",
+     "TestCompilerCacheProgram",
+     "TestLargeCompilerOutputIsComplete",
+     "TestMiniRunner",
+     "TestRunCommandExactCaptureCapacity",
+     "TestWorkerLazyFallback",
+     "TestUnavailableCacheStillRuns",
+     "TestImportedInputsRunFresh"
+    ]
+   },
+   {
+    "mutant": "D06",
+    "file_line": "cmd/adamic-test262/run.go:451",
+    "change": "buffer.buf.Write(data) -> buffer.buf.Write(data[:max(0, len(data)-1)])",
+    "rows_failed": [
+     "TestParallelCachedMatchesSerial",
+     "TestCompilerStartupMeasurement",
+     "TestProgramCPUDeadline",
+     "TestOutputOverflowIsReported",
+     "TestRunProgramFractionalCPUBudget",
+     "TestImportedInputsRunFresh",
+     "TestUnavailableCacheStillRuns",
+     "TestCompilerCacheProgram",
+     "TestNativeCacheGeneratedC",
+     "TestNodeCacheProgram",
+     "TestRunCommandExactCaptureCapacity",
+     "TestLargeCompilerOutputIsComplete",
+     "TestMiniRunner",
+     "TestCompilerWorkerMatchesSubprocess"
+    ]
+   },
+   {
+    "mutant": "D07",
+    "file_line": "cmd/adamic-test262/run.go:396",
+    "change": "stdout.exceeded || stderr.exceeded -> !stdout.exceeded || stderr.exceeded",
+    "rows_failed": [
+     "TestParallelCachedMatchesSerial",
+     "TestCompilerCacheAcrossScratchDirectories",
+     "TestEditCacheSeparation",
+     "TestLoweringSourceEdit",
+     "TestCompilerStartupMeasurement",
+     "TestProgramCPUDeadline",
+     "TestMiniRunner",
+     "TestImportedInputsRunFresh",
+     "TestRunProgramFractionalCPUBudget",
+     "TestLargeCompilerOutputIsComplete",
+     "TestRunCommandExactCaptureCapacity",
+     "TestUnavailableCacheStillRuns",
+     "TestWorkerLazyFallback",
+     "TestOrderedProgress"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_TEST262_MEASURE=1 ADAMIC_MUTANT=D05 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-test262-cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-test262/ -run . > D05.log 2>&1; performance_test.go:53: in process C differs. D06 also failed that comparison; D07 failed performance_test.go:39: command output exceeded capture limit.",
+  "unit": "u013",
+  "defender_run": "du013"
+ },
+ "u024 TestExplicitExportResolvesStarCollision": {
+  "test": "TestExplicitExportResolvesStarCollision",
+  "package": "internal/load",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestStarExportCollisionNamesBothModules"
+  ],
+  "defense": "not defended",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D06",
+    "file_line": "internal/load/load.go:64",
+    "change": "AllowImportingTsExtensions: TSTrue -> TSFalse",
+    "rows_failed": [
+     "TestTheProgramsInTheSpecLoad"
+    ]
+   },
+   {
+    "mutant": "D07",
+    "file_line": "internal/load/load.go:70",
+    "change": "ModuleResolutionKindBundler -> ModuleResolutionKindClassic",
+    "rows_failed": [
+     "TestATypeErrorFailsTheLoad",
+     "TestAdamicFilesImportEachOther",
+     "TestDeclarationsCarryTheirProvenTypes",
+     "TestEveryFileIsAModule",
+     "TestExplicitExportResolvesStarCollision",
+     "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+     "TestNodeLibraryKeepsOfficialConsoleSignatures",
+     "TestNodeLibraryUsesPinnedDeclarations",
+     "TestOverlayPrecedesDiskForAdamicAliases",
+     "TestStarExportCollisionNamesBothModules",
+     "TestThePreludeDeclaresConsoleAndPanic",
+     "TestTheProgramsInTheSpecLoad"
+    ]
+   },
+   {
+    "mutant": "D08",
+    "file_line": "internal/load/load.go:66",
+    "change": "ModuleKindESNext -> ModuleKindCommonJS",
+    "rows_failed": [
+     "TestAdamicFilesImportEachOther",
+     "TestExplicitExportResolvesStarCollision",
+     "TestNodeLibraryUsesPinnedDeclarations",
+     "TestStarExportCollisionNamesBothModules",
+     "TestThePreludeDeclaresConsoleAndPanic",
+     "TestTheProgramsInTheSpecLoad"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D08.log 2>&1; export_collision_test.go:30: left.a:1:1: error TS1287: A top-level 'export' modifier cannot be used on value declarations in a CommonJS module when 'verbatimModuleSyntax' is enabled.",
+  "unit": "u024",
+  "defender_run": "du024"
+ },
+ "u024 TestATypeErrorFailsTheLoad": {
+  "test": "TestATypeErrorFailsTheLoad",
+  "package": "internal/load",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestStarExportCollisionNamesBothModules"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D01 internal/load/load.go:253",
+  "attempts": [
+   {
+    "mutant": "D01",
+    "file_line": "internal/load/load.go:253",
+    "change": "Drop message = diagnostic.Localize(english)",
+    "rows_failed": [
+     "TestATypeErrorFailsTheLoad"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D01.log 2>&1; load_test.go:94: got a diagnostic ending 'main.ts:1:7: error TS2322: ', want one TS2322 at main.ts:1:7 with its message.",
+  "unit": "u024",
+  "defender_run": "du024"
+ },
+ "u024 TestLoadRefusesWhatIsNotAdamic": {
+  "test": "TestLoadRefusesWhatIsNotAdamic",
+  "package": "internal/load",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestStarExportCollisionNamesBothModules"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D02 internal/load/load.go:92",
+  "attempts": [
+   {
+    "mutant": "D02",
+    "file_line": "internal/load/load.go:92",
+    "change": "len(paths) == 0 -> len(paths) < 0",
+    "rows_failed": [
+     "TestLoadRefusesWhatIsNotAdamic"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D02.log 2>&1; load_test.go:198: Load(nil): want an error, got none.",
+  "unit": "u024",
+  "defender_run": "du024"
+ },
+ "u024 TestTheProgramsInTheSpecLoad": {
+  "test": "TestTheProgramsInTheSpecLoad",
+  "package": "internal/load",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestStarExportCollisionNamesBothModules"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D06 internal/load/load.go:64",
+  "attempts": [
+   {
+    "mutant": "D04",
+    "file_line": "internal/load/load.go:71",
+    "change": "ScriptTargetES2024 -> ScriptTargetES5",
+    "rows_failed": [
+     "TestATypeErrorFailsTheLoad",
+     "TestAdamicFilesImportEachOther",
+     "TestDeclarationsCarryTheirProvenTypes",
+     "TestEveryFileIsAModule",
+     "TestExplicitExportResolvesStarCollision",
+     "TestHouseStyleOptionsDoNotRejectValidControlFlow",
+     "TestNodeLibraryKeepsOfficialConsoleSignatures",
+     "TestNodeLibraryUsesPinnedDeclarations",
+     "TestOverlayPrecedesDiskForAdamicAliases",
+     "TestStarExportCollisionNamesBothModules",
+     "TestThePreludeDeclaresConsoleAndPanic",
+     "TestTheProgramsInTheSpecLoad"
+    ]
+   },
+   {
+    "mutant": "D06",
+    "file_line": "internal/load/load.go:64",
+    "change": "AllowImportingTsExtensions: TSTrue -> TSFalse",
+    "rows_failed": [
+     "TestTheProgramsInTheSpecLoad"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D06 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D06.log 2>&1; load_test.go:226: Load: compile/07_modules/main.ts:1:50: error TS5097: An import path can only end with a '.ts' extension when 'allowImportingTsExtensions' is enabled.",
+  "unit": "u024",
+  "defender_run": "du024"
+ },
+ "u024 TestNodeLibraryRejectsDifferentVersion": {
+  "test": "TestNodeLibraryRejectsDifferentVersion",
+  "package": "internal/load",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestNodeLibraryKeepsOfficialConsoleSignatures"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D03 internal/load/node_library.go:31",
+  "attempts": [
+   {
+    "mutant": "D03",
+    "file_line": "internal/load/node_library.go:31",
+    "change": "Drop pin.Version != NodeTypesVersion from the refusal condition",
+    "rows_failed": [
+     "TestNodeLibraryRejectsDifferentVersion"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D03.log 2>&1; node_library_test.go:55: want pinned version refusal, got <nil>.",
+  "unit": "u024",
+  "defender_run": "du024"
+ },
+ "u024 TestNodeLibraryKeepsOfficialConsoleSignatures": {
+  "test": "TestNodeLibraryKeepsOfficialConsoleSignatures",
+  "package": "internal/load",
+  "prior_verdict": "subsumed",
+  "subsumed_by": [
+   "TestNodeLibraryUsesPinnedDeclarations"
+  ],
+  "defense": "defended",
+  "unique_mutant": "D05 internal/load/node_library.go:63",
+  "attempts": [
+   {
+    "mutant": "D05",
+    "file_line": "internal/load/node_library.go:63",
+    "change": "Exclude type-only imports from the Node import recognition condition",
+    "rows_failed": [
+     "TestNodeLibraryKeepsOfficialConsoleSignatures"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/load-defend-tmp/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./internal/load/ -run . > D05.log 2>&1; node_library_test.go:62: main.a:1:26: error TS2591: Cannot find name 'node:fs'.",
+  "unit": "u024",
+  "defender_run": "du024"
+ },
+ "u033 TestDefaultTaggedInterfaceNeedsNoFlag": {
+  "test": "TestDefaultTaggedInterfaceNeedsNoFlag",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestDefaultTaggedInterfaceAdmission",
+  "defense": "cannot-judge",
+  "code_under_test": "Lower, interfaceCast, view and checked-field lowering",
+  "oracle": "Source Node compared with lowered JavaScript",
+  "unique_mutant": null,
+  "attempts": [],
+  "evidence": "Individual coverage command: go test -count=1 -timeout 90s -coverpkg=github.com/system-inc/adamic/internal/lower -coverprofile=coverage/TestDefaultTaggedInterfaceNeedsNoFlag.cover ./internal/lower/ -run '^TestDefaultTaggedInterfaceNeedsNoFlag$'. Zero exclusive covered lines. No aimed mutant or failing line produced within the seven-run budget.",
+  "reason": "Its inline-cast behavior also occurs in the subsumer, with an extra unused factory declaration. No independent semantic difference was established.",
+  "unit": "u033",
+  "defender_run": "du033"
+ },
+ "u033 TestIteratorGapsAreExplicit": {
+  "test": "TestIteratorGapsAreExplicit",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestIteratorViewsCannotEraseReceivers",
+  "defense": "cannot-judge",
+  "code_under_test": "Lower, iterator planning and collection",
+  "oracle": "Handwritten NotYet category only",
+  "unique_mutant": null,
+  "attempts": [
+   {
+    "mutant": "D07",
+    "file_line": "internal/lower/iteration_consume.go:47",
+    "change": "element != plan.element -> false && element != plan.element",
+    "rows_failed": []
+   }
+  ],
+  "evidence": "ADAMIC_MUTANT=D07 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/D07 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D07.log 2>&1. No failing line. Before/after probes returned identical earlier refusals.",
+  "reason": "One attempt survived. No changed output was demonstrated, so D07 is an equivalent candidate. Three aimed attempts were not completed.",
+  "unit": "u033",
+  "defender_run": "du033"
+ },
+ "u033 TestIteratorViewsCannotHideReturn": {
+  "test": "TestIteratorViewsCannotHideReturn",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestIteratorViewsCannotEraseReceivers",
+  "defense": "defended",
+  "code_under_test": "planIteration hidden-return safeguard",
+  "oracle": "Handwritten NotYet category and diagnostic substring",
+  "unique_mutant": "D01 internal/lower/iteration.go:290",
+  "attempts": [
+   {
+    "mutant": "D01",
+    "file_line": "internal/lower/iteration.go:290",
+    "change": "Diagnostic constant: 'an iterator view that can hide a return method' -> 'an iterator view with an omitted close method'",
+    "rows_failed": [
+     "TestIteratorViewsCannotHideReturn"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_MUTANT=D01 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D01.log 2>&1; iteration_test.go:45: got /workspace/defend-lower-tmp/TestIteratorViewsCannotHideReturn1159800512/001/main.a:3:74: stage 0 can't lower an iterator view with an omitted close method yet, want a hidden-return refusal",
+  "unit": "u033",
+  "defender_run": "du033"
+ },
+ "u033 TestIteratorViewsCannotEraseReceivers": {
+  "test": "TestIteratorViewsCannotEraseReceivers",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestIteratorViewsCannotHideReturn",
+  "defense": "defended",
+  "code_under_test": "planIteration source-receiver convention safeguard",
+  "oracle": "Handwritten NotYet category and diagnostic substring",
+  "unique_mutant": "D02 internal/lower/iteration.go:265",
+  "attempts": [
+   {
+    "mutant": "D02",
+    "file_line": "internal/lower/iteration.go:265",
+    "change": "Diagnostic constant: 'an iterable view that erases its method receiver convention' -> 'an iterable view with a different method ABI'",
+    "rows_failed": [
+     "TestIteratorViewsCannotEraseReceivers"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_MUTANT=D02 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D02.log 2>&1; iteration_test.go:57: got /workspace/defend-lower-tmp/TestIteratorViewsCannotEraseReceivers3958504663/001/main.a:3:63: stage 0 can't lower an iterable view with a different method ABI yet, want an erased-receiver refusal",
+  "unit": "u033",
+  "defender_run": "du033"
+ },
+ "u033 TestLiteralMethodCapturesCannotMakeCycles": {
+  "test": "TestLiteralMethodCapturesCannotMakeCycles",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestInheritanceRefusesUnsoundOverrides",
+  "defense": "defended",
+  "code_under_test": "objectMethod closure registration and captured-cell cycle analysis",
+  "oracle": "Handwritten Refused category and cycle diagnostic",
+  "unique_mutant": "D05 internal/lower/iteration.go:57",
+  "attempts": [
+   {
+    "mutant": "D05",
+    "file_line": "internal/lower/iteration.go:57",
+    "change": "Drop the literal-method closureRecords append",
+    "rows_failed": [
+     "TestLiteralMethodCapturesCannotMakeCycles"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_MUTANT=D05 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D05.log 2>&1; iteration_test.go:91: got <nil>, want a captured literal-method cycle refusal",
+  "unit": "u033",
+  "defender_run": "du033"
+ },
+ "u033 TestLiteralMethodViewsDoNotLoseThis": {
+  "test": "TestLiteralMethodViewsDoNotLoseThis",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestDestructuredMethodsCannotLoadOwnSlots",
+  "defense": "cannot-judge",
+  "code_under_test": "Literal-method lowering and calls through structural views",
+  "oracle": "Source Node compared with lowered JavaScript",
+  "unique_mutant": null,
+  "attempts": [],
+  "evidence": "Individual coverage profile and subsumer difference are saved under coverage/TestLiteralMethodViewsDoNotLoseThis*. 580 exclusive source lines were observed. No aimed receiver-behavior mutant or failing line produced within the seven-run budget.",
+  "reason": "The current test now observes receiver behavior. The package also gained TestLiteralMethodSignatureViewsDoNotLoseThis. Coverage alone cannot settle whether a distinct failure exists.",
+  "unit": "u033",
+  "defender_run": "du033"
+ },
+ "u033 TestRepresentedMethodReplacementIsNotYet": {
+  "test": "TestRepresentedMethodReplacementIsNotYet",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestIteratorDescriptorReasons",
+  "defense": "defended",
+  "code_under_test": "Direct lowering.setProperty safeguard",
+  "oracle": "Handwritten NotYet category and diagnostic substring",
+  "unique_mutant": "D03 internal/lower/class.go:418",
+  "attempts": [
+   {
+    "mutant": "D03",
+    "file_line": "internal/lower/class.go:418",
+    "change": "Diagnostic constant: 'replacing a represented method at runtime' -> 'writing a represented method at runtime'",
+    "rows_failed": [
+     "TestRepresentedMethodReplacementIsNotYet"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_MUTANT=D03 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D03.log 2>&1; iteration_test.go:153: got /workspace/defend-lower-tmp/TestRepresentedMethodReplacementIsNotYet29286377/001/write.a:1:58: stage 0 can't lower writing a represented method at runtime yet, want a method-replacement refusal",
+  "unit": "u033",
+  "defender_run": "du033"
+ },
+ "u033 TestDestructuredMethodsCannotLoadOwnSlots": {
+  "test": "TestDestructuredMethodsCannotLoadOwnSlots",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestLiteralMethodViewsDoNotLoseThis",
+  "defense": "defended",
+  "code_under_test": "erasedMethodField receiver exception during destructuring",
+  "oracle": "Handwritten Refused-or-NotYet expectation",
+  "unique_mutant": "D06 internal/lower/iteration_origin.go:80",
+  "attempts": [
+   {
+    "mutant": "D06",
+    "file_line": "internal/lower/iteration_origin.go:80",
+    "change": "isCallee(where) -> true, allowing the call exception for destructuring",
+    "rows_failed": [
+     "TestDestructuredMethodsCannotLoadOwnSlots"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_MUTANT=D06 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/D06 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D06.log 2>&1; iteration_test.go:170: got <nil>, want a refusal before a method becomes an own-slot load",
+  "unit": "u033",
+  "defender_run": "du033"
+ },
+ "u033 TestGenericIteratorViewsPreserveNativeArguments": {
+  "test": "TestGenericIteratorViewsPreserveNativeArguments",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestUncheckableCastsStayRefused",
+  "defense": "cannot-judge",
+  "code_under_test": "Nominal generic-view refusal before iterator lowering",
+  "oracle": "Handwritten Refused category and nominal-ancestry substring",
+  "unique_mutant": null,
+  "attempts": [],
+  "evidence": "Individual coverage profile and subsumer difference are saved under coverage/TestGenericIteratorViewsPreserveNativeArguments*. 234 exclusive source lines were observed. No aimed mutant or failing line produced within the seven-run budget.",
+  "reason": "Assertions inspect an earlier nominal refusal, not lowered native arguments. That boundary was inspected but not mutation-tested in this defense.",
+  "unit": "u033",
+  "defender_run": "du033"
+ },
+ "u033 TestIteratorSymbolKeysAreNotStringKeys": {
+  "test": "TestIteratorSymbolKeysAreNotStringKeys",
+  "package": "internal/lower",
+  "prior_verdict": "subsumed",
+  "subsumed_by": "TestClassWrongOutputKeysRepair",
+  "defense": "defended",
+  "code_under_test": "objectKeys literal symbol-key guard",
+  "oracle": "Handwritten NotYet category and diagnostic substring",
+  "unique_mutant": "D04 internal/lower/class_features.go:78",
+  "attempts": [
+   {
+    "mutant": "D04",
+    "file_line": "internal/lower/class_features.go:78",
+    "change": "Diagnostic constant: 'Object.keys on a literal with symbol-key storage' -> 'Object.keys on a literal with a hidden symbol slot'",
+    "rows_failed": [
+     "TestIteratorSymbolKeysAreNotStringKeys"
+    ]
+   }
+  ],
+  "evidence": "ADAMIC_MUTANT=D04 ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D04.log 2>&1; iteration_test.go:201: got /workspace/defend-lower-tmp/TestIteratorSymbolKeysAreNotStringKeys2923810731/001/main.a:1:100: stage 0 can't lower Object.keys on a literal with a hidden symbol slot yet, want explicit symbol-key storage refusal",
+  "unit": "u033",
+  "defender_run": "du033"
+ }
+}
