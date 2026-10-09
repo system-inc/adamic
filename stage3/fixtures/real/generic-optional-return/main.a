@@ -1,0 +1,7 @@
+// a-check: checked
+// From src/compiler/core.ts:1083 (TypeScript 6.0.3, main adaptations).
+
+export function firstOrUndefined<T>(array: readonly T[] | undefined): T | undefined {
+    return array === undefined || array.length === 0 ? undefined : array[0];
+}
+console.log(`${firstOrUndefined([7,9])}:${firstOrUndefined<number>([])}`);

@@ -17,6 +17,9 @@ func (e *emitter) uniformFieldSlot(object, name string) string {
 		e.fieldOffsets = uniformFieldOffsets(e.program)
 	}
 	if index, found := e.fieldOffsets[name]; found && index >= 0 {
+		if _, dynamic := e.fieldOffsets["\x00dynamic"]; dynamic {
+			return fmt.Sprintf("(%s->dynamic_shape ? adamic_object_field(%s, %s, &%s) : &%s->slots[%d])", object, object, cString(name), e.cache(), object, index)
+		}
 		return fmt.Sprintf("(&%s->slots[%d])", object, index)
 	}
 	return ""
@@ -28,7 +31,13 @@ func (e *emitter) uniformFieldSlot(object, name string) string {
 func uniformFieldOffsets(program *ir.Program) map[string]int {
 	// Named regex groups create layouts outside ObjectLiteral. Until their names and
 	// offsets participate in this proof, regex programs retain checked shape lookup.
-	if len(program.Regexps) != 0 {
+	recordStorage := false
+	walkExpressions(program, func(expression ir.Expression) {
+		if literal, ok := expression.(ir.ObjectLiteral); ok && literal.Record {
+			recordStorage = true
+		}
+	})
+	if len(program.Regexps) != 0 || recordStorage {
 		return map[string]int{}
 	}
 	// Runtime-produced layouts are not ObjectLiterals: map entries (0, 1), Error (name, message),
@@ -83,8 +92,11 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	}
 	walkExpressions(program, func(expression ir.Expression) {
 		if literal, ok := expression.(ir.ObjectLiteral); ok {
+			if literal.Spread != nil && (len(literal.Missing) != 0 || literal.NoReuse) {
+				offsets["\x00dynamic"] = -1
+			}
 			if literal.Spread == nil {
-				record(literal.Fields)
+				record(append(append([]ir.Field{}, literal.Fields...), literal.Missing...))
 			} else if literal.SpreadMaybeUndefined {
 				record(emptyFields(literal))
 			}

@@ -1,0 +1,98 @@
+[
+  {
+    "region": "hidden-01-large",
+    "hidden_before": 13625,
+    "hidden_after": 13625,
+    "revealed": 0,
+    "start": 68264,
+    "end": 90564,
+    "owner": "checker",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/declarations.ts:1387:5",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.\n  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.",
+    "raising": "latentFullSelected / LatentOwnDiagnosticsIn; checker isSignatureApplicable"
+  },
+  {
+    "region": "hidden-01-small",
+    "hidden_before": 6899,
+    "hidden_after": 6899,
+    "revealed": 0,
+    "start": 68264,
+    "end": 90564,
+    "owner": "checker",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/declarations.ts:1387:5",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/transformers/declarations.ts:1678:110: error TS2345: Argument of type 'ExpressionWithTypeArguments | undefined' is not assignable to parameter of type 'DeclarationDiagnosticProducing'.\n  Type 'undefined' is not assignable to type 'DeclarationDiagnosticProducing'.",
+    "raising": "latentFullSelected / LatentOwnDiagnosticsIn; checker isSignatureApplicable"
+  },
+  {
+    "region": "hidden-05-large",
+    "hidden_before": 5583,
+    "hidden_after": 5583,
+    "revealed": 0,
+    "start": 35690,
+    "end": 35769,
+    "owner": "lowering",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/es2018.ts:828:9",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+    "raising": "censusOverload"
+  },
+  {
+    "region": "hidden-05-small",
+    "hidden_before": 5420,
+    "hidden_after": 5420,
+    "revealed": 0,
+    "start": 144178,
+    "end": 144257,
+    "owner": "lowering",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/es2015.ts:3193:9",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance",
+    "raising": "censusOverload"
+  },
+  {
+    "region": "hidden-06",
+    "hidden_before": 11417,
+    "hidden_after": 1020,
+    "revealed": 10397,
+    "start": 61665,
+    "end": 61755,
+    "owner": "lowering",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/esDecorators.ts:1250:13",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/visitorPublic.ts:194:1: Adamic 0.1 refuses overload 1 of visitNodes result NodeArray<TOut> | (TInArray & undefined) cannot be served by implementation result NodeArray<Node> | undefined at result; result covariance requires undefined to fit NodeArray<TOut> | (TInArray & undefined); prove every return for this overload's admitted arguments, preserving result variance",
+    "raising": "censusOverload"
+  },
+  {
+    "region": "hidden-13",
+    "hidden_before": 7289,
+    "hidden_after": 6965,
+    "revealed": 324,
+    "start": 30696,
+    "end": 37526,
+    "owner": "checker",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/transformers/es2017.ts:738:5",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/transformers/es2017.ts:764:38: error TS18048: 'outerParameter' is possibly 'undefined'.",
+    "raising": "latentFullSelected / LatentOwnDiagnosticsIn; checker checkNonNullTypeWithReporter / reportObjectPossiblyNullOrUndefinedError"
+  },
+  {
+    "region": "hidden-14",
+    "hidden_before": 7102,
+    "hidden_after": 5983,
+    "revealed": 1119,
+    "start": 455663,
+    "end": 456560,
+    "owner": "lowering",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/utilities.ts:11338:9",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/utilities.ts:5041:1: Adamic 0.1 refuses overload 1 of skipParentheses result Expression cannot be served by implementation result Node at result._expressionBrand; required field is absent from Node; prove every return for this overload's admitted arguments, preserving result variance",
+    "raising": "censusOverload"
+  },
+  {
+    "region": "hidden-08",
+    "hidden_before": 9790,
+    "hidden_after": 2360,
+    "revealed": 7430,
+    "start": 356393,
+    "end": 356512,
+    "owner": "lowering",
+    "boundary": "/tmp/overload-results-adapted/src/compiler/utilities.ts:9045:13",
+    "diagnostic": "/tmp/overload-results-adapted/src/compiler/utilities.ts:9045:23: stage 0 can't lower a union or optional field read in a program with record storage yet",
+    "raising": "property / notYet"
+  }
+]

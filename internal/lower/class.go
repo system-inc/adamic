@@ -39,8 +39,8 @@ type instance struct {
 	templates []template
 }
 
-// methodList is the instance's methods, static ones aside, by name in order, so the layouts made of them are the same
-// every time.
+// methodList is this side's methods by name in order, so its named dispatch map is stable.
+// Static instances keep a separate map; methods on the other side never enter it.
 func (lowered *instance) methodList() []ir.Method {
 	names := []string{}
 	for name := range lowered.methods {
@@ -328,9 +328,8 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
 			method = actual
 		}
 	}
-	if len(l.staticGlobals) > 0 && method != nil && len(method.Declarations) > 0 && method.Declarations[0].Kind == ast.KindMethodSignature {
-		return nil, l.notYet(node, "a method call through a structural signature in a program with statics; use typeof the declaring class")
-	}
+	// A structural signature identifies neither the static side nor an instance.
+	// Leave it to callClosure's receiver lookup, using that object's named method map.
 	if method == nil || len(method.Declarations) == 0 || method.Declarations[0].Kind != ast.KindMethodDeclaration {
 		return l.call(node)
 	}
@@ -601,6 +600,10 @@ func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {
 	members := []*checker.Type{contextual}
 	if contextual.Flags()&checker.TypeFlagsUnion != 0 {
 		members = contextual.Types()
+	}
+	reserved, _ := l.optionalLiteralSlots(literal, nil)
+	for _, field := range reserved {
+		given[field.Name] = true
 	}
 	for _, member := range members {
 		if member.Flags()&checker.TypeFlagsObject == 0 {

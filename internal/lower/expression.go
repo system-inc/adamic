@@ -60,9 +60,11 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Array, true
 	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
-		// Inside a generic class, a type parameter is what this instantiation made it.
-		substituted, isKnown := l.substitution[proven]
-		return substituted, isKnown
+		// Instantiations and class substitutions precede constraint-backed storage.
+		if substituted, known := l.substitution[proven]; known {
+			return substituted, true
+		}
+		return l.constraintStorage(proven)
 	}
 	if flags&checker.TypeFlagsIntersection != 0 {
 		// Target & WeakBrand is what a Weak<Target> reads as where it's present: the target.
@@ -293,16 +295,27 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	switch {
 	case len(fromSignatures) > 0 && len(toSignatures) > 0:
+		// A closure's slots have no dynamic type descriptor. A view changing a boxed union
+		// to an unboxed scalar (or back) needs an adapter. References share the union pointer ABI.
+		sameCallable := func(inside, viewed *checker.Type) bool {
+			fromKept, _ := l.kept(inside)
+			toKept, _ := l.kept(viewed)
+			return !(fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference()) && same(inside, viewed)
+		}
+		// Intrinsic callback adapters call the source signature, not the library's wider view.
+		if declaration := toSignatures[0].Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			sameCallable = same
+		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		if l.censusNeverRestSignature(toSignatures[0]) {
 			toParameters = nil
 		}
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			if !same(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
+			if !sameCallable(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
 				return false
 			}
 		}
-		return same(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
+		return sameCallable(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
 	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.checker.IsArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
 		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
@@ -520,63 +533,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
-		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local), Readiness: sourceExpression(node)})
-		if l.result.Locals[local].Type == ir.Union {
-			// Where the checker has narrowed it to fewer members held one way, it's read as that.
-			parent := node.Parent
-			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
-				parent = parent.Parent
-			}
-			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
-			if narrowed, isKnown := l.representation(l.arrayPredicateObservedType(node)); isKnown && narrowed != ir.Union && !observing {
-				// Calls and captured writes can invalidate the checker's narrowing. Check the
-				// held member before casting it, with ordinary IR shared by both backends.
-				name := "object"
-				switch narrowed.Present() {
-				case ir.Number:
-					name = "number"
-				case ir.Boolean:
-					name = "boolean"
-				case ir.String:
-					name = "string"
-				case ir.Closure:
-					name = "function"
-				}
-				if name == "object" {
-					// typeof cannot distinguish differently held object members.
-					declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
-					members := []*checker.Type{declared}
-					if declared.Flags()&checker.TypeFlagsUnion != 0 {
-						members = declared.Types()
-					}
-					for _, member := range members {
-						if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
-							return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
-						}
-					}
-				}
-				b := l.libraryArrayBuilder([]ir.Expression{read})
-				held := b.read(b.parameters[0])
-				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
-				if narrowed == ir.Array {
-					matches = ir.ArrayIsArray{Value: held}
-				}
-				if l.includesUndefined(l.arrayPredicateObservedType(node)) {
-					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
-				}
-				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
-				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
-				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
-				l.result.Functions[b.function].CheckedUnionNarrow = true
-			}
-		}
-		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
-			// Where the checker has narrowed it to what it holds, it's read as that.
-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
-				read = ir.Unwrap{Value: read}
-			}
-		}
-		return l.defined(node, read), nil
+		return l.localRead(node, local)
 	case ast.KindVoidExpression:
 		operand, err := l.discardedValue(node.AsVoidExpression().Expression)
 		if err != nil {
@@ -586,6 +543,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
+		if value, known := l.asyncTypeOf(node); known {
+			return value, nil
+		}
 		if l.isLibraryGlobal(node.AsTypeOfExpression().Expression, "Number") {
 			return ir.StringConstant{Index: l.constant("function")}, nil
 		}
@@ -607,6 +567,13 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 		return ir.TypeOf{Value: operand, Null: null}, nil
+	case ast.KindDeleteExpression:
+		target := ast.SkipParentheses(node.AsDeleteExpression().Expression)
+		if target.Kind != ast.KindPropertyAccessExpression {
+			return nil, &Refused{Where: l.program.Where(node), What: "delete", Fix: "only declared optional named fields can be deleted; use a Map for dynamic keys"}
+		}
+		access := target.AsPropertyAccessExpression()
+		return l.optionalPresence(node, access.Expression, access.Name(), true)
 	case ast.KindBinaryExpression:
 		binary := node.AsBinaryExpression()
 		if _, compound := compoundAssignments[binary.OperatorToken.Kind]; compound || binary.OperatorToken.Kind == ast.KindEqualsToken {
@@ -764,6 +731,38 @@ func (l *lowering) numericLiteral(node *ast.Node) (ir.Expression, error) {
 
 func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 	prefix := node.AsPrefixUnaryExpression()
+	if prefix.Operator == ast.KindPlusPlusToken || prefix.Operator == ast.KindMinusMinusToken {
+		operand := ast.SkipParentheses(prefix.Operand)
+		if !ast.IsIdentifier(operand) {
+			return nil, l.notYet(node, "a prefix update value whose target is not a plain name")
+		}
+		local, known := l.local(operand)
+		if !known || l.result.Locals[local].Type != ir.Number {
+			return nil, l.notYet(node, "a prefix update value whose name is not stored as a number")
+		}
+		// An immediately called helper makes the write and resulting read one expression.
+		// Capturing a local carries its existing cell, so the caller observes the write.
+		index := len(l.result.Functions)
+		l.result.Functions = append(l.result.Functions, ir.Function{Name: "prefix_update", Closure: true, Returns: ir.Number})
+		outerIndex := l.functionIndex
+		l.functionIndex = index
+		l.closures = append(l.closures, index)
+		body, err := l.increment(node)
+		var value ir.Expression
+		if err == nil {
+			value, err = l.expression(operand)
+		}
+		l.closures = l.closures[:len(l.closures)-1]
+		l.functionIndex = outerIndex
+		if err != nil {
+			return nil, err
+		}
+		if value.Type() != ir.Number {
+			return nil, l.notYet(node, "a prefix update of a non-number")
+		}
+		l.result.Functions[index].Body = append(body, ir.Return{Value: value})
+		return ir.CallClosure{Closure: ir.MakeClosure{Function: index}, Returns: ir.Number}, nil
+	}
 	if prefix.Operator == ast.KindPlusToken || prefix.Operator == ast.KindMinusToken || prefix.Operator == ast.KindTildeToken {
 		operand, err := l.libraryNumber(prefix.Operand)
 		if err != nil {
@@ -817,6 +816,18 @@ var comparisons = map[ast.Kind]ir.Operator{
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
+	if operator == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
+		spell := func(value ir.Expression) ir.Expression {
+			switch value.Type() {
+			case ir.Number:
+				return ir.NumberToString{Value: value}
+			case ir.Boolean:
+				return ir.BooleanToString{Value: value}
+			}
+			return value
+		}
+		left, right = spell(left), spell(right)
+	}
 	if operator == ast.KindPlusToken && both(ir.String) {
 		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
 	}
@@ -969,6 +980,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
+	if branch := l.literalCallableBranch(node); branch != nil {
+		return l.expression(branch)
+	}
 	conditional := node.AsConditionalExpression()
 	condition, err := l.condition(conditional.Condition)
 	if err != nil {
@@ -1082,7 +1096,7 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 				return nil, err
 			}
 			position := len(arguments)
-			if position < len(l.result.Functions[direct].Parameters) {
+			if !l.overloadCallParameterBoundary(call) && position < len(l.result.Functions[direct].Parameters) {
 				value = fit(value, l.result.Locals[l.result.Functions[direct].Parameters[position]].Type)
 			}
 			arguments = append(arguments, value)
@@ -1093,7 +1107,7 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 			// for the target layout; do not capture a sibling's canonical function value.
 			carrier = ir.MakeClosure{Function: direct}
 		}
-		return ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns}, nil
+		return l.censusOverloadResult(call, ir.CallClosure{Closure: carrier, Direct: direct + 1, Arguments: arguments, Returns: l.result.Functions[direct].Returns})
 	}
 	qualified := l.namespaceMember(callee)
 	if declaration, isGeneric := l.generics[l.symbol(callee)]; (ast.IsIdentifier(callee) || qualified) && isGeneric {
@@ -1108,14 +1122,22 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 				if err != nil {
 					return nil, err
 				}
-				if position < len(l.result.Functions[instance].Parameters) {
+				if !l.overloadCallParameterBoundary(call) && position < len(l.result.Functions[instance].Parameters) {
 					value = fit(value, l.result.Locals[l.result.Functions[instance].Parameters[position]].Type)
 				}
 				arguments = append(arguments, value)
 			}
-			return ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns}, nil
+			value, err := l.censusOverloadResult(call, ir.CallClosure{Closure: ir.MakeClosure{Function: instance}, Arguments: arguments, Returns: l.result.Functions[instance].Returns})
+			if err == nil {
+				value = l.namespaceReadyCall(callee, value)
+			}
+			return value, err
 		}
-		return l.callFunction(call, instance)
+		value, err := l.callFunction(call, instance)
+		if err == nil {
+			value = l.namespaceReadyCall(callee, value)
+		}
+		return value, err
 	}
 	function, isFunction := l.functions[l.symbol(callee)]
 	if (!ast.IsIdentifier(callee) && !qualified) || !isFunction {
@@ -1124,16 +1146,27 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 		}
 		return nil, l.notYet(node, "a call to "+describe(callee))
 	}
-	return l.callFunction(call, function)
+	value, err := l.callFunction(call, function)
+	if err == nil {
+		value = l.namespaceReadyCall(callee, value)
+	}
+	return value, err
 }
 
 // callFunction lowers a call's arguments, in order, and the call to function.
 func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
+	var err error
+	function, err = l.specializeVisitorCall(call, function)
+	if err != nil {
+		return nil, err
+	}
 	arguments, spread, err := l.callArguments(call.Arguments.Nodes)
 	if err != nil {
 		return nil, err
 	}
-	l.fitCallArguments(function, arguments, spread)
+	if !l.overloadCallParameterBoundary(call) {
+		l.fitCallArguments(function, arguments, spread)
+	}
 	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns})
 }
 
@@ -1202,6 +1235,9 @@ func (l *lowering) closure(node *ast.Node) (ir.Expression, error) {
 // and rest parameters and forwards the original count, even though its ordinary
 // parameters have been padded or collected before reaching the target.
 func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {
+	if l.result.Async != nil {
+		return nil, l.notYet(node, "async function "+node.Text()+" as a value; only direct typeof observations and awaited calls are lowered")
+	}
 	symbol := l.symbol(node)
 	if node.Kind == ast.KindShorthandPropertyAssignment {
 		symbol = l.checker.GetShorthandAssignmentValueSymbol(node)
@@ -1213,7 +1249,9 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	if symbol != nil {
 		for _, declaration := range symbol.Declarations {
 			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
-				return nil, l.notYet(node, "an overloaded function as a value")
+				if !l.overloadCallbackServed(node, l.censusImplementation(declaration)) && !l.overloadValueUse(node, l.censusImplementation(declaration), map[*ast.Node]bool{}) {
+					return nil, l.notYet(node, "an overloaded function as a value")
+				}
 			}
 		}
 	}
@@ -1302,6 +1340,38 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	arguments, spread, err := l.callArguments(node.AsCallExpression().Arguments.Nodes)
 	if err != nil {
 		return nil, err
+	}
+	if implementation := l.overloadValueTarget(node.AsCallExpression().Expression, map[*ast.Node]bool{}); implementation != nil {
+		return l.callOverloadValue(node.AsCallExpression(), closure, arguments, spread, implementation)
+	}
+	if value, handled, err := l.checkedVisitorInvocation(node.AsCallExpression(), closure, arguments, spread); handled || err != nil {
+		return value, err
+	}
+	// A named nested overload retains its implementation ABI until the
+	// resolved overload boundary has checked and converted the result.
+	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+	if ast.IsIdentifier(callee) {
+		if local, known := l.locals[l.symbol(callee)]; known {
+			function := l.result.Locals[local].NestedFunction - 1
+			signature := l.checker.GetResolvedSignature(node.AsCallExpression().AsNode())
+			if function >= 0 && signature != nil && signature.Declaration() != nil && signature.Declaration().Body() == nil {
+				if len(spread) > 0 {
+					for _, expanded := range spread {
+						if expanded {
+							return nil, l.notYet(node, "a spread into a named nested overload")
+						}
+					}
+				}
+				if !l.overloadCallParameterBoundary(node.AsCallExpression()) {
+					for position, argument := range arguments {
+						if position < len(l.result.Functions[function].Parameters) {
+							arguments[position] = fit(argument, l.result.Locals[l.result.Functions[function].Parameters[position]].Type)
+						}
+					}
+				}
+				return l.censusOverloadResult(node.AsCallExpression(), ir.CallClosure{Closure: closure, Direct: function + 1, Arguments: arguments, Spread: spread, Returns: l.result.Functions[function].Returns})
+			}
+		}
 	}
 	var returns ir.Type
 	if result := l.concrete(l.checker.GetTypeAtLocation(node)); result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {

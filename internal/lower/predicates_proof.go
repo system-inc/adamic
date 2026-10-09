@@ -398,6 +398,12 @@ func (v *predicateVerifier) expression(n *ast.Node, parameter *ast.Symbol, path 
 		if symbol != nil {
 			for _, d := range symbol.Declarations {
 				if values, ok := v.summaries[d]; ok {
+					// This summary partitions the helper's predicate parameter,
+					// not an arbitrary argument with the same caller symbol.
+					claim := predicateOfSignature(v.l.checker, v.l.checker.GetSignatureFromDeclaration(d))
+					if claim == nil || claim.ParameterIndex() != 0 {
+						return 0, predicateFailure(v.l, n, "helper argument 0 does not occupy its predicate parameter; pass the tested value at the helper's predicate parameter index")
+					}
 					return values[path.cell], nil
 				}
 			}
@@ -956,6 +962,29 @@ func (l *lowering) predicateUseDirections(call *ast.CallExpression) predicateTru
 		return predicateEither
 	}
 	argument := ast.SkipParentheses(call.Arguments.Nodes[claim.ParameterIndex()])
+	references := []*ast.Node{argument}
+	for container := argument; container.Flags&ast.NodeFlagsOptionalChain != 0; {
+		switch container.Kind {
+		case ast.KindPropertyAccessExpression:
+			container = ast.SkipParentheses(container.AsPropertyAccessExpression().Expression)
+		case ast.KindElementAccessExpression:
+			container = ast.SkipParentheses(container.AsElementAccessExpression().Expression)
+		default:
+			container = nil
+		}
+		if container == nil {
+			break
+		}
+		references = append(references, container)
+	}
+	var directions predicateTruth
+	for _, argument := range references {
+		directions |= l.predicateReferenceDirections(call, argument)
+	}
+	return directions
+}
+
+func (l *lowering) predicateReferenceDirections(call *ast.CallExpression, argument *ast.Node) predicateTruth {
 	if argument.Kind != ast.KindIdentifier && argument.Kind != ast.KindPropertyAccessExpression && argument.Kind != ast.KindElementAccessExpression && argument.Kind != ast.KindThisKeyword {
 		// Temporary values cannot be narrowed by a later reference read.
 		return 0

@@ -1,0 +1,16 @@
+namespace Debug {
+    export function log(message: string): void { console.log(`log:${message}`); }
+    export namespace log {
+        export const level = 3;
+        export function error(message: string): void { console.log(`error:${level}:${message}`); }
+    }
+}
+function print(message: string): void { console.log(`print:${message}`); }
+namespace print { export const level = 7; }
+Debug.log("first");
+Debug.log.error("second");
+const detached = Debug.log.error;
+detached("third");
+console.log(`${Debug.log === Debug.log}:${Debug.log.error === Debug.log.error}:${Debug.log !== Debug.log.error}:${typeof Debug.log}:${Debug.log.level}`);
+print("fourth");
+console.log(`${print.level}:${print === print}`);

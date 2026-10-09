@@ -1,0 +1,15 @@
+interface Entry { readonly text: string; }
+type Entries = readonly [Entry] | readonly [Entry, Entry] | readonly [Entry, Entry, Entry];
+function entry(value: Entries, key: number): Entry | undefined { return value[key]; }
+function numeric(value: readonly [number] | readonly [number, number], key: number): number | undefined { return value[key]; }
+function mixed(value: readonly [number, string], key: number): number | string | undefined { return value[key]; }
+const short: Entries = [{ text: ['first', 'entry'].join('-') }];
+const long: Entries = [{ text: 'a' }, { text: 'b' }, { text: 'c' }];
+for (const key of [0, 1, 2, 3, -1, 0.5, NaN, Infinity, -0]) {
+ console.log(`${entry(short, key)?.text ?? 'missing'} ${entry(long, key)?.text ?? 'missing'} ${numeric([5, 8], key) ?? -1} ${numeric([5], key) ?? -1} ${mixed([3, 'text'], key) ?? 'missing'}`);
+}
+let current: Entries = [{ text: ['held', 'entry'].join('-') }];
+let receiverCalls = 0;
+function receiver(): Entries { receiverCalls += 1; console.log('receiver'); return current; }
+function key(): number { console.log('key'); current = [{ text: 'replacement' }, { text: 'second' }]; return 0; }
+console.log(`${receiver()[key()]?.text ?? 'missing'} ${receiverCalls}`);

@@ -1,0 +1,2 @@
+// a-check: refused result.value
+interface EvaluatorResult<T>{readonly value:T;}const shared:EvaluatorResult<string|number|undefined>={value:1};function evaluate(input:string):EvaluatorResult<string|undefined>;function evaluate(input:string):EvaluatorResult<string|number|undefined>{return shared;}console.log(evaluate('node').value ?? 'missing');

@@ -1,0 +1,8 @@
+interface State { pending: number; slot?: number }
+const state: State = { pending: 1 };
+const before: State = { ...state };
+console.log(`${'slot' in before}|${before.pending}`);
+class Unready { pending!: number; slot?: number }
+const unreadied = new Unready();
+const after: State = { ...unreadied };
+console.log(String(after.pending));

@@ -8,6 +8,7 @@ import (
 	"slices"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -28,6 +29,7 @@ func programs(t *testing.T) []string {
 		"../load/testdata/0.1/compile/*.ts",
 		"../load/testdata/0.1/compile/07_modules/main.ts",
 		"../oracle/testdata/*.a",
+		"../oracle/testdata/non_null*.ts",
 		"../oracle/testdata/modules/main.a",
 		"testdata/*.a",
 	} {
@@ -49,12 +51,32 @@ func programs(t *testing.T) []string {
 	// Its trace would record hundreds of millions of instructions; the smaller normalization
 	// fixtures cover the same loop shapes here, and the oracle still runs the long program.
 	paths = slices.DeleteFunc(paths, func(path string) bool {
-		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
+		return refusedNonNullFixture(path) || refusedConstructorFixture(path) || filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
 	}
 	return paths
+}
+
+// Package tests use immutable, hash-pinned source inputs. Each program is lowered
+// once per package process; graph construction never changes this shared IR.
+type loweredProgram struct {
+	once    sync.Once
+	program *ir.Program
+	err     error
+	phase   string
+}
+
+var loweredPrograms sync.Map
+
+// Only deliberate .a refusal controls are excluded. Runtime assertions use .ts.
+func refusedNonNullFixture(path string) bool {
+	name := filepath.Base(path)
+	if filepath.Ext(path) != ".a" || !(strings.HasPrefix(name, "non_null_refuse_") || strings.HasPrefix(name, "non_null_possible_")) {
+		return false
+	}
+	return true
 }
 
 func lowered(t *testing.T, path string) *ir.Program {
@@ -63,15 +85,21 @@ func lowered(t *testing.T, path string) *ir.Program {
 	if err != nil {
 		t.Fatal(err)
 	}
-	program, err := load.Load([]string{absolute})
-	if err != nil {
-		t.Fatalf("Load: %v", err)
+	value, _ := loweredPrograms.LoadOrStore(absolute, &loweredProgram{})
+	entry := value.(*loweredProgram)
+	entry.once.Do(func() {
+		entry.phase = "Load"
+		program, err := load.Load([]string{absolute})
+		entry.err = err
+		if err == nil {
+			entry.phase = "Lower"
+			entry.program, entry.err = Lower(context.Background(), program)
+		}
+	})
+	if entry.err != nil {
+		t.Fatalf("%s: %s: %v", path, entry.phase, entry.err)
 	}
-	result, err := Lower(context.Background(), program)
-	if err != nil {
-		t.Fatalf("Lower: %v", err)
-	}
-	return result
+	return entry.program
 }
 
 // Every function of every program goes into single assignment form, and three checks hold it there,
@@ -79,35 +107,37 @@ func lowered(t *testing.T, path string) *ir.Program {
 // dominated by its definition), reaching definitions computed the classic way (each use names
 // exactly what reaches it), and a count of the IR's reads made by encoding/json rather than by
 // Build's walk (no read went missing).
-func TestEveryFunctionIsInSingleAssignment(t *testing.T) {
-	t.Parallel()
+func checkSingleAssignmentProgram(t *testing.T, path string) {
+	t.Helper()
 	var totals SSAStats
 	var functions int
-	for _, path := range programs(t) {
-		program := lowered(t, path)
-		for function := -1; function < len(program.Functions); function++ {
-			name := "main"
-			if function >= 0 {
-				name = program.Functions[function].Name
-			}
-			where := fmt.Sprintf("%s, function %d (%s)", path, function, name)
-			checkReads(t, where, program, function)
-			reaching := reachingDefinitions(Build(program, function))
-			graph := Build(program, function)
-			Construct(graph)
-			for _, violation := range VerifySSA(graph) {
-				t.Errorf("%s: %s", where, violation)
-			}
-			checkReaching(t, where, graph, reaching)
-			stats := CollectSSAStats(graph)
-			totals.Phis += stats.Phis
-			totals.NamedValues += stats.NamedValues
-			totals.Uses += stats.Uses
-			functions++
+	program := lowered(t, path)
+	if program.Async != nil {
+		t.Logf("%s: synchronous SSA does not model suspension states; async oracle checks them", path)
+		return
+	}
+	for function := -1; function < len(program.Functions); function++ {
+		name := "main"
+		if function >= 0 {
+			name = program.Functions[function].Name
 		}
+		where := fmt.Sprintf("%s, function %d (%s)", path, function, name)
+		checkReads(t, where, program, function)
+		reaching := reachingDefinitions(Build(program, function))
+		graph := Build(program, function)
+		Construct(graph)
+		for _, violation := range VerifySSA(graph) {
+			t.Errorf("%s: %s", where, violation)
+		}
+		checkReaching(t, where, graph, reaching)
+		stats := CollectSSAStats(graph)
+		totals.Phis += stats.Phis
+		totals.NamedValues += stats.NamedValues
+		totals.Uses += stats.Uses
+		functions++
 	}
 	// An empty list of violations is what a vacuous check returns too.
-	if totals.Phis == 0 || totals.Uses == 0 {
+	if path == "testdata/joins.a" && (totals.Phis == 0 || totals.Uses == 0) {
 		t.Errorf("nothing was checked: %+v", totals)
 	}
 	t.Logf("%d functions: %d phis, %d values, %d uses checked", functions, totals.Phis, totals.NamedValues, totals.Uses)
@@ -278,4 +308,13 @@ func checkReaching(t *testing.T, where string, graph *Function, want reaching) {
 			}
 		}
 	}
+}
+
+// These constructor fixtures deliberately assert NotYet and never enter the oracle's runnable set.
+func refusedConstructorFixture(path string) bool {
+	switch filepath.Base(path) {
+	case "new_expression_uint16.a", "new_expression_uint16_notyet.a", "new_expression_class_cache_capture_notyet.a":
+		return true
+	}
+	return false
 }

@@ -13,18 +13,15 @@ func acceptanceGrammar() []string {
 	}
 }
 func TestAcceptanceGrammar(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, acceptanceGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff != "" {
-			t.Fatal(name + ": " + diff)
-		}
-	}
+	checkPort(t, main, []string{"--manifest", list}, want, false, false)
 	t.Logf("%d acceptance grammar cases, %d identical canonical bytes", len(acceptanceGrammar()), len(want))
 }
 func TestAcceptanceMutants(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, acceptanceGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	for _, item := range []struct{ name, file, from, to string }{
@@ -32,19 +29,14 @@ func TestAcceptanceMutants(t *testing.T) {
 		{"class-keyword-name", "sourceStatements.ts", "!(this.parser.peek() === 'Identifier' || this.parser.peek().endsWith('Keyword'))", "false"},
 	} {
 		t.Run(item.name, func(t *testing.T) {
+			t.Parallel()
 			main := mutantPort(t, item.file, item.from, item.to)
-			binary, _ := build(t, main, true)
-			for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-				if diff := firstDifference(want, got); diff == "" {
-					t.Fatal(name + " mutant survived")
-				} else {
-					t.Log(name + ": " + diff)
-				}
-			}
+			checkPort(t, main, []string{"--manifest", list}, want, true, false)
 		})
 	}
 }
 func TestAcceptanceDiagnostics(t *testing.T) {
+	t.Parallel()
 	sources := []string{"++await 42;", "++delete foo.bar;", "--ANY1--;", "type T = A | () => B;", "new obj?.member();", "import { 'a' } from 'm';", "import A from 'm' assert {type:'json'};", "super<T>();"}
 	list := manifest(t, sources)
 	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
@@ -58,24 +50,20 @@ func TestAcceptanceDiagnostics(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, path := range strings.Fields(string(paths)) {
-		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-			refusedBeforeDeadline(t, argv, "ESTree parser")
-		}
+		t.Run(filepath.Base(path), func(t *testing.T) {
+			t.Parallel()
+			checkRefusalModes(t, main, binary, script, path, "ESTree parser")
+		})
 	}
 	t.Logf("%d Go refusals explicitly refused before deadline on all builds", len(sources))
 }
 func TestAcceptanceDiagnosticControl(t *testing.T) {
+	t.Parallel()
 	list := manifest(t, []string{"++await 42;"})
 	statuses := string(execute(t, "", goOracle(t), "--audit", list, t.TempDir()))
 	if !strings.Contains(statuses, `"status":"error"`) {
 		t.Fatal(statuses)
 	}
 	main := mutantPort(t, "pipeline.ts", "if(syntax !== '')", "if(false)")
-	binary, _ := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-		if !strings.Contains(string(got), "0 Program ") {
-			t.Fatal(name + " control did not accept")
-		}
-		t.Log(name + ": disabled syntax validation accepts Go-refused update operand; acceptance check catches it")
-	}
+	checkAcceptanceControl(t, main, list, 1)
 }

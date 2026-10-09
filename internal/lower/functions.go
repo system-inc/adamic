@@ -102,6 +102,9 @@ func (l *lowering) signatureReturn(index int, declaration *ast.Node, this int, r
 				}
 			}
 			if !isKnown {
+				valueType, isKnown = l.clockGenericReturnsT01(returns)
+			}
+			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()
 				if where == nil {
@@ -225,25 +228,25 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	// Defaults run before the body, in order, after a constructor's fields, as JavaScript runs them.
 	var prologue, lowered []ir.Statement
 	var err error
-	if len(patterns) > 0 && len(defaults) > 0 {
-		// JavaScript binds parameters in order, a default perhaps reading a name destructured
-		// before it; the two together aren't lowered yet.
-		err = l.notYet(declaration, "a destructured parameter beside a parameter with a default")
-	}
-	for _, parameter := range patterns {
+	// Signature allocates incoming locals in source parameter order. Merge the two
+	// prologues by that order: a default can read an earlier destructured name,
+	// and a later destructuring must observe any mutation made by a default.
+	for patternIndex, defaultIndex := 0, 0; patternIndex < len(patterns) || defaultIndex < len(defaults); {
 		if err != nil {
 			break
 		}
-		var destructured []ir.Statement
-		patternType := l.checker.GetTypeAtLocation(parameter.parameter)
-		heldAs, _ := l.representation(patternType)
-		destructured, err = l.destructureFrom(parameter.pattern, patternType, heldAs, parameter.incoming)
-		prologue = append(prologue, destructured...)
-	}
-	for _, parameter := range defaults {
-		if err != nil {
-			break
+		if patternIndex < len(patterns) && (defaultIndex == len(defaults) || patterns[patternIndex].incoming < defaults[defaultIndex].incoming) {
+			parameter := patterns[patternIndex]
+			patternIndex++
+			patternType := l.checker.GetTypeAtLocation(parameter.parameter)
+			heldAs, _ := l.representation(patternType)
+			var destructured []ir.Statement
+			destructured, err = l.destructureFrom(parameter.pattern, patternType, heldAs, parameter.incoming)
+			prologue = append(prologue, destructured...)
+			continue
 		}
+		parameter := defaults[defaultIndex]
+		defaultIndex++
 		if declaration.Kind == ast.KindConstructor {
 			if err = l.parameterPropertyDefault(declaration, parameter.initializer); err != nil {
 				break
@@ -256,7 +259,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 			continue
 		}
 
-		if assertionInitializer(parameter.initializer) {
+		if l.lazyAssertionInitializer(parameter.initializer) {
 			prefix, present, value, lazyErr := l.lazyAssertion(parameter.initializer, l.result.Locals[parameter.local].Type)
 			if lazyErr != nil {
 				err = lazyErr

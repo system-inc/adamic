@@ -26,41 +26,63 @@ func (l *lowering) instantiateFunction(call *ast.Node, declaration *ast.Node) (i
 	if resolved == nil || target == nil {
 		return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
 	}
-	// Resolve in the caller's mapper before entering the callee's instantiation.
-	resolvedReturn, err := l.resolvedFunctionReturn(call, resolved)
-	if err != nil {
-		return 0, err
-	}
-	mapper := resolvedTypeMapper(resolved)
-	if mapper == nil {
-		return 0, l.notYet(call, "a generic function whose type argument mapper the checker didn't resolve")
+	// A resolved overload describes its promise, not the implementation's
+	// binders or wider result. Keep the existing implementation inference and
+	// result boundary; ordinary calls use the checker's exact resolved mapper.
+	overload := resolved.Declaration() != nil && resolved.Declaration().Body() == nil && l.censusImplementation(resolved.Declaration()) == declaration
+	var resolvedReturn *checker.Type
+	if !overload {
+		var err error
+		resolvedReturn, err = l.resolvedFunctionReturn(call, resolved)
+		if err != nil {
+			return 0, err
+		}
 	}
 	concreteTypes := map[*checker.Type]*checker.Type{}
 	classContext := l.genericUsesClasses(declaration, map[*ast.Node]bool{})
-	signatureParameters := target.TypeParameters()
-	if resolved.Target() != nil {
-		signatureParameters = resolved.Target().TypeParameters()
-	}
-	if len(signatureParameters) < len(declaration.TypeParameters()) {
-		return 0, l.notYet(call, "a generic function whose resolved type parameter correspondence is unknown")
-	}
-	// The overload proof establishes positional alpha-renaming between the
-	// selected declaration and implementation (their binder names may differ).
-	for index, parameter := range declaration.TypeParameters() {
-		declaredType := l.checker.GetTypeAtLocation(parameter.Name())
-		concrete := l.concrete(checker.Checker_instantiateType(l.checker, signatureParameters[index], mapper))
-		// classGenericCall has already installed this callee's specialization.
+	given := resolved.Parameters()
+	if overload {
 		if classContext {
-			if active := l.concrete(declaredType); active != declaredType && active.Flags()&checker.TypeFlagsTypeParameter == 0 {
-				concrete = active
+			for _, parameter := range declaration.TypeParameters() {
+				declaredType := l.checker.GetTypeAtLocation(parameter.Name())
+				concrete := l.concrete(declaredType)
+				if concrete != declaredType && concrete.Flags()&checker.TypeFlagsTypeParameter == 0 {
+					concreteTypes[declaredType] = concrete
+				}
 			}
 		}
-		if concrete == nil || concrete == declaredType || concrete.Flags()&checker.TypeFlagsAny != 0 {
-			return 0, l.notYet(call, "a generic function whose type argument "+parameter.Name().Text()+" is any or unresolved")
+		for index, parameter := range target.Parameters() {
+			if index < len(given) {
+				l.inferTypes(l.checker.GetTypeOfSymbol(parameter), l.checker.GetTypeOfSymbol(given[index]), concreteTypes)
+			}
 		}
-		concreteTypes[declaredType] = concrete
+		l.inferTypes(l.checker.GetReturnTypeOfSignature(target), l.checker.GetReturnTypeOfSignature(resolved), concreteTypes)
+	} else {
+		mapper := resolvedTypeMapper(resolved)
+		if mapper == nil {
+			return 0, l.notYet(call, "a generic function whose type argument mapper the checker didn't resolve")
+		}
+		signatureParameters := target.TypeParameters()
+		if resolved.Target() != nil {
+			signatureParameters = resolved.Target().TypeParameters()
+		}
+		if len(signatureParameters) < len(declaration.TypeParameters()) {
+			return 0, l.notYet(call, "a generic function whose resolved type parameter correspondence is unknown")
+		}
+		for index, parameter := range declaration.TypeParameters() {
+			declaredType := l.checker.GetTypeAtLocation(parameter.Name())
+			concrete := l.concrete(checker.Checker_instantiateType(l.checker, signatureParameters[index], mapper))
+			if classContext {
+				if active := l.concrete(declaredType); active != declaredType && active.Flags()&checker.TypeFlagsTypeParameter == 0 {
+					concrete = active
+				}
+			}
+			if concrete == nil || concrete == declaredType || concrete.Flags()&checker.TypeFlagsAny != 0 {
+				return 0, l.notYet(call, "a generic function whose type argument "+parameter.Name().Text()+" is any or unresolved")
+			}
+			concreteTypes[declaredType] = concrete
+		}
 	}
-	given := resolved.Parameters()
 
 	// An explicit type argument can make tsc view a mutable argument through a wider type without
 	// giving the argument that contextual type. Judge the instantiated parameter directly: the
@@ -241,6 +263,92 @@ func (l *lowering) refuseInstantiatedMutation(declaration *ast.Node) error {
 	}
 	declaration.ForEachChild(visit)
 	return refused
+}
+
+// inferTypes records what each type parameter in declared stands for, by where it stands in
+// instantiated: the type itself, a referenced type's arguments, or a function's parameters and
+// result. The caller's type mapper makes an outer function's parameter concrete before it is saved,
+// so a generic function calling another with its own type parameter passes the concrete type on.
+func (l *lowering) inferTypes(declared *checker.Type, instantiated *checker.Type, into map[*checker.Type]*checker.Type) {
+	if declared == nil || instantiated == nil {
+		return
+	}
+	// Optional implementation parameters and results can wrap the same generic
+	// binder that the resolved overload exposes directly. Infer from the present
+	// member; an absent argument supplies no evidence about that binder.
+	if declared.Flags()&checker.TypeFlagsUnion != 0 && l.censusHasUndefined(declared) {
+		present := []*checker.Type{}
+		for _, member := range declared.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined == 0 {
+				present = append(present, member)
+			}
+		}
+		given := instantiated
+		if l.censusHasUndefined(given) && given.Flags()&checker.TypeFlagsUnion != 0 {
+			members := []*checker.Type{}
+			for _, member := range given.Types() {
+				if member.Flags()&checker.TypeFlagsUndefined == 0 {
+					members = append(members, member)
+				}
+			}
+			given = l.checker.GetUnionType(members)
+		}
+		// GetNonNullableType also turns a rigid T into T & {}. Removing only
+		// the optional member preserves the binder we are trying to infer.
+		if len(present) == 1 && given.Flags()&checker.TypeFlagsUndefined == 0 {
+			l.inferTypes(present[0], given, into)
+		}
+		return
+	}
+	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+		var missing *checker.Type
+		for _, member := range declared.Types() {
+			known, found := into[member]
+			if !found && member.Flags()&checker.TypeFlagsTypeParameter != 0 {
+				if missing != nil {
+					return // More than one unknown binder has no unique witness.
+				}
+				missing = member
+				continue
+			}
+			if !found {
+				known = l.concrete(member)
+			}
+			if !l.checker.IsTypeAssignableTo(known, l.concrete(instantiated)) {
+				return
+			}
+		}
+		if missing != nil {
+			into[missing] = l.concrete(instantiated)
+		}
+		return
+	}
+	if declared.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		if _, isSet := into[declared]; !isSet {
+			into[declared] = l.concrete(instantiated)
+		}
+		return
+	}
+	if declared.Flags()&checker.TypeFlagsObject != 0 && instantiated.Flags()&checker.TypeFlagsObject != 0 {
+		if declared.ObjectFlags()&checker.ObjectFlagsReference != 0 && instantiated.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+			declaredArguments, instantiatedArguments := l.checker.GetTypeArguments(declared), l.checker.GetTypeArguments(instantiated)
+			for index := range declaredArguments {
+				if index < len(instantiatedArguments) {
+					l.inferTypes(declaredArguments[index], instantiatedArguments[index], into)
+				}
+			}
+		}
+		declaredSignatures, instantiatedSignatures := l.checker.GetSignaturesOfType(declared, checker.SignatureKindCall), l.checker.GetSignaturesOfType(instantiated, checker.SignatureKindCall)
+		if len(declaredSignatures) > 0 && len(instantiatedSignatures) > 0 {
+			declaredParameters, instantiatedParameters := declaredSignatures[0].Parameters(), instantiatedSignatures[0].Parameters()
+			for index := range declaredParameters {
+				if index < len(instantiatedParameters) {
+					l.inferTypes(l.checker.GetTypeOfSymbol(declaredParameters[index]), l.checker.GetTypeOfSymbol(instantiatedParameters[index]), into)
+				}
+			}
+			l.inferTypes(l.checker.GetReturnTypeOfSignature(declaredSignatures[0]), l.checker.GetReturnTypeOfSignature(instantiatedSignatures[0]), into)
+		}
+	}
 }
 
 // JSON descriptors must be checked against the actual type arguments too. Without
