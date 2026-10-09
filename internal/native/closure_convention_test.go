@@ -71,11 +71,18 @@ func TestClosureConventionRuntimeDropCount(t *testing.T) {
 	if strings.Count(string(runtime), original) != 1 {
 		t.Fatal("runtime mutation site moved")
 	}
-	changed := strings.Replace(string(runtime), original, "adamic_closure_call(callback, packed)", 1)
-	changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
-	source := changed + "\n" + strings.ReplaceAll(C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
-	err = Build(source, filepath.Join(t.TempDir(), "mutant"), Options{})
-	if err == nil || !strings.Contains(err.Error(), "expected 3, have 2") {
+	source := strings.ReplaceAll(string(runtime)+"\n"+C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
+	binary := filepath.Join(t.TempDir(), "control")
+	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	want := runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", "../oracle/testdata/closure_convention_regexp_count.a")
+	if got := runWithInput(t, "", binary); got != want {
+		t.Fatalf("unmutated runtime disagrees with Node: got %q, want %q", got, want)
+	}
+	changed := strings.Replace(source, original, "adamic_closure_call(callback, packed)", 1)
+	err = Build(changed, filepath.Join(t.TempDir(), "mutant"), Options{})
+	if err == nil || !strings.Contains(err.Error(), "too few arguments to function call") || !strings.Contains(err.Error(), "expected 3, have 2") {
 		t.Fatalf("runtime drop-count mutant escaped the typed convention: %v", err)
 	}
 	t.Log("runtime callback drop-count mutant rejected by clang under -Werror: expected 3, have 2")

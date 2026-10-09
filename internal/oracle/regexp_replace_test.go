@@ -27,6 +27,20 @@ func init() {
 	}
 }
 
+// Exercise the same runtime-before-program layout without applying a mutation.
+func replacementRuntimeControl(t *testing.T, source string, expected run) {
+	t.Helper()
+	binary := filepath.Join(t.TempDir(), "control")
+	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
+	if diff := disagreement(expected, actual); diff != "" {
+		t.Fatalf("unmutated replacement runtime: %s: %+v", diff, actual)
+	}
+	t.Log("unmutated runtime agrees with its oracle with sanitizers and leaks")
+}
+
 // Each mutant builds cleanly and completes without sanitizer diagnostics. Only the
 // source-on-Node output decides whether its callback argument construction is correct.
 func TestRegExpReplacementNodeMutants(t *testing.T) {
@@ -49,6 +63,7 @@ func TestRegExpReplacementNodeMutants(t *testing.T) {
 			if bytes.Count(runtime, []byte(mutant.old)) != 1 {
 				t.Fatal("mutation site moved")
 			}
+			replacementRuntimeControl(t, strings.ReplaceAll(string(runtime)+"\n"+native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant"), expected)
 			changed := strings.Replace(string(runtime), mutant.old, mutant.new, 1)
 			changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 			source := changed + "\n" + strings.ReplaceAll(native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
@@ -102,6 +117,7 @@ func TestRegExpReplacementTypeGuardMutants(t *testing.T) {
 			if bytes.Count(runtime, []byte(mutant.old)) != 1 {
 				t.Fatal("mutation site moved")
 			}
+			replacementRuntimeControl(t, strings.ReplaceAll(string(runtime)+"\n"+native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant"), expected)
 			changed := strings.Replace(string(runtime), mutant.old, mutant.new, 1)
 			changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 			source := changed + "\n" + strings.ReplaceAll(native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
