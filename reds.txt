@@ -1,0 +1,13 @@
+run adamic-verify-20261009T043523-b0c46b72: void, 0 tests in 12 units, 0 failed, 12 units broken, 0 killed over budget
+BROKEN tests-00: no results (exited false, last output "loom-pilot: 778cbaeee660 slot ? cpus ? tree 5a2ea95d36e19a526b5422fedf185252de94f8af setup 13 s, 2 packages at a time")
+BROKEN tests-01: no results (exited false, last output "loom-pilot: 8357c7535bda slot ? cpus ? tree 5a2ea95d36e19a526b5422fedf185252de94f8af setup 1 s, 2 packages at a time")
+BROKEN tests-02: no results (exited true, last output "3.6G\t/tmp/adamic")
+BROKEN tests-03: no results (exited true, last output "3.6G\t/tmp/adamic")
+BROKEN tests-04: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-05: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-06: no results (exited false, last output "loom-pilot: 4bc005e9d828 slot ? cpus ? tree 5a2ea95d36e19a526b5422fedf185252de94f8af setup 75 s, 2 packages at a time")
+BROKEN tests-07: no results (exited true, last output "3.6G\t/tmp/adamic")
+BROKEN tests-08: no results (exited true, last output "3.6G\t/tmp/adamic")
+BROKEN tests-09: no results (exited true, last output "3.6G\t/tmp/adamic")
+BROKEN tests-10: no results (exited true, last output "3.7G\t/tmp/adamic")
+BROKEN tests-11: no results (exited true, last output "3.7G\t/tmp/adamic")
