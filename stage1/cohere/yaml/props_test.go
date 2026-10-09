@@ -73,6 +73,7 @@ func goProps(t *testing.T, cases string) []byte {
 	}
 	return expected
 }
+
 // Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS; fixed /tmp/stage1-yaml-props-* diagnostic files.
 func TestPropsMatchGo(t *testing.T) {
 	cases, files, count := lexCases(t)
