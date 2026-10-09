@@ -1,0 +1,18 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-select-20261009T183532-d429e8cd",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "6a1a485817888eff313d39f476e15c16bb947b1a",
+  "branch": "codex/stage3-batch6-fix",
+  "base": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ]
+}
