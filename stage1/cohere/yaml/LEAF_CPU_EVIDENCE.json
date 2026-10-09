@@ -1,0 +1,583 @@
+{
+  "measurement_date": "2026-10-09",
+  "before_source": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "after_source": "15dd9557c4e705ab7d8bb9af299c54526a9de6a8",
+  "nproc": 5,
+  "cpu_quota": 4,
+  "gomaxprocs": 4,
+  "cpu_method": "RUSAGE_CHILDREN user+system delta per go test subprocess; includes waited descendants and builds",
+  "records": [
+    {
+      "test": "TestComposeMatchGo",
+      "leaf_seconds": 16.76655,
+      "longest_leaf": "TestComposeMatchGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 18.223959,
+      "system_cpu": 3.204534,
+      "total_cpu": 21.428493,
+      "command_wall": 18.039544846000354,
+      "load_before": [
+        1.84423828125,
+        0.88134765625,
+        0.39794921875
+      ],
+      "load_after": [
+        1.66650390625,
+        0.90625,
+        0.4169921875
+      ],
+      "returncode": 0,
+      "json_sha256": "8493faaabfd8d7064fb5974ccda3f287cbcbd72c493bf342d27df5ddfb36c8fa"
+    },
+    {
+      "test": "TestComposeMatchGo",
+      "leaf_seconds": 16.578658,
+      "longest_leaf": "TestComposeMatchGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "after",
+      "user_cpu": 17.80044199999999,
+      "system_cpu": 3.745984,
+      "total_cpu": 21.546425999999993,
+      "command_wall": 17.85704182399968,
+      "load_before": [
+        1.5322265625,
+        1.08740234375,
+        0.54052734375
+      ],
+      "load_after": [
+        1.5673828125,
+        1.12890625,
+        0.56689453125
+      ],
+      "returncode": 0,
+      "json_sha256": "8779026971ffc73f33cc8278ffacf1c15e9bdd1ecbf0268abbaee0df7e4905a8"
+    },
+    {
+      "test": "TestFormatterMutants",
+      "leaf_seconds": 16.3,
+      "longest_leaf": "TestFormatterMutants/emoji_surrogate_slot_shifted",
+      "kind": "longest leaf own pass Elapsed",
+      "leaf_count": 6,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 101.210597,
+      "system_cpu": 6.151526,
+      "total_cpu": 107.362123,
+      "command_wall": 99.68113758500022,
+      "load_before": [
+        0.0,
+        0.0,
+        0.02099609375
+      ],
+      "load_after": [
+        0.8828125,
+        0.31689453125,
+        0.13525390625
+      ],
+      "returncode": 0,
+      "json_sha256": "3450889f899477da220a6aef18e3fc9b55ef88c467955e38545b71aa08e48fb1"
+    },
+    {
+      "test": "TestFormatterMutants",
+      "leaf_seconds": 1.32,
+      "longest_leaf": "TestFormatterMutants/shard-005",
+      "kind": "longest leaf own pass Elapsed",
+      "leaf_count": 6,
+      "shard_count": 6,
+      "setup_seconds": 94.76,
+      "phase": "after",
+      "user_cpu": 101.09426899999997,
+      "system_cpu": 6.288953999999999,
+      "total_cpu": 107.38322299999994,
+      "command_wall": 98.1224652840001,
+      "load_before": [
+        1.1787109375,
+        0.50244140625,
+        0.212890625
+      ],
+      "load_after": [
+        1.03125,
+        0.64794921875,
+        0.2978515625
+      ],
+      "returncode": 0,
+      "json_sha256": "348403aaf258eaa20e6c692c39a683b2ddafc786b6758519d28e76cbdfe24bdf"
+    },
+    {
+      "test": "TestFormatterMatchesGo",
+      "leaf_seconds": 31.075174,
+      "longest_leaf": "TestFormatterMatchesGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 33.14715199999999,
+      "system_cpu": 3.873932000000001,
+      "total_cpu": 37.02108399999998,
+      "command_wall": 32.46077848200002,
+      "load_before": [
+        0.8828125,
+        0.31689453125,
+        0.13525390625
+      ],
+      "load_after": [
+        0.93017578125,
+        0.3837890625,
+        0.16455078125
+      ],
+      "returncode": 0,
+      "json_sha256": "e721cae5ebb08ef97542f8026a685c36aa42c386e6d22639cb4ce94fcefe8c44"
+    },
+    {
+      "test": "TestFormatterMatchesGo",
+      "leaf_seconds": 2.35,
+      "longest_leaf": "TestFormatterMatchesGo/shard-000",
+      "kind": "longest leaf own pass Elapsed",
+      "leaf_count": 20,
+      "shard_count": 20,
+      "setup_seconds": 24.52,
+      "phase": "after",
+      "user_cpu": 40.00837700000005,
+      "system_cpu": 8.318516000000002,
+      "total_cpu": 48.32689300000008,
+      "command_wall": 31.30110258700006,
+      "load_before": [
+        1.03125,
+        0.64794921875,
+        0.2978515625
+      ],
+      "load_after": [
+        0.9375,
+        0.66552734375,
+        0.3154296875
+      ],
+      "returncode": 0,
+      "json_sha256": "73bbe298e863c6170dd5e9b3cae56987aad324e017003ee18a15d05c8d92bb9d"
+    },
+    {
+      "test": "TestUnistMatchesGo",
+      "leaf_seconds": 19.156242,
+      "longest_leaf": "TestUnistMatchesGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 20.740657000000002,
+      "system_cpu": 2.9422879999999996,
+      "total_cpu": 23.682945000000004,
+      "command_wall": 20.368747585000165,
+      "load_before": [
+        1.66650390625,
+        0.90625,
+        0.4169921875
+      ],
+      "load_after": [
+        1.68212890625,
+        0.9609375,
+        0.44677734375
+      ],
+      "returncode": 0,
+      "json_sha256": "6a674aa73966e4242b969cfe1bbcd4f1083dfd03bdc0209d8816ef8afe3bff3a"
+    },
+    {
+      "test": "TestUnistMatchesGo",
+      "leaf_seconds": 19.667166,
+      "longest_leaf": "TestUnistMatchesGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "after",
+      "user_cpu": 21.03002700000002,
+      "system_cpu": 4.233524999999997,
+      "total_cpu": 25.263552000000008,
+      "command_wall": 20.912104852000084,
+      "load_before": [
+        1.5673828125,
+        1.12890625,
+        0.56689453125
+      ],
+      "load_after": [
+        1.4052734375,
+        1.119140625,
+        0.57666015625
+      ],
+      "returncode": 0,
+      "json_sha256": "c2b52caf3a0aaee7709c92f6990b818b4c0f3e57cfefc5b0b99ce639796da630"
+    },
+    {
+      "test": "TestFileDriver",
+      "leaf_seconds": 32.84084,
+      "longest_leaf": "TestFileDriver",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 38.41539900000001,
+      "system_cpu": 4.5802879999999995,
+      "total_cpu": 42.995687,
+      "command_wall": 34.11435986699962,
+      "load_before": [
+        0.93017578125,
+        0.3837890625,
+        0.16455078125
+      ],
+      "load_after": [
+        1.1787109375,
+        0.50244140625,
+        0.212890625
+      ],
+      "returncode": 0,
+      "json_sha256": "7b68a588448fa8290caf06383358a74d44265ec75f1e64154033a7b37ce943ff"
+    },
+    {
+      "test": "TestFileDriver",
+      "leaf_seconds": 0.55,
+      "longest_leaf": "TestFileDriver/shard-014",
+      "kind": "longest leaf own pass Elapsed",
+      "leaf_count": 50,
+      "shard_count": 50,
+      "setup_seconds": 24.17,
+      "phase": "after",
+      "user_cpu": 37.41753699999998,
+      "system_cpu": 6.111762999999996,
+      "total_cpu": 43.5293,
+      "command_wall": 29.622198045000005,
+      "load_before": [
+        0.9375,
+        0.66552734375,
+        0.3154296875
+      ],
+      "load_after": [
+        1.84423828125,
+        0.88134765625,
+        0.39794921875
+      ],
+      "returncode": 0,
+      "json_sha256": "96f5723924c55037ad459b0a46e2ef8f43a77cbc047a0448ce0ddbaf6e6cd7b5"
+    },
+    {
+      "test": "TestWidthsMatchGo",
+      "leaf_seconds": 9.018788,
+      "longest_leaf": "TestWidthsMatchGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 10.528557999999997,
+      "system_cpu": 4.057311,
+      "total_cpu": 14.585868999999997,
+      "command_wall": 10.26633623699945,
+      "load_before": [
+        1.68212890625,
+        0.9609375,
+        0.44677734375
+      ],
+      "load_after": [
+        1.73779296875,
+        0.99609375,
+        0.46435546875
+      ],
+      "returncode": 0,
+      "json_sha256": "bf56245d89314a8967d54060e379b506470845c95657d65a84568eabce0beb3a"
+    },
+    {
+      "test": "TestWidthsMatchGo",
+      "leaf_seconds": 9.232864,
+      "longest_leaf": "TestWidthsMatchGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "after",
+      "user_cpu": 10.21262999999999,
+      "system_cpu": 4.681293000000004,
+      "total_cpu": 14.893922999999994,
+      "command_wall": 10.500044228000661,
+      "load_before": [
+        1.4052734375,
+        1.119140625,
+        0.57666015625
+      ],
+      "load_after": [
+        1.34228515625,
+        1.11474609375,
+        0.58154296875
+      ],
+      "returncode": 0,
+      "json_sha256": "07dfdb190b81bcfc9ed8221c47607752cf7c61553c06ed9308118673c5b75ccc"
+    },
+    {
+      "test": "TestComposeMutants",
+      "leaf_seconds": 6.39,
+      "longest_leaf": "TestComposeMutants/implicit_key_limit_skipped",
+      "kind": "longest leaf own pass Elapsed",
+      "leaf_count": 3,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 21.586385999999997,
+      "system_cpu": 3.860253,
+      "total_cpu": 25.446638999999998,
+      "command_wall": 21.449365711999235,
+      "load_before": [
+        1.73779296875,
+        0.99609375,
+        0.46435546875
+      ],
+      "load_after": [
+        1.595703125,
+        1.0126953125,
+        0.4814453125
+      ],
+      "returncode": 0,
+      "json_sha256": "f3da3d642621e8b7e0460f414e22a1818f6d65096568ea51a851a73d5128c90b"
+    },
+    {
+      "test": "TestComposeMutants",
+      "leaf_seconds": 6.37,
+      "longest_leaf": "TestComposeMutants/document_start_marker_lost",
+      "kind": "longest leaf own pass Elapsed",
+      "leaf_count": 3,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "after",
+      "user_cpu": 21.516009999999994,
+      "system_cpu": 3.9443139999999985,
+      "total_cpu": 25.460323999999986,
+      "command_wall": 21.52621975799957,
+      "load_before": [
+        1.34228515625,
+        1.11474609375,
+        0.58154296875
+      ],
+      "load_after": [
+        1.30712890625,
+        1.12255859375,
+        0.5966796875
+      ],
+      "returncode": 0,
+      "json_sha256": "c8bb995f957488241ec0cd83cbe113434351dfb5fa9c877a156afa4630562751"
+    },
+    {
+      "test": "TestUnistMutants",
+      "leaf_seconds": 9.05,
+      "longest_leaf": "TestUnistMutants/comment_prefix_lost",
+      "kind": "longest leaf own pass Elapsed",
+      "leaf_count": 3,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 30.340907,
+      "system_cpu": 4.2814879999999995,
+      "total_cpu": 34.622395,
+      "command_wall": 29.986409565999566,
+      "load_before": [
+        1.595703125,
+        1.0126953125,
+        0.4814453125
+      ],
+      "load_after": [
+        1.4345703125,
+        1.02685546875,
+        0.50439453125
+      ],
+      "returncode": 0,
+      "json_sha256": "94247a7bbe332181116165d5b4774582ae3e198fcbf9e8701a2c57bc8bd24153"
+    },
+    {
+      "test": "TestUnistMutants",
+      "leaf_seconds": 9.01,
+      "longest_leaf": "TestUnistMutants/document_end_marker_lost",
+      "kind": "longest leaf own pass Elapsed",
+      "leaf_count": 3,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "after",
+      "user_cpu": 30.24204800000001,
+      "system_cpu": 3.6036100000000033,
+      "total_cpu": 33.84565800000001,
+      "command_wall": 29.805864044999907,
+      "load_before": [
+        1.30712890625,
+        1.12255859375,
+        0.5966796875
+      ],
+      "load_after": [
+        1.18505859375,
+        1.109375,
+        0.611328125
+      ],
+      "returncode": 0,
+      "json_sha256": "05c665185b43619f4f7c43fc748792e144c6ccd9a5b87b69b98514411af6aba3"
+    },
+    {
+      "test": "TestCSTMatchesGo",
+      "leaf_seconds": 6.642413,
+      "longest_leaf": "TestCSTMatchesGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 8.211747000000003,
+      "system_cpu": 1.7927989999999987,
+      "total_cpu": 10.004546000000001,
+      "command_wall": 7.963709297000605,
+      "load_before": [
+        1.4345703125,
+        1.02685546875,
+        0.50439453125
+      ],
+      "load_after": [
+        1.5888671875,
+        1.0751953125,
+        0.5263671875
+      ],
+      "returncode": 0,
+      "json_sha256": "c9c4b7d1df18a21d4b311f9fa8b1b3a1368523156486854613885daf8811549a"
+    },
+    {
+      "test": "TestCSTMatchesGo",
+      "leaf_seconds": 6.764602,
+      "longest_leaf": "TestCSTMatchesGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "after",
+      "user_cpu": 7.9308479999999975,
+      "system_cpu": 2.6065809999999985,
+      "total_cpu": 10.537428999999968,
+      "command_wall": 8.036051330999726,
+      "load_before": [
+        1.18505859375,
+        1.109375,
+        0.611328125
+      ],
+      "load_after": [
+        1.15625,
+        1.10546875,
+        0.6162109375
+      ],
+      "returncode": 0,
+      "json_sha256": "ac6b562617f7d6bd146c31275531cfe1215f65ce87d2bdb76f2597cbe966a71a"
+    },
+    {
+      "test": "TestScalarsMatchGo",
+      "leaf_seconds": 8.009467,
+      "longest_leaf": "TestScalarsMatchGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 9.281220000000005,
+      "system_cpu": 2.441655000000001,
+      "total_cpu": 11.722875000000016,
+      "command_wall": 9.333422591999806,
+      "load_before": [
+        1.5888671875,
+        1.0751953125,
+        0.5263671875
+      ],
+      "load_after": [
+        1.57861328125,
+        1.08935546875,
+        0.53759765625
+      ],
+      "returncode": 0,
+      "json_sha256": "a7bf32a89d8385297348e14ee1d39758ce222a46dee878093e87e9414511c554"
+    },
+    {
+      "test": "TestScalarsMatchGo",
+      "leaf_seconds": 8.451397,
+      "longest_leaf": "TestScalarsMatchGo",
+      "kind": "whole wall from first run to last pass (no subtests)",
+      "leaf_count": 1,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "after",
+      "user_cpu": 9.46423999999999,
+      "system_cpu": 3.388945999999997,
+      "total_cpu": 12.853185999999965,
+      "command_wall": 9.835074308999538,
+      "load_before": [
+        1.15625,
+        1.10546875,
+        0.6162109375
+      ],
+      "load_after": [
+        1.1318359375,
+        1.1015625,
+        0.62109375
+      ],
+      "returncode": 0,
+      "json_sha256": "92fcf302102d3f703f57bed72978d220cba220c4c2d085e2edb35bbe4ab4eab2"
+    },
+    {
+      "test": "TestCSTMutants",
+      "leaf_seconds": 1.83,
+      "longest_leaf": "TestCSTMutants/source_offset_advanced",
+      "kind": "longest leaf own pass Elapsed",
+      "leaf_count": 3,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "before",
+      "user_cpu": 7.575901999999999,
+      "system_cpu": 2.2583410000000015,
+      "total_cpu": 9.834242999999997,
+      "command_wall": 7.508782113000052,
+      "load_before": [
+        1.57861328125,
+        1.08935546875,
+        0.53759765625
+      ],
+      "load_after": [
+        1.5322265625,
+        1.08740234375,
+        0.54052734375
+      ],
+      "returncode": 0,
+      "json_sha256": "858e1b9501ef5ee7aefc85f435062eae0d42675454690829f90a1a7f38372450"
+    },
+    {
+      "test": "TestCSTMutants",
+      "leaf_seconds": 1.85,
+      "longest_leaf": "TestCSTMutants/null_key_absent",
+      "kind": "longest leaf own pass Elapsed",
+      "leaf_count": 3,
+      "shard_count": 0,
+      "setup_seconds": null,
+      "phase": "after",
+      "user_cpu": 7.706868000000014,
+      "system_cpu": 2.120512000000005,
+      "total_cpu": 9.82738000000004,
+      "command_wall": 7.5395432069999515,
+      "load_before": [
+        1.1318359375,
+        1.1015625,
+        0.62109375
+      ],
+      "load_after": [
+        1.12109375,
+        1.099609375,
+        0.62353515625
+      ],
+      "returncode": 0,
+      "json_sha256": "8aa7ee955d3fb2c389383780c06f8d53a66ac544e1264dbc3bcf7a1fd6ad389c"
+    }
+  ]
+}

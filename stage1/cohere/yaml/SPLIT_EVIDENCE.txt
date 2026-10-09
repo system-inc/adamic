@@ -1,3 +1,5 @@
+Measurement correction: use LEAF_CPU_EVIDENCE.txt and LEAF_CPU_EVIDENCE.json for paired longest-leaf/setup/total-CPU measurements. Historical CPU is unavailable.
+
 YAML split evidence, 2026-10-08 UTC
 Branch: stage1-split/yaml
 Base origin/main: 54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8
@@ -12,18 +14,19 @@ Final package: go test -json ./stage1/cohere/yaml -count=1 -timeout 3h.
 
 LIMIT: internal/buildcache is absent on base and latest fetched main. Builders run once per invocation, shared across shards, as explicitly permitted fallback. No package cache was added. FormatterMutants setup exceeds 30 s and awaits developer-tools internal/buildcache; these units are not yet fully gate eligible. Go oracle empty-cache products also exceed 30 s for formatter tests; they are build inputs, not logic.
 
-Test | before wall s | after longest shard / unchanged own wall s | shards | setup s
-TestComposeMatchGo | 28.27 | 17.14 (unchanged) | 1 | not split
-TestFormatterMutants | 102.14 | 1.40 | 6 | 94.58
+Historical JSON re-audited under the leaf rule. Historical total CPU was not recorded; see LEAF_CPU_EVIDENCE.txt for fresh paired leaf/setup/CPU measurements.
+Test | before longest leaf / no-subtest whole wall s | after longest leaf / no-subtest whole wall s | shards | setup s
+TestComposeMatchGo | 28.27 | 17.14 | unchanged | -
+TestFormatterMutants | 18.52 | 1.40 | 6 | 94.58
 TestFormatterMatchesGo | 31.19 | 2.09 | 20 | 25.02
-TestUnistMatchesGo | 19.47 | 19.79 (unchanged) | 1 | not split
+TestUnistMatchesGo | 19.47 | 19.79 | unchanged | -
 TestFileDriver | 32.63 | 0.53 | 50 | 24.49
-TestWidthsMatchGo | 9.39 | 9.11 (unchanged) | 1 | not split
-TestComposeMutants | 19.72 | 20.40 (unchanged) | 1 | not split
-TestUnistMutants | 27.89 | 28.81 (unchanged) | 1 | not split
-TestCSTMatchesGo | 6.64 | 6.55 (unchanged) | 1 | not split
-TestScalarsMatchGo | 8.83 | 8.15 (unchanged) | 1 | not split
-TestCSTMutants | 6.31 | 6.32 (unchanged) | 1 | not split
+TestWidthsMatchGo | 9.39 | 9.11 | unchanged | -
+TestComposeMutants | 6.28 | 6.53 | unchanged | -
+TestUnistMutants | 8.84 | 9.29 | unchanged | -
+TestCSTMatchesGo | 6.64 | 6.55 | unchanged | -
+TestScalarsMatchGo | 8.83 | 8.15 | unchanged | -
+TestCSTMutants | 1.85 | 1.81 | unchanged | -
 
 Build timings, each product on its own line. Fresh output directories; normal compiler/runtime dependency caches unless explicitly empty-cache below. Lowered products include C and JavaScript emission where logged. Mutants use original release native flags, unchanged. Formatter and file-driver native products use ASan/UBSan with leak detection on every shard.
 TestComposeMatchGo:
@@ -103,16 +106,6 @@ TestCSTMutants:
   native 0.403773s
   lowered 0.627185s
   native 0.411822s
-
-Unchanged-test phase profiles (separate complete invocation from baseline; residual includes enumeration, oracle execution and all comparisons):
-TestComposeMatchGo: wall=17.01 s, builds=9.97 s, residual logic=7.04 s
-TestUnistMatchesGo: wall=19.28 s, builds=14.54 s, residual logic=4.74 s
-TestWidthsMatchGo: wall=9.43 s, builds=3.16 s, residual logic=6.27 s
-TestComposeMutants: wall=20.37 s, builds=16.70 s, residual logic=3.67 s
-TestUnistMutants: wall=28.65 s, builds=25.57 s, residual logic=3.08 s
-TestCSTMatchesGo: wall=6.85 s, builds=2.55 s, residual logic=4.30 s
-TestScalarsMatchGo: wall=8.23 s, builds=3.50 s, residual logic=4.73 s
-TestCSTMutants: wall=6.27 s, builds=3.63 s, residual logic=2.64 s
 
 Truly cold Go oracle builds (empty GOCACHE per distinct oracle product):
 TestCSTMatchesGo: lexer_test.go:43: empty-cache Go oracle cold build: 5.384216s
