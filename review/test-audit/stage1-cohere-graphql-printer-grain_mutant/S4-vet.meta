@@ -1,0 +1,10 @@
+{
+  "command": [
+    "go",
+    "vet",
+    "./stage1/cohere/graphql/printer/"
+  ],
+  "exit": 0,
+  "wall": 0.18750453000029665,
+  "description": "replace whole native construction callback with empty success; drop now-unused source-read statement and guard"
+}

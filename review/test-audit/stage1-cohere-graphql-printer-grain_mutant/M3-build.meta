@@ -1,0 +1,16 @@
+{
+  "command": [
+    "timeout",
+    "90",
+    "go",
+    "run",
+    "./cmd/adamic",
+    "build",
+    "stage1/cohere/graphql/printer/main.ts",
+    "-o",
+    "/tmp/u098/standalone/M3"
+  ],
+  "exit": 0,
+  "wall": 5.192494040999918,
+  "artifact_exists": true
+}

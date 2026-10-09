@@ -1,0 +1,32 @@
+--- a/stage1/cohere/graphql/printer/grain_mutant_test.go
++++ b/stage1/cohere/graphql/printer/grain_mutant_test.go
+@@ -5,7 +5,6 @@
+ 	"fmt"
+ 	"os"
+ 	"path/filepath"
+-	"runtime"
+ 	"strings"
+ 	"sync"
+ 	"testing"
+@@ -39,20 +38,7 @@
+ }
+ 
+ func printerMutantSource(t *testing.T, number int) string {
+-	t.Helper()
+-	return mutantSources[number].get(t, func() string {
+-		mutation := printerMutations[number]
+-		files := []string{"../token.ts", "../characterClasses.ts", "../blockString.ts", "../lexer.ts", "../parser.ts", "../../json/width.ts", "../../json/widthTables.ts", "doc.ts", "printer.ts", "main.ts", "printer_test.go", "grain_mutant_test.go"}
+-		return printerBuild(t, printerBuildInputs{
+-			Name:      fmt.Sprintf("GraphQL mutant %03d source", number),
+-			Files:     printerInputFiles(t, files...),
+-			Flags:     []string{mutation.file, mutation.from, mutation.to},
+-			Toolchain: runtime.Version(),
+-		}, func(dir string) error {
+-			printerDirectoryAt(t, dir, mutation.file, mutation.from, mutation.to)
+-			return nil
+-		}) + "/graphql/printer/main.ts"
+-	})
++	return ""
+ }
+ 
+ func printerMutantLowered(t *testing.T, number int) string {

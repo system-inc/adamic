@@ -1,0 +1,83 @@
+[
+  {
+    "test": "TestPrinterMutants family",
+    "samples": [
+      7.291,
+      6.988,
+      7.567
+    ],
+    "median": 7.291
+  },
+  {
+    "test": "TestPrinterMutantUnion",
+    "samples": [
+      1.278,
+      1.229,
+      1.116
+    ],
+    "median": 1.229
+  },
+  {
+    "test": "TestProduct_GraphQLMutantOracle",
+    "samples": [
+      1.141,
+      1.092,
+      1.152
+    ],
+    "median": 1.141
+  },
+  {
+    "test": "TestProduct_GraphQLMutantDefaults",
+    "samples": [
+      1.207,
+      1.212,
+      1.31
+    ],
+    "median": 1.212
+  },
+  {
+    "test": "TestProduct_GraphQLMutantSource family",
+    "samples": [
+      0.01,
+      0.011,
+      0.009
+    ],
+    "median": 0.01
+  },
+  {
+    "test": "TestProduct_GraphQLMutantLowered family",
+    "samples": [
+      2.172,
+      2.125,
+      2.139
+    ],
+    "median": 2.139
+  },
+  {
+    "test": "TestProduct_GraphQLMutantSanitized family",
+    "samples": [
+      2.049,
+      2.16,
+      2.166
+    ],
+    "median": 2.16
+  },
+  {
+    "test": "TestPrinterMutantPlantedSurvivor",
+    "samples": [
+      0.091,
+      0.096,
+      0.095
+    ],
+    "median": 0.095
+  },
+  {
+    "test": "TestPrinterThroughput",
+    "samples": [
+      19.706,
+      19.06,
+      17.978
+    ],
+    "median": 19.06
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/graphql/printer/",
+    "-run",
+    "^(TestPrinterMutantUnion)$"
+  ],
+  "exit": 0,
+  "wall": 3.22997289200066,
+  "seconds": 1.237,
+  "mode": "P7",
+  "cache": "/tmp/u098/cache/switch",
+  "selector": ""
+}

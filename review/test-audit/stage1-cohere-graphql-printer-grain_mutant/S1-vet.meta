@@ -1,0 +1,10 @@
+{
+  "command": [
+    "go",
+    "vet",
+    "./stage1/cohere/graphql/printer/"
+  ],
+  "exit": 0,
+  "wall": 0.15920709499914665,
+  "description": "off-by-one shard construction omits first case"
+}

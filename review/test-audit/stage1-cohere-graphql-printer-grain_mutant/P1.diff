@@ -1,0 +1,17 @@
+--- a/stage1/cohere/graphql/printer/printer.ts
++++ b/stage1/cohere/graphql/printer/printer.ts
+@@ -642,12 +642,5 @@
+ export type ResultType =
+     { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string };
+ export function format(source: string, settings: SettingsOptions = defaults): ResultType {
+-    // cohere/internal/format/native's file wrapper: normalize before parsing and
+-    // restore the leading BOM after printing. Parser offsets name this normalized text.
+-    const bom = source.startsWith('\ufeff');
+-    const text = (bom ? source.slice(1) : source).split('\r\n').join('\n').split('\r').join('\n');
+-    const result = parse(text);
+-    if(result.kind === 'Refused') return { kind: 'Error', message: decoded(result.message) };
+-    const printer = new Printer(result.document, text, new Documents(settings));
+-    return { kind: 'Ok', text: (bom ? '\ufeff' : '') + printer.finish() };
+-}
++    return { kind: 'Ok', text: '' };
++}

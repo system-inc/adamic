@@ -1,0 +1,10 @@
+{
+  "command": [
+    "go",
+    "vet",
+    "./stage1/cohere/graphql/printer/"
+  ],
+  "exit": 0,
+  "wall": 0.1644063660005486,
+  "description": "empty answer at printerMutantOracle entry; remove unused path/filepath import; remove unused github.com/system-inc/adamic/internal/buildcache import"
+}

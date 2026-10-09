@@ -1,0 +1,10 @@
+{
+  "command": [
+    "go",
+    "vet",
+    "./stage1/cohere/graphql/printer/"
+  ],
+  "exit": 0,
+  "wall": 0.17195953000009467,
+  "description": "empty answer at printerMutantSanitized entry; remove unused github.com/system-inc/adamic/internal/native import"
+}

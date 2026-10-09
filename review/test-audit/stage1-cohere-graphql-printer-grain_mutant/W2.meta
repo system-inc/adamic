@@ -1,0 +1,21 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/graphql/printer/",
+    "-run",
+    "^(TestPrinterMutantPlantedSurvivor)$"
+  ],
+  "exit": 1,
+  "wall": 2.184694016999856,
+  "seconds": 0.089,
+  "mode": "W2",
+  "cache": "/tmp/u098/cache/switch",
+  "selector": ""
+}

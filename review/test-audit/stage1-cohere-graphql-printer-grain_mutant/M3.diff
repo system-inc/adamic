@@ -1,0 +1,11 @@
+--- a/stage1/cohere/graphql/printer/doc.ts
++++ b/stage1/cohere/graphql/printer/doc.ts
+@@ -180,7 +180,7 @@
+                             break;
+                         }
+                     }
+-                    output.push('\n');
++                    output.push('\r\n');
+                     pendingIndent = command.indent;
+                     column = command.indent;
+                 }

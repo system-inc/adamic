@@ -1,0 +1,21 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/graphql/printer/",
+    "-run",
+    "^(TestPrinterMutants_000|TestPrinterMutants_001|TestPrinterMutants_002|TestPrinterMutantUnion|TestProduct_GraphQLMutantOracle|TestProduct_GraphQLMutantDefaults|TestProduct_GraphQLMutantSource000|TestProduct_GraphQLMutantSource001|TestProduct_GraphQLMutantSource002|TestProduct_GraphQLMutantLowered000|TestProduct_GraphQLMutantLowered001|TestProduct_GraphQLMutantLowered002|TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002|TestPrinterMutantPlantedSurvivor|TestPrinterThroughput|TestPrinterAsGoCohere_000|TestPrinterAsGoCohere_001|TestPrinterAsGoCohere_002|TestPrinterAsGoCohere_003|TestPrinterFileDriver|TestPrinterShardPlantedDisagreement|TestPrinterWhitespaceGap_000|TestPrinterWhitespaceGap_001|TestPrinterWhitespaceGap_002|TestPrinterWhitespaceGap_003|TestPrinterWhitespaceGap_004)$"
+  ],
+  "exit": 1,
+  "wall": 32.97844820699902,
+  "seconds": 30.957,
+  "mode": "",
+  "cache": "/tmp/u098/cache/switch",
+  "selector": "M1"
+}

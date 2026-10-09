@@ -1,0 +1,21 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/graphql/printer/",
+    "-run",
+    "^(TestProduct_GraphQLMutantSanitized000|TestProduct_GraphQLMutantSanitized001|TestProduct_GraphQLMutantSanitized002)$"
+  ],
+  "exit": 0,
+  "wall": 6.84528944900012,
+  "seconds": 4.671,
+  "mode": "S4",
+  "cache": "/tmp/u098/cache/S4",
+  "selector": ""
+}

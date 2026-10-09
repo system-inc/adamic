@@ -1,0 +1,18 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/graphql/printer/",
+    "-run",
+    "^TestPrinterAsGoCohere_[0-9]{3}$"
+  ],
+  "exit": 0,
+  "wall": 14.967479695000293,
+  "seconds": 12.951
+}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/graphql/printer/grain_mutant_test.go
++++ b/stage1/cohere/graphql/printer/grain_mutant_test.go
+@@ -155,7 +155,7 @@
+ 	shards := make([]printerShard, len(printerMutations))
+ 	products := make([]printerProducts, len(printerMutations))
+ 	for number := range printerMutations {
+-		shards[number] = printerShard{mode: "defaults", path: cases, cases: printerMutantCases(number, enumeration)}
++		shards[number] = printerShard{mode: "defaults", path: cases, cases: printerMutantCases(number, enumeration)[1:]}
+ 		if number == unit {
+ 			products[number] = printerMutantProducts(t, number)
+ 		}

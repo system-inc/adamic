@@ -1,0 +1,10 @@
+{
+  "command": [
+    "go",
+    "vet",
+    "./stage1/cohere/graphql/printer/"
+  ],
+  "exit": 0,
+  "wall": 0.1710456079999858,
+  "description": "empty answer at printerMutantLowered entry"
+}

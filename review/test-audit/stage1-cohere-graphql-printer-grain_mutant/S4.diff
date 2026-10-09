@@ -1,0 +1,25 @@
+--- a/stage1/cohere/graphql/printer/shards_test.go
++++ b/stage1/cohere/graphql/printer/shards_test.go
+@@ -141,10 +141,6 @@
+ 
+ func printerCompiledProduct(t *testing.T, loweredProduct string, options native.Options) string {
+ 	t.Helper()
+-	data, err := os.ReadFile(loweredProduct + "/port.c")
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+ 	clang := buildcache.Tool("clang", "--version")
+ 	name := "release GraphQL printer"
+ 	if options.Sanitize {
+@@ -152,10 +148,7 @@
+ 	}
+ 	inputs := printerInputFiles(t, filepath.Join(repository, "internal/native"))
+ 	return printerBuild(t, printerBuildInputs{Name: name, Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native.Flags(options), Toolchain: clang}, func(dir string) error {
+-		start := time.Now()
+-		err := native.Build(string(data), dir+"/port", options)
+-		t.Logf("clang wall %.3fs", time.Since(start).Seconds())
+-		return err
++		return nil
+ 	}) + "/port"
+ }
+ 

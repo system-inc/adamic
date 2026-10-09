@@ -1,0 +1,28 @@
+--- a/stage1/cohere/graphql/printer/shards_test.go
++++ b/stage1/cohere/graphql/printer/shards_test.go
+@@ -15,7 +15,6 @@
+ 	"time"
+ 
+ 	"github.com/system-inc/adamic/internal/buildcache"
+-	"github.com/system-inc/adamic/internal/javascript"
+ 	"github.com/system-inc/adamic/internal/native"
+ )
+ 
+@@ -126,16 +125,7 @@
+ 	return printerBuild(t, printerBuildInputs{
+ 		Name: "lowered GraphQL printer", Files: printerInputFiles(t, repository, filepath.Dir(filepath.Dir(filepath.Dir(path)))), Toolchain: runtime.Version(),
+ 	}, func(dir string) error {
+-		start := time.Now()
+-		program := lowered(t, path)
+-		t.Logf("lowering wall %.3fs", time.Since(start).Seconds())
+-		start = time.Now()
+-		source := native.C(program)
+-		t.Logf("C emission wall %.3fs", time.Since(start).Seconds())
+-		if err := os.WriteFile(dir+"/port.c", []byte(source), 0644); err != nil {
+-			return err
+-		}
+-		return os.WriteFile(dir+"/program.mjs", []byte(javascript.JavaScript(program)), 0644)
++		return nil
+ 	})
+ }
+ 

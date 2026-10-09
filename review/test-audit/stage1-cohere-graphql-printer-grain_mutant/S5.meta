@@ -1,0 +1,21 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/graphql/printer/",
+    "-run",
+    "^(TestProduct_GraphQLMutantOracle)$"
+  ],
+  "exit": 0,
+  "wall": 2.977488088001337,
+  "seconds": 1.181,
+  "mode": "S5",
+  "cache": "/tmp/u098/cache/S5",
+  "selector": ""
+}

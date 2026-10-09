@@ -1,0 +1,11 @@
+--- a/stage1/cohere/graphql/printer/printer.ts
++++ b/stage1/cohere/graphql/printer/printer.ts
+@@ -44,7 +44,7 @@
+             position += 3;
+             while(position < text.length && text.charCodeAt(position) !== 125) {
+                 const characterCode = text.charCodeAt(position);
+-                point = point * 16 + (characterCode >= 65 ? characterCode - 55 : characterCode - 48);
++                point = point * 15 + (characterCode >= 65 ? characterCode - 55 : characterCode - 48);
+                 position++;
+             }
+             if(position === text.length) panic('unterminated parser string transport');

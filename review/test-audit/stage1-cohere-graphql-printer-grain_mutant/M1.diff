@@ -1,0 +1,11 @@
+--- a/stage1/cohere/graphql/printer/printer.ts
++++ b/stage1/cohere/graphql/printer/printer.ts
+@@ -433,7 +433,7 @@
+             case 'EnumValue':
+                 return documents.text(textValue(node, 'value'));
+             case 'BooleanValue':
+-                return documents.text(flag(node, 'value') ? 'true' : 'false');
++                return documents.text(flag(node, 'value') ? 'TRUE' : 'false');
+             case 'NullValue':
+                 return documents.text('null');
+             case 'Variable':

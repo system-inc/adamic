@@ -1,0 +1,10 @@
+--- a/stage1/cohere/graphql/printer/grain_mutant_test.go
++++ b/stage1/cohere/graphql/printer/grain_mutant_test.go
+@@ -49,7 +49,6 @@
+ 			Flags:     []string{mutation.file, mutation.from, mutation.to},
+ 			Toolchain: runtime.Version(),
+ 		}, func(dir string) error {
+-			printerDirectoryAt(t, dir, mutation.file, mutation.from, mutation.to)
+ 			return nil
+ 		}) + "/graphql/printer/main.ts"
+ 	})

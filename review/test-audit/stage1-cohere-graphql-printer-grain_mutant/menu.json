@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 436,
+    "old": "flag(node, 'value') ? 'true' : 'false'",
+    "new": "flag(node, 'value') ? 'TRUE' : 'false'",
+    "kind": "change constant"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/graphql/printer/printer.ts",
+    "line": 47,
+    "old": "point = point * 16 +",
+    "new": "point = point * 15 +",
+    "kind": "change constant"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 183,
+    "old": "output.push('\\n');",
+    "new": "output.push('\\r\\n');",
+    "kind": "change constant"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/graphql/printer/doc.ts",
+    "line": 94,
+    "old": "while(remaining >= 0)",
+    "new": "while(remaining > 0)",
+    "kind": "off-by-one bound"
+  }
+]

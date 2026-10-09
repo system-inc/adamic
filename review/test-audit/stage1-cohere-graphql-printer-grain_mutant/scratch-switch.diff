@@ -1,0 +1,216 @@
+diff --git a/stage1/cohere/graphql/printer/doc.ts b/stage1/cohere/graphql/printer/doc.ts
+index 91487e22..d9aca793 100644
+--- a/stage1/cohere/graphql/printer/doc.ts
++++ b/stage1/cohere/graphql/printer/doc.ts
+@@ -1,7 +1,9 @@
+ // The subset of cohere/internal/format/doc reached by the GraphQL printer.
+ // Children are indexes, preserving acyclic ownership. Width uses the JSON slice's
+ // port of cohere's Unicode string-width implementation.
+-import { panic } from 'adamic';
++import { panic, readTextFile } from 'adamic';
++const auditRead = readTextFile('/tmp/u098/selector');
++export const auditMode = auditRead.kind === 'Ok' ? auditRead.text : '';
+ import { stringWidth } from '../../json/width.ts';
+ interface DocInterface {
+     readonly kind: string;
+@@ -91,7 +93,7 @@ export class Documents {
+         let remaining = width;
+         const stack: CommandInterface[] = [candidate];
+         let restIndex = rest.length;
+-        while(remaining >= 0) {
++        while(auditMode === 'M4' ? remaining > 0 : remaining >= 0) {
+             if(stack.length === 0) {
+                 if(restIndex === 0) return true;
+                 restIndex--;
+@@ -180,7 +182,7 @@ export class Documents {
+                             break;
+                         }
+                     }
+-                    output.push('\n');
++                    output.push(auditMode === 'M3' ? '\r\n' : '\n');
+                     pendingIndent = command.indent;
+                     column = command.indent;
+                 }
+diff --git a/stage1/cohere/graphql/printer/grain_mutant_test.go b/stage1/cohere/graphql/printer/grain_mutant_test.go
+index cefee702..d57ae1a9 100644
+--- a/stage1/cohere/graphql/printer/grain_mutant_test.go
++++ b/stage1/cohere/graphql/printer/grain_mutant_test.go
+@@ -39,6 +39,9 @@ var mutantCorpus struct {
+ }
+ 
+ func printerMutantSource(t *testing.T, number int) string {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P2" {
++		return ""
++	}
+ 	t.Helper()
+ 	return mutantSources[number].get(t, func() string {
+ 		mutation := printerMutations[number]
+@@ -49,13 +52,18 @@ func printerMutantSource(t *testing.T, number int) string {
+ 			Flags:     []string{mutation.file, mutation.from, mutation.to},
+ 			Toolchain: runtime.Version(),
+ 		}, func(dir string) error {
+-			printerDirectoryAt(t, dir, mutation.file, mutation.from, mutation.to)
++			if os.Getenv("ADAMIC_AUDIT_MODE") != "S2" {
++				printerDirectoryAt(t, dir, mutation.file, mutation.from, mutation.to)
++			}
+ 			return nil
+ 		}) + "/graphql/printer/main.ts"
+ 	})
+ }
+ 
+ func printerMutantLowered(t *testing.T, number int) string {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P3" {
++		return ""
++	}
+ 	t.Helper()
+ 	return mutantLowered[number].get(t, func() string {
+ 		return printerLoweredProduct(t, printerMutantSource(t, number))
+@@ -63,6 +71,9 @@ func printerMutantLowered(t *testing.T, number int) string {
+ }
+ 
+ func printerMutantSanitized(t *testing.T, number int) string {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P4" {
++		return ""
++	}
+ 	t.Helper()
+ 	return mutantSanitized[number].get(t, func() string {
+ 		return printerCompiledProduct(t, printerMutantLowered(t, number), native.Options{Sanitize: true})
+@@ -75,6 +86,9 @@ func printerMutantProducts(t *testing.T, number int) printerProducts {
+ }
+ 
+ func printerMutantOracle(t *testing.T) string {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P5" {
++		return ""
++	}
+ 	t.Helper()
+ 	return mutantOracle.get(t, func() string {
+ 		// GoBuild is not available yet. Hash the entire pinned Cohere tree rather
+@@ -94,6 +108,9 @@ func printerMutantOracle(t *testing.T) string {
+ 			Flags:     []string{"go test -c -trimpath -ldflags=-buildid= -overlay ./internal/format/graphql"},
+ 			Toolchain: buildcache.Tool("go", "env", "-json", "GOVERSION", "GOOS", "GOARCH", "GOEXPERIMENT", "GOFLAGS", "CGO_ENABLED", "GOTOOLCHAIN", "GOAMD64", "GOARM64", "GOARM", "GO386", "GOMIPS", "GOMIPS64", "GOPPC64", "GORISCV64", "GOWASM"),
+ 		}, func(dir string) error {
++			if os.Getenv("ADAMIC_AUDIT_MODE") == "S5" {
++				return nil
++			}
+ 			binary := printerOracle(t)
+ 			data, err := os.ReadFile(binary)
+ 			if err != nil {
+@@ -105,6 +122,9 @@ func printerMutantOracle(t *testing.T) string {
+ }
+ 
+ func printerMutantCorpus(t *testing.T) (string, string) {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P6" {
++		return "", ""
++	}
+ 	t.Helper()
+ 	mutantCorpus.once.Do(func() { mutantCorpus.path, mutantCorpus.want = printerCases(t, "defaults", printerMutantOracle(t)) })
+ 	if mutantCorpus.path == "" {
+@@ -156,6 +176,9 @@ func printerMutantUnit(t *testing.T, unit int) {
+ 	products := make([]printerProducts, len(printerMutations))
+ 	for number := range printerMutations {
+ 		shards[number] = printerShard{mode: "defaults", path: cases, cases: printerMutantCases(number, enumeration)}
++		if os.Getenv("ADAMIC_AUDIT_MODE") == "S1" {
++			shards[number].cases = shards[number].cases[1:]
++		}
+ 		if number == unit {
+ 			products[number] = printerMutantProducts(t, number)
+ 		}
+@@ -208,6 +231,9 @@ func printerMutantUnit(t *testing.T, unit int) {
+ }
+ 
+ func printerMutantCases(number int, enumeration []printerCase) []printerCase {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "P7" {
++		return nil
++	}
+ 	owned := make([]printerCase, len(enumeration))
+ 	for i, item := range enumeration {
+ 		item.id = fmt.Sprintf("mutant-%03d/%s", number, item.id)
+@@ -221,7 +247,10 @@ func printerMutantDisagreement(number int, side string, result run, want string)
+ 		return "", fmt.Errorf("shard-%03d %s mutant must run: exit %d, %s", number, side, result.exitCode, result.stderr)
+ 	}
+ 	difference := firstDifference(string(result.stdout), want)
+-	if difference == "" {
++	if os.Getenv("ADAMIC_AUDIT_MODE") == "W1" {
++		difference = ""
++	}
++	if difference == "" && os.Getenv("ADAMIC_AUDIT_MODE") != "W2" {
+ 		return "", fmt.Errorf("shard-%03d %s mutant escaped oracle", number, side)
+ 	}
+ 	return difference, nil
+diff --git a/stage1/cohere/graphql/printer/printer.ts b/stage1/cohere/graphql/printer/printer.ts
+index 58b9724c..186eac54 100644
+--- a/stage1/cohere/graphql/printer/printer.ts
++++ b/stage1/cohere/graphql/printer/printer.ts
+@@ -2,7 +2,7 @@
+ // with the existing parser. The reachable shared comment core is below too.
+ import { panic } from 'adamic';
+ import { parse, type Document, type GraphNode, type Value, type Comment } from '../parser.ts';
+-import { Documents, defaults, type SettingsOptions } from './doc.ts';
++import { Documents, defaults, auditMode, type SettingsOptions } from './doc.ts';
+ const absent: Value = { kind: 'Undefined' };
+ function field(node: GraphNode, key: string): Value {
+     for(const property of node.fields) {
+@@ -44,7 +44,7 @@ export function decoded(text: string): string {
+             position += 3;
+             while(position < text.length && text.charCodeAt(position) !== 125) {
+                 const characterCode = text.charCodeAt(position);
+-                point = point * 16 + (characterCode >= 65 ? characterCode - 55 : characterCode - 48);
++                point = point * (auditMode === 'M2' ? 15 : 16) + (characterCode >= 65 ? characterCode - 55 : characterCode - 48);
+                 position++;
+             }
+             if(position === text.length) panic('unterminated parser string transport');
+@@ -433,7 +433,7 @@ class Printer {
+             case 'EnumValue':
+                 return documents.text(textValue(node, 'value'));
+             case 'BooleanValue':
+-                return documents.text(flag(node, 'value') ? 'true' : 'false');
++                return documents.text(flag(node, 'value') ? (auditMode === 'M1' ? 'TRUE' : 'true') : 'false');
+             case 'NullValue':
+                 return documents.text('null');
+             case 'Variable':
+@@ -642,6 +642,7 @@ class Printer {
+ export type ResultType =
+     { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string };
+ export function format(source: string, settings: SettingsOptions = defaults): ResultType {
++    if(auditMode === 'P1') return { kind: 'Ok', text: '' };
+     // cohere/internal/format/native's file wrapper: normalize before parsing and
+     // restore the leading BOM after printing. Parser offsets name this normalized text.
+     const bom = source.startsWith('\ufeff');
+diff --git a/stage1/cohere/graphql/printer/printer_test.go b/stage1/cohere/graphql/printer/printer_test.go
+index 8b821496..494f4edc 100644
+--- a/stage1/cohere/graphql/printer/printer_test.go
++++ b/stage1/cohere/graphql/printer/printer_test.go
+@@ -38,6 +38,9 @@ func printerCases(t *testing.T, mode string, oracle ...string) (string, string)
+ 		Files: []string{oracle[0], root + "/stage1/cohere/graphql/printer/printer_test.go", root + "/stage1/cohere/graphql/printer/shards_test.go"},
+ 		Flags: []string{"mode=" + mode, "test-run=TestAdamicPrinter"}, Toolchain: runtime.Version(),
+ 	}, func(directory string) error {
++		if os.Getenv("ADAMIC_AUDIT_MODE") == "S6" {
++			return nil
++		}
+ 		request, err := json.Marshal(map[string]any{"Sources": []string(nil), "Cases": directory + "/cases.txt", "Answers": directory + "/answers.txt", "Mode": mode, "Coverage": directory + "/coverage.json"})
+ 		if err != nil {
+ 			return err
+diff --git a/stage1/cohere/graphql/printer/shards_test.go b/stage1/cohere/graphql/printer/shards_test.go
+index 943d5df1..25125d92 100644
+--- a/stage1/cohere/graphql/printer/shards_test.go
++++ b/stage1/cohere/graphql/printer/shards_test.go
+@@ -126,6 +126,9 @@ func printerLoweredProduct(t *testing.T, path string) string {
+ 	return printerBuild(t, printerBuildInputs{
+ 		Name: "lowered GraphQL printer", Files: printerInputFiles(t, repository, filepath.Dir(filepath.Dir(filepath.Dir(path)))), Toolchain: runtime.Version(),
+ 	}, func(dir string) error {
++		if os.Getenv("ADAMIC_AUDIT_MODE") == "S3" {
++			return nil
++		}
+ 		start := time.Now()
+ 		program := lowered(t, path)
+ 		t.Logf("lowering wall %.3fs", time.Since(start).Seconds())
+@@ -152,6 +155,9 @@ func printerCompiledProduct(t *testing.T, loweredProduct string, options native.
+ 	}
+ 	inputs := printerInputFiles(t, filepath.Join(repository, "internal/native"))
+ 	return printerBuild(t, printerBuildInputs{Name: name, Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native.Flags(options), Toolchain: clang}, func(dir string) error {
++		if os.Getenv("ADAMIC_AUDIT_MODE") == "S4" {
++			return nil
++		}
+ 		start := time.Now()
+ 		err := native.Build(string(data), dir+"/port", options)
+ 		t.Logf("clang wall %.3fs", time.Since(start).Seconds())
