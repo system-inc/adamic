@@ -292,7 +292,7 @@ func checkGrainBudget(t *testing.T) func() {
 }
 
 const randomRegexCases = 10000
-const randomRegexUnitSize = 250
+const randomRegexUnitSize = 251
 
 var splitCacheModes = []string{"0", "1"}
 var decodeTargets = []string{"native", "wasi"}
