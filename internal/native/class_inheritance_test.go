@@ -36,6 +36,18 @@ func TestInheritanceMemoryPlans(t *testing.T) {
 	if len(reuse.spreads) == 0 {
 		t.Fatal("hierarchy lost every reused spread")
 	}
+	if len(reuse.spreads) != 1 {
+		t.Fatalf("expected the one Reader.replace spread, got %d", len(reuse.spreads))
+	}
+	for statement, locals := range reuse.spreads {
+		for _, literal := range spreadsOf(*statement) {
+			read, ok := variableRead(literal.Spread)
+			if !ok || !locals[read.Local] || program.Functions[program.Locals[read.Local].Function].Name != "Reader_replace" {
+				t.Fatal("reused spread is not Reader.replace's ordinary Item parameter")
+			}
+			t.Log("Reader.replace reuses its ordinary Item parameter; no checked-view member boundary applies")
+		}
+	}
 	for _, class := range program.Classes {
 		if class.Name == "ChildReader" && !regions.fresh[class.Constructor] {
 			t.Error("class allocator lost its region variant")

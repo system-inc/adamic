@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"reflect"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -120,4 +122,108 @@ func (l *lowering) checkedViewMembers(node, source *ast.Node, value ir.Expressio
 		b.body = append(b.body, checks...)
 	}
 	return b.finish("checked_view_members", held), nil
+}
+
+// Wait until readiness has resolved every receiver certificate, including views
+// created after a function declaration. A helper containing only ordinary slot
+// reads and an identity return no longer enforces a boundary. Removing its call
+// exposes the original operand to ownership and spread reuse without evaluating
+// that operand twice. Helpers with a view or readiness check remain intact.
+func removeUncheckedMemberHelpers(program *ir.Program) {
+	removable := map[int]bool{}
+	for index, function := range program.Functions {
+		if function.Name != "checked_view_members" || len(function.Parameters) != 1 || len(function.Body) == 0 {
+			continue
+		}
+		parameter := function.Parameters[0]
+		result, ok := function.Body[len(function.Body)-1].(ir.Return)
+		if !ok {
+			continue
+		}
+		read, ok := result.Value.(ir.Read)
+		if !ok || read.Local != parameter || read.Readiness != "" {
+			continue
+		}
+		var plain func([]ir.Statement) bool
+		plain = func(body []ir.Statement) bool {
+			for _, statement := range body {
+				switch statement := statement.(type) {
+				case ir.Evaluate:
+					value := statement.Value
+					for {
+						unwrap, ok := value.(ir.Unwrap)
+						if !ok {
+							break
+						}
+						value = unwrap.Value
+					}
+					property, ok := value.(ir.Property)
+					if !ok || property.View != "" || property.Readiness != "" || property.Method {
+						return false
+					}
+					object, ok := property.Object.(ir.Read)
+					if !ok || object.Local != parameter || object.Readiness != "" {
+						return false
+					}
+				case ir.If:
+					condition, ok := statement.Condition.(ir.Unary)
+					if !ok || condition.Operator != ir.Not || len(statement.Else) != 0 {
+						return false
+					}
+					undefined, ok := condition.Operand.(ir.IsUndefined)
+					if !ok {
+						return false
+					}
+					object, ok := undefined.Value.(ir.Read)
+					if !ok || object.Local != parameter || object.Readiness != "" || !plain(statement.Then) {
+						return false
+					}
+				default:
+					return false
+				}
+			}
+			return true
+		}
+		removable[index] = plain(function.Body[:len(function.Body)-1])
+	}
+	var transform func(reflect.Value) reflect.Value
+	transform = func(value reflect.Value) reflect.Value {
+		switch value.Kind() {
+		case reflect.Interface:
+			if value.IsNil() {
+				return value
+			}
+			mapped := transform(value.Elem())
+			node := mapped.Interface()
+			if call, ok := node.(ir.Call); ok && call.Virtual == 0 && len(call.Arguments) == 1 && !program.CallExpandsArguments(call) && call.Returns == call.Arguments[0].Type() {
+				targets := program.CallTargets(call)
+				if len(targets) == 1 && removable[targets[0]] {
+					node = call.Arguments[0]
+				}
+			}
+			result := reflect.New(value.Type()).Elem()
+			result.Set(reflect.ValueOf(node))
+			return result
+		case reflect.Struct:
+			result := reflect.New(value.Type()).Elem()
+			for i := 0; i < value.NumField(); i++ {
+				result.Field(i).Set(transform(value.Field(i)))
+			}
+			return result
+		case reflect.Slice:
+			if value.IsNil() {
+				return value
+			}
+			result := reflect.MakeSlice(value.Type(), value.Len(), value.Len())
+			for i := 0; i < value.Len(); i++ {
+				result.Index(i).Set(transform(value.Index(i)))
+			}
+			return result
+		}
+		return value
+	}
+	program.Main = transform(reflect.ValueOf(program.Main)).Interface().([]ir.Statement)
+	for index := range program.Functions {
+		program.Functions[index].Body = transform(reflect.ValueOf(program.Functions[index].Body)).Interface().([]ir.Statement)
+	}
 }
