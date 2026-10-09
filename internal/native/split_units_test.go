@@ -162,7 +162,10 @@ var testExecutable struct {
 	err    error
 }
 
-type testBuildCache struct{ inputs buildcache.Inputs }
+type testBuildCache struct {
+	inputs buildcache.Inputs
+	get    func(buildcache.Inputs, func(string) error) (string, error)
+}
 
 func newTestBuildCache(repository string, directories ...string) (*testBuildCache, error) {
 	testExecutable.Do(func() {
@@ -188,7 +191,7 @@ func newTestBuildCache(repository string, directories ...string) (*testBuildCach
 	for _, name := range []string{"GOFLAGS", "CGO_CFLAGS", "CGO_LDFLAGS", "CC", "GOTOOLCHAIN"} {
 		in.Flags = append(in.Flags, name+"="+os.Getenv(name))
 	}
-	return &testBuildCache{in}, nil
+	return &testBuildCache{inputs: in}, nil
 }
 func (c *testBuildCache) Tree(label string, inputs [][]byte, build func(string) error) (string, error) {
 	in := c.inputs
@@ -196,6 +199,9 @@ func (c *testBuildCache) Tree(label string, inputs [][]byte, build func(string) 
 	in.Flags = append([]string(nil), c.inputs.Flags...)
 	for index, input := range inputs {
 		in.Flags = append(in.Flags, fmt.Sprintf("input[%d]=%x", index, sha256.Sum256(input)))
+	}
+	if c.get != nil {
+		return c.get(in, build)
 	}
 	return buildcache.Get(in, build)
 }
