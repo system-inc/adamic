@@ -1,0 +1,10 @@
+const rows: (string | number)[][] = [[1, 2]];
+const items = rows[0];
+if (items !== undefined) {
+console.log(`${typeof items[0]} ${items[0]}`);
+console.log(`${typeof items[1]} ${items[1]}`);
+items.push('a');
+console.log(`${typeof items[0]} ${items[0]}`);
+console.log(`${typeof items[1]} ${items[1]}`);
+console.log(`${typeof items[2]} ${items[2]}`);
+}

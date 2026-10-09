@@ -312,14 +312,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 				}
 			}
 		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
-			// Layout must follow the destination, even when the literal infers narrower elements.
-			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared == ir.Union {
-				if inferred, known := l.kept(l.checker.GetElementTypeOfArrayType(arrayType)); known && inferred != ir.Union {
-					return 0, &Refused{Where: l.program.Where(literal), What: "union-typed array built from a narrower literal", Fix: "declare the literal's element type explicitly, or build the array with a mixed literal"}
-				}
-			}
-			// Keep every proven nonempty contextual element representation, including weak handles.
-			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
+			// The literal is built in its destination's layout. arrayLiteral fits each
+			// element to this representation, boxing narrower values into union slots.
+			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared != 0 && (!slotless(declared) || declared == ir.Union) {
 				arrayType = contextual
 			}
 		}

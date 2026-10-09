@@ -1,0 +1,43 @@
+{
+  "base": "fd27bb0e",
+  "branch": "compiler/fx5-literal-fix",
+  "full_lower_seconds": 115.897,
+  "changed_leaves": [
+    {
+      "test": "TestFX5ConstTupleUsesSeparatePath",
+      "seconds": 0.09
+    },
+    {
+      "test": "TestFX5NumberValueRefused",
+      "seconds": 0.08
+    },
+    {
+      "test": "TestFX5MixedLiteralAgrees",
+      "seconds": 0.92
+    },
+    {
+      "test": "TestFX5NestedNumberLiteralAgrees",
+      "seconds": 1.1
+    },
+    {
+      "test": "TestFX5AssignedNumberLiteralAgrees",
+      "seconds": 0.94
+    },
+    {
+      "test": "TestFX5NumberLiteralAgrees",
+      "seconds": 1.09
+    }
+  ],
+  "reader_guard_seconds": 4.5,
+  "mutant": {
+    "change": "choose source layout again by excluding contextual ir.Union",
+    "caught_by": [
+      "TestFX5NumberLiteralAgrees",
+      "TestFX5AssignedNumberLiteralAgrees",
+      "TestFX5NestedNumberLiteralAgrees"
+    ],
+    "native_stdout": "",
+    "node_stdout": "number 1\nnumber 2\nnumber 1\nnumber 2\nstring a\n"
+  },
+  "const_tuple": "does not take literal path; existing tuple-to-array NotYet pinned at main.a:1:45"
+}

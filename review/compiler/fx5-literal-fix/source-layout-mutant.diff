@@ -1,0 +1,13 @@
+diff --git a/internal/lower/object.go b/internal/lower/object.go
+index 44897bac..5571fbde 100644
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -314,7 +314,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
+ 		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
+ 			// The literal is built in its destination's layout. arrayLiteral fits each
+ 			// element to this representation, boxing narrower values into union slots.
+-			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared != 0 && (!slotless(declared) || declared == ir.Union) {
++			if declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); known && declared != 0 && !slotless(declared) {
+ 				arrayType = contextual
+ 			}
+ 		}
