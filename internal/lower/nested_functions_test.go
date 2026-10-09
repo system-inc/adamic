@@ -47,15 +47,13 @@ console.log(String(make()()));`)
 
 func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `function make(start: number): () => number {
+	// JavaScript cannot observe environment allocation counts or ownership layout.
+	program := lowersAndAgreesWithNode(t, `function make(start: number): () => number {
  let count = start;
  function first(): number { count += start; return count; }
  function second(): number { return first(); }
  return second;
 } console.log(String(make(2)()));`)
-	if err != nil {
-		t.Fatal(err)
-	}
 	sites := 0
 	for _, function := range program.Functions {
 		for _, statement := range function.Body {
@@ -98,10 +96,8 @@ func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
 
 func TestNestedCapturedParametersAreOwned(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `function make(text: string): () => string { function read(): string { return text; } return read; } console.log(make("hello")());`)
-	if err != nil {
-		t.Fatal(err)
-	}
+	// JavaScript garbage collection cannot observe captured parameter ownership.
+	program := lowersAndAgreesWithNode(t, `function make(text: string): () => string { function read(): string { return text; } return read; } console.log(make("hello")());`)
 	found := false
 	for _, local := range program.Locals {
 		if local.EnvironmentCell && local.Type == ir.String {
@@ -118,15 +114,13 @@ func TestNestedCapturedParametersAreOwned(t *testing.T) {
 
 func TestClosedFrameInputRejectsMutation(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `function parser(scanner: { scan: () => number }): () => number {
+	// Behavior cannot observe the closed-frame ownership proof or its invalidation.
+	program := lowersAndAgreesWithNode(t, `function parser(scanner: { scan: () => number }): () => number {
  let token = 0;
  function read(): number { return token; }
  function next(): number { return token = scanner.scan(); }
  next(); return read;
  } console.log(String(parser({scan: () => 1})()));`)
-	if err != nil {
-		t.Fatal(err)
-	}
 	l := lowering{result: program}
 	input := -1
 	for i, local := range program.Locals {
@@ -201,7 +195,10 @@ func TestNestedBodylessDeclarationsAreLoud(t *testing.T) {
 		run  func(*lowering, *ast.Node) error
 		want string
 	}{
-		{"missing implementation", func(l *lowering, signature *ast.Node) error { _, err := l.nestedDeclarations([]*ast.Node{signature}); return err }, "a nested function declaration without an implementation"},
+		{"missing implementation", func(l *lowering, signature *ast.Node) error {
+			_, err := l.nestedDeclarations([]*ast.Node{signature})
+			return err
+		}, "a nested function declaration without an implementation"},
 		{"body lowering", func(l *lowering, signature *ast.Node) error { return l.lowerBody(0, signature, -1, nil, nil) }, "a function without a body"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -234,7 +231,5 @@ func TestNestedBodylessDeclarationsAreLoud(t *testing.T) {
 
 func TestNestedRestIsSupported(t *testing.T) {
 	t.Parallel()
-	if _, err := lowerSource(t, `function run(): number { function inner(...values: number[]): number { return values.length; } return inner(1); } console.log(String(run()));`); err != nil {
-		t.Fatal(err)
-	}
+	lowersAndAgreesWithNode(t, `function run(): number { function inner(...values: number[]): number { return values.length; } return inner(1); } console.log(String(run()));`)
 }

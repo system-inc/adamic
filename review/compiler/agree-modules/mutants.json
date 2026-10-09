@@ -1,0 +1,262 @@
+[
+  {
+    "label": "enum-value-old",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestConstEnumErasesRuntimeObject$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 7.734,
+    "failures": []
+  },
+  {
+    "label": "enum-value-converted",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestConstEnumErasesRuntimeObject$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 7.752,
+    "failures": [
+      "--- FAIL: TestConstEnumErasesRuntimeObject (0.14s)"
+    ]
+  },
+  {
+    "label": "nested-rest-old",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestNestedRestIsSupported$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 7.733,
+    "failures": []
+  },
+  {
+    "label": "nested-rest-converted",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestNestedRestIsSupported$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 7.555,
+    "failures": [
+      "--- FAIL: TestNestedRestIsSupported (0.15s)"
+    ]
+  },
+  {
+    "label": "enum-guards-M01",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestEnumMemberValuesAndReverseNameMatchNode$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 2.123,
+    "failures": [
+      "--- FAIL: TestEnumMemberValuesAndReverseNameMatchNode (0.16s)"
+    ]
+  },
+  {
+    "label": "enum-guards-M02",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestEnumMemberValuesAndReverseNameMatchNode$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 12.87,
+    "failures": [
+      "--- FAIL: TestEnumMemberValuesAndReverseNameMatchNode (0.21s)"
+    ]
+  },
+  {
+    "label": "enum-guards-M04",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestEnumReverseMappingUsesSingleSlot$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 19.458,
+    "failures": [
+      "--- FAIL: TestEnumReverseMappingUsesSingleSlot (0.16s)"
+    ]
+  },
+  {
+    "label": "enum-guards-M14",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestEnumFlagProofsWithoutObservableLoweringEffect$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 18.092,
+    "failures": [
+      "--- FAIL: TestEnumFlagProofsWithoutObservableLoweringEffect (0.21s)"
+    ]
+  },
+  {
+    "label": "enum-guards-M15",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestEnumFlagProofsWithoutObservableLoweringEffect$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 16.709,
+    "failures": [
+      "--- FAIL: TestEnumFlagProofsWithoutObservableLoweringEffect (0.04s)"
+    ]
+  },
+  {
+    "label": "enum-guards-M16",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestEnumFlagProofsWithoutObservableLoweringEffect$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 7.832,
+    "failures": [
+      "--- FAIL: TestEnumFlagProofsWithoutObservableLoweringEffect (0.05s)"
+    ]
+  },
+  {
+    "label": "statics-guards-M06",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestPrivateAndPublicStaticsAgreeWithNode$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 7.81,
+    "failures": [
+      "--- FAIL: TestPrivateAndPublicStaticsAgreeWithNode (0.13s)"
+    ]
+  },
+  {
+    "label": "statics-guards-M12",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestNamespaceFactoryBindingsAgreeWithNode$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 8.669,
+    "failures": []
+  },
+  {
+    "label": "statics-guards-M12-paired",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^Test(NamespaceFactoryBindingsAgreeWithNode|ParserFactoryBindingHoisting)$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 2.029,
+    "failures": [
+      "--- FAIL: TestParserFactoryBindingHoisting (0.04s)"
+    ]
+  },
+  {
+    "label": "statics-guards-M13-paired",
+    "command": [
+      "go",
+      "test",
+      "./internal/lower",
+      "-run",
+      "^TestReadinessErrorIncludesReceiverExpression$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v"
+    ],
+    "exit": 1,
+    "seconds": 7.772,
+    "failures": [
+      "--- FAIL: TestReadinessErrorIncludesReceiverExpression (0.07s)"
+    ]
+  }
+]

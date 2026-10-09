@@ -1,0 +1,8 @@
+// a-check: checked
+// From src/compiler/factory/emitNode.ts:166 (TypeScript 6.0.3, main adaptations).
+
+interface Node { readonly emitNode: { readonly startsOnNewLine: boolean | undefined } | undefined; }
+export function getStartsOnNewLine(node: Node): boolean | undefined {
+    return node.emitNode?.startsOnNewLine;
+}
+console.log(`${getStartsOnNewLine({emitNode:{startsOnNewLine:true}})}:${getStartsOnNewLine({emitNode:undefined})}`);

@@ -1,0 +1,2 @@
+function make(length: number): number { const values = new Array(length); return values.length; }
+console.log(`${make(2)}`);

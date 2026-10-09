@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T10:52:18.47720888Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:52:18.48457607Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSRemoveDefaultRetryDelayLowers"}
+{"Time":"2026-10-09T10:52:18.484647459Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSRemoveDefaultRetryDelayLowers","Output":"=== RUN   TestFSRemoveDefaultRetryDelayLowers\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:18.484676457Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSRemoveDefaultRetryDelayLowers","Output":"=== PAUSE TestFSRemoveDefaultRetryDelayLowers\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:18.484678731Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSRemoveDefaultRetryDelayLowers"}
+{"Time":"2026-10-09T10:52:18.484681075Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSRemoveDefaultRetryDelayLowers"}
+{"Time":"2026-10-09T10:52:18.484682948Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSRemoveDefaultRetryDelayLowers","Output":"=== CONT  TestFSRemoveDefaultRetryDelayLowers\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:18.599755765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSRemoveDefaultRetryDelayLowers","Output":"    fs_method_guards_test.go:108: Node main.a: exit 0, stdout \"present\\nmissing\\n\"\n"}
+{"Time":"2026-10-09T10:52:18.979394536Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSRemoveDefaultRetryDelayLowers","Output":"    fs_method_guards_test.go:108: Node generated.mjs: exit 0, stdout \"present\\nmissing\\n\"\n"}
+{"Time":"2026-10-09T10:52:18.979461386Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSRemoveDefaultRetryDelayLowers","Output":"--- PASS: TestFSRemoveDefaultRetryDelayLowers (0.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:18.979467205Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSRemoveDefaultRetryDelayLowers","Elapsed":0.49}
+{"Time":"2026-10-09T10:52:18.979553344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:52:18.986347774Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.509s\n"}
+{"Time":"2026-10-09T10:52:18.98639812Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.509}

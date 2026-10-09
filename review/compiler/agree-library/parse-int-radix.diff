@@ -1,0 +1,13 @@
+diff --git a/internal/lower/library_method_values.go b/internal/lower/library_method_values.go
+index 0a226f31..cf9f17ca 100644
+--- a/internal/lower/library_method_values.go
++++ b/internal/lower/library_method_values.go
+@@ -429,7 +429,7 @@ func (l *lowering) libraryMapCallback(node, receiver *ast.Node, element ir.Type)
+ 	} else if (method.family == "Number" || method.family == "global") && (method.name == "parseInt" || method.name == "parseFloat") && element == ir.String {
+ 		arguments := []ir.Expression{reads[0]}
+ 		if method.name == "parseInt" {
+-			arguments = append(arguments, reads[1])
++			arguments = append(arguments, ir.NumberConstant{Value: 10})
+ 		}
+ 		result = ir.NumberCall{Function: method.name, Arguments: arguments}
+ 	}

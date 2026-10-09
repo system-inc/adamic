@@ -1,0 +1,529 @@
+{
+  "live_at_boundaries": {
+    "parse": {
+      "Node": {
+        "count": 130962,
+        "self_bytes": 18434536
+      },
+      "Symbol": {
+        "count": 0,
+        "self_bytes": 0
+      },
+      "Type": {
+        "count": 0,
+        "self_bytes": 0
+      },
+      "Signature": {
+        "count": 0,
+        "self_bytes": 0
+      },
+      "Array": {
+        "count": 22760,
+        "self_bytes": 728368
+      },
+      "Map": {
+        "count": 267,
+        "self_bytes": 8520
+      },
+      "String": {
+        "count": 40819,
+        "self_bytes": 21383406
+      },
+      "Array backing": {
+        "count": 22122,
+        "self_bytes": 2240920
+      },
+      "Other": {
+        "count": 127413,
+        "self_bytes": 10065464
+      }
+    },
+    "bind": {
+      "Node": {
+        "count": 130962,
+        "self_bytes": 18434536
+      },
+      "Symbol": {
+        "count": 30750,
+        "self_bytes": 4182000
+      },
+      "Type": {
+        "count": 85,
+        "self_bytes": 5440
+      },
+      "Signature": {
+        "count": 4,
+        "self_bytes": 416
+      },
+      "Array": {
+        "count": 53578,
+        "self_bytes": 1714544
+      },
+      "Map": {
+        "count": 22828,
+        "self_bytes": 730472
+      },
+      "String": {
+        "count": 43578,
+        "self_bytes": 21501886
+      },
+      "Array backing": {
+        "count": 75509,
+        "self_bytes": 7286048
+      },
+      "Other": {
+        "count": 148302,
+        "self_bytes": 11532504
+      }
+    },
+    "check": {
+      "Node": {
+        "count": 130962,
+        "self_bytes": 18434536
+      },
+      "Symbol": {
+        "count": 31308,
+        "self_bytes": 4257888
+      },
+      "Type": {
+        "count": 454,
+        "self_bytes": 29056
+      },
+      "Signature": {
+        "count": 137,
+        "self_bytes": 14248
+      },
+      "Array": {
+        "count": 54285,
+        "self_bytes": 1737168
+      },
+      "Map": {
+        "count": 23012,
+        "self_bytes": 736360
+      },
+      "String": {
+        "count": 44550,
+        "self_bytes": 21534574
+      },
+      "Array backing": {
+        "count": 76381,
+        "self_bytes": 7462992
+      },
+      "Other": {
+        "count": 163523,
+        "self_bytes": 13602792
+      }
+    }
+  },
+  "released": {
+    "Node": {
+      "count": 0,
+      "self_bytes": 0
+    },
+    "Symbol": {
+      "count": 0,
+      "self_bytes": 0
+    },
+    "Type": {
+      "count": 0,
+      "self_bytes": 0
+    },
+    "Signature": {
+      "count": 0,
+      "self_bytes": 0
+    },
+    "Array": {
+      "count": 201,
+      "self_bytes": 6432
+    },
+    "Map": {
+      "count": 46,
+      "self_bytes": 1448
+    },
+    "String": {
+      "count": 14410,
+      "self_bytes": 2436032
+    },
+    "Array backing": {
+      "count": 1207,
+      "self_bytes": 827112
+    },
+    "Other": {
+      "count": 48846,
+      "self_bytes": 3507016
+    }
+  },
+  "phase_cohorts": [
+    {
+      "phase": "parse",
+      "constructor": "Node",
+      "exact_constructor_calls": 135372,
+      "observed_new_live_count": 130936,
+      "new_live_self_bytes": 18430408,
+      "survives_check_count": 130936,
+      "survives_check_birth_self_bytes": 18430408,
+      "gone_before_phase_snapshot_count": 4436,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "parse",
+      "constructor": "Symbol",
+      "exact_constructor_calls": 0,
+      "observed_new_live_count": 0,
+      "new_live_self_bytes": 0,
+      "survives_check_count": 0,
+      "survives_check_birth_self_bytes": 0,
+      "gone_before_phase_snapshot_count": 0,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "parse",
+      "constructor": "Type",
+      "exact_constructor_calls": 0,
+      "observed_new_live_count": 0,
+      "new_live_self_bytes": 0,
+      "survives_check_count": 0,
+      "survives_check_birth_self_bytes": 0,
+      "gone_before_phase_snapshot_count": 0,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "parse",
+      "constructor": "Signature",
+      "exact_constructor_calls": 0,
+      "observed_new_live_count": 0,
+      "new_live_self_bytes": 0,
+      "survives_check_count": 0,
+      "survives_check_birth_self_bytes": 0,
+      "gone_before_phase_snapshot_count": 0,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "parse",
+      "constructor": "Array",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 22322,
+      "new_live_self_bytes": 714304,
+      "survives_check_count": 22322,
+      "survives_check_birth_self_bytes": 714304,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "parse",
+      "constructor": "Map",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 138,
+      "new_live_self_bytes": 4416,
+      "survives_check_count": 138,
+      "survives_check_birth_self_bytes": 4416,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "parse",
+      "constructor": "String",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 12223,
+      "new_live_self_bytes": 5603470,
+      "survives_check_count": 12219,
+      "survives_check_birth_self_bytes": 5603294,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 4,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "parse",
+      "constructor": "Array backing",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 20725,
+      "new_live_self_bytes": 1112896,
+      "survives_check_count": 20725,
+      "survives_check_birth_self_bytes": 1112896,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 0,
+      "survives_release_count": 1,
+      "survives_release_birth_self_bytes": 152
+    },
+    {
+      "phase": "parse",
+      "constructor": "Other",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 52216,
+      "new_live_self_bytes": 4335944,
+      "survives_check_count": 51295,
+      "survives_check_birth_self_bytes": 3958920,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 921,
+      "survives_release_count": 306,
+      "survives_release_birth_self_bytes": 132080
+    },
+    {
+      "phase": "bind",
+      "constructor": "Node",
+      "exact_constructor_calls": 0,
+      "observed_new_live_count": 0,
+      "new_live_self_bytes": 0,
+      "survives_check_count": 0,
+      "survives_check_birth_self_bytes": 0,
+      "gone_before_phase_snapshot_count": 0,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "bind",
+      "constructor": "Symbol",
+      "exact_constructor_calls": 30750,
+      "observed_new_live_count": 30750,
+      "new_live_self_bytes": 4182000,
+      "survives_check_count": 30750,
+      "survives_check_birth_self_bytes": 4182000,
+      "gone_before_phase_snapshot_count": 0,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "bind",
+      "constructor": "Type",
+      "exact_constructor_calls": 85,
+      "observed_new_live_count": 85,
+      "new_live_self_bytes": 5440,
+      "survives_check_count": 85,
+      "survives_check_birth_self_bytes": 5440,
+      "gone_before_phase_snapshot_count": 0,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "bind",
+      "constructor": "Signature",
+      "exact_constructor_calls": 4,
+      "observed_new_live_count": 4,
+      "new_live_self_bytes": 416,
+      "survives_check_count": 4,
+      "survives_check_birth_self_bytes": 416,
+      "gone_before_phase_snapshot_count": 0,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "bind",
+      "constructor": "Array",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 30818,
+      "new_live_self_bytes": 986176,
+      "survives_check_count": 30816,
+      "survives_check_birth_self_bytes": 986112,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 2,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "bind",
+      "constructor": "Map",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 22561,
+      "new_live_self_bytes": 721952,
+      "survives_check_count": 22561,
+      "survives_check_birth_self_bytes": 721952,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "bind",
+      "constructor": "String",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 2763,
+      "new_live_self_bytes": 118656,
+      "survives_check_count": 2759,
+      "survives_check_birth_self_bytes": 118488,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 4,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "bind",
+      "constructor": "Array backing",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 53387,
+      "new_live_self_bytes": 5045128,
+      "survives_check_count": 53379,
+      "survives_check_birth_self_bytes": 5043816,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 8,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "bind",
+      "constructor": "Other",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 21848,
+      "new_live_self_bytes": 1772232,
+      "survives_check_count": 20846,
+      "survives_check_birth_self_bytes": 1716520,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 1002,
+      "survives_release_count": 59,
+      "survives_release_birth_self_bytes": 21368
+    },
+    {
+      "phase": "check",
+      "constructor": "Node",
+      "exact_constructor_calls": 0,
+      "observed_new_live_count": 0,
+      "new_live_self_bytes": 0,
+      "survives_check_count": 0,
+      "survives_check_birth_self_bytes": 0,
+      "gone_before_phase_snapshot_count": 0,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "check",
+      "constructor": "Symbol",
+      "exact_constructor_calls": 567,
+      "observed_new_live_count": 558,
+      "new_live_self_bytes": 75888,
+      "survives_check_count": 558,
+      "survives_check_birth_self_bytes": 75888,
+      "gone_before_phase_snapshot_count": 9,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "check",
+      "constructor": "Type",
+      "exact_constructor_calls": 369,
+      "observed_new_live_count": 369,
+      "new_live_self_bytes": 23616,
+      "survives_check_count": 369,
+      "survives_check_birth_self_bytes": 23616,
+      "gone_before_phase_snapshot_count": 0,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "check",
+      "constructor": "Signature",
+      "exact_constructor_calls": 137,
+      "observed_new_live_count": 133,
+      "new_live_self_bytes": 13832,
+      "survives_check_count": 133,
+      "survives_check_birth_self_bytes": 13832,
+      "gone_before_phase_snapshot_count": 4,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "check",
+      "constructor": "Array",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 709,
+      "new_live_self_bytes": 22688,
+      "survives_check_count": 709,
+      "survives_check_birth_self_bytes": 22688,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "check",
+      "constructor": "Map",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 184,
+      "new_live_self_bytes": 5888,
+      "survives_check_count": 184,
+      "survives_check_birth_self_bytes": 5888,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "check",
+      "constructor": "String",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 976,
+      "new_live_self_bytes": 32856,
+      "survives_check_count": 976,
+      "survives_check_birth_self_bytes": 32856,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "check",
+      "constructor": "Array backing",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 881,
+      "new_live_self_bytes": 178704,
+      "survives_check_count": 881,
+      "survives_check_birth_self_bytes": 178704,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 0,
+      "survives_release_count": 0,
+      "survives_release_birth_self_bytes": 0
+    },
+    {
+      "phase": "check",
+      "constructor": "Other",
+      "exact_constructor_calls": null,
+      "observed_new_live_count": 16799,
+      "new_live_self_bytes": 2241480,
+      "survives_check_count": 16799,
+      "survives_check_birth_self_bytes": 2241480,
+      "gone_before_phase_snapshot_count": null,
+      "gone_by_check_count": 0,
+      "survives_release_count": 48,
+      "survives_release_birth_self_bytes": 6608
+    }
+  ],
+  "sampling_including_collected": {
+    "estimated_bytes_by_stack": {
+      "unclassified": 125954944,
+      "Symbol-associated stack": 4164296,
+      "Type-associated stack": 65688,
+      "Signature-associated stack": 32848,
+      "Node-associated stack": 1863664
+    },
+    "sample_records_by_stack": {
+      "unclassified": 3379,
+      "Symbol-associated stack": 253,
+      "Type-associated stack": 4,
+      "Signature-associated stack": 2,
+      "Node-associated stack": 113
+    },
+    "total_estimated_bytes": 132081440,
+    "call_tree_estimated_bytes": 131882216,
+    "sample_records": 3751
+  },
+  "interpretation": "Counts/self bytes in snapshots are exact live graph observations after snapshot GC. Cumulative allocation calls are exact only for hooked compiler constructors. Cohorts omit objects dead before a snapshot. Array/Map/String cumulative allocations and allocated bytes cannot be recovered by constructor from sampling call stacks."
+}

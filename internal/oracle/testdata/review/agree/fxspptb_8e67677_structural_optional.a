@@ -1,0 +1,4 @@
+interface Maybe { test?: (text: string) => boolean; }
+function describe(value: Maybe): string { return value.test === undefined ? 'no test' : 'has test'; }
+console.log(describe(/a/));
+console.log(describe({}));

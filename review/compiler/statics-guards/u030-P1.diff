@@ -1,0 +1,12 @@
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..71c46bcb 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,7 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++ if program == program { return nil, nil }
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))

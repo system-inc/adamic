@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:41:15.724308711Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:41:15.731459053Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSOpenStringFlagsLower"}
+{"Time":"2026-10-09T10:41:15.731532233Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSOpenStringFlagsLower","Output":"=== RUN   TestFSOpenStringFlagsLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:15.731552413Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSOpenStringFlagsLower","Output":"=== PAUSE TestFSOpenStringFlagsLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:15.731554897Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSOpenStringFlagsLower"}
+{"Time":"2026-10-09T10:41:15.73155712Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSOpenStringFlagsLower"}
+{"Time":"2026-10-09T10:41:15.731559754Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSOpenStringFlagsLower","Output":"=== CONT  TestFSOpenStringFlagsLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:16.004674598Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSOpenStringFlagsLower","Output":"    fs_method_guards_test.go:82: /tmp/adamic-gate/TestFSOpenStringFlagsLower935596547/001/main.a:1:35: stage 0 can't lower openSync: numeric fs open flags yet\n","OutputType":"error"}
+{"Time":"2026-10-09T10:41:16.005133716Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSOpenStringFlagsLower","Output":"--- FAIL: TestFSOpenStringFlagsLower (0.27s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:16.005146836Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSOpenStringFlagsLower","Elapsed":0.27}
+{"Time":"2026-10-09T10:41:16.005168478Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:16.008477766Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.284s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:16.008498708Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.284}

@@ -3,15 +3,12 @@ package lower
 import (
 	"bytes"
 	"context"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -65,15 +62,8 @@ func TestClassStaticInitializerCallIsEmitted(t *testing.T) {
 
 func TestClassStaticSideEffectMatchesNode(t *testing.T) {
 	t.Parallel()
+	program := lowersAndAgreesWithNode(t, staticSideEffectSource)
 	directory := t.TempDir()
-	source := filepath.Join(directory, "main.a")
-	if err := os.WriteFile(source, []byte(staticSideEffectSource), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		t.Fatal(err)
-	}
 	run := func(name, executable string, arguments ...string) []byte {
 		t.Helper()
 		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -87,25 +77,7 @@ func TestClassStaticSideEffectMatchesNode(t *testing.T) {
 		}
 		return stdout
 	}
-	want := run("source Node", "node", "--disable-warning=ExperimentalWarning", runner, source)
-	if string(want) != "static side effect\ndone\n" {
-		t.Fatalf("source Node stdout = %q, want static side effect then done", want)
-	}
-	checked, err := load.Load([]string{source})
-	if err != nil {
-		t.Fatal(err)
-	}
-	program, err := Lower(context.Background(), checked)
-	if err != nil {
-		t.Fatal(err)
-	}
-	generated := filepath.Join(directory, "generated.mjs")
-	if err := os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0o644); err != nil {
-		t.Fatal(err)
-	}
-	if got := run("JavaScript backend", "node", "--disable-warning=ExperimentalWarning", runner, generated); !bytes.Equal(got, want) {
-		t.Errorf("JavaScript backend stdout = %q, source Node = %q", got, want)
-	}
+	want := []byte("static side effect\ndone\n")
 	binary := filepath.Join(directory, "native")
 	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)

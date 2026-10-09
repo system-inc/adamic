@@ -1,0 +1,11 @@
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -227,7 +227,7 @@
+ 			for _, name := range []string{"maxRetries", "retryDelay"} {
+ 				fallback := number(0)
+ 				if name == "retryDelay" {
+-					fallback = number(100)
++					fallback = number(101)
+ 				}
+ 				value, e := option(args[1], name, fallback)
+ 				if e != nil {

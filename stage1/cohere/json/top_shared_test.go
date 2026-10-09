@@ -14,7 +14,7 @@ import (
 
 // Fixed hash buckets have headroom. Keys are repository-relative case paths,
 // including generated indices/modes, never enumeration positions.
-const testPortMatchesGoCohereShards = 8192
+const testPortMatchesGoCohereShards = 2048
 const testUpstreamRepositoryCorpusParityShards = 2048
 
 // ADAMIC_TEST_SHARD=i/n selects ordinals modulo n locally; unset runs every
@@ -55,7 +55,7 @@ func jsonTopCorpus(t *testing.T) ([]textCase, []nativeChunk) {
 			t.Fatal("repository JSON corpus is empty")
 		}
 		jsonTopState.cases = corpusCases(t)
-		jsonTopState.shards = jsonHashShards(jsonTopState.cases, testPortMatchesGoCohereShards/4)
+		jsonTopState.shards = jsonHashShards(jsonTopState.cases, testPortMatchesGoCohereShards)
 	})
 	if len(jsonTopState.cases) == 0 {
 		t.Fatal("live JSON corpus is empty or preparation failed")
@@ -126,18 +126,6 @@ func TestMain(m *testing.M) {
 		}
 	}
 	os.Exit(code)
-}
-func TestPortMatchesGoCohereUnion(t *testing.T) {
-	t.Parallel()
-	allCases, _ := jsonTopCorpus(t)
-	cases, shards, dedicated := jsonPortClassOrderPartition(allCases)
-	if len(shards)*4 != testPortMatchesGoCohereShards {
-		t.Fatal("static port count differs from enumeration")
-	}
-	if e := jsonPortClassOrderUnion(allCases, cases, shards, dedicated); e != nil {
-		t.Fatal(e)
-	}
-	t.Logf("exact live union: %d cases", len(allCases))
 }
 func TestUpstreamRepositoryCorpusParityUnion(t *testing.T) {
 	t.Parallel()

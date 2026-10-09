@@ -1,0 +1,23 @@
+Built class acceptance agreement for task #41bkfdw wave 3: 106 rows censused; 28 converted acceptance rows and 2 already covered acceptance rows.
+Implementation commit: e1a6245f; current-main merge: a4e45dd0; delivery evidence commit is the branch tip.
+Focused lower tests passed in 2.814s, slowest leaf 0.780s; TestCallTargetReaders and lane checks passed (logs alongside this report).
+Both one-line mutants passed original rows and failed converted rows on stdout: static initializer call removed; parameter-property store key changed.
+Uncovered: full packages/full gate, new native semantics, and the excluded static initializer IR guard conversion; no new fixtures or counts update needed.
+
+The census is in rows.md. All 74 refusal rows remain. The two internal-only rows inspect cycle-finder inherited-field traversal and the existing static initializer call/adjacency guard. The latter is in class_static_guard_test.go, explicitly excluded by the brief. Its behavioral/native test remains covered. The ten checker-identity rows and two generic-layout rows now execute their source as well as retaining targeted native-layout checks, with comments explaining that Node cannot observe layout count/types or erased-definition sharing. Object.keys and spread observe private-field metadata, so the redundant private-storage IR assertion was removed.
+
+Awkward rows: empty classes now print distinct-instance and instanceof observations; generic rows print their instantiated read results instead of only "done"; the void-return neighbor prints inside its dispatched method. The parameter-property checker acceptance prints both its initial and updated values, since an overwritten bad constructor store would otherwise remain invisible. The readonly acceptance prints both its initialized field and mutated contents. No rows were deleted or skipped.
+
+The adjacent parameter_property_guard_test.go held the local Node comparison described by the brief. It is included conservatively in scope, read whole, converted to the shared helper, and its native ASan/UBSan comparison preserved. No local source/backend Node comparator remains in the scoped files. Production lowering was changed only temporarily by the mutant runner and restored; committed Go changes are test-only.
+
+Commands (test output was written directly to files):
+
+- `export GOPROXY='https://proxy.golang.org|direct'; timeout 240 bash cloud/setup.sh`: exit 124 during cold build-cache warming. Node ready 0.030s; Go ready 0.031s; clang ready 0.242s; markdown ready 1.379s; submodules ready 17.413s. The tools were usable from the printed setup location, `/workspace/adamic-tools/env.sh`; `/opt/adamic-tools/env.sh` was absent.
+- Retry `timeout 360 bash cloud/setup.sh`: exit 0. Node ready 0.018s; Go ready 0.019s; submodules ready 0.059s; markdown ready 0.062s; clang ready 0.156s; Go build ready 12.383s; build cache warm 12.481s; done 12.504s. `nproc`: 5; cgroup CPU quota: 4.
+- With `source /workspace/adamic-tools/env.sh`, `go test ./internal/lower -run 'Test(Class|Inheritance|ParameterPropert)' -count=1 -timeout 90s -json`: PASS, final current-main run 2.814s. This includes the scoped files and existing neighboring class/parameter tests selected by these names. Every touched leaf is below 60s; individual runtimes are in timings.md.
+- `go test ./internal/ir -run '^TestCallTargetReaders$' -count=1 -timeout 90s`: PASS. No new direct call-target readers were introduced.
+- `timeout 300 python3 review/compiler/agree-classes/run-mutants.py`: exit 0. Each Go test has `-timeout 90s` and an outer 110s process limit. static-call-old.log: PASS 0.061s; static-call-converted.log: FAIL 0.141s, backend "done" versus source "static side effect/done". parameter-store-old.log: PASS 0.123s; parameter-store-converted.log: FAIL 0.206s, backend "0/2" versus source "1/2". Patches are static-call.diff and parameter-store.diff.
+- `git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -`: PASS; first committed-tree run: `lane checks 5.2 s: gofmt and tools on 6 Go files, t.Parallel on 1 test packages; vet 1 packages`. This checkout initially fetched only main, so explicit refspecs were used to materialize the two required integration remote-tracking refs. Final delivery-tree output is in lane-checks.log.
+- `git diff --check`: clean.
+
+This advances the named agreement wave by replacing lowering-only acceptance and observable IR shape claims with source Node versus JavaScript-backend stdout and exit agreement. Ownership/native layout metadata remains explicit about the oracle's limits. No cohere code was copied.

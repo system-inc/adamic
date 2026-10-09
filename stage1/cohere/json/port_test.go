@@ -232,7 +232,7 @@ func jsonPortTopShard(t *testing.T, target int) {
 	if err := jsonPortClassOrderUnion(allCases, cases, shards, dedicated); err != nil {
 		t.Fatal(err)
 	}
-	enumeratedUnits := len(shards) + 3*len(shards) // agreement plus three benchmark rounds
+	enumeratedUnits := len(shards)
 	if got := enumeratedUnits; got != testPortMatchesGoCohereShards {
 		t.Fatalf("enumerated %d shards, declared %d", got, testPortMatchesGoCohereShards)
 	}
@@ -416,17 +416,16 @@ func jsonPortTopShard(t *testing.T, target int) {
 		}
 
 	})
-	{
+	// Opt-in measurements reuse the explicitly selected agreement bucket.
+	// Benchmark rounds are never independent gate units.
+	if os.Getenv("ADAMIC_JSON_BENCH") == "1" {
 		for ordinal, shard := range allShards {
 			for round := 0; round < 3; round++ {
-				unit := len(shards) + ordinal*3 + round
+				unit := ordinal
 				if unit != target || unit%count != index {
 					continue
 				}
 				func(t *testing.T) {
-					if os.Getenv("ADAMIC_JSON_BENCH") != "1" {
-						t.Skip("ADAMIC_JSON_BENCH=1 enables benchmark comparisons")
-					}
 					items := allCases[shard.start:shard.end]
 					if len(items) == 0 {
 						t.Log("empty hash bucket")

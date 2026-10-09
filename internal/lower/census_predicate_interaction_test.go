@@ -3,7 +3,6 @@ package lower
 import (
 	"errors"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -18,13 +17,11 @@ func TestCensusPredicateInteractionBoundary(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		t.Fatal(err)
-	}
-	output, err := exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path).CombinedOutput()
-	if err != nil || string(output) != "boundary declaration loaded\n" {
-		t.Fatalf("Node: %q, %v", output, err)
+	// This is a refusal row, so acceptance agreement would fail before running Node.
+	// Use the shared bounded source runner and retain the independent declaration check.
+	observation := runAgreementNode(t, path)
+	if observation.code != 0 || string(observation.stdout) != "boundary declaration loaded\n" || len(observation.stderr) != 0 {
+		t.Fatalf("Node: stdout %q, stderr %q, exit %d", observation.stdout, observation.stderr, observation.code)
 	}
 	source, err := os.ReadFile(path)
 	if err != nil {

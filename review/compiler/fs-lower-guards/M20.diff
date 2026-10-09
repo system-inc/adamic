@@ -1,0 +1,11 @@
+--- a/internal/lower/library_method_values.go
++++ b/internal/lower/library_method_values.go
+@@ -429,7 +429,7 @@
+ 	} else if (method.family == "Number" || method.family == "global") && (method.name == "parseInt" || method.name == "parseFloat") && element == ir.String {
+ 		arguments := []ir.Expression{reads[0]}
+ 		if method.name == "parseInt" {
+-			arguments = append(arguments, reads[1])
++			arguments = append(arguments, reads[0])
+ 		}
+ 		result = ir.NumberCall{Function: method.name, Arguments: arguments}
+ 	}

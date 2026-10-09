@@ -1,0 +1,48 @@
+from pathlib import Path
+import difflib
+import re
+import subprocess
+
+root = Path.cwd()
+evidence = root / 'review/compiler/agree-native'
+tests = root / 'internal/lower/typed_arrays_test.go'
+compiler = root / 'internal/lower/typed_arrays.go'
+helper = root / 'internal/lower/agree_test.go'
+original_tests = tests.read_text()
+original_compiler = compiler.read_text()
+original_helper = helper.read_text()
+# During the proof, remove both IR assertions before invoking either witness.
+without_ir = re.sub(r'\n\t// JavaScript behavior cannot observe FromArray.*?\n\t}\n', '\n', original_tests, flags=re.S)
+without_ir = without_ir.replace('\n\t"github.com/system-inc/adamic/internal/ir"\n', '\n').replace('p := lowersAndAgreesWithNodeNative', 'lowersAndAgreesWithNodeNative')
+assert 'constructor.FromArray' not in without_ir
+(evidence / 'typed-arrays-without-ir.go.txt').write_text(without_ir)
+
+def run(label, pattern):
+    with (evidence / (label + '.log')).open('w') as log:
+        result = subprocess.run(['timeout', '120', 'go', 'test', './internal/lower', '-run', pattern, '-count=1', '-timeout', '90s', '-v'], stdout=log, stderr=subprocess.STDOUT)
+    output = (evidence / (label + '.log')).read_text()
+    assert result.returncode == 1, (label, result.returncode, output)
+    return output
+
+try:
+    tests.write_text(without_ir)
+    subprocess.run(['gofmt', '-w', str(tests)], check=True)
+    for mutant, name in [('M01', 'TestTypedArrayFromEmptyArray'), ('M02', 'TestTypedArrayFromArray')]:
+        try:
+            subprocess.run(['git', 'apply', str(evidence / (mutant + '.patch'))], check=True)
+            output = run(mutant, '^' + name + '$')
+            assert 'Native build:' in output or 'Native backend' in output, output
+            print(mutant + ': native leg failed with IR assertions removed')
+        finally:
+            compiler.write_text(original_compiler)
+    bad = original_helper.replace('\tcompareNativeAgreement(t, got, want)', '\t_ = got\n\t_ = want // mutant skips native comparison')
+    assert bad != original_helper
+    (evidence / 'skip-native-comparison.patch').write_text(''.join(difflib.unified_diff(original_helper.splitlines(True), bad.splitlines(True), fromfile='a/internal/lower/agree_test.go', tofile='b/internal/lower/agree_test.go')))
+    helper.write_text(bad)
+    output = run('skip-native-comparison', '^TestNativeAgreementRejectsWrong(Output|Exit)$')
+    assert 'planted native output was not caught' in output and 'planted native exit was not caught' in output, output
+    print('skip-native-comparison: both planted native rows caught the missing comparison')
+finally:
+    tests.write_text(original_tests)
+    compiler.write_text(original_compiler)
+    helper.write_text(original_helper)

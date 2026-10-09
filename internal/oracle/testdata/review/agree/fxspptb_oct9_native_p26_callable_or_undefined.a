@@ -1,0 +1,12 @@
+type Target = ((value: number) => number) | ((value: string | number) => number) | undefined;
+interface Root { readonly kind: 'Receiver'; }
+interface Receiver extends Root { readonly value: Target; }
+interface Holder { readonly kind: 'Receiver'; value: Target; }
+const raw: Holder = { kind: 'Receiver', value: undefined };
+const base: Root = raw;
+const view = base as Receiver;
+const first = view.value;
+console.log(`${first === undefined}`);
+raw.value = (value: number): number => value + 1;
+const second = view.value;
+console.log(`${second === undefined ? -1 : second(1)}`);

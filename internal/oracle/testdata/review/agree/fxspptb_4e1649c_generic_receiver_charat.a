@@ -1,0 +1,9 @@
+function first<T extends string | undefined>(value: T): string {
+ return String.prototype.charAt.call(value, 0);
+}
+console.log(first<string>('abc'));
+try {
+ console.log(first<string | undefined>(undefined));
+} catch (error) {
+ console.log('caught');
+}

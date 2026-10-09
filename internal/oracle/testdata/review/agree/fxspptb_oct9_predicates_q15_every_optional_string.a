@@ -1,0 +1,4 @@
+const items: (string | undefined)[] = ["a", "bc"];
+if (items.every((x) => x !== undefined)) {
+  console.log(items.map((s) => s.toUpperCase()).join("|"));
+}
