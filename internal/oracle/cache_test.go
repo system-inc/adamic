@@ -42,6 +42,12 @@ type nativeResult struct {
 	LeakReport []byte
 }
 
+// reusable says whether an observation may be published. A run a signal ended (exit -1 from ProcessState: the
+// deadline's kill, the box's OOM killer) says nothing about the program, only about the box at that moment, so it
+// is never cached (@system_adamic_runtime, Oct 8: output_edges/usr1.a timed out at 60 s under a loaded counts test,
+// was cached as exit -1, and every later run returned it in 0.24 s). A fixture that aborts on purpose just misses.
+func (result nativeResult) reusable() bool { return result.Run.ExitCode != -1 }
+
 type resultEnvelope struct {
 	Key    string
 	Digest string
@@ -152,9 +158,14 @@ func reusableResult[T any](t *testing.T, cache *resultCache, kind int, key strin
 	result = execute()
 	// Never publish a result after a harness failure. Failed observations may still be compared by
 	// the caller; they remain evidence, and every cached observation is compared again on a hit.
-	if !t.Failed() {
-		cache.write(t, key, result)
+	if t.Failed() {
+		return result
 	}
+	if observation, ok := any(result).(interface{ reusable() bool }); ok && !observation.reusable() {
+		t.Logf("gate cache %s not written: a signal ended the run", resultKinds[kind])
+		return result
+	}
+	cache.write(t, key, result)
 	return result
 }
 
@@ -527,6 +538,29 @@ func TestGateCacheNodeInputs(t *testing.T) {
 	}
 	if sourceIdentity(t, entry) == before {
 		t.Fatal("an imported module changed without invalidating Node's source key")
+	}
+}
+
+// A run a signal ended (a deadline's kill) is never cached: the next run executes again.
+func TestGateCacheNeverKeepsASignalDeath(t *testing.T) {
+	t.Parallel()
+	cache := &resultCache{directory: t.TempDir()}
+	key := cacheKey("killed at its deadline")
+	var runs atomic.Int64
+	killed := nativeResult{Run: recordedRun{ExitCode: -1}}
+	for range 2 {
+		reusableResult(t, cache, nativeResults, key, func() nativeResult { runs.Add(1); return killed })
+	}
+	if runs.Load() != 2 {
+		t.Fatalf("a run ended by a signal was reused: executed %d times, want 2", runs.Load())
+	}
+	// An ordinary nonzero exit is the program's own answer and is cached.
+	exited := cacheKey("exited 70")
+	for range 2 {
+		reusableResult(t, cache, nativeResults, exited, func() nativeResult { runs.Add(1); return nativeResult{Run: recordedRun{ExitCode: 70}} })
+	}
+	if runs.Load() != 3 {
+		t.Fatalf("an ordinary exit wasn't reused: executed %d times in all, want 3", runs.Load())
 	}
 }
 
