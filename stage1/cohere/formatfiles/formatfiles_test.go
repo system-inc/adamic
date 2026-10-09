@@ -56,20 +56,21 @@ func formatfilesCheckShard(t *testing.T, selected int) {
 	if requested := formatfilesSelectedShard(t); requested >= 0 && requested != selected {
 		t.Skip("another shard selected")
 	}
-	casesPath, goAnswers := formatfilesAskedCases(t)
-	shards := formatfilesPartition(t, casesPath, goAnswers)
-	portSource := portDirectory(t, nil)
-	program := lowered(t, filepath.Join(portSource, "main.ts"))
-	binary := formatfilesBinary(t, program, nil)
+	shared := formatfilesReady(t)
+	ctx := formatfilesDeadline(t, "shard")
+	casesPath, goAnswers := shared.casesPath, shared.answers
+	shards := shared.parts
+	portSource, program, binary := shared.port.source, shared.port.program, shared.port.binary
+
 	checks := make([][]func(*testing.T), testThePortParsesAsGoCohereDoesShards)
 
 	for index, part := range shards {
 		checks[index] = append(checks[index], func(t *testing.T) {
 			casesPath, goAnswers := formatfilesCaseFile(t, part), part.answers
-			nodeRun := onNode(t, filepath.Join(portSource, "main.ts"), casesPath)
-			nativeRun := execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, casesPath)
+			nodeRun := formatfilesNode(t, ctx, filepath.Join(portSource, "main.ts"), casesPath)
+			nativeRun := formatfilesExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, casesPath)
 			sanitized := binary
-			backendRun := onJavaScriptBackend(t, program, casesPath)
+			backendRun := formatfilesNode(t, ctx, shared.port.javascript, casesPath)
 			for _, side := range []struct {
 				name string
 				run  run
@@ -82,7 +83,7 @@ func formatfilesCheckShard(t *testing.T, selected int) {
 				}
 			}
 			agreed := !t.Failed()
-			if leaked := leaks(t, program, sanitized, casesPath); leaked != "" {
+			if leaked := formatfilesLeaks(t, ctx, program, sanitized, casesPath); leaked != "" {
 				t.Errorf("leaks:\n%s", leaked)
 			}
 
@@ -115,15 +116,15 @@ func formatfilesCheckShard(t *testing.T, selected int) {
 		if selected >= 0 && index != selected {
 			continue
 		}
-		mutated := portDirectory(t, &mutant)
-		mutatedProgram := lowered(t, filepath.Join(mutated, "main.ts"))
-		mutatedBinary := formatfilesBinary(t, mutatedProgram, &mutant)
+		prepared := shared.mutated[mutant.name]
+		mutated, mutatedBinary := prepared.source, prepared.binary
+
 		checks[index] = append(checks[index], func(t *testing.T) {
 			t.Logf("mutant %s", mutant.name)
 			for _, side := range []struct {
 				name string
 				run  run
-			}{{"natively", execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, mutatedBinary, casesPath)}, {"on Node", onNode(t, filepath.Join(mutated, "main.ts"), casesPath)}} {
+			}{{"natively", formatfilesExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, mutatedBinary, casesPath)}, {"on Node", formatfilesNode(t, ctx, filepath.Join(mutated, "main.ts"), casesPath)}} {
 				if side.run.exitCode != 0 {
 					t.Errorf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, side.run.exitCode, side.run.stderr)
 					continue

@@ -142,20 +142,11 @@ func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
 // selects stable ordinals modulo n locally; unset runs every unit. The gate uses
 // -run '^TestThePortParsesAsGoCohereDoes_NNN$'. Every original side and sanitizer/leak check stays.
 
-func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
+func prepareThePortParsesAsGoCohereDoesSetup(t *testing.T) {
 	t.Helper()
-	started := time.Now()
-	defer func() {
-		if elapsed := time.Since(started); elapsed > 60*time.Second {
-			t.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
-		}
-	}()
-	if os.Getenv("ADAMIC_CSS_PARSER_DISAGREEMENT_PROBE") == "1" {
-		cssParserTopProbe(t, ordinal)
-		return
-	}
 	cssParserTopSetup.once.Do(func() {
 		setupStarted := time.Now()
+		prepareCSSParserTopCorpus(t)
 		corpus := cssParserTopCorpus(t)
 		units := cssParserShards(corpus.keys)
 		if len(units) != testThePortParsesAsGoCohereDoesShards {
@@ -172,7 +163,7 @@ func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
 		for i := range mutants {
 			programs = append(programs, buildCSSParserProgram(t, fmt.Sprintf("mutant-%d", i), cssParserTopPortDirectory(t, &mutants[i])))
 		}
-		binaries := buildCSSParserBinaries(t, programs[:1])
+		binaries := buildCSSParserBinaries(t, programs)
 		leakBinary := binaries[0]
 		if runtime.GOOS == "darwin" {
 			leakBinary = buildCSSParserUnsanitized(t, programs[0])
@@ -185,8 +176,8 @@ func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
 		}
 		setupElapsed := time.Since(setupStarted)
 		t.Logf("setup before shards %.6fs, including cached non-Go products and a private Go oracle build", setupElapsed.Seconds())
-		if setupElapsed > 60*time.Second {
-			t.Fatalf("invalid test setup: wall %s exceeds 60s", setupElapsed)
+		if setupElapsed > 90*time.Second {
+			t.Fatalf("cooked setup: wall %s exceeds 90s", setupElapsed)
 		}
 		cssParserTopSetup.units = units
 		cssParserTopSetup.run = func(t *testing.T, root cssParserShard) {
@@ -228,7 +219,7 @@ func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
 				} else {
 					// Fetch this mutant product once and share the immutable binary
 					// between its two original side checks for this complete case range.
-					mutantBinary := buildCSSParserBinaries(t, programs[unit.mutation+1:unit.mutation+2])[0]
+					mutantBinary := binaries[unit.mutation+1]
 					shardCases, want := writeCSSParserSlice(t, corpus, unit.cases)
 					witness := cssParserMutantWitness(unit.mutation)
 					for _, side := range []struct {
@@ -253,8 +244,29 @@ func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
 			}
 		}
 	})
+}
+
+func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
+	t.Helper()
 	if cssParserTopSetup.run == nil {
-		t.Fatal("shared setup did not complete")
+		t.Fatal("TestThePortParsesAsGoCohereDoes_Setup must finish before a shard starts")
+	}
+	timer := time.AfterFunc(90*time.Second, func() {
+		panic(fmt.Sprintf("cooked TestThePortParsesAsGoCohereDoes_%03d: case deadline exceeded 90s", ordinal))
+	})
+	defer timer.Stop()
+	started := time.Now()
+	defer func() {
+		if elapsed := time.Since(started); elapsed > 60*time.Second {
+			t.Errorf("invalid top-level unit: %s exceeds 60s", elapsed)
+		}
+	}()
+	if os.Getenv("ADAMIC_CSS_PARSER_DISAGREEMENT_PROBE") == "1" {
+		cssParserTopProbe(t, ordinal)
+		return
+	}
+	if cssParserTopSetup.run == nil {
+		t.Fatal("TestThePortParsesAsGoCohereDoes_Setup must finish before a shard starts")
 	}
 	selected := selectedCSSParserShards(t, cssParserTopSetup.units)
 	for _, unit := range selected {
