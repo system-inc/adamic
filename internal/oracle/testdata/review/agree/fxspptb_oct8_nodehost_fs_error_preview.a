@@ -1,0 +1,8 @@
+import { openSync, closeSync, mkdtempSync } from 'node:fs';
+function code(error: unknown): string { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : ''; }
+for (const value of ['x\ud800\0', 'x\udfff\0', 'x\u0085\0', 'x\u2028\0', '\0\n\t\b\v\f\r', "'\"`$\0", 'a'.repeat(130) + '\0']) {
+    try { closeSync(openSync(value, 'r')); }
+    catch(error) { if(error instanceof Error) console.log(`${error.name}|${code(error)}|${error.message}`); }
+    try { mkdtempSync(value); }
+    catch(error) { if(error instanceof Error) console.log(`${error.name}|${code(error)}|${error.message}`); }
+}

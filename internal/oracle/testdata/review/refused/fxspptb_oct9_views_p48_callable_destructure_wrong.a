@@ -1,0 +1,7 @@
+// A wrong view's function-valued field taken by destructuring, then called.
+interface Holder { readonly kind: 'Holder'; readonly compute: (value: number) => number; }
+const raw = { kind: 'Holder' as const, compute: (value: string): number => value.length };
+const base: { readonly kind: 'Holder' } = raw;
+const view = base as Holder;
+const { compute } = view;
+console.log(`${compute(41)}`);

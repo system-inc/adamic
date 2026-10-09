@@ -1,0 +1,13 @@
+diff --git a/cmd/adamic-meter/returns.go b/cmd/adamic-meter/returns.go
+index c70c352a..bcde5ab1 100644
+--- a/cmd/adamic-meter/returns.go
++++ b/cmd/adamic-meter/returns.go
+@@ -51,7 +51,7 @@ func returnAdaptations(paths []string, overlay map[string]string, before error)
+ 			name += ".ts"
+ 		}
+ 		file := files[name]
+-		if file == nil || !owned[name] {
++		if file == nil {
+ 			continue
+ 		}
+ 		line, _ := strconv.Atoi(match[2])

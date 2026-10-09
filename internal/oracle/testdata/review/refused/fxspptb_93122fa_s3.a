@@ -1,0 +1,15 @@
+function kind(code: number): string {
+	let said = '';
+	switch (code) {
+		// @ts-ignore
+		case 1:
+			said += 'one ';
+		case 2:
+			said += 'two';
+			break;
+		default:
+			said = 'other';
+	}
+	return said;
+}
+console.log(`${kind(1)}|${kind(2)}`);

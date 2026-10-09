@@ -94,15 +94,12 @@ func TestLiteralMethodCapturesCannotMakeCycles(t *testing.T) {
 
 func TestLiteralMethodViewsDoNotLoseThis(t *testing.T) {
 	t.Parallel()
-	for _, source := range []string{
-		"const own={value:1,read():number{return this.value;}};const view:{readonly value:number;read:()=>number}=own;console.log(`${view.read()}`);",
-		"const own={value:1,read():number{return this.value;}};const view:{readonly value:number;read():number}=own;console.log(`${view.read()}`);",
-	} {
-		_, err := lowerSource(t, source)
-		if err != nil {
-			t.Fatalf("literal-method call must preserve its receiver: %v", err)
-		}
-	}
+	lowersAndAgreesWithNode(t, "const own={value:1,read():number{return this.value;}};const view:{readonly value:number;read:()=>number}=own;console.log(`${view.read()}`);")
+}
+
+func TestLiteralMethodSignatureViewsDoNotLoseThis(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNode(t, "const own={value:1,read():number{return this.value;}};const view:{readonly value:number;read():number}=own;console.log(`${view.read()}`);")
 }
 
 func TestIteratorDescriptorReasons(t *testing.T) {

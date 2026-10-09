@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:58:56.002754007Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:58:56.008975587Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting"}
+{"Time":"2026-10-09T10:58:56.009027664Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"=== RUN   TestParserFactoryBindingHoisting\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:56.009086491Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"=== PAUSE TestParserFactoryBindingHoisting\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:56.009088724Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting"}
+{"Time":"2026-10-09T10:58:56.009091629Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting"}
+{"Time":"2026-10-09T10:58:56.009093281Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"=== CONT  TestParserFactoryBindingHoisting\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:56.039061661Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"    namespaces_factory_test.go:51: parser factory namespace body is empty\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:56.039132255Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Output":"--- FAIL: TestParserFactoryBindingHoisting (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:56.03913566Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParserFactoryBindingHoisting","Elapsed":0.03}
+{"Time":"2026-10-09T10:58:56.039152936Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:56.04057976Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.038s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:56.040596726Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.038}

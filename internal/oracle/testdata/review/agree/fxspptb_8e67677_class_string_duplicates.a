@@ -1,0 +1,7 @@
+// A class string listed twice (or twice after case folding) is one alternative to Node.
+let text = '';
+for (let i = 0; i < 28; i++) text += 'ab';
+text += 'x';
+console.log(`${/^(?:[\q{ab|ab}])*$/v.test(text)}`);
+console.log(`${/^(?:[\q{ab|AB}])*$/vi.test(text)}`);
+console.log(`${/^(?:[\q{ab}\q{ab}])*$/v.test(text)}`);

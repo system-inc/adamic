@@ -1,0 +1,13 @@
+diff --git a/internal/lower/regexp.go b/internal/lower/regexp.go
+index b6715a74..5be8dc7a 100644
+--- a/internal/lower/regexp.go
++++ b/internal/lower/regexp.go
+@@ -222,7 +222,7 @@ func escapeRegexSource(pattern, flags string) string {
+ 		return "(?:)"
+ 	}
+ 	var result strings.Builder
+-	escaped, sets := false, strings.Contains(flags, "v")
++	escaped, sets := false, strings.Contains(flags, "u")
+ 	depth := 0
+ 	// Scan bytes so WTF-8 lone surrogates retain their exact code units.
+ 	for at := 0; at < len(pattern); at++ {

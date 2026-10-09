@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"strings"
 	"testing"
 )
@@ -23,9 +24,8 @@ func TestLibraryMethodValues(t *testing.T) {
 		"const f = Number.parseInt; console.log(['10', '10'].map(f).join(','));",
 	} {
 		t.Run(source, func(t *testing.T) {
-			if _, err := lowerSource(t, source); err != nil {
-				t.Fatal(err)
-			}
+			t.Parallel()
+			lowersAndAgreesWithNode(t, source)
 		})
 	}
 }
@@ -46,6 +46,7 @@ func TestLibraryMethodValueBoundaries(t *testing.T) {
 		{"const f = String.prototype.trim; ['x'].map(f);", "primitive adapter"},
 	} {
 		t.Run(test.reason, func(t *testing.T) {
+			t.Parallel()
 			_, err := lowerSource(t, test.source)
 			if err == nil || !strings.Contains(err.Error(), test.reason) {
 				t.Fatalf("want %s, got %v", test.reason, err)
@@ -54,30 +55,41 @@ func TestLibraryMethodValueBoundaries(t *testing.T) {
 	}
 }
 
-// These are admissibility checks, not diagnostic wording checks. A source mutant must actually
-// admit the unsafe program to fail one of them.
+// Pin the intended refusal as well as admission: an unrelated failure is not evidence
+// that the method value kept its receiver and callable ABI.
 func TestLibraryMethodValueSafety(t *testing.T) {
 	t.Parallel()
-	cases := map[string]string{
-		"mutable alias":         "let f = Number.parseInt; f = (text: string): number => 99; console.log(`${f('12', 10)}`);",
-		"opaque field":          "const f = Number.parseInt; const object = {f: f}; console.log(`${object.f('12')}`);",
-		"opaque shorthand":      "const f = Number.parseInt; const g = f; const object = {g}; console.log(`${object.g('12')}`);",
-		"opaque return":         "function get() { const f = Number.parseInt; return f; } console.log(`${get()('12')}`);",
-		"absent array":          "function get(): number[] | undefined { return undefined; } const f = Array.prototype.indexOf; f.call(get(), 1);",
-		"array element erasure": "const f = Array.prototype.slice; const wrong: string[] = f.call([1, 2]); console.log(wrong.join());",
-		"apply spread":          "const f = String.prototype.substring; console.log(f.apply('abcd', [1, ...([2] as const)]));",
-		"call spread":           "const f = Number.parseInt; console.log(`${f.call(undefined, '10', ...([16] as const))}`);",
-		"string receiver":       "const f = String.prototype.toString; f.call(1);",
-		"number receiver":       "const f = Number.prototype.toString; f.call('10');",
-		"bind arity":            "const f = String.prototype.substring; f.bind('abcd');",
-		"bind absent receiver":  "function get(): string | undefined { return undefined; } String.prototype.trim.bind(get());",
-		"opaque identity":       "const f = Number.parseInt; console.log(`${f === f}`);",
-		"unsupported callback":  "const f = String.prototype.trim; console.log([' x '].map(f).join());",
+	cases := map[string]struct {
+		source, reason string
+		refused        bool
+	}{
+		"mutable alias":         {"let f = Number.parseInt; f = (text: string): number => 99; console.log(`${f('12', 10)}`);", "a method read as a value (parseInt", true},
+		"opaque field":          {"const f = Number.parseInt; const object = {f: f}; console.log(`${object.f('12')}`);", "a library method value outside a const alias, typed call/apply", false},
+		"opaque shorthand":      {"const f = Number.parseInt; const g = f; const object = {g}; console.log(`${object.g('12')}`);", "an object field erases its receiver and callable ABI", false},
+		"opaque return":         {"function get() { const f = Number.parseInt; return f; } console.log(`${get()('12')}`);", "a library method value outside a const alias, typed call/apply", false},
+		"absent array":          {"function get(): number[] | undefined { return undefined; } const f = Array.prototype.indexOf; f.call(get(), 1);", "an Array method receiver that may be undefined", false},
+		"array element erasure": {"const f = Array.prototype.slice; const wrong: string[] = f.call([1, 2]); console.log(wrong.join());", "erased or different element type", false},
+		"apply spread":          {"const f = String.prototype.substring; console.log(f.apply('abcd', [1, ...([2] as const)]));", "apply with holes or spread", false},
+		"call spread":           {"const f = Number.parseInt; console.log(`${f.call(undefined, '10', ...([16] as const))}`);", "spread into a delayed library call", false},
+		"string receiver":       {"const f = String.prototype.toString; f.call(1);", "primitive string representation is not proven", false},
+		"number receiver":       {"const f = Number.prototype.toString; f.call('10');", "a Number method receiver without a proven number internal slot", false},
+		"bind arity":            {"const f = String.prototype.substring; f.bind('abcd');", "bind of a method with optional, required or partial arguments", false},
+		"bind absent receiver":  {"function get(): string | undefined { return undefined; } String.prototype.trim.bind(get());", "bind without a proven present primitive string receiver", false},
+		"opaque identity":       {"const f = Number.parseInt; console.log(`${f === f}`);", "a library method value outside a const alias, typed call/apply", false},
+		"unsupported callback":  {"const f = String.prototype.trim; console.log([' x '].map(f).join());", "a library map callback without a proven primitive adapter", false},
 	}
-	for name, source := range cases {
+	for name, test := range cases {
 		t.Run(name, func(t *testing.T) {
-			if _, err := lowerSource(t, source); err == nil {
-				t.Fatal("unsafe method value was admitted")
+			t.Parallel()
+			_, err := lowerSource(t, test.source)
+			var missing *NotYet
+			var refused *Refused
+			correctKind := errors.As(err, &missing)
+			if test.refused {
+				correctKind = errors.As(err, &refused)
+			}
+			if !correctKind || !strings.Contains(err.Error(), test.reason) {
+				t.Fatalf("want method-value refusal %q (Refused=%t), got %v", test.reason, test.refused, err)
 			}
 		})
 	}

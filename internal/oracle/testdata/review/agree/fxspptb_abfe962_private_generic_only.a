@@ -1,0 +1,11 @@
+class Box<T> {
+    #value: T;
+    #label = `label${1}`;
+    constructor(value: T) { this.#value = value; }
+    read(): T { return this.#value; }
+    peek(other: Box<string>): string { return other.#label + '/' + other.#value; }
+}
+const numbers = new Box<number>(5);
+const strings = new Box<string>(`s${2}`);
+console.log(numbers.peek(strings));
+console.log(`${numbers.read()} ${strings.read()}`);

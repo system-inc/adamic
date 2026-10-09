@@ -1,0 +1,34 @@
+// Paths no fixture reaches: typeof of a pair, a union narrowed to boolean | undefined, and a
+// boolean | undefined boxed into a union.
+const flags = [true, false];
+const present = flags[0];
+const missing = flags[5];
+const counts = [1.5];
+const count = counts[0];
+const none = counts[4];
+console.log(`${typeof present} ${typeof missing} ${typeof count} ${typeof none}`);
+function pick(which: number): string | boolean | undefined {
+	if (which === 0) {
+		return 'text';
+	}
+	if (which === 1) {
+		return true;
+	}
+	if (which === 2) {
+		return false;
+	}
+	return undefined;
+}
+for (let which = 0; which < 4; which += 1) {
+	const picked = pick(which);
+	if (typeof picked !== 'string') {
+		const flag = picked;
+		console.log(`${which}: ${flag} ${flag === true} ${flag === undefined}`);
+	}
+}
+function show(value: string | number | boolean | undefined): string {
+	return `${typeof value}:${value}`;
+}
+console.log(`${show(present)} ${show(missing)} ${show(flags[1])}`);
+const mixed: string | boolean | undefined = flags[1];
+console.log(`${mixed === false} ${mixed === present}`);
