@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:41:33.279690679Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:41:33.286972376Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation"}
+{"Time":"2026-10-09T10:41:33.287058124Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"=== RUN   TestFSExistsOperation\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:33.287078184Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"=== PAUSE TestFSExistsOperation\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:33.287080798Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation"}
+{"Time":"2026-10-09T10:41:33.287089461Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation"}
+{"Time":"2026-10-09T10:41:33.287094068Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"=== CONT  TestFSExistsOperation\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:33.547245997Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"    fs_method_guards_test.go:100: want boolean exists operation: ir.NodeFSFile{Operation:\"stat\", Arguments:[]ir.Expression{ir.StringConstant{Index:0}, ir.BooleanConstant{Value:true}}, Of:2}\n","OutputType":"error"}
+{"Time":"2026-10-09T10:41:33.547338455Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Output":"--- FAIL: TestFSExistsOperation (0.26s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:33.547342471Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSExistsOperation","Elapsed":0.26}
+{"Time":"2026-10-09T10:41:33.547363513Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:33.550693673Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.271s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:41:33.55071201Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.271}
