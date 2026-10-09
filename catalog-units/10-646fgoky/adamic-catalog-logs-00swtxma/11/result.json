@@ -1,0 +1,18 @@
+{
+  "number": 11,
+  "made_against": "d772b5c990de4304de990e723835f19ebb613641",
+  "target": "2f7d81f91623c81b86e2ce5a439fdca69ef2d2b8",
+  "worktree": "/home/ahra/full-gate/out/2f7d81f91623-20261009T102705Z/catalog-units/10-646fgoky/adamic-catalog-worktree-dpq09hax/entry-11",
+  "setup_seconds": 81.91653246799251,
+  "ok": true,
+  "check_seconds": 18.744353818998206,
+  "cleanup_seconds": 8.731033263000427,
+  "wall_seconds": 111.2309967129986,
+  "load_before": "17.33 18.33 26.30 57/973 2075796",
+  "load_after": "63.17 34.59 31.29 76/1283 2140868",
+  "messages": [
+    "11 refuse-definite-assignment: applies-and-fails-as-recorded",
+    "11 made against=d772b5c990de4304de990e723835f19ebb613641",
+    "11 wall=111.231s setup=81.917s check=18.744s cleanup=8.731s load=17.33 18.33 26.30 57/973 2075796 -> 63.17 34.59 31.29 76/1283 2140868"
+  ]
+}

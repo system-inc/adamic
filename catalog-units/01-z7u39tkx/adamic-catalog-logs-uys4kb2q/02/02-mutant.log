@@ -1,0 +1,18 @@
+--- FAIL: TestNativeAgreesWithNode (0.09s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/throw_keeps_old_value.a (1.90s)
+        oracle_test.go:758: the release build: exit codes differ
+            sanitized: exit 1, stdout "", stderr "/home/ahra/.cache/adamic/runtime/c4cff354c5906933152a1b7d8213a68e2416f4b54255516d0e26950923dd1455/adamic.h:379:30: runtime error: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/ahra/.cache/adamic/runtime/c4cff354c5906933152a1b7d8213a68e2416f4b54255516d0e26950923dd1455/adamic.h:379:30 \n"
+            release:   exit -1, stdout "", stderr ""
+        oracle_test.go:774: exit codes differ
+            node:   exit 0, stdout "spread caught: 5 local5\nmove caught: 7 moved7\n", stderr ""
+            native: exit 1, stdout "", stderr "/home/ahra/.cache/adamic/runtime/c4cff354c5906933152a1b7d8213a68e2416f4b54255516d0e26950923dd1455/adamic.h:379:30: runtime error: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/ahra/.cache/adamic/runtime/c4cff354c5906933152a1b7d8213a68e2416f4b54255516d0e26950923dd1455/adamic.h:379:30 \n"
+        oracle_test.go:787: leaks:
+            exit 1
+            /home/ahra/.cache/adamic/runtime/c4cff354c5906933152a1b7d8213a68e2416f4b54255516d0e26950923dd1455/adamic.h:379:30: runtime error: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')
+            SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/ahra/.cache/adamic/runtime/c4cff354c5906933152a1b7d8213a68e2416f4b54255516d0e26950923dd1455/adamic.h:379:30 
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.031s
+FAIL
