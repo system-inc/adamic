@@ -25,7 +25,7 @@ func jsonPortClassOrderPartition(all []textCase) (ordinary []textCase, shards []
 			ordinary = append(ordinary, item)
 		}
 	}
-	shards = jsonHashShards(ordinary, testPortMatchesGoCohereShards/4)
+	shards = jsonHashShards(ordinary, testPortMatchesGoCohereShards)
 	return
 }
 
@@ -135,7 +135,7 @@ func TestJSONClassOrderShardOwnership(t *testing.T) {
 	if len(dedicated) != 1 || len(ordinary) != 1 {
 		t.Fatal("wrong dedicated ownership")
 	}
-	owner := jsonCaseShard("small.json", 2048)
+	owner := jsonCaseShard("small.json", testPortMatchesGoCohereShards)
 	if shards[owner].end-shards[owner].start != 1 || ordinary[shards[owner].start].Name != "small.json" {
 		t.Fatal("ordinary hash owner changed")
 	}
