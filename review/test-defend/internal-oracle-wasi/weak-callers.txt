@@ -1,0 +1,237 @@
+internal/oracle/call_targets_guards_test.go:8:func TestCallTargetThrowAgreesWithNode(t *testing.T) {
+internal/oracle/call_targets_guards_test.go:13:func TestDirectClosureCallAgreesWithNode(t *testing.T) {
+internal/oracle/cache_test.go:451:func TestMain(main *testing.M) {
+internal/oracle/cache_test.go:462:func TestGateCacheGeneratedC(t *testing.T) {
+internal/oracle/cache_test.go:481:func TestGateCacheToolchains(t *testing.T) {
+internal/oracle/cache_test.go:507:func TestGateCacheNodeInputs(t *testing.T) {
+internal/oracle/cache_test.go:533:func TestGateCacheAtomicEvidence(t *testing.T) {
+internal/oracle/cache_test.go:565:func TestGateCacheUncached(t *testing.T) {
+internal/oracle/census_small_test.go:34:func TestCensusSmallStoppedSourceOnNode(t *testing.T) {
+internal/oracle/checked_views_interfaces_test.go:5:func TestCheckedViewInterfaces(t *testing.T) {
+internal/oracle/checked_views_objects_test.go:9:func TestCheckedViewObjects(t *testing.T) {
+internal/oracle/arguments_length_test.go:34:func TestArgumentsLengthTypeScriptSource(t *testing.T) {
+internal/oracle/arguments_length_test.go:71:func TestArgumentsLengthWrongSlotMutant(t *testing.T) {
+internal/oracle/checked_views_v2_object_primitive_test.go:14:func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
+internal/oracle/checked_views_v2_migration_test.go:15:func TestCheckedViewV2ReadsAfterWrites(t *testing.T) {
+internal/oracle/checked_views_v2_migration_test.go:35:func TestCheckedViewV2ArrayArmBoundary(t *testing.T) {
+internal/oracle/checked_views_v2_migration_test.go:51:func TestCheckedViewV2WrongFamilyMutant(t *testing.T) {
+internal/oracle/checked_views_v2_migration_test.go:88:func TestCheckedViewV2RepresentationMutants(t *testing.T) {
+internal/oracle/checked_views_v2_migration_test.go:159:func TestCheckedViewV2MembershipMutant(t *testing.T) {
+internal/oracle/checked_views_v2_migration_test.go:190:func TestCheckedViewV2TupleIdentityMutant(t *testing.T) {
+internal/oracle/checked_views_v2_migration_test.go:221:func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
+internal/oracle/checked_views_v2_migration_test.go:252:func TestCheckedViewV2MovedStage3Results(t *testing.T) {
+internal/oracle/class_wrong_output_test.go:11:func TestClassWrongOutput103(t *testing.T) {
+internal/oracle/class_wrong_output_test.go:37:func TestClassWrongOutput107(t *testing.T) {
+internal/oracle/class_wrong_output_test.go:62:func TestClassWrongOutput108(t *testing.T) {
+internal/oracle/class_wrong_output_test.go:79:func TestClassWrongOutput106(t *testing.T) {
+internal/oracle/closure_merge_refusals_test.go:15:func TestClosureMergeRefusals(t *testing.T) {
+internal/oracle/debugger_test.go:25:func TestDebuggerNativeEmitsNothing(t *testing.T) {
+internal/oracle/entries_provenance_test.go:20:func TestEntriesProvenance(t *testing.T) {
+internal/oracle/entries_provenance_test.go:112:func TestEntriesRuntimeReadiness(t *testing.T) {
+internal/oracle/enums_stage3_test.go:38:func TestStage3EnumBoundaries(t *testing.T) {
+internal/oracle/enums_stage3_test.go:68:func TestStage3EnumSparseArrayBoundary(t *testing.T) {
+internal/oracle/enums_stage3_test.go:92:func TestEnumNameEnumerationMutant(t *testing.T) {
+internal/oracle/cast_test.go:33:func TestCheckedCastFlushesOutput(t *testing.T) {
+internal/oracle/cast_test.go:50:func TestUncheckableCastAdmission(t *testing.T) {
+internal/oracle/cast_test.go:75:func TestCheckedCastRunsNoCatchOrFinally(t *testing.T) {
+internal/oracle/cast_test.go:138:func TestCheckedCastFailureContract(t *testing.T) {
+internal/oracle/cast_test.go:160:func TestCheckedCastMutants(t *testing.T) {
+internal/oracle/fresh_test.go:19:func TestFreshWriteProbesStayRefused(t *testing.T) {
+internal/oracle/conditions_test.go:25:func TestTypeScriptConditionsAgreeWithNode(t *testing.T) {
+internal/oracle/conditions_test.go:67:func TestConditionNaNMutant(t *testing.T) {
+internal/oracle/conditions_test.go:174:func TestConditionLedgerMissingSiteMutant(t *testing.T) {
+internal/oracle/conditions_test.go:207:func TestConditionLedgerNullMutant(t *testing.T) {
+internal/oracle/imported_const_case_test.go:21:func TestImportedNonliteralConstCaseIsNotYet(t *testing.T) {
+internal/oracle/element_access_boundaries_test.go:16:		// is refused (an index signature), which TestElementAccessCompilerAreaBoundaries pins.
+internal/oracle/element_access_boundaries_test.go:30:func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
+internal/oracle/checked_views_optional_read_test.go:16:func TestCheckedViewOptionalReadBoundary(t *testing.T) {
+internal/oracle/enum_initialization_reach_test.go:21:func TestEnumInitializationNode(t *testing.T) {
+internal/oracle/enum_initialization_reach_test.go:69:func TestEnumInitializationUnknownPinned(t *testing.T) {
+internal/oracle/library_map_set_test.go:15:func TestLibraryMapSetMutants(t *testing.T) {
+internal/oracle/enums_test.go:26:func TestEnumSemanticMutants(t *testing.T) {
+internal/oracle/enums_test.go:115:func TestEnumCleanupMutant(t *testing.T) {
+internal/oracle/checked_views_v2_source_test.go:14:func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
+internal/oracle/checked_views_v2_source_test.go:79:func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
+internal/oracle/checked_views_v2_source_test.go:112:func TestCheckedViewUntaggedOptionalCallableControl(t *testing.T) {
+internal/oracle/checked_views_v2_source_test.go:126:func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
+internal/oracle/checked_views_v2_source_test.go:151:func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
+internal/oracle/checked_views_v2_source_test.go:175:func TestCheckedViewUntaggedRecursive(t *testing.T) {
+internal/oracle/checked_views_v2_source_test.go:199:func TestCheckedViewUntaggedArrayPending(t *testing.T) {
+internal/oracle/function_values_test.go:29:func TestFunctionValueBoundaryBoxing(t *testing.T) {
+internal/oracle/census_overload_result_test.go:21:func TestCensusAppendResultProof(t *testing.T) {
+internal/oracle/census_overload_result_test.go:40:func TestCensusOverloadResultStop(t *testing.T) {
+internal/oracle/clock_generic_returns_t_01_test.go:19:func TestClockGenericReturnsT01Mutant(t *testing.T) {
+internal/oracle/checked_views_flag_downcast_test.go:12:func TestCheckedViewFlagDowncast(t *testing.T) {
+internal/oracle/input_test.go:106:func TestInputAgreesWithNode(t *testing.T) {
+internal/oracle/counters_test.go:22:func TestLoopCountersAgreeWithNode(t *testing.T) {
+internal/oracle/library_array_mutant_test.go:13:func TestArrayFamilyMutants(t *testing.T) {
+internal/oracle/library_array_mutant_test.go:129:func TestArrayWithBoundsMutant(t *testing.T) {
+internal/oracle/library_math_number_test.go:13:func TestMathNumberOracleCatchesMutants(t *testing.T) {
+internal/oracle/literal_undefined_test.go:26:func TestLiteralUndefinedOracleCatchesMutant(t *testing.T) {
+internal/oracle/fallthrough_test.go:22:func TestFallthroughMutants(t *testing.T) {
+internal/oracle/counts_test.go:17:// updateCounts rewrites counts.md with what was measured: go test ./internal/oracle -run TestCounts -args -update-counts
+internal/oracle/counts_test.go:33:fixture runs as TestInputAgreesWithNode runs it, a directory of its own to write in included, and must finish. Every run has an
+internal/oracle/counts_test.go:40:Generated by TestCountsAreRecorded; after a change that moves them, run
+internal/oracle/counts_test.go:41:` + "`go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts`" + ` and commit the diff.
+internal/oracle/counts_test.go:65:// fixture runs as TestInputAgreesWithNode runs it: from its own directory, with its arguments, a
+internal/oracle/counts_test.go:112:				t.Fatalf("want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit %d, stderr %q", result.exitCode, result.stderr)
+internal/oracle/counts_test.go:138:func TestCountsAreRecorded(t *testing.T) {
+internal/oracle/counts_test.go:221:	t.Errorf("the counts changed and %s wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):\n%s",
+internal/oracle/method_values_mutant_test.go:14:func TestLibraryMethodValueMutants(t *testing.T) {
+internal/oracle/method_values_mutant_test.go:185:func TestLibraryMethodOwnLoadMutants(t *testing.T) {
+internal/oracle/interface_cast_counts_test.go:49:	// view substitution in TestNarrowedFieldUsesSharedReadiness is a separate IR probe.
+internal/oracle/entries_acceptance_test.go:29:func TestEntriesAcceptance(t *testing.T) {
+internal/oracle/enums_open_test.go:19:func TestNumericEnumNeverPathsPinned(t *testing.T) {
+internal/oracle/enums_open_test.go:46:func TestNumericEnumNeverPinned(t *testing.T) {
+internal/oracle/module_namespace_reads_test.go:20:func TestModuleNamespaceReadsMatchNode(t *testing.T) {
+internal/oracle/module_namespace_reads_test.go:49:func TestModuleNamespaceReadinessMutants(t *testing.T) {
+internal/oracle/module_namespace_reads_test.go:85:func TestModuleNamespaceLiveBindingMutant(t *testing.T) {
+internal/oracle/library_json_stringify_test.go:17:func TestJSONStringifyRefusals(t *testing.T) {
+internal/oracle/library_json_stringify_test.go:53:func TestJSONStringifyResultMayBeUndefined(t *testing.T) {
+internal/oracle/library_json_stringify_test.go:68:func TestJSONStringifyOracleCatchesKeyOrder(t *testing.T) {
+internal/oracle/field_readiness_test.go:9:func TestFieldReadinessRepresentation(t *testing.T) {
+internal/oracle/import_cycles_test.go:26:func TestImportCycleRuntimeCalls(t *testing.T) {
+internal/oracle/import_cycles_test.go:83:func TestImportCycleLoadTimeReads(t *testing.T) {
+internal/oracle/new_expression_test.go:23:func TestNewExpressionUint16RemainsNotYet(t *testing.T) {
+internal/oracle/new_expression_test.go:42:func TestNewExpressionCacheCaptureRemainsNotYet(t *testing.T) {
+internal/oracle/method_values_ownership_test.go:12:func TestLibraryMethodCaptureMutants(t *testing.T) {
+internal/oracle/interface_cast_test.go:35:func TestInterfaceCastOracle(t *testing.T) {
+internal/oracle/interface_cast_test.go:72:func TestInterfaceCastChecksMalformedRead(t *testing.T) {
+internal/oracle/interface_cast_test.go:96:func TestInterfaceCastRuntimeMutants(t *testing.T) {
+internal/oracle/interface_cast_test.go:155:func TestInterfaceCastImportedConstruction(t *testing.T) {
+internal/oracle/interface_cast_test.go:181:func TestInterfaceCastScalarTags(t *testing.T) {
+internal/oracle/non_null_impossible_test.go:21:func TestImpossibleNonNullFixturesAreRefused(t *testing.T) {
+internal/oracle/non_null_impossible_test.go:80:func TestPossibleNonNullAdamicAssertionsAreRefused(t *testing.T) {
+internal/oracle/library_map_set_iterator_test.go:22:func TestLibraryMapSetIteratorCopiesRefused(t *testing.T) {
+internal/oracle/namespace_live_export_boundary_test.go:8:func TestNamespaceLiveExportBoundary(t *testing.T) {
+internal/oracle/library_string_test.go:14:func TestLibraryStringMutants(t *testing.T) {
+internal/oracle/non_null_refusal_test.go:12:func TestNonNullAdamicRefusal(t *testing.T) {
+internal/oracle/method_values_read_test.go:11:func TestLibraryMethodAliasReadMutant(t *testing.T) {
+internal/oracle/notyet_library_string_bounds_test.go:19:func TestNotYetLibraryStringBoundsMutants(t *testing.T) {
+internal/oracle/namespace_ruled_mutants_test.go:9:func TestNamespaceRuledMutants(t *testing.T) {
+internal/oracle/non_null_migration_test.go:16:func TestMigratedNonNullFixturesRemainCovered(t *testing.T) {
+internal/oracle/non_null_migration_test.go:54:			if strings.HasPrefix(move.To, "internal/oracle/testdata/") && filepath.Base(move.To) != "non_null_weak_freed.ts" || strings.HasPrefix(move.To, "stage3/fixtures/nested-functions/") {
+internal/oracle/non_null_migration_test.go:63:func TestNonNullLiteralUnionInitializers(t *testing.T) {
+internal/oracle/narrowed_union_test.go:26:func TestNarrowedUnionMemberCheck(t *testing.T) {
+internal/oracle/narrowed_union_test.go:76:func TestNarrowedUnionObjectTagRefusal(t *testing.T) {
+internal/oracle/notyet_library_object_entries_const_test.go:17:func TestNotYetLibraryObjectEntriesConstMutant(t *testing.T) {
+internal/oracle/node_fs_file_test.go:19:// Their exact diagnostics are checked by TestClosureMergeRefusals.
+internal/oracle/node_fs_file_test.go:108:func TestNodeFSFileAgreesWithNode(t *testing.T) {
+internal/oracle/node_fs_file_test.go:152:func TestNodeFSFileMutants(t *testing.T) {
+internal/oracle/non_null_parser_test.go:11:func TestParserNonNullSourceExtension(t *testing.T) {
+internal/oracle/parameter_properties_test.go:35:func TestParameterPropertyMutants(t *testing.T) {
+internal/oracle/parameter_properties_test.go:86:func TestParameterPropertyOwnershipMutant(t *testing.T) {
+internal/oracle/notyet_library_regex_callback_test.go:15:func TestNotYetLibraryRegexCallbackMutants(t *testing.T) {
+internal/oracle/omitted_arguments_test.go:22:func TestOmittedArgumentZeroMutantIsCaught(t *testing.T) {
+internal/oracle/omitted_arguments_test.go:70:func TestOmittedOriginalProbePolicy(t *testing.T) {
+internal/oracle/omitted_arguments_test.go:97:func TestOmittedReaderZeroMutantIsCaught(t *testing.T) {
+internal/oracle/output_test.go:73:func TestOneFileHoldsNodesOrder(t *testing.T) {
+internal/oracle/output_test.go:125:func TestClosedStdoutEndsAsOnNode(t *testing.T) {
+internal/oracle/output_test.go:203:func TestFileWritesLandInNodesOrder(t *testing.T) {
+internal/oracle/output_test.go:234:func TestAPromptComesBeforeTheRead(t *testing.T) {
+internal/oracle/output_test.go:301:func TestASignalLeavesWhatWasPrinted(t *testing.T) {
+internal/oracle/predicate_counts_test.go:81:func TestPredicateDirectionCountsAreRecorded(t *testing.T) {
+internal/oracle/oct6_mutant_test.go:13:func TestOct6InheritanceMutants(t *testing.T) {
+internal/oracle/oct6_mutant_test.go:82:func TestOct6ReleaseMutant(t *testing.T) {
+internal/oracle/parser_namespaces_test.go:28:func TestParserNamespaceReceiver(t *testing.T) {
+internal/oracle/parser_namespaces_test.go:33:func TestParserNamespaceClass(t *testing.T) {
+internal/oracle/parser_namespaces_test.go:38:func TestParserCallableNamespace(t *testing.T) {
+internal/oracle/parser_namespaces_test.go:43:func TestParserCallableNamespaceMutant(t *testing.T) {
+internal/oracle/parser_namespaces_test.go:117:func TestParserNamespaceClassRegistrationMutant(t *testing.T) {
+internal/oracle/parser_namespaces_test.go:150:func TestParserNamespaceReceiverMutant(t *testing.T) {
+internal/oracle/presence_refused_test.go:23:func TestInUnionNarrowingIsRefused(t *testing.T) {
+internal/oracle/real_nested_functions_test.go:38:func TestClosedNestedConstituentMutant(t *testing.T) {
+internal/oracle/oracle_test.go:263:	{"internal/oracle/testdata/weak_parent.a", true, false},
+internal/oracle/oracle_test.go:271:	{"internal/oracle/testdata/weak_narrowed.a", true, false},
+internal/oracle/oracle_test.go:342:	// parameter moved on, a global moved out while another argument reads it, and a value a Weak
+internal/oracle/oracle_test.go:346:	{"internal/oracle/testdata/reuse_weak_during_spread.a", true, false},
+internal/oracle/oracle_test.go:347:	{"internal/oracle/testdata/reuse_weak_after_reuse.a", true, false},
+internal/oracle/oracle_test.go:728:func TestNativeAgreesWithNode(t *testing.T) {
+internal/oracle/oracle_test.go:796:func TestTheOracleCatchesOneByte(t *testing.T) {
+internal/oracle/regexp_replace_test.go:29:func TestRegExpReplacementNodeMutants(t *testing.T) {
+internal/oracle/regexp_replace_test.go:72:func TestRegExpReplacementTypeGuardMutants(t *testing.T) {
+internal/oracle/review_test.go:150:func TestReviewProgramsAgreeWithNode(t *testing.T) {
+internal/oracle/review_test.go:159:func TestReviewProgramsRefuse(t *testing.T) {
+internal/oracle/review_test.go:188:func TestReviewProgramsNoLooseFiles(t *testing.T) {
+internal/oracle/review_test.go:196:func TestReviewProgramsSelfTest(t *testing.T) {
+internal/oracle/overload_contract_test.go:14:func TestOverloadContractRulings(t *testing.T) {
+internal/oracle/scanner_nested_overload_test.go:17:func TestScannerNestedOverloadImplementationMutantIsCaught(t *testing.T) {
+internal/oracle/parseint_map_guard_test.go:9:func TestParseIntMapIndexRadixAgreesWithNode(t *testing.T) {
+internal/oracle/stage3_hook_test.go:9:// TestStage3FixtureHook exposes the existing helpers through the oracle test
+internal/oracle/stage3_hook_test.go:11:func TestStage3FixtureHook(t *testing.T) {
+internal/oracle/stack_test.go:17:func TestLongArgumentsLeaveTheStackItsLimit(t *testing.T) {
+internal/oracle/stack_test.go:89:func TestSmallStacksStillPanic(t *testing.T) {
+internal/oracle/predicate_refusals_test.go:30:func TestPredicateMiscompileRefusals(t *testing.T) {
+internal/oracle/syntax_substr_test.go:19:func TestSyntaxSubstrMutants(t *testing.T) {
+internal/oracle/switch_empty_test.go:21:func TestSwitchTrailingEmptyMutant(t *testing.T) {
+internal/oracle/regexp_cycle_test.go:26:			"internal/oracle/testdata/regexp_cycle_weak.a",
+internal/oracle/regexp_cycle_test.go:37:func TestRegexCycleFixtureHasItsNativeDependency(t *testing.T) {
+internal/oracle/typeof_dispatch_test.go:25:func TestTypeOfConstructorMutant(t *testing.T) {
+internal/oracle/typeof_dispatch_test.go:62:func TestTypeOfStringLiteralMutant(t *testing.T) {
+internal/oracle/runtime_last_index_test.go:8:func TestRuntimeLastIndexOfMatchesNode(t *testing.T) {
+internal/oracle/unknown_test.go:25:func TestUnknownNarrowingMutants(t *testing.T) {
+internal/oracle/stage3_front_test.go:12:func TestStage3EnumFallthrough(t *testing.T) {
+internal/oracle/statements_small_typescript_test.go:51:func TestStatementsSmallTypeScriptIncrement(t *testing.T) {
+internal/oracle/weak_test.go:8:// A Weak read after what it points to was freed is where native and Node differ by design
+internal/oracle/weak_test.go:10:// Weak points at it. So these programs are held to what each side is meant to do, not to each other:
+internal/oracle/weak_test.go:13:func TestWeakReadsUndefinedOnceFreed(t *testing.T) {
+internal/oracle/weak_test.go:20:			"internal/oracle/testdata/weak/freed.a",
+internal/oracle/weak_test.go:25:			"internal/oracle/testdata/weak/probe_chain.a",
+internal/oracle/weak_test.go:30:			"internal/oracle/testdata/weak/reuse.a",
+internal/oracle/weak_test.go:35:			"internal/oracle/testdata/weak/narrowed.a",
+internal/oracle/weak_test.go:36:			run{stdout: []byte("before: cc\n"), stderr: []byte("adamic: panic: a weak reference was read after what it pointed to was freed\n"), exitCode: 70},
+internal/oracle/syntax_module_declarations_test.go:18:func TestSyntaxModuleDeclarationMutants(t *testing.T) {
+internal/oracle/typed_arrays_test.go:22:func TestTypedArrayWriteStopIsPinned(t *testing.T) {
+internal/oracle/typed_arrays_test.go:47:func TestTypedArrayWorkersStatsMatchesPlatforms(t *testing.T) {
+internal/oracle/pow_runtime_test.go:21:func TestFractionalPowersReachRuntime(t *testing.T) {
+internal/oracle/view_fields_test.go:13:func TestRequiredViewFieldPrimitive(t *testing.T) {
+internal/oracle/view_fields_test.go:93:func TestRequiredViewFieldOperandOnce(t *testing.T) {
+internal/oracle/view_fields_test.go:125:func TestNarrowedFieldUsesSharedReadiness(t *testing.T) {
+internal/oracle/view_fields_test.go:151:func TestViewFieldInheritedStaticReadiness(t *testing.T) {
+internal/oracle/view_fields_test.go:161:func TestDefaultTaggedSourceViews(t *testing.T) {
+internal/oracle/private_generic_mutant_test.go:14:func TestPrivateGenericMethodOwnerMutant(t *testing.T) {
+internal/oracle/switch_case_declaration_test.go:23:func TestSwitchCaseDeadZoneStop(t *testing.T) {
+internal/oracle/switch_case_declaration_test.go:35:func TestSwitchCaseDeclarationMutants(t *testing.T) {
+internal/oracle/switch_case_declaration_test.go:129:func TestSwitchCaseOverloadIsNotYet(t *testing.T) {
+internal/oracle/readiness_test.go:11:	for _, name := range []string{"initialized", "uninitialized", "uninitialized_field", "uninitialized_capture", "uninitialized_exception", "uninitialized_loop", "uninitialized_default", "uninitialized_const", "weak", "definite", "definite_local", "definite_field", "static_initialized", "static_uninitialized", "uninitialized_optional", "uninitialized_spread", "literal_return", "literal_assignment", "literal_statement", "uninitialized_iteration", "uninitialized_catch", "uninitialized_interface", "uninitialized_append", "uninitialized_map_entry", "lazy_initialized", "lazy_read", "lazy_field", "lazy_static", "lazy_default"} {
+internal/oracle/readiness_test.go:26:func TestReadinessMutants(t *testing.T) {
+internal/oracle/readiness_test.go:35:		{"weak-generic-message", "weak", "before\n", "non-null assertion failed: holder.value! is null or undefined"},
+internal/oracle/readiness_test.go:50:			if probe.fixture == "weak" {
+internal/oracle/readiness_test.go:58:func TestUninitializedIsNotNullishMutant(t *testing.T) {
+internal/oracle/readiness_test.go:100:// Native Weak lifetime differs from Node tracing; keep both original observations.
+internal/oracle/readiness_test.go:101:func TestNonNullWeakFreedNamesExpression(t *testing.T) {
+internal/oracle/readiness_test.go:103:	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/non_null_weak_freed.ts"))
+internal/oracle/readiness_test.go:124:		if target, ok := node.(ir.WeakTarget); ok && !target.Present {
+internal/oracle/readiness_test.go:132:		t.Fatal("Weak diagnostic mutant changed nothing")
+internal/oracle/readiness_test.go:136:		t.Fatal("freed Weak diagnostic mutant escaped pinned output")
+internal/oracle/readiness_test.go:138:	t.Logf("freed Weak diagnostic mutant caught: %s", mutant.stderr)
+internal/oracle/readiness_test.go:141:func TestLazyInitializerIsNotEagerMutant(t *testing.T) {
+internal/oracle/typeof_null_test.go:33:func TestTypeOfNullMutant(t *testing.T) {
+internal/oracle/typeof_null_test.go:111:func TestTypeOfNullSlotPresenceMutant(t *testing.T) {
+internal/oracle/wasi_test.go:16:// TestWASIAgreesWithNode runs every ordinary fixture as a WASI command.
+internal/oracle/wasi_test.go:18:func TestWASIAgreesWithNode(t *testing.T) {
+internal/oracle/wasi_test.go:90:func TestWASIOracleCatchesMutants(t *testing.T) {
+internal/oracle/wasi_test.go:113:func TestWASIRunnerCatchesMutants(t *testing.T) {
+internal/oracle/wasi_test.go:144:func TestWASIEmission(t *testing.T) {
+internal/oracle/representation_clock_source_test.go:20:func TestRepresentationClockSourceMutant(t *testing.T) {
+internal/oracle/statements_small_rulings_test.go:12:func TestStatementsSmallRulings(t *testing.T) {
+internal/oracle/wasi_shards_test.go:73:func TestWASIShardUnion(t *testing.T) {
+internal/oracle/wasi_shards_test.go:103:func TestWASIShardPlantedDisagreement(t *testing.T) {
+internal/oracle/wasi_shards_test.go:133:func TestWASIShardPlantedFixture(t *testing.T) {
+internal/oracle/wasi_shards_test.go:166:	command := exec.CommandContext(ctx, executable, "-test.run=^TestWASIShardPlantedFixture$", "-test.timeout=90s", "-test.parallel=4", "-test.v")
+internal/oracle/wasi_shards_test.go:173:	if !errors.As(err, &exit) || !strings.Contains(string(output), "--- FAIL: TestWASIShardPlantedFixture/"+name) || !strings.Contains(string(output), "stdout differs") {
+internal/oracle/scanner_nested_references_test.go:27:func TestScannerNestedReferenceMutants(t *testing.T) {
+internal/oracle/scanner_nested_references_test.go:81:func TestScannerNestedReferences(t *testing.T) {
+internal/oracle/scanner_nested_references_test.go:113:func TestNestedReferenceIdentityMutant(t *testing.T) {
+internal/oracle/notyet_library_regex_offset_test.go:14:func TestNotYetLibraryRegexOffsetMutants(t *testing.T) {
+internal/oracle/namespaces_test.go:43:func TestNamespaceSemanticMutants(t *testing.T) {
+internal/oracle/namespaces_test.go:203:func TestNamespaceStateMutants(t *testing.T) {
+internal/oracle/non_null_checked_test.go:23:func TestCheckedNonNullTypeScript(t *testing.T) {
+internal/oracle/non_null_checked_test.go:138:func TestCheckedNonNullAdamicRefusal(t *testing.T) {
+internal/oracle/non_null_checked_test.go:152:func TestCheckedNonNullCounts(t *testing.T) {
+internal/oracle/nested_functions_test.go:14:	for _, name := range []string{"minimal", "captures", "hoisting", "mutual", "returned", "array", "three_levels", "tdz", "tdz_write", "weak", "destructured", "destructured_tdz", "mixed", "pattern_parameter", "owned_parameter", "generic_capture", "assignment_return", "reduced_parameter_unused", "reduced_parameter_unreachable", "reduced_parameter_escaped", "callback_recursive", "callback_escaped", "callback_levels", "callback_late_capture"} {
+internal/oracle/nested_functions_test.go:25:func TestNestedSiblingCycleMutantIsCaught(t *testing.T) {
+internal/oracle/nested_functions_test.go:95:func TestNestedCycleRefusal(t *testing.T) {
+internal/oracle/nested_functions_test.go:117:func TestNestedRebindingCheckerRefusal(t *testing.T) {
+internal/oracle/nested_functions_test.go:129:func TestNestedCallbackCarrierMutantIsCaught(t *testing.T) {
+internal/oracle/literal_optional_test.go:24:func TestLiteralOptionalOracleCatchesMutant(t *testing.T) {

@@ -1,0 +1,106 @@
+[
+  {
+    "test": "TestWASIEmission",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestWeakReadsUndefinedOnceFreed"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/emit_values.go:22",
+        "change": "Map C type: \"adamic_map *\" -> \"adamic_array *\".",
+        "rows_failed": [
+          "TestNativeAgreesWithNode",
+          "TestWASIAgreesWithNode",
+          "TestWASIEmission"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/native/emit_values.go:28",
+        "change": "MaybeBoolean C type: \"adamic_maybe_boolean\" -> \"bool\".",
+        "rows_failed": [
+          "TestNativeAgreesWithNode",
+          "TestWASIAgreesWithNode",
+          "TestWASIEmission"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/native/emit.go:150",
+        "change": "Off-by-one longestLiteral: 4095 -> 4096.",
+        "rows_failed": [
+          "TestNativeAgreesWithNode",
+          "TestWASIAgreesWithNode",
+          "TestWASIEmission"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_ORACLE_WASI=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-oracle-wasi/cache/D4-final timeout 120 go test -overlay=/tmp/defend-oracle-wasi/D4.overlay.json -json -count=1 -timeout 90s ./internal/oracle/ -run \"$PATTERN\" > D4-final.log 2>&1; wasi_test.go:174: emitted C: exit status 1",
+    "bounded": true,
+    "matrix_rows": [
+      "TestNativeAgreesWithNode",
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestReadinessMutants",
+      "TestWASIOracleCatchesMutants",
+      "TestWASIRunnerCatchesMutants",
+      "TestWASIShardPlantedDisagreement",
+      "TestWASIShardPlantedFixture",
+      "TestWASIShardUnion",
+      "TestWeakReadsUndefinedOnceFreed"
+    ]
+  },
+  {
+    "test": "TestWeakReadsUndefinedOnceFreed",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestWASIAgreesWithNode"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/native/runtime/weak.c:141",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/native/runtime/weak.c:141",
+        "change": "Change the freed-target panic message constant to \"a weak target was freed\".",
+        "rows_failed": [
+          "TestWeakReadsUndefinedOnceFreed"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_ORACLE_WASI=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-oracle-wasi/cache/D1-final timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run \"$PATTERN\" > D1-final.log 2>&1; weak_test.go:52: native: stderr differs: exit 70, stdout \"before: cc\\n\", stderr \"adamic: panic: a weak target was freed\\n\"",
+    "bounded": true,
+    "matrix_rows": [
+      "TestWeakReadsUndefinedOnceFreed",
+      "TestNativeAgreesWithNode",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestReadinessMutants",
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWASIOracleCatchesMutants",
+      "TestWASIRunnerCatchesMutants",
+      "TestWASIShardPlantedDisagreement",
+      "TestWASIShardPlantedFixture",
+      "TestWASIShardUnion"
+    ],
+    "passed_rows": [
+      "TestNativeAgreesWithNode",
+      "TestNonNullWeakFreedNamesExpression",
+      "TestReadinessMutants",
+      "TestWASIAgreesWithNode",
+      "TestWASIEmission",
+      "TestWASIOracleCatchesMutants",
+      "TestWASIRunnerCatchesMutants",
+      "TestWASIShardPlantedDisagreement",
+      "TestWASIShardPlantedFixture",
+      "TestWASIShardUnion"
+    ]
+  }
+]

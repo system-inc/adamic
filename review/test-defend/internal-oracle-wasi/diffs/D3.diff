@@ -1,0 +1,11 @@
+--- a/internal/native/emit_values.go
++++ b/internal/native/emit_values.go
+@@ -25,7 +25,7 @@
+ 	case ir.MaybeNumber:
+ 		return "adamic_maybe_number"
+ 	case ir.MaybeBoolean:
+-		return "adamic_maybe_boolean"
++		return "bool"
+ 	case ir.Union:
+ 		return "adamic_heap *"
+ 	case ir.Weak:

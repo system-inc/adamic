@@ -1,0 +1,3 @@
+ADAMIC_ORACLE_WASI=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-oracle-wasi/cache/D4-final timeout 120 go test -overlay=/tmp/defend-oracle-wasi/D4.overlay.json -json -count=1 -timeout 90s ./internal/oracle/ -run "$PATTERN" > D4-final.log 2>&1
+ADAMIC_ORACLE_WASI=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-oracle-wasi/cache/D1-final timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run "$PATTERN" > D1-final.log 2>&1
+Coverage: ADAMIC_ORACLE_WASI=1 timeout 120 go test -json -count=1 -timeout 90s -coverpkg=./internal/native -coverprofile=PATH ./internal/oracle/ -run PATTERN > LOG 2>&1

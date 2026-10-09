@@ -1,0 +1,20 @@
+[
+  {
+    "id": "D2",
+    "file": "internal/native/emit_values.go",
+    "old": "case ir.Map:\n\t\treturn \"adamic_map *\"",
+    "new": "case ir.Map:\n\t\treturn \"adamic_array *\""
+  },
+  {
+    "id": "D3",
+    "file": "internal/native/emit_values.go",
+    "old": "case ir.MaybeBoolean:\n\t\treturn \"adamic_maybe_boolean\"",
+    "new": "case ir.MaybeBoolean:\n\t\treturn \"bool\""
+  },
+  {
+    "id": "D4",
+    "file": "internal/native/emit.go",
+    "old": "const longestLiteral = 4095",
+    "new": "const longestLiteral = 4096"
+  }
+]

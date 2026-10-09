@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/weak.c b/internal/native/runtime/weak.c
+index 4bd699cd..36b2e62a 100644
+--- a/internal/native/runtime/weak.c
++++ b/internal/native/runtime/weak.c
+@@ -138,7 +138,7 @@ void *adamic_weak_target(const adamic_weak *handle) {
+ void *adamic_weak_target_present(const adamic_weak *handle) {
+ 	void *target = adamic_weak_target(handle);
+ 	if (target == NULL) {
+-		static const char message[] = "a weak reference was read after what it pointed to was freed";
++		static const char message[] = "a weak target was freed";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+ 	return target;
