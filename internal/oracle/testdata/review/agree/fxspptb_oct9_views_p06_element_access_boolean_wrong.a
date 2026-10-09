@@ -1,0 +1,6 @@
+// A wrong view's number field, read by a string-literal key, holds a boolean.
+interface Holder { readonly kind: 'Holder'; readonly count: number; }
+const raw = { kind: 'Holder' as const, count: true };
+const base: { readonly kind: 'Holder' } = raw;
+const view = base as Holder;
+console.log(`${view['count'] + 1}`);
