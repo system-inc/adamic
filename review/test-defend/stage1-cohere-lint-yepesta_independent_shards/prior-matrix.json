@@ -1,0 +1,84 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 5,
+    "change": "context.kind(index) !== 'JsxText' -> context.kind(index) === 'JsxText'",
+    "menu": "flip condition",
+    "failed_rows": [],
+    "bounded": true,
+    "status": "survivor"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 13,
+    "change": "character === '\\n' -> character === '\\r'",
+    "menu": "change constant",
+    "failed_rows": [],
+    "bounded": true,
+    "status": "survivor"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+    "line": 9,
+    "change": "context.source.slice(node.pos, node.end) -> context.source.slice(node.pos, node.end - 1)",
+    "menu": "off-by-one bound",
+    "failed_rows": [],
+    "bounded": true,
+    "status": "survivor"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/lint/lint.ts",
+    "line": 104,
+    "change": "this.findings.sort(compareFindings); -> [drop statement]",
+    "menu": "drop statement",
+    "failed_rows": [],
+    "bounded": true,
+    "status": "survivor"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/lint/lint_test.go",
+    "line": 158,
+    "change": "replace comparison body with return \"\"",
+    "failed_rows": [
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure"
+    ],
+    "kind": "witness",
+    "bounded": true
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/lint/yepesta_independent_shards_test.go",
+    "line": 182,
+    "change": "condition -> true, treating every answer as equal",
+    "failed_rows": [
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled"
+    ],
+    "kind": "witness",
+    "bounded": true
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/lint/yepesta_independent_shards_test.go",
+    "line": 266,
+    "change": "drop oracle build call and return nil",
+    "failed_rows": [
+      "TestMutantsReactJsxNoCommentTextnodesSetup family"
+    ],
+    "kind": "construction",
+    "bounded": true
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/lint/yepesta_independent_shards_test.go",
+    "line": 321,
+    "change": "marshal yepestaBundle{}",
+    "failed_rows": [],
+    "kind": "construction",
+    "bounded": true
+  }
+]

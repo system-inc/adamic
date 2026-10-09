@@ -1,0 +1,1 @@
+Family profile is partial: its pristine coverage run timed out in C emission. It proves construction reached these Go blocks, not that any shard executed the native canary. Other profile is a completed TestNestedOutsideModuleCopy run, not the rest of the package. Exclusive blocks are only leads relative to that row. No full-rest coverage claim is made.

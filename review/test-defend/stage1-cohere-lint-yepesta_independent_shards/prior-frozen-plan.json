@@ -1,0 +1,50 @@
+{
+  "commit": "ce1c5a2fd91e40b05160e587ea5d88ed5bdfedb2",
+  "code": "TypeScript lint port; entry main.ts run; Linter and RuleContext, generated rule registry, stage1 Parser/Scanner; conservative static function inventory in source-functions.txt is not dynamic reach proof",
+  "oracle": "Node executes copied builtin-mutated TypeScript; Go cohere is outside oracle only for MutantKilled witness",
+  "mutants": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+      "from": "context.kind(index) !== 'JsxText'",
+      "to": "context.kind(index) === 'JsxText'",
+      "menu": "flip condition"
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+      "from": "character === '\\n'",
+      "to": "character === '\\r'",
+      "menu": "change constant"
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/lint/rules/react-jsx-no-comment-textnodes/rule.ts",
+      "from": "context.source.slice(node.pos, node.end)",
+      "to": "context.source.slice(node.pos, node.end - 1)",
+      "menu": "off-by-one bound"
+    },
+    {
+      "id": "M4",
+      "file": "stage1/cohere/lint/lint.ts",
+      "from": "        this.findings.sort(compareFindings);",
+      "to": "",
+      "menu": "drop statement"
+    }
+  ],
+  "probe": {
+    "id": "P1",
+    "file": "stage1/cohere/lint/main.ts",
+    "entry": "run",
+    "change": "replace run body with return 0; original insertion rejected by TypeScript narrowing diagnostics",
+    "status": "not adjudicated: both body-replacement builds cooked in C emission; third bounded isolation cancelled at budget stop"
+  },
+  "witnesses": [
+    "W1 difference returns empty",
+    "W2 loosen MutantKilled comparison so disagreement rejected is never checked"
+  ],
+  "construction": [
+    "S1 omit oracle build callback",
+    "S2 marshal empty bundle"
+  ]
+}

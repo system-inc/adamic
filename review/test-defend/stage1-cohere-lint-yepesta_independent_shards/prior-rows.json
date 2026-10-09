@@ -1,0 +1,163 @@
+[
+  {
+    "test": "TestMutantsReactJsxNoCommentTextnodes family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/yepesta_independent_shards_test.go",
+    "seconds": 6.574,
+    "oracle": "Node runs the same copied, already-mutated TypeScript as the compiled products; full byte equality checks compiler fidelity. Go cohere disagreement is logged but not asserted by the shards. Union construction expectations are self-written.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMutantsReactJsxNoCommentTextnodes family",
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+      "TestMutantsReactJsxNoCommentTextnodesSetup family",
+      "TestProduct_YepestaOracle"
+    ],
+    "evidence": "M1,M2,M3: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^(TestMutantsReactJsxNoCommentTextnodes.*|TestProduct_YepestaOracle)$'; package PASS and all 24 test pass events. M4-warm-lowered.log and five M4-isolated-*.log likewise pass. No proven assertion failure under these four production mutants.",
+    "members": [
+      "TestMutantsReactJsxNoCommentTextnodesUnion",
+      "TestMutantsReactJsxNoCommentTextnodes_000",
+      "TestMutantsReactJsxNoCommentTextnodes_001",
+      "TestMutantsReactJsxNoCommentTextnodes_002",
+      "TestMutantsReactJsxNoCommentTextnodes_003",
+      "TestMutantsReactJsxNoCommentTextnodes_004",
+      "TestMutantsReactJsxNoCommentTextnodes_005",
+      "TestMutantsReactJsxNoCommentTextnodes_006",
+      "TestMutantsReactJsxNoCommentTextnodes_007",
+      "TestMutantsReactJsxNoCommentTextnodes_008",
+      "TestMutantsReactJsxNoCommentTextnodes_009",
+      "TestMutantsReactJsxNoCommentTextnodes_010",
+      "TestMutantsReactJsxNoCommentTextnodes_011",
+      "TestMutantsReactJsxNoCommentTextnodes_012",
+      "TestMutantsReactJsxNoCommentTextnodes_013",
+      "TestMutantsReactJsxNoCommentTextnodes_014",
+      "TestMutantsReactJsxNoCommentTextnodes_015"
+    ]
+  },
+  {
+    "test": "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/yepesta_independent_shards_test.go",
+    "seconds": 1.8,
+    "oracle": "Go cohere runs outside Adamic. This witness requires any byte disagreement, not a specified missing JSX finding; healthy subprocess exit is checked separately.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: yepesta_independent_shards_test.go:183: JSX textnode mutant survived on Node",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMutantsReactJsxNoCommentTextnodes family",
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+      "TestMutantsReactJsxNoCommentTextnodesSetup family",
+      "TestProduct_YepestaOracle"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestMutantsReactJsxNoCommentTextnodesMutantKilled$' > W2.log 2>&1; yepesta_independent_shards_test.go:183: JSX textnode mutant survived on Node"
+  },
+  {
+    "test": "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/yepesta_independent_shards_test.go",
+    "seconds": 1.651,
+    "oracle": "Self-written inserted output and expected catch count 1. The owner shard is logged, not asserted against its assignment. Go cohere supplies the output being copied.",
+    "oracle_kind": [
+      "self",
+      "external-run"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: yepesta_independent_shards_test.go:227: planted disagreement caught by 0 shards",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMutantsReactJsxNoCommentTextnodes family",
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+      "TestMutantsReactJsxNoCommentTextnodesSetup family",
+      "TestProduct_YepestaOracle"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestMutantsReactJsxNoCommentTextnodesPlantedFailure$' > W1.log 2>&1; yepesta_independent_shards_test.go:227: planted disagreement caught by 0 shards"
+  },
+  {
+    "test": "TestMutantsReactJsxNoCommentTextnodesSetup family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/yepesta_independent_shards_test.go",
+    "seconds": 1.423,
+    "oracle": "Self: shared product preparation must succeed. No explicit validation of nonempty rows or bundle paths: S2 persisted empty fields and all four setup aliases passed.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: yepesta_independent_shards_test.go:273: shared preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMutantsReactJsxNoCommentTextnodes family",
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+      "TestMutantsReactJsxNoCommentTextnodesSetup family",
+      "TestProduct_YepestaOracle"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run '^TestProduct_YepestaOracle$|^TestMutantsReactJsxNoCommentTextnodes(OracleSetup|LoweredSetup|NativeSetup|_Setup)$' > S1.log 2>&1; yepesta_independent_shards_test.go:273: shared preparation failed",
+    "members": [
+      "TestMutantsReactJsxNoCommentTextnodesOracleSetup",
+      "TestMutantsReactJsxNoCommentTextnodesLoweredSetup",
+      "TestMutantsReactJsxNoCommentTextnodesNativeSetup",
+      "TestMutantsReactJsxNoCommentTextnodes_Setup"
+    ]
+  },
+  {
+    "test": "TestProduct_YepestaOracle",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/yepesta_products_test.go",
+    "seconds": 1.428,
+    "oracle": "Self: build callback success only. It does not assert executable existence: S1 returned successfully without building it, oracle_exists=false in construction-witnesses.json.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMutantsReactJsxNoCommentTextnodes family",
+      "TestMutantsReactJsxNoCommentTextnodesMutantKilled",
+      "TestMutantsReactJsxNoCommentTextnodesPlantedFailure",
+      "TestMutantsReactJsxNoCommentTextnodesSetup family",
+      "TestProduct_YepestaOracle"
+    ],
+    "evidence": "S1 construction run: --- PASS: TestProduct_YepestaOracle (1.70s); construction-witnesses.json proves oracle_exists=false."
+  }
+]
