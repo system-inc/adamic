@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "green",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T120326-0b141ec5",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "cffe43477b398ad8c40c6cad979df65c1a1b95cb",
+  "branch": "codex/step31-emitter-native",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "candidate": "cffe43477b398ad8c40c6cad979df65c1a1b95cb",
+  "gated": "41e1dd15dd2ef2b88cba4f85ef7c6bc707a053b8",
+  "unplanned_packages_not_run": 53
+}
