@@ -1,32 +1,17 @@
 #!/usr/bin/env bash
-# Moves main to a sha whose whole gate ran green and uncached, then records the landing and merges
-# main back into every area. Only integration runs it. It checks what it can (a full sha, main still
-# its ancestor, no failures) and refuses otherwise; the gate itself is the caller's evidence, passed
-# as numbers, and must have run with ADAMIC_GATE_UNCACHED=1 and "gate cache: ... hits=0".
+# Moves main to a sha whose gate ran green and uncached, in one landing commit, and merges main back
+# into every area. Only integration runs it. It checks what it can (a full sha, main still its
+# ancestor, no failures) and refuses otherwise.
 #
-# The landing's row goes to documentation/velocity/landings.csv in its own commit on top of the green
-# sha. That commit changes no other file, which the script checks before it pushes, so the gated tree
-# and the pushed tree differ by that one row (ruled by @system_adamic, October 6).
-#
-# --defer-velocity holds this landing's row in a local file instead of committing it now, so a
-# speculative stack built on this sha stays a fast-forward; the next push writes every held row
-# in its own velocity commit.
-#
-# --meter-run <commit> also records a stage 3 meter run (stage3/meter/twice-daily.sh, run on a box
-# against main) in a commit of its own after the velocity row. Only the files that commit adds under
-# stage3/meter/runs/ are taken, plus stage3/progress.json (stage 3's milestone record) while nothing in
-# the landing reads that file, so it can't change what a gate tested; the script refuses to push if
-# the record changes anything else. A meter run is measured after a landing, so each landing carries
-# the newest run there is.
+# Each landing is one commit on main: first parent the old main, second the landed sha, its tree
+# exactly what was gated (or, over a main that moved by records and tests only, that plus main's), and
+# its numbers as trailers: Old-main, Landed-commits, Branches, Gate-minutes, Pass, Fail, Skip, Backlog
+# (@system_adamic, Oct 9, from Kirk: "whats the point of all these record the landings?"). Nothing else
+# is committed, so main moves once per landing. `git log --first-parent` over the landing commits is
+# the velocity table, and landings.py beside this script prints it as CSV.
 #
 # Gate minutes are wall time from the first gate start to the last green piece (the whole run, its
-# reruns, input runs and groups), so every row means the same thing (@system_adamic, October 7).
-# --correct-minutes <new_main> <minutes> "<note>" rewrites an earlier row that was recorded another
-# way, in this landing's velocity commit: the row whose new_main starts with <new_main> gets <minutes>
-# and "; <note>" on its branches field. Exactly one row must match.
-# --strike-row <new_main> "<why>" removes an earlier row that should never have been written (a sha
-# landed twice records a second row that counts the same work again), in this landing's velocity
-# commit, and says why in that commit's message. Exactly one row must match.
+# reruns, input runs and groups), so every landing means the same thing (@system_adamic, October 7).
 #
 # The fast gate (Kirk, October 7: "we need tests to run in <1 minute"): --fast-gate <gate-logs ref>
 # lands on the fast gate developer tools runs on the Threadripper (build and vet everywhere, the
@@ -42,17 +27,11 @@
 # main-reds.tsv beside this script, except a revert (--revert) or a fix-forward naming that red log
 # (--fix-forward <gate-logs ref>). Main never carries two unexplained reds.
 #
-# usage: cloud/integration/push-main.sh [--defer-velocity] [--meter-run <commit>] [--correct-minutes <new_main> <minutes> "<note>"] [--strike-row <new_main> "<why>"] [--revert | --fix-forward <red log ref>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
-#        cloud/integration/push-main.sh [same options] --fast-gate <gate-logs ref> [--smoke-list-reviewed] <full sha> "<branches landed>"
+# usage: cloud/integration/push-main.sh [--revert | --fix-forward <red log ref>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
+#        cloud/integration/push-main.sh [same options] (--fast-gate | --full-gate) <gate-logs ref> [--smoke-list-reviewed] <full sha> "<branches landed>"
+#        cloud/integration/push-main.sh --test-only <full sha> "<branches landed>"
 set -euo pipefail
 
-defer=no
-meterRun=""
-correctMain=""
-correctMinutes=""
-correctNote=""
-strikeMain=""
-strikeWhy=""
 fastGate=""
 gateKind=fast
 smokeReviewed=no
@@ -60,10 +39,6 @@ pauseException=""
 testOnly=no
 while [ "$#" -gt 0 ]; do
 	case "$1" in
-	--defer-velocity) defer=yes; shift ;;
-	--meter-run) meterRun=$2; shift 2 ;;
-	--correct-minutes) correctMain=$2; correctMinutes=$3; correctNote=$4; shift 4 ;;
-	--strike-row) strikeMain=$2; strikeWhy=$3; shift 3 ;;
 	--fast-gate) fastGate=${2#origin/}; shift 2 ;;
 	# --full-gate <gate-logs ref>/full-main of this exact sha: the whole gate as the landing's verdict
 	# and main's confirmation in one (@system_adamic, October 8). It is a superset of the fast gate,
@@ -78,34 +53,6 @@ while [ "$#" -gt 0 ]; do
 	*) break ;;
 	esac
 done
-if [ "$defer" = yes ] && [ -n "$meterRun" ]; then
-	echo "refused: a meter run is recorded with the velocity row, so it can't ride a deferred push" >&2
-	exit 2
-fi
-if [ -n "$correctMain" ]; then
-	if [ "$defer" = yes ]; then
-		echo "refused: a corrected row is written with the velocity commit, so it can't ride a deferred push" >&2
-		exit 2
-	fi
-	if ! [[ "$correctMain" =~ ^[0-9a-f]{8,40}$ ]] || ! [[ "$correctMinutes" =~ ^[0-9]+$ ]]; then
-		echo "refused: --correct-minutes takes a main sha of 8 or more hex characters and whole minutes" >&2
-		exit 2
-	fi
-fi
-if [ -n "$strikeMain" ]; then
-	if [ "$defer" = yes ]; then
-		echo "refused: a struck row is removed in the velocity commit, so it can't ride a deferred push" >&2
-		exit 2
-	fi
-	if ! [[ "$strikeMain" =~ ^[0-9a-f]{8,40}$ ]] || [ -z "$strikeWhy" ]; then
-		echo "refused: --strike-row takes a main sha of 8 or more hex characters and a reason" >&2
-		exit 2
-	fi
-	if [ "$strikeMain" = "$correctMain" ]; then
-		echo "refused: one row can't be both corrected and struck" >&2
-		exit 2
-	fi
-fi
 if [ "$testOnly" = yes ]; then
 	if [ "$#" -ne 2 ]; then
 		echo "usage: $0 --test-only <full sha> \"<branches landed>\"" >&2
@@ -166,10 +113,7 @@ countingPaths() {
 		printf '%s\n' "$path"
 	done
 }
-velocityFile=documentation/velocity/landings.csv
-velocityHeader=pushed_at_utc,old_main,new_main,commits_landed,branches_landed,gate_minutes,pass,fail,skip,backlog_commits
 directory=$(cd "$(dirname "$0")" && pwd)
-heldRows="$(git rev-parse --git-common-dir)/velocity-held-rows.csv"
 
 if ! [[ "$sha" =~ ^[0-9a-f]{40}$ ]]; then
 	echo "refused: pass the full 40-character sha, not $sha" >&2
@@ -411,13 +355,14 @@ git fetch -q origin
 old=$(git rev-parse origin/main)
 if [ "$old" = "$sha" ] || git merge-base --is-ancestor "$sha" "$old"; then
 	# Already on main: the train or another hand landed it first. Landing it again would push an empty
-	# record-only merge and a second velocity row (Oct 9: e3f2be21 landed twice, 5bc33818..b620d51b).
+	# landing commit counting the same work twice (Oct 9: e3f2be21 landed twice, 5bc33818..b620d51b).
 	echo "refused: main ${old:0:8} already holds ${sha:0:8}" >&2
 	exit 1
 fi
+gated=$sha
 if [ "$testOnly" = yes ]; then
-	if ! tree=$(git merge-tree --write-tree "$old" "$sha" | head -n 1) || [ -z "$tree" ]; then
-		echo "refused: ${sha:0:8} doesn't merge cleanly with main ${old:0:8}" >&2
+	if ! tree=$(git merge-tree --write-tree "$old" "$gated" | head -n 1) || [ -z "$tree" ]; then
+		echo "refused: ${gated:0:8} doesn't merge cleanly with main ${old:0:8}" >&2
 		exit 1
 	fi
 	# Tests only: Go test files, testdata, review evidence and shard tables. Anything else needs a gate.
@@ -435,19 +380,22 @@ if [ "$testOnly" = yes ]; then
 		echo "refused: it changes test harness ($(printf '%s' "$harness" | head -n 3 | paste -sd ' ' -)) with no mutant evidence among its files" >&2
 		exit 1
 	fi
-	if ! git merge-base --is-ancestor "$old" "$sha" || [ "$(git rev-parse "${sha}^{tree}")" != "$tree" ]; then
-		sha=$(git commit-tree "$tree" -p "$old" -p "$sha" -m "Land test-only ${sha:0:8} over main ${old:0:8}
-
-Every path it changes against main is a test, testdata, review evidence or a shard table, so it lands with no
-gate (Kirk, Oct 8); Loom's next whole-suite run of main is its check.")
-	fi
-	echo "Landing test-only ${sha:0:8} over main ${old:0:8}."
-elif ! git merge-base --is-ancestor "$old" "$sha"; then
-	# Ruled by @system_adamic, October 7: a green stack lands over a main that moved only by record
-	# commits (the velocity table, meter runs, and a progress.json nothing in the landing reads). The
-	# landing is a merge whose tree is the gated tree plus exactly those record paths from main, so
-	# what reaches main is what the gate tested; any other commit on main means merge and gate again.
-	gated=$sha
+	landingSubject="Land test-only ${gated:0:8} over main ${old:0:8}"
+	landingBody="Every path it changes against main is a test, testdata, review evidence, a shard table or ruled harness,
+so it lands with no gate (Kirk, Oct 8); Loom's next whole-suite run of main is its check."
+	echo "Landing test-only ${gated:0:8} over main ${old:0:8}."
+elif git merge-base --is-ancestor "$old" "$gated"; then
+	tree=$(git rev-parse "${gated}^{tree}")
+	landingSubject="Land ${gated:0:8} over main ${old:0:8}"
+	landingBody="The tree is ${gated:0:8}'s, as gated."
+	echo "Landing ${gated:0:8} over main ${old:0:8}."
+else
+	# Ruled by @system_adamic, October 7 and October 9: a green candidate lands over a main that moved only
+	# by record and test-only commits (the old velocity table, meter runs, a progress.json nothing in the
+	# landing reads, and tests outside the candidate's code packages). The landing's tree is the gated
+	# tree plus exactly those paths from main; any other commit on main means merge and gate again. A
+	# candidate built ahead on a gated sha lands this way over that sha's landing commit, whose tree is
+	# the same as the sha's.
 	# git computes the merge itself (merge-tree, no worktree), so a stack that already holds main's
 	# older commits, or two merge bases, is judged by the tree it would really produce.
 	if ! tree=$(git merge-tree --write-tree "$old" "$gated" | head -n 1) || [ -z "$tree" ]; then
@@ -464,115 +412,36 @@ elif ! git merge-base --is-ancestor "$old" "$sha"; then
 		echo "refused: main's stage3/progress.json differs from ${gated:0:8}'s and ${gated:0:8} reads it; merge it in and gate again" >&2
 		exit 1
 	fi
-	sha=$(git commit-tree "$tree" -p "$old" -p "$gated" -m "Land ${gated:0:8} over main ${old:0:8}, which moved only by record and test-only commits
+	landingSubject="Land ${gated:0:8} over main ${old:0:8}, which moved only by record and test-only commits"
+	landingBody="The tree is ${gated:0:8}'s, as gated, plus $(printf '%s\n' "$recordPaths" | grep -c . || true) record and test-only paths from main."
+	echo "Landing ${gated:0:8} over main ${old:0:8}, which moved only by record and test-only commits."
+fi
 
-The tree is ${gated:0:8}'s, as gated, plus main's record and test-only paths: $(printf '%s\n' "$recordPaths" | grep . | sed 's#^stage3/meter/runs/\([^/]*\)/.*#stage3/meter/runs/\1/#' | sort -u | paste -sd ' ' -).")
-	echo "Landing ${gated:0:8} over record-only main ${old:0:8} as ${sha:0:8} (tree = gated tree + record paths)."
-fi
-if [ -n "$correctMain" ]; then
-	matched=$(git show "${sha}:${velocityFile}" 2>/dev/null | awk -F, -v main="$correctMain" 'index($3, main) == 1' | wc -l | tr -d ' ')
-	if [ "$matched" != "1" ]; then
-		echo "refused: ${matched} velocity rows have new_main ${correctMain}, not one" >&2
-		exit 1
-	fi
-fi
-if [ -n "$strikeMain" ]; then
-	matched=$(git show "${sha}:${velocityFile}" 2>/dev/null | awk -F, -v main="$strikeMain" 'index($3, main) == 1' | wc -l | tr -d ' ')
-	if [ "$matched" != "1" ]; then
-		echo "refused: ${matched} velocity rows have new_main ${strikeMain}, not one" >&2
-		exit 1
-	fi
-fi
-git push origin "${sha}:refs/heads/main"
-commitsLanded=$(git rev-list --count "${old}..${sha}")
+# One commit per landing, first parent the old main and second the landed sha, its tree exactly the
+# landing's, its numbers as trailers (@system_adamic, Oct 9, from Kirk: the velocity table left main).
+# `git log --first-parent` over these is the velocity table; landings.py prints it as CSV.
+commitsLanded=$(($(git rev-list --count "${old}..${gated}") + 1))
+backlog=$(git rev-list --count --no-merges --remotes=origin "^${gated}")
+landing=$(git commit-tree "$tree" -p "$old" -p "$gated" -F - <<MESSAGE
+${landingSubject}
 
-# The row. Branch names are joined with semicolons so the field needs no quoting.
-backlog=$(git rev-list --count --no-merges --remotes=origin "^${sha}")
-row="$(date -u +%Y-%m-%dT%H:%M:%SZ),${old},${sha},${commitsLanded},$(printf '%s' "$branches" | tr ',' ';'),${gateMinutes},${pass},${fail},${skip},${backlog}"
-if [ "$defer" = yes ]; then
-	printf '%s\n' "$row" >>"$heldRows"
-	echo "Pushed main ${old:0:8}..${sha:0:8}, ${commitsLanded} commits (${branches}), gate ${pass} pass / ${fail} fail / ${skip} skip, ${gateMinutes} minutes uncached; velocity row held for the next push; backlog ${backlog} commits."
-	"$directory/merge-back.sh"
-	exit 0
-fi
-rows=$row
-if [ -s "$heldRows" ]; then
-	rows="$(cat "$heldRows")
-$row"
-fi
-if existing=$(git show "${sha}:${velocityFile}" 2>/dev/null); then
-	if [ -n "$correctMain" ]; then
-		matched=$(printf '%s\n' "$existing" | awk -F, -v main="$correctMain" 'index($3, main) == 1' | wc -l | tr -d ' ')
-		if [ "$matched" != "1" ]; then
-			echo "main is pushed as ${sha:0:8}, but its velocity row is NOT written: ${matched} rows have new_main ${correctMain}, not one; write the row by hand" >&2
-			exit 1
-		fi
-		existing=$(printf '%s\n' "$existing" | awk -F, -v OFS=, -v main="$correctMain" -v minutes="$correctMinutes" -v note="$(printf '%s' "$correctNote" | tr ',' ';')" 'index($3, main) == 1 { $5 = $5 "; " note; $6 = minutes } { print }')
-	fi
-	if [ -n "$strikeMain" ]; then
-		matched=$(printf '%s\n' "$existing" | awk -F, -v main="$strikeMain" 'index($3, main) == 1' | wc -l | tr -d ' ')
-		if [ "$matched" != "1" ]; then
-			echo "main is pushed as ${sha:0:8}, but its velocity row is NOT written: ${matched} rows have new_main ${strikeMain}, not one; write the row by hand" >&2
-			exit 1
-		fi
-		existing=$(printf '%s\n' "$existing" | awk -F, -v main="$strikeMain" 'index($3, main) != 1')
-	fi
-	blob=$(printf '%s\n%s\n' "$existing" "$rows" | git hash-object -w --stdin)
-else
-	blob=$(printf '%s\n%s\n' "$velocityHeader" "$rows" | git hash-object -w --stdin)
-fi
-index=$(mktemp)
-GIT_INDEX_FILE=$index git read-tree "$sha"
-GIT_INDEX_FILE=$index git update-index --add --cacheinfo "100644,${blob},${velocityFile}"
-tree=$(GIT_INDEX_FILE=$index git write-tree)
-rm -f "${index:?}"
-velocityMessage="Record the landing ${old:0:8}..${sha:0:8} in the velocity table"
-if [ -n "$strikeMain" ]; then
-	velocityMessage="${velocityMessage}
+${landingBody}
 
-It also strikes the row for ${strikeMain:0:8}: ${strikeWhy}"
-fi
-velocity=$(git commit-tree "$tree" -p "$sha" -m "$velocityMessage")
-changed=$(git diff --name-only "$sha" "$velocity")
-if [ "$changed" != "$velocityFile" ]; then
-	echo "refused to push the velocity commit: it changes $changed" >&2
+Old-main: ${old}
+Landed-commits: ${commitsLanded}
+Branches: $(printf '%s' "$branches" | tr '\n' ' ')
+Gate-minutes: ${gateMinutes}
+Pass: ${pass}
+Fail: ${fail}
+Skip: ${skip}
+Backlog: ${backlog}
+MESSAGE
+)
+if [ "$(git rev-parse "${landing}^{tree}")" != "$tree" ]; then
+	echo "refused: the landing commit's tree isn't the landing's" >&2
 	exit 1
 fi
-record=$velocity
-meterNote=""
-if [ -n "$meterRun" ]; then
-	git fetch -q origin "$meterRun" 2>/dev/null || true
-	meterCommit=$(git rev-parse --verify "${meterRun}^{commit}")
-	# The runs this commit has that the landing doesn't, so a run main already holds is never recorded twice.
-	added=$(git diff --name-only --diff-filter=AM "$velocity" "$meterCommit" -- stage3/meter/runs/ stage3/progress.json)
-	if printf '%s\n' "$added" | grep -qx 'stage3/progress.json' && git grep -q 'progress\.json' "$sha" -- '*.go' '*.py' '*.sh' '*.mjs' '*.cjs' '*.js' '*.ts' '*.a'; then
-		echo "refused to record stage3/progress.json as data: something in ${sha:0:8} reads it, so it has to be gated" >&2
-		exit 1
-	fi
-	if [ -z "$added" ]; then
-		echo "refused to record the meter run: ${meterCommit:0:8} has nothing under stage3/meter/runs/ or stage3/progress.json that main lacks" >&2
-		exit 1
-	fi
-	index=$(mktemp)
-	GIT_INDEX_FILE=$index git read-tree "$velocity"
-	while IFS= read -r file; do
-		entry=$(git ls-tree "$meterCommit" -- "$file")
-		GIT_INDEX_FILE=$index git update-index --add --cacheinfo "$(printf '%s' "$entry" | awk '{print $1}'),$(printf '%s' "$entry" | awk '{print $3}'),${file}"
-	done <<<"$added"
-	tree=$(GIT_INDEX_FILE=$index git write-tree)
-	rm -f "${index:?}"
-	runs=$(printf '%s\n' "$added" | awk -F/ '$2 == "meter" { print $4 } $2 == "progress.json" { print "and progress.json" }' | sort -u | paste -sd ' ' -)
-	meter=$(git commit-tree "$tree" -p "$velocity" -m "Record the stage 3 meter run ${runs} from ${meterCommit:0:8}")
-	outside=$(git diff --name-only "$velocity" "$meter" | grep -v -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' || true)
-	if [ -n "$outside" ]; then
-		echo "refused to push the meter record: it changes $outside" >&2
-		exit 1
-	fi
-	record=$meter
-	meterNote="; meter run ${runs} in ${meter:0:8}"
-fi
-git push origin "${record}:refs/heads/main"
-rm -f "${heldRows:?}"
+git push origin "${landing}:refs/heads/main"
 
-echo "Pushed main ${old:0:8}..${sha:0:8}, ${commitsLanded} commits (${branches}), gate ${pass} pass / ${fail} fail / ${skip} skip, ${gateMinutes} minutes uncached; velocity row ${velocity:0:8}${meterNote}; backlog ${backlog} commits."
+echo "Pushed main ${old:0:8}..${landing:0:8}, ${commitsLanded} commits (${branches}), gate ${pass} pass / ${fail} fail / ${skip} skip, ${gateMinutes} minutes; its numbers are ${landing:0:8}'s trailers; backlog ${backlog} commits."
 "$directory/merge-back.sh"

@@ -50,18 +50,19 @@ named). The rule hasn't changed; the tree only changes what reaches it.
   bisected. Members go in order of risk: fast tracks and small, already gated areas first, merges
   that have never had a whole gate of their own last. Each prefix must be an ancestor of the next
   with valid counts on its own, so a stack whose merges conflict in counts.md is built by a seat
-  that regenerates counts after every merge, not once at the end. When a small push lands under a
-  stack built on it, push it with --defer-velocity so the stack stays a fast-forward.
-- `push-main.sh <sha> <gate minutes> <pass> <fail> <skip> "<branches>"` checks main is still the
-  sha's ancestor, fast-forwards main (never a force), appends one row to
-  `documentation/velocity/landings.csv` in a commit that changes only that file, pushes it, and runs
-  merge-back.
+  that regenerates counts after every merge, not once at the end. A stack built on a gated sha lands
+  over that sha's landing commit, whose tree is the same.
+- `push-main.sh <sha> <gate minutes> <pass> <fail> <skip> "<branches>"` (or `--fast-gate`, `--full-gate`
+  with a gate log, or `--test-only`) checks main is still the sha's ancestor or moved only by records
+  and by tests outside the sha's code packages, lands it as one commit (first parent the old main,
+  second the sha, the numbers as trailers), pushes it (never a force), and runs merge-back.
+- `pr-lane.py` lands each open pull request into main through `push-main.sh --test-only`, every minute.
 - `merge-back.sh` merges main into every area with git merge-tree, so it needs no checkout. An area
   that conflicts with main is named with its owner, who merges main by hand.
 
 ## Velocity
 
-`documentation/velocity/landings.csv` has one row per push: when, old and new main, commits and
-branches landed, gate minutes, pass, fail and skip, and the backlog (commits on any branch of origin
-that main doesn't hold yet, merges left out). From October 7 06:00 MDT the backlog should fall every
-hour.
+Each landing commit on main carries its numbers as trailers: Old-main, Landed-commits, Branches,
+Gate-minutes, Pass, Fail, Skip and Backlog (commits on any branch of origin that main doesn't hold yet,
+merges left out). `python3 cloud/integration/landings.py` prints them as the velocity table's CSV,
+after the rows `documentation/velocity/landings.csv` held until it left main on October 9.

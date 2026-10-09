@@ -127,9 +127,9 @@ def recordsOnly(older, newer, code=frozenset()):
 
 def mainConfirmation(sha):
     # Main's whole gate: its own newest finished record, or, when main moved past a gated tree only by
-    # record commits, that tree's record. A slice that landed on its own full gate leaves main one
-    # velocity commit past it, and that record is main's confirmation too (--full-gate, @system_adamic,
-    # October 8), so the next slice doesn't wait a whole gate for a row in a table no test reads.
+    # record and test-only commits, that tree's record. A slice that landed on its own full gate leaves
+    # main at its landing commit, whose tree is the slice's, and that record is main's confirmation too
+    # (--full-gate, @system_adamic, October 8), so the next slice doesn't wait a whole gate for it.
     seen, frontier = set(), [sha]
     while frontier:
         current = frontier.pop(0)
@@ -272,7 +272,7 @@ for number, (slug, source, owner, riderBranches) in enumerate(slices(), start=1)
     prefix = f"cloud/land-train-{number}-{slug}{riderTag}{fixTag}-{sourceSha[:8]}-"
     name = f"{prefix}{base[:8]}"
     if name not in trainHeads:
-        # When a slice lands, main moves to its velocity commit, a row in a table no test reads. The
+        # When a slice lands, main moves to its landing commit, whose tree is the slice's. The
         # candidate above, built on the landed slice, keeps its gates: push-main lands it over a main
         # that moved only by records, so it isn't rebuilt and gated whole again. Its base is below
         # its rider merges, one first parent each.
