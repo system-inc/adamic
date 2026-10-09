@@ -1,0 +1,4 @@
+// a-check: type error TS2322
+function value(): number | undefined { return undefined; }
+const n: number = value();
+console.log(n);

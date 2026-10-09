@@ -1,0 +1,57 @@
+--- main/compiler/builder.d.ts
++++ extended/compiler/builder.d.ts
+@@ -68,17 +68,17 @@
+     /**
+      * Hash of d.ts emitted for the file, use to track when emit of d.ts changes
+      */
+-    emitSignatures?: Map<Path, EmitSignature>;
++    emitSignatures?: Map<Path, EmitSignature> | undefined;
+     /**
+      * Hash of d.ts emit with --out
+      */
+-    outSignature?: EmitSignature;
++    outSignature?: EmitSignature | undefined;
+     /**
+      * Name of the file whose dts was the latest to change
+      */
+     latestChangedDtsFile: string | undefined;
+     /** Recorded if program had errors */
+-    hasErrors?: boolean;
++    hasErrors?: boolean | undefined;
+ }
+ /** @internal */
+ export declare const enum BuilderFileEmit {
+--- main/compiler/resolutionCache.d.ts
++++ extended/compiler/resolutionCache.d.ts
+@@ -97,7 +97,7 @@
+     /** ref count keeping this watch alive */
+     refCount: number;
+     /** is the directory watched being non recursive */
+-    nonRecursive?: boolean;
++    nonRecursive?: boolean | undefined;
+ }
+ /** @internal */
+ export interface DirPathToWatcherOfPackageDirWatcher {
+--- main/compiler/types.d.ts
++++ extended/compiler/types.d.ts
+@@ -3768,7 +3768,7 @@
+ /** @internal */
+ export interface SymbolVisibilityResult {
+     accessibility: SymbolAccessibility;
+-    aliasesToMakeVisible?: LateVisibilityPaintedStatement[];
++    aliasesToMakeVisible?: LateVisibilityPaintedStatement[] | undefined;
+     errorSymbolName?: string;
+     errorNode?: Node | undefined;
+     /** @internal */
+@@ -7271,9 +7271,9 @@
+     reportCyclicStructureError?(): void;
+     reportLikelyUnsafeImportRequiredError?(specifier: string, symbolName: string | undefined): void;
+     reportTruncationError?(): void;
+-    moduleResolverHost?: ModuleSpecifierResolutionHost & {
++    moduleResolverHost?: (ModuleSpecifierResolutionHost & {
+         getCommonSourceDirectory(): string;
+-    };
++    }) | undefined;
+     reportNonlocalAugmentation?(containingFile: SourceFile, parentSymbol: Symbol, augmentingSymbol: Symbol): void;
+     reportNonSerializableProperty?(propertyName: string): void;
+     reportInferenceFallback?(node: Node): void;

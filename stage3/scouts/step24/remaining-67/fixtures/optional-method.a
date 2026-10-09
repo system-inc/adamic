@@ -1,0 +1,6 @@
+// a-check: type error TS2412
+interface Host { value?(): number; }
+function reset(host: Host): void { host.value = undefined; }
+const host: Host = {};
+reset(host);
+console.log(`${'value' in host} ${host.value}`);

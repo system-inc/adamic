@@ -1,0 +1,986 @@
+{
+  "before": [
+    {
+      "id": "builder.ts:2273:9:TS2375",
+      "file": "builder.ts",
+      "line": 2273,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; semanticDiagnosticsPerFile: Map<Path, readonly ReusableDiagnostic[]>; ... 7 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'outSignature' are incompatible.\n    Type 'EmitSignature | undefined' is not assignable to type 'EmitSignature'.\n      Type 'undefined' is not assignable to type 'EmitSignature'.\n"
+    },
+    {
+      "id": "builder.ts:2310:9:TS2375",
+      "file": "builder.ts",
+      "line": 2310,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; referencedMap: BuilderState.ManyToManyPathMap | undefined; ... 8 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'emitSignatures' are incompatible.\n    Type 'Map<Path, EmitSignature> | undefined' is not assignable to type 'Map<Path, EmitSignature>'.\n      Type 'undefined' is not assignable to type 'Map<Path, EmitSignature>'.\n"
+    },
+    {
+      "id": "checker.ts:10941:33:TS2379",
+      "file": "checker.ts",
+      "line": 10941,
+      "column": 33,
+      "code": 2379,
+      "message": "Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; modifiers: ... | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'modifiers' are incompatible.\n    Type 'Modifier[] | undefined' is not assignable to type 'readonly Modifier[]'.\n      Type 'undefined' is not assignable to type 'readonly Modifier[]'.\n"
+    },
+    {
+      "id": "checker.ts:1683:9:TS2322",
+      "file": "checker.ts",
+      "line": 1683,
+      "column": 9,
+      "code": 2322,
+      "message": "Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.\n  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'typeArguments' are incompatible.\n            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.\n              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.\n"
+    },
+    {
+      "id": "checker.ts:17890:21:TS2412",
+      "file": "checker.ts",
+      "line": 17890,
+      "column": 21,
+      "code": 2412,
+      "message": "Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration'.\n"
+    },
+    {
+      "id": "checker.ts:20618:50:TS2345",
+      "file": "checker.ts",
+      "line": 20618,
+      "column": 50,
+      "code": 2345,
+      "message": "Argument of type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to parameter of type 'TypeMapper'.\n  Type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo?: () => string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'debugInfo' are incompatible.\n      Type '(() => string) | undefined' is not assignable to type '() => string'.\n        Type 'undefined' is not assignable to type '() => string'.\n"
+    },
+    {
+      "id": "checker.ts:21434:98:TS2379",
+      "file": "checker.ts",
+      "line": 21434,
+      "column": 98,
+      "code": 2379,
+      "message": "Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'errors' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.\n"
+    },
+    {
+      "id": "checker.ts:43740:86:TS2379",
+      "file": "checker.ts",
+      "line": 43740,
+      "column": 86,
+      "code": 2379,
+      "message": "Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'value' are incompatible.\n    Type 'Type | undefined' is not assignable to type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.\n"
+    },
+    {
+      "id": "checker.ts:46159:176:TS2345",
+      "file": "checker.ts",
+      "line": 46159,
+      "column": 176,
+      "code": 2345,
+      "message": "Argument of type 'ErrorOutputContainer | undefined' is not assignable to parameter of type '{ errors?: Diagnostic[]; } | undefined'.\n  Type 'ErrorOutputContainer' is not assignable to type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'errors' are incompatible.\n      Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n        Type 'undefined' is not assignable to type 'Diagnostic[]'.\n"
+    },
+    {
+      "id": "checker.ts:54261:5:TS2375",
+      "file": "checker.ts",
+      "line": 54261,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'readFile' are incompatible.\n    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.\n      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.\n"
+    },
+    {
+      "id": "checker.ts:54329:7:TS2420",
+      "file": "checker.ts",
+      "line": 54329,
+      "column": 7,
+      "code": 2420,
+      "message": "Class 'SymbolTrackerImpl' incorrectly implements interface 'SymbolTracker'.\n  Types of property 'moduleResolverHost' are incompatible.\n    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.\n"
+    },
+    {
+      "id": "checker.ts:6035:9:TS2375",
+      "file": "checker.ts",
+      "line": 6035,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ accessibility: SymbolAccessibility.Accessible; aliasesToMakeVisible: LateVisibilityPaintedStatement[] | undefined; }' is not assignable to type 'SymbolVisibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'aliasesToMakeVisible' are incompatible.\n    Type 'LateVisibilityPaintedStatement[] | undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.\n      Type 'undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.\n"
+    },
+    {
+      "id": "checker.ts:7837:133:TS2379",
+      "file": "checker.ts",
+      "line": 7837,
+      "column": 133,
+      "code": 2379,
+      "message": "Argument of type '{ name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; questionToken: PunctuationToken<...> | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'questionToken' are incompatible.\n    Type 'PunctuationToken<SyntaxKind.QuestionToken> | undefined' is not assignable to type 'QuestionToken'.\n      Type 'undefined' is not assignable to type 'PunctuationToken<SyntaxKind.QuestionToken>'.\n"
+    },
+    {
+      "id": "checker.ts:8082:62:TS2379",
+      "file": "checker.ts",
+      "line": 8082,
+      "column": 62,
+      "code": 2379,
+      "message": "Argument of type '{ reportTruncationError?: () => void; reportNonlocalAugmentation?: (containingFile: SourceFile, parentSymbol: Symbol, augmentingSymbol: Symbol) => void; ... 10 more ...; moduleResolverHost: (ModuleSpecifierResolutionHost & ...) | undefined; }' is not assignable to parameter of type 'SymbolTracker' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'moduleResolverHost' are incompatible.\n    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.\n"
+    },
+    {
+      "id": "commandLineParser.ts:2663:9:TS2375",
+      "file": "commandLineParser.ts",
+      "line": 2663,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'build' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.\n"
+    },
+    {
+      "id": "commandLineParser.ts:2677:9:TS2322",
+      "file": "commandLineParser.ts",
+      "line": 2677,
+      "column": 9,
+      "code": 2322,
+      "message": "Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.\n  Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.\n    Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'originalPath' are incompatible.\n        Type 'undefined' is not assignable to type 'string'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:132:13:TS2375",
+      "file": "moduleNameResolver.ts",
+      "line": 132,
+      "column": 13,
+      "code": 2375,
+      "message": "Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'peerDependencies' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:2772:21:TS2322",
+      "file": "moduleNameResolver.ts",
+      "line": 2772,
+      "column": 21,
+      "code": 2322,
+      "message": "Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.\n  Type '{ readonly value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.\n    Types of property 'value' are incompatible.\n      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.\n        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'originalPath' are incompatible.\n            Type 'string | undefined' is not assignable to type 'string | true'.\n              Type 'undefined' is not assignable to type 'string | true'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:286:9:TS2322",
+      "file": "moduleNameResolver.ts",
+      "line": 286,
+      "column": 9,
+      "code": 2322,
+      "message": "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'originalPath' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:627:9:TS2375",
+      "file": "moduleNameResolver.ts",
+      "line": 627,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'originalPath' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:635:5:TS2375",
+      "file": "moduleNameResolver.ts",
+      "line": 635,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: ... | undefined; resolutionDiagnostics: ... | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'resolutionDiagnostics' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:642:143:TS2345",
+      "file": "moduleNameResolver.ts",
+      "line": 642,
+      "column": 143,
+      "code": 2345,
+      "message": "Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:644:144:TS2345",
+      "file": "moduleNameResolver.ts",
+      "line": 644,
+      "column": 144,
+      "code": 2345,
+      "message": "Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:647:35:TS2345",
+      "file": "moduleNameResolver.ts",
+      "line": 647,
+      "column": 35,
+      "code": 2345,
+      "message": "Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:648:5:TS2322",
+      "file": "moduleNameResolver.ts",
+      "line": 648,
+      "column": 5,
+      "code": 2322,
+      "message": "Type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n"
+    },
+    {
+      "id": "program.ts:1876:11:TS2375",
+      "file": "program.ts",
+      "line": 1876,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'directoryExists' are incompatible.\n    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.\n      Type 'undefined' is not assignable to type '(path: string) => boolean'.\n"
+    },
+    {
+      "id": "program.ts:2599:9:TS2375",
+      "file": "program.ts",
+      "line": 2599,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.\n"
+    },
+    {
+      "id": "program.ts:472:11:TS2375",
+      "file": "program.ts",
+      "line": 472,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 16 more ...; createHash: ... | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.\n"
+    },
+    {
+      "id": "program.ts:4956:9:TS2412",
+      "file": "program.ts",
+      "line": 4956,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.\n"
+    },
+    {
+      "id": "program.ts:4957:9:TS2412",
+      "file": "program.ts",
+      "line": 4957,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((path: string) => string[]) | undefined' is not assignable to type '(path: string) => string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => string[]'.\n"
+    },
+    {
+      "id": "program.ts:5107:5:TS2375",
+      "file": "program.ts",
+      "line": 5107,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: ...; ... 6 more ...; trace: ... | undefined; }' is not assignable to type 'ParseConfigFileHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'trace' are incompatible.\n    Type '((s: string) => void) | undefined' is not assignable to type '(s: string) => void'.\n      Type 'undefined' is not assignable to type '(s: string) => void'.\n"
+    },
+    {
+      "id": "resolutionCache.ts:1019:43:TS2379",
+      "file": "resolutionCache.ts",
+      "line": 1019,
+      "column": 43,
+      "code": 2379,
+      "message": "Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly StringLiteralLike[] | undefined' is not assignable to type 'readonly StringLiteralLike[]'.\n      Type 'undefined' is not assignable to type 'readonly StringLiteralLike[]'.\n"
+    },
+    {
+      "id": "resolutionCache.ts:1282:21:TS2322",
+      "file": "resolutionCache.ts",
+      "line": 1282,
+      "column": 21,
+      "code": 2322,
+      "message": "Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.\n  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.\n"
+    },
+    {
+      "id": "resolutionCache.ts:1297:17:TS2322",
+      "file": "resolutionCache.ts",
+      "line": 1297,
+      "column": 17,
+      "code": 2322,
+      "message": "Type 'DirectoryWatchesOfFailedLookup | undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.\n  Type 'undefined' is not assignable to type 'DirectoryWatchesOfFailedLookup'.\n"
+    },
+    {
+      "id": "resolutionCache.ts:1332:58:TS2375",
+      "file": "resolutionCache.ts",
+      "line": 1332,
+      "column": 58,
+      "code": 2375,
+      "message": "Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.\n"
+    },
+    {
+      "id": "resolutionCache.ts:1332:58:TS2379",
+      "file": "resolutionCache.ts",
+      "line": 1332,
+      "column": 58,
+      "code": 2379,
+      "message": "Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.\n"
+    },
+    {
+      "id": "resolutionCache.ts:1386:9:TS2412",
+      "file": "resolutionCache.ts",
+      "line": 1386,
+      "column": 9,
+      "code": 2412,
+      "message": "Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n"
+    },
+    {
+      "id": "resolutionCache.ts:990:43:TS2379",
+      "file": "resolutionCache.ts",
+      "line": 990,
+      "column": 43,
+      "code": 2379,
+      "message": "Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n"
+    },
+    {
+      "id": "transformers/classFields.ts:2745:16:TS2375",
+      "file": "transformers/classFields.ts",
+      "line": 2745,
+      "column": 16,
+      "code": 2375,
+      "message": "Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ className: undefined; weakSetName: undefined; }' is not assignable to type 'PrivateEnvironmentData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'className' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.\n"
+    },
+    {
+      "id": "transformers/classFields.ts:2864:52:TS2345",
+      "file": "transformers/classFields.ts",
+      "line": 2864,
+      "column": 52,
+      "code": 2345,
+      "message": "Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.\n  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'setterName' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.\n"
+    },
+    {
+      "id": "transformers/classFields.ts:2896:52:TS2345",
+      "file": "transformers/classFields.ts",
+      "line": 2896,
+      "column": 52,
+      "code": 2345,
+      "message": "Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.\n  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'getterName' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.\n"
+    },
+    {
+      "id": "transformers/esDecorators.ts:351:9:TS2322",
+      "file": "transformers/esDecorators.ts",
+      "line": 351,
+      "column": 9,
+      "code": 2322,
+      "message": "Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.\n  Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'ClassLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'savedPendingExpressions' are incompatible.\n      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.\n        Type 'undefined' is not assignable to type 'Expression[]'.\n"
+    },
+    {
+      "id": "transformers/esDecorators.ts:398:13:TS2322",
+      "file": "transformers/esDecorators.ts",
+      "line": 398,
+      "column": 13,
+      "code": 2322,
+      "message": "Type '{ kind: \"other\"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.\n  Type '{ kind: \"other\"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'OtherLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'savedPendingExpressions' are incompatible.\n      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.\n        Type 'undefined' is not assignable to type 'Expression[]'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:302:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 302,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => Date'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:438:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 438,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:439:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 439,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:440:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 440,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:441:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 441,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:442:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 442,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:443:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 443,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:785:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 785,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => boolean'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:786:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 786,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => void'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:787:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 787,
+      "column": 5,
+      "code": 2412,
+      "message": "Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.\n"
+    },
+    {
+      "id": "watch.ts:756:11:TS2375",
+      "file": "watch.ts",
+      "line": 756,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getDefaultLibLocation' are incompatible.\n    Type '(() => string) | undefined' is not assignable to type '() => string'.\n      Type 'undefined' is not assignable to type '() => string'.\n"
+    },
+    {
+      "id": "watch.ts:845:5:TS2375",
+      "file": "watch.ts",
+      "line": 845,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ useCaseSensitiveFileNames: () => boolean; getNewLine: () => string; getCurrentDirectory: () => string; getDefaultLibLocation: () => string; getDefaultLibFileName: (options: CompilerOptions) => string; ... 13 more ...; now: ... | undefined; }' is not assignable to type 'ProgramHost<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.\n"
+    },
+    {
+      "id": "watchPublic.ts:125:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 125,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(data: string) => string'.\n"
+    },
+    {
+      "id": "watchPublic.ts:371:65:TS2379",
+      "file": "watchPublic.ts",
+      "line": 371,
+      "column": 65,
+      "code": 2379,
+      "message": "Argument of type '{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.\n"
+    },
+    {
+      "id": "watchPublic.ts:383:52:TS2379",
+      "file": "watchPublic.ts",
+      "line": 383,
+      "column": 52,
+      "code": 2379,
+      "message": "Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.\n"
+    },
+    {
+      "id": "watchPublic.ts:506:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 506,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => boolean'.\n"
+    },
+    {
+      "id": "watchPublic.ts:529:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 529,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.\n"
+    },
+    {
+      "id": "watchPublic.ts:530:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 530,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.\n"
+    },
+    {
+      "id": "watchPublic.ts:534:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 534,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.\n"
+    },
+    {
+      "id": "watchPublic.ts:535:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 535,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.\n"
+    },
+    {
+      "id": "watchPublic.ts:542:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 542,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.\n"
+    },
+    {
+      "id": "watchPublic.ts:568:17:TS2412",
+      "file": "watchPublic.ts",
+      "line": 568,
+      "column": 17,
+      "code": 2412,
+      "message": "Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n"
+    },
+    {
+      "id": "watchPublic.ts:661:9:TS2412",
+      "file": "watchPublic.ts",
+      "line": 661,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directory: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.\n"
+    },
+    {
+      "id": "watchPublic.ts:662:9:TS2412",
+      "file": "watchPublic.ts",
+      "line": 662,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directory: string) => void'.\n"
+    }
+  ],
+  "after": [
+    {
+      "id": "checker.ts:1683:9:TS2322",
+      "file": "checker.ts",
+      "line": 1683,
+      "column": 9,
+      "code": 2322,
+      "message": "Type '(signature: Signature, kind: SignatureDeclaration[\"kind\"], enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker, maximumLength?: number, verbosityLevel?: number, out?: WriterContextOut) => SignatureDeclaration | undefined' is not assignable to type '{ (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined): (SignatureDeclaration & ...) | undefined; (signature: Signature, kind: SyntaxKind, enclosingDeclaration: Node | undefined, flags: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderF...'.\n  Type 'SignatureDeclaration | undefined' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n    Type 'ArrowFunction' is not assignable to type '(SignatureDeclaration & { typeArguments?: NodeArray<TypeNode>; }) | undefined'.\n      Type 'ArrowFunction' is not assignable to type 'ArrowFunction & { typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n        Type 'ArrowFunction' is not assignable to type '{ typeArguments?: NodeArray<TypeNode>; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'typeArguments' are incompatible.\n            Type 'NodeArray<TypeNode> | undefined' is not assignable to type 'NodeArray<TypeNode>'.\n              Type 'undefined' is not assignable to type 'NodeArray<TypeNode>'.\n"
+    },
+    {
+      "id": "checker.ts:17890:21:TS2412",
+      "file": "checker.ts",
+      "line": 17890,
+      "column": 21,
+      "code": 2412,
+      "message": "Type 'NamedTupleMember | ParameterDeclaration | undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'NamedTupleMember | ParameterDeclaration'.\n"
+    },
+    {
+      "id": "checker.ts:20618:50:TS2345",
+      "file": "checker.ts",
+      "line": 20618,
+      "column": 50,
+      "code": 2345,
+      "message": "Argument of type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to parameter of type 'TypeMapper'.\n  Type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo: (() => string) | undefined; }' is not assignable to type '{ kind: TypeMapKind.Function; func: (t: Type) => Type; debugInfo?: () => string; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'debugInfo' are incompatible.\n      Type '(() => string) | undefined' is not assignable to type '() => string'.\n        Type 'undefined' is not assignable to type '() => string'.\n"
+    },
+    {
+      "id": "checker.ts:54261:5:TS2375",
+      "file": "checker.ts",
+      "line": 54261,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'readFile' are incompatible.\n    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.\n      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.\n"
+    },
+    {
+      "id": "commandLineParser.ts:2663:9:TS2375",
+      "file": "commandLineParser.ts",
+      "line": 2663,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'build' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.\n"
+    },
+    {
+      "id": "commandLineParser.ts:2677:9:TS2322",
+      "file": "commandLineParser.ts",
+      "line": 2677,
+      "column": 9,
+      "code": 2322,
+      "message": "Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined' is not assignable to type 'readonly ProjectReference[] | undefined'.\n  Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[]' is not assignable to type 'readonly ProjectReference[]'.\n    Type '{ prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }' is not assignable to type 'ProjectReference' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n      Types of property 'originalPath' are incompatible.\n        Type 'undefined' is not assignable to type 'string'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:132:13:TS2375",
+      "file": "moduleNameResolver.ts",
+      "line": 132,
+      "column": 13,
+      "code": 2375,
+      "message": "Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'peerDependencies' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:2772:21:TS2322",
+      "file": "moduleNameResolver.ts",
+      "line": 2772,
+      "column": 21,
+      "code": 2322,
+      "message": "Type 'SearchResult<{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }>' is not assignable to type 'SearchResult<Resolved>'.\n  Type '{ value: { path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined; }' is not assignable to type 'SearchResult<Resolved>'.\n    Types of property 'value' are incompatible.\n      Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined' is not assignable to type 'Resolved | undefined'.\n        Type '{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }' is not assignable to type 'Resolved' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n          Types of property 'originalPath' are incompatible.\n            Type 'string | undefined' is not assignable to type 'string | true'.\n              Type 'undefined' is not assignable to type 'string | true'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:286:9:TS2322",
+      "file": "moduleNameResolver.ts",
+      "line": 286,
+      "column": 9,
+      "code": 2322,
+      "message": "Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined' is not assignable to type 'ResolvedModuleFull | undefined'.\n  Type '{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean | undefined; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }' is not assignable to type 'ResolvedModuleFull' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'originalPath' are incompatible.\n      Type 'string | undefined' is not assignable to type 'string'.\n        Type 'undefined' is not assignable to type 'string'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:627:9:TS2375",
+      "file": "moduleNameResolver.ts",
+      "line": 627,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'originalPath' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:635:5:TS2375",
+      "file": "moduleNameResolver.ts",
+      "line": 635,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: ... | undefined; resolutionDiagnostics: ... | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'resolutionDiagnostics' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:642:143:TS2345",
+      "file": "moduleNameResolver.ts",
+      "line": 642,
+      "column": 143,
+      "code": 2345,
+      "message": "Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:644:144:TS2345",
+      "file": "moduleNameResolver.ts",
+      "line": 644,
+      "column": 144,
+      "code": 2345,
+      "message": "Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:647:35:TS2345",
+      "file": "moduleNameResolver.ts",
+      "line": 647,
+      "column": 35,
+      "code": 2345,
+      "message": "Argument of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to parameter of type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n"
+    },
+    {
+      "id": "moduleNameResolver.ts:648:5:TS2322",
+      "file": "moduleNameResolver.ts",
+      "line": 648,
+      "column": 5,
+      "code": 2322,
+      "message": "Type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations | undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n  Type 'undefined' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations'.\n"
+    },
+    {
+      "id": "program.ts:1876:11:TS2375",
+      "file": "program.ts",
+      "line": 1876,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'directoryExists' are incompatible.\n    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.\n      Type 'undefined' is not assignable to type '(path: string) => boolean'.\n"
+    },
+    {
+      "id": "program.ts:2599:9:TS2375",
+      "file": "program.ts",
+      "line": 2599,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: ... | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.\n"
+    },
+    {
+      "id": "program.ts:472:11:TS2375",
+      "file": "program.ts",
+      "line": 472,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 16 more ...; createHash: ... | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.\n"
+    },
+    {
+      "id": "program.ts:4956:9:TS2412",
+      "file": "program.ts",
+      "line": 4956,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.\n"
+    },
+    {
+      "id": "program.ts:4957:9:TS2412",
+      "file": "program.ts",
+      "line": 4957,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((path: string) => string[]) | undefined' is not assignable to type '(path: string) => string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => string[]'.\n"
+    },
+    {
+      "id": "program.ts:5107:5:TS2375",
+      "file": "program.ts",
+      "line": 5107,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: ...; ... 6 more ...; trace: ... | undefined; }' is not assignable to type 'ParseConfigFileHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'trace' are incompatible.\n    Type '((s: string) => void) | undefined' is not assignable to type '(s: string) => void'.\n      Type 'undefined' is not assignable to type '(s: string) => void'.\n"
+    },
+    {
+      "id": "resolutionCache.ts:1019:43:TS2379",
+      "file": "resolutionCache.ts",
+      "line": 1019,
+      "column": 43,
+      "code": 2379,
+      "message": "Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly StringLiteralLike[] | undefined' is not assignable to type 'readonly StringLiteralLike[]'.\n      Type 'undefined' is not assignable to type 'readonly StringLiteralLike[]'.\n"
+    },
+    {
+      "id": "resolutionCache.ts:1386:9:TS2412",
+      "file": "resolutionCache.ts",
+      "line": 1386,
+      "column": 9,
+      "code": 2412,
+      "message": "Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n"
+    },
+    {
+      "id": "resolutionCache.ts:990:43:TS2379",
+      "file": "resolutionCache.ts",
+      "line": 990,
+      "column": 43,
+      "code": 2379,
+      "message": "Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n"
+    },
+    {
+      "id": "transformers/classFields.ts:2745:16:TS2375",
+      "file": "transformers/classFields.ts",
+      "line": 2745,
+      "column": 16,
+      "code": 2375,
+      "message": "Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ className: undefined; weakSetName: undefined; }' is not assignable to type 'PrivateEnvironmentData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'className' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.\n"
+    },
+    {
+      "id": "transformers/classFields.ts:2864:52:TS2345",
+      "file": "transformers/classFields.ts",
+      "line": 2864,
+      "column": 52,
+      "code": 2345,
+      "message": "Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.\n  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: Identifier; setterName: undefined; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'setterName' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.\n"
+    },
+    {
+      "id": "transformers/classFields.ts:2896:52:TS2345",
+      "file": "transformers/classFields.ts",
+      "line": 2896,
+      "column": 52,
+      "code": 2345,
+      "message": "Argument of type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to parameter of type 'PrivateIdentifierInfo'.\n  Type '{ kind: PrivateIdentifierKind.Accessor; getterName: undefined; setterName: Identifier; brandCheckIdentifier: Identifier; isStatic: boolean; isValid: boolean; }' is not assignable to type 'PrivateIdentifierAccessorInfo' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'getterName' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.\n"
+    },
+    {
+      "id": "transformers/esDecorators.ts:351:9:TS2322",
+      "file": "transformers/esDecorators.ts",
+      "line": 351,
+      "column": 9,
+      "code": 2322,
+      "message": "Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.\n  Type '{ kind: \"class\"; next: LexicalEnvironmentStackEntry | undefined; classInfo: ClassInfo | undefined; savedPendingExpressions: Expression[] | undefined; }' is not assignable to type 'ClassLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'savedPendingExpressions' are incompatible.\n      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.\n        Type 'undefined' is not assignable to type 'Expression[]'.\n"
+    },
+    {
+      "id": "transformers/esDecorators.ts:398:13:TS2322",
+      "file": "transformers/esDecorators.ts",
+      "line": 398,
+      "column": 13,
+      "code": 2322,
+      "message": "Type '{ kind: \"other\"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'LexicalEnvironmentStackEntry | undefined'.\n  Type '{ kind: \"other\"; next: ClassElementLexicalEnvironmentStackEntry | ClassLexicalEnvironmentStackEntry | PropertyNameLexicalEnvironmentStackEntry | undefined; depth: number; savedPendingExpressions: ... | undefined; }' is not assignable to type 'OtherLexicalEnvironmentStackEntry' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'savedPendingExpressions' are incompatible.\n      Type 'Expression[] | undefined' is not assignable to type 'Expression[]'.\n        Type 'undefined' is not assignable to type 'Expression[]'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:302:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 302,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => Date'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:438:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 438,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:439:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 439,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:440:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 440,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:441:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 441,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:442:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 442,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:443:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 443,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:785:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 785,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => boolean'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:786:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 786,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => void'.\n"
+    },
+    {
+      "id": "tsbuildPublic.ts:787:5:TS2412",
+      "file": "tsbuildPublic.ts",
+      "line": 787,
+      "column": 5,
+      "code": 2412,
+      "message": "Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.\n"
+    },
+    {
+      "id": "watch.ts:756:11:TS2375",
+      "file": "watch.ts",
+      "line": 756,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: CreateSourceFileOptions | ScriptTarget, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getDefaultLibLocation' are incompatible.\n    Type '(() => string) | undefined' is not assignable to type '() => string'.\n      Type 'undefined' is not assignable to type '() => string'.\n"
+    },
+    {
+      "id": "watch.ts:845:5:TS2375",
+      "file": "watch.ts",
+      "line": 845,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ useCaseSensitiveFileNames: () => boolean; getNewLine: () => string; getCurrentDirectory: () => string; getDefaultLibLocation: () => string; getDefaultLibFileName: (options: CompilerOptions) => string; ... 13 more ...; now: ... | undefined; }' is not assignable to type 'ProgramHost<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.\n"
+    },
+    {
+      "id": "watchPublic.ts:125:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 125,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(data: string) => string'.\n"
+    },
+    {
+      "id": "watchPublic.ts:371:65:TS2379",
+      "file": "watchPublic.ts",
+      "line": 371,
+      "column": 65,
+      "code": 2379,
+      "message": "Argument of type '{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.\n"
+    },
+    {
+      "id": "watchPublic.ts:383:52:TS2379",
+      "file": "watchPublic.ts",
+      "line": 383,
+      "column": 52,
+      "code": 2379,
+      "message": "Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.\n"
+    },
+    {
+      "id": "watchPublic.ts:506:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 506,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => boolean'.\n"
+    },
+    {
+      "id": "watchPublic.ts:529:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 529,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: ... | undefined) => ...'.\n"
+    },
+    {
+      "id": "watchPublic.ts:530:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 530,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => ...'.\n"
+    },
+    {
+      "id": "watchPublic.ts:534:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 534,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...) | undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: ... | undefined) => ...'.\n"
+    },
+    {
+      "id": "watchPublic.ts:535:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 535,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => ...'.\n"
+    },
+    {
+      "id": "watchPublic.ts:542:5:TS2412",
+      "file": "watchPublic.ts",
+      "line": 542,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.\n"
+    },
+    {
+      "id": "watchPublic.ts:568:17:TS2412",
+      "file": "watchPublic.ts",
+      "line": 568,
+      "column": 17,
+      "code": 2412,
+      "message": "Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n"
+    },
+    {
+      "id": "watchPublic.ts:661:9:TS2412",
+      "file": "watchPublic.ts",
+      "line": 661,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directory: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.\n"
+    },
+    {
+      "id": "watchPublic.ts:662:9:TS2412",
+      "file": "watchPublic.ts",
+      "line": 662,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directory: string) => void'.\n"
+    }
+  ],
+  "cleared": [
+    "builder.ts:2273:9:TS2375",
+    "builder.ts:2310:9:TS2375",
+    "checker.ts:10941:33:TS2379",
+    "checker.ts:21434:98:TS2379",
+    "checker.ts:43740:86:TS2379",
+    "checker.ts:46159:176:TS2345",
+    "checker.ts:54329:7:TS2420",
+    "checker.ts:6035:9:TS2375",
+    "checker.ts:7837:133:TS2379",
+    "checker.ts:8082:62:TS2379",
+    "resolutionCache.ts:1282:21:TS2322",
+    "resolutionCache.ts:1297:17:TS2322",
+    "resolutionCache.ts:1332:58:TS2375",
+    "resolutionCache.ts:1332:58:TS2379"
+  ],
+  "new": [],
+  "compiler": "8f32e51e8fc41b8f1177453213ca5453ce764486 merged uncommitted into main 45487a809f89885a3fc651cd590e7dabf31362dc; scratch tree 6be232f53831a0d1faf8def593ebb8b382c73862",
+  "entry": "src/compiler/parser.ts",
+  "firstAfter": "checker.ts:1683:9:TS2322"
+}

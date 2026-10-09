@@ -1,0 +1,4 @@
+// a-check: type error TS2345
+function value(): number | undefined { return undefined; }
+function use(n: number): void { console.log(n); }
+use(value());

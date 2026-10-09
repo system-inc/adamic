@@ -1,0 +1,306 @@
+{
+  "main": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "identical": true,
+  "files": [
+    {
+      "file": "stage3/apply.py",
+      "sha256": "3ab2a1412cbaf9ccbdcf1f84f19d8f876b2aebfe1f178667fd19134de24c43cf"
+    },
+    {
+      "file": "stage3/apply.sh",
+      "sha256": "e57c6a3a1f35178807baf263f57fb6a21ab432e71d7f699063c1db4e8b14e761"
+    },
+    {
+      "file": "stage3/lane/.gitignore",
+      "sha256": "32dae3052f331ee34d628ef535709b301259a45df7c7522c4d35dcf49873f00b"
+    },
+    {
+      "file": "stage3/lane/APPLY_TABLE_REPORT.md",
+      "sha256": "01deefb069889d20defd5d48409cc53185a46a46883edd3a28be3f30be52038b"
+    },
+    {
+      "file": "stage3/lane/NOTICE",
+      "sha256": "86555064b21e06f5cb02d04ececedda6417778d41e5f5e3d44177a9ad47eaa27"
+    },
+    {
+      "file": "stage3/lane/README.md",
+      "sha256": "c9766f96de463fd565266494b132360d39c4202685dd94d72bcba1fd6d66d5f1"
+    },
+    {
+      "file": "stage3/lane/REPORT.md",
+      "sha256": "5753cc7ca404677a0051f96982ed3f6df4a595b32a3138eedeb51bff0ca19359"
+    },
+    {
+      "file": "stage3/lane/check.py",
+      "sha256": "a83a8e59b19c0f8c659bc79aa00c23746b4506da7422b0334fe358075ba8fe07"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/checkout-verification.json",
+      "sha256": "d5b6ffa44a1e2654f0a25372b967cb86bc03649a3896bdb5784e03695f02ef4c"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/clean-checkout.log.gz",
+      "sha256": "5697cabe5b1109cd6cf4ec3fbcf4357fe688073609fdfd205edfc0fa2dd692b5"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/lane-apply.log.gz",
+      "sha256": "6d7111be5da51db510fc306ddfc021e68b7250ebfcd495675a5182ae3582817b"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/lane-execution.json",
+      "sha256": "f4dbb85d40df1e0bd4c2808be14a47a35b93fe7e8b279011cfbd8d13f2e9e77b"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/lane-report.json",
+      "sha256": "56abc647cb7c29f79790cb189cbcf176f6a80178e3c0dcb80435eea151314bfd"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/lane-stdout.log.gz",
+      "sha256": "fc847d624c0a6f8fb54dcd055a537c07ab9f9fa754f598b127061d939730616a"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/lane-tests.log.gz",
+      "sha256": "cc04966727d50bcdfb045679285b44fa5c2ebd84024b10ef12a34afc51035c41"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/lane-verdict.txt",
+      "sha256": "37dbf86c5b35055ea3ba92b68eec81c34b3b3e02f31cc7ded989c688623a9454"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/missing-copy-mutant.log.gz",
+      "sha256": "c70b6c9f97fbe19f0d20ac93b593f7646dc861c36ef80a2339b0e30d0642763e"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/oracle-baseline.diff",
+      "sha256": "55736ed1ddb2e0a1cd8932dfce6ca2aa9cd6a82e83351110927163a354a911e9"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/oracle-build.log.gz",
+      "sha256": "f9c3babdd59eea1e899bf4a9eb1d24ebd55b2ed7bbdc9f572d022ae6ffd08b6d"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/oracle-install.log.gz",
+      "sha256": "a8fc4edfce394deea680188174bfd1615112fbad007847d1989f2c85deeabc32"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/oracle-report.json",
+      "sha256": "f3bfe29675404aacd250d6b2b5d910d9aacb7b22324dda1480efae21c6429316"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/oracle-tests.log.gz",
+      "sha256": "0607f4fee717bcd135b80bc31bb8e76c4ec888f58b232e6b443345100009cea7"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/patch-set.md",
+      "sha256": "c4ab2be5dec23aa3689557740fc3cec95a5bd16ad4ac4d4408e1bc43bd2d4e3f"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/required-results-mutant.log.gz",
+      "sha256": "faaf115b438f5996a7c95ea84134699fc616a080a24fabc1e6ee3a6a94ed44ee"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/setup.log.gz",
+      "sha256": "6d78aa85a51694c0fd98b2f6ed2a5d430bc5409dd9a9ce16faabda0a016648b1"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/unconditional-write-mutant.log.gz",
+      "sha256": "68659416b32d473ef67e1a386cf4ebac3c61ade431ef4a5787a9dae0bf5c5df7"
+    },
+    {
+      "file": "stage3/lane/evidence/apply-table/write-table.log.gz",
+      "sha256": "db41b534ce85d07198f91fd88c376a5cbebd8493cf952bad22dcffbe69968b4b"
+    },
+    {
+      "file": "stage3/lane/evidence/area-apply.log.gz",
+      "sha256": "fabbff4d945e944edde5ba4dcd1ef18f7e4c3e6ee68076f8e4bd92dbc9d72d83"
+    },
+    {
+      "file": "stage3/lane/evidence/area-baseline.diff",
+      "sha256": "7c52e25dfa3b71375c937495b9b9526c876c96a6df7dc4d024fe21be17f159d2"
+    },
+    {
+      "file": "stage3/lane/evidence/area-oracle-build.log.gz",
+      "sha256": "1e87a053bd857c6d5582a52d185cb77c286b0eca0ce236e804183bd7821d29cb"
+    },
+    {
+      "file": "stage3/lane/evidence/area-oracle-install.log.gz",
+      "sha256": "2ed91f46890f8d7477c431f38c1ea4d3a25762d6ed974a03f35461048301f9da"
+    },
+    {
+      "file": "stage3/lane/evidence/area-oracle-report.json",
+      "sha256": "2417ba0c1bed8c9af2ba0ef05ca809b5399ff61d1cbc2548762988bf7cf86635"
+    },
+    {
+      "file": "stage3/lane/evidence/area-oracle-tests.log.gz",
+      "sha256": "504a081c7028e74ca30c425b85ad6afdb765f0c79772c44f7064dedd8ef7f2f0"
+    },
+    {
+      "file": "stage3/lane/evidence/area-report.json",
+      "sha256": "3677a37a6a60cae68c8c9c1acc845a5e03bab1025de09b3db5fcbaf20af25ecd"
+    },
+    {
+      "file": "stage3/lane/evidence/area-verdict.txt",
+      "sha256": "5c5f2a33eaae71233557fdac4c108208148f9582b0ad1b99ec3237745f44419e"
+    },
+    {
+      "file": "stage3/lane/evidence/check-replay.log",
+      "sha256": "41900e1e73f2e38d5969527e9e5c194bee69ef05c62057203f7d8a2bf0195856"
+    },
+    {
+      "file": "stage3/lane/evidence/handoffs-apply.log.gz",
+      "sha256": "c7fb0431d9869a7550fb6d5c758b74eaa45ab451cc5912fd93b65b3d6c7a129d"
+    },
+    {
+      "file": "stage3/lane/evidence/handoffs-area-report.json",
+      "sha256": "8efd1caaded04e29becb5aaa95f552fff6b9810c08b1b26699a0a2b040558a4c"
+    },
+    {
+      "file": "stage3/lane/evidence/handoffs-baseline.diff",
+      "sha256": "7c52e25dfa3b71375c937495b9b9526c876c96a6df7dc4d024fe21be17f159d2"
+    },
+    {
+      "file": "stage3/lane/evidence/handoffs-oracle-build.log.gz",
+      "sha256": "92cabb66c83a4bc80b5aec7d641812c2cd420cec889cf2d7d235b880808205ec"
+    },
+    {
+      "file": "stage3/lane/evidence/handoffs-oracle-install.log.gz",
+      "sha256": "a8fc4edfce394deea680188174bfd1615112fbad007847d1989f2c85deeabc32"
+    },
+    {
+      "file": "stage3/lane/evidence/handoffs-oracle-report.json",
+      "sha256": "e3b85af6029084dff5e05431647105b13446f23c4d0e3c311094f7a47a84c3af"
+    },
+    {
+      "file": "stage3/lane/evidence/handoffs-oracle-tests.log.gz",
+      "sha256": "9b4d13e04036e60c40b0e3713be56955960e0dcc16315b1e77fa0f9bb2152f7a"
+    },
+    {
+      "file": "stage3/lane/evidence/handoffs-tests.log",
+      "sha256": "525bf142587639f55ab38a5ba48d19ee4729367d460d3f943448228af7d0c2f5"
+    },
+    {
+      "file": "stage3/lane/evidence/handoffs-verdict.txt",
+      "sha256": "1c2edf49e0ff8a3e97c8c9b6b76761bc2231963fe4e03921cc15003affd417b3"
+    },
+    {
+      "file": "stage3/lane/evidence/method-revert-control.json",
+      "sha256": "add11f2fb28710dbb385fcf19f114d59055aa1e8516bd8a77c5769055c4e813a"
+    },
+    {
+      "file": "stage3/lane/evidence/setup.log",
+      "sha256": "b4d974effdb6861d75941d80f5bfdf1fee65a2d853d3e147511ea575b07b3bce"
+    },
+    {
+      "file": "stage3/lane/evidence/tests.log",
+      "sha256": "54d9e0b002b2057de8b7637271203f9c218223fae7ccc01a70a8ed757c096a9c"
+    },
+    {
+      "file": "stage3/lane/expected.json",
+      "sha256": "bd0ba9ae1ac096ff05febd123faade326fa0c15deb4e56c1c85bbcd95771ffa8"
+    },
+    {
+      "file": "stage3/lane/generate-api.cjs",
+      "sha256": "fd0a7cce6bbfe625583f4b431034dd86613ff649972c5a63f39fafe2fe1256cc"
+    },
+    {
+      "file": "stage3/lane/generate-api.py",
+      "sha256": "00c83e218d3fdd24db4c3c8a6d6edb5dc65da84b9daa87aae00e6f590d34dc39"
+    },
+    {
+      "file": "stage3/lane/normalize-api.cjs",
+      "sha256": "294a884c3bc72b05cd330771fb16cd9d020e402250e437dc4a16977600f841c5"
+    },
+    {
+      "file": "stage3/lane/run.py",
+      "sha256": "dac44d6d855d50c820e2fb1956d34c9c421739c365fedca026309da731b97870"
+    },
+    {
+      "file": "stage3/lane/run.sh",
+      "sha256": "a4d7d33b78d44cba201e6d955f0cb5f4f2586dbb5645d54cf0cfd345e6eb19eb"
+    },
+    {
+      "file": "stage3/lane/sanctioned-api.json",
+      "sha256": "a86659568255754eb2a27fcefdce35090d9ae8a8c1ac8cadfeea15aebc2b4a8e"
+    },
+    {
+      "file": "stage3/lane/test_check.py",
+      "sha256": "ccb2a54d2c85a6fca05d8cc6fb74e341ff13baaef2266005adb001a193d98223"
+    },
+    {
+      "file": "stage3/lane/test_table.py",
+      "sha256": "982f8404cf3a88330bd44906c20793173978f5a45288c481d4e61283db3cae08"
+    },
+    {
+      "file": "stage3/oracle/README.md",
+      "sha256": "03da794a98e61e519d7c970cb371bd84c8385911be71615cb391e69a99133f82"
+    },
+    {
+      "file": "stage3/oracle/REPORT.md",
+      "sha256": "348d316424ed69d6f6fd05ba6392ed9f350ca6fe8f91b7e4399a01e3cf201cfb"
+    },
+    {
+      "file": "stage3/oracle/evidence/adapted-concurrent-failed.json",
+      "sha256": "3e7957af09ab1b469cbd1e4d556f0f4d0e9c4d50d8a18e29a65c5771be15d32f"
+    },
+    {
+      "file": "stage3/oracle/evidence/adapted-report.json",
+      "sha256": "81dd7e9f95cb7ca25d9c0c53f8b38c0a78ea5040db8ccf5682ce515cc284f3fd"
+    },
+    {
+      "file": "stage3/oracle/evidence/census-comparison.json",
+      "sha256": "3b1eeb301379810a30a2bb121dd5201ef767f793ff6c20e8067408de603fc3ce"
+    },
+    {
+      "file": "stage3/oracle/evidence/comment-patch-set.md",
+      "sha256": "4a6e6d6edd25aaa420fe41b4df68f272a0f9749114948d686cf1059f72fdb629"
+    },
+    {
+      "file": "stage3/oracle/evidence/comment-report.json",
+      "sha256": "9b75e2e15a56fa936b7e1815b7006d3c0dbdb1afee98661664768a7acb412ee9"
+    },
+    {
+      "file": "stage3/oracle/evidence/empty-report.json",
+      "sha256": "8bdb439a89d0a5e1c5f8fd81072e68458259ae6ba3a5c9d9ee65f021309f9182"
+    },
+    {
+      "file": "stage3/oracle/evidence/pin-rejection.json",
+      "sha256": "512abd468d7afd78c61645ed8a2d6f0c6d42a1938388a2ff51f798b6868946c2"
+    },
+    {
+      "file": "stage3/oracle/evidence/pristine-concurrent-failed.json",
+      "sha256": "1436cbbf1884cdb1e354458ceb64e6ced643b8ba9ffb19e57b5be6726081f00c"
+    },
+    {
+      "file": "stage3/oracle/evidence/pristine-report.json",
+      "sha256": "900e84dbc2454eb9f4adcca84cc0b368db40ee476914379abff1f66836cd9d29"
+    },
+    {
+      "file": "stage3/oracle/evidence/setup-equivalence.json",
+      "sha256": "d59043e7b20e9b18fcf3ba4843a9f868d80febc64a2987796dcbf63453153e79"
+    },
+    {
+      "file": "stage3/oracle/evidence/value-baseline.json",
+      "sha256": "cddc9911e929b27e2d7563f59f686c4f57fb9d053ce5efbab8102b6ea727be25"
+    },
+    {
+      "file": "stage3/oracle/evidence/value-patch-set.md",
+      "sha256": "a32948cf6f1392c1a34e6feb1f9b4d46b0b5e91bd803b4404558f55cce101cb4"
+    },
+    {
+      "file": "stage3/oracle/evidence/value-report.json",
+      "sha256": "3b4cf8ad8aa5b5bc512ceb1ddf040c3a0a708550f2aa911429d95a18490fa8ad"
+    },
+    {
+      "file": "stage3/oracle/evidence/value-unexercised-report.json",
+      "sha256": "4526f7b7920bfebf51b5cc304122675d42e5d8b07c0d269b300d7d0931e30754"
+    },
+    {
+      "file": "stage3/oracle/run.py",
+      "sha256": "edbe20223a13b2a66ad5ab3c5db6d4233c056f26d76b09e2ec44ee20e06ec96f"
+    },
+    {
+      "file": "stage3/oracle/run.sh",
+      "sha256": "40824223c443f8277f2267ba9b9b55d895c30c8ab89ed0e298e2de0e8a0a775f"
+    }
+  ]
+}

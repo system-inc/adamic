@@ -1,0 +1,6 @@
+// a-check: type error TS2412
+interface Slot { value?: number; }
+function reset<T extends Slot>(slot: T): void { slot.value = undefined; }
+const slot: Slot = {};
+reset(slot);
+console.log(`${'value' in slot} ${slot.value}`);

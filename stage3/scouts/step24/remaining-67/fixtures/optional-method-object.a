@@ -1,0 +1,4 @@
+// a-check: type error TS2375
+interface Host { value?(): number; }
+function make(): Host { return { value: undefined }; }
+console.log(`${'value' in make()} ${make().value}`);

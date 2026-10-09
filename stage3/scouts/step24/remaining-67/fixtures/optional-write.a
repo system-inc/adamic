@@ -1,0 +1,5 @@
+// a-check: type error TS2412
+function reset(slot: { value?: number }): void { slot.value = undefined; }
+const slot: { value?: number } = {};
+reset(slot);
+console.log(`${'value' in slot} ${slot.value}`);

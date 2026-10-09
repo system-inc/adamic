@@ -1,0 +1,1286 @@
+{
+  "typescript": "6.0.3",
+  "declarations_changed": 3,
+  "declarations": [
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 176,
+      "column": 5,
+      "name": "outSignature",
+      "owner_path": [
+        "ReusableBuilderProgramState",
+        "outSignature"
+      ],
+      "before": "EmitSignature"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 182,
+      "column": 5,
+      "name": "hasErrors",
+      "owner_path": [
+        "ReusableBuilderProgramState",
+        "hasErrors"
+      ],
+      "before": "boolean"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 172,
+      "column": 5,
+      "name": "emitSignatures",
+      "owner_path": [
+        "ReusableBuilderProgramState",
+        "emitSignatures"
+      ],
+      "before": "Map<Path, EmitSignature>"
+    }
+  ],
+  "resolved_findings": [
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2273,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; semanticDiagnosticsPerFile: Map<Path, readonly ReusableDiagnostic[]>; ... 7 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'outSignature' are incompatible.\n    Type 'EmitSignature | undefined' is not assignable to type 'EmitSignature'.\n      Type 'undefined' is not assignable to type 'EmitSignature'.",
+      "source": "state",
+      "owners": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 176,
+          "column": 5,
+          "name": "outSignature"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2273,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; semanticDiagnosticsPerFile: Map<Path, readonly ReusableDiagnostic[]>; ... 7 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'outSignature' are incompatible.\n    Type 'EmitSignature | undefined' is not assignable to type 'EmitSignature'.\n      Type 'undefined' is not assignable to type 'EmitSignature'.",
+      "source": "state",
+      "owners": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 182,
+          "column": 5,
+          "name": "hasErrors"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2310,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; referencedMap: BuilderState.ManyToManyPathMap | undefined; ... 8 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'emitSignatures' are incompatible.\n    Type 'Map<Path, EmitSignature> | undefined' is not assignable to type 'Map<Path, EmitSignature>'.\n      Type 'undefined' is not assignable to type 'Map<Path, EmitSignature>'.",
+      "source": "state",
+      "owners": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 172,
+          "column": 5,
+          "name": "emitSignatures"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2310,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ fileInfos: Map<Path, BuilderState.FileInfo>; compilerOptions: CompilerOptions; referencedMap: BuilderState.ManyToManyPathMap | undefined; ... 8 more ...; checkPending: true | undefined; }' is not assignable to type 'ReusableBuilderProgramState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'emitSignatures' are incompatible.\n    Type 'Map<Path, EmitSignature> | undefined' is not assignable to type 'Map<Path, EmitSignature>'.\n      Type 'undefined' is not assignable to type 'Map<Path, EmitSignature>'.",
+      "source": "state",
+      "owners": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 182,
+          "column": 5,
+          "name": "hasErrors"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2281,
+      "column": 13,
+      "code": null,
+      "source": "outSignature: buildInfo.outSignature",
+      "resolution": "reviewed present-undefined assignment, independent of first diagnostic member",
+      "owners": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 176,
+          "column": 5,
+          "name": "outSignature"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2283,
+      "column": 13,
+      "code": null,
+      "source": "hasErrors: buildInfo.errors",
+      "resolution": "reviewed present-undefined assignment, independent of first diagnostic member",
+      "owners": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 182,
+          "column": 5,
+          "name": "hasErrors"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2321,
+      "column": 13,
+      "code": null,
+      "source": "hasErrors: buildInfo.errors",
+      "resolution": "reviewed present-undefined assignment, independent of first diagnostic member",
+      "owners": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 182,
+          "column": 5,
+          "name": "hasErrors"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2320,
+      "column": 13,
+      "code": null,
+      "source": "emitSignatures: emitSignatures?.size ? emitSignatures : undefined",
+      "resolution": "reviewed present-undefined assignment, independent of first diagnostic member",
+      "owners": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 172,
+          "column": 5,
+          "name": "emitSignatures"
+        }
+      ]
+    }
+  ],
+  "initially_declined": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6035,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ accessibility: SymbolAccessibility.Accessible; aliasesToMakeVisible: LateVisibilityPaintedStatement[] | undefined; }' is not assignable to type 'SymbolVisibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'aliasesToMakeVisible' are incompatible.\n    Type 'LateVisibilityPaintedStatement[] | undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.\n      Type 'undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.",
+      "source": "return",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 7837,
+      "column": 133,
+      "code": 2379,
+      "message": "Argument of type '{ name: Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | ComputedPropertyName; questionToken: PunctuationToken<...> | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'questionToken' are incompatible.\n    Type 'PunctuationToken<SyntaxKind.QuestionToken> | undefined' is not assignable to type 'QuestionToken'.\n      Type 'undefined' is not assignable to type 'PunctuationToken<SyntaxKind.QuestionToken>'.",
+      "source": "{ name: propertyName, questionToken: optionalToken }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 8082,
+      "column": 62,
+      "code": 2379,
+      "message": "Argument of type '{ reportCyclicStructureError(): void; reportInaccessibleThisError(): void; reportInaccessibleUniqueSymbolError(): void; reportLikelyUnsafeImportRequiredError(specifier: string, symbolName: string | undefined): void; ... 8 more ...; popErrorFallbackNode?: () => void; }' is not assignable to parameter of type 'SymbolTracker' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'moduleResolverHost' are incompatible.\n    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.",
+      "source": "{\r\n                ...oldTracker.inner,\r\n                reportCyclicStructureError() {\r\n                    markError(() => oldTracker.reportCyclicStructureError());\r\n                },\r\n                reportInaccessibleThisError() {\r\n                    markError(() => oldTracker.reportInaccessibleThisError());\r\n                },\r\n                reportInaccessibleUniqueSymbolError() {\r\n                    markError(() => oldTracker.reportInaccessibleUniqueSymbolError());\r\n                },\r\n                reportLikelyUnsafeImportRequiredError(specifier, symbolName) {\r\n                    markError(() => oldTracker.reportLikelyUnsafeImportRequiredError(specifier, symbolName));\r\n                },\r\n                reportNonSerializableProperty(name) {\r\n                    markError(() => oldTracker.reportNonSerializableProperty(name));\r\n                },\r\n                reportPrivateInBaseOfClassExpression(propertyName) {\r\n                    markError(() => oldTracker.reportPrivateInBaseOfClassExpression(propertyName));\r\n                },\r\n                trackSymbol(sym, decl, meaning) {\r\n                    (trackedSymbols ??= []).push([sym, decl, meaning]);\r\n                    return false;\r\n                },\r\n                moduleResolverHost: context.tracker.moduleResolverHost,\r\n            }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10941,
+      "column": 33,
+      "code": 2379,
+      "message": "Argument of type '{ name: Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | ComputedPropertyName; questionToken: PunctuationToken<...> | undefined; modifiers: Modifier[] | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'modifiers' are incompatible.\n    Type 'Modifier[] | undefined' is not assignable to type 'readonly Modifier[]'.\n      Type 'undefined' is not assignable to type 'readonly Modifier[]'.",
+      "source": "{\r\n                                    name,\r\n                                    questionToken: p.flags & SymbolFlags.Optional ? factory.createToken(SyntaxKind.QuestionToken) : undefined,\r\n                                    modifiers: flag ? factory.createModifiersFromModifierFlags(flag) : undefined,\r\n                                }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 17890,
+      "column": 21,
+      "code": 2412,
+      "message": "Type 'ParameterDeclaration | NamedTupleMember | undefined' is not assignable to type 'ParameterDeclaration | NamedTupleMember' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'ParameterDeclaration | NamedTupleMember'.",
+      "source": "property.links.tupleLabelDeclaration",
+      "reason": "unproven indexed read, not optionality evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21434,
+      "column": 98,
+      "code": 2379,
+      "message": "Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'errors' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.",
+      "source": "resultObj",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 43517,
+      "column": 20,
+      "code": 2412,
+      "message": "Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'Type'.",
+      "source": "typeAsPromise.promisedTypeOfPromise",
+      "reason": "unproven indexed read, not optionality evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 43740,
+      "column": 86,
+      "code": 2379,
+      "message": "Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'value' are incompatible.\n    Type 'Type | undefined' is not assignable to type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.",
+      "source": "thisTypeForErrorOut",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 54261,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: (() => string | undefined) | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'readFile' are incompatible.\n    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.\n      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.",
+      "source": "return",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2663,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'build' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+      "source": "compilerOptions",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 132,
+      "column": 13,
+      "code": 2375,
+      "message": "Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'peerDependencies' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+      "source": "packageId",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 627,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'originalPath' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+      "source": "resolvedTypeReferenceDirective",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 635,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: string[] | undefined; resolutionDiagnostics: Diagnostic[] | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'resolutionDiagnostics' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.",
+      "source": "result",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 472,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 16 more ...; createHash: ((data: string) => string) | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+      "source": "compilerHost",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1876,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: (() => string | undefined) | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'directoryExists' are incompatible.\n    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.\n      Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+      "source": "program",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2599,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: (() => string | undefined) | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+      "source": "return",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4956,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.",
+      "source": "host.compilerHost.directoryExists",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4957,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((path: string) => string[]) | undefined' is not assignable to type '(path: string) => string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => string[]'.",
+      "source": "host.compilerHost.getDirectories",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 5107,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: (f: string) => string | undefined; ... 6 more ...; trace: ((s: string) => void) | undefined; }' is not assignable to type 'ParseConfigFileHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'trace' are incompatible.\n    Type '((s: string) => void) | undefined' is not assignable to type '(s: string) => void'.\n      Type 'undefined' is not assignable to type '(s: string) => void'.",
+      "source": "return",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 990,
+      "column": 43,
+      "code": 2379,
+      "message": "Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'.",
+      "source": "{\r\n            entries: typeDirectiveReferences,\r\n            containingFile,\r\n            containingSourceFile,\r\n            redirectedReference,\r\n            options,\r\n            reusedNames,\r\n            perFileCache: resolvedTypeReferenceDirectives,\r\n            loader: createTypeReferenceResolutionLoader(\r\n                containingFile,\r\n                redirectedReference,\r\n                options,\r\n                getModuleResolutionHost(resolutionHost),\r\n                typeReferenceDirectiveResolutionCache,\r\n            ),\r\n            getResolutionWithResolvedFileName: getResolvedTypeReferenceDirectiveFromResolution,\r\n            shouldRetryResolution: resolution => resolution.resolvedTypeReferenceDirective === undefined,\r\n            deferWatchingNonRelativeResolution: false,\r\n        }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1019,
+      "column": 43,
+      "code": 2379,
+      "message": "Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly StringLiteralLike[] | undefined' is not assignable to type 'readonly StringLiteralLike[]'.\n      Type 'undefined' is not assignable to type 'readonly StringLiteralLike[]'.",
+      "source": "{\r\n            entries: moduleLiterals,\r\n            containingFile,\r\n            containingSourceFile,\r\n            redirectedReference,\r\n            options,\r\n            reusedNames,\r\n            perFileCache: resolvedModuleNames,\r\n            loader: createModuleResolutionLoaderUsingGlobalCache(\r\n                containingFile,\r\n                redirectedReference,\r\n                options,\r\n                resolutionHost,\r\n                moduleResolutionCache,\r\n            ),\r\n            getResolutionWithResolvedFileName: getResolvedModuleFromResolution,\r\n            shouldRetryResolution: resolution => !resolution.resolvedModule || !resolutionExtensionIsTSOrJson(resolution.resolvedModule.extension),\r\n            logChanges: logChangesWhenResolvingModule,\r\n            deferWatchingNonRelativeResolution: true, // Defer non relative resolution watch because we could be using ambient modules\r\n        }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1332,
+      "column": 58,
+      "code": 2375,
+      "message": "Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+      "source": "dirWatcher",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1332,
+      "column": 58,
+      "code": 2379,
+      "message": "Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+      "source": "dirWatcher = { watcher: createDirectoryWatcher(dir, dirPath, nonRecursive), refCount: 1, nonRecursive }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1386,
+      "column": 9,
+      "code": 2412,
+      "message": "Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+      "source": "resolution.files",
+      "reason": "generic or unresolved receiver contract"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2745,
+      "column": 16,
+      "code": 2375,
+      "message": "Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ className: undefined; weakSetName: undefined; }' is not assignable to type 'PrivateEnvironmentData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'className' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.",
+      "source": "lexicalEnvironment.privateEnv",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 302,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => Date'.",
+      "source": "host.now",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 438,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]'.",
+      "source": "compilerHost.resolveModuleNameLiterals",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 439,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly (string | FileReference)[] | undefined) => readonly ResolvedTypeReferenceDir...' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined) => readonly ResolvedTypeReferenceDirectiveWithFai...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined) => readonly ResolvedTypeReferenceDirectiveWithFai...'.",
+      "source": "compilerHost.resolveTypeReferenceDirectiveReferences",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 440,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations'.",
+      "source": "compilerHost.resolveLibrary",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 441,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]'.",
+      "source": "compilerHost.resolveModuleNames",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 442,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]'.",
+      "source": "compilerHost.resolveTypeReferenceDirectives",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 443,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.",
+      "source": "compilerHost.getModuleResolutionCache",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 785,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+      "source": "host.directoryExists",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 786,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => void'.",
+      "source": "host.createDirectory",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 787,
+      "column": 5,
+      "code": 2412,
+      "message": "Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.",
+      "source": "host.writeFile",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 756,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getDefaultLibLocation' are incompatible.\n    Type '(() => string) | undefined' is not assignable to type '() => string'.\n      Type 'undefined' is not assignable to type '() => string'.",
+      "source": "compilerHost",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 845,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ useCaseSensitiveFileNames: () => boolean; getNewLine: () => string; getCurrentDirectory: () => string; getDefaultLibLocation: () => string; getDefaultLibFileName: (options: CompilerOptions) => string; ... 13 more ...; now: (() => Date) | undefined; }' is not assignable to type 'ProgramHost<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+      "source": "return",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 125,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(data: string) => string'.",
+      "source": "host.createHash",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 371,
+      "column": 65,
+      "code": 2379,
+      "message": "Argument of type '{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.",
+      "source": "{\r\n            rootFiles: rootFilesOrConfigFileName,\r\n            options: options!,\r\n            watchOptions: watchOptionsOrExtraFileExtensions as WatchOptions,\r\n            projectReferences: projectReferencesOrWatchOptionsToExtend as readonly ProjectReference[],\r\n            system,\r\n            createProgram,\r\n            reportDiagnostic,\r\n            reportWatchStatus,\r\n        }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 383,
+      "column": 52,
+      "code": 2379,
+      "message": "Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.",
+      "source": "{\r\n            configFileName: rootFilesOrConfigFileName,\r\n            optionsToExtend: options,\r\n            watchOptionsToExtend: projectReferencesOrWatchOptionsToExtend as WatchOptions,\r\n            extraFileExtensions: watchOptionsOrExtraFileExtensions as readonly FileExtensionInfo[],\r\n            system,\r\n            createProgram,\r\n            reportDiagnostic,\r\n            reportWatchStatus,\r\n        }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 506,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => boolean'.",
+      "source": "compilerHost.useSourceOfProjectReferenceRedirect",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 529,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]'.",
+      "source": "compilerHost.resolveModuleNameLiterals",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 530,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]'.",
+      "source": "compilerHost.resolveModuleNames",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 534,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly (string | FileReference)[] | undefined) => readonly ResolvedTypeReferenceDir...' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined) => readonly ResolvedTypeReferenceDirectiveWithFai...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined) => readonly ResolvedTypeReferenceDirectiveWithFai...'.",
+      "source": "compilerHost.resolveTypeReferenceDirectiveReferences",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 535,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]'.",
+      "source": "compilerHost.resolveTypeReferenceDirectives",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 542,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.",
+      "source": "compilerHost.getModuleResolutionCache",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 568,
+      "column": 17,
+      "code": 2412,
+      "message": "Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+      "source": "value.fileWatcher",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 661,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directory: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.",
+      "source": "compilerHost.directoryExists",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 662,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directory: string) => void'.",
+      "source": "compilerHost.createDirectory",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    }
+  ],
+  "before": {
+    "2304": 6,
+    "2307": 1,
+    "2322": 17,
+    "2339": 7,
+    "2345": 45,
+    "2375": 16,
+    "2379": 10,
+    "2412": 25,
+    "2420": 1,
+    "2488": 1,
+    "2503": 2,
+    "2532": 15,
+    "2538": 2,
+    "2556": 1,
+    "2584": 1,
+    "2591": 46,
+    "2722": 1,
+    "2769": 2,
+    "7006": 1,
+    "7031": 1,
+    "18046": 4,
+    "18048": 29
+  },
+  "after": {
+    "2304": 6,
+    "2307": 1,
+    "2322": 17,
+    "2339": 7,
+    "2345": 45,
+    "2375": 14,
+    "2379": 10,
+    "2412": 25,
+    "2420": 1,
+    "2488": 1,
+    "2503": 2,
+    "2532": 15,
+    "2538": 2,
+    "2556": 1,
+    "2584": 1,
+    "2591": 46,
+    "2722": 1,
+    "2769": 2,
+    "7006": 1,
+    "7031": 1,
+    "18046": 4,
+    "18048": 29
+  },
+  "newly_exposed_consumers": [],
+  "declined": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 6035,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ accessibility: SymbolAccessibility.Accessible; aliasesToMakeVisible: LateVisibilityPaintedStatement[] | undefined; }' is not assignable to type 'SymbolVisibilityResult' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'aliasesToMakeVisible' are incompatible.\n    Type 'LateVisibilityPaintedStatement[] | undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.\n      Type 'undefined' is not assignable to type 'LateVisibilityPaintedStatement[]'.",
+      "source": "return",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 7837,
+      "column": 133,
+      "code": 2379,
+      "message": "Argument of type '{ name: Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | ComputedPropertyName; questionToken: PunctuationToken<...> | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'questionToken' are incompatible.\n    Type 'PunctuationToken<SyntaxKind.QuestionToken> | undefined' is not assignable to type 'QuestionToken'.\n      Type 'undefined' is not assignable to type 'PunctuationToken<SyntaxKind.QuestionToken>'.",
+      "source": "{ name: propertyName, questionToken: optionalToken }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 8082,
+      "column": 62,
+      "code": 2379,
+      "message": "Argument of type '{ reportCyclicStructureError(): void; reportInaccessibleThisError(): void; reportInaccessibleUniqueSymbolError(): void; reportLikelyUnsafeImportRequiredError(specifier: string, symbolName: string | undefined): void; ... 8 more ...; popErrorFallbackNode?: () => void; }' is not assignable to parameter of type 'SymbolTracker' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'moduleResolverHost' are incompatible.\n    Type '(ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n      Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }'.\n        Type 'undefined' is not assignable to type 'ModuleSpecifierResolutionHost'.",
+      "source": "{\r\n                ...oldTracker.inner,\r\n                reportCyclicStructureError() {\r\n                    markError(() => oldTracker.reportCyclicStructureError());\r\n                },\r\n                reportInaccessibleThisError() {\r\n                    markError(() => oldTracker.reportInaccessibleThisError());\r\n                },\r\n                reportInaccessibleUniqueSymbolError() {\r\n                    markError(() => oldTracker.reportInaccessibleUniqueSymbolError());\r\n                },\r\n                reportLikelyUnsafeImportRequiredError(specifier, symbolName) {\r\n                    markError(() => oldTracker.reportLikelyUnsafeImportRequiredError(specifier, symbolName));\r\n                },\r\n                reportNonSerializableProperty(name) {\r\n                    markError(() => oldTracker.reportNonSerializableProperty(name));\r\n                },\r\n                reportPrivateInBaseOfClassExpression(propertyName) {\r\n                    markError(() => oldTracker.reportPrivateInBaseOfClassExpression(propertyName));\r\n                },\r\n                trackSymbol(sym, decl, meaning) {\r\n                    (trackedSymbols ??= []).push([sym, decl, meaning]);\r\n                    return false;\r\n                },\r\n                moduleResolverHost: context.tracker.moduleResolverHost,\r\n            }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10941,
+      "column": 33,
+      "code": 2379,
+      "message": "Argument of type '{ name: Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | ComputedPropertyName; questionToken: PunctuationToken<...> | undefined; modifiers: Modifier[] | undefined; }' is not assignable to parameter of type 'SignatureToSignatureDeclarationOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'modifiers' are incompatible.\n    Type 'Modifier[] | undefined' is not assignable to type 'readonly Modifier[]'.\n      Type 'undefined' is not assignable to type 'readonly Modifier[]'.",
+      "source": "{\r\n                                    name,\r\n                                    questionToken: p.flags & SymbolFlags.Optional ? factory.createToken(SyntaxKind.QuestionToken) : undefined,\r\n                                    modifiers: flag ? factory.createModifiersFromModifierFlags(flag) : undefined,\r\n                                }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 17890,
+      "column": 21,
+      "code": 2412,
+      "message": "Type 'ParameterDeclaration | NamedTupleMember | undefined' is not assignable to type 'ParameterDeclaration | NamedTupleMember' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'ParameterDeclaration | NamedTupleMember'.",
+      "source": "property.links.tupleLabelDeclaration",
+      "reason": "unproven indexed read, not optionality evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21434,
+      "column": 98,
+      "code": 2379,
+      "message": "Argument of type '{ errors?: Diagnostic[] | undefined; }' is not assignable to parameter of type '{ errors?: Diagnostic[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'errors' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.",
+      "source": "resultObj",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 43517,
+      "column": 20,
+      "code": 2412,
+      "message": "Type 'Type | undefined' is not assignable to type 'Type' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type 'Type'.",
+      "source": "typeAsPromise.promisedTypeOfPromise",
+      "reason": "unproven indexed read, not optionality evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 43740,
+      "column": 86,
+      "code": 2379,
+      "message": "Argument of type '{ value: Type | undefined; }' is not assignable to parameter of type '{ value?: Type; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'value' are incompatible.\n    Type 'Type | undefined' is not assignable to type 'Type'.\n      Type 'undefined' is not assignable to type 'Type'.",
+      "source": "thisTypeForErrorOut",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 54261,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: (() => SymlinkCache) | undefined; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: (() => string | undefined) | undefined; }' is not assignable to type 'ModuleSpecifierResolutionHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'readFile' are incompatible.\n    Type '((fileName: string) => string | undefined) | undefined' is not assignable to type '(path: string) => string | undefined'.\n      Type 'undefined' is not assignable to type '(path: string) => string | undefined'.",
+      "source": "return",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2663,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }' is not assignable to type 'CompilerOptions' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'build' are incompatible.\n    Type 'undefined' is not assignable to type 'boolean'.",
+      "source": "compilerOptions",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 132,
+      "column": 13,
+      "code": 2375,
+      "message": "Type '{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }' is not assignable to type 'PackageId' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'peerDependencies' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+      "source": "packageId",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 627,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ primary: boolean; resolvedFileName: string; originalPath: string | undefined; packageId: PackageId | undefined; isExternalLibraryImport: boolean; }' is not assignable to type 'ResolvedTypeReferenceDirective' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'originalPath' are incompatible.\n    Type 'string | undefined' is not assignable to type 'string'.\n      Type 'undefined' is not assignable to type 'string'.",
+      "source": "resolvedTypeReferenceDirective",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 635,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: string[] | undefined; resolutionDiagnostics: Diagnostic[] | undefined; }' is not assignable to type 'ResolvedTypeReferenceDirectiveWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'resolutionDiagnostics' are incompatible.\n    Type 'Diagnostic[] | undefined' is not assignable to type 'Diagnostic[]'.\n      Type 'undefined' is not assignable to type 'Diagnostic[]'.",
+      "source": "result",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 472,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 16 more ...; createHash: ((data: string) => string) | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+      "source": "compilerHost",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1876,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; getSourceFiles: () => SourceFile[]; ... 75 more ...; getGlobalTypingsCacheLocation: (() => string | undefined) | undefined; }' is not assignable to type 'Program' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'directoryExists' are incompatible.\n    Type '((path: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean'.\n      Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+      "source": "program",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2599,
+      "column": 9,
+      "code": 2375,
+      "message": "Type '{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: (() => string | undefined) | undefined; }' is not assignable to type 'EmitHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+      "source": "return",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4956,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.",
+      "source": "host.compilerHost.directoryExists",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 4957,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((path: string) => string[]) | undefined' is not assignable to type '(path: string) => string[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => string[]'.",
+      "source": "host.compilerHost.getDirectories",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 5107,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: (f: string) => string | undefined; ... 6 more ...; trace: ((s: string) => void) | undefined; }' is not assignable to type 'ParseConfigFileHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'trace' are incompatible.\n    Type '((s: string) => void) | undefined' is not assignable to type '(s: string) => void'.\n      Type 'undefined' is not assignable to type '(s: string) => void'.",
+      "source": "return",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 990,
+      "column": 43,
+      "code": 2379,
+      "message": "Argument of type '{ entries: readonly T[]; containingFile: string; containingSourceFile: SourceFile | undefined; redirectedReference: ResolvedProjectReference | undefined; ... 6 more ...; deferWatchingNonRelativeResolution: false; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<string | FileReference, SourceFile | undefined, ResolvedTypeReferenceDirectiveWithFailedLookupLocations, ResolvedTypeReferenceDirective>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly T[] | undefined' is not assignable to type 'readonly (string | FileReference)[]'.\n      Type 'undefined' is not assignable to type 'readonly (string | FileReference)[]'.",
+      "source": "{\r\n            entries: typeDirectiveReferences,\r\n            containingFile,\r\n            containingSourceFile,\r\n            redirectedReference,\r\n            options,\r\n            reusedNames,\r\n            perFileCache: resolvedTypeReferenceDirectives,\r\n            loader: createTypeReferenceResolutionLoader(\r\n                containingFile,\r\n                redirectedReference,\r\n                options,\r\n                getModuleResolutionHost(resolutionHost),\r\n                typeReferenceDirectiveResolutionCache,\r\n            ),\r\n            getResolutionWithResolvedFileName: getResolvedTypeReferenceDirectiveFromResolution,\r\n            shouldRetryResolution: resolution => resolution.resolvedTypeReferenceDirective === undefined,\r\n            deferWatchingNonRelativeResolution: false,\r\n        }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1019,
+      "column": 43,
+      "code": 2379,
+      "message": "Argument of type '{ entries: readonly StringLiteralLike[]; containingFile: string; containingSourceFile: SourceFile; redirectedReference: ResolvedProjectReference | undefined; ... 7 more ...; deferWatchingNonRelativeResolution: true; }' is not assignable to parameter of type 'ResolveNamesWithLocalCacheInput<StringLiteralLike, SourceFile, ResolvedModuleWithFailedLookupLocations, ResolvedModuleFull>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'reusedNames' are incompatible.\n    Type 'readonly StringLiteralLike[] | undefined' is not assignable to type 'readonly StringLiteralLike[]'.\n      Type 'undefined' is not assignable to type 'readonly StringLiteralLike[]'.",
+      "source": "{\r\n            entries: moduleLiterals,\r\n            containingFile,\r\n            containingSourceFile,\r\n            redirectedReference,\r\n            options,\r\n            reusedNames,\r\n            perFileCache: resolvedModuleNames,\r\n            loader: createModuleResolutionLoaderUsingGlobalCache(\r\n                containingFile,\r\n                redirectedReference,\r\n                options,\r\n                resolutionHost,\r\n                moduleResolutionCache,\r\n            ),\r\n            getResolutionWithResolvedFileName: getResolvedModuleFromResolution,\r\n            shouldRetryResolution: resolution => !resolution.resolvedModule || !resolutionExtensionIsTSOrJson(resolution.resolvedModule.extension),\r\n            logChanges: logChangesWhenResolvingModule,\r\n            deferWatchingNonRelativeResolution: true, // Defer non relative resolution watch because we could be using ambient modules\r\n        }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1332,
+      "column": 58,
+      "code": 2375,
+      "message": "Type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+      "source": "dirWatcher",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1332,
+      "column": 58,
+      "code": 2379,
+      "message": "Argument of type '{ watcher: FileWatcher; refCount: number; nonRecursive: boolean | undefined; }' is not assignable to parameter of type 'DirectoryWatchesOfFailedLookup' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'nonRecursive' are incompatible.\n    Type 'boolean | undefined' is not assignable to type 'boolean'.\n      Type 'undefined' is not assignable to type 'boolean'.",
+      "source": "dirWatcher = { watcher: createDirectoryWatcher(dir, dirPath, nonRecursive), refCount: 1, nonRecursive }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1386,
+      "column": 9,
+      "code": 2412,
+      "message": "Type 'undefined' is not assignable to type 'Set<Path>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+      "source": "resolution.files",
+      "reason": "generic or unresolved receiver contract"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2745,
+      "column": 16,
+      "code": 2375,
+      "message": "Type 'PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo>' is not assignable to type 'PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Type '{ className: undefined; weakSetName: undefined; }' is not assignable to type 'PrivateEnvironmentData' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n    Types of property 'className' are incompatible.\n      Type 'undefined' is not assignable to type 'Identifier'.",
+      "source": "lexicalEnvironment.privateEnv",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 302,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => Date) | undefined' is not assignable to type '() => Date' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => Date'.",
+      "source": "host.now",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 438,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]'.",
+      "source": "compilerHost.resolveModuleNameLiterals",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 439,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly (string | FileReference)[] | undefined) => readonly ResolvedTypeReferenceDir...' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined) => readonly ResolvedTypeReferenceDirectiveWithFai...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined) => readonly ResolvedTypeReferenceDirectiveWithFai...'.",
+      "source": "compilerHost.resolveTypeReferenceDirectiveReferences",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 440,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations) | undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(libraryName: string, resolveFrom: string, options: CompilerOptions, libFileName: string) => ResolvedModuleWithFailedLookupLocations'.",
+      "source": "compilerHost.resolveLibrary",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 441,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]'.",
+      "source": "compilerHost.resolveModuleNames",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 442,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]'.",
+      "source": "compilerHost.resolveTypeReferenceDirectives",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 443,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.",
+      "source": "compilerHost.getModuleResolutionCache",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 785,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((directoryName: string) => boolean) | undefined' is not assignable to type '(path: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => boolean'.",
+      "source": "host.directoryExists",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 786,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((directory: string) => void) | undefined' is not assignable to type '(path: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string) => void'.",
+      "source": "host.createDirectory",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 787,
+      "column": 5,
+      "code": 2412,
+      "message": "Type 'WriteFileCallback | undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(path: string, data: string, writeByteOrderMark?: boolean | undefined) => void'.",
+      "source": "host.writeFile",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 756,
+      "column": 11,
+      "code": 2375,
+      "message": "Type '{ getSourceFile: (fileName: string, languageVersionOrOptions: ScriptTarget | CreateSourceFileOptions, onError?: ((message: string) => void) | undefined, shouldCreateNewSourceFile?: boolean | undefined) => SourceFile | undefined; ... 17 more ...; jsDocParsingMode: JSDocParsingMode | undefined; }' is not assignable to type 'CompilerHost' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'getDefaultLibLocation' are incompatible.\n    Type '(() => string) | undefined' is not assignable to type '() => string'.\n      Type 'undefined' is not assignable to type '() => string'.",
+      "source": "compilerHost",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 845,
+      "column": 5,
+      "code": 2375,
+      "message": "Type '{ useCaseSensitiveFileNames: () => boolean; getNewLine: () => string; getCurrentDirectory: () => string; getDefaultLibLocation: () => string; getDefaultLibFileName: (options: CompilerOptions) => string; ... 13 more ...; now: (() => Date) | undefined; }' is not assignable to type 'ProgramHost<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createHash' are incompatible.\n    Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string'.\n      Type 'undefined' is not assignable to type '(data: string) => string'.",
+      "source": "return",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 125,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((data: string) => string) | undefined' is not assignable to type '(data: string) => string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(data: string) => string'.",
+      "source": "host.createHash",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 371,
+      "column": 65,
+      "code": 2379,
+      "message": "Argument of type '{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }' is not assignable to parameter of type 'CreateWatchCompilerHostOfFilesAndCompilerOptionsInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.",
+      "source": "{\r\n            rootFiles: rootFilesOrConfigFileName,\r\n            options: options!,\r\n            watchOptions: watchOptionsOrExtraFileExtensions as WatchOptions,\r\n            projectReferences: projectReferencesOrWatchOptionsToExtend as readonly ProjectReference[],\r\n            system,\r\n            createProgram,\r\n            reportDiagnostic,\r\n            reportWatchStatus,\r\n        }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 383,
+      "column": 52,
+      "code": 2379,
+      "message": "Argument of type '{ configFileName: string; optionsToExtend: CompilerOptions | undefined; watchOptionsToExtend: WatchOptions; extraFileExtensions: readonly FileExtensionInfo[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | unde...' is not assignable to parameter of type 'CreateWatchCompilerHostOfConfigFileInput<T>' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'createProgram' are incompatible.\n    Type 'CreateProgram<T> | undefined' is not assignable to type 'CreateProgram<T>'.\n      Type 'undefined' is not assignable to type 'CreateProgram<T>'.",
+      "source": "{\r\n            configFileName: rootFilesOrConfigFileName,\r\n            optionsToExtend: options,\r\n            watchOptionsToExtend: projectReferencesOrWatchOptionsToExtend as WatchOptions,\r\n            extraFileExtensions: watchOptionsOrExtraFileExtensions as readonly FileExtensionInfo[],\r\n            system,\r\n            createProgram,\r\n            reportDiagnostic,\r\n            reportWatchStatus,\r\n        }",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 506,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => boolean) | undefined' is not assignable to type '() => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => boolean'.",
+      "source": "compilerHost.useSourceOfProjectReferenceRedirect",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 529,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]) | undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleLiterals: readonly StringLiteralLike[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile, reusedNames: readonly StringLiteralLike[] | undefined) => readonly ResolvedModuleWithFailedLookupLocations[]'.",
+      "source": "compilerHost.resolveModuleNameLiterals",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 530,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]) | undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(moduleNames: string[], containingFile: string, reusedNames: string[] | undefined, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile?: SourceFile | undefined) => (ResolvedModule | undefined)[]'.",
+      "source": "compilerHost.resolveModuleNames",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 534,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeDirectiveReferences: readonly (string | FileReference)[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly (string | FileReference)[] | undefined) => readonly ResolvedTypeReferenceDir...' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined) => readonly ResolvedTypeReferenceDirectiveWithFai...' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '<T extends FileReference | string>(typeDirectiveReferences: readonly T[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingSourceFile: SourceFile | undefined, reusedNames: readonly T[] | undefined) => readonly ResolvedTypeReferenceDirectiveWithFai...'.",
+      "source": "compilerHost.resolveTypeReferenceDirectiveReferences",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 535,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '((typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]) | undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(typeReferenceDirectiveNames: string[] | readonly FileReference[], containingFile: string, redirectedReference: ResolvedProjectReference | undefined, options: CompilerOptions, containingFileMode?: ResolutionMode) => (ResolvedTypeReferenceDirective | undefined)[]'.",
+      "source": "compilerHost.resolveTypeReferenceDirectives",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 542,
+      "column": 5,
+      "code": 2412,
+      "message": "Type '(() => ModuleResolutionCache | undefined) | undefined' is not assignable to type '() => ModuleResolutionCache | undefined' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '() => ModuleResolutionCache | undefined'.",
+      "source": "compilerHost.getModuleResolutionCache",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 568,
+      "column": 17,
+      "code": 2412,
+      "message": "Type 'undefined' is not assignable to type 'FileWatcher' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+      "source": "value.fileWatcher",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 661,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directory: string) => boolean) | undefined' is not assignable to type '(directoryName: string) => boolean' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directoryName: string) => boolean'.",
+      "source": "compilerHost.directoryExists",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 662,
+      "column": 9,
+      "code": 2412,
+      "message": "Type '((directory: string) => void) | undefined' is not assignable to type '(directory: string) => void' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.\n  Type 'undefined' is not assignable to type '(directory: string) => void'.",
+      "source": "compilerHost.createDirectory",
+      "reason": "expanded chain has no eligible owned optional declaration with compatible present-undefined evidence"
+    }
+  ],
+  "declined_owners": [
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10002,
+      "name": "readFile",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10004,
+      "name": "getSymlinkCache",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10007,
+      "name": "getGlobalTypingsCacheLocation",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8207,
+      "name": "createHash",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8005,
+      "name": "realpath",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10001,
+      "name": "directoryExists",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10003,
+      "name": "realpath",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8631,
+      "name": "createHash",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 10019,
+      "name": "trace",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8000,
+      "name": "directoryExists",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8007,
+      "name": "getDirectories",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 4552,
+      "name": "trace",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 238,
+      "name": "now",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8173,
+      "name": "resolveModuleNameLiterals",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8181,
+      "name": "resolveTypeReferenceDirectiveReferences",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8190,
+      "name": "resolveLibrary",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8162,
+      "name": "resolveModuleNames",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8172,
+      "name": "resolveTypeReferenceDirectives",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8166,
+      "name": "getModuleResolutionCache",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 200,
+      "name": "directoryExists",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 217,
+      "name": "createDirectory",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 222,
+      "name": "writeFile",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8146,
+      "name": "getDefaultLibLocation",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8152,
+      "name": "readDirectory",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 7999,
+      "name": "trace",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 186,
+      "name": "createHash",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 207,
+      "name": "realpath",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 211,
+      "name": "getEnvironmentVariable",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8209,
+      "name": "useSourceOfProjectReferenceRedirect",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "line": 8212,
+      "name": "createDirectory",
+      "reason": "optional method syntax cannot add a callable undefined union without changing method variance and public declaration shape"
+    }
+  ]
+}

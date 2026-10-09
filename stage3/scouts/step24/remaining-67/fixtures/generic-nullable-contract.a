@@ -1,0 +1,4 @@
+// a-check: type error TS2345
+interface Box<T> { value?: T; }
+function use<T>(box: Box<T>): void { console.log(box.value); }
+use<number>({ value: undefined });
