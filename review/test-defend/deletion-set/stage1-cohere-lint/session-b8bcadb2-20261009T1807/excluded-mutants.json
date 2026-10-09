@@ -1,0 +1,20 @@
+{
+  "audit-lint": [
+    "M1",
+    "M2",
+    "M3"
+  ],
+  "audit-profile": [
+    "M01",
+    "M02",
+    "M03"
+  ],
+  "defender-lint": [
+    "D3"
+  ],
+  "defender-profile": [
+    "D2",
+    "D3"
+  ],
+  "reason": "No recorded failure of either deletion candidate. Empty-answer probes and harness mutations excluded."
+}

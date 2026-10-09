@@ -1,0 +1,11 @@
+{
+  "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "nproc": 5,
+  "tool_setup": "warm env.sh; skipped",
+  "submodules": " 7945d102a6c18dd36adf9114a758ce646e8b2359 cohere (7945d10)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)\n",
+  "effective_skip": "^(TestNodeTableIsLinkOnlyFamily|TestNodeTableIsLinkOnly_[0-9]+|TestProfileCompilationBuildLower)($|_|/)",
+  "full_baseline_completed": false,
+  "narrow_baseline_passed": true,
+  "baseline_binary_seconds": 100.053,
+  "bounded": true
+}

@@ -1,0 +1,346 @@
+[
+  {
+    "mutant": "lint-D1",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "./stage1/cohere/lint/",
+      "-skip",
+      "^(TestNodeTableIsLinkOnlyFamily|TestNodeTableIsLinkOnly_[0-9]+|TestProfileCompilationBuildLower)($|_|/)",
+      "-run",
+      "^(TestOwnedWitnesses_000|TestOwnedWitnesses_001|TestOwnedWitnesses_002|TestOwnedWitnesses_003|TestOwnedWitnesses_004|TestOwnedWitnesses_005|TestOwnedWitnesses_006|TestOwnedWitnesses_007|TestOwnedWitnesses_008|TestOwnedWitnesses_009|TestOwnedWitnesses_010|TestOwnedWitnesses_011|TestOwnedWitnesses_012|TestOwnedWitnesses_013|TestOwnedWitnesses_014|TestOwnedWitnesses_015|TestProduct_ProfileCompilationC|TestProduct_ProfileCompilationCounted|TestProduct_ProfileCompilationJavaScript|TestProduct_ProfileCompilationLowered|TestProduct_ProfileCompilationOracleOutputs|TestProduct_ProfileCompilationProfiled|TestProduct_ProfileCompilationScanner|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilationPlantedFailure|TestProfileCompilation_000|TestProfileCompilation_Setup)$"
+    ],
+    "seconds": 104.54492407699945,
+    "failed": [
+      "TestOwnedWitnesses_000",
+      "TestOwnedWitnesses_001",
+      "TestOwnedWitnesses_002",
+      "TestOwnedWitnesses_003",
+      "TestOwnedWitnesses_004",
+      "TestOwnedWitnesses_005",
+      "TestOwnedWitnesses_006",
+      "TestOwnedWitnesses_007",
+      "TestOwnedWitnesses_008",
+      "TestOwnedWitnesses_009",
+      "TestOwnedWitnesses_010",
+      "TestOwnedWitnesses_011",
+      "TestOwnedWitnesses_012",
+      "TestOwnedWitnesses_013",
+      "TestOwnedWitnesses_014",
+      "TestOwnedWitnesses_015",
+      "TestProfileCompilationPlantedFailure",
+      "TestProfileCompilation_000"
+    ],
+    "stopped_after_first_clean_failure": false,
+    "exit_code": 1,
+    "panic_marker_seen": true,
+    "test_binary_panicked": false,
+    "native_child_panic_tests": [
+      "TestOwnedWitnesses_000",
+      "TestOwnedWitnesses_001",
+      "TestOwnedWitnesses_002",
+      "TestOwnedWitnesses_003",
+      "TestOwnedWitnesses_004",
+      "TestOwnedWitnesses_005",
+      "TestOwnedWitnesses_006",
+      "TestOwnedWitnesses_007",
+      "TestOwnedWitnesses_008",
+      "TestOwnedWitnesses_009",
+      "TestOwnedWitnesses_010",
+      "TestOwnedWitnesses_011",
+      "TestOwnedWitnesses_012",
+      "TestOwnedWitnesses_013",
+      "TestOwnedWitnesses_014",
+      "TestOwnedWitnesses_015",
+      "TestProfileCompilationPlantedFailure",
+      "TestProfileCompilation_000"
+    ],
+    "witness_failures": [
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "still_caught_by": [
+      "TestOwnedWitnesses_000",
+      "TestOwnedWitnesses_001",
+      "TestOwnedWitnesses_002",
+      "TestOwnedWitnesses_003",
+      "TestOwnedWitnesses_004",
+      "TestOwnedWitnesses_005",
+      "TestOwnedWitnesses_006",
+      "TestOwnedWitnesses_007",
+      "TestOwnedWitnesses_008",
+      "TestOwnedWitnesses_009",
+      "TestOwnedWitnesses_010",
+      "TestOwnedWitnesses_011",
+      "TestOwnedWitnesses_012",
+      "TestOwnedWitnesses_013",
+      "TestOwnedWitnesses_014",
+      "TestOwnedWitnesses_015",
+      "TestProfileCompilation_000"
+    ],
+    "row_results": [
+      {
+        "test": "TestProduct_ProfileCompilationLowered",
+        "action": "pass"
+      },
+      {
+        "test": "TestProfileCompilationBuildC",
+        "action": "pass"
+      },
+      {
+        "test": "TestProfileCompilationBuildNative",
+        "action": "pass"
+      },
+      {
+        "test": "TestProfileCompilationBuildJavaScript",
+        "action": "pass"
+      },
+      {
+        "test": "TestProfileCompilationPlantedFailure",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_007",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_003",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_009",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_010",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_000",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_008",
+        "action": "fail"
+      },
+      {
+        "test": "TestProduct_ProfileCompilationCounted",
+        "action": "pass"
+      },
+      {
+        "test": "TestProduct_ProfileCompilationProfiled",
+        "action": "pass"
+      },
+      {
+        "test": "TestProduct_ProfileCompilationJavaScript",
+        "action": "pass"
+      },
+      {
+        "test": "TestProduct_ProfileCompilationScanner",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_002",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_014",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_015",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_005",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_006",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_004",
+        "action": "fail"
+      },
+      {
+        "test": "TestProduct_ProfileCompilationC",
+        "action": "pass"
+      },
+      {
+        "test": "TestProfileCompilation_Setup",
+        "action": "pass"
+      },
+      {
+        "test": "TestProduct_ProfileCompilationOracleOutputs",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_012",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_013",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_001",
+        "action": "fail"
+      },
+      {
+        "test": "TestOwnedWitnesses_011",
+        "action": "fail"
+      },
+      {
+        "test": "TestProfileCompilation_000",
+        "action": "fail"
+      }
+    ],
+    "evidence": [
+      "owned_witness_units_test.go:416: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0071506410082/127/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:400: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_003431283556/147/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:424: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0093049936974/151/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:428: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0104052475532/151/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:388: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0003266326881/155/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:420: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0082801001173/139/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:396: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_002230231977/143/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:444: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0143486074971/139/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:448: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0153668850607/139/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:408: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0053673036754/147/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:412: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0063492914054/139/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:404: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0041415802401/147/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:436: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0121734283641/135/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:440: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_0133253206597/151/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:392: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_00125425395/147/manifest.txt]: exit status 70",
+      "owned_witness_units_test.go:432: node [--disable-warning=ExperimentalWarning ../../../oracle/node.mjs /tmp/deletion-lint/cache/lint-D1/61e687d28ff71c4fc8a008bb60fc8b42cc889c058cdc7963b16daa4e537fb2b3/program.mjs --manifest /tmp/adamic-gate/TestOwnedWitnesses_011823750995/139/manifest.txt]: exit status 70",
+      "profile_test.go:124: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /tmp/adamic-gate/TestProfileCompilation_0001745227123/002/lint.mjs --manifest /tmp/adamic-gate/TestProfileCompilation_0001745227123/004/manifest.txt]: exit status 70"
+    ]
+  },
+  {
+    "mutant": "lint-D2",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "./stage1/cohere/lint/",
+      "-skip",
+      "^(TestNodeTableIsLinkOnlyFamily|TestNodeTableIsLinkOnly_[0-9]+|TestProfileCompilationBuildLower)($|_|/)",
+      "-run",
+      "^(TestOwnedWitnesses_000|TestOwnedWitnesses_001|TestOwnedWitnesses_002|TestOwnedWitnesses_003|TestOwnedWitnesses_004|TestOwnedWitnesses_005|TestOwnedWitnesses_006|TestOwnedWitnesses_007|TestOwnedWitnesses_008|TestOwnedWitnesses_009|TestOwnedWitnesses_010|TestOwnedWitnesses_011|TestOwnedWitnesses_012|TestOwnedWitnesses_013|TestOwnedWitnesses_014|TestOwnedWitnesses_015|TestProduct_ProfileCompilationC|TestProduct_ProfileCompilationCounted|TestProduct_ProfileCompilationJavaScript|TestProduct_ProfileCompilationLowered|TestProduct_ProfileCompilationOracleOutputs|TestProduct_ProfileCompilationProfiled|TestProduct_ProfileCompilationScanner|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilationPlantedFailure|TestProfileCompilation_000|TestProfileCompilation_Setup)$"
+    ],
+    "seconds": 105.5164308300009,
+    "failed": [
+      "TestOwnedWitnesses_004"
+    ],
+    "stopped_after_first_clean_failure": true,
+    "exit_code": -15,
+    "panic_marker_seen": false,
+    "test_binary_panicked": false,
+    "native_child_panic_tests": [],
+    "witness_failures": [],
+    "still_caught_by": [
+      "TestOwnedWitnesses_004"
+    ],
+    "row_results": [
+      {
+        "test": "TestProduct_ProfileCompilationLowered",
+        "action": "pass"
+      },
+      {
+        "test": "TestProfileCompilation_000",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_015",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_014",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_003",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_009",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_010",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_007",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_008",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_006",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_005",
+        "action": "pass"
+      },
+      {
+        "test": "TestProfileCompilationBuildC",
+        "action": "pass"
+      },
+      {
+        "test": "TestOwnedWitnesses_004",
+        "action": "fail"
+      }
+    ],
+    "evidence": [
+      "owned_witness_units_test.go:404: shard-004 Node: case 14 line 176: port \"fixed\\tconst flag = (!!(((((((((((a ? true : false) ? true : false) ? true : false) ? true : false) ? true : false) ? true : false) ? true : false) ? true : false) ? true : false) ? true : false)));\\\\u000a\", Go \"rejected no-unneeded-ternary 19 171 no-unneeded-ternary overlaps another fix\""
+    ]
+  },
+  {
+    "mutant": "profile-D1",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "./stage1/cohere/lint/",
+      "-skip",
+      "^(TestNodeTableIsLinkOnlyFamily|TestNodeTableIsLinkOnly_[0-9]+|TestProfileCompilationBuildLower)($|_|/)",
+      "-run",
+      "^(TestOwnedWitnesses_000|TestOwnedWitnesses_001|TestOwnedWitnesses_002|TestOwnedWitnesses_003|TestOwnedWitnesses_004|TestOwnedWitnesses_005|TestOwnedWitnesses_006|TestOwnedWitnesses_007|TestOwnedWitnesses_008|TestOwnedWitnesses_009|TestOwnedWitnesses_010|TestOwnedWitnesses_011|TestOwnedWitnesses_012|TestOwnedWitnesses_013|TestOwnedWitnesses_014|TestOwnedWitnesses_015|TestProduct_ProfileCompilationC|TestProduct_ProfileCompilationCounted|TestProduct_ProfileCompilationJavaScript|TestProduct_ProfileCompilationLowered|TestProduct_ProfileCompilationOracleOutputs|TestProduct_ProfileCompilationProfiled|TestProduct_ProfileCompilationScanner|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilationPlantedFailure|TestProfileCompilation_000|TestProfileCompilation_Setup)$"
+    ],
+    "seconds": 12.498986211998272,
+    "failed": [
+      "TestProduct_ProfileCompilationLowered"
+    ],
+    "stopped_after_first_clean_failure": true,
+    "exit_code": -15,
+    "panic_marker_seen": false,
+    "test_binary_panicked": false,
+    "native_child_panic_tests": [],
+    "witness_failures": [],
+    "still_caught_by": [
+      "TestProduct_ProfileCompilationLowered"
+    ],
+    "row_results": [
+      {
+        "test": "TestProduct_ProfileCompilationLowered",
+        "action": "fail"
+      }
+    ],
+    "evidence": [
+      "profile_compilation_main_test.go:303: build lint-profile-lowered: lower: stage 0 compiles a program from one entry file, got 1"
+    ]
+  }
+]

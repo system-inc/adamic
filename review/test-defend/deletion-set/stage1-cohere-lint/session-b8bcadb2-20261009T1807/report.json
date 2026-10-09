@@ -1,0 +1,74 @@
+{
+  "package": "stage1/cohere/lint",
+  "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "skipped": [
+    "TestNodeTableIsLinkOnlyFamily",
+    "TestProfileCompilationBuildLower"
+  ],
+  "mutants": [
+    {
+      "mutant": "lint-D1",
+      "file_line": "stage1/cohere/lint/lint.ts:83",
+      "branch": "test-defend/stage1-cohere-lint-lint",
+      "candidates_failed": [
+        "TestNodeTableIsLinkOnlyFamily"
+      ],
+      "still_caught_by": [
+        "TestOwnedWitnesses_000",
+        "TestOwnedWitnesses_001",
+        "TestOwnedWitnesses_002",
+        "TestOwnedWitnesses_003",
+        "TestOwnedWitnesses_004",
+        "TestOwnedWitnesses_005",
+        "TestOwnedWitnesses_006",
+        "TestOwnedWitnesses_007",
+        "TestOwnedWitnesses_008",
+        "TestOwnedWitnesses_009",
+        "TestOwnedWitnesses_010",
+        "TestOwnedWitnesses_011",
+        "TestOwnedWitnesses_012",
+        "TestOwnedWitnesses_013",
+        "TestOwnedWitnesses_014",
+        "TestOwnedWitnesses_015",
+        "TestProfileCompilation_000"
+      ],
+      "stale": false
+    },
+    {
+      "mutant": "lint-D2",
+      "file_line": "stage1/cohere/lint/lint.ts:202",
+      "branch": "test-defend/stage1-cohere-lint-lint",
+      "candidates_failed": [
+        "TestNodeTableIsLinkOnlyFamily"
+      ],
+      "still_caught_by": [
+        "TestOwnedWitnesses_004"
+      ],
+      "stale": false
+    },
+    {
+      "mutant": "profile-D1",
+      "file_line": "internal/lower/lower.go:22",
+      "branch": "test-defend/stage1-cohere-lint-profile_compilation_main",
+      "candidates_failed": [
+        "TestProfileCompilationBuildLower"
+      ],
+      "still_caught_by": [
+        "TestProduct_ProfileCompilationLowered"
+      ],
+      "stale": false
+    }
+  ],
+  "keep": [],
+  "deletable": [
+    "TestNodeTableIsLinkOnlyFamily",
+    "TestProfileCompilationBuildLower"
+  ],
+  "bounded": true,
+  "notes": [
+    "Missing ADAMIC_TYPESCRIPT_SOURCE was confirmed by TestShardsAgree_000. Baseline and mutants use the same 29 recorded outside catchers; other tests remain unknown.",
+    "The virtual NodeTable family label was expanded to TestNodeTableIsLinkOnly_000 through _007.",
+    "Native child panics in lint-D1 were caught as ordinary test failures; the Go binary completed all 29 rows. No Go test-binary panic occurred.",
+    "lint-D2 and profile-D1 stopped after their first clean non-witness failure."
+  ]
+}

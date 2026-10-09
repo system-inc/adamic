@@ -1,0 +1,249 @@
+[
+  {
+    "id": "build-c",
+    "log": "switch-build-c.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationBuildC)$"
+    ],
+    "status": 0,
+    "wall": 68.48959044700314,
+    "binary_seconds": 66.298,
+    "failed_tests": [],
+    "ran": [
+      "TestProfileCompilationBuildC"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "build-native",
+    "log": "switch-build-native.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationBuildNative)$"
+    ],
+    "status": 0,
+    "wall": 20.591796307999175,
+    "binary_seconds": 18.571,
+    "failed_tests": [],
+    "ran": [
+      "TestProfileCompilationBuildNative"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "control",
+    "log": "control.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationUnion|TestProfileCompilationPlantedFailure|TestProfileCompilationBuildLower|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilation_Setup|TestProfileCompilation_000|TestCommentFoldMutant|TestPositionIndexMutant|TestRegistrationMutant|TestFactoryHooks_Setup|TestNestedOutsideModuleCopy)$"
+    ],
+    "status": 0,
+    "wall": 57.77372230500259,
+    "binary_seconds": 55.44,
+    "failed_tests": [],
+    "ran": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilationUnion",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationBuildC",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilation_000",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant",
+      "TestRegistrationMutant"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "M01",
+    "log": "M01.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationUnion|TestProfileCompilationPlantedFailure|TestProfileCompilationBuildLower|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilation_Setup|TestProfileCompilation_000|TestCommentFoldMutant|TestPositionIndexMutant|TestRegistrationMutant|TestFactoryHooks_Setup|TestNestedOutsideModuleCopy)$"
+    ],
+    "status": 1,
+    "wall": 20.407623860002786,
+    "binary_seconds": 18.011,
+    "failed_tests": [
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "ran": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilationUnion",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationBuildNative",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilationBuildC",
+      "TestRegistrationMutant",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "M02",
+    "log": "M02.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationUnion|TestProfileCompilationPlantedFailure|TestProfileCompilationBuildLower|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilation_Setup|TestProfileCompilation_000|TestCommentFoldMutant|TestPositionIndexMutant|TestRegistrationMutant|TestFactoryHooks_Setup|TestNestedOutsideModuleCopy)$"
+    ],
+    "status": 1,
+    "wall": 18.68905698600065,
+    "binary_seconds": 16.339,
+    "failed_tests": [
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "ran": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilationUnion",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationBuildC",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilation_000",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationPlantedFailure",
+      "TestRegistrationMutant",
+      "TestPositionIndexMutant",
+      "TestCommentFoldMutant"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "M03",
+    "log": "M03.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationUnion|TestProfileCompilationPlantedFailure|TestProfileCompilationBuildLower|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilation_Setup|TestProfileCompilation_000|TestCommentFoldMutant|TestPositionIndexMutant|TestRegistrationMutant|TestFactoryHooks_Setup|TestNestedOutsideModuleCopy)$"
+    ],
+    "status": 1,
+    "wall": 18.458598442997754,
+    "binary_seconds": 16.262,
+    "failed_tests": [
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "ran": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilationUnion",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationBuildC",
+      "TestProfileCompilationBuildLower",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure",
+      "TestRegistrationMutant",
+      "TestCommentFoldMutant",
+      "TestPositionIndexMutant"
+    ],
+    "cooked": false
+  },
+  {
+    "id": "P01",
+    "log": "P01.log",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProfileCompilationUnion|TestProfileCompilationPlantedFailure|TestProfileCompilationBuildLower|TestProfileCompilationBuildC|TestProfileCompilationBuildJavaScript|TestProfileCompilationBuildNative|TestProfileCompilation_Setup|TestProfileCompilation_000|TestCommentFoldMutant|TestPositionIndexMutant|TestRegistrationMutant|TestFactoryHooks_Setup|TestNestedOutsideModuleCopy)$"
+    ],
+    "status": 1,
+    "wall": 17.786031370000273,
+    "binary_seconds": 15.363,
+    "failed_tests": [
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure"
+    ],
+    "ran": [
+      "TestFactoryHooks_Setup",
+      "TestProfileCompilationUnion",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationBuildC",
+      "TestNestedOutsideModuleCopy",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilation_000",
+      "TestProfileCompilationPlantedFailure",
+      "TestProfileCompilationBuildLower",
+      "TestProfileCompilationBuildNative",
+      "TestPositionIndexMutant",
+      "TestRegistrationMutant",
+      "TestCommentFoldMutant"
+    ],
+    "cooked": false
+  }
+]

@@ -1,0 +1,12 @@
+diff --git a/stage1/cohere/lint/lint.ts b/stage1/cohere/lint/lint.ts
+index 406f1270..d5047097 100644
+--- a/stage1/cohere/lint/lint.ts
++++ b/stage1/cohere/lint/lint.ts
+@@ -80,7 +80,6 @@ export class Linter {
+                 this.parser.nodes.push(this.parser.node(index));
+             }
+         }
+-        this.parents = this.parser.nodes.map(() => -1);
+         this.ancestry(this.root, -1);
+         const context = new RuleContext(
+             this.source,

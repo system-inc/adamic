@@ -1,0 +1,69 @@
+[
+  {
+    "mutant": "lint-D1",
+    "branch": "test-defend/stage1-cohere-lint-lint",
+    "file": "review/test-defend/stage1-cohere-lint-lint/D1.diff",
+    "candidates_failed": [
+      "TestNodeTableIsLinkOnlyFamily"
+    ],
+    "other_rows_failed": [
+      "TestOwnedWitnesses_000",
+      "TestOwnedWitnesses_001",
+      "TestOwnedWitnesses_002",
+      "TestOwnedWitnesses_003",
+      "TestOwnedWitnesses_004",
+      "TestOwnedWitnesses_005",
+      "TestOwnedWitnesses_006",
+      "TestOwnedWitnesses_007",
+      "TestOwnedWitnesses_008",
+      "TestOwnedWitnesses_009",
+      "TestOwnedWitnesses_010",
+      "TestOwnedWitnesses_011",
+      "TestOwnedWitnesses_012",
+      "TestOwnedWitnesses_013",
+      "TestOwnedWitnesses_014",
+      "TestOwnedWitnesses_015"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "lint-D2",
+    "branch": "test-defend/stage1-cohere-lint-lint",
+    "file": "review/test-defend/stage1-cohere-lint-lint/D2.diff",
+    "candidates_failed": [
+      "TestNodeTableIsLinkOnlyFamily"
+    ],
+    "other_rows_failed": [
+      "TestOwnedWitnesses_004",
+      "TestOwnedWitnesses_011"
+    ],
+    "stale": false,
+    "apply_check": ""
+  },
+  {
+    "mutant": "profile-D1",
+    "branch": "test-defend/stage1-cohere-lint-profile_compilation_main",
+    "file": "review/test-defend/stage1-cohere-lint-profile_compilation_main/session-157a4355/D1.diff",
+    "candidates_failed": [
+      "TestProfileCompilationBuildLower"
+    ],
+    "other_rows_failed": [
+      "TestProduct_ProfileCompilationCounted",
+      "TestProduct_ProfileCompilationScanner",
+      "TestProduct_ProfileCompilationLowered",
+      "TestProfileCompilation_Setup",
+      "TestProfileCompilation_000",
+      "TestProduct_ProfileCompilationJavaScript",
+      "TestProduct_ProfileCompilationC",
+      "TestProfileCompilationBuildJavaScript",
+      "TestProfileCompilationPlantedFailure",
+      "TestProfileCompilationBuildNative",
+      "TestProfileCompilationBuildC",
+      "TestProduct_ProfileCompilationOracleOutputs",
+      "TestProduct_ProfileCompilationProfiled"
+    ],
+    "stale": false,
+    "apply_check": ""
+  }
+]
