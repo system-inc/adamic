@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:24:36.179047132Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:24:36.203340887Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix"}
+{"Time":"2026-10-09T12:24:36.203401944Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix","Output":"=== RUN   TestSuggestionAlongsideAutomaticFix\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:36.20346623Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix","Output":"=== PAUSE TestSuggestionAlongsideAutomaticFix\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:36.203469202Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix"}
+{"Time":"2026-10-09T12:24:36.203643605Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix"}
+{"Time":"2026-10-09T12:24:36.203648251Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix","Output":"=== CONT  TestSuggestionAlongsideAutomaticFix\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:36.20421169Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix","Output":"    harness_test.go:47: union: 3 runtime comparisons, one pinned source/rule case, each exactly once\n"}
+{"Time":"2026-10-09T12:24:36.204224457Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix","Output":"--- PASS: TestSuggestionAlongsideAutomaticFix (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:36.20422737Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestSuggestionAlongsideAutomaticFix","Elapsed":0}
+{"Time":"2026-10-09T12:24:36.204238679Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:36.204477341Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.025s\n"}
+{"Time":"2026-10-09T12:24:36.20450731Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.025}

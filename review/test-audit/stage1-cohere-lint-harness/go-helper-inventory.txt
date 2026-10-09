@@ -1,0 +1,148 @@
+Conservative helper declarations from the current named-row delegate files, not an exact dynamic reach proof.
+stage1/cohere/lint/harness_test.go:10: func TestEmittedJavaScriptMismatch(t *testing.T) {
+stage1/cohere/lint/harness_test.go:16: func TestEmittedJavaScriptMismatch_Setup(t *testing.T) {
+stage1/cohere/lint/harness_test.go:23: func serializationPort(t *testing.T) string {
+stage1/cohere/lint/harness_test.go:40: func TestCompleteSuggestionSerialization(t *testing.T) {
+stage1/cohere/lint/harness_test.go:45: func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
+stage1/cohere/lint/jsx_integration_test.go:21: func jsxSpansOracle(t *testing.T) string {
+stage1/cohere/lint/jsx_integration_test.go:38: func jsxSources(t *testing.T) []string {
+stage1/cohere/lint/jsx_integration_test.go:66: func buildNative(t *testing.T, entry string, sanitize bool) string {
+stage1/cohere/lint/jsx_integration_test.go:84: func TestJsxLintReleaseAndThroughput(t *testing.T) {
+stage1/cohere/lint/jsx_integration_test.go:143: func TestJsxLintTrees_000(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 0) }
+stage1/cohere/lint/jsx_integration_test.go:144: func TestJsxLintTrees_001(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 1) }
+stage1/cohere/lint/jsx_integration_test.go:145: func TestJsxLintTrees_002(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 2) }
+stage1/cohere/lint/jsx_integration_test.go:146: func TestJsxLintTrees_003(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 3) }
+stage1/cohere/lint/jsx_integration_test.go:147: func TestJsxLintTrees_004(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 4) }
+stage1/cohere/lint/jsx_integration_test.go:148: func TestJsxLintTrees_005(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 5) }
+stage1/cohere/lint/jsx_integration_test.go:149: func TestJsxLintTrees_006(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 6) }
+stage1/cohere/lint/jsx_integration_test.go:150: func TestJsxLintTrees_007(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 7) }
+stage1/cohere/lint/jsx_integration_test.go:151: func TestJsxLintTrees_008(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 8) }
+stage1/cohere/lint/jsx_integration_test.go:152: func TestJsxLintTrees_009(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 9) }
+stage1/cohere/lint/jsx_integration_test.go:153: func TestJsxLintTrees_010(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 10) }
+stage1/cohere/lint/jsx_integration_test.go:154: func TestJsxLintTrees_011(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 11) }
+stage1/cohere/lint/jsx_integration_test.go:155: func TestJsxLintTrees_012(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 12) }
+stage1/cohere/lint/jsx_integration_test.go:156: func TestJsxLintTrees_013(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 13) }
+stage1/cohere/lint/jsx_integration_test.go:157: func TestJsxLintTrees_014(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 14) }
+stage1/cohere/lint/jsx_integration_test.go:158: func TestJsxLintTrees_015(t *testing.T) { t.Parallel(); jsxRunTreeShard(t, 15) }
+stage1/cohere/lint/jsx_products_test.go:6: func TestProduct_jsx_membership(t *testing.T) {
+stage1/cohere/lint/jsx_products_test.go:11: func TestProduct_jsx_parser(t *testing.T) {
+stage1/cohere/lint/jsx_products_test.go:16: func TestProduct_jsx_tree_lowered(t *testing.T) {
+stage1/cohere/lint/jsx_products_test.go:21: func TestProduct_jsx_tree_native(t *testing.T) {
+stage1/cohere/lint/jsx_products_test.go:26: func TestProduct_jsx_tree_setup(t *testing.T) {
+stage1/cohere/lint/jsx_setup_isolation_test.go:10: func TestJsxLintTreesSetupIsolation(t *testing.T) {
+stage1/cohere/lint/jsx_shards_test.go:42: func jsxInputFiles(t *testing.T, roots ...string) []string {
+stage1/cohere/lint/jsx_shards_test.go:81: func jsxGoOracle(t *testing.T, name, root, side, virtualName string) string {
+stage1/cohere/lint/jsx_shards_test.go:112: func jsxStableCaseKeys(t *testing.T, paths []string) map[string]string {
+stage1/cohere/lint/jsx_shards_test.go:220: func jsxCaseShard(key string) int {
+stage1/cohere/lint/jsx_shards_test.go:225: func jsxTreeShards(paths []string, identities ...map[string]string) ([][]string, error) {
+stage1/cohere/lint/jsx_shards_test.go:249: func jsxValidateUnion(paths []string, shards [][]string) error {
+stage1/cohere/lint/jsx_shards_test.go:288: func jsxShardSelection(value string) (func(int) bool, error) {
+stage1/cohere/lint/jsx_shards_test.go:304: func jsxPlantDisagreement(output []byte) []byte {
+stage1/cohere/lint/jsx_shards_test.go:315: func jsxCheckTree(t *testing.T, side string, got, want []byte) {
+stage1/cohere/lint/jsx_shards_test.go:322: func TestJsxLintTreesShardCoverage(t *testing.T) {
+stage1/cohere/lint/jsx_shards_test.go:410: func jsxProduct(t *testing.T, inputs jsxProductInputs, build func(string) error) string {
+stage1/cohere/lint/jsx_shards_test.go:429: func jsxTreeInputs(t *testing.T, entry string) jsxProductInputs {
+stage1/cohere/lint/jsx_shards_test.go:434: func jsxTreeLowered(t *testing.T, entry string) string {
+stage1/cohere/lint/jsx_shards_test.go:449: func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
+stage1/cohere/lint/jsx_shards_test.go:467: func jsxParserEntry(t *testing.T) string {
+stage1/cohere/lint/jsx_shards_test.go:476: func jsxParserOracle(t *testing.T) string {
+stage1/cohere/lint/jsx_shards_test.go:483: func jsxMembershipOracle(t *testing.T) string {
+stage1/cohere/lint/jsx_shards_test.go:500: func jsxSetupInputs() buildcache.Inputs {
+stage1/cohere/lint/jsx_shards_test.go:509: func TestJsxLintTrees_Setup(t *testing.T) {
+stage1/cohere/lint/jsx_shards_test.go:514: func jsxPrepareTrees(t *testing.T) string {
+stage1/cohere/lint/jsx_shards_test.go:584: func jsxFetchTrees(t *testing.T) (jsxTreeBundle, string) {
+stage1/cohere/lint/jsx_shards_test.go:609: func jsxTreeSources(t *testing.T) []string {
+stage1/cohere/lint/jsx_shards_test.go:645: func TestJsxLintTreesUnion(t *testing.T) {
+stage1/cohere/lint/jsx_shards_test.go:680: func jsxRunTreeShard(t *testing.T, i int) {
+stage1/cohere/lint/jsx_shards_test.go:734: func TestJsxLintTreesShardDisagreement(t *testing.T) {
+stage1/cohere/lint/jsx_shards_test.go:761: func jsxDeadlineCommand(t *testing.T, name string, args ...string) *exec.Cmd {
+stage1/cohere/lint/jsx_shards_test.go:766: func jsxContextCommand(t *testing.T, parent context.Context, name string, args ...string) *exec.Cmd {
+stage1/cohere/lint/jsx_shards_test.go:783: func jsxCaseExecute(t *testing.T, ctx context.Context, directory, name string, args ...string) execution {
+stage1/cohere/lint/jsx_shards_test.go:810: func jsxUpstream(t *testing.T) []string {
+stage1/cohere/lint/jsx_shards_test.go:826: func jsxCaptureRun(directory string, environment []string, name string, args ...string) ([]byte, error) {
+stage1/cohere/lint/jsx_shards_test.go:861: func jsxCaptureUpstream(sourceRoot, directory string) ([]string, error) {
+stage1/cohere/lint/emitted_javascript_shards_test.go:37: func emittedMismatchSetup(t *testing.T) {
+stage1/cohere/lint/emitted_javascript_shards_test.go:65: func emittedMismatchCases(t *testing.T) []string {
+stage1/cohere/lint/emitted_javascript_shards_test.go:77: func emittedMismatchAssignment(key string) int {
+stage1/cohere/lint/emitted_javascript_shards_test.go:87: func emittedMismatchUnion(t *testing.T) {
+stage1/cohere/lint/emitted_javascript_shards_test.go:126: func TestEmittedJavaScriptMismatch_000(t *testing.T) {
+stage1/cohere/lint/emitted_javascript_shards_test.go:198: func emittedMismatchInputs(t *testing.T) []string {
+stage1/cohere/lint/emitted_javascript_shards_test.go:241: func emittedMismatchOracle(t *testing.T) string {
+stage1/cohere/lint/emitted_javascript_shards_test.go:262: func emittedMismatchLowered(t *testing.T) string {
+stage1/cohere/lint/emitted_javascript_shards_test.go:291: func emittedMismatchNative(t *testing.T) string {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:32: func completeSuggestionUnion(t *testing.T) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:65: func completeSuggestionEqual(caseID, plantedID int, got, want []byte) bool {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:79: func TestCompleteSuggestionSerialization_Setup(t *testing.T) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:84: func completeSuggestionPrepare(t *testing.T) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:115: func completeSuggestionFixture(t *testing.T, mutant bool) string {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:145: func completeSuggestionProductFiles(t *testing.T) []string {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:156: func completeSuggestionOracleProduct(ctx context.Context, t *testing.T, directory string) string {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:165: func completeSuggestionLoweredProduct(ctx context.Context, t *testing.T, directory string, mutant bool) string {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:188: func completeSuggestionNativeProduct(ctx context.Context, t *testing.T, directory string) string {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:204: func completeSuggestionShard(t *testing.T, shard int) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:254: func TestCompleteSuggestionSerialization_000(t *testing.T) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:258: func TestCompleteSuggestionSerialization_001(t *testing.T) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:262: func TestCompleteSuggestionSerialization_002(t *testing.T) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:266: func TestCompleteSuggestionSerialization_003(t *testing.T) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:270: func TestCompleteSuggestionSerialization_004(t *testing.T) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:274: func TestCompleteSuggestionSerialization_005(t *testing.T) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:280: func TestCompleteSuggestionSerialization_PlantedFailure(t *testing.T) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:315: func completeSuggestionOnlyRule(t *testing.T, directory string) {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:333: func completeSuggestionReady(t *testing.T) *completeSuggestionProducts {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:342: func completeSuggestionCommand(ctx context.Context, name string, args ...string) *exec.Cmd {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:355: func completeSuggestionExecute(ctx context.Context, t *testing.T, directory, name string, args ...string) execution {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:381: func completeSuggestionNode(ctx context.Context, t *testing.T, module, path string) execution {
+stage1/cohere/lint/complete_suggestion_serialization_shards_test.go:389: func completeSuggestionBuildOracle(ctx context.Context, sourceRoot, directory string) error {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:41: func suggestionAlongsideSetup(t *testing.T) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:45: func suggestionAlongsidePrepare(t *testing.T) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:139: func TestSuggestionAlongsideAutomaticFix_Setup(t *testing.T) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:145: func suggestionAlongsideReady(t *testing.T) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:150: func suggestionAlongsideDeadline(t *testing.T) func() {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:167: func suggestionAlongsideCheck(got, want []byte) string { return difference(got, want) }
+stage1/cohere/lint/suggestion_alongside_shards_test.go:168: func suggestionAlongsideShard(t *testing.T, index int) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:196: func TestSuggestionAlongsideAutomaticFix_000(t *testing.T) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:200: func TestSuggestionAlongsideAutomaticFix_001(t *testing.T) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:204: func TestSuggestionAlongsideAutomaticFix_002(t *testing.T) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:209: func suggestionAlongsideUnion(t *testing.T) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:265: func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:289: func TestSuggestionAlongsideAutomaticFixSetupIsRequired(t *testing.T) {
+stage1/cohere/lint/suggestion_alongside_shards_test.go:301: func suggestionAlongsideGoOracle(t *testing.T, sourceRoot, directory string) (string, error) {
+stage1/cohere/lint/lint_test.go:23: func prepareRegistry(t *testing.T, directory string) []registry.Descriptor {
+stage1/cohere/lint/lint_test.go:32: func portFiles(t *testing.T) []string {
+stage1/cohere/lint/lint_test.go:64: func commandDiagnostics(name string, stderr []byte) []byte {
+stage1/cohere/lint/lint_test.go:72: func execute(t *testing.T, directory, name string, args ...string) execution {
+stage1/cohere/lint/lint_test.go:97: func goOracle(t *testing.T) string {
+stage1/cohere/lint/lint_test.go:100: func goOracleFrom(t *testing.T, sourceRoot string) string {
+stage1/cohere/lint/lint_test.go:123: func buildPort(t *testing.T, directory string, sanitize bool) string {
+stage1/cohere/lint/lint_test.go:144: func node(t *testing.T, directory, manifest string, count bool) execution {
+stage1/cohere/lint/lint_test.go:158: func difference(got, want []byte) string {
+stage1/cohere/lint/lint_test.go:193: func manifest(t *testing.T, rows []string) string {
+stage1/cohere/lint/lint_test.go:206: func recoveryRows(t *testing.T, oracle string, rows []string) []string {
+stage1/cohere/lint/lint_test.go:233: func generated(t *testing.T) []string {
+stage1/cohere/lint/lint_test.go:275: func upstream(t *testing.T) []string {
+stage1/cohere/lint/lint_test.go:278: func upstreamFrom(t *testing.T, sourceRoot string) []string {
+stage1/cohere/lint/lint_test.go:302: func compare(t *testing.T, oracle, binary, directory, path string) []byte {
+stage1/cohere/lint/lint_test.go:306: func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module string) []byte {
+stage1/cohere/lint/lint_test.go:324: func checkRecoveryRefusal(t *testing.T, oracle, binary, directory, row string) {
+stage1/cohere/lint/lint_test.go:362: func compilerShardAssignments(t *testing.T, rows []string, count int) [][]int {
+stage1/cohere/lint/lint_test.go:397: func compilerCasePath(rows []string, message string) string {
+stage1/cohere/lint/lint_test.go:408: func compilerShardLauncher(t *testing.T, command string, arguments []string, rows []string, assignments [][]int) (string, string) {
+stage1/cohere/lint/lint_test.go:476: func mutant(t *testing.T, from, to string, targets ...string) string {
+stage1/cohere/lint/lint_test.go:479: func copyPort(t *testing.T, directory, from, to string, targets ...string) string {
+stage1/cohere/lint/lint_test.go:537: func TestLegacyMutants(t *testing.T) {
+stage1/cohere/lint/lint_test.go:559: func TestDecorationOptionMutant(t *testing.T) {
+stage1/cohere/lint/lint_test.go:578: func TestCountGuardMutant(t *testing.T) {
+stage1/cohere/lint/lint_test.go:607: func TestThroughput(t *testing.T) {
+stage1/cohere/lint/lint_test.go:693: func TestMutants(t *testing.T) {
+stage1/cohere/lint/lint_test.go:765: func rewritePortImports(t *testing.T, file, source string) string {
+stage1/cohere/lint/lint_test.go:788: func emittedJavaScript(t *testing.T, directory string) string {
+stage1/cohere/lint/lint_test.go:808: func emittedNode(t *testing.T, directory, manifest string, count bool) execution {
+stage1/cohere/lint/lint_test.go:812: func runJavaScript(t *testing.T, module, manifest string, count bool) execution {
+stage1/cohere/lint/shared_test.go:46: func shared(key string, make func(value *sharedValue)) *sharedValue {
+stage1/cohere/lint/shared_test.go:62: func isPackage(directory string) bool {
+stage1/cohere/lint/shared_test.go:68: func sharedPath(name string) (string, error) {
+stage1/cohere/lint/shared_test.go:78: func run(directory string, environment []string, name string, args ...string) ([]byte, error) {
+stage1/cohere/lint/shared_test.go:102: func buildPortTo(directory string, sanitize bool, binary string) error {
+stage1/cohere/lint/shared_test.go:117: func emitJavaScriptTo(directory, module string) error {
+stage1/cohere/lint/shared_test.go:134: func goOracleIn(sourceRoot, directory string) (string, error) {
+stage1/cohere/lint/shared_test.go:188: func captureUpstream(sourceRoot, directory string) ([]string, error) {

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:34:04.416112063Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:34:04.441980868Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion"}
+{"Time":"2026-10-09T12:34:04.442051954Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"=== RUN   TestJsxLintTreesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:34:04.442073569Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"=== PAUSE TestJsxLintTreesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:34:04.442076692Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion"}
+{"Time":"2026-10-09T12:34:04.442083334Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion"}
+{"Time":"2026-10-09T12:34:04.442085892Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"=== CONT  TestJsxLintTreesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:34:04.443128258Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"    jsx_shards_test.go:654: enumerated 0 shards, want 16\n","OutputType":"error"}
+{"Time":"2026-10-09T12:34:04.443203288Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"--- FAIL: TestJsxLintTreesUnion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:34:04.44321539Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Elapsed":0}
+{"Time":"2026-10-09T12:34:04.443233353Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:34:04.443646122Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.027s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:34:04.443661616Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.028}

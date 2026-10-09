@@ -1,0 +1,457 @@
+[
+  {
+    "test": "TestEmittedJavaScriptMismatch",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/harness_test.go",
+    "seconds": 0.024,
+    "oracle": "Handwritten shard declaration census and exactly-once assignment; this row now checks construction.",
+    "oracle_kind": "self",
+    "kills": [
+      "H1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H1 shard declarations: got 1 want 2",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestEmittedJavaScriptMismatch"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestEmittedJavaScriptMismatch$; H1.log; stage1/cohere/lint/harness_test.go:12: shard declarations: got 1 want 2"
+  },
+  {
+    "test": "TestEmittedJavaScriptMismatch_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/harness_test.go",
+    "seconds": 0.385,
+    "oracle": "Successful immutable product construction and nonempty oracle path; no runtime output comparison.",
+    "oracle_kind": "self",
+    "kills": [
+      "H5"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H5 emitted mismatch setup did not complete",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestEmittedJavaScriptMismatch_Setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestEmittedJavaScriptMismatch_Setup$; H5.log; stage1/cohere/lint/harness_test.go:19: emitted mismatch setup did not complete"
+  },
+  {
+    "test": "TestCompleteSuggestionSerialization",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/harness_test.go",
+    "seconds": 4.51,
+    "oracle": "Handwritten exactly-once census and synthetic planted disagreement rejected by completeSuggestionEqual; this row is a union/witness, not a runtime serialization comparison.",
+    "oracle_kind": "self",
+    "kills": [
+      "W1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W1 planted disagreement caught by []",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompleteSuggestionSerialization"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestCompleteSuggestionSerialization$; W1.log; stage1/cohere/lint/harness_test.go:42: planted disagreement caught by []"
+  },
+  {
+    "test": "TestSuggestionAlongsideAutomaticFix",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/harness_test.go",
+    "seconds": 0.027,
+    "oracle": "Handwritten AST census: one parallel call and one literal case index per shard; runtime comparisons moved into numbered leaves.",
+    "oracle_kind": "self",
+    "kills": [
+      "H2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H2 shard enumeration changed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestSuggestionAlongsideAutomaticFix$; H2.log; stage1/cohere/lint/harness_test.go:47: shard enumeration changed"
+  },
+  {
+    "test": "TestJsxLintReleaseAndThroughput",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_integration_test.go",
+    "seconds": null,
+    "oracle": "Go cohere full finding comparison and Go/Node/native count equality; nonzero count and a handwritten JSX census. Both clean attempts timed out before completion.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [],
+    "evidence": "baseline-benchmark-split.log: panic: test timed out after 1m30s"
+  },
+  {
+    "test": "TestJsxLintTrees family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_integration_test.go",
+    "seconds": 2.803,
+    "oracle": "Go TypeScript whole-tree bytes compared with Node running the original parser port source and sanitized native output.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 Node: case 0 line 12: port \"3 JsxText 25 36 0 0 -1 0 0\\t\\t\\\\u000a          \\t\\t0\", Go \"3 JsxText 25 36 0 0 -1 0 0\\t\\t\\\\u000a          \\t\\t1\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestJsxLintTreesSetupIsolation"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 23.457,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$; M3.log; stage1/cohere/lint/jsx_integration_test.go:155: Node: case 0 line 12: port \"3 JsxText 25 36 0 0 -1 0 0\\t\\t\\\\u000a          \\t\\t0\", Go \"3 JsxText 25 36 0 0 -1 0 0\\t\\t\\\\u000a          \\t\\t1\"",
+    "members": [
+      "TestJsxLintTrees_000",
+      "TestJsxLintTrees_001",
+      "TestJsxLintTrees_002",
+      "TestJsxLintTrees_003",
+      "TestJsxLintTrees_004",
+      "TestJsxLintTrees_005",
+      "TestJsxLintTrees_006",
+      "TestJsxLintTrees_007",
+      "TestJsxLintTrees_008",
+      "TestJsxLintTrees_009",
+      "TestJsxLintTrees_010",
+      "TestJsxLintTrees_011",
+      "TestJsxLintTrees_012",
+      "TestJsxLintTrees_013",
+      "TestJsxLintTrees_014",
+      "TestJsxLintTrees_015"
+    ],
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestProduct_jsx_oracle family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_products_test.go",
+    "seconds": 0.502,
+    "oracle": "Shared jsxGoOracle constructor with two input recipes. Checks command errors, but does not inspect the returned executable; H6 accepted absent oracle files.",
+    "oracle_kind": "self",
+    "kills": [
+      "H7"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H7 build jsx-membership: build jsx-membership: exit status 1",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 5,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestProduct_jsx_(membership|parser)$; H7.log; stage1/cohere/lint/jsx_products_test.go:8: build jsx-membership: build jsx-membership: exit status 1",
+    "members": [
+      "TestProduct_jsx_membership",
+      "TestProduct_jsx_parser"
+    ]
+  },
+  {
+    "test": "TestProduct_jsx_tree_lowered",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_products_test.go",
+    "seconds": 0.489,
+    "oracle": "Successful lowering/write return only; H8 wrote empty.c instead of program.c and the row passed. No planted valid construction mutant caught by this row. One construction attempt, limited verdict.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "evidence": "M1.log: selected row passed; M2.log: selected row passed; M3.log: selected row passed; H8.log: selected row passed"
+  },
+  {
+    "test": "TestProduct_jsx_tree_native",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_products_test.go",
+    "seconds": 0.956,
+    "oracle": "Successful native build return only; H9 disabled sanitization and passed with __asan_init absent. No valid planted construction mutant caught by this row. One construction attempt, limited verdict.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "evidence": "M1.log: selected row passed; M2.log: selected row passed; M3.log: selected row passed; H9.log: selected row passed"
+  },
+  {
+    "test": "TestProduct_jsx_tree_setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_products_test.go",
+    "seconds": 1.245,
+    "oracle": "Shared setup constructor and its nonempty directory guard; no explicit bundle consumption.",
+    "oracle_kind": "self",
+    "kills": [
+      "H4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H4 shared JSX preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestProduct_jsx_tree_setup|TestJsxLintTrees_Setup|TestJsxLintTreesUnion|TestJsxLintTreesSetupIsolation)$; H4.log; stage1/cohere/lint/jsx_products_test.go:28: shared JSX preparation failed"
+  },
+  {
+    "test": "TestJsxLintTreesSetupIsolation",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_setup_isolation_test.go",
+    "seconds": 23.457,
+    "oracle": "Cold standalone shard must pass and log named build misses. Its child also compares Go/Node/native trees, so observed M2/M3 failures count against uniqueness; H4 proves the construction check.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2",
+      "M3",
+      "H4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H4 shared JSX preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P5"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestProduct_jsx_tree_setup|TestJsxLintTrees_Setup|TestJsxLintTreesUnion|TestJsxLintTreesSetupIsolation)$; H4.log; stage1/cohere/lint/jsx_integration_test.go:144: shared JSX preparation failed"
+  },
+  {
+    "test": "TestJsxLintTreesShardCoverage",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "seconds": 0.027,
+    "oracle": "Handwritten stable ownership, relocated identity, invalid union and shard-selection invariants.",
+    "oracle_kind": "self",
+    "kills": [
+      "H3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H3 empty corpus accepted",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P10",
+      "P11",
+      "P12"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestJsxLintTreesShardCoverage$; H3.log; stage1/cohere/lint/jsx_shards_test.go:359: empty corpus accepted",
+    "vacuous_subcases": [
+      "P10/P11: positive ownership stability and relocated identity checks before empty-corpus rejection"
+    ]
+  },
+  {
+    "test": "TestJsxLintTrees_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "seconds": 1.248,
+    "oracle": "Shared setup constructor and its nonempty directory guard.",
+    "oracle_kind": "self",
+    "kills": [
+      "H4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H4 shared JSX preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestProduct_jsx_tree_setup|TestJsxLintTrees_Setup|TestJsxLintTreesUnion|TestJsxLintTreesSetupIsolation)$; H4.log; stage1/cohere/lint/jsx_shards_test.go:511: shared JSX preparation failed"
+  },
+  {
+    "test": "TestJsxLintTreesUnion",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "seconds": 1.244,
+    "oracle": "AST declaration census and exact live bundle union. Kept separate because it asserts declaration and coverage facts absent from runtime shards.",
+    "oracle_kind": "self",
+    "kills": [
+      "H4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H4 shared JSX preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P6"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^(TestProduct_jsx_tree_setup|TestJsxLintTrees_Setup|TestJsxLintTreesUnion|TestJsxLintTreesSetupIsolation)$; H4.log; stage1/cohere/lint/jsx_shards_test.go:668: shared JSX preparation failed"
+  },
+  {
+    "test": "TestJsxLintTreesShardDisagreement",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "seconds": 0.049,
+    "oracle": "Synthetic planted tree disagreement must fail only its owning child shard and include the planted message.",
+    "oracle_kind": "self",
+    "kills": [
+      "W2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W2 planted disagreement survived:",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxLintTreesShardDisagreement"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run ^TestJsxLintTreesShardDisagreement$; W2.log; stage1/cohere/lint/jsx_shards_test.go:744: planted disagreement survived:"
+  }
+]

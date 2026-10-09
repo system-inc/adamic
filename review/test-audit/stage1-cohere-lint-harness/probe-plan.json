@@ -1,0 +1,112 @@
+[
+  {
+    "id": "P2",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 81,
+    "old": "{\n\tt.Helper()\n\tinputs := jsxProductInputs{Name: name, Files: jsxInputFiles(t, side, filepath.Join(repository, \"cohere\")), Flags: []string{\"build\", \"-overlay\", virtualName}, Toolchain: runtime.Version()}\n\tdirectory := jsxProduct(t, inputs, func(dir string) error {\n\t\tvirtual := filepath.Join(root, virtualName)\n\t\toverlay, err := json.Marshal(map[string]any{\"Replace\": map[string]string{virtual: side}})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\toverlayPath := filepath.Join(dir, \"overlay.json\")\n\t\tif err := os.WriteFile(overlayPath, overlay, 0644); err != nil {\n\t\t\treturn err\n\t\t}\n\t\tcommand := exec.CommandContext(context.Background(), \"go\", \"build\", \"-overlay=\"+overlayPath, \"-o\", filepath.Join(dir, \"oracle\"), virtual)\n\t\tcommand.Dir = root\n\t\tvar stdout, stderr bytes.Buffer\n\t\tcommand.Stdout, command.Stderr = &stdout, &stderr\n\t\tif err := command.Run(); err != nil {\n\t\t\treturn fmt.Errorf(\"build %s: %w\\n%s\\n%s\", name, err, &stdout, &stderr)\n\t\t}\n\t\tif diagnostics := commandDiagnostics(\"go\", stderr.Bytes()); len(diagnostics) != 0 {\n\t\t\treturn fmt.Errorf(\"build %s: %s\", name, diagnostics)\n\t\t}\n\t\treturn nil\n\t})\n\treturn filepath.Join(directory, \"oracle\")\n}",
+    "new": "{\n\treturn \"\"\n}",
+    "kind": "probe",
+    "regex": "^TestProduct_jsx_(membership|parser)$",
+    "change": "empty-answer entry probe for jsxGoOracle"
+  },
+  {
+    "id": "P3",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 434,
+    "old": "{\n\tt.Helper()\n\treturn jsxProduct(t, jsxTreeInputs(t, entry), func(dir string) error {\n\t\tprogram, err := load.Load([]string{entry})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tlowered, err := lower.Lower(context.Background(), program)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn os.WriteFile(filepath.Join(dir, \"program.c\"), []byte(native.C(lowered)), 0644)\n\t})\n}",
+    "new": "{\n\treturn \"\"\n}",
+    "kind": "probe",
+    "regex": "^TestProduct_jsx_tree_lowered$",
+    "change": "empty-answer entry probe for jsxTreeLowered"
+  },
+  {
+    "id": "P4",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 449,
+    "old": "{\n\tt.Helper()\n\tsource := filepath.Join(jsxTreeLowered(t, entry), \"program.c\")\n\tinputs := jsxTreeInputs(t, entry)\n\tinputs.Name = \"jsx-tree-native\"\n\tinputs.Files = append(inputs.Files, jsxInputFiles(t, filepath.Join(repository, \"internal/native/runtime\"))...)\n\tinputs.Flags = native.Flags(native.Options{Sanitize: sanitize})\n\tinputs.Toolchain = string(execute(t, \"\", \"clang\", \"--version\").output)\n\tbuilt := jsxProduct(t, inputs, func(dir string) error {\n\t\tdata, err := os.ReadFile(source)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn native.Build(string(data), filepath.Join(dir, \"native\"), native.Options{Sanitize: sanitize})\n\t})\n\treturn filepath.Join(built, \"native\")\n}",
+    "new": "{\n\treturn \"\"\n}",
+    "kind": "probe",
+    "regex": "^TestProduct_jsx_tree_native$",
+    "change": "empty-answer entry probe for jsxTreeNative"
+  },
+  {
+    "id": "P5",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 514,
+    "old": "{\n\tt.Helper()\n\tjsxPrepareOnce.Do(func() {\n\t\tjsxReadyDirectory = buildcache.Product(t, jsxSetupInputs(), func(directory string) error {\n\t\t\tpaths := jsxTreeSources(t)\n\t\t\tshards, err := jsxTreeShards(paths, jsxStableCaseKeys(t, paths))\n\t\t\tif err != nil {\n\t\t\t\treturn err\n\t\t\t}\n\t\t\toracle := jsxParserOracle(t)\n\t\t\tbinary := jsxTreeNative(t, jsxParserEntry(t), true)\n\t\t\tcopied := map[string]string{}\n\t\t\tfor _, path := range paths {\n\t\t\t\tcomponents := strings.Split(filepath.ToSlash(path), \"/\")\n\t\t\t\trelative := \"\"\n\t\t\t\tfor i, component := range components {\n\t\t\t\t\tif strings.HasPrefix(component, \"case-\") {\n\t\t\t\t\t\trelative = filepath.Join(append([]string{\"cases\"}, components[i:]...)...)\n\t\t\t\t\t\tbreak\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tif relative == \"\" {\n\t\t\t\t\treturn fmt.Errorf(\"case has no capture directory: %s\", path)\n\t\t\t\t}\n\t\t\t\ttarget := filepath.Join(directory, relative)\n\t\t\t\tif err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {\n\t\t\t\t\treturn err\n\t\t\t\t}\n\t\t\t\tdata, err := os.ReadFile(path)\n\t\t\t\tif err != nil {\n\t\t\t\t\treturn err\n\t\t\t\t}\n\t\t\t\tif err := os.WriteFile(target, data, 0444); err != nil {\n\t\t\t\t\treturn err\n\t\t\t\t}\n\t\t\t\tcopied[path] = relative\n\t\t\t}\n\t\t\tbundle := jsxTreeBundle{Shards: make([][]string, len(shards))}\n\t\t\tfor _, path := range paths {\n\t\t\t\tbundle.Paths = append(bundle.Paths, copied[path])\n\t\t\t}\n\t\t\tfor i, cases := range shards {\n\t\t\t\tfor _, path := range cases {\n\t\t\t\t\tbundle.Shards[i] = append(bundle.Shards[i], copied[path])\n\t\t\t\t}\n\t\t\t}\n\t\t\tfor name, source := range map[string]string{\"parser-oracle\": oracle, \"native\": binary} {\n\t\t\t\tdata, err := os.ReadFile(source)\n\t\t\t\tif err != nil {\n\t\t\t\t\treturn err\n\t\t\t\t}\n\t\t\t\tif err := os.WriteFile(filepath.Join(directory, name), data, 0555); err != nil {\n\t\t\t\t\treturn err\n\t\t\t\t}\n\t\t\t}\n\t\t\tdata, err := json.Marshal(bundle)\n\t\t\tif err != nil {\n\t\t\t\treturn err\n\t\t\t}\n\t\t\treturn os.WriteFile(filepath.Join(directory, \"bundle.json\"), data, 0444)\n\t\t})\n\t})\n\t// A failed builder may have called Fatal inside Once; do not let another\n\t// parallel consumer mistake its empty result for a prepared product.\n\tif jsxReadyDirectory == \"\" {\n\t\tt.Fatal(\"shared JSX preparation failed\")\n\t}\n\treturn jsxReadyDirectory\n}",
+    "new": "{\n\treturn \"\"\n}",
+    "kind": "probe",
+    "regex": "^(TestProduct_jsx_tree_setup|TestJsxLintTrees_Setup|TestJsxLintTreesSetupIsolation)$",
+    "change": "empty-answer entry probe for jsxPrepareTrees"
+  },
+  {
+    "id": "P6",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 584,
+    "old": "{\n\tt.Helper()\n\tdirectory := jsxPrepareTrees(t)\n\tdata, err := os.ReadFile(filepath.Join(directory, \"bundle.json\"))\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tvar bundle jsxTreeBundle\n\tif err := json.Unmarshal(data, &bundle); err != nil {\n\t\tt.Fatal(err)\n\t}\n\tif err := jsxValidateUnion(bundle.Paths, bundle.Shards); err != nil {\n\t\tt.Fatal(err)\n\t}\n\tfor i, path := range bundle.Paths {\n\t\tbundle.Paths[i] = filepath.Join(directory, path)\n\t}\n\tfor i, cases := range bundle.Shards {\n\t\tfor j, path := range cases {\n\t\t\tbundle.Shards[i][j] = filepath.Join(directory, path)\n\t\t}\n\t}\n\treturn bundle, directory\n}",
+    "new": "{\n\treturn jsxTreeBundle{}, \"\"\n}",
+    "kind": "probe",
+    "regex": "^TestJsxLintTreesUnion$",
+    "change": "empty-answer entry probe for jsxFetchTrees"
+  },
+  {
+    "id": "P7",
+    "file": "stage1/cohere/lint/emitted_javascript_shards_test.go",
+    "line": 37,
+    "old": "{\n\tt.Helper()\n\temittedMismatchProducts.Do(func() {\n\t\t// Shared preparation has no deadline; Loom covers the whole unit.\n\t\t// The subprocess receives immutable products; it never builds them again.\n\t\tif os.Getenv(\"ADAMIC_LINT_MISMATCH_PROBE\") == \"1\" {\n\t\t\temittedMismatchProducts.oracle = os.Getenv(\"ADAMIC_MISMATCH_ORACLE\")\n\t\t\temittedMismatchProducts.binary = os.Getenv(\"ADAMIC_MISMATCH_NATIVE\")\n\t\t\temittedMismatchProducts.module = os.Getenv(\"ADAMIC_MISMATCH_MODULE\")\n\t\t\tfor _, path := range []string{emittedMismatchProducts.oracle, emittedMismatchProducts.binary, emittedMismatchProducts.module} {\n\t\t\t\tif _, err := os.Stat(path); err != nil {\n\t\t\t\t\tt.Fatal(err)\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn\n\t\t}\n\t\temittedMismatchProducts.oracle = emittedMismatchOracle(t)\n\t\tlowered := emittedMismatchLowered(t)\n\t\temittedMismatchProducts.binary = emittedMismatchNative(t)\n\t\temittedMismatchProducts.module = filepath.Join(lowered, \"lint.mjs\")\n\t})\n\tif emittedMismatchProducts.oracle == \"\" {\n\t\tt.Fatal(\"emitted mismatch setup did not complete\")\n\t}\n}",
+    "new": "{\n\n}",
+    "kind": "probe",
+    "regex": "^TestEmittedJavaScriptMismatch_Setup$",
+    "change": "empty-answer entry probe for emittedMismatchSetup"
+  },
+  {
+    "id": "P8",
+    "file": "stage1/cohere/lint/emitted_javascript_shards_test.go",
+    "line": 87,
+    "old": "{\n\tt.Helper()\n\t// Check the actual top-level declaration census, including accidental extras.\n\ttree, err := parser.ParseFile(token.NewFileSet(), \"emitted_javascript_shards_test.go\", nil, 0)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tcount := 0\n\tfor _, declaration := range tree.Decls {\n\t\tif function, ok := declaration.(*ast.FuncDecl); ok && strings.HasPrefix(function.Name.Name, \"TestEmittedJavaScriptMismatch_\") {\n\t\t\tif function.Name.Name != fmt.Sprintf(\"TestEmittedJavaScriptMismatch_%03d\", count) {\n\t\t\t\tt.Fatal(\"noncontiguous shard enumeration\")\n\t\t\t}\n\t\t\tcount++\n\t\t}\n\t}\n\tif count != testEmittedJavaScriptMismatchShards {\n\t\tt.Fatalf(\"shard declarations: got %d want %d\", count, testEmittedJavaScriptMismatchShards)\n\t}\n\tcases := emittedMismatchCases(t)\n\tseen := make(map[string]int)\n\tfor shard := 0; shard < testEmittedJavaScriptMismatchShards; shard++ {\n\t\tfor _, key := range cases {\n\t\t\tif emittedMismatchAssignment(key) == shard {\n\t\t\t\tseen[key]++\n\t\t\t}\n\t\t}\n\t}\n\tfor _, key := range cases {\n\t\tif seen[key] != 1 {\n\t\t\tt.Fatalf(\"case %s assigned %d times\", key, seen[key])\n\t\t}\n\t}\n\tif len(seen) != len(cases) {\n\t\tt.Fatal(\"shard union differs from live enumeration\")\n\t}\n\tt.Logf(\"union: %d live cases, each exactly once\", len(cases))\n}",
+    "new": "{\n\n}",
+    "kind": "probe",
+    "regex": "^TestEmittedJavaScriptMismatch$",
+    "change": "empty-answer entry probe for emittedMismatchUnion"
+  },
+  {
+    "id": "P9",
+    "file": "stage1/cohere/lint/suggestion_alongside_shards_test.go",
+    "line": 209,
+    "old": "{\n\tt.Helper()\n\tfile, err := parser.ParseFile(token.NewFileSet(), \"suggestion_alongside_shards_test.go\", nil, 0)\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tseen := map[string]int{}\n\tassignments := make([]int, len(suggestionAlongsideCases))\n\tfor _, declaration := range file.Decls {\n\t\tif f, ok := declaration.(*ast.FuncDecl); ok && strings.HasPrefix(f.Name.Name, \"TestSuggestionAlongsideAutomaticFix_\") && f.Name.Name != \"TestSuggestionAlongsideAutomaticFix_Setup\" {\n\t\t\tseen[f.Name.Name]++\n\t\t\tparallel, calls := 0, 0\n\t\t\tast.Inspect(f.Body, func(n ast.Node) bool {\n\t\t\t\tcall, ok := n.(*ast.CallExpr)\n\t\t\t\tif !ok {\n\t\t\t\t\treturn true\n\t\t\t\t}\n\t\t\t\tif selector, ok := call.Fun.(*ast.SelectorExpr); ok && selector.Sel.Name == \"Parallel\" {\n\t\t\t\t\tparallel++\n\t\t\t\t}\n\t\t\t\tif name, ok := call.Fun.(*ast.Ident); ok && name.Name == \"suggestionAlongsideShard\" {\n\t\t\t\t\tcalls++\n\t\t\t\t\tif len(call.Args) != 2 {\n\t\t\t\t\t\tt.Fatal(\"wrong shard arguments\")\n\t\t\t\t\t}\n\t\t\t\t\tliteral, ok := call.Args[1].(*ast.BasicLit)\n\t\t\t\t\tif !ok {\n\t\t\t\t\t\tt.Fatal(\"shard index must be literal\")\n\t\t\t\t\t}\n\t\t\t\t\tindex, err := strconv.Atoi(literal.Value)\n\t\t\t\t\tif err != nil || index < 0 || index >= len(assignments) {\n\t\t\t\t\t\tt.Fatal(\"invalid shard index\")\n\t\t\t\t\t}\n\t\t\t\t\tassignments[index]++\n\t\t\t\t}\n\t\t\t\treturn true\n\t\t\t})\n\t\t\tif parallel != 1 || calls != 1 {\n\t\t\t\tt.Fatal(\"shard must be parallel and run exactly one case\")\n\t\t\t}\n\t\t}\n\t}\n\tif len(seen) != testSuggestionAlongsideAutomaticFixShards || len(suggestionAlongsideCases) != testSuggestionAlongsideAutomaticFixShards {\n\t\tt.Fatal(\"shard enumeration changed\")\n\t}\n\tfor i := range suggestionAlongsideCases {\n\t\tif assignments[i] != 1 {\n\t\t\tt.Fatal(\"case missing or duplicated\", i)\n\t\t}\n\t\tif seen[fmt.Sprintf(\"TestSuggestionAlongsideAutomaticFix_%03d\", i)] != 1 {\n\t\t\tt.Fatal(\"missing or duplicated shard\", i)\n\t\t}\n\t}\n\tt.Logf(\"union: %d runtime comparisons, one pinned source/rule case, each exactly once\", len(suggestionAlongsideCases))\n}",
+    "new": "{\n\n}",
+    "kind": "probe",
+    "regex": "^TestSuggestionAlongsideAutomaticFix$",
+    "change": "empty-answer entry probe for suggestionAlongsideUnion"
+  },
+  {
+    "id": "P10",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 225,
+    "old": "{\n\tordered := append([]string(nil), paths...)\n\tsort.Strings(ordered)\n\tshards := make([][]string, testJsxLintTreesShards)\n\tfor _, path := range ordered {\n\t\tkey := path // Helper-test fixtures are already repository-relative identities.\n\t\tif len(identities) > 0 {\n\t\t\tvar exists bool\n\t\t\tkey, exists = identities[0][path]\n\t\t\tif !exists || key == \"\" {\n\t\t\t\treturn nil, fmt.Errorf(\"missing stable case key %q\", path)\n\t\t\t}\n\t\t} else if filepath.IsAbs(path) || strings.HasPrefix(filepath.Clean(path), \"..\") {\n\t\t\treturn nil, fmt.Errorf(\"case %q needs a repository-relative stable identity\", path)\n\t\t}\n\t\tshard := jsxCaseShard(key)\n\t\tshards[shard] = append(shards[shard], path)\n\t}\n\tif err := jsxValidateUnion(paths, shards); err != nil {\n\t\treturn nil, err\n\t}\n\treturn shards, nil\n}",
+    "new": "{\n\treturn nil, nil\n}",
+    "kind": "probe",
+    "regex": "^TestJsxLintTreesShardCoverage$",
+    "change": "empty-answer entry probe for jsxTreeShards"
+  },
+  {
+    "id": "P11",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 249,
+    "old": "{\n\tif len(shards) != testJsxLintTreesShards {\n\t\treturn fmt.Errorf(\"enumerated %d shards, want %d\", len(shards), testJsxLintTreesShards)\n\t}\n\tif len(paths) == 0 {\n\t\treturn fmt.Errorf(\"JSX corpus is empty\")\n\t}\n\texpected := map[string]bool{}\n\tfor _, path := range paths {\n\t\tif path == \"\" || expected[path] {\n\t\t\treturn fmt.Errorf(\"empty or repeated unsplit case id %q\", path)\n\t\t}\n\t\texpected[path] = true\n\t}\n\tseen := map[string]bool{}\n\tcount := 0\n\tfor i, cases := range shards {\n\t\tfor _, path := range cases {\n\t\t\tif !expected[path] {\n\t\t\t\treturn fmt.Errorf(\"shard-%03d has unknown case id %q\", i, path)\n\t\t\t}\n\t\t\tif seen[path] {\n\t\t\t\treturn fmt.Errorf(\"shard-%03d repeats case id %q\", i, path)\n\t\t\t}\n\t\t\tseen[path] = true\n\t\t\tcount++\n\t\t}\n\t}\n\tif count != len(paths) || len(seen) != len(expected) {\n\t\treturn fmt.Errorf(\"shard union has %d cases and %d ids, want %d\", count, len(seen), len(paths))\n\t}\n\tfor path := range expected {\n\t\tif !seen[path] {\n\t\t\treturn fmt.Errorf(\"shard union missing case id %q\", path)\n\t\t}\n\t}\n\treturn nil\n}",
+    "new": "{\n\treturn nil\n}",
+    "kind": "probe",
+    "regex": "^TestJsxLintTreesShardCoverage$",
+    "change": "empty-answer entry probe for jsxValidateUnion"
+  },
+  {
+    "id": "P12",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 288,
+    "old": "{\n\tif value == \"\" {\n\t\treturn func(int) bool { return true }, nil\n\t}\n\tfields := strings.Split(value, \"/\")\n\tif len(fields) != 2 {\n\t\treturn nil, fmt.Errorf(\"invalid ADAMIC_TEST_SHARD %q: want i/n\", value)\n\t}\n\tindex, first := strconv.Atoi(fields[0])\n\tcount, second := strconv.Atoi(fields[1])\n\tif first != nil || second != nil || count <= 0 || count > testJsxLintTreesShards || index < 0 || index >= count {\n\t\treturn nil, fmt.Errorf(\"invalid ADAMIC_TEST_SHARD %q\", value)\n\t}\n\treturn func(shard int) bool { return shard%count == index }, nil\n}",
+    "new": "{\n\treturn nil, nil\n}",
+    "kind": "probe",
+    "regex": "^TestJsxLintTreesShardCoverage$",
+    "change": "empty-answer entry probe for jsxShardSelection"
+  }
+]

@@ -1,0 +1,77 @@
+--- a/stage1/cohere/lint/jsx_shards_test.go
++++ b/stage1/cohere/lint/jsx_shards_test.go
+@@ -512,73 +512,7 @@
+ }
+ 
+ func jsxPrepareTrees(t *testing.T) string {
+-	t.Helper()
+-	jsxPrepareOnce.Do(func() {
+-		jsxReadyDirectory = buildcache.Product(t, jsxSetupInputs(), func(directory string) error {
+-			paths := jsxTreeSources(t)
+-			shards, err := jsxTreeShards(paths, jsxStableCaseKeys(t, paths))
+-			if err != nil {
+-				return err
+-			}
+-			oracle := jsxParserOracle(t)
+-			binary := jsxTreeNative(t, jsxParserEntry(t), true)
+-			copied := map[string]string{}
+-			for _, path := range paths {
+-				components := strings.Split(filepath.ToSlash(path), "/")
+-				relative := ""
+-				for i, component := range components {
+-					if strings.HasPrefix(component, "case-") {
+-						relative = filepath.Join(append([]string{"cases"}, components[i:]...)...)
+-						break
+-					}
+-				}
+-				if relative == "" {
+-					return fmt.Errorf("case has no capture directory: %s", path)
+-				}
+-				target := filepath.Join(directory, relative)
+-				if err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {
+-					return err
+-				}
+-				data, err := os.ReadFile(path)
+-				if err != nil {
+-					return err
+-				}
+-				if err := os.WriteFile(target, data, 0444); err != nil {
+-					return err
+-				}
+-				copied[path] = relative
+-			}
+-			bundle := jsxTreeBundle{Shards: make([][]string, len(shards))}
+-			for _, path := range paths {
+-				bundle.Paths = append(bundle.Paths, copied[path])
+-			}
+-			for i, cases := range shards {
+-				for _, path := range cases {
+-					bundle.Shards[i] = append(bundle.Shards[i], copied[path])
+-				}
+-			}
+-			for name, source := range map[string]string{"parser-oracle": oracle, "native": binary} {
+-				data, err := os.ReadFile(source)
+-				if err != nil {
+-					return err
+-				}
+-				if err := os.WriteFile(filepath.Join(directory, name), data, 0555); err != nil {
+-					return err
+-				}
+-			}
+-			data, err := json.Marshal(bundle)
+-			if err != nil {
+-				return err
+-			}
+-			return os.WriteFile(filepath.Join(directory, "bundle.json"), data, 0444)
+-		})
+-	})
+-	// A failed builder may have called Fatal inside Once; do not let another
+-	// parallel consumer mistake its empty result for a prepared product.
+-	if jsxReadyDirectory == "" {
+-		t.Fatal("shared JSX preparation failed")
+-	}
+-	return jsxReadyDirectory
++	return ""
+ }
+ 
+ func jsxFetchTrees(t *testing.T) (jsxTreeBundle, string) {

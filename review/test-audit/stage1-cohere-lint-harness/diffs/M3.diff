@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/jsx.ts
++++ b/stage1/typescript/parser/jsx.ts
+@@ -66,7 +66,7 @@
+         const whitespace = this.parser.kind() === 'JsxTextAllWhiteSpaces';
+         const id = this.make('JsxText', pos);
+         this.parser.node(id).text = this.parser.scanner.value;
+-        this.parser.node(id).semantic = whitespace ? '1' : '0';
++        this.parser.node(id).semantic = whitespace ? '0' : '1';
+         this.parser.scanner.scanJsx();
+         this.parser.node(id).end = this.parser.scanner.fullStart;
+         return id;

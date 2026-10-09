@@ -1,0 +1,1979 @@
+[
+  {
+    "id": "M1",
+    "kind": "production",
+    "file": "stage1/typescript/parser/nodes.ts",
+    "line": 31,
+    "change": "off-by-one printable ASCII upper bound 126 -> 125",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$"
+    ],
+    "logs": [
+      "M1.log",
+      "M1-isolation.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "failed_rows": [],
+    "failed_functions": [],
+    "outputs": {
+      "TestProduct_jsx_oracle family": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 13,
+          "message": "build jsx-parser 5fb7f5a562c0 miss 0.84",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 8,
+          "message": "build jsx-membership ea979905c5e5 hit 0.71",
+          "log": "M1.log"
+        }
+      ],
+      "TestJsxLintTrees family": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 518,
+          "message": "build jsx-membership ea979905c5e5 miss 0.75",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 523,
+          "message": "build jsx-parser 5fb7f5a562c0 hit 0.27",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-lowered 79cdb12e1d16 miss 5.50",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-native af23f502335f miss 1.39",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 517,
+          "message": "build jsx-tree-setup-v1 abdda5b810b1 miss 23.55",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 143,
+          "message": "3 cases, logic wall 334.978572ms, 2347 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 158,
+          "message": "3 cases, logic wall 395.379202ms, 3284 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 155,
+          "message": "5 cases, logic wall 412.028656ms, 3503 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 149,
+          "message": "4 cases, logic wall 241.695769ms, 4621 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 154,
+          "message": "4 cases, logic wall 287.642114ms, 1978 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 153,
+          "message": "2 cases, logic wall 279.114727ms, 2613 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 152,
+          "message": "8 cases, logic wall 286.090041ms, 6114 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 151,
+          "message": "5 cases, logic wall 399.077504ms, 4035 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 150,
+          "message": "3 cases, logic wall 353.110875ms, 1550 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 157,
+          "message": "1 cases, logic wall 387.425012ms, 1625 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 148,
+          "message": "7 cases, logic wall 378.915349ms, 5149 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 146,
+          "message": "4 cases, logic wall 411.022586ms, 3695 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 147,
+          "message": "6 cases, logic wall 351.09847ms, 5104 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 156,
+          "message": "2 cases, logic wall 287.902566ms, 912 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 145,
+          "message": "3 cases, logic wall 354.50913ms, 2163 identical whole-tree bytes",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 144,
+          "message": "3 cases, logic wall 339.703844ms, 2686 identical whole-tree bytes",
+          "log": "M1.log"
+        }
+      ],
+      "TestJsxLintTreesUnion": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 677,
+          "message": "live union: 63 cases",
+          "log": "M1.log"
+        }
+      ],
+      "TestProduct_jsx_tree_native": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 23,
+          "message": "build jsx-tree-lowered 79cdb12e1d16 hit 0.74",
+          "log": "M1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 23,
+          "message": "build jsx-tree-native af23f502335f hit 0.50",
+          "log": "M1.log"
+        }
+      ],
+      "TestProduct_jsx_tree_lowered": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 18,
+          "message": "build jsx-tree-lowered 79cdb12e1d16 hit 0.94",
+          "log": "M1.log"
+        }
+      ]
+    },
+    "additional_commands": [
+      [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/lint/",
+        "-run",
+        "^TestJsxLintTreesSetupIsolation$"
+      ]
+    ]
+  },
+  {
+    "id": "M2",
+    "kind": "production",
+    "file": "stage1/typescript/parser/nodes.ts",
+    "line": 51,
+    "change": "change recursive tree depth increment 1 -> 2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$"
+    ],
+    "logs": [
+      "M2.log",
+      "M2-isolation.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "failed_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation"
+    ],
+    "failed_functions": [
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTrees_000",
+      "TestJsxLintTrees_001",
+      "TestJsxLintTrees_002",
+      "TestJsxLintTrees_003",
+      "TestJsxLintTrees_004",
+      "TestJsxLintTrees_005",
+      "TestJsxLintTrees_006",
+      "TestJsxLintTrees_007",
+      "TestJsxLintTrees_008",
+      "TestJsxLintTrees_009",
+      "TestJsxLintTrees_010",
+      "TestJsxLintTrees_011",
+      "TestJsxLintTrees_012",
+      "TestJsxLintTrees_013",
+      "TestJsxLintTrees_014",
+      "TestJsxLintTrees_015"
+    ],
+    "outputs": {
+      "TestProduct_jsx_oracle family": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 8,
+          "message": "build jsx-membership ea979905c5e5 miss 1.10",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 13,
+          "message": "build jsx-parser 5fb7f5a562c0 miss 1.15",
+          "log": "M2.log"
+        }
+      ],
+      "TestProduct_jsx_tree_lowered": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 18,
+          "message": "build jsx-tree-lowered 9fb437427f9c miss 6.37",
+          "log": "M2.log"
+        }
+      ],
+      "TestJsxLintTrees family": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 518,
+          "message": "build jsx-membership ea979905c5e5 hit 0.27",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 523,
+          "message": "build jsx-parser 5fb7f5a562c0 hit 0.28",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-lowered 9fb437427f9c hit 0.32",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-native 60053f2d2b80 miss 1.35",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 517,
+          "message": "build jsx-tree-setup-v1 c7295dedc18d miss 17.92",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 143,
+          "message": "Node: case 0 line 4: port \"2 ClassDeclaration 0 160 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ClassDeclaration 0 160 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 157,
+          "message": "Node: case 0 line 4: port \"2 VariableStatement 0 309 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 VariableStatement 0 309 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 155,
+          "message": "Node: case 0 line 4: port \"2 ExpressionStatement 0 64 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ExpressionStatement 0 64 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 158,
+          "message": "Node: case 0 line 4: port \"2 VariableStatement 0 44 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 VariableStatement 0 44 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 156,
+          "message": "Node: case 0 line 4: port \"2 ExpressionStatement 0 47 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ExpressionStatement 0 47 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 149,
+          "message": "Node: case 0 line 4: port \"2 ClassDeclaration 0 130 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ClassDeclaration 0 130 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 151,
+          "message": "Node: case 0 line 4: port \"2 ClassDeclaration 0 187 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ClassDeclaration 0 187 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 154,
+          "message": "Node: case 0 line 4: port \"2 ExpressionStatement 0 22 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ExpressionStatement 0 22 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 152,
+          "message": "Node: case 0 line 4: port \"2 ExpressionStatement 0 41 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ExpressionStatement 0 41 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 153,
+          "message": "Node: case 0 line 4: port \"2 ClassDeclaration 0 159 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ClassDeclaration 0 159 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 150,
+          "message": "Node: case 0 line 4: port \"2 ExpressionStatement 0 25 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ExpressionStatement 0 25 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 147,
+          "message": "Node: case 0 line 4: port \"2 VariableStatement 0 40 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 VariableStatement 0 40 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 146,
+          "message": "Node: case 0 line 4: port \"2 ClassDeclaration 0 254 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ClassDeclaration 0 254 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 148,
+          "message": "Node: case 0 line 4: port \"2 ExpressionStatement 0 120 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ExpressionStatement 0 120 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 145,
+          "message": "Node: case 0 line 4: port \"2 ClassDeclaration 0 184 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ClassDeclaration 0 184 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 144,
+          "message": "Node: case 0 line 4: port \"2 ClassDeclaration 0 121 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ClassDeclaration 0 121 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2.log"
+        }
+      ],
+      "TestJsxLintTreesUnion": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 677,
+          "message": "live union: 63 cases",
+          "log": "M2.log"
+        }
+      ],
+      "TestProduct_jsx_tree_native": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 23,
+          "message": "build jsx-tree-lowered 9fb437427f9c hit 0.48",
+          "log": "M2.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 23,
+          "message": "build jsx-tree-native 60053f2d2b80 hit 0.33",
+          "log": "M2.log"
+        }
+      ],
+      "TestJsxLintTreesSetupIsolation": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_setup_isolation_test.go",
+          "origin_line": 20,
+          "message": "standalone cold shard failed: exit status 1",
+          "log": "M2-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 518,
+          "message": "build jsx-membership ea979905c5e5 miss 0.73",
+          "log": "M2-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 523,
+          "message": "build jsx-parser 5fb7f5a562c0 miss 0.72",
+          "log": "M2-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-lowered 9fb437427f9c miss 5.55",
+          "log": "M2-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-native 60053f2d2b80 miss 0.94",
+          "log": "M2-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 517,
+          "message": "build jsx-tree-setup-v1 c7295dedc18d miss 23.23",
+          "log": "M2-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 144,
+          "message": "Node: case 0 line 4: port \"2 ClassDeclaration 0 121 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 ClassDeclaration 0 121 0 0 -1 0 0\\t\\t\\t\\t\"",
+          "log": "M2-isolation.log"
+        }
+      ]
+    },
+    "additional_commands": [
+      [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/lint/",
+        "-run",
+        "^TestJsxLintTreesSetupIsolation$"
+      ]
+    ]
+  },
+  {
+    "id": "M3",
+    "kind": "production",
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 69,
+    "change": "flip JSX text whitespace semantics",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$"
+    ],
+    "logs": [
+      "M3.log",
+      "M3-isolation.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "failed_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesSetupIsolation"
+    ],
+    "failed_functions": [
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTrees_000",
+      "TestJsxLintTrees_001",
+      "TestJsxLintTrees_002",
+      "TestJsxLintTrees_003",
+      "TestJsxLintTrees_004",
+      "TestJsxLintTrees_005",
+      "TestJsxLintTrees_006",
+      "TestJsxLintTrees_007",
+      "TestJsxLintTrees_008",
+      "TestJsxLintTrees_009",
+      "TestJsxLintTrees_010",
+      "TestJsxLintTrees_011",
+      "TestJsxLintTrees_012",
+      "TestJsxLintTrees_013",
+      "TestJsxLintTrees_014",
+      "TestJsxLintTrees_015"
+    ],
+    "outputs": {
+      "TestProduct_jsx_oracle family": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 13,
+          "message": "build jsx-parser 5fb7f5a562c0 miss 0.80",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 8,
+          "message": "build jsx-membership ea979905c5e5 hit 0.53",
+          "log": "M3.log"
+        }
+      ],
+      "TestJsxLintTrees family": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 518,
+          "message": "build jsx-membership ea979905c5e5 miss 0.75",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 523,
+          "message": "build jsx-parser 5fb7f5a562c0 hit 0.27",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-lowered 90d5856ea6a9 miss 5.59",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-native eecce87d4168 miss 1.27",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 517,
+          "message": "build jsx-tree-setup-v1 42bbf4f0e976 miss 23.51",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 155,
+          "message": "Node: case 0 line 12: port \"3 JsxText 25 36 0 0 -1 0 0\\t\\t\\\\u000a          \\t\\t0\", Go \"3 JsxText 25 36 0 0 -1 0 0\\t\\t\\\\u000a          \\t\\t1\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 149,
+          "message": "Node: case 1 line 33: port \"5 JsxText 15 27 0 0 -1 0 0\\t\\t\\\\u000a  // one\\\\u000a  \\t\\t1\", Go \"5 JsxText 15 27 0 0 -1 0 0\\t\\t\\\\u000a  // one\\\\u000a  \\t\\t0\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 143,
+          "message": "Node: case 0 line 18: port \"7 JsxText 102 117 0 0 -1 0 0\\t\\t\\\\u000a              \\t\\t0\", Go \"7 JsxText 102 117 0 0 -1 0 0\\t\\t\\\\u000a              \\t\\t1\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 154,
+          "message": "Node: case 1 line 23: port \"3 JsxText 17 88 0 0 -1 0 0\\t\\t\\\\u000a          &nbsp;https://www.example.com/attachment/download/1\\\\u000a        \\t\\t1\", Go \"3 JsxText 17 88 0 0 -1 0 0\\t\\t\\\\u000a          &nbsp;https://www.example.com/attachment/download/1\\\\u000a        \\t\\t0\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 153,
+          "message": "Node: case 1 line 63: port \"11 JsxText 281 286 0 0 -1 0 0\\t\\tHello\\t\\t1\", Go \"11 JsxText 281 286 0 0 -1 0 0\\t\\tHello\\t\\t0\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 152,
+          "message": "Node: case 2 line 38: port \"5 JsxText 15 37 0 0 -1 0 0\\t\\thello // not a comment\\t\\t1\", Go \"5 JsxText 15 37 0 0 -1 0 0\\t\\thello // not a comment\\t\\t0\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 151,
+          "message": "Node: case 0 line 18: port \"7 JsxText 102 144 0 0 -1 0 0\\t\\t\\\\u000a                // invalid\\\\u000a              \\t\\t1\", Go \"7 JsxText 102 144 0 0 -1 0 0\\t\\t\\\\u000a                // invalid\\\\u000a              \\t\\t0\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 150,
+          "message": "Node: case 1 line 26: port \"7 JsxText 102 119 0 0 -1 0 0\\t\\t\\\\u000a                \\t\\t0\", Go \"7 JsxText 102 119 0 0 -1 0 0\\t\\t\\\\u000a                \\t\\t1\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 148,
+          "message": "Node: case 0 line 9: port \"3 JsxText 14 25 0 0 -1 0 0\\t\\t\\\\u000a          \\t\\t0\", Go \"3 JsxText 14 25 0 0 -1 0 0\\t\\t\\\\u000a          \\t\\t1\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 146,
+          "message": "Node: case 0 line 18: port \"7 JsxText 102 119 0 0 -1 0 0\\t\\t\\\\u000a                \\t\\t0\", Go \"7 JsxText 102 119 0 0 -1 0 0\\t\\t\\\\u000a                \\t\\t1\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 147,
+          "message": "Node: case 0 line 12: port \"5 JsxText 15 33 0 0 -1 0 0\\t\\t\\\\u000a      // invalid\\\\u000a\\t\\t1\", Go \"5 JsxText 15 33 0 0 -1 0 0\\t\\t\\\\u000a      // invalid\\\\u000a\\t\\t0\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 158,
+          "message": "Node: case 0 line 12: port \"5 JsxText 15 37 0 0 -1 0 0\\t\\t\\\\u000a  hello\\\\u000a  // invalid\\\\u000a\\t\\t1\", Go \"5 JsxText 15 37 0 0 -1 0 0\\t\\t\\\\u000a  hello\\\\u000a  // invalid\\\\u000a\\t\\t0\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 157,
+          "message": "Node: case 0 line 37: port \"11 JsxText 265 270 0 0 -1 0 0\\t\\tHello\\t\\t1\", Go \"11 JsxText 265 270 0 0 -1 0 0\\t\\tHello\\t\\t0\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 156,
+          "message": "Node: case 1 line 24: port \"5 JsxText 15 25 0 0 -1 0 0\\t\\t// invalid\\t\\t1\", Go \"5 JsxText 15 25 0 0 -1 0 0\\t\\t// invalid\\t\\t0\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 145,
+          "message": "Node: case 0 line 16: port \"7 JsxText 99 116 0 0 -1 0 0\\t\\t\\\\u000a                \\t\\t0\", Go \"7 JsxText 99 116 0 0 -1 0 0\\t\\t\\\\u000a                \\t\\t1\"",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 144,
+          "message": "Node: case 0 line 16: port \"7 JsxText 84 94 0 0 -1 0 0\\t\\t// invalid\\t\\t1\", Go \"7 JsxText 84 94 0 0 -1 0 0\\t\\t// invalid\\t\\t0\"",
+          "log": "M3.log"
+        }
+      ],
+      "TestJsxLintTreesUnion": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 677,
+          "message": "live union: 63 cases",
+          "log": "M3.log"
+        }
+      ],
+      "TestProduct_jsx_tree_native": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 23,
+          "message": "build jsx-tree-lowered 90d5856ea6a9 hit 0.44",
+          "log": "M3.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 23,
+          "message": "build jsx-tree-native eecce87d4168 hit 0.32",
+          "log": "M3.log"
+        }
+      ],
+      "TestProduct_jsx_tree_lowered": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 18,
+          "message": "build jsx-tree-lowered 90d5856ea6a9 hit 0.36",
+          "log": "M3.log"
+        }
+      ],
+      "TestJsxLintTreesSetupIsolation": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_setup_isolation_test.go",
+          "origin_line": 20,
+          "message": "standalone cold shard failed: exit status 1",
+          "log": "M3-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 518,
+          "message": "build jsx-membership ea979905c5e5 miss 0.73",
+          "log": "M3-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 523,
+          "message": "build jsx-parser 5fb7f5a562c0 miss 0.72",
+          "log": "M3-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-lowered 90d5856ea6a9 miss 5.40",
+          "log": "M3-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-native eecce87d4168 miss 0.95",
+          "log": "M3-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 517,
+          "message": "build jsx-tree-setup-v1 42bbf4f0e976 miss 23.01",
+          "log": "M3-isolation.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 144,
+          "message": "Node: case 0 line 16: port \"7 JsxText 84 94 0 0 -1 0 0\\t\\t// invalid\\t\\t1\", Go \"7 JsxText 84 94 0 0 -1 0 0\\t\\t// invalid\\t\\t0\"",
+          "log": "M3-isolation.log"
+        }
+      ]
+    },
+    "additional_commands": [
+      [
+        "timeout",
+        "120",
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./stage1/cohere/lint/",
+        "-run",
+        "^TestJsxLintTreesSetupIsolation$"
+      ]
+    ]
+  },
+  {
+    "id": "H1",
+    "kind": "setup",
+    "file": "stage1/cohere/lint/emitted_javascript_shards_test.go",
+    "line": 30,
+    "change": "change declared shard count 1 -> 2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestEmittedJavaScriptMismatch$"
+    ],
+    "logs": [
+      "H1.log"
+    ],
+    "matrix_rows": [
+      "TestEmittedJavaScriptMismatch"
+    ],
+    "failed_rows": [
+      "TestEmittedJavaScriptMismatch"
+    ],
+    "failed_functions": [
+      "TestEmittedJavaScriptMismatch"
+    ],
+    "outputs": {
+      "TestEmittedJavaScriptMismatch": [
+        {
+          "origin_file": "stage1/cohere/lint/harness_test.go",
+          "origin_line": 12,
+          "message": "shard declarations: got 1 want 2",
+          "log": "H1.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "H2",
+    "kind": "setup",
+    "file": "stage1/cohere/lint/suggestion_alongside_shards_test.go",
+    "line": 31,
+    "change": "change declared shard count 3 -> 4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix$"
+    ],
+    "logs": [
+      "H2.log"
+    ],
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix"
+    ],
+    "failed_rows": [
+      "TestSuggestionAlongsideAutomaticFix"
+    ],
+    "failed_functions": [
+      "TestSuggestionAlongsideAutomaticFix"
+    ],
+    "outputs": {
+      "TestSuggestionAlongsideAutomaticFix": [
+        {
+          "origin_file": "stage1/cohere/lint/harness_test.go",
+          "origin_line": 47,
+          "message": "shard enumeration changed",
+          "log": "H2.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "W1",
+    "kind": "witness",
+    "file": "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+    "line": 66,
+    "change": "return early with unconditional agreement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestCompleteSuggestionSerialization$"
+    ],
+    "logs": [
+      "W1.log"
+    ],
+    "matrix_rows": [
+      "TestCompleteSuggestionSerialization"
+    ],
+    "failed_rows": [
+      "TestCompleteSuggestionSerialization"
+    ],
+    "failed_functions": [
+      "TestCompleteSuggestionSerialization"
+    ],
+    "outputs": {
+      "TestCompleteSuggestionSerialization": [
+        {
+          "origin_file": "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+          "origin_line": 335,
+          "message": "build complete-suggestion-go-oracle f2fd744028d1 miss 2.81",
+          "log": "W1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+          "origin_line": 335,
+          "message": "build complete-suggestion-lowered-false 9f9e6206cab4 miss 11.22",
+          "log": "W1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+          "origin_line": 195,
+          "message": "build complete-suggestion-lowered-false 9f9e6206cab4 hit 1.12",
+          "log": "W1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+          "origin_line": 335,
+          "message": "build complete-suggestion-native 9eed35cd9c8d miss 3.08",
+          "log": "W1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+          "origin_line": 335,
+          "message": "build complete-suggestion-lowered-true 870184482f4e miss 11.09",
+          "log": "W1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+          "origin_line": 91,
+          "message": "complete suggestion preparation: 28.350s",
+          "log": "W1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/harness_test.go",
+          "origin_line": 42,
+          "message": "planted disagreement caught by []",
+          "log": "W1.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "W2",
+    "kind": "witness",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 317,
+    "change": "drop the complete tree disagreement assertion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestJsxLintTreesShardDisagreement$"
+    ],
+    "logs": [
+      "W2.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTreesShardDisagreement"
+    ],
+    "failed_rows": [
+      "TestJsxLintTreesShardDisagreement"
+    ],
+    "failed_functions": [
+      "TestJsxLintTreesShardDisagreement"
+    ],
+    "outputs": {
+      "TestJsxLintTreesShardDisagreement": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 744,
+          "message": "planted disagreement survived:",
+          "log": "W2.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "H3",
+    "kind": "setup",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 253,
+    "change": "flip empty-corpus rejection condition to impossible bound",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestJsxLintTreesShardCoverage$"
+    ],
+    "logs": [
+      "H3.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "failed_rows": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "failed_functions": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "outputs": {
+      "TestJsxLintTreesShardCoverage": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 359,
+          "message": "empty corpus accepted",
+          "log": "H3.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "H4",
+    "kind": "setup",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 516,
+    "change": "drop the complete shared preparation statement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProduct_jsx_tree_setup|TestJsxLintTrees_Setup|TestJsxLintTreesUnion|TestJsxLintTreesSetupIsolation)$"
+    ],
+    "logs": [
+      "H4.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "failed_rows": [
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "failed_functions": [
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "outputs": {
+      "TestProduct_jsx_tree_setup": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 28,
+          "message": "shared JSX preparation failed",
+          "log": "H4.log"
+        }
+      ],
+      "TestJsxLintTrees_Setup": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 511,
+          "message": "shared JSX preparation failed",
+          "log": "H4.log"
+        }
+      ],
+      "TestJsxLintTreesUnion": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 668,
+          "message": "shared JSX preparation failed",
+          "log": "H4.log"
+        }
+      ],
+      "TestJsxLintTreesSetupIsolation": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_setup_isolation_test.go",
+          "origin_line": 20,
+          "message": "standalone cold shard failed: exit status 1",
+          "log": "H4.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 144,
+          "message": "shared JSX preparation failed",
+          "log": "H4.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "H5",
+    "kind": "setup",
+    "file": "stage1/cohere/lint/emitted_javascript_shards_test.go",
+    "line": 39,
+    "change": "drop the complete mismatch product preparation statement",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestEmittedJavaScriptMismatch_Setup$"
+    ],
+    "logs": [
+      "H5.log"
+    ],
+    "matrix_rows": [
+      "TestEmittedJavaScriptMismatch_Setup"
+    ],
+    "failed_rows": [
+      "TestEmittedJavaScriptMismatch_Setup"
+    ],
+    "failed_functions": [
+      "TestEmittedJavaScriptMismatch_Setup"
+    ],
+    "outputs": {
+      "TestEmittedJavaScriptMismatch_Setup": [
+        {
+          "origin_file": "stage1/cohere/lint/harness_test.go",
+          "origin_line": 19,
+          "message": "emitted mismatch setup did not complete",
+          "log": "H5.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "H6",
+    "kind": "setup",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 98,
+    "change": "drop the oracle construction command, preserving oracle source",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_jsx_(membership|parser)$"
+    ],
+    "logs": [
+      "H6.log"
+    ],
+    "matrix_rows": [
+      "TestProduct_jsx_oracle family"
+    ],
+    "failed_rows": [],
+    "failed_functions": [],
+    "outputs": {
+      "TestProduct_jsx_oracle family": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 13,
+          "message": "build jsx-parser 5fb7f5a562c0 miss 0.31",
+          "log": "H6.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 8,
+          "message": "build jsx-membership ea979905c5e5 miss 0.31",
+          "log": "H6.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "H7",
+    "kind": "setup",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 95,
+    "change": "change the build working-directory option from cohere root to scratch output",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_jsx_(membership|parser)$"
+    ],
+    "logs": [
+      "H7.log"
+    ],
+    "matrix_rows": [
+      "TestProduct_jsx_oracle family"
+    ],
+    "failed_rows": [
+      "TestProduct_jsx_oracle family"
+    ],
+    "failed_functions": [
+      "TestProduct_jsx_membership",
+      "TestProduct_jsx_parser"
+    ],
+    "outputs": {
+      "TestProduct_jsx_oracle family": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 8,
+          "message": "build jsx-membership: build jsx-membership: exit status 1",
+          "log": "H7.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 13,
+          "message": "build jsx-parser: build jsx-parser: exit status 1",
+          "log": "H7.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "H8",
+    "kind": "setup",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 445,
+    "change": "change the construction output filename program.c -> empty.c",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_jsx_tree_lowered$"
+    ],
+    "logs": [
+      "H8.log"
+    ],
+    "matrix_rows": [
+      "TestProduct_jsx_tree_lowered"
+    ],
+    "failed_rows": [],
+    "failed_functions": [],
+    "outputs": {
+      "TestProduct_jsx_tree_lowered": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 18,
+          "message": "build jsx-tree-lowered cc413a085db7 miss 5.52",
+          "log": "H8.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "H9",
+    "kind": "setup",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 462,
+    "change": "flip the sanitizer construction option",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_jsx_tree_native$"
+    ],
+    "logs": [
+      "H9.log"
+    ],
+    "matrix_rows": [
+      "TestProduct_jsx_tree_native"
+    ],
+    "failed_rows": [],
+    "failed_functions": [],
+    "outputs": {
+      "TestProduct_jsx_tree_native": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 23,
+          "message": "build jsx-tree-lowered 12237ded0f70 miss 6.59",
+          "log": "H9.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 23,
+          "message": "build jsx-tree-native 58dd1e520789 miss 3.46",
+          "log": "H9.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "file": "stage1/typescript/parser/main.ts",
+    "line": 4,
+    "change": "empty-output probe: drop all executable module code after imports",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$"
+    ],
+    "logs": [
+      "P1.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTrees family",
+      "TestJsxLintTreesUnion",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_oracle family",
+      "TestProduct_jsx_tree_lowered",
+      "TestProduct_jsx_tree_native",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "failed_rows": [
+      "TestJsxLintTrees family"
+    ],
+    "failed_functions": [
+      "TestJsxLintTrees_000",
+      "TestJsxLintTrees_001",
+      "TestJsxLintTrees_002",
+      "TestJsxLintTrees_003",
+      "TestJsxLintTrees_004",
+      "TestJsxLintTrees_005",
+      "TestJsxLintTrees_006",
+      "TestJsxLintTrees_007",
+      "TestJsxLintTrees_008",
+      "TestJsxLintTrees_009",
+      "TestJsxLintTrees_010",
+      "TestJsxLintTrees_011",
+      "TestJsxLintTrees_012",
+      "TestJsxLintTrees_013",
+      "TestJsxLintTrees_014",
+      "TestJsxLintTrees_015"
+    ],
+    "outputs": {
+      "TestProduct_jsx_oracle family": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 13,
+          "message": "build jsx-parser 5fb7f5a562c0 miss 1.00",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 8,
+          "message": "build jsx-membership ea979905c5e5 hit 0.37",
+          "log": "P1.log"
+        }
+      ],
+      "TestProduct_jsx_tree_lowered": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 18,
+          "message": "build jsx-tree-lowered f8db97af2ee4 miss 1.70",
+          "log": "P1.log"
+        }
+      ],
+      "TestJsxLintTrees family": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 518,
+          "message": "build jsx-membership ea979905c5e5 miss 0.77",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 523,
+          "message": "build jsx-parser 5fb7f5a562c0 hit 0.27",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-lowered f8db97af2ee4 hit 0.33",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 524,
+          "message": "build jsx-tree-native 8928bb07c2f5 miss 2.86",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 517,
+          "message": "build jsx-tree-setup-v1 cc5d4d59ee0c miss 20.92",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 152,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 154,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 143,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 153,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 155,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 151,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 150,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 147,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 148,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 149,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 146,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 145,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 144,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 158,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 156,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 157,
+          "message": "Node: case 0 line 1: port \"\", Go \"case 0\"",
+          "log": "P1.log"
+        }
+      ],
+      "TestJsxLintTreesUnion": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 677,
+          "message": "live union: 63 cases",
+          "log": "P1.log"
+        }
+      ],
+      "TestProduct_jsx_tree_native": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 23,
+          "message": "build jsx-tree-lowered f8db97af2ee4 hit 0.36",
+          "log": "P1.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_products_test.go",
+          "origin_line": 23,
+          "message": "build jsx-tree-native 8928bb07c2f5 hit 0.31",
+          "log": "P1.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 81,
+    "change": "empty-answer entry probe for jsxGoOracle",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_jsx_(membership|parser)$"
+    ],
+    "logs": [
+      "P2.log"
+    ],
+    "matrix_rows": [
+      "TestProduct_jsx_oracle family"
+    ],
+    "failed_rows": [],
+    "failed_functions": [],
+    "outputs": {}
+  },
+  {
+    "id": "P3",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 434,
+    "change": "empty-answer entry probe for jsxTreeLowered",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_jsx_tree_lowered$"
+    ],
+    "logs": [
+      "P3.log"
+    ],
+    "matrix_rows": [
+      "TestProduct_jsx_tree_lowered"
+    ],
+    "failed_rows": [],
+    "failed_functions": [],
+    "outputs": {}
+  },
+  {
+    "id": "P4",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 449,
+    "change": "empty-answer entry probe for jsxTreeNative",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_jsx_tree_native$"
+    ],
+    "logs": [
+      "P4.log"
+    ],
+    "matrix_rows": [
+      "TestProduct_jsx_tree_native"
+    ],
+    "failed_rows": [],
+    "failed_functions": [],
+    "outputs": {}
+  },
+  {
+    "id": "P5",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 514,
+    "change": "empty-answer entry probe for jsxPrepareTrees",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProduct_jsx_tree_setup|TestJsxLintTrees_Setup|TestJsxLintTreesSetupIsolation)$"
+    ],
+    "logs": [
+      "P5.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTreesSetupIsolation",
+      "TestJsxLintTrees_Setup",
+      "TestProduct_jsx_tree_setup"
+    ],
+    "failed_rows": [
+      "TestJsxLintTreesSetupIsolation"
+    ],
+    "failed_functions": [
+      "TestJsxLintTreesSetupIsolation"
+    ],
+    "outputs": {
+      "TestJsxLintTreesSetupIsolation": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_setup_isolation_test.go",
+          "origin_line": 20,
+          "message": "standalone cold shard failed: exit status 1",
+          "log": "P5.log"
+        },
+        {
+          "origin_file": "stage1/cohere/lint/jsx_integration_test.go",
+          "origin_line": 144,
+          "message": "open bundle.json: no such file or directory",
+          "log": "P5.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P6",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 584,
+    "change": "empty-answer entry probe for jsxFetchTrees",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestJsxLintTreesUnion$"
+    ],
+    "logs": [
+      "P6.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTreesUnion"
+    ],
+    "failed_rows": [
+      "TestJsxLintTreesUnion"
+    ],
+    "failed_functions": [
+      "TestJsxLintTreesUnion"
+    ],
+    "outputs": {
+      "TestJsxLintTreesUnion": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 675,
+          "message": "enumerated 0 shards, want 16",
+          "log": "P6.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P7",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/emitted_javascript_shards_test.go",
+    "line": 37,
+    "change": "empty-answer entry probe for emittedMismatchSetup",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestEmittedJavaScriptMismatch_Setup$"
+    ],
+    "logs": [
+      "P7.log"
+    ],
+    "matrix_rows": [
+      "TestEmittedJavaScriptMismatch_Setup"
+    ],
+    "failed_rows": [],
+    "failed_functions": [],
+    "outputs": {
+      "TestEmittedJavaScriptMismatch_Setup": [
+        {
+          "origin_file": "stage1/cohere/lint/harness_test.go",
+          "origin_line": 20,
+          "message": "TestEmittedJavaScriptMismatch (setup): 0.000s",
+          "log": "P7.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P8",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/emitted_javascript_shards_test.go",
+    "line": 87,
+    "change": "empty-answer entry probe for emittedMismatchUnion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestEmittedJavaScriptMismatch$"
+    ],
+    "logs": [
+      "P8.log"
+    ],
+    "matrix_rows": [
+      "TestEmittedJavaScriptMismatch"
+    ],
+    "failed_rows": [],
+    "failed_functions": [],
+    "outputs": {}
+  },
+  {
+    "id": "P9",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/suggestion_alongside_shards_test.go",
+    "line": 209,
+    "change": "empty-answer entry probe for suggestionAlongsideUnion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix$"
+    ],
+    "logs": [
+      "P9.log"
+    ],
+    "matrix_rows": [
+      "TestSuggestionAlongsideAutomaticFix"
+    ],
+    "failed_rows": [],
+    "failed_functions": [],
+    "outputs": {}
+  },
+  {
+    "id": "P10",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 225,
+    "change": "empty-answer entry probe for jsxTreeShards",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestJsxLintTreesShardCoverage$"
+    ],
+    "logs": [
+      "P10.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "failed_rows": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "failed_functions": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "outputs": {
+      "TestJsxLintTreesShardCoverage": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 359,
+          "message": "empty corpus accepted",
+          "log": "P10.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P11",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 249,
+    "change": "empty-answer entry probe for jsxValidateUnion",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestJsxLintTreesShardCoverage$"
+    ],
+    "logs": [
+      "P11.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "failed_rows": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "failed_functions": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "outputs": {
+      "TestJsxLintTreesShardCoverage": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 359,
+          "message": "empty corpus accepted",
+          "log": "P11.log"
+        }
+      ]
+    }
+  },
+  {
+    "id": "P12",
+    "kind": "probe",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 288,
+    "change": "empty-answer entry probe for jsxShardSelection",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestJsxLintTreesShardCoverage$"
+    ],
+    "logs": [
+      "P12.log"
+    ],
+    "matrix_rows": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "failed_rows": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "failed_functions": [
+      "TestJsxLintTreesShardCoverage"
+    ],
+    "outputs": {
+      "TestJsxLintTreesShardCoverage": [
+        {
+          "origin_file": "stage1/cohere/lint/jsx_shards_test.go",
+          "origin_line": 391,
+          "message": "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]",
+          "log": "P12.log"
+        }
+      ]
+    }
+  }
+]

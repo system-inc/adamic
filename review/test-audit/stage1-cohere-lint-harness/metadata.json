@@ -1,0 +1,80 @@
+{
+  "unit": "u109",
+  "base": "16f436a16a8e3b9cd2343f449eb1b0b4577c135c",
+  "branch": "test-audit/stage1-cohere-lint-harness",
+  "nproc": 5,
+  "requested_functions": 31,
+  "grouped_rows": 15,
+  "missing": [],
+  "scope": [
+    "TestEmittedJavaScriptMismatch",
+    "TestEmittedJavaScriptMismatch_Setup",
+    "TestCompleteSuggestionSerialization",
+    "TestSuggestionAlongsideAutomaticFix",
+    "TestJsxLintReleaseAndThroughput",
+    "TestJsxLintTrees_000",
+    "TestJsxLintTrees_001",
+    "TestJsxLintTrees_002",
+    "TestJsxLintTrees_003",
+    "TestJsxLintTrees_004",
+    "TestJsxLintTrees_005",
+    "TestJsxLintTrees_006",
+    "TestJsxLintTrees_007",
+    "TestJsxLintTrees_008",
+    "TestJsxLintTrees_009",
+    "TestJsxLintTrees_010",
+    "TestJsxLintTrees_011",
+    "TestJsxLintTrees_012",
+    "TestJsxLintTrees_013",
+    "TestJsxLintTrees_014",
+    "TestJsxLintTrees_015",
+    "TestProduct_jsx_membership",
+    "TestProduct_jsx_parser",
+    "TestProduct_jsx_tree_lowered",
+    "TestProduct_jsx_tree_native",
+    "TestProduct_jsx_tree_setup",
+    "TestJsxLintTreesSetupIsolation",
+    "TestJsxLintTreesShardCoverage",
+    "TestJsxLintTrees_Setup",
+    "TestJsxLintTreesUnion",
+    "TestJsxLintTreesShardDisagreement"
+  ],
+  "skipped_requested": [],
+  "over_budget": [
+    "TestJsxLintReleaseAndThroughput"
+  ],
+  "ordinary_mutants": [
+    "M1",
+    "M2",
+    "M3"
+  ],
+  "construction_mutants": [
+    "H1",
+    "H2",
+    "H3",
+    "H4",
+    "H5",
+    "H6",
+    "H7",
+    "H8",
+    "H9"
+  ],
+  "weakened_checks": [
+    "W1",
+    "W2"
+  ],
+  "probes": [
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "P5",
+    "P6",
+    "P7",
+    "P8",
+    "P9",
+    "P10",
+    "P11",
+    "P12"
+  ]
+}

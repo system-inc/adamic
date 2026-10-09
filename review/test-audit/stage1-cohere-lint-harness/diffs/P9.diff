@@ -1,0 +1,78 @@
+--- a/stage1/cohere/lint/suggestion_alongside_shards_test.go
++++ b/stage1/cohere/lint/suggestion_alongside_shards_test.go
+@@ -5,14 +5,10 @@
+ 	"context"
+ 	"encoding/json"
+ 	"fmt"
+-	"go/ast"
+-	"go/parser"
+-	"go/token"
+ 	"os"
+ 	"os/exec"
+ 	"path/filepath"
+ 	"runtime"
+-	"strconv"
+ 	"strings"
+ 	"sync"
+ 	"syscall"
+@@ -207,59 +203,7 @@
+ }
+ 
+ func suggestionAlongsideUnion(t *testing.T) {
+-	t.Helper()
+-	file, err := parser.ParseFile(token.NewFileSet(), "suggestion_alongside_shards_test.go", nil, 0)
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	seen := map[string]int{}
+-	assignments := make([]int, len(suggestionAlongsideCases))
+-	for _, declaration := range file.Decls {
+-		if f, ok := declaration.(*ast.FuncDecl); ok && strings.HasPrefix(f.Name.Name, "TestSuggestionAlongsideAutomaticFix_") && f.Name.Name != "TestSuggestionAlongsideAutomaticFix_Setup" {
+-			seen[f.Name.Name]++
+-			parallel, calls := 0, 0
+-			ast.Inspect(f.Body, func(n ast.Node) bool {
+-				call, ok := n.(*ast.CallExpr)
+-				if !ok {
+-					return true
+-				}
+-				if selector, ok := call.Fun.(*ast.SelectorExpr); ok && selector.Sel.Name == "Parallel" {
+-					parallel++
+-				}
+-				if name, ok := call.Fun.(*ast.Ident); ok && name.Name == "suggestionAlongsideShard" {
+-					calls++
+-					if len(call.Args) != 2 {
+-						t.Fatal("wrong shard arguments")
+-					}
+-					literal, ok := call.Args[1].(*ast.BasicLit)
+-					if !ok {
+-						t.Fatal("shard index must be literal")
+-					}
+-					index, err := strconv.Atoi(literal.Value)
+-					if err != nil || index < 0 || index >= len(assignments) {
+-						t.Fatal("invalid shard index")
+-					}
+-					assignments[index]++
+-				}
+-				return true
+-			})
+-			if parallel != 1 || calls != 1 {
+-				t.Fatal("shard must be parallel and run exactly one case")
+-			}
+-		}
+-	}
+-	if len(seen) != testSuggestionAlongsideAutomaticFixShards || len(suggestionAlongsideCases) != testSuggestionAlongsideAutomaticFixShards {
+-		t.Fatal("shard enumeration changed")
+-	}
+-	for i := range suggestionAlongsideCases {
+-		if assignments[i] != 1 {
+-			t.Fatal("case missing or duplicated", i)
+-		}
+-		if seen[fmt.Sprintf("TestSuggestionAlongsideAutomaticFix_%03d", i)] != 1 {
+-			t.Fatal("missing or duplicated shard", i)
+-		}
+-	}
+-	t.Logf("union: %d runtime comparisons, one pinned source/rule case, each exactly once", len(suggestionAlongsideCases))
++
+ }
+ 
+ func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {

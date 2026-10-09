@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T12:27:01.546578658Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:27:01.570051183Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion"}
+{"Time":"2026-10-09T12:27:01.570108648Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"=== RUN   TestJsxLintTreesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:01.570153879Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"=== PAUSE TestJsxLintTreesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:01.57015635Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion"}
+{"Time":"2026-10-09T12:27:01.570161711Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion"}
+{"Time":"2026-10-09T12:27:01.570163403Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"=== CONT  TestJsxLintTreesUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:02.78893334Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"    jsx_shards_test.go:517: build jsx-tree-setup-v1 fb2474344be3 hit 1.20\n"}
+{"Time":"2026-10-09T12:27:02.789026177Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"    jsx_shards_test.go:677: live union: 63 cases\n"}
+{"Time":"2026-10-09T12:27:02.78904727Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Output":"--- PASS: TestJsxLintTreesUnion (1.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:02.789064717Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesUnion","Elapsed":1.22}
+{"Time":"2026-10-09T12:27:02.789100196Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:27:02.790199014Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t1.243s\n"}
+{"Time":"2026-10-09T12:27:02.790239909Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":1.244}

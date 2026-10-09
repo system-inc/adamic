@@ -1,0 +1,28 @@
+{"Time":"2026-10-09T12:26:49.713706014Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:26:49.737094829Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage"}
+{"Time":"2026-10-09T12:26:49.737160464Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage","Output":"=== RUN   TestJsxLintTreesShardCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.737186626Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage","Output":"=== PAUSE TestJsxLintTreesShardCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.737188576Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage"}
+{"Time":"2026-10-09T12:26:49.737194317Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage"}
+{"Time":"2026-10-09T12:26:49.737195914Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage","Output":"=== CONT  TestJsxLintTreesShardCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.738927385Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/missing"}
+{"Time":"2026-10-09T12:26:49.73894107Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/missing","Output":"=== RUN   TestJsxLintTreesShardCoverage/missing\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.73900868Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/missing","Output":"--- PASS: TestJsxLintTreesShardCoverage/missing (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.739012538Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/missing","Elapsed":0}
+{"Time":"2026-10-09T12:26:49.739031405Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/repeated"}
+{"Time":"2026-10-09T12:26:49.739033562Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/repeated","Output":"=== RUN   TestJsxLintTreesShardCoverage/repeated\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.739038694Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/repeated","Output":"--- PASS: TestJsxLintTreesShardCoverage/repeated (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.739060682Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/repeated","Elapsed":0}
+{"Time":"2026-10-09T12:26:49.739063113Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/unknown"}
+{"Time":"2026-10-09T12:26:49.739064868Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/unknown","Output":"=== RUN   TestJsxLintTreesShardCoverage/unknown\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.739068236Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/unknown","Output":"--- PASS: TestJsxLintTreesShardCoverage/unknown (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.73908561Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/unknown","Elapsed":0}
+{"Time":"2026-10-09T12:26:49.739087924Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/shard_count"}
+{"Time":"2026-10-09T12:26:49.739106282Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/shard_count","Output":"=== RUN   TestJsxLintTreesShardCoverage/shard_count\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.739118531Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/shard_count","Output":"--- PASS: TestJsxLintTreesShardCoverage/shard_count (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.739123756Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage/shard_count","Elapsed":0}
+{"Time":"2026-10-09T12:26:49.739181953Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage","Output":"--- PASS: TestJsxLintTreesShardCoverage (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.739186498Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTreesShardCoverage","Elapsed":0}
+{"Time":"2026-10-09T12:26:49.739188139Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:49.739417855Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.025s\n"}
+{"Time":"2026-10-09T12:26:49.739433231Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.026}

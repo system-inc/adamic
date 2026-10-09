@@ -1,0 +1,29 @@
+--- a/stage1/cohere/lint/emitted_javascript_shards_test.go
++++ b/stage1/cohere/lint/emitted_javascript_shards_test.go
+@@ -36,25 +36,7 @@
+ 
+ func emittedMismatchSetup(t *testing.T) {
+ 	t.Helper()
+-	emittedMismatchProducts.Do(func() {
+-		// Shared preparation has no deadline; Loom covers the whole unit.
+-		// The subprocess receives immutable products; it never builds them again.
+-		if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
+-			emittedMismatchProducts.oracle = os.Getenv("ADAMIC_MISMATCH_ORACLE")
+-			emittedMismatchProducts.binary = os.Getenv("ADAMIC_MISMATCH_NATIVE")
+-			emittedMismatchProducts.module = os.Getenv("ADAMIC_MISMATCH_MODULE")
+-			for _, path := range []string{emittedMismatchProducts.oracle, emittedMismatchProducts.binary, emittedMismatchProducts.module} {
+-				if _, err := os.Stat(path); err != nil {
+-					t.Fatal(err)
+-				}
+-			}
+-			return
+-		}
+-		emittedMismatchProducts.oracle = emittedMismatchOracle(t)
+-		lowered := emittedMismatchLowered(t)
+-		emittedMismatchProducts.binary = emittedMismatchNative(t)
+-		emittedMismatchProducts.module = filepath.Join(lowered, "lint.mjs")
+-	})
++
+ 	if emittedMismatchProducts.oracle == "" {
+ 		t.Fatal("emitted mismatch setup did not complete")
+ 	}

@@ -1,0 +1,303 @@
+[
+  {
+    "test": "TestEmittedJavaScriptMismatch",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/harness_test.go",
+    "seconds": 0.024,
+    "oracle_kind": "self",
+    "kills": [
+      "H1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H1 shard declarations: got 1 want 2",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true
+  },
+  {
+    "test": "TestEmittedJavaScriptMismatch_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/harness_test.go",
+    "seconds": 0.385,
+    "oracle_kind": "self",
+    "kills": [
+      "H5"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H5 emitted mismatch setup did not complete",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true
+  },
+  {
+    "test": "TestCompleteSuggestionSerialization",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/harness_test.go",
+    "seconds": 4.51,
+    "oracle_kind": "self",
+    "kills": [
+      "W1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W1 planted disagreement caught by []",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true
+  },
+  {
+    "test": "TestSuggestionAlongsideAutomaticFix",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/harness_test.go",
+    "seconds": 0.027,
+    "oracle_kind": "self",
+    "kills": [
+      "H2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H2 shard enumeration changed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true
+  },
+  {
+    "test": "TestJsxLintReleaseAndThroughput",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_integration_test.go",
+    "seconds": null,
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true
+  },
+  {
+    "test": "TestJsxLintTrees family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_integration_test.go",
+    "seconds": 2.803,
+    "oracle_kind": "external-run",
+    "kills": [
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3 Node: case 0 line 12: port \"3 JsxText 25 36 0 0 -1 0 0\\t\\t\\\\u000a          \\t\\t0\", Go \"3 JsxText 25 36 0 0 -1 0 0\\t\\t\\\\u000a          \\t\\t1\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestJsxLintTreesSetupIsolation"
+    ],
+    "mutants_in_matrix": 3,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 23.457,
+    "vacuous": false,
+    "bounded": true,
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestProduct_jsx_oracle family",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_products_test.go",
+    "seconds": 0.502,
+    "oracle_kind": "self",
+    "kills": [
+      "H7"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H7 build jsx-membership: build jsx-membership: exit status 1",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 5,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true
+  },
+  {
+    "test": "TestProduct_jsx_tree_lowered",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_products_test.go",
+    "seconds": 0.489,
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true
+  },
+  {
+    "test": "TestProduct_jsx_tree_native",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_products_test.go",
+    "seconds": 0.956,
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true
+  },
+  {
+    "test": "TestProduct_jsx_tree_setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_products_test.go",
+    "seconds": 1.245,
+    "oracle_kind": "self",
+    "kills": [
+      "H4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H4 shared JSX preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true
+  },
+  {
+    "test": "TestJsxLintTreesSetupIsolation",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_setup_isolation_test.go",
+    "seconds": 23.457,
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2",
+      "M3",
+      "H4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H4 shared JSX preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P5"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true
+  },
+  {
+    "test": "TestJsxLintTreesShardCoverage",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "seconds": 0.027,
+    "oracle_kind": "self",
+    "kills": [
+      "H3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H3 empty corpus accepted",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [
+      "P10",
+      "P11",
+      "P12"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true
+  },
+  {
+    "test": "TestJsxLintTrees_Setup",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "seconds": 1.248,
+    "oracle_kind": "self",
+    "kills": [
+      "H4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H4 shared JSX preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true
+  },
+  {
+    "test": "TestJsxLintTreesUnion",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "seconds": 1.244,
+    "oracle_kind": "self",
+    "kills": [
+      "H4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "H4 shared JSX preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P6"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true
+  },
+  {
+    "test": "TestJsxLintTreesShardDisagreement",
+    "package": "stage1/cohere/lint",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "seconds": 0.049,
+    "oracle_kind": "self",
+    "kills": [
+      "W2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W2 planted disagreement survived:",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true
+  }
+]

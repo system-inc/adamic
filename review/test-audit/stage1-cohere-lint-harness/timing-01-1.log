@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T12:24:09.535380769Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:24:09.560110978Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup"}
+{"Time":"2026-10-09T12:24:09.560167977Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup","Output":"=== RUN   TestEmittedJavaScriptMismatch_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:09.560187481Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup","Output":"=== PAUSE TestEmittedJavaScriptMismatch_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:09.560189573Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup"}
+{"Time":"2026-10-09T12:24:09.560192049Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup"}
+{"Time":"2026-10-09T12:24:09.560193779Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup","Output":"=== CONT  TestEmittedJavaScriptMismatch_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:09.780845558Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup","Output":"    emitted_javascript_shards_test.go:246: build emitted-mismatch-oracle 74012d67bef7 hit 0.21\n"}
+{"Time":"2026-10-09T12:24:09.848304442Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup","Output":"    emitted_javascript_shards_test.go:266: build emitted-mismatch-lowered 273bf6f4a5d6 hit 0.06\n"}
+{"Time":"2026-10-09T12:24:09.922015226Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup","Output":"    emitted_javascript_shards_test.go:298: build emitted-mismatch-native 921bc7c73ac0 hit 0.06\n"}
+{"Time":"2026-10-09T12:24:09.922051734Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup","Output":"    harness_test.go:20: TestEmittedJavaScriptMismatch (setup): 0.362s\n"}
+{"Time":"2026-10-09T12:24:09.922071095Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup","Output":"--- PASS: TestEmittedJavaScriptMismatch_Setup (0.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:09.922074073Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch_Setup","Elapsed":0.36}
+{"Time":"2026-10-09T12:24:09.922263697Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:09.923379758Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.388s\n"}
+{"Time":"2026-10-09T12:24:09.923412218Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.388}

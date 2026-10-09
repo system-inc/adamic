@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:28:59.765043115Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:28:59.788261682Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch"}
+{"Time":"2026-10-09T12:28:59.788329571Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch","Output":"=== RUN   TestEmittedJavaScriptMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:28:59.788357099Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch","Output":"=== PAUSE TestEmittedJavaScriptMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:28:59.788359417Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch"}
+{"Time":"2026-10-09T12:28:59.788361794Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch"}
+{"Time":"2026-10-09T12:28:59.78836344Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch","Output":"=== CONT  TestEmittedJavaScriptMismatch\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:28:59.789026257Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch","Output":"    harness_test.go:12: shard declarations: got 1 want 2\n","OutputType":"error"}
+{"Time":"2026-10-09T12:28:59.789038637Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch","Output":"--- FAIL: TestEmittedJavaScriptMismatch (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:28:59.789043436Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestEmittedJavaScriptMismatch","Elapsed":0}
+{"Time":"2026-10-09T12:28:59.789054904Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:28:59.789141567Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.024s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:28:59.78916913Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.024}

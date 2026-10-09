@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/nodes.ts
++++ b/stage1/typescript/parser/nodes.ts
+@@ -48,7 +48,7 @@
+     );
+     let count = 1;
+     for(const child of node.children) {
+-        count += printTree(nodes, child, offsets, depth + 1, whole);
++        count += printTree(nodes, child, offsets, depth + 2, whole);
+     }
+     return count;
+ }

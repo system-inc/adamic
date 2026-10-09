@@ -1,0 +1,236 @@
+[
+  {
+    "id": "M1",
+    "exit": 0,
+    "wall": 27.529940275000627,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$"
+    ]
+  },
+  {
+    "id": "M2",
+    "exit": 1,
+    "wall": 21.89015154000117,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$"
+    ]
+  },
+  {
+    "id": "M3",
+    "exit": 1,
+    "wall": 27.572536322000815,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$"
+    ]
+  },
+  {
+    "id": "H1",
+    "exit": 1,
+    "wall": 6.748434433999137,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestEmittedJavaScriptMismatch$"
+    ]
+  },
+  {
+    "id": "H2",
+    "exit": 1,
+    "wall": 6.682415019999098,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestSuggestionAlongsideAutomaticFix$"
+    ]
+  },
+  {
+    "id": "W1",
+    "exit": 1,
+    "wall": 35.88209786799962,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestCompleteSuggestionSerialization$"
+    ]
+  },
+  {
+    "id": "W2",
+    "exit": 1,
+    "wall": 6.730775559999529,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestJsxLintTreesShardDisagreement$"
+    ]
+  },
+  {
+    "id": "H3",
+    "exit": 1,
+    "wall": 7.026185643000645,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestJsxLintTreesShardCoverage$"
+    ]
+  },
+  {
+    "id": "H4",
+    "exit": 1,
+    "wall": 6.734520748999785,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^(TestProduct_jsx_tree_setup|TestJsxLintTrees_Setup|TestJsxLintTreesUnion|TestJsxLintTreesSetupIsolation)$"
+    ]
+  },
+  {
+    "id": "H5",
+    "exit": 1,
+    "wall": 6.871045519999825,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestEmittedJavaScriptMismatch_Setup$"
+    ]
+  },
+  {
+    "id": "H6",
+    "exit": 0,
+    "wall": 7.505790417000753,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_jsx_(membership|parser)$"
+    ]
+  },
+  {
+    "id": "H7",
+    "exit": 1,
+    "wall": 7.40918371600128,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_jsx_(membership|parser)$"
+    ]
+  },
+  {
+    "id": "H8",
+    "exit": 0,
+    "wall": 12.940198025999052,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/",
+      "-run",
+      "^TestProduct_jsx_tree_lowered$"
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+{"Time":"2026-10-09T12:24:53.697196411Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:24:53.720575721Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_membership"}
+{"Time":"2026-10-09T12:24:53.720634369Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_membership","Output":"=== RUN   TestProduct_jsx_membership\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:53.720651174Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_membership","Output":"=== PAUSE TestProduct_jsx_membership\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:53.720653293Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_membership"}
+{"Time":"2026-10-09T12:24:53.720655949Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_parser"}
+{"Time":"2026-10-09T12:24:53.720657492Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_parser","Output":"=== RUN   TestProduct_jsx_parser\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:53.720663752Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_parser","Output":"=== PAUSE TestProduct_jsx_parser\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:53.720665783Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_parser"}
+{"Time":"2026-10-09T12:24:53.720667741Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_membership"}
+{"Time":"2026-10-09T12:24:53.720669514Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_membership","Output":"=== CONT  TestProduct_jsx_membership\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:53.720729132Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_parser"}
+{"Time":"2026-10-09T12:24:53.720731271Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_parser","Output":"=== CONT  TestProduct_jsx_parser\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:54.189732984Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_membership","Output":"    jsx_products_test.go:8: build jsx-membership ea979905c5e5 hit 0.31\n"}
+{"Time":"2026-10-09T12:24:54.189776469Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_membership","Output":"--- PASS: TestProduct_jsx_membership (0.47s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:54.194675863Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_membership","Elapsed":0.47}
+{"Time":"2026-10-09T12:24:54.194733454Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_parser","Output":"    jsx_products_test.go:13: build jsx-parser 5fb7f5a562c0 hit 0.31\n"}
+{"Time":"2026-10-09T12:24:54.194739867Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_parser","Output":"--- PASS: TestProduct_jsx_parser (0.47s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:54.194742964Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestProduct_jsx_parser","Elapsed":0.47}
+{"Time":"2026-10-09T12:24:54.194745769Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:24:54.196420498Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t0.499s\n"}
+{"Time":"2026-10-09T12:24:54.196459878Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0.499}

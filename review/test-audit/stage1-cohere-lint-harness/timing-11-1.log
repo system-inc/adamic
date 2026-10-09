@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T12:26:52.978049154Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-09T12:26:53.002102613Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees_Setup"}
+{"Time":"2026-10-09T12:26:53.002173293Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees_Setup","Output":"=== RUN   TestJsxLintTrees_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:53.002194799Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees_Setup","Output":"=== PAUSE TestJsxLintTrees_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:53.002197208Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees_Setup"}
+{"Time":"2026-10-09T12:26:53.002204534Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees_Setup"}
+{"Time":"2026-10-09T12:26:53.002206163Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees_Setup","Output":"=== CONT  TestJsxLintTrees_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:54.204732861Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees_Setup","Output":"    jsx_shards_test.go:517: build jsx-tree-setup-v1 fb2474344be3 hit 1.18\n"}
+{"Time":"2026-10-09T12:26:54.204807615Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees_Setup","Output":"--- PASS: TestJsxLintTrees_Setup (1.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:54.204810624Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Test":"TestJsxLintTrees_Setup","Elapsed":1.2}
+{"Time":"2026-10-09T12:26:54.204830283Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:26:54.205821345Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint\t1.227s\n"}
+{"Time":"2026-10-09T12:26:54.205859038Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":1.228}

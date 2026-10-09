@@ -1,0 +1,152 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/typescript/parser/nodes.ts",
+    "line": 31,
+    "old": "code <= 126",
+    "new": "code <= 125",
+    "kind": "production",
+    "regex": "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$",
+    "change": "off-by-one printable ASCII upper bound 126 -> 125"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/typescript/parser/nodes.ts",
+    "line": 51,
+    "old": "depth + 1, whole",
+    "new": "depth + 2, whole",
+    "kind": "production",
+    "regex": "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$",
+    "change": "change recursive tree depth increment 1 -> 2"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/typescript/parser/jsx.ts",
+    "line": 69,
+    "old": "semantic = whitespace ? '1' : '0'",
+    "new": "semantic = whitespace ? '0' : '1'",
+    "kind": "production",
+    "regex": "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$",
+    "change": "flip JSX text whitespace semantics"
+  },
+  {
+    "id": "H1",
+    "file": "stage1/cohere/lint/emitted_javascript_shards_test.go",
+    "line": 30,
+    "old": "const testEmittedJavaScriptMismatchShards = 1",
+    "new": "const testEmittedJavaScriptMismatchShards = 2",
+    "kind": "setup",
+    "regex": "^TestEmittedJavaScriptMismatch$",
+    "change": "change declared shard count 1 -> 2"
+  },
+  {
+    "id": "H2",
+    "file": "stage1/cohere/lint/suggestion_alongside_shards_test.go",
+    "line": 31,
+    "old": "const testSuggestionAlongsideAutomaticFixShards = 3",
+    "new": "const testSuggestionAlongsideAutomaticFixShards = 4",
+    "kind": "setup",
+    "regex": "^TestSuggestionAlongsideAutomaticFix$",
+    "change": "change declared shard count 3 -> 4"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/lint/complete_suggestion_serialization_shards_test.go",
+    "line": 66,
+    "old": "return caseID != plantedID || bytes.Equal(got, want)",
+    "new": "return true",
+    "kind": "witness",
+    "regex": "^TestCompleteSuggestionSerialization$",
+    "change": "return early with unconditional agreement"
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 317,
+    "old": "\tif diff := difference(got, want); diff != \"\" {\n\t\tt.Fatalf(\"%s: %s\", side, diff)\n\t}\n",
+    "new": "",
+    "kind": "witness",
+    "regex": "^TestJsxLintTreesShardDisagreement$",
+    "change": "drop the complete tree disagreement assertion"
+  },
+  {
+    "id": "H3",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 253,
+    "old": "if len(paths) == 0 {",
+    "new": "if len(paths) < 0 {",
+    "kind": "setup",
+    "regex": "^TestJsxLintTreesShardCoverage$",
+    "change": "flip empty-corpus rejection condition to impossible bound"
+  },
+  {
+    "id": "H4",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 516,
+    "old": "\tjsxPrepareOnce.Do(func() {\n\t\tjsxReadyDirectory = buildcache.Product(t, jsxSetupInputs(), func(directory string) error {\n\t\t\tpaths := jsxTreeSources(t)\n\t\t\tshards, err := jsxTreeShards(paths, jsxStableCaseKeys(t, paths))\n\t\t\tif err != nil {\n\t\t\t\treturn err\n\t\t\t}\n\t\t\toracle := jsxParserOracle(t)\n\t\t\tbinary := jsxTreeNative(t, jsxParserEntry(t), true)\n\t\t\tcopied := map[string]string{}\n\t\t\tfor _, path := range paths {\n\t\t\t\tcomponents := strings.Split(filepath.ToSlash(path), \"/\")\n\t\t\t\trelative := \"\"\n\t\t\t\tfor i, component := range components {\n\t\t\t\t\tif strings.HasPrefix(component, \"case-\") {\n\t\t\t\t\t\trelative = filepath.Join(append([]string{\"cases\"}, components[i:]...)...)\n\t\t\t\t\t\tbreak\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tif relative == \"\" {\n\t\t\t\t\treturn fmt.Errorf(\"case has no capture directory: %s\", path)\n\t\t\t\t}\n\t\t\t\ttarget := filepath.Join(directory, relative)\n\t\t\t\tif err := os.MkdirAll(filepath.Dir(target), 0755); err != nil {\n\t\t\t\t\treturn err\n\t\t\t\t}\n\t\t\t\tdata, err := os.ReadFile(path)\n\t\t\t\tif err != nil {\n\t\t\t\t\treturn err\n\t\t\t\t}\n\t\t\t\tif err := os.WriteFile(target, data, 0444); err != nil {\n\t\t\t\t\treturn err\n\t\t\t\t}\n\t\t\t\tcopied[path] = relative\n\t\t\t}\n\t\t\tbundle := jsxTreeBundle{Shards: make([][]string, len(shards))}\n\t\t\tfor _, path := range paths {\n\t\t\t\tbundle.Paths = append(bundle.Paths, copied[path])\n\t\t\t}\n\t\t\tfor i, cases := range shards {\n\t\t\t\tfor _, path := range cases {\n\t\t\t\t\tbundle.Shards[i] = append(bundle.Shards[i], copied[path])\n\t\t\t\t}\n\t\t\t}\n\t\t\tfor name, source := range map[string]string{\"parser-oracle\": oracle, \"native\": binary} {\n\t\t\t\tdata, err := os.ReadFile(source)\n\t\t\t\tif err != nil {\n\t\t\t\t\treturn err\n\t\t\t\t}\n\t\t\t\tif err := os.WriteFile(filepath.Join(directory, name), data, 0555); err != nil {\n\t\t\t\t\treturn err\n\t\t\t\t}\n\t\t\t}\n\t\t\tdata, err := json.Marshal(bundle)\n\t\t\tif err != nil {\n\t\t\t\treturn err\n\t\t\t}\n\t\t\treturn os.WriteFile(filepath.Join(directory, \"bundle.json\"), data, 0444)\n\t\t})\n\t})",
+    "new": "",
+    "kind": "setup",
+    "regex": "^(TestProduct_jsx_tree_setup|TestJsxLintTrees_Setup|TestJsxLintTreesUnion|TestJsxLintTreesSetupIsolation)$",
+    "change": "drop the complete shared preparation statement"
+  },
+  {
+    "id": "H5",
+    "file": "stage1/cohere/lint/emitted_javascript_shards_test.go",
+    "line": 39,
+    "old": "\temittedMismatchProducts.Do(func() {\n\t\t// Shared preparation has no deadline; Loom covers the whole unit.\n\t\t// The subprocess receives immutable products; it never builds them again.\n\t\tif os.Getenv(\"ADAMIC_LINT_MISMATCH_PROBE\") == \"1\" {\n\t\t\temittedMismatchProducts.oracle = os.Getenv(\"ADAMIC_MISMATCH_ORACLE\")\n\t\t\temittedMismatchProducts.binary = os.Getenv(\"ADAMIC_MISMATCH_NATIVE\")\n\t\t\temittedMismatchProducts.module = os.Getenv(\"ADAMIC_MISMATCH_MODULE\")\n\t\t\tfor _, path := range []string{emittedMismatchProducts.oracle, emittedMismatchProducts.binary, emittedMismatchProducts.module} {\n\t\t\t\tif _, err := os.Stat(path); err != nil {\n\t\t\t\t\tt.Fatal(err)\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn\n\t\t}\n\t\temittedMismatchProducts.oracle = emittedMismatchOracle(t)\n\t\tlowered := emittedMismatchLowered(t)\n\t\temittedMismatchProducts.binary = emittedMismatchNative(t)\n\t\temittedMismatchProducts.module = filepath.Join(lowered, \"lint.mjs\")\n\t})",
+    "new": "",
+    "kind": "setup",
+    "regex": "^TestEmittedJavaScriptMismatch_Setup$",
+    "change": "drop the complete mismatch product preparation statement"
+  },
+  {
+    "id": "H6",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 98,
+    "old": "\t\tif err := command.Run(); err != nil {\n\t\t\treturn fmt.Errorf(\"build %s: %w\\n%s\\n%s\", name, err, &stdout, &stderr)\n\t\t}\n",
+    "new": "",
+    "kind": "setup",
+    "regex": "^TestProduct_jsx_(membership|parser)$",
+    "change": "drop the oracle construction command, preserving oracle source"
+  },
+  {
+    "id": "H7",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 95,
+    "old": "command.Dir = root",
+    "new": "command.Dir = dir",
+    "kind": "setup",
+    "regex": "^TestProduct_jsx_(membership|parser)$",
+    "change": "change the build working-directory option from cohere root to scratch output"
+  },
+  {
+    "id": "H8",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 445,
+    "old": "return os.WriteFile(filepath.Join(dir, \"program.c\"), []byte(native.C(lowered)), 0644)",
+    "new": "return os.WriteFile(filepath.Join(dir, \"empty.c\"), []byte(native.C(lowered)), 0644)",
+    "kind": "setup",
+    "regex": "^TestProduct_jsx_tree_lowered$",
+    "change": "change the construction output filename program.c -> empty.c"
+  },
+  {
+    "id": "H9",
+    "file": "stage1/cohere/lint/jsx_shards_test.go",
+    "line": 462,
+    "old": "return native.Build(string(data), filepath.Join(dir, \"native\"), native.Options{Sanitize: sanitize})",
+    "new": "return native.Build(string(data), filepath.Join(dir, \"native\"), native.Options{Sanitize: !sanitize})",
+    "kind": "setup",
+    "regex": "^TestProduct_jsx_tree_native$",
+    "change": "flip the sanitizer construction option"
+  },
+  {
+    "id": "P1",
+    "file": "stage1/typescript/parser/main.ts",
+    "line": 4,
+    "old": "\nfunction run(path: string, countOnly: boolean, whole: boolean, docTypes: boolean): number {\n    const source = readTextFile(path);\n    if(source.kind === 'Error') {\n        panic(source.message);\n    }\n    const parser = new Parser(source.text, path);\n    const types: number[] = docTypes ? parser.docTypes() : [];\n    const file = docTypes ? -1 : parser.file();\n    const offsets: number[] = [0];\n    if(!countOnly) {\n        let bytes = 0;\n        for(let index = 0; index < source.text.length; index++) {\n            const code = source.text.codePointAt(index) ?? 0;\n            if(code > 65535) {\n                offsets.push(bytes);\n                index++;\n            }\n            bytes += code < 128 ? 1 : code < 2048 ? 2 : code < 65536 ? 3 : 4;\n            offsets.push(bytes);\n        }\n        if(bytes !== utf8Length(source.text)) {\n            panic('source byte mapping differs');\n        }\n    }\n    let count = 0;\n    for(const root of docTypes ? types : whole ? [file] : parser.roots) {\n        if(!countOnly) {\n            console.log(docTypes ? 'type' : whole ? 'file' : 'expression');\n        }\n        count += countOnly\n            ? countTree(parser.nodes, root)\n            : printTree(parser.nodes, root, offsets, 0, whole || docTypes);\n    }\n    return count;\n}\nconst args = programArguments();\nconst first = args[0] ?? panic('usage: main.ts <file> or --manifest <file> [--count]');\nif(first === '--manifest') {\n    const manifest = readTextFile(args[1] ?? panic('missing manifest'));\n    if(manifest.kind === 'Error') {\n        panic(manifest.message);\n    }\n    const countOnly = args.includes('--count');\n    let count = 0;\n    let caseNumber = 0;\n    for(const path of manifest.text.split('\\n')) {\n        if(path === '') {\n            continue;\n        }\n        if(!countOnly) {\n            console.log(`case ${caseNumber}`);\n        }\n        count += run(path, countOnly, args.includes('--whole'), args.includes('--doc-types'));\n        caseNumber++;\n    }\n    if(countOnly) {\n        console.log(`${count}`);\n    }\n}\nelse {\n    run(first, false, args.includes('--whole'), args.includes('--doc-types'));\n}\n",
+    "new": "\n",
+    "kind": "probe",
+    "regex": "^(TestJsxLintTrees_[0-9]{3}|TestJsxLintTreesUnion|TestJsxLintTrees_Setup|TestProduct_jsx_.*)$",
+    "change": "empty-output probe: drop all executable module code after imports"
+  }
+]

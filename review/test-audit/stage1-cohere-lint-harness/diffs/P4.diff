@@ -1,0 +1,25 @@
+--- a/stage1/cohere/lint/jsx_shards_test.go
++++ b/stage1/cohere/lint/jsx_shards_test.go
+@@ -447,21 +447,7 @@
+ }
+ 
+ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
+-	t.Helper()
+-	source := filepath.Join(jsxTreeLowered(t, entry), "program.c")
+-	inputs := jsxTreeInputs(t, entry)
+-	inputs.Name = "jsx-tree-native"
+-	inputs.Files = append(inputs.Files, jsxInputFiles(t, filepath.Join(repository, "internal/native/runtime"))...)
+-	inputs.Flags = native.Flags(native.Options{Sanitize: sanitize})
+-	inputs.Toolchain = string(execute(t, "", "clang", "--version").output)
+-	built := jsxProduct(t, inputs, func(dir string) error {
+-		data, err := os.ReadFile(source)
+-		if err != nil {
+-			return err
+-		}
+-		return native.Build(string(data), filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
+-	})
+-	return filepath.Join(built, "native")
++	return ""
+ }
+ 
+ func jsxParserEntry(t *testing.T) string {
