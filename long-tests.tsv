@@ -1,0 +1,15 @@
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestShadowIndexMissingBinding	177.71	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere	127.41	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestSuggestionAlongsideAutomaticFix	125.33	pass
+github.com/system-inc/adamic/internal/native	TestSplitTSGoAgrees	120.67	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestInspectRequestRefusals	117.43	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownListLayout	116.38	fail
+github.com/system-inc/adamic/stage1/cohere/lint/regex	TestShapeFixtures (setup)	80.48	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestWitnessScriptKind	80.23	pass
+github.com/system-inc/adamic/internal/native	TestWASI (setup)	78.47	pass
+github.com/system-inc/adamic/internal/native	TestRegExpBytecodeRandomNode	76.24	pass
+github.com/system-inc/adamic/internal/native	TestRegExpBytecodeTest262	59.88	pass
+github.com/system-inc/adamic/internal/native	TestNormalizeRandomMatchesNode	38.87	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline/escaped_delimiter_parity	36.95	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestFactsDecoderGuards	33.12	pass
+github.com/system-inc/adamic/internal/native	TestRecordsAgainstNode/workload-1000000	32.55	pass
