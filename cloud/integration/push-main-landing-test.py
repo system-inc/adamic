@@ -490,6 +490,16 @@ class LandingTests(unittest.TestCase):
         self.assertNotIn('20261009T010000Z', paused)
         # Its one red is excused, so it reaches the pause rule, which main's red record here still holds.
         self.assertIn('landings are paused', self.push('--fast-gate', oneRed, '--infra-red', 'code TestRuled=#t4b9j71', alone, 'one').stderr)
+        # A change gated by its own ruled gate (no product code: a Go cache program, the build store) isn't held by the
+        # product-red pause, and its landing names main's red (@system_adamic, Oct 9 11:16). The manual form only.
+        self.assertIn('landings are paused', self.push(alone, '18', '18', '0', '0', 'cache program').stderr)
+        refusedFast = self.push('--fast-gate', oneRed, '--infra-red', 'code TestRuled=#t4b9j71', '--ruled-gate', 'ruling', alone, 'one').stderr
+        self.assertIn('landings are paused', refusedFast)
+        before = self.main_now()
+        ruledLanding = self.assertLanded(self.push('--ruled-gate', 'Oct 9 11:16', alone, '18', '18', '0', '0', 'cache program'), before, alone)
+        message = git(self.repository, 'log', '-1', '--format=%B', ruledLanding)
+        self.assertIn("ruled gate, not held by main's product-red pause (Oct 9 11:16)", message)
+        self.assertIn('20261009T000000Z/full-main was known', message)
 
 
 if __name__ == '__main__':

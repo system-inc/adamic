@@ -25,7 +25,10 @@
 # The pause rule: if the newest finished whole gate on main (gate-logs/<sha12>/<stamp>/full-main) is
 # red, every landing is refused until a later main's whole gate is green or that red is explained in
 # main-reds.tsv beside this script, except a revert (--revert) or a fix-forward naming that red log
-# (--fix-forward <gate-logs ref>). Main never carries two unexplained reds.
+# (--fix-forward <gate-logs ref>). Main never carries two unexplained reds. One more, a rule (@system_adamic, Oct 9
+# 11:16): a change with no product code, gated by its own ruled gate (gocacheprog, floor1), isn't held by the pause,
+# because no product test can see it and the pause exists to stop reds compounding in code that can. It lands with the
+# manual form and --ruled-gate "<the ruling>", and the landing names main's red so the record shows it was known.
 #
 # usage: cloud/integration/push-main.sh [--revert | --fix-forward <red log ref>] <full sha> <gate minutes> <pass> <fail> <skip> "<branches landed>"
 #        cloud/integration/push-main.sh [same options] (--fast-gate | --full-gate) <gate-logs ref> [--smoke-list-reviewed] <full sha> "<branches landed>"
@@ -40,6 +43,7 @@ mainReds=""
 gateKind=fast
 smokeReviewed=no
 pauseException=""
+ruledGate=""
 testOnly=no
 deletion=no
 extraTrailers=""
@@ -86,6 +90,7 @@ while [ "$#" -gt 0 ]; do
 	# those units ran green on this sha merged onto main; the landing carries it. Not a docs class: the run is required.
 	--markdown-corpus) markdownCorpus=$2; shift 2 ;;
 	--revert) pauseException=revert; shift ;;
+	--ruled-gate) ruledGate=$2; shift 2 ;;
 	--fix-forward) pauseException="fix-forward ${2#origin/}"; shift 2 ;;
 	*) break ;;
 	esac
@@ -688,6 +693,9 @@ red\ *)
 		# Compared against this very red record and adding none of its own (--main-reds), it can't make main
 		# worse; the reds stay main's, owned on its red list (@system_adamic, Oct 9 05:28Z).
 		echo "Landing over main's red whole gate (${redLog}) with no new reds against it."
+	elif [ -n "$ruledGate" ] && [ -z "$fastGate" ]; then
+		echo "Landing a ruled-gate change while main's whole gate is red (${redLog}): no product test can see it."
+		branches="${branches}; ruled gate, not held by main's product-red pause (${ruledGate}); main's red ${redLog} was known: ${pause#red }"
 	elif [ "$pauseException" = "fix-forward ${redLog}" ]; then
 		echo "Landing a fix-forward for main's red whole gate (${redLog})."
 		branches="${branches}; fix-forward for ${redLog}"
