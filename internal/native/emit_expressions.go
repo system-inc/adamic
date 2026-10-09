@@ -228,6 +228,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.Unwrap:
+		if expression.Proven {
+			return fmt.Sprintf("(%s).%s", e.value(expression.Value), member(expression.Type()))
+		}
 		// The checker narrowed undefined away, but a call since may have put it back (ir.Unwrap).
 		value := e.snapshot(expression.Value.Type(), e.value(expression.Value))
 		e.line("if (!%s.present) {", value)

@@ -1,0 +1,5 @@
+function accept(value: string): void { console.log(value === undefined ? "missing" : "present"); }
+let value: string = null!;
+const saved = value;
+value = "written" + " later";
+accept(saved);

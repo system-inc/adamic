@@ -10,6 +10,11 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// PlaceholderSources records source-slot provenance during lowering, keyed by declaration.
+	PlaceholderSources map[string]string
+	PlaceholderViews   map[string]string
+	PlaceholderChecks  []PlaceholderCheck
+
 	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
 	argumentFacts *argumentFacts
 	// UninitializedFields records the field names whose readiness can be observed.
@@ -62,6 +67,18 @@ type Program struct {
 	// callers test for it after each.
 	ClosuresMayThrow bool
 }
+
+// PlaceholderCheck records one readiness or storage-arm boundary in the checked-sites report.
+type PlaceholderCheck struct{ Origin, Use, Path, Where, Status string }
+
+type PlaceholderUse struct {
+	Value                    Expression
+	Origin, Use, Path, Where string
+	CheckArm                 bool
+	Of                       Type
+}
+
+func (p PlaceholderUse) Type() Type { return p.Of }
 
 // PredicateCheckCounts counts emitted overload-result directions. Unobservable
 // directions are proven and are also counted separately so erasure is visible.
@@ -247,6 +264,7 @@ func (t Type) IsReference() bool {
 type Local struct {
 	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
 	Uninitialized         bool
+	Placeholder           string
 	InitializerExpression string
 	// UnsetField identifies a tagged, flow-bounded factory save.
 	UnsetField string
@@ -317,6 +335,7 @@ type (
 		Of        Type
 		Checked   bool
 		Readiness string
+		Unset     bool // Reads honest placeholder storage, preserving undefined.
 	}
 
 	// Call calls a function. Returns is its result type, 0 for void.
@@ -420,6 +439,8 @@ type (
 		ViewAllowed []Expression
 		// Readiness is the source expression for a checked field read, empty when proven ready.
 		Readiness string
+		Unset     bool
+		UnsetType Type
 		Object    Expression
 		Name      string
 		Of        Type
@@ -515,7 +536,10 @@ type (
 	// Unwrap is a Maybe pair the checker has proven present (narrowed), as what it holds. A narrowing
 	// outlives a call that assigns the variable again (the checker doesn't look inside the call), so
 	// it's checked, in both backends: undefined there panics.
-	Unwrap struct{ Value Expression }
+	Unwrap struct {
+		Value  Expression
+		Proven bool
+	}
 
 	// Defined is a reference the checker narrowed undefined out of, checked for the same reason as
 	// Unwrap: undefined there panics with Message. Where the value is about to be read through a
@@ -544,8 +568,10 @@ type (
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
 	// undefined).
 	Narrow struct {
-		Value Expression
-		To    Type
+		Value   Expression
+		To      Type
+		Checked bool
+		Message string
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
@@ -903,9 +929,11 @@ type Field struct {
 	Absent bool
 	// Uninitialized reserves storage without making its typed value readable.
 	Uninitialized bool
-	Name          string
-	Value         Expression
-	Private       bool
+	// Unset has an observable nullish payload, without typed-use readiness.
+	Unset   bool
+	Name    string
+	Value   Expression
+	Private bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter
@@ -1178,9 +1206,11 @@ type (
 	SetProperty struct {
 		Record        bool // write into counted own-key storage
 		Uninitialized bool
-		Object        Expression
-		Name          string
-		Value         Expression
+		// Unset stores observable null or undefined while typed-use readiness is false.
+		Unset  bool
+		Object Expression
+		Name   string
+		Value  Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of

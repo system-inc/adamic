@@ -147,7 +147,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
 			}
 			if e.fieldReadinessNeeded(field.Name) {
-				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized])
+				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
 			}
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
@@ -216,7 +216,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		if constructionFields(literal.Fields) {
 			e.line("adamic_object_publish(%s, %d); adamic_object_initialized(%s)[%d] = 1;", object, index, object, index)
 		}
-		if field.Uninitialized {
+		if field.Uninitialized && !field.Unset {
 			e.line("adamic_object_initialized(%s)[%d] = 0;", object, index)
 		}
 		value := values[index]

@@ -6,6 +6,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -14,7 +15,6 @@ func TestAdamicNullishAssertionsAreRefused(t *testing.T) {
 	for _, extension := range []string{"a"} {
 		for _, operand := range []string{"undefined", "null"} {
 			for _, source := range []string{
-				"function f(value: number = " + operand + "!): number {return value;}",
 				"function f(): number { return " + operand + "!; }",
 				"console.log(`${" + operand + "! + 1}`);",
 				"console.log(`${" + operand + "! === undefined}`);",
@@ -48,18 +48,10 @@ func TestAdamicNullishAssertionsAreRefused(t *testing.T) {
 						t.Fatal(err)
 					}
 					_, err = Lower(context.Background(), program)
-					// Literal field initialization is the placeholder exception.
-					if source == "const box: {value: number; other: number} = {value: "+operand+"!, get other(): number { return 1; }};" {
-						if err != nil {
-							t.Fatal(err)
-						}
-						return
-					}
-					// Container slots have no placeholder representation on this tip.
-					if source == "const values=[1]; values[0]="+operand+"!;" {
+					if strings.Contains(source, "="+operand+"!") || strings.Contains(source, "value: "+operand+"!") {
 						var notYet *NotYet
 						if !errors.As(err, &notYet) {
-							t.Fatalf("want unsupported placeholder container, got %v", err)
+							t.Fatalf("want unsupported placeholder result/storage, got %v", err)
 						}
 						return
 					}

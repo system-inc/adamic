@@ -67,7 +67,7 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	}
 	if !isCompound && l.uninitializedInitializer(binary.Right) {
 		l.result.Locals[local].Uninitialized = true
-		return []ir.Statement{ir.Assign{Local: local, Value: placeholderZero(l.result.Locals[local].Type), Checked: l.checked(local), Uninitialized: true}}, nil
+		return []ir.Statement{ir.Assign{Local: local, Value: l.placeholderInitialValue(binary.Right, l.result.Locals[local].Type), Checked: l.checked(local), Uninitialized: true}}, nil
 	}
 	value, err := l.expression(binary.Right)
 	if err != nil {
@@ -75,6 +75,9 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 	}
 	if isCompound {
 		current := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)})
+		if origin := l.result.Locals[local].Placeholder; origin != "" {
+			current = l.placeholderRead(target, ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local), Unset: true}, origin)
+		}
 		if operator == ast.KindPlusToken {
 			current, value = l.spelled(target, current), l.spelled(binary.Right, value)
 		}
