@@ -10,6 +10,15 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// The fixtures that read or write files, which the shim refuses by design (docs/wasm.md). They are
+// left out by name rather than skipped, and their imports are still asserted, so the list cannot drift:
+// TestWASIAgreesWithNode runs all three under node:wasi.
+var shimFileFixtures = map[string]bool{
+	"internal/oracle/testdata/write_stdout_order.a": true,
+	"internal/oracle/testdata/write_stderr_order.a": true,
+	"internal/oracle/testdata/prompt_then_read.a":   true,
+}
+
 // Not parallel: the import inventory and final counts follow fixture order.
 func TestWASIShimAgreesWithNode(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
@@ -19,7 +28,7 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
-	ran, agreed, skipped := 0, 0, 0
+	ran, agreed, skipped, excluded := 0, 0, 0, 0
 	for _, fixture := range fixtures {
 		t.Run(fixture.path, func(t *testing.T) {
 			if !fixture.lowers {
@@ -47,11 +56,22 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 				t.Fatal(err)
 			}
 			t.Logf("IMPORTS %s | %s", fixture.path, strings.Join(imports, ", "))
+			fileAccess := ""
 			for _, name := range imports {
 				if strings.HasPrefix(name, "path_") || name == "fd_read" || name == "fd_readdir" || name == "fd_filestat_get" {
-					skipped++
-					t.Skipf("file access import %s", name)
+					fileAccess = name
+					break
 				}
+			}
+			if shimFileFixtures[fixture.path] {
+				if fileAccess == "" {
+					t.Fatalf("listed in shimFileFixtures but imports no file access: run it through the shim and drop it from the list")
+				}
+				excluded++
+				return
+			}
+			if fileAccess != "" {
+				t.Fatalf("imports %s, file access the shim refuses: add it to shimFileFixtures with its reason in docs/wasm.md", fileAccess)
 			}
 			ran++
 			if os.Getenv("ADAMIC_SHIM_INVENTORY_ONLY") == "1" {
@@ -74,7 +94,7 @@ func TestWASIShimAgreesWithNode(t *testing.T) {
 			}
 		})
 	}
-	t.Logf("SHIM COUNTS run=%d agreed=%d skipped=%d", ran, agreed, skipped)
+	t.Logf("SHIM COUNTS run=%d agreed=%d skipped=%d excluded=%d", ran, agreed, skipped, excluded)
 }
 
 // Comparing this checked fixture to source instead of the backend is a wrong-witness mutant.
