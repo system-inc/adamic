@@ -1,7 +1,6 @@
 package lint
 
 import (
-	"bytes"
 	"os"
 	"path/filepath"
 	"strings"
@@ -10,6 +9,7 @@ import (
 )
 
 // Prepare products once before the parallel comparison leaf.
+// Not parallel: initializes the shared emitted-mismatch products before comparison leaves.
 func TestEmittedJavaScriptMismatch(t *testing.T) {
 	started := time.Now()
 	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript setup exceeded 90s") })
@@ -40,16 +40,19 @@ func serializationPort(t *testing.T) string {
 	return directory
 }
 
+// Not parallel: initializes the shared serialization products before comparison leaves.
 func TestCompleteSuggestionSerialization(t *testing.T) {
 	completeSuggestionUnion(t)
 	completeSuggestionSetup(t)
 }
 
+// Not parallel: initializes the shared automatic-fix products before comparison leaves.
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
 	suggestionAlongsideSetup(t)
 	suggestionAlongsideUnion(t)
 }
 
+// Not parallel: initializes the shared witness script-kind products before comparison leaves.
 func TestWitnessScriptKind(t *testing.T) {
 	witnessScriptKindSetup(t)
 	witnessScriptKindUnion(t)
