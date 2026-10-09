@@ -1,0 +1,17 @@
+=== RUN   TestWASIUnit14
+    wasm_test.go:371: WASI toolchain probe phase 0.117s
+    wasm_test.go:371: WASI runtime inputs and cache identity phase 0.044s
+    wasm_test.go:104: WASI runtime build/cache phase counted=false 5.804s
+    wasm_test.go:371: strict C11 runtime: 58 translation units compiled
+    wasm_test.go:371: WASI compiler build/cache phase 7.279s
+=== RUN   TestWASIUnit14/internal/oracle/testdata/regions.a
+    wasm_test.go:154: WASI generate phase 0.053s
+    wasm_test.go:160: WASI link/cache phase 0.127s
+    wasm_test.go:210: WASI source Node phase 0.085s
+    wasm_test.go:213: WASI execution phase 0.040s
+=== NAME  TestWASIUnit14
+    wasm_test.go:371: WASI oracle: 1/35 equivalent
+--- PASS: TestWASIUnit14 (13.55s)
+    --- PASS: TestWASIUnit14/internal/oracle/testdata/regions.a (0.31s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	13.565s

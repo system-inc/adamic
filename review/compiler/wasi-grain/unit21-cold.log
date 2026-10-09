@@ -1,0 +1,9 @@
+=== RUN   TestWASIUnit21
+    wasm_test.go:388: strict C11 runtime: 58 translation units compiled
+=== RUN   TestWASIUnit21/internal/oracle/testdata/maps_and_text.a
+=== NAME  TestWASIUnit21
+    wasm_test.go:388: WASI oracle: 1/35 equivalent
+--- PASS: TestWASIUnit21 (9.13s)
+    --- PASS: TestWASIUnit21/internal/oracle/testdata/maps_and_text.a (0.29s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	9.145s

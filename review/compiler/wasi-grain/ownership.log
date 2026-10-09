@@ -1,0 +1,24 @@
+=== RUN   TestShardSelection
+=== PAUSE TestShardSelection
+=== RUN   TestRetainedSplitCoverage
+=== PAUSE TestRetainedSplitCoverage
+=== RUN   TestRetainedTopLevelCoverage
+=== PAUSE TestRetainedTopLevelCoverage
+=== CONT  TestShardSelection
+--- PASS: TestShardSelection (0.00s)
+=== CONT  TestRetainedSplitCoverage
+=== RUN   TestRetainedSplitCoverage/shard_union
+=== CONT  TestRetainedTopLevelCoverage
+--- PASS: TestRetainedTopLevelCoverage (0.02s)
+=== RUN   TestRetainedSplitCoverage/decode_targets
+=== RUN   TestRetainedSplitCoverage/WASI
+=== RUN   TestRetainedSplitCoverage/split_cache
+=== RUN   TestRetainedSplitCoverage/record_mutants
+--- PASS: TestRetainedSplitCoverage (0.02s)
+    --- PASS: TestRetainedSplitCoverage/shard_union (0.02s)
+    --- PASS: TestRetainedSplitCoverage/decode_targets (0.00s)
+    --- PASS: TestRetainedSplitCoverage/WASI (0.00s)
+    --- PASS: TestRetainedSplitCoverage/split_cache (0.00s)
+    --- PASS: TestRetainedSplitCoverage/record_mutants (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.047s

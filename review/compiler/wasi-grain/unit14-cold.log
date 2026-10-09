@@ -1,0 +1,9 @@
+=== RUN   TestWASIUnit14
+    wasm_test.go:353: strict C11 runtime: 58 translation units compiled
+=== RUN   TestWASIUnit14/internal/oracle/testdata/regions.a
+=== NAME  TestWASIUnit14
+    wasm_test.go:353: WASI oracle: 1/35 equivalent
+--- PASS: TestWASIUnit14 (7.89s)
+    --- PASS: TestWASIUnit14/internal/oracle/testdata/regions.a (0.33s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	7.905s
