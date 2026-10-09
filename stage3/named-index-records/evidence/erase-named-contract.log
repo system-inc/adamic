@@ -1,0 +1,8 @@
+--- FAIL: TestNamedRecordRefusals (0.49s)
+    --- FAIL: TestNamedRecordRefusals/interface_R_{named?:number;[key:string]:number|string|undefined}_const_r:R={};_const_view:Record<string,number|string|undefined>=r; (0.07s)
+        records_named_test.go:45: got <nil>, want NotYet seen as
+    --- FAIL: TestNamedRecordRefusals/interface_R_{readonly_named:number;[key:string]:number}_const_r:R={named:1};_const_view:Record<string,number>=r; (0.09s)
+        records_named_test.go:45: got <nil>, want NotYet seen as
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.512s
+FAIL

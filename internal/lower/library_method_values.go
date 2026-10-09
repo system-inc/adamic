@@ -154,7 +154,7 @@ func (l *lowering) methodAliasRead(node *ast.Node) (ir.Expression, error) {
 		return nil, nil
 	}
 	if local, known := l.local(ast.SkipParentheses(node)); known {
-		return ir.Read{Local: local, Of: ir.Closure, Checked: l.checked(local)}, nil
+		return ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checked(local)}, nil
 	}
 	return nil, nil
 }

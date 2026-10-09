@@ -1,0 +1,9 @@
+// core.ts:2143 b[key] is passed directly to the generic comparer.
+function observe(left: number | undefined, right: number | undefined): void {
+    console.log(String(left)); console.log(String(right));
+}
+const left: Record<string, number> = { ['constructor']: 1 };
+const right: Record<string, number> = {};
+const key: string = 'constructor';
+console.log('before comparer');
+observe(left[key], right[key]);
