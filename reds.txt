@@ -1,0 +1,14 @@
+run adamic-verify-20261009T141107-5d6b2822: red, 27235 tests in 91 units, 3 failed, 0 units broken, 0 killed over budget
+AGAIN tests-20: from run adamic-verify-again-20261009T143425-f4edd79e
+AGAIN tests-06-r2: from run adamic-verify-again-20261009T143425-f4edd79e
+AGAIN tests-23-r2: from run adamic-verify-again-20261009T143425-f4edd79e
+FAIL github.com/system-inc/adamic/internal/ir TestCallTargetReaders (tests-26)
+    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /tmp/adamic/internal/lower/overload_results.go:212:23; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:Call.Function at /tmp/adamic/internal/lower/overload_results.go:255:49; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /tmp/adamic/internal/lower/overload_results.go:274:47; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:Call.Function at /tmp/adamic/internal/lower/overload_results.go:313:46; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:170: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /tmp/adamic/internal/lower/overload_results.go:325:46; use CallTargets or ClosureTargets
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixturesCycles/cycles/05_safe_load_read/main.a/stage0 (tests-11-r11)
+    fixtures_test.go:359: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/05_safe_load_read/core.a:4:36: stage 0 can't lower an array of never yet}
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixturesCycles/cycles/06_import_order_mutant/main.a/stage0 (tests-11-r11)
+    fixtures_test.go:359: gap changed: update status.json and check the native output; got {Outcome:Compiles What:}; recorded {Outcome:NotYet What:stage3/fixtures/cycles/06_import_order_mutant/core.a:4:36: stage 0 can't lower an array of never yet}
