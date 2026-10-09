@@ -76,7 +76,7 @@ func TestMarkdownWhitespaceLayout(t *testing.T) {
 
 func TestMarkdownLeafComposition(t *testing.T) {
 	parallelMarkdown(t)
-	testBlockLayout(t, "leaves")
+	testMarkdownLeafShards(t)
 }
 
 func TestMarkdownRootLayout(t *testing.T) {
