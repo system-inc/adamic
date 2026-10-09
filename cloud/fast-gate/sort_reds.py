@@ -30,6 +30,9 @@ def ledger(record):
     rows = {}
     for field in ('units', 'product_units', 'cache_drain_units', 'phase_units'):
         for row in record.get(field, []):
+            # A Go failure already has its test unit; its enclosing phase isn't a second bug.
+            if field == 'phase_units' and any(name in row.get('detail', '') for name in record.get('failed_tests', [])) and row.get('status') == 'failed':
+                continue
             rows[identity(row)] = dict(rows.get(identity(row), {}), **row)
     for row in record.get('test_outcomes', []):
         key = identity(row)
@@ -38,6 +41,15 @@ def ledger(record):
     for key in record.get('failed_tests', []):
         if not any(name == key or name.startswith(key + '/') or name == key + ' (setup)' for name in rows):
             rows[key] = {'unit': key, 'action': 'fail'}
+    for name, row in list(rows.items()):
+        if name.endswith(' (setup)') and row.get('action') == 'fail':
+            parent = name.removesuffix(' (setup)')
+            # testUnits inherits the parent's fail action when a child failed. Only
+            # an actual setup diagnostic makes that a separate red unit.
+            detail = row.get('detail', '')
+            if not WRONG.search(detail) and not TIMING.search(detail) and any(
+                    key.startswith(parent + '/') and red(child) for key, child in rows.items()):
+                del rows[name]
     return rows
 
 
@@ -85,7 +97,7 @@ def sort_reds(candidate, main=None, context=None):
             label, reason = 'infra', 'void, unreported unit or tool failure; rerun'
         elif not wrong and TIMING.search(detail) and cold and known_inputs and not touched and matching:
             label, reason = 'mains', 'cold timing red; candidate does not touch its inputs'
-        elif INFRA.search(detail) and not wrong:
+        elif 'Traceback (most recent call last)' in detail or INFRA.search(detail) and not wrong:
             label, reason = 'infra', 'tool limit, storage, transport or runner failure; rerun'
         elif same and red(other) and other.get('status') != 'not run':
             label, reason = 'mains', 'same unit and input hash red in newest main record on these tools'
