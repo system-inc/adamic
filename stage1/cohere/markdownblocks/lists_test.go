@@ -20,7 +20,7 @@ import (
 
 func TestMarkdownListLayout(t *testing.T) {
 	parallelMarkdown(t)
-	testBlockLayout(t, "lists")
+	listLayoutSetup(t)
 }
 
 func TestMarkdownQuoteLayout(t *testing.T) {
@@ -28,8 +28,7 @@ func TestMarkdownQuoteLayout(t *testing.T) {
 }
 
 func TestMarkdownTableLayout(t *testing.T) {
-	parallelMarkdown(t)
-	testBlockLayout(t, "tables")
+	testMarkdownTableLayout(t)
 }
 
 func TestMarkdownCodeBlockLayout(t *testing.T) {
@@ -76,7 +75,7 @@ func TestMarkdownWhitespaceLayout(t *testing.T) {
 
 func TestMarkdownLeafComposition(t *testing.T) {
 	parallelMarkdown(t)
-	testBlockLayout(t, "leaves")
+	testMarkdownLeafShards(t)
 }
 
 func TestMarkdownRootLayout(t *testing.T) {
@@ -85,8 +84,8 @@ func TestMarkdownRootLayout(t *testing.T) {
 }
 
 func TestMarkdownStructureLayout(t *testing.T) {
-	parallelMarkdown(t)
-	testBlockLayout(t, "structure")
+	configureMarkdownMemory(t)
+	structureLayoutShared(t)
 }
 
 func buildLayoutFixture(t *testing.T) *layoutFixture {
