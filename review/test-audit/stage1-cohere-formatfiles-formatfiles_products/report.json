@@ -1,0 +1,175 @@
+[
+  {
+    "test": "TestProduct_FormatfilesGoOracle",
+    "package": "stage1/cohere/formatfiles",
+    "file": "stage1/cohere/formatfiles/formatfiles_products_test.go",
+    "members": [
+      "TestProduct_FormatfilesGoOracle"
+    ],
+    "seconds": 1.074,
+    "trials": [
+      1.087,
+      1.022,
+      1.074
+    ],
+    "oracle": "Self: successful go test -c product construction; does not run Go cohere or check that its returned binary exists.",
+    "oracle_kind": "self",
+    "kills": [
+      "S03"
+    ],
+    "production_kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S03: formatfiles_products_test.go:9: build formatfiles-go-oracle: build Go oracle: exit status 1",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestProduct_FormatfilesGoOracle",
+      "TestProduct_FormatfilesNative",
+      "TestProduct_FormatfilesNativeUnsanitized",
+      "TestProduct_FormatfilesNative family",
+      "TestThePortParsesAsGoCohereDoes family",
+      "TestFormatfilesShardPlantedDisagreement",
+      "TestExtAgreesWithGo"
+    ],
+    "evidence": "ADAMIC_MUTANT=S03 ADAMIC_BUILD_CACHE_DIR=/tmp/u091/cache/S03 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run . > S03.log 2>&1; formatfiles_products_test.go:9: build formatfiles-go-oracle: build Go oracle: exit status 1",
+    "own_probe": "P02"
+  },
+  {
+    "test": "TestProduct_FormatfilesNative",
+    "package": "stage1/cohere/formatfiles",
+    "file": "stage1/cohere/formatfiles/formatfiles_products_test.go",
+    "members": [
+      "TestProduct_FormatfilesNative"
+    ],
+    "seconds": 1.561,
+    "trials": [
+      1.561,
+      1.507,
+      1.565
+    ],
+    "oracle": "Self: successful product preparation and internal nonempty binary-path checks; no executable output comparison.",
+    "oracle_kind": "self",
+    "kills": [
+      "S01"
+    ],
+    "production_kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S01: formatfiles_products_test.go:14: shared port preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestProduct_FormatfilesGoOracle",
+      "TestProduct_FormatfilesNative",
+      "TestProduct_FormatfilesNativeUnsanitized",
+      "TestProduct_FormatfilesNative family",
+      "TestThePortParsesAsGoCohereDoes family",
+      "TestFormatfilesShardPlantedDisagreement",
+      "TestExtAgreesWithGo"
+    ],
+    "evidence": "ADAMIC_MUTANT=S01 ADAMIC_BUILD_CACHE_DIR=/tmp/u091/cache/port timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run . > S01.log 2>&1; formatfiles_products_test.go:14: shared port preparation failed",
+    "own_probe": "P03"
+  },
+  {
+    "test": "TestProduct_FormatfilesNativeUnsanitized",
+    "package": "stage1/cohere/formatfiles",
+    "file": "stage1/cohere/formatfiles/formatfiles_products_test.go",
+    "members": [
+      "TestProduct_FormatfilesNativeUnsanitized"
+    ],
+    "seconds": 1.524,
+    "trials": [
+      1.542,
+      1.524,
+      1.52
+    ],
+    "oracle": "Self: successful product preparation and internal nonempty binary-path checks; no executable output comparison.",
+    "oracle_kind": "self",
+    "kills": [
+      "S02"
+    ],
+    "production_kills": [],
+    "unique_kills": [
+      "S02"
+    ],
+    "last_proven_fail": "S02: formatfiles_products_test.go:20: unsanitized port preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestProduct_FormatfilesGoOracle",
+      "TestProduct_FormatfilesNative",
+      "TestProduct_FormatfilesNativeUnsanitized",
+      "TestProduct_FormatfilesNative family",
+      "TestThePortParsesAsGoCohereDoes family",
+      "TestFormatfilesShardPlantedDisagreement",
+      "TestExtAgreesWithGo"
+    ],
+    "evidence": "ADAMIC_MUTANT=S02 ADAMIC_BUILD_CACHE_DIR=/tmp/u091/cache/port timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run . > S02.log 2>&1; formatfiles_products_test.go:20: unsanitized port preparation failed",
+    "own_probe": "P05"
+  },
+  {
+    "test": "TestProduct_FormatfilesNative family",
+    "package": "stage1/cohere/formatfiles",
+    "file": "stage1/cohere/formatfiles/formatfiles_products_test.go",
+    "members": [
+      "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "TestProduct_FormatfilesNativeBareAdamicName",
+      "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "TestProduct_FormatfilesNativeUTF16Sort",
+      "TestProduct_FormatfilesNativeLinkLoop",
+      "TestProduct_FormatfilesNativeQuoteDEL",
+      "TestProduct_FormatfilesNativeQuoteMark",
+      "TestProduct_FormatfilesNativeDanglingLink",
+      "TestProduct_FormatfilesNativeTrailingDot",
+      "TestProduct_FormatfilesNativeDanglingGit",
+      "TestProduct_FormatfilesNativeDanglingPrettierignore"
+    ],
+    "seconds": 6.736,
+    "trials": [
+      6.736,
+      6.747,
+      6.619
+    ],
+    "oracle": "Self: successful product preparation and internal nonempty binary-path checks; no executable output comparison.",
+    "oracle_kind": "self",
+    "kills": [
+      "S01"
+    ],
+    "production_kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S01: formatfiles_products_test.go:70: mutant \"a trailing dot no extension\" preparation failed",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [
+      "TestProduct_FormatfilesGoOracle",
+      "TestProduct_FormatfilesNative",
+      "TestProduct_FormatfilesNativeUnsanitized",
+      "TestProduct_FormatfilesNative family",
+      "TestThePortParsesAsGoCohereDoes family",
+      "TestFormatfilesShardPlantedDisagreement",
+      "TestExtAgreesWithGo"
+    ],
+    "evidence": "ADAMIC_MUTANT=S01 ADAMIC_BUILD_CACHE_DIR=/tmp/u091/cache/port timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/formatfiles/ -run . > S01.log 2>&1; formatfiles_products_test.go:70: mutant \"a trailing dot no extension\" preparation failed",
+    "own_probe": "P04"
+  }
+]

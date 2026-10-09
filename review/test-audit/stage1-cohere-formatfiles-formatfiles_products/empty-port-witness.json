@@ -1,0 +1,32 @@
+[
+  {
+    "label": "control-build",
+    "command": [
+      "go",
+      "run",
+      "./.audit-u091",
+      "/tmp/u091/validation/control/stage1/cohere/formatfiles/main.ts",
+      "/tmp/u091/validation/control/port"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.839095521001582
+  },
+  {
+    "label": "control-run",
+    "command": [
+      "/tmp/u091/validation/control/port",
+      "/tmp/u091/witness-cases"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.009438812001462793
+  },
+  {
+    "label": "empty-run",
+    "command": [
+      "/tmp/u091/validation/P01/port",
+      "/tmp/u091/witness-cases"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.00803920299949823
+  }
+]

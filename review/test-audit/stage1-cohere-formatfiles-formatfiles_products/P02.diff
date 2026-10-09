@@ -1,0 +1,45 @@
+--- a/stage1/cohere/formatfiles/formatfiles_shards_test.go
++++ b/stage1/cohere/formatfiles/formatfiles_shards_test.go
+@@ -491,41 +491,7 @@
+ 
+ // Both build-phase units and shard preparation use this exact oracle recipe.
+ func formatfilesOracle(t *testing.T) (string, string) {
+-	t.Helper()
+-	directory := t.TempDir()
+-	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	packageDirectory := filepath.Join(cohere, "internal", "format", "formatfiles")
+-	replace := map[string]string{filepath.Join(packageDirectory, "adamic_port_side_test.go"): side}
+-	overlay, err := json.Marshal(map[string]any{"Replace": replace})
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	overlayPath := filepath.Join(directory, "overlay.json")
+-	if err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {
+-		t.Fatal(err)
+-	}
+-
+-	inputs := buildcache.Inputs{Name: "formatfiles-go-oracle",
+-		Files:     []string{"cohere/go.mod", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "stage1/cohere/formatfiles/testdata/cohere_side_test.go"},
+-		Flags:     []string{"go test -c -overlay ./internal/format/formatfiles", buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOFLAGS")},
+-		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")}}
+-	product := buildcache.Product(t, inputs, func(directory string) error {
+-		command := formatfilesCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(directory, "oracle"), "./internal/format/formatfiles")
+-		command.Dir = cohere
+-		output, err := combinedOutput(command)
+-		if err != nil {
+-			return fmt.Errorf("build Go oracle: %w\n%s", err, output)
+-		}
+-		return nil
+-	})
+-	return filepath.Join(product, "oracle"), packageDirectory
++	return "", ""
+ }
+ 
+ // Setup children carry no deadline; the gate bounds the whole unit.

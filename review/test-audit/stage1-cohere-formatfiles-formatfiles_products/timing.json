@@ -1,0 +1,299 @@
+[
+  {
+    "row": "TestProduct_FormatfilesGoOracle",
+    "members": [
+      "TestProduct_FormatfilesGoOracle"
+    ],
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesGoOracle)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.8598156130028656
+  },
+  {
+    "row": "TestProduct_FormatfilesGoOracle",
+    "members": [
+      "TestProduct_FormatfilesGoOracle"
+    ],
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesGoOracle)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.759397413003171
+  },
+  {
+    "row": "TestProduct_FormatfilesGoOracle",
+    "members": [
+      "TestProduct_FormatfilesGoOracle"
+    ],
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesGoOracle)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.8330760290009493
+  },
+  {
+    "row": "TestProduct_FormatfilesNative",
+    "members": [
+      "TestProduct_FormatfilesNative"
+    ],
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesNative)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.289003330999549
+  },
+  {
+    "row": "TestProduct_FormatfilesNative",
+    "members": [
+      "TestProduct_FormatfilesNative"
+    ],
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesNative)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.2832076439990487
+  },
+  {
+    "row": "TestProduct_FormatfilesNative",
+    "members": [
+      "TestProduct_FormatfilesNative"
+    ],
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesNative)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.269159090999892
+  },
+  {
+    "row": "TestProduct_FormatfilesNativeUnsanitized",
+    "members": [
+      "TestProduct_FormatfilesNativeUnsanitized"
+    ],
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesNativeUnsanitized)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.5254179570001725
+  },
+  {
+    "row": "TestProduct_FormatfilesNativeUnsanitized",
+    "members": [
+      "TestProduct_FormatfilesNativeUnsanitized"
+    ],
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesNativeUnsanitized)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.204262520001066
+  },
+  {
+    "row": "TestProduct_FormatfilesNativeUnsanitized",
+    "members": [
+      "TestProduct_FormatfilesNativeUnsanitized"
+    ],
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesNativeUnsanitized)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 3.198286114999064
+  },
+  {
+    "row": "TestProduct_FormatfilesNativeMutants family",
+    "members": [
+      "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "TestProduct_FormatfilesNativeBareAdamicName",
+      "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "TestProduct_FormatfilesNativeUTF16Sort",
+      "TestProduct_FormatfilesNativeLinkLoop",
+      "TestProduct_FormatfilesNativeQuoteDEL",
+      "TestProduct_FormatfilesNativeQuoteMark",
+      "TestProduct_FormatfilesNativeDanglingLink",
+      "TestProduct_FormatfilesNativeTrailingDot",
+      "TestProduct_FormatfilesNativeDanglingGit",
+      "TestProduct_FormatfilesNativeDanglingPrettierignore"
+    ],
+    "trial": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesNativeAdamicFilesDeclined|TestProduct_FormatfilesNativeBareAdamicName|TestProduct_FormatfilesNativeUppercaseAdamicExtension|TestProduct_FormatfilesNativeJavaScriptLowercase|TestProduct_FormatfilesNativeUTF16Sort|TestProduct_FormatfilesNativeLinkLoop|TestProduct_FormatfilesNativeQuoteDEL|TestProduct_FormatfilesNativeQuoteMark|TestProduct_FormatfilesNativeDanglingLink|TestProduct_FormatfilesNativeTrailingDot|TestProduct_FormatfilesNativeDanglingGit|TestProduct_FormatfilesNativeDanglingPrettierignore)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 8.47630807799942
+  },
+  {
+    "row": "TestProduct_FormatfilesNativeMutants family",
+    "members": [
+      "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "TestProduct_FormatfilesNativeBareAdamicName",
+      "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "TestProduct_FormatfilesNativeUTF16Sort",
+      "TestProduct_FormatfilesNativeLinkLoop",
+      "TestProduct_FormatfilesNativeQuoteDEL",
+      "TestProduct_FormatfilesNativeQuoteMark",
+      "TestProduct_FormatfilesNativeDanglingLink",
+      "TestProduct_FormatfilesNativeTrailingDot",
+      "TestProduct_FormatfilesNativeDanglingGit",
+      "TestProduct_FormatfilesNativeDanglingPrettierignore"
+    ],
+    "trial": 1,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesNativeAdamicFilesDeclined|TestProduct_FormatfilesNativeBareAdamicName|TestProduct_FormatfilesNativeUppercaseAdamicExtension|TestProduct_FormatfilesNativeJavaScriptLowercase|TestProduct_FormatfilesNativeUTF16Sort|TestProduct_FormatfilesNativeLinkLoop|TestProduct_FormatfilesNativeQuoteDEL|TestProduct_FormatfilesNativeQuoteMark|TestProduct_FormatfilesNativeDanglingLink|TestProduct_FormatfilesNativeTrailingDot|TestProduct_FormatfilesNativeDanglingGit|TestProduct_FormatfilesNativeDanglingPrettierignore)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 8.495905661002325
+  },
+  {
+    "row": "TestProduct_FormatfilesNativeMutants family",
+    "members": [
+      "TestProduct_FormatfilesNativeAdamicFilesDeclined",
+      "TestProduct_FormatfilesNativeBareAdamicName",
+      "TestProduct_FormatfilesNativeUppercaseAdamicExtension",
+      "TestProduct_FormatfilesNativeJavaScriptLowercase",
+      "TestProduct_FormatfilesNativeUTF16Sort",
+      "TestProduct_FormatfilesNativeLinkLoop",
+      "TestProduct_FormatfilesNativeQuoteDEL",
+      "TestProduct_FormatfilesNativeQuoteMark",
+      "TestProduct_FormatfilesNativeDanglingLink",
+      "TestProduct_FormatfilesNativeTrailingDot",
+      "TestProduct_FormatfilesNativeDanglingGit",
+      "TestProduct_FormatfilesNativeDanglingPrettierignore"
+    ],
+    "trial": 2,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/formatfiles/",
+      "-run",
+      "^(TestProduct_FormatfilesNativeAdamicFilesDeclined|TestProduct_FormatfilesNativeBareAdamicName|TestProduct_FormatfilesNativeUppercaseAdamicExtension|TestProduct_FormatfilesNativeJavaScriptLowercase|TestProduct_FormatfilesNativeUTF16Sort|TestProduct_FormatfilesNativeLinkLoop|TestProduct_FormatfilesNativeQuoteDEL|TestProduct_FormatfilesNativeQuoteMark|TestProduct_FormatfilesNativeDanglingLink|TestProduct_FormatfilesNativeTrailingDot|TestProduct_FormatfilesNativeDanglingGit|TestProduct_FormatfilesNativeDanglingPrettierignore)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 8.364163940001163
+  }
+]

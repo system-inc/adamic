@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/golang.ts
++++ b/stage1/cohere/formatfiles/golang.ts
+@@ -45,7 +45,7 @@
+ export function ext(path: string): string {
+ 	for (let index = path.length - 1; index >= 0 && path[index] !== '/'; index--) {
+ 		if (path[index] === '.') {
+-			return path.slice(index);
++			return path.slice(index + 1);
+ 		}
+ 	}
+ 	return '';

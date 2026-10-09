@@ -1,0 +1,49 @@
+{
+  "commit": "3a1c8b5792fb66503290d2d494ce96302bc4386d",
+  "setup_seconds": 0,
+  "nproc": 5,
+  "baseline_binary_seconds": 42.092,
+  "control_binary_seconds": 26.341,
+  "timing_command_wall_seconds": 53.558003392008686,
+  "matrix_wall_seconds": 303.0256022960166,
+  "validation_wall_seconds": 42.76390243499918,
+  "standalone_builds": {
+    "M01": {
+      "load_lower_seconds": 0.153396081,
+      "native_build_seconds": 3.191121912
+    },
+    "M02": {
+      "load_lower_seconds": 0.14332056,
+      "native_build_seconds": 2.302224959
+    },
+    "M03": {
+      "load_lower_seconds": 0.107749483,
+      "native_build_seconds": 2.308084219
+    },
+    "M04": {
+      "load_lower_seconds": 0.160403119,
+      "native_build_seconds": 2.453703846
+    },
+    "M05": {
+      "load_lower_seconds": 0.216057675,
+      "native_build_seconds": 3.0385153
+    },
+    "M06": {
+      "load_lower_seconds": 0.209805834,
+      "native_build_seconds": 4.1309631079999996
+    },
+    "M07": {
+      "load_lower_seconds": 0.409135917,
+      "native_build_seconds": 4.118022808
+    },
+    "M08": {
+      "load_lower_seconds": 0.210126763,
+      "native_build_seconds": 3.064182855
+    },
+    "P01": {
+      "load_lower_seconds": 0.11832497,
+      "native_build_seconds": 2.085538287
+    }
+  },
+  "final_clean_binary_seconds": 20.641
+}

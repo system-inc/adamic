@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/main.ts
++++ b/stage1/cohere/formatfiles/main.ts
+@@ -35,7 +35,7 @@
+ } from './enumerate.ts';
+ import { compareCodePoints, ext, goToLower } from './golang.ts';
+ 
+-const hexDigits = '0123456789abcdef';
++const hexDigits = '0123456789ABCDEF';
+ 
+ // escapeOf is how quote writes a character, or '' for a character written as itself. It would say
+ // undefined for that, but stage 0 writes `return undefined` from a function returning string | undefined

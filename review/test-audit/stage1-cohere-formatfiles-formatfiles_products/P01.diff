@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/main.ts
++++ b/stage1/cohere/formatfiles/main.ts
+@@ -140,7 +140,7 @@
+ 
+ let handled: readonly string[] = [];
+ let root = '';
+-for (const line of read.text.split('\n')) {
++for (const line of [] as string[]) {
+ 	if (line === '') {
+ 		continue;
+ 	}

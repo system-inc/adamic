@@ -1,0 +1,155 @@
+[
+  {
+    "id": "M01",
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 16,
+    "old": "character === '\u0130' ? 'i' : character.toLowerCase()",
+    "new": "character === '\u0130' ? 'x' : character.toLowerCase()",
+    "kind": "production",
+    "menu": "change constant"
+  },
+  {
+    "id": "M02",
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 31,
+    "old": "return leftPoint < rightPoint ? -1 : 1;",
+    "new": "return leftPoint < rightPoint ? 1 : -1;",
+    "kind": "production",
+    "menu": "change constants"
+  },
+  {
+    "id": "M03",
+    "file": "stage1/cohere/formatfiles/golang.ts",
+    "line": 48,
+    "old": "return path.slice(index);",
+    "new": "return path.slice(index + 1);",
+    "kind": "production",
+    "menu": "off-by-one bound"
+  },
+  {
+    "id": "M04",
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 52,
+    "old": "walked = 0;",
+    "new": "walked = 1;",
+    "kind": "production",
+    "menu": "change constant"
+  },
+  {
+    "id": "M05",
+    "file": "stage1/cohere/formatfiles/enumerate.ts",
+    "line": 400,
+    "old": "enumeration.files.push(path);",
+    "new": "/* dropped file push */",
+    "kind": "production",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M06",
+    "file": "stage1/cohere/formatfiles/disk.ts",
+    "line": 49,
+    "old": "return fileStatus(path).kind === 'Ok';",
+    "new": "return fileStatus(path).kind !== 'Ok';",
+    "kind": "production",
+    "menu": "flip condition"
+  },
+  {
+    "id": "M07",
+    "file": "stage1/cohere/formatfiles/main.ts",
+    "line": 38,
+    "old": "const hexDigits = '0123456789abcdef';",
+    "new": "const hexDigits = '0123456789ABCDEF';",
+    "kind": "production",
+    "menu": "change constant"
+  },
+  {
+    "id": "M08",
+    "file": "stage1/cohere/formatfiles/disk.ts",
+    "line": 33,
+    "old": "symbolicLink: status.symbolicLink };",
+    "new": "symbolicLink: false };",
+    "kind": "production",
+    "menu": "change constant"
+  },
+  {
+    "id": "S01",
+    "file": "stage1/cohere/formatfiles/formatfiles_prepare_test.go",
+    "line": 64,
+    "old": "prepared.binary = formatfilesBinary(t, prepared.program, applied)",
+    "new": "/* dropped prepared binary assignment */",
+    "kind": "setup-construction",
+    "menu": "drop statement"
+  },
+  {
+    "id": "S03",
+    "file": "stage1/cohere/formatfiles/formatfiles_shards_test.go",
+    "line": 520,
+    "old": "\"./internal/format/formatfiles\")",
+    "new": "\"./internal/format/formatfiles-missing\")",
+    "kind": "setup-construction",
+    "menu": "change option"
+  },
+  {
+    "id": "S02",
+    "file": "stage1/cohere/formatfiles/formatfiles_prepare_test.go",
+    "line": 114,
+    "old": "formatfilesUnsanitizedOnce.Do(func() {\n\t\tsource := formatfilesSetupPort(t, nil)\n\t\tprogram := lowered(t, filepath.Join(source, \"main.ts\"))\n\t\tformatfilesUnsanitizedState = formatfilesBinaryWithOptions(t, program, nil, false)\n\t})\n",
+    "new": "formatfilesUnsanitizedOnce.Do(func() {})\n",
+    "kind": "setup-construction",
+    "menu": "drop entire callback body"
+  },
+  {
+    "id": "S04",
+    "file": "stage1/cohere/formatfiles/formatfiles_shards_test.go",
+    "line": 519,
+    "old": "product := buildcache.Product(t, inputs, func(directory string) error {\n\t\tcommand := formatfilesCommand(t, \"go\", \"test\", \"-c\", \"-overlay=\"+overlayPath, \"-o\", filepath.Join(directory, \"oracle\"), \"./internal/format/formatfiles\")\n\t\tcommand.Dir = cohere\n\t\toutput, err := combinedOutput(command)\n\t\tif err != nil {\n\t\t\treturn fmt.Errorf(\"build Go oracle: %w\\n%s\", err, output)\n\t\t}\n\t\treturn nil\n\t})\n",
+    "new": "product := buildcache.Product(t, inputs, func(directory string) error { return nil })\n",
+    "kind": "setup-construction",
+    "menu": "drop entire build callback body"
+  },
+  {
+    "id": "P02",
+    "file": "stage1/cohere/formatfiles/formatfiles_shards_test.go",
+    "line": 493,
+    "old": "func formatfilesOracle(t *testing.T) (string, string) {\n\tt.Helper()\n\tdirectory := t.TempDir()\n\tcohere, err := filepath.Abs(filepath.Join(repository, \"cohere\"))\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tside, err := filepath.Abs(filepath.Join(\"testdata\", \"cohere_side_test.go\"))\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tpackageDirectory := filepath.Join(cohere, \"internal\", \"format\", \"formatfiles\")\n\treplace := map[string]string{filepath.Join(packageDirectory, \"adamic_port_side_test.go\"): side}\n\toverlay, err := json.Marshal(map[string]any{\"Replace\": replace})\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\toverlayPath := filepath.Join(directory, \"overlay.json\")\n\tif err := os.WriteFile(overlayPath, overlay, 0o644); err != nil {\n\t\tt.Fatal(err)\n\t}\n\n\tinputs := buildcache.Inputs{Name: \"formatfiles-go-oracle\",\n\t\tFiles:     []string{\"cohere/go.mod\", \"cohere/internal\", \"cohere/TypeScript/tsc\", \"cohere/TypeScript-shim\", \"stage1/cohere/formatfiles/testdata/cohere_side_test.go\"},\n\t\tFlags:     []string{\"go test -c -overlay ./internal/format/formatfiles\", buildcache.Tool(\"go\", \"env\", \"GOOS\", \"GOARCH\", \"CGO_ENABLED\", \"GOEXPERIMENT\", \"GOFLAGS\")},\n\t\tToolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool(\"go\", \"version\")}}\n\tproduct := buildcache.Product(t, inputs, func(directory string) error {\n\t\tcommand := formatfilesCommand(t, \"go\", \"test\", \"-c\", \"-overlay=\"+overlayPath, \"-o\", filepath.Join(directory, \"oracle\"), \"./internal/format/formatfiles\")\n\t\tcommand.Dir = cohere\n\t\toutput, err := combinedOutput(command)\n\t\tif err != nil {\n\t\t\treturn fmt.Errorf(\"build Go oracle: %w\\n%s\", err, output)\n\t\t}\n\t\treturn nil\n\t})\n\treturn filepath.Join(product, \"oracle\"), packageDirectory\n}",
+    "new": "func formatfilesOracle(t *testing.T) (string, string) {\n\treturn \"\", \"\"\n}",
+    "kind": "probe",
+    "menu": "return early"
+  },
+  {
+    "id": "P03",
+    "file": "stage1/cohere/formatfiles/formatfiles_prepare_test.go",
+    "line": 92,
+    "old": "func formatfilesPreparedPort(t *testing.T) formatfilesPrepared {\n\tt.Helper()\n\tformatfilesPortOnce.Do(func() { formatfilesPortState = formatfilesPreparePort(t, nil) })\n\tif formatfilesPortState.binary == \"\" {\n\t\tt.Fatal(\"shared port preparation failed\")\n\t}\n\treturn formatfilesPortState\n}",
+    "new": "func formatfilesPreparedPort(t *testing.T) formatfilesPrepared {\n\treturn formatfilesPrepared{}\n}",
+    "kind": "probe",
+    "menu": "return early"
+  },
+  {
+    "id": "P04",
+    "file": "stage1/cohere/formatfiles/formatfiles_prepare_test.go",
+    "line": 101,
+    "old": "func formatfilesPreparedMutant(t *testing.T, index int) formatfilesPrepared {\n\tt.Helper()\n\tformatfilesMutantOnce[index].Do(func() {\n\t\tformatfilesMutantState[index] = formatfilesPreparePort(t, &mutants[index])\n\t})\n\tif formatfilesMutantState[index].binary == \"\" {\n\t\tt.Fatalf(\"mutant %q preparation failed\", mutants[index].name)\n\t}\n\treturn formatfilesMutantState[index]\n}",
+    "new": "func formatfilesPreparedMutant(t *testing.T, index int) formatfilesPrepared {\n\treturn formatfilesPrepared{}\n}",
+    "kind": "probe",
+    "menu": "return early"
+  },
+  {
+    "id": "P05",
+    "file": "stage1/cohere/formatfiles/formatfiles_prepare_test.go",
+    "line": 112,
+    "old": "func formatfilesUnsanitized(t *testing.T) string {\n\tt.Helper()\n\tformatfilesUnsanitizedOnce.Do(func() {\n\t\tsource := formatfilesSetupPort(t, nil)\n\t\tprogram := lowered(t, filepath.Join(source, \"main.ts\"))\n\t\tformatfilesUnsanitizedState = formatfilesBinaryWithOptions(t, program, nil, false)\n\t})\n\tif formatfilesUnsanitizedState == \"\" {\n\t\tt.Fatal(\"unsanitized port preparation failed\")\n\t}\n\treturn formatfilesUnsanitizedState\n}",
+    "new": "func formatfilesUnsanitized(t *testing.T) string {\n\treturn \"\"\n}",
+    "kind": "probe",
+    "menu": "return early"
+  },
+  {
+    "id": "P01",
+    "file": "stage1/cohere/formatfiles/main.ts",
+    "line": 143,
+    "old": "for (const line of read.text.split('\\n')) {",
+    "new": "for (const line of [] as string[]) {",
+    "kind": "probe",
+    "menu": "return early"
+  }
+]

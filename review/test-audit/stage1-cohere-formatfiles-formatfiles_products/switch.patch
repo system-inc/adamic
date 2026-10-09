@@ -1,0 +1,207 @@
+diff --git a/stage1/cohere/formatfiles/disk.ts b/stage1/cohere/formatfiles/disk.ts
+index ef42b65d..997847d3 100644
+--- a/stage1/cohere/formatfiles/disk.ts
++++ b/stage1/cohere/formatfiles/disk.ts
+@@ -1,3 +1,6 @@
++import { readTextFile as auditReadTextFile } from 'adamic';
++const auditRead = auditReadTextFile('/tmp/u091-selector');
++const auditSelector = auditRead.kind === 'Ok' ? auditRead.text : '';
+ // The file system as the formatfiles Go sees it through os.Lstat, os.Stat and os.ReadFile, read with
+ // 'adamic''s fileStatus, readDirectory and readTextFile; and a gitignore WorkingTree read from disk, which
+ // the gitignore slice's GAPS.md waited for ("a WorkingTree read from disk can take the in-memory one's
+@@ -30,7 +33,7 @@ export interface LinkStatus {
+ export function lstat(path: string): LinkStatus {
+ 	const status = fileStatus(path);
+ 	if (status.kind === 'Ok') {
+-		return { exists: true, directory: status.type === 'directory' && !status.symbolicLink, symbolicLink: status.symbolicLink };
++		return { exists: true, directory: status.type === 'directory' && !status.symbolicLink, symbolicLink: auditSelector === 'M08' ? false : status.symbolicLink };
+ 	}
+ 	// Listed, but nothing there to follow to: a symbolic link to nothing, or round a loop of links
+ 	// (fileStatus says no such file for the first and failed for the second, ELOOP). A permission error
+@@ -46,7 +49,8 @@ export function lstat(path: string): LinkStatus {
+ 
+ // statExists is whether os.Stat finds something at path, following symbolic links.
+ export function statExists(path: string): boolean {
+-	return fileStatus(path).kind === 'Ok';
++	if (auditSelector === 'M06') { return fileStatus(path).kind !== 'Ok'; }
++			return fileStatus(path).kind === 'Ok';
+ }
+ 
+ // statIsDirectory is whether os.Stat finds a directory at path, following symbolic links.
+diff --git a/stage1/cohere/formatfiles/enumerate.ts b/stage1/cohere/formatfiles/enumerate.ts
+index b5d4f05e..7bd02810 100644
+--- a/stage1/cohere/formatfiles/enumerate.ts
++++ b/stage1/cohere/formatfiles/enumerate.ts
+@@ -1,3 +1,6 @@
++import { readTextFile as auditReadTextFile } from 'adamic';
++const auditRead = auditReadTextFile('/tmp/u091-selector');
++const auditSelector = auditRead.kind === 'Ok' ? auditRead.text : '';
+ // A port of cohere's internal/format/formatfiles/enumerate.go to Adamic 0.1: which files a tree offers
+ // the formatter, the walk, its ignore layers, and an account of every file it did not offer. Each piece
+ // names the Go it reads as.
+@@ -49,7 +52,7 @@ export const IgnorePatternsLayer = 'ignorePatterns';
+ // the number of files plus Adamic files held back.
+ export class Enumeration {
+ 	readonly root: string;
+-	walked = 0;
++	walked = auditSelector === 'M04' ? 1 : 0;
+ 	readonly ignoredByLayer = new Map<string, number>();
+ 	unhandled = 0;
+ 	symbolicLinks = 0;
+@@ -397,7 +400,7 @@ export function enumerate(root: string, resolution: Resolution, handles: (fileNa
+ 			return proceed;
+ 		}
+ 
+-		enumeration.files.push(path);
++		if (auditSelector !== 'M05') { enumeration.files.push(path); }
+ 		return proceed;
+ 	};
+ 	const walked = walk(root, visit);
+diff --git a/stage1/cohere/formatfiles/formatfiles_prepare_test.go b/stage1/cohere/formatfiles/formatfiles_prepare_test.go
+index 2c62af36..7a18f692 100644
+--- a/stage1/cohere/formatfiles/formatfiles_prepare_test.go
++++ b/stage1/cohere/formatfiles/formatfiles_prepare_test.go
+@@ -61,7 +61,9 @@ func formatfilesPreparePort(t *testing.T, applied *mutant) formatfilesPrepared {
+ 	t.Helper()
+ 	prepared := formatfilesPrepared{source: formatfilesSetupPort(t, applied)}
+ 	prepared.program = lowered(t, filepath.Join(prepared.source, "main.ts"))
+-	prepared.binary = formatfilesBinary(t, prepared.program, applied)
++	if os.Getenv("ADAMIC_MUTANT") != "S01" {
++		prepared.binary = formatfilesBinary(t, prepared.program, applied)
++	}
+ 	if applied == nil {
+ 		prepared.javascript = filepath.Join(formatfilesSetupDirectory(t), "program.mjs")
+ 		if err := os.WriteFile(prepared.javascript, []byte(javascript.JavaScript(prepared.program)), 0644); err != nil {
+@@ -90,6 +92,9 @@ func formatfilesPrepareShard(t *testing.T, selected int) *formatfilesShared {
+ 
+ // The product units and shards share these once-per-process entry points.
+ func formatfilesPreparedPort(t *testing.T) formatfilesPrepared {
++	if os.Getenv("ADAMIC_MUTANT") == "P03" {
++		return formatfilesPrepared{}
++	}
+ 	t.Helper()
+ 	formatfilesPortOnce.Do(func() { formatfilesPortState = formatfilesPreparePort(t, nil) })
+ 	if formatfilesPortState.binary == "" {
+@@ -99,6 +104,9 @@ func formatfilesPreparedPort(t *testing.T) formatfilesPrepared {
+ }
+ 
+ func formatfilesPreparedMutant(t *testing.T, index int) formatfilesPrepared {
++	if os.Getenv("ADAMIC_MUTANT") == "P04" {
++		return formatfilesPrepared{}
++	}
+ 	t.Helper()
+ 	formatfilesMutantOnce[index].Do(func() {
+ 		formatfilesMutantState[index] = formatfilesPreparePort(t, &mutants[index])
+@@ -110,8 +118,14 @@ func formatfilesPreparedMutant(t *testing.T, index int) formatfilesPrepared {
+ }
+ 
+ func formatfilesUnsanitized(t *testing.T) string {
++	if os.Getenv("ADAMIC_MUTANT") == "P05" {
++		return ""
++	}
+ 	t.Helper()
+ 	formatfilesUnsanitizedOnce.Do(func() {
++		if os.Getenv("ADAMIC_MUTANT") == "S02" {
++			return
++		}
+ 		source := formatfilesSetupPort(t, nil)
+ 		program := lowered(t, filepath.Join(source, "main.ts"))
+ 		formatfilesUnsanitizedState = formatfilesBinaryWithOptions(t, program, nil, false)
+diff --git a/stage1/cohere/formatfiles/formatfiles_shards_test.go b/stage1/cohere/formatfiles/formatfiles_shards_test.go
+index d652633d..1d0825c2 100644
+--- a/stage1/cohere/formatfiles/formatfiles_shards_test.go
++++ b/stage1/cohere/formatfiles/formatfiles_shards_test.go
+@@ -491,6 +491,9 @@ func formatfilesCohereSide(t *testing.T, request map[string]any) {
+ 
+ // Both build-phase units and shard preparation use this exact oracle recipe.
+ func formatfilesOracle(t *testing.T) (string, string) {
++	if os.Getenv("ADAMIC_MUTANT") == "P02" {
++		return "", ""
++	}
+ 	t.Helper()
+ 	directory := t.TempDir()
+ 	cohere, err := filepath.Abs(filepath.Join(repository, "cohere"))
+@@ -517,7 +520,10 @@ func formatfilesOracle(t *testing.T) (string, string) {
+ 		Flags:     []string{"go test -c -overlay ./internal/format/formatfiles", buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOFLAGS")},
+ 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")}}
+ 	product := buildcache.Product(t, inputs, func(directory string) error {
+-		command := formatfilesCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(directory, "oracle"), "./internal/format/formatfiles")
++		if os.Getenv("ADAMIC_MUTANT") == "S04" {
++			return nil
++		}
++		command := formatfilesCommand(t, "go", "test", "-c", "-overlay="+overlayPath, "-o", filepath.Join(directory, "oracle"), auditOraclePackage())
+ 		command.Dir = cohere
+ 		output, err := combinedOutput(command)
+ 		if err != nil {
+@@ -533,3 +539,10 @@ func formatfilesCommand(t *testing.T, name string, arguments ...string) *exec.Cm
+ 	t.Helper()
+ 	return formatfilesContextCommand(context.Background(), name, arguments...)
+ }
++
++func auditOraclePackage() string {
++	if os.Getenv("ADAMIC_MUTANT") == "S03" {
++		return "./internal/format/formatfiles-missing"
++	}
++	return "./internal/format/formatfiles"
++}
+diff --git a/stage1/cohere/formatfiles/golang.ts b/stage1/cohere/formatfiles/golang.ts
+index cf945a7d..7fc1f14d 100644
+--- a/stage1/cohere/formatfiles/golang.ts
++++ b/stage1/cohere/formatfiles/golang.ts
+@@ -1,3 +1,6 @@
++import { readTextFile as auditReadTextFile } from 'adamic';
++const auditRead = auditReadTextFile('/tmp/u091-selector');
++const auditSelector = auditRead.kind === 'Ok' ? auditRead.text : '';
+ // What the formatfiles Go reaches for in Go's standard library and has no JavaScript twin, written here
+ // as Go answers it: strings.ToLower, the order sort.Strings and Go's map printing put strings in, and
+ // path/filepath's Ext and Rel for the absolute, slash-separated paths a walk on Linux makes. Clean, Dir
+@@ -13,7 +16,7 @@ import { clean } from '../gitignore/path.ts';
+ export function goToLower(text: string): string {
+ 	let lowered = '';
+ 	for (const character of text) {
+-		lowered += character === 'İ' ? 'i' : character.toLowerCase();
++		lowered += (auditSelector === 'M01' ? character === 'İ' ? 'x' : character.toLowerCase() : character === 'İ' ? 'i' : character.toLowerCase());
+ 	}
+ 	return lowered;
+ }
+@@ -28,6 +31,7 @@ export function compareCodePoints(left: string, right: string): number {
+ 		const leftPoint = left.codePointAt(leftIndex) ?? 0;
+ 		const rightPoint = right.codePointAt(rightIndex) ?? 0;
+ 		if (leftPoint !== rightPoint) {
++			if (auditSelector === 'M02') { return leftPoint < rightPoint ? 1 : -1; }
+ 			return leftPoint < rightPoint ? -1 : 1;
+ 		}
+ 		leftIndex += leftPoint > 0xffff ? 2 : 1;
+@@ -45,6 +49,7 @@ export function compareCodePoints(left: string, right: string): number {
+ export function ext(path: string): string {
+ 	for (let index = path.length - 1; index >= 0 && path[index] !== '/'; index--) {
+ 		if (path[index] === '.') {
++			if (auditSelector === 'M03') { return path.slice(index + 1); }
+ 			return path.slice(index);
+ 		}
+ 	}
+diff --git a/stage1/cohere/formatfiles/main.ts b/stage1/cohere/formatfiles/main.ts
+index 59a5855e..bf396e4d 100644
+--- a/stage1/cohere/formatfiles/main.ts
++++ b/stage1/cohere/formatfiles/main.ts
+@@ -35,7 +35,10 @@ import {
+ } from './enumerate.ts';
+ import { compareCodePoints, ext, goToLower } from './golang.ts';
+ 
+-const hexDigits = '0123456789abcdef';
++const auditRead = readTextFile('/tmp/u091-selector');
++const auditSelector = auditRead.kind === 'Ok' ? auditRead.text : '';
++
++const hexDigits = auditSelector === 'M07' ? '0123456789ABCDEF' : '0123456789abcdef';
+ 
+ // escapeOf is how quote writes a character, or '' for a character written as itself. It would say
+ // undefined for that, but stage 0 writes `return undefined` from a function returning string | undefined
+@@ -140,7 +143,7 @@ if (read.kind === 'Error') {
+ 
+ let handled: readonly string[] = [];
+ let root = '';
+-for (const line of read.text.split('\n')) {
++for (const line of (auditSelector === 'P01' ? [] : read.text.split('\n'))) {
+ 	if (line === '') {
+ 		continue;
+ 	}

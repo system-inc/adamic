@@ -1,0 +1,33 @@
+stage1/cohere/formatfiles/formatfiles_products_test.go:9:	formatfilesOracle(t)
+stage1/cohere/formatfiles/formatfiles_products_test.go:14:	formatfilesPreparedPort(t)
+stage1/cohere/formatfiles/formatfiles_products_test.go:20:	formatfilesUnsanitized(t)
+stage1/cohere/formatfiles/formatfiles_products_test.go:25:	formatfilesPreparedMutant(t, 0)
+stage1/cohere/formatfiles/formatfiles_products_test.go:30:	formatfilesPreparedMutant(t, 1)
+stage1/cohere/formatfiles/formatfiles_products_test.go:35:	formatfilesPreparedMutant(t, 2)
+stage1/cohere/formatfiles/formatfiles_products_test.go:40:	formatfilesPreparedMutant(t, 3)
+stage1/cohere/formatfiles/formatfiles_products_test.go:45:	formatfilesPreparedMutant(t, 4)
+stage1/cohere/formatfiles/formatfiles_products_test.go:50:	formatfilesPreparedMutant(t, 5)
+stage1/cohere/formatfiles/formatfiles_products_test.go:55:	formatfilesPreparedMutant(t, 6)
+stage1/cohere/formatfiles/formatfiles_products_test.go:60:	formatfilesPreparedMutant(t, 7)
+stage1/cohere/formatfiles/formatfiles_products_test.go:65:	formatfilesPreparedMutant(t, 8)
+stage1/cohere/formatfiles/formatfiles_products_test.go:70:	formatfilesPreparedMutant(t, 9)
+stage1/cohere/formatfiles/formatfiles_products_test.go:75:	formatfilesPreparedMutant(t, 10)
+stage1/cohere/formatfiles/formatfiles_products_test.go:80:	formatfilesPreparedMutant(t, 11)
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:38:var formatfilesUnsanitizedOnce sync.Once
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:39:var formatfilesUnsanitizedState string
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:60:func formatfilesPreparePort(t *testing.T, applied *mutant) formatfilesPrepared {
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:79:	state.port = formatfilesPreparedPort(t)
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:81:		state.port.unsanitized = formatfilesUnsanitized(t)
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:88:		state.mutated[mutant.name] = formatfilesPreparedMutant(t, index)
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:94:func formatfilesPreparedPort(t *testing.T) formatfilesPrepared {
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:99:	formatfilesPortOnce.Do(func() { formatfilesPortState = formatfilesPreparePort(t, nil) })
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:106:func formatfilesPreparedMutant(t *testing.T, index int) formatfilesPrepared {
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:112:		formatfilesMutantState[index] = formatfilesPreparePort(t, &mutants[index])
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:120:func formatfilesUnsanitized(t *testing.T) string {
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:125:	formatfilesUnsanitizedOnce.Do(func() {
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:131:		formatfilesUnsanitizedState = formatfilesBinaryWithOptions(t, program, nil, false)
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:133:	if formatfilesUnsanitizedState == "" {
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:136:	return formatfilesUnsanitizedState
+stage1/cohere/formatfiles/formatfiles_prepare_test.go:226:		report := formatfilesExecute(t, ctx, nil, "leaks", append([]string{"--atExit", "--", formatfilesUnsanitizedState}, args...)...)
+stage1/cohere/formatfiles/formatfiles_shards_test.go:474:	product, packageDirectory := formatfilesOracle(t)
+stage1/cohere/formatfiles/formatfiles_shards_test.go:493:func formatfilesOracle(t *testing.T) (string, string) {

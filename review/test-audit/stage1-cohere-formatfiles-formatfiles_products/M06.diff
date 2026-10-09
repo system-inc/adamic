@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/disk.ts
++++ b/stage1/cohere/formatfiles/disk.ts
+@@ -46,7 +46,7 @@
+ 
+ // statExists is whether os.Stat finds something at path, following symbolic links.
+ export function statExists(path: string): boolean {
+-	return fileStatus(path).kind === 'Ok';
++	return fileStatus(path).kind !== 'Ok';
+ }
+ 
+ // statIsDirectory is whether os.Stat finds a directory at path, following symbolic links.

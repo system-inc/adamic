@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/disk.ts
++++ b/stage1/cohere/formatfiles/disk.ts
+@@ -30,7 +30,7 @@
+ export function lstat(path: string): LinkStatus {
+ 	const status = fileStatus(path);
+ 	if (status.kind === 'Ok') {
+-		return { exists: true, directory: status.type === 'directory' && !status.symbolicLink, symbolicLink: status.symbolicLink };
++		return { exists: true, directory: status.type === 'directory' && !status.symbolicLink, symbolicLink: false };
+ 	}
+ 	// Listed, but nothing there to follow to: a symbolic link to nothing, or round a loop of links
+ 	// (fileStatus says no such file for the first and failed for the second, ELOOP). A permission error

@@ -1,0 +1,484 @@
+{
+  "stage1/cohere/formatfiles/main.ts": [
+    {
+      "line": 41,
+      "declaration": "// undefined for that, but stage 0 writes `return undefined` from a function returning string | undefined"
+    },
+    {
+      "line": 43,
+      "declaration": "function escapeOf(character: string): string {"
+    },
+    {
+      "line": 65,
+      "declaration": "function needsEscape(text: string): boolean {"
+    },
+    {
+      "line": 77,
+      "declaration": "function quote(text: string): string {"
+    },
+    {
+      "line": 96,
+      "declaration": "function unescapeOf(letter: string, field: string): string {"
+    },
+    {
+      "line": 112,
+      "declaration": "function unescape(field: string): string {"
+    },
+    {
+      "line": 126,
+      "declaration": "function field(fields: readonly string[], index: number, line: string): string {"
+    },
+    {
+      "line": 131,
+      "declaration": "function sortedKeys(counts: ReadonlyMap<string, number>): string[] {"
+    }
+  ],
+  "stage1/cohere/formatfiles/enumerate.ts": [
+    {
+      "line": 63,
+      "declaration": "constructor(root: string) {"
+    },
+    {
+      "line": 79,
+      "declaration": "function covers(layer: IgnoreLayer, relative: string, directory: boolean): boolean {"
+    },
+    {
+      "line": 94,
+      "declaration": "function walkTree(path: string, status: LinkStatus, visit: Visit): WalkStep {"
+    },
+    {
+      "line": 122,
+      "declaration": "function walk(root: string, visit: Visit): WalkStep {"
+    },
+    {
+      "line": 130,
+      "declaration": "function walkDirectories(path: string, status: LinkStatus, visit: Visit): WalkStep {"
+    },
+    {
+      "line": 154,
+      "declaration": "function walkDir(root: string, visit: Visit): WalkStep {"
+    },
+    {
+      "line": 162,
+      "declaration": "function parentOf(relative: string): string {"
+    },
+    {
+      "line": 169,
+      "declaration": "export function hasOwnRepository(directory: string): boolean {"
+    },
+    {
+      "line": 175,
+      "declaration": "export function repositoryBoundaryBetween(rootGiven: string, settingsDirectoryGiven: string): boolean {"
+    },
+    {
+      "line": 192,
+      "declaration": "export function nestedRepositoryContaining(rootGiven: string, fileName: string): string {"
+    },
+    {
+      "line": 210,
+      "declaration": "function scopeOf(scopes: ReadonlyMap<string, Matcher>, relative: string): Matcher {"
+    },
+    {
+      "line": 216,
+      "declaration": "export function nestedRepositoriesBelow(root: string): { readonly kind: 'Ok'; readonly nested: readonly string[] } | { readonly kind: 'Error'; readonly message: string } {"
+    },
+    {
+      "line": 218,
+      "declaration": "disk.load(IgnoreFileName);"
+    },
+    {
+      "line": 219,
+      "declaration": "disk.load('.git');"
+    },
+    {
+      "line": 220,
+      "declaration": "disk.load(ExcludeFile);"
+    },
+    {
+      "line": 246,
+      "declaration": "disk.load(`${relative}/.git`);"
+    },
+    {
+      "line": 247,
+      "declaration": "disk.load(`${relative}/${IgnoreFileName}`);"
+    },
+    {
+      "line": 266,
+      "declaration": "export function enumerate(root: string, resolution: Resolution, handles: (fileName: string) => boolean): Enumerated {"
+    },
+    {
+      "line": 278,
+      "declaration": "disk.load(IgnoreFileName);"
+    },
+    {
+      "line": 279,
+      "declaration": "disk.load('.git');"
+    },
+    {
+      "line": 280,
+      "declaration": "disk.load(ExcludeFile);"
+    },
+    {
+      "line": 351,
+      "declaration": "disk.load(`${relative}/.git`);"
+    },
+    {
+      "line": 352,
+      "declaration": "disk.load(`${relative}/${IgnoreFileName}`);"
+    }
+  ],
+  "stage1/cohere/formatfiles/disk.ts": [
+    {
+      "line": 30,
+      "declaration": "export function lstat(path: string): LinkStatus {"
+    },
+    {
+      "line": 48,
+      "declaration": "export function statExists(path: string): boolean {"
+    },
+    {
+      "line": 53,
+      "declaration": "export function statIsDirectory(path: string): boolean {"
+    },
+    {
+      "line": 60,
+      "declaration": "function followedEntry(path: string): Entry | undefined {"
+    },
+    {
+      "line": 91,
+      "declaration": "constructor(root: string) {"
+    },
+    {
+      "line": 97,
+      "declaration": "load(relative: string): void {"
+    }
+  ],
+  "stage1/cohere/formatfiles/golang.ts": [
+    {
+      "line": 13,
+      "declaration": "export function goToLower(text: string): string {"
+    },
+    {
+      "line": 24,
+      "declaration": "export function compareCodePoints(left: string, right: string): number {"
+    },
+    {
+      "line": 45,
+      "declaration": "export function ext(path: string): string {"
+    },
+    {
+      "line": 55,
+      "declaration": "export function join(directory: string, name: string): string {"
+    },
+    {
+      "line": 63,
+      "declaration": "// `return undefined` from a function returning string | undefined as C that clang refuses"
+    },
+    {
+      "line": 65,
+      "declaration": "export function rel(base: string, target: string): string {"
+    }
+  ],
+  "stage1/cohere/formatfiles/formatfiles_prepare_test.go": [
+    {
+      "line": 46,
+      "declaration": "func TestMain(m *testing.M) {"
+    },
+    {
+      "line": 60,
+      "declaration": "func formatfilesPreparePort(t *testing.T, applied *mutant) formatfilesPrepared {"
+    },
+    {
+      "line": 74,
+      "declaration": "func formatfilesPrepareShard(t *testing.T, selected int) *formatfilesShared {"
+    },
+    {
+      "line": 92,
+      "declaration": "func formatfilesPreparedPort(t *testing.T) formatfilesPrepared {"
+    },
+    {
+      "line": 101,
+      "declaration": "func formatfilesPreparedMutant(t *testing.T, index int) formatfilesPrepared {"
+    },
+    {
+      "line": 112,
+      "declaration": "func formatfilesUnsanitized(t *testing.T) string {"
+    },
+    {
+      "line": 125,
+      "declaration": "func formatfilesSetupDirectory(t *testing.T) string {"
+    },
+    {
+      "line": 134,
+      "declaration": "func formatfilesReady(t *testing.T) *formatfilesShared {"
+    },
+    {
+      "line": 149,
+      "declaration": "func formatfilesDeadline(t *testing.T, label string) context.Context {"
+    },
+    {
+      "line": 160,
+      "declaration": "func formatfilesContextCommand(ctx context.Context, name string, args ...string) *exec.Cmd {"
+    },
+    {
+      "line": 174,
+      "declaration": "func formatfilesExecute(t *testing.T, ctx context.Context, environment []string, name string, args ...string) run {"
+    },
+    {
+      "line": 193,
+      "declaration": "func formatfilesNode(t *testing.T, ctx context.Context, path string, args ...string) run {"
+    },
+    {
+      "line": 202,
+      "declaration": "func formatfilesLeaks(t *testing.T, ctx context.Context, program *ir.Program, binary string, args ...string) string {"
+    },
+    {
+      "line": 223,
+      "declaration": "func init() {"
+    },
+    {
+      "line": 239,
+      "declaration": "func formatfilesBuildNative(t *testing.T, source, output string, sanitize bool) error {"
+    },
+    {
+      "line": 252,
+      "declaration": "func formatfilesSetupPort(t *testing.T, applied *mutant) string {"
+    }
+  ],
+  "stage1/cohere/formatfiles/formatfiles_shards_test.go": [
+    {
+      "line": 35,
+      "declaration": "func formatfilesShard(key string) int {"
+    },
+    {
+      "line": 41,
+      "declaration": "func formatfilesSelectedShard(t *testing.T) int {"
+    },
+    {
+      "line": 59,
+      "declaration": "func formatfilesBlocks(t *testing.T, text, marker string) []string {"
+    },
+    {
+      "line": 74,
+      "declaration": "func formatfilesPartition(t *testing.T, path, answers string) []formatfilesPart {"
+    },
+    {
+      "line": 172,
+      "declaration": "func formatfilesCaseFile(t *testing.T, part formatfilesPart) string {"
+    },
+    {
+      "line": 181,
+      "declaration": "func formatfilesBinary(t *testing.T, program *ir.Program, mutant *mutant) string {"
+    },
+    {
+      "line": 185,
+      "declaration": "func formatfilesBinaryWithOptions(t *testing.T, program *ir.Program, mutant *mutant, sanitize bool) string {"
+    },
+    {
+      "line": 207,
+      "declaration": "func TestFormatfilesShardPlantedDisagreement(t *testing.T) {"
+    },
+    {
+      "line": 239,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_000(t *testing.T) {"
+    },
+    {
+      "line": 243,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_001(t *testing.T) {"
+    },
+    {
+      "line": 247,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_002(t *testing.T) {"
+    },
+    {
+      "line": 251,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_003(t *testing.T) {"
+    },
+    {
+      "line": 255,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_004(t *testing.T) {"
+    },
+    {
+      "line": 259,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_005(t *testing.T) {"
+    },
+    {
+      "line": 263,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_006(t *testing.T) {"
+    },
+    {
+      "line": 267,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_007(t *testing.T) {"
+    },
+    {
+      "line": 271,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_008(t *testing.T) {"
+    },
+    {
+      "line": 275,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_009(t *testing.T) {"
+    },
+    {
+      "line": 279,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_010(t *testing.T) {"
+    },
+    {
+      "line": 283,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_011(t *testing.T) {"
+    },
+    {
+      "line": 287,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_012(t *testing.T) {"
+    },
+    {
+      "line": 291,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_013(t *testing.T) {"
+    },
+    {
+      "line": 295,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_014(t *testing.T) {"
+    },
+    {
+      "line": 299,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_015(t *testing.T) {"
+    },
+    {
+      "line": 303,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_016(t *testing.T) {"
+    },
+    {
+      "line": 307,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_017(t *testing.T) {"
+    },
+    {
+      "line": 311,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_018(t *testing.T) {"
+    },
+    {
+      "line": 315,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_019(t *testing.T) {"
+    },
+    {
+      "line": 319,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_020(t *testing.T) {"
+    },
+    {
+      "line": 323,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_021(t *testing.T) {"
+    },
+    {
+      "line": 327,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_022(t *testing.T) {"
+    },
+    {
+      "line": 331,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_023(t *testing.T) {"
+    },
+    {
+      "line": 335,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_024(t *testing.T) {"
+    },
+    {
+      "line": 339,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_025(t *testing.T) {"
+    },
+    {
+      "line": 343,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_026(t *testing.T) {"
+    },
+    {
+      "line": 347,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_027(t *testing.T) {"
+    },
+    {
+      "line": 351,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_028(t *testing.T) {"
+    },
+    {
+      "line": 355,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_029(t *testing.T) {"
+    },
+    {
+      "line": 359,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_030(t *testing.T) {"
+    },
+    {
+      "line": 363,
+      "declaration": "func TestThePortParsesAsGoCohereDoes_031(t *testing.T) {"
+    },
+    {
+      "line": 368,
+      "declaration": "func TestThePortParsesAsGoCohereDoesUnion(t *testing.T) {"
+    },
+    {
+      "line": 430,
+      "declaration": "func formatfilesAskedCases(t *testing.T) (string, string) {"
+    },
+    {
+      "line": 472,
+      "declaration": "func formatfilesCohereSide(t *testing.T, request map[string]any) {"
+    },
+    {
+      "line": 493,
+      "declaration": "func formatfilesOracle(t *testing.T) (string, string) {"
+    },
+    {
+      "line": 532,
+      "declaration": "func formatfilesCommand(t *testing.T, name string, arguments ...string) *exec.Cmd {"
+    }
+  ],
+  "stage1/cohere/formatfiles/formatfiles_test.go": [
+    {
+      "line": 141,
+      "declaration": "func askedCases(t *testing.T) (string, string) {"
+    },
+    {
+      "line": 185,
+      "declaration": "func cohereSide(t *testing.T, request map[string]any) {"
+    },
+    {
+      "line": 224,
+      "declaration": "func portDirectory(t *testing.T, applied *mutant) string {"
+    },
+    {
+      "line": 263,
+      "declaration": "func firstDifference(got string, want string) string {"
+    },
+    {
+      "line": 284,
+      "declaration": "func lowered(t *testing.T, path string) *ir.Program {"
+    },
+    {
+      "line": 298,
+      "declaration": "func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {"
+    },
+    {
+      "line": 307,
+      "declaration": "func combinedOutput(command *exec.Cmd) ([]byte, error) {"
+    },
+    {
+      "line": 311,
+      "declaration": "func execute(t *testing.T, environment []string, name string, arguments ...string) run {"
+    },
+    {
+      "line": 329,
+      "declaration": "func onNode(t *testing.T, path string, arguments ...string) run {"
+    },
+    {
+      "line": 339,
+      "declaration": "func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {"
+    },
+    {
+      "line": 349,
+      "declaration": "func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {"
+    },
+    {
+      "line": 358,
+      "declaration": "func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {"
+    },
+    {
+      "line": 374,
+      "declaration": "func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {"
+    }
+  ]
+}

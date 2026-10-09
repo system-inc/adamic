@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/formatfiles_prepare_test.go
++++ b/stage1/cohere/formatfiles/formatfiles_prepare_test.go
+@@ -61,7 +61,7 @@
+ 	t.Helper()
+ 	prepared := formatfilesPrepared{source: formatfilesSetupPort(t, applied)}
+ 	prepared.program = lowered(t, filepath.Join(prepared.source, "main.ts"))
+-	prepared.binary = formatfilesBinary(t, prepared.program, applied)
++	/* dropped prepared binary assignment */
+ 	if applied == nil {
+ 		prepared.javascript = filepath.Join(formatfilesSetupDirectory(t), "program.mjs")
+ 		if err := os.WriteFile(prepared.javascript, []byte(javascript.JavaScript(prepared.program)), 0644); err != nil {

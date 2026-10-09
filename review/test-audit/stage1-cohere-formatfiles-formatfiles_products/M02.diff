@@ -1,0 +1,11 @@
+--- a/stage1/cohere/formatfiles/golang.ts
++++ b/stage1/cohere/formatfiles/golang.ts
+@@ -28,7 +28,7 @@
+ 		const leftPoint = left.codePointAt(leftIndex) ?? 0;
+ 		const rightPoint = right.codePointAt(rightIndex) ?? 0;
+ 		if (leftPoint !== rightPoint) {
+-			return leftPoint < rightPoint ? -1 : 1;
++			return leftPoint < rightPoint ? 1 : -1;
+ 		}
+ 		leftIndex += leftPoint > 0xffff ? 2 : 1;
+ 		rightIndex += rightPoint > 0xffff ? 2 : 1;

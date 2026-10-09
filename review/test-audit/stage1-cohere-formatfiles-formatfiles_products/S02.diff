@@ -1,0 +1,15 @@
+--- a/stage1/cohere/formatfiles/formatfiles_prepare_test.go
++++ b/stage1/cohere/formatfiles/formatfiles_prepare_test.go
+@@ -111,11 +111,7 @@
+ 
+ func formatfilesUnsanitized(t *testing.T) string {
+ 	t.Helper()
+-	formatfilesUnsanitizedOnce.Do(func() {
+-		source := formatfilesSetupPort(t, nil)
+-		program := lowered(t, filepath.Join(source, "main.ts"))
+-		formatfilesUnsanitizedState = formatfilesBinaryWithOptions(t, program, nil, false)
+-	})
++	formatfilesUnsanitizedOnce.Do(func() {})
+ 	if formatfilesUnsanitizedState == "" {
+ 		t.Fatal("unsanitized port preparation failed")
+ 	}

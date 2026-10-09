@@ -1,0 +1,338 @@
+[
+  {
+    "id": "M01",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/M01",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/M01.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u091",
+      "/tmp/u091/validation/M01/stage1/cohere/formatfiles/main.ts",
+      "/tmp/u091/validation/M01/port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 12.510554504002357
+  },
+  {
+    "id": "M02",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/M02",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/M02.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u091",
+      "/tmp/u091/validation/M02/stage1/cohere/formatfiles/main.ts",
+      "/tmp/u091/validation/M02/port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 2.656493530001171
+  },
+  {
+    "id": "M03",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/M03",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/M03.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u091",
+      "/tmp/u091/validation/M03/stage1/cohere/formatfiles/main.ts",
+      "/tmp/u091/validation/M03/port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 2.534034284999507
+  },
+  {
+    "id": "M04",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/M04",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/M04.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u091",
+      "/tmp/u091/validation/M04/stage1/cohere/formatfiles/main.ts",
+      "/tmp/u091/validation/M04/port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 2.862333105000289
+  },
+  {
+    "id": "M05",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/M05",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/M05.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u091",
+      "/tmp/u091/validation/M05/stage1/cohere/formatfiles/main.ts",
+      "/tmp/u091/validation/M05/port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 3.5811935710007674
+  },
+  {
+    "id": "M06",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/M06",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/M06.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u091",
+      "/tmp/u091/validation/M06/stage1/cohere/formatfiles/main.ts",
+      "/tmp/u091/validation/M06/port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 4.781760257999849
+  },
+  {
+    "id": "M07",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/M07",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/M07.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u091",
+      "/tmp/u091/validation/M07/stage1/cohere/formatfiles/main.ts",
+      "/tmp/u091/validation/M07/port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 4.890884951000771
+  },
+  {
+    "id": "M08",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/M08",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/M08.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u091",
+      "/tmp/u091/validation/M08/stage1/cohere/formatfiles/main.ts",
+      "/tmp/u091/validation/M08/port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 3.650071588999708
+  },
+  {
+    "id": "S01",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/S01",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/S01.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u091/validation/S01/overlay.json",
+      "./stage1/cohere/formatfiles/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.17739498000082676
+  },
+  {
+    "id": "S03",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/S03",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/S03.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u091/validation/S03/overlay.json",
+      "./stage1/cohere/formatfiles/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.1965864279991365
+  },
+  {
+    "id": "S02",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/S02",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/S02.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u091/validation/S02/overlay.json",
+      "./stage1/cohere/formatfiles/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.1844550559981144
+  },
+  {
+    "id": "S04",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/S04",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/S04.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u091/validation/S04/overlay.json",
+      "./stage1/cohere/formatfiles/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.17511526599992067
+  },
+  {
+    "id": "P02",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/P02",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/P02.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "/workspace/adamic-tools/go/bin/go",
+      "vet",
+      "-overlay=/tmp/u091/validation/P02/overlay.json",
+      "./stage1/cohere/formatfiles/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.6396254069986753,
+    "initial_vet_error": "unreachable code in entry-return probe; fixed by replacing whole function body"
+  },
+  {
+    "id": "P03",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/P03",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/P03.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "/workspace/adamic-tools/go/bin/go",
+      "vet",
+      "-overlay=/tmp/u091/validation/P03/overlay.json",
+      "./stage1/cohere/formatfiles/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.5501333920001343,
+    "initial_vet_error": "unreachable code in entry-return probe; fixed by replacing whole function body"
+  },
+  {
+    "id": "P04",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/P04",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/P04.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "/workspace/adamic-tools/go/bin/go",
+      "vet",
+      "-overlay=/tmp/u091/validation/P04/overlay.json",
+      "./stage1/cohere/formatfiles/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.5548885060015891,
+    "initial_vet_error": "unreachable code in entry-return probe; fixed by replacing whole function body"
+  },
+  {
+    "id": "P05",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/P05",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/P05.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "/workspace/adamic-tools/go/bin/go",
+      "vet",
+      "-overlay=/tmp/u091/validation/P05/overlay.json",
+      "./stage1/cohere/formatfiles/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.4983184529992286,
+    "initial_vet_error": "unreachable code in entry-return probe; fixed by replacing whole function body"
+  },
+  {
+    "id": "P01",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u091/validation/P01",
+      "/workspace/adamic/review/test-audit/stage1-cohere-formatfiles-formatfiles_products/P01.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u091",
+      "/tmp/u091/validation/P01/stage1/cohere/formatfiles/main.ts",
+      "/tmp/u091/validation/P01/port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 2.3200591539971356
+  }
+]

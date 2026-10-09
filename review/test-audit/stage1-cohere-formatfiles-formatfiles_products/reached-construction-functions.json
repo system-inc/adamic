@@ -1,0 +1,40 @@
+{
+  "TestProduct_FormatfilesGoOracle": [
+    "formatfilesOracle",
+    "formatfilesCommand",
+    "formatfilesContextCommand",
+    "combinedOutput"
+  ],
+  "TestProduct_FormatfilesNative": [
+    "formatfilesPreparedPort",
+    "formatfilesPreparePort",
+    "formatfilesSetupPort",
+    "formatfilesSetupDirectory",
+    "lowered",
+    "formatfilesBinary",
+    "formatfilesBinaryWithOptions",
+    "formatfilesBuildNative",
+    "formatfilesContextCommand"
+  ],
+  "TestProduct_FormatfilesNativeUnsanitized": [
+    "formatfilesUnsanitized",
+    "formatfilesSetupPort",
+    "formatfilesSetupDirectory",
+    "lowered",
+    "formatfilesBinary",
+    "formatfilesBinaryWithOptions",
+    "formatfilesBuildNative",
+    "formatfilesContextCommand"
+  ],
+  "TestProduct_FormatfilesNative family": [
+    "formatfilesPreparedMutant",
+    "formatfilesPreparePort",
+    "formatfilesSetupPort",
+    "formatfilesSetupDirectory",
+    "lowered",
+    "formatfilesBinary",
+    "formatfilesBinaryWithOptions",
+    "formatfilesBuildNative",
+    "formatfilesContextCommand"
+  ]
+}
