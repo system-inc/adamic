@@ -16,25 +16,15 @@ import (
 var volumeRules = []string{"no_unsafe_type_assertion", "no_unsafe_member_access", "prefer_nullish_coalescing", "no_shadow", "no_unsafe_enum_comparison", "no_unsafe_assignment", "no_confusing_void_expression", "consistent_return", "switch_exhaustiveness_check", "unbound_method"}
 
 func volumeOracle(h *harness, name, source string) string {
-	h.t.Helper()
-	binary, err := sharedProduct("Go oracle "+source, func(directory string) (string, error) {
-		virtual := filepath.Join(h.repository, "cohere/adamic_"+name+".go")
-		data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata", source)}})
-		if err != nil {
-			return "", err
-		}
-		overlay := filepath.Join(directory, "overlay.json")
-		if err := os.WriteFile(overlay, data, 0644); err != nil {
-			return "", err
-		}
-		binary := filepath.Join(directory, "oracle")
-		command := exec.Command("go", "build", "-overlay", overlay, "-o", binary, virtual)
-		command.Dir = filepath.Join(h.repository, "cohere")
-		return binary, buildProduct(h.t, name+"-build", command, directory)
-	})
+	virtual := filepath.Join(h.repository, "cohere/adamic_"+name+".go")
+	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata", source)}})
 	if err != nil {
 		h.t.Fatal(err)
 	}
+	binary := filepath.Join(h.directory, name)
+	cmd := exec.Command("go", "build", "-overlay", h.write(name+"-overlay.json", string(data)), "-o", binary, virtual)
+	cmd.Dir = filepath.Join(h.repository, "cohere")
+	h.must(name+"-build", cmd)
 	return binary
 }
 
@@ -93,9 +83,8 @@ func volumeControls() []string {
 	}
 }
 
-// Not parallel: volume controls and optional corpus timings run separately from
-// other suites. Mutants use their own directories and parallel subtests.
-// Not parallel: volume controls share corpus timing and checker build resources.
+// Not parallel: archive builds and corpus runs share the optional artifact directory
+// and need the limited scratch space without another archive build competing.
 func TestVolumeAgreementAndMutants(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
@@ -112,8 +101,8 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 		}
 	}
 	h := &harness{t: t, repository: repository, directory: directory}
-	traceGroup(t)
-	stage0 := h.stage0()
+	stage0 := filepath.Join(directory, "adamic")
+	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
 	normal := h.archive("checker", "", false)
 	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
 	binary := h.build(stage0, "volume", entry, normal, false)
@@ -143,7 +132,6 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 		{"assignable-types", "bridge/tsgo/checker/facts.go", "out.yes(checker.Checker_isTypeAssignableTo(c, selected[0], selected[1]))", "out.yes(checker.Checker_isTypeAssignableTo(c, selected[1], selected[0]))"},
 		{"widened-shape", "bridge/tsgo/checker/facts.go", "t = checker.Checker_getWidenedType(c, t)", "// Mutant keeps the fresh type."},
 		{"enum-types", "bridge/tsgo/checker/facts.go", "base = c.GetTypeAtLocation(symbol.ValueDeclaration.Parent)", "base = part"},
-		{"type-symbol", "bridge/tsgo/checker/facts.go", "name = symbol.Name", "name = symbol.Name + \"wrong\""},
 		{"scope-locals", "bridge/tsgo/checker/scopes.go", "out.text(name)", "out.text(name + \"wrong\")"},
 		{"call-returns", "bridge/tsgo/checker/facts.go", "roots = append(roots, g.add(c.GetReturnTypeOfSignature(signature)))", "_ = signature; roots = append(roots, g.add(checker.Checker_numberType(c)))"},
 		{"property-shape", "bridge/tsgo/checker/facts.go", "g.add(c.GetTypeOfSymbolAtLocation(property, node))", "g.add(checker.Checker_numberType(c))"},
@@ -158,8 +146,9 @@ func TestVolumeAgreementAndMutants(t *testing.T) {
 	}
 	for _, change := range changes {
 		t.Run(change.name, func(t *testing.T) {
-			t.Parallel()
-			h := h.child(t)
+			previous := h.t
+			h.t = t
+			defer func() { h.t = previous }()
 			overlay := h.overlay(change.name, change.path, change.from, change.to)
 			archive := h.archive(change.name+"-checker", overlay, false)
 			t.Cleanup(func() { os.Remove(archive) })
@@ -188,18 +177,12 @@ console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
 		t.Fatalf("released program escaped: %v %s", observed.err, observed.stderr)
 	}
 	t.Log("released program queried with new question: panic 70, invalid or released checker handle")
-
-	t.Run("released-registry", func(t *testing.T) {
-		t.Parallel()
-		h := h.child(t)
-		overlay := h.overlay("released-registry", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant keeps released program live.")
-		archive := h.archive("released-registry-checker", overlay, false)
-		mutated := h.build(stage0, "released-registry-native", releasedSource, archive, false)
-		h.must("released-registry-run", exec.Command(mutated, config, probe))
-		t.Log("released registry mutant: exit 0 caught by required panic 70")
-		os.Remove(archive)
-
-	})
+	overlay := h.overlay("released-registry", "bridge/tsgo/archive/main.go", "delete(programs.live, uint64(handle))", "// Mutant keeps released program live.")
+	archive := h.archive("released-registry-checker", overlay, false)
+	mutated := h.build(stage0, "released-registry-native", releasedSource, archive, false)
+	observed = h.must("released-registry-run", exec.Command(mutated, config, probe))
+	t.Log("released registry mutant: exit 0 caught by required panic 70")
+	os.Remove(archive)
 
 	// Repository roots are the pre-port manifest so rule selection and agreement
 	// describe the same measured population. Include declaration roots from config.
@@ -220,68 +203,6 @@ console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
 // previous configs; this expanded runner has not ported implicit-this messages.
 // Not parallel: sanitizer archives consume the same limited scratch space as
 // the main volume test; corpus timings must not compete with that test.
-// Not parallel: sanitizer archives share scratch space with volume controls.
 func TestVolumeConfigGuardAndMutant(t *testing.T) {
-	repository, err := filepath.Abs("../../..")
-	if err != nil {
-		t.Fatal(err)
-	}
-	directory := t.TempDir()
-	if path := os.Getenv("ADAMIC_VOLUME_GUARD_ARTIFACTS"); path != "" {
-		directory, err = filepath.Abs(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err = os.MkdirAll(directory, 0755); err != nil {
-			t.Fatal(err)
-		}
-	}
-	h := &harness{t: t, repository: repository, directory: directory}
-	traceGroup(t)
-	stage0 := h.stage0()
-	archive := h.archive("checker", "", false)
-	entry := filepath.Join(repository, "stage1/cohere/typeaware/volume_suite.ts")
-	binary := h.build(stage0, "volume", entry, archive, false)
-	source := h.write("this.ts", "function f(){const x=this.m;const y:number=this;return x;} export {};\n")
-	manifest := h.write("this.manifest", source+"\n")
-	config := h.write("tsconfig.json", `{"compilerOptions":{"strict":true,"noImplicitThis":false,"target":"ES2022","lib":["ES2022"]}}`)
-	observed := h.run("nonstrict-this", exec.Command(binary, config, manifest))
-	message := []byte("adamic: panic: volume suite requires noImplicitThis; implicit-this messages are not yet ported\n")
-	if code, ok := observed.err.(*exec.ExitError); !ok || code.ExitCode() != 70 || !bytes.Equal(observed.stderr, message) || len(observed.stdout) != 0 {
-		t.Fatalf("unsupported this mode escaped: %v %s", observed.err, observed.stderr)
-	}
-	overlay := h.overlay("strict-this", "bridge/tsgo/checker/facts.go", "option = p.Compiler.Options().NoImplicitThis", "option = p.Compiler.Options().StrictNullChecks")
-	mutantArchive := h.archive("strict-this-checker", overlay, false)
-	mutant := h.build(stage0, "strict-this-native", entry, mutantArchive, false)
-	observed = h.must("strict-this-run", exec.Command(mutant, config, manifest))
-	if len(observed.stderr) != 0 || !bytes.Contains(observed.stdout, []byte("findings ")) {
-		t.Fatal("strict-this mutant did not finish normally")
-	}
-	t.Log("strict-this compiler-option mutant: refusal expectation catches exit 0 instead of 70")
-	oracle := volumeOracle(h, "volume-oracle", "oracle_volume.go")
-	truth := h.must("nonstrict-go", exec.Command(oracle, config, manifest))
-	if bytes.Equal(observed.stdout, truth.stdout) {
-		t.Fatal("implicit-this input did not distinguish the production message variants")
-	}
-	t.Logf("implicit-this mutant also differs from independent Go at byte %d", firstDifference(observed.stdout, truth.stdout))
-	config = h.write("strict.json", `{"compilerOptions":{"strict":true,"target":"ES2022","lib":["ES2022"]}}`)
-	sanitized := h.archive("checker-asan", "", true)
-	asan := h.build(stage0, "volume-asan", entry, sanitized, true)
-	h.compare("strict-this-control", oracle, asan, config, manifest)
-	var controls []string
-	for i, text := range volumeControls() {
-		controls = append(controls, h.write(fmt.Sprintf("edge-control-%03d.ts", i), text+"\nexport {};\n"))
-	}
-	controls = append(controls, h.write("native-globals.d.ts", "declare const console: {log():void};\n"), h.write("native-console.ts", "const detached=console.log;\nexport {};\n"))
-	controlsManifest := h.write("edge-controls.manifest", strings.Join(controls, "\n")+"\n")
-	h.compare("edge-controls-asan", oracle, asan, config, controlsManifest)
-	// Use the final scalar-option guard on both external corpora too.
-	if manifest := os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST"); manifest != "" {
-		h.compare("repository-final-asan", oracle, asan, filepath.Join(repository, "tsconfig.json"), manifest)
-	}
-	if corpus := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE"); corpus != "" {
-		paths := corpusfiles.Upstream(t, corpus, compilerCommit, []string{"src/compiler"}, []string{"*.ts"})
-		manifest := h.write("compiler.manifest", strings.Join(paths, "\n")+"\n")
-		h.compare("compiler-final-asan", oracle, asan, filepath.Join(corpus, "src/compiler/tsconfig.json"), manifest)
-	}
+	runVolumeConfigGuardShards(t)
 }

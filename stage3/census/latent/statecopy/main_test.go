@@ -9,6 +9,7 @@ import (
 )
 
 func TestUnknownMutableContainerFailsLoudly(t *testing.T) {
+	t.Parallel()
 	root := t.TempDir()
 	folder := filepath.Join(root, "internal", "lower")
 	os.MkdirAll(folder, 0700)
@@ -38,6 +39,7 @@ func TestUnknownMutableContainerFailsLoudly(t *testing.T) {
 }
 
 func TestUnknownForeignPointerFailsLoudly(t *testing.T) {
+	t.Parallel()
 	root := t.TempDir()
 	folder := filepath.Join(root, "internal", "lower")
 	if err := os.MkdirAll(folder, 0700); err != nil {

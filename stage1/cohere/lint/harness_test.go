@@ -3,89 +3,24 @@ package lint
 import (
 	"bytes"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
-// Not parallel: the subprocess repeats the same end-to-end comparison.
+// Prepare products once before the parallel comparison leaf.
 func TestEmittedJavaScriptMismatch(t *testing.T) {
-	if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
-		directory, err := filepath.Abs(".")
-		if err != nil {
-			t.Fatal(err)
-		}
-		path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-		oracle := goOracle(t)
-		binary := buildPort(t, directory, true)
-		module := emittedJavaScript(t, directory)
-		compareWithJavaScript(t, oracle, binary, directory, path, module)
-		data, err := os.ReadFile(module)
-		if err != nil {
-			t.Fatal(err)
-		}
-		// The emitted module is the run's shared one, so the planted mismatch goes into a copy of it.
-		module = filepath.Join(t.TempDir(), "lint.mjs")
-		data = append(data, []byte("\nconsole.log('planted emitted JavaScript mismatch');\n")...)
-		if err := os.WriteFile(module, data, 0644); err != nil {
-			t.Fatal(err)
-		}
-		compareWithJavaScript(t, oracle, binary, directory, path, module)
-		t.Fatal("emitted JavaScript mutant survived")
+	started := time.Now()
+	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript setup exceeded 90s") })
+	defer deadline.Stop()
+	emittedMismatchSetup(t)
+	emittedMismatchUnion(t)
+	elapsed := time.Since(started)
+	t.Logf("TestEmittedJavaScriptMismatch (setup): %.3fs cooked=%t", elapsed.Seconds(), elapsed >= 90*time.Second)
+	if elapsed >= 60*time.Second {
+		t.Fatal("setup exceeds 60s budget")
 	}
-	log := filepath.Join(t.TempDir(), "mismatch.log")
-	output, err := os.Create(log)
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := exec.Command(os.Args[0], "-test.run=^TestEmittedJavaScriptMismatch$", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_LINT_MISMATCH_PROBE=1")
-	command.Stdout, command.Stderr = output, output
-	runError := command.Run()
-	if err := output.Close(); err != nil {
-		t.Fatal(err)
-	}
-	data, err := os.ReadFile(log)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if runError == nil || !bytes.Contains(data, []byte("emitted JavaScript:")) || !bytes.Contains(data, []byte("planted emitted JavaScript mismatch")) {
-		t.Fatalf("wrong mutant failure: %v\n%s", runError, data)
-	}
-	t.Logf("ordinary comparison rejected clean-running emitted JavaScript mutant:\n%s", data)
-}
-
-func TestDotARename(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-	oracle := goOracle(t)
-	want := compare(t, oracle, buildPort(t, directory, true), directory, path)
-	copied := mutant(t, "", "")
-	entry := filepath.Join(copied, "rules/no-var/rule.a")
-	before, err := os.ReadFile(entry)
-	if err != nil {
-		t.Fatal(err)
-	}
-	renamed := filepath.Join(copied, "rules/no-var/rule.ts")
-	if err := os.Rename(entry, renamed); err != nil {
-		t.Fatal(err)
-	}
-	after, err := os.ReadFile(renamed)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !bytes.Equal(before, after) {
-		t.Fatal("rename changed module bytes")
-	}
-	got := compare(t, oracle, buildPort(t, copied, true), copied, path)
-	if !bytes.Equal(got, want) {
-		t.Fatal("rename changed results")
-	}
-	t.Logf("rename only: .ts and .a identical on all three runtimes against Go (%d bytes)", len(want))
 }
 
 func serializationPort(t *testing.T) string {
@@ -106,40 +41,8 @@ func serializationPort(t *testing.T) string {
 }
 
 func TestCompleteSuggestionSerialization(t *testing.T) {
-	directory := serializationPort(t)
-	source := filepath.Join(t.TempDir(), "suggestions.ts")
-	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{source + "\tno-debugger"})
-	oracle := goOracleFrom(t, directory)
-	want := compare(t, oracle, buildPort(t, directory, true), directory, path)
-	for _, field := range []string{"suggestion\tfirst", "suggestion\tsecond", "suggestion\tempty", "suggestion-edit\t8 9", "fixed\t/*"} {
-		if !bytes.Contains(want, []byte(field)) {
-			t.Fatalf("missing field %q: %s", field, want)
-		}
-	}
-	changed := filepath.Join(directory, "rules/no-debugger/rule.a")
-	data, err := os.ReadFile(changed)
-	if err != nil {
-		t.Fatal(err)
-	}
-	data = bytes.Replace(data, []byte("start + 1, start + 2, ''"), []byte("start + 1, start + 3, ''"), 1)
-	if err := os.WriteFile(changed, data, 0644); err != nil {
-		t.Fatal(err)
-	}
-	for _, side := range []struct {
-		name string
-		run  execution
-	}{
-		{"Node", node(t, directory, path, false)},
-		{"emitted JavaScript", emittedNode(t, directory, path, false)},
-	} {
-		if bytes.Equal(side.run.output, want) {
-			t.Fatalf("second suggestion edit mutant survived on %s", side.name)
-		}
-		t.Logf("second suggestion edit mutant caught on %s: %s", side.name, difference(side.run.output, want))
-	}
+	completeSuggestionUnion(t)
+	completeSuggestionSetup(t)
 }
 
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {

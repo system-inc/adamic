@@ -14,6 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units).
 func TestSpeedCostProbes(t *testing.T) {
 	input := filepath.Join(t.TempDir(), "units.txt")
 	if err := os.WriteFile(input, []byte(strings.Repeat("abc中😀", 4000)), 0644); err != nil {
