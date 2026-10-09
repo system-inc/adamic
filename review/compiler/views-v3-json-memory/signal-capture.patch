@@ -1,0 +1,25 @@
+--- stage1/cohere/json/port_test.go	2026-10-09 01:39:54.160683156 +0000
++++ /tmp/v3-json-measure/capture-port-test.go	2026-10-09 05:29:02.301532132 +0000
+@@ -434,3 +434,22 @@
+ 		compare(t, "native file driver", execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, path), answers[index].Output, cases)
+ 	}
+ }
++
++// Not parallel: this temporary measurement captures one fixed corpus before child runs.
++func TestCaptureSignalCorpus(t *testing.T) {
++ cases := sampledCorpusCases(t, 32)
++ root := "/workspace/v3-json-artifacts/followup"
++ writeJSON(t, filepath.Join(root,"cases.json"),cases)
++ for i, chunk := range chunkRanges(len(cases),5) {
++  input,_ := protocol(cases[chunk.start:chunk.end],make([]answer,chunk.end-chunk.start))
++  if err := os.WriteFile(filepath.Join(root,fmt.Sprintf("chunk-%d.txt",i)),[]byte(input),0644);err!=nil {t.Fatal(err)}
++ }
++ input,_ := protocol(cases[694:1389],make([]answer,695))
++ if err := os.WriteFile(filepath.Join(root,"exact-694-1389.txt"),[]byte(input),0644);err!=nil {t.Fatal(err)}
++ directory := portDirectory(t,nil)
++ program := lowered(t,filepath.Join(directory,"main.ts"))
++ source := native.C(program)
++ if err := os.WriteFile(filepath.Join(root,"v3-current.c"),[]byte(source),0644);err!=nil {t.Fatal(err)}
++ if err := native.Build(source,filepath.Join(root,"v3-sanitized"),native.Options{Sanitize:true});err!=nil {t.Fatal(err)}
++ t.Logf("captured %d cases, [694:1389] %s through %s",len(cases),cases[694].Name,cases[1388].Name)
++}
