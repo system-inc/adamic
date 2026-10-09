@@ -1,4 +1,4 @@
-// Package childguard runs Unix child process groups with output-based stall protection.
+// Package childguard runs Unix child process groups with CPU-progress stall protection.
 package childguard
 
 import (
@@ -14,11 +14,15 @@ import (
 	"time"
 )
 
+const minimumCPUProgress = 10 * time.Millisecond
+
 const DefaultFirstOutput = 30 * time.Minute
 const DefaultStall = 2 * time.Minute
 const DefaultCeiling = 60 * time.Minute
 
-// FirstOutput is the silence allowed before the first byte; Stall applies thereafter.
+// FirstOutput and Stall select observation windows before and after the first
+// byte. A stall requires no output and less than 10ms of group user+system CPU
+// progress in a whole window. Ceiling is the unconditional wall backstop.
 // Options overrides the defaults. Zero durations select the defaults.
 type Options struct{ FirstOutput, Stall, Ceiling time.Duration }
 
@@ -26,11 +30,13 @@ type Options struct{ FirstOutput, Stall, Ceiling time.Duration }
 // Reason is "stalled" or "ceiling". Load is the one-minute load average,
 // or "unavailable" on systems without /proc/loadavg.
 type Error struct {
-	Reason          string
-	FirstOutput     bool
-	Command         string
-	Window, Elapsed time.Duration
-	Load            string
+	Reason           string
+	FirstOutput      bool
+	Command          string
+	Window, Elapsed  time.Duration
+	CPU, CPUProgress time.Duration
+	CPUError         string
+	Load             string
 }
 
 func (e *Error) Error() string {
@@ -39,9 +45,9 @@ func (e *Error) Error() string {
 		if e.FirstOutput {
 			window = "no first output"
 		}
-		return fmt.Sprintf("stalled: %s for %s after %s, load %s (%s)", window, e.Window, e.Elapsed, e.Load, e.Command)
+		return fmt.Sprintf("stalled: %s for %s after %s, CPU %s (progress %s, minimum %s), load %s (%s)", window, e.Window, e.Elapsed, e.CPU, e.CPUProgress, minimumCPUProgress, e.Load, e.Command)
 	}
-	return fmt.Sprintf("ceiling: %s", e.Elapsed)
+	return fmt.Sprintf("ceiling: %s, window %s, CPU %s (progress %s, sampling error %q), load %s (%s)", e.Elapsed, e.Window, e.CPU, e.CPUProgress, e.CPUError, e.Load, e.Command)
 }
 
 type activity struct {
@@ -112,6 +118,10 @@ func Run(cmd *exec.Cmd, options Options) error {
 	}
 	done := make(chan error, 1)
 	go func() { done <- cmd.Wait() }()
+	// Linux /proc CPU accounting has 10ms resolution. Require one tick of
+	// progress; a busy child delayed by scheduler load renews its window.
+	cpu, cpuErr := processGroupCPU(cmd.Process.Pid)
+	baseline, observed := cpu, time.Now()
 	timer := time.NewTimer(min(options.FirstOutput, options.Ceiling))
 	defer timer.Stop()
 	for {
@@ -136,10 +146,16 @@ func Run(cmd *exec.Cmd, options Options) error {
 			}
 			a.Unlock()
 			elapsed := now.Sub(start)
+			previousErr := cpuErr
+			sampled := now.Sub(observed) >= window || elapsed >= options.Ceiling
+			if sampled {
+				cpu, cpuErr = processGroupCPU(cmd.Process.Pid)
+			}
+			gain := cpu - baseline
 			reason := ""
 			if elapsed >= options.Ceiling {
 				reason = "ceiling"
-			} else if idle >= window {
+			} else if sampled && cpuErr == nil && previousErr == nil && idle >= window && gain >= 0 && gain < minimumCPUProgress {
 				reason = "stalled"
 			}
 			if reason != "" {
@@ -153,9 +169,20 @@ func Run(cmd *exec.Cmd, options Options) error {
 						load = fields[0]
 					}
 				}
-				return &Error{Reason: reason, Window: window, FirstOutput: firstOutput, Command: cmd.Path, Elapsed: elapsed, Load: load}
+				sampleError := ""
+				if cpuErr != nil {
+					sampleError = cpuErr.Error()
+				}
+				return &Error{Reason: reason, Window: window, FirstOutput: firstOutput, Command: strings.Join(cmd.Args, " "), Elapsed: elapsed, Load: load, CPU: cpu, CPUProgress: gain, CPUError: sampleError}
 			}
-			timer.Reset(min(window-idle, options.Ceiling-elapsed))
+			if sampled {
+				// Always start a fresh CPU observation window, even if output
+				// is arriving. CPU spent before the last output must not keep
+				// renewing a later silent window. Failed reads or a transient
+				// regression while a descendant is reaped cannot cause a stall.
+				baseline, observed = cpu, now
+			}
+			timer.Reset(min(window-now.Sub(observed), options.Ceiling-elapsed))
 		}
 	}
 }

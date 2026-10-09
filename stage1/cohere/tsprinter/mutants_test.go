@@ -1,6 +1,7 @@
 package tsprinter
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -77,8 +78,13 @@ func mutatedPort(t *testing.T, change mutation) string {
 	return filepath.Join(directory, change.entry)
 }
 
+const testMutantsShards = 29
+
 func TestMutants(t *testing.T) {
 	t.Parallel()
+	if len(mutations) != testMutantsShards {
+		t.Fatalf("%d mutants, want %d declared shards", len(mutations), testMutantsShards)
+	}
 	documents, documentWant, _ := documentCorpus(t)
 	expressions, expressionWant, _ := expressionCorpus(t)
 	statementCases, statementWant := "", ""
@@ -88,8 +94,20 @@ func TestMutants(t *testing.T) {
 			break
 		}
 	}
-	for _, change := range mutations {
-		t.Run(change.name, func(t *testing.T) {
+	// Build once before the timed run units. Directories belong to this test,
+	// so binaries survive until every shard finishes.
+	paths := make([]string, testMutantsShards)
+	directories := make([]string, testMutantsShards)
+	for i, change := range mutations {
+		paths[i] = mutatedPort(t, change)
+		directories[i] = t.TempDir()
+	}
+	binaries := buildMutants(t, paths, directories)
+	if t.Failed() {
+		return
+	}
+	for i, change := range mutations {
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
 			t.Parallel()
 			cases, want := documents, documentWant
 			arguments := []string{cases}
@@ -110,10 +128,13 @@ func TestMutants(t *testing.T) {
 				want = string(gapWant)
 				arguments = []string{"--cases", cases, "80"}
 			}
-			path := mutatedPort(t, change)
-			node := onNode(t, path, arguments...)
-			program := lowered(t, path)
-			native, _ := natively(t, program, arguments...)
+			if change.entry != "docMain.ts" && change.name != "hashbang loses its refusal" {
+				cases, want = mutantCorpus(t, change, cases, want)
+				arguments = []string{"--cases", cases, "80"}
+			}
+			t.Logf("mutant %d/%d: %s", i+1, testMutantsShards, change.name)
+			node := onNode(t, paths[i], arguments...)
+			native := execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binaries[i], arguments...)
 			for _, side := range []struct {
 				name   string
 				result run
@@ -125,7 +146,7 @@ func TestMutants(t *testing.T) {
 					t.Fatalf("%s mutant escaped the byte comparison", side.name)
 				}
 				difference := firstDifference(string(side.result.stdout), want)
-				if filepath.Base(cases) != "gaps.txt" {
+				if filepath.Base(cases) != "gaps.txt" && filepath.Base(cases) != "witnesses.txt" {
 					difference = corpusDifference(t, cases, string(side.result.stdout), want)
 				}
 				t.Logf("%s caught by successful-run output mismatch: %s", side.name, difference)
