@@ -1,0 +1,80 @@
+{
+  "name": "stage3-lane-symlink-case-03",
+  "inputs_hash": "8df89e3da6a9724e06f4c5f394c1374222243ce688d152dd35f5aa87c1e61db9",
+  "artifact": "e41a430a94a8b7b011d31cd1c9aaabfda03d4f8c9dc3f67d13eb8859aa434b24",
+  "counts": {
+    "pass": 0,
+    "fail": 1,
+    "skip": 0
+  },
+  "errors": [
+    "counts: expected {'fail': 0, 'skip': 0, 'pass': 1}, observed {'pass': 0, 'fail': 1, 'skip': 0}",
+    "failure titles: expected [], observed ['unittests:: sys:: symlinkWatching:: with ts.sys:: watchFile using polling watchFile using polling']",
+    "upstream exit: 1"
+  ],
+  "status": "fail",
+  "mutant": {
+    "case": "built/local/run.js",
+    "sha256": "d6c18a5abbfe1563019a24770bef4aa39758c42054b77f03cdb58643efde0f41"
+  },
+  "failed_tests": [
+    "unittests:: sys:: symlinkWatching:: with ts.sys:: watchFile using polling watchFile using polling"
+  ],
+  "baseline_diffs": [],
+  "upstream_exit": 1,
+  "producer_phases": {
+    "apply": {
+      "exit": 0,
+      "seconds": 101.079
+    },
+    "install": {
+      "exit": 0,
+      "seconds": 2.447
+    },
+    "build": {
+      "exit": 0,
+      "seconds": 21.884
+    },
+    "harness": {
+      "exit": 0,
+      "seconds": 0.981
+    }
+  },
+  "command": [
+    "node",
+    "/workspace/adamic/stage3/oracle/run-prepared.mjs",
+    "/workspace/scratch/step34-followup/mutant-cases/stage3-lane-symlink-case-03/adapted-tree",
+    "--workers=1",
+    "--light=false",
+    "--no-colors",
+    "--runners=unittest",
+    "--tests=^unittests::\\ sys::\\ symlinkWatching::\\ with\\ ts\\.sys::\\ watchFile\\ using\\ polling\\ watchFile\\ using\\ polling$"
+  ],
+  "failures": [
+    {
+      "title": "unittests:: sys:: symlinkWatching:",
+      "message": "with ts.sys::\n         watchFile using polling\n           watchFile using polling:\n\n      AssertionError: expected 'export const x = 100;' to equal 'export const x = 10;'\n      + expected - actual\n\n      -export const x = 100;\n      +export const x = 10;\n      \n      at Context.<anonymous> (src/testRunner/unittests/sys/symlinkWatching.ts:48:49)\n\n\n\nfile:///workspace/scratch/step34-artifacts/e41a430a94a8b7b011d31cd1c9aaabfda03d4f8c9dc3f67d13eb8859aa434b24/tree/scripts/build/utils.mjs:42\n                        new ExecError(exitCode);\n                        ^\n\nExecError: Process exited with code: 1\n    at ChildProcess.<anonymous> (file:///workspace/scratch/step34-artifacts/e41a430a94a8b7b011d31cd1c9aaabfda03d4f8c9dc3f67d13eb8859aa434b24/tree/scripts/build/utils.mjs:42:25)\n    at ChildProcess.emit (node:events:509:28)\n    at ChildProcess._handle.onexit (node:internal/child_process:295:12) {\n  exitCode: 1\n}\n\nNode.js v24.19.0",
+      "stack": "with ts.sys::\n         watchFile using polling\n           watchFile using polling:\n\n      AssertionError: expected 'export const x = 100;' to equal 'export const x = 10;'\n      + expected - actual\n\n      -export const x = 100;\n      +export const x = 10;\n      \n      at Context.<anonymous> (src/testRunner/unittests/sys/symlinkWatching.ts:48:49)\n\n\n\nfile:///workspace/scratch/step34-artifacts/e41a430a94a8b7b011d31cd1c9aaabfda03d4f8c9dc3f67d13eb8859aa434b24/tree/scripts/build/utils.mjs:42\n                        new ExecError(exitCode);\n                        ^\n\nExecError: Process exited with code: 1\n    at ChildProcess.<anonymous> (file:///workspace/scratch/step34-artifacts/e41a430a94a8b7b011d31cd1c9aaabfda03d4f8c9dc3f67d13eb8859aa434b24/tree/scripts/build/utils.mjs:42:25)\n    at ChildProcess.emit (node:events:509:28)\n    at ChildProcess._handle.onexit (node:internal/child_process:295:12) {\n  exitCode: 1\n}\n\nNode.js v24.19.0",
+      "stack_top": "at Context.<anonymous> (src/testRunner/unittests/sys/symlinkWatching.ts:48:49)",
+      "elapsed_ms": null,
+      "timeout_ms": null,
+      "source": "reporter",
+      "cause": "exception",
+      "baselines": []
+    },
+    {
+      "title": "unittests:: sys:: symlinkWatching:: with ts.sys:: watchFile using polling watchFile using polling",
+      "kind": "test",
+      "message": "expected 'export const x = 100;' to equal 'export const x = 10;'",
+      "stack": "AssertionError: expected 'export const x = 100;' to equal 'export const x = 10;'\n    at Context.<anonymous> (src/testRunner/unittests/sys/symlinkWatching.ts:48:49)",
+      "stack_top": "    at Context.<anonymous> (src/testRunner/unittests/sys/symlinkWatching.ts:48:49)",
+      "timeout_ms": 40000,
+      "elapsed_ms": 1574.312469,
+      "pid": 30061,
+      "source": "mocha",
+      "cause": "exception",
+      "baselines": []
+    }
+  ],
+  "seconds": 11.714873285999602
+}

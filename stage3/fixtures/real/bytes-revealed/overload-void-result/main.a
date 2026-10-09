@@ -1,0 +1,16 @@
+// a-check: refused the non-null assertion !
+// From src/compiler/emitter.ts:4949 (TypeScript 6.0.3, ed6e2975 adaptations).
+
+type SyntaxKind = 64;
+function tokenToString(token:SyntaxKind):string {return '=';}
+function writeTokenText(token: SyntaxKind, writer: (s: string) => void): void;
+function writeTokenText(token: SyntaxKind, writer: (s: string) => void, pos: number): number;
+function writeTokenText(token: SyntaxKind, writer: (s: string) => void, pos?: number): number {
+        const tokenString = tokenToString(token)!;
+        writer(tokenString);
+        return pos! < 0 ? pos! : pos! + tokenString.length;
+    }
+let output='';
+function writer(text:string):void {output+=text;}
+writeTokenText(64,writer);
+console.log(`${writeTokenText(64,writer,10)}:${writeTokenText(64,writer,-1)}:${output}`);

@@ -220,3 +220,9 @@ receivers and their parentheses are removed; no contract or API sanction is
 added. Combined progress is 74 removed and 136 remaining.
 [ERROR-HOST.md](ERROR-HOST.md) records clean build artifacts, wrong-member
 mutants, the exact scanner reference without temporary 80, and gate results.
+
+## Earlier fixture-branch composition
+
+The independent filesystem stat and isArray merge previously removed 70 of 210
+any tokens, leaving 140. That snapshot is historical; the Error host sites bring
+the composed total to 74 removed and 136 remaining.
