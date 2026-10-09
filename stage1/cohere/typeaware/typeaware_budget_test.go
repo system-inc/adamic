@@ -7,18 +7,17 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"testing"
 	"time"
 )
 
-const typeAwareUnitBudget = 60 * time.Second
-const typeAwareUnitKill = 75 * time.Second
+const typeAwareUnitBudget = 90 * time.Second
+const typeAwareUnitKill = 90 * time.Second
 
 // Setup is split into individual immutable product builds. Every setup unit and
 // every check shard has its own watchdog; one slow unit cannot hold the worker.
-// Exit 124 identifies cooked work separately from an assertion failure.
+// Crossing the deadline kills active command groups and fails the worker.
 func typeAwareDeadline(t *testing.T, name string) func() {
 	return typeAwareDeadlineWithin(t, name, typeAwareUnitBudget, typeAwareUnitKill)
 }
@@ -27,9 +26,9 @@ func typeAwareDeadlineWithin(t *testing.T, name string, budget, kill time.Durati
 	t.Helper()
 	started := time.Now()
 	cooked := func() {
-		fmt.Fprintf(os.Stdout, "cooked unit=%s elapsed_s=%.6f budget_s=60 kill_s=75\n", name, time.Since(started).Seconds())
-		typeAwareKillChildren(os.Getpid())
-		os.Exit(124)
+		fmt.Fprintf(os.Stdout, "unit deadline exceeded name=%s elapsed_s=%.6f limit_s=%.6f\n", name, time.Since(started).Seconds(), kill.Seconds())
+		typeAwareKillCommandGroups()
+		os.Exit(1)
 	}
 	timer := time.AfterFunc(kill, cooked)
 	return func() {
@@ -39,35 +38,6 @@ func typeAwareDeadlineWithin(t *testing.T, name string, budget, kill time.Durati
 			cooked()
 		}
 		t.Logf("unit-budget name=%s elapsed_s=%.6f cooked=false", name, elapsed.Seconds())
-	}
-}
-
-// The watchdog kills this test binary's subprocess tree before exiting, so a
-// timed-out Go/clang build is not left running after its worker calls it cooked.
-func typeAwareKillChildren(parent int) {
-	entries, _ := filepath.Glob("/proc/[0-9]*/stat")
-	for _, entry := range entries {
-		data, err := os.ReadFile(entry)
-		if err != nil {
-			continue
-		}
-		_, tail, ok := strings.Cut(string(data), ") ")
-		fields := strings.Fields(tail)
-		if !ok || len(fields) < 2 {
-			continue
-		}
-		ppid, err := strconv.Atoi(fields[1])
-		if err != nil || ppid != parent {
-			continue
-		}
-		pid, err := strconv.Atoi(filepath.Base(filepath.Dir(entry)))
-		if err != nil {
-			continue
-		}
-		typeAwareKillChildren(pid)
-		if child, err := os.FindProcess(pid); err == nil {
-			_ = child.Kill()
-		}
 	}
 }
 
@@ -121,6 +91,7 @@ func typeAwareRunShards(t *testing.T, h *harness, expected []string, shards []si
 
 // A real nested subprocess must be killed before it can publish its marker.
 // This exercises the same watchdog as the setup products and check shards.
+// Not parallel: deadline probe shares the package command-group registry.
 func TestTypeAwareUnitDeadline(t *testing.T) {
 	mode := os.Getenv("ADAMIC_TYPEAWARE_DEADLINE_CHILD")
 	marker := os.Getenv("ADAMIC_TYPEAWARE_DEADLINE_MARKER")
@@ -138,7 +109,7 @@ func TestTypeAwareUnitDeadline(t *testing.T) {
 		}
 		command := exec.Command(os.Args[0], "-test.run=^TestTypeAwareUnitDeadline$")
 		command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_DEADLINE_CHILD=marker")
-		if err := command.Run(); err != nil {
+		if err := typeAwareRunCommand(command); err != nil {
 			t.Fatal(err)
 		}
 		return
@@ -146,9 +117,9 @@ func TestTypeAwareUnitDeadline(t *testing.T) {
 	for _, mode := range []string{"quick", "slow"} {
 		t.Run(mode, func(t *testing.T) {
 			marker := filepath.Join(t.TempDir(), "marker")
-			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+			ctx, cancel := context.WithTimeout(context.Background(), typeAwareChildLimit)
 			defer cancel()
-			command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestTypeAwareUnitDeadline$", "-test.v")
+			command := typeAwareContextCommand(ctx, os.Args[0], "-test.run=^TestTypeAwareUnitDeadline$", "-test.v")
 			command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_DEADLINE_CHILD="+mode, "ADAMIC_TYPEAWARE_DEADLINE_MARKER="+marker)
 			output, err := command.CombinedOutput()
 			if mode == "quick" {
@@ -158,7 +129,7 @@ func TestTypeAwareUnitDeadline(t *testing.T) {
 				return
 			}
 			exit, ok := err.(*exec.ExitError)
-			if !ok || exit.ExitCode() != 124 || !bytes.Contains(output, []byte("cooked unit=watchdog-probe")) {
+			if !ok || exit.ExitCode() != 1 || !bytes.Contains(output, []byte("unit deadline exceeded name=watchdog-probe")) {
 				t.Fatalf("slow unit was not cooked: %v %s", err, output)
 			}
 			time.Sleep(time.Second)

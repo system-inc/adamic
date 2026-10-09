@@ -23,6 +23,7 @@ type product struct {
 	err   error
 }
 
+// Not parallel: package-wide build product directory.
 func TestMain(m *testing.M) {
 	directory, err := os.MkdirTemp("", "typeaware-products-")
 	if err != nil {
@@ -68,7 +69,7 @@ func buildProduct(t *testing.T, name string, command *exec.Cmd, directory string
 	defer stderr.Close()
 	command.Stdout, command.Stderr = stdout, stderr
 	started := time.Now()
-	err = command.Run()
+	err = typeAwareRunCommand(command)
 	t.Logf("phase command %s %.6fs", name, time.Since(started).Seconds())
 	if err != nil {
 		out, _ := os.ReadFile(stdout.Name())

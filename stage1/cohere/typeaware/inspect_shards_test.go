@@ -13,6 +13,7 @@ import (
 // selects zero-based shards; unset runs every refusal and mutant check.
 const testInspectRequestRefusalsShards = 6
 
+// Not parallel: refusal controls share checker setup and build resources.
 func TestInspectRequestRefusals(t *testing.T) {
 	started := time.Now()
 	repository, err := filepath.Abs("../../..")

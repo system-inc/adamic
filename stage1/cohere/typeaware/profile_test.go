@@ -44,6 +44,7 @@ func profileSourceMutant(h *harness, stage0, archive, name, from, to string) str
 
 // Not parallel: profile controls and optional corpus runs stay separate from
 // other suites. Each independent mutant has a parallel child harness.
+// Not parallel: profile controls share corpus timing and checker build resources.
 func TestVolumeProfileAgreementAndMutants(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {

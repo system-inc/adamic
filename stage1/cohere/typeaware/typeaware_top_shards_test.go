@@ -5,7 +5,6 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"sync"
 	"testing"
@@ -108,9 +107,9 @@ func TestTypeAwareTopPlanted_001(t *testing.T) { t.Parallel(); typeAwareTopShard
 func TestTypeAwareTopShardPlantedFailure(t *testing.T) {
 	t.Parallel()
 	for i := range 2 {
-		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), typeAwareChildLimit)
 		name := fmt.Sprintf("TestTypeAwareTopPlanted_%03d", i)
-		command := exec.CommandContext(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.v")
+		command := typeAwareContextCommand(ctx, os.Args[0], "-test.run=^"+name+"$", "-test.v")
 		command.Env = append(os.Environ(), "ADAMIC_TYPEAWARE_TOP_PLANTED=1")
 		output, err := command.CombinedOutput()
 		cancel()

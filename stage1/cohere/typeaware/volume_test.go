@@ -95,6 +95,7 @@ func volumeControls() []string {
 
 // Not parallel: volume controls and optional corpus timings run separately from
 // other suites. Mutants use their own directories and parallel subtests.
+// Not parallel: volume controls share corpus timing and checker build resources.
 func TestVolumeAgreementAndMutants(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
@@ -219,6 +220,7 @@ console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
 // previous configs; this expanded runner has not ported implicit-this messages.
 // Not parallel: sanitizer archives consume the same limited scratch space as
 // the main volume test; corpus timings must not compete with that test.
+// Not parallel: sanitizer archives share scratch space with volume controls.
 func TestVolumeConfigGuardAndMutant(t *testing.T) {
 	repository, err := filepath.Abs("../../..")
 	if err != nil {

@@ -94,7 +94,7 @@ func (h *harness) run(name string, command *exec.Cmd) result {
 		command.Env = append(environment, "GOMAXPROCS=1")
 	}
 	started := time.Now()
-	runError := command.Run()
+	runError := typeAwareRunCommand(command)
 	elapsed := time.Since(started)
 	h.t.Logf("phase command %s %.6fs", name, elapsed.Seconds())
 	stdout, err := os.ReadFile(out.Name())
@@ -200,7 +200,7 @@ func (h *harness) build(_ string, name, entry, archive string, sanitize bool) st
 	}
 	compile := func(output string) error {
 		started := time.Now()
-		err := native.BuildTSGo(source, output, archive, native.Options{Sanitize: sanitize})
+		err := typeAwareNativeBuild(source, output, archive, sanitize)
 		h.t.Logf("phase clang %s %.6fs", name, time.Since(started).Seconds())
 		return err
 	}

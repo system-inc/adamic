@@ -264,6 +264,7 @@ func TestSixShardUnionRejectsLossAndDuplication(t *testing.T) {
 // planted/case-5 is corrupted; exactly selection 2/4 must fail in shard-002.
 const testSixShardPlantedDisagreementShards = 4
 
+// Not parallel: parent and child share the planted-case subprocess protocol.
 func TestSixShardPlantedDisagreement(t *testing.T) {
 	if os.Getenv("ADAMIC_SIX_PLANTED_CHILD") == "1" {
 		var shards []sixShard

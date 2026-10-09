@@ -47,7 +47,7 @@ func sixCommandBuild(command *exec.Cmd, file string) func(string) error {
 		var stdout, stderr bytes.Buffer
 		cmd.Stdout = &stdout
 		cmd.Stderr = &stderr
-		err := cmd.Run()
+		err := typeAwareRunCommand(cmd)
 		if writeErr := os.WriteFile(filepath.Join(dir, "build.stdout"), stdout.Bytes(), 0644); writeErr != nil {
 			return writeErr
 		}
@@ -85,7 +85,7 @@ func (h *harness) sixSourceInputs() []string {
 	} {
 		cmd := exec.Command("go", append([]string{"list", "-test", "-deps", "-json"}, request.packages...)...)
 		cmd.Dir = request.dir
-		data, err := cmd.Output()
+		data, err := typeAwareCommandOutput(cmd)
 		if err != nil {
 			h.t.Fatalf("six build input inventory: %v", err)
 		}
@@ -177,7 +177,7 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 			name string
 			args []string
 		}{{"go", []string{"version"}}, {"clang", []string{"--version"}}} {
-			data, err := exec.Command(tool.name, tool.args...).Output()
+			data, err := typeAwareCommandOutput(exec.Command(tool.name, tool.args...))
 			if err != nil {
 				h.t.Fatal(err)
 			}
@@ -190,7 +190,7 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 	env := exec.Command("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOWORK", "GOMOD")
 	env.Dir = command.Dir
 	env.Env = command.Env
-	data, err := env.Output()
+	data, err := typeAwareCommandOutput(env)
 	if err != nil {
 		h.t.Fatal(err)
 	}
@@ -202,7 +202,7 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 	// CC's version also matters for cgo, including its default when CC is unset.
 	cc := strings.Fields(settings["CC"])
 	if len(cc) > 0 {
-		data, err := exec.Command(cc[0], append(cc[1:], "--version")...).Output()
+		data, err := typeAwareCommandOutput(exec.Command(cc[0], append(cc[1:], "--version")...))
 		if err != nil {
 			h.t.Fatal(err)
 		}
@@ -214,11 +214,11 @@ func (h *harness) sixBuildRecipe(name string, command *exec.Cmd) sixProduct {
 	in.Flags = append(in.Flags, "cwd="+canonical(command.Dir))
 	// Go embeds VCS metadata by default. Preserve the existing flags and declare
 	// this implicit input too, rather than silently changing -buildvcs behavior.
-	revision, err := exec.Command("git", "-C", command.Dir, "rev-parse", "HEAD").Output()
+	revision, err := typeAwareCommandOutput(exec.Command("git", "-C", command.Dir, "rev-parse", "HEAD"))
 	if err != nil {
 		h.t.Fatal(err)
 	}
-	status, err := exec.Command("git", "-C", command.Dir, "status", "--porcelain").Output()
+	status, err := typeAwareCommandOutput(exec.Command("git", "-C", command.Dir, "status", "--porcelain"))
 	if err != nil {
 		h.t.Fatal(err)
 	}
@@ -353,6 +353,7 @@ func (h *harness) sixBuildOnce(product sixProduct) string {
 
 // Exercise the callback boundary with a real child process: the requested
 // output must be redirected into the product directory, not the caller's path.
+// Not parallel: parent and child share the requested build product path.
 func TestSixBuildCallbackUsesProductDirectory(t *testing.T) {
 	if os.Getenv("ADAMIC_SIX_PRODUCT_CHILD") == "1" {
 		for i, arg := range os.Args {
