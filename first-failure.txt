@@ -1,5 +1,3 @@
-idle preemption: 0 marked, 0 survivors in their sessions, 4 ms
-FIRST FAILURE (tests, at 107.0 s):
 github.com/system-inc/adamic/stage1/cohere/markdownblocks (package)
 panic: cooked: TestMarkdownTableLayout_Setup exceeded 90s: context deadline exceeded
 	=== RUN   TestMarkdownTableLayout_Setup
