@@ -10,24 +10,26 @@ import (
 	"testing"
 )
 
+// Refused record shapes are pinned by TestRecordRefusal* in records_refusal_test.go.
 func init() {
 	fixtures = append(fixtures, struct {
 		path    string
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/records_refuse/r24.a", false, false})
-	for _, name := range []string{"operations", "ownership", "for_in", "census", "scalars", "optional", "narrowed_number", "narrowed_reference", "prototype_read", "prototype_in", "prototype_set"} {
+	for _, name := range []string{"operations", "ownership", "for_in", "census", "scalars", "optional", "narrowed_reference"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/records_" + name + ".a", name != "prototype_read" && name != "prototype_in" && name != "prototype_set" && name != "narrowed_number", false})
+		}{"internal/oracle/testdata/records_" + name + ".a", true, false})
 	}
 }
 
 // The native oracle also consumes these fixtures. This separate check allows the
 // JavaScript lowering to be held to Node while checked native declarations arrive.
 func TestRecordJavaScriptAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"operations", "ownership", "for_in", "census", "scalars", "optional"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_"+name+".a"))

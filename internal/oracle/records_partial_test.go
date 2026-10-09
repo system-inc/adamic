@@ -15,6 +15,7 @@ func init() {
 	}
 }
 func TestPartialRecordJavaScriptAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"parser", "views", "undefined"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_partial_"+name+".a"))
@@ -35,6 +36,7 @@ func TestPartialRecordJavaScriptAgreesWithNode(t *testing.T) {
 
 // An absent optional field is not an own property with an undefined value.
 func TestPartialRecordAbsentEntryMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_partial_parser.a"))
 	if err != nil {
 		t.Fatal(err)

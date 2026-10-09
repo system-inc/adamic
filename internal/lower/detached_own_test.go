@@ -50,6 +50,7 @@ func TestDetachedOwnRepresentation(t *testing.T) {
 }
 
 func TestDetachedOwnAreaAdapters(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		"const own=Object.prototype.hasOwnProperty; console.log(`${own.apply({x:1},['x'])}`);",
 		`const own=Object.prototype.hasOwnProperty; const alias=own; const r:Record<string,number>={}; console.log(String(alias.call(r,'x')));`,

@@ -13,12 +13,13 @@ import (
 	"os/exec"
 )
 
+// Prototype comparisons and the environment boundary use TestRecordRefusal* pins.
 func init() {
-	for _, name := range []string{"discarded", "guarded_snapshot", "compare_missing_scalar", "compare_properties_left", "compare_properties_right", "environment_boundary"} {
+	for _, name := range []string{"discarded", "guarded_snapshot", "compare_missing_scalar"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
-		}{"internal/oracle/testdata/records_" + name + ".a", name != "compare_properties_left" && name != "compare_properties_right" && name != "environment_boundary", false})
+		}{"internal/oracle/testdata/records_" + name + ".a", true, false})
 	}
 }
 
@@ -117,6 +118,7 @@ func TestRecordCensusComparisonBuckets(t *testing.T) {
 }
 
 func TestRecordHostEnvironmentObservation(t *testing.T) {
+	t.Parallel()
 	file := filepath.Join(t.TempDir(), "host.mjs")
 	if err := os.WriteFile(file, []byte(`console.log(Object.hasOwn(process.env, 'toString')); console.log(typeof process.env['toString']);`), 0644); err != nil {
 		t.Fatal(err)

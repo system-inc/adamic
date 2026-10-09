@@ -2,16 +2,14 @@ package oracle
 
 import (
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
 
 func init() {
-	fixtures = append(fixtures, struct {
-		path            string
-		lowers, checked bool
-	}{"internal/oracle/testdata/records_named_invalidated.a", false, false})
+	// Invalidated reads are pinned by TestRecordRefusalNamedInvalidated.
 	for _, name := range []string{"options", "operations", "union", "intrinsics", "alias_unready"} {
 		fixtures = append(fixtures, struct {
 			path            string
@@ -65,6 +63,7 @@ func TestNamedRecordTypeGuardMutant(t *testing.T) {
 }
 
 func TestNamedRecordAliasReadinessMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_alias_unready.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -94,7 +93,7 @@ func TestNamedRecordAliasReadinessMutant(t *testing.T) {
 		t.Fatal("mutant removed no alias-copy readiness check")
 	}
 	want := onNode(t, path)
-	if want.exitCode != 70 {
+	if want.exitCode != 1 || !strings.Contains(string(want.stderr), "ReferenceError") {
 		t.Fatalf("Node did not stop in the dead zone: %+v", want)
 	}
 	native, _ := nativelyUncached(t, p)
@@ -102,11 +101,12 @@ func TestNamedRecordAliasReadinessMutant(t *testing.T) {
 		if got.exitCode != 0 || disagreement(want, got) != "exit codes differ" {
 			t.Fatalf("%s alias-copy readiness mutant survived: %+v", name, got)
 		}
-		t.Logf("%s alias-copy readiness mutant caught by Node's exit 70", name)
+		t.Logf("%s alias-copy readiness mutant caught by Node's ReferenceError exit 1", name)
 	}
 }
 
 func TestNamedRecordJavaScriptAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"options", "operations", "union", "intrinsics", "alias_unready"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_"+name+".a"))
@@ -126,6 +126,7 @@ func TestNamedRecordJavaScriptAgreesWithNode(t *testing.T) {
 }
 
 func TestNamedRecordAbsentEntryMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_named_union.a"))
 	if err != nil {
 		t.Fatal(err)

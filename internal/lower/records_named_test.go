@@ -9,6 +9,7 @@ import (
 )
 
 func TestNamedRecordReadTypes(t *testing.T) {
+	t.Parallel()
 	p, err := lowerSource(t, `interface Options { target?:number; [key:string]:number|string|undefined } function named(o:Options):number|undefined{return o.target;} function indexed(o:Options,k:string):number|string|undefined{return o[k];}`)
 	if err != nil {
 		t.Fatal(err)
@@ -30,6 +31,7 @@ func TestNamedRecordReadTypes(t *testing.T) {
 }
 
 func TestNamedRecordRefusals(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ source, reason string }{
 		{`interface R {named?:number[];[key:string]:number[]|string|undefined} function read(r:R):number|undefined {return r.named?.length;}`, "dictionary member narrowed to an object kind"},
 		{`interface R {named?:number;[key:string]:number|string|boolean|null|undefined} const r:R={};`, "slot representation"},

@@ -7,6 +7,7 @@ import (
 )
 
 func TestPartialRecordStorageRefusals(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ source, reason string }{
 		{`const fixed={first:1}; const cache:Partial<Record<'first'|'second',number>>=fixed;`, "seen as"},
 		{`const cache:Partial<Record<'first'|'second',number>>={}; const fixed:{first?:number}=cache;`, "seen as"},
