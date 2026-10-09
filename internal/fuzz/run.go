@@ -319,11 +319,13 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 	// Every program that finishes must let go of everything through the shared platform check.
 	// Threads stay at the default here; the one-thread leak check is parallelRuns' job.
 	if outcome.Node.ExitCode == 0 {
-		report, err := c.leaks(binary, directory, "")
+		report, died, err := c.leaksRun(binary, directory, "")
 		if err != nil {
 			// A leak check that never finished says nothing about the program: run it again alone.
 			report, outcome.retry = err.Error(), true
 		}
+		// So does a leak runner killed by a signal (under load, or by the harness's deadline).
+		outcome.retry = outcome.retry || died
 		if report != "" {
 			outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(report, 20)
 			return outcome
@@ -502,11 +504,18 @@ func nativeEnvironment(threads string) []string {
 
 // Preserve the fuzzer's isolated environment, deadline and one-worker witness in every leak run.
 func (c *Checkout) leaks(binary, directory, threads string) (string, error) {
+	report, _, err := c.leaksRun(binary, directory, threads)
+	return report, err
+}
+
+// leaksRun is leaks that also says whether a run of the check was killed by a signal, so a
+// leak runner that died under load is tried again alone rather than reported as a leak.
+func (c *Checkout) leaksRun(binary, directory, threads string) (string, bool, error) {
 	code, err := os.ReadFile(filepath.Join(directory, "main.c"))
 	if err != nil {
-		return "", err
+		return "", false, err
 	}
-	timedOut := false
+	timedOut, died := false, false
 	report, err := leakcheck.Check(leakcheck.Program{
 		C: string(code), Sanitized: binary, Counted: filepath.Join(directory, "program-counted"),
 		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
@@ -516,13 +525,14 @@ func (c *Checkout) leaks(binary, directory, threads string) (string, error) {
 			}
 			result := executeIsolated(directory, isolatedEnvironment(extra), 20*time.Second, name, arguments...)
 			timedOut = timedOut || result.TimedOut
+			died = died || runnerDied(result)
 			return leakcheck.Run{Stdout: result.Stdout, Stderr: result.Stderr, ExitCode: result.ExitCode}
 		},
 	})
 	if timedOut {
-		return "", fmt.Errorf("leak check never finished")
+		return "", true, fmt.Errorf("leak check never finished")
 	}
-	return report, err
+	return report, died, err
 }
 
 func tsanEnvironment(threads string) []string {
