@@ -1,0 +1,49 @@
+package lower
+
+import "github.com/microsoft/TypeScript/tsc/shim/ast"
+
+// receiverIndependentMethod proves a literal method can use the ordinary closure ABI.
+// Scan parameter defaults and nested arrows too. Reject nested dynamic receivers conservatively:
+// their independence is not needed here, and neither this nor super may acquire the outer receiver.
+func receiverIndependentMethod(node *ast.Node) bool {
+	if node.Kind != ast.KindMethodDeclaration || node.Parent == nil || node.Parent.Kind != ast.KindObjectLiteralExpression || node.Body() == nil {
+		return false
+	}
+	for _, parameter := range node.Parameters() {
+		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
+			return false
+		}
+	}
+	independent := true
+	var visit ast.Visitor
+	visit = func(child *ast.Node) bool {
+		if ast.IsPartOfTypeNode(child) {
+			return false
+		}
+		if child.Kind == ast.KindThisKeyword || child.Kind == ast.KindSuperKeyword {
+			independent = false
+			return true
+		}
+		return child.ForEachChild(visit)
+	}
+	node.ForEachChild(visit)
+	return independent
+}
+
+// Structural method signatures can hold ordinary callback fields. The existing whole-program
+// erasedMethodField guard still rejects any compatible literal with a receiver or class prototype.
+// A signature alone never proves the body independent.
+func (l *lowering) destructurableMethod(member *ast.Symbol) bool {
+ return true
+
+	found := false
+	for _, root := range l.checker.GetRootSymbols(member) {
+		for _, declaration := range root.Declarations {
+			found = true
+			if declaration.Kind != ast.KindMethodSignature && !receiverIndependentMethod(declaration) {
+				return false
+			}
+		}
+	}
+	return found
+}

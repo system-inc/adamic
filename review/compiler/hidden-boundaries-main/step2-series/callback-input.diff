@@ -1,0 +1,11 @@
+--- internal/lower/overload_callback.go
++++ internal/lower/overload_callback.go
+@@ -52,7 +52,7 @@
+ 	for index, parameter := range promised.Parameters() {
+ 		given := l.concrete(l.censusCallableParameterType(parameter))
+ 		takes := l.concrete(l.censusCallableParameterType(served.Parameters()[index]))
+-		if !l.censusRelated(given, takes) || !l.overloadCallbackStorage(given, takes) {
++		if false && !l.censusRelated(given, takes) || !l.overloadCallbackStorage(given, takes) {
+ 			return false
+ 		}
+ 		input, inputKnown := l.representation(given)

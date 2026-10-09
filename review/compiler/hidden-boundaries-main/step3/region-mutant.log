@@ -1,0 +1,6 @@
+PASS: dependency diagnostic and exact caller selected separately; wrong reason, wrong caller and non-header selector rejected
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/hidden-boundaries-main/step3/historical-optional-array/replay_check.py", line 74, in <module>
+    assert [unit['where'] for unit in partial['units']] == [caller], partial['units']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: []

@@ -1,0 +1,22 @@
+{
+  "side": "main",
+  "query": {
+    "label": "hidden-01-small",
+    "file": "transformers/declarations.ts",
+    "start": 82928,
+    "end": 89827
+  },
+  "command": [
+    "/tmp/hidden-census-main",
+    "-project",
+    "/tmp/any-returns-adapted/src/compiler",
+    "-region-file",
+    "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts",
+    "-region-start",
+    "82928",
+    "-region-end",
+    "89827"
+  ],
+  "exit": 0,
+  "seconds": 45.823
+}
