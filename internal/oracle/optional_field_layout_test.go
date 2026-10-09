@@ -69,7 +69,7 @@ int main(void) {
 	original := string(implementation)
 	// Compile the production implementation under private symbol names. Runtime
 	// link flags load the complete archive, so replacing public symbols would clash.
-	definitions := regexp.MustCompile(`(?m)^(?:adamic_object \*|adamic_value \*|adamic_closure \*|adamic_maybe_number |adamic_maybe_boolean |adamic_value |void |bool )((?:adamic_object_|adamic_view_)[a-z_]+)\(`)
+	definitions := regexp.MustCompile(`(?m)^(?:adamic_object \*|adamic_value \*|adamic_closure \*|adamic_maybe_number |adamic_maybe_boolean |adamic_view_union_value |adamic_value |void |bool )((?:adamic_object_|adamic_view_)[a-z_]+)\(`)
 	prefix := ""
 	for _, match := range definitions.FindAllStringSubmatch(original, -1) {
 		prefix += "#define " + match[1] + " probe_" + match[1] + "\n"
@@ -78,10 +78,10 @@ int main(void) {
 		name, from, to string
 	}{
 		{"baseline", "", ""},
-		{"drop presence on checked copy", "if (source->write_order != NULL) object->write_order[index] = source->write_order[cache.index];", "(void)source;"},
+		{"drop presence on checked copy", "if (source->write_order != NULL) object->write_order[index] = source->write_order[cache.index];", "if (source->write_order != NULL) (void)source;"},
 		{"drop readiness on checked copy", "adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];", "(void)source;"},
 		{"drop representation on checked copy", "adamic_object_field_types(object)[index] = adamic_object_field_types(source)[cache.index];", "(void)source;"},
-		{"overlap presence and readiness", "#include \"adamic.h\"", "#include \"adamic.h\"\n#define adamic_object_initialized(object) ((unsigned char *)(void *)(object)->write_order)"},
+		{"overlap presence and readiness", "#include \"adamic.h\"", "#include \"adamic.h\"\n#define adamic_object_initialized(object) ((unsigned char *)(void *)(object) + adamic_object_size((object)->shape->count) - (object)->shape->count * sizeof(size_t))"},
 	} {
 		t.Run(mutation.name, func(t *testing.T) {
 			code := original

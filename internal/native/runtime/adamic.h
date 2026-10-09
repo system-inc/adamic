@@ -298,7 +298,7 @@ typedef struct adamic_object {
 } adamic_object;
 
 // Reserve the insertion-order tail as well as both per-slot byte tails.
-// The base has no order accessor yet; c1 uses this same allocation size.
+// Align the order tail after readiness and representation bytes.
 static inline size_t adamic_object_size(size_t count) {
     size_t tail = sizeof(adamic_object) + count * (sizeof(adamic_value) + 2);
     tail = (tail + _Alignof(size_t) - 1) & ~(size_t)(_Alignof(size_t) - 1);

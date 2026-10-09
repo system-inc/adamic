@@ -200,17 +200,31 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 
 // A key that could denote a getter or a prototype method cannot yet be read dynamically.
 func (l *lowering) dynamicReadHazard(name string) bool {
-	return l.propertyReadHazard(name, false)
+	return l.propertyReadHazardMode(name, false, true)
 }
 
 func (l *lowering) propertyReadHazard(name string, taggedNull bool) bool {
+	return l.propertyReadHazardMode(name, taggedNull, false)
+}
+
+func (l *lowering) propertyReadHazardMode(name string, taggedNull, numericReadiness bool) bool {
 	if l.accessorNames[name] {
 		return true
 	}
 	for _, declaration := range l.classes {
 		for _, member := range declaration.Members() {
-			if member.Name() != nil && member.Name().Text() == name && (member.Kind != ast.KindPropertyDeclaration || l.uninitializedDeclaration(member)) {
-				return true
+			if member.Name() != nil && member.Name().Text() == name {
+				if member.Kind != ast.KindPropertyDeclaration {
+					return true
+				}
+				if l.uninitializedDeclaration(member) {
+					// Unknown reads check readiness before inspecting storage. A declared
+					// numeric slot has a scalar tag after assignment, including boxed writes.
+					held, known := l.representation(l.checker.GetTypeAtLocation(member))
+					if !numericReadiness || !known || (held != ir.Number && held != ir.MaybeNumber) {
+						return true
+					}
+				}
 			}
 		}
 	}

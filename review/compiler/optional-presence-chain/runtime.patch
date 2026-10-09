@@ -1,0 +1,313 @@
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
+index 3387bf41..9e5c0037 100644
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -290,21 +290,29 @@ typedef struct adamic_object {
+ 	const adamic_class *class;
+ 	bool frozen;
+ 	bool tuple;
++	bool dynamic_shape;
++	const int *dynamic_types;
+ 	// NULL for a complete shape; SIZE_MAX means reserved but not own.
+ 	size_t *write_order;
+ 	adamic_value slots[];
+ } adamic_object;
+ 
+ // Reserve the insertion-order tail as well as both per-slot byte tails.
+-// The base has no order accessor yet; c1 uses this same allocation size.
++// Align the order tail after readiness and representation bytes.
+ static inline size_t adamic_object_size(size_t count) {
+-    return sizeof(adamic_object) + count * (sizeof(adamic_value) + sizeof(size_t) + 2);
++    size_t tail = sizeof(adamic_object) + count * (sizeof(adamic_value) + 2);
++    tail = (tail + _Alignof(size_t) - 1) & ~(size_t)(_Alignof(size_t) - 1);
++    return tail + count * sizeof(size_t);
+ }
+ 
+ // Initialized bits follow slots in the same allocation, indexed by the actual shape.
+ static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
+ 	return (unsigned char *)(void *)(object->slots + object->shape->count);
+ }
++adamic_object *adamic_object_copy_reserving_checked(const adamic_object *source, const adamic_shape *reserved, const char *expression);
++void adamic_object_absent(adamic_object *object, size_t index);
++bool adamic_object_delete(adamic_object *object, const adamic_string *key);
++adamic_object *adamic_object_copy_reserving(const adamic_object *source, const adamic_shape *reserved);
+ void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized);
+ // Physical representation bytes are separate from the shared initialization bitmap.
+ // Zero means no representation evidence, never permission to interpret a slot.
+@@ -394,6 +402,7 @@ typedef struct adamic_shape_types {
+ 	const int *types;
+ 	struct adamic_shape_types *next;
+ } adamic_shape_types;
++int adamic_shape_type(const adamic_shape *shape, size_t index);
+ extern adamic_heap adamic_null;
+ void adamic_register_shape_types(adamic_shape_types *metadata);
+ bool adamic_has_property(const adamic_heap *object, const char *name);
+@@ -411,7 +420,7 @@ adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, co
+ // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
+ adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+ static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+-	if (cache->shape != object->shape) {
++	if (object->dynamic_shape || cache->shape != object->shape) {
+ 		return adamic_object_optional_find(object, name, cache);
+ 	}
+ 	if (cache->index == object->shape->count || !adamic_object_present(object, cache->index)) {
+@@ -423,7 +432,7 @@ static inline adamic_value *adamic_object_optional_field(const adamic_object *ob
+ // layout. That whole-program proof excludes inherited constructor storage, so the cache
+ // hit needs only the shape comparison, without loading a class descriptor.
+ static inline adamic_value *adamic_object_data_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+-	if (cache->shape == object->shape) {
++	if (!object->dynamic_shape && cache->shape == object->shape) {
+ 		return &((adamic_object *)object)->slots[cache->index];
+ 	}
+ 	return adamic_object_find(object, name, cache);
+diff --git a/internal/native/runtime/class_features.c b/internal/native/runtime/class_features.c
+index b3f274c1..9620d9e2 100644
+--- a/internal/native/runtime/class_features.c
++++ b/internal/native/runtime/class_features.c
+@@ -42,6 +42,7 @@ size_t adamic_public_index(const adamic_shape *shape, size_t position) {
+ adamic_array *adamic_class_object_keys(const adamic_object *object) {
+     if (object->write_order != NULL) return adamic_object_keys(object);
+     if (adamic_record_is(object)) { return adamic_record_keys(object); }
++    if (object->class == NULL) return adamic_object_keys(object);
+     const adamic_shape *shape = object->class == NULL ? object->shape : object->class->public_shape;
+     if (object->class != NULL && object->class->is_static) {
+         adamic_array *keys = adamic_array_new(shape->count, true);
+diff --git a/internal/native/runtime/construction.c b/internal/native/runtime/construction.c
+index c82bc21a..a32105c0 100644
+--- a/internal/native/runtime/construction.c
++++ b/internal/native/runtime/construction.c
+@@ -19,6 +19,8 @@ static void construction_start(adamic_object *object, const adamic_shape *shape)
+  object->class = NULL;
+  object->frozen = false;
+  object->tuple = false;
++ object->dynamic_shape = false;
++ object->dynamic_types = NULL;
+  memset(object->slots, 0, shape->count * sizeof(adamic_value));
+  memset(adamic_object_initialized(object), 0, shape->count);
+  memset(adamic_object_field_types(object), 0, shape->count);
+diff --git a/internal/native/runtime/library_object.c b/internal/native/runtime/library_object.c
+index 3b069025..7971a304 100644
+--- a/internal/native/runtime/library_object.c
++++ b/internal/native/runtime/library_object.c
+@@ -149,7 +149,7 @@ void adamic_object_assign(adamic_object *target, const adamic_object *source) {
+   if (!adamic_object_present(source, index)) continue;
+   adamic_object_check_write(target, name);
+   adamic_slot_cache cache = {NULL, 0};
+-  adamic_value *slot = adamic_object_field(target, name, &cache);
++  adamic_value *slot = adamic_object_write_field(target, name, &cache);
+   adamic_value value = source->slots[index];
+   if (source->shape->references[index]) {
+    adamic_retain(value.reference);
+diff --git a/internal/native/runtime/object.c b/internal/native/runtime/object.c
+index f2cb9ca9..d300b30b 100644
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -14,6 +14,8 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
+ 	object->class = NULL;
+ 	object->frozen = false;
+ 	object->tuple = false;
++	object->dynamic_shape = false;
++	object->dynamic_types = NULL;
+ 	object->write_order = NULL;
+ 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
+ 	memset(adamic_object_initialized(object), 1, shape->count);
+@@ -21,25 +23,38 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
+ 	return object;
+ }
+ 
+-adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
+-	if (adamic_record_is(source)) adamic_panic("NotYet: spread of record storage", sizeof "NotYet: spread of record storage" - 1);
+-	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
+-	adamic_object *object = source->write_order == NULL ? adamic_object_new(shape) : adamic_object_construct(shape);
+-	if (source->write_order != NULL) memcpy(object->write_order, source->write_order, shape->count * sizeof(size_t));
++// Fixed and dynamic descriptors share one copy of slot state.
++static void copy_fields(const adamic_object *source, adamic_object *object, const adamic_shape *shape, const char *expression) {
+ 	for (size_t position = 0; position < shape->count; position++) {
+ 		size_t index = adamic_public_index(shape, position);
+-		if (!adamic_object_present(source, index)) continue;
+ 		adamic_slot_cache cache = {NULL, 0};
+ 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
+-		object->slots[index] = accessor == NULL ? *(expression == NULL ? adamic_object_field(source, shape->names[index], &cache) : adamic_object_read(source, shape->names[index], &cache, expression)) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+ 		if (accessor == NULL) {
++			adamic_value *slot = adamic_object_field(source, shape->names[index], &cache);
++			if (expression != NULL && adamic_object_present(source, cache.index)) slot = adamic_object_read(source, shape->names[index], &cache, expression);
++			object->slots[index] = *slot;
+ 			adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];
+ 			adamic_object_field_types(object)[index] = adamic_object_field_types(source)[cache.index];
++			if (source->write_order != NULL) object->write_order[index] = source->write_order[cache.index];
++			else adamic_object_publish(object, index);
++		} else {
++			object->slots[index] = adamic_accessor_get((adamic_object *)source, shape->names[index]);
++			adamic_object_initialized(object)[index] = 1;
++			adamic_object_field_types(object)[index] = (unsigned char)accessor->type;
++			adamic_object_publish(object, index);
+ 		}
+ 		if (shape->references[index] && accessor == NULL) {
+ 			adamic_retain(object->slots[index].reference);
+ 		}
+ 	}
++}
++
++adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
++	if (adamic_record_is(source)) adamic_panic("NotYet: spread of record storage", sizeof "NotYet: spread of record storage" - 1);
++	if (source->dynamic_shape) { return adamic_object_copy_reserving_checked(source, NULL, expression); }
++	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
++	adamic_object *object = source->write_order == NULL ? adamic_object_new(shape) : adamic_object_construct(shape);
++	copy_fields(source, object, shape, expression);
+ 	return object;
+ }
+ 
+@@ -82,7 +97,7 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
+  }
+  const adamic_shape *shape = object->shape;
+ 	// The cache's index counts the fields, then the methods after them.
+-	if (cache->shape != shape) {
++	if (object->dynamic_shape || cache->shape != shape) {
+ 		bool found = false;
+ 		for (size_t index = 0; index < shape->count && !found; index++) {
+ 			if (strcmp(shape->names[index], name) == 0) {
+@@ -204,6 +219,100 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
+ 	adamic_object_publish(object, cache.index);
+ }
+ 
++void adamic_object_absent(adamic_object *object, size_t index) {
++ if (object->write_order == NULL) {
++  size_t offset = sizeof(adamic_object) + object->shape->count * (sizeof(adamic_value) + 2);
++  offset = (offset + _Alignof(size_t) - 1) & ~(size_t)(_Alignof(size_t) - 1);
++  object->write_order = (size_t *)(void *)((unsigned char *)object + offset);
++  for (size_t at = 0; at < object->shape->count; at++) object->write_order[at] = at;
++ }
++ object->write_order[index] = SIZE_MAX;
++}
++
++bool adamic_object_delete(adamic_object *object, const adamic_string *key) {
++	for (size_t index = 0; index < object->shape->count; index++) {
++		const char *name = object->shape->names[index];
++		if (strlen(name) != key->length || memcmp(name, key->bytes, key->length) != 0) continue;
++		adamic_object_check_write(object, name);
++		if (object->shape->references[index]) {
++			adamic_release(object->slots[index].reference);
++			object->slots[index].reference = NULL;
++		} else {
++			object->slots[index].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
++		}
++		adamic_object_absent(object, index);
++		return true;
++	}
++	return true;
++}
++
++adamic_object *adamic_object_copy_reserving(const adamic_object *source, const adamic_shape *reserved) {
++	return adamic_object_copy_reserving_checked(source, reserved, NULL);
++}
++
++adamic_object *adamic_object_copy_reserving_checked(const adamic_object *source, const adamic_shape *reserved, const char *expression) {
++	const adamic_shape *base = source == NULL ? NULL : (source->class == NULL ? source->shape : source->class->public_shape);
++	size_t count = base == NULL ? 0 : base->count;
++	size_t extra = reserved == NULL ? 0 : reserved->count;
++	if (base != NULL && !source->dynamic_shape) {
++		bool adds = false;
++		for (size_t index = 0; index < extra; index++) {
++			bool found = false;
++			for (size_t at = 0; at < count; at++) {
++				if (strcmp(base->names[at], reserved->names[index]) == 0) found = true;
++			}
++			if (!found) adds = true;
++		}
++		if (!adds) return adamic_object_copy_checked(source, expression);
++	}
++	size_t capacity = count + extra;
++	size_t size = adamic_object_size(capacity);
++	// The byte tail must not misalign the descriptor or its pointer/int arrays.
++	size_t alignment = _Alignof(adamic_shape);
++	size = (size + alignment - 1) / alignment * alignment;
++	adamic_object *object = adamic_allocate(size + sizeof(adamic_shape) + capacity * (sizeof(const char *) + sizeof(int) + sizeof(bool)), adamic_kind_object);
++	// Reserve capacity for values and orders before the descriptor and its arrays.
++	adamic_shape *shape = (adamic_shape *)(void *)((unsigned char *)object + size);
++	const char **names = (const char **)(void *)(shape + 1);
++	int *types = (int *)(void *)(names + capacity);
++	bool *references = (bool *)(void *)(types + capacity);
++	for (size_t index = 0; index < count; index++) {
++		names[index] = base->names[index];
++		references[index] = base->references[index];
++		types[index] = source->dynamic_shape ? source->dynamic_types[index] : adamic_shape_type(base, index);
++	}
++	for (size_t index = 0; index < extra; index++) {
++		bool found = false;
++		for (size_t at = 0; at < count; at++) {
++			if (strcmp(names[at], reserved->names[index]) == 0) found = true;
++		}
++		if (!found) {
++			names[count] = reserved->names[index];
++			references[count] = reserved->references[index];
++		types[count++] = adamic_shape_type(reserved, index);
++		}
++	}
++	*shape = (adamic_shape){count, names, references, base == NULL ? NULL : base->methods};
++	object->shape = shape;
++	object->class = NULL;
++	object->frozen = false;
++	object->tuple = false;
++	object->dynamic_shape = true;
++	object->dynamic_types = types;
++	memset(object->slots, 0, count * sizeof(adamic_value));
++	size_t order_offset = sizeof(adamic_object) + count * (sizeof(adamic_value) + 2);
++	order_offset = (order_offset + _Alignof(size_t) - 1) & ~(size_t)(_Alignof(size_t) - 1);
++	object->write_order = (size_t *)(void *)((unsigned char *)object + order_offset);
++	for (size_t index = 0; index < count; index++) object->write_order[index] = SIZE_MAX;
++	memset(adamic_object_initialized(object), 1, count);
++	memset(adamic_object_field_types(object), 0, count);
++	for (size_t index = base == NULL ? 0 : base->count; index < count; index++) {
++		if (!references[index]) object->slots[index].number = adamic_maybe_number_pack((adamic_maybe_number){false, 0});
++	}
++	if (source != NULL) copy_fields(source, object, base, expression);
++	return object;
++}
++
+ // Required-field contract checks use the shared readiness bitmap. Representation evidence is
+ // checked before reading any union member, including before following a possible reference.
+ adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
+diff --git a/internal/native/runtime/region.c b/internal/native/runtime/region.c
+index 20faadf1..84f42952 100644
+--- a/internal/native/runtime/region.c
++++ b/internal/native/runtime/region.c
+@@ -64,6 +64,8 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
+ 	object->class = NULL;
+ 	object->frozen = false;
+ 	object->tuple = false;
++	object->dynamic_shape = false;
++	object->dynamic_types = NULL;
+ 	object->write_order = NULL;
+ 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
+ 	memset(adamic_object_initialized(object), 1, shape->count);
+diff --git a/internal/native/runtime/union.c b/internal/native/runtime/union.c
+index 8d348396..c42f4f5d 100644
+--- a/internal/native/runtime/union.c
++++ b/internal/native/runtime/union.c
+@@ -97,6 +97,13 @@ void adamic_register_shape_types(adamic_shape_types *metadata) {
+ 	shape_types = metadata;
+ }
+ 
++int adamic_shape_type(const adamic_shape *shape, size_t index) {
++	for (const adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
++		if (entry->shape == shape) return entry->types[index];
++	}
++	return 0;
++}
++
+ static bool named(const char *name, const char *const *names, size_t count) {
+ 	for (size_t index = 0; index < count; index++) {
+ 		if (strcmp(name, names[index]) == 0) return true;
+@@ -169,10 +176,9 @@ static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
+ 		if (actual==1) return adamic_box_number(slot.number);
+ 		if (actual==2) return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+ 	}
+-	for (const adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
+-		if (entry->shape != object->shape) continue;
++	{
+ 		// These are ir.Type's scalar representations, written by the emitter.
+-		switch (entry->types[index]) {
++		switch (object->dynamic_shape ? object->dynamic_types[index] : adamic_shape_type(object->shape, index)) {
+ 		case 1: return adamic_box_number(slot.number);
+ 		case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
+ 		case 7: {

@@ -14,8 +14,8 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	object->class = NULL;
 	object->frozen = false;
 	object->tuple = false;
- object->dynamic_shape = false;
- object->dynamic_types = NULL;
+	object->dynamic_shape = false;
+	object->dynamic_types = NULL;
 	object->write_order = NULL;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
@@ -39,6 +39,8 @@ static void copy_fields(const adamic_object *source, adamic_object *object, cons
 			else adamic_object_publish(object, index);
 		} else {
 			object->slots[index] = adamic_accessor_get((adamic_object *)source, shape->names[index]);
+			adamic_object_initialized(object)[index] = 1;
+			adamic_object_field_types(object)[index] = (unsigned char)accessor->type;
 			adamic_object_publish(object, index);
 		}
 		if (shape->references[index] && accessor == NULL) {
