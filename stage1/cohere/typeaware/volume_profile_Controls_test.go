@@ -57,9 +57,7 @@ func volumeProfileHarness(t *testing.T) *harness {
 
 // Go products retain the original build commands until GoBuild is available.
 func volumeProfileStage0(h *harness) string {
-	stage0 := filepath.Join(h.directory, "adamic")
-	h.must("stage0", exec.Command("go", "build", "-o", stage0, "./cmd/adamic"))
-	return stage0
+	return h.stage0()
 }
 
 func volumeProfileNativeInputs(h *harness, stage0, archive string, sanitize bool, name string, variant ...string) buildcache.Inputs {
@@ -245,6 +243,27 @@ func TestVolumeProfileControlsUnion(t *testing.T) {
 	t.Logf("controls union: %d live source/mode cases in %d shards", len(seen), len(cases))
 }
 
+func volumeProfileControlsBinary(h *harness, stage0, archive string, sanitize bool) string {
+	t := h.t
+	name := "typeaware volume"
+	if sanitize {
+		name += " asan"
+	}
+	lowered := volumeProfileControlsLowered(h, stage0)
+	binary := volumeProfileNative(h, stage0, archive, sanitize, name, func(local *harness) string {
+		source, err := os.ReadFile(lowered)
+		if err != nil {
+			t.Fatal(err)
+		}
+		path := filepath.Join(local.directory, "volume")
+		if err := native.BuildTSGo(string(source), path, archive, native.Options{Sanitize: sanitize}); err != nil {
+			t.Fatal(err)
+		}
+		return path
+	})
+	return binary
+}
+
 func runVolumeProfileControls(t *testing.T, index int) {
 	started := time.Now()
 	c := volumeProfileControlsCases()[index]
@@ -274,22 +293,7 @@ func runVolumeProfileControls(t *testing.T, index int) {
 		return
 	}
 	t.Logf("setup: %.3fs", time.Since(started).Seconds())
-	name := "typeaware volume"
-	if c.sanitize {
-		name += " asan"
-	}
-	lowered := volumeProfileControlsLowered(h, stage0)
-	binary := volumeProfileNative(h, stage0, archive, c.sanitize, name, func(local *harness) string {
-		source, err := os.ReadFile(lowered)
-		if err != nil {
-			t.Fatal(err)
-		}
-		path := filepath.Join(local.directory, "volume")
-		if err := native.BuildTSGo(string(source), path, archive, native.Options{Sanitize: c.sanitize}); err != nil {
-			t.Fatal(err)
-		}
-		return path
-	})
+	binary := volumeProfileControlsBinary(h, stage0, archive, c.sanitize)
 	checkStarted := time.Now()
 	h.compare(c.name, oracle, binary, filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/tsconfig.json"), volumeProfileControlsManifest(h))
 	t.Logf("check after product fetch: %.3fs; cooked=false", time.Since(checkStarted).Seconds())

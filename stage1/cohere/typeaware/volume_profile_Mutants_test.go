@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -86,11 +85,6 @@ func runVolumeProfileMutantShard(t *testing.T, shardIndex int) {
 		t.Fatal(err)
 	}
 	h := &harness{t: t, repository: repository, directory: t.TempDir()}
-	// These remain ordinary Go builds until buildcache.GoBuild lands on main.
-	stage0 := filepath.Join(h.directory, "adamic")
-	h.must("stage0", volumeProfileMutantCommand(t, "go", "build", "-o", stage0, "./cmd/adamic"))
-	archive := filepath.Join(h.directory, "checker.a")
-	h.must("checker", volumeProfileMutantCommand(t, "go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive"))
 	oracle := volumeProfileMutantOracle(h)
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	sources := append(volumeControls(),
@@ -104,6 +98,24 @@ func runVolumeProfileMutantShard(t *testing.T, shardIndex int) {
 	paths = append(paths, h.write("native-globals.d.ts", "declare const console: {log():void};\n"), h.write("native-console.ts", "const detached=console.log;\nexport {};\n"))
 	manifest := h.write("controls.manifest", strings.Join(paths, "\n")+"\n")
 	truth := h.must("controls-go", volumeProfileMutantCommand(t, oracle, config, manifest))
+	t.Logf("%s (setup): %.6fs; slice coverage: %d source mutants, %d controls", t.Name(), time.Since(started).Seconds(), len(changes), len(paths))
+	for _, change := range changes {
+		binary := volumeProfileMutantProduct(h, change)
+		leafStarted := time.Now()
+		shard := &harness{t: t, repository: repository, directory: t.TempDir()}
+		got := shard.must(change.name+"-run", volumeProfileMutantCommand(t, binary, config, manifest))
+		if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
+			t.Fatalf("%s mutant survived byte oracle", change.name)
+		}
+		t.Logf("%s: exit 0, independent Go byte oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
+		t.Logf("leaf after product fetch: %.6fs", time.Since(leafStarted).Seconds())
+		t.Logf("shard including product fetch: %.6fs; budget 60s", time.Since(started).Seconds())
+	}
+}
+
+func volumeProfileMutantProduct(h *harness, change volumeProfileMutantChange) string {
+	t, repository := h.t, h.repository
+	stage0, archive := h.stage0(), h.archive("checker", "", false)
 	// Hash the actual build executables as well as the imported source tree.
 	var products []string
 	for _, path := range []string{stage0, archive} {
@@ -129,43 +141,32 @@ func runVolumeProfileMutantShard(t *testing.T, shardIndex int) {
 		"clang --version: " + strings.TrimSpace(string(h.must("clang-version", volumeProfileMutantCommand(t, "clang", "--version")).stdout)),
 		"go version: " + strings.TrimSpace(string(h.must("go-version", volumeProfileMutantCommand(t, "go", "version")).stdout)),
 	}
-	t.Logf("%s (setup): %.6fs; slice coverage: %d source mutants, %d controls", t.Name(), time.Since(started).Seconds(), len(changes), len(paths))
-	for _, change := range changes {
-		// Include mutated source bytes explicitly, independent of scratch paths.
-		digest := sha256.New()
-		for _, path := range files {
-			data, err := os.ReadFile(path)
-			if err != nil {
-				t.Fatal(err)
-			}
-			source := string(data)
-			if filepath.Base(path) == "shadow.ts" {
-				if strings.Count(source, change.from) != 1 {
-					t.Fatalf("nonunique mutant %s", change.name)
-				}
-				source = strings.Replace(source, change.from, change.to, 1)
-			}
-			fmt.Fprintf(digest, "%s %d\n%s", filepath.Base(path), len(source), source)
+	// Include mutated source bytes explicitly, independent of scratch paths.
+	digest := sha256.New()
+	for _, path := range files {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
 		}
-		flags := append([]string{"build volume_suite.ts --tsgo checker.a", "sanitize=false", "repository=" + repository, fmt.Sprintf("mutated-source=%x", digest.Sum(nil))}, products...)
-		directory := buildcache.Product(t, buildcache.Inputs{
-			Name:  "typeaware volume mutant " + change.name,
-			Files: inputs, Flags: flags, Toolchain: toolchain,
-		}, func(directory string) error {
-			builder := &harness{t: t, repository: repository, directory: directory}
-			volumeProfileSourceMutant(builder, stage0, archive, change.name, change.from, change.to)
-			return nil
-		})
-		leafStarted := time.Now()
-		shard := &harness{t: t, repository: repository, directory: t.TempDir()}
-		got := shard.must(change.name+"-run", volumeProfileMutantCommand(t, filepath.Join(directory, change.name), config, manifest))
-		if len(got.stderr) != 0 || bytes.Equal(got.stdout, truth.stdout) {
-			t.Fatalf("%s mutant survived byte oracle", change.name)
+		source := string(data)
+		if filepath.Base(path) == "shadow.ts" {
+			if strings.Count(source, change.from) != 1 {
+				t.Fatalf("nonunique mutant %s", change.name)
+			}
+			source = strings.Replace(source, change.from, change.to, 1)
 		}
-		t.Logf("%s: exit 0, independent Go byte oracle catches byte %d; %s", change.name, firstDifference(got.stdout, truth.stdout), summary(got.stdout))
-		t.Logf("leaf after product fetch: %.6fs", time.Since(leafStarted).Seconds())
-		t.Logf("shard including product fetch: %.6fs; budget 60s", time.Since(started).Seconds())
+		fmt.Fprintf(digest, "%s %d\n%s", filepath.Base(path), len(source), source)
 	}
+	flags := append([]string{"build volume_suite.ts --tsgo checker.a", "sanitize=false", "repository=" + repository, fmt.Sprintf("mutated-source=%x", digest.Sum(nil))}, products...)
+	directory := buildcache.Product(t, buildcache.Inputs{
+		Name:  "typeaware volume mutant " + change.name,
+		Files: inputs, Flags: flags, Toolchain: toolchain,
+	}, func(directory string) error {
+		builder := &harness{t: t, repository: repository, directory: directory}
+		volumeProfileSourceMutant(builder, stage0, archive, change.name, change.from, change.to)
+		return nil
+	})
+	return filepath.Join(directory, change.name)
 }
 
 // Cancel the entire child process group so a lowering command cannot leave its
@@ -195,17 +196,7 @@ func volumeProfileMutantCommand(t *testing.T, name string, args ...string) *exec
 
 func volumeProfileMutantOracle(h *harness) string {
 	h.t.Helper()
-	name := "volume-oracle"
-	virtual := filepath.Join(h.repository, "cohere/adamic_"+name+".go")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(h.repository, "stage1/cohere/typeaware/testdata/oracle_volume.go")}})
-	if err != nil {
-		h.t.Fatal(err)
-	}
-	binary := filepath.Join(h.directory, name)
-	cmd := volumeProfileMutantCommand(h.t, "go", "build", "-overlay", h.write(name+"-overlay.json", string(data)), "-o", binary, virtual)
-	cmd.Dir = filepath.Join(h.repository, "cohere")
-	h.must(name+"-build", cmd)
-	return binary
+	return volumeOracle(h, "volume-oracle", "oracle_volume.go")
 }
 
 func volumeProfileSourceMutant(h *harness, stage0, archive, name, from, to string) string {
