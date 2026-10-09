@@ -20,11 +20,33 @@ func TestNumericEnumsAreOpen(t *testing.T) {
 		{"containers", "enum E { A, B } const values: E[] = [E.A]; const numbers: number[] = values; numbers.push(77); const map = new Map<string, E>(); const wide: Map<string, number> = map; wide.set('x', 99);"},
 		{"optional_object", "enum E { A, B } function flags(box: { flags: E; other?: { flags: E } }): E { return box.other ? box.flags | box.other.flags : box.flags; }"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			if _, err := lowerSource(t, probe.source); err != nil {
-				t.Fatal(err)
-			}
-		})
+		t.Log(probe.name)
+		program, err := lowerSource(t, probe.source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		name := "E"
+		fields := []enumGuardField{{"A", float64(0)}, {"0", "A"}, {"B", float64(1)}, {"1", "B"}}
+		switch probe.name {
+		case "singleton":
+			fields = fields[:2]
+		case "member_tags":
+			name = "Kind"
+		case "coalesce":
+			name = "Flags"
+			fields = []enumGuardField{{"None", float64(0)}, {"0", "None"}, {"A", float64(1)}, {"1", "A"}, {"B", float64(2)}, {"2", "B"}, {"Pair", float64(3)}, {"3", "Pair"}}
+		case "signed_flags":
+			name = "Flags"
+			fields = []enumGuardField{{"A", float64(-2147483648)}, {"-2147483648", "A"}, {"B", float64(1)}, {"1", "B"}}
+		case "cast":
+			name = "SyntaxKind"
+			fields = []enumGuardField{{"First", float64(0)}, {"0", "First"}, {"Last", float64(1)}, {"1", "Last"}}
+		}
+		assertEnumGuardFields(t, program, name, fields)
+		l, statements := enumGuardProof(t, probe.source)
+		if !l.openNumericEnumType(l.checker.GetTypeAtLocation(statements[0].Name())) {
+			t.Fatal("whole numeric enum must remain open")
+		}
 	}
 }
 

@@ -4,6 +4,8 @@ import (
 	"errors"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 const flagDeclaration = "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, High = 1 << 30, Both = A | B } "
@@ -67,53 +69,99 @@ func TestFlagEnumsDomain(t *testing.T) {
 		{"optional", "function use(flags: Flags | undefined): void {} use(Flags.A | Flags.B);"},
 		{"switch", "function use(flags: Flags): void { switch(flags) { case Flags.A: break; default: break; } }"},
 	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			if _, err := lowerSource(t, flagDeclaration+probe.source); err != nil {
-				t.Fatal(err)
-			}
-		})
+		t.Log(probe.name)
+		program, err := lowerSource(t, flagDeclaration+probe.source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		assertEnumGuardFields(t, program, "Flags", flagGuardFields)
 	}
+	assertEnumGuardDomains(t)
 }
 
 func TestEnumNeverDefault(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, "enum Color { Red, Green, Blue } function describe(value: Color): string { switch(value) { case Color.Red: return 'r'; case Color.Green: return 'g'; case Color.Blue: return 'b'; default: { const unreachable: never = value; return unreachable; } } }")
+	program, err := lowerSource(t, "enum Color { Red, Green, Blue } function describe(value: Color): string { switch(value) { case Color.Red: return 'r'; case Color.Green: return 'g'; case Color.Blue: return 'b'; default: { const unreachable: never = value; return unreachable; } } }")
 	if err != nil {
 		t.Fatal(err)
 	}
+	assertEnumGuardFields(t, program, "Color", []enumGuardField{{"Red", float64(0)}, {"0", "Red"}, {"Green", float64(1)}, {"1", "Green"}, {"Blue", float64(2)}, {"2", "Blue"}})
+	for _, function := range program.Functions {
+		if function.Name == "enum_never" {
+			for _, statement := range function.Body {
+				if _, ok := statement.(ir.Panic); ok {
+					return
+				}
+			}
+		}
+	}
+	t.Fatal("open numeric enum default lost its runtime never guard")
 }
 
 func TestFlagEnumLiteralSpellings(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, "enum Flags { None = 0x0, A = 0x1 << 0b0, High = 0o1 << 0x1e } const flags: Flags = Flags.A | Flags.High;")
+	source := "enum Flags { None = 0x0, A = 0x1 << 0b0, High = 0o1 << 0x1e } const flags: Flags = Flags.A | Flags.High;"
+	program, err := lowerSource(t, source)
 	if err != nil {
 		t.Fatal(err)
 	}
+	assertEnumGuardFields(t, program, "Flags", []enumGuardField{{"None", float64(0)}, {"0", "None"}, {"A", float64(1)}, {"1", "A"}, {"High", float64(1073741824)}, {"1073741824", "High"}})
+	assertEnumGuardFlag(t, source)
 }
 
 func TestFlagEnumMemberAliases(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Alias = A, Qualified = Flags.B } const flags: Flags = Flags.Alias | Flags.Qualified;")
+	source := "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Alias = A, Qualified = Flags.B } const flags: Flags = Flags.Alias | Flags.Qualified;"
+	program, err := lowerSource(t, source)
 	if err != nil {
 		t.Fatal(err)
 	}
+	assertEnumGuardFields(t, program, "Flags", []enumGuardField{{"None", float64(0)}, {"0", "None"}, {"A", float64(1)}, {"1", "Alias"}, {"B", float64(2)}, {"2", "Qualified"}, {"Alias", float64(1)}, {"Qualified", float64(2)}})
+	assertEnumGuardFlag(t, source)
 }
 
 func TestEnumNameEnumeration(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, "enum Names { A, B, Alias = B } const names = Names; for (const name in names) { console.log(name); }")
+	source := "enum Names { A, B, Alias = B } const names = Names; for (const name in names) { console.log(name); }"
+	program, err := lowerSource(t, source)
 	if err != nil {
 		t.Fatal(err)
 	}
+	assertEnumGuardFields(t, program, "Names", []enumGuardField{{"A", float64(0)}, {"0", "A"}, {"B", float64(1)}, {"1", "Alias"}, {"Alias", float64(1)}})
+	loop := enumGuardLoop(t, program)
+	if _, ok := loop.Iterable.(ir.ObjectKeys); !ok || loop.Element != ir.String {
+		t.Fatalf("enum name iteration = %#v, want string iteration over ObjectKeys", loop)
+	}
+	enumGuardNodeOutput(t, source, program, "0\n1\nA\nB\nAlias\n", true)
 }
 
 func TestFlagEnumInlineIteration(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, flagDeclaration+"function use(box: { flags: Flags }): void {} for (const flags of [Flags.None, Flags.A | Flags.B]) { use({flags}); }")
+	source := flagDeclaration + "function use(box: { flags: Flags }): void { console.log(`${box.flags}`); } for (const flags of [Flags.None, Flags.A | Flags.B]) { use({flags}); }"
+	program, err := lowerSource(t, source)
 	if err != nil {
 		t.Fatal(err)
 	}
+	assertEnumGuardFields(t, program, "Flags", flagGuardFields)
+	loop := enumGuardLoop(t, program)
+	array, ok := loop.Iterable.(ir.ArrayLiteral)
+	if !ok || len(array.Elements) != 2 || array.Element != ir.Number {
+		t.Fatalf("inline enum iterable = %#v, want two numeric elements", loop.Iterable)
+	}
+	first, ok := array.Elements[0].(ir.Property)
+	if !ok || first.Name != "None" {
+		t.Fatalf("first inline element = %#v, want Flags.None", array.Elements[0])
+	}
+	second, ok := array.Elements[1].(ir.Binary)
+	if !ok || second.Operator != ir.BitOr {
+		t.Fatalf("second inline element = %#v, want bitwise OR", array.Elements[1])
+	}
+	left, leftOK := second.Left.(ir.Property)
+	right, rightOK := second.Right.(ir.Property)
+	if !leftOK || !rightOK || left.Name != "A" || right.Name != "B" {
+		t.Fatalf("second inline operands = %#v, %#v, want Flags.A and Flags.B", second.Left, second.Right)
+	}
+	enumGuardNodeOutput(t, source, program, "0\n3\n", true)
 }
 
 func TestFlagEnumAliasBoundaries(t *testing.T) {
