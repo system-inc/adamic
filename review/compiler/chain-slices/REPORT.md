@@ -121,3 +121,5 @@ git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/
 lane.log and lane-status.log record its result. The final answer reports the
 pushed head and actual lane output. The code commit is one member on main;
 additional commits contain only the plan and review evidence. No PR is opened.
+
+Observed lane result: exit 0, `lane checks 1.4 s: gofmt and tools on 5 Go files, t.Parallel on 2 test packages; vet 2 packages`. Maximum lower shard wall time is 16.332s.

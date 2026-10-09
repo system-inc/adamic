@@ -3,6 +3,8 @@ base='5e33a17b186a8a2218d27b69b21e2de5acc5b750'
 paths=['internal/load','internal/lower','internal/ir','internal/javascript','cohere','go.mod','go.sum']
 rows=[]
 for path in paths:
+ untracked=subprocess.check_output(['git','ls-files','--others','--exclude-standard','--',path],text=True).splitlines()
+ assert not untracked,(path,'untracked inputs',untracked)
  p=subprocess.run(['git','diff','--exit-code',base,'--',path],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
  assert p.returncode==0,(path,p.stdout.decode(),p.stderr.decode())
  identity=subprocess.check_output(['git','ls-tree',base,path],text=True).strip()

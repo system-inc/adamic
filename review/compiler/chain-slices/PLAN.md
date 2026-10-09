@@ -51,8 +51,8 @@ is the direct chain commit; only internal/native/tsgo.go is its implementation.
 | self-compare-main | `387c2826` | yes | pending own-net and semantic audit | pending | #7c6b4pq |
 | feature-set-link-main | `e1efb527` | no | pending own-net and semantic audit | pending | #hmab710 |
 | per-backend-stops | `7a151f7f` | yes | pending own-net and semantic audit | pending | #z1vjxxd |
-| search-shrink | `c0c4e102` | no | pending own-net and semantic audit | pending | #b75jjs3 |
-| optional-presence-next | `897d0e79` | no | pending own-net and semantic audit | pending | #r3chqza |
+| search-shrink | `c0c4e102` | no | callback-widening (adaptArrayCallback); additional edges pending | pending | #b75jjs3 |
+| optional-presence-next | `897d0e79` | no | namespace-value (namespaceType in preserved hasOwn guard); additional edges pending | pending | #r3chqza |
 | eep-presence | `21ceb23c` | no | pending audit; optional-presence is its source base, not proof of necessity | pending | #eep1m5z |
 | lint-features | `35353870` | no | pending fixture audit; RuntimeLibraryForSource/sourceFlags already exist on main | pending | #wj4pmt1, #hmab710 |
 
@@ -144,3 +144,6 @@ The saved admission-delta.json records equality checks and their source revision
 Integration lands this branch independently on main. Later work starts from main
 containing accepted slices. The whole e271a596 cut may still land independently;
 no later slice should reapply a member already accepted there.
+
+Qualified confirmed symbol edges are recorded in confirmed-dependency-edges.json.
+They do not certify the proposed groups as a complete dependency-closed order.
