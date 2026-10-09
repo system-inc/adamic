@@ -376,8 +376,8 @@ func gitFetchesTracing(t *testing.T, run func()) int {
 	return fetches
 }
 
+// Not parallel: the process environment (GIT_TRACE2_EVENT, set by t.Setenv to trace git's fetches).
 func TestPinnedRepositoryCorpusBlobsFetchInOneBatch(t *testing.T) {
-	// Not parallel: it traces git through the environment.
 	fixture := newRepositoryFixture(t)
 	for index := 0; index < 8; index++ {
 		fixtureWrite(t, fixture.root, fmt.Sprintf("batch/%d.json", index), fmt.Sprintf("[%d]", index))
