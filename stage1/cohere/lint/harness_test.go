@@ -3,57 +3,24 @@ package lint
 import (
 	"bytes"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
-// Not parallel: the subprocess repeats the same end-to-end comparison.
+// Prepare products once before the parallel comparison leaf.
 func TestEmittedJavaScriptMismatch(t *testing.T) {
-	if os.Getenv("ADAMIC_LINT_MISMATCH_PROBE") == "1" {
-		directory, err := filepath.Abs(".")
-		if err != nil {
-			t.Fatal(err)
-		}
-		path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-		oracle := goOracle(t)
-		binary := buildPort(t, directory, true)
-		module := emittedJavaScript(t, directory)
-		compareWithJavaScript(t, oracle, binary, directory, path, module)
-		data, err := os.ReadFile(module)
-		if err != nil {
-			t.Fatal(err)
-		}
-		// The emitted module is the run's shared one, so the planted mismatch goes into a copy of it.
-		module = filepath.Join(t.TempDir(), "lint.mjs")
-		data = append(data, []byte("\nconsole.log('planted emitted JavaScript mismatch');\n")...)
-		if err := os.WriteFile(module, data, 0644); err != nil {
-			t.Fatal(err)
-		}
-		compareWithJavaScript(t, oracle, binary, directory, path, module)
-		t.Fatal("emitted JavaScript mutant survived")
+	started := time.Now()
+	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript setup exceeded 90s") })
+	defer deadline.Stop()
+	emittedMismatchSetup(t)
+	emittedMismatchUnion(t)
+	elapsed := time.Since(started)
+	t.Logf("TestEmittedJavaScriptMismatch (setup): %.3fs cooked=%t", elapsed.Seconds(), elapsed >= 90*time.Second)
+	if elapsed >= 60*time.Second {
+		t.Fatal("setup exceeds 60s budget")
 	}
-	log := filepath.Join(t.TempDir(), "mismatch.log")
-	output, err := os.Create(log)
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := exec.Command(os.Args[0], "-test.run=^TestEmittedJavaScriptMismatch$", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_LINT_MISMATCH_PROBE=1")
-	command.Stdout, command.Stderr = output, output
-	runError := command.Run()
-	if err := output.Close(); err != nil {
-		t.Fatal(err)
-	}
-	data, err := os.ReadFile(log)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if runError == nil || !bytes.Contains(data, []byte("emitted JavaScript:")) || !bytes.Contains(data, []byte("planted emitted JavaScript mismatch")) {
-		t.Fatalf("wrong mutant failure: %v\n%s", runError, data)
-	}
-	t.Logf("ordinary comparison rejected clean-running emitted JavaScript mutant:\n%s", data)
 }
 
 func TestDotARename(t *testing.T) {
