@@ -1,0 +1,10 @@
+run adamic-verify-20261009T121030-0f527b34: red, 2774 tests in 16 units, 1 failed, 0 units broken, 0 killed over budget
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtureDirectoriesHaveTopLevelTests (tests-11-r1)
+    units_test.go:130: TestFixturesAssertions directory=assertions fixtures=20
+    units_test.go:130: TestFixturesCycles directory=cycles fixtures=10
+    units_test.go:130: TestFixturesEnums directory=enums fixtures=13
+    units_test.go:130: TestFixturesHost directory=host fixtures=25
+    units_test.go:130: TestFixturesNamespaces directory=namespaces fixtures=12
+    units_test.go:130: TestFixturesNestedFunctions directory=nested-functions fixtures=11
+    units_test.go:130: TestFixturesObjects directory=objects fixtures=25
+    units_test.go:130: TestFixturesPredicates directory=predicates fixtures=11
