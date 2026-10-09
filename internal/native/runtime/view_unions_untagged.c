@@ -117,9 +117,52 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
         }
         return false;
     }
-    /* V3 owns array element storage and hole-aware reads. The lowering rejects
-     * this arm before emission; an injected descriptor still fails closed. */
-    if (contract->kind == 3) { return false; }
+    if (contract->kind == 3) {
+        if (value->kind != adamic_view_union_array || value->payload.reference == NULL || contract->element == 0 || contract->element > count) { return false; }
+        const adamic_array *array = value->payload.reference;
+        size_t slots = array->sparse == NULL ? array->length : array->sparse->used;
+        for (size_t i = 0; i < slots; i++) {
+            double index = (double)i;
+            if (array->sparse != NULL) {
+                const adamic_map_entry *entry = &array->sparse->entries[i];
+                if (entry->deleted) { continue; }
+                index = entry->key.number;
+            }
+            adamic_value *slot = adamic_array_holes_at(array, index);
+            if (slot == NULL) { continue; }
+            adamic_view_union_value actual = {adamic_view_union_unknown, *slot};
+            if (array->references) {
+                actual = adamic_view_union_heap(slot->reference);
+            } else if (array->element_kind == adamic_rep_number) { actual.kind = adamic_view_union_number; }
+            else if (array->element_kind == adamic_rep_boolean) { actual.kind = adamic_view_union_boolean; }
+            else if (array->element_kind == adamic_rep_maybe_number) {
+                adamic_maybe_number number = adamic_maybe_number_unpack(slot->number);
+                actual.kind = number.present ? adamic_view_union_number : adamic_view_union_undefined;
+                actual.payload.number = number.number;
+            } else if (array->element_kind == adamic_rep_maybe_boolean) {
+                adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
+                actual.kind = boolean.present ? adamic_view_union_boolean : adamic_view_union_undefined;
+                actual.payload.boolean = boolean.boolean;
+            }
+            const adamic_view_untagged_contract *child = &contracts[contract->element - 1];
+            if (child->kind == 2 && !child->fixed_tuple) {
+                if (actual.kind != adamic_view_union_object || actual.payload.reference == NULL) { return false; }
+                const adamic_object *object = actual.payload.reference;
+                if (object->tuple || (object->class != NULL && object->class->is_static)) { return false; }
+                /* Array payload fields remain checked at their own reads.
+                 * Required scalar selectors distinguish union array arms. */
+                for (size_t f = 0; f < child->field_count; f++) {
+                    const adamic_view_untagged_field *field = &child->fields[f];
+                    if (field->optional || field->contract == 0 || field->contract > count) { continue; }
+                    const adamic_view_untagged_contract *selector = &contracts[field->contract - 1];
+                    if (selector->kind != 1 || (selector->allowed_count == 0 && strcmp(field->name, "kind") != 0)) { continue; }
+                    adamic_view_union_value selected;
+                    if (!adamic_view_untagged_plain_slot(NULL, &actual, field->name, &selected) || !plain_matches_depth(contracts, count, field->contract, &selected, depth + 1, path)) { return false; }
+                }
+            } else if (!plain_matches_depth(contracts, count, contract->element, &actual, depth + 1, path)) { return false; }
+        }
+        return true;
+    }
     if (contract->kind == 4) {
         for (size_t i = 0; i < contract->member_count; i++) {
             if (plain_matches_depth(contracts, count, contract->members[i], value, depth + 1, path)) { return true; }
