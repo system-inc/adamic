@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T06:51:12.475535006Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:51:12.483875731Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T06:51:12.483962259Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== RUN   TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:12.484002979Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== PAUSE TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:12.484007295Z","Action":"pause","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T06:51:12.484016949Z","Action":"cont","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion"}
+{"Time":"2026-10-09T06:51:12.484019834Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"=== CONT  TestProduct_HealthyRegion\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:13.154655227Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"    products_test.go:260: build bridge-test-stage0 6430d092d416 hit 0.04\n"}
+{"Time":"2026-10-09T06:51:13.526366905Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"    products_test.go:261: build bridge-test-tsgo-asan.a 5176b3f575d6 hit 0.03\n"}
+{"Time":"2026-10-09T06:51:19.314305979Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"    product_units_test.go:123: build bridge-test-healthy-region 87b567f49f08 miss 6.51\n"}
+{"Time":"2026-10-09T06:51:19.355564712Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Output":"--- PASS: TestProduct_HealthyRegion (6.87s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:19.355601796Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestProduct_HealthyRegion","Elapsed":6.87}
+{"Time":"2026-10-09T06:51:19.355626403Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:51:19.366769461Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t6.891s\n"}
+{"Time":"2026-10-09T06:51:19.36680264Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":6.891}
