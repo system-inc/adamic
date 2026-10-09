@@ -172,6 +172,7 @@ func firstDifference(want, got []byte) string {
 	}
 	return fmt.Sprintf("length: Go %d, port %d", len(want), len(got))
 }
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestGeneratedAgreement(t *testing.T) {
 	path, err := filepath.Abs("main.ts")
 	if err != nil {
@@ -219,6 +220,7 @@ func mutantPort(t *testing.T, file, from, to string) string {
 	}
 	return filepath.Join(directory, "main.ts")
 }
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestThreePortMutants(t *testing.T) {
 	list := manifest(t, generated())
 	want := execute(t, "", goOracle(t), "--manifest", list)
@@ -247,6 +249,7 @@ func TestThreePortMutants(t *testing.T) {
 }
 
 func TestOriginalLibraries(t *testing.T) {
+	t.Parallel()
 	checkOriginalLibraries(t, generated(), 3)
 }
 func checkOriginalLibraries(t *testing.T, cases []string, postprocessedGaps int) {

@@ -8,6 +8,7 @@ import (
 func decoratedExports() []string {
 	return []string{"@d export class C {}", "@d export default class C {}", "export @d class C {}", "export default @d class C {}", "@a @b() export abstract class C {}", "// first\n@d\nexport default class {}"}
 }
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestDecoratedExports(t *testing.T) {
 	list := manifest(t, decoratedExports())
 	want := execute(t, "", goOracle(t), "--manifest", list)
@@ -20,6 +21,7 @@ func TestDecoratedExports(t *testing.T) {
 	}
 	t.Logf("%d decorated exports, %d bytes match Go", len(decoratedExports()), len(want))
 }
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestDecoratedExportMutant(t *testing.T) {
 	list := manifest(t, decoratedExports())
 	want := execute(t, "", goOracle(t), "--manifest", list)

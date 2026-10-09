@@ -26,6 +26,7 @@ func refusedBeforeDeadline(t *testing.T, argv []string, diagnostic string) {
 		t.Fatalf("%v: timeout=%v exit=%v stdout=%d stderr=%s", argv, timedOut, err, info.Size(), &stderr)
 	}
 }
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestBoundedPortParser(t *testing.T) {
 	main, _ := filepath.Abs("main.ts")
 	binary, script := build(t, main, true)
@@ -69,6 +70,7 @@ func TestBoundedPortParser(t *testing.T) {
 	t.Log("all 13 recorded stalls terminate: Go-accepted inputs match and Go-refused inputs explicitly refuse in all three port builds")
 	t.Log("three EOF recovery cases explicitly refuse with parser diagnostics before 2s of child CPU time on Node, sanitized native and emitted JS")
 }
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestPortStallControl(t *testing.T) {
 	main := mutantPort(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
 	binary, _ := build(t, main, true)
