@@ -1,0 +1,11 @@
+--- a/internal/lower/proven_relations.go
++++ b/internal/lower/proven_relations.go
+@@ -39,7 +39,7 @@
+ 	if origin != nil {
+ 		origin = ast.SkipParentheses(origin)
+ 	}
+-	exact := origin != nil && origin.Kind == ast.KindObjectLiteralExpression
++	exact := origin != nil && origin.Kind == ast.KindNewExpression
+ 	if exact {
+ 		for _, property := range origin.AsObjectLiteralExpression().Properties.Nodes {
+ 			if property.Kind == ast.KindSpreadAssignment {

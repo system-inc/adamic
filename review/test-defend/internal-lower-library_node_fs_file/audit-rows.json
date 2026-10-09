@@ -1,0 +1,17 @@
+[
+  "TestNodeFSFileOptionsBorrow",
+  "TestNodeFSFileDoesNotAuthorizeMutableWidening",
+  "TestNodeFSFileRefusesOptionEffects",
+  "TestNodeFSFileRefusesVoidValues",
+  "TestNodeFSFileRefusesPinnedUnsupportedOverloads",
+  "TestNodeFSFileNamespaceImport",
+  "TestNodeFSFileQualifiedErrorType",
+  "TestNodeFSFileKeepsDetachedMethodRefusal",
+  "TestNodeFSFileBufferBorrow",
+  "TestNodeFSFileScratchOptionsBorrow",
+  "TestNodeFSFileScratchOverloadsAreNamed",
+  "TestNodeLibraryNamesUnimplementedMembers",
+  "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+  "TestNodeLibraryDistinguishesReceiverOwners",
+  "TestNodeLibraryQualifiedTypeAssertion"
+]

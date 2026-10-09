@@ -1,0 +1,142 @@
+[
+  {
+    "id": "M01",
+    "file": "library_node_fs_file.go",
+    "line": 466,
+    "old": "index := 1",
+    "new": "index := 0"
+  },
+  {
+    "id": "M02",
+    "file": "library_node_fs_buffer.go",
+    "line": 34,
+    "old": "len(call.Arguments.Nodes) != 5",
+    "new": "len(call.Arguments.Nodes) != 4"
+  },
+  {
+    "id": "M03",
+    "file": "library_node.go",
+    "line": 35,
+    "old": "!load.IsNodeLibrary(file)",
+    "new": "load.IsNodeLibrary(file)"
+  },
+  {
+    "id": "M04",
+    "file": "library_node.go",
+    "line": 45,
+    "old": "owners = append([]string{parent.Name().Text()}, owners...)",
+    "new": ""
+  },
+  {
+    "id": "M05",
+    "file": "library_node.go",
+    "line": 68,
+    "old": "!implementedNodeMembers[name]",
+    "new": "implementedNodeMembers[name]"
+  },
+  {
+    "id": "M06",
+    "file": "library_node_fs_file.go",
+    "line": 101,
+    "old": "!discarded && !returned",
+    "new": "!discarded || !returned"
+  },
+  {
+    "id": "M07",
+    "file": "library_node_fs_file.go",
+    "line": 171,
+    "old": "\"fs option literals containing evaluated expressions; bind a plain options object first\"",
+    "new": "\"unsupported options\""
+  },
+  {
+    "id": "M08",
+    "file": "library_node_fs_file.go",
+    "line": 192,
+    "old": "l.result.Strings[text.Index] == \"utf8\"",
+    "new": "l.result.Strings[text.Index] == \"ascii\""
+  },
+  {
+    "id": "M09",
+    "file": "library_node_fs_file.go",
+    "line": 270,
+    "old": "args[1].Type() != ir.String",
+    "new": "args[1].Type() == ir.String"
+  },
+  {
+    "id": "M10",
+    "file": "library_node_fs_file.go",
+    "line": 358,
+    "old": "!ok || b.Value",
+    "new": "!ok || !b.Value"
+  },
+  {
+    "id": "M11",
+    "file": "library_node_fs_file.go",
+    "line": 230,
+    "old": "fallback = number(100)",
+    "new": "fallback = number(101)"
+  },
+  {
+    "id": "M12",
+    "file": "library_node_fs_file.go",
+    "line": 81,
+    "old": "operation, of = \"exists\", ir.Boolean",
+    "new": "operation, of = \"stat\", ir.Boolean"
+  },
+  {
+    "id": "M13",
+    "file": "library_node_fs_file.go",
+    "line": 348,
+    "old": "throws := ir.Expression(ir.BooleanConstant{Value: true})",
+    "new": "throws := ir.Expression(ir.BooleanConstant{Value: false})"
+  },
+  {
+    "id": "M14",
+    "file": "invariance.go",
+    "line": 47,
+    "old": "from == to || visited[[2]*checker.Type{from, to}]",
+    "new": "from != to || visited[[2]*checker.Type{from, to}]"
+  },
+  {
+    "id": "M15",
+    "file": "optional_widening.go",
+    "line": 196,
+    "old": "\"declare \" + found.property + \" on the source type, or build a fresh object with known fields (adamic/no-optional-widening)\"",
+    "new": "\"declare \" + found.property"
+  },
+  {
+    "id": "M16",
+    "file": "refusals.go",
+    "line": 205,
+    "old": "\"a method read as a value (\" + symbol.Name",
+    "new": "\"a method read as a value (\" + \"method\""
+  },
+  {
+    "id": "M17",
+    "file": "library_node_fs_file.go",
+    "line": 474,
+    "old": "len(call.Arguments.Nodes) > index &&",
+    "new": "len(call.Arguments.Nodes) > index+1 &&"
+  },
+  {
+    "id": "M18",
+    "file": "library_node_fs_file.go",
+    "line": 70,
+    "old": "len(call.Arguments.Nodes) != 5",
+    "new": "len(call.Arguments.Nodes) != 4"
+  },
+  {
+    "id": "M19",
+    "file": "library_node_fs_file.go",
+    "line": 66,
+    "old": "operation = \"rm\"",
+    "new": "operation = \"unlink\""
+  },
+  {
+    "id": "M20",
+    "file": "library_node_fs_buffer.go",
+    "line": 42,
+    "old": "load.IsNodeLibrary(file) &&",
+    "new": "!load.IsNodeLibrary(file) &&"
+  }
+]
