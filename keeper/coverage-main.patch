@@ -1,0 +1,25 @@
+--- a/pilots/adamic-gate/main.go	2026-10-09 03:02:52
++++ b/pilots/adamic-gate/main.go	2026-10-09 03:05:09
+@@ -251,12 +251,21 @@
+     echo "${package}" > "${out}/part-${index}.package"
+     cd "${tree}" && go test -count=1 -exec /bin/true -run "${pattern}" "${package}" > /dev/null 2>&1
+     times > "${out}/part-${index}.build"
+-    go test -count=1 -json -timeout 3h -run "${pattern}" ${skip:+-skip "${skip}"} "${package}" > "${out}/part-${index}.jsonl" 2> "${out}/part-${index}.stderr"
++    # ADAMIC_GATE_COVERPKG (the test audit'"'"'s line map, #mp71kkr): each part also writes the lines of those packages
++    # its tests executed, so a mutant replays only on the parts that ran its line.
++    cover=() && [ -n "${ADAMIC_GATE_COVERPKG:-}" ] && cover=(-coverpkg="${ADAMIC_GATE_COVERPKG}" -coverprofile="${out}/part-${index}.cover")
++    go test -count=1 -json -timeout 3h "${cover[@]}" -run "${pattern}" ${skip:+-skip "${skip}"} "${package}" > "${out}/part-${index}.jsonl" 2> "${out}/part-${index}.stderr"
+     code=$?
+     times > "${out}/part-${index}.total"
+     [ "${code}" = 0 ] || { echo "loom-pilot: ${package} exited ${code}"; tail -5 "${out}/part-${index}.stderr"; }
+     exit "${code}"' _ {} || status=1
+ cat "${out}"/part-*.jsonl | gzip -9 > "${out}/test.jsonl.gz"
++# Each part's profile beside its spec, so the map knows which tests ran which lines. cover.sh declares cover.tgz as
++# an output, so it's always written, empty when no part left a profile (the map records those parts as no lines).
++if [ -n "${ADAMIC_GATE_COVERPKG:-}" ]; then
++  for index in $(seq 0 $(( ${#specs[@]} - 1 ))); do printf '%s\n' "${specs[${index}]}" > "${out}/part-${index}.spec"; done
++  (cd "${out}" && tar -czf cover.tgz --files-from <(ls part-*.cover part-*.spec 2> /dev/null))
++fi
+ # times prints the shell's user and system time, then its children's, as 1m2.345s; the children are go's.
+ for build in "${out}"/part-*.build; do
+   part=${build%.build}
