@@ -124,7 +124,11 @@ fi
 # A candidate that doesn't hold main's tip is gated as a merge commit onto it (developer tools #11ymb02, tools
 # a79ee19), kept at refs/gate-merges/<merge sha> rather than on a branch; that merge is what lands, so fetch it.
 git cat-file -e "${sha}^{commit}" 2>/dev/null || git fetch -q origin "refs/gate-merges/${sha}" 2>/dev/null || true
-# The paths the test-only lane takes with no gate (Kirk, Oct 8). Main moving by them doesn't spend a
+# The paths the test-only lane takes with no gate (Kirk, Oct 8). One list, each piece by ruling: Go tests (_test.go) and
+# testdata; Python tests (_test.py, test_*.py, and -test.py since @system_adamic Oct 9 04:20, refused when a non-test
+# file names one); review evidence; shard tables; stage3 fixtures and meter (Oct 8); the root README; internal/oracle/
+# counts.md rows added for fixtures the same change adds (Oct 9 05:27, below); and with --markdown-corpus, Markdown
+# whose corpus units ran green (Oct 9 02:16). Main moving by them doesn't spend a
 # candidate's gate either: the lane already lands them ungated, and Loom's whole run of main is their
 # check (@system_adamic, Oct 9). star-train.py's testOnlyPaths is the same pattern.
 # One guard: a test-only change in a package where the candidate changes code still counts, since a
@@ -155,6 +159,28 @@ countingPaths() {
 	done
 }
 directory=$(cd "$(dirname "$0")" && pwd)
+# The oracle's counts ledger in the test-only lane (@system_adamic, Oct 9 05:27): added rows only, each naming a fixture
+# the same change adds under testdata. A changed or removed row is a counts change and gets audited through a gate.
+countsFile=internal/oracle/counts.md
+countsRowsAdded() {
+	python3 - "$1" "$2" "$countsFile" <<'COUNTS'
+import re, subprocess, sys
+old, tree, counts = sys.argv[1:4]
+diff = subprocess.run(["git", "diff", "-U0", old, tree, "--", counts], capture_output=True, text=True).stdout.splitlines()
+added = {path for path in subprocess.run(["git", "diff", "--name-only", "--diff-filter=A", old, tree], capture_output=True, text=True).stdout.split()}
+for line in diff:
+    if line.startswith("-") and not line.startswith("---"):
+        sys.exit("it changes or removes a row: " + line[1:80])
+for line in diff:
+    if not line.startswith("+") or line.startswith("+++"):
+        continue
+    row = re.match(r"\+\| *([^ |]+) *\|", line)
+    if not row:
+        sys.exit("it adds a line that isn't a fixture's row: " + line[1:80])
+    if row.group(1) not in added or "/testdata/" not in row.group(1):
+        sys.exit("it adds a row for %s, which this change doesn't add under testdata" % row.group(1))
+COUNTS
+}
 # Prints why a test-only change (its paths on stdin's argument, one per line) waits for the star, or
 # nothing: the board's star (@system_adamic, Oct 9 04:56Z: the hold protects only the star, never a train
 # below it), named by its landing branch in ~/.adamic-integration/star, while a gate of it is running (a
@@ -654,6 +680,15 @@ Named but not read, checked by hand: ${notReaders[*]}."
 		echo "Landing deletion ${gated:0:8} over main ${old:0:8}."
 	else
 	nonTest=$(printf '%s\n' "$changed" | grep -v -E "$testOnlyPattern" | grep . || true)
+	countsAdded=no
+	if printf '%s\n' "$nonTest" | grep -qxF "$countsFile"; then
+		if ! countsWhy=$(countsRowsAdded "$old" "$tree" 2>&1); then
+			echo "refused: ${countsFile} in the test-only lane takes added fixture rows only; ${countsWhy}" >&2
+			exit 1
+		fi
+		countsAdded=yes
+		nonTest=$(printf '%s\n' "$nonTest" | grep -v -x -F -e "$countsFile" | grep . || true)
+	fi
 	if [ -n "$markdownCorpus" ]; then
 		nonTest=$(printf '%s\n' "$nonTest" | grep -v -E '\.md$' | grep . || true)
 		branches="${branches}; Markdown gated by its corpus alone (@system_adamic, Oct 9 02:16): ${markdownCorpus}"
@@ -677,7 +712,7 @@ Named but not read, checked by hand: ${notReaders[*]}."
 	# its branch then silently deletes them (cohere's estree split carried buildcache-shared 2afbfa75 this way).
 	# The lane never filters files out of a merge; the worker cherry-picks its test commits onto main instead.
 	for commit in $(git rev-list --reverse --topo-order --no-merges "${old}..${gated}"); do
-		outside=$(git diff-tree --no-commit-id --name-only -r "$commit" | grep -v -E "$testOnlyPattern" | { if [ -n "$markdownCorpus" ]; then grep -v -E '\.md$'; else cat; fi; } | grep . || true)
+		outside=$(git diff-tree --no-commit-id --name-only -r "$commit" | grep -v -E "$testOnlyPattern" | { if [ -n "$markdownCorpus" ]; then grep -v -E '\.md$'; else cat; fi; } | { if [ "$countsAdded" = yes ]; then grep -v -x -F -e "$countsFile"; else cat; fi; } | grep . || true)
 		if [ -n "$outside" ]; then
 			echo "refused: carries non-test history: ${commit:0:8} ($(git log -1 --format=%s "$commit" | cut -c1-60)) changes $(printf '%s' "$outside" | head -n 3 | paste -sd ' ' -); cherry-pick the test commits onto main instead" >&2
 			exit 1

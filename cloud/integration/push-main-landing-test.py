@@ -177,6 +177,25 @@ class LandingTests(unittest.TestCase):
         refused = self.push('--test-only', edited, 'edited')
         self.assertIn('cloud/check-test.py is named by cloud/run.sh', refused.stderr)
 
+    def test_the_counts_ledger_takes_added_fixture_rows_only(self):
+        # @system_adamic, Oct 9 05:27: internal/oracle/counts.md takes added rows only, each for a fixture the same change
+        # adds under testdata; a changed or removed row is a counts change and gets a gate.
+        header = '| Fixture | Allocations |\n|---|---:|\n| internal/oracle/testdata/old.a | 1 |\n'
+        base = self.change(self.main, 'internal/oracle/counts.md', header, 'the ledger')
+        git(self.repository, 'push', '-q', 'origin', base + ':refs/heads/main')
+        fixture = self.change(base, 'internal/oracle/testdata/new.a', 'new\n', 'a fixture')
+        self.write('internal/oracle/counts.md', header + '| internal/oracle/testdata/new.a | 2 |\n')
+        added = self.commit('and its row')
+        self.assertLanded(self.push('--test-only', added, 'added'), base, added)
+        # The planted case: an existing row changes, which refuses by the line.
+        changed = self.change(self.main_now(), 'internal/oracle/counts.md',
+                              header.replace('old.a | 1', 'old.a | 9') + '| internal/oracle/testdata/new.a | 2 |\n', 'a row changes')
+        self.assertIn('changes or removes a row', self.push('--test-only', changed, 'changed').stderr)
+        # A row for a fixture the change doesn't add refuses too.
+        stray = self.change(self.main_now(), 'internal/oracle/counts.md',
+                            header + '| internal/oracle/testdata/new.a | 2 |\n| internal/oracle/testdata/missing.a | 3 |\n', 'a stray row')
+        self.assertIn("missing.a, which this change doesn't add under testdata", self.push('--test-only', stray, 'stray').stderr)
+
     def test_a_candidate_built_ahead_lands_over_the_landing_commit_below_it(self):
         lower = self.change(self.main, 'code/a.go', 'package code\n\n// lower\n', 'lower')
         upper = self.change(lower, 'other/b.go', 'package other\n\n// upper\n', 'upper')
