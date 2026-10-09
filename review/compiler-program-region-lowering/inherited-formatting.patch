@@ -1,0 +1,16 @@
+diff internal/flow/corpus_units_test.go.orig internal/flow/corpus_units_test.go
+--- internal/flow/corpus_units_test.go.orig
++++ internal/flow/corpus_units_test.go
+@@ -9120,4 +9120,3 @@
+ 	beginFlowUnit(t)
+ 	checkLivenessProgram(t, flowCorpusPaths[730])
+ }
+-
+diff internal/fresh/corpus_units_test.go.orig internal/fresh/corpus_units_test.go
+--- internal/fresh/corpus_units_test.go.orig
++++ internal/fresh/corpus_units_test.go
+@@ -6418,4 +6418,3 @@
+ 	beginFreshUnit(t)
+ 	checkFreshProgram(t, freshCorpusPaths[800])
+ }
+-

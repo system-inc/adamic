@@ -1,0 +1,8 @@
+=== RUN   TestProgramRegionEntryPairsRefused
+=== PAUSE TestProgramRegionEntryPairsRefused
+=== CONT  TestProgramRegionEntryPairsRefused
+    program_region_test.go:188: want unpublished-pair refusal, got <nil>
+--- FAIL: TestProgramRegionEntryPairsRefused (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.044s
+FAIL

@@ -1,0 +1,20 @@
+--- a/internal/lower/program_region.go
++++ b/internal/lower/program_region.go
+@@ -162,7 +162,7 @@
+ 	for _, f := range l.result.Functions {
+ 		walk(f.Body, check)
+ 	}
+-	if entryPairs && len(plan.types) != 0 {
++	if false && entryPairs && len(plan.types) != 0 {
+ 		return &Refused{Where: l.result.Source, What: "Map entry pair allocation in a Program-region program", Fix: "iterate keys and get values until entry pairs can adopt before publication"}
+ 	}
+ 	if parallel && len(plan.types) != 0 {
+@@ -177,7 +177,7 @@
+ 	if !l.programDiscovery && l.programPlan == nil {
+ 		return value, nil
+ 	}
+-	if l.programPlan != nil && len(l.programPlan.types) != 0 && node.Kind == ast.KindCallExpression {
++	if l.programPlan != nil && false && len(l.programPlan.types) != 0 && node.Kind == ast.KindCallExpression {
+ 		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
+ 		if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "entries" {
+ 			receiver := callee.AsPropertyAccessExpression().Expression

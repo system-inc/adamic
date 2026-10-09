@@ -524,6 +524,9 @@ type taking struct {
 // literal's fields written over its own; otherwise a copy, as any spread. Either way the result is a
 // reference the statement owns.
 func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
+	if literal.ProgramRegion {
+		return "", false
+	}
 	read, ok := variableRead(literal.Spread)
 	if !ok || !e.reuse.spreads[e.at][read.Local] {
 		return "", false
@@ -555,7 +558,7 @@ func (e *emitter) reused(literal ir.ObjectLiteral) (string, bool) {
 		slot := e.temporary()
 		cache := e.cache()
 		e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
-		e.line("adamic_object_present(%s, %s.index);", object, cache)
+		e.line("adamic_object_present(%s, adamic_slot_index(%s, %s));", object, object, slot)
 		if e.fieldTypesNeeded() {
 			e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, field.Value.Type())
 		}
@@ -729,6 +732,9 @@ func sameSlots(left, right ir.Type) bool {
 // mapped emits a map the plan reuses: when its array is unique, each result is written over the
 // element it came from, in the array itself; otherwise a new array, as any map.
 func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
+	if expression.ProgramRegion {
+		return "", false
+	}
 	read, ok := variableRead(expression.Array)
 	if !ok || !e.reuse.arrays[e.at][read.Local] {
 		return "", false
@@ -764,6 +770,9 @@ func (e *emitter) mapped(expression ir.ArrayMap) (string, bool) {
 // when that array is unique, the literal is the array itself, the rest appended to it; otherwise a
 // new array, as any literal.
 func (e *emitter) spreadArray(literal ir.ArrayLiteral) (string, bool) {
+	if literal.ProgramRegion {
+		return "", false
+	}
 	if len(literal.Spread) == 0 || !literal.Spread[0] {
 		return "", false
 	}

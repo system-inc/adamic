@@ -114,7 +114,7 @@ func (plan *regionPlan) returnsFresh(program *ir.Program, function int) bool {
 			return false
 		}
 		literal, ok := declaration.Value.(ir.ObjectLiteral)
-		if !ok || literal.Class == 0 {
+		if !ok || literal.Class == 0 || literal.ProgramRegion {
 			return false
 		}
 		returned, ok := body[len(body)-1].(ir.Return)
@@ -153,7 +153,7 @@ func (plan *regionPlan) returnsFresh(program *ir.Program, function int) bool {
 func (plan *regionPlan) freshValue(value ir.Expression) bool {
 	switch value := value.(type) {
 	case ir.ObjectLiteral:
-		return value.Spread == nil
+		return !value.ProgramRegion && value.Spread == nil
 	case ir.Undefined:
 		return true
 	case ir.Call:

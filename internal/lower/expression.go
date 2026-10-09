@@ -470,7 +470,11 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		}
 		return l.enumNeverCheck(node, value, identity), nil
 	}
-	return l.enumNeverValue(node)
+	value, err := l.enumNeverValue(node)
+	if err != nil {
+		return nil, err
+	}
+	return l.programAllocation(node, value)
 }
 
 func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {

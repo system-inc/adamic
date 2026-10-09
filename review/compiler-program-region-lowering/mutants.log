@@ -1,0 +1,6 @@
+acyclic-leaf: caught: regions 3, want 2
+cyclic-member: caught: regions 1, want 2
+reuse-member: caught: Program member array storage was reused
+field-only-size: caught: heap-buffer-overflow
+shape-key: caught: distinct property shapes collide
+entry-pair-publication: caught: want unpublished-pair refusal

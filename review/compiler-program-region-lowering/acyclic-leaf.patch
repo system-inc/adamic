@@ -1,0 +1,10 @@
+--- a/internal/lower/program_region.go
++++ b/internal/lower/program_region.go
+@@ -207,6 +207,7 @@
+ 	switch value := value.(type) {
+ 	case ir.ObjectLiteral:
+ 		value.ProgramRegion = member
++		for _,field:=range value.Fields {if field.Name=="text"{value.ProgramRegion=true}}
+ 		return value, nil
+ 	case ir.ArrayLiteral:
+ 		value.ProgramRegion = member

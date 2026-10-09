@@ -1,0 +1,10 @@
+--- a/internal/lower/program_region_shapes.go
++++ b/internal/lower/program_region_shapes.go
+@@ -91,5 +91,6 @@
+ 		}
+ 		return strings.Join(encoded, ",")
+ 	}
+-	return quote(all) + "|" + quote(required)
++	_ = quote
++ return strings.Join(all,"\x00")+"\x01"+strings.Join(required,"\x00")
+ }

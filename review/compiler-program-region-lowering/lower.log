@@ -1,0 +1,41 @@
+=== RUN   TestProgramRegionCensusMembership
+=== PAUSE TestProgramRegionCensusMembership
+=== RUN   TestProgramRegionCensusPairwise
+=== PAUSE TestProgramRegionCensusPairwise
+=== RUN   TestProgramRegionSCCOwningEdges
+=== PAUSE TestProgramRegionSCCOwningEdges
+=== RUN   TestProgramRegionShapeKeySeparators
+=== PAUSE TestProgramRegionShapeKeySeparators
+=== RUN   TestProgramRegionMembership
+=== PAUSE TestProgramRegionMembership
+=== RUN   TestProgramRegionViewCycleIsNotOwnership
+=== PAUSE TestProgramRegionViewCycleIsNotOwnership
+=== RUN   TestProgramRegionTaskBoundary
+=== PAUSE TestProgramRegionTaskBoundary
+=== RUN   TestProgramRegionConcreteContainers
+=== PAUSE TestProgramRegionConcreteContainers
+=== RUN   TestProgramRegionEntryPairsRefused
+=== PAUSE TestProgramRegionEntryPairsRefused
+=== CONT  TestProgramRegionCensusMembership
+=== CONT  TestProgramRegionViewCycleIsNotOwnership
+=== NAME  TestProgramRegionCensusMembership
+    program_region_census_test.go:36: set ADAMIC_PROGRAM_CENSUS_ROOT to pristine TypeScript 6.0.3 with generated diagnostics
+--- SKIP: TestProgramRegionCensusMembership (0.00s)
+=== CONT  TestProgramRegionSCCOwningEdges
+--- PASS: TestProgramRegionSCCOwningEdges (0.00s)
+=== CONT  TestProgramRegionCensusPairwise
+    program_region_census_test.go:37: set ADAMIC_PROGRAM_CENSUS_ROOT to pristine TypeScript 6.0.3 with generated diagnostics
+--- SKIP: TestProgramRegionCensusPairwise (0.00s)
+=== CONT  TestProgramRegionConcreteContainers
+--- PASS: TestProgramRegionViewCycleIsNotOwnership (0.00s)
+=== CONT  TestProgramRegionTaskBoundary
+=== CONT  TestProgramRegionShapeKeySeparators
+=== CONT  TestProgramRegionMembership
+=== CONT  TestProgramRegionEntryPairsRefused
+--- PASS: TestProgramRegionShapeKeySeparators (0.00s)
+--- PASS: TestProgramRegionTaskBoundary (0.07s)
+--- PASS: TestProgramRegionConcreteContainers (0.07s)
+--- PASS: TestProgramRegionEntryPairsRefused (0.07s)
+--- PASS: TestProgramRegionMembership (0.08s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.086s

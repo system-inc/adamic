@@ -21,6 +21,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	switch visit.Method {
 	case "filter":
 		result = e.own(ir.Array, fmt.Sprintf("adamic_array_new(0, %t)", references))
+		e.programArray(result, visit.ProgramRegion)
 	case "some", "every":
 		result = e.snapshot(ir.Boolean, strconv.FormatBool(visit.Method == "every"))
 	case "findIndex", "findLastIndex":
