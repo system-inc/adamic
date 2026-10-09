@@ -86,8 +86,8 @@ func formatterMutantsCommand(ctx context.Context, directory, name string, args .
 func formatterMutantsOracleProduct(t *testing.T) string {
 	t.Helper()
 	formatterMutantsOracle.once.Do(func() {
-		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		defer cancel()
+		// Shared setup is bounded by the product unit, before shard own work starts.
+		ctx := context.Background()
 		started := time.Now()
 		product := buildcache.Product(t, formatterMutantsSetupInputs(), func(directory string) error {
 			cases, _, count := formatCases(t)
@@ -185,7 +185,7 @@ func formatterMutantsUnion(t *testing.T, cases []byte) {
 // shard cannot silently make the claimed union complete.
 func formatterMutantsEnumeration(t *testing.T) []int {
 	t.Helper()
-	file, err := parser.ParseFile(token.NewFileSet(), "formatter_mutants_grain_test.go", nil, 0)
+	file, err := parser.ParseFile(token.NewFileSet(), "grain30_yaml_formatter_mutants_test.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -310,8 +310,8 @@ func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, strin
 	t.Helper()
 	started := time.Now()
 	defer func() { t.Logf("mutant %03d product %d: %.3fs", index, level, time.Since(started).Seconds()) }()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
+	// Shared setup is bounded by the product unit, before shard own work starts.
+	ctx := context.Background()
 	mutant := testFormatterMutants[index]
 	entries, err := filepath.Glob("*.ts")
 	if err != nil {
