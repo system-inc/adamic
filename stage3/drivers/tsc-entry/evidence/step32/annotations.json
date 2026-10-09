@@ -1,0 +1,98 @@
+{
+  "1": {
+    "probe": "probes/01-indexed-path.a",
+    "expected_stdout": "undefined\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "2": {
+    "probe": "probes/02-tuple-parameter.a",
+    "expected_stdout": "p1\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "3": {
+    "probe": "probes/03-present-undefined-field.a",
+    "expected_stdout": "ok\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "4": {
+    "probe": "probes/04-optional-path-argument.a",
+    "expected_stdout": "undefined\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "5": {
+    "probe": "probes/05-optional-path-argument.a",
+    "expected_stdout": "undefined\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "6": {
+    "probe": "probes/06-optional-symbol-argument.a",
+    "expected_stdout": "ok\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "7": {
+    "probe": "probes/07-optional-symbol-argument.a",
+    "expected_stdout": "ok\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "8": {
+    "probe": "probes/08-optional-member-read.a",
+    "expected_stdout": "ok\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "9": {
+    "probe": "probes/09-never-argument.a",
+    "expected_stdout": "real\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "10": {
+    "probe": "probes/10-optional-symbol-argument.a",
+    "expected_stdout": "ok\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "11": {
+    "probe": "probes/11-optional-symbol-array.a",
+    "expected_stdout": "ok\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "12": {
+    "probe": "probes/12-present-undefined-argument.a",
+    "expected_stdout": "ok\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "13": {
+    "probe": "probes/13-optional-file-read.a",
+    "expected_stdout": "ok\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "14": {
+    "probe": "probes/14-void-result.a",
+    "expected_stdout": "ok\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "15": {
+    "probe": "probes/15-optional-declaration-argument.a",
+    "expected_stdout": "ok\n",
+    "owner": "compiler",
+    "owner_reason": "Reference-only compiler does not admit this strictness finding; combined stricter mode was skipped due to conflicts."
+  },
+  "16": {
+    "probe": "probes/step32-symbol-array.a",
+    "expected_stdout": "1\n",
+    "owner": "compiler",
+    "owner_reason": "Compiler checker admission: arrayFrom(members.values()) carries possibly undefined Symbol elements into getIndexInfosOfIndexSymbol, whose parameter is Symbol[]. This reproducer preserves the Map-values-to-array call shape; combined stricter mode remains unmeasured."
+  }
+}

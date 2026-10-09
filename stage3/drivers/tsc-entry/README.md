@@ -1,5 +1,8 @@
 # Native tsc entry measurement
 
+The step 32 attempted composition, skipped conflicts and sixteen-stop walk are
+in [STEP32.md](STEP32.md).
+
 The project-reference build witness and scratch source-root experiment are in
 [PROJECT-REFERENCES.md](PROJECT-REFERENCES.md). All compiler changes for that
 experiment remain outside this publication checkout.

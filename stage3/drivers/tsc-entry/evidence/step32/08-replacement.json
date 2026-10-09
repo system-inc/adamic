@@ -1,0 +1,10 @@
+{
+  "file": "/tmp/step32-walk-final/src/compiler/checker.ts",
+  "line": 10033,
+  "column": 67,
+  "function": "<anonymous>",
+  "start": 576108,
+  "end": 576172,
+  "original": "m.parent && m.parent === symbol || expanding ? \"real\" : \"merged\"",
+  "replacement": "{ throw new Error(\"tsc-entry scratch placeholder\"); }"
+}
