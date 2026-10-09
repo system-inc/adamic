@@ -139,3 +139,53 @@ inside the adapted output tree; only explicit `--write-table` also updates
 the checked-in `stage3/patch-set.md`. The lane uses ordinary apply and
 preserves a copy beside its report.json.
 See REPORT.md and evidence for the measured area-tip verdict.
+
+## Reading a red lane
+
+report.json now includes failures and cause_counts even when API evidence is
+missing. Each failure keeps the full Mocha error, stack top, elapsed time and
+timeout limit when captured, and first-40-line previews for each implicated
+baseline file. All baseline previews are also available in baseline_previews.
+The verdict line appends all five cause counts; the sanctioned API failure
+still counts as a baseline-content failure in a passing lane.
+
+failures.md publishes a readable explanation beside verdict.txt. verdict.json
+embeds the same details and previews beside the verdict, so the fast gate's
+existing report.json and verdict.json publication preserves them without a
+workflow change. Cause classification is observational: none of these fields
+participates in inspect, api_check, expected counts, or the sanctioned exception.
+A metadata collection error is reported separately and never alters status.
+
+See ERRORS_REPORT.md for the real targeted timeout, source-mutation baseline
+proof, normal full lane, and dropped-text mutant evidence.
+
+## Thirty-second file-plan measurement
+
+[SHARDS_REPORT.md](SHARDS_REPORT.md) records an input-hashed shared build,
+per-file timings, complete candidate test inventory and real input mutants.
+The 30-second whole-file constraint is blocked by the upstream
+sys/symlinkWatching.ts file: 43.102 seconds cold for 16 passing tests. No valid
+sharded gate is claimed; the existing lane command and verdict remain intact.
+
+`python3 stage3/lane/artifact.py CACHE` prepares and verifies a shared build by
+its input hash. This is artifact preparation, not a test unit. The task profiler,
+run-tasks.cjs and measure_plan.py are measurement tools. The recorded candidate
+plan exits 1 as invalid; it is not a replacement for run.sh. The lane's fixture
+suite also verifies artifact invalidation, file ownership, the complete measured
+inventory and original IPC observation behavior.
+
+## Gate manifest and case shards
+
+The follow-up [manifest contract](SHARD_CONTRACT.md) supersedes the whole-file
+blocker for this lane. `shards.json` uses the exact developer-tools version-1
+schema. Its 151 commands share a verified artifact by inputs hash, give each
+watcher case an exact upstream `--tests` grep, and keep the same expected counts
+and Public APIs sanction. The original run.sh remains available; its optional
+`--artifact` mode supplies the same-tree unsharded reference measurement.
+
+[CASE_SHARDS_REPORT.md](CASE_SHARDS_REPORT.md) records cold command walls,
+complete executed coverage and the real single-watcher failure proof. Developer
+tools owns `cloud/fast-gate/run.py stage3()` on `devtools/fast-gate`; it is not
+modified here. Artifact preparation precedes test units. The separate
+merge_shards.py script checks all actual results against the same-artifact
+unsharded lane rather than acting as a parallel unit with undeclared dependencies.

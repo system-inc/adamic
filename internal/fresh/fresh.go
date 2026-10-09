@@ -1483,6 +1483,9 @@ func (a *analysis) value(expression ir.Expression) value {
 		// Cells and structural receivers are outside this summary's model. The
 		// union for any bounded target set, and for Unknown, is an arbitrary call.
 		return a.call(a.operands(expression), expression.Returns)
+	case ir.ParallelMap:
+		// Tasks have a separate effect proof; results may alias shared inputs.
+		return a.call([]value{a.value(expression.Items), a.value(expression.Work)}, ir.Array)
 	case ir.ArrayMap:
 		return a.call([]value{a.value(expression.Array), a.value(expression.Callback)}, ir.Array)
 	case ir.ArrayVisit:

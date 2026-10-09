@@ -8,9 +8,18 @@ import (
 
 // The runtime returns a borrowed slot snapshot only after validating its physical storage.
 // Lowering must supply a complete runtime contract before using this for an admitted cast.
+type checkedViewReadHook func(*emitter, ir.Property) (string, bool)
+
+var checkedViewReadAdapter checkedViewReadHook
+
 func (e *emitter) viewField(property ir.Property) string {
 	if property.Unset {
 		return e.placeholderViewField(property)
+	}
+	if checkedViewReadAdapter != nil {
+		if value, handled := checkedViewReadAdapter(e, property); handled {
+			return value
+		}
 	}
 	return e.viewFieldObject(property, e.value(property.Object))
 }

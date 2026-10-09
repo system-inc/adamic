@@ -2,6 +2,7 @@ package native
 
 import (
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 )
@@ -16,6 +17,7 @@ const normalizeHarness = `#include "adamic.h"
 
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 static void put_hex(const adamic_string *string) {
@@ -85,8 +87,10 @@ static const uint32_t alphabet[] = {ALPHABET};
 int main(int count, char **arguments) {
 	static char buffer[1 << 20];
 	setvbuf(stdout, buffer, _IOFBF, sizeof buffer);
-	if (count == 2 && strcmp(arguments[1], "points") == 0) {
-		for (uint32_t point = 0; point <= 0x10ffff; point++) {
+	if (count >= 2 && strcmp(arguments[1], "points") == 0) {
+		uint32_t first = count == 4 ? (uint32_t)strtoul(arguments[2], NULL, 10) : 0;
+		uint32_t last = count == 4 ? (uint32_t)strtoul(arguments[3], NULL, 10) : 0x110000;
+		for (uint32_t point = first; point < last; point++) {
 			printf("%x", point);
 			answer((uint32_t[]){point}, 1);
 			answer((uint32_t[]){'a', point, 0x301}, 3);
@@ -161,7 +165,9 @@ const flush = () => {
 	chunk = '';
 };
 if (process.argv[1] === 'points') {
-	for (let point = 0; point <= 0x10ffff; point++) {
+	const first = process.argv.length === 4 ? Number(process.argv[2]) : 0;
+	const last = process.argv.length === 4 ? Number(process.argv[3]) : 0x110000;
+	for (let point = first; point < last; point++) {
 		chunk += point.toString(16) + answer([point]) + answer([0x61, point, 0x301]) + answer([point, 0x301, 0x323]) +
 			answer([0x1100, point]) + answer([0xac00, point]) + '\n';
 		if (chunk.length > 1 << 20) {
@@ -207,22 +213,42 @@ var normalizeAlphabet = []string{
 func TestNormalizeMatchesNode(t *testing.T) {
 	t.Parallel()
 	alphabet := strings.Join(normalizeAlphabet, ", ")
-	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(strings.Replace(normalizeHarness, "ALPHABET", alphabet, 1), binary, Options{Sanitize: true}); err != nil {
+	repository, err := filepath.Abs("../..")
+	if err != nil {
 		t.Fatal(err)
 	}
+	cache, err := newTestBuildCache(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := strings.Replace(normalizeHarness, "ALPHABET", alphabet, 1)
+	built, err := cache.Tree("normalization-probe", [][]byte{[]byte(source)}, func(destination string) error {
+		return Build(source, filepath.Join(destination, "harness"), Options{Sanitize: true})
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(built, "harness")
 	oracle := strings.Replace(normalizeOracle, "ALPHABET", alphabet, 1)
-	letters := len(normalizeAlphabet)
-	for _, sweep := range []struct {
-		name  string
-		lines int
-	}{
-		{"points", 0x110000},
-		{"contexts", letters + letters*letters + letters*letters*letters + letters*letters*letters*letters},
-	} {
-		t.Run(sweep.name, func(t *testing.T) {
+	shard := currentTestShard(t)
+	pieces := unitRanges(0x110000, normalizePointUnitSize)
+	for index, piece := range pieces {
+		if !shard.owns(index) {
+			continue
+		}
+		t.Run("points/"+piece.name(), func(t *testing.T) {
 			t.Parallel()
-			compareStreams(t, sweep.lines, []string{binary, sweep.name}, []string{"node", "--eval", oracle, sweep.name})
+			first, last := strconv.Itoa(piece.first), strconv.Itoa(piece.last)
+			compareStreams(t, piece.last-piece.first, []string{binary, "points", first, last}, []string{"node", "--eval", oracle, "points", first, last})
 		})
 	}
+	letters := len(normalizeAlphabet)
+	if !shard.owns(len(pieces)) {
+		return
+	}
+	t.Run("contexts", func(t *testing.T) {
+		t.Parallel()
+		compareStreams(t, letters+letters*letters+letters*letters*letters+letters*letters*letters*letters,
+			[]string{binary, "contexts"}, []string{"node", "--eval", oracle, "contexts"})
+	})
 }

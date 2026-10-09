@@ -1,0 +1,8 @@
+// a-check: refused result.kind
+interface Block { readonly kind: 'Block'; readonly statements: readonly number[]; }
+interface Expression { readonly kind: string; readonly text: string; }
+type Body = Block | Expression;
+function widerBody(): Body { return { kind: 'Expression', text: 'lie' }; }
+function transform(): Block;
+function transform(): Body { return widerBody(); }
+console.log(transform().kind);

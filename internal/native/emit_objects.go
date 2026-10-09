@@ -64,50 +64,12 @@ func (e *emitter) staticFieldName(name string) bool {
 	return false
 }
 
-// writeFieldSlot keeps static own-property bookkeeping on the runtime path. A write
-// does not prove an optional field exists, and SetProperty carries no presence proof.
-// Uniform offsets therefore need an exact literal-layout guard here; a class fallback
-// already has that guard. Unknown, absent and conflicting layouts keep checked lookup.
-// Frozen checks and value evaluation remain at the statement. Only C names may repeat.
+// writeFieldSlot publishes readiness and presence through the actual object, including
+// static own-property bookkeeping. A binding-local offset cannot prove continued presence.
 func (e *emitter) writeFieldSlot(object, name string, class int) string {
-	lookup := fmt.Sprintf("adamic_object_write_field(%s, %s, &%s)", object, cString(name), e.cache())
-	if !cName.MatchString(object) {
-		return lookup
-	}
-	static := e.staticFieldName(name)
-	fallback := lookup
-	if !static {
-		fallback = fmt.Sprintf("adamic_object_data_field(%s, %s, &%s)", object, cString(name), e.cache())
-	}
-	data := e.fieldSlot(object, name, class)
-	if slot := e.uniformFieldSlot(object, name); slot != "" {
-		seen := map[string]bool{}
-		checks := []string{}
-		walkExpressions(e.program, func(expression ir.Expression) {
-			literal, ok := expression.(ir.ObjectLiteral)
-			if !ok || literal.Spread != nil {
-				return
-			}
-			for _, field := range literal.Fields {
-				if field.Name == name {
-					shape := e.literalShape(literal)
-					if !seen[shape] {
-						seen[shape] = true
-						checks = append(checks, fmt.Sprintf("%s->shape == &%s", object, shape))
-					}
-					break
-				}
-			}
-		})
-		data = fallback
-		if len(checks) != 0 {
-			data = fmt.Sprintf("(%s ? %s : %s)", strings.Join(checks, " || "), slot, fallback)
-		}
-	}
-	if !static {
-		return data
-	}
-	return fmt.Sprintf("(%s->class != NULL && %s->class->is_static ? %s : %s)", object, object, lookup, data)
+	// Every write may reinsert an absent field through another alias. Publish presence
+	// using the actual object's slot, independently of optional readiness emission.
+	return fmt.Sprintf("adamic_object_write_field(%s, %s, &%s)", object, cString(name), e.cache())
 }
 
 // cName is a C name alone, which a C expression can repeat without evaluating anything twice.
@@ -131,7 +93,18 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		if literal.NoReuse {
 			source = e.own(ir.Object, fmt.Sprintf("adamic_retain(%s)", source))
 		}
-		object := e.own(ir.Object, e.spreadCopy(literal, source))
+		copy := e.spreadCopy(literal, source)
+		if len(literal.Missing) != 0 || literal.NoReuse {
+			reserved := e.shape(append(append([]ir.Field{}, literal.Fields...), literal.Missing...))
+			if len(literal.Fields)+len(literal.Missing) > 0 && e.dynamicProperties() {
+				e.line("adamic_register_shape_types(&%s_metadata);", reserved)
+			}
+			copy = fmt.Sprintf("adamic_object_copy_reserving_checked(%s, &%s, %s)", source, reserved, cString(literal.SpreadReadiness))
+			if literal.SpreadMaybeUndefined {
+				copy = fmt.Sprintf("(%s != NULL ? %s : adamic_object_new(&%s))", source, copy, e.shape(emptyFields(literal)))
+			}
+		}
+		object := e.own(ir.Object, copy)
 		e.emptySpread(literal, source, object)
 		values := make([]string, 0, len(literal.Fields))
 		for _, field := range literal.Fields {
@@ -141,11 +114,12 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 			slot := e.temporary()
 			cache := e.cache()
 			e.line("adamic_value *%s = adamic_object_field(%s, %s, &%s);", slot, object, cString(field.Name), cache)
+			e.line("adamic_object_present(%s, adamic_slot_index(%s, %s));", object, object, slot)
 			if e.fieldTypesNeeded() {
-				e.line("adamic_object_field_types(%s)[%s.index] = %d;", object, cache, field.Value.Type())
+				e.line("adamic_object_field_types(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, field.Value.Type())
 			}
 			if e.fieldReadinessNeeded(field.Name) {
-				e.line("adamic_object_initialized(%s)[%s.index] = %d;", object, cache, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
+				e.line("adamic_object_initialized(%s)[adamic_slot_index(%s, %s)] = %d;", object, object, slot, map[bool]int{true: 0, false: 1}[field.Uninitialized && !field.Unset])
 			}
 			if field.Value.Type().IsReference() {
 				e.line("adamic_release(%s->reference);", slot)
@@ -177,7 +151,7 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 	} else {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_new(&%s)", e.literalShape(literal)))
 	}
-	if len(literal.Fields) > 0 && e.dynamicProperties() {
+	if len(literal.Fields)+len(literal.Missing) > 0 && e.dynamicProperties() {
 		e.line("adamic_register_shape_types(&%s_metadata);", e.literalShape(literal))
 	}
 	if literal.Class != 0 {
@@ -216,6 +190,13 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 		e.line("%s->slots[%d].%s = %s;", object, index, member(field.Value.Type()), slotted(field.Value.Type(), value))
 	}
+	for index, field := range literal.Missing {
+		if e.fieldTypesNeeded() {
+			e.line("adamic_object_field_types(%s)[%d] = %d;", object, len(literal.Fields)+index, field.Value.Type())
+		}
+		e.line("%s->slots[%d].%s = %s;", object, len(literal.Fields)+index, member(field.Value.Type()), slotted(field.Value.Type(), e.value(field.Value)))
+		e.line("adamic_object_absent(%s, %d);", object, len(literal.Fields)+index)
+	}
 	return object
 }
 
@@ -233,7 +214,7 @@ func (e *emitter) shape(fields []ir.Field) string {
 // too, so it's the class's own, never shared with a literal of the same fields.
 func (e *emitter) literalShape(literal ir.ObjectLiteral) string {
 	if len(literal.Methods) == 0 {
-		return e.shape(literal.Fields)
+		return e.shape(append(append([]ir.Field{}, literal.Fields...), literal.Missing...))
 	}
 	names, types := []string{}, []ir.Type{}
 	for _, field := range literal.Fields {
@@ -309,7 +290,7 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	if len(fields) > 0 && e.dynamicProperties() {
 		e.declarations = append(e.declarations,
 			fmt.Sprintf("static const int %s_types[] = {%s};", name, strings.Join(kinds, ", ")),
-			fmt.Sprintf("static adamic_shape_types %s_metadata = {&%s, %s_types, NULL};", name, name, name))
+			fmt.Sprintf("static adamic_shape_types %s_metadata = {&%s, %s_types, NULL, false};", name, name, name))
 	}
 	return name
 }

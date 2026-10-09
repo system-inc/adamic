@@ -28,12 +28,13 @@ func (e *emitter) placeholderViewField(property ir.Property) string {
 	if absent {
 		e.line("if (%s != NULL) {", slot)
 	}
-	e.line("const adamic_object *%s = (const adamic_object *)((const unsigned char *)(%s - %s.index) - offsetof(adamic_object, slots));", owner, slot, cache)
-	e.line("unsigned char %s = adamic_object_field_types(%s)[%s.index];", kind, owner, cache)
+	e.line("const adamic_object *%s = NULL;", owner)
+	e.line("%s = adamic_object_field_owned(%s, %s, &%s, &%s);", slot, object, cString(property.Name), cache, owner)
+	e.line("unsigned char %s = adamic_object_field_types(%s)[adamic_slot_index(%s, %s)];", kind, owner, owner, slot)
 	// Copy a tagged nullish payload even when its readiness bit is unset.
 	e.line("if (%s == %d && (%s->reference == NULL || %s->reference == &adamic_null)) {", kind, ir.Union, slot, slot)
 	e.line("%s = adamic_retain(%s->reference);", result, slot)
-	unset := fmt.Sprintf("!adamic_object_initialized(%s)[%s.index]", owner, cache)
+	unset := fmt.Sprintf("!adamic_object_initialized(%s)[adamic_slot_index(%s, %s)]", owner, owner, slot)
 	unset += fmt.Sprintf(" || (%s == %d && !adamic_maybe_number_unpack(%s->number).present)", kind, ir.MaybeNumber, slot)
 	unset += fmt.Sprintf(" || (%s == %d && !adamic_maybe_boolean_unpack(%s->maybe_boolean).present)", kind, ir.MaybeBoolean, slot)
 	if present.IsReference() {

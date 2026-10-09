@@ -95,7 +95,11 @@ func (e *emitter) read(read ir.Read) string {
 	if read.Checked {
 		e.checkReady(read.Local)
 	}
-	if read.Readiness != "" {
+	// The readiness pass (lower/readiness.go) clears Readiness on reads it proves ready, but async
+	// programs lower on their own path and never reach it. That path refuses uninitialized locals and
+	// nested functions, and tsc refuses a read before its declaration in the same body (TS2448), so
+	// every read there is of an initialized local: there's no ready flag to check.
+	if read.Readiness != "" && e.program.Async == nil {
 		e.checkReadyRead(read.Local, read.Readiness)
 	}
 	if e.program.Locals[read.Local].Counter {
