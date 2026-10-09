@@ -1,5 +1,5 @@
 Built runtime-store corpus classification, closed push-gap checks, restored scanner offset pushes, and registered self-compare fixtures for task #wj4pmt1.
-Base: 379dbfb3; delivery commits are reported with the pushed HEAD.
+Base: 379dbfb3; implementation a233eec3; current-main merge 320c1776; pushed HEAD is reported separately.
 All assigned checks pass; all 68 fresh remainder programs pass after installing pinned Node API types.
 Six independent mutant checks exited 1 at their intended assertions; mutants.json records each exact command and catcher.
 Not covered: other gate families, whole packages, the full gate, readiness/stack semantic changes, and the full scanner corpus.
@@ -46,3 +46,16 @@ Setup: GOPROXY was exported as https://proxy.golang.org|direct before cloud/setu
 The first focused fresh selector selected zero leaves because Go splits test names at slashes; it was corrected before any passing coverage claim. The first mutant runner expected a different markdown diagnostic phrase; the real comparison had failed, and the corrected complete runner was rerun successfully. Initial lane-script retrieval used FETCH_HEAD instead of the explicit remote tracking ref and found no file; explicit fetching of the two integration refs corrected it.
 
 No permanent fixtures were added or changed, so no new counts row or counts update is needed. Only existing scanner source changed to remove the closed gap workaround. Evidence and full test outputs are in this directory; mutant source is .go.txt or .patch, never compilable Go. Final lane-check output is lane.log. No PR was opened.
+
+Final setup retry completed: Go 0.019s, Node 0.020s, submodules 0.062s, markdown dependencies 0.069s, clang 0.169s, go build 50.143s, cache warm 50.263s, done 50.289s. nproc 5; cgroup quota 4 CPUs. See setup-final.log.
+
+Merged current origin/main 76c59c81 into the committed branch, without conflicts. The same focused commands were rerun after that merge: fresh remainder PASS 3.258s, markdown PASS 0.385s, scanner PASS 2.430s, and fixture coverage plus self-compare PASS 0.991s. The merge only added the already-landed registry rendering tests; it changed none of this family's compiler inputs.
+
+Required committed-branch lane command:
+
+```text
+git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -
+lane checks 9.3 s: gofmt and tools on 274 Go files, t.Parallel on 23 test packages; vet 23 packages
+```
+
+The logs and report are added in a final evidence-only commit. The same lane command is run against that committed HEAD before push, with its output reported in the final response.

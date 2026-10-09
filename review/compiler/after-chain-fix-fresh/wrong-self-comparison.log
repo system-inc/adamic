@@ -1,0 +1,8 @@
+--- FAIL: TestFixturesSelfCompare (0.49s)
+    --- FAIL: TestFixturesSelfCompare/self-compare (0.00s)
+        --- FAIL: TestFixturesSelfCompare/self-compare/closure.a (0.28s)
+            --- FAIL: TestFixturesSelfCompare/self-compare/closure.a/node (0.00s)
+                fixtures_test.go:281: recorded Node byte comparison failed: got exit=0 stdout="false\n" stderr=""; want exit=0 stdout="true\n" stderr=""
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	0.783s
+FAIL
