@@ -19,3 +19,5 @@ Matrix wall seconds (including Go build):
 - D2: 96.583 wall, 82.168 binary; 0 failing rows.
 - D3: 50.769 wall, 39.699 binary; 0 failing rows.
 - D4: 47.444 wall, 39.745 binary; 5 failing rows.
+
+Publication: the requested remote branch already contained another inheritance defense. This session evidence is isolated under factory-constraints-7b9d4272; existing root evidence and branch history are preserved. The non-fast-forward rejection cost a fetch, path separation and merge. Mutant IDs in this session are local to its subdirectory.
