@@ -1,0 +1,5 @@
+FIRST FAILURE (tools, at 3.3 s):
+stage1/cohere/json/builds_test.go:86 runs ar, which cloud/fast-gate/tools.txt doesn't declare
+stage1/cohere/typeaware/volume_profile_Overlays_test.go:96 runs timeout, which cloud/fast-gate/tools.txt doesn't declare
+Declare each in cloud/fast-gate/tools.txt (devtools/fast-gate), with a check, and have setup provide it.
+(box load 98.4 on 64 cores at first failure)
