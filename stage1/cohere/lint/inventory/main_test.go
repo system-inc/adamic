@@ -38,13 +38,7 @@ func TestInventoryEngine(t *testing.T) {
 		}
 		t.Run(fmt.Sprintf("shard-%03d", index), func(t *testing.T) {
 			t.Parallel()
-			for _, name := range cases {
-				output, err := inventoryEngineRun(binary, cohere, name)
-				t.Logf("%s", output)
-				if err != nil {
-					t.Fatalf("case %s: %v", name, err)
-				}
-			}
+			inventoryEngineDeadline(t, binary, cohere, cases)
 		})
 	}
 	setup := time.Since(started)
