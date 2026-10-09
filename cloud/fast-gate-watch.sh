@@ -124,7 +124,7 @@ dispatch() {
     # Loom's side pool runs it with the good tools' selection (cloud/pool-job.sh): never a canary for new tools, so its
     # token names the good tools and a pool green promotes nothing.
     token="$(cat "${state}/tools-good"):pool"
-    bash "${here}/cloud/pool-job.sh" "${sha}" --branch "${branch}" --tools "$(cat "${state}/tools-good")" > "${log}" 2>&1 &
+    bash "${here}/cloud/pool-job.sh" "${sha}" --branch "${branch}" --tools "$(cat "${state}/tools-good")" $(isFront "${branch}" && echo --priority 30) > "${log}" 2>&1 &
   else
     ADAMIC_FAST_GATE_BOX=${box} bash "${script}" "${sha}" --branch "${branch}" --class "${slot}" ${whole} > "${log}" 2>&1 &
   fi
@@ -390,6 +390,8 @@ writeStarBoxes() {
   assignStarBoxes
   {
     cat "${state}"/running/* 2> /dev/null | while read -r runningBranch runningSha runningSlot runningBox rest; do
+      # The pool isn't a box the star owns: its side jobs are never preempted for it.
+      [ "${runningBox}" = pool ] && continue
       isFront "${runningBranch}" && echo "${runningBox:-threadripper}"
     done
     while read -r class queued branch sha; do
@@ -558,16 +560,14 @@ borrowableBox() {
     [ "$(cat "${state}"/running/* 2>/dev/null | awk -v b="${b}" '($4 == "" ? "threadripper" : $4) == b && ($5 == "B" || $3 == "B")' | wc -l)" -lt "${limit}" ] && echo "${b}"
   done | head -1
 }
-# Side work's fast gates go to Loom's pool (#xt96xyp; @system_adamic, Oct 8 23:53Z): codex/* and devtools/* tips, never
-# the star, an ahead tip, a reservation, a landing or an area (areas run complete, with stage 3, which the pool can't).
-# "pool P" lines in the slot table are its capacity, one per job at once, and ${state}/pool-side switches it on. A tip
-# the pool once voided goes to the boxes.
+# Fast gates go to Loom's pool once it's promoted (@system_adamic, Oct 9 04:19Z, retiring #xt96xyp's side-tips-only
+# clause): side work, landing candidates and the star (at Loom's priority 30), so the boxes become spot-checkers and the
+# fallback. Areas stay on the boxes: they run complete, with stage 3. "pool P" lines in the slot table are its capacity,
+# one per job at once, and ${state}/pool-side switches it on. A tip the pool voided, or didn't start within ten minutes
+# (cloud/pool-job.sh), goes to the boxes.
 poolTip() {
-  local branch=$1 sha=$2 glob
-  [[ ${branch} == codex/* || ${branch} == devtools/* ]] || return 1
-  isFront "${branch}" && return 1
-  for glob in ${aheadList[@]+"${aheadList[@]}"}; do [[ ${branch} == ${glob} ]] && return 1; done
-  matchesReservation "${branch}" && return 1
+  local branch=$1 sha=$2
+  [[ ${branch} == codex/* || ${branch} == devtools/* || ${branch} == cloud/land-* ]] || isFront "${branch}" || return 1
   ! grep -qx "${sha}" "${state}/pool-void" 2> /dev/null
 }
 # One pick from the ranked list: the tip with the lowest position * 100 + rank + extra that a free slot can
@@ -586,7 +586,7 @@ pickNext() {
   while read -r key queued class branch sha reserved; do
     position=$(( key / 100 ))
     [ -n "${best}" ] && [ "${position}" -gt "${bestPosition}" ] && break
-    if [ "${poolFree}" = yes ] && [ "${reserved}" = no ] && poolTip "${branch}" "${sha}"; then
+    if [ "${poolFree}" = yes ] && poolTip "${branch}" "${sha}"; then
       [ -n "${best}" ] && [ "${key}" -ge "${bestScore}" ] && continue
       best="${key} ${queued} ${branch} ${sha} ${class} P pool" bestScore=${key} bestPosition=${position}
       break

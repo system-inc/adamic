@@ -76,6 +76,7 @@ touch "$TEST_ROOT/stopped-$sha"
         # Loom's side pool (#xt96xyp): a local waiter, here answering from pool-mode (green, red or void).
         self.script(cloud / 'pool-job.sh', '''sha=$1; branch=$3
 printf '%s %s\\n' "$branch" "$sha" >> "$TEST_ROOT/pool-starts"
+printf '%s\\n' "$*" >> "$TEST_ROOT/pool-args"
 while [ "$(cat "$TEST_ROOT/pool-mode" 2>/dev/null || echo hold)" = hold ]; do /bin/sleep 0.01; done
 case "$(cat "$TEST_ROOT/pool-mode")" in
   green) echo "green: $sha fast gate on Loom's side pool, go tests only" ;;
@@ -651,27 +652,28 @@ class WatchTests(unittest.TestCase):
         w.put('mode', 'pass')
         w.wait(lambda: 'codex/side' in w.read('starts'))
 
-    def test_side_tips_go_to_the_pool_and_a_pool_void_goes_to_the_boxes(self):
-        # @system_adamic, Oct 8 23:53Z: side work's fast gates go to Loom's pool, the boxes keep the star and landings.
-        w = self.reservation('box0 B\nbox1 S\npool P\n', [('cloud/land-x', 'B'), ('codex/side', 'S'), ('area/compiler', 'B')], release=False)
+    def test_landings_side_tips_and_the_star_go_to_the_pool_areas_to_the_boxes_and_a_pool_void_to_the_boxes(self):
+        # @system_adamic, Oct 9 04:19Z: the pool is promoted, so landings' and the star's fast gates go there too (the
+        # star at Loom's priority 30); areas run complete, with stage 3, on the boxes.
+        w = self.reservation('box0 B\nbox1 S\npool P\npool P\npool P\n',
+                             [('cloud/land-x', 'B'), ('codex/side', 'S'), ('area/compiler', 'B'), ('cloud/land-train-9', 'B')], release=False)
+        (w.state / 'front').write_text('cloud/land-train-* # the star\n')
         (w.state / 'pool-side').touch()
         w.put('initial', 'pass')
-        w.wait(lambda: 'cloud/land-x ' in w.read('starts'))
-        # The pool before a free small slot: the boxes are kept for the star and landings.
-        w.wait(lambda: 'codex/side ' in w.read('pool-starts'))
-        self.assertNotIn('codex/side', w.read('starts'))
-        time.sleep(.3)
-        # An area runs complete, with stage 3: never on the pool.
+        w.wait(lambda: all(b + ' ' in w.read('pool-starts') for b in ('cloud/land-x', 'codex/side', 'cloud/land-train-9')))
+        w.wait(lambda: 'area/compiler ' in w.read('starts'))
         self.assertNotIn('area/compiler', w.read('pool-starts'))
-        self.assertEqual(len(w.read('pool-starts').splitlines()), 1, 'one pool line, one job at once')
+        for branch in ('cloud/land-x', 'codex/side', 'cloud/land-train-9'):
+            self.assertNotIn(branch + ' ', w.read('starts'))
+        star = [line for line in w.read('pool-args').splitlines() if 'cloud/land-train-9' in line][0]
+        self.assertIn('--priority 30', star)
+        self.assertNotIn('--priority', [line for line in w.read('pool-args').splitlines() if 'codex/side' in line][0])
         # A pool void sends the tip to the boxes, never counting toward a void storm.
         w.put('pool-mode', 'void')
         w.wait(lambda: 'pool void codex/side' in w.read('output'))
         self.assertFalse((w.state / 'void-window').exists() and (w.state / 'void-window').read_text().strip())
         w.put('mode', 'pass')
         w.wait(lambda: 'codex/side 0' in w.read('starts'))
-        self.assertTrue([x for x in w.read('starts').splitlines() if x.startswith('codex/side ')][0].endswith(' box1'))
-        self.assertEqual(len(w.read('pool-starts').splitlines()), 1)
 
     def test_a_pool_green_reaches_its_owner_and_promotes_no_tools(self):
         w = Watcher(1, canaryBox='box1', mode='hold', slots='pool P\n')
